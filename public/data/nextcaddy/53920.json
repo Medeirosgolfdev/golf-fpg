@@ -1,0 +1,1084 @@
+{
+  "tourId": 53920,
+  "url": "https://www.nextcaddy.com/tour/53920",
+  "scrapedAt": "2026-05-09T16:07:22.926Z",
+  "meta": {
+    "name": "II Prueba Circuito 5ª Categoría de la Federación Canaria de Golf - Golf Las Américas",
+    "organizer": null,
+    "course": "Campo de Golf Las Americas",
+    "courseCode": "CP14",
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Stableford (Handicap) Circuito 5ª Catego",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ]
+  },
+  "course": {
+    "par": [
+      5,
+      4,
+      4,
+      4,
+      3,
+      4,
+      5,
+      3,
+      4,
+      4,
+      3,
+      4,
+      3,
+      4,
+      4,
+      5,
+      4,
+      5
+    ],
+    "si": [
+      7,
+      3,
+      5,
+      15,
+      9,
+      1,
+      13,
+      17,
+      11,
+      4,
+      18,
+      6,
+      16,
+      14,
+      2,
+      12,
+      8,
+      10
+    ],
+    "meters": [
+      390,
+      318,
+      315,
+      203,
+      146,
+      363,
+      396,
+      131,
+      315,
+      358,
+      110,
+      272,
+      113,
+      207,
+      354,
+      387,
+      266,
+      382
+    ]
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Handicap Señoras",
+      "expectedJugadores": 2,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Karola Wonneberger",
+          "licencia": "CP05970488",
+          "hcp": 44.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 1890327,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                8,
+                7,
+                7,
+                6,
+                8,
+                7,
+                3,
+                9,
+                7,
+                4,
+                7,
+                7,
+                9,
+                8,
+                8,
+                6,
+                8
+              ],
+              "total": 127
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Mª Gabriela Diaz-Saavedra Zerolo",
+          "licencia": "CP01315946",
+          "hcp": 30.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 1881923,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                6,
+                6,
+                7,
+                4,
+                9,
+                6,
+                6,
+                8,
+                7,
+                6,
+                6,
+                4,
+                6,
+                7,
+                7,
+                5,
+                7
+              ],
+              "total": 115
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Clasificación Handicap Caballeros",
+      "expectedJugadores": 20,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Juan Jose Afonso Perez",
+          "licencia": "CP41154682",
+          "hcp": 27.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 42,
+          "toPar": -6,
+          "inscribedId": 1891542,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                4,
+                5,
+                4,
+                3,
+                5,
+                7,
+                3,
+                6,
+                5,
+                5,
+                4,
+                4,
+                4,
+                5,
+                5,
+                6,
+                6
+              ],
+              "total": 87
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Pablo Rodriguez Aranaz",
+          "licencia": "CP09469239",
+          "hcp": 28,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 1887071,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                6,
+                4,
+                4,
+                5,
+                5,
+                8,
+                4,
+                5,
+                5,
+                5,
+                4,
+                3,
+                5,
+                6,
+                6,
+                5,
+                4
+              ],
+              "total": 89
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Seth Garcia Herrera",
+          "licencia": "CP41968084",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 1885546,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                5,
+                4,
+                6,
+                4,
+                5,
+                6,
+                4,
+                7,
+                5,
+                null,
+                5,
+                4,
+                5,
+                6,
+                6,
+                6,
+                5
+              ],
+              "total": null
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Rayco Alvarez Diaz",
+          "licencia": "CP41927659",
+          "hcp": 31.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 1889379,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Antonio C. Afonso Perez",
+          "licencia": "CP41154635",
+          "hcp": 28.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 1881978,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Antonio Afonso Perez",
+          "licencia": "CP41154659",
+          "hcp": 32.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 1881862,
+          "roundScores": []
+        },
+        {
+          "pos": 7,
+          "name": "Agustin Paez Lorenzo",
+          "licencia": "CP41472857",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 1889623,
+          "roundScores": []
+        },
+        {
+          "pos": 8,
+          "name": "Luis Fernando Elneser Montesinos",
+          "licencia": "CP22412180",
+          "hcp": 35.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 1881997,
+          "roundScores": []
+        },
+        {
+          "pos": 9,
+          "name": "Juan Benito Negrin Coello",
+          "licencia": "CP15398443",
+          "hcp": 26.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 1890132,
+          "roundScores": []
+        },
+        {
+          "pos": 10,
+          "name": "Oscar Arturo Gomez Helmeyer",
+          "licencia": "CP06994057",
+          "hcp": 26.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 1891204,
+          "roundScores": []
+        },
+        {
+          "pos": 11,
+          "name": "Andres Castro Mesa",
+          "licencia": "CP41154676",
+          "hcp": 31.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 1889633,
+          "roundScores": []
+        },
+        {
+          "pos": 12,
+          "name": "Manuel Perez Ravelo",
+          "licencia": "CP41964184",
+          "hcp": 31.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 1889373,
+          "roundScores": []
+        },
+        {
+          "pos": 13,
+          "name": "Benito Dominguez Pequeño",
+          "licencia": "CP06150837",
+          "hcp": 30.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 1891080,
+          "roundScores": []
+        },
+        {
+          "pos": 14,
+          "name": "Gersan Javier Gonzalez",
+          "licencia": "CP15377710",
+          "hcp": 33.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 1883516,
+          "roundScores": []
+        },
+        {
+          "pos": 15,
+          "name": "Jesus Luis Diaz",
+          "licencia": "CP41467886",
+          "hcp": 16.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 1889240,
+          "roundScores": []
+        },
+        {
+          "pos": 16,
+          "name": "Jose Luis Mesa Martin",
+          "licencia": "CP41079684",
+          "hcp": 33.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 1883288,
+          "roundScores": []
+        },
+        {
+          "pos": 17,
+          "name": "Jesus Urriza Lopez",
+          "licencia": "CP01971968",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 1883190,
+          "roundScores": []
+        },
+        {
+          "pos": 18,
+          "name": "Manuel Sosa Suarez",
+          "licencia": "CP15305438",
+          "hcp": 26.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 13,
+          "toPar": 23,
+          "inscribedId": 1891206,
+          "roundScores": []
+        },
+        {
+          "pos": 19,
+          "name": "Davd Torres Padilla",
+          "licencia": "CP26321870",
+          "hcp": 30.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 11,
+          "toPar": 25,
+          "inscribedId": 1889350,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Domingo Paillet Zurdo",
+          "licencia": "CP41073895",
+          "hcp": 36.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 1891655,
+          "roundScores": []
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Handicap Señoras",
+      "jugadores": 2
+    },
+    "2": {
+      "name": "Clasificación Handicap Caballeros",
+      "jugadores": 20
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Antonio Afonso Perez",
+      "licencia": "CP41154659",
+      "hcp": 32.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Antonio C. Afonso Perez",
+      "licencia": "CP41154635",
+      "hcp": 28.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Luis Fernando Elneser Montesinos",
+      "licencia": "CP22412180",
+      "hcp": 35.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Jesus Urriza Lopez",
+      "licencia": "CP01971968",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Jose Luis Mesa Martin",
+      "licencia": "CP41079684",
+      "hcp": 33.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Gersan Javier Gonzalez",
+      "licencia": "CP15377710",
+      "hcp": 33.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 7,
+      "name": "Seth Garcia Herrera",
+      "licencia": "CP41968084",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 8,
+      "name": "Juan Carlos Medina Francisco",
+      "licencia": "CP00157260",
+      "hcp": 28.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Pablo Rodriguez Aranaz",
+      "licencia": "CP09469239",
+      "hcp": 28,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 10,
+      "name": "Jesus Luis Diaz",
+      "licencia": "CP41467886",
+      "hcp": 16.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 11,
+      "name": "Davd Torres Padilla",
+      "licencia": "CP26321870",
+      "hcp": 30.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 12,
+      "name": "Manuel Perez Ravelo",
+      "licencia": "CP41964184",
+      "hcp": 31.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Rayco Alvarez Diaz",
+      "licencia": "CP41927659",
+      "hcp": 31.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 14,
+      "name": "Agustin Paez Lorenzo",
+      "licencia": "CP41472857",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Andres Castro Mesa",
+      "licencia": "CP41154676",
+      "hcp": 31.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Juan Benito Negrin Coello",
+      "licencia": "CP15398443",
+      "hcp": 26.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Benito Dominguez Pequeño",
+      "licencia": "CP06150837",
+      "hcp": 30.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Oscar Arturo Gomez Helmeyer",
+      "licencia": "CP06994057",
+      "hcp": 26.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Manuel Sosa Suarez",
+      "licencia": "CP15305438",
+      "hcp": 26.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Juan Jose Afonso Perez",
+      "licencia": "CP41154682",
+      "hcp": 27.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 21,
+      "name": "Domingo Paillet Zurdo",
+      "licencia": "CP41073895",
+      "hcp": 36.4,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Mª Gabriela Diaz-Saavedra Zerolo",
+      "licencia": "CP01315946",
+      "hcp": 30.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Karola Wonneberger",
+      "licencia": "CP05970488",
+      "hcp": 44.1,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Antonio Afonso Perez",
+      "licencia": "CP41154659",
+      "hcp": 32.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Mª Gabriela Diaz-Saavedra Zerolo",
+      "licencia": "CP01315946",
+      "hcp": 30.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Antonio C. Afonso Perez",
+      "licencia": "CP41154635",
+      "hcp": 28.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Luis Fernando Elneser Montesinos",
+      "licencia": "CP22412180",
+      "hcp": 35.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Jesus Urriza Lopez",
+      "licencia": "CP01971968",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Jose Luis Mesa Martin",
+      "licencia": "CP41079684",
+      "hcp": 33.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Gersan Javier Gonzalez",
+      "licencia": "CP15377710",
+      "hcp": 33.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 8,
+      "name": "Seth Garcia Herrera",
+      "licencia": "CP41968084",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 9,
+      "name": "Juan Carlos Medina Francisco",
+      "licencia": "CP00157260",
+      "hcp": 28.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Pablo Rodriguez Aranaz",
+      "licencia": "CP09469239",
+      "hcp": 28,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 11,
+      "name": "Jesus Luis Diaz",
+      "licencia": "CP41467886",
+      "hcp": 16.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 12,
+      "name": "Davd Torres Padilla",
+      "licencia": "CP26321870",
+      "hcp": 30.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 13,
+      "name": "Manuel Perez Ravelo",
+      "licencia": "CP41964184",
+      "hcp": 31.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Rayco Alvarez Diaz",
+      "licencia": "CP41927659",
+      "hcp": 31.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 15,
+      "name": "Agustin Paez Lorenzo",
+      "licencia": "CP41472857",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Andres Castro Mesa",
+      "licencia": "CP41154676",
+      "hcp": 31.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Juan Benito Negrin Coello",
+      "licencia": "CP15398443",
+      "hcp": 26.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Karola Wonneberger",
+      "licencia": "CP05970488",
+      "hcp": 44.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Benito Dominguez Pequeño",
+      "licencia": "CP06150837",
+      "hcp": 30.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Oscar Arturo Gomez Helmeyer",
+      "licencia": "CP06994057",
+      "hcp": 26.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Manuel Sosa Suarez",
+      "licencia": "CP15305438",
+      "hcp": 26.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Juan Jose Afonso Perez",
+      "licencia": "CP41154682",
+      "hcp": 27.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 23,
+      "name": "Domingo Paillet Zurdo",
+      "licencia": "CP41073895",
+      "hcp": 36.4,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Juan Benito Negrin Coello",
+          "hcp": 26.5,
+          "ins": "1890132",
+          "jid": "56609",
+          "nivel": "S"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Oscar Arturo Gomez Helmeyer",
+          "hcp": 26.5,
+          "ins": "1891204",
+          "jid": "56609",
+          "nivel": "S"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Manuel Sosa Suarez",
+          "hcp": 26.5,
+          "ins": "1891206",
+          "jid": "56609",
+          "nivel": "S"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Juan Jose Afonso Perez",
+          "hcp": 27.9,
+          "ins": "1891542",
+          "jid": "56609",
+          "nivel": "M"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Pablo Rodriguez Aranaz",
+          "hcp": 28,
+          "ins": "1887071",
+          "jid": "56609",
+          "nivel": "M"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Antonio C. Afonso Perez",
+          "hcp": 28.5,
+          "ins": "1881978",
+          "jid": "56609",
+          "nivel": "S"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Benito Dominguez Pequeño",
+          "hcp": 30.2,
+          "ins": "1891080",
+          "jid": "56609",
+          "nivel": "S"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Davd Torres Padilla",
+          "hcp": 30.7,
+          "ins": "1889350",
+          "jid": "56609",
+          "nivel": "M"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Mª Gabriela Diaz-Saavedra Zerolo",
+          "hcp": 30.9,
+          "ins": "1881923",
+          "jid": "56609",
+          "nivel": "S"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Andres Castro Mesa",
+          "hcp": 31.4,
+          "ins": "1889633",
+          "jid": "56609",
+          "nivel": "S"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Manuel Perez Ravelo",
+          "hcp": 31.7,
+          "ins": "1889373",
+          "jid": "56609",
+          "nivel": "S"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Rayco Alvarez Diaz",
+          "hcp": 31.9,
+          "ins": "1889379",
+          "jid": "56609",
+          "nivel": "M"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Antonio Afonso Perez",
+          "hcp": 32.9,
+          "ins": "1881862",
+          "jid": "56609",
+          "nivel": "M"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Gersan Javier Gonzalez",
+          "hcp": 33.5,
+          "ins": "1883516",
+          "jid": "56609",
+          "nivel": "M"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Jose Luis Mesa Martin",
+          "hcp": 33.9,
+          "ins": "1883288",
+          "jid": "56609",
+          "nivel": "S"
+        },
+        {
+          "time": "13:00",
+          "tee": 1,
+          "name": "Luis Fernando Elneser Montesinos",
+          "hcp": 35.9,
+          "ins": "1881997",
+          "jid": "56609",
+          "nivel": "M"
+        },
+        {
+          "time": "13:00",
+          "tee": 1,
+          "name": "Jesus Urriza Lopez",
+          "hcp": 36,
+          "ins": "1883190",
+          "jid": "56609",
+          "nivel": "S"
+        },
+        {
+          "time": "13:00",
+          "tee": 1,
+          "name": "Seth Garcia Herrera",
+          "hcp": 36,
+          "ins": "1885546",
+          "jid": "56609",
+          "nivel": "M"
+        },
+        {
+          "time": "13:10",
+          "tee": 1,
+          "name": "Jesus Luis Diaz",
+          "hcp": 16.8,
+          "ins": "1889240",
+          "jid": "56609",
+          "nivel": "M"
+        },
+        {
+          "time": "13:10",
+          "tee": 1,
+          "name": "Agustin Paez Lorenzo",
+          "hcp": 36,
+          "ins": "1889623",
+          "jid": "56609",
+          "nivel": "S"
+        },
+        {
+          "time": "13:20",
+          "tee": 1,
+          "name": "Domingo Paillet Zurdo",
+          "hcp": 36.4,
+          "ins": "1891655",
+          "jid": "56609",
+          "nivel": "S"
+        },
+        {
+          "time": "13:20",
+          "tee": 1,
+          "name": "Karola Wonneberger",
+          "hcp": 44.1,
+          "ins": "1890327",
+          "jid": "56609",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 56609
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/53920_cartel_340.pdf"
+  ]
+}

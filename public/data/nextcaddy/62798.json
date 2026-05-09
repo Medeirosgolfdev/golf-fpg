@@ -1,0 +1,839 @@
+{
+  "tourId": 62798,
+  "url": "https://www.nextcaddy.com/tour/62798",
+  "scrapedAt": "2026-05-09T16:54:56.383Z",
+  "meta": {
+    "name": "IV Prueba Circuito Regional Amateur 2025 (Inscripción Profesionales)",
+    "organizer": null,
+    "course": "Campo de Golf Abama",
+    "courseCode": "CP24",
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Medal Play (Scratch)  Caballeros C. Técn",
+    "categories": [
+      "Profesional",
+      "Caballeros",
+      "profesional",
+      "PROFESIONAL",
+      "Infantil",
+      "Senior",
+      "Juvenil"
+    ]
+  },
+  "course": {
+    "par": null,
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Final",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Victor Dubuisson",
+          "licencia": "EXX1467557",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 67
+            }
+          ],
+          "total": 143,
+          "toPar": -1,
+          "inscribedId": 2123959,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Jose Luis Gonzalez Courtney",
+          "licencia": "CP143284-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 77
+            }
+          ],
+          "total": 155,
+          "toPar": 11,
+          "inscribedId": 2113103,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Samuel Santana Garcia",
+          "licencia": "CP313008-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 77
+            },
+            {
+              "round": 2,
+              "gross": 84
+            }
+          ],
+          "total": 161,
+          "toPar": 17,
+          "inscribedId": 2118030,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Ignacio Urriza Fuentes",
+          "licencia": "CP013212-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 84
+            },
+            {
+              "round": 2,
+              "gross": 79
+            }
+          ],
+          "total": 163,
+          "toPar": 19,
+          "inscribedId": 2118242,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Christian Espino Bohm",
+          "licencia": "CP013755-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 86
+            },
+            {
+              "round": 2,
+              "gross": 80
+            }
+          ],
+          "total": 166,
+          "toPar": 22,
+          "inscribedId": 2118319,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Raul Santos Cascallana Hernandez",
+          "licencia": "CP043425-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 89
+            },
+            {
+              "round": 2,
+              "gross": 81
+            }
+          ],
+          "total": 170,
+          "toPar": 26,
+          "inscribedId": 2118699,
+          "roundScores": []
+        },
+        {
+          "pos": 7,
+          "name": "Eduardo Gonzalez Galvan",
+          "licencia": "CP020896-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 87
+            },
+            {
+              "round": 2,
+              "gross": 85
+            }
+          ],
+          "total": 172,
+          "toPar": 28,
+          "inscribedId": 2112857,
+          "roundScores": []
+        },
+        {
+          "pos": 8,
+          "name": "Malang Jammeh Sanneh",
+          "licencia": "CP201895-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 87
+            },
+            {
+              "round": 2,
+              "gross": 87
+            }
+          ],
+          "total": 174,
+          "toPar": 30,
+          "inscribedId": 2112928,
+          "roundScores": []
+        },
+        {
+          "pos": 9,
+          "name": "Francisco Cea Bermudez",
+          "licencia": "CP060677-P",
+          "hcp": 0.5,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 90
+            },
+            {
+              "round": 2,
+              "gross": 85
+            }
+          ],
+          "total": 175,
+          "toPar": 31,
+          "inscribedId": 2112885,
+          "roundScores": []
+        },
+        {
+          "pos": 10,
+          "name": "Eduardo Santos Gutierrez",
+          "licencia": "CP023621-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 83
+            },
+            {
+              "round": 2,
+              "gross": 96
+            }
+          ],
+          "total": 179,
+          "toPar": 35,
+          "inscribedId": 2113070,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Resultados 1ª Jornada.",
+      "expectedJugadores": 11,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Victor Dubuisson",
+          "licencia": "EXX1467557",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "total": 76,
+          "toPar": 4,
+          "inscribedId": 2123959,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Samuel Santana Garcia",
+          "licencia": "CP313008-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "total": 77,
+          "toPar": 5,
+          "inscribedId": 2118030,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Jose Luis Gonzalez Courtney",
+          "licencia": "CP143284-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "total": 78,
+          "toPar": 6,
+          "inscribedId": 2113103,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Pol De Aviles Rovira",
+          "licencia": "CP061771-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "total": 83,
+          "toPar": 11,
+          "inscribedId": 2112778,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Eduardo Santos Gutierrez",
+          "licencia": "CP023621-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "total": 83,
+          "toPar": 11,
+          "inscribedId": 2113070,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Ignacio Urriza Fuentes",
+          "licencia": "CP013212-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "total": 84,
+          "toPar": 12,
+          "inscribedId": 2118242,
+          "roundScores": []
+        },
+        {
+          "pos": 7,
+          "name": "Christian Espino Bohm",
+          "licencia": "CP013755-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "total": 86,
+          "toPar": 14,
+          "inscribedId": 2118319,
+          "roundScores": []
+        },
+        {
+          "pos": 8,
+          "name": "Eduardo Gonzalez Galvan",
+          "licencia": "CP020896-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "total": 87,
+          "toPar": 15,
+          "inscribedId": 2112857,
+          "roundScores": []
+        },
+        {
+          "pos": 9,
+          "name": "Malang Jammeh Sanneh",
+          "licencia": "CP201895-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "total": 87,
+          "toPar": 15,
+          "inscribedId": 2112928,
+          "roundScores": []
+        },
+        {
+          "pos": 10,
+          "name": "Raul Santos Cascallana Hernandez",
+          "licencia": "CP043425-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "total": 89,
+          "toPar": 17,
+          "inscribedId": 2118699,
+          "roundScores": []
+        },
+        {
+          "pos": 11,
+          "name": "Francisco Cea Bermudez",
+          "licencia": "CP060677-P",
+          "hcp": 0.5,
+          "nivel": "P+",
+          "rounds": [],
+          "total": 90,
+          "toPar": 18,
+          "inscribedId": 2112885,
+          "roundScores": []
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Final",
+      "jugadores": 10
+    },
+    "2": {
+      "name": "Resultados 1ª Jornada.",
+      "jugadores": 11
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Pol De Aviles Rovira",
+      "licencia": "CP061771-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 2,
+      "name": "Eduardo Gonzalez Galvan",
+      "licencia": "CP020896-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 3,
+      "name": "Francisco Cea Bermudez",
+      "licencia": "CP060677-P",
+      "hcp": 0.5,
+      "nivel": "P+"
+    },
+    {
+      "orden": 4,
+      "name": "Malang Jammeh Sanneh",
+      "licencia": "CP201895-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 5,
+      "name": "Eduardo Santos Gutierrez",
+      "licencia": "CP023621-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 6,
+      "name": "Jose Luis Gonzalez Courtney",
+      "licencia": "CP143284-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 7,
+      "name": "Luis Claverie Beautell",
+      "licencia": "CP020715-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 8,
+      "name": "Samuel Santana Garcia",
+      "licencia": "CP313008-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 9,
+      "name": "Ignacio Urriza Fuentes",
+      "licencia": "CP013212-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 10,
+      "name": "Christian Espino Bohm",
+      "licencia": "CP013755-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 11,
+      "name": "Raul Santos Cascallana Hernandez",
+      "licencia": "CP043425-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 12,
+      "name": "Victor Dubuisson",
+      "licencia": "EXX1467557",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Pol De Aviles Rovira",
+      "licencia": "CP061771-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 2,
+      "name": "Eduardo Gonzalez Galvan",
+      "licencia": "CP020896-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 3,
+      "name": "Francisco Cea Bermudez",
+      "licencia": "CP060677-P",
+      "hcp": 0.5,
+      "nivel": "P+"
+    },
+    {
+      "orden": 4,
+      "name": "Malang Jammeh Sanneh",
+      "licencia": "CP201895-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 5,
+      "name": "Eduardo Santos Gutierrez",
+      "licencia": "CP023621-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 6,
+      "name": "Jose Luis Gonzalez Courtney",
+      "licencia": "CP143284-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 7,
+      "name": "Luis Claverie Beautell",
+      "licencia": "CP020715-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 8,
+      "name": "Samuel Santana Garcia",
+      "licencia": "CP313008-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 9,
+      "name": "Ignacio Urriza Fuentes",
+      "licencia": "CP013212-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 10,
+      "name": "Christian Espino Bohm",
+      "licencia": "CP013755-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 11,
+      "name": "Raul Santos Cascallana Hernandez",
+      "licencia": "CP043425-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 12,
+      "name": "Victor Dubuisson",
+      "licencia": "EXX1467557",
+      "hcp": 0,
+      "nivel": "P+"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Samuel Santana Garcia",
+          "hcp": 0,
+          "ins": "2118030",
+          "jid": "66739",
+          "nivel": "P"
+        },
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Victor Dubuisson",
+          "hcp": 0,
+          "ins": "2123959",
+          "jid": "66739",
+          "nivel": "P"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Luis Claverie Beautell",
+          "hcp": 0,
+          "ins": "2114182",
+          "jid": "66739",
+          "nivel": "P"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Malang Jammeh Sanneh",
+          "hcp": 0,
+          "ins": "2112928",
+          "jid": "66739",
+          "nivel": "P"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Eduardo Gonzalez Galvan",
+          "hcp": 0,
+          "ins": "2112857",
+          "jid": "66739",
+          "nivel": "P"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Pol De Aviles Rovira",
+          "hcp": 0,
+          "ins": "2112778",
+          "jid": "66739",
+          "nivel": "P"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Francisco Cea Bermudez",
+          "hcp": 0.5,
+          "ins": "2112885",
+          "jid": "66739",
+          "nivel": "P"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Eduardo Santos Gutierrez",
+          "hcp": 0,
+          "ins": "2113070",
+          "jid": "66739",
+          "nivel": "P"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Jose Luis Gonzalez Courtney",
+          "hcp": 0,
+          "ins": "2113103",
+          "jid": "66739",
+          "nivel": "P"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Christian Espino Bohm",
+          "hcp": 0,
+          "ins": "2118319",
+          "jid": "66739",
+          "nivel": "P"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Raul Santos Cascallana Hernandez",
+          "hcp": 0,
+          "ins": "2118699",
+          "jid": "66739",
+          "nivel": "P"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Ignacio Urriza Fuentes",
+          "hcp": 0,
+          "ins": "2118242",
+          "jid": "66739",
+          "nivel": "P"
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "players": [
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Francisco Cea Bermudez",
+          "hcp": 0.5,
+          "ins": "2112885",
+          "jid": "66740",
+          "nivel": "P"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Raul Santos Cascallana Hernandez",
+          "hcp": 0,
+          "ins": "2118699",
+          "jid": "66740",
+          "nivel": "P"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Malang Jammeh Sanneh",
+          "hcp": 0,
+          "ins": "2112928",
+          "jid": "66740",
+          "nivel": "P"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Eduardo Gonzalez Galvan",
+          "hcp": 0,
+          "ins": "2112857",
+          "jid": "66740",
+          "nivel": "P"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Christian Espino Bohm",
+          "hcp": 0,
+          "ins": "2118319",
+          "jid": "66740",
+          "nivel": "P"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Ignacio Urriza Fuentes",
+          "hcp": 0,
+          "ins": "2118242",
+          "jid": "66740",
+          "nivel": "P"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Eduardo Santos Gutierrez",
+          "hcp": 0,
+          "ins": "2113070",
+          "jid": "66740",
+          "nivel": "P"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Pol De Aviles Rovira",
+          "hcp": 0,
+          "ins": "2112778",
+          "jid": "66740",
+          "nivel": "P"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Jose Luis Gonzalez Courtney",
+          "hcp": 0,
+          "ins": "2113103",
+          "jid": "66740",
+          "nivel": "P"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Samuel Santana Garcia",
+          "hcp": 0,
+          "ins": "2118030",
+          "jid": "66740",
+          "nivel": "P"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Victor Dubuisson",
+          "hcp": 0,
+          "ins": "2123959",
+          "jid": "66740",
+          "nivel": "P"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 66739
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 66740
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": []
+}

@@ -1,4 +1,3 @@
-import React from "react";
 import { norm } from "../utils/format";
 
 /* —— Course key lookup: course display name → courseKey for /campos/:courseKey —— */

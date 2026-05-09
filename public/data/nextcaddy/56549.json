@@ -1,0 +1,1157 @@
+{
+  "tourId": 56549,
+  "url": "https://www.nextcaddy.com/tour/56549",
+  "scrapedAt": "2026-05-09T16:07:21.394Z",
+  "meta": {
+    "name": "Campeonato de Las Palmas Juvenil (9 Hoyos) - Meloneras Golf by Lopesan",
+    "organizer": null,
+    "course": "Meloneras Golf",
+    "courseCode": "CP27",
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Medal Play (Scratch) Circuito Juvenil 20",
+    "categories": [
+      "Juvenil",
+      "Caballeros",
+      "Señoras",
+      "Benjamin",
+      "Benjamín",
+      "Infantil",
+      "Profesional",
+      "Senior"
+    ]
+  },
+  "course": {
+    "par": [
+      4,
+      4,
+      3,
+      5,
+      3,
+      4,
+      3,
+      4,
+      5,
+      4,
+      4,
+      3,
+      5,
+      4,
+      3,
+      4,
+      4,
+      5
+    ],
+    "si": [
+      15,
+      5,
+      7,
+      9,
+      17,
+      1,
+      13,
+      3,
+      11,
+      18,
+      4,
+      10,
+      2,
+      6,
+      14,
+      16,
+      8,
+      12
+    ],
+    "meters": [
+      274,
+      295,
+      130,
+      380,
+      69,
+      333,
+      65,
+      329,
+      362,
+      224,
+      262,
+      93,
+      420,
+      279,
+      99,
+      236,
+      257,
+      368
+    ]
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Final Benjamín Femenina",
+      "expectedJugadores": 4,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "J3",
+        "HcpJuego J3",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Isabella Cabezas De Herrera Mendez",
+          "licencia": "CP02962907",
+          "hcp": 16.3,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 41
+            },
+            {
+              "round": 2,
+              "gross": 47
+            },
+            {
+              "round": 3,
+              "gross": 42
+            }
+          ],
+          "total": 130,
+          "toPar": 25,
+          "inscribedId": 1902609,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Valeria Armas Mateo",
+          "licencia": "CP02099929",
+          "hcp": 26.2,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 47
+            },
+            {
+              "round": 2,
+              "gross": 41
+            },
+            {
+              "round": 3,
+              "gross": 46
+            }
+          ],
+          "total": 134,
+          "toPar": 29,
+          "inscribedId": 1900772,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Sofia Mendoza Duque",
+          "licencia": "CP04972681",
+          "hcp": 39.4,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 57
+            },
+            {
+              "round": 2,
+              "gross": 55
+            },
+            {
+              "round": 3,
+              "gross": 52
+            }
+          ],
+          "total": 164,
+          "toPar": 59,
+          "inscribedId": 1901356,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Lucia Saviron Alayon",
+          "licencia": "CP02053219",
+          "hcp": 36,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 60
+            },
+            {
+              "round": 2,
+              "gross": 61
+            },
+            {
+              "round": 3,
+              "gross": 56
+            }
+          ],
+          "total": 177,
+          "toPar": 72,
+          "inscribedId": 1901664,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Clasificación Final Benjamín Masculino",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "J3",
+        "HcpJuego J3",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Niko Alvarez Van Der Walt",
+          "licencia": "CP23976839",
+          "hcp": 22.2,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 44
+            },
+            {
+              "round": 2,
+              "gross": 42
+            },
+            {
+              "round": 3,
+              "gross": 45
+            }
+          ],
+          "total": 131,
+          "toPar": 26,
+          "inscribedId": 1894628,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Leo Calasanzio Borsellino",
+          "licencia": "CP05081101",
+          "hcp": 27.4,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 49
+            },
+            {
+              "round": 2,
+              "gross": 48
+            },
+            {
+              "round": 3,
+              "gross": 48
+            }
+          ],
+          "total": 145,
+          "toPar": 40,
+          "inscribedId": 1895669,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Jorge Alvarez Garcia",
+          "licencia": "CP02957731",
+          "hcp": 36.2,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 51
+            },
+            {
+              "round": 2,
+              "gross": 47
+            },
+            {
+              "round": 3,
+              "gross": 49
+            }
+          ],
+          "total": 147,
+          "toPar": 42,
+          "inscribedId": 1901365,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Mark Kaydo Petrov",
+          "licencia": "CP05993369",
+          "hcp": 42.6,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 55
+            },
+            {
+              "round": 2,
+              "gross": 52
+            },
+            {
+              "round": 3,
+              "gross": 48
+            }
+          ],
+          "total": 155,
+          "toPar": 50,
+          "inscribedId": 1896521,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Nicolas Colella",
+          "licencia": "CP14082506",
+          "hcp": 33.8,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 56
+            },
+            {
+              "round": 2,
+              "gross": 49
+            },
+            {
+              "round": 3,
+              "gross": 51
+            }
+          ],
+          "total": 156,
+          "toPar": 51,
+          "inscribedId": 1896544,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Maximo Cabezas De Herrera Mendez",
+          "licencia": "CP02052226",
+          "hcp": 52.4,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 68
+            },
+            {
+              "round": 2,
+              "gross": 53
+            },
+            {
+              "round": 3,
+              "gross": 55
+            }
+          ],
+          "total": 176,
+          "toPar": 71,
+          "inscribedId": 1902608,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Clasificación 2ª Jornada Indistinta",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Niko Alvarez Van Der Walt",
+          "licencia": "CP23976839",
+          "hcp": 22.2,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 44
+            },
+            {
+              "round": 2,
+              "gross": 42
+            }
+          ],
+          "total": 86,
+          "toPar": 16,
+          "inscribedId": 1894628,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Valeria Armas Mateo",
+          "licencia": "CP02099929",
+          "hcp": 26.2,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 47
+            },
+            {
+              "round": 2,
+              "gross": 41
+            }
+          ],
+          "total": 88,
+          "toPar": 18,
+          "inscribedId": 1900772,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Isabella Cabezas De Herrera Mendez",
+          "licencia": "CP02962907",
+          "hcp": 16.3,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 41
+            },
+            {
+              "round": 2,
+              "gross": 47
+            }
+          ],
+          "total": 88,
+          "toPar": 18,
+          "inscribedId": 1902609,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Leo Calasanzio Borsellino",
+          "licencia": "CP05081101",
+          "hcp": 27.4,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 49
+            },
+            {
+              "round": 2,
+              "gross": 48
+            }
+          ],
+          "total": 97,
+          "toPar": 27,
+          "inscribedId": 1895669,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Jorge Alvarez Garcia",
+          "licencia": "CP02957731",
+          "hcp": 36.2,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 51
+            },
+            {
+              "round": 2,
+              "gross": 47
+            }
+          ],
+          "total": 98,
+          "toPar": 28,
+          "inscribedId": 1901365,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Nicolas Colella",
+          "licencia": "CP14082506",
+          "hcp": 33.8,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 56
+            },
+            {
+              "round": 2,
+              "gross": 49
+            }
+          ],
+          "total": 105,
+          "toPar": 35,
+          "inscribedId": 1896544,
+          "roundScores": []
+        },
+        {
+          "pos": 7,
+          "name": "Mark Kaydo Petrov",
+          "licencia": "CP05993369",
+          "hcp": 42.6,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 55
+            },
+            {
+              "round": 2,
+              "gross": 52
+            }
+          ],
+          "total": 107,
+          "toPar": 37,
+          "inscribedId": 1896521,
+          "roundScores": []
+        },
+        {
+          "pos": 8,
+          "name": "Sofia Mendoza Duque",
+          "licencia": "CP04972681",
+          "hcp": 39.4,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 57
+            },
+            {
+              "round": 2,
+              "gross": 55
+            }
+          ],
+          "total": 112,
+          "toPar": 42,
+          "inscribedId": 1901356,
+          "roundScores": []
+        },
+        {
+          "pos": 9,
+          "name": "Maximo Cabezas De Herrera Mendez",
+          "licencia": "CP02052226",
+          "hcp": 52.4,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 68
+            },
+            {
+              "round": 2,
+              "gross": 53
+            }
+          ],
+          "total": 121,
+          "toPar": 51,
+          "inscribedId": 1902608,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Lucia Saviron Alayon",
+          "licencia": "CP02053219",
+          "hcp": 36,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 60
+            },
+            {
+              "round": 2,
+              "gross": 61
+            }
+          ],
+          "total": 121,
+          "toPar": 51,
+          "inscribedId": 1901664,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 4,
+      "categoryName": "1ª Jornada Indistinto",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Isabella Cabezas De Herrera Mendez",
+          "licencia": "CP02962907",
+          "hcp": 16.3,
+          "nivel": "B",
+          "rounds": [],
+          "total": 41,
+          "toPar": 6,
+          "inscribedId": 1902609,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Niko Alvarez Van Der Walt",
+          "licencia": "CP23976839",
+          "hcp": 22.2,
+          "nivel": "B",
+          "rounds": [],
+          "total": 44,
+          "toPar": 9,
+          "inscribedId": 1894628,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Valeria Armas Mateo",
+          "licencia": "CP02099929",
+          "hcp": 26.2,
+          "nivel": "B",
+          "rounds": [],
+          "total": 47,
+          "toPar": 12,
+          "inscribedId": 1900772,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Leo Calasanzio Borsellino",
+          "licencia": "CP05081101",
+          "hcp": 27.4,
+          "nivel": "B",
+          "rounds": [],
+          "total": 49,
+          "toPar": 14,
+          "inscribedId": 1895669,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Jorge Alvarez Garcia",
+          "licencia": "CP02957731",
+          "hcp": 36.2,
+          "nivel": "B",
+          "rounds": [],
+          "total": 51,
+          "toPar": 16,
+          "inscribedId": 1901365,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Mark Kaydo Petrov",
+          "licencia": "CP05993369",
+          "hcp": 42.6,
+          "nivel": "B",
+          "rounds": [],
+          "total": 55,
+          "toPar": 20,
+          "inscribedId": 1896521,
+          "roundScores": []
+        },
+        {
+          "pos": 7,
+          "name": "Nicolas Colella",
+          "licencia": "CP14082506",
+          "hcp": 33.8,
+          "nivel": "B",
+          "rounds": [],
+          "total": 56,
+          "toPar": 21,
+          "inscribedId": 1896544,
+          "roundScores": []
+        },
+        {
+          "pos": 8,
+          "name": "Sofia Mendoza Duque",
+          "licencia": "CP04972681",
+          "hcp": 39.4,
+          "nivel": "B",
+          "rounds": [],
+          "total": 57,
+          "toPar": 22,
+          "inscribedId": 1901356,
+          "roundScores": []
+        },
+        {
+          "pos": 9,
+          "name": "Lucia Saviron Alayon",
+          "licencia": "CP02053219",
+          "hcp": 36,
+          "nivel": "B",
+          "rounds": [],
+          "total": 60,
+          "toPar": 25,
+          "inscribedId": 1901664,
+          "roundScores": []
+        },
+        {
+          "pos": 10,
+          "name": "Maximo Cabezas De Herrera Mendez",
+          "licencia": "CP02052226",
+          "hcp": 52.4,
+          "nivel": "B",
+          "rounds": [],
+          "total": 68,
+          "toPar": 33,
+          "inscribedId": 1902608,
+          "roundScores": []
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Final Benjamín Femenina",
+      "jugadores": 4
+    },
+    "2": {
+      "name": "Clasificación Final Benjamín Masculino",
+      "jugadores": 6
+    },
+    "3": {
+      "name": "Clasificación 2ª Jornada Indistinta",
+      "jugadores": 10
+    },
+    "4": {
+      "name": "1ª Jornada Indistinto",
+      "jugadores": 10
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Niko Alvarez Van Der Walt",
+      "licencia": "CP23976839",
+      "hcp": 22.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Leo Calasanzio Borsellino",
+      "licencia": "CP05081101",
+      "hcp": 27.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Mark Kaydo Petrov",
+      "licencia": "CP05993369",
+      "hcp": 42.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Nicolas Colella",
+      "licencia": "CP14082506",
+      "hcp": 33.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Jorge Alvarez Garcia",
+      "licencia": "CP02957731",
+      "hcp": 36.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Maximo Cabezas De Herrera Mendez",
+      "licencia": "CP02052226",
+      "hcp": 52.4,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Valeria Armas Mateo",
+      "licencia": "CP02099929",
+      "hcp": 26.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Sofia Mendoza Duque",
+      "licencia": "CP04972681",
+      "hcp": 39.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Lucia Saviron Alayon",
+      "licencia": "CP02053219",
+      "hcp": 36,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Isabella Cabezas De Herrera Mendez",
+      "licencia": "CP02962907",
+      "hcp": 16.3,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Niko Alvarez Van Der Walt",
+      "licencia": "CP23976839",
+      "hcp": 22.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Leo Calasanzio Borsellino",
+      "licencia": "CP05081101",
+      "hcp": 27.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Mark Kaydo Petrov",
+      "licencia": "CP05993369",
+      "hcp": 42.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Nicolas Colella",
+      "licencia": "CP14082506",
+      "hcp": 33.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Valeria Armas Mateo",
+      "licencia": "CP02099929",
+      "hcp": 26.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Sofia Mendoza Duque",
+      "licencia": "CP04972681",
+      "hcp": 39.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Jorge Alvarez Garcia",
+      "licencia": "CP02957731",
+      "hcp": 36.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "Lucia Saviron Alayon",
+      "licencia": "CP02053219",
+      "hcp": 36,
+      "nivel": "B"
+    },
+    {
+      "orden": 9,
+      "name": "Maximo Cabezas De Herrera Mendez",
+      "licencia": "CP02052226",
+      "hcp": 52.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 10,
+      "name": "Isabella Cabezas De Herrera Mendez",
+      "licencia": "CP02962907",
+      "hcp": 16.3,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 59625
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 59626
+    },
+    {
+      "roundNumber": 3,
+      "roundId": 59627
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Cabrera Monzon, Juan",
+          "holeNumber": 1,
+          "createdAt": "20/04/24 11:39:37"
+        },
+        {
+          "playerName": "Baroja Hernandez, Rodrigo",
+          "holeNumber": 10,
+          "createdAt": "20/04/24 11:39:48"
+        },
+        {
+          "playerName": "Brandstetter Altamirano, Gustavo",
+          "holeNumber": 13,
+          "createdAt": "20/04/24 12:21:49"
+        },
+        {
+          "playerName": "Cabrera Monzon, Juan",
+          "holeNumber": 4,
+          "createdAt": "20/04/24 12:22:11"
+        },
+        {
+          "playerName": "Crespo Barco, Diego",
+          "holeNumber": 4,
+          "createdAt": "20/04/24 12:38:09"
+        },
+        {
+          "playerName": "Gonzalez Albarracin, Silvia",
+          "holeNumber": 4,
+          "createdAt": "20/04/24 12:49:41"
+        },
+        {
+          "playerName": "Cabrera Monzon, Juan",
+          "holeNumber": 5,
+          "createdAt": "20/04/24 12:58:17"
+        },
+        {
+          "playerName": "Martinez Guerra, Isabel Ping",
+          "holeNumber": 15,
+          "createdAt": "20/04/24 13:07:38"
+        },
+        {
+          "playerName": "Martinez Guerra, Isabel Ping",
+          "holeNumber": 17,
+          "createdAt": "20/04/24 13:26:59"
+        },
+        {
+          "playerName": "Cabrera Monzon, Juan",
+          "holeNumber": 9,
+          "createdAt": "20/04/24 13:35:48"
+        },
+        {
+          "playerName": "Brandstetter Altamirano, Gustavo",
+          "holeNumber": 1,
+          "createdAt": "20/04/24 13:55:50"
+        },
+        {
+          "playerName": "Galban Morales, Paula",
+          "holeNumber": 1,
+          "createdAt": "20/04/24 14:23:33"
+        },
+        {
+          "playerName": "Brandstetter Altamirano, Gustavo",
+          "holeNumber": 4,
+          "createdAt": "20/04/24 14:48:00"
+        },
+        {
+          "playerName": "Martinez Guerra, Isabel Ping",
+          "holeNumber": 5,
+          "createdAt": "20/04/24 15:16:31"
+        },
+        {
+          "playerName": "Cabrera Monzon, Juan",
+          "holeNumber": 16,
+          "createdAt": "20/04/24 15:32:22"
+        },
+        {
+          "playerName": "Crespo Barco, Diego",
+          "holeNumber": 15,
+          "createdAt": "20/04/24 15:56:47"
+        },
+        {
+          "playerName": "Brandstetter Altamirano, Gustavo",
+          "holeNumber": 9,
+          "createdAt": "20/04/24 16:03:06"
+        },
+        {
+          "playerName": "Cabrera Monzon, Juan",
+          "holeNumber": 17,
+          "createdAt": "20/04/24 16:11:40"
+        },
+        {
+          "playerName": "Henningsen Suárez, Guillermo",
+          "holeNumber": 1,
+          "createdAt": "20/04/24 17:05:15"
+        },
+        {
+          "playerName": "Henningsen Suárez, Guillermo",
+          "holeNumber": 3,
+          "createdAt": "20/04/24 17:05:15"
+        },
+        {
+          "playerName": "Henningsen Suárez, Guillermo",
+          "holeNumber": 4,
+          "createdAt": "20/04/24 17:05:15"
+        },
+        {
+          "playerName": "Henningsen Suárez, Guillermo",
+          "holeNumber": 9,
+          "createdAt": "20/04/24 17:05:15"
+        },
+        {
+          "playerName": "Henningsen Suárez, Guillermo",
+          "holeNumber": 15,
+          "createdAt": "20/04/24 17:05:15"
+        },
+        {
+          "playerName": "Gomez Guerra, Jose",
+          "holeNumber": 1,
+          "createdAt": "20/04/24 17:07:25"
+        },
+        {
+          "playerName": "Gomez Guerra, Jose",
+          "holeNumber": 3,
+          "createdAt": "20/04/24 17:07:25"
+        },
+        {
+          "playerName": "Gomez Guerra, Jose",
+          "holeNumber": 7,
+          "createdAt": "20/04/24 17:07:25"
+        },
+        {
+          "playerName": "Gomez Guerra, Jose",
+          "holeNumber": 15,
+          "createdAt": "20/04/24 17:07:25"
+        },
+        {
+          "playerName": "Amoni Gamardo, Massimo",
+          "holeNumber": 1,
+          "createdAt": "20/04/24 17:08:27"
+        },
+        {
+          "playerName": "Amoni Gamardo, Massimo",
+          "holeNumber": 4,
+          "createdAt": "20/04/24 17:08:27"
+        },
+        {
+          "playerName": "Amoni Gamardo, Massimo",
+          "holeNumber": 7,
+          "createdAt": "20/04/24 17:08:27"
+        },
+        {
+          "playerName": "Amoni Gamardo, Massimo",
+          "holeNumber": 14,
+          "createdAt": "20/04/24 17:08:27"
+        },
+        {
+          "playerName": "Uribe De Leon, Lucia",
+          "holeNumber": 6,
+          "createdAt": "20/04/24 17:18:34"
+        },
+        {
+          "playerName": "De Bethencourt, Maxima",
+          "holeNumber": 1,
+          "createdAt": "20/04/24 17:19:48"
+        },
+        {
+          "playerName": "Uribe De Leon, Maria Del Pino",
+          "holeNumber": 5,
+          "createdAt": "20/04/24 17:22:02"
+        },
+        {
+          "playerName": "Molina Spindler, Malena",
+          "holeNumber": 11,
+          "createdAt": "20/04/24 17:22:41"
+        },
+        {
+          "playerName": "Arzola Hernandez, David",
+          "holeNumber": 1,
+          "createdAt": "20/04/24 17:25:17"
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Gonzalez Albarracin, Silvia",
+          "holeNumber": 15,
+          "createdAt": "20/04/24 16:27:05"
+        },
+        {
+          "playerName": "Amoni Gamardo, Massimo",
+          "holeNumber": 15,
+          "createdAt": "20/04/24 17:08:27"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/o_1hvjufpa81ogbqve3am1m3nimta.pdf"
+  ]
+}

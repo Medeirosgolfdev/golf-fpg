@@ -6,7 +6,8 @@
  */
 
 // Re-export core types from fpgTypes for Drive domain
-export type { RoundScore, Player, Tournament } from "../data/fpgTypes";
+import type { RoundScore, Player, Tournament } from "../data/fpgTypes";
+export type { RoundScore, Player, Tournament };
 
 export interface DriveData {
   lastUpdated: string;
@@ -19,7 +20,7 @@ export interface DriveData {
 
 export type SDLookup = Record<string, number>;
 
-export type EscLookup = Map<string, string>; // fedCode → normalized escalão ("Sub 12")
+export type EscLookup = Map<string, string>; // fedCode -> normalized escalao ("Sub 12")
 
 export interface TStats {
   pos: number | string | null;
@@ -35,15 +36,15 @@ export interface TStats {
 
 export interface TournGroup {
   key: string;
-  label: string; // tab label
+  label: string;
   campo: string;
   num: number;
   date: string;
-  escalao: string | null; // para Challenge single-escalão ou null quando evento agrupa vários
-  isMulti: boolean; // multi-ronda (R1/R2/Total)
-  isEvent: boolean; // Challenge: vários escalões no mesmo dia/campo → tabs por escalão
+  escalao: string | null;
+  isMulti: boolean;
+  isEvent: boolean;
   totalRounds: number;
-  entries: Tournament[]; // 1 para single, N+1 para multi-ronda, N escalões para isEvent
+  entries: Tournament[];
 }
 
 export interface Sub12Row {

@@ -1,14 +1,14 @@
 {
   "tourId": 68597,
   "url": "https://www.nextcaddy.com/tour/68597",
-  "scrapedAt": "2026-05-08T17:34:19.700Z",
+  "scrapedAt": "2026-05-09T16:04:00.380Z",
   "meta": {
     "name": "VI Prueba Circuito Juvenil de P&P (9 hoyos) 3ª Categoría y Noveles - Las Palmeras Golf",
     "organizer": null,
     "course": "Las Palmeras Golf Club",
     "courseCode": "CP26",
-    "dateStart": "13 sep 2026",
-    "dateEnd": "13 sep 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Juvenil",
@@ -17,12 +17,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-09-13"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -49,11 +51,11 @@
         },
         {
           "playerName": "Galiana Calero, Juan",
-          "holeNumber": 15
+          "holeNumber": 15,
+          "createdAt": "24/08/25 13:29:32"
         }
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-09T12:12:49.357Z"
+  "pdfs": []
 }

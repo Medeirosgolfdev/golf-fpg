@@ -1,14 +1,14 @@
 {
   "tourId": 68707,
   "url": "https://www.nextcaddy.com/tour/68707",
-  "scrapedAt": "2026-05-09T10:15:49.054Z",
+  "scrapedAt": "2026-05-09T16:03:44.442Z",
   "meta": {
     "name": "II Prueba Circuito Regional Amateur (INSCRIPCIÓN PROFESIONALES)",
     "organizer": null,
     "course": "Anfi Tauro Golf",
     "courseCode": "CP29",
-    "dateStart": "02 may 2026",
-    "dateEnd": "02 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Profesional  Señor",
     "categories": [
       "PROFESIONAL",
@@ -18,13 +18,75 @@
       "profesional",
       "Infantil",
       "Senior"
-    ],
-    "dateIso": "2026-05-02"
+    ]
   },
-  "course": null,
+  "course": {
+    "par": [
+      4,
+      5,
+      3,
+      4,
+      4,
+      3,
+      4,
+      4,
+      5,
+      4,
+      3,
+      5,
+      3,
+      5,
+      3,
+      4,
+      4,
+      5
+    ],
+    "si": [
+      17,
+      3,
+      15,
+      9,
+      5,
+      7,
+      1,
+      13,
+      11,
+      4,
+      12,
+      2,
+      14,
+      16,
+      18,
+      8,
+      6,
+      10
+    ],
+    "meters": [
+      300,
+      500,
+      173,
+      375,
+      343,
+      183,
+      381,
+      316,
+      466,
+      323,
+      169,
+      455,
+      151,
+      479,
+      136,
+      293,
+      325,
+      451
+    ]
+  },
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Final",
+      "expectedJugadores": 7,
       "header": [
         "Pos",
         "Jugador",
@@ -58,7 +120,57 @@
           ],
           "total": 136,
           "toPar": -8,
-          "inscribedId": 2298062
+          "inscribedId": 2298062,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                5,
+                4,
+                4,
+                3,
+                2,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5,
+                3,
+                5,
+                2,
+                4,
+                5,
+                4
+              ],
+              "total": 68
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                5,
+                3,
+                3,
+                4,
+                3,
+                4,
+                4,
+                5,
+                3,
+                3,
+                4,
+                2,
+                6,
+                3,
+                4,
+                4,
+                4
+              ],
+              "total": 68
+            }
+          ]
         },
         {
           "pos": 2,
@@ -78,7 +190,8 @@
           ],
           "total": 138,
           "toPar": -6,
-          "inscribedId": 2305571
+          "inscribedId": 2305571,
+          "roundScores": []
         },
         {
           "pos": 3,
@@ -98,7 +211,8 @@
           ],
           "total": 141,
           "toPar": -3,
-          "inscribedId": 2297689
+          "inscribedId": 2297689,
+          "roundScores": []
         },
         {
           "pos": 4,
@@ -118,7 +232,8 @@
           ],
           "total": 142,
           "toPar": -2,
-          "inscribedId": 2297676
+          "inscribedId": 2297676,
+          "roundScores": []
         },
         {
           "pos": 5,
@@ -138,7 +253,8 @@
           ],
           "total": 143,
           "toPar": -1,
-          "inscribedId": 2297672
+          "inscribedId": 2297672,
+          "roundScores": []
         },
         {
           "pos": 6,
@@ -158,7 +274,8 @@
           ],
           "total": 145,
           "toPar": 1,
-          "inscribedId": 2297670
+          "inscribedId": 2297670,
+          "roundScores": []
         },
         {
           "pos": 7,
@@ -178,12 +295,15 @@
           ],
           "total": 155,
           "toPar": 11,
-          "inscribedId": 2297746
+          "inscribedId": 2297746,
+          "roundScores": []
         }
       ]
     },
     {
       "category": 2,
+      "categoryName": "Clasificación 1ª Vuelta",
+      "expectedJugadores": 7,
       "header": [
         "Pos",
         "Jugador",
@@ -205,7 +325,57 @@
           "rounds": [],
           "total": 68,
           "toPar": -4,
-          "inscribedId": 2298062
+          "inscribedId": 2298062,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                5,
+                4,
+                4,
+                3,
+                2,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5,
+                3,
+                5,
+                2,
+                4,
+                5,
+                4
+              ],
+              "total": 68
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                5,
+                3,
+                3,
+                4,
+                3,
+                4,
+                4,
+                5,
+                3,
+                3,
+                4,
+                2,
+                6,
+                3,
+                4,
+                4,
+                4
+              ],
+              "total": 68
+            }
+          ]
         },
         {
           "pos": null,
@@ -216,7 +386,8 @@
           "rounds": [],
           "total": 68,
           "toPar": -4,
-          "inscribedId": 2305571
+          "inscribedId": 2305571,
+          "roundScores": []
         },
         {
           "pos": 3,
@@ -227,7 +398,8 @@
           "rounds": [],
           "total": 69,
           "toPar": -3,
-          "inscribedId": 2297670
+          "inscribedId": 2297670,
+          "roundScores": []
         },
         {
           "pos": 4,
@@ -238,7 +410,8 @@
           "rounds": [],
           "total": 70,
           "toPar": -2,
-          "inscribedId": 2297689
+          "inscribedId": 2297689,
+          "roundScores": []
         },
         {
           "pos": 5,
@@ -249,7 +422,8 @@
           "rounds": [],
           "total": 72,
           "toPar": null,
-          "inscribedId": 2297672
+          "inscribedId": 2297672,
+          "roundScores": []
         },
         {
           "pos": null,
@@ -260,7 +434,8 @@
           "rounds": [],
           "total": 72,
           "toPar": null,
-          "inscribedId": 2297676
+          "inscribedId": 2297676,
+          "roundScores": []
         },
         {
           "pos": 7,
@@ -271,11 +446,23 @@
           "rounds": [],
           "total": 80,
           "toPar": 8,
-          "inscribedId": 2297746
+          "inscribedId": 2297746,
+          "roundScores": []
         }
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Final",
+      "jugadores": 7
+    },
+    "2": {
+      "name": "Clasificación 1ª Vuelta",
+      "jugadores": 7
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -390,26 +577,6 @@
       "nivel": "CP013742-P"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73352
-    },
-    {
-      "roundNumber": 2,
-      "roundId": 73355
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -548,5 +715,25 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:28.444Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73352
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 73355
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": []
 }

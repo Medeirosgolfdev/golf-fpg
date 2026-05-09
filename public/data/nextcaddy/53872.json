@@ -1,0 +1,1365 @@
+{
+  "tourId": 53872,
+  "url": "https://www.nextcaddy.com/tour/53872",
+  "scrapedAt": "2026-05-09T16:06:33.897Z",
+  "meta": {
+    "name": "I Prueba Circuito 5ª Categoría",
+    "organizer": null,
+    "course": "Lanzarote Golf",
+    "courseCode": "CP31",
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Stableford (Handicap) Circuito 5ª Catego",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ]
+  },
+  "course": {
+    "par": [
+      4,
+      4,
+      3,
+      5,
+      4,
+      4,
+      4,
+      3,
+      4,
+      4,
+      5,
+      4,
+      4,
+      5,
+      3,
+      5,
+      3,
+      4
+    ],
+    "si": [
+      10,
+      4,
+      8,
+      12,
+      16,
+      2,
+      14,
+      6,
+      18,
+      13,
+      9,
+      5,
+      1,
+      11,
+      17,
+      7,
+      15,
+      3
+    ],
+    "meters": [
+      299,
+      294,
+      99,
+      353,
+      291,
+      281,
+      290,
+      115,
+      226,
+      263,
+      404,
+      222,
+      250,
+      369,
+      93,
+      363,
+      82,
+      285
+    ]
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Scratch Femenino",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Vanesa Fernanda Maggio Moran",
+          "licencia": "CP04983786",
+          "hcp": 30.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 9,
+          "toPar": 27,
+          "inscribedId": 1855793,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                6,
+                5,
+                8,
+                5,
+                6,
+                7,
+                null,
+                5,
+                4,
+                6,
+                7,
+                6,
+                6,
+                4,
+                null,
+                4,
+                6
+              ],
+              "total": null
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Maria Ines Moran Galdona",
+          "licencia": "CP04983784",
+          "hcp": 33.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 7,
+          "toPar": 29,
+          "inscribedId": 1855863,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Mª Gabriela Diaz-Saavedra Zerolo",
+          "licencia": "CP01315946",
+          "hcp": 30.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 7,
+          "toPar": 29,
+          "inscribedId": 1861646,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                null,
+                5,
+                7,
+                6,
+                5,
+                null,
+                5,
+                5,
+                5,
+                7,
+                6,
+                5,
+                7,
+                4,
+                8,
+                3,
+                6
+              ],
+              "total": null
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Jezabel Rodriguez Caceres",
+          "licencia": "CP04887546",
+          "hcp": 34.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 6,
+          "toPar": 30,
+          "inscribedId": 1859563,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Margarita Rivas Garcia",
+          "licencia": "CP04304820",
+          "hcp": 40,
+          "nivel": "S",
+          "rounds": [],
+          "total": 1,
+          "toPar": 35,
+          "inscribedId": 1856198,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Carmen Rosa Caceres Delgado",
+          "licencia": "CP04376712",
+          "hcp": 36.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 1,
+          "toPar": 35,
+          "inscribedId": 1857201,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                7,
+                6,
+                null,
+                null,
+                6,
+                7,
+                6,
+                null,
+                7,
+                8,
+                8,
+                7,
+                null,
+                4,
+                null,
+                5,
+                8
+              ],
+              "total": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Scratch Masculino",
+      "expectedJugadores": 15,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Juan Jose Afonso Perez",
+          "licencia": "CP41154682",
+          "hcp": 28.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 1867144,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Andres Gioia Sastre",
+          "licencia": "CP26095924",
+          "hcp": 26.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 1865967,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Andres Castro Mesa",
+          "licencia": "CP41154676",
+          "hcp": 31.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 13,
+          "toPar": 23,
+          "inscribedId": 1858917,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Paolo Guggiola",
+          "licencia": "CP04478440",
+          "hcp": 30,
+          "nivel": "S",
+          "rounds": [],
+          "total": 13,
+          "toPar": 23,
+          "inscribedId": 1864467,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Rafael Valls Pascual",
+          "licencia": "CP28468321",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "total": 9,
+          "toPar": 27,
+          "inscribedId": 1862996,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Riccardo Mattei",
+          "licencia": "CP36322613",
+          "hcp": 30.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 9,
+          "toPar": 27,
+          "inscribedId": 1855739,
+          "roundScores": []
+        },
+        {
+          "pos": 7,
+          "name": "Antonio C. Afonso Perez",
+          "licencia": "CP41154635",
+          "hcp": 28.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 9,
+          "toPar": 27,
+          "inscribedId": 1857249,
+          "roundScores": []
+        },
+        {
+          "pos": 8,
+          "name": "Angel Martin Llamas",
+          "licencia": "CP20168044",
+          "hcp": 27.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 9,
+          "toPar": 27,
+          "inscribedId": 1861621,
+          "roundScores": []
+        },
+        {
+          "pos": 9,
+          "name": "Manuel Sosa Suarez",
+          "licencia": "CP15305438",
+          "hcp": 26.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 8,
+          "toPar": 28,
+          "inscribedId": 1855905,
+          "roundScores": []
+        },
+        {
+          "pos": 10,
+          "name": "Alfonso Moreno Pelayo",
+          "licencia": "CP04305204",
+          "hcp": 33.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 7,
+          "toPar": 29,
+          "inscribedId": 1856773,
+          "roundScores": []
+        },
+        {
+          "pos": 11,
+          "name": "Javier Garces Herrero",
+          "licencia": "CP04072630",
+          "hcp": 34.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 6,
+          "toPar": 30,
+          "inscribedId": 1856229,
+          "roundScores": []
+        },
+        {
+          "pos": 12,
+          "name": "Davd Torres Padilla",
+          "licencia": "CP26321870",
+          "hcp": 30.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 4,
+          "toPar": 32,
+          "inscribedId": 1855768,
+          "roundScores": []
+        },
+        {
+          "pos": 13,
+          "name": "Juan Carlos Medina Francisco",
+          "licencia": "CP00157260",
+          "hcp": 28.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 4,
+          "toPar": 32,
+          "inscribedId": 1861647,
+          "roundScores": []
+        },
+        {
+          "pos": 14,
+          "name": "Joaquin Rodriguez Alonso",
+          "licencia": "CP20168652",
+          "hcp": 28,
+          "nivel": "S",
+          "rounds": [],
+          "total": 4,
+          "toPar": 32,
+          "inscribedId": 1862994,
+          "roundScores": []
+        },
+        {
+          "pos": 15,
+          "name": "Gersan Javier Gonzalez",
+          "licencia": "CP15377710",
+          "hcp": 33.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 2,
+          "toPar": 34,
+          "inscribedId": 1855731,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Hándicap Individual Femenino",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Mª Gabriela Diaz-Saavedra Zerolo",
+          "licencia": "CP01315946",
+          "hcp": 30.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 1861646,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                null,
+                5,
+                7,
+                6,
+                5,
+                null,
+                5,
+                5,
+                5,
+                7,
+                6,
+                5,
+                7,
+                4,
+                8,
+                3,
+                6
+              ],
+              "total": null
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Vanesa Fernanda Maggio Moran",
+          "licencia": "CP04983786",
+          "hcp": 30.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 1855793,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                6,
+                5,
+                8,
+                5,
+                6,
+                7,
+                null,
+                5,
+                4,
+                6,
+                7,
+                6,
+                6,
+                4,
+                null,
+                4,
+                6
+              ],
+              "total": null
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Jezabel Rodriguez Caceres",
+          "licencia": "CP04887546",
+          "hcp": 34.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 1859563,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Margarita Rivas Garcia",
+          "licencia": "CP04304820",
+          "hcp": 40,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 1856198,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Maria Ines Moran Galdona",
+          "licencia": "CP04983784",
+          "hcp": 33.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 1855863,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Carmen Rosa Caceres Delgado",
+          "licencia": "CP04376712",
+          "hcp": 36.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 15,
+          "toPar": 21,
+          "inscribedId": 1857201,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                7,
+                6,
+                null,
+                null,
+                6,
+                7,
+                6,
+                null,
+                7,
+                8,
+                8,
+                7,
+                null,
+                4,
+                null,
+                5,
+                8
+              ],
+              "total": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": 4,
+      "categoryName": "Hándicap Individual Masculino",
+      "expectedJugadores": 15,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Juan Jose Afonso Perez",
+          "licencia": "CP41154682",
+          "hcp": 28.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 1867144,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Andres Gioia Sastre",
+          "licencia": "CP26095924",
+          "hcp": 26.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 1865967,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Andres Castro Mesa",
+          "licencia": "CP41154676",
+          "hcp": 31.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 1858917,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Paolo Guggiola",
+          "licencia": "CP04478440",
+          "hcp": 30,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 1864467,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Alfonso Moreno Pelayo",
+          "licencia": "CP04305204",
+          "hcp": 33.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 1856773,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Rafael Valls Pascual",
+          "licencia": "CP28468321",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 1862996,
+          "roundScores": []
+        },
+        {
+          "pos": 7,
+          "name": "Riccardo Mattei",
+          "licencia": "CP36322613",
+          "hcp": 30.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 1855739,
+          "roundScores": []
+        },
+        {
+          "pos": 8,
+          "name": "Antonio C. Afonso Perez",
+          "licencia": "CP41154635",
+          "hcp": 28.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 1857249,
+          "roundScores": []
+        },
+        {
+          "pos": 9,
+          "name": "Angel Martin Llamas",
+          "licencia": "CP20168044",
+          "hcp": 27.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 1861621,
+          "roundScores": []
+        },
+        {
+          "pos": 10,
+          "name": "Joaquin Rodriguez Alonso",
+          "licencia": "CP20168652",
+          "hcp": 28,
+          "nivel": "S",
+          "rounds": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 1862994,
+          "roundScores": []
+        },
+        {
+          "pos": 11,
+          "name": "Javier Garces Herrero",
+          "licencia": "CP04072630",
+          "hcp": 34.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 1856229,
+          "roundScores": []
+        },
+        {
+          "pos": 12,
+          "name": "Gersan Javier Gonzalez",
+          "licencia": "CP15377710",
+          "hcp": 33.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 1855731,
+          "roundScores": []
+        },
+        {
+          "pos": 13,
+          "name": "Manuel Sosa Suarez",
+          "licencia": "CP15305438",
+          "hcp": 26.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 1855905,
+          "roundScores": []
+        },
+        {
+          "pos": 14,
+          "name": "Juan Carlos Medina Francisco",
+          "licencia": "CP00157260",
+          "hcp": 28.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 1861647,
+          "roundScores": []
+        },
+        {
+          "pos": 15,
+          "name": "Davd Torres Padilla",
+          "licencia": "CP26321870",
+          "hcp": 30.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 1855768,
+          "roundScores": []
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Femenino",
+      "jugadores": 6
+    },
+    "2": {
+      "name": "Scratch Masculino",
+      "jugadores": 15
+    },
+    "3": {
+      "name": "Hándicap Individual Femenino",
+      "jugadores": 6
+    },
+    "4": {
+      "name": "Hándicap Individual Masculino",
+      "jugadores": 15
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Gersan Javier Gonzalez",
+      "licencia": "CP15377710",
+      "hcp": 33.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Riccardo Mattei",
+      "licencia": "CP36322613",
+      "hcp": 30.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Davd Torres Padilla",
+      "licencia": "CP26321870",
+      "hcp": 30.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Manuel Sosa Suarez",
+      "licencia": "CP15305438",
+      "hcp": 26.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Javier Garces Herrero",
+      "licencia": "CP04072630",
+      "hcp": 34.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Alfonso Moreno Pelayo",
+      "licencia": "CP04305204",
+      "hcp": 33.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Antonio C. Afonso Perez",
+      "licencia": "CP41154635",
+      "hcp": 28.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Andres Castro Mesa",
+      "licencia": "CP41154676",
+      "hcp": 31.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Angel Martin Llamas",
+      "licencia": "CP20168044",
+      "hcp": 27.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Juan Carlos Medina Francisco",
+      "licencia": "CP00157260",
+      "hcp": 28.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Joaquin Rodriguez Alonso",
+      "licencia": "CP20168652",
+      "hcp": 28,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Rafael Valls Pascual",
+      "licencia": "CP28468321",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Paolo Guggiola",
+      "licencia": "CP04478440",
+      "hcp": 30,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Andres Gioia Sastre",
+      "licencia": "CP26095924",
+      "hcp": 26.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Juan Jose Afonso Perez",
+      "licencia": "CP41154682",
+      "hcp": 28.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Vanesa Fernanda Maggio Moran",
+      "licencia": "CP04983786",
+      "hcp": 30.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Maria Ines Moran Galdona",
+      "licencia": "CP04983784",
+      "hcp": 33.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Margarita Rivas Garcia",
+      "licencia": "CP04304820",
+      "hcp": 40,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Carmen Rosa Caceres Delgado",
+      "licencia": "CP04376712",
+      "hcp": 36.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Jezabel Rodriguez Caceres",
+      "licencia": "CP04887546",
+      "hcp": 34.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 6,
+      "name": "Mª Gabriela Diaz-Saavedra Zerolo",
+      "licencia": "CP01315946",
+      "hcp": 30.9,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Gersan Javier Gonzalez",
+      "licencia": "CP15377710",
+      "hcp": 33.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Riccardo Mattei",
+      "licencia": "CP36322613",
+      "hcp": 30.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Davd Torres Padilla",
+      "licencia": "CP26321870",
+      "hcp": 30.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Vanesa Fernanda Maggio Moran",
+      "licencia": "CP04983786",
+      "hcp": 30.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Maria Ines Moran Galdona",
+      "licencia": "CP04983784",
+      "hcp": 33.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Manuel Sosa Suarez",
+      "licencia": "CP15305438",
+      "hcp": 26.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Margarita Rivas Garcia",
+      "licencia": "CP04304820",
+      "hcp": 40,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Javier Garces Herrero",
+      "licencia": "CP04072630",
+      "hcp": 34.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Alfonso Moreno Pelayo",
+      "licencia": "CP04305204",
+      "hcp": 33.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Carmen Rosa Caceres Delgado",
+      "licencia": "CP04376712",
+      "hcp": 36.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Antonio C. Afonso Perez",
+      "licencia": "CP41154635",
+      "hcp": 28.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Andres Castro Mesa",
+      "licencia": "CP41154676",
+      "hcp": 31.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Jezabel Rodriguez Caceres",
+      "licencia": "CP04887546",
+      "hcp": 34.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 14,
+      "name": "Angel Martin Llamas",
+      "licencia": "CP20168044",
+      "hcp": 27.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Mª Gabriela Diaz-Saavedra Zerolo",
+      "licencia": "CP01315946",
+      "hcp": 30.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Juan Carlos Medina Francisco",
+      "licencia": "CP00157260",
+      "hcp": 28.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Joaquin Rodriguez Alonso",
+      "licencia": "CP20168652",
+      "hcp": 28,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Rafael Valls Pascual",
+      "licencia": "CP28468321",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Paolo Guggiola",
+      "licencia": "CP04478440",
+      "hcp": 30,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Andres Gioia Sastre",
+      "licencia": "CP26095924",
+      "hcp": 26.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Juan Jose Afonso Perez",
+      "licencia": "CP41154682",
+      "hcp": 28.2,
+      "nivel": "Mid"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Juan Carlos Medina Francisco",
+          "hcp": 28.8,
+          "ins": "1861647",
+          "jid": "56555",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Paolo Guggiola",
+          "hcp": 30,
+          "ins": "1864467",
+          "jid": "56555",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Vanesa Fernanda Maggio Moran",
+          "hcp": 30.4,
+          "ins": "1855793",
+          "jid": "56555",
+          "nivel": "M"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Riccardo Mattei",
+          "hcp": 30.5,
+          "ins": "1855739",
+          "jid": "56555",
+          "nivel": "M"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Mª Gabriela Diaz-Saavedra Zerolo",
+          "hcp": 30.9,
+          "ins": "1861646",
+          "jid": "56555",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Maria Ines Moran Galdona",
+          "hcp": 33.3,
+          "ins": "1855863",
+          "jid": "56555",
+          "nivel": "S"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Alfonso Moreno Pelayo",
+          "hcp": 33.9,
+          "ins": "1856773",
+          "jid": "56555",
+          "nivel": "S"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Javier Garces Herrero",
+          "hcp": 34.4,
+          "ins": "1856229",
+          "jid": "56555",
+          "nivel": "S"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Jezabel Rodriguez Caceres",
+          "hcp": 34.7,
+          "ins": "1859563",
+          "jid": "56555",
+          "nivel": "M"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Carmen Rosa Caceres Delgado",
+          "hcp": 36.6,
+          "ins": "1857201",
+          "jid": "56555",
+          "nivel": "S"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Margarita Rivas Garcia",
+          "hcp": 40,
+          "ins": "1856198",
+          "jid": "56555",
+          "nivel": "S"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Manuel Sosa Suarez",
+          "hcp": 26.5,
+          "ins": "1855905",
+          "jid": "56555",
+          "nivel": "S"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Andres Gioia Sastre",
+          "hcp": 26.7,
+          "ins": "1865967",
+          "jid": "56555",
+          "nivel": "S"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Angel Martin Llamas",
+          "hcp": 27.3,
+          "ins": "1861621",
+          "jid": "56555",
+          "nivel": "S"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Joaquin Rodriguez Alonso",
+          "hcp": 28,
+          "ins": "1862994",
+          "jid": "56555",
+          "nivel": "S"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Antonio C. Afonso Perez",
+          "hcp": 28.5,
+          "ins": "1857249",
+          "jid": "56555",
+          "nivel": "S"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Juan Jose Afonso Perez",
+          "hcp": 28.2,
+          "ins": "1867144",
+          "jid": "56555",
+          "nivel": "M"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Davd Torres Padilla",
+          "hcp": 30.7,
+          "ins": "1855768",
+          "jid": "56555",
+          "nivel": "M"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Andres Castro Mesa",
+          "hcp": 31.4,
+          "ins": "1858917",
+          "jid": "56555",
+          "nivel": "S"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Gersan Javier Gonzalez",
+          "hcp": 33.5,
+          "ins": "1855731",
+          "jid": "56555",
+          "nivel": "M"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Rafael Valls Pascual",
+          "hcp": 36,
+          "ins": "1862996",
+          "jid": "56555",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 56555
+    }
+  ],
+  "scoreTypes": {
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": []
+    },
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": []
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/53872_cartel_285.pdf"
+  ]
+}

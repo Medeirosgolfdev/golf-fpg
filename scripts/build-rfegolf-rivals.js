@@ -146,7 +146,9 @@ for (const f of ncFiles) {
     if (!tourId) { ncSkipped++; continue; }
     const name = d.meta?.name || "";
     const par = d.course?.par;
-    if (!Array.isArray(par) || par.length !== 18) { ncSkipped++; continue; }
+    // Aceita 9H ou 18H. Skip se par ausente — UI (KIDSdataLoader) requer par[]
+    if (!Array.isArray(par) || (par.length !== 18 && par.length !== 9)) { ncSkipped++; continue; }
+    const nholes = par.length;
     const parTotal = par.reduce((a, b) => a + b, 0);
     const dateIso = d.meta?.dateIso || null;
     const year = dateIso ? parseInt(dateIso.slice(0, 4), 10) : null;
@@ -160,31 +162,46 @@ for (const f of ncFiles) {
       const players = Array.isArray(block.players) ? block.players : [];
       if (players.length === 0) continue;
 
-      let catName = null;
-      if (Array.isArray(d.meta?.categories) && typeof block.category === "number") {
+      // Preferir block.categoryName (formato novo, descritivo) — fallback para
+      // antigo meta.categories[block.category] (que indexa array genérico)
+      let catName = block.categoryName || null;
+      if (!catName && Array.isArray(d.meta?.categories) && typeof block.category === "number") {
         catName = d.meta.categories[block.category] || null;
       }
       if (!catName) catName = (players[0] && (players[0].nivel || players[0].catEdad)) || null;
       if (!catName) catName = name;
       const ageGroup = ncCatToAgeGroup(catName) || extractAgeGroup(catName) || extractAgeGroup(name);
       if (!ageGroup) continue;
+      // Evitar dupes: skip "1ª/2ª/3ª Jornada" e "Resultados Scratch X J." (intermédias).
+      // Apenas categorias Final ou single-round (sem prefixo Jornada) ficam.
+      // O Niko deve ter UMA entrada por tour+escalão (a Final).
+      if (/\b\d+[ªa]\.?\s*Jornada\b/i.test(catName)
+          || /\b\d+[ªa]\s*J\.?\s*$/i.test(catName)              // "1ª J." no fim
+          || /\b\d+[ªa]\s*[Jj]\b/.test(catName)                  // "1ªj" inline
+          || /^Resultados\s+(Scratch|Hcp)\s+\d+\s*J\b/i.test(catName)) continue;
 
+      const expectedHoles = nholes || 18;
       const enriched = [];
       for (const p of players) {
         const rs = Array.isArray(p.roundScores) ? p.roundScores : [];
-        const valid = rs.filter(r => Array.isArray(r.scores) && r.scores.length === 18);
-        if (valid.length === 0) continue;
+        const valid = rs.filter(r => Array.isArray(r.scores) && r.scores.length === expectedHoles);
         const totalsByRound = valid.map(r =>
           (typeof r.total === "number") ? r.total :
           (r.scores.filter(x => x > 0).reduce((a, b) => a + b, 0) || 0)
         );
         const scoresByRound = valid.map(r => r.scores);
-        const total = (typeof p.total === "number") ? p.total : totalsByRound.reduce((a, b) => a + b, 0);
+        const totalFromRounds = totalsByRound.reduce((a, b) => a + b, 0);
+        const total = (typeof p.total === "number") ? p.total : (totalFromRounds || null);
+        // INCLUIR mesmo sem scorecards: usa só pos+total+toPar para ranking
+        // (cp00 tem 101 PDF-only e ~30 lb-only que beneficiam)
+        if (total == null && (p.pos == null || p.pos === "")) continue;
         enriched.push({
           n: p.name,
           p: p.pos == null ? null : p.pos,
           t: total || null,
           tp: p.toPar == null ? null : p.toPar,
+          hcp: typeof p.hcp === "number" ? p.hcp : null,
+          lic: p.licencia || null,
           rd: totalsByRound,
           sc: scoresByRound,
         });
@@ -193,7 +210,14 @@ for (const f of ncFiles) {
       if (enriched.length === 0) continue;
 
       const ageKey = ageGroup.replace(/[\s-]/g, "").toLowerCase();
-      const tid = `nc${tourId}_${ageKey}`;
+      // Detectar Scratch vs Handicap pelo NOME da categoria (mais fiável que heurística).
+      // "Final Alevin Scratch Indistinto" → scratch. "Final Alevin Handicap" → handicap.
+      // Tids ficam separados quando ambos existem no mesmo tour+ageGroup,
+      // permitindo mostrar os dois na UI (gross + net).
+      const isScratch = /\bScratch\b/i.test(catName);
+      const isHandicap = /\bHandicap\b|\bHcp\b/i.test(catName) || /\bHcp\s+J\b/i.test(catName);
+      const typeSuffix = isHandicap ? "_hcp" : (isScratch ? "_sc" : "");
+      const tid = `nc${tourId}_${ageKey}${typeSuffix}`;
       const nRounds = Math.max(1, ...players.flatMap(p =>
         (p.roundScores || []).map(r => r.round || 0)
       ));
@@ -227,14 +251,16 @@ for (const f of ncFiles) {
         scoringType = "HANDICAP";
       }
       out.torneios[tid] = {
-        name, year, ageGroup,
+        name,
+        categoryName: catName,    // descritivo: "Final Alevin Scratch Indistinto"
+        year, ageGroup,
         dateIso, dateRange: d.meta?.dateStart || null,
         par, parTotal,
         meters,
         si,
-        nholes: 18, nRounds,
+        nholes: expectedHoles, nRounds,
         source: "nextcaddy",
-        scoringType,   // "GROSS" | "NET"
+        scoringType,   // "SCRATCH" | "HANDICAP"
         players: enriched,
       };
       ncEntriesAdded++;
@@ -247,14 +273,8 @@ for (const f of ncFiles) {
   }
 }
 
-// Sem dedup \u2014 manter ambas as entradas (GROSS e NET) com pill differentia\u00e7\u00e3o
-// na UI. Cada torneio tem `scoringType: "GROSS" | "NET"` derivado por
-// heur\u00edstica (total \u2248 par+toPar \u2192 GROSS; sen\u00e3o NET).
-
 out.total = Object.keys(out.torneios).length;
 out.dedupedPlayers = 0;
 fs.writeFileSync(OUT, JSON.stringify(out));
 const size = (fs.statSync(OUT).size / 1024 / 1024).toFixed(2);
-console.log("Built rfegolf-rivals: LGS " + lgsKept + "/" + (lgsKept + lgsSkipped) +
-            ", NC " + ncKept + " files (" + ncEntriesAdded + " cats) -> " +
-            out.total + " torneios -> " + OUT + " (" + size + " MB)");
+console.log("Built rfegolf-rivals: LGS " + lgsKept + "/" + (lgsKept + lgsSkipped) + ", NC " + ncKept + " files (" + ncEntriesAdded + " cats) -> " + out.total + " torneios -> " + OUT + " (" + size + " MB)");

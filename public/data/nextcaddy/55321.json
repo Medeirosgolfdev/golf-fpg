@@ -1,0 +1,401 @@
+{
+  "tourId": 55321,
+  "url": "https://www.nextcaddy.com/tour/55321",
+  "scrapedAt": "2026-05-09T17:00:58.437Z",
+  "meta": {
+    "name": "XXXIV Campeonato Juvenil de C y L (Hcp Mayor de 36)",
+    "organizer": null,
+    "course": null,
+    "courseCode": null,
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Infantil Masculin",
+    "categories": [
+      "Juvenil",
+      "Infantil Masculino",
+      "Infantil Femenino",
+      "Alevin Masculino",
+      "Alevin Femenino",
+      "Benjamin Masculino",
+      "Benjamin Femenino",
+      "Infantil",
+      "Profesional",
+      "Senior"
+    ]
+  },
+  "course": {
+    "par": [
+      5,
+      4,
+      4,
+      5,
+      3,
+      4,
+      3,
+      4,
+      4,
+      5,
+      4,
+      3,
+      4,
+      3,
+      4,
+      4,
+      4,
+      5
+    ],
+    "si": [
+      14,
+      2,
+      18,
+      6,
+      12,
+      4,
+      10,
+      16,
+      8,
+      11,
+      17,
+      5,
+      7,
+      13,
+      1,
+      3,
+      9,
+      15
+    ],
+    "meters": [
+      421,
+      328,
+      267,
+      425,
+      110,
+      355,
+      137,
+      306,
+      320,
+      418,
+      307,
+      129,
+      279,
+      127,
+      323,
+      315,
+      248,
+      389
+    ]
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Benjamin",
+      "expectedJugadores": 3,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Marcos Lopez Sanz",
+          "licencia": "7753096088",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 1940773,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Rodrigo Garabito De Las Heras",
+          "licencia": "7709344278",
+          "hcp": 51.8,
+          "nivel": "B",
+          "rounds": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 1954854,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Angela Basconcillos Rodriguez",
+          "licencia": "7712416189",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 6,
+          "toPar": 12,
+          "inscribedId": 1937329,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Alevin",
+      "expectedJugadores": 3,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Olivia Gallego Sanchez",
+          "licencia": "7709092740",
+          "hcp": 36.8,
+          "nivel": "A",
+          "rounds": [],
+          "total": 23,
+          "toPar": -5,
+          "inscribedId": 1949862,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Rodrigo Del Rio Gonzalo",
+          "licencia": "7762983105",
+          "hcp": 41.3,
+          "nivel": "A",
+          "rounds": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 1947028,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Carmen Garabito De Las Heras",
+          "licencia": "7709055250",
+          "hcp": 36.6,
+          "nivel": "A",
+          "rounds": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 1954855,
+          "roundScores": []
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Benjamin",
+      "jugadores": 3
+    },
+    "2": {
+      "name": "Alevin",
+      "jugadores": 3
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Angela Basconcillos Rodriguez",
+      "licencia": "7712416189",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Marcos Lopez Sanz",
+      "licencia": "7753096088",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Rodrigo Garabito De Las Heras",
+      "licencia": "7709344278",
+      "hcp": 51.8,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Rodrigo Del Rio Gonzalo",
+      "licencia": "7762983105",
+      "hcp": 41.3,
+      "nivel": "A"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Olivia Gallego Sanchez",
+      "licencia": "7709092740",
+      "hcp": 36.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Carmen Garabito De Las Heras",
+      "licencia": "7709055250",
+      "hcp": 36.6,
+      "nivel": "A"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Angela Basconcillos Rodriguez",
+      "licencia": "7712416189",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Marcos Lopez Sanz",
+      "licencia": "7753096088",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Rodrigo Del Rio Gonzalo",
+      "licencia": "7762983105",
+      "hcp": 41.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Olivia Gallego Sanchez",
+      "licencia": "7709092740",
+      "hcp": 36.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 5,
+      "name": "Rodrigo Garabito De Las Heras",
+      "licencia": "7709344278",
+      "hcp": 51.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Carmen Garabito De Las Heras",
+      "licencia": "7709055250",
+      "hcp": 36.6,
+      "nivel": "A"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:49",
+          "tee": 1,
+          "name": "Carmen Garabito De Las Heras",
+          "hcp": 36.6,
+          "ins": "1954855",
+          "jid": "58192",
+          "nivel": "A"
+        },
+        {
+          "time": "10:49",
+          "tee": 1,
+          "name": "Olivia Gallego Sanchez",
+          "hcp": 36.8,
+          "ins": "1949862",
+          "jid": "58192",
+          "nivel": "A"
+        },
+        {
+          "time": "10:49",
+          "tee": 1,
+          "name": "Rodrigo Del Rio Gonzalo",
+          "hcp": 41.3,
+          "ins": "1947028",
+          "jid": "58192",
+          "nivel": "A"
+        },
+        {
+          "time": "10:58",
+          "tee": 1,
+          "name": "Rodrigo Garabito De Las Heras",
+          "hcp": 51.8,
+          "ins": "1954854",
+          "jid": "58192",
+          "nivel": "B"
+        },
+        {
+          "time": "10:58",
+          "tee": 1,
+          "name": "Angela Basconcillos Rodriguez",
+          "hcp": 54,
+          "ins": "1937329",
+          "jid": "58192",
+          "nivel": "B"
+        },
+        {
+          "time": "10:58",
+          "tee": 1,
+          "name": "Marcos Lopez Sanz",
+          "hcp": 54,
+          "ins": "1940773",
+          "jid": "58192",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 58192
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": []
+}

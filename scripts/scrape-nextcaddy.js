@@ -122,10 +122,40 @@ function trCells(trHtml) {
   return cells;
 }
 
+/* ─── parseClasificacionesMeta — extrai nomes das categorias do dropdown topo ─── */
+// O HTML de getListadoClasificaciones tem um dropdown no topo com os nomes
+// completos das categorias e contagens, ex:
+//   <a class="header" href="#clasif_7_title">Clasificación Final Absoluta Indistinta</a>
+//   <span class="description disabled">47 jugadores</span>
+// Construímos um Map { catId → {name, jugadoresCount} }
+function parseClasificacionesMeta(html) {
+  const meta = {};
+  const re = /<a\s+class="header"\s+href="#clasif_(\d+)_title">\s*([^<]+?)\s*<\/a>\s*<span\s+class="description[^"]*"[^>]*>\s*(\d+)\s+jugadores/gi;
+  let m;
+  while ((m = re.exec(html)) !== null) {
+    meta[m[1]] = { name: stripTags(m[2]), jugadores: parseInt(m[3], 10) };
+  }
+  return meta;
+}
+
+/* ─── parsePdfsAttached — PDFs anexos no response (banderas, results) ── */
+function parsePdfsAttached(html) {
+  const out = new Set();
+  for (const m of html.matchAll(/\/uploads\/[^"'\s)<>]+\.pdf/gi)) out.add(m[0]);
+  return [...out];
+}
+
 /* ─── parseClasificaciones — leaderboard ─────────────────────── */
 
 function parseClasificaciones(html) {
   const tables = [];
+  const namesByCat = parseClasificacionesMeta(html);
+  // Detectar caso "PDF only" (togglePDF sem tabela)
+  const pdfOnly = /<object[^>]+togglePDF/.test(html) && !/<table[^>]+id="clasif_\d+_frontend"/.test(html);
+  if (pdfOnly) {
+    const pdfs = parsePdfsAttached(html);
+    return { tables: [], pdfOnly: true, pdfs, names: namesByCat };
+  }
   const tblRe = /<table[^>]+id="clasif_(\d+)_frontend"[\s\S]+?<\/table>/gi;
   let m;
   while ((m = tblRe.exec(html)) !== null) {
@@ -184,9 +214,10 @@ function parseClasificaciones(html) {
       if (!name && !licencia) continue;
       players.push({ pos, name, licencia, hcp, nivel, rounds, total, toPar, inscribedId: row.inscribedId });
     }
-    tables.push({ category: categoryNum, header, players });
+    const meta = namesByCat[String(categoryNum)] || {};
+    tables.push({ category: categoryNum, categoryName: meta.name || null, expectedJugadores: meta.jugadores || null, header, players });
   }
-  return tables;
+  return { tables, pdfOnly: false, pdfs: parsePdfsAttached(html), names: namesByCat };
 }
 
 /* ─── parseScorecard — extrai par/SI/metros + scores hole-by-hole ─── */
@@ -404,6 +435,54 @@ function parseDiscoveryCards(html) {
   return found;
 }
 
+/* ─── parseHorarios — tee times por ronda (POST /getListadoHorarios) ─── */
+// Cada ronda aparece num bloco delimitado por <h4 ... data-table-index="N"> seguido
+// da tabela. Extracted inline em vez de exigir scrape-nextcaddy-horarios.js.
+function parseHorarios(html) {
+  const rounds = [];
+  const splits = [];
+  const headerRe = /<h4[^>]*data-table-index="(\d+)"/g;
+  let m;
+  while ((m = headerRe.exec(html)) !== null) splits.push({ round: parseInt(m[1], 10), idx: m.index });
+  for (let i = 0; i < splits.length; i++) {
+    const start = splits[i].idx;
+    const end = i + 1 < splits.length ? splits[i + 1].idx : html.length;
+    const segment = html.slice(start, end);
+    const players = [];
+    let lastTime = null, lastTee = null;
+    const trRe = /<tr class="gradeX[^"]*">([\s\S]*?)<\/tr>/g;
+    let rowMatch;
+    while ((rowMatch = trRe.exec(segment)) !== null) {
+      const row = rowMatch[1];
+      const tdNegrita = /<td class="negrita">([\s\S]*?)<\/td>/.exec(row);
+      let time = null;
+      if (tdNegrita) {
+        const v = /<span class="visibleSearch">\s*([0-9:]+)\s*<\/span>/.exec(tdNegrita[1]);
+        if (v) time = v[1];
+      }
+      const tdTee = /<td class="mobile hidden center aligned">([\s\S]*?)<\/td>/.exec(row);
+      let tee = null;
+      if (tdTee) {
+        const t = /<span class="visibleSearch">\s*(\d+)\s*<\/span>/.exec(tdTee[1]);
+        if (t) tee = parseInt(t[1], 10);
+      }
+      if (time) lastTime = time; else time = lastTime;
+      if (tee != null) lastTee = tee; else tee = lastTee;
+      const nameM = /<td class="nombre-horario"\s+data-ins="(\d+)"\s+data-jid="(\d+)">([\s\S]*?)<\/td>/.exec(row);
+      if (!nameM) continue;
+      const nameInner = /<div[^>]*>([\s\S]*?)(?:<\/div>|$)/.exec(nameM[3]);
+      const name = stripTags(nameInner ? nameInner[1] : nameM[3]);
+      const hcpM = /<td class="right aligned">\s*([+\-]?[0-9.]+)/.exec(row);
+      const hcp = hcpM ? parseFloat(hcpM[1]) : null;
+      const nivelM = /<td class="disabled center aligned mostrarNivel[^"]*">\s*([A-Z0-9]+)/.exec(row);
+      const nivel = nivelM ? nivelM[1].trim() : null;
+      players.push({ time, tee, name, hcp, ins: nameM[1], jid: nameM[2], nivel });
+    }
+    if (players.length > 0) rounds.push({ round: splits[i].round, players });
+  }
+  return rounds;
+}
+
 /* ─── scrapeTour — orquestra todos os endpoints por torneio ─── */
 
 async function scrapeTour(tourId, opts) {
@@ -415,20 +494,29 @@ async function scrapeTour(tourId, opts) {
     get(`${BASE}/tour/${tourId}`),
     post(`${BASE}/getListadoClasificaciones`, `id=${tourId}`),
     post(`${BASE}/getListadoInscritos`, `id=${tourId}`),
+    post(`${BASE}/getListadoHorarios`, `id=${tourId}`),
     get(`${BASE}/getListadoEstadisticas?id=${tourId}`, { accept: "application/json" }),
     get(`${BASE}/stats/rounds/${tourId}`, { accept: "application/json" }),
     get(`${BASE}/stats/scoreTypes/${tourId}`, { accept: "application/json" }),
   ]);
-  const [pageR, clasR, inscR, estR, roundsR, scoreTypesR] = tasks;
+  const [pageR, clasR, inscR, horaR, estR, roundsR, scoreTypesR] = tasks;
 
   const meta = pageR.status === 200 ? parseTourMeta(pageR.body) : {};
-  const leaderboard = clasR.status === 200 && clasR.body.length > 1000 ? parseClasificaciones(clasR.body) : [];
+  // parseClasificaciones agora devolve {tables, pdfOnly, pdfs, names}
+  const clasParsed = clasR.status === 200 && clasR.body.length > 1000
+    ? parseClasificaciones(clasR.body)
+    : { tables: [], pdfOnly: false, pdfs: [], names: {} };
+  const leaderboard = clasParsed.tables;
   const inscritos = inscR.status === 200 && inscR.body.length > 1000 ? parseInscritos(inscR.body) : [];
+  const horarios = horaR.status === 200 && horaR.body.length > 500 ? parseHorarios(horaR.body) : [];
   const estadisticas = estR.status === 200 ? parseEstadisticas(estR.body) : null;
   let rounds = [];
   try { rounds = JSON.parse(roundsR.body); } catch { /* ignore */ }
   let scoreTypes = null;
   try { scoreTypes = JSON.parse(scoreTypesR.body); } catch { /* ignore */ }
+  // PDFs: do clas response + da page (banderas, etc.)
+  const pagePdfs = pageR.status === 200 ? parsePdfsAttached(pageR.body) : [];
+  const allPdfs = [...new Set([...(clasParsed.pdfs || []), ...pagePdfs])];
 
   // Optionally fetch per-player scorecards (hole-by-hole) via /tarjeta-aux/{inscribedId}/-1
   // O par/SI/metros do campo é igual para todos os jogadores duma categoria — extrai da PRIMEIRA tarjeta e partilha.
@@ -477,10 +565,14 @@ async function scrapeTour(tourId, opts) {
     meta,
     course: courseScorecard,   // { par[18], si[18], meters[18] } — só presente se --scorecards
     leaderboard,
+    leaderboardPdfOnly: clasParsed.pdfOnly || false,
+    categoryNames: clasParsed.names || {},  // { "1": {name:"Final Alevin Femenina", jugadores:5}, ... }
     inscritos,
+    horarios,                  // [{round, players:[{time, tee, name, hcp, ins, jid, nivel}]}]
     estadisticas,
     roundIds: rounds,
     scoreTypes,
+    pdfs: allPdfs,             // urls de PDFs (banderas, results, etc.) - apenas paths /uploads/...
   };
 }
 
@@ -498,12 +590,48 @@ async function discoverTours(opts) {
   if (opts.provincia != null && opts.provincia !== "") {
     params.push(`form%5Bprovincia%5D=${encodeURIComponent(opts.provincia)}`);
   }
-  const url = opts.club
-    ? `${BASE}/club/${opts.club}`
-    : `${BASE}/competiciones-comite${params.length ? "?" + params.join("&") : ""}`;
+  if (opts.club) {
+    // Club discovery: POST /competiciones-club/{code} com body "anio=YYYY"
+    // (descoberto 2026-05-09 via inspecção do HTML — o dropdown faz
+    // $("#anio").val(value); $("form").submit(); que vai POST para a mesma URL)
+    const clubUrl = `${BASE}/competiciones-club/${opts.club}`;
+    const body = opts.year ? `anio=${encodeURIComponent(opts.year)}` : "";
+    const r = body ? await post(clubUrl, body) : await get(clubUrl);
+    if (r.status !== 200) throw new Error(`Discovery failed: HTTP ${r.status}`);
+    return parseDiscoveryCards(r.body);
+  }
+  const url = `${BASE}/competiciones-comite${params.length ? "?" + params.join("&") : ""}`;
   const r = await get(url);
   if (r.status !== 200) throw new Error(`Discovery failed: HTTP ${r.status}`);
   return parseDiscoveryCards(r.body);
+}
+
+/* ─── discoverToursMultiYear — varre todos os anos para um club/comite ── */
+
+async function discoverToursMultiYear(opts) {
+  opts = opts || {};
+  const yearStart = parseInt(opts.yearStart || 2013, 10);
+  const yearEnd = parseInt(opts.yearEnd || (new Date().getFullYear() + 1), 10);
+  const seen = new Map(); // tourId → tour (dedup)
+  for (let y = yearEnd; y >= yearStart; y--) {
+    let tours;
+    try {
+      tours = await discoverTours({ ...opts, year: String(y) });
+    } catch (e) {
+      console.log(`  year ${y}: ERROR ${e.message}`);
+      continue;
+    }
+    let added = 0;
+    for (const t of tours) {
+      if (!seen.has(t.tourId)) {
+        seen.set(t.tourId, { ...t, discoveredYear: y });
+        added++;
+      }
+    }
+    console.log(`  year ${y}: ${tours.length} tours (${added} new)`);
+    await new Promise((r) => setTimeout(r, 250));
+  }
+  return [...seen.values()];
 }
 
 /* ─── CLI ─────────────────────────────────────────────────────── */
@@ -515,6 +643,7 @@ async function main() {
   const scopeArg = getArg("scope");
   const discoverFlag = args.includes("--discover");
   const yearArg = getArg("year", null);
+  const yearsArg = getArg("years", null);  // "all" ou "2020-2026" para varrer múltiplos anos
   const comiteArg = getArg("comite", null);
   const clubArg = getArg("club", null);
   const provinciaArg = getArg("provincia", null);
@@ -526,15 +655,29 @@ async function main() {
   const filterArg = getArg("filter", null);
 
   if (discoverFlag) {
-    const tag = clubArg ? `club-${clubArg}` :
-                (comiteArg ? `comite-${comiteArg}` : "all") +
-                (yearArg ? `-y${yearArg}` : "") +
+    const tag = (clubArg ? `club-${clubArg}` :
+                (comiteArg ? `comite-${comiteArg}` : "all")) +
+                (yearArg ? `-y${yearArg}` : (yearsArg ? `-y${yearsArg}` : "")) +
                 (provinciaArg ? `-p${provinciaArg}` : "");
     const out = outArg
       ? path.resolve(process.cwd(), outArg)
       : path.resolve(__dirname, `nextcaddy-scope-${tag}.json`);
-    console.log(`Discover NextCaddy: ${clubArg ? `club=${clubArg}` : `comite=${comiteArg || "all"}, year=${yearArg || "all"}, provincia=${provinciaArg || "all"}`}`);
-    let tours = await discoverTours({ comite: comiteArg, year: yearArg, club: clubArg, provincia: provinciaArg });
+    console.log(`Discover NextCaddy: ${clubArg ? `club=${clubArg}` : `comite=${comiteArg || "all"}`}, year=${yearArg || yearsArg || "current"}, provincia=${provinciaArg || "all"}`);
+    let tours;
+    if (yearsArg) {
+      // Varrer múltiplos anos. "all" = 2013..nextYear; "2020-2026" = range
+      let yStart, yEnd;
+      if (yearsArg === "all") {
+        yStart = 2013; yEnd = new Date().getFullYear() + 1;
+      } else {
+        const m = /^(\d{4})-(\d{4})$/.exec(yearsArg);
+        if (!m) { console.error("--years must be 'all' or 'YYYY-YYYY'"); process.exit(1); }
+        yStart = parseInt(m[1], 10); yEnd = parseInt(m[2], 10);
+      }
+      tours = await discoverToursMultiYear({ comite: comiteArg, club: clubArg, provincia: provinciaArg, yearStart: yStart, yearEnd: yEnd });
+    } else {
+      tours = await discoverTours({ comite: comiteArg, year: yearArg, club: clubArg, provincia: provinciaArg });
+    }
     if (filterArg) {
       const re = new RegExp(filterArg, "i");
       const before = tours.length;
@@ -543,8 +686,8 @@ async function main() {
     }
     fs.writeFileSync(out, JSON.stringify({
       generatedAt: new Date().toISOString(),
-      source: clubArg ? `/club/${clubArg}` : "/competiciones-comite",
-      comite: comiteArg, year: yearArg, club: clubArg, provincia: provinciaArg,
+      source: clubArg ? `/competiciones-club/${clubArg}` : "/competiciones-comite",
+      comite: comiteArg, year: yearArg, years: yearsArg, club: clubArg, provincia: provinciaArg,
       filter: filterArg,
       total: tours.length, tours,
     }, null, 2));
@@ -610,7 +753,7 @@ async function main() {
             }
           }
           await Promise.all(Array.from({ length: 2 }, () => pworker()));
-          // Aplicar aos players + actualizar course se ainda não tem par
+          // Aplicar aos players + actualizar course se ainda nao tem par
           let appliedCount = 0;
           for (const p of allPlayers) {
             if (!p.inscribedId) continue;
@@ -618,7 +761,8 @@ async function main() {
             if (sc && sc.rounds && sc.rounds.length) {
               p.roundScores = sc.rounds;
               appliedCount++;
-              if (!r.course && sc.par) r.course = { par: sc.par, si: sc.si, meters: sc.meters };
+              // course pode ser {par: null,...} (truthy mas vazio) — usar par como teste real
+              if ((!r.course || !Array.isArray(r.course.par)) && sc.par) r.course = { par: sc.par, si: sc.si, meters: sc.meters };
             }
           }
           r.scrapedAt = new Date().toISOString();
@@ -630,13 +774,14 @@ async function main() {
         }
         r = await scrapeTour(tid, { scorecards: fetchScorecards });
         fs.writeFileSync(outFile, JSON.stringify(r, null, 2));
-        // lb e sc contam jogadores ÚNICOS (mesmo jogador pode estar em várias categorias = Scratch + Hcp)
-        const allLbPlayers = r.leaderboard.flatMap((t) => t.players || []);
+        const allLbPlayers = (r.leaderboard || []).flatMap((t) => t.players || []);
         const uniqueLb = new Set(allLbPlayers.map((p) => p.inscribedId || p.licencia || p.name)).size;
         const uniqueSc = new Set(allLbPlayers.filter((p) => p.roundScores && p.roundScores.length).map((p) => p.inscribedId || p.licencia || p.name)).size;
-        const inscCount = r.inscritos.length;
+        const inscCount = (r.inscritos || []).length;
+        const horCount = (r.horarios || []).reduce((a, h) => a + (h.players || []).length, 0);
+        const pdfCount = (r.pdfs || []).length;
         const elapsed = ((Date.now() - t0) / 1000).toFixed(1);
-        const tag = `${(r.meta && r.meta.name) || "?"} (insc=${inscCount}, lb=${uniqueLb}${fetchScorecards ? `, sc=${uniqueSc}` : ""}, ${elapsed}s)`;
+        const tag = `${(r.meta && r.meta.name) || "?"} (insc=${inscCount}, lb=${uniqueLb}${fetchScorecards ? `, sc=${uniqueSc}` : ""}, hor=${horCount}, pdf=${pdfCount}, ${elapsed}s)`;
         console.log(`  [${idx + 1}/${tours.length}] ${tid}: ${tag}`);
         ok++;
       } catch (e) {
@@ -654,4 +799,4 @@ if (require.main === module) {
   main().catch((e) => { console.error(e); process.exit(1); });
 }
 
-module.exports = { scrapeTour, discoverTours, parseClasificaciones, parseInscritos, parseEstadisticas, parseTourMeta, parseDiscoveryCards, parseScorecard, fetchScorecard };
+module.exports = { scrapeTour, discoverTours, discoverToursMultiYear, parseClasificaciones, parseClasificacionesMeta, parsePdfsAttached, parseHorarios, parseInscritos, parseEstadisticas, parseTourMeta, parseDiscoveryCards, parseScorecard, fetchScorecard };

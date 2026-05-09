@@ -117,7 +117,7 @@ const COUNTRY_TO_CODE: Record<string, string> = {
   islandia:"is",malasia:"my","africa do sul":"za",
   // Países adicionais (BlueGolf, FPG)
   azerbaijão:"az",azerbaijao:"az","arabia saudita":"sa","arábia saudita":"sa",
-  jordânia:"jo",jordania:"jo",mónaco:"mc",monaco:"mc",
+  jordânia:"jo",jordania:"jo",mónaco:"mc",
   áustria:"at",paraguai:"py",nigéria:"ng",omã:"om","porto rico":"pr",
   chipre:"cy",líbano:"lb",indonésia:"id","nova zelândia":"nz",arménia:"am",
   bolívia:"bo","república dominicana":"do",argélia:"dz",equador:"ec",

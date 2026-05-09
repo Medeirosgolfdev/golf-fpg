@@ -1,14 +1,14 @@
 {
   "tourId": 68582,
   "url": "https://www.nextcaddy.com/tour/68582",
-  "scrapedAt": "2026-05-08T17:33:58.597Z",
+  "scrapedAt": "2026-05-09T16:03:41.767Z",
   "meta": {
     "name": "II Prueba Circuito Juvenil de P&P (18 Hoyos) 1ª y 2ª Categoría - Golf Los Palos",
     "organizer": null,
     "course": "Campo de Golf Los Palos",
     "courseCode": "CP09",
-    "dateStart": "25 abr 2026",
-    "dateEnd": "25 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Juvenil",
@@ -17,11 +17,12 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-04-25"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -66,6 +67,7 @@
       "nivel": "CP09002671"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -437,11 +439,11 @@
         },
         {
           "playerName": "Lacave Arbesu, Juan",
-          "holeNumber": 17
+          "holeNumber": 17,
+          "createdAt": "26/08/25 13:16:31"
         }
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-09T12:12:49.099Z"
+  "pdfs": []
 }

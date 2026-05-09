@@ -1,0 +1,717 @@
+{
+  "tourId": 60052,
+  "url": "https://www.nextcaddy.com/tour/60052",
+  "scrapedAt": "2026-05-09T16:41:54.202Z",
+  "meta": {
+    "name": "Campeonato de Las Palmas Juvenil (9 Hoyos)",
+    "organizer": null,
+    "course": "Meloneras Golf",
+    "courseCode": "CP27",
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Medal Play (Scratch)  Señoras  Caballero",
+    "categories": [
+      "Juvenil",
+      "Señoras",
+      "Caballeros",
+      "Benjamin",
+      "Infantil",
+      "Profesional",
+      "Senior"
+    ]
+  },
+  "course": {
+    "par": [
+      4,
+      4,
+      3,
+      5,
+      3,
+      4,
+      3,
+      4,
+      5,
+      4,
+      4,
+      3,
+      5,
+      4,
+      3,
+      4,
+      4,
+      5
+    ],
+    "si": [
+      15,
+      5,
+      7,
+      9,
+      17,
+      1,
+      13,
+      3,
+      11,
+      18,
+      4,
+      10,
+      2,
+      6,
+      14,
+      16,
+      8,
+      12
+    ],
+    "meters": [
+      274,
+      295,
+      130,
+      380,
+      69,
+      333,
+      65,
+      329,
+      362,
+      224,
+      262,
+      93,
+      420,
+      279,
+      99,
+      236,
+      257,
+      368
+    ]
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Final Scratch Indistinta",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "J3",
+        "HcpJuego J3",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Leo Calasanzio Borsellino",
+          "licencia": "CP05081101",
+          "hcp": 17.5,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 42
+            },
+            {
+              "round": 2,
+              "gross": 44
+            },
+            {
+              "round": 3,
+              "gross": 44
+            }
+          ],
+          "total": 130,
+          "toPar": 25,
+          "inscribedId": 2117956,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Maximo Cabezas De Herrera Mendez",
+          "licencia": "CP02052226",
+          "hcp": 35.4,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 44
+            },
+            {
+              "round": 2,
+              "gross": 46
+            },
+            {
+              "round": 3,
+              "gross": 41
+            }
+          ],
+          "total": 131,
+          "toPar": 26,
+          "inscribedId": 2121831,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Giovanni Amedeo",
+          "licencia": "CP22416355",
+          "hcp": 52.7,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 57
+            },
+            {
+              "round": 2,
+              "gross": 59
+            },
+            {
+              "round": 3,
+              "gross": 50
+            }
+          ],
+          "total": 166,
+          "toPar": 61,
+          "inscribedId": 2115325,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Sara Henningsen Suarez",
+          "licencia": "CP01061295",
+          "hcp": 49.1,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 70
+            },
+            {
+              "round": 2,
+              "gross": 63
+            },
+            {
+              "round": 3,
+              "gross": 52
+            }
+          ],
+          "total": 185,
+          "toPar": 80,
+          "inscribedId": 2118230,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Sofia Crespo Barco",
+          "licencia": "CP02470250",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 80
+            },
+            {
+              "round": 2,
+              "gross": 94
+            },
+            {
+              "round": 3,
+              "gross": 80
+            }
+          ],
+          "total": 254,
+          "toPar": 149,
+          "inscribedId": 2122016,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "2ª Jornada Scratch Indistinto",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Leo Calasanzio Borsellino",
+          "licencia": "CP05081101",
+          "hcp": 17.5,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 42
+            },
+            {
+              "round": 2,
+              "gross": 44
+            }
+          ],
+          "total": 86,
+          "toPar": 16,
+          "inscribedId": 2117956,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Maximo Cabezas De Herrera Mendez",
+          "licencia": "CP02052226",
+          "hcp": 35.4,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 44
+            },
+            {
+              "round": 2,
+              "gross": 46
+            }
+          ],
+          "total": 90,
+          "toPar": 20,
+          "inscribedId": 2121831,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Giovanni Amedeo",
+          "licencia": "CP22416355",
+          "hcp": 52.7,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 57
+            },
+            {
+              "round": 2,
+              "gross": 59
+            }
+          ],
+          "total": 116,
+          "toPar": 46,
+          "inscribedId": 2115325,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Sara Henningsen Suarez",
+          "licencia": "CP01061295",
+          "hcp": 49.1,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 70
+            },
+            {
+              "round": 2,
+              "gross": 63
+            }
+          ],
+          "total": 133,
+          "toPar": 63,
+          "inscribedId": 2118230,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Sofia Crespo Barco",
+          "licencia": "CP02470250",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 80
+            },
+            {
+              "round": 2,
+              "gross": 94
+            }
+          ],
+          "total": 174,
+          "toPar": 104,
+          "inscribedId": 2122016,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "1ª Jornada Scratch",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Leo Calasanzio Borsellino",
+          "licencia": "CP05081101",
+          "hcp": 17.5,
+          "nivel": "B",
+          "rounds": [],
+          "total": 42,
+          "toPar": 7,
+          "inscribedId": 2117956,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Maximo Cabezas De Herrera Mendez",
+          "licencia": "CP02052226",
+          "hcp": 35.4,
+          "nivel": "B",
+          "rounds": [],
+          "total": 44,
+          "toPar": 9,
+          "inscribedId": 2121831,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Giovanni Amedeo",
+          "licencia": "CP22416355",
+          "hcp": 52.7,
+          "nivel": "B",
+          "rounds": [],
+          "total": 57,
+          "toPar": 22,
+          "inscribedId": 2115325,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Sara Henningsen Suarez",
+          "licencia": "CP01061295",
+          "hcp": 49.1,
+          "nivel": "B",
+          "rounds": [],
+          "total": 70,
+          "toPar": 35,
+          "inscribedId": 2118230,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Sofia Crespo Barco",
+          "licencia": "CP02470250",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 80,
+          "toPar": 45,
+          "inscribedId": 2122016,
+          "roundScores": []
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Final Scratch Indistinta",
+      "jugadores": 5
+    },
+    "2": {
+      "name": "2ª Jornada Scratch Indistinto",
+      "jugadores": 5
+    },
+    "3": {
+      "name": "1ª Jornada Scratch",
+      "jugadores": 5
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Giovanni Amedeo",
+      "licencia": "CP22416355",
+      "hcp": 52.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Leo Calasanzio Borsellino",
+      "licencia": "CP05081101",
+      "hcp": 17.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Maximo Cabezas De Herrera Mendez",
+      "licencia": "CP02052226",
+      "hcp": 35.4,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Sara Henningsen Suarez",
+      "licencia": "CP01061295",
+      "hcp": 49.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Sofia Crespo Barco",
+      "licencia": "CP02470250",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Giovanni Amedeo",
+      "licencia": "CP22416355",
+      "hcp": 52.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Leo Calasanzio Borsellino",
+      "licencia": "CP05081101",
+      "hcp": 17.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Sara Henningsen Suarez",
+      "licencia": "CP01061295",
+      "hcp": 49.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Maximo Cabezas De Herrera Mendez",
+      "licencia": "CP02052226",
+      "hcp": 35.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Sofia Crespo Barco",
+      "licencia": "CP02470250",
+      "hcp": 54,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Leo Calasanzio Borsellino",
+          "hcp": 17.5,
+          "ins": "2117956",
+          "jid": "63433",
+          "nivel": "B"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Maximo Cabezas De Herrera Mendez",
+          "hcp": 35.4,
+          "ins": "2121831",
+          "jid": "63433",
+          "nivel": "B"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Giovanni Amedeo",
+          "hcp": 52.7,
+          "ins": "2115325",
+          "jid": "63433",
+          "nivel": "B"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Sara Henningsen Suarez",
+          "hcp": 49.1,
+          "ins": "2118230",
+          "jid": "63433",
+          "nivel": "B"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Sofia Crespo Barco",
+          "hcp": 54,
+          "ins": "2122016",
+          "jid": "63433",
+          "nivel": "B"
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "players": [
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Leo Calasanzio Borsellino",
+          "hcp": 17.5,
+          "ins": "2117956",
+          "jid": "63434",
+          "nivel": "B"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Maximo Cabezas De Herrera Mendez",
+          "hcp": 35.4,
+          "ins": "2121831",
+          "jid": "63434",
+          "nivel": "B"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Giovanni Amedeo",
+          "hcp": 52.7,
+          "ins": "2115325",
+          "jid": "63434",
+          "nivel": "B"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Sara Henningsen Suarez",
+          "hcp": 49.1,
+          "ins": "2118230",
+          "jid": "63434",
+          "nivel": "B"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Sofia Crespo Barco",
+          "hcp": 54,
+          "ins": "2122016",
+          "jid": "63434",
+          "nivel": "B"
+        }
+      ]
+    },
+    {
+      "round": 3,
+      "players": [
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Leo Calasanzio Borsellino",
+          "hcp": 17.5,
+          "ins": "2117956",
+          "jid": "63435",
+          "nivel": "B"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Maximo Cabezas De Herrera Mendez",
+          "hcp": 35.4,
+          "ins": "2121831",
+          "jid": "63435",
+          "nivel": "B"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Giovanni Amedeo",
+          "hcp": 52.7,
+          "ins": "2115325",
+          "jid": "63435",
+          "nivel": "B"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Sara Henningsen Suarez",
+          "hcp": 49.1,
+          "ins": "2118230",
+          "jid": "63435",
+          "nivel": "B"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Sofia Crespo Barco",
+          "hcp": 54,
+          "ins": "2122016",
+          "jid": "63435",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 63433
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 63434
+    },
+    {
+      "roundNumber": 3,
+      "roundId": 63435
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": []
+}

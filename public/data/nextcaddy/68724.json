@@ -1,14 +1,14 @@
 {
   "tourId": 68724,
   "url": "https://www.nextcaddy.com/tour/68724",
-  "scrapedAt": "2026-05-09T10:16:52.292Z",
+  "scrapedAt": "2026-05-09T16:03:57.482Z",
   "meta": {
     "name": "Campeonato de Canarias Individual de P&P",
     "organizer": null,
     "course": "Las Palmeras Golf Club",
     "courseCode": "CP26",
-    "dateStart": "18 jul 2026",
-    "dateEnd": "18 jul 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) Circuito P&P 20206",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-07-18"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -123,6 +125,5 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-09T12:12:50.300Z"
+  "pdfs": []
 }

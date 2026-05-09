@@ -183,7 +183,7 @@ export function canonicalSantoDaSerraNameOnly(name: string): string {
  */
 export function canonicalCourseName<T extends string | null | undefined>(name: T): T {
   if (!name || typeof name !== "string") return name;
-  let out = name;
+  let out: string = name;
   for (const re of SUFFIX_PATTERNS) {
     if (re.test(out)) {
       out = out.replace(re, "").trim();
@@ -193,7 +193,7 @@ export function canonicalCourseName<T extends string | null | undefined>(name: T
   // Resolver alias histórico (ex: "Aroeira Challenge" → "PGA  Aroeira No.2")
   const alias = COURSE_NAME_ALIASES[aliasKey(out)];
   if (alias) out = alias;
-  return (out as T);
+  return (out as unknown as T);
 }
 
 /**

@@ -1,0 +1,6982 @@
+{
+  "tourId": 53925,
+  "url": "https://www.nextcaddy.com/tour/53925",
+  "scrapedAt": "2026-05-09T16:07:26.318Z",
+  "meta": {
+    "name": "Campeonato de Las Palmas Juvenil (18 Hoyos) - Meloneras Golf by Lopesan",
+    "organizer": null,
+    "course": "Meloneras Golf",
+    "courseCode": "CP27",
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Medal Play (Scratch) Circuito Juvenil 20",
+    "categories": [
+      "Juvenil",
+      "Caballeros",
+      "Señoras",
+      "Cadete",
+      "Infantil",
+      "Alevin",
+      "Alevín",
+      "Profesional",
+      "Senior"
+    ]
+  },
+  "course": {
+    "par": [
+      4,
+      4,
+      3,
+      5,
+      3,
+      4,
+      3,
+      4,
+      5,
+      4,
+      4,
+      3,
+      5,
+      4,
+      3,
+      4,
+      4,
+      5
+    ],
+    "si": [
+      15,
+      5,
+      7,
+      9,
+      17,
+      1,
+      13,
+      3,
+      11,
+      18,
+      4,
+      10,
+      2,
+      6,
+      14,
+      16,
+      8,
+      12
+    ],
+    "meters": [
+      274,
+      295,
+      130,
+      380,
+      69,
+      333,
+      65,
+      329,
+      362,
+      224,
+      262,
+      93,
+      420,
+      279,
+      99,
+      236,
+      257,
+      368
+    ]
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Final Alevín Femenina",
+      "expectedJugadores": 2,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "J3",
+        "HcpJuego J3",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Leire Aranzabal Hernandez",
+          "licencia": "CP04973022",
+          "hcp": 33.2,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 104
+            },
+            {
+              "round": 2,
+              "gross": 100
+            },
+            {
+              "round": 3,
+              "gross": 105
+            }
+          ],
+          "total": 309,
+          "toPar": 96,
+          "inscribedId": 1894858,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                7,
+                7,
+                8,
+                3,
+                6,
+                2,
+                6,
+                7,
+                5,
+                6,
+                3,
+                6,
+                5,
+                8,
+                6,
+                6,
+                5
+              ],
+              "total": 104
+            },
+            {
+              "round": 2,
+              "scores": [
+                6,
+                5,
+                4,
+                7,
+                2,
+                5,
+                4,
+                7,
+                7,
+                5,
+                6,
+                5,
+                8,
+                5,
+                4,
+                5,
+                6,
+                9
+              ],
+              "total": 100
+            },
+            {
+              "round": 3,
+              "scores": [
+                7,
+                6,
+                3,
+                7,
+                4,
+                8,
+                5,
+                6,
+                6,
+                4,
+                7,
+                5,
+                7,
+                6,
+                4,
+                6,
+                6,
+                8
+              ],
+              "total": 105
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Victoria Rodriguez Puerto",
+          "licencia": "CP04945721",
+          "hcp": 35,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 121
+            },
+            {
+              "round": 2,
+              "gross": 121
+            },
+            {
+              "round": 3,
+              "gross": 117
+            }
+          ],
+          "total": 359,
+          "toPar": 146,
+          "inscribedId": 1902814,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Clasificación Final Alevin Masculino",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "J3",
+        "HcpJuego J3",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Diego Crespo Barco",
+          "licencia": "CP02923942",
+          "hcp": 10.5,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 80
+            },
+            {
+              "round": 2,
+              "gross": 86
+            },
+            {
+              "round": 3,
+              "gross": 83
+            }
+          ],
+          "total": 249,
+          "toPar": 36,
+          "inscribedId": 1901369,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Nicolas Kopecky Albertazzi",
+          "licencia": "CP06957898",
+          "hcp": 16.8,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 86
+            },
+            {
+              "round": 2,
+              "gross": 99
+            },
+            {
+              "round": 3,
+              "gross": 86
+            }
+          ],
+          "total": 271,
+          "toPar": 58,
+          "inscribedId": 1902494,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Carlos Selig Marrero",
+          "licencia": "CP00466935",
+          "hcp": 13.4,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 95
+            },
+            {
+              "round": 2,
+              "gross": 88
+            },
+            {
+              "round": 3,
+              "gross": 91
+            }
+          ],
+          "total": 274,
+          "toPar": 61,
+          "inscribedId": 1895151,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Cisco De Bethencourt",
+          "licencia": "CP01952017",
+          "hcp": 15.6,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 88
+            },
+            {
+              "round": 2,
+              "gross": 97
+            },
+            {
+              "round": 3,
+              "gross": 90
+            }
+          ],
+          "total": 275,
+          "toPar": 62,
+          "inscribedId": 1901624,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Massimo Amoni Gamardo",
+          "licencia": "CP04942811",
+          "hcp": 12.6,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 89
+            },
+            {
+              "round": 2,
+              "gross": 96
+            },
+            {
+              "round": 3,
+              "gross": 92
+            }
+          ],
+          "total": 277,
+          "toPar": 64,
+          "inscribedId": 1896539,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Alejandro Sanchez Lopez",
+          "licencia": "CP01951648",
+          "hcp": 21.2,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 95
+            },
+            {
+              "round": 2,
+              "gross": 90
+            },
+            {
+              "round": 3,
+              "gross": 97
+            }
+          ],
+          "total": 282,
+          "toPar": 69,
+          "inscribedId": 1903141,
+          "roundScores": []
+        },
+        {
+          "pos": 7,
+          "name": "Nevis Molina Spindler",
+          "licencia": "CP01949889",
+          "hcp": 31,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 123
+            },
+            {
+              "round": 2,
+              "gross": 109
+            },
+            {
+              "round": 3,
+              "gross": 119
+            }
+          ],
+          "total": 351,
+          "toPar": 138,
+          "inscribedId": 1903160,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Gonzalo Caballero De Rodas Gross",
+          "licencia": "CP01963463",
+          "hcp": 25.3,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 1903158,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Clasificación Final Infantil Femenino",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "J3",
+        "HcpJuego J3",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Isabel Ping Martinez Guerra",
+          "licencia": "CP01929578",
+          "hcp": 4.9,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 70
+            },
+            {
+              "round": 3,
+              "gross": 76
+            }
+          ],
+          "total": 221,
+          "toPar": 8,
+          "inscribedId": 1896578,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Lucia Uribe De Leon",
+          "licencia": "CP01944236",
+          "hcp": 12.2,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 80
+            },
+            {
+              "round": 3,
+              "gross": 78
+            }
+          ],
+          "total": 237,
+          "toPar": 24,
+          "inscribedId": 1902808,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Edurne Lairihoy Gonzalez",
+          "licencia": "CP06944877",
+          "hcp": 13.5,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 82
+            },
+            {
+              "round": 3,
+              "gross": 81
+            }
+          ],
+          "total": 239,
+          "toPar": 26,
+          "inscribedId": 1901325,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Paula Galban Morales",
+          "licencia": "CP01931970",
+          "hcp": 7.9,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 85
+            },
+            {
+              "round": 2,
+              "gross": 76
+            },
+            {
+              "round": 3,
+              "gross": 80
+            }
+          ],
+          "total": 241,
+          "toPar": 28,
+          "inscribedId": 1900849,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Maria Del Pino Uribe De Leon",
+          "licencia": "CP01944235",
+          "hcp": 16.9,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 80
+            },
+            {
+              "round": 2,
+              "gross": 84
+            },
+            {
+              "round": 3,
+              "gross": 82
+            }
+          ],
+          "total": 246,
+          "toPar": 33,
+          "inscribedId": 1902805,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Silvia Gonzalez Albarracin",
+          "licencia": "CP02884346",
+          "hcp": 8,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 88
+            },
+            {
+              "round": 2,
+              "gross": 82
+            },
+            {
+              "round": 3,
+              "gross": 78
+            }
+          ],
+          "total": 248,
+          "toPar": 35,
+          "inscribedId": 1903149,
+          "roundScores": []
+        },
+        {
+          "pos": 7,
+          "name": "Maxima De Bethencourt",
+          "licencia": "CP01931459",
+          "hcp": 15.5,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 86
+            },
+            {
+              "round": 2,
+              "gross": 84
+            },
+            {
+              "round": 3,
+              "gross": 84
+            }
+          ],
+          "total": 254,
+          "toPar": 41,
+          "inscribedId": 1901623,
+          "roundScores": []
+        },
+        {
+          "pos": 8,
+          "name": "Malena Molina Spindler",
+          "licencia": "CP01949890",
+          "hcp": 15.2,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 91
+            },
+            {
+              "round": 2,
+              "gross": 88
+            },
+            {
+              "round": 3,
+              "gross": 89
+            }
+          ],
+          "total": 268,
+          "toPar": 55,
+          "inscribedId": 1903159,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 4,
+      "categoryName": "Clasificación Final Infantil Masculino",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "J3",
+        "HcpJuego J3",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Luis Abeledo Miranda",
+          "licencia": "CP02167542",
+          "hcp": 1.7,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 68
+            },
+            {
+              "round": 2,
+              "gross": 71
+            },
+            {
+              "round": 3,
+              "gross": 75
+            }
+          ],
+          "total": 214,
+          "toPar": 1,
+          "inscribedId": 1900775,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Rodrigo Baroja Hernandez",
+          "licencia": "CP02817964",
+          "hcp": 5,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 71
+            },
+            {
+              "round": 3,
+              "gross": 70
+            }
+          ],
+          "total": 222,
+          "toPar": 9,
+          "inscribedId": 1901802,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Juan Cabrera Monzon",
+          "licencia": "CP01897445",
+          "hcp": 4.3,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 75
+            },
+            {
+              "round": 3,
+              "gross": 74
+            }
+          ],
+          "total": 227,
+          "toPar": 14,
+          "inscribedId": 1894708,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Guillermo Henningsen Suárez",
+          "licencia": "CP01923710",
+          "hcp": 9.1,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 74
+            },
+            {
+              "round": 2,
+              "gross": 86
+            },
+            {
+              "round": 3,
+              "gross": 85
+            }
+          ],
+          "total": 245,
+          "toPar": 32,
+          "inscribedId": 1900851,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Jose Gomez Guerra",
+          "licencia": "CP01932032",
+          "hcp": 12.9,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 86
+            },
+            {
+              "round": 2,
+              "gross": 93
+            },
+            {
+              "round": 3,
+              "gross": 89
+            }
+          ],
+          "total": 268,
+          "toPar": 55,
+          "inscribedId": 1896558,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Alfonso Caballero De Rodas Gross",
+          "licencia": "CP01963464",
+          "hcp": 23.4,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 88
+            },
+            {
+              "round": 2,
+              "gross": 92
+            },
+            {
+              "round": 3,
+              "gross": 88
+            }
+          ],
+          "total": 268,
+          "toPar": 55,
+          "inscribedId": 1903157,
+          "roundScores": []
+        },
+        {
+          "pos": 7,
+          "name": "David Arzola Hernandez",
+          "licencia": "CP24974220",
+          "hcp": 19.7,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 89
+            },
+            {
+              "round": 2,
+              "gross": 98
+            },
+            {
+              "round": 3,
+              "gross": 94
+            }
+          ],
+          "total": 281,
+          "toPar": 68,
+          "inscribedId": 1895105,
+          "roundScores": []
+        },
+        {
+          "pos": 8,
+          "name": "Cristobal Jimenez Sanchez",
+          "licencia": "CP26948681",
+          "hcp": 21.6,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 113
+            },
+            {
+              "round": 2,
+              "gross": 96
+            },
+            {
+              "round": 3,
+              "gross": 86
+            }
+          ],
+          "total": 295,
+          "toPar": 82,
+          "inscribedId": 1896112,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 5,
+      "categoryName": "Clasificación Final Cadete Femenina",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "J3",
+        "HcpJuego J3",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Sofia Henningsen Suarez",
+          "licencia": "CP01923713",
+          "hcp": 1.4,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 74
+            },
+            {
+              "round": 2,
+              "gross": 70
+            },
+            {
+              "round": 3,
+              "gross": 72
+            }
+          ],
+          "total": 216,
+          "toPar": 3,
+          "inscribedId": 1900850,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Minerva Sintes Navarro",
+          "licencia": "CP01907134",
+          "hcp": 5.8,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 79
+            },
+            {
+              "round": 3,
+              "gross": 75
+            }
+          ],
+          "total": 230,
+          "toPar": 17,
+          "inscribedId": 1897225,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Valentina De Bethencourt",
+          "licencia": "CP01883174",
+          "hcp": 8.1,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 77
+            },
+            {
+              "round": 3,
+              "gross": 78
+            }
+          ],
+          "total": 231,
+          "toPar": 18,
+          "inscribedId": 1901620,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Irene Martin Rodriguez",
+          "licencia": "CP04887266",
+          "hcp": 8.8,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 83
+            },
+            {
+              "round": 2,
+              "gross": 73
+            },
+            {
+              "round": 3,
+              "gross": 83
+            }
+          ],
+          "total": 239,
+          "toPar": 26,
+          "inscribedId": 1894876,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Adriana Torres Digon",
+          "licencia": "CP02887575",
+          "hcp": 5.5,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 86
+            },
+            {
+              "round": 2,
+              "gross": 81
+            },
+            {
+              "round": 3,
+              "gross": 78
+            }
+          ],
+          "total": 245,
+          "toPar": 32,
+          "inscribedId": 1901647,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Jimena Rodriguez Puerto",
+          "licencia": "CP04892307",
+          "hcp": 12.5,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 92
+            },
+            {
+              "round": 2,
+              "gross": 93
+            },
+            {
+              "round": 3,
+              "gross": 89
+            }
+          ],
+          "total": 274,
+          "toPar": 61,
+          "inscribedId": 1901349,
+          "roundScores": []
+        },
+        {
+          "pos": 7,
+          "name": "Carlota Perez Gonzalez",
+          "licencia": "CP04945360",
+          "hcp": 13.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 99
+            },
+            {
+              "round": 2,
+              "gross": 91
+            },
+            {
+              "round": 3,
+              "gross": 88
+            }
+          ],
+          "total": 278,
+          "toPar": 65,
+          "inscribedId": 1901072,
+          "roundScores": []
+        },
+        {
+          "pos": 8,
+          "name": "Adela Garcia Luis",
+          "licencia": "CP22927512",
+          "hcp": 33,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 103
+            },
+            {
+              "round": 2,
+              "gross": 90
+            },
+            {
+              "round": 3,
+              "gross": 101
+            }
+          ],
+          "total": 294,
+          "toPar": 81,
+          "inscribedId": 1901290,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 6,
+      "categoryName": "Clasificación Final Cadete Masculina",
+      "expectedJugadores": 11,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "J3",
+        "HcpJuego J3",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Nicolas Vidal Reig",
+          "licencia": "CP01811935",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 65
+            },
+            {
+              "round": 2,
+              "gross": 68
+            },
+            {
+              "round": 3,
+              "gross": 66
+            }
+          ],
+          "total": 199,
+          "toPar": -14,
+          "inscribedId": 1899524,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Rafael Gonzalez Albarracin",
+          "licencia": "CP02817272",
+          "hcp": 1.3,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 71
+            },
+            {
+              "round": 2,
+              "gross": 65
+            },
+            {
+              "round": 3,
+              "gross": 66
+            }
+          ],
+          "total": 202,
+          "toPar": -11,
+          "inscribedId": 1903148,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Javier De Bethencourt Duque",
+          "licencia": "CP01896466",
+          "hcp": 1.9,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 68
+            },
+            {
+              "round": 3,
+              "gross": 72
+            }
+          ],
+          "total": 218,
+          "toPar": 5,
+          "inscribedId": 1896580,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Alvaro Febles Rodriguez",
+          "licencia": "CP02894372",
+          "hcp": 2.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 72
+            },
+            {
+              "round": 3,
+              "gross": 73
+            }
+          ],
+          "total": 220,
+          "toPar": 7,
+          "inscribedId": 1900606,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Matias Pusnik Sylverans",
+          "licencia": "CP23941520",
+          "hcp": 1,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 75
+            },
+            {
+              "round": 3,
+              "gross": 70
+            }
+          ],
+          "total": 221,
+          "toPar": 8,
+          "inscribedId": 1896759,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Adrian Nordin Henning",
+          "licencia": "CP04899452",
+          "hcp": 6.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 76
+            },
+            {
+              "round": 3,
+              "gross": 71
+            }
+          ],
+          "total": 222,
+          "toPar": 9,
+          "inscribedId": 1894879,
+          "roundScores": []
+        },
+        {
+          "pos": 7,
+          "name": "Tiago Joel Peters",
+          "licencia": "CP31371850",
+          "hcp": 6.9,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 75
+            },
+            {
+              "round": 3,
+              "gross": 77
+            }
+          ],
+          "total": 231,
+          "toPar": 18,
+          "inscribedId": 1894640,
+          "roundScores": []
+        },
+        {
+          "pos": 8,
+          "name": "Javier Cumplido Hernandez",
+          "licencia": "CP01898580",
+          "hcp": 7.3,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 72
+            },
+            {
+              "round": 3,
+              "gross": 80
+            }
+          ],
+          "total": 233,
+          "toPar": 20,
+          "inscribedId": 1902806,
+          "roundScores": []
+        },
+        {
+          "pos": 9,
+          "name": "Cristian Alvarez Claverie",
+          "licencia": "CP22930343",
+          "hcp": 7.4,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 85
+            },
+            {
+              "round": 2,
+              "gross": 83
+            },
+            {
+              "round": 3,
+              "gross": 83
+            }
+          ],
+          "total": 251,
+          "toPar": 38,
+          "inscribedId": 1902493,
+          "roundScores": []
+        },
+        {
+          "pos": 10,
+          "name": "Alvaro Sanchez Lopez",
+          "licencia": "CP01951644",
+          "hcp": 17,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 93
+            },
+            {
+              "round": 2,
+              "gross": 80
+            },
+            {
+              "round": 3,
+              "gross": 90
+            }
+          ],
+          "total": 263,
+          "toPar": 50,
+          "inscribedId": 1903140,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Raimundo Baroja Hernandez",
+          "licencia": "CP02817962",
+          "hcp": 2.8,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 1901801,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 7,
+      "categoryName": "Clasificación Final Femenina",
+      "expectedJugadores": 19,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "J3",
+        "HcpJuego J3",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Sofia Henningsen Suarez",
+          "licencia": "CP01923713",
+          "hcp": 1.4,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 74
+            },
+            {
+              "round": 2,
+              "gross": 70
+            },
+            {
+              "round": 3,
+              "gross": 72
+            }
+          ],
+          "total": 216,
+          "toPar": 3,
+          "inscribedId": 1900850,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Isabel Ping Martinez Guerra",
+          "licencia": "CP01929578",
+          "hcp": 4.9,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 70
+            },
+            {
+              "round": 3,
+              "gross": 76
+            }
+          ],
+          "total": 221,
+          "toPar": 8,
+          "inscribedId": 1896578,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Minerva Sintes Navarro",
+          "licencia": "CP01907134",
+          "hcp": 5.8,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 79
+            },
+            {
+              "round": 3,
+              "gross": 75
+            }
+          ],
+          "total": 230,
+          "toPar": 17,
+          "inscribedId": 1897225,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Lara Galban Morales",
+          "licencia": "CP01884866",
+          "hcp": 5.2,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 80
+            },
+            {
+              "round": 2,
+              "gross": 74
+            },
+            {
+              "round": 3,
+              "gross": 77
+            }
+          ],
+          "total": 231,
+          "toPar": 18,
+          "inscribedId": 1900852,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Valentina De Bethencourt",
+          "licencia": "CP01883174",
+          "hcp": 8.1,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 77
+            },
+            {
+              "round": 3,
+              "gross": 78
+            }
+          ],
+          "total": 231,
+          "toPar": 18,
+          "inscribedId": 1901620,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Lucia Uribe De Leon",
+          "licencia": "CP01944236",
+          "hcp": 12.2,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 80
+            },
+            {
+              "round": 3,
+              "gross": 78
+            }
+          ],
+          "total": 237,
+          "toPar": 24,
+          "inscribedId": 1902808,
+          "roundScores": []
+        },
+        {
+          "pos": 7,
+          "name": "Edurne Lairihoy Gonzalez",
+          "licencia": "CP06944877",
+          "hcp": 13.5,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 82
+            },
+            {
+              "round": 3,
+              "gross": 81
+            }
+          ],
+          "total": 239,
+          "toPar": 26,
+          "inscribedId": 1901325,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Irene Martin Rodriguez",
+          "licencia": "CP04887266",
+          "hcp": 8.8,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 83
+            },
+            {
+              "round": 2,
+              "gross": 73
+            },
+            {
+              "round": 3,
+              "gross": 83
+            }
+          ],
+          "total": 239,
+          "toPar": 26,
+          "inscribedId": 1894876,
+          "roundScores": []
+        },
+        {
+          "pos": 9,
+          "name": "Paula Galban Morales",
+          "licencia": "CP01931970",
+          "hcp": 7.9,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 85
+            },
+            {
+              "round": 2,
+              "gross": 76
+            },
+            {
+              "round": 3,
+              "gross": 80
+            }
+          ],
+          "total": 241,
+          "toPar": 28,
+          "inscribedId": 1900849,
+          "roundScores": []
+        },
+        {
+          "pos": 10,
+          "name": "Adriana Torres Digon",
+          "licencia": "CP02887575",
+          "hcp": 5.5,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 86
+            },
+            {
+              "round": 2,
+              "gross": 81
+            },
+            {
+              "round": 3,
+              "gross": 78
+            }
+          ],
+          "total": 245,
+          "toPar": 32,
+          "inscribedId": 1901647,
+          "roundScores": []
+        },
+        {
+          "pos": 11,
+          "name": "Maria Del Pino Uribe De Leon",
+          "licencia": "CP01944235",
+          "hcp": 16.9,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 80
+            },
+            {
+              "round": 2,
+              "gross": 84
+            },
+            {
+              "round": 3,
+              "gross": 82
+            }
+          ],
+          "total": 246,
+          "toPar": 33,
+          "inscribedId": 1902805,
+          "roundScores": []
+        },
+        {
+          "pos": 12,
+          "name": "Silvia Gonzalez Albarracin",
+          "licencia": "CP02884346",
+          "hcp": 8,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 88
+            },
+            {
+              "round": 2,
+              "gross": 82
+            },
+            {
+              "round": 3,
+              "gross": 78
+            }
+          ],
+          "total": 248,
+          "toPar": 35,
+          "inscribedId": 1903149,
+          "roundScores": []
+        },
+        {
+          "pos": 13,
+          "name": "Maxima De Bethencourt",
+          "licencia": "CP01931459",
+          "hcp": 15.5,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 86
+            },
+            {
+              "round": 2,
+              "gross": 84
+            },
+            {
+              "round": 3,
+              "gross": 84
+            }
+          ],
+          "total": 254,
+          "toPar": 41,
+          "inscribedId": 1901623,
+          "roundScores": []
+        },
+        {
+          "pos": 14,
+          "name": "Malena Molina Spindler",
+          "licencia": "CP01949890",
+          "hcp": 15.2,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 91
+            },
+            {
+              "round": 2,
+              "gross": 88
+            },
+            {
+              "round": 3,
+              "gross": 89
+            }
+          ],
+          "total": 268,
+          "toPar": 55,
+          "inscribedId": 1903159,
+          "roundScores": []
+        },
+        {
+          "pos": 15,
+          "name": "Jimena Rodriguez Puerto",
+          "licencia": "CP04892307",
+          "hcp": 12.5,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 92
+            },
+            {
+              "round": 2,
+              "gross": 93
+            },
+            {
+              "round": 3,
+              "gross": 89
+            }
+          ],
+          "total": 274,
+          "toPar": 61,
+          "inscribedId": 1901349,
+          "roundScores": []
+        },
+        {
+          "pos": 16,
+          "name": "Carlota Perez Gonzalez",
+          "licencia": "CP04945360",
+          "hcp": 13.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 99
+            },
+            {
+              "round": 2,
+              "gross": 91
+            },
+            {
+              "round": 3,
+              "gross": 88
+            }
+          ],
+          "total": 278,
+          "toPar": 65,
+          "inscribedId": 1901072,
+          "roundScores": []
+        },
+        {
+          "pos": 17,
+          "name": "Adela Garcia Luis",
+          "licencia": "CP22927512",
+          "hcp": 33,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 103
+            },
+            {
+              "round": 2,
+              "gross": 90
+            },
+            {
+              "round": 3,
+              "gross": 101
+            }
+          ],
+          "total": 294,
+          "toPar": 81,
+          "inscribedId": 1901290,
+          "roundScores": []
+        },
+        {
+          "pos": 18,
+          "name": "Leire Aranzabal Hernandez",
+          "licencia": "CP04973022",
+          "hcp": 33.2,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 104
+            },
+            {
+              "round": 2,
+              "gross": 100
+            },
+            {
+              "round": 3,
+              "gross": 105
+            }
+          ],
+          "total": 309,
+          "toPar": 96,
+          "inscribedId": 1894858,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                7,
+                7,
+                8,
+                3,
+                6,
+                2,
+                6,
+                7,
+                5,
+                6,
+                3,
+                6,
+                5,
+                8,
+                6,
+                6,
+                5
+              ],
+              "total": 104
+            },
+            {
+              "round": 2,
+              "scores": [
+                6,
+                5,
+                4,
+                7,
+                2,
+                5,
+                4,
+                7,
+                7,
+                5,
+                6,
+                5,
+                8,
+                5,
+                4,
+                5,
+                6,
+                9
+              ],
+              "total": 100
+            },
+            {
+              "round": 3,
+              "scores": [
+                7,
+                6,
+                3,
+                7,
+                4,
+                8,
+                5,
+                6,
+                6,
+                4,
+                7,
+                5,
+                7,
+                6,
+                4,
+                6,
+                6,
+                8
+              ],
+              "total": 105
+            }
+          ]
+        },
+        {
+          "pos": 19,
+          "name": "Victoria Rodriguez Puerto",
+          "licencia": "CP04945721",
+          "hcp": 35,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 121
+            },
+            {
+              "round": 2,
+              "gross": 121
+            },
+            {
+              "round": 3,
+              "gross": 117
+            }
+          ],
+          "total": 359,
+          "toPar": 146,
+          "inscribedId": 1902814,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 8,
+      "categoryName": "Clasificación Final Masculina",
+      "expectedJugadores": 33,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "J3",
+        "HcpJuego J3",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Nicolas Vidal Reig",
+          "licencia": "CP01811935",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 65
+            },
+            {
+              "round": 2,
+              "gross": 68
+            },
+            {
+              "round": 3,
+              "gross": 66
+            }
+          ],
+          "total": 199,
+          "toPar": -14,
+          "inscribedId": 1899524,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Rafael Gonzalez Albarracin",
+          "licencia": "CP02817272",
+          "hcp": 1.3,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 71
+            },
+            {
+              "round": 2,
+              "gross": 65
+            },
+            {
+              "round": 3,
+              "gross": 66
+            }
+          ],
+          "total": 202,
+          "toPar": -11,
+          "inscribedId": 1903148,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Isaac Puerto Rodriguez",
+          "licencia": "CP04887265",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 72
+            },
+            {
+              "round": 2,
+              "gross": 67
+            },
+            {
+              "round": 3,
+              "gross": 69
+            }
+          ],
+          "total": 208,
+          "toPar": -5,
+          "inscribedId": 1895138,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Ignacio Jose Sintes Navarro",
+          "licencia": "CP01813124",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 71
+            },
+            {
+              "round": 2,
+              "gross": 69
+            },
+            {
+              "round": 3,
+              "gross": 68
+            }
+          ],
+          "total": 208,
+          "toPar": -5,
+          "inscribedId": 1897194,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Luis Abeledo Miranda",
+          "licencia": "CP02167542",
+          "hcp": 1.7,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 68
+            },
+            {
+              "round": 2,
+              "gross": 71
+            },
+            {
+              "round": 3,
+              "gross": 75
+            }
+          ],
+          "total": 214,
+          "toPar": 1,
+          "inscribedId": 1900775,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Samuel Moran Rodriguez",
+          "licencia": "CP01883264",
+          "hcp": 0.7,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 71
+            },
+            {
+              "round": 2,
+              "gross": 71
+            },
+            {
+              "round": 3,
+              "gross": 75
+            }
+          ],
+          "total": 217,
+          "toPar": 4,
+          "inscribedId": 1901335,
+          "roundScores": []
+        },
+        {
+          "pos": 7,
+          "name": "Javier De Bethencourt Duque",
+          "licencia": "CP01896466",
+          "hcp": 1.9,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 68
+            },
+            {
+              "round": 3,
+              "gross": 72
+            }
+          ],
+          "total": 218,
+          "toPar": 5,
+          "inscribedId": 1896580,
+          "roundScores": []
+        },
+        {
+          "pos": 8,
+          "name": "Alvaro Febles Rodriguez",
+          "licencia": "CP02894372",
+          "hcp": 2.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 72
+            },
+            {
+              "round": 3,
+              "gross": 73
+            }
+          ],
+          "total": 220,
+          "toPar": 7,
+          "inscribedId": 1900606,
+          "roundScores": []
+        },
+        {
+          "pos": 9,
+          "name": "Matias Pusnik Sylverans",
+          "licencia": "CP23941520",
+          "hcp": 1,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 75
+            },
+            {
+              "round": 3,
+              "gross": 70
+            }
+          ],
+          "total": 221,
+          "toPar": 8,
+          "inscribedId": 1896759,
+          "roundScores": []
+        },
+        {
+          "pos": 10,
+          "name": "Rodrigo Baroja Hernandez",
+          "licencia": "CP02817964",
+          "hcp": 5,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 71
+            },
+            {
+              "round": 3,
+              "gross": 70
+            }
+          ],
+          "total": 222,
+          "toPar": 9,
+          "inscribedId": 1901802,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Adrian Nordin Henning",
+          "licencia": "CP04899452",
+          "hcp": 6.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 76
+            },
+            {
+              "round": 3,
+              "gross": 71
+            }
+          ],
+          "total": 222,
+          "toPar": 9,
+          "inscribedId": 1894879,
+          "roundScores": []
+        },
+        {
+          "pos": 12,
+          "name": "Lukas Pusnik Sylverans",
+          "licencia": "CP23941519",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 82
+            },
+            {
+              "round": 2,
+              "gross": 72
+            },
+            {
+              "round": 3,
+              "gross": 72
+            }
+          ],
+          "total": 226,
+          "toPar": 13,
+          "inscribedId": 1896758,
+          "roundScores": []
+        },
+        {
+          "pos": 13,
+          "name": "Juan Cabrera Monzon",
+          "licencia": "CP01897445",
+          "hcp": 4.3,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 75
+            },
+            {
+              "round": 3,
+              "gross": 74
+            }
+          ],
+          "total": 227,
+          "toPar": 14,
+          "inscribedId": 1894708,
+          "roundScores": []
+        },
+        {
+          "pos": 14,
+          "name": "Tiago Joel Peters",
+          "licencia": "CP31371850",
+          "hcp": 6.9,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 75
+            },
+            {
+              "round": 3,
+              "gross": 77
+            }
+          ],
+          "total": 231,
+          "toPar": 18,
+          "inscribedId": 1894640,
+          "roundScores": []
+        },
+        {
+          "pos": 15,
+          "name": "Javier Cumplido Hernandez",
+          "licencia": "CP01898580",
+          "hcp": 7.3,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 72
+            },
+            {
+              "round": 3,
+              "gross": 80
+            }
+          ],
+          "total": 233,
+          "toPar": 20,
+          "inscribedId": 1902806,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Jose Angel Cumplido Hernandez",
+          "licencia": "CP01898245",
+          "hcp": 8.6,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 82
+            },
+            {
+              "round": 2,
+              "gross": 75
+            },
+            {
+              "round": 3,
+              "gross": 76
+            }
+          ],
+          "total": 233,
+          "toPar": 20,
+          "inscribedId": 1903100,
+          "roundScores": []
+        },
+        {
+          "pos": 17,
+          "name": "Guillermo Henningsen Suárez",
+          "licencia": "CP01923710",
+          "hcp": 9.1,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 74
+            },
+            {
+              "round": 2,
+              "gross": 86
+            },
+            {
+              "round": 3,
+              "gross": 85
+            }
+          ],
+          "total": 245,
+          "toPar": 32,
+          "inscribedId": 1900851,
+          "roundScores": []
+        },
+        {
+          "pos": 18,
+          "name": "Diego Crespo Barco",
+          "licencia": "CP02923942",
+          "hcp": 10.5,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 80
+            },
+            {
+              "round": 2,
+              "gross": 86
+            },
+            {
+              "round": 3,
+              "gross": 83
+            }
+          ],
+          "total": 249,
+          "toPar": 36,
+          "inscribedId": 1901369,
+          "roundScores": []
+        },
+        {
+          "pos": 19,
+          "name": "Cristian Alvarez Claverie",
+          "licencia": "CP22930343",
+          "hcp": 7.4,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 85
+            },
+            {
+              "round": 2,
+              "gross": 83
+            },
+            {
+              "round": 3,
+              "gross": 83
+            }
+          ],
+          "total": 251,
+          "toPar": 38,
+          "inscribedId": 1902493,
+          "roundScores": []
+        },
+        {
+          "pos": 20,
+          "name": "Alejandro Mendoza Duque",
+          "licencia": "CP04893478",
+          "hcp": 12.9,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 90
+            },
+            {
+              "round": 2,
+              "gross": 85
+            },
+            {
+              "round": 3,
+              "gross": 84
+            }
+          ],
+          "total": 259,
+          "toPar": 46,
+          "inscribedId": 1901354,
+          "roundScores": []
+        },
+        {
+          "pos": 21,
+          "name": "Alvaro Sanchez Lopez",
+          "licencia": "CP01951644",
+          "hcp": 17,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 93
+            },
+            {
+              "round": 2,
+              "gross": 80
+            },
+            {
+              "round": 3,
+              "gross": 90
+            }
+          ],
+          "total": 263,
+          "toPar": 50,
+          "inscribedId": 1903140,
+          "roundScores": []
+        },
+        {
+          "pos": 22,
+          "name": "Jose Gomez Guerra",
+          "licencia": "CP01932032",
+          "hcp": 12.9,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 86
+            },
+            {
+              "round": 2,
+              "gross": 93
+            },
+            {
+              "round": 3,
+              "gross": 89
+            }
+          ],
+          "total": 268,
+          "toPar": 55,
+          "inscribedId": 1896558,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Alfonso Caballero De Rodas Gross",
+          "licencia": "CP01963464",
+          "hcp": 23.4,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 88
+            },
+            {
+              "round": 2,
+              "gross": 92
+            },
+            {
+              "round": 3,
+              "gross": 88
+            }
+          ],
+          "total": 268,
+          "toPar": 55,
+          "inscribedId": 1903157,
+          "roundScores": []
+        },
+        {
+          "pos": 24,
+          "name": "Nicolas Kopecky Albertazzi",
+          "licencia": "CP06957898",
+          "hcp": 16.8,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 86
+            },
+            {
+              "round": 2,
+              "gross": 99
+            },
+            {
+              "round": 3,
+              "gross": 86
+            }
+          ],
+          "total": 271,
+          "toPar": 58,
+          "inscribedId": 1902494,
+          "roundScores": []
+        },
+        {
+          "pos": 25,
+          "name": "Carlos Selig Marrero",
+          "licencia": "CP00466935",
+          "hcp": 13.4,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 95
+            },
+            {
+              "round": 2,
+              "gross": 88
+            },
+            {
+              "round": 3,
+              "gross": 91
+            }
+          ],
+          "total": 274,
+          "toPar": 61,
+          "inscribedId": 1895151,
+          "roundScores": []
+        },
+        {
+          "pos": 26,
+          "name": "Cisco De Bethencourt",
+          "licencia": "CP01952017",
+          "hcp": 15.6,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 88
+            },
+            {
+              "round": 2,
+              "gross": 97
+            },
+            {
+              "round": 3,
+              "gross": 90
+            }
+          ],
+          "total": 275,
+          "toPar": 62,
+          "inscribedId": 1901624,
+          "roundScores": []
+        },
+        {
+          "pos": 27,
+          "name": "Massimo Amoni Gamardo",
+          "licencia": "CP04942811",
+          "hcp": 12.6,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 89
+            },
+            {
+              "round": 2,
+              "gross": 96
+            },
+            {
+              "round": 3,
+              "gross": 92
+            }
+          ],
+          "total": 277,
+          "toPar": 64,
+          "inscribedId": 1896539,
+          "roundScores": []
+        },
+        {
+          "pos": 28,
+          "name": "David Arzola Hernandez",
+          "licencia": "CP24974220",
+          "hcp": 19.7,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 89
+            },
+            {
+              "round": 2,
+              "gross": 98
+            },
+            {
+              "round": 3,
+              "gross": 94
+            }
+          ],
+          "total": 281,
+          "toPar": 68,
+          "inscribedId": 1895105,
+          "roundScores": []
+        },
+        {
+          "pos": 29,
+          "name": "Alejandro Sanchez Lopez",
+          "licencia": "CP01951648",
+          "hcp": 21.2,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 95
+            },
+            {
+              "round": 2,
+              "gross": 90
+            },
+            {
+              "round": 3,
+              "gross": 97
+            }
+          ],
+          "total": 282,
+          "toPar": 69,
+          "inscribedId": 1903141,
+          "roundScores": []
+        },
+        {
+          "pos": 30,
+          "name": "Cristobal Jimenez Sanchez",
+          "licencia": "CP26948681",
+          "hcp": 21.6,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 113
+            },
+            {
+              "round": 2,
+              "gross": 96
+            },
+            {
+              "round": 3,
+              "gross": 86
+            }
+          ],
+          "total": 295,
+          "toPar": 82,
+          "inscribedId": 1896112,
+          "roundScores": []
+        },
+        {
+          "pos": 31,
+          "name": "Nevis Molina Spindler",
+          "licencia": "CP01949889",
+          "hcp": 31,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 123
+            },
+            {
+              "round": 2,
+              "gross": 109
+            },
+            {
+              "round": 3,
+              "gross": 119
+            }
+          ],
+          "total": 351,
+          "toPar": 138,
+          "inscribedId": 1903160,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Raimundo Baroja Hernandez",
+          "licencia": "CP02817962",
+          "hcp": 2.8,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 1901801,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Gonzalo Caballero De Rodas Gross",
+          "licencia": "CP01963463",
+          "hcp": 25.3,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 1903158,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 9,
+      "categoryName": "Clasificación 2ª Jornada Indistinta 18 Hoyos",
+      "expectedJugadores": 52,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Nicolas Vidal Reig",
+          "licencia": "CP01811935",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 65
+            },
+            {
+              "round": 2,
+              "gross": 68
+            }
+          ],
+          "total": 133,
+          "toPar": -9,
+          "inscribedId": 1899524,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Rafael Gonzalez Albarracin",
+          "licencia": "CP02817272",
+          "hcp": 1.3,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 71
+            },
+            {
+              "round": 2,
+              "gross": 65
+            }
+          ],
+          "total": 136,
+          "toPar": -6,
+          "inscribedId": 1903148,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Isaac Puerto Rodriguez",
+          "licencia": "CP04887265",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 72
+            },
+            {
+              "round": 2,
+              "gross": 67
+            }
+          ],
+          "total": 139,
+          "toPar": -3,
+          "inscribedId": 1895138,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Luis Abeledo Miranda",
+          "licencia": "CP02167542",
+          "hcp": 1.7,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 68
+            },
+            {
+              "round": 2,
+              "gross": 71
+            }
+          ],
+          "total": 139,
+          "toPar": -3,
+          "inscribedId": 1900775,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Ignacio Jose Sintes Navarro",
+          "licencia": "CP01813124",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 71
+            },
+            {
+              "round": 2,
+              "gross": 69
+            }
+          ],
+          "total": 140,
+          "toPar": -2,
+          "inscribedId": 1897194,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Samuel Moran Rodriguez",
+          "licencia": "CP01883264",
+          "hcp": 0.7,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 71
+            },
+            {
+              "round": 2,
+              "gross": 71
+            }
+          ],
+          "total": 142,
+          "toPar": null,
+          "inscribedId": 1901335,
+          "roundScores": []
+        },
+        {
+          "pos": 7,
+          "name": "Sofia Henningsen Suarez",
+          "licencia": "CP01923713",
+          "hcp": 1.4,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 74
+            },
+            {
+              "round": 2,
+              "gross": 70
+            }
+          ],
+          "total": 144,
+          "toPar": 2,
+          "inscribedId": 1900850,
+          "roundScores": []
+        },
+        {
+          "pos": 8,
+          "name": "Isabel Ping Martinez Guerra",
+          "licencia": "CP01929578",
+          "hcp": 4.9,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 70
+            }
+          ],
+          "total": 145,
+          "toPar": 3,
+          "inscribedId": 1896578,
+          "roundScores": []
+        },
+        {
+          "pos": 9,
+          "name": "Javier De Bethencourt Duque",
+          "licencia": "CP01896466",
+          "hcp": 1.9,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 68
+            }
+          ],
+          "total": 146,
+          "toPar": 4,
+          "inscribedId": 1896580,
+          "roundScores": []
+        },
+        {
+          "pos": 10,
+          "name": "Alvaro Febles Rodriguez",
+          "licencia": "CP02894372",
+          "hcp": 2.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 72
+            }
+          ],
+          "total": 147,
+          "toPar": 5,
+          "inscribedId": 1900606,
+          "roundScores": []
+        },
+        {
+          "pos": 11,
+          "name": "Matias Pusnik Sylverans",
+          "licencia": "CP23941520",
+          "hcp": 1,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 75
+            }
+          ],
+          "total": 151,
+          "toPar": 9,
+          "inscribedId": 1896759,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Adrian Nordin Henning",
+          "licencia": "CP04899452",
+          "hcp": 6.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 76
+            }
+          ],
+          "total": 151,
+          "toPar": 9,
+          "inscribedId": 1894879,
+          "roundScores": []
+        },
+        {
+          "pos": 13,
+          "name": "Rodrigo Baroja Hernandez",
+          "licencia": "CP02817964",
+          "hcp": 5,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 71
+            }
+          ],
+          "total": 152,
+          "toPar": 10,
+          "inscribedId": 1901802,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Raimundo Baroja Hernandez",
+          "licencia": "CP02817962",
+          "hcp": 2.8,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 76
+            }
+          ],
+          "total": 152,
+          "toPar": 10,
+          "inscribedId": 1901801,
+          "roundScores": []
+        },
+        {
+          "pos": 15,
+          "name": "Javier Cumplido Hernandez",
+          "licencia": "CP01898580",
+          "hcp": 7.3,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 72
+            }
+          ],
+          "total": 153,
+          "toPar": 11,
+          "inscribedId": 1902806,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Juan Cabrera Monzon",
+          "licencia": "CP01897445",
+          "hcp": 4.3,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 75
+            }
+          ],
+          "total": 153,
+          "toPar": 11,
+          "inscribedId": 1894708,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Valentina De Bethencourt",
+          "licencia": "CP01883174",
+          "hcp": 8.1,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 77
+            }
+          ],
+          "total": 153,
+          "toPar": 11,
+          "inscribedId": 1901620,
+          "roundScores": []
+        },
+        {
+          "pos": 18,
+          "name": "Lukas Pusnik Sylverans",
+          "licencia": "CP23941519",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 82
+            },
+            {
+              "round": 2,
+              "gross": 72
+            }
+          ],
+          "total": 154,
+          "toPar": 12,
+          "inscribedId": 1896758,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Lara Galban Morales",
+          "licencia": "CP01884866",
+          "hcp": 5.2,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 80
+            },
+            {
+              "round": 2,
+              "gross": 74
+            }
+          ],
+          "total": 154,
+          "toPar": 12,
+          "inscribedId": 1900852,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Tiago Joel Peters",
+          "licencia": "CP31371850",
+          "hcp": 6.9,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 75
+            }
+          ],
+          "total": 154,
+          "toPar": 12,
+          "inscribedId": 1894640,
+          "roundScores": []
+        },
+        {
+          "pos": 21,
+          "name": "Minerva Sintes Navarro",
+          "licencia": "CP01907134",
+          "hcp": 5.8,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 79
+            }
+          ],
+          "total": 155,
+          "toPar": 13,
+          "inscribedId": 1897225,
+          "roundScores": []
+        },
+        {
+          "pos": 22,
+          "name": "Irene Martin Rodriguez",
+          "licencia": "CP04887266",
+          "hcp": 8.8,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 83
+            },
+            {
+              "round": 2,
+              "gross": 73
+            }
+          ],
+          "total": 156,
+          "toPar": 14,
+          "inscribedId": 1894876,
+          "roundScores": []
+        },
+        {
+          "pos": 23,
+          "name": "Jose Angel Cumplido Hernandez",
+          "licencia": "CP01898245",
+          "hcp": 8.6,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 82
+            },
+            {
+              "round": 2,
+              "gross": 75
+            }
+          ],
+          "total": 157,
+          "toPar": 15,
+          "inscribedId": 1903100,
+          "roundScores": []
+        },
+        {
+          "pos": 24,
+          "name": "Edurne Lairihoy Gonzalez",
+          "licencia": "CP06944877",
+          "hcp": 13.5,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 82
+            }
+          ],
+          "total": 158,
+          "toPar": 16,
+          "inscribedId": 1901325,
+          "roundScores": []
+        },
+        {
+          "pos": 25,
+          "name": "Lucia Uribe De Leon",
+          "licencia": "CP01944236",
+          "hcp": 12.2,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 80
+            }
+          ],
+          "total": 159,
+          "toPar": 17,
+          "inscribedId": 1902808,
+          "roundScores": []
+        },
+        {
+          "pos": 26,
+          "name": "Guillermo Henningsen Suárez",
+          "licencia": "CP01923710",
+          "hcp": 9.1,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 74
+            },
+            {
+              "round": 2,
+              "gross": 86
+            }
+          ],
+          "total": 160,
+          "toPar": 18,
+          "inscribedId": 1900851,
+          "roundScores": []
+        },
+        {
+          "pos": 27,
+          "name": "Paula Galban Morales",
+          "licencia": "CP01931970",
+          "hcp": 7.9,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 85
+            },
+            {
+              "round": 2,
+              "gross": 76
+            }
+          ],
+          "total": 161,
+          "toPar": 19,
+          "inscribedId": 1900849,
+          "roundScores": []
+        },
+        {
+          "pos": 28,
+          "name": "Maria Del Pino Uribe De Leon",
+          "licencia": "CP01944235",
+          "hcp": 16.9,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 80
+            },
+            {
+              "round": 2,
+              "gross": 84
+            }
+          ],
+          "total": 164,
+          "toPar": 22,
+          "inscribedId": 1902805,
+          "roundScores": []
+        },
+        {
+          "pos": 29,
+          "name": "Diego Crespo Barco",
+          "licencia": "CP02923942",
+          "hcp": 10.5,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 80
+            },
+            {
+              "round": 2,
+              "gross": 86
+            }
+          ],
+          "total": 166,
+          "toPar": 24,
+          "inscribedId": 1901369,
+          "roundScores": []
+        },
+        {
+          "pos": 30,
+          "name": "Adriana Torres Digon",
+          "licencia": "CP02887575",
+          "hcp": 5.5,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 86
+            },
+            {
+              "round": 2,
+              "gross": 81
+            }
+          ],
+          "total": 167,
+          "toPar": 25,
+          "inscribedId": 1901647,
+          "roundScores": []
+        },
+        {
+          "pos": 31,
+          "name": "Cristian Alvarez Claverie",
+          "licencia": "CP22930343",
+          "hcp": 7.4,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 85
+            },
+            {
+              "round": 2,
+              "gross": 83
+            }
+          ],
+          "total": 168,
+          "toPar": 26,
+          "inscribedId": 1902493,
+          "roundScores": []
+        },
+        {
+          "pos": 32,
+          "name": "Silvia Gonzalez Albarracin",
+          "licencia": "CP02884346",
+          "hcp": 8,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 88
+            },
+            {
+              "round": 2,
+              "gross": 82
+            }
+          ],
+          "total": 170,
+          "toPar": 28,
+          "inscribedId": 1903149,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Maxima De Bethencourt",
+          "licencia": "CP01931459",
+          "hcp": 15.5,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 86
+            },
+            {
+              "round": 2,
+              "gross": 84
+            }
+          ],
+          "total": 170,
+          "toPar": 28,
+          "inscribedId": 1901623,
+          "roundScores": []
+        },
+        {
+          "pos": 34,
+          "name": "Alvaro Sanchez Lopez",
+          "licencia": "CP01951644",
+          "hcp": 17,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 93
+            },
+            {
+              "round": 2,
+              "gross": 80
+            }
+          ],
+          "total": 173,
+          "toPar": 31,
+          "inscribedId": 1903140,
+          "roundScores": []
+        },
+        {
+          "pos": 35,
+          "name": "Alejandro Mendoza Duque",
+          "licencia": "CP04893478",
+          "hcp": 12.9,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 90
+            },
+            {
+              "round": 2,
+              "gross": 85
+            }
+          ],
+          "total": 175,
+          "toPar": 33,
+          "inscribedId": 1901354,
+          "roundScores": []
+        },
+        {
+          "pos": 36,
+          "name": "Malena Molina Spindler",
+          "licencia": "CP01949890",
+          "hcp": 15.2,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 91
+            },
+            {
+              "round": 2,
+              "gross": 88
+            }
+          ],
+          "total": 179,
+          "toPar": 37,
+          "inscribedId": 1903159,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Jose Gomez Guerra",
+          "licencia": "CP01932032",
+          "hcp": 12.9,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 86
+            },
+            {
+              "round": 2,
+              "gross": 93
+            }
+          ],
+          "total": 179,
+          "toPar": 37,
+          "inscribedId": 1896558,
+          "roundScores": []
+        },
+        {
+          "pos": 38,
+          "name": "Alfonso Caballero De Rodas Gross",
+          "licencia": "CP01963464",
+          "hcp": 23.4,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 88
+            },
+            {
+              "round": 2,
+              "gross": 92
+            }
+          ],
+          "total": 180,
+          "toPar": 38,
+          "inscribedId": 1903157,
+          "roundScores": []
+        },
+        {
+          "pos": 39,
+          "name": "Carlos Selig Marrero",
+          "licencia": "CP00466935",
+          "hcp": 13.4,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 95
+            },
+            {
+              "round": 2,
+              "gross": 88
+            }
+          ],
+          "total": 183,
+          "toPar": 41,
+          "inscribedId": 1895151,
+          "roundScores": []
+        },
+        {
+          "pos": 40,
+          "name": "Alejandro Sanchez Lopez",
+          "licencia": "CP01951648",
+          "hcp": 21.2,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 95
+            },
+            {
+              "round": 2,
+              "gross": 90
+            }
+          ],
+          "total": 185,
+          "toPar": 43,
+          "inscribedId": 1903141,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Jimena Rodriguez Puerto",
+          "licencia": "CP04892307",
+          "hcp": 12.5,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 92
+            },
+            {
+              "round": 2,
+              "gross": 93
+            }
+          ],
+          "total": 185,
+          "toPar": 43,
+          "inscribedId": 1901349,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Massimo Amoni Gamardo",
+          "licencia": "CP04942811",
+          "hcp": 12.6,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 89
+            },
+            {
+              "round": 2,
+              "gross": 96
+            }
+          ],
+          "total": 185,
+          "toPar": 43,
+          "inscribedId": 1896539,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Cisco De Bethencourt",
+          "licencia": "CP01952017",
+          "hcp": 15.6,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 88
+            },
+            {
+              "round": 2,
+              "gross": 97
+            }
+          ],
+          "total": 185,
+          "toPar": 43,
+          "inscribedId": 1901624,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Nicolas Kopecky Albertazzi",
+          "licencia": "CP06957898",
+          "hcp": 16.8,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 86
+            },
+            {
+              "round": 2,
+              "gross": 99
+            }
+          ],
+          "total": 185,
+          "toPar": 43,
+          "inscribedId": 1902494,
+          "roundScores": []
+        },
+        {
+          "pos": 45,
+          "name": "David Arzola Hernandez",
+          "licencia": "CP24974220",
+          "hcp": 19.7,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 89
+            },
+            {
+              "round": 2,
+              "gross": 98
+            }
+          ],
+          "total": 187,
+          "toPar": 45,
+          "inscribedId": 1895105,
+          "roundScores": []
+        },
+        {
+          "pos": 46,
+          "name": "Carlota Perez Gonzalez",
+          "licencia": "CP04945360",
+          "hcp": 13.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 99
+            },
+            {
+              "round": 2,
+              "gross": 91
+            }
+          ],
+          "total": 190,
+          "toPar": 48,
+          "inscribedId": 1901072,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Gonzalo Caballero De Rodas Gross",
+          "licencia": "CP01963463",
+          "hcp": 25.3,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 96
+            },
+            {
+              "round": 2,
+              "gross": 94
+            }
+          ],
+          "total": 190,
+          "toPar": 48,
+          "inscribedId": 1903158,
+          "roundScores": []
+        },
+        {
+          "pos": 48,
+          "name": "Adela Garcia Luis",
+          "licencia": "CP22927512",
+          "hcp": 33,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 103
+            },
+            {
+              "round": 2,
+              "gross": 90
+            }
+          ],
+          "total": 193,
+          "toPar": 51,
+          "inscribedId": 1901290,
+          "roundScores": []
+        },
+        {
+          "pos": 49,
+          "name": "Leire Aranzabal Hernandez",
+          "licencia": "CP04973022",
+          "hcp": 33.2,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 104
+            },
+            {
+              "round": 2,
+              "gross": 100
+            }
+          ],
+          "total": 204,
+          "toPar": 62,
+          "inscribedId": 1894858,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                7,
+                7,
+                8,
+                3,
+                6,
+                2,
+                6,
+                7,
+                5,
+                6,
+                3,
+                6,
+                5,
+                8,
+                6,
+                6,
+                5
+              ],
+              "total": 104
+            },
+            {
+              "round": 2,
+              "scores": [
+                6,
+                5,
+                4,
+                7,
+                2,
+                5,
+                4,
+                7,
+                7,
+                5,
+                6,
+                5,
+                8,
+                5,
+                4,
+                5,
+                6,
+                9
+              ],
+              "total": 100
+            },
+            {
+              "round": 3,
+              "scores": [
+                7,
+                6,
+                3,
+                7,
+                4,
+                8,
+                5,
+                6,
+                6,
+                4,
+                7,
+                5,
+                7,
+                6,
+                4,
+                6,
+                6,
+                8
+              ],
+              "total": 105
+            }
+          ]
+        },
+        {
+          "pos": 50,
+          "name": "Cristobal Jimenez Sanchez",
+          "licencia": "CP26948681",
+          "hcp": 21.6,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 113
+            },
+            {
+              "round": 2,
+              "gross": 96
+            }
+          ],
+          "total": 209,
+          "toPar": 67,
+          "inscribedId": 1896112,
+          "roundScores": []
+        },
+        {
+          "pos": 51,
+          "name": "Nevis Molina Spindler",
+          "licencia": "CP01949889",
+          "hcp": 31,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 123
+            },
+            {
+              "round": 2,
+              "gross": 109
+            }
+          ],
+          "total": 232,
+          "toPar": 90,
+          "inscribedId": 1903160,
+          "roundScores": []
+        },
+        {
+          "pos": 52,
+          "name": "Victoria Rodriguez Puerto",
+          "licencia": "CP04945721",
+          "hcp": 35,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 121
+            },
+            {
+              "round": 2,
+              "gross": 121
+            }
+          ],
+          "total": 242,
+          "toPar": 100,
+          "inscribedId": 1902814,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 10,
+      "categoryName": "1ª Jornada Indistinto 18 Hoyos",
+      "expectedJugadores": 52,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Nicolas Vidal Reig",
+          "licencia": "CP01811935",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [],
+          "total": 65,
+          "toPar": -6,
+          "inscribedId": 1899524,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Luis Abeledo Miranda",
+          "licencia": "CP02167542",
+          "hcp": 1.7,
+          "nivel": "I",
+          "rounds": [],
+          "total": 68,
+          "toPar": -3,
+          "inscribedId": 1900775,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Samuel Moran Rodriguez",
+          "licencia": "CP01883264",
+          "hcp": 0.7,
+          "nivel": "J",
+          "rounds": [],
+          "total": 71,
+          "toPar": null,
+          "inscribedId": 1901335,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Ignacio Jose Sintes Navarro",
+          "licencia": "CP01813124",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [],
+          "total": 71,
+          "toPar": null,
+          "inscribedId": 1897194,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Rafael Gonzalez Albarracin",
+          "licencia": "CP02817272",
+          "hcp": 1.3,
+          "nivel": "C",
+          "rounds": [],
+          "total": 71,
+          "toPar": null,
+          "inscribedId": 1903148,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Isaac Puerto Rodriguez",
+          "licencia": "CP04887265",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [],
+          "total": 72,
+          "toPar": 1,
+          "inscribedId": 1895138,
+          "roundScores": []
+        },
+        {
+          "pos": 7,
+          "name": "Guillermo Henningsen Suárez",
+          "licencia": "CP01923710",
+          "hcp": 9.1,
+          "nivel": "I",
+          "rounds": [],
+          "total": 74,
+          "toPar": 3,
+          "inscribedId": 1900851,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Sofia Henningsen Suarez",
+          "licencia": "CP01923713",
+          "hcp": 1.4,
+          "nivel": "C",
+          "rounds": [],
+          "total": 74,
+          "toPar": 3,
+          "inscribedId": 1900850,
+          "roundScores": []
+        },
+        {
+          "pos": 9,
+          "name": "Isabel Ping Martinez Guerra",
+          "licencia": "CP01929578",
+          "hcp": 4.9,
+          "nivel": "I",
+          "rounds": [],
+          "total": 75,
+          "toPar": 4,
+          "inscribedId": 1896578,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Adrian Nordin Henning",
+          "licencia": "CP04899452",
+          "hcp": 6.6,
+          "nivel": "C",
+          "rounds": [],
+          "total": 75,
+          "toPar": 4,
+          "inscribedId": 1894879,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Alvaro Febles Rodriguez",
+          "licencia": "CP02894372",
+          "hcp": 2.6,
+          "nivel": "C",
+          "rounds": [],
+          "total": 75,
+          "toPar": 4,
+          "inscribedId": 1900606,
+          "roundScores": []
+        },
+        {
+          "pos": 12,
+          "name": "Matias Pusnik Sylverans",
+          "licencia": "CP23941520",
+          "hcp": 1,
+          "nivel": "C",
+          "rounds": [],
+          "total": 76,
+          "toPar": 5,
+          "inscribedId": 1896759,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Minerva Sintes Navarro",
+          "licencia": "CP01907134",
+          "hcp": 5.8,
+          "nivel": "C",
+          "rounds": [],
+          "total": 76,
+          "toPar": 5,
+          "inscribedId": 1897225,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Valentina De Bethencourt",
+          "licencia": "CP01883174",
+          "hcp": 8.1,
+          "nivel": "C",
+          "rounds": [],
+          "total": 76,
+          "toPar": 5,
+          "inscribedId": 1901620,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Raimundo Baroja Hernandez",
+          "licencia": "CP02817962",
+          "hcp": 2.8,
+          "nivel": "C",
+          "rounds": [],
+          "total": 76,
+          "toPar": 5,
+          "inscribedId": 1901801,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Edurne Lairihoy Gonzalez",
+          "licencia": "CP06944877",
+          "hcp": 13.5,
+          "nivel": "I",
+          "rounds": [],
+          "total": 76,
+          "toPar": 5,
+          "inscribedId": 1901325,
+          "roundScores": []
+        },
+        {
+          "pos": 17,
+          "name": "Javier De Bethencourt Duque",
+          "licencia": "CP01896466",
+          "hcp": 1.9,
+          "nivel": "C",
+          "rounds": [],
+          "total": 78,
+          "toPar": 7,
+          "inscribedId": 1896580,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Juan Cabrera Monzon",
+          "licencia": "CP01897445",
+          "hcp": 4.3,
+          "nivel": "I",
+          "rounds": [],
+          "total": 78,
+          "toPar": 7,
+          "inscribedId": 1894708,
+          "roundScores": []
+        },
+        {
+          "pos": 19,
+          "name": "Lucia Uribe De Leon",
+          "licencia": "CP01944236",
+          "hcp": 12.2,
+          "nivel": "I",
+          "rounds": [],
+          "total": 79,
+          "toPar": 8,
+          "inscribedId": 1902808,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Tiago Joel Peters",
+          "licencia": "CP31371850",
+          "hcp": 6.9,
+          "nivel": "C",
+          "rounds": [],
+          "total": 79,
+          "toPar": 8,
+          "inscribedId": 1894640,
+          "roundScores": []
+        },
+        {
+          "pos": 21,
+          "name": "Lara Galban Morales",
+          "licencia": "CP01884866",
+          "hcp": 5.2,
+          "nivel": "J",
+          "rounds": [],
+          "total": 80,
+          "toPar": 9,
+          "inscribedId": 1900852,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Maria Del Pino Uribe De Leon",
+          "licencia": "CP01944235",
+          "hcp": 16.9,
+          "nivel": "I",
+          "rounds": [],
+          "total": 80,
+          "toPar": 9,
+          "inscribedId": 1902805,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Diego Crespo Barco",
+          "licencia": "CP02923942",
+          "hcp": 10.5,
+          "nivel": "A",
+          "rounds": [],
+          "total": 80,
+          "toPar": 9,
+          "inscribedId": 1901369,
+          "roundScores": []
+        },
+        {
+          "pos": 24,
+          "name": "Javier Cumplido Hernandez",
+          "licencia": "CP01898580",
+          "hcp": 7.3,
+          "nivel": "C",
+          "rounds": [],
+          "total": 81,
+          "toPar": 10,
+          "inscribedId": 1902806,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Rodrigo Baroja Hernandez",
+          "licencia": "CP02817964",
+          "hcp": 5,
+          "nivel": "I",
+          "rounds": [],
+          "total": 81,
+          "toPar": 10,
+          "inscribedId": 1901802,
+          "roundScores": []
+        },
+        {
+          "pos": 26,
+          "name": "Jose Angel Cumplido Hernandez",
+          "licencia": "CP01898245",
+          "hcp": 8.6,
+          "nivel": "J",
+          "rounds": [],
+          "total": 82,
+          "toPar": 11,
+          "inscribedId": 1903100,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Lukas Pusnik Sylverans",
+          "licencia": "CP23941519",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [],
+          "total": 82,
+          "toPar": 11,
+          "inscribedId": 1896758,
+          "roundScores": []
+        },
+        {
+          "pos": 28,
+          "name": "Irene Martin Rodriguez",
+          "licencia": "CP04887266",
+          "hcp": 8.8,
+          "nivel": "C",
+          "rounds": [],
+          "total": 83,
+          "toPar": 12,
+          "inscribedId": 1894876,
+          "roundScores": []
+        },
+        {
+          "pos": 29,
+          "name": "Paula Galban Morales",
+          "licencia": "CP01931970",
+          "hcp": 7.9,
+          "nivel": "I",
+          "rounds": [],
+          "total": 85,
+          "toPar": 14,
+          "inscribedId": 1900849,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Cristian Alvarez Claverie",
+          "licencia": "CP22930343",
+          "hcp": 7.4,
+          "nivel": "C",
+          "rounds": [],
+          "total": 85,
+          "toPar": 14,
+          "inscribedId": 1902493,
+          "roundScores": []
+        },
+        {
+          "pos": 31,
+          "name": "Adriana Torres Digon",
+          "licencia": "CP02887575",
+          "hcp": 5.5,
+          "nivel": "C",
+          "rounds": [],
+          "total": 86,
+          "toPar": 15,
+          "inscribedId": 1901647,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Nicolas Kopecky Albertazzi",
+          "licencia": "CP06957898",
+          "hcp": 16.8,
+          "nivel": "A",
+          "rounds": [],
+          "total": 86,
+          "toPar": 15,
+          "inscribedId": 1902494,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Maxima De Bethencourt",
+          "licencia": "CP01931459",
+          "hcp": 15.5,
+          "nivel": "I",
+          "rounds": [],
+          "total": 86,
+          "toPar": 15,
+          "inscribedId": 1901623,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Jose Gomez Guerra",
+          "licencia": "CP01932032",
+          "hcp": 12.9,
+          "nivel": "I",
+          "rounds": [],
+          "total": 86,
+          "toPar": 15,
+          "inscribedId": 1896558,
+          "roundScores": []
+        },
+        {
+          "pos": 35,
+          "name": "Silvia Gonzalez Albarracin",
+          "licencia": "CP02884346",
+          "hcp": 8,
+          "nivel": "I",
+          "rounds": [],
+          "total": 88,
+          "toPar": 17,
+          "inscribedId": 1903149,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Cisco De Bethencourt",
+          "licencia": "CP01952017",
+          "hcp": 15.6,
+          "nivel": "A",
+          "rounds": [],
+          "total": 88,
+          "toPar": 17,
+          "inscribedId": 1901624,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Alfonso Caballero De Rodas Gross",
+          "licencia": "CP01963464",
+          "hcp": 23.4,
+          "nivel": "I",
+          "rounds": [],
+          "total": 88,
+          "toPar": 17,
+          "inscribedId": 1903157,
+          "roundScores": []
+        },
+        {
+          "pos": 38,
+          "name": "David Arzola Hernandez",
+          "licencia": "CP24974220",
+          "hcp": 19.7,
+          "nivel": "I",
+          "rounds": [],
+          "total": 89,
+          "toPar": 18,
+          "inscribedId": 1895105,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Massimo Amoni Gamardo",
+          "licencia": "CP04942811",
+          "hcp": 12.6,
+          "nivel": "A",
+          "rounds": [],
+          "total": 89,
+          "toPar": 18,
+          "inscribedId": 1896539,
+          "roundScores": []
+        },
+        {
+          "pos": 40,
+          "name": "Alejandro Mendoza Duque",
+          "licencia": "CP04893478",
+          "hcp": 12.9,
+          "nivel": "J",
+          "rounds": [],
+          "total": 90,
+          "toPar": 19,
+          "inscribedId": 1901354,
+          "roundScores": []
+        },
+        {
+          "pos": 41,
+          "name": "Malena Molina Spindler",
+          "licencia": "CP01949890",
+          "hcp": 15.2,
+          "nivel": "I",
+          "rounds": [],
+          "total": 91,
+          "toPar": 20,
+          "inscribedId": 1903159,
+          "roundScores": []
+        },
+        {
+          "pos": 42,
+          "name": "Jimena Rodriguez Puerto",
+          "licencia": "CP04892307",
+          "hcp": 12.5,
+          "nivel": "C",
+          "rounds": [],
+          "total": 92,
+          "toPar": 21,
+          "inscribedId": 1901349,
+          "roundScores": []
+        },
+        {
+          "pos": 43,
+          "name": "Alvaro Sanchez Lopez",
+          "licencia": "CP01951644",
+          "hcp": 17,
+          "nivel": "C",
+          "rounds": [],
+          "total": 93,
+          "toPar": 22,
+          "inscribedId": 1903140,
+          "roundScores": []
+        },
+        {
+          "pos": 44,
+          "name": "Alejandro Sanchez Lopez",
+          "licencia": "CP01951648",
+          "hcp": 21.2,
+          "nivel": "A",
+          "rounds": [],
+          "total": 95,
+          "toPar": 24,
+          "inscribedId": 1903141,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Carlos Selig Marrero",
+          "licencia": "CP00466935",
+          "hcp": 13.4,
+          "nivel": "A",
+          "rounds": [],
+          "total": 95,
+          "toPar": 24,
+          "inscribedId": 1895151,
+          "roundScores": []
+        },
+        {
+          "pos": 46,
+          "name": "Gonzalo Caballero De Rodas Gross",
+          "licencia": "CP01963463",
+          "hcp": 25.3,
+          "nivel": "A",
+          "rounds": [],
+          "total": 96,
+          "toPar": 25,
+          "inscribedId": 1903158,
+          "roundScores": []
+        },
+        {
+          "pos": 47,
+          "name": "Carlota Perez Gonzalez",
+          "licencia": "CP04945360",
+          "hcp": 13.6,
+          "nivel": "C",
+          "rounds": [],
+          "total": 99,
+          "toPar": 28,
+          "inscribedId": 1901072,
+          "roundScores": []
+        },
+        {
+          "pos": 48,
+          "name": "Adela Garcia Luis",
+          "licencia": "CP22927512",
+          "hcp": 33,
+          "nivel": "C",
+          "rounds": [],
+          "total": 103,
+          "toPar": 32,
+          "inscribedId": 1901290,
+          "roundScores": []
+        },
+        {
+          "pos": 49,
+          "name": "Leire Aranzabal Hernandez",
+          "licencia": "CP04973022",
+          "hcp": 33.2,
+          "nivel": "A",
+          "rounds": [],
+          "total": 104,
+          "toPar": 33,
+          "inscribedId": 1894858,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                7,
+                7,
+                8,
+                3,
+                6,
+                2,
+                6,
+                7,
+                5,
+                6,
+                3,
+                6,
+                5,
+                8,
+                6,
+                6,
+                5
+              ],
+              "total": 104
+            },
+            {
+              "round": 2,
+              "scores": [
+                6,
+                5,
+                4,
+                7,
+                2,
+                5,
+                4,
+                7,
+                7,
+                5,
+                6,
+                5,
+                8,
+                5,
+                4,
+                5,
+                6,
+                9
+              ],
+              "total": 100
+            },
+            {
+              "round": 3,
+              "scores": [
+                7,
+                6,
+                3,
+                7,
+                4,
+                8,
+                5,
+                6,
+                6,
+                4,
+                7,
+                5,
+                7,
+                6,
+                4,
+                6,
+                6,
+                8
+              ],
+              "total": 105
+            }
+          ]
+        },
+        {
+          "pos": 50,
+          "name": "Cristobal Jimenez Sanchez",
+          "licencia": "CP26948681",
+          "hcp": 21.6,
+          "nivel": "I",
+          "rounds": [],
+          "total": 113,
+          "toPar": 42,
+          "inscribedId": 1896112,
+          "roundScores": []
+        },
+        {
+          "pos": 51,
+          "name": "Victoria Rodriguez Puerto",
+          "licencia": "CP04945721",
+          "hcp": 35,
+          "nivel": "A",
+          "rounds": [],
+          "total": 121,
+          "toPar": 50,
+          "inscribedId": 1902814,
+          "roundScores": []
+        },
+        {
+          "pos": 52,
+          "name": "Nevis Molina Spindler",
+          "licencia": "CP01949889",
+          "hcp": 31,
+          "nivel": "A",
+          "rounds": [],
+          "total": 123,
+          "toPar": 52,
+          "inscribedId": 1903160,
+          "roundScores": []
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Final Alevín Femenina",
+      "jugadores": 2
+    },
+    "2": {
+      "name": "Clasificación Final Alevin Masculino",
+      "jugadores": 8
+    },
+    "3": {
+      "name": "Clasificación Final Infantil Femenino",
+      "jugadores": 8
+    },
+    "4": {
+      "name": "Clasificación Final Infantil Masculino",
+      "jugadores": 8
+    },
+    "5": {
+      "name": "Clasificación Final Cadete Femenina",
+      "jugadores": 8
+    },
+    "6": {
+      "name": "Clasificación Final Cadete Masculina",
+      "jugadores": 11
+    },
+    "7": {
+      "name": "Clasificación Final Femenina",
+      "jugadores": 19
+    },
+    "8": {
+      "name": "Clasificación Final Masculina",
+      "jugadores": 33
+    },
+    "9": {
+      "name": "Clasificación 2ª Jornada Indistinta 18 Hoyos",
+      "jugadores": 52
+    },
+    "10": {
+      "name": "1ª Jornada Indistinto 18 Hoyos",
+      "jugadores": 52
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Tiago Joel Peters",
+      "licencia": "CP31371850",
+      "hcp": 6.9,
+      "nivel": "C"
+    },
+    {
+      "orden": 2,
+      "name": "Juan Cabrera Monzon",
+      "licencia": "CP01897445",
+      "hcp": 4.3,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Adrian Nordin Henning",
+      "licencia": "CP04899452",
+      "hcp": 6.6,
+      "nivel": "C"
+    },
+    {
+      "orden": 4,
+      "name": "David Arzola Hernandez",
+      "licencia": "CP24974220",
+      "hcp": 19.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 5,
+      "name": "Isaac Puerto Rodriguez",
+      "licencia": "CP04887265",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 6,
+      "name": "Carlos Selig Marrero",
+      "licencia": "CP00466935",
+      "hcp": 13.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 7,
+      "name": "Cristobal Jimenez Sanchez",
+      "licencia": "CP26948681",
+      "hcp": 21.6,
+      "nivel": "I"
+    },
+    {
+      "orden": 8,
+      "name": "Massimo Amoni Gamardo",
+      "licencia": "CP04942811",
+      "hcp": 12.6,
+      "nivel": "A"
+    },
+    {
+      "orden": 9,
+      "name": "Jose Gomez Guerra",
+      "licencia": "CP01932032",
+      "hcp": 12.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 10,
+      "name": "Javier De Bethencourt Duque",
+      "licencia": "CP01896466",
+      "hcp": 1.9,
+      "nivel": "C"
+    },
+    {
+      "orden": 11,
+      "name": "Lukas Pusnik Sylverans",
+      "licencia": "CP23941519",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 12,
+      "name": "Matias Pusnik Sylverans",
+      "licencia": "CP23941520",
+      "hcp": 1,
+      "nivel": "C"
+    },
+    {
+      "orden": 13,
+      "name": "Ignacio Jose Sintes Navarro",
+      "licencia": "CP01813124",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 14,
+      "name": "Nicolas Vidal Reig",
+      "licencia": "CP01811935",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 15,
+      "name": "Alvaro Febles Rodriguez",
+      "licencia": "CP02894372",
+      "hcp": 2.6,
+      "nivel": "C"
+    },
+    {
+      "orden": 16,
+      "name": "Luis Abeledo Miranda",
+      "licencia": "CP02167542",
+      "hcp": 1.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 17,
+      "name": "Guillermo Henningsen Suárez",
+      "licencia": "CP01923710",
+      "hcp": 9.1,
+      "nivel": "I"
+    },
+    {
+      "orden": 18,
+      "name": "Samuel Moran Rodriguez",
+      "licencia": "CP01883264",
+      "hcp": 0.7,
+      "nivel": "J"
+    },
+    {
+      "orden": 19,
+      "name": "Alejandro Mendoza Duque",
+      "licencia": "CP04893478",
+      "hcp": 12.9,
+      "nivel": "J"
+    },
+    {
+      "orden": 20,
+      "name": "Diego Crespo Barco",
+      "licencia": "CP02923942",
+      "hcp": 10.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 21,
+      "name": "Cisco De Bethencourt",
+      "licencia": "CP01952017",
+      "hcp": 15.6,
+      "nivel": "A"
+    },
+    {
+      "orden": 22,
+      "name": "Raimundo Baroja Hernandez",
+      "licencia": "CP02817962",
+      "hcp": 2.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 23,
+      "name": "Rodrigo Baroja Hernandez",
+      "licencia": "CP02817964",
+      "hcp": 5,
+      "nivel": "I"
+    },
+    {
+      "orden": 24,
+      "name": "Cristian Alvarez Claverie",
+      "licencia": "CP22930343",
+      "hcp": 7.4,
+      "nivel": "C"
+    },
+    {
+      "orden": 25,
+      "name": "Nicolas Kopecky Albertazzi",
+      "licencia": "CP06957898",
+      "hcp": 16.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 26,
+      "name": "Javier Cumplido Hernandez",
+      "licencia": "CP01898580",
+      "hcp": 7.3,
+      "nivel": "C"
+    },
+    {
+      "orden": 27,
+      "name": "Jose Angel Cumplido Hernandez",
+      "licencia": "CP01898245",
+      "hcp": 8.6,
+      "nivel": "J"
+    },
+    {
+      "orden": 28,
+      "name": "Alvaro Sanchez Lopez",
+      "licencia": "CP01951644",
+      "hcp": 17,
+      "nivel": "C"
+    },
+    {
+      "orden": 29,
+      "name": "Alejandro Sanchez Lopez",
+      "licencia": "CP01951648",
+      "hcp": 21.2,
+      "nivel": "A"
+    },
+    {
+      "orden": 30,
+      "name": "Rafael Gonzalez Albarracin",
+      "licencia": "CP02817272",
+      "hcp": 1.3,
+      "nivel": "C"
+    },
+    {
+      "orden": 31,
+      "name": "Alfonso Caballero De Rodas Gross",
+      "licencia": "CP01963464",
+      "hcp": 23.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 32,
+      "name": "Gonzalo Caballero De Rodas Gross",
+      "licencia": "CP01963463",
+      "hcp": 25.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 33,
+      "name": "Nevis Molina Spindler",
+      "licencia": "CP01949889",
+      "hcp": 31,
+      "nivel": "A"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Leire Aranzabal Hernandez",
+      "licencia": "CP04973022",
+      "hcp": 33.2,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Irene Martin Rodriguez",
+      "licencia": "CP04887266",
+      "hcp": 8.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 3,
+      "name": "Isabel Ping Martinez Guerra",
+      "licencia": "CP01929578",
+      "hcp": 4.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Minerva Sintes Navarro",
+      "licencia": "CP01907134",
+      "hcp": 5.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 5,
+      "name": "Paula Galban Morales",
+      "licencia": "CP01931970",
+      "hcp": 7.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 6,
+      "name": "Sofia Henningsen Suarez",
+      "licencia": "CP01923713",
+      "hcp": 1.4,
+      "nivel": "C"
+    },
+    {
+      "orden": 7,
+      "name": "Lara Galban Morales",
+      "licencia": "CP01884866",
+      "hcp": 5.2,
+      "nivel": "J"
+    },
+    {
+      "orden": 8,
+      "name": "Carlota Perez Gonzalez",
+      "licencia": "CP04945360",
+      "hcp": 13.6,
+      "nivel": "C"
+    },
+    {
+      "orden": 9,
+      "name": "Adela Garcia Luis",
+      "licencia": "CP22927512",
+      "hcp": 33,
+      "nivel": "C"
+    },
+    {
+      "orden": 10,
+      "name": "Edurne Lairihoy Gonzalez",
+      "licencia": "CP06944877",
+      "hcp": 13.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 11,
+      "name": "Jimena Rodriguez Puerto",
+      "licencia": "CP04892307",
+      "hcp": 12.5,
+      "nivel": "C"
+    },
+    {
+      "orden": 12,
+      "name": "Valentina De Bethencourt",
+      "licencia": "CP01883174",
+      "hcp": 8.1,
+      "nivel": "C"
+    },
+    {
+      "orden": 13,
+      "name": "Maxima De Bethencourt",
+      "licencia": "CP01931459",
+      "hcp": 15.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 14,
+      "name": "Adriana Torres Digon",
+      "licencia": "CP02887575",
+      "hcp": 5.5,
+      "nivel": "C"
+    },
+    {
+      "orden": 15,
+      "name": "Maria Del Pino Uribe De Leon",
+      "licencia": "CP01944235",
+      "hcp": 16.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 16,
+      "name": "Lucia Uribe De Leon",
+      "licencia": "CP01944236",
+      "hcp": 12.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 17,
+      "name": "Victoria Rodriguez Puerto",
+      "licencia": "CP04945721",
+      "hcp": 35,
+      "nivel": "A"
+    },
+    {
+      "orden": 18,
+      "name": "Silvia Gonzalez Albarracin",
+      "licencia": "CP02884346",
+      "hcp": 8,
+      "nivel": "I"
+    },
+    {
+      "orden": 19,
+      "name": "Malena Molina Spindler",
+      "licencia": "CP01949890",
+      "hcp": 15.2,
+      "nivel": "I"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Tiago Joel Peters",
+      "licencia": "CP31371850",
+      "hcp": 6.9,
+      "nivel": "C"
+    },
+    {
+      "orden": 2,
+      "name": "Juan Cabrera Monzon",
+      "licencia": "CP01897445",
+      "hcp": 4.3,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Leire Aranzabal Hernandez",
+      "licencia": "CP04973022",
+      "hcp": 33.2,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Irene Martin Rodriguez",
+      "licencia": "CP04887266",
+      "hcp": 8.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 5,
+      "name": "Adrian Nordin Henning",
+      "licencia": "CP04899452",
+      "hcp": 6.6,
+      "nivel": "C"
+    },
+    {
+      "orden": 6,
+      "name": "David Arzola Hernandez",
+      "licencia": "CP24974220",
+      "hcp": 19.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 7,
+      "name": "Isaac Puerto Rodriguez",
+      "licencia": "CP04887265",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 8,
+      "name": "Carlos Selig Marrero",
+      "licencia": "CP00466935",
+      "hcp": 13.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 9,
+      "name": "Cristobal Jimenez Sanchez",
+      "licencia": "CP26948681",
+      "hcp": 21.6,
+      "nivel": "I"
+    },
+    {
+      "orden": 10,
+      "name": "Massimo Amoni Gamardo",
+      "licencia": "CP04942811",
+      "hcp": 12.6,
+      "nivel": "A"
+    },
+    {
+      "orden": 11,
+      "name": "Jose Gomez Guerra",
+      "licencia": "CP01932032",
+      "hcp": 12.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 12,
+      "name": "Isabel Ping Martinez Guerra",
+      "licencia": "CP01929578",
+      "hcp": 4.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 13,
+      "name": "Javier De Bethencourt Duque",
+      "licencia": "CP01896466",
+      "hcp": 1.9,
+      "nivel": "C"
+    },
+    {
+      "orden": 14,
+      "name": "Lukas Pusnik Sylverans",
+      "licencia": "CP23941519",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 15,
+      "name": "Matias Pusnik Sylverans",
+      "licencia": "CP23941520",
+      "hcp": 1,
+      "nivel": "C"
+    },
+    {
+      "orden": 16,
+      "name": "Ignacio Jose Sintes Navarro",
+      "licencia": "CP01813124",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 17,
+      "name": "Minerva Sintes Navarro",
+      "licencia": "CP01907134",
+      "hcp": 5.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 18,
+      "name": "Nicolas Vidal Reig",
+      "licencia": "CP01811935",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 19,
+      "name": "Alvaro Febles Rodriguez",
+      "licencia": "CP02894372",
+      "hcp": 2.6,
+      "nivel": "C"
+    },
+    {
+      "orden": 20,
+      "name": "Luis Abeledo Miranda",
+      "licencia": "CP02167542",
+      "hcp": 1.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 21,
+      "name": "Paula Galban Morales",
+      "licencia": "CP01931970",
+      "hcp": 7.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 22,
+      "name": "Sofia Henningsen Suarez",
+      "licencia": "CP01923713",
+      "hcp": 1.4,
+      "nivel": "C"
+    },
+    {
+      "orden": 23,
+      "name": "Guillermo Henningsen Suárez",
+      "licencia": "CP01923710",
+      "hcp": 9.1,
+      "nivel": "I"
+    },
+    {
+      "orden": 24,
+      "name": "Lara Galban Morales",
+      "licencia": "CP01884866",
+      "hcp": 5.2,
+      "nivel": "J"
+    },
+    {
+      "orden": 25,
+      "name": "Carlota Perez Gonzalez",
+      "licencia": "CP04945360",
+      "hcp": 13.6,
+      "nivel": "C"
+    },
+    {
+      "orden": 26,
+      "name": "Adela Garcia Luis",
+      "licencia": "CP22927512",
+      "hcp": 33,
+      "nivel": "C"
+    },
+    {
+      "orden": 27,
+      "name": "Edurne Lairihoy Gonzalez",
+      "licencia": "CP06944877",
+      "hcp": 13.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 28,
+      "name": "Samuel Moran Rodriguez",
+      "licencia": "CP01883264",
+      "hcp": 0.7,
+      "nivel": "J"
+    },
+    {
+      "orden": 29,
+      "name": "Jimena Rodriguez Puerto",
+      "licencia": "CP04892307",
+      "hcp": 12.5,
+      "nivel": "C"
+    },
+    {
+      "orden": 30,
+      "name": "Alejandro Mendoza Duque",
+      "licencia": "CP04893478",
+      "hcp": 12.9,
+      "nivel": "J"
+    },
+    {
+      "orden": 31,
+      "name": "Diego Crespo Barco",
+      "licencia": "CP02923942",
+      "hcp": 10.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 32,
+      "name": "Valentina De Bethencourt",
+      "licencia": "CP01883174",
+      "hcp": 8.1,
+      "nivel": "C"
+    },
+    {
+      "orden": 33,
+      "name": "Maxima De Bethencourt",
+      "licencia": "CP01931459",
+      "hcp": 15.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 34,
+      "name": "Cisco De Bethencourt",
+      "licencia": "CP01952017",
+      "hcp": 15.6,
+      "nivel": "A"
+    },
+    {
+      "orden": 35,
+      "name": "Adriana Torres Digon",
+      "licencia": "CP02887575",
+      "hcp": 5.5,
+      "nivel": "C"
+    },
+    {
+      "orden": 36,
+      "name": "Raimundo Baroja Hernandez",
+      "licencia": "CP02817962",
+      "hcp": 2.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 37,
+      "name": "Rodrigo Baroja Hernandez",
+      "licencia": "CP02817964",
+      "hcp": 5,
+      "nivel": "I"
+    },
+    {
+      "orden": 38,
+      "name": "Cristian Alvarez Claverie",
+      "licencia": "CP22930343",
+      "hcp": 7.4,
+      "nivel": "C"
+    },
+    {
+      "orden": 39,
+      "name": "Nicolas Kopecky Albertazzi",
+      "licencia": "CP06957898",
+      "hcp": 16.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 40,
+      "name": "Maria Del Pino Uribe De Leon",
+      "licencia": "CP01944235",
+      "hcp": 16.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 41,
+      "name": "Javier Cumplido Hernandez",
+      "licencia": "CP01898580",
+      "hcp": 7.3,
+      "nivel": "C"
+    },
+    {
+      "orden": 42,
+      "name": "Lucia Uribe De Leon",
+      "licencia": "CP01944236",
+      "hcp": 12.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 43,
+      "name": "Victoria Rodriguez Puerto",
+      "licencia": "CP04945721",
+      "hcp": 35,
+      "nivel": "A"
+    },
+    {
+      "orden": 44,
+      "name": "Jose Angel Cumplido Hernandez",
+      "licencia": "CP01898245",
+      "hcp": 8.6,
+      "nivel": "J"
+    },
+    {
+      "orden": 45,
+      "name": "Alvaro Sanchez Lopez",
+      "licencia": "CP01951644",
+      "hcp": 17,
+      "nivel": "C"
+    },
+    {
+      "orden": 46,
+      "name": "Alejandro Sanchez Lopez",
+      "licencia": "CP01951648",
+      "hcp": 21.2,
+      "nivel": "A"
+    },
+    {
+      "orden": 47,
+      "name": "Rafael Gonzalez Albarracin",
+      "licencia": "CP02817272",
+      "hcp": 1.3,
+      "nivel": "C"
+    },
+    {
+      "orden": 48,
+      "name": "Silvia Gonzalez Albarracin",
+      "licencia": "CP02884346",
+      "hcp": 8,
+      "nivel": "I"
+    },
+    {
+      "orden": 49,
+      "name": "Alfonso Caballero De Rodas Gross",
+      "licencia": "CP01963464",
+      "hcp": 23.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 50,
+      "name": "Gonzalo Caballero De Rodas Gross",
+      "licencia": "CP01963463",
+      "hcp": 25.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 51,
+      "name": "Malena Molina Spindler",
+      "licencia": "CP01949890",
+      "hcp": 15.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 52,
+      "name": "Nevis Molina Spindler",
+      "licencia": "CP01949889",
+      "hcp": 31,
+      "nivel": "A"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Nicolas Vidal Reig",
+          "hcp": 1.9,
+          "ins": "1899524",
+          "jid": "56615",
+          "nivel": "C"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Ignacio Jose Sintes Navarro",
+          "hcp": 1.4,
+          "ins": "1897194",
+          "jid": "56615",
+          "nivel": "J"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Isaac Puerto Rodriguez",
+          "hcp": 1.1,
+          "ins": "1895138",
+          "jid": "56615",
+          "nivel": "J"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Lukas Pusnik Sylverans",
+          "hcp": 0.8,
+          "ins": "1896758",
+          "jid": "56615",
+          "nivel": "J"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Samuel Moran Rodriguez",
+          "hcp": 0.7,
+          "ins": "1901335",
+          "jid": "56615",
+          "nivel": "J"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Matias Pusnik Sylverans",
+          "hcp": 1,
+          "ins": "1896759",
+          "jid": "56615",
+          "nivel": "C"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Rafael Gonzalez Albarracin",
+          "hcp": 1.3,
+          "ins": "1903148",
+          "jid": "56615",
+          "nivel": "C"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Luis Abeledo Miranda",
+          "hcp": 1.7,
+          "ins": "1900775",
+          "jid": "56615",
+          "nivel": "I"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Javier De Bethencourt Duque",
+          "hcp": 1.9,
+          "ins": "1896580",
+          "jid": "56615",
+          "nivel": "C"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Alvaro Febles Rodriguez",
+          "hcp": 2.6,
+          "ins": "1900606",
+          "jid": "56615",
+          "nivel": "C"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Raimundo Baroja Hernandez",
+          "hcp": 2.8,
+          "ins": "1901801",
+          "jid": "56615",
+          "nivel": "C"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Juan Cabrera Monzon",
+          "hcp": 4.3,
+          "ins": "1894708",
+          "jid": "56615",
+          "nivel": "I"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Sofia Henningsen Suarez",
+          "hcp": 1.4,
+          "ins": "1900850",
+          "jid": "56615",
+          "nivel": "C"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Isabel Ping Martinez Guerra",
+          "hcp": 4.9,
+          "ins": "1896578",
+          "jid": "56615",
+          "nivel": "I"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Lara Galban Morales",
+          "hcp": 5.2,
+          "ins": "1900852",
+          "jid": "56615",
+          "nivel": "J"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Rodrigo Baroja Hernandez",
+          "hcp": 5,
+          "ins": "1901802",
+          "jid": "56615",
+          "nivel": "I"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Adrian Nordin Henning",
+          "hcp": 6.6,
+          "ins": "1894879",
+          "jid": "56615",
+          "nivel": "C"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Tiago Joel Peters",
+          "hcp": 6.9,
+          "ins": "1894640",
+          "jid": "56615",
+          "nivel": "C"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Adriana Torres Digon",
+          "hcp": 5.5,
+          "ins": "1901647",
+          "jid": "56615",
+          "nivel": "C"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Minerva Sintes Navarro",
+          "hcp": 5.8,
+          "ins": "1897225",
+          "jid": "56615",
+          "nivel": "C"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Paula Galban Morales",
+          "hcp": 7.9,
+          "ins": "1900849",
+          "jid": "56615",
+          "nivel": "I"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Javier Cumplido Hernandez",
+          "hcp": 7.3,
+          "ins": "1902806",
+          "jid": "56615",
+          "nivel": "C"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Cristian Alvarez Claverie",
+          "hcp": 7.4,
+          "ins": "1902493",
+          "jid": "56615",
+          "nivel": "C"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Jose Angel Cumplido Hernandez",
+          "hcp": 8.6,
+          "ins": "1903100",
+          "jid": "56615",
+          "nivel": "J"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Silvia Gonzalez Albarracin",
+          "hcp": 8,
+          "ins": "1903149",
+          "jid": "56615",
+          "nivel": "I"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Valentina De Bethencourt",
+          "hcp": 8.1,
+          "ins": "1901620",
+          "jid": "56615",
+          "nivel": "C"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Irene Martin Rodriguez",
+          "hcp": 8.8,
+          "ins": "1894876",
+          "jid": "56615",
+          "nivel": "C"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Guillermo Henningsen Suárez",
+          "hcp": 9.1,
+          "ins": "1900851",
+          "jid": "56615",
+          "nivel": "I"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Diego Crespo Barco",
+          "hcp": 10.5,
+          "ins": "1901369",
+          "jid": "56615",
+          "nivel": "A"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Massimo Amoni Gamardo",
+          "hcp": 12.6,
+          "ins": "1896539",
+          "jid": "56615",
+          "nivel": "A"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Lucia Uribe De Leon",
+          "hcp": 12.2,
+          "ins": "1902808",
+          "jid": "56615",
+          "nivel": "I"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Jimena Rodriguez Puerto",
+          "hcp": 12.5,
+          "ins": "1901349",
+          "jid": "56615",
+          "nivel": "C"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Edurne Lairihoy Gonzalez",
+          "hcp": 13.5,
+          "ins": "1901325",
+          "jid": "56615",
+          "nivel": "I"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "Jose Gomez Guerra",
+          "hcp": 12.9,
+          "ins": "1896558",
+          "jid": "56615",
+          "nivel": "I"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "Alejandro Mendoza Duque",
+          "hcp": 12.9,
+          "ins": "1901354",
+          "jid": "56615",
+          "nivel": "J"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "Carlos Selig Marrero",
+          "hcp": 13.4,
+          "ins": "1895151",
+          "jid": "56615",
+          "nivel": "A"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Carlota Perez Gonzalez",
+          "hcp": 13.6,
+          "ins": "1901072",
+          "jid": "56615",
+          "nivel": "C"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Malena Molina Spindler",
+          "hcp": 15.2,
+          "ins": "1903159",
+          "jid": "56615",
+          "nivel": "I"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Maxima De Bethencourt",
+          "hcp": 15.5,
+          "ins": "1901623",
+          "jid": "56615",
+          "nivel": "I"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Cisco De Bethencourt",
+          "hcp": 15.6,
+          "ins": "1901624",
+          "jid": "56615",
+          "nivel": "A"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Nicolas Kopecky Albertazzi",
+          "hcp": 16.8,
+          "ins": "1902494",
+          "jid": "56615",
+          "nivel": "A"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Alvaro Sanchez Lopez",
+          "hcp": 17,
+          "ins": "1903140",
+          "jid": "56615",
+          "nivel": "C"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "David Arzola Hernandez",
+          "hcp": 19.7,
+          "ins": "1895105",
+          "jid": "56615",
+          "nivel": "I"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Alejandro Sanchez Lopez",
+          "hcp": 21.2,
+          "ins": "1903141",
+          "jid": "56615",
+          "nivel": "A"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Cristobal Jimenez Sanchez",
+          "hcp": 21.6,
+          "ins": "1896112",
+          "jid": "56615",
+          "nivel": "I"
+        },
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Alfonso Caballero De Rodas Gross",
+          "hcp": 23.4,
+          "ins": "1903157",
+          "jid": "56615",
+          "nivel": "I"
+        },
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Gonzalo Caballero De Rodas Gross",
+          "hcp": 25.3,
+          "ins": "1903158",
+          "jid": "56615",
+          "nivel": "A"
+        },
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Nevis Molina Spindler",
+          "hcp": 31,
+          "ins": "1903160",
+          "jid": "56615",
+          "nivel": "A"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Maria Del Pino Uribe De Leon",
+          "hcp": 16.9,
+          "ins": "1902805",
+          "jid": "56615",
+          "nivel": "I"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Adela Garcia Luis",
+          "hcp": 33,
+          "ins": "1901290",
+          "jid": "56615",
+          "nivel": "C"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Leire Aranzabal Hernandez",
+          "hcp": 33.2,
+          "ins": "1894858",
+          "jid": "56615",
+          "nivel": "A"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Victoria Rodriguez Puerto",
+          "hcp": 35,
+          "ins": "1902814",
+          "jid": "56615",
+          "nivel": "A"
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "players": [
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Nicolas Vidal Reig",
+          "hcp": 1.9,
+          "ins": "1899524",
+          "jid": "56616",
+          "nivel": "C"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Samuel Moran Rodriguez",
+          "hcp": 0.7,
+          "ins": "1901335",
+          "jid": "56616",
+          "nivel": "J"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Luis Abeledo Miranda",
+          "hcp": 1.7,
+          "ins": "1900775",
+          "jid": "56616",
+          "nivel": "I"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Ignacio Jose Sintes Navarro",
+          "hcp": 1.4,
+          "ins": "1897194",
+          "jid": "56616",
+          "nivel": "J"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Isaac Puerto Rodriguez",
+          "hcp": 1.1,
+          "ins": "1895138",
+          "jid": "56616",
+          "nivel": "J"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Rafael Gonzalez Albarracin",
+          "hcp": 1.3,
+          "ins": "1903148",
+          "jid": "56616",
+          "nivel": "C"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Alvaro Febles Rodriguez",
+          "hcp": 2.6,
+          "ins": "1900606",
+          "jid": "56616",
+          "nivel": "C"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Adrian Nordin Henning",
+          "hcp": 6.6,
+          "ins": "1894879",
+          "jid": "56616",
+          "nivel": "C"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Guillermo Henningsen Suárez",
+          "hcp": 9.1,
+          "ins": "1900851",
+          "jid": "56616",
+          "nivel": "I"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Sofia Henningsen Suarez",
+          "hcp": 1.4,
+          "ins": "1900850",
+          "jid": "56616",
+          "nivel": "C"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Isabel Ping Martinez Guerra",
+          "hcp": 4.9,
+          "ins": "1896578",
+          "jid": "56616",
+          "nivel": "I"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Minerva Sintes Navarro",
+          "hcp": 5.8,
+          "ins": "1897225",
+          "jid": "56616",
+          "nivel": "C"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Matias Pusnik Sylverans",
+          "hcp": 1,
+          "ins": "1896759",
+          "jid": "56616",
+          "nivel": "C"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Javier De Bethencourt Duque",
+          "hcp": 1.9,
+          "ins": "1896580",
+          "jid": "56616",
+          "nivel": "C"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Raimundo Baroja Hernandez",
+          "hcp": 2.8,
+          "ins": "1901801",
+          "jid": "56616",
+          "nivel": "C"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Valentina De Bethencourt",
+          "hcp": 8.1,
+          "ins": "1901620",
+          "jid": "56616",
+          "nivel": "C"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Lucia Uribe De Leon",
+          "hcp": 12.2,
+          "ins": "1902808",
+          "jid": "56616",
+          "nivel": "I"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Edurne Lairihoy Gonzalez",
+          "hcp": 13.5,
+          "ins": "1901325",
+          "jid": "56616",
+          "nivel": "I"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Juan Cabrera Monzon",
+          "hcp": 4.3,
+          "ins": "1894708",
+          "jid": "56616",
+          "nivel": "I"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Tiago Joel Peters",
+          "hcp": 6.9,
+          "ins": "1894640",
+          "jid": "56616",
+          "nivel": "C"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Diego Crespo Barco",
+          "hcp": 10.5,
+          "ins": "1901369",
+          "jid": "56616",
+          "nivel": "A"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Lara Galban Morales",
+          "hcp": 5.2,
+          "ins": "1900852",
+          "jid": "56616",
+          "nivel": "J"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Irene Martin Rodriguez",
+          "hcp": 8.8,
+          "ins": "1894876",
+          "jid": "56616",
+          "nivel": "C"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Maria Del Pino Uribe De Leon",
+          "hcp": 16.9,
+          "ins": "1902805",
+          "jid": "56616",
+          "nivel": "I"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Rodrigo Baroja Hernandez",
+          "hcp": 5,
+          "ins": "1901802",
+          "jid": "56616",
+          "nivel": "I"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Javier Cumplido Hernandez",
+          "hcp": 7.3,
+          "ins": "1902806",
+          "jid": "56616",
+          "nivel": "C"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Jose Angel Cumplido Hernandez",
+          "hcp": 8.6,
+          "ins": "1903100",
+          "jid": "56616",
+          "nivel": "J"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Lukas Pusnik Sylverans",
+          "hcp": 0.8,
+          "ins": "1896758",
+          "jid": "56616",
+          "nivel": "J"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Cristian Alvarez Claverie",
+          "hcp": 7.4,
+          "ins": "1902493",
+          "jid": "56616",
+          "nivel": "C"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Nicolas Kopecky Albertazzi",
+          "hcp": 16.8,
+          "ins": "1902494",
+          "jid": "56616",
+          "nivel": "A"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Adriana Torres Digon",
+          "hcp": 5.5,
+          "ins": "1901647",
+          "jid": "56616",
+          "nivel": "C"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Paula Galban Morales",
+          "hcp": 7.9,
+          "ins": "1900849",
+          "jid": "56616",
+          "nivel": "I"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Maxima De Bethencourt",
+          "hcp": 15.5,
+          "ins": "1901623",
+          "jid": "56616",
+          "nivel": "I"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "Jose Gomez Guerra",
+          "hcp": 12.9,
+          "ins": "1896558",
+          "jid": "56616",
+          "nivel": "I"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "Cisco De Bethencourt",
+          "hcp": 15.6,
+          "ins": "1901624",
+          "jid": "56616",
+          "nivel": "A"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "Alfonso Caballero De Rodas Gross",
+          "hcp": 23.4,
+          "ins": "1903157",
+          "jid": "56616",
+          "nivel": "I"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Massimo Amoni Gamardo",
+          "hcp": 12.6,
+          "ins": "1896539",
+          "jid": "56616",
+          "nivel": "A"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Alejandro Mendoza Duque",
+          "hcp": 12.9,
+          "ins": "1901354",
+          "jid": "56616",
+          "nivel": "J"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "David Arzola Hernandez",
+          "hcp": 19.7,
+          "ins": "1895105",
+          "jid": "56616",
+          "nivel": "I"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Silvia Gonzalez Albarracin",
+          "hcp": 8,
+          "ins": "1903149",
+          "jid": "56616",
+          "nivel": "I"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Jimena Rodriguez Puerto",
+          "hcp": 12.5,
+          "ins": "1901349",
+          "jid": "56616",
+          "nivel": "C"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Malena Molina Spindler",
+          "hcp": 15.2,
+          "ins": "1903159",
+          "jid": "56616",
+          "nivel": "I"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Carlos Selig Marrero",
+          "hcp": 13.4,
+          "ins": "1895151",
+          "jid": "56616",
+          "nivel": "A"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Alvaro Sanchez Lopez",
+          "hcp": 17,
+          "ins": "1903140",
+          "jid": "56616",
+          "nivel": "C"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Alejandro Sanchez Lopez",
+          "hcp": 21.2,
+          "ins": "1903141",
+          "jid": "56616",
+          "nivel": "A"
+        },
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Cristobal Jimenez Sanchez",
+          "hcp": 21.6,
+          "ins": "1896112",
+          "jid": "56616",
+          "nivel": "I"
+        },
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Gonzalo Caballero De Rodas Gross",
+          "hcp": 25.3,
+          "ins": "1903158",
+          "jid": "56616",
+          "nivel": "A"
+        },
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Nevis Molina Spindler",
+          "hcp": 31,
+          "ins": "1903160",
+          "jid": "56616",
+          "nivel": "A"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Carlota Perez Gonzalez",
+          "hcp": 13.6,
+          "ins": "1901072",
+          "jid": "56616",
+          "nivel": "C"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Adela Garcia Luis",
+          "hcp": 33,
+          "ins": "1901290",
+          "jid": "56616",
+          "nivel": "C"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Leire Aranzabal Hernandez",
+          "hcp": 33.2,
+          "ins": "1894858",
+          "jid": "56616",
+          "nivel": "A"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Victoria Rodriguez Puerto",
+          "hcp": 35,
+          "ins": "1902814",
+          "jid": "56616",
+          "nivel": "A"
+        }
+      ]
+    },
+    {
+      "round": 3,
+      "players": [
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Nicolas Vidal Reig",
+          "hcp": 1.9,
+          "ins": "1899524",
+          "jid": "56617",
+          "nivel": "C"
+        },
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Isaac Puerto Rodriguez",
+          "hcp": 1.1,
+          "ins": "1895138",
+          "jid": "56617",
+          "nivel": "J"
+        },
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Rafael Gonzalez Albarracin",
+          "hcp": 1.3,
+          "ins": "1903148",
+          "jid": "56617",
+          "nivel": "C"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Ignacio Jose Sintes Navarro",
+          "hcp": 1.4,
+          "ins": "1897194",
+          "jid": "56617",
+          "nivel": "J"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Samuel Moran Rodriguez",
+          "hcp": 0.7,
+          "ins": "1901335",
+          "jid": "56617",
+          "nivel": "J"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Luis Abeledo Miranda",
+          "hcp": 1.7,
+          "ins": "1900775",
+          "jid": "56617",
+          "nivel": "I"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Sofia Henningsen Suarez",
+          "hcp": 1.4,
+          "ins": "1900850",
+          "jid": "56617",
+          "nivel": "C"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Isabel Ping Martinez Guerra",
+          "hcp": 4.9,
+          "ins": "1896578",
+          "jid": "56617",
+          "nivel": "I"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Valentina De Bethencourt",
+          "hcp": 8.1,
+          "ins": "1901620",
+          "jid": "56617",
+          "nivel": "C"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Matias Pusnik Sylverans",
+          "hcp": 1,
+          "ins": "1896759",
+          "jid": "56617",
+          "nivel": "C"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Javier De Bethencourt Duque",
+          "hcp": 1.9,
+          "ins": "1896580",
+          "jid": "56617",
+          "nivel": "C"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Alvaro Febles Rodriguez",
+          "hcp": 2.6,
+          "ins": "1900606",
+          "jid": "56617",
+          "nivel": "C"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Raimundo Baroja Hernandez",
+          "hcp": 2.8,
+          "ins": "1901801",
+          "jid": "56617",
+          "nivel": "C"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Rodrigo Baroja Hernandez",
+          "hcp": 5,
+          "ins": "1901802",
+          "jid": "56617",
+          "nivel": "I"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Adrian Nordin Henning",
+          "hcp": 6.6,
+          "ins": "1894879",
+          "jid": "56617",
+          "nivel": "C"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Lukas Pusnik Sylverans",
+          "hcp": 0.8,
+          "ins": "1896758",
+          "jid": "56617",
+          "nivel": "J"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Juan Cabrera Monzon",
+          "hcp": 4.3,
+          "ins": "1894708",
+          "jid": "56617",
+          "nivel": "I"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Javier Cumplido Hernandez",
+          "hcp": 7.3,
+          "ins": "1902806",
+          "jid": "56617",
+          "nivel": "C"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Lara Galban Morales",
+          "hcp": 5.2,
+          "ins": "1900852",
+          "jid": "56617",
+          "nivel": "J"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Minerva Sintes Navarro",
+          "hcp": 5.8,
+          "ins": "1897225",
+          "jid": "56617",
+          "nivel": "C"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Irene Martin Rodriguez",
+          "hcp": 8.8,
+          "ins": "1894876",
+          "jid": "56617",
+          "nivel": "C"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Tiago Joel Peters",
+          "hcp": 6.9,
+          "ins": "1894640",
+          "jid": "56617",
+          "nivel": "C"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Jose Angel Cumplido Hernandez",
+          "hcp": 8.6,
+          "ins": "1903100",
+          "jid": "56617",
+          "nivel": "J"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Guillermo Henningsen Suárez",
+          "hcp": 9.1,
+          "ins": "1900851",
+          "jid": "56617",
+          "nivel": "I"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Paula Galban Morales",
+          "hcp": 7.9,
+          "ins": "1900849",
+          "jid": "56617",
+          "nivel": "I"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Lucia Uribe De Leon",
+          "hcp": 12.2,
+          "ins": "1902808",
+          "jid": "56617",
+          "nivel": "I"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Edurne Lairihoy Gonzalez",
+          "hcp": 13.5,
+          "ins": "1901325",
+          "jid": "56617",
+          "nivel": "I"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Adriana Torres Digon",
+          "hcp": 5.5,
+          "ins": "1901647",
+          "jid": "56617",
+          "nivel": "C"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Silvia Gonzalez Albarracin",
+          "hcp": 8,
+          "ins": "1903149",
+          "jid": "56617",
+          "nivel": "I"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Maria Del Pino Uribe De Leon",
+          "hcp": 16.9,
+          "ins": "1902805",
+          "jid": "56617",
+          "nivel": "I"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Cristian Alvarez Claverie",
+          "hcp": 7.4,
+          "ins": "1902493",
+          "jid": "56617",
+          "nivel": "C"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Diego Crespo Barco",
+          "hcp": 10.5,
+          "ins": "1901369",
+          "jid": "56617",
+          "nivel": "A"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Alvaro Sanchez Lopez",
+          "hcp": 17,
+          "ins": "1903140",
+          "jid": "56617",
+          "nivel": "C"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Jimena Rodriguez Puerto",
+          "hcp": 12.5,
+          "ins": "1901349",
+          "jid": "56617",
+          "nivel": "C"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Malena Molina Spindler",
+          "hcp": 15.2,
+          "ins": "1903159",
+          "jid": "56617",
+          "nivel": "I"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Maxima De Bethencourt",
+          "hcp": 15.5,
+          "ins": "1901623",
+          "jid": "56617",
+          "nivel": "I"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Alejandro Mendoza Duque",
+          "hcp": 12.9,
+          "ins": "1901354",
+          "jid": "56617",
+          "nivel": "J"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Jose Gomez Guerra",
+          "hcp": 12.9,
+          "ins": "1896558",
+          "jid": "56617",
+          "nivel": "I"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Alfonso Caballero De Rodas Gross",
+          "hcp": 23.4,
+          "ins": "1903157",
+          "jid": "56617",
+          "nivel": "I"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Massimo Amoni Gamardo",
+          "hcp": 12.6,
+          "ins": "1896539",
+          "jid": "56617",
+          "nivel": "A"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Carlos Selig Marrero",
+          "hcp": 13.4,
+          "ins": "1895151",
+          "jid": "56617",
+          "nivel": "A"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Alejandro Sanchez Lopez",
+          "hcp": 21.2,
+          "ins": "1903141",
+          "jid": "56617",
+          "nivel": "A"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Cisco De Bethencourt",
+          "hcp": 15.6,
+          "ins": "1901624",
+          "jid": "56617",
+          "nivel": "A"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Nicolas Kopecky Albertazzi",
+          "hcp": 16.8,
+          "ins": "1902494",
+          "jid": "56617",
+          "nivel": "A"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "David Arzola Hernandez",
+          "hcp": 19.7,
+          "ins": "1895105",
+          "jid": "56617",
+          "nivel": "I"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Cristobal Jimenez Sanchez",
+          "hcp": 21.6,
+          "ins": "1896112",
+          "jid": "56617",
+          "nivel": "I"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Gonzalo Caballero De Rodas Gross",
+          "hcp": 25.3,
+          "ins": "1903158",
+          "jid": "56617",
+          "nivel": "A"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Nevis Molina Spindler",
+          "hcp": 31,
+          "ins": "1903160",
+          "jid": "56617",
+          "nivel": "A"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Carlota Perez Gonzalez",
+          "hcp": 13.6,
+          "ins": "1901072",
+          "jid": "56617",
+          "nivel": "C"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Adela Garcia Luis",
+          "hcp": 33,
+          "ins": "1901290",
+          "jid": "56617",
+          "nivel": "C"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "Leire Aranzabal Hernandez",
+          "hcp": 33.2,
+          "ins": "1894858",
+          "jid": "56617",
+          "nivel": "A"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "Victoria Rodriguez Puerto",
+          "hcp": 35,
+          "ins": "1902814",
+          "jid": "56617",
+          "nivel": "A"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 56615
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 56616
+    },
+    {
+      "roundNumber": 3,
+      "roundId": 56617
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/53925_cartel_264.pdf",
+    "/uploads/competiciones/pdf/1207703318_banderas_sarbado_punto_amarillo.pdf",
+    "/uploads/o_1hvjufpa81ogbqve3am1m3nimta.pdf"
+  ]
+}

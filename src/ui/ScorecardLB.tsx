@@ -439,9 +439,6 @@ Key={sortKey}
               k="sd"
               sortKey={sortKey}
               sortDir={sortDir}
-          
-              sortKey={sortKey}
-              sortDir={sortDir}
               onSort={handleSort}
               className="lb-sd"
             >

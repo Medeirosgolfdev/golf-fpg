@@ -1,14 +1,14 @@
 {
   "tourId": 67320,
   "url": "https://www.nextcaddy.com/tour/67320",
-  "scrapedAt": "2026-05-08T17:32:28.638Z",
+  "scrapedAt": "2026-05-09T16:03:24.773Z",
   "meta": {
     "name": "I Prueba Circuito Juvenil de P&P (9 hoyos) 3ª Categoría y Noveles - Golf La Rosaleda",
     "organizer": null,
     "course": "Golf la Rosaleda S L",
     "courseCode": "CP15",
-    "dateStart": "29 mar 2026",
-    "dateEnd": "29 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Juvenil",
@@ -17,12 +17,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-03-29"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -164,11 +166,11 @@
         },
         {
           "playerName": "Solbrig, Christian Andreas",
-          "holeNumber": 14
+          "holeNumber": 14,
+          "createdAt": "24/06/25 16:40:45"
         }
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-09T12:12:41.971Z"
+  "pdfs": []
 }

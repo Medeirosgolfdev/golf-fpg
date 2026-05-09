@@ -1,14 +1,14 @@
 {
   "tourId": 70088,
   "url": "https://www.nextcaddy.com/tour/70088",
-  "scrapedAt": "2026-05-09T10:37:34.744Z",
+  "scrapedAt": "2026-05-09T16:03:45.696Z",
   "meta": {
     "name": "Campeonato de Las Palmas Juvenil (Boys, Girls y Cadetes)",
     "organizer": null,
     "course": "Meloneras Golf",
     "courseCode": "CP27",
-    "dateStart": "18 abr 2026",
-    "dateEnd": "18 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Juvenil",
@@ -18,8 +18,7 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-04-18"
+    ]
   },
   "course": {
     "par": [
@@ -86,6 +85,8 @@
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Final Cadete Femenino",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -470,56 +471,7 @@
           "total": 165,
           "toPar": 23,
           "inscribedId": 2292554,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                6,
-                4,
-                3,
-                5,
-                3,
-                4,
-                2,
-                6,
-                5,
-                6,
-                4,
-                3,
-                6,
-                5,
-                4,
-                3,
-                6,
-                5
-              ],
-              "total": 80
-            },
-            {
-              "round": 2,
-              "scores": [
-                5,
-                4,
-                7,
-                6,
-                2,
-                5,
-                3,
-                5,
-                6,
-                5,
-                5,
-                4,
-                6,
-                4,
-                3,
-                6,
-                4,
-                5
-              ],
-              "total": 85
-            }
-          ]
+          "roundScores": []
         },
         {
           "pos": 7,
@@ -540,56 +492,7 @@
           "total": 178,
           "toPar": 36,
           "inscribedId": 2289902,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                7,
-                5,
-                4,
-                6,
-                4,
-                5,
-                4,
-                7,
-                4,
-                6,
-                5,
-                5,
-                5,
-                4,
-                3,
-                5,
-                6,
-                5
-              ],
-              "total": 90
-            },
-            {
-              "round": 2,
-              "scores": [
-                6,
-                5,
-                3,
-                7,
-                3,
-                5,
-                3,
-                7,
-                5,
-                5,
-                6,
-                3,
-                6,
-                6,
-                4,
-                3,
-                5,
-                6
-              ],
-              "total": 88
-            }
-          ]
+          "roundScores": []
         },
         {
           "pos": 8,
@@ -610,61 +513,14 @@
           "total": 197,
           "toPar": 55,
           "inscribedId": 2290267,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                4,
-                3,
-                9,
-                8,
-                6,
-                4,
-                6,
-                7,
-                5,
-                6,
-                4,
-                6,
-                5,
-                4,
-                4,
-                5,
-                6
-              ],
-              "total": 97
-            },
-            {
-              "round": 2,
-              "scores": [
-                5,
-                6,
-                4,
-                7,
-                3,
-                6,
-                4,
-                6,
-                7,
-                5,
-                5,
-                4,
-                8,
-                5,
-                3,
-                8,
-                6,
-                8
-              ],
-              "total": 100
-            }
-          ]
+          "roundScores": []
         }
       ]
     },
     {
       "category": 2,
+      "categoryName": "Clasificación Final Cadete Masculino",
+      "expectedJugadores": 4,
       "header": [
         "Pos",
         "Jugador",
@@ -699,56 +555,7 @@
           "total": 168,
           "toPar": 26,
           "inscribedId": 2289648,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                4,
-                4,
-                4,
-                5,
-                4,
-                6,
-                4,
-                5,
-                5,
-                4,
-                6,
-                5,
-                5,
-                5,
-                4,
-                5,
-                6,
-                5
-              ],
-              "total": 86
-            },
-            {
-              "round": 2,
-              "scores": [
-                5,
-                5,
-                3,
-                8,
-                4,
-                5,
-                4,
-                5,
-                4,
-                5,
-                4,
-                3,
-                5,
-                4,
-                3,
-                4,
-                5,
-                6
-              ],
-              "total": 82
-            }
-          ]
+          "roundScores": []
         },
         {
           "pos": 2,
@@ -811,61 +618,14 @@
           "total": null,
           "toPar": null,
           "inscribedId": 2293650,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                7,
-                4,
-                6,
-                4,
-                5,
-                4,
-                6,
-                6,
-                4,
-                6,
-                3,
-                5,
-                3,
-                5,
-                8,
-                4,
-                5
-              ],
-              "total": 90
-            },
-            {
-              "round": 2,
-              "scores": [
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-              ],
-              "total": null
-            }
-          ]
+          "roundScores": []
         }
       ]
     },
     {
       "category": 3,
+      "categoryName": "Clasificación Final Girls",
+      "expectedJugadores": 1,
       "header": [
         "Pos",
         "Jugador",
@@ -906,6 +666,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Clasificación Final Boys",
+      "expectedJugadores": 7,
       "header": [
         "Pos",
         "Jugador",
@@ -961,7 +723,56 @@
           "total": 160,
           "toPar": 18,
           "inscribedId": 2291583,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                5,
+                4,
+                6,
+                3,
+                4,
+                3,
+                6,
+                4,
+                4,
+                6,
+                4,
+                5,
+                4,
+                2,
+                6,
+                4,
+                7
+              ],
+              "total": 82
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                5,
+                3,
+                6,
+                5,
+                4,
+                3,
+                5,
+                5,
+                4,
+                4,
+                3,
+                4,
+                3,
+                3,
+                4,
+                9,
+                4
+              ],
+              "total": 78
+            }
+          ]
         },
         {
           "pos": 3,
@@ -1045,7 +856,56 @@
           "total": 202,
           "toPar": 60,
           "inscribedId": 2294563,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                5,
+                6,
+                6,
+                3,
+                6,
+                6,
+                4,
+                7,
+                6,
+                7,
+                4,
+                6,
+                6,
+                4,
+                5,
+                5,
+                7
+              ],
+              "total": 98
+            },
+            {
+              "round": 2,
+              "scores": [
+                8,
+                5,
+                4,
+                12,
+                3,
+                6,
+                5,
+                5,
+                5,
+                7,
+                5,
+                4,
+                6,
+                6,
+                6,
+                4,
+                6,
+                7
+              ],
+              "total": 104
+            }
+          ]
         },
         {
           "pos": null,
@@ -1072,6 +932,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Clasificación Final Cadete Indistinto",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -1456,56 +1318,7 @@
           "total": 165,
           "toPar": 23,
           "inscribedId": 2292554,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                6,
-                4,
-                3,
-                5,
-                3,
-                4,
-                2,
-                6,
-                5,
-                6,
-                4,
-                3,
-                6,
-                5,
-                4,
-                3,
-                6,
-                5
-              ],
-              "total": 80
-            },
-            {
-              "round": 2,
-              "scores": [
-                5,
-                4,
-                7,
-                6,
-                2,
-                5,
-                3,
-                5,
-                6,
-                5,
-                5,
-                4,
-                6,
-                4,
-                3,
-                6,
-                4,
-                5
-              ],
-              "total": 85
-            }
-          ]
+          "roundScores": []
         },
         {
           "pos": 7,
@@ -1526,56 +1339,7 @@
           "total": 168,
           "toPar": 26,
           "inscribedId": 2289648,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                4,
-                4,
-                4,
-                5,
-                4,
-                6,
-                4,
-                5,
-                5,
-                4,
-                6,
-                5,
-                5,
-                5,
-                4,
-                5,
-                6,
-                5
-              ],
-              "total": 86
-            },
-            {
-              "round": 2,
-              "scores": [
-                5,
-                5,
-                3,
-                8,
-                4,
-                5,
-                4,
-                5,
-                4,
-                5,
-                4,
-                3,
-                5,
-                4,
-                3,
-                4,
-                5,
-                6
-              ],
-              "total": 82
-            }
-          ]
+          "roundScores": []
         },
         {
           "pos": 8,
@@ -1617,56 +1381,7 @@
           "total": 178,
           "toPar": 36,
           "inscribedId": 2289902,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                7,
-                5,
-                4,
-                6,
-                4,
-                5,
-                4,
-                7,
-                4,
-                6,
-                5,
-                5,
-                5,
-                4,
-                3,
-                5,
-                6,
-                5
-              ],
-              "total": 90
-            },
-            {
-              "round": 2,
-              "scores": [
-                6,
-                5,
-                3,
-                7,
-                3,
-                5,
-                3,
-                7,
-                5,
-                5,
-                6,
-                3,
-                6,
-                6,
-                4,
-                3,
-                5,
-                6
-              ],
-              "total": 88
-            }
-          ]
+          "roundScores": []
         },
         {
           "pos": 10,
@@ -1687,56 +1402,7 @@
           "total": 197,
           "toPar": 55,
           "inscribedId": 2290267,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                4,
-                3,
-                9,
-                8,
-                6,
-                4,
-                6,
-                7,
-                5,
-                6,
-                4,
-                6,
-                5,
-                4,
-                4,
-                5,
-                6
-              ],
-              "total": 97
-            },
-            {
-              "round": 2,
-              "scores": [
-                5,
-                6,
-                4,
-                7,
-                3,
-                6,
-                4,
-                6,
-                7,
-                5,
-                5,
-                4,
-                8,
-                5,
-                3,
-                8,
-                6,
-                8
-              ],
-              "total": 100
-            }
-          ]
+          "roundScores": []
         },
         {
           "pos": null,
@@ -1778,61 +1444,14 @@
           "total": null,
           "toPar": null,
           "inscribedId": 2293650,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                7,
-                4,
-                6,
-                4,
-                5,
-                4,
-                6,
-                6,
-                4,
-                6,
-                3,
-                5,
-                3,
-                5,
-                8,
-                4,
-                5
-              ],
-              "total": 90
-            },
-            {
-              "round": 2,
-              "scores": [
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-              ],
-              "total": null
-            }
-          ]
+          "roundScores": []
         }
       ]
     },
     {
       "category": 6,
+      "categoryName": "Clasificación 1ª Jornada Indistinto",
+      "expectedJugadores": 20,
       "header": [
         "Pos",
         "Jugador",
@@ -1940,56 +1559,7 @@
           "total": 80,
           "toPar": 9,
           "inscribedId": 2292554,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                6,
-                4,
-                3,
-                5,
-                3,
-                4,
-                2,
-                6,
-                5,
-                6,
-                4,
-                3,
-                6,
-                5,
-                4,
-                3,
-                6,
-                5
-              ],
-              "total": 80
-            },
-            {
-              "round": 2,
-              "scores": [
-                5,
-                4,
-                7,
-                6,
-                2,
-                5,
-                3,
-                5,
-                6,
-                5,
-                5,
-                4,
-                6,
-                4,
-                3,
-                6,
-                4,
-                5
-              ],
-              "total": 85
-            }
-          ]
+          "roundScores": []
         },
         {
           "pos": 5,
@@ -2062,7 +1632,56 @@
           "total": 82,
           "toPar": 11,
           "inscribedId": 2291583,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                5,
+                4,
+                6,
+                3,
+                4,
+                3,
+                6,
+                4,
+                4,
+                6,
+                4,
+                5,
+                4,
+                2,
+                6,
+                4,
+                7
+              ],
+              "total": 82
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                5,
+                3,
+                6,
+                5,
+                4,
+                3,
+                5,
+                5,
+                4,
+                4,
+                3,
+                4,
+                3,
+                3,
+                4,
+                9,
+                4
+              ],
+              "total": 78
+            }
+          ]
         },
         {
           "pos": 7,
@@ -2281,56 +1900,7 @@
           "total": 86,
           "toPar": 15,
           "inscribedId": 2289648,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                4,
-                4,
-                4,
-                5,
-                4,
-                6,
-                4,
-                5,
-                5,
-                4,
-                6,
-                5,
-                5,
-                5,
-                4,
-                5,
-                6,
-                5
-              ],
-              "total": 86
-            },
-            {
-              "round": 2,
-              "scores": [
-                5,
-                5,
-                3,
-                8,
-                4,
-                5,
-                4,
-                5,
-                4,
-                5,
-                4,
-                3,
-                5,
-                4,
-                3,
-                4,
-                5,
-                6
-              ],
-              "total": 82
-            }
-          ]
+          "roundScores": []
         },
         {
           "pos": 13,
@@ -2354,56 +1924,7 @@
           "total": 90,
           "toPar": 19,
           "inscribedId": 2293650,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                7,
-                4,
-                6,
-                4,
-                5,
-                4,
-                6,
-                6,
-                4,
-                6,
-                3,
-                5,
-                3,
-                5,
-                8,
-                4,
-                5
-              ],
-              "total": 90
-            },
-            {
-              "round": 2,
-              "scores": [
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-              ],
-              "total": null
-            }
-          ]
+          "roundScores": []
         },
         {
           "pos": null,
@@ -2415,56 +1936,7 @@
           "total": 90,
           "toPar": 19,
           "inscribedId": 2289902,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                7,
-                5,
-                4,
-                6,
-                4,
-                5,
-                4,
-                7,
-                4,
-                6,
-                5,
-                5,
-                5,
-                4,
-                3,
-                5,
-                6,
-                5
-              ],
-              "total": 90
-            },
-            {
-              "round": 2,
-              "scores": [
-                6,
-                5,
-                3,
-                7,
-                3,
-                5,
-                3,
-                7,
-                5,
-                5,
-                6,
-                3,
-                6,
-                6,
-                4,
-                3,
-                5,
-                6
-              ],
-              "total": 88
-            }
-          ]
+          "roundScores": []
         },
         {
           "pos": 16,
@@ -2500,56 +1972,7 @@
           "total": 97,
           "toPar": 26,
           "inscribedId": 2290267,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                4,
-                3,
-                9,
-                8,
-                6,
-                4,
-                6,
-                7,
-                5,
-                6,
-                4,
-                6,
-                5,
-                4,
-                4,
-                5,
-                6
-              ],
-              "total": 97
-            },
-            {
-              "round": 2,
-              "scores": [
-                5,
-                6,
-                4,
-                7,
-                3,
-                6,
-                4,
-                6,
-                7,
-                5,
-                5,
-                4,
-                8,
-                5,
-                3,
-                8,
-                6,
-                8
-              ],
-              "total": 100
-            }
-          ]
+          "roundScores": []
         },
         {
           "pos": 19,
@@ -2561,7 +1984,56 @@
           "total": 98,
           "toPar": 27,
           "inscribedId": 2294563,
-          "roundScores": []
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                5,
+                6,
+                6,
+                3,
+                6,
+                6,
+                4,
+                7,
+                6,
+                7,
+                4,
+                6,
+                6,
+                4,
+                5,
+                5,
+                7
+              ],
+              "total": 98
+            },
+            {
+              "round": 2,
+              "scores": [
+                8,
+                5,
+                4,
+                12,
+                3,
+                6,
+                5,
+                5,
+                5,
+                7,
+                5,
+                4,
+                6,
+                6,
+                6,
+                4,
+                6,
+                7
+              ],
+              "total": 104
+            }
+          ]
         },
         {
           "pos": 20,
@@ -2578,6 +2050,33 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Final Cadete Femenino",
+      "jugadores": 8
+    },
+    "2": {
+      "name": "Clasificación Final Cadete Masculino",
+      "jugadores": 4
+    },
+    "3": {
+      "name": "Clasificación Final Girls",
+      "jugadores": 1
+    },
+    "4": {
+      "name": "Clasificación Final Boys",
+      "jugadores": 7
+    },
+    "5": {
+      "name": "Clasificación Final Cadete Indistinto",
+      "jugadores": 12
+    },
+    "6": {
+      "name": "Clasificación 1ª Jornada Indistinto",
+      "jugadores": 20
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2874,26 +2373,6 @@
       "nivel": "C"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74988
-    },
-    {
-      "roundNumber": 2,
-      "roundId": 74989
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -3266,5 +2745,27 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:57.798Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74988
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 74989
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/cartel/2683741261_70088-campeonato-de-las-palmas-juvenil-boys-girls-y-cadetes.pdf"
+  ]
 }

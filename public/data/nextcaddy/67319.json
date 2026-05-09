@@ -1,14 +1,14 @@
 {
   "tourId": 67319,
   "url": "https://www.nextcaddy.com/tour/67319",
-  "scrapedAt": "2026-05-08T17:27:15.087Z",
+  "scrapedAt": "2026-05-09T16:03:13.093Z",
   "meta": {
     "name": "I Prueba Circuito Juvenil de P&P (9 hoyos) 3ª Categoría y Noveles - Las Palmeras Golf",
     "organizer": null,
     "course": "Las Palmeras Golf Club",
     "courseCode": "CP26",
-    "dateStart": "22 feb 2026",
-    "dateEnd": "22 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Juvenil",
@@ -17,11 +17,12 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-02-22"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -542,6 +543,7 @@
       "nivel": "A"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -563,11 +565,11 @@
       "players": [
         {
           "playerName": "Cadenas Vallejo, Nico",
-          "holeNumber": 7
+          "holeNumber": 7,
+          "createdAt": "17/07/25 11:54:00"
         }
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-09T12:12:41.949Z"
+  "pdfs": []
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 68725,
   "url": "https://www.nextcaddy.com/tour/68725",
-  "scrapedAt": "2026-05-09T10:16:59.843Z",
+  "scrapedAt": "2026-05-09T16:03:57.932Z",
   "meta": {
     "name": "Campeonato de Canarias Dobles de P&P",
     "organizer": null,
     "course": "Campo de Golf Los Palos",
     "courseCode": "CP09",
-    "dateStart": "01 ago 2026",
-    "dateEnd": "01 ago 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) Circuito P&P 20206",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-08-01"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -73,6 +75,5 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-09T12:12:50.260Z"
+  "pdfs": []
 }

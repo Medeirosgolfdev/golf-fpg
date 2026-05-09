@@ -39,8 +39,8 @@ import type { H2HConfronto } from "./kids/types";
 /* ═══════════════════════════════════
    TYPES
    ═══════════════════════════════════ */
-interface TournResult { p: number | "WD"; t: number | null; tp: number | null; rd: (number | null)[]; nholes?: number }
-interface RivalPlayer {
+export interface TournResult { p: number | "WD"; t: number | null; tp: number | null; rd: (number | null)[]; nholes?: number }
+export interface RivalPlayer {
   n: string;
   co: string;
   isM?: boolean;
@@ -49,17 +49,9 @@ interface RivalPlayer {
   up: string[];
 }
 
-interface TournDef {
-  id: string; name: string; short: string; date: string;
-  rounds: number; par: number; field: number; nations: number;
-  intendedRounds?: number; url: string;
-  dateExact?: string;    // "YYYY-MM-DD" para cálculo de DOB
-  ageMin?: number;       // escalão: idade mínima
-  ageMax?: number;       // escalão: idade máxima
-}
 
 /** Deriva label de escalão a partir de ageMin/ageMax */
-function ageLabel(ageMin?: number, ageMax?: number): string | null {
+export function ageLabel(ageMin?: number, ageMax?: number): string | null {
   if (ageMin == null && ageMax != null) return `Sub-${ageMax}`;
   if (ageMin == null || ageMax == null) return null;
   if (ageMin === ageMax) return `Boys ${ageMin}`;
@@ -67,35 +59,29 @@ function ageLabel(ageMin?: number, ageMax?: number): string | null {
 }
 
 /* ── Member History (USKids) types ── */
-interface MHTournRound { gross: number }
-interface MHTournament {
+export interface MHTournRound { gross: number }
+export interface MHTournament {
   name: string; ageGroup: string; place: number;
   totalStrokes: number; rounds: Record<string, MHTournRound>;
   par?: number[]; startDate?: string;
 }
-interface MHPlayer { memberId: string; name: string; torneios: Record<string, MHTournament & { tid?: string }> }
-interface MHData { jogadores: Record<string, MHPlayer> }
+export interface MHPlayer { memberId: string; name: string; torneios: Record<string, MHTournament & { tid?: string }> }
+export interface MHData { jogadores: Record<string, MHPlayer> }
 
 /* ═══════════════════════════════════
    CONFIG
    ═══════════════════════════════════ */
 
 
-const T: TournDef[]=[
-  {id:"brjgt25",name:"WJGC 2025",short:"WJGC",date:"Fev 2025",rounds:3,par:71,field:40,nations:17,dateExact:"2025-02-24",ageMin:10,ageMax:11,url:"https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/34/leaderboard.htm"},
-  {id:"eowagr25",name:"European Open",short:"EU Open",date:"Ago 2025",rounds:3,par:72,field:8,nations:6,dateExact:"2025-08-01",ageMin:11,ageMax:12,url:"https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2512/contest/21/leaderboard.htm"},
-  {id:"venice25",name:"Venice Open 2025",short:"Venice",date:"Ago 2025",rounds:3,par:72,field:39,nations:16,dateExact:"2025-08-07",ageMin:11,ageMax:11,url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/515206/venice-open-2025/results"},
-  {id:"rome25",name:"Rome Classic 2025",short:"Rome",date:"Out 2025",rounds:2,par:72,field:14,nations:6,dateExact:"2025-10-18",ageMin:11,ageMax:11,url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516026/rome-classic-2025/results"},
-  {id:"doral25",name:"Doral Junior 2025",short:"Doral",date:"Dez 2025",rounds:2,par:71,field:35,nations:13,dateExact:"2025-12-18",ageMin:11,ageMax:11,url:"https://www.golfgenius.com/v2tournaments/4222407?called_from=widgets%2Fcustomized_tournament_results&hide_totals=false&player_stats_for_portal=true"},
-  {id:"qdl25",name:"QDL Junior Open 2025",short:"QDL",date:"Nov 2025",rounds:1,par:72,field:12,nations:7,intendedRounds:3,dateExact:"2025-11-08",ageMax:12,url:"https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=962&tcode=10080&classif_order=2"},
-  {id:"gg26",name:"Greatgolf Junior Open",short:"GG",date:"Fev 2026",rounds:2,par:72,field:12,nations:4,dateExact:"2026-02-08",ageMax:12,url:"https://scoring-pt.datagolf.pt/scripts/classif.asp?tourn=10296&club=935&ack=OT342GH16T"},
-  {id:"wjgc26",name:"WJGC 2026",short:"WJGC26",date:"Fev 2026",rounds:3,par:72,field:38,nations:18,dateExact:"2026-02-24",ageMin:10,ageMax:11,url:"https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/73/leaderboard.htm"},
-  {id:"wjgc26_1213",name:"WJGC 2026",short:"WJGC26↑",date:"Fev 2026",rounds:2,intendedRounds:3,par:73,field:39,nations:17,dateExact:"2026-02-24",ageMin:12,ageMax:13,url:"https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/33/leaderboard.htm"},
-];
+/* T extraído para kids/tournDef.ts */
+import { T } from "./kids/tournDef";
+import type { TournDef } from "./kids/tournDef";
+export { T };
+export type { TournDef };
 
 // Tournament prestige weight: rounds (40%) + field size (35%) + internationality (25%)
 // Uses intendedRounds when available (e.g. QDL reduced by weather)
-function getTournWeight(tid: string): number {
+export function getTournWeight(tid: string): number {
   // Overrides explícitos — têm prioridade sobre T_WEIGHTS_BASE
   if (tid.startsWith("brjgt") || tid.startsWith("wjgc"))  return 1.2;  // BJGT/WJGC → ★★★★
   if (tid.startsWith("venice") || tid.startsWith("doral")) return 1.2; // Venice/Doral → ★★★★
@@ -129,7 +115,7 @@ const T_WEIGHTS_BASE: Record<string, number> = (() => {
 
 // Extended tournament names/display for auto-loaded tournaments
 // Metadados completos para auto tids que substituem entradas manuais (field, nations, par, url)
-const AUTO_TOURN_META: Record<string, { field: number; nations: number; par: number; url?: string }> = {
+export const AUTO_TOURN_META: Record<string, { field: number; nations: number; par: number; url?: string }> = {
   // WJGC 2025
   wjgc25_b89:    { field: 37, nations: 15, par: 71, url: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/34/leaderboard.htm" },
   wjgc25_b1011:  { field: 40, nations: 17, par: 71, url: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/34/leaderboard.htm" },
@@ -157,7 +143,7 @@ const AUTO_TOURN_META: Record<string, { field: number; nations: number; par: num
   rome25_b12:    { field: 12, nations: 5,  par: 72, url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516026/rome-classic-2025/results" },
 };
 
-const AUTO_TOURN_NAMES: Record<string, { name: string; short: string; date: string }> = {
+export const AUTO_TOURN_NAMES: Record<string, { name: string; short: string; date: string }> = {
   wjgc25_b89:     { name: "WJGC 2025",         short: "WJGC25",   date: "Fev 2025" },
   wjgc25_b1011:   { name: "WJGC 2025",         short: "WJGC25",   date: "Fev 2025" },
   wjgc25_b1213:   { name: "WJGC 2025",         short: "WJGC25",   date: "Fev 2025" },
@@ -221,7 +207,7 @@ function getSignupanytimeUrl(tid: string): string | undefined {
  *  - uskidsUrl: quando existe no T[] ou AUTO_TOURN_META
  *  - fpgUrl: classif FPG pública para tids fpg{tcode}
  *  - ffgolfUrl: página resultats-details do FFGolf para tids ff{trnId}_U{N} */
-function getTournLinks(tid: string, manualUrl?: string): { signupanytimeUrl?: string; uskidsUrl?: string; fpgUrl?: string; ffgolfUrl?: string; lgsUrl?: string; ncUrl?: string } {
+export function getTournLinks(tid: string, manualUrl?: string): { signupanytimeUrl?: string; uskidsUrl?: string; fpgUrl?: string; ffgolfUrl?: string; lgsUrl?: string; ncUrl?: string } {
   const uskidsUrl = manualUrl ?? AUTO_TOURN_META[tid]?.url;
   const signupanytimeUrl = getSignupanytimeUrl(tid);
   const fpgUrl = getFpgUrl(tid);
@@ -293,12 +279,12 @@ function getFfgolfUrl(tid: string): string | undefined {
  *  Nota: NÃO inclui getFfgolfUrl porque o link FFGolf é renderizado separadamente
  *  via getTournLinks().ffgolfUrl (botão ↗ FFG). Caso contrário, t.url e ffgolfUrl
  *  apontariam para o mesmo URL e apareceriam dois botões idênticos. */
-function getTournUrl(tid: string, existingUrl?: string): string | undefined {
+export function getTournUrl(tid: string, existingUrl?: string): string | undefined {
   return existingUrl ?? AUTO_TOURN_META[tid]?.url ?? getFpgUrl(tid) ?? getLgsUrl(tid);
 }
 
 /** Lookup tournament display info by id (works for manual T and auto tourns) */
-function getTournInfo(tid: string): { name: string; short: string; date: string; dateExact: string } {
+export function getTournInfo(tid: string): { name: string; short: string; date: string; dateExact: string } {
   const manual = T.find(t => t.id === tid);
   if (manual) return { name: manual.name, short: manual.short, date: manual.date, dateExact: manual.dateExact ?? manual.date };
   const autoName = AUTO_TOURN_NAMES[tid];
@@ -353,326 +339,12 @@ function getTournInfo(tid: string): { name: string; short: string; date: string;
    DOB DEDUCTION UTILITIES
    ═══════════════════════════════════ */
 /** Parse "DD/MM/YYYY" → Date */
-function parseDob(s: string): Date {
-  const [d, m, y] = s.split("/").map(Number);
-  return new Date(y, m - 1, d);
-}
+/* dobInference extraído para kids/dobInference.ts */
+import { parseDob, ageAt, computeDobInfo, escalaoIntl, dobRangeStrict, arePlayersCompatible, T_MAP } from "./kids/dobInference";
+import type { DobInfo } from "./kids/dobInference";
 
-/** Age at a given date */
-function ageAt(dob: Date, at: Date): number {
-  let age = at.getFullYear() - dob.getFullYear();
-  const m = at.getMonth() - dob.getMonth();
-  if (m < 0 || (m === 0 && at.getDate() < dob.getDate())) age--;
-  return age;
-}
 
-/** Format age string for an ESTIMATED DOB (midpoint) — no countdown */
-function fmtAgeEstimated(dob: Date): string {
-  return `~${ageAt(dob, new Date())} anos`;
-}
-
-interface DobInfo {
-  exact: boolean;
-  dob?: Date;
-  dobStr?: string;       // "DD/MM/YYYY"
-  rangeMin?: Date;       // earliest possible
-  rangeMax?: Date;       // latest possible
-  rangeStr: string;      // e.g. "Mar–Dez 2014" or "2014–2015"
-  ageStr: string;        // e.g. "11 anos" or "~11 anos"
-  nextBdayDays?: number; // dias para o próximo aniversário (só exact)
-  nextAge?: number;      // próxima idade (só exact, quando countdown activo)
-}
-
-const T_MAP: Record<string, { dateExact?: string; ageMin?: number; ageMax?: number }> = {
-  ...Object.fromEntries(T.map(t => [t.id, t])),
-  // Auto tourns from rivaisDataLoader
-  wjgc25_b89:    { dateExact: "2025-02-24", ageMin: 8,  ageMax: 9  },
-  wjgc25_b1011:  { dateExact: "2025-02-24", ageMin: 10, ageMax: 11 },
-  wjgc25_b1213:  { dateExact: "2025-02-24", ageMin: 12, ageMax: 13 },
-  eowagr25_b78:  { dateExact: "2025-08-01", ageMin: 7,  ageMax: 8  },
-  eowagr25_b910: { dateExact: "2025-08-01", ageMin: 9,  ageMax: 10 },
-  eowagr25_b1314:{ dateExact: "2025-08-01", ageMin: 13, ageMax: 14 },
-  doral25_b89:   { dateExact: "2025-12-19", ageMin: 8,  ageMax: 9  },
-  doral25_b1011: { dateExact: "2025-12-19", ageMin: 10, ageMax: 11 },
-  doral25_b1213: { dateExact: "2025-12-19", ageMin: 12, ageMax: 13 },
-  venice25_b9:   { dateExact: "2025-08-07", ageMin: 9,  ageMax: 9  },
-  venice25_b10:  { dateExact: "2025-08-07", ageMin: 10, ageMax: 10 },
-  venice25_b11:  { dateExact: "2025-08-07", ageMin: 11, ageMax: 11 },
-  venice25_b12:  { dateExact: "2025-08-07", ageMin: 12, ageMax: 12 },
-  rome25_b10:    { dateExact: "2025-10-09", ageMin: 10, ageMax: 10 },
-  rome25_b11:    { dateExact: "2025-10-09", ageMin: 11, ageMax: 11 },
-  rome25_b12:    { dateExact: "2025-10-09", ageMin: 12, ageMax: 12 },
-  marco25_b9:    { dateExact: "2025-03-15", ageMin: 9,  ageMax: 9  },
-  marco25_b10:   { dateExact: "2025-03-15", ageMin: 10, ageMax: 10 },
-  marco25_b11:   { dateExact: "2025-03-15", ageMin: 11, ageMax: 11 },
-  marco25_b12:   { dateExact: "2025-03-15", ageMin: 12, ageMax: 12 },
-  marco26_b9:    { dateExact: "2026-03-13", ageMin: 9,  ageMax: 9  },
-  marco26_b10:   { dateExact: "2026-03-13", ageMin: 10, ageMax: 10 },
-  marco26_b11:   { dateExact: "2026-03-13", ageMin: 11, ageMax: 11 },
-  marco26_b12:   { dateExact: "2026-03-13", ageMin: 12, ageMax: 12 },
-  desert26_b9:   { dateExact: "2026-02-21", ageMin: 9,  ageMax: 9  },
-  desert26_b10:  { dateExact: "2026-02-21", ageMin: 10, ageMax: 10 },
-  desert26_b11:  { dateExact: "2026-02-21", ageMin: 11, ageMax: 11 },
-  desert26_b12:  { dateExact: "2026-02-21", ageMin: 12, ageMax: 12 },
-  sandestin26_b9: { dateExact: "2026-01-17", ageMin: 9,  ageMax: 9  },
-  sandestin26_b10:{ dateExact: "2026-01-17", ageMin: 10, ageMax: 10 },
-  sandestin26_b11:{ dateExact: "2026-01-17", ageMin: 11, ageMax: 11 },
-  sandestin26_b12:{ dateExact: "2026-01-17", ageMin: 12, ageMax: 12 },
-  msstate26_b9:  { dateExact: "2026-03-09", ageMin: 9,  ageMax: 9  },
-  msstate26_b10: { dateExact: "2026-03-09", ageMin: 10, ageMax: 10 },
-  msstate26_b11: { dateExact: "2026-03-09", ageMin: 11, ageMax: 11 },
-  msstate26_b12: { dateExact: "2026-03-09", ageMin: 12, ageMax: 12 },
-  elprat23_b8:   { dateExact: "2023-10-22", ageMin: 8,  ageMax: 8  },
-  elprat23_b9:   { dateExact: "2023-10-22", ageMin: 9,  ageMax: 9  },
-  elprat23_b10:  { dateExact: "2023-10-22", ageMin: 10, ageMax: 10 },
-  // Doral 2024
-  doral24_b89:   { dateExact: "2024-12-19", ageMin: 8,  ageMax: 9  },
-  doral24_b1011: { dateExact: "2024-12-19", ageMin: 10, ageMax: 11 },
-  doral24_b1213: { dateExact: "2024-12-19", ageMin: 12, ageMax: 13 },
-  // Greatgolf
-  gg25:          { dateExact: "2025-02-08", ageMax: 12 },
-  gg26_u14:      { dateExact: "2026-02-08", ageMin: 13, ageMax: 14 },
-  gg26_open:     { dateExact: "2026-02-08" },
-};
-
-/** Parse "Boys 11" / "Boys 10-11" / "Boys 10 & 11" → exact age or null */
-function parseExactAge(agStr: string): number | null {
-  if (!agStr) return null;
-  // "Boys 11" — single age, no range
-  const single = agStr.match(/[Bb]oys\s+(\d+)$/);
-  if (single) return Number(single[1]);
-  // "Boys 10" with trailing spaces / punctuation
-  const clean = agStr.match(/[Bb]oys\s+(\d+)\s*$/);
-  if (clean) return Number(clean[1]);
-  return null; // range like "Boys 10-11" or "Boys 10 & 11" → can't pin exact age
-}
-
-interface DobConstraint {
-  dateExact: string;   // tournament date
-  ageMin: number;      // minimum age bracket
-  ageMax: number;      // maximum age bracket (same as min when exact)
-  tid: string;
-}
-
-/** Calcula o escalão internacional Sub-N (Sub-10/12/14/16/18/21) prefirindo
- *  a idade actual (DOB exacto), com fallback para a categoria RFEG (catEdad). */
-function escalaoIntl(rival: RivalPlayer): string | null {
-  const ageToSub = (a: number): string | null => {
-    if (a <= 9) return "Sub-10";
-    if (a <= 11) return "Sub-12";
-    if (a <= 13) return "Sub-14";
-    if (a <= 15) return "Sub-16";
-    if (a <= 17) return "Sub-18";
-    if (a <= 21) return "Sub-21";
-    return null;
-  };
-  // 1) DOB exacto → idade actual
-  if (rival.dob) {
-    try {
-      const d = parseDob(rival.dob);
-      const today = new Date();
-      let a = today.getFullYear() - d.getFullYear();
-      const beforeBirthday = today.getMonth() < d.getMonth()
-        || (today.getMonth() === d.getMonth() && today.getDate() < d.getDate());
-      if (beforeBirthday) a--;
-      const sub = ageToSub(a);
-      if (sub) return sub;
-    } catch {}
-  }
-  // 2) Fallback: catEdad RFEG → mapeamento standard
-  const cat = (rival as any).esCatEdad as string | undefined;
-  if (cat) {
-    const c = cat.toUpperCase();
-    if (/BENJAM/.test(c)) return "Sub-10";
-    if (/ALEV/.test(c)) return "Sub-12";
-    if (/INFANT/.test(c)) return "Sub-14";
-    if (/CADETE/.test(c)) return "Sub-16";
-    if (/JUNIOR|JUVENIL/.test(c)) return "Sub-18";
-  }
-  return null;
-}
-
-function computeDobInfo(p: RivalPlayer, mhPlayer?: MHPlayer | null): DobInfo {
-  // If exact DOB known
-  if (p.dob) {
-    const d = parseDob(p.dob);
-    const today = new Date();
-    const a = ageAt(d, today);
-    const nextBday = new Date(today.getFullYear(), d.getMonth(), d.getDate());
-    if (nextBday <= today) nextBday.setFullYear(nextBday.getFullYear() + 1);
-    const diffDays = Math.ceil((nextBday.getTime() - today.getTime()) / 86400000);
-    const showCountdown = diffDays <= 90;
-    return {
-      exact: true, dob: d, dobStr: p.dob, rangeStr: p.dob, ageStr: `${a} anos`,
-      nextBdayDays: showCountdown ? diffDays : undefined,
-      nextAge: showCountdown ? a + 1 : undefined,
-    };
-  }
-
-  // ── Step 1: collect constraints from p.r tournaments ──────────────────────
-  const constraints: DobConstraint[] = [];
-  const hidden = hiddenTids(p); // skip dedup'd tids to avoid contradictory constraints
-
-  for (const [tid, res] of Object.entries(p.r)) {
-    if (hidden.has(tid)) continue; // skip duplicates that could create contradictions
-    let td: { dateExact?: string; ageMin?: number; ageMax?: number } | undefined = T_MAP[tid];
-
-    // USKids completo tids "usk{tcode}_b{n}" → dateExact from name map, age from suffix
-    if (!td) {
-      const m = tid.match(/^(usk\d+)_b(\d+)$/);
-      if (m) {
-        const base = uskTournNames.get(m[1]);
-        const age = Number(m[2]);
-        if (base) td = { dateExact: base.dateExact, ageMin: age, ageMax: age };
-      }
-    }
-    // FPG juniores: "fpg{tcode}" — tcode pode conter + para torneios pré-fundidos
-    if (!td && /^fpg[\d+]+$/.test(tid)) {
-      const fpg = fpgTournNames.get(tid);
-      if (fpg) td = { dateExact: fpg.dateExact, ageMin: fpg.ageMin, ageMax: fpg.ageMax };
-    }
-    // FFGolf: "ff{trnId}_{U10|U12|U14}" → dateExact + age range derivado do escalão
-    if (!td && tid.startsWith("ff")) {
-      const ff = ffgolfTournNames.get(tid);
-      if (ff) {
-        const ag = ff.ageGroup || "";
-        const aMin = ag === "U10" ? 8 : ag === "U12" ? 11 : ag === "U14" ? 13 : null;
-        const aMax = ag === "U10" ? 10 : ag === "U12" ? 12 : ag === "U14" ? 14 : null;
-        if (aMin != null && aMax != null) {
-          td = { dateExact: ff.dateExact, ageMin: aMin, ageMax: aMax };
-        }
-      }
-    }
-    if (!td?.dateExact) continue;
-
-    let ageMin = td.ageMin ?? null;
-    let ageMax = td.ageMax ?? null;
-
-    // Refine using the actual ageGroup string stored on this result
-    const agStr = (res as any).ageGroup as string | undefined;
-    if (agStr) {
-      const exact = parseExactAge(agStr);
-      if (exact != null) {
-        ageMin = (ageMin == null) ? exact : Math.max(ageMin, exact);
-        ageMax = (ageMax == null) ? exact : Math.min(ageMax, exact);
-      }
-    }
-
-    if (ageMin == null || ageMax == null) continue;
-    constraints.push({ dateExact: td.dateExact, ageMin, ageMax, tid });
-  }
-
-  // ── Step 1b: member history — precise single-age USKids data points ────────
-  // Each entry gives an exact age on a specific date → very tight constraint
-  // Multiple consecutive entries with a step-up reveal the birthday window precisely
-  if (mhPlayer) {
-    for (const [mhTid, t] of Object.entries(mhPlayer.torneios)) {
-      if (!t.startDate || !t.ageGroup) continue;
-      const isoD = isoDate(t.startDate);
-      if (!isoD) continue;
-      const exact = parseExactAge(t.ageGroup);
-      if (exact == null) continue; // range label like "Boys 10-11" → skip
-      constraints.push({ dateExact: isoD, ageMin: exact, ageMax: exact, tid: `mh_${mhTid}` });
-    }
-  }
-
-  if (constraints.length === 0) {
-    return { exact: false, rangeStr: "?", ageStr: "?" };
-  }
-
-  // ── Step 2: intersect all per-tournament DOB windows ───────────────────────
-  // "Age A on date D" → birthday ∈ (D − (A+1) years, D − A years]
-  // Apply each constraint only if it doesn't make the range impossible.
-  // Bad constraints (e.g. from a name collision in auto-loaded data) are skipped.
-  let rangeMin: Date | null = null;
-  let rangeMax: Date | null = null;
-
-  for (const c of constraints) {
-    const tDate = new Date(c.dateExact);
-    const latest = new Date(tDate);
-    latest.setFullYear(latest.getFullYear() - c.ageMin);
-    const earliest = new Date(tDate);
-    earliest.setFullYear(earliest.getFullYear() - c.ageMax - 1);
-    earliest.setDate(earliest.getDate() + 1);
-
-    // Try applying — only commit if the result is still a valid window
-    const newMin: Date = (!rangeMin || earliest > rangeMin) ? earliest : rangeMin;
-    const newMax: Date = (!rangeMax || latest  < rangeMax)  ? latest   : rangeMax;
-    if (newMin <= newMax) {
-      rangeMin = newMin;
-      rangeMax = newMax;
-    }
-    // else: this constraint conflicts with what we know — skip it silently
-  }
-
-  if (!rangeMin || !rangeMax || rangeMin > rangeMax) {
-    return { exact: false, rangeStr: "?", ageStr: "?" };
-  }
-
-  // ── Step 3: tighten using age-group transitions ─────────────────────────────
-  // If player was age A at T1 and A+1 at T2 (T2 > T1), their (A+1)-th birthday
-  // falls strictly between T1 and T2 → birthday ∈ (T1 − (A+1) years, T2 − (A+1) years]
-  // This same window is already captured by the intersection above, but the
-  // transition check lets us tighten when we only have the later tournament:
-  //   if we know birthday > T1 (because they were still A at T1), we can set
-  //   a lower bound on birthday of (T1 - (A+1) years + 1 day).
-  // So the main benefit is detecting the transition to add this lower bound constraint.
-
-  const sorted = [...constraints].sort((a, b) => a.dateExact.localeCompare(b.dateExact));
-  for (let i = 0; i < sorted.length - 1; i++) {
-    const c1 = sorted[i], c2 = sorted[i + 1];
-    // Is this a clear step-up? (c2's minimum age > c1's maximum age, difference = 1)
-    if (c2.ageMin - c1.ageMax === 1) {
-      // Birthday is the (c1.ageMax + 1)th birthday, which happened between T1 and T2
-      // → birthday ∈ (T1 − (c1.ageMax+1) years, T2 − (c1.ageMax+1) years]
-      const transA = c1.ageMax + 1;
-      const transLate = new Date(c2.dateExact);
-      transLate.setFullYear(transLate.getFullYear() - transA);
-      const transEarly = new Date(c1.dateExact);
-      transEarly.setFullYear(transEarly.getFullYear() - transA);
-      transEarly.setDate(transEarly.getDate() + 1);
-
-      // Apply transition tightening only if it keeps the range valid
-      const tMin: Date = transEarly > rangeMin! ? transEarly : rangeMin!;
-      const tMax: Date = transLate  < rangeMax! ? transLate  : rangeMax!;
-      if (tMin <= tMax) { rangeMin = tMin; rangeMax = tMax; }
-    }
-  }
-
-  if (rangeMin! > rangeMax!) {
-    return { exact: false, rangeStr: "?", ageStr: "?" };
-  }
-
-  // ── Step 4: format output ───────────────────────────────────────────────────
-  const minY = rangeMin!.getFullYear(), maxY = rangeMax!.getFullYear();
-  const minM = rangeMin!.getMonth(),    maxM = rangeMax!.getMonth();
-  const spanDays = Math.round((rangeMax!.getTime() - rangeMin!.getTime()) / 86400000);
-
-  let rangeStr: string;
-  if (spanDays <= 1) {
-    // Single day — essentially exact
-    const d = rangeMin!;
-    rangeStr = `${String(d.getDate()).padStart(2,"0")}/${String(d.getMonth()+1).padStart(2,"0")}/${d.getFullYear()}`;
-  } else if (minY === maxY) {
-    if (minM === maxM) {
-      rangeStr = `${MONTHS_PT[minM]} ${minY}`;
-    } else {
-      rangeStr = `${MONTHS_PT[minM]}–${MONTHS_PT[maxM]} ${minY}`;
-    }
-  } else {
-    rangeStr = `${MONTHS_PT[minM]} ${minY} – ${MONTHS_PT[maxM]} ${maxY}`;
-  }
-
-  // Estimate age: use midpoint of the DOB range
-  const midMs  = (rangeMin!.getTime() + rangeMax!.getTime()) / 2;
-  const midDob = new Date(midMs);
-  // Never show countdown for estimated DOBs — midpoint is not the real birthday
-  const ageStr = fmtAgeEstimated(midDob);
-
-  return { exact: false, rangeMin: rangeMin ?? undefined, rangeMax: rangeMax ?? undefined, rangeStr, ageStr };
-}
-
-const UP = [
+export const UP = [
   { id: "marco26", name: "Marco Simone Inv. 2026", short: "M.SIMONE", url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516989/marco-simone-invitational-2026/field" },
 ];
 
@@ -690,7 +362,7 @@ function resolvePlayerKey(n: string): string {
   return PLAYER_ALIASES[norm] ?? norm;
 }
 
-const D: RivalPlayer[]=[
+export const D: RivalPlayer[]=[
   {n:"Manuel Medeiros",co:"Portugal",isM:true,dob:"29/04/2014",r:{brjgt25:{p:26,t:265,tp:52,rd:[90,85,90]},eowagr25:{p:7,t:238,tp:22,rd:[85,77,76]},venice25:{p:28,t:237,tp:21,rd:[78,76,83]},rome25:{p:10,t:166,tp:22,rd:[89,77]},doral25:{p:29,t:177,tp:35,rd:[98,79]},qdl25:{p:11,t:90,tp:18,rd:[90]},gg26:{p:4,t:169,tp:25,rd:[87,82]},wjgc26:{p:9,t:232,tp:16,rd:[79,78,75]}},up:["marco26"]},
   {n:"Dmitrii Elchaninov",co:"Russian Federation",dob:"13/05/2014",r:{brjgt25:{p:1,t:205,tp:-8,rd:[69,68,68]},eowagr25:{p:2,t:218,tp:2,rd:[77,70,71]},venice25:{p:1,t:198,tp:-18,rd:[62,68,68]},qdl25:{p:1,t:71,tp:-1,rd:[71]},wjgc26:{p:1,t:210,tp:-6,rd:[69,69,72]}},up:[]},
   {n:"Diego Gross Paneque",co:"Spain",r:{brjgt25:{p:16,t:249,tp:36,rd:[80,84,85]},wjgc26:{p:9,t:232,tp:16,rd:[76,75,81]}},up:[]},
@@ -898,112 +570,9 @@ const D: RivalPlayer[]=[
  *
  * Usa as registries uskTournNames, fpgTournNames, ffgolfTournNames + T_MAP.
  */
-function dobRangeStrict(p: RivalPlayer): [Date | null, Date | null] {
-  if (p.dob) {
-    const d = parseDob(p.dob);
-    return [d, d];
-  }
-  let lo: Date | null = null, hi: Date | null = null;
-  for (const [tid, res] of Object.entries(p.r)) {
-    let td: { dateExact?: string; ageMin?: number; ageMax?: number } | undefined = T_MAP[tid];
-    if (!td) {
-      const m = tid.match(/^(usk\d+)_b(\d+)$/);
-      if (m) {
-        const base = uskTournNames.get(m[1]);
-        const age = Number(m[2]);
-        if (base) td = { dateExact: base.dateExact, ageMin: age, ageMax: age };
-      }
-    }
-    if (!td && /^fpg[\d+]+$/.test(tid)) {
-      const fpg = fpgTournNames.get(tid);
-      if (fpg) td = { dateExact: fpg.dateExact, ageMin: fpg.ageMin, ageMax: fpg.ageMax };
-    }
-    if (!td && tid.startsWith("ff")) {
-      const ff = ffgolfTournNames.get(tid);
-      if (ff) {
-        const ag = ff.ageGroup || "";
-        const aMin = ag === "U10" ? 8 : ag === "U12" ? 11 : ag === "U14" ? 13 : null;
-        const aMax = ag === "U10" ? 10 : ag === "U12" ? 12 : ag === "U14" ? 14 : null;
-        if (aMin != null && aMax != null) td = { dateExact: ff.dateExact, ageMin: aMin, ageMax: aMax };
-      }
-    }
-    if (!td?.dateExact) continue;
+/* dobInference (part 2) extraído para kids/dobInference.ts */
 
-    let ageMin = td.ageMin ?? null;
-    let ageMax = td.ageMax ?? null;
-    const agStr = (res as any).ageGroup as string | undefined;
-    if (agStr) {
-      const exact = parseExactAge(agStr);
-      if (exact != null) {
-        ageMin = ageMin == null ? exact : Math.max(ageMin, exact);
-        ageMax = ageMax == null ? exact : Math.min(ageMax, exact);
-      }
-    }
-    // Aceitar constraints parciais: só ageMin (≥X anos) ou só ageMax (≤X anos)
-    if (ageMin == null && ageMax == null) continue;
-
-    const tDate = new Date(td.dateExact);
-    if (ageMin != null) {
-      // Tinha PELO MENOS ageMin → DOB ≤ tDate - ageMin anos (latest possível)
-      const latest = new Date(tDate); latest.setFullYear(latest.getFullYear() - ageMin);
-      if (!hi || latest < hi) hi = latest;
-    }
-    if (ageMax != null) {
-      // Tinha NO MÁXIMO ageMax → DOB > tDate - (ageMax+1) anos (earliest possível)
-      const earliest = new Date(tDate); earliest.setFullYear(earliest.getFullYear() - ageMax - 1);
-      earliest.setDate(earliest.getDate() + 1);
-      if (!lo || earliest > lo) lo = earliest;
-    }
-  }
-  return [lo, hi];
-}
-
-/**
- * Verifica se dois jogadores podem coerentemente ser a mesma pessoa.
- * Conservador: SÓ bloqueia merge quando há evidência FORTE de pessoas diferentes.
- *
- * Bloqueia se:
- *   1. memberId definido em ambos e diferente
- *   2. DOB explícita em ambos e diferem por > 30 dias
- *
- * NÃO bloqueia em janelas DOB inferidas (demasiado ruidosas — kids jogam em
- * escalões adjacentes, dados podem ter pequenas inconsistências). Janelas
- * com gap > 1 ano contra DOB explícita vão soltar a flag.
- *
- * Para Manuel: nunca bloqueia (resolvePlayerKey + isM já tratam dele).
- */
-function arePlayersCompatible(a: RivalPlayer, b: RivalPlayer): boolean {
-  if (a.isM || b.isM) return true;
-
-  const aMid = (a as any).memberId, bMid = (b as any).memberId;
-  if (aMid && bMid && aMid !== bMid) return false;
-
-  // DOB explícita em ambos: têm de coincidir (tolerância 30 dias)
-  if (a.dob && b.dob) {
-    const da = parseDob(a.dob), db = parseDob(b.dob);
-    const diffDays = Math.abs(da.getTime() - db.getTime()) / 86400000;
-    if (diffDays > 30) return false;
-  }
-
-  // DOB explícita vs janela inferida do outro: bloqueia só se gap > 12 meses
-  const explicit = a.dob ? parseDob(a.dob) : (b.dob ? parseDob(b.dob) : null);
-  const other = a.dob ? b : (b.dob ? a : null);
-  if (explicit && other) {
-    const [lo, hi] = dobRangeStrict(other);
-    if (lo && explicit < lo) {
-      const months = (lo.getTime() - explicit.getTime()) / (30.44 * 86400000);
-      if (months > 12) return false;
-    }
-    if (hi && explicit > hi) {
-      const months = (explicit.getTime() - hi.getTime()) / (30.44 * 86400000);
-      if (months > 12) return false;
-    }
-  }
-
-  return true;  // default: permitir merge
-}
-
-const manuel = D.find(x => x.isM)!;
+export const manuel = D.find(x => x.isM)!;
 
 /** Hook: carrega todos os ficheiros JSON e faz merge com D */
 /** Converte dob FPG "YYYY-MM-DD" → "DD/MM/YYYY" esperado por RivalPlayer.dob */
@@ -1199,13 +768,13 @@ function useScoringStats() {
 
 
 /** Extrai o ano de um dateExact (YYYY-MM-DD) ou de um texto de data ("Fev 2025") */
-function yearOf(dateExact?: string, fallback?: string): number {
+export function yearOf(dateExact?: string, fallback?: string): number {
   if (dateExact) return parseInt(dateExact.slice(0, 4));
   return parseInt(fallback?.match(/(\d{4})/)?.[1] ?? "0");
 }
 
 /** ±par color — variante local intencional: retorna sempre cor (nunca undefined), usa dark variants para contraste em cards */
-function tpColorMH(tp: number | null): string {
+export function tpColorMH(tp: number | null): string {
   if (tp == null) return "var(--text-3)";
   if (tp < 0) return "var(--color-good-dark)";
   if (tp === 0) return "var(--text-2)";
@@ -1216,107 +785,9 @@ function tpColorMH(tp: number | null): string {
    SCORECARD DATA — WJGC 2026 (3 rondas)
    ═══════════════════════════════════ */
 // Villa Padierna Flamingos — tee WJGC 2026 (away-villa-padierna-flamingos-espanha-2)
-const WJGC26_PAR = VP_WJGC26_PAR as unknown as readonly number[];
-const WJGC26_SI  = VP_WJGC26_SI  as unknown as readonly number[];
-const WJGC26_M   = VP_WJGC26_M   as unknown as readonly number[];
-const WJGC26_CARDS=[
-{n:"Dmitrii Elchaninov",pos:1,tp:-6,rds:[[4,3,3,4,4,4,3,4,4,5,4,4,3,4,5,3,4,4],[5,3,5,4,3,5,4,3,3,4,4,3,5,4,5,2,3,4],[6,3,4,3,3,5,5,2,4,5,5,2,4,4,5,3,4,5]]},
-{n:"William Harran",pos:2,tp:5,rds:[[7,4,5,3,4,5,4,3,4,5,5,4,4,3,4,3,4,4],[5,3,4,4,3,6,3,3,4,4,5,3,4,3,7,3,3,4],[4,3,4,3,5,4,4,4,4,5,6,2,5,4,5,3,5,5]]},
-{n:"Sean Wilding",pos:3,tp:8,rds:[[5,3,4,4,4,5,2,3,4,5,5,3,3,4,5,3,4,5],[5,4,5,3,4,6,4,3,4,5,5,3,4,3,5,2,5,4],[6,4,5,3,3,5,5,2,4,5,5,4,6,4,6,3,5,4]]},
-{n:"Weilian Sun",pos:4,tp:9,rds:[[5,3,4,5,5,5,5,3,4,4,6,3,5,4,4,3,5,4],[5,3,4,2,4,6,3,3,4,5,4,3,4,4,6,3,6,4],[8,3,3,4,4,4,5,2,4,5,5,3,4,3,7,3,3,5]]},
-{n:"Philippe Xiao",pos:5,tp:11,rds:[[5,3,4,3,4,5,5,3,4,5,5,3,5,3,6,3,4,4],[6,4,4,3,3,5,3,3,4,5,6,2,4,4,5,4,4,4],[6,4,4,3,5,6,5,2,4,5,5,4,5,6,6,2,4,4]]},
-{n:"Hugo Strasser",pos:6,tp:12,rds:[[5,3,4,3,4,6,3,3,4,5,5,4,4,3,6,3,4,4],[6,3,4,3,4,4,4,3,6,5,5,3,5,3,4,3,4,4],[5,3,3,4,5,6,3,3,5,5,6,4,6,4,7,3,5,5]]},
-{n:"Christian Chepishev",pos:7,tp:14,rds:[[4,4,5,3,4,5,4,3,4,5,5,4,5,4,6,4,3,3],[6,3,5,3,4,5,3,4,4,5,6,2,4,5,5,3,4,5],[5,4,4,3,4,5,6,4,3,6,5,3,5,6,5,3,4,4]]},
-{n:"Henry Bucys",pos:8,tp:15,rds:[[6,3,5,4,4,5,4,4,5,5,5,4,4,4,5,3,4,5],[5,3,4,3,4,5,4,3,4,4,5,3,5,4,6,4,4,6],[4,3,4,3,3,4,4,4,4,6,5,5,5,4,6,4,4,4]]},
-{n:"Diego Gross Paneque",pos:9,tp:16,rds:[[6,3,4,3,4,5,5,3,5,5,5,4,4,3,5,4,3,5],[7,3,4,3,4,5,4,3,4,5,6,3,5,4,6,2,3,4],[5,3,5,5,5,4,5,4,5,5,5,4,4,4,5,3,5,5]]},
-{n:"Manuel Francisco Medeiros",pos:9,tp:16,rds:[[9,3,3,4,5,5,4,3,4,5,5,5,5,4,4,3,3,5],[5,3,4,4,3,5,5,4,4,6,5,4,4,4,7,3,4,4],[5,3,3,3,4,7,3,3,4,4,6,3,5,4,6,4,4,4]]},
-{n:"Leon Schneitter",pos:11,tp:20,rds:[[5,3,4,4,5,6,4,3,5,4,5,3,3,4,6,3,4,5],[8,4,4,5,4,4,4,2,4,6,5,4,6,4,5,3,4,4],[5,4,5,3,4,5,5,4,5,4,5,4,5,4,8,2,3,5]]},
-{n:"Álex Carrón",pos:12,tp:25,rds:[[5,3,4,3,4,5,4,3,4,8,5,4,4,4,4,3,4,5],[6,3,5,4,5,5,4,2,5,4,5,3,5,4,7,2,5,8],[5,3,4,3,4,6,4,4,4,7,7,4,5,4,6,3,5,5]]},
-{n:"Benji Botham",pos:13,tp:28,rds:[[5,3,3,3,5,6,4,3,4,8,6,5,5,4,4,4,4,5],[6,3,4,4,4,5,5,3,6,4,5,3,5,4,7,3,5,4],[6,3,4,4,5,5,4,3,7,5,6,4,5,4,6,3,5,4]]},
-{n:"Myles Jones",pos:14,tp:29,rds:[[7,4,5,3,4,6,4,3,4,5,6,3,4,4,5,3,4,5],[5,3,4,3,4,5,4,3,5,6,6,3,7,6,8,4,6,6],[5,4,4,4,4,6,5,3,4,4,6,3,4,4,5,3,5,5]]},
-{n:"Oscar Bunt",pos:14,tp:29,rds:[[9,3,4,4,4,5,4,3,5,4,5,3,3,4,6,3,5,8],[5,3,5,4,5,5,3,3,4,4,5,5,6,4,5,4,5,5],[5,5,4,3,4,8,4,4,3,4,5,5,4,5,6,4,5,5]]},
-{n:"Dylan Dedaj Ungureanu",pos:14,tp:29,rds:[[5,3,4,3,4,6,4,4,4,5,9,3,5,5,5,4,5,6],[6,2,5,4,4,5,5,3,6,5,5,3,5,5,6,3,5,4],[5,3,4,2,4,6,5,3,4,5,7,3,4,5,7,4,5,4]]},
-{n:"Alexis Beringer",pos:17,tp:30,rds:[[5,4,5,3,4,6,3,5,6,6,5,3,5,4,8,3,4,4],[7,3,4,4,4,5,3,3,5,8,6,4,4,3,7,3,5,4],[4,5,5,4,4,5,7,4,3,5,5,3,5,4,5,3,5,5]]},
-{n:"Hermes Stuart Cañizares Plaja",pos:18,tp:32,rds:[[7,4,3,4,4,5,4,3,4,4,5,3,4,4,7,3,4,5],[5,5,5,3,4,5,4,3,5,8,8,3,4,4,6,3,4,4],[5,4,5,2,5,5,4,4,8,4,6,3,10,3,7,3,5,5]]},
-{n:"Niko Alvarez Van Der Walt",pos:19,tp:33,rds:[[5,3,4,5,4,5,4,4,5,5,5,4,4,4,7,3,4,6],[5,7,5,3,3,6,3,3,3,4,5,4,5,4,9,3,5,9],[5,3,6,3,3,5,4,4,4,6,7,4,5,4,5,3,6,5]]},
-{n:"Miroslavs Bogdanovs",pos:20,tp:36,rds:[[5,3,5,3,4,4,4,2,5,5,5,3,5,4,9,4,4,4],[4,4,4,3,4,5,3,3,11,6,5,4,6,5,6,3,4,6],[6,5,4,4,4,5,4,3,4,6,7,4,6,4,8,4,5,5]]},
-{n:"Buster Airey",pos:20,tp:36,rds:[[6,3,4,3,4,5,4,3,4,7,4,4,5,5,6,3,4,5],[7,4,5,5,4,5,4,4,5,6,5,3,6,5,5,4,4,4],[7,3,5,3,5,5,5,4,4,8,5,4,6,4,6,4,5,5]]},
-{n:"Elijah Gibbons",pos:22,tp:37,rds:[[9,3,3,4,4,8,4,3,5,5,5,3,4,5,5,3,5,5],[7,4,4,4,4,7,4,4,4,5,6,4,3,4,6,3,4,6],[6,4,4,3,5,6,3,4,4,9,5,4,6,3,7,5,4,5]]},
-{n:"Henry Liechti",pos:23,tp:39,rds:[[6,3,5,3,4,4,5,3,4,5,5,4,5,4,5,3,6,5],[6,4,5,3,5,5,5,3,4,5,5,4,4,5,10,4,5,5],[7,6,5,4,4,6,4,4,4,7,5,4,4,5,7,3,6,4]]},
-{n:"Kai Russell",pos:24,tp:40,rds:[[7,6,3,3,4,5,4,4,5,5,6,4,3,4,6,3,5,4],[7,4,5,3,4,5,4,6,5,6,6,4,4,4,6,2,5,3],[6,4,5,6,4,5,3,4,4,11,5,3,5,5,9,3,6,4]]},
-{n:"Aineon Hiram Jabonero",pos:25,tp:41,rds:[[5,3,6,5,6,5,4,4,7,5,7,4,5,4,5,4,4,5],[6,4,5,4,5,6,4,2,5,6,5,4,6,4,6,4,5,6],[5,6,5,4,3,6,5,4,4,4,5,4,4,4,5,4,5,5]]},
-{n:"Lukas Doherty",pos:26,tp:42,rds:[[6,3,4,3,5,7,5,3,5,6,6,5,5,5,7,4,5,5],[9,5,5,3,4,4,5,3,4,5,5,3,4,4,7,4,5,6],[6,4,5,3,4,5,5,3,4,5,6,4,5,4,7,3,6,5]]},
-{n:"Elias Didjurgis",pos:27,tp:43,rds:[[6,3,5,3,5,6,5,4,5,6,5,3,5,5,5,4,3,6],[5,3,5,4,4,5,4,4,5,5,6,5,6,4,9,4,5,6],[7,5,4,3,4,6,6,2,6,5,6,3,5,4,7,3,5,5]]},
-{n:"Joe Short",pos:28,tp:50,rds:[[8,4,5,4,4,7,5,4,7,6,5,5,4,5,6,4,6,4],[6,3,3,3,6,7,3,4,6,6,4,5,5,4,7,2,3,6],[6,4,6,3,3,8,6,4,3,5,6,3,5,5,6,7,4,6]]},
-{n:"Rodrigo Palacios Bauer",pos:29,tp:51,rds:[[5,3,3,3,4,5,5,3,4,7,7,3,6,5,6,2,5,6],[5,3,5,4,4,6,5,3,7,10,6,4,5,5,7,4,5,5],[6,4,4,5,4,6,7,4,3,5,10,3,6,4,8,2,5,6]]},
-{n:"Kevin Canton",pos:30,tp:57,rds:[[5,2,5,3,6,7,5,4,4,6,5,2,4,5,8,3,5,6],[6,3,5,3,4,6,4,4,6,6,5,6,5,4,7,3,4,7],[4,3,8,4,5,6,7,2,4,7,6,4,6,5,8,5,9,7]]},
-{n:"James Doyle",pos:31,tp:60,rds:[[6,4,8,4,5,7,4,3,4,5,5,5,4,6,8,4,4,5],[5,4,4,4,4,7,5,3,5,5,7,4,6,5,6,3,5,5],[8,8,6,3,4,7,4,3,5,3,9,6,3,5,8,6,6,4]]},
-{n:"Joseph Robinson",pos:32,tp:61,rds:[[6,7,6,3,4,5,5,3,4,6,7,3,4,5,6,2,4,5],[8,3,5,2,6,5,4,6,5,9,5,4,5,6,6,4,5,5],[8,6,4,4,4,8,7,3,5,5,6,4,6,4,4,4,12,5]]},
-{n:"Arthur Lamblin",pos:33,tp:63,rds:[[7,3,5,3,5,7,4,4,4,7,6,3,6,5,5,5,5,5],[6,4,4,4,4,6,5,6,6,6,6,4,6,5,10,6,5,5],[8,4,5,4,4,8,4,3,5,6,6,3,5,5,6,3,6,7]]},
-{n:"Zeyn Lababedi",pos:34,tp:64,rds:[[6,3,5,5,7,7,4,5,5,5,6,5,6,5,6,4,5,6],[7,3,5,4,5,6,5,5,6,6,6,3,5,5,8,4,5,6],[8,5,5,3,4,6,5,3,4,6,7,4,5,5,9,3,4,5]]},
-{n:"Maddox Tiemann",pos:null,tp:32,rds:[[7,4,4,4,7,6,4,3,4,5,5,5,4,5,8,4,4,6],[5,3,6,3,4,6,5,3,4,7,5,3,6,4,7,3,5,8]]},
-];
+/* courseScorecards extraído para kids/courseScorecards.ts */
+import { WJGC26_CARDS, EOWAGR25_CARDS, WJGC26_1213_CARDS, WJGC26_PAR, WJGC26_SI, WJGC26_M, WJGC26_1213_PAR, WJGC26_1213_SI, WJGC26_1213_M, EOWAGR25_PAR, EOWAGR25_SI, EOWAGR25_M } from "./kids/courseScorecards";
 
-/* ═══════════════════════════════════
-   SCORECARD DATA — GG 2026 U12
-   (Vilamoura - Laguna, 2 rounds, par 72)
-   ═══════════════════════════════════ */
-/* GG26 scorecards: lidos de pull-torneios000.json via loader */
-
-/* QDL25 scorecards: lidos de pull-torneios000.json via loader */
-
-/* ═══════════════════════════════════
-   SCORECARD DATA — European Open WAGR 2025
-   (par 72, 3 rondas, 8 jogadores)
-   ═══════════════════════════════════ */
-// Golf du Touquet La Forêt — EOWAGR 2025 (away-golf-du-touquet-la-foret-0)
-// Le Touquet La Forêt — EOWAGR 2025
-const EOWAGR25_PAR = LT_FORET_PAR as unknown as readonly number[];
-const EOWAGR25_SI  = LT_FORET_SI  as unknown as readonly number[];
-const EOWAGR25_M   = LT_FORET_M   as unknown as readonly number[];
-const EOWAGR25_CARDS=[
-{n:"Aronas Juodis",pos:1,tp:-3,rds:[[4,4,3,6,5,3,4,3,4,4,4,2,5,4,3,4,4,4],[4,6,4,4,5,4,4,2,5,3,4,3,5,3,3,4,4,4],[5,4,3,4,6,3,4,3,4,4,5,3,4,5,3,4,4,4]]},
-{n:"Dmitrii Elchaninov",pos:2,tp:2,rds:[[5,4,4,4,5,3,4,3,4,4,4,3,4,4,3,5,4,4],[5,3,4,3,4,2,4,3,4,4,4,3,7,4,3,4,5,4],[5,4,4,4,5,3,4,4,4,4,6,3,4,5,3,5,6,4]]},
-{n:"Emile Cuanalo",pos:3,tp:8,rds:[[5,6,4,4,5,3,5,4,7,4,4,3,4,4,4,4,4,4],[5,4,4,5,4,3,4,3,4,4,5,4,5,4,4,6,4,4],[5,4,4,4,4,3,4,2,3,4,5,3,4,4,4,5,4,4]]},
-{n:"Maxwell Ip",pos:4,tp:11,rds:[[7,4,4,4,7,3,4,3,4,3,4,4,5,4,4,3,4,4],[6,4,4,4,3,3,4,3,8,4,4,3,6,5,4,5,4,5],[5,3,3,4,6,3,4,2,4,4,4,3,7,4,3,5,5,4]]},
-{n:"Yorick De Hek",pos:5,tp:18,rds:[[6,5,4,4,4,4,4,3,5,4,8,4,4,5,3,4,4,4],[5,4,4,5,6,3,4,3,6,4,5,3,5,4,3,4,4,4],[5,4,5,4,4,4,4,3,5,5,5,3,5,5,3,5,5,5]]},
-{n:"Nial Diwan",pos:6,tp:22,rds:[[5,5,4,4,4,3,4,3,4,4,5,4,4,4,3,5,4,4],[6,6,5,4,5,4,5,4,5,6,5,4,3,4,3,4,5,6],[5,4,4,5,6,4,5,4,4,5,5,3,4,4,4,6,5,4]]},
-{n:"Manuel Medeiros",pos:7,tp:22,rds:[[4,3,4,5,6,3,5,4,5,4,5,3,6,4,3,4,4,4],[5,6,4,4,4,4,4,3,4,4,5,4,4,4,4,5,5,4],[7,5,4,6,5,3,4,3,5,3,6,3,6,4,5,6,5,5]]},
-{n:"Muduo Wang",pos:8,tp:46,rds:[[4,6,5,4,5,3,6,4,6,4,6,4,5,5,2,4,5,5],[6,5,5,5,7,3,5,3,5,6,5,5,5,5,6,7,5,5],[7,6,5,5,7,3,5,3,5,5,5,3,5,5,3,5,5,4]]},
-];
-
-/* ═══════════════════════════════════
-   SCORECARD DATA — WJGC 2026 Boys 12-13
-   (contest 33, par 73, 3 rondas)
-   ═══════════════════════════════════ */
-// Villa Padierna Alferini — WJGC 2026 Boys 12-13
-const WJGC26_1213_PAR = VP_ALFERINI_PAR as unknown as readonly number[];
-const WJGC26_1213_SI  = VP_ALFERINI_SI  as unknown as readonly number[];
-const WJGC26_1213_M   = VP_ALFERINI_M   as unknown as readonly number[];
-const WJGC26_1213_CARDS=[
-{n:"Marcus Latt",pos:1,tp:-8,rds:[[4,3,2,4,4,4,6,3,4,3,3,5,4,3,5,4,3,5],[4,5,3,4,4,4,5,3,5,3,3,5,4,4,4,5,3,3],[4,4,2,5,4,3,5,3,4,3,7,4,4,3,5,5,3,3]]},
-{n:"Skyy Wilding",pos:5,tp:0,rds:[[4,4,3,3,3,4,4,3,4,3,5,5,4,3,3,6,4,5],[6,6,3,5,4,4,5,3,4,4,4,4,4,3,4,4,2,4],[4,5,3,4,4,3,5,3,4,4,5,5,4,3,4,6,3,4]]},
-{n:"Marcus Karim",pos:8,tp:6,rds:[[6,6,3,4,4,4,5,3,4,4,4,5,4,3,3,4,5,4],[6,5,4,5,4,4,4,3,3,4,4,5,6,3,5,5,3,5],[5,6,3,3,3,4,5,3,3,3,4,6,5,3,4,4,4,4]]},
-{n:"Emile Cuanalo",pos:5,tp:0,rds:[[5,7,4,4,4,5,4,4,4,4,4,4,5,3,6,4,4,4],[3,6,3,6,4,4,5,3,3,4,4,5,5,3,3,5,4,4],[5,5,3,5,4,4,4,4,4,4,3,5,4,3,3,5,3,4]]},
-{n:"Maxime Vervaet",pos:10,tp:8,rds:[[5,4,3,4,4,4,5,3,4,3,5,5,4,3,6,5,4,5],[6,4,3,5,5,6,5,3,4,4,5,4,4,3,6,4,3,4],[5,3,4,5,4,6,4,3,4,4,5,4,4,3,5,5,4,4]]},
-{n:"Harrison Barnett",pos:19,tp:14,rds:[[4,5,3,5,7,3,7,3,5,3,4,5,3,3,6,4,3,4],[7,5,3,5,4,4,7,3,4,5,6,4,4,2,5,6,5,4],[5,6,3,4,4,3,5,3,5,3,5,6,4,4,5,6,3,3]]},
-{n:"Kirill Sedov",pos:13,tp:10,rds:[[5,5,2,4,5,3,5,4,5,6,3,7,5,3,3,5,4,4],[4,5,2,5,5,4,5,2,4,3,6,5,5,3,4,6,4,5],[5,4,3,5,5,5,5,3,5,4,3,5,7,3,4,5,4,4]]},
-{n:"Aronas Juodis",pos:22,tp:17,rds:[[6,7,2,5,5,4,6,3,5,4,6,5,4,3,5,5,3,4],[6,5,3,5,5,5,5,4,5,4,5,5,6,3,5,4,5,7],[4,5,3,5,4,3,5,3,5,4,6,5,5,3,4,5,3,4]]},
-{n:"Francisco Carvalho",pos:29,tp:27,rds:[[4,7,2,5,5,5,4,5,4,4,4,5,5,5,5,6,4,4],[6,6,3,5,4,5,6,3,7,4,6,6,6,3,5,7,4,5],[5,6,3,6,5,5,5,2,6,4,5,5,5,3,5,5,3,4]]},
-{n:"César Goossens",pos:36,tp:101,rds:[[8,6,6,6,6,4,8,5,6,4,4,9,6,5,4,8,4,7],[6,7,3,8,7,7,5,3,6,6,6,6,6,3,5,6,5,8],[8,12,3,10,7,4,7,5,5,5,6,6,7,4,6,6,5,5]]},
-{n:"Seb Toft",pos:18,tp:17,rds:[[5,4,3,4,4,6,4,3,5,5,4,5,6,6,4,5,3,4],[5,5,3,4,6,4,5,4,4,4,4,5,4,4,3,6,4,4],[4,5,3,4,3,4,5,3,4,6,4,5,4,3,6,6,4,5]]},
-{n:"Memphis Greenwood",pos:15,tp:11,rds:[[5,4,3,5,5,4,4,3,3,5,4,6,4,3,3,6,3,5],[5,4,3,4,3,4,4,3,5,6,4,5,5,3,6,6,3,6],[5,5,4,4,4,5,5,3,4,6,4,5,4,3,5,5,3,4]]},
-{n:"Luc Taylor",pos:16,tp:12,rds:[[5,5,4,4,4,4,4,3,4,3,4,5,5,3,5,6,4,4],[5,5,3,4,4,4,5,4,4,6,4,5,5,3,6,6,3,4],[4,5,3,5,5,3,6,6,4,3,4,5,5,4,3,4,3,6]]},
-{n:"Harry Mody",pos:16,tp:12,rds:[[4,5,3,3,4,4,5,4,5,3,4,5,4,2,4,7,3,5],[4,4,3,6,4,4,5,4,6,5,4,4,5,3,4,6,3,4],[5,5,4,4,5,4,5,3,4,4,4,5,6,5,4,5,4,4]]},
-{n:"Jack Hollingsworth",pos:22,tp:21,rds:[[5,4,3,4,5,4,6,5,5,3,5,5,5,3,6,5,4,4],[6,5,4,4,4,4,6,4,5,4,4,6,4,4,4,5,3,6],[5,4,4,5,4,4,5,3,4,4,5,5,3,2,5,7,4,4]]},
-{n:"Kris Kuusk",pos:25,tp:27,rds:[[6,5,4,5,5,4,5,3,4,5,6,5,4,3,5,5,4,5],[4,5,4,4,4,4,6,4,5,5,5,5,5,4,5,7,3,4],[4,4,3,4,4,5,8,3,4,4,5,5,6,4,4,6,3,4]]},
-{n:"David Filip",pos:23,tp:25,rds:[[5,5,4,5,3,4,4,3,5,4,5,6,4,2,4,5,3,4],[6,5,4,4,5,4,5,2,5,4,4,7,6,6,5,5,5,4],[4,5,3,4,4,5,6,3,5,4,9,6,5,3,3,5,4,5]]},
-{n:"Dylan Williams",pos:32,tp:45,rds:[[6,5,4,4,4,9,6,3,6,5,4,4,4,3,3,5,4,4],[7,5,4,5,5,8,7,4,5,5,5,7,6,4,4,4,3,6],[6,4,3,7,4,6,6,3,6,5,4,5,6,3,5,6,3,5]]},
-{n:"Alejandro Gomez Morillo",pos:33,tp:57,rds:[[6,5,4,5,5,5,6,4,6,5,5,5,6,3,6,7,4,8],[4,6,2,6,6,6,7,6,3,5,4,5,5,4,7,6,4,5],[8,6,3,6,3,5,6,5,7,4,5,4,5,3,5,6,3,6]]},
-{n:"Fredrik Sonsteby",pos:34,tp:71,rds:[[6,6,6,6,6,5,6,5,6,4,5,6,5,3,5,6,5,7],[8,6,3,5,6,5,6,4,6,5,5,4,5,4,7,6,3,5],[7,7,3,5,5,5,6,7,7,4,6,7,5,3,5,7,5,5]]},
-{n:"William Ottesen Wang",pos:35,tp:75,rds:[[6,8,3,4,5,6,8,3,4,8,4,6,6,4,7,10,3,5],[7,8,5,6,5,8,6,4,4,4,5,7,7,3,4,5,4,5],[6,6,4,5,5,4,6,5,9,6,7,5,6,5,5,5,4,4]]},
-{n:"Rafael Devic Frugier",pos:29,tp:37,rds:[[4,4,4,5,5,5,6,4,7,4,4,4,4,3,5,7,4,4],[5,4,4,4,4,5,5,4,4,5,6,7,5,4,4,6,2,6],[7,5,4,4,6,4,6,3,7,4,9,4,4,4,4,6,4,4]]},
-];
 
 // Compute field averages per round (used for tier coloring in dashboard)
 const AVG_R: Record<string, Array<{ m: number; s: number } | null>> = {};
@@ -1334,18 +805,18 @@ for (const t of T) {
 
 
 /* ── Name matching: "Manuel Medeiros" <→ "Manuel Francisco Medeiros" ── */
-function matchName(dName: string, cardName: string): boolean {
+export function matchName(dName: string, cardName: string): boolean {
   if (dName === cardName) return true;
   const dn = dName.toLowerCase().split(" ");
   const cn = cardName.toLowerCase().split(" ");
   return dn[0] === cn[0] && dn[dn.length - 1] === cn[cn.length - 1];
 }
-function findCard<T extends { n: string }>(cards: T[], dName: string): T | undefined {
+export function findCard<T extends { n: string }>(cards: T[], dName: string): T | undefined {
   return cards.find(c => matchName(dName, c.n));
 }
 
 /* ── Canonical tournament name (strips year, normalises) ── */
-function tornCanonK(name: string): string {
+export function tornCanonK(name: string): string {
   return name.toLowerCase()
     .replace(/\s*\d{4}$/g, "").replace(/\s*'\d{2}$/g, "")
     .replace(/[^a-z0-9]/g, "").trim();
@@ -1360,7 +831,7 @@ function tornCanonK(name: string): string {
  *      Implementação: usa janela DOB inferida; se a janela está completamente
  *      fora do range Manuel±2 anos, descarta. Se for ambígua (parcial), aceita.
  */
-function getPlayerType(rival: RivalPlayer): { label: string; bg: string; fg: string } | null {
+export function getPlayerType(rival: RivalPlayer): { label: string; bg: string; fg: string } | null {
   if (rival.isM) return null;
   const hidden = hiddenTids(rival);
   const positions = Object.entries(rival.r)
@@ -1423,16 +894,16 @@ function getPlayerType(rival: RivalPlayer): { label: string; bg: string; fg: str
    auto-merge async) por todos os sub-componentes
    ══════════════════════════════════════════════════════ */
 const RivalsCtx = React.createContext<RivalPlayer[]>(D);
-function useRivals() { return React.useContext(RivalsCtx); }
+export function useRivals() { return React.useContext(RivalsCtx); }
 
 const MemberHistCtx = React.createContext<MHData | null>(null);
-function useMH() { return React.useContext(MemberHistCtx); }
+export function useMH() { return React.useContext(MemberHistCtx); }
 
 const ScoringStatsCtx = React.createContext<ScoringStatsData | null>(null);
-function useScoringStatsCtx() { return React.useContext(ScoringStatsCtx); }
+export function useScoringStatsCtx() { return React.useContext(ScoringStatsCtx); }
 
 /* ── Rank map derivado do array de rivais ── */
-function buildRankMap(rivals: RivalPlayer[]): Record<string, number> {
+export function buildRankMap(rivals: RivalPlayer[]): Record<string, number> {
   const scored = rivals.map(p => ({ n: p.n, z: (getAvgZ as unknown as (p: RivalPlayer) => number | null)(p) })).filter(x => x.z != null) as { n: string; z: number }[];
   scored.sort((a, b) => a.z - b.z);
   const m: Record<string, number> = {};
@@ -1441,8 +912,8 @@ function buildRankMap(rivals: RivalPlayer[]): Record<string, number> {
 }
 
 // Inicializado vazio — populado só depois de loaded=true
-let rankMap: Record<string, number> = {};
-let totalRanked = 0;
+export let rankMap: Record<string, number> = {};
+export let totalRanked = 0;
 
 // nPlayed e nRounds contam todos os torneios (T manual + auto-loaded)
 // Tids que ficam ocultos no detalhe (deduplicação)
@@ -1462,7 +933,7 @@ const HIDDEN_WHEN_PRESENT: Array<[string, string]> = [
   ["doral25_b1011","doral25"], ["doral25_b89", "doral25"], ["doral25_b1213","doral25"],
 ];
 
-function hiddenTids(p: RivalPlayer): Set<string> {
+export function hiddenTids(p: RivalPlayer): Set<string> {
   const hidden = new Set<string>();
   for (const [toHide, whenPresent] of HIDDEN_WHEN_PRESENT) {
     if (p.r[toHide]?.rd?.length > 0 && p.r[whenPresent]?.rd?.length > 0)
@@ -1527,11 +998,12 @@ const _T_BY_NAME = (() => {
  *      - usk{tcode}_b{n} cujo info.name corresponde a um T[] com dados → skip
  *      - Caso contrário → incluir.
  */
-function getCanonicalTids(p: RivalPlayer): Set<string> {
+export function getCanonicalTids(p: RivalPlayer): Set<string> {
   const out = new Set<string>();
   // 1. T[] manuais com dados
   for (const t of T) {
-    if (!(p.r[t.id]?.rd?.length)) continue;
+    const r = p.r[t.id];
+    if (!r || (!r.rd?.length && r.p == null && r.t == null && r.tp == null)) continue;
     if (t.id === "brjgt25" && p.r["wjgc25_b1011"]?.rd?.length) continue;
     out.add(t.id);
   }
@@ -1540,7 +1012,8 @@ function getCanonicalTids(p: RivalPlayer): Set<string> {
     .replace(/\s+/g, " ").trim();
   for (const [tid, res] of Object.entries(p.r)) {
     if (_MANUAL_TIDS_SET.has(tid)) continue;
-    if (!res?.rd?.length) continue;
+    // Aceitar tids com rd hbh OU pos/total (cp00 maioria sem hbh, só leaderboard)
+    if (!res || (!res.rd?.length && res.p == null && res.t == null && res.tp == null)) continue;
     // 2a) AUTO_COVERED_BY explícito
     if (AUTO_COVERED_BY[tid]) {
       const manualTid = AUTO_COVERED_BY[tid];
@@ -1565,7 +1038,7 @@ function getCanonicalTids(p: RivalPlayer): Set<string> {
   return out;
 }
 
-function nPlayed(p: RivalPlayer) {
+export function nPlayed(p: RivalPlayer) {
   const total = Object.values(p.r).filter(r => r && (r.tp != null || r.rd?.length > 0)).length;
   return total - hiddenTids(p).size;
 }
@@ -1594,7 +1067,7 @@ const SIDEBAR_FILTERS = [
 ];
 
 
-function playerMatchesFilter(p: RivalPlayer, fids: Set<string>): boolean {
+export function playerMatchesFilter(p: RivalPlayer, fids: Set<string>): boolean {
   if (fids.size === 0) return true;
   const tids = Object.keys(p.r);
   return [...fids].some(fid => {
@@ -1624,1652 +1097,35 @@ function playerMatchesFilter(p: RivalPlayer, fids: Set<string>): boolean {
   });
 }
 
-function RivaisSidebar({ selected, onSelect, fids, q, paisFilter, tierFilter, minTorn, apenasDirectos, playerTypeMap }: {
-  selected: string | null;
-  onSelect: (n: string) => void;
-  fids: Set<string>;
-  q: string;
-  paisFilter: string;
-  tierFilter: string;
-  minTorn: number;
-  apenasDirectos: boolean;
-  playerTypeMap: Map<string, ReturnType<typeof getPlayerType>>;
-}) {
-  const rivals = useRivals();
-  const memberHist = useMH();
+/* RivaisSidebar extraído para kids/RivaisSidebar.tsx */
+import { RivaisSidebar } from "./kids/RivaisSidebar";
 
-  const mhCountSidebar = useMemo<Map<string, number>>(() => {
-    const m = new Map<string, number>();
-    if (!memberHist) return m;
-    for (const mh of Object.values(memberHist.jogadores) as MHPlayer[]) {
-      if (!mh.name || mh.name === "?" || mh.name.startsWith("[unknown")) continue;
-      const key = mh.name.toLowerCase().trim().replace(/\s+/g, " ");
-      const cnt = Object.values(mh.torneios).filter(t => t.rounds && Object.keys(t.rounds).length > 0).length;
-      if (cnt > 0) m.set(key, cnt);
-    }
-    return m;
-  }, [memberHist]);
-
-  const manuelMerged = rivals.find(d => d.isM);
-
-  const h2hMap = useMemo<Map<string, { w: number; l: number; d: number }>>(() => {
-    const m = new Map<string, { w: number; l: number; d: number }>();
-    if (!manuelMerged) return m;
-    // Usa getCanonicalTids — mesma deduplicação que tournResults/confrontosH2H
-    // no detail. Garante que sidebar e detail mostram o mesmo nº de confrontos.
-    const manuelTids = getCanonicalTids(manuelMerged);
-    for (const p of rivals) {
-      if (p.isM) continue;
-      const playerTids = getCanonicalTids(p);
-      const shared: string[] = [];
-      for (const tid of playerTids) {
-        if (!manuelTids.has(tid)) continue;
-        if (typeof manuelMerged.r[tid]?.p !== "number" || typeof p.r[tid]?.p !== "number") continue;
-        shared.push(tid);
-      }
-      if (!shared.length) continue;
-      const w = shared.filter(tid => (manuelMerged.r[tid].p as number) < (p.r[tid].p as number)).length;
-      const l = shared.filter(tid => (manuelMerged.r[tid].p as number) > (p.r[tid].p as number)).length;
-      m.set(p.n, { w, l, d: shared.length - w - l });
-    }
-    return m;
-  }, [rivals, manuelMerged]);
-
-  // Lista filtrada + agrupamento directos / circuito
-  const { directos, circuito } = useMemo(() => {
-    let pl = rivals.filter(p => nPlayed(p) > 0 || p.isM);
-    if (fids.size > 0) pl = pl.filter(p => playerMatchesFilter(p, fids));
-    if (paisFilter) pl = pl.filter(p => p.co === paisFilter);
-    if (tierFilter) pl = pl.filter(p => !p.isM && playerTypeMap.get(p.n)?.label.includes(tierFilter.split(" ")[0]));
-    if (minTorn > 0) pl = pl.filter(p => p.isM || nPlayed(p) >= minTorn);
-    if (q) { const ql = q.toLowerCase(); pl = pl.filter(p => p.n.toLowerCase().includes(ql) || p.co.toLowerCase().includes(ql)); }
-
-    const sorted = [...pl].sort((a, b) => {
-      if (a.isM) return -1; if (b.isM) return 1;
-      const ra = rankMap[a.n] ?? 9999, rb = rankMap[b.n] ?? 9999;
-      return ra - rb;
-    });
-
-    const dir: typeof sorted = [];
-    const circ: typeof sorted = [];
-    for (const p of sorted) {
-      if (p.isM) { dir.unshift(p); continue; }
-      const h = h2hMap.get(p.n);
-      if (h && h.w + h.l + h.d > 0) dir.push(p);
-      else if (!apenasDirectos) circ.push(p);
-    }
-    return { directos: dir, circuito: circ };
-  }, [q, fids, paisFilter, tierFilter, minTorn, apenasDirectos, rivals, h2hMap, playerTypeMap]);
-
-  const renderItem = (p: RivalPlayer) => {
-    const flagEmoji = flagOf(p.co);
-    const rank = rankMap[p.n];
-    const played = nPlayed(p);
-    const isActive = selected === p.n;
-    const h2h = h2hMap.get(p.n);
-    const mhKey = p.n.toLowerCase().trim().replace(/\s+/g, " ");
-    const mhCnt = mhCountSidebar.get(mhKey) ?? 0;
-    const playerType = playerTypeMap.get(p.n);
-    const hidden = hiddenTids(p);
-    const bestTpVal = Object.entries(p.r).filter(([tid, r]) => !hidden.has(tid) && r?.tp != null).map(([, r]) => r.tp as number);
-    const bestTp = bestTpVal.length ? Math.min(...bestTpVal) : null;
-    const recordStr = h2h && (h2h.w + h2h.l + h2h.d) > 0
-      ? [h2h.w > 0 ? `${h2h.w}V` : "", h2h.d > 0 ? `${h2h.d}E` : "", h2h.l > 0 ? `${h2h.l}D` : ""].filter(Boolean).join(" ")
-      : null;
-    const recordBg = h2h ? (h2h.w > h2h.l ? "var(--bg-success-subtle)" : h2h.l > h2h.w ? "var(--bg-danger-strong)" : "var(--bg-muted)") : "var(--bg-muted)";
-    const recordCo = h2h ? (h2h.w > h2h.l ? "var(--color-good-dark)" : h2h.l > h2h.w ? "var(--color-danger-dark)" : "var(--text-3)") : "var(--text-3)";
-    const accentColor = h2h ? (h2h.w > h2h.l ? "var(--color-teal)" : h2h.l > h2h.w ? "var(--color-danger)" : h2h.w + h2h.l + h2h.d > 0 ? "var(--accent)" : "var(--border)") : "var(--border)";
-    return (
-      <button key={p.n} className={`course-item${isActive ? " active" : ""}`}
-        style={{ borderLeftColor: isActive ? accentColor : undefined, padding: "8px 10px 7px 12px" }}
-        onClick={() => onSelect(p.n)}>
-
-        {/* Linha 1: rank + flag + nome + nº torneios */}
-        <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 3 }}>
-          {rank != null ? (
-            <span style={{ flexShrink: 0, fontSize: 10, minWidth: 18, height: 18, borderRadius: 4,
-              background: rank <= 3 ? "var(--bg-topbar)" : rank <= 10 ? "var(--bg-warn-strong)" : "var(--bg-muted)",
-              color: rank <= 3 ? "var(--text-inv)" : rank <= 10 ? "var(--color-warn-dark)" : "var(--text-3)",
-              display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: 700 }}>
-              {rank}
-            </span>
-          ) : <span style={{ width: 18 }} />}
-          <span className="fs-13 shrink-0">{flagEmoji}</span>
-          <span style={{ flex: 1, fontSize: 12, fontWeight: isActive ? 700 : 600, color: "var(--text)",
-            overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-            {p.n}
-            {p.isM && <span className="p p-sm p-outline" style={{ marginLeft: 5 }}>REF</span>}
-          </span>
-          <span style={{ flexShrink: 0, fontSize: 12, fontWeight: 700, color: isActive ? "var(--accent)" : "var(--text-3)" }}>
-            {played}
-          </span>
-        </div>
-
-        {/* Linha 2: player type + record + bestTp + mhCnt + upcoming */}
-        <div className="gap-4 flex-wrap" style={{ display: "flex", alignItems: "center", paddingLeft: 23 }}>
-          {playerType && !p.isM && (
-            <span className="fs-10 fw-700" style={{ padding: "1px 5px", borderRadius: 10, background: playerType.bg, color: playerType.fg }}>
-              {playerType.label}
-            </span>
-          )}
-          {recordStr && (
-            <span className="p p-sm fs-10"  style={{ background: recordBg, color: recordCo, padding: "1px 5px" }}>
-              {recordStr}
-            </span>
-          )}
-          {bestTp != null && (
-            <span className="fw-700 fs-11" style={{ color: tpColorDark(bestTp) }}>
-              {fmtToPar(bestTp)}
-            </span>
-          )}
-          {mhCnt > 0 && <span style={{ fontSize: 10, color: "var(--accent)", fontWeight: 600 }} title={`${mhCnt} torneios USKids`}>📊</span>}
-          {((p as any).fpgClub || (p as any).esClub) && (
-            <span style={{ fontSize: 9, color: "var(--color-good-dark)", fontWeight: 600, opacity: 0.85 }}
-              title={(p as any).fpgClub ? "Clube FPG" : "Clube espanhol"}>
-              🏌️ {(p as any).fpgClub || (p as any).esClub}
-            </span>
-          )}
-          {p.up.length > 0 && <span style={{ color: "var(--color-good-dark)", fontWeight: 700, marginLeft: "auto" }}>▲</span>}
-        </div>
-      </button>
-    );
-  };
-
-  const total = directos.length + circuito.length;
-
-  return (
-    <div className="flex-col" style={{ display: "flex", height: "100%" }}>
-      {/* Lista agrupada — sem pesquisa nem filtros (estão no toolbar) */}
-      <div className="flex-1" style={{ overflowY: "auto" }}>
-        {/* Jogadores com quem já se cruzou (directos) */}
-        {directos.length > 0 && (
-          <>
-            <SidebarSectionTitle dark>Jogadores com quem já se cruzou ({directos.length})</SidebarSectionTitle>
-            {directos.map((p) => renderItem(p))}
-          </>
-        )}
-        {/* Todos (circuito alargado) */}
-        {circuito.length > 0 && !apenasDirectos && (
-          <>
-            <SidebarSectionTitle dark color="var(--color-info-dark)">
-              Todos ({circuito.length})
-            </SidebarSectionTitle>
-            {circuito.map((p) => renderItem(p))}
-          </>
-        )}
-        {total === 0 && (
-          <div style={{ padding: "16px 12px", fontSize: 12, color: "var(--text-muted)", textAlign: "center" }}>
-            Sem rivais com estes filtros
-          </div>
-        )}
-      </div>
-
-      <div style={{ padding: "5px 10px", borderTop: "1px solid var(--border-light)", fontSize: 10, color: "var(--text-muted)", flexShrink: 0 }}>
-        {total} rivais · {totalRanked} com rank
-      </div>
-    </div>
-  );
-}
 
 
 
 /* ═══════════════════════════════════
    MEMBER HISTORY TABLE — sortable
    ═══════════════════════════════════ */
-type MHSortCol = "date" | "pos" | "total" | "name";
+/* MemberHistTable extraído para kids/MemberHistTable.tsx */
+import { MemberHistTable } from "./kids/MemberHistTable";
+import type { MHSortCol } from "./kids/MemberHistTable";
 
-function MemberHistTable({ mhTorneios, memberId }: {
-  mhTorneios: Array<MHTournament & { tid: string }>;
-  memberId: string;
-}) {
-  const [sortCol, setSortCol] = useState<MHSortCol>("date");
-  const [sortDir, setSortDir] = useState<"asc"|"desc">("desc");
-
-  const doSort = (col: MHSortCol) => {
-    if (sortCol === col) setSortDir(d => d === "asc" ? "desc" : "asc");
-    else { setSortCol(col); setSortDir(col === "name" ? "asc" : "desc"); }
-  };
-
-  const sorted = useMemo(() => {
-    return [...mhTorneios].sort((a, b) => {
-      let cmp = 0;
-      if (sortCol === "date") {
-        const pa = isoDate(a.startDate || ""), pb = isoDate(b.startDate || "");
-        cmp = pa.localeCompare(pb);
-      } else if (sortCol === "pos") {
-        cmp = (a.place || 999) - (b.place || 999);
-      } else if (sortCol === "total") {
-        cmp = (a.totalStrokes || 999) - (b.totalStrokes || 999);
-      } else if (sortCol === "name") {
-        cmp = (a.name || "").localeCompare(b.name || "");
-      }
-      return sortDir === "desc" ? -cmp : cmp;
-    });
-  }, [mhTorneios, sortCol, sortDir]);
-
-  const ThS = ({ col, label, style, className }: { col: MHSortCol; label: string; style?: React.CSSProperties; className?: string }) => (
-    <th onClick={() => doSort(col)} className={className} style={{ cursor: "pointer", userSelect: "none", ...style }}>
-      {label}{sortArrow(col, sortCol, sortDir)}
-    </th>
-  );
-
-  return (
-    <div className="mt-24 mb-16">
-      <div className="h-sm mb-8" style={{ color: "var(--text-2)", display: "flex", alignItems: "center", gap: 8 }}>
-        <span>📊 Histórico USKids · {mhTorneios.length} torneios</span>
-        <span style={{ fontSize: 10, color: "var(--text-3)", fontWeight: 400 }}>ID: {memberId}</span>
-      </div>
-      <div className="scroll-x">
-        <table className="dtable w-full fs-12" >
-          <thead>
-            <tr>
-              <ThS col="name"  label="Torneio"  className="ta-left"  style={{ padding: "4px 8px" }} />
-              <th className="ta-c" style={{ width: 60 }}>Escalão</th>
-              <ThS col="pos"   label="Pos"   className="ta-c"   style={{ width: 42 }} />
-              <ThS col="total" label="Total" className="ta-c" style={{ width: 60 }} />
-              <th className="ta-c" style={{ width: 70 }}>Rondas</th>
-              <ThS col="date"  label="Data"  className="ta-left"  style={{ width: 70 }} />
-            </tr>
-          </thead>
-          <tbody>
-            {sorted.map(t => {
-              const nRds = Object.keys(t.rounds || {}).length;
-              const rdGross = Object.values(t.rounds || {}).map((rd: MHTournRound) => rd.gross).filter(g => g > 0);
-              const parTotal = (t.par || []).reduce((a: number, b: number) => a + b, 0);
-              const tp = t.totalStrokes && parTotal ? t.totalStrokes - parTotal * nRds : null;
-              const tpStr = fmtToPar(tp, "");
-              const isoD = isoDate(t.startDate || "");
-              const fmtD = isoD ? new Date(isoD + "T12:00:00").toLocaleDateString("pt-PT", { month: "short", year: "numeric" }) : (t.startDate || "");
-              return (
-                <tr key={t.tid} style={{ borderBottom: "1px solid var(--border-light)" }}>
-                  <td style={{ padding: "4px 8px", fontWeight: 500 }}>{t.name}</td>
-                  <td style={{ textAlign: "center", fontSize: 10, color: "var(--text-2)" }}>{t.ageGroup}</td>
-                  <td style={{ textAlign: "center", fontWeight: 700,
-                    color: t.place <= 3 && t.place > 0 ? "var(--color-good-dark)" : "var(--text-2)" }}>
-                    {t.place > 0 ? `${t.place}º` : "—"}
-                  </td>
-                  <td className="ta-c">
-                    {t.totalStrokes > 0 ? (
-                      <>
-                        <span className="fw-600">{t.totalStrokes}</span>
-                        {tpStr && <span className="fs-10" style={{ color: tpColorMH(tp), marginLeft: 3 }}>({tpStr})</span>}
-                      </>
-                    ) : "—"}
-                  </td>
-                  <td style={{ textAlign: "center", fontSize: 10, color: "var(--text-3)" }}>
-                    {rdGross.length > 0 ? rdGross.join(" + ") : "—"}
-                  </td>
-                  <td style={{ fontSize: 10, color: "var(--text-3)" }}>{fmtD}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-}
 
 /* ═══════════════════════════════════
    EVOLUÇÃO — gráfico recharts normalizado
    ═══════════════════════════════════ */
-type EvoMode = "tpr" | "pos";
-
-/** Devolve nholes a partir dos dados do torneio. Usa o valor explícito do loader. */
-function inferNholes(nholes: number | undefined, _ageGroup?: string | null): number {
-  return (nholes !== undefined && nholes > 0) ? nholes : 18;
-}
-
-/** ±par por ronda normalizado para equivalente 18 buracos */
-function tprNorm(tp: number | null, rounds: number, nholes: number): number | null {
-  if (tp == null || rounds <= 0) return null;
-  // Normaliza para equivalente de 18 buracos: tp_18h = tp * (18/nholes) / rounds
-  return Math.round(tp * (18 / nholes) / rounds * 10) / 10;
-}
-
-function EvolucaoChart({
-  tournResults, manuelResults,
-}: {
-  tournResults: { id: string; short: string; dateExact: string; tp: number | null; rounds: number; nholes?: number; field: number; pos: number | null }[];
-  manuelResults: typeof tournResults;
-}) {
-  const [mode, setMode] = useState<EvoMode>("tpr");
-
-  const sorted = useMemo(() => [...tournResults].sort((a, b) => a.dateExact.localeCompare(b.dateExact)), [tournResults]);
-
-  const data = useMemo(() => sorted.map(t => {
-    const mEntry = manuelResults.find(m => m.id === t.id);
-    const nh = t.nholes ?? 18;
-    const rivalVal = mode === "tpr"
-      ? tprNorm(t.tp, t.rounds, nh)
-      : (t.pos != null && t.field > 0 ? Math.round(t.pos / t.field * 100) : null);
-    const manuelVal = mEntry
-      ? (mode === "tpr"
-          ? tprNorm(mEntry.tp, mEntry.rounds, mEntry.nholes ?? 18)
-          : (mEntry.pos != null && mEntry.field > 0 ? Math.round(mEntry.pos / mEntry.field * 100) : null))
-      : null;
-    return { name: t.short + (nh === 9 ? "⁹" : ""), rival: rivalVal, manuel: manuelVal };
-  }), [sorted, manuelResults, mode]);
-
-  const hasManuel = data.some(d => d.manuel != null);
-  const yFormat  = (v: number) => mode === "tpr" ? (v > 0 ? `+${v.toFixed(1)}` : v.toFixed(1)) : `${v}%`;
-
-  return (
-    <div className="mb-16">
-      <div className="flex-between-mb6">
-        <div style={{ fontSize: 12, fontWeight: 700, color: "var(--text-2)" }}>
-          Evolução por torneio
-        </div>
-        <div style={{ display: "flex", gap: 3 }}>
-          {(["tpr", "pos"] as EvoMode[]).map(m => (
-            <button key={m}
-              className={`p p-filter p-sm fs-10${mode === m ? " active" : ""}`}
-              onClick={() => setMode(m)}>
-              {m === "tpr" ? "±par/ronda" : "posição %"}
-            </button>
-          ))}
-        </div>
-      </div>
-      <div style={{ fontSize: 10, color: "var(--text-3)", marginBottom: 6 }}>
-        {mode === "tpr"
-          ? "±par/ronda equiv. 18h — torneios de 9 buracos são normalizados (⁹ no nome)"
-          : "Posição relativa no field — independente do par e dimensão do torneio"}
-      </div>
-      <ResponsiveContainer width="100%" height={160}>
-        <LineChart data={data} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="var(--border-light)" />
-          <XAxis dataKey="name" tick={{ fontSize: 10, fill: "var(--text-3)" }} />
-          <YAxis reversed={mode === "pos"} tickFormatter={yFormat} tick={{ fontSize: 10, fill: "var(--text-3)" }} width={42} />
-          <Tooltip
-            formatter={((val: number, name: string) => [yFormat(val), name === "rival" ? "Jogador" : "Manuel"]) as any}
-            contentStyle={{ fontSize: 11, background: "var(--bg-card)", border: "1px solid var(--border)" }}
-          />
-          {hasManuel && <Legend formatter={v => v === "rival" ? "Jogador" : "Manuel"} wrapperStyle={{ fontSize: 11 }} />}
-          <Line type="monotone" dataKey="rival" stroke="var(--accent)" strokeWidth={2} dot={{ r: 4, fill: "var(--accent)" }} connectNulls />
-          {hasManuel && (
-            <Line type="monotone" dataKey="manuel" stroke="var(--color-info-light)" strokeWidth={1.5} strokeDasharray="5 3" dot={{ r: 3, fill: "var(--color-info-light)" }} connectNulls />
-          )}
-          {mode === "tpr" && <ReferenceLine y={0} stroke="var(--border)" strokeDasharray="4 2" />}
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
-  );
-}
-
 /* ═══════════════════════════════════
-   TORNEIOS RECORRENTES
+   RivalCharts — extraído para kids/RivalCharts.tsx (2026-05-09)
    ═══════════════════════════════════ */
-function TorneiosRecorrentes({
-  groups,
-}: {
-  groups: { canon: string; name: string; entries: { year: number; pos: number | null; tp: number | null; ageGroup: string | null }[] }[];
-}) {
-  if (!groups.length) return null;
-  return (
-    <div className="card mb-12"  style={{ padding: "12px 16px" }}>
-      <div className="h-sm mb-8" style={{ color: "var(--text-2)" }}>
-        Evolução no mesmo torneio · <span className="fw-400 fs-11">torneios com 2+ presenças</span>
-      </div>
-      <div className="gap-8" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))" }}>
-        {groups.map(g => {
-          const hasPodium    = g.entries.some(e => e.pos != null && e.pos <= 3);
-          const podiumBorder = g.entries.some(e => e.pos === 1) ? "var(--medal-gold)"
-            : g.entries.some(e => e.pos === 2) ? "var(--medal-silver)"
-            : g.entries.some(e => e.pos === 3) ? "var(--medal-bronze)" : undefined;
-          return (
-            <div key={g.canon} className="card" style={{ padding: "8px 12px", margin: 0,
-              borderLeft: podiumBorder ? `3px solid ${podiumBorder}` : undefined }}>
-              <div style={{ fontSize: 12, fontWeight: 700, color: "var(--text)", marginBottom: 6,
-                display: "flex", alignItems: "center", gap: 4 }}>
-                {hasPodium && <span>{g.entries.some(e => e.pos === 1) ? "🏆" : g.entries.some(e => e.pos === 2) ? "🥈" : "🥉"}</span>}
-                <span className="overflow-hidden flex-1" style={{ textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{g.name}</span>
-                <span className="muted fs-10 fw-400 shrink-0" >{g.entries.length}×</span>
-              </div>
-              <div style={{ display: "flex", gap: 3, alignItems: "center", overflowX: "auto" }}>
-                {g.entries.map((e, i) => {
-                  const prev  = g.entries[i - 1];
-                  const delta = (prev && e.pos != null && prev.pos != null) ? e.pos - prev.pos : null;
-                  const mdl = medal(e.pos ?? 0);
-                  const bg    = e.pos === 1 ? "#fffbea" : e.pos === 2 ? "#f0f4ff" : e.pos === 3 ? "#fff4f0" : "var(--bg-detail)";
-                  const bd    = e.pos === 1 ? "var(--medal-gold)" : e.pos === 2 ? "var(--medal-silver)" : e.pos === 3 ? "var(--medal-bronze)" : "var(--border-light)";
-                  const tpStr = fmtToPar(e.tp);
-                  return (
-                    <React.Fragment key={i}>
-                      {i > 0 && (
-                        <span style={{ fontSize: 12, fontWeight: 900, flexShrink: 0,
-                          color: delta != null && delta < 0 ? "var(--color-good-dark)"
-                            : delta != null && delta > 0 ? "var(--color-danger-vivid)"
-                            : "var(--text-3)" }}>
-                          {delta != null && delta < 0 ? "↑" : delta != null && delta > 0 ? "↓" : "="}
-                        </span>
-                      )}
-                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 0,
-                        padding: "3px 5px", borderRadius: 4, background: bg, border: `1px solid ${bd}`, flexShrink: 0 }}>
-                        <span style={{ fontSize: 9, color: "var(--text-3)", fontWeight: 500 }}>{e.year}</span>
-                        <span style={{ fontSize: mdl ? 14 : 11, fontWeight: 900, lineHeight: 1,
-                          color: e.pos === 1 ? "var(--color-warn-dark)" : e.pos != null && e.pos <= 3 ? "var(--medal-silver)" : "var(--text-3)" }}>
-                          {mdl ?? (e.pos != null ? `#${e.pos}` : "—")}
-                        </span>
-                        {e.tp != null && <span style={{ fontSize: 9, fontWeight: 600,
-                          color: (e.tp ?? 0) <= 0 ? "var(--color-good-dark)" : "var(--text-3)" }}>{tpStr}</span>}
-                        {e.ageGroup && <span style={{ fontSize: 8, color: "var(--text-muted)", fontWeight: 500, whiteSpace: "nowrap" }}>{e.ageGroup}</span>}
-                      </div>
-                    </React.Fragment>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
+import { inferNholes, tprNorm, EvolucaoChart, TorneiosRecorrentes, H2HTable } from "./kids/RivalCharts";
 
-/* ═══════════════════════════════════
-   HEAD-TO-HEAD TABLE DETALHADA
-   ═══════════════════════════════════ */
-/* H2HSortableTable extraído para ./kids/H2HSortableTable.tsx */
-
-function H2HTable({
-  confrontos, playerName,
-}: {
-  confrontos: H2HConfronto[];
-  playerName: string;
-}) {
-  if (!confrontos.length) return null;
-  const firstName = playerName.split(" ")[0];
-  const vitorias  = confrontos.filter(c => c.manPos < c.rivalPos).length;
-  const derrotas  = confrontos.filter(c => c.manPos > c.rivalPos).length;
-  const avgDifTp  = (() => {
-    const difs = confrontos.filter(c => c.manTp != null && c.rivalTp != null).map(c => (c.rivalTp ?? 0) - (c.manTp ?? 0));
-    return difs.length ? (difs.reduce((a, b) => a + b, 0) / difs.length).toFixed(1) : null;
-  })();
-  const avgManPos  = Math.round(confrontos.reduce((s, c) => s + c.manPos, 0) / confrontos.length);
-  const avgRivPos  = Math.round(confrontos.reduce((s, c) => s + c.rivalPos, 0) / confrontos.length);
-
-  return (
-    <div className="card mb-12 overflow-hidden" >
-      <div className="flex-wrap" style={{ padding: "12px 16px 8px", display: "flex", alignItems: "baseline", gap: 10 }}>
-        <div className="h-sm" style={{ color: "var(--text-2)" }}>
-          Head-to-head · {confrontos.length} confronto{confrontos.length !== 1 ? "s" : ""}
-        </div>
-        <span style={{ fontSize: 13, fontWeight: 700, color: derrotas < vitorias ? "var(--color-danger-vivid)" : "var(--color-good-dark)" }}>
-          {firstName} {derrotas}× vs Manuel {vitorias}×
-        </span>
-        <span style={{ fontSize: 11, color: "var(--text-3)", marginLeft: "auto" }}>
-          Avg: {firstName} {avgRivPos}º · Manuel {avgManPos}º
-          {avgDifTp != null && ` · Dif. ±par: ${parseFloat(avgDifTp) > 0 ? "+" : ""}${avgDifTp}`}
-        </span>
-      </div>
-      <div className="scroll-x">
-        <H2HSortableTable confrontos={confrontos} firstName={firstName} />
-      </div>
-    </div>
-  );
-}
 
 /* ═══════════════════════════════════
    RIVAL DETAIL
    ═══════════════════════════════════ */
-function RivalDetail({ playerName }: { playerName: string }) {
-  const rivals = useRivals();
-  const memberHist = useMH();
-  const scoringStats = useScoringStatsCtx();
-  // Debug mode: activar com ?debug=1 na URL (funciona em prod e dev)
-  const debugMode = typeof window !== "undefined" && new URLSearchParams(window.location.search).get("debug") === "1";
-  const rival = rivals.find(d => d.n === playerName);
-  // Usar o Manuel do array merged (tem wjgc25_b1011 e outros tids auto)
-  const manuelMerged = rivals.find(d => d.isM) ?? manuel;
+/* RivalDetail extraído para kids/RivalDetail.tsx */
+import { RivalDetail } from "./kids/RivalDetail";
 
-  // Scoring stats pré-calculadas para este jogador (do slim.json)
-  const playerScoringStats = React.useMemo(() => {
-    if (!scoringStats) return null;
-    const key = normName(playerName);
-    return scoringStats.jogadores[key] ?? null;
-  }, [scoringStats, playerName]);
-
-  // Member history lookup for this player (used for DOB estimation + history table)
-  const mhPlayer = React.useMemo(() => {
-    if (!memberHist) return null;
-    const key = playerName.toLowerCase().trim().replace(/\s+/g, " ");
-    return (Object.values(memberHist.jogadores) as MHPlayer[]).find(
-      m => m.name && m.name.toLowerCase().trim().replace(/\s+/g, " ") === key
-    ) ?? null;
-  }, [memberHist, playerName]);
-  const bjgtCard = FIELD_CARDS.find(c => c.name === playerName);
-  const lbEntry = FIELD_2025.leaderboard.find(p => p.name === playerName);
-  const wjgcCard = findCard(WJGC26_CARDS, playerName);
-
-  const eowagr25Card = findCard(EOWAGR25_CARDS, playerName);
-  const wjgc26_1213Card = findCard(WJGC26_1213_CARDS, playerName);
-
-  const [expandedTourns, setExpandedTourns] = useState<Set<string>>(() => new Set());
-
-  // Reset expanded state whenever player changes
-  React.useEffect(() => {
-    setExpandedTourns(new Set());
-  }, [playerName]);
-
-  const toggleExpand = (id: string) => setExpandedTourns(prev => {
-    const next = new Set(prev);
-    next.has(id) ? next.delete(id) : next.add(id);
-    return next;
-  });
-
-  const flag = rival ? flagOf(rival.co) : "";
-  const rank = rankMap[playerName];
-  const tr = rival ? (getTrend as (p: RivalPlayer) => string | null)(rival) : null;
-  const played = rival ? nPlayed(rival) : 0;
-  const isManuel = rival?.isM;
-
-  // Tournament results: T manual (com scorecard) + auto-loaded (sem scorecard)
-  const manualTournIds = new Set(T.map(t => t.id));
-
-  // Mapa explícito: auto tid → manual T id que o cobre
-  // Necessário quando o id manual não deriva trivialmente do auto tid
-  const AUTO_COVERED_BY: Record<string,string> = {
-    // brjgt25 (manual) era listado aqui mas ele próprio é skipado em tournResults
-    // (linha ~2193) quando há wjgc25_b1011 — ambos eram skipados → torneio
-    // sumia. Mantemos só wjgc26_b1213 → wjgc26_1213 e os escalões venice/rome/doral.
-    // wjgc26_1213 (manual) é coberto pelo auto tid
-    "wjgc26_b1213":  "wjgc26_1213",
-    // Venice 2025
-    "venice25_b11":  "venice25",
-    "venice25_b12":  "venice25",
-    "venice25_b9":   "venice25",
-    "venice25_b10":  "venice25",
-    // Rome 2025
-    "rome25_b11":    "rome25",
-    "rome25_b12":    "rome25",
-    "rome25_b9":     "rome25",
-    "rome25_b10":    "rome25",
-    // Doral 2025
-    "doral25_b1011": "doral25",
-    "doral25_b89":   "doral25",
-    "doral25_b1213": "doral25",
-  };
-  // Mapa inverso: manual T id → lista de auto tids equivalentes (para buscar scorecards)
-  const MANUAL_AUTO_TIDS: Record<string,string[]> = {};
-  for (const [autoTid, manTid] of Object.entries(AUTO_COVERED_BY)) {
-    if (!MANUAL_AUTO_TIDS[manTid]) MANUAL_AUTO_TIDS[manTid] = [];
-    MANUAL_AUTO_TIDS[manTid].push(autoTid);
-  }
-
-  // Lookup inverso: nome de torneio (normalizado) → id do T[] manual
-  const T_BY_NAME = useMemo(() => {
-    const m = new Map<string, string>();
-    for (const t of T) {
-      // normalizar: minúsculas, sem acentos, sem anos
-      const k = t.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")
-        .replace(/\s*\d{4}$/, "").replace(/\s+/g, " ").trim();
-      m.set(k, t.id);
-      // também indexar o nome completo com ano
-      const k2 = t.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")
-        .replace(/\s+/g, " ").trim();
-      m.set(k2, t.id);
-    }
-    return m;
-  }, []);
-
-  function autoIsCoveredByManual(tid: string): boolean {
-    // 1. Mapa explícito (formato antigo → tid manual T[])
-    if (tid in AUTO_COVERED_BY) {
-      const manualTid = AUTO_COVERED_BY[tid];
-      return !!((rival?.r[manualTid]?.rd?.length ?? 0) > 0);
-    }
-    // 2. Novo formato usk{tcode}_b{n} → verifica contra T[] por nome
-    const uskMatch = tid.match(/^(usk\d+)_b\d+$/);
-    if (uskMatch) {
-      const info = uskTournNames.get(uskMatch[1]);
-      if (info) {
-        const normFull = info.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")
-          .replace(/\s+/g, " ").trim();
-        const normBase = normFull.replace(/\s*\d{4}$/, "").trim();
-        const manualTid = T_BY_NAME.get(normFull) ?? T_BY_NAME.get(normBase);
-        if (manualTid) return !!((rival?.r[manualTid]?.rd?.length ?? 0) > 0);
-      }
-      return false;
-    }
-    // 3. Formato antigo não mapeado (ex: marco26_b11): verifica se existe tid completo com mesmo nome
-    const autoNameInfo = AUTO_TOURN_NAMES[tid];
-    if (autoNameInfo) {
-      const normOld = autoNameInfo.name.toLowerCase().replace(/\s*\d{4}$/, "").trim();
-      for (const rivalTid of Object.keys(rival?.r ?? {})) {
-        const um = rivalTid.match(/^(usk\d+)_b\d+$/);
-        if (!um) continue;
-        const completoInfo = uskTournNames.get(um[1]);
-        if (!completoInfo) continue;
-        const normC = completoInfo.name.toLowerCase().replace(/\s*\d{4}$/, "").trim();
-        if (normC === normOld && (rival!.r[rivalTid]?.rd?.length ?? 0) > 0) return true;
-      }
-    }
-    // 4. Fallback: strip _b\d+ suffix
-    const base = tid.replace(/_b\d+$/, "");
-    if (manualTournIds.has(base)) return !!((rival?.r[base]?.rd?.length ?? 0) > 0);
-    return false;
-  }
-
-  /** Procura scorecard auto para um tid manual — verifica formato antigo E novo (usk{tcode}_b{n}) por nome */
-  function findAutoScorecard(manualTid: string) {
-    // 1. Formato antigo (MANUAL_AUTO_TIDS)
-    const oldCard = (MANUAL_AUTO_TIDS[manualTid] || []).reduce(
-      (found: typeof autoScorecards[0] | null, atid) =>
-        found || autoScorecards.find(sc => sc.tid === atid) || null, null
-    );
-    if (oldCard) return oldCard;
-    // 2. Mesmo tid
-    const exact = autoScorecards.find(sc => sc.tid === manualTid);
-    if (exact) return exact;
-    // 3. Novo formato: usk{tcode}_b{n} com mesmo nome de torneio
-    const manualT = T.find(t => t.id === manualTid);
-    if (manualT) {
-      const nameNorm = manualT.name.toLowerCase().replace(/\s*\d{4}$/, "").trim();
-      return autoScorecards.find(sc => {
-        const m = sc.tid.match(/^(usk\d+)_b\d+$/);
-        if (!m) return false;
-        const info = uskTournNames.get(m[1]);
-        if (!info) return false;
-        return info.name.toLowerCase().replace(/\s*\d{4}$/, "").trim() === nameNorm;
-      }) ?? null;
-    }
-    return null;
-  }
-
-  const autoScorecards = rival ? getScorecards(rival.n) : [];
-
-  const tournResults = rival ? [
-    // 1. Torneios do array T manual com resultados
-    ...T.filter(t => rival.r[t.id] && rival.r[t.id].rd?.length > 0
-      // Ocultar brjgt25 se wjgc25_b1011 existir (o JSON tem info completa)
-      && !(t.id === "brjgt25" && rival.r["wjgc25_b1011"]?.rd?.length > 0)
-    ).map(t => ({
-      t,
-      res: rival.r[t.id],
-      // Auto-scorecard: para tourns com card dedicado usa-o; caso contrário (ou se não existe para este jogador) usa auto
-      autoCard: (() => {
-        const isKnownDedicated = ["brjgt25","wjgc26","eowagr25","wjgc26_1213"].includes(t.id);
-        const dedicatedMissing =
-          (t.id === "brjgt25" && !bjgtCard) ||
-          (t.id === "wjgc26" && !wjgcCard) ||
-          (t.id === "eowagr25" && !eowagr25Card) ||
-          (t.id === "wjgc26_1213" && !wjgc26_1213Card);
-        if (isKnownDedicated && !dedicatedMissing) return null;
-        return findAutoScorecard(t.id);
-      })(),
-      hasCard: (() => {
-        if (t.id === "brjgt25")     return !!bjgtCard      || !!findAutoScorecard("brjgt25");
-        if (t.id === "wjgc26")      return !!wjgcCard      || !!findAutoScorecard("wjgc26");
-        if (t.id === "eowagr25")    return !!eowagr25Card  || !!findAutoScorecard("eowagr25");
-        if (t.id === "wjgc26_1213") return !!wjgc26_1213Card;
-        return !!findAutoScorecard(t.id);
-      })(),
-      // ageGroup: primeiro dos MANUAL_AUTO_TIDS, depois usk{tcode}_b{n} por nome, depois fallback
-      ageGroup: (() => {
-        const fromOld = (MANUAL_AUTO_TIDS[t.id] || []).reduce((found: string | null, atid) =>
-          found || ((rival.r[atid] as any)?.ageGroup ?? null), null);
-        if (fromOld) return fromOld;
-        const nameNorm = t.name.toLowerCase().replace(/\s*\d{4}$/, "").trim();
-        for (const [rTid, rRes] of Object.entries(rival.r)) {
-          const m = rTid.match(/^(usk\d+)_b\d+$/);
-          if (!m) continue;
-          const info = uskTournNames.get(m[1]);
-          if (!info) continue;
-          if (info.name.toLowerCase().replace(/\s*\d{4}$/, "").trim() !== nameNorm) continue;
-          const ag = (rRes as any)?.ageGroup;
-          if (ag) return ag;
-        }
-        return ageLabel(t.ageMin, t.ageMax);
-      })() as string | null,
-      isAuto: false,
-    })),
-    // 2. Torneios auto-loaded não presentes em T e não cobertos por T
-    ...Object.entries(rival.r)
-      .filter(([tid, res]) => {
-        if (manualTournIds.has(tid) || autoIsCoveredByManual(tid)) return false;
-        if (!res?.rd?.length) return false;
-        return true;
-      })
-      .map(([tid, res]) => {
-        const info = getTournInfo(tid);
-        const autoMeta = AUTO_TOURN_META[tid];
-        const tmap = T_MAP[tid];
-        const uskField = uskFieldSizes.get(tid) ?? 0;
-        const fakeDef = {
-          id: tid, name: info.name, short: info.short, date: info.date,
-          dateExact: tmap?.dateExact ?? info.dateExact,
-          rounds: res.rd.length, par: autoMeta?.par ?? 72,
-          field: autoMeta?.field ?? uskField, nations: autoMeta?.nations ?? 0,
-          intendedRounds: res.rd.length, url: getTournUrl(tid, autoMeta?.url),
-        } as unknown as TournDef;
-        const autoCard = autoScorecards.find(sc => sc.tid === tid) || null;
-        return { t: fakeDef, res, hasCard: !!autoCard, autoCard, ageGroup: ((res as any).ageGroup ?? null) as string | null, isAuto: true };
-      }),
-  ].sort((a, b) => {
-    const da = a.t.dateExact ?? a.t.date;
-    const db = b.t.dateExact ?? b.t.date;
-    return db.localeCompare(da);  // mais recente primeiro
-  }) : [];
-
-  // Contadores baseados em tournResults (deduplicados) — fonte de verdade para o detalhe
-  const playedDedup = tournResults.length;
-  const roundsDedup = tournResults.reduce((acc, x) =>
-    acc + x.res.rd.filter((r: number | null) => r != null && r > 0).length, 0);
-
-  // ── Player type badge ──────────────────────────────────────────────────────
-  const playerType = rival && !isManuel ? getPlayerType(rival) : null;
-
-  // ── Dados para o gráfico de evolução ──────────────────────────────────────
-  const evoRivalData = tournResults.map(({ t, res }) => ({
-    id: t.id,
-    short: t.short,
-    dateExact: t.dateExact ?? t.date,
-    tp: res.tp,
-    rounds: res.rd.filter((r: number | null): r is number => r != null && r > 0).length,
-    nholes: inferNholes((res as any).nholes, (res as any).ageGroup),
-    field: t.field,
-    pos: typeof res.p === "number" ? res.p : null,
-  }));
-
-  const evoManuelData = !isManuel ? (() => {
-    const manTournResults = manuelMerged ? (() => {
-      const hidden = hiddenTids(manuelMerged);
-      return Object.entries(manuelMerged.r)
-        .filter(([tid]) => !hidden.has(tid))
-        .map(([tid, res]) => {
-          const info = getTournInfo(tid);
-          const tDef = T.find(t => t.id === tid);
-          return {
-            id: tid, short: info.short,
-            dateExact: info.dateExact ?? info.date,
-            tp: res.tp,
-            rounds: (res.rd || []).filter((r: number | null): r is number => r != null && r > 0).length,
-            nholes: inferNholes((res as any).nholes, (res as any).ageGroup),
-            field: tDef?.field ?? AUTO_TOURN_META[tid]?.field ?? 0,
-            pos: typeof res.p === "number" ? res.p : null,
-          };
-        });
-    })() : [];
-    return manTournResults;
-  })() : [];
-
-  // ── Torneios recorrentes ───────────────────────────────────────────────────
-  const torneiosRecorrentes = useMemo(() => {
-    const map = new Map<string, { year: number; pos: number | null; tp: number | null; ageGroup: string | null }[]>();
-    for (const { t, res, ageGroup } of tournResults) {
-      const canon = tornCanonK(t.name.replace(/\s*\d{4}$/, "").replace(/\s*'\d{2}$/, ""));
-      if (!map.has(canon)) map.set(canon, []);
-      const yr = yearOf(t.dateExact, t.date);
-      if (yr <= 0) continue;
-      map.get(canon)!.push({ year: yr, pos: typeof res.p === "number" ? res.p : null, tp: res.tp, ageGroup });
-    }
-    return [...map.entries()]
-      .map(([canon, entries]) => {
-        const nameEntry = tournResults.find(x => tornCanonK(x.t.name.replace(/\s*\d{4}$/, "").replace(/\s*'\d{2}$/, "")) === canon);
-        const name = nameEntry ? nameEntry.t.name.replace(/\s*\d{4}$/, "").replace(/\s*'\d{2}$/, "") : canon;
-        // Dedup por (year, ageGroup) mantendo melhor resultado
-        const dedupMap = new Map<string, typeof entries[0]>();
-        for (const e of entries) {
-          const k = `${e.year}|${e.ageGroup}`;
-          const ex = dedupMap.get(k);
-          if (!ex || (e.pos != null && (ex.pos == null || e.pos < ex.pos))) dedupMap.set(k, e);
-        }
-        const deduped = [...dedupMap.values()].sort((a, b) => a.year - b.year);
-        return { canon, name, entries: deduped };
-      })
-      .filter(g => g.entries.length >= 2)
-      .sort((a, b) => b.entries.length - a.entries.length);
-  }, [tournResults]);
-
-  // ── H2H detalhado ──────────────────────────────────────────────────────────
-  const confrontosH2H = useMemo<{ tid: string; tornName: string; ageGroup: string | null; manPos: number; rivalPos: number; manTp: number | null; rivalTp: number | null; year: number; nRounds?: number }[]>(() => {
-    if (!rival || isManuel) return [];
-    const hidden = hiddenTids(rival);
-    const manHidden = hiddenTids(manuelMerged ?? rival);
-    return tournResults
-      .filter(({ t, res }) => {
-        if (hidden.has(t.id) || manHidden.has(t.id)) return false;
-        const mRes = manuelMerged?.r[t.id];
-        return typeof res.p === "number" && typeof mRes?.p === "number";
-      })
-      .map(({ t, res, ageGroup }) => {
-        const mRes = manuelMerged!.r[t.id];
-        // nRounds: usa a definição do torneio (T.rounds) ou o número real de rondas jogadas
-        const nRounds = t.rounds ?? Math.max(res.rd?.length ?? 0, mRes.rd?.length ?? 0);
-        return {
-          tid: t.id, tornName: t.name, ageGroup,
-          manPos:  mRes.p as number, rivalPos: res.p as number,
-          manTp:   mRes.tp,          rivalTp:  res.tp,
-          year:    yearOf(t.dateExact, t.date),
-          nRounds: nRounds > 0 ? nRounds : undefined,
-        };
-      })
-      .sort((a, b) => b.year - a.year);
-  }, [tournResults, rival, manuelMerged, isManuel]);
-
-  // All scorecards start closed — user expands manually
-  // Double-check: nPlayed(rival) deve bater com playedDedup
-  if (rival && import.meta.env.DEV && nPlayed(rival) !== playedDedup) {
-    console.warn(`[RivaisIntl] count mismatch for ${rival.n}: nPlayed=${nPlayed(rival)} vs tournResults=${playedDedup}`);
-  }
-
-  const allRds = tournResults.flatMap(x => x.res.rd.filter((r): r is number => r != null && r > 0));
-  const completedResults = tournResults.filter(x => x.res.tp != null);
-  const bestTp = completedResults.length ? Math.min(...completedResults.map(x => x.res.tp!)) : null;
-  const _bestRd = allRds.length ? Math.min(...allRds) : null;
-  void _bestRd;
-  const avgRd = allRds.length ? (allRds.reduce((a: number, b: number) => a + b, 0) / allRds.length) : null;
-
-  // Collect all scores from any tournament with full scorecards for distribution
-  const allCardScores: number[][] = [];
-  const allCardPars: number[][] = [];
-  if (bjgtCard) { allCardScores.push(...bjgtCard.rounds); bjgtCard.rounds.forEach(() => allCardPars.push([...VP_PAR])); }
-  if (wjgcCard) { allCardScores.push(...wjgcCard.rds); wjgcCard.rds.forEach(() => allCardPars.push([...WJGC26_PAR])); }
-  if (eowagr25Card) { allCardScores.push(...eowagr25Card.rds); eowagr25Card.rds.forEach(() => allCardPars.push([...EOWAGR25_PAR])); }
-  if (wjgc26_1213Card) { allCardScores.push(...wjgc26_1213Card.rds); wjgc26_1213Card.rds.forEach(() => allCardPars.push([...WJGC26_1213_PAR])); }
-  // Todos os auto-scorecards com par por buraco (evitar duplicar os que já foram incluídos acima)
-  const dedupAutoTids = new Set(["brjgt25","wjgc26","eowagr25","wjgc26_1213"]);
-  for (const sc of autoScorecards) {
-    if (dedupAutoTids.has(sc.tid)) continue;  // já incluído via card dedicado
-    dedupAutoTids.add(sc.tid);
-    if (!sc.par || sc.par.length !== 18) continue;  // sem par por buraco → não conta para birdie %
-    for (const rd of sc.rounds) {
-      if (rd.length === 18 && rd.some(s => s > 0)) {
-        allCardScores.push(rd);
-        allCardPars.push(sc.par);
-      }
-    }
-  }
-
-  // BJGT 2025 special rendering (with field stats)
-  const par = VP_PAR;
-  const FH = FIELD_2025.holes;
-  const frontPar = par.slice(0, 9).reduce((a, b) => a + b, 0);
-  const backPar = par.slice(9).reduce((a, b) => a + b, 0);
-  const totalPar = frontPar + backPar;
-  const sm = (arr: readonly number[], f: number, t: number) => arr.slice(f, t).reduce((a, b) => a + b, 0);
-
-  const SubCell = ({ gross, parVal, cls }: { gross: number; parVal: number; cls: string }) => {
-    const tp = gross - parVal;
-    return <td className={`${cls} fw-700`}>{gross}<span className={`sc-topar ${toParClass(tp)}`}>{fmtSign(tp)}</span></td>;
-  };
-  const vpFrontM = VP_M.slice(0, 9).reduce((a, b) => a + b, 0);
-  const vpBackM  = VP_M.slice(9).reduce((a, b) => a + b, 0);
-  const vpTotalM = vpFrontM + vpBackM;
-
-  const THead = () => (
-    <thead><tr>
-      <th className="hole-header ta-left">Buraco</th>
-      {par.slice(0, 9).map((_, i) => <th key={i} className="hole-header">{i + 1}</th>)}
-      <th className="hole-header col-out fs-10">Out</th>
-      {par.slice(9).map((_, i) => <th key={i + 9} className="hole-header">{i + 10}</th>)}
-      <th className="hole-header col-in fs-10">In</th>
-      <th className="hole-header col-total">TOTAL</th>
-    </tr></thead>
-  );
-  const MetrosRow = () => (
-    <tr className="meta-row">
-      <td className="row-label fs-10 c-text-3">m</td>
-      {VP_M.slice(0, 9).map((m, i) => <td key={i} className="fs-10 c-text-3">{m}</td>)}
-      <td className="col-out c-text-3">{vpFrontM}</td>
-      {VP_M.slice(9).map((m, i) => <td key={i + 9} className="fs-10 c-text-3">{m}</td>)}
-      <td className="col-in c-text-3">{vpBackM}</td>
-      <td className="col-total fs-10 c-text-3">{vpTotalM}</td>
-    </tr>
-  );
-  const SIRow = () => (
-    <tr className="meta-row">
-      <td className="row-label fs-10">SI</td>
-      {VP_SI.slice(0, 9).map((s, i) => <td key={i}>{s}</td>)}
-      <td className="col-out" />
-      {VP_SI.slice(9).map((s, i) => <td key={i + 9}>{s}</td>)}
-      <td className="col-in" /><td className="col-total" />
-    </tr>
-  );
-  const ParRow = ({ sep }: { sep?: boolean }) => (
-    <tr className={sep ? "sep-row" : "meta-row"}>
-      <td className="row-label par-label">Par</td>
-      {par.slice(0, 9).map((p, i) => <td key={i}>{p}</td>)}
-      <td className="col-out fw-600">{frontPar}</td>
-      {par.slice(9).map((p, i) => <td key={i + 9}>{p}</td>)}
-      <td className="col-in fw-600">{backPar}</td>
-      <td className="col-total">{totalPar}</td>
-    </tr>
-  );
-  const GrossRow = ({ holes, label }: { holes: number[]; label: string }) => {
-    const front = sm(holes, 0, 9), back = sm(holes, 9, 18), total = front + back;
-    return (
-      <tr>
-        <td className="row-label fw-700">{label}</td>
-        {holes.slice(0, 9).map((g, i) => <td key={i}><span className={`sc-score ${scClass(g, par[i])}`}>{g}</span></td>)}
-        <SubCell gross={front} parVal={frontPar} cls="col-out" />
-        {holes.slice(9).map((g, i) => <td key={i + 9}><span className={`sc-score ${scClass(g, par[i + 9])}`}>{g}</span></td>)}
-        <SubCell gross={back} parVal={backPar} cls="col-in" />
-        <SubCell gross={total} parVal={totalPar} cls="col-total" />
-      </tr>
-    );
-  };
-  const FieldAvgRow = () => (
-    <tr className="meta-row">
-      <td className="row-label c-muted fs-10 fw-400">Avg Field</td>
-      {FH.map((h, i) => (
-        <React.Fragment key={i}>
-          <td className="fs-10 c-muted">{h.fAvg.toFixed(1)}</td>
-          {i === 8 && <td className="col-out c-muted">{FH.slice(0, 9).reduce((a, x) => a + x.fAvg, 0).toFixed(1)}</td>}
-        </React.Fragment>
-      ))}
-      <td className="col-in c-muted">{FH.slice(9).reduce((a, x) => a + x.fAvg, 0).toFixed(1)}</td>
-      <td className="col-total fs-10 c-muted">{FH.reduce((a, x) => a + x.fAvg, 0).toFixed(1)}</td>
-    </tr>
-  );
-  const VsFieldRow = ({ holes }: { holes: number[] }) => (
-    <tr className="meta-row">
-      <td className="row-label c-muted fs-10 fw-400">vs Field</td>
-      {holes.map((g, i) => {
-        const diff = g - FH[i].fAvg;
-        const col = diff <= -0.5 ? "var(--color-good)" : diff >= 0.5 ? "var(--color-danger)" : "var(--text-muted)";
-        return (
-          <React.Fragment key={i}>
-            <td className="fs-10 fw-600" style={{ color: col }}>{fmtSign(diff, 1)}</td>
-            {i === 8 && <td className="col-out" />}
-          </React.Fragment>
-        );
-      })}
-      <td className="col-in" /><td className="col-total" />
-    </tr>
-  );
-
-
-  // ── Helpers de data ──────────────────────────────────────────────
-  const fmtDM = (dateExact?: string, fallback?: string): string => {
-    if (dateExact) {
-      const d = new Date(dateExact + "T12:00:00");
-      return `${d.getDate()} ${MONTHS_PT_FULL[d.getMonth()]}`;
-    }
-    return fallback?.replace(/\s+\d{4}$/, "") ?? "";
-  };
-
-  // ── Palmarès ─────────────────────────────────────────────────────
-  const palmares = React.useMemo(() =>
-    tournResults.filter(x => x.res.p === 1)
-      .sort((a, b) => (b.t.dateExact ?? b.t.date).localeCompare(a.t.dateExact ?? a.t.date)),
-  [tournResults]);
-
-  // ── Tier badge ───────────────────────────────────────────────────
-  const tierBadge = React.useMemo(() => {
-    if (!rival || isManuel || played === 0) return null;
-    const wins = palmares.length;
-    const ps = tournResults.filter(x => typeof x.res.p === "number").map(x => x.res.p as number);
-    const avgPos = ps.length ? ps.reduce((a, b) => a + b, 0) / ps.length : null;
-    if (wins >= 3 && avgPos != null && avgPos <= 4)  return { label: "Elite",         icon: "🏆", cls: "seg-eagle"  };
-    if (wins >= 1 && avgPos != null && avgPos <= 5)  return { label: "Top Contender", icon: "⭐", cls: "seg-birdie" };
-    if (avgPos != null && avgPos <= 8 && played >= 5) return { label: "Forte",        icon: "🎯", cls: "seg-par"   };
-    if (played >= 20)                                return { label: "Assíduo",       icon: "🔁", cls: "seg-bogey" };
-    return null;
-  }, [rival, isManuel, played, palmares, tournResults]);
-
-  // ── H2H data ─────────────────────────────────────────────────────
-  // Perspectiva MANUEL — alinhada com sidebar (h2hMap) e tabela H2HTable.
-  // V = vitórias do Manuel (manPos < rivalPos = Manuel finished better)
-  // D = derrotas do Manuel (manPos > rivalPos)
-  const h2hData = React.useMemo(() => {
-    if (!rival || isManuel || !confrontosH2H.length) return null;
-    const w = confrontosH2H.filter(c => c.manPos < c.rivalPos).length;
-    const l = confrontosH2H.filter(c => c.manPos > c.rivalPos).length;
-    return {
-      tids: confrontosH2H.map(c => c.tid),
-      wins: w, losses: l, draws: confrontosH2H.length - w - l,
-    };
-  }, [rival, isManuel, confrontosH2H]);
-
-  // ── Scoring block ─────────────────────────────────────────────────
-  const scoringBlock = React.useMemo(() => {
-    let e=0,b=0,p=0,bo=0,d=0,w=0,tot=0,upr=0;
-    const bp: Record<number,{sum:number;n:number;under:number}> = {3:{sum:0,n:0,under:0},4:{sum:0,n:0,under:0},5:{sum:0,n:0,under:0}};
-    const ps = playerScoringStats;
-    if (ps) {
-      e=ps.e; b=ps.b; p=ps.p; bo=ps.bo; d=ps.d; w=ps.w; tot=ps.tot; upr=ps.upr;
-      for (const pp of [3,4,5] as const) {
-        const bpe = ps.bp?.[pp];
-        if (bpe) bp[pp] = { sum: bpe.avg*bpe.n, n: bpe.n, under: bpe.under };
-      }
-    } else {
-      for (let k=0;k<allCardScores.length;k++) {
-        const sc=allCardScores[k], par=allCardPars[k];
-        for (let i=0;i<18;i++) {
-          const dv=sc[i]-par[i];
-          if(dv<=-2)e++; else if(dv===-1)b++; else if(dv===0)p++; else if(dv===1)bo++; else if(dv===2)d++; else w++;
-          const pp=par[i] as 3|4|5;
-          if(pp===3||pp===4||pp===5){bp[pp].sum+=sc[i];bp[pp].n++;if(dv<0)bp[pp].under++;}
-        }
-        const gt=sc.reduce((a,v)=>a+v,0),pt=par.reduce((a,v)=>a+v,0);
-        if(gt<pt)upr++;
-      }
-      tot=allCardScores.length*18;
-    }
-    return { e,b,p,bo,d,w,tot,upr,n:ps?.n??allCardScores.length,bp };
-  }, [playerScoringStats, allCardScores, allCardPars]);
-
-  // ── Std dev rondas ───────────────────────────────────────────────
-  const rdStdDev = allRds.length > 1
-    ? Math.sqrt(allRds.reduce((s,r)=>s+(r-avgRd!)*(r-avgRd!),0)/(allRds.length-1))
-    : null;
-
-  // ── DOB ──────────────────────────────────────────────────────────
-  const dobInfo = React.useMemo(() => rival ? computeDobInfo(rival, mhPlayer) : null, [rival, mhPlayer]);
-
-  // ── Todos os hooks foram chamados — safe para early return ────────
-  if (!rival && !lbEntry) return (
-    <DetailHeader>
-      <div className="muted">
-        {/^\d+$/.test(playerName)
-          ? "⏳ A identificar jogador…"
-          : `Sem dados para ${playerName}`}
-      </div>
-    </DetailHeader>
-  );
-
-  return (
-    <>
-      {/* ══ HERO CARD ══ */}
-      <div className="card" style={{ marginBottom: 12, padding: 0, overflow: "hidden", border: "1.5px solid var(--border-light)" }}>
-
-        {/* Faixa de identidade */}
-        <div style={{ display: "flex", gap: 16, alignItems: "flex-start", padding: "20px 22px 16px", borderBottom: "1px solid var(--border-light)" }}>
-
-          {/* Flag grande */}
-          <div className="shrink-0" style={{ fontSize: 56, lineHeight: 1, marginTop: 2 }}>{flag}</div>
-
-          {/* Nome + pills + palmarès inline */}
-          <div className="flex-1" style={{ minWidth: 0 }}>
-            <div className="flex-wrap mb-8" style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <div style={{ fontSize: 26, fontWeight: 900, color: "var(--text)", lineHeight: 1.1, letterSpacing: "-0.02em" }}>
-                {playerName}
-              </div>
-              {/* Nome RFEG completo (entre parêntesis) quando difere */}
-              {rival && (rival as any).esFullName && (
-                <span className="fs-12 fw-500" style={{ color: "var(--text-2)", fontStyle: "italic" }}
-                  title="Nome completo na federação espanhola">
-                  ({(rival as any).esFullName})
-                </span>
-              )}
-              {/* Player type badge (getPlayerType) */}
-              {playerType && (
-                <span className="fs-12 fw-800 shrink-0" style={{ padding: "3px 10px", borderRadius: 20, background: playerType.bg, color: playerType.fg, letterSpacing: "0.02em" }}>
-                  {playerType.label}
-                </span>
-              )}
-              {/* Scoring tier badge (se não há playerType) */}
-              {!playerType && tierBadge && (
-                <span style={{ fontSize: 12, fontWeight: 800, padding: "3px 10px", borderRadius: 20,
-                  background: tierBadge.cls === "seg-eagle" ? "var(--score-eagle)"
-                    : tierBadge.cls === "seg-birdie" ? "var(--medal-gold)"
-                    : tierBadge.cls === "seg-par" ? "var(--color-good-dark)"
-                    : "var(--text-dark)",
-                  color: "#fff", letterSpacing: "0.02em", flexShrink: 0 }}>
-                  {tierBadge.icon} {tierBadge.label}
-                </span>
-              )}
-            </div>
-
-            {/* Pills: país · trend · DOB · rank · ano activo */}
-            <div className="flex-wrap mb-8" style={{ display: "flex", gap: 5, alignItems: "center" }}>
-              {rival && !isManuel && <span className="p p-sm p-muted fs-12" >{rival.co}</span>}
-              {/* Identidade FPG (nfed + clube PT) */}
-              {rival && !isManuel && (rival as any).ptFed && (
-                <span className="p p-sm p-club fs-11" title={`FPG nfed ${(rival as any).ptFed}`}
-                  style={{ background: "var(--bg-portugal-pale, #fff5f5)", color: "var(--color-portugal, #c41e3a)", border: "1px solid var(--color-portugal-light, #f5b8c0)" }}>
-                  🇵🇹 {(rival as any).ptFed}
-                </span>
-              )}
-              {/* Identidade RFEG/Espanha (licença + clube ES) */}
-              {rival && !isManuel && (rival as any).esLicencia && (
-                <span className="p p-sm p-club fs-11" title="Licença RFEG"
-                  style={{ background: "#fef9e7", color: "#854d0e", border: "1px solid #facc15" }}>
-                  🇪🇸 {(rival as any).esLicencia}
-                </span>
-              )}
-              {/* Clube FPG (já tem cor distinta) */}
-              {rival && !isManuel && (rival as any).fpgClub && rival.co === "Portugal" && (
-                <span className="p p-sm p-club fs-11" title="Clube FPG">
-                  🏌️ {(rival as any).fpgClub}
-                </span>
-              )}
-              {/* Clube ES — só renderiza se for diferente do FPG (evita duplicado) */}
-              {rival && !isManuel && (rival as any).esClub && (rival as any).esClub !== (rival as any).fpgClub && (
-                <span className="p p-sm p-club fs-11" title="Clube espanhol">
-                  🏌️ {(rival as any).esClub}
-                </span>
-              )}
-              {/* Comunidade Autónoma (RFEG) — inferida do clube */}
-              {rival && !isManuel && (rival as any).esRegion && (
-                <span className="p p-sm fs-11" title="Comunidade Autónoma"
-                  style={{ background: "#fef3c7", color: "#92400e", border: "1px solid #fcd34d" }}>
-                  📍 {(rival as any).esRegion}
-                </span>
-              )}
-              {/* Categoria oficial RFEG (Benjamín/Alevín/Infantil/Cadete/Junior/Juvenil) */}
-              {rival && !isManuel && (rival as any).esCatEdad && (
-                <span className="p p-sm fs-11" title="Categoria RFEG"
-                  style={{ background: "#dbeafe", color: "#1e40af", border: "1px solid #93c5fd", fontWeight: 600 }}>
-                  {(rival as any).esCatEdad}
-                </span>
-              )}
-              {/* Escalão internacional Sub-N (calculado da idade ou catEdad) */}
-              {rival && !isManuel && (() => {
-                const sub = escalaoIntl(rival);
-                if (!sub) return null;
-                return (
-                  <span className="p p-sm fs-11" title="Escalão internacional"
-                    style={{ background: "#ede9fe", color: "#6d28d9", border: "1px solid #c4b5fd", fontWeight: 600 }}>
-                    {sub}
-                  </span>
-                );
-              })()}
-              {/* Sexo (M/F) com cor — usa SexBadge para coerência global */}
-              {rival && !isManuel && (rival as any).esSex && (
-                <SexBadge sex={(rival as any).esSex} />
-              )}
-              {/* HCP exacto RFEG */}
-              {rival && !isManuel && typeof (rival as any).esHcp === "number" && (
-                <span className="p p-sm fs-11" title={(rival as any).esHcpDate ? `HCP em ${(rival as any).esHcpDate}` : "HCP RFEG"}
-                  style={{ background: "#ecfdf5", color: "#065f46", border: "1px solid #6ee7b7", fontWeight: 700 }}>
-                  HCP {(rival as any).esHcp.toFixed(1)}
-                </span>
-              )}
-              {isManuel && <span className="p p-outline p-sm">REF</span>}
-              {rank != null && (
-                <span className={`sidebar-rank fs-11 ${rank <= 3 ? "sidebar-rank-top3" : rank <= 10 ? "sidebar-rank-top10" : "sidebar-rank-rest"}`}
-                  style={{ padding: "2px 7px" }}>#{rank}/{totalRanked}</span>
-              )}
-              {tr && <span className="fs-13 fw-700" style={{ color: TR_I[tr as keyof typeof TR_I].c }}>{TR_I[tr as keyof typeof TR_I].i}</span>}
-              {rival?.up.map(u => { const up = UP.find(x => x.id === u); return up ? <span key={u} className="p p-sm" style={{ background: "var(--bg-success-strong)", color: "var(--color-good-dark)", fontSize: 11 }}>▲ {up.short}</span> : null; })}
-              {dobInfo && (() => {
-                if (!dobInfo.exact && dobInfo.rangeStr === "?") return null;
-                const pillStyle = { background: "var(--bg-info)", color: "var(--color-info)", fontWeight: 700, fontSize: 12 };
-                if (dobInfo.exact) return (
-                  <>
-                    <span className="p p-sm" style={pillStyle}>🎂 {dobInfo.ageStr}</span>
-                    {dobInfo.nextBdayDays != null && (
-                      <span className="p p-sm" style={{ ...pillStyle, background: "var(--bg-warn)" }}>
-                        faz {dobInfo.nextAge} em {dobInfo.nextBdayDays}d
-                      </span>
-                    )}
-                    <span className="p p-sm" style={{ ...pillStyle, fontWeight: 500 }}>{dobInfo.dobStr}</span>
-                  </>
-                );
-                const days = dobInfo.rangeMin && dobInfo.rangeMax ? Math.round((dobInfo.rangeMax.getTime() - dobInfo.rangeMin.getTime()) / 86400000) : 999;
-                return (
-                  <>
-                    <span className="p p-sm" style={pillStyle}>{days <= 60 ? "🎯" : "📅"} {dobInfo.ageStr}</span>
-                    <span className="p p-sm" style={{ ...pillStyle, fontWeight: 500 }}>~{dobInfo.rangeStr}</span>
-                  </>
-                );
-              })()}
-            </div>
-
-            {/* Palmarès compacto inline */}
-            {palmares.length > 0 && (
-              <div className="gap-4 flex-wrap" style={{ display: "flex", alignItems: "flex-start" }}>
-                {palmares.slice(0, 5).map(({ t, res }) => {
-                  const ag = (res as any).ageGroup as string | null;
-                  const mdl2 = typeof res.p === "number" ? (medal(res.p) ?? "🥉") : "🥉";
-                  const bg = res.p === 1 ? "#fffbea" : res.p === 2 ? "#f0f4ff" : "#fff4f0";
-                  const border = res.p === 1 ? "var(--medal-gold)" : res.p === 2 ? "var(--medal-silver)" : "var(--medal-bronze)";
-                  const shortName = t.name.replace(/\s*\d{4}$/, "").replace(/\s*'\d{2}$/, "");
-                  return (
-                    <div key={t.id} title={`${t.name} ${yearOf(t.dateExact, t.date)}`}
-                      style={{ display: "inline-flex", alignItems: "center", gap: 4, padding: "3px 7px",
-                        borderRadius: 6, background: bg, border: `1px solid ${border}`, flexShrink: 0 }}>
-                      <span className="fs-13">{mdl2}</span>
-                      <div style={{ lineHeight: 1.2 }}>
-                        <div style={{ fontSize: 10, fontWeight: 700, color: "var(--color-warn-dark)", maxWidth: 90,
-                          overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{shortName}</div>
-                        <div style={{ fontSize: 9, color: "var(--text-3)" }}>
-                          {yearOf(t.dateExact, t.date)}{ag ? ` · ${ag}` : ""}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-                {palmares.length > 5 && (
-                  <div style={{ display: "inline-flex", alignItems: "center", gap: 3, padding: "3px 8px",
-                    borderRadius: 6, background: "var(--bg-warn-strong)", border: "1px solid var(--medal-gold)" }}>
-                    <span style={{ fontSize: 11, fontWeight: 800, color: "var(--color-warn-dark)" }}>+{palmares.length - 5}</span>
-                    <span className="fs-11">🏆</span>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-
-          {/* V/E/D vs Manuel — caixas coloridas */}
-          {h2hData && !isManuel && (
-            <div className="shrink-0 ta-c">
-              <div style={{ fontSize: 11, fontWeight: 700, color: "var(--text-3)", marginBottom: 6,
-                textTransform: "uppercase", letterSpacing: "0.06em" }}>vs Manuel</div>
-              <div style={{ display: "flex", gap: 5, marginBottom: 5 }}>
-                {([
-                  { n: h2hData.wins,   bg: "var(--bg-success-strong)", co: "var(--color-good-dark)", l: "V" },
-                  { n: h2hData.draws,  bg: "var(--bg-muted)",          co: "var(--text-2)",          l: "E" },
-                  { n: h2hData.losses, bg: "var(--bg-danger-strong)",  co: "var(--color-danger-vivid)", l: "D" },
-                ] as const).map(({ n, bg, co, l }) => (
-                  <div key={l} className="ta-c" style={{ minWidth: 46, padding: "10px 6px", background: bg, borderRadius: 10 }}>
-                    <div className="fw-900" style={{ fontSize: 28, color: co, lineHeight: 1 }}>{n}</div>
-                    <div className="fs-11 fw-700" style={{ color: co, marginTop: 2, opacity: .75 }}>{l}</div>
-                  </div>
-                ))}
-              </div>
-              <div style={{ fontSize: 11, color: "var(--text-3)" }}>
-                {h2hData.tids.length} confronto{h2hData.tids.length !== 1 ? "s" : ""}
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* KPI grid — separados por bordas, sem rounded cards */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(110px, 1fr))" }}>
-          {[
-            { v: String(playedDedup),                                                      l: "torneios",      accent: false,                           sub: roundsDedup > 0 ? `${roundsDedup} rondas` : null },
-            palmares.length > 0 ? { v: `${palmares.length}`, l: "vitórias 🥇",            accent: true,                                                sub: null } : null,
-            bestTp != null ? { v: fmtToPar(bestTp),           l: "melhor ±par",            accent: bestTp < 0,  sub: null } : null,
-            avgRd != null  ? { v: avgRd.toFixed(1),            l: "média ronda",            accent: false,       sub: rdStdDev != null ? `σ ${rdStdDev.toFixed(1)}` : null } : null,
-            scoringBlock.n > 0 ? { v: `${Math.round(scoringBlock.upr / scoringBlock.n * 100)}%`, l: "sub-par rondas", accent: scoringBlock.upr / scoringBlock.n > 0.3, sub: `${scoringBlock.upr}/${scoringBlock.n}` } : null,
-          ].filter(Boolean).map((item, i, arr) => {
-            const { v, l, accent, sub } = item!;
-            return (
-              <div key={l} style={{ padding: "14px 10px", textAlign: "center",
-                borderRight: i < arr.length - 1 ? "1px solid var(--border-light)" : "none",
-                borderTop: "1px solid var(--border-light)" }}>
-                <div style={{ fontSize: 24, fontWeight: 900, lineHeight: 1,
-                  color: accent ? "var(--color-good-dark)" : "var(--text)" }}>{v}</div>
-                {sub && <div style={{ fontSize: 11, color: "var(--text-3)", marginTop: 2 }}>{sub}</div>}
-                <div style={{ fontSize: 12, color: "var(--text-3)", marginTop: 5, fontWeight: 500 }}>{l}</div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* ══ GRÁFICO DE EVOLUÇÃO ══ */}
-      {evoRivalData.filter(d => d.tp != null && d.rounds > 0).length >= 2 && (
-        <div className="card mb-12"  style={{ padding: "12px 16px" }}>
-          <EvolucaoChart tournResults={evoRivalData} manuelResults={evoManuelData} />
-        </div>
-      )}
-
-      {/* ══ PALMARÈS ══ */}
-      {palmares.length > 0 && (
-        <div className="card mb-12"  style={{ padding: "12px 16px" }}>
-          <div className="h-sm mb-8" style={{ color: "var(--text-2)" }}>🥇 Palmarès · {palmares.length} {palmares.length===1?"vitória":"vitórias"}</div>
-          <div className="gap-8" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(210px,1fr))" }}>
-            {palmares.map(({ t, res }) => {
-              const mPos = manuelMerged?.r[t.id]?.p;
-              const bateuManuel = mPos!=null && typeof mPos==="number" && typeof res.p==="number" && res.p < mPos;
-              const ag = (res as any).ageGroup as string|null;
-              const agNum = parseInt((ag?.match(/\d+/)??[])[0]??"0");
-              const agCls = agNum<=10?"p-sub10":agNum<=12?"p-sub12":agNum<=14?"p-sub14":"p-sub18";
-              return (
-                <div key={t.id} style={{ border: "1.5px solid var(--medal-gold,#d97706)", borderRadius: 8, padding: "10px 12px", display: "flex", gap: 10, alignItems: "center" }}>
-                  <span className="shrink-0" style={{ fontSize: 32, lineHeight: 1 }}>🥇</span>
-                  <div>
-                    <div className="fs-13 fw-600">{t.name}</div>
-                    <div style={{ fontSize: 11, color: "var(--text-2)", marginTop: 2 }}>
-                      {fmtDM(t.dateExact, t.date)}
-                      {ag && <span className={`p p-sm ${agCls}`} style={{ marginLeft: 5 }}>{ag}</span>}
-                      {t.field>0 && <span style={{ marginLeft: 5, color: "var(--text-3)" }}>· {t.field>15?"⭐ ":""}{t.field} jog.</span>}
-                    </div>
-                    {res.tp!=null && <div style={{ fontSize: 12, fontWeight: 600, color: "var(--color-good-dark)", marginTop: 2 }}>{fmtToPar(res.tp)} ±par</div>}
-                    {bateuManuel && <div style={{ fontSize: 10, color: "var(--medal-gold,#d97706)", marginTop: 2 }}>⚔️ ganhou ao Manuel (#{mPos})</div>}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* ══ TORNEIOS RECORRENTES ══ */}
-      <TorneiosRecorrentes groups={torneiosRecorrentes} />
-
-      {/* ══ SCORING DISTRIBUTION ══ */}
-      {scoringBlock.tot > 0 && (() => {
-        const segs = [
-          { key:"eagle",  n:scoringBlock.e,  cls:"seg-eagle",  label:"Eagle+", circle:true  },
-          { key:"birdie", n:scoringBlock.b,  cls:"seg-birdie", label:"Birdie",  circle:true  },
-          { key:"par",    n:scoringBlock.p,  cls:"seg-par",    label:"Par",     circle:false },
-          { key:"bogey",  n:scoringBlock.bo, cls:"seg-bogey",  label:"Bogey",   circle:false },
-          { key:"double", n:scoringBlock.d,  cls:"seg-double", label:"Duplo",   circle:false },
-          { key:"triple", n:scoringBlock.w,  cls:"seg-triple", label:"Triple+", circle:false },
-        ].filter(s=>s.n>0);
-        const tot = scoringBlock.tot;
-        const parAvgs = ([3,4,5] as const).map(pp=>({
-          pp, n:scoringBlock.bp[pp].n,
-          avg:scoringBlock.bp[pp].n?scoringBlock.bp[pp].sum/scoringBlock.bp[pp].n:null,
-          under:scoringBlock.bp[pp].under,
-        })).filter(x=>x.n>0);
-        return (
-          <div className="card mb-12"  style={{ padding: "12px 16px" }}>
-            <div style={{ fontSize: 10, fontWeight: 600, color: "var(--text-3)", marginBottom: 6 }}>
-              Distribuição de scoring · {tot} buracos
-            </div>
-            {/* Barra — par é branco/transparente */}
-            <div style={{ display: "flex", height: 16, borderRadius: 4, overflow: "hidden", gap: 1, marginBottom: 6, background: "var(--bg)" }}>
-              {segs.map(s => (
-                <div key={s.key} className={s.key==="par"?"":""+s.cls}
-                  style={{ flex: s.n, minWidth: 2, background: s.key==="par"?"#fff":undefined }}
-                  title={`${s.label}: ${(s.n/tot*100).toFixed(0)}%`} />
-              ))}
-            </div>
-            {/* Legenda */}
-            <div style={{ display: "flex", gap: "5px 12px", flexWrap: "wrap", marginBottom: parAvgs.length>0?10:0 }}>
-              {segs.map(s => (
-                <span key={s.key} style={{ fontSize: 10, color: "var(--text-2)", display: "flex", alignItems: "center", gap: 4 }}>
-                  <span className={s.key==="par"?"":s.cls}
-                    style={{ width:8, height:8, display:"inline-block", flexShrink:0,
-                      borderRadius: s.circle?"50%":2,
-                      background: s.key==="par"?"#fff":undefined,
-                      border: s.key==="par"?"1px solid var(--border)":undefined }} />
-                  {s.label} {(s.n/tot*100).toFixed(0)}%
-                  <span style={{ color:"var(--text-3)", fontSize:9 }}>({s.n})</span>
-                </span>
-              ))}
-            </div>
-            {/* Par 3 / 4 / 5 */}
-            {parAvgs.length>0 && (
-              <div className="gap-8 flex-wrap" style={{ display: "flex" }}>
-                {parAvgs.map(({ pp, avg, n, under }) => {
-                  const diff = avg!=null?avg-pp:null;
-                  const col = diff==null?"var(--text-3)":diff<0?"var(--color-good-dark)":diff<0.3?"var(--text-2)":"var(--color-warn)";
-                  return (
-                    <KpiCard key={pp} label={`Par ${pp}`} value={avg!=null?avg.toFixed(2):"—"} sub={`${Math.round(under/n*100)}% sub-par`} color={col} style={{ flex:"1 1 80px", padding:"6px 10px", minWidth:72 }} />
-                  );
-                })}
-              </div>
-            )}
-          </div>
-        );
-      })()}
-
-      {/* ══ ANÁLISE ESTILO MASTERS ══ */}
-      {autoScorecards.length > 0 && (
-        <div className="card mb-12" style={{ padding: "12px 16px" }}>
-          <div className="h-sm mb-8" style={{ color: "var(--text-2)" }}>
-            📊 Análise · Scoring · Por ronda · F9 vs B9 · Por buraco
-          </div>
-          <AnaliseSection playerName={playerName} scorecards={autoScorecards} />
-        </div>
-      )}
-
-      {/* ══ LISTA DE TORNEIOS ══ */}
-      {tournResults.length > 0 && (() => {
-        let lastYear = 0;
-        return (
-          <div className="card mb-12 overflow-hidden" >
-            {tournResults.map(({ t, res, hasCard, autoCard, ageGroup }) => {
-              const expanded    = expandedTourns.has(t.id);
-              const pos         = typeof res.p==="number" ? res.p : null;
-              const mdl3        = pos != null ? medal(pos) : null;
-              const nholes      = inferNholes((res as any).nholes, ageGroup);
-              const is9h        = nholes === 9;
-              const tpDisplay   = res.tp!=null ? fmtToPar(res.tp) : null;
-              const rds         = res.rd.filter((r:number|null):r is number => r!=null && r>0);
-              const topPct      = pos!=null && t.field>0 ? Math.round(pos/t.field*100) : null;
-              const manuelRes   = !isManuel ? manuelMerged?.r[t.id] : null;
-              const manuelEsteve = manuelRes!=null;
-              const manuelPos   = typeof manuelRes?.p==="number" ? manuelRes.p : null;
-              const isLarge     = t.field>15;
-              const thisYear    = yearOf(t.dateExact, t.date);
-              const showYrSep   = thisYear>0 && thisYear!==lastYear;
-              if (thisYear>0) lastYear = thisYear;
-              const agNum = parseInt((ageGroup?.match(/\d+/)??[])[0]??"0");
-              const agCls = agNum<=10?"p-sub10":agNum<=12?"p-sub12":agNum<=14?"p-sub14":"p-sub18";
-              const wOrd  = getTournWeight(t.id);
-              const stars = wOrd>=1.3?"★★★★★":wOrd>=1.1?"★★★★":wOrd>=0.9?"★★★":wOrd>=0.6?"★★":wOrd>=0.4?"★":null;
-
-              return (
-                <React.Fragment key={t.id}>
-                  {/* Separador de ano */}
-                  {showYrSep && (
-                    <div style={{ padding:"4px 14px", fontSize:11, fontWeight:600, color:"var(--text-2)",
-                      background:"var(--bg-muted)", borderBottom:"1px solid var(--border-light)",
-                      borderTop: lastYear>0?"1px solid var(--border-light)":undefined }}>
-                      {thisYear}
-                    </div>
-                  )}
-
-                  {/* Linha do torneio */}
-                  <div style={{ display:"grid", gridTemplateColumns:"40px 1fr auto auto auto auto",
-                    alignItems:"center", gap:10, padding:"8px 14px",
-                    borderBottom:expanded?"none":"1px solid var(--border-light)" }}>
-
-                    {/* Col 1: medalha ou posição */}
-                    <div className="ta-c">
-                      {mdl3
-                        ? <span style={{ fontSize:18, lineHeight:1 }}>{mdl3}</span>
-                        : pos!=null
-                          ? <span style={{ fontSize:13, fontWeight:700, color:"var(--text-2)" }}>#{pos}</span>
-                          : <span style={{ fontSize:12, color:"var(--text-3)" }}>—</span>}
-                    </div>
-
-                    {/* Col 2: nome + pills + meta */}
-                    <div>
-                      <div style={{ display:"flex", alignItems:"center", gap:5, flexWrap:"wrap" }}>
-                        <span style={{ fontWeight:600, fontSize:13 }}>{t.name}</span>
-                        {/* Nº de rondas — pill do sistema global PillBadge */}
-                        <RoundPill nR={rds.length} />
-                        {/* Debug pill (?debug=1): mostra tid do torneio para diagnóstico */}
-                        {debugMode && (
-                          <span title={`tid: ${t.id}`} className="fs-10 shrink-0 overflow-hidden" style={{ fontFamily: "'JetBrains Mono', monospace", padding: "1px 5px", borderRadius: 4, background: "var(--bg-warn-light)", color: "var(--color-warn-dark)", border: "1px solid var(--bg-warn-strong)", maxWidth: 200, textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                            {t.id}
-                          </span>
-                        )}
-                        {/* Links */}
-                        {(() => {
-                          const { signupanytimeUrl, uskidsUrl, fpgUrl, ffgolfUrl, lgsUrl, ncUrl } = getTournLinks(t.id, t.url);
-                          const linkStyle: React.CSSProperties = {
-                            display:"inline-flex", alignItems:"center", gap:2, fontSize:10,
-                            fontWeight:600, textDecoration:"none", padding:"1px 5px",
-                            borderRadius:4, lineHeight:1.2, flexShrink:0,
-                          };
-                          return (
-                            <>
-                              {signupanytimeUrl && (
-                                <ExtLink href={signupanytimeUrl}
-                                  onClick={e => e.stopPropagation()} title="Resultados (Signupanytime)"
-                                  style={{ ...linkStyle, color:"var(--color-info-dark)", border:"1px solid var(--color-info-light)" }}>
-                                  ↗ SAT
-                                </ExtLink>
-                              )}
-                              {uskidsUrl && (
-                                <ExtLink href={uskidsUrl}
-                                  onClick={e => e.stopPropagation()} title="Ver resultados"
-                                  style={{ ...linkStyle, color:"var(--accent)", border:"1px solid var(--accent)" }}>
-                                  ↗ result
-                                </ExtLink>
-                              )}
-                              {fpgUrl && (
-                                <ExtLink href={fpgUrl}
-                                  onClick={e => e.stopPropagation()} title="Classif. FPG"
-                                  style={{ ...linkStyle, color:"var(--accent)", border:"1px solid var(--accent)" }}>
-                                  ↗ FPG
-                                </ExtLink>
-                              )}
-                              {ffgolfUrl && (
-                                <ExtLink href={ffgolfUrl}
-                                  onClick={e => e.stopPropagation()} title="Resultados FFGolf"
-                                  style={{ ...linkStyle, color:"var(--accent)", border:"1px solid var(--accent)" }}>
-                                  ↗ FFG
-                                </ExtLink>
-                              )}
-                              {lgsUrl && (
-                                <ExtLink href={lgsUrl}
-                                  onClick={e => e.stopPropagation()} title="Clasificación LiveGolfScoring (RFEGolf)"
-                                  style={{ ...linkStyle, color:"var(--accent)", border:"1px solid var(--accent)" }}>
-                                  ↗ RFEG
-                                </ExtLink>
-                              )}
-                              {ncUrl && (
-                                <ExtLink href={ncUrl}
-                                  onClick={e => e.stopPropagation()} title="Clasificación NextCaddy (RFGA Andaluzia / FGM Madrid)"
-                                  style={{ ...linkStyle, color:"var(--accent)", border:"1px solid var(--accent)" }}>
-                                  ↗ RFEG
-                                </ExtLink>
-                              )}
-                              {(() => {
-                                // Pill colorido SCRATCH/HANDICAP para torneios NC.
-                                // Scratch (gross) = âmbar/amarelo; Handicap (net) = azul.
-                                const sct = ncScoringType.get(t.id);
-                                if (!sct) return null;
-                                const isScratch = sct === "SCRATCH";
-                                return (
-                                  <span title={isScratch
-                                      ? "Scratch — pontuação bruta (gross)"
-                                      : "Handicap — pontuação líquida (net = gross − handicap)"}
-                                    style={{
-                                      ...linkStyle,
-                                      cursor: "help",
-                                      background: isScratch ? "#fef3c7" : "#dbeafe",
-                                      color: isScratch ? "#92400e" : "#1e40af",
-                                      border: `1px solid ${isScratch ? "#f59e0b" : "#3b82f6"}`,
-                                    }}>
-                                    {isScratch ? "Scratch" : "Handicap"}
-                                  </span>
-                                );
-                              })()}
-                            </>
-                          );
-                        })()}
-                        {manuelEsteve && !isManuel && (
-                          <span style={{ background:"#d1fae5", color:"#065f46", border:"1px solid #6ee7b7",
-                            fontSize:9, padding:"1px 5px", borderRadius:4, fontWeight:600 }}>★ M{manuelPos!=null?` #${manuelPos}`:""}</span>
-                        )}
-                      </div>
-                      <div style={{ fontSize:11, color:"var(--text-2)", marginTop:1 }}>
-                        {fmtDM(t.dateExact, t.date)}
-                        {stars && ` · ${stars}`}
-                        {t.field>0 && <> · {isLarge && "⭐ "}{t.field} jogadores</>}
-                        {ageGroup && <></>}
-                      </div>
-                    </div>
-
-                    {/* Col 3: escalão pill + 9H badge */}
-                    <div style={{ display:"flex", flexDirection:"column", alignItems:"flex-end", gap:2 }}>
-                      {ageGroup && <span className={`p p-sm ${agCls}`}>{ageGroup}</span>}
-                      {is9h && <span className="p p-sm" style={{ fontSize:9, background:"var(--color-info-dark)", color:"#fff", padding:"1px 4px" }}>9H</span>}
-                    </div>
-
-                    {/* Col 4: ±par total · se 9H mostra também equiv. 18H */}
-                    <div style={{ textAlign:"right", minWidth:36 }}>
-                      <div style={{ fontSize:14, fontWeight:700,
-                        color: tpDisplay ? tpColorDark(res.tp) : "var(--text-3)" }}>
-                        {tpDisplay ?? "—"}
-                      </div>
-                    </div>
-
-                    {/* Col 5: top % */}
-                    <div style={{ textAlign:"right", minWidth:52, fontSize:12, fontWeight:500,
-                      color: topPct!=null && topPct<=15 ? "var(--color-good-dark)" : "var(--text-3)" }}>
-                      {topPct!=null ? `top ${topPct}%` : ""}
-                    </div>
-
-                    {/* Col 6: Scorecard ▼ — span sem bordo, sem fundo */}
-                    <div>
-                      {hasCard && (
-                        <span onClick={() => toggleExpand(t.id)}
-                          style={{ fontSize:8, color:"var(--text-3)", cursor:"pointer", userSelect:"none" }}>
-                          {expanded ? "Scorecard ▲" : "Scorecard ▼"}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Scorecard expandido */}
-                  {expanded && hasCard && (
-                    <div style={{ padding:"0 8px 12px", borderBottom:"1px solid var(--border-light)", background:"var(--bg)" }}>
-                      {t.id==="brjgt25" && bjgtCard && (
-                        <div className="bjgt-chart-scroll">
-                          <table className="sc-table-modern" data-sc-table="1">
-                            <THead /><tbody>
-                              <MetrosRow /><SIRow /><FieldAvgRow /><ParRow sep />
-                              {bjgtCard.rounds.map((rd,i) => <GrossRow key={i} holes={rd as number[]} label={`R${i+1}`} />)}
-                              <GrossRow holes={bjgtCard.ecl as number[]} label="ECL" />
-                              <VsFieldRow holes={bjgtCard.ecl as number[]} />
-                            </tbody>
-                          </table>
-                        </div>
-                      )}
-                      {t.id==="brjgt25" && !bjgtCard && autoCard && (
-                        <TournScorecard
-                          par={autoCard.par.length===18?autoCard.par as unknown as readonly number[]:VP_PAR as unknown as readonly number[]}
-                          si={autoCard.si.length>0?autoCard.si as unknown as readonly number[]:VP_SI as unknown as readonly number[]}
-                          meters={autoCard.meters.length>0?autoCard.meters as unknown as readonly number[]:VP_M as unknown as readonly number[]}
-                          rounds={autoCard.rounds.map((sc,i)=>({label:`R${i+1}`,scores:sc}))} />
-                      )}
-                      {t.id==="wjgc26" && wjgcCard && (
-                        <TournScorecard par={WJGC26_PAR} si={WJGC26_SI} meters={WJGC26_M}
-                          rounds={wjgcCard.rds.map((sc,i)=>({label:`R${i+1}`,scores:[...sc]}))} />
-                      )}
-                      {t.id==="eowagr25" && eowagr25Card && (
-                        <TournScorecard par={EOWAGR25_PAR} si={EOWAGR25_SI} meters={EOWAGR25_M}
-                          rounds={eowagr25Card.rds.map((sc,i)=>({label:`R${i+1}`,scores:[...sc]}))} />
-                      )}
-                      {t.id==="wjgc26_1213" && wjgc26_1213Card && (
-                        <TournScorecard par={WJGC26_1213_PAR} si={WJGC26_1213_SI} meters={WJGC26_1213_M}
-                          rounds={wjgc26_1213Card.rds.map((sc,i)=>({label:`R${i+1}`,scores:[...sc]}))} />
-                      )}
-                      {autoCard && (() => {
-                        const METERS_FALLBACK: Record<string,readonly number[]> = {
-                          "usk20175_b11":MS_USKIDS_M_B1011,"usk20175_b10":MS_USKIDS_M_B1011,
-                          "usk21080_b11":MS_USKIDS_M_B1011,"usk21080_b10":MS_USKIDS_M_B1011,
-                          "usk21080_b12":MS_USKIDS_M_B12,"usk21080_b9":MS_USKIDS_M_B1011,
-                          "usk20175_b12":MS_USKIDS_M_B12,
-                          "doral25_b1011":DORAL_GP_M_B1011,"doral25_b89":DORAL_GP_M_B1011,
-                          "doral25_b1213":DORAL_SF_M_B1213,
-                          "doral24_b1011":DORAL_GP_M_B1011,"doral24_b89":DORAL_GP_M_B1011,
-                          "doral24_b1213":DORAL_SF_M_B1213,
-                        };
-                        const dedicated = ["brjgt25","wjgc26","eowagr25","wjgc26_1213"];
-                        if (dedicated.includes(t.id) && (bjgtCard||wjgcCard||eowagr25Card||wjgc26_1213Card)) return null;
-                        if (!autoCard.par||autoCard.par.length<9) return <div className="fs-11 c-text-3 p-10">— scorecard buraco-a-buraco não disponível</div>;
-                        return (
-                          <TournScorecard
-                            par={autoCard.par as unknown as readonly number[]}
-                            si={autoCard.si as unknown as readonly number[]}
-                            meters={(METERS_FALLBACK[t.id]??autoCard.meters??[]) as unknown as readonly number[]}
-                            rounds={autoCard.rounds.map((sc,i)=>({label:`R${i+1}`,scores:sc}))}
-                          />
-                        );
-                      })()}
-                    </div>
-                  )}
-                </React.Fragment>
-              );
-            })}
-          </div>
-        );
-      })()}
-
-      {/* ══ HEAD-TO-HEAD DETALHADO ══ */}
-      {!isManuel && <H2HTable confrontos={confrontosH2H} playerName={playerName} />}
-
-      {/* ══ HISTÓRICO USKIDS ══ */}
-      {(() => {
-        if (!mhPlayer) return null;
-        const mhTorneiosAll = Object.entries(mhPlayer.torneios)
-          .map(([tid,t]) => ({ tid, ...(t as MHTournament) }))
-          .filter(t => Object.keys(t.rounds||{}).length>0)
-          .sort((a,b) => (isoDate(b.startDate||"")||"").localeCompare(isoDate(a.startDate||"")||""));
-        if (mhTorneiosAll.length===0) return null;
-        return <MemberHistTable mhTorneios={mhTorneiosAll} memberId={mhPlayer.memberId} />;
-      })()}
-
-      {played===0 && !lbEntry && (
-        <EmptyState size="sm" message="Sem resultados registados ainda." />
-      )}
-    </>
-  );
-}
 
 
 
@@ -3513,8 +1369,4 @@ function RivaisIntlContent() {
   );
 }
 
-export default function RivaisIntlPage() {
-  const { unlocked, unlock } = usePasswordGate();
-  if (!unlocked) return <PasswordGate onUnlock={unlock} />;
-  return <RivaisIntlContent />;
-}
+export default RivaisIntlContent;

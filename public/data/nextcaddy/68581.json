@@ -1,14 +1,14 @@
 {
   "tourId": 68581,
   "url": "https://www.nextcaddy.com/tour/68581",
-  "scrapedAt": "2026-05-08T17:33:20.620Z",
+  "scrapedAt": "2026-05-09T16:03:25.867Z",
   "meta": {
     "name": "III Prueba Circuito Juvenil de P&P (9 hoyos) 3ª Categoría y Noveles - Las Palmeras Golf",
     "organizer": null,
     "course": "Las Palmeras Golf Club",
     "courseCode": "CP26",
-    "dateStart": "12 abr 2026",
-    "dateEnd": "12 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Juvenil",
@@ -17,11 +17,12 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-04-12"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -248,6 +249,7 @@
       "nivel": "I"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -339,11 +341,11 @@
         },
         {
           "playerName": "Yunes Peiretti, Jorge Alberto",
-          "holeNumber": 7
+          "holeNumber": 7,
+          "createdAt": "28/08/25 12:41:52"
         }
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-09T12:12:49.080Z"
+  "pdfs": []
 }

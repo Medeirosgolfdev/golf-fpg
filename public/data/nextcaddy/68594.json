@@ -1,14 +1,14 @@
 {
   "tourId": 68594,
   "url": "https://www.nextcaddy.com/tour/68594",
-  "scrapedAt": "2026-05-08T17:34:52.787Z",
+  "scrapedAt": "2026-05-09T16:03:56.827Z",
   "meta": {
     "name": "V Prueba Circuito Juvenil de P&P (18 Hoyos) 1ª y 2ª Categoría - Golf Los Palos",
     "organizer": null,
     "course": "Campo de Golf Los Palos",
     "courseCode": "CP09",
-    "dateStart": "05 jul 2026",
-    "dateEnd": "05 jul 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Juvenil",
@@ -17,12 +17,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-07-05"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -54,11 +56,11 @@
         },
         {
           "playerName": "Perez-Caballer Baeza, Jaime",
-          "holeNumber": 7
+          "holeNumber": 7,
+          "createdAt": "24/08/25 15:05:38"
         }
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-09T12:12:49.304Z"
+  "pdfs": []
 }

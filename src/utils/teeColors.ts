@@ -134,7 +134,7 @@ export function getTeeHex(teeName: string, scorecardColor?: string | null): stri
 }
 
 /** Cor do texto (escuro/claro) sobre uma cor de fundo */
-export function textOnColor(hex: string): C.grey900 | "#fff" {
+export function textOnColor(hex: string): string {
   const h = (hex || "").replace("#", "");
   if (h.length !== 6) return "#fff";
   const r = parseInt(h.slice(0, 2), 16) / 255;

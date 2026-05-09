@@ -1,14 +1,14 @@
 {
   "tourId": 68583,
   "url": "https://www.nextcaddy.com/tour/68583",
-  "scrapedAt": "2026-05-08T17:34:49.334Z",
+  "scrapedAt": "2026-05-09T16:03:42.033Z",
   "meta": {
     "name": "II Prueba Circuito Juvenil de P&P (9 hoyos) 3ª Categoría y Noveles - Golf Los Palos",
     "organizer": null,
     "course": "Campo de Golf Los Palos",
     "courseCode": "CP09",
-    "dateStart": "25 abr 2026",
-    "dateEnd": "25 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Juvenil",
@@ -17,11 +17,12 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-04-25"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -374,6 +375,7 @@
       "nivel": "CP05481539"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -389,6 +391,6 @@
       "roundId": 73225
     }
   ],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-09T12:12:49.109Z"
+  "scoreTypes": [],
+  "pdfs": []
 }

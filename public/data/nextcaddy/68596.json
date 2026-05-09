@@ -1,14 +1,14 @@
 {
   "tourId": 68596,
   "url": "https://www.nextcaddy.com/tour/68596",
-  "scrapedAt": "2026-05-08T17:34:54.261Z",
+  "scrapedAt": "2026-05-09T16:04:00.214Z",
   "meta": {
     "name": "VI Prueba Circuito Juvenil de P&P (9 hoyos) 3ª Categoría y Noveles - Golf La Rosaleda",
     "organizer": null,
     "course": "Golf la Rosaleda S L",
     "courseCode": "CP15",
-    "dateStart": "13 sep 2026",
-    "dateEnd": "13 sep 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Juvenil",
@@ -17,12 +17,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-09-13"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -44,11 +46,11 @@
       "players": [
         {
           "playerName": "Macian Martinez, Vicente",
-          "holeNumber": 9
+          "holeNumber": 9,
+          "createdAt": "24/08/25 12:49:44"
         }
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-09T12:12:49.339Z"
+  "pdfs": []
 }

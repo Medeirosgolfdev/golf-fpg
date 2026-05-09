@@ -10,14 +10,10 @@ import type { Tournament } from "../../data/fpgTypes";
 /** Helper: Tournament mínimo para os testes (só os campos que o builder lê). */
 function mkT(partial: Partial<Tournament> & { name: string; date: string; ccode: string; tcode: string }): Tournament {
   return {
-    name: partial.name,
-    date: partial.date,
-    ccode: partial.ccode,
-    tcode: partial.tcode,
-    campo: partial.campo ?? "Campo Default",
-    players: partial.players ?? [],
-    playerCount: partial.playerCount ?? 0,
-    escalao: partial.escalao ?? null,
+    campo: "Campo Default",
+    players: [],
+    playerCount: 0,
+    escalao: null,
     ...partial,
   } as Tournament;
 }

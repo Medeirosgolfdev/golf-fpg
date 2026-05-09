@@ -22,10 +22,6 @@ function converterTorneioCompleto(raw: any): TorneioResult | null {
     const tCode      = Number(raw.signupanytime_t);
     const ageGroups: Record<string, { name: string; holes_per_round: number }> = raw.age_groups ?? {};
 
-    // par por buraco por flight: fid → ronda → par[]
-    // Fonte: flight.course_info['R1'].holes[].par  (mais fiável — por escalão)
-    const _flightRoundPar = new Map<string, number[]>(); // key: `${fid}_R${rn}`
-
     // Agrupa flights pelo nome do escalão (category)
     // Usar índice numérico sintético para manter compatibilidade com age_group int
     const catToId = new Map<string, number>();

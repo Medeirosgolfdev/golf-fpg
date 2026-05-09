@@ -1,14 +1,14 @@
 {
   "tourId": 68715,
   "url": "https://www.nextcaddy.com/tour/68715",
-  "scrapedAt": "2026-05-09T10:17:03.314Z",
+  "scrapedAt": "2026-05-09T16:03:59.742Z",
   "meta": {
     "name": "VII Prueba Circuito Regional Amateur (INSCRIPCIÓN PROFESIONALES)",
     "organizer": null,
     "course": "Golf Club Fuerteventura",
     "courseCode": "CP20",
-    "dateStart": "29 ago 2026",
-    "dateEnd": "29 ago 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Profesional C. Téc",
     "categories": [
       "PROFESIONAL",
@@ -17,12 +17,14 @@
       "profesional",
       "Infantil",
       "Senior"
-    ],
-    "dateIso": "2026-08-29"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -249,6 +251,5 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-09T12:12:50.098Z"
+  "pdfs": []
 }

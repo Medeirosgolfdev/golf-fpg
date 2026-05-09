@@ -95,7 +95,7 @@ export function playerSeriesResult(
     const canon = tornCanon(meta.name).replace(/-\d+$/, "");
     if (canon !== sBase) continue;
     const fs = uskFieldSizes.get(tid) ?? 0;
-    return { p: res.p ?? 0, tp: res.tp ?? null, fieldSize: fs };
+    return { p: typeof res.p === "number" ? res.p : 0, tp: res.tp ?? null, fieldSize: fs };
   }
   return null;
 }

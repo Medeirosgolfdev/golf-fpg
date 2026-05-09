@@ -1,14 +1,14 @@
 {
   "tourId": 68720,
   "url": "https://www.nextcaddy.com/tour/68720",
-  "scrapedAt": "2026-05-09T10:16:35.945Z",
+  "scrapedAt": "2026-05-09T16:03:45.177Z",
   "meta": {
     "name": "Campeonato de Las Palmas de P&P",
     "organizer": null,
     "course": "Anfi Tauro Golf",
     "courseCode": "CP29",
-    "dateStart": "23 may 2026",
-    "dateEnd": "23 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) Circuito P&P 20206",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-23"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -367,6 +368,7 @@
       "nivel": "Mid"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -387,6 +389,5 @@
     }
   ],
   "scoreTypes": null,
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-09T12:12:50.234Z"
+  "pdfs": []
 }

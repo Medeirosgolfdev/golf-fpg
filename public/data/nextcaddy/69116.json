@@ -1,14 +1,14 @@
 {
   "tourId": 69116,
   "url": "https://www.nextcaddy.com/tour/69116",
-  "scrapedAt": "2026-05-09T10:17:16.563Z",
+  "scrapedAt": "2026-05-09T16:04:01.497Z",
   "meta": {
     "name": "Campeonato de Canarias Juvenil",
     "organizer": null,
     "course": "Meloneras Golf",
     "courseCode": "CP27",
-    "dateStart": "23 oct 2026",
-    "dateEnd": "23 oct 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Juvenil",
@@ -17,12 +17,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-10-23"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -47,6 +49,5 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-09T12:12:51.347Z"
+  "pdfs": []
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 68763,
   "url": "https://www.nextcaddy.com/tour/68763",
-  "scrapedAt": "2026-05-09T10:38:24.381Z",
+  "scrapedAt": "2026-05-09T16:03:43.688Z",
   "meta": {
     "name": "Campeonato de Las Palmas Juvenil 9 Hoyos (Benjamín)",
     "organizer": null,
     "course": "Meloneras Golf",
     "courseCode": "CP27",
-    "dateStart": "18 abr 2026",
-    "dateEnd": "18 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Juvenil",
@@ -19,8 +19,7 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-04-18"
+    ]
   },
   "course": {
     "par": [
@@ -87,6 +86,8 @@
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Final Benjamín Femenino",
+      "expectedJugadores": 2,
       "header": [
         "Pos",
         "Jugador",
@@ -148,6 +149,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Clasificación Final Benjamín Masculino",
+      "expectedJugadores": 6,
       "header": [
         "Pos",
         "Jugador",
@@ -293,6 +296,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Clasificación Final Indistinta",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -480,6 +485,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Clasificación 1ª Jornada Indistinto",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -591,6 +598,25 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Final Benjamín Femenino",
+      "jugadores": 2
+    },
+    "2": {
+      "name": "Clasificación Final Benjamín Masculino",
+      "jugadores": 6
+    },
+    "3": {
+      "name": "Clasificación Final Indistinta",
+      "jugadores": 8
+    },
+    "4": {
+      "name": "Clasificación 1ª Jornada Indistinto",
+      "jugadores": 8
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -719,26 +745,6 @@
       "nivel": "B"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73435
-    },
-    {
-      "roundNumber": 2,
-      "roundId": 73436
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -895,5 +901,25 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:29.322Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73435
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 73436
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": []
 }

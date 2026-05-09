@@ -1,14 +1,14 @@
 {
   "tourId": 70431,
   "url": "https://www.nextcaddy.com/tour/70431",
-  "scrapedAt": "2026-05-09T10:17:14.884Z",
+  "scrapedAt": "2026-05-09T16:04:01.198Z",
   "meta": {
     "name": "Campeonato de Canarias Mid Amateur",
     "organizer": null,
     "course": "Golf del Sur",
     "courseCode": "CP05",
-    "dateStart": "17 oct 2026",
-    "dateEnd": "17 oct 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros Faceboo",
     "categories": [
       "Caballeros",
@@ -16,12 +16,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-10-17"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -58,6 +60,7 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-09T12:13:00.055Z"
+  "pdfs": [
+    "/uploads/competiciones/cartel/731027393_70431-campeonato-de-canarias-mid-amateur.pdf"
+  ]
 }

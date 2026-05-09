@@ -371,8 +371,19 @@ export function processRfegolfRivals(data: unknown): AutoRivalPlayer[] {
     if (t.scoringType) {
       ncScoringType.set(tid, t.scoringType);
     }
+    // Field size — usado pela UI para mostrar "X jogadores" sob título.
+    // Conta TODOS os players com nome+total ou pos (mesmo sem hbh).
+    const fieldSize = (t.players || []).filter(p =>
+      p.n && (typeof p.t === "number" || p.p != null)
+    ).length;
+    if (fieldSize > 0) uskFieldSizes.set(tid, fieldSize);
     for (const p of t.players || []) {
-      if (!p.n || !Array.isArray(p.rd) || p.rd.length === 0) continue;
+      if (!p.n) continue;
+      // Aceitar players sem scorecards individuais (rd=[]) desde que tenham
+      // total — typical para PDF-only ou tournaments com leaderboard agregado.
+      const hasRd = Array.isArray(p.rd) && p.rd.length > 0;
+      const hasTotal = typeof p.t === "number" && p.t > 0;
+      if (!hasRd && !hasTotal) continue;
       // Converter "APELIDO, Nomes" → "Nomes Apelido" para casar com USKids/FFG
       // (senão Marcus Latt aparece como 2 rivais distintos: "Marcus Latt" e "LATT, Marcus")
       const canonicalName = rfegolfNameToCanonical(p.n);
@@ -382,7 +393,7 @@ export function processRfegolfRivals(data: unknown): AutoRivalPlayer[] {
       // Registar scorecard hole-by-hole quando há scores válidos (18 buracos por ronda)
       const norm = normName(canonicalName);
       const validScores = (p.sc || []).filter(s => Array.isArray(s) && s.length === 18);
-      if (validScores.length > 0 && t.par.length === 18) {
+      if (validScores.length > 0 && Array.isArray(t.par) && t.par.length === 18) {
         addScorecard(norm, {
           tid,
           playerName: canonicalName,
@@ -399,7 +410,8 @@ export function processRfegolfRivals(data: unknown): AutoRivalPlayer[] {
           p: typeof p.p === "number" ? p.p : null,
           t: total,
           tp: toPar,
-          rd: p.rd,
+          // rd vazio quando só temos total agregado (sem scorecard hbh) — mantém compatibilidade
+          rd: hasRd ? p.rd : [],
           ageGroup: t.ageGroup || undefined,
           nholes: t.nholes,
         }},
@@ -1764,8 +1776,8 @@ async function _buildAutoRivalsInternal(
   try {
     const rfegRaw = await rfegRivalsPromise;
     if (rfegRaw) {
-      _loadedFiles.push({ path: `${base}rfegolf-rivals.json`, status: "loaded", group: "phase 2.5 esp" });
       mergeInto(map, processRfegolfRivals(rfegRaw));
+      _loadedFiles.push({ path: `${base}rfegolf-rivals.json`, status: "loaded", group: "phase 2.5 esp" });
 
       // Consolidação por token-set: indexar por sorted-tokens (bucket único)
       // — match só quando os tokens são idênticos (após sort). Casos como
@@ -2077,14 +2089,13 @@ async function _buildAutoRivalsInternal(
         if (viaFuzzy) fuzzy++;
         matched++;
       }
-      _loadedFiles.push({ path: `spain-enrich:matched=${matched},fuzzy=${fuzzy},rejected=${rejected}`, status: "loaded", group: "enrich" });
-    } else {
-      _loadedFiles.push({ path: `${base}spain-players.json`, status: "error", error: "null", group: "enrich" });
+      _loadedFiles.push({ path: `spain-enrich:matched=${matched},fuzzy=${fuzzy},rejected=${rejected}`, status: "loaded", group: "phase 3 enrich" });
     }
   } catch (e) {
-    _loadedFiles.push({ path: `${base}spain-players.json`, status: "error", error: String(e), group: "enrich" });
+    _loadedFiles.push({ path: `spain-enrich:error`, status: "error", error: String(e), group: "phase 3 enrich" });
   }
 
+  _autoRivalsCache = Array.from(map.values());
   onUpdate?.(Array.from(map.values()));
   return Array.from(map.values());
 }

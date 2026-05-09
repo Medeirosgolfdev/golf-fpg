@@ -29,7 +29,6 @@
  *   TournPName        — nome clicável do jogador com ícone M/F e estrela Manuel
  */
 
-import React from "react";
 import SexBadge from "./SexBadge";
 import { getTeeHex, teeBorder } from "../utils/teeColors";
 import { sdClassByHcp } from "../utils/scoreDisplay";

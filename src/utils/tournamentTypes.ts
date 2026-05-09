@@ -274,9 +274,6 @@ export function deriveResults(
     for (const { catKey, dayKey } of mappings) {
       if (catKey !== pCat) continue;
 
-      const draw = findDrawEntry(norm, round.fed, round.name);
-      const teeColor = draw?.teeColor || norm.categories.find(c => c.key === catKey)?.tee || "Brancas";
-      const sex = draw?.sex || "M";
       const catCourse = norm.categories.find(c => c.key === catKey)?.courseData;
       const toPar = catCourse ? round.gross - catCourse.par : round.gross - 72;
 

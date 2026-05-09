@@ -1,0 +1,472 @@
+{
+  "tourId": 59999,
+  "url": "https://www.nextcaddy.com/tour/59999",
+  "scrapedAt": "2026-05-09T16:54:50.757Z",
+  "meta": {
+    "name": "Paralelo II Puntuable Zonal Juvenil (Benjamines)",
+    "organizer": null,
+    "course": "Real Club Golf Las Palmas",
+    "courseCode": "CP01",
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Medal Play (Scratch)  Señoras  Caballero",
+    "categories": [
+      "Juvenil",
+      "Benjamin",
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior"
+    ]
+  },
+  "course": {
+    "par": null,
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Final Benjamin Indistinta",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Leo Calasanzio Borsellino",
+          "licencia": "CP05081101",
+          "hcp": 16.6,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 48
+            },
+            {
+              "round": 2,
+              "gross": 42
+            }
+          ],
+          "total": 90,
+          "toPar": 20,
+          "inscribedId": 2049422,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Maximo Cabezas De Herrera Mendez",
+          "licencia": "CP02052226",
+          "hcp": 39.8,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 49
+            },
+            {
+              "round": 2,
+              "gross": 46
+            }
+          ],
+          "total": 95,
+          "toPar": 25,
+          "inscribedId": 2049859,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Leo Gonzalez Salvat",
+          "licencia": "CP04962401",
+          "hcp": 35,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 55
+            },
+            {
+              "round": 2,
+              "gross": 47
+            }
+          ],
+          "total": 102,
+          "toPar": 32,
+          "inscribedId": 2051307,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Noa Sanchez Viera",
+          "licencia": "CP02171427",
+          "hcp": 49.7,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 65
+            },
+            {
+              "round": 2,
+              "gross": 59
+            }
+          ],
+          "total": 124,
+          "toPar": 54,
+          "inscribedId": 2050219,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Sara Henningsen Suarez",
+          "licencia": "CP01061295",
+          "hcp": 53.3,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 63
+            },
+            {
+              "round": 2,
+              "gross": 62
+            }
+          ],
+          "total": 125,
+          "toPar": 55,
+          "inscribedId": 2055798,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Clasificación 1ª Jornada Benjamín Indistinta",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Leo Calasanzio Borsellino",
+          "licencia": "CP05081101",
+          "hcp": 16.6,
+          "nivel": "B",
+          "rounds": [],
+          "total": 48,
+          "toPar": 13,
+          "inscribedId": 2049422,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Maximo Cabezas De Herrera Mendez",
+          "licencia": "CP02052226",
+          "hcp": 39.8,
+          "nivel": "B",
+          "rounds": [],
+          "total": 49,
+          "toPar": 14,
+          "inscribedId": 2049859,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Leo Gonzalez Salvat",
+          "licencia": "CP04962401",
+          "hcp": 35,
+          "nivel": "B",
+          "rounds": [],
+          "total": 55,
+          "toPar": 20,
+          "inscribedId": 2051307,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Sara Henningsen Suarez",
+          "licencia": "CP01061295",
+          "hcp": 53.3,
+          "nivel": "B",
+          "rounds": [],
+          "total": 63,
+          "toPar": 28,
+          "inscribedId": 2055798,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Noa Sanchez Viera",
+          "licencia": "CP02171427",
+          "hcp": 49.7,
+          "nivel": "B",
+          "rounds": [],
+          "total": 65,
+          "toPar": 30,
+          "inscribedId": 2050219,
+          "roundScores": []
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Final Benjamin Indistinta",
+      "jugadores": 5
+    },
+    "2": {
+      "name": "Clasificación 1ª Jornada Benjamín Indistinta",
+      "jugadores": 5
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Leo Calasanzio Borsellino",
+      "licencia": "CP05081101",
+      "hcp": 16.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Maximo Cabezas De Herrera Mendez",
+      "licencia": "CP02052226",
+      "hcp": 39.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Leo Gonzalez Salvat",
+      "licencia": "CP04962401",
+      "hcp": 35,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Noa Sanchez Viera",
+      "licencia": "CP02171427",
+      "hcp": 49.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Sara Henningsen Suarez",
+      "licencia": "CP01061295",
+      "hcp": 53.3,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Leo Calasanzio Borsellino",
+      "licencia": "CP05081101",
+      "hcp": 16.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Maximo Cabezas De Herrera Mendez",
+      "licencia": "CP02052226",
+      "hcp": 39.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Noa Sanchez Viera",
+      "licencia": "CP02171427",
+      "hcp": 49.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Leo Gonzalez Salvat",
+      "licencia": "CP04962401",
+      "hcp": 35,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Sara Henningsen Suarez",
+      "licencia": "CP01061295",
+      "hcp": 53.3,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "13:20",
+          "tee": 1,
+          "name": "Leo Calasanzio Borsellino",
+          "hcp": 16.6,
+          "ins": "2049422",
+          "jid": "63359",
+          "nivel": "B"
+        },
+        {
+          "time": "13:20",
+          "tee": 1,
+          "name": "Leo Gonzalez Salvat",
+          "hcp": 35,
+          "ins": "2051307",
+          "jid": "63359",
+          "nivel": "B"
+        },
+        {
+          "time": "13:20",
+          "tee": 1,
+          "name": "Maximo Cabezas De Herrera Mendez",
+          "hcp": 39.8,
+          "ins": "2049859",
+          "jid": "63359",
+          "nivel": "B"
+        },
+        {
+          "time": "13:30",
+          "tee": 1,
+          "name": "Noa Sanchez Viera",
+          "hcp": 49.7,
+          "ins": "2050219",
+          "jid": "63359",
+          "nivel": "B"
+        },
+        {
+          "time": "13:30",
+          "tee": 1,
+          "name": "Sara Henningsen Suarez",
+          "hcp": 53.3,
+          "ins": "2055798",
+          "jid": "63359",
+          "nivel": "B"
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "players": [
+        {
+          "time": "13:20",
+          "tee": 1,
+          "name": "Leo Calasanzio Borsellino",
+          "hcp": 16.6,
+          "ins": "2049422",
+          "jid": "63360",
+          "nivel": "B"
+        },
+        {
+          "time": "13:20",
+          "tee": 1,
+          "name": "Leo Gonzalez Salvat",
+          "hcp": 35,
+          "ins": "2051307",
+          "jid": "63360",
+          "nivel": "B"
+        },
+        {
+          "time": "13:20",
+          "tee": 1,
+          "name": "Maximo Cabezas De Herrera Mendez",
+          "hcp": 39.8,
+          "ins": "2049859",
+          "jid": "63360",
+          "nivel": "B"
+        },
+        {
+          "time": "13:30",
+          "tee": 1,
+          "name": "Noa Sanchez Viera",
+          "hcp": 49.7,
+          "ins": "2050219",
+          "jid": "63360",
+          "nivel": "B"
+        },
+        {
+          "time": "13:30",
+          "tee": 1,
+          "name": "Sara Henningsen Suarez",
+          "hcp": 53.3,
+          "ins": "2055798",
+          "jid": "63360",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 63359
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 63360
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Martinez Navarro, Agustin",
+          "holeNumber": 6,
+          "createdAt": "26/06/24 14:25:22"
+        },
+        {
+          "playerName": "Martinez Navarro, Agustin",
+          "holeNumber": 8,
+          "createdAt": "26/06/24 14:25:22"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/o_1iljg1a111u4j1lg31coa9mhvla.pdf"
+  ]
+}

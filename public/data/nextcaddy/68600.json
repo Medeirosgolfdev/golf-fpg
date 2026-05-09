@@ -1,14 +1,14 @@
 {
   "tourId": 68600,
   "url": "https://www.nextcaddy.com/tour/68600",
-  "scrapedAt": "2026-05-08T17:34:55.708Z",
+  "scrapedAt": "2026-05-09T16:04:01.356Z",
   "meta": {
     "name": "Final Circuito Juvenil de P&P",
     "organizer": null,
     "course": "Las Palmeras Golf Club",
     "courseCode": "CP26",
-    "dateStart": "18 oct 2026",
-    "dateEnd": "18 oct 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Match Play (Handicap)  Caballeros  Señor",
     "categories": [
       "Juvenil",
@@ -17,12 +17,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-10-18"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -54,11 +56,11 @@
         },
         {
           "playerName": "Lonergan, Margaret Ann",
-          "holeNumber": 13
+          "holeNumber": 13,
+          "createdAt": "26/08/25 13:22:25"
         }
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-09T12:12:49.469Z"
+  "pdfs": []
 }
