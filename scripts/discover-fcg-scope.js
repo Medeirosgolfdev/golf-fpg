@@ -113,7 +113,7 @@ function dateIsoFromCat(dd_mm_yyyy) {
 
 // Página de torneio: extrair organizador, sede, datas, tipos+categorias, links golfdirecto
 function parseTournamentPage(html, slug) {
-  const out = { slug, title: null, organizer: null, sede: null, dateStart: null, dateEnd: null, modalitat: null, tipus: null, agePills: [], games: [] };
+  const out = { slug, title: null, organizer: null, sede: null, dateStart: null, dateEnd: null, modalitat: null, tipus: null, agePills: [], games: [], imasterIds: [], inscritos: [] };
 
   // Title (h1)
   const h1 = /<h1[^>]*>([^<]+)<\/h1>/.exec(html);
@@ -160,6 +160,32 @@ function parseTournamentPage(html, slug) {
     sections: Array.from(g.sections),
     hintCategories: Array.from(g.categories),
   }));
+
+  // imaster.golf — plataforma legacy de livescoring (2018-2023+). URLs:
+  //   https://open.imaster.golf/{lang}/catgolf/torneos/livescoring/{IMID}
+  // O IMID parece ser tipo "CB9623069" ou "CBA223002" (8-9 chars alfanum).
+  const IM_RE = /open\.imaster\.golf\/[a-z]{2,3}\/catgolf\/[a-z]+\/livescoring\/([A-Z0-9]+)/gi;
+  const imSet = new Set();
+  let im;
+  while ((im = IM_RE.exec(html)) !== null) imSet.add(im[1]);
+  out.imasterIds = Array.from(imSet);
+
+  // Lista de inscritos embebida na página: tabela em divs com IDs específicos
+  //   <div id="col-nombre">Hugo Carmona Rodriguez</div>
+  //   <div id="col-licencia">CB01903452</div>
+  //   <div class="circular-col-fecha">2023-01-14 10:30:36</div>
+  // (sim, "id" repetido — o site usa-o como class de facto)
+  const INSC_RE = /id="col-nombre"[^>]*>\s*([^<]+?)\s*<\/div>\s*<div[^>]*id="col-licencia"[^>]*>\s*([A-Z]{2,3}[0-9A-Z]{6,12})\s*<\/div>(?:\s*<div[^>]*(?:class="[^"]*col-fecha[^"]*"|id="col-fecha")[^>]*>\s*(\d{4}-\d{2}-\d{2}(?:[ T]\d{2}:\d{2}(?::\d{2})?)?)\s*<\/div>)?/g;
+  const inscMap = new Map();
+  let isc;
+  while ((isc = INSC_RE.exec(html)) !== null) {
+    const name = isc[1].replace(/\s+/g, " ").trim();
+    const lic = isc[2];
+    const dt = isc[3] || null;
+    if (name.length < 3) continue;
+    if (!inscMap.has(lic)) inscMap.set(lic, { name, license: lic, registeredAt: dt });
+  }
+  out.inscritos = Array.from(inscMap.values());
 
   return out;
 }
@@ -213,11 +239,12 @@ async function main() {
         det.url = t.url;
         det.juvenile = isJuvenile(det);
         allTourns.push(det);
-        if (det.games.length > 0) {
-          console.log(`[disc]   ${t.slug} ─ ${det.games.length} game(s), juvenile=${det.juvenile}`);
-        } else {
-          console.log(`[disc]   ${t.slug} ─ no golfdirecto links (juvenile=${det.juvenile})`);
-        }
+        const flags = [];
+        if (det.games.length > 0) flags.push(`${det.games.length} game(s)`);
+        if (det.imasterIds.length > 0) flags.push(`${det.imasterIds.length} imaster`);
+        if (det.inscritos.length > 0) flags.push(`${det.inscritos.length} inscritos`);
+        if (flags.length === 0) flags.push("no live data");
+        console.log(`[disc]   ${t.slug} ─ ${flags.join(", ")} (juvenile=${det.juvenile})`);
       } catch (e) {
         console.warn(`[disc]   ${t.slug} ─ ERROR: ${e.message}`);
       }
@@ -237,11 +264,13 @@ async function main() {
     keepNonJuvenile: KEEP_NON_JUVENILE,
     totalTournaments: final.length,
     totalGames,
+    totalImaster: final.reduce((acc, t) => acc + (t.imasterIds||[]).length, 0),
+    totalInscritos: final.reduce((acc, t) => acc + (t.inscritos||[]).length, 0),
     tournaments: final,
   };
 
   fs.writeFileSync(SCOPE_OUT, JSON.stringify(out, null, 2));
-  console.log(`[disc] wrote ${path.relative(REPO, SCOPE_OUT)} ─ ${final.length} tournaments, ${totalGames} games`);
+  console.log(`[disc] wrote ${path.relative(REPO, SCOPE_OUT)} ─ ${final.length} tournaments, ${totalGames} games, ${out.totalImaster} imaster IDs, ${out.totalInscritos} inscritos`);
 }
 
 if (require.main === module) {

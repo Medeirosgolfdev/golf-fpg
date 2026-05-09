@@ -1620,8 +1620,17 @@ function Content() {
       const k = keyOf(j);
       if (!dedupMap.has(k)) dedupMap.set(k, j);
     }
+    // Regex de detecção de torneios juvenis pelo nome:
+    //  - "junior" / "juniors"  (Junior Open, GJG Portuguese Juniors)
+    //  - "júnior" (Taça Yeatman Júnior — strip de diacríticos antes do test)
+    //  - "subN"   (sub10, sub-14, sub 14, ...)
+    //  - "UN"     (U10, U12, U14, U16, U18, U21 — categorias internacionais)
+    const JOVEM_NAME_RE = /\b(juniors?|sub[\s-]?\d{1,2}|u\d{1,2})\b/i;
+    const stripAcc = (s: string) =>
+      s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     for (const t of tournaments) {
-      if (!/\bjunior\b/i.test(t.name || "")) continue;
+      const cleanName = stripAcc(t.name || "");
+      if (!JOVEM_NAME_RE.test(cleanName)) continue;
       if (/PJA/i.test(t.name || "")) continue;                // já em tab PJA
       if (/greatgolf.*junior/i.test(t.name || "")) continue;  // já em tab PJA (excepção)
       const k = keyOf(t);

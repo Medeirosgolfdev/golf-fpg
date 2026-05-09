@@ -421,6 +421,116 @@ export function processRfegolfRivals(data: unknown): AutoRivalPlayer[] {
   return all;
 }
 
+/** processFcgRivals — variante para fcg-rivals.json (Catalã via golfdirecto).
+ *  Estruturalmente idêntico ao formato rfegolf-rivals, mas cada player tem
+ *  campos extra: license (CB.../AD...), country, sex, dobIso. Usa o country
+ *  do próprio player em vez de hardcoded "Spain" (Andorra cai em "Andorra").
+ */
+export function processFcgRivals(data: unknown): AutoRivalPlayer[] {
+  const d = data as {
+    torneios?: Record<string, {
+      name: string;
+      year: number | null;
+      ageGroup: string | null;
+      dateIso?: string | null;
+      par: number[];
+      parTotal: number;
+      meters?: number[] | null;
+      si?: number[] | null;
+      nholes: number;
+      nRounds: number;
+      players: Array<{
+        n: string;
+        p: number | null;
+        t: number | null;
+        tp: number | null;
+        rd: number[];
+        sc?: number[][];
+        license?: string;
+        country?: string;
+        sex?: "M" | "F" | null;
+        dob?: string | null;
+        dobIso?: string | null;
+        club?: string | null;
+      }>;
+    }>;
+  };
+  if (!d || !d.torneios) return [];
+
+  const all: AutoRivalPlayer[] = [];
+  for (const [tid, t] of Object.entries(d.torneios)) {
+    if (!uskTournNames.has(tid)) {
+      // FCG dates já estão em ISO directamente
+      let formatted = "";
+      if (t.dateIso) {
+        const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(t.dateIso);
+        if (m) {
+          const months = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+          formatted = `${parseInt(m[3], 10)} ${months[parseInt(m[2], 10) - 1]} ${m[1]}`;
+        }
+      }
+      uskTournNames.set(tid, {
+        name: t.name,
+        short: t.name.length > 30 ? t.name.slice(0, 30) + "…" : t.name,
+        date: formatted || (t.year ? String(t.year) : ""),
+        dateExact: t.dateIso || (t.year ? `${t.year}-01-01` : ""),
+      });
+    }
+    const fieldSize = (t.players || []).filter(p =>
+      p.n && (typeof p.t === "number" || p.p != null)
+    ).length;
+    if (fieldSize > 0) uskFieldSizes.set(tid, fieldSize);
+
+    for (const p of t.players || []) {
+      if (!p.n) continue;
+      const hasRd = Array.isArray(p.rd) && p.rd.length > 0;
+      const hasTotal = typeof p.t === "number" && p.t > 0;
+      if (!hasRd && !hasTotal) continue;
+
+      const canonicalName = rfegolfNameToCanonical(p.n);
+      const total = typeof p.t === "number" ? p.t : p.rd.reduce((a, b) => a + b, 0);
+      const toPar = typeof p.tp === "number" ? p.tp : (total - t.parTotal * t.nRounds);
+
+      const norm = normName(canonicalName);
+      const validScores = (p.sc || []).filter(s => Array.isArray(s) && s.length === 18);
+      if (validScores.length > 0 && Array.isArray(t.par) && t.par.length === 18) {
+        addScorecard(norm, {
+          tid,
+          playerName: canonicalName,
+          par: t.par,
+          si: (t.si && t.si.length === 18) ? t.si : [],
+          meters: (t.meters && t.meters.length === 18) ? t.meters : [],
+          rounds: validScores,
+        });
+      }
+
+      // Country: ESP → Spain, AND → Andorra, ITA → Italy, FRA → France, etc.
+      // Cross-ref via co map global se já existir; fallback "Spain" para CB licenças.
+      const ccMap: Record<string, string> = {
+        ESP: "Spain", AND: "Andorra", ITA: "Italy", FRA: "France",
+        GBR: "United Kingdom", USA: "USA", PRT: "Portugal", CHN: "China",
+        TUR: "Turkey", DEU: "Germany", NLD: "Netherlands",
+      };
+      const country = (p.country && ccMap[p.country]) || (p.license?.startsWith("AD") ? "Andorra" : "Spain");
+
+      all.push({
+        n: canonicalName,
+        co: country,
+        dob: p.dob || undefined,
+        r: { [tid]: {
+          p: typeof p.p === "number" ? p.p : null,
+          t: total,
+          tp: toPar,
+          rd: hasRd ? p.rd : [],
+          ageGroup: t.ageGroup || undefined,
+          nholes: t.nholes,
+        }},
+      });
+    }
+  }
+  return all;
+}
+
 export function processDoral(data: unknown): AutoRivalPlayer[] {
   const d = data as {
     year?: number;
@@ -1672,6 +1782,8 @@ async function _buildAutoRivalsInternal(
   const spainHcpPromise = fetchJson(`${base}licencia-hcp-lookup.json`).catch(() => null);
   // Arrancar rfegolf-rivals.json em paralelo (66 torneios LGS juvenis consolidados)
   const rfegRivalsPromise = fetchJson(`${base}rfegolf-rivals.json`).catch(() => null);
+  // Arrancar fcg-rivals.json em paralelo (torneios catalães via golfdirecto)
+  const fcgRivalsPromise = fetchJson(`${base}fcg-rivals.json`).catch(() => null);
 
   const labelFor = (t: FileTask): string => {
     if (t.kind === "wjgc") return t.tid.replace(/_/g," ").toUpperCase();
@@ -1822,6 +1934,19 @@ async function _buildAutoRivalsInternal(
     }
   } catch (e) {
     _loadedFiles.push({ path: `${base}rfegolf-rivals.json`, status: "error", error: String(e), group: "phase 2.5 esp" });
+  }
+
+  // ── Fase 2.6: fcg-rivals.json (torneios catalães via golfdirecto) ──
+  try {
+    const fcgRaw = await fcgRivalsPromise;
+    if (fcgRaw) {
+      mergeInto(map, processFcgRivals(fcgRaw));
+      _loadedFiles.push({ path: `${base}fcg-rivals.json`, status: "loaded", group: "phase 2.6 fcg" });
+    } else {
+      _loadedFiles.push({ path: `${base}fcg-rivals.json`, status: "error", error: "null", group: "phase 2.6 fcg" });
+    }
+  } catch (e) {
+    _loadedFiles.push({ path: `${base}fcg-rivals.json`, status: "error", error: String(e), group: "phase 2.6 fcg" });
   }
 
   // ── Enriquecimento FPG: players.json → corrigir co + adicionar fpgClub e dob ──

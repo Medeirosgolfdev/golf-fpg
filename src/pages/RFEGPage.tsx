@@ -11,6 +11,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { cachedFetchJson } from "../data/fetchCache";
+import { adaptFcg, fcgToFPGTournament, type FCGDetail, type MinimalRFEGShape } from "../data/fcgAdapter";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { useSort } from "../hooks/useSort";
 import { useKidsLinkMap } from "../hooks/useKidsLinkMap";
@@ -39,8 +40,8 @@ import { RFEGFederationsView } from "./rfeg/FederationsView";
 /* ── Types ──────────────────────────────────────────────── */
 
 interface RFEGIndexEntry {
-  source: "rfegolf" | "nextcaddy" | "livegolfscoring";
-  id: number;
+  source: "rfegolf" | "nextcaddy" | "livegolfscoring" | "golfdirecto";
+  id: number | string;
   compId?: number;
   tourId?: number;
   file: string;
@@ -1313,6 +1314,8 @@ function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEnt
           setData(adaptNextCaddy(d as NCDetail, dobLookup, hcpLookup));
         } else if (entry.source === "livegolfscoring") {
           setData(adaptLgs(d as LgsDetail, dobLookup, hcpLookup));
+        } else if (entry.source === "golfdirecto") {
+          setData(adaptFcg(d as unknown as FCGDetail, dobLookup, hcpLookup) as unknown as RFEGDetail);
         } else {
           const detail = d as RFEGDetail;
           setData({ ...detail, coursePar: detail.coursePar ?? null });
@@ -1335,6 +1338,10 @@ function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEnt
     }
     if (entry.source === "nextcaddy") return ncToFPGTournament(data, dobLookup);
     if (entry.source === "rfegolf") return rfegolfToFPGTournament(data, dobLookup);
+    if (entry.source === "golfdirecto") {
+      const fpg = fcgToFPGTournament(data as unknown as MinimalRFEGShape, dobLookup);
+      return fpg as unknown as FPGTournament | null;
+    }
     return null;
   }, [data, entry.source, dobLookup, hcpLookup]);
 
@@ -1347,12 +1354,16 @@ function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEnt
     ? `https://rfegolf.es/CompetenciaPaginas/CompetitionMicrosite.aspx?CompId=${entry.compId}`
     : entry.source === "nextcaddy"
       ? `https://www.nextcaddy.com/tour/${entry.tourId}`
-      : `https://rfegolf.livegolfscoring.es/torneos/clasificacion/${entry.id}`;
+      : entry.source === "golfdirecto"
+        ? `https://www.golfdirecto.com/micro/game/${entry.id}/summary?lang=es`
+        : `https://rfegolf.livegolfscoring.es/torneos/clasificacion/${entry.id}`;
   const scoringUrl = entry.source === "rfegolf"
     ? `https://rfegolf.es/CompetenciaPaginas/LiveScoring.aspx?CompId=${entry.compId}`
     : entry.source === "nextcaddy"
       ? `https://www.nextcaddy.com/tour/${entry.tourId}/clasificaciones`
-      : `https://rfegolf.livegolfscoring.es/torneos/hoyoahoyo/${entry.id}`;
+      : entry.source === "golfdirecto"
+        ? `https://www.golfdirecto.com/micro/game/${entry.id}/ranking/entry?lang=es`
+        : `https://rfegolf.livegolfscoring.es/torneos/hoyoahoyo/${entry.id}`;
 
   const listsAvailable: ListKind[] = (Object.keys(c) as ListKind[]).filter((k) => c[k] > 0);
   const effectiveList: ListKind = c[list] > 0 ? list : (listsAvailable[0] || "admitidos");
@@ -1360,7 +1371,7 @@ function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEnt
 
   const hasResults = fpgTournament !== null && fpgTournament.players.length > 0;
   const inscritosTotal = listsAvailable.reduce((s, k) => s + c[k], 0);
-  const sourceLabel = entry.source === "rfegolf" ? "RFEGolf" : entry.source === "nextcaddy" ? "NextCaddy" : "LGS";
+  const sourceLabel = entry.source === "rfegolf" ? "RFEGolf" : entry.source === "nextcaddy" ? "NextCaddy" : entry.source === "golfdirecto" ? "FCG" : "LGS";
 
   return (
     <>
@@ -2039,9 +2050,9 @@ export default function RFEGPage() {
                 <div className="sidebar-year-label" style={{ padding: "2px 10px", fontSize: 10, fontWeight: 700, letterSpacing: "0.05em", color: "#ffffff", textTransform: "uppercase", marginTop: 4, background: "#aa151b" }}>{y}</div>
                 {yearEntries.map((entry) => {
                   const active = cur?.id === entry.id && cur?.source === entry.source;
-                  const sourceColor = entry.source === "rfegolf" ? "#aa151b" : entry.source === "livegolfscoring" ? "#0a5" : "#f1bf00";
-                  const sourceFg = entry.source === "rfegolf" || entry.source === "livegolfscoring" ? "#fff" : "#000";
-                  const sourceLabel = entry.source === "rfegolf" ? "RFEGolf" : entry.source === "livegolfscoring" ? "LGS" : "NextCaddy";
+                  const sourceColor = entry.source === "rfegolf" ? "#aa151b" : entry.source === "livegolfscoring" ? "#0a5" : entry.source === "golfdirecto" ? "#0066cc" : "#f1bf00";
+                  const sourceFg = entry.source === "rfegolf" || entry.source === "livegolfscoring" || entry.source === "golfdirecto" ? "#fff" : "#000";
+                  const sourceLabel = entry.source === "rfegolf" ? "RFEGolf" : entry.source === "livegolfscoring" ? "LGS" : entry.source === "golfdirecto" ? "FCG" : "NextCaddy";
                   return (
                     <button
                       key={`${entry.source}-${entry.id}`}
@@ -2075,7 +2086,7 @@ export default function RFEGPage() {
                       )}
                       {entry.counts && entry.counts.admitidos > 0 && (
                         <div className="course-item-meta" style={{ fontSize: 11, marginTop: 2 }}>
-                          🏌️ {entry.counts.admitidos} {entry.source === "livegolfscoring" ? "resultados" : "inscritos"}
+                          🏌️ {entry.counts.admitidos} {entry.source === "livegolfscoring" || entry.source === "golfdirecto" ? "jogadores" : "inscritos"}
                         </div>
                       )}
                     </button>
@@ -2105,5 +2116,8 @@ export default function RFEGPage() {
       </div>
     </div>
     </KidsLinkCtx.Provider>
+  );
+}
+LinkCtx.Provider>
   );
 }

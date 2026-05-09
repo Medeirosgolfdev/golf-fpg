@@ -22,10 +22,11 @@ interface RFEGFederation {
   rfegPage: string;
   /** Plataforma onde os torneios desta federação são publicados.
    *  - "NextCaddy" — usa nextcaddy.com (4 federações)
+   *  - "GolfDirecto" — usa golfdirecto.com (Catalana, descoberto 2026-05-09)
    *  - "Próprio" — site próprio com sistema interno (não scrapado)
    *  - "Vazio" — código NC existe mas não tem dados
    */
-  platform: "NextCaddy" | "Próprio" | "Vazio";
+  platform: "NextCaddy" | "GolfDirecto" | "Próprio" | "Vazio";
   /** Código NextCaddy se aplicável */
   ncCode?: string;
   /** Estado do scrape (NextCaddy só) */
@@ -34,6 +35,8 @@ interface RFEGFederation {
   scrapedCount?: number;
   /** Prefixo das licenças emitidas por esta federação (2 letras) */
   licPrefix?: string;
+  /** Notas adicionais sobre a plataforma — ex: legacy, multi-sistemas */
+  notes?: string;
 }
 
 export const RFEG_FEDERATIONS: RFEGFederation[] = [
@@ -123,13 +126,18 @@ export const RFEG_FEDERATIONS: RFEGFederation[] = [
     platform: "Próprio",
     licPrefix: "CL",
   },
+  // Federación Catalana — descoberta 2026-05-09: usa golfdirecto.com (não NextCaddy).
+  // Site real é catgolf.com, não fcgolf.cat. Plataforma legacy: open.imaster.golf.
   {
     name: "Federación Catalana de Golf",
     region: "Catalunya",
-    website: "https://www.fcgolf.cat",
+    website: "https://www.catgolf.com",
     rfegPage: "https://rfeg.es/rfeg/federaciones-autonomicas/federacion_catalana_de_golf.html?id=987",
-    platform: "Próprio",
+    platform: "GolfDirecto",
+    scraped: true,
+    scrapedCount: 25,
     licPrefix: "CB",
+    notes: "Plataforma actual: golfdirecto.com (desde 2024). Legacy: open.imaster.golf (2018-2023). Discovery via catgolf.com.",
   },
   {
     name: "Federación Extremeña de Golf",
@@ -210,9 +218,12 @@ export const RFEG_FEDERATIONS: RFEGFederation[] = [
 
 export function RFEGFederationsView() {
   const ncFeds = RFEG_FEDERATIONS.filter(f => f.platform === "NextCaddy");
+  const gdFeds = RFEG_FEDERATIONS.filter(f => f.platform === "GolfDirecto");
   const ownFeds = RFEG_FEDERATIONS.filter(f => f.platform === "Próprio");
   const emptyFeds = RFEG_FEDERATIONS.filter(f => f.platform === "Vazio");
   const totalScraped = ncFeds.reduce((acc, f) => acc + (f.scrapedCount || 0), 0);
+  const totalGdScraped = gdFeds.reduce((acc, f) => acc + (f.scrapedCount || 0), 0);
+  const trackedTotal = ncFeds.length + gdFeds.length;
 
   return (
     <div style={{ padding: "12px 16px" }}>
@@ -243,11 +254,16 @@ export function RFEGFederationsView() {
         joga em Madrid com a mesma licença.
       </div>
 
-      <div style={{ marginTop: 16, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
+      <div style={{ marginTop: 16, display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
         <div style={{ padding: 12, background: "var(--bg-muted, #f5f5f5)", borderRadius: 6, border: "1px solid var(--border)" }}>
           <div style={{ fontSize: 24, fontWeight: 700, color: "#0a5" }}>{ncFeds.length}</div>
           <div className="fs-11 muted">via NextCaddy (scrapadas)</div>
           <div className="fs-10" style={{ marginTop: 4 }}>{totalScraped} torneios indexados</div>
+        </div>
+        <div style={{ padding: 12, background: "var(--bg-muted, #f5f5f5)", borderRadius: 6, border: "1px solid var(--border)" }}>
+          <div style={{ fontSize: 24, fontWeight: 700, color: "#0a5" }}>{gdFeds.length}</div>
+          <div className="fs-11 muted">via GolfDirecto (scrapada)</div>
+          <div className="fs-10" style={{ marginTop: 4 }}>{totalGdScraped} games descobertos</div>
         </div>
         <div style={{ padding: 12, background: "var(--bg-muted, #f5f5f5)", borderRadius: 6, border: "1px solid var(--border)" }}>
           <div style={{ fontSize: 24, fontWeight: 700, color: "var(--text-2)" }}>{ownFeds.length}</div>
@@ -259,6 +275,9 @@ export function RFEGFederationsView() {
           <div className="fs-11 muted">delegações</div>
           <div className="fs-10" style={{ marginTop: 4 }}>Ceuta + Melilla</div>
         </div>
+      </div>
+      <div className="fs-11 muted" style={{ marginTop: 8 }}>
+        <strong>{trackedTotal}</strong> federações com plataforma rastreada (NextCaddy + GolfDirecto).
       </div>
 
       <h3 style={{ marginTop: 24, marginBottom: 8 }}>✅ Federações com NextCaddy (rastreadas)</h3>
@@ -301,13 +320,63 @@ export function RFEGFederationsView() {
         </table>
       </div>
 
+      <h3 style={{ marginTop: 24, marginBottom: 8 }}>🟢 Federações com GolfDirecto (rastreadas)</h3>
+      <p className="fs-11 muted" style={{ marginBottom: 8 }}>
+        Plataforma <code>golfdirecto.com</code> — SPA com API JSON pública (sem auth). Discovery via{" "}
+        <code>catgolf.com</code> que linka aos game IDs em <code>/micro/game/&#123;id&#125;</code>.
+        Plataforma legacy (2018-2023): <ExtLink href="https://open.imaster.golf/" className="tourn-ext-link">open.imaster.golf</ExtLink>{" "}
+        — ainda activa para torneios antigos mas requer scraper diferente (não implementado).
+      </p>
+      <div style={{ overflowX: "auto" }}>
+        <table className="data-table" style={{ width: "100%", fontSize: 12 }}>
+          <thead>
+            <tr>
+              <th style={{ textAlign: "left" }}>Federação</th>
+              <th>Comunidade</th>
+              <th>Lic.</th>
+              <th>Plataforma actual</th>
+              <th>Games scrapados</th>
+              <th>Site oficial</th>
+              <th>Página RFEG</th>
+            </tr>
+          </thead>
+          <tbody>
+            {gdFeds.map(f => (
+              <tr key={f.name}>
+                <td>
+                  <strong>{f.name}</strong>
+                  {f.notes && (
+                    <div className="fs-10 muted" style={{ marginTop: 2 }}>{f.notes}</div>
+                  )}
+                </td>
+                <td style={{ textAlign: "center" }}>{f.region}</td>
+                <td style={{ textAlign: "center", fontFamily: "monospace" }}>
+                  <code>{f.licPrefix}</code>
+                </td>
+                <td style={{ textAlign: "center" }}>
+                  <ExtLink href="https://www.golfdirecto.com/" className="tourn-ext-link">golfdirecto.com</ExtLink>
+                </td>
+                <td style={{ textAlign: "right", fontFamily: "monospace", color: "#0a5", fontWeight: 600 }}>
+                  {f.scrapedCount}
+                </td>
+                <td style={{ textAlign: "center" }}>
+                  {f.website && <ExtLink href={f.website} className="tourn-ext-link">🔗</ExtLink>}
+                </td>
+                <td style={{ textAlign: "center" }}>
+                  <ExtLink href={f.rfegPage} className="tourn-ext-link">📄</ExtLink>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
       <h3 style={{ marginTop: 24, marginBottom: 8 }}>🔵 Federações com sistema próprio (não rastreadas)</h3>
       <p className="fs-11 muted" style={{ marginBottom: 8 }}>
-        Estas federações organizam os seus circuitos em sistemas internos (não NextCaddy).
-        Os respectivos sites foram verificados e <strong>não usam <code>nextcaddy.com</code></strong>
-        nem outras plataformas standard agregadoras. Para apanhar dados delas seria preciso
-        scraper específico por federação. Os jogadores destas federações <em>aparecem</em>
-        nos torneios scrapados quando entram em provas Andaluzas/Madrileñas/etc.
+        Estas federações organizam os seus circuitos em sistemas internos (não NextCaddy
+        nem GolfDirecto). Para apanhar dados delas seria preciso scraper específico por
+        federação. Os jogadores destas federações <em>aparecem</em> nos torneios scrapados
+        quando entram em provas Andaluzas/Madrileñas/Catalanas/etc.
       </p>
       <div style={{ overflowX: "auto" }}>
         <table className="data-table" style={{ width: "100%", fontSize: 12 }}>
@@ -386,7 +455,15 @@ export function RFEGFederationsView() {
             usado por 4 federações regionais. <strong>1.323 ficheiros indexados</strong> (am00 + cm00 + cp00 + 7700).
           </li>
           <li>
-            <strong>Sites próprios</strong> — 13 federações têm os seus próprios sistemas internos
+            <strong>GolfDirecto</strong> (<code>golfdirecto.com/web/home/&#123;endpoint&#125;</code>) —
+            usado pela Catalana desde 2024. API pública sem auth com endpoints{" "}
+            <code>game/&#123;id&#125;</code>, <code>score/ranking/entry</code>, <code>score/player/&#123;id&#125;/result</code>.
+            Discovery via <ExtLink href="https://www.catgolf.com/ca/campionats" className="tourn-ext-link">catgolf.com</ExtLink>.{" "}
+            Plataforma legacy (2018-2023): <ExtLink href="https://open.imaster.golf/" className="tourn-ext-link">open.imaster.golf</ExtLink>{" "}
+            (~18 IDs detectados em 2023; scraper não implementado).
+          </li>
+          <li>
+            <strong>Sites próprios</strong> — 12 federações têm os seus próprios sistemas internos
             (calendário em PDF, leaderboards privados, etc.). <strong>Não rastreadas</strong>.
           </li>
         </ul>
@@ -406,9 +483,10 @@ export function RFEGFederationsView() {
             relação institucional com a RFEG nacional.
           </li>
           <li>
-            A <strong>Federación Catalana</strong> é a maior em número de jogadores federados
-            mas usa o seu próprio sistema (<code>fcgolf.cat</code>). Investigar como
-            aceder programaticamente aos seus leaderboards seria um próximo passo de alto valor.
+            A <strong>Federación Catalana</strong> usa <code>catgolf.com</code> como portal
+            e <code>golfdirecto.com</code> como plataforma de scoring (descoberto 2026-05-09).
+            Scraper Node implementado em <code>scripts/scrape-fcg.js</code> + discovery em{" "}
+            <code>scripts/discover-fcg-scope.js</code>.
           </li>
         </ul>
       </div>

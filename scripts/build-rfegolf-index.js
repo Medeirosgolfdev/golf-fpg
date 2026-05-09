@@ -244,6 +244,80 @@ for (const file of lgsFiles) {
   } catch (e) { console.warn("skip lgs " + file + ": " + e.message); skipped++; }
 }
 
+// ── 4) GolfDirecto / FCG (Federación Catalana, descoberto 2026-05-09) ──
+const FCG_ROOT = path.resolve(__dirname, "../public/data/fcg");
+const fcgFiles = fs.existsSync(FCG_ROOT)
+  ? fs.readdirSync(FCG_ROOT).filter(f => /^[0-9a-f]{24}\.json$/.test(f)).sort()
+  : [];
+
+for (const file of fcgFiles) {
+  try {
+    const j = JSON.parse(fs.readFileSync(path.join(FCG_ROOT, file), "utf-8"));
+    if (!j || !j.gameId || !j.game) { skipped++; continue; }
+    const game = j.game;
+    const cats = j.categories || [];
+    const totalPlayers = cats.reduce((acc, c) => acc + (c.players || []).length, 0);
+    if (totalPlayers === 0 && game.status === "scheduled") { skipped++; continue; }
+
+    const tName = (game.tournament && game.tournament.name) || game.name || j.gameId;
+    const dateIso = game.scheduleStartDate ? game.scheduleStartDate.slice(0, 10) : null;
+    const year = dateIso ? parseInt(dateIso.slice(0, 4), 10) : null;
+
+    // Categoria juvenil dominante (Aleví / Benjamí / Infantil / Cadete)
+    const catNames = cats.map(c => c.name || "");
+    const catText = catNames.join(" ");
+    let category = extractCategoryFromName(tName) || extractCategoryFromName(catText);
+    if (!category) {
+      if (/sub-?12|alev[íi]/i.test(catText)) category = "Alevín";
+      else if (/benjam[íi]/i.test(catText)) category = "Benjamín";
+      else if (/infantil|sub-?14/i.test(catText)) category = "Infantil";
+      else if (/cadet|sub-?16/i.test(catText)) category = "Cadete";
+      else if (/sub-?18|junior/i.test(catText)) category = "Sub-18";
+    }
+
+    // Sexo: M se todas categorias M; F se todas F; Mixto senão
+    const genders = cats.map(c => c.gender).filter(Boolean);
+    const allM = genders.length > 0 && genders.every(g => g === "M");
+    const allF = genders.length > 0 && genders.every(g => g === "F");
+    const sex = allM ? "M" : (allF ? "F" : (genders.length > 1 ? "Mixto" : (extractSexFromName(tName) || null)));
+
+    tournaments.push({
+      source: "golfdirecto",
+      id: j.gameId,
+      gameId: j.gameId,
+      file,
+      filePath: `fcg/${file}`,
+      name: tName + (cats.length > 1 ? "" : (cats[0] && cats[0].name ? ` — ${cats[0].name}` : "")),
+      year,
+      category,
+      sex,
+      dateStart: dateIso,
+      dateEnd: game.scheduleEndDate ? game.scheduleEndDate.slice(0, 10) : dateIso,
+      dateStartIso: dateIso,
+      dateEndIso: game.scheduleEndDate ? game.scheduleEndDate.slice(0, 10) : dateIso,
+      course: (game.course && game.course.name) || (game.club && game.club.name) || null,
+      courseCode: "CB", // prefixo licença catalã
+      organizer: (game.tournament && game.tournament.clientName) || "Federación Catalana de Golf",
+      format: game.pointMode || null,
+      categories: cats.map(c => c.name).filter(Boolean),
+      counts: {
+        admitidos: totalPlayers,
+        reservas: 0, bajas: 0, invitados: 0, noAdmitidos: 0, provisional: 0,
+      },
+      leaderboardPlayers: totalPlayers,
+      nRounds: 1, // 1 game golfdirecto = 1 jornada
+      tournamentId: game.tournament && game.tournament._id || null,
+      tournamentName: game.tournament && game.tournament.name || null,
+      status: game.status,
+      scrapedAt: j.fetchedAt || null,
+    });
+  } catch (e) {
+    console.warn("skip fcg " + file + ": " + e.message);
+    skipped++;
+  }
+}
+
+
 tournaments.sort((a, b) => {
   const da = a.dateStartIso || "0";
   const db = b.dateStartIso || "0";
@@ -273,6 +347,6 @@ const out = {
 };
 
 fs.writeFileSync(OUT, JSON.stringify(out, null, 2), "utf-8");
-console.log(`Index built: ${tournaments.length} torneios (rfegolf=${bySource.rfegolf || 0}, nextcaddy=${bySource.nextcaddy || 0}), skipped=${skipped}`);
+console.log(`Index built: ${tournaments.length} torneios (rfegolf=${bySource.rfegolf || 0}, nextcaddy=${bySource.nextcaddy || 0}, livegolfscoring=${bySource.livegolfscoring || 0}, golfdirecto=${bySource.golfdirecto || 0}), skipped=${skipped}`);
 console.log(`  -> ${OUT}`);
 console.log(`  byYear: ${JSON.stringify(byYear)}`);
