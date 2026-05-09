@@ -163,6 +163,10 @@ export const uskTournNames: Map<string, { name: string; short: string; date: str
 // Field sizes per tid: "usk{tcode}_b{n}" → number of players
 export const uskFieldSizes: Map<string, number> = new Map();
 
+/** Scoring type por tid de NextCaddy (nc...) — "SCRATCH" (gross) ou
+ *  "HANDICAP" (net). Usado para renderizar pill na KIDSPage. */
+export const ncScoringType: Map<string, "SCRATCH" | "HANDICAP"> = new Map();
+
 function addScorecard(normN: string, sc: AutoScorecard) {
   if (!_scorecards.has(normN)) _scorecards.set(normN, []);
   _scorecards.get(normN)!.push(sc);
@@ -270,8 +274,12 @@ export function processRfegolfRivals(data: unknown): AutoRivalPlayer[] {
       dateRange?: string | null;
       par: number[];
       parTotal: number;
+      meters?: number[] | null;
+      si?: number[] | null;
       nholes: number;
       nRounds: number;
+      /** "SCRATCH" (gross) | "HANDICAP" (net) — só para NC, undefined para LGS. */
+      scoringType?: "SCRATCH" | "HANDICAP";
       players: Array<{
         n: string;
         p: number | null;
@@ -322,6 +330,11 @@ export function processRfegolfRivals(data: unknown): AutoRivalPlayer[] {
         dateExact: t.dateIso || (t.year ? `${t.year}-01-01` : ""),
       });
     }
+    // Registar scoringType (Scratch/Handicap) por tid — usado pela KIDSPage
+    // para renderizar pill colorido de aviso.
+    if (t.scoringType) {
+      ncScoringType.set(tid, t.scoringType);
+    }
     for (const p of t.players || []) {
       if (!p.n || !Array.isArray(p.rd) || p.rd.length === 0) continue;
       // Converter "APELIDO, Nomes" → "Nomes Apelido" para casar com USKids/FFG
@@ -338,14 +351,14 @@ export function processRfegolfRivals(data: unknown): AutoRivalPlayer[] {
           tid,
           playerName: canonicalName,
           par: t.par,
-          si: [],
-          meters: [],
+          si: (t.si && t.si.length === 18) ? t.si : [],
+          meters: (t.meters && t.meters.length === 18) ? t.meters : [],
           rounds: validScores,
         });
       }
       all.push({
         n: canonicalName,
-        co: "",   // refinado depois pelo enrich spain-players.json (co=Spain)
+        co: "Spain",   // rfegolf-rivals.json é por definição espanhol (LGS + NextCaddy)
         r: { [tid]: {
           p: typeof p.p === "number" ? p.p : null,
           t: total,

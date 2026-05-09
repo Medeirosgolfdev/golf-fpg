@@ -7,8 +7,8 @@
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Los Moriscos Club de Golf",
     "courseCode": "AM67",
-    "dateStart": null,
-    "dateEnd": null,
+    "dateStart": "15 feb 2026",
+    "dateEnd": "15 feb 2026",
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Benjamín",
@@ -18,7 +18,8 @@
       "Juvenil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-02-15"
   },
   "course": {
     "par": [
@@ -668,5 +669,49 @@
         }
       ]
     }
-  }
+  },
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Iker Barragan Jimenez",
+          "hcp": 34.6,
+          "ins": "2248349",
+          "jid": "64675",
+          "nivel": "B"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Daniel Ferreiro Luciano",
+          "hcp": 36.1,
+          "ins": "2250906",
+          "jid": "64675",
+          "nivel": "B"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Rafael Valle Garcia-Valdecasas",
+          "hcp": 37.9,
+          "ins": "2247786",
+          "jid": "64675",
+          "nivel": "B"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Tiago Dos Santos Vicente",
+          "hcp": 42,
+          "ins": "2256986",
+          "jid": "64675",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "horariosScrapedAt": "2026-05-09T12:11:58.257Z"
 }

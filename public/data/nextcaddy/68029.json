@@ -1,0 +1,844 @@
+{
+  "tourId": 68029,
+  "url": "https://www.nextcaddy.com/tour/68029",
+  "scrapedAt": "2026-05-09T09:57:30.180Z",
+  "meta": {
+    "name": "abonados",
+    "organizer": null,
+    "course": "Alhaurín Golf Hotel & Resort",
+    "courseCode": "AM22",
+    "dateStart": "29 ene 2026",
+    "dateEnd": "29 ene 2026",
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-01-29"
+  },
+  "course": null,
+  "leaderboard": [
+    {
+      "category": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Renaat Bal",
+          "licencia": "AM22992233",
+          "hcp": 16.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2253405
+        },
+        {
+          "pos": 2,
+          "name": "James Ducker",
+          "licencia": "AM22607027",
+          "hcp": 0.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2253414
+        },
+        {
+          "pos": 3,
+          "name": "Alfonso Gonzalez Macho",
+          "licencia": "AM15758034",
+          "hcp": 14.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2253403
+        },
+        {
+          "pos": 4,
+          "name": "Carlos Ruiz Rubia",
+          "licencia": "AM00625049",
+          "hcp": 20.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2253406
+        },
+        {
+          "pos": 5,
+          "name": "Francisco Burgos Garcia",
+          "licencia": "AMC8968943",
+          "hcp": 28.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2253407
+        },
+        {
+          "pos": 6,
+          "name": "Chantal Rudduck",
+          "licencia": "AM22992232",
+          "hcp": 13.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2253404
+        }
+      ]
+    }
+  ],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Alfonso Gonzalez Macho",
+      "licencia": "AM15758034",
+      "hcp": 14.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Renaat Bal",
+      "licencia": "AM22992233",
+      "hcp": 16.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Carlos Ruiz Rubia",
+      "licencia": "AM00625049",
+      "hcp": 20.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Francisco Burgos Garcia",
+      "licencia": "AMC8968943",
+      "hcp": 28.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "James Ducker",
+      "licencia": "AM22607027",
+      "hcp": 0.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Chantal Rudduck",
+      "licencia": "AM22992232",
+      "hcp": 13.6,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Fecha Inscripción",
+      "hcp": null,
+      "nivel": "Licencia"
+    },
+    {
+      "orden": 1,
+      "name": "Alfonso Gonzalez Macho",
+      "licencia": "29-01-26 15:44",
+      "hcp": 14.5,
+      "nivel": "AM15758034"
+    },
+    {
+      "orden": 2,
+      "name": "Chantal Rudduck",
+      "licencia": "29-01-26 15:44",
+      "hcp": 13.6,
+      "nivel": "AM22992232"
+    },
+    {
+      "orden": 3,
+      "name": "Renaat Bal",
+      "licencia": "29-01-26 15:45",
+      "hcp": 16.6,
+      "nivel": "AM22992233"
+    },
+    {
+      "orden": 4,
+      "name": "Carlos Ruiz Rubia",
+      "licencia": "29-01-26 15:46",
+      "hcp": 20.6,
+      "nivel": "AM00625049"
+    },
+    {
+      "orden": 5,
+      "name": "Francisco Burgos Garcia",
+      "licencia": "29-01-26 15:46",
+      "hcp": 28.1,
+      "nivel": "AMC8968943"
+    },
+    {
+      "orden": 6,
+      "name": "James Ducker",
+      "licencia": "29-01-26 16:22",
+      "hcp": 0.8,
+      "nivel": "AM22607027"
+    }
+  ],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 157488,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            27
+          ],
+          [
+            "Birdie",
+            7
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            39
+          ],
+          [
+            "Peor",
+            30
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 157489,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            4
+          ],
+          [
+            "2",
+            4
+          ],
+          [
+            "3",
+            10
+          ],
+          [
+            "4",
+            1
+          ],
+          [
+            "5",
+            5
+          ],
+          [
+            "6",
+            6
+          ],
+          [
+            "7",
+            7
+          ],
+          [
+            "8",
+            8
+          ],
+          [
+            "9",
+            6
+          ],
+          [
+            "10",
+            3
+          ],
+          [
+            "11",
+            10
+          ],
+          [
+            "12",
+            3
+          ],
+          [
+            "13",
+            9
+          ],
+          [
+            "14",
+            4
+          ],
+          [
+            "15",
+            7
+          ],
+          [
+            "16",
+            5
+          ],
+          [
+            "17",
+            6
+          ],
+          [
+            "18",
+            6
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 157490,
+        "datos": [
+          [
+            "Hoyo",
+            "RENAAT BAL ",
+            "JAMES DUCKER ",
+            "ALFONSO   GONZALEZ MACHO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 2",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 4",
+            0,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 5",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 6",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 7",
+            2,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 8",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 9",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 10",
+            1,
+            2,
+            1
+          ],
+          [
+            "Hoyo 11",
+            0,
+            2,
+            2
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            2,
+            2
+          ],
+          [
+            "Hoyo 13",
+            0,
+            2,
+            2
+          ],
+          [
+            "Hoyo 14",
+            0,
+            1,
+            3
+          ],
+          [
+            "Hoyo 15",
+            1,
+            1,
+            3
+          ],
+          [
+            "Hoyo 16",
+            0,
+            0,
+            3
+          ],
+          [
+            "Hoyo 17",
+            -1,
+            0,
+            4
+          ],
+          [
+            "Hoyo 18",
+            -2,
+            1,
+            4
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 157491,
+        "datos": [
+          [
+            "Hoyo",
+            "RENAAT BAL ",
+            "JAMES DUCKER ",
+            "ALFONSO   GONZALEZ MACHO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 2",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            0,
+            1,
+            1
+          ],
+          [
+            "Hoyo 4",
+            0,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 5",
+            1,
+            -1,
+            2
+          ],
+          [
+            "Hoyo 6",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 7",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 8",
+            -1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 9",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 10",
+            0,
+            2,
+            0
+          ],
+          [
+            "Hoyo 11",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 14",
+            0,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 15",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 17",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 18",
+            -1,
+            1,
+            0
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72567
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Fideo Beca, Gonzalo",
+          "holeNumber": 2,
+          "createdAt": "02/08/25 15:44:58"
+        },
+        {
+          "playerName": "Naranjo Alba, Daniel",
+          "holeNumber": 3,
+          "createdAt": "02/08/25 16:00:15"
+        },
+        {
+          "playerName": "Del Castillo Valenzuela, Rodrigo",
+          "holeNumber": 4,
+          "createdAt": "02/08/25 16:08:56"
+        },
+        {
+          "playerName": "Jimenez Mateos, Emilio",
+          "holeNumber": 5,
+          "createdAt": "02/08/25 16:11:29"
+        },
+        {
+          "playerName": "Cascallana Garcia, Jesus Maria",
+          "holeNumber": 9,
+          "createdAt": "02/08/25 16:12:28"
+        },
+        {
+          "playerName": "Rabano Ruiz, Alberto",
+          "holeNumber": 3,
+          "createdAt": "02/08/25 16:13:39"
+        },
+        {
+          "playerName": "Camacho Torrent, Eva",
+          "holeNumber": 6,
+          "createdAt": "02/08/25 16:24:52"
+        },
+        {
+          "playerName": "De Juan Valero, Francisco Javier",
+          "holeNumber": 9,
+          "createdAt": "02/08/25 16:26:08"
+        },
+        {
+          "playerName": "Sanchez Gutierrez, Bernardo",
+          "holeNumber": 3,
+          "createdAt": "02/08/25 16:26:14"
+        },
+        {
+          "playerName": "Mazon Born, Diego",
+          "holeNumber": 11,
+          "createdAt": "02/08/25 16:30:36"
+        },
+        {
+          "playerName": "Sanchez Gutierrez, Bernardo",
+          "holeNumber": 5,
+          "createdAt": "02/08/25 16:53:39"
+        },
+        {
+          "playerName": "Sanchez Gutierrez, Bernardo",
+          "holeNumber": 6,
+          "createdAt": "02/08/25 17:06:59"
+        },
+        {
+          "playerName": "Garrido Fernandez, Fernando",
+          "holeNumber": 2,
+          "createdAt": "02/08/25 17:07:16"
+        },
+        {
+          "playerName": "Camacho Torrent, Eva",
+          "holeNumber": 9,
+          "createdAt": "02/08/25 17:10:08"
+        },
+        {
+          "playerName": "Togores Mahou, Jose Antonio",
+          "holeNumber": 16,
+          "createdAt": "02/08/25 17:14:45"
+        },
+        {
+          "playerName": "Diaz Calvo, Francisco Javier",
+          "holeNumber": 17,
+          "createdAt": "02/08/25 17:26:07"
+        },
+        {
+          "playerName": "Moron Semprum, Luis",
+          "holeNumber": 17,
+          "createdAt": "02/08/25 17:35:06"
+        },
+        {
+          "playerName": "Ceballos Alcoba, Cayetano",
+          "holeNumber": 18,
+          "createdAt": "02/08/25 17:40:41"
+        },
+        {
+          "playerName": "Diaz Calvo, Francisco Javier",
+          "holeNumber": 18,
+          "createdAt": "02/08/25 17:42:17"
+        },
+        {
+          "playerName": "Cascallana Garcia, Jesus Maria",
+          "holeNumber": 16,
+          "createdAt": "02/08/25 18:15:16"
+        },
+        {
+          "playerName": "Gomez-Zubeldia Soroa, Francisco",
+          "holeNumber": 11,
+          "createdAt": "02/08/25 18:17:04"
+        },
+        {
+          "playerName": "Sanchez Gutierrez, Bernardo",
+          "holeNumber": 11,
+          "createdAt": "02/08/25 18:25:38"
+        },
+        {
+          "playerName": "Gomez-Zubeldia Soroa, Francisco",
+          "holeNumber": 13,
+          "createdAt": "02/08/25 18:38:13"
+        },
+        {
+          "playerName": "Bustamante Esquivias, Manuel",
+          "holeNumber": 16,
+          "createdAt": "02/08/25 18:38:15"
+        },
+        {
+          "playerName": "Cutilla Ferris, Antonio",
+          "holeNumber": 3,
+          "createdAt": "02/08/25 18:44:45"
+        },
+        {
+          "playerName": "Cavanillas Junco, Estanislao",
+          "holeNumber": 3,
+          "createdAt": "02/08/25 18:47:05"
+        },
+        {
+          "playerName": "De Juan Valero, Francisco Javier",
+          "holeNumber": 18,
+          "createdAt": "02/08/25 18:49:40"
+        },
+        {
+          "playerName": "Moron Semprum, Luis",
+          "holeNumber": 3,
+          "createdAt": "02/08/25 18:52:15"
+        },
+        {
+          "playerName": "Vicente-Rodriguez Palau, Alvaro De",
+          "holeNumber": 2,
+          "createdAt": "02/08/25 18:52:43"
+        },
+        {
+          "playerName": "Ribera Zabalbeascoa, Juan",
+          "holeNumber": 16,
+          "createdAt": "02/08/25 18:53:28"
+        },
+        {
+          "playerName": "Ruiz-Garma Gorostiza, Nacho",
+          "holeNumber": 3,
+          "createdAt": "02/08/25 18:53:51"
+        },
+        {
+          "playerName": "Ceballos Alcoba, Cayetano",
+          "holeNumber": 4,
+          "createdAt": "02/08/25 18:54:08"
+        },
+        {
+          "playerName": "Roman Garcia, Fco Javier",
+          "holeNumber": 14,
+          "createdAt": "02/08/25 18:59:12"
+        },
+        {
+          "playerName": "Ybarra Satrustegui, Joaquin",
+          "holeNumber": 6,
+          "createdAt": "02/08/25 19:05:11"
+        },
+        {
+          "playerName": "Ruiz-Garma Gorostiza, Nacho",
+          "holeNumber": 4,
+          "createdAt": "02/08/25 19:06:24"
+        },
+        {
+          "playerName": "Naranjo Alba, Daniel",
+          "holeNumber": 16,
+          "createdAt": "02/08/25 19:13:52"
+        },
+        {
+          "playerName": "Ybarra Satrustegui, Joaquin",
+          "holeNumber": 7,
+          "createdAt": "02/08/25 19:15:19"
+        },
+        {
+          "playerName": "Enrile Mora-Figueroa, Pablo",
+          "holeNumber": 17,
+          "createdAt": "02/08/25 19:20:34"
+        },
+        {
+          "playerName": "Gomez-Zubeldia Soroa, Francisco",
+          "holeNumber": 16,
+          "createdAt": "02/08/25 19:21:38"
+        },
+        {
+          "playerName": "Diez-Polanco Martin-Gonzalez, Francisco Javier",
+          "holeNumber": 18,
+          "createdAt": "02/08/25 19:22:59"
+        },
+        {
+          "playerName": "Moron Semprum, Luis",
+          "holeNumber": 5,
+          "createdAt": "02/08/25 19:24:23"
+        },
+        {
+          "playerName": "Valdes Pascual De Riquelme, Rafael",
+          "holeNumber": 16,
+          "createdAt": "02/08/25 19:31:18"
+        },
+        {
+          "playerName": "Garcia Manzanares, Javier",
+          "holeNumber": 2,
+          "createdAt": "02/08/25 19:34:13"
+        },
+        {
+          "playerName": "Letort, Pierrick",
+          "holeNumber": 12,
+          "createdAt": "02/08/25 19:53:53"
+        },
+        {
+          "playerName": "Ceballos Alcoba, Cayetano",
+          "holeNumber": 8,
+          "createdAt": "02/08/25 19:58:41"
+        },
+        {
+          "playerName": "De La Rica Perez, Enrique",
+          "holeNumber": 17,
+          "createdAt": "02/08/25 20:02:01"
+        },
+        {
+          "playerName": "Diez-Polanco Martin-Gonzalez, Francisco Javier",
+          "holeNumber": 1,
+          "createdAt": "02/08/25 20:05:59"
+        },
+        {
+          "playerName": "Ybarra Satrustegui, Joaquin",
+          "holeNumber": 10,
+          "createdAt": "02/08/25 20:08:50"
+        },
+        {
+          "playerName": "De Juan Valero, Francisco Javier",
+          "holeNumber": 3,
+          "createdAt": "02/08/25 20:18:30"
+        },
+        {
+          "playerName": "Cascallana Garcia, Jesus Maria",
+          "holeNumber": 7,
+          "createdAt": "02/08/25 20:23:49"
+        },
+        {
+          "playerName": "Segovia Utrera, Alfonso",
+          "holeNumber": 11,
+          "createdAt": "02/08/25 20:52:59"
+        }
+      ]
+    }
+  },
+  "horarios": [],
+  "horariosScrapedAt": "2026-05-09T12:12:45.291Z"
+}

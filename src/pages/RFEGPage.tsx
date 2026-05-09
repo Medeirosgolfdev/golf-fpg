@@ -21,7 +21,7 @@ import LoadingState from "../ui/LoadingState";
 import SidebarToggle from "../ui/SidebarToggle";
 import SidebarSectionTitle from "../ui/SidebarSectionTitle";
 import { Toolbar, ToolbarTitle, ToolbarMeta } from "../ui/Toolbar";
-import { RoundPill, EscPill, YearPill } from "../ui/PillBadge";
+import { RoundPill, EscPill, YearPill, SUB_TO_ES_TERM } from "../ui/PillBadge";
 import SortableHdr from "../ui/SortableHdr";
 import SexBadge from "../ui/SexBadge";
 import ExtLink from "../ui/ExternalLink";
@@ -31,6 +31,8 @@ import { displayName } from "../utils/format";
 import { flag } from "../utils/flagUtils";
 import { formatPlayerName } from "../utils/playerUtils";
 import { IntlTournView } from "../ui/IntlTournView";
+import DrawTab from "../ui/DrawTab";
+import type { FpgDraw, FpgDrawFlight } from "../data/nacional2026Loader";
 import type { Tournament as FPGTournament, Player as FPGPlayer, RoundScore as FPGRoundScore, ScorecardOptions } from "./FPGPage";
 
 /* ── Types ──────────────────────────────────────────────── */
@@ -69,6 +71,8 @@ interface RFEGIndexEntry {
     provisional: number;
   };
   leaderboardPlayers?: number;
+  /** Número de rondas (LGS expõe; NC/RFEGolf ficam undefined). */
+  nRounds?: number;
   scrapedAt: string | null;
 }
 
@@ -259,10 +263,19 @@ function lgsToFPGTournament(
     return a.pos - b.pos;
   });
 
+  const dateRef = lgs.meta.dateIso || lgs.meta.dateRange || null;
+  // Lookup HCP global injectado via dobLookup (efetivamente o terceiro arg do adapter).
+  // Como esta função foi criada antes de termos hcpLookup, lemos via campo extra.
   const players: FPGPlayer[] = sortedAcc.map((a, idx) => {
     const e = lookupByName[norm(a.name)];
     const club = e?.club ? displayName(e.club) : "";
+    const age = e?.dob ? ageAt(e.dob, dateRef) : null;
+    const escLabel = ageToEscalaoEs(age);
+    const sex: "M" | "F" | null = e?.sex === "M" ? "M" : e?.sex === "F" ? "F" : null;
     const incomplete = a.rounds.length < numRounds;
+    // HCP via lookup global (LGS não tem HCP no JSON)
+    const lic = (e?.licencia || "").toUpperCase();
+    const hcp = lic && (lgs as any)._hcpLookup?.[lic]?.hcp;
     return {
       scoreId: `lgs-${lgs.id}-${idx}`,
       pos: a.pos ?? idx + 1,
@@ -272,7 +285,10 @@ function lgsToFPGTournament(
       fedCode: e?.licencia || undefined,
       grossTotal: a.total || null,
       toPar: a.toPar,
-      hcpExact: undefined,
+      hcpExact: hcp != null ? hcp : undefined,
+      escalao: escLabel,
+      _sex: sex,
+      _age: age,
       nholes: 18,
       parTotal,
       scores: a.rounds[0]?.scores || [],
@@ -282,7 +298,7 @@ function lgsToFPGTournament(
       roundScores: a.rounds,
       _wd: incomplete,
       _roundsPlayed: a.rounds.length,
-    } as FPGPlayer;
+    } as FPGPlayer & { _sex: "M" | "F" | null; _age: number | null };
   });
 
   return {
@@ -297,12 +313,207 @@ function lgsToFPGTournament(
 }
 
 function lgsScorecardOptions(): ScorecardOptions {
+  // Vista coerente para ES (todos os 3 sources):
+  // - ESC visível (idade → Sub-N, pill colorido global)
+  // - HCP visível (coluna própria, sortable)
+  // - CLUBE escondido (irrelevante em ES — não conhecemos os clubes)
+  // - SD escondido (não temos CR/slope)
+  // - TEE escondido
+  // - noPlayerLink: licenças espanholas (AM12345...) não correspondem a fed codes
+  //   FPG — não criar link /jogadores/{fed} a apontar para nada útil.
   return {
-    hideHCP: true,
+    hideHCP: false,
+    hideEsc: false,
+    hideClub: true,
     hideSD: true,
-    hideEsc: true,
     hideTee: true,
-    clubLabel: "Clube",
+    showAge: true,
+    noPlayerLink: true,
+  };
+}
+
+/* ── Helpers de conversão idade → Sub-N (escalão FPG/RFEG) ──────
+ * Todos os adapters (LGS/NC/RFEGolf) usam isto para preencher
+ * player.escalao com "Sub-N" → renderiza como pill colorido (EscPill). */
+function ageToSubN(age: number | null): string | null {
+  if (age == null || age < 0) return null;
+  if (age <= 10) return "Sub-10";
+  if (age <= 12) return "Sub-12";
+  if (age <= 14) return "Sub-14";
+  if (age <= 16) return "Sub-16";
+  if (age <= 18) return "Sub-18";
+  if (age <= 21) return "Sub-21";
+  if (age <= 25) return "Sub-25";
+  return null;
+}
+function dobToSubN(dob: string | null, ref: string | null | undefined): string | null {
+  return ageToSubN(ageAt(dob, ref));
+}
+/** Termo oficial RFEG para o escalão. Sub-12 → "Alevín", etc. */
+function ageToEscalaoEs(age: number | null): string | null {
+  const subN = ageToSubN(age);
+  if (!subN) return null;
+  return SUB_TO_ES_TERM[subN] || subN;
+}
+
+/* ── ncToFPGTournament ────────────────────────────────────────
+ * Converte JSON NextCaddy (já adaptado para RFEGDetail por adaptNextCaddy)
+ * em FPGTournament — mesma estrutura uniforme para IntlTournView.
+ *
+ * Requer que o JSON tenha sido scrapado com `--scorecards` (popula roundScores
+ * em cada player + course.par[]). Se estiver vazio, devolve null. */
+function ncToFPGTournament(
+  detail: RFEGDetail & { _ncCourseSi?: number[] | null; _ncCourseMeters?: number[] | null },
+  dobLookup?: DobLookup,
+): FPGTournament | null {
+  const players = detail.inscritos.admitidos;
+  // Determinar nº de rondas a partir do max round encontrado
+  let nRounds = 0;
+  for (const p of players) {
+    for (const r of (p.rounds || [])) {
+      if (r.round > nRounds) nRounds = r.round;
+    }
+  }
+  if (nRounds === 0) return null;
+
+  const par18 = (detail.coursePar && detail.coursePar.length === 18 ? detail.coursePar : new Array(18).fill(4));
+  const parTotal = par18.reduce((a, b) => a + b, 0);
+  const si18 = (detail._ncCourseSi && detail._ncCourseSi.length === 18) ? detail._ncCourseSi : [];
+  const meters18 = (detail._ncCourseMeters && detail._ncCourseMeters.length === 18) ? detail._ncCourseMeters : [];
+
+  const norm = (s: string) => s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/[,.]/g, " ").replace(/\s+/g, " ").trim();
+  const lookupByName: Record<string, DobLookupEntry> = {};
+  if (dobLookup) for (const e of Object.values(dobLookup)) if (e.name) lookupByName[norm(e.name)] = e;
+
+  // Para Espanha: clube irrelevante. Mapeamos:
+  //  - escalao = Sub-N derivado da idade (pill colorido global, sortable)
+  //  - hcpExact = HCP número (coluna sortable)
+  //  - club = clube real (ESCONDIDO via hideClub)
+  const dateRef = detail.meta.dateStart || null;
+
+  const fpgPlayers: FPGPlayer[] = players.map((p, idx) => {
+    const e = (p.licencia && dobLookup && dobLookup[p.licencia.trim()]) || lookupByName[norm(p.name || "")] || null;
+    const dob = p.dob || e?.dob || null;
+    const age = ageAt(dob, dateRef);
+    // Termo RFEG (Alevín, Benjamín, etc.) — coerência: sempre o termo da
+    // federação espanhola, nunca "Sub-N". EscPill tem mapeamento ES→Sub-N CSS,
+    // logo "Alevín" recebe a mesma cor que "Sub-12".
+    const escLabel = ageToEscalaoEs(age);
+    const club = (p.club || e?.club || "").toString();
+    const sex: "M" | "F" | null = (p.sexo === "M" ? "M" : p.sexo === "F" ? "F" : (e?.sex === "M" ? "M" : e?.sex === "F" ? "F" : null));
+    const roundScores: FPGRoundScore[] = (p.rounds || [])
+      .filter((r) => Array.isArray((r as any).scores) && (r as any).scores.length === 18)
+      .map((r) => ({
+        round: r.round,
+        gross: (r.gross != null) ? r.gross : ((r as any).scores.reduce((a: number, b: number) => a + b, 0) || 0),
+        scores: (r as any).scores,
+        pars: par18,
+        si: si18,
+        meters: meters18,
+        teeName: meters18.length ? "Tour" : undefined,
+      }));
+    const incomplete = roundScores.length < nRounds;
+    return {
+      scoreId: `nc-${detail.compId}-${idx}`,
+      pos: p.pos ?? idx + 1,
+      name: formatPlayerName(p.name || ""),
+      club: club ? displayName(club) : "—",
+      fed: p.licencia || undefined,
+      fedCode: p.licencia || undefined,
+      grossTotal: p.total ?? null,
+      toPar: p.toPar ?? null,
+      hcpExact: p.hcp ?? undefined,
+      escalao: escLabel,
+      // Fields extra usados pelo nameDecorator (M/F badge) + filtros (sex/age)
+      _sex: sex,
+      _age: age,
+      teeName: meters18.length ? "Tour" : undefined,
+      nholes: 18,
+      parTotal,
+      scores: roundScores[0]?.scores || [],
+      par: par18,
+      si: si18,
+      meters: meters18,
+      roundScores,
+      _wd: incomplete,
+      _roundsPlayed: roundScores.length,
+    } as FPGPlayer & { _sex: "M" | "F" | null; _age: number | null };
+  });
+
+  return {
+    name: detail.meta.name || `NextCaddy ${detail.compId}`,
+    tcode: String(detail.compId),
+    date: detail.meta.dateStart || "",
+    campo: detail.meta.course || "",
+    rounds: nRounds,
+    playerCount: fpgPlayers.length,
+    players: fpgPlayers,
+  };
+}
+
+/* ── rfegolfToFPGTournament ─────────────────────────────────────
+ * Converte RFEGolf microsite results (PDF parsed) em FPGTournament. Sem hbh,
+ * apenas totais por ronda — IntlTournView mostra "Resumo" mas as tabs Rn
+ * mostram só totais. Útil para uniformidade visual. */
+function rfegolfToFPGTournament(detail: RFEGDetail, dobLookup?: DobLookup): FPGTournament | null {
+  const results = (detail.results || []).filter(r => r.players && r.players.length > 0);
+  if (results.length === 0) return null;
+  // Concatenar todos os groups de resultados (categorias)
+  const allRows = results.flatMap(g => g.players.map(p => ({ ...p, _label: g.label })));
+  const nRounds = Math.max(...results.map(r => r.nRounds || 0), 1);
+  const par18 = new Array(18).fill(4);  // RFEGolf não expõe par
+  const parTotal = par18.reduce((a, b) => a + b, 0);
+
+  const norm = (s: string) => s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/[,.]/g, " ").replace(/\s+/g, " ").trim();
+  const lookupByName: Record<string, DobLookupEntry> = {};
+  if (dobLookup) for (const e of Object.values(dobLookup)) if (e.name) lookupByName[norm(e.name)] = e;
+
+  const dateRef = detail.meta.dateStart || null;
+  const players: FPGPlayer[] = allRows.map((p, idx) => {
+    const e = lookupByName[norm(p.name || "")];
+    const subN = e?.dob ? dobToSubN(e.dob, dateRef) : null;
+    const roundScores: FPGRoundScore[] = (p.rounds || [])
+      .map((g, i) => ({
+        round: i + 1,
+        gross: g,
+        scores: [],
+        pars: par18,
+        si: [],
+        meters: [],
+        teeName: undefined,
+      }))
+      .filter(r => r.gross != null && r.gross > 0);
+    const incomplete = roundScores.length < nRounds;
+    return {
+      scoreId: `rfeg-${detail.compId}-${idx}`,
+      pos: p.pos ?? idx + 1,
+      name: formatPlayerName(p.name || ""),
+      club: e?.club ? displayName(e.club) : "—",
+      fed: e?.licencia || undefined,
+      fedCode: e?.licencia || undefined,
+      grossTotal: p.total ?? null,
+      toPar: p.toPar ?? null,
+      escalao: subN,
+      nholes: 18,
+      parTotal,
+      scores: [],
+      par: par18,
+      si: [],
+      meters: [],
+      roundScores,
+      _wd: incomplete,
+      _roundsPlayed: roundScores.length,
+    } as FPGPlayer;
+  });
+
+  return {
+    name: detail.meta.name || `RFEGolf ${detail.compId}`,
+    tcode: String(detail.compId),
+    date: detail.meta.dateStart || "",
+    campo: detail.meta.course || "",
+    rounds: nRounds,
+    playerCount: players.length,
+    players,
   };
 }
 
@@ -536,6 +747,18 @@ interface NCInsc {
   hcp?: number | null;
   nivel?: string | null;
 }
+interface NCHorario {
+  round: number;
+  players: Array<{
+    time: string | null;
+    tee: number | null;
+    name: string;
+    hcp: number | null;
+    nivel?: string | null;
+    ins?: string;
+    jid?: string;
+  }>;
+}
 interface NCDetail {
   tourId: number;
   scrapedAt: string;
@@ -547,6 +770,8 @@ interface NCDetail {
     format?: string | null;
     categories?: string[];
   };
+  /** Horarios (draw / tee times). Populado por scripts/scrape-nextcaddy-horarios.js. */
+  horarios?: NCHorario[];
   /** par[] inferido a partir dos scores (script infer-nextcaddy-par.js).
    *  parInferred=true assinala que não vem da fonte directa.
    *  parConfidence ∈ {high, medium, low} indica quanto se pode confiar no par. */
@@ -594,7 +819,7 @@ interface LgsDetail {
   rounds: LgsRound[];
 }
 
-function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup): RFEGDetail {
+function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup): RFEGDetail {
   const norm = (s: string) => s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/[,.]/g, " ").replace(/\s+/g, " ").trim();
   const lookupByName: Record<string, DobLookupEntry> = {};
   if (dobLookup) {
@@ -602,6 +827,8 @@ function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup): RFEGDetail {
       if (e.name) lookupByName[norm(e.name)] = e;
     }
   }
+  // Anexar hcpLookup ao detail para o adapter LGS-FPG poder usar
+  void hcpLookup; // injectado depois via adaptLgs e flag detail._hcpLookup
 
   // Construir leaderboard agregado a partir das rondas — somar totals de cada
   // ronda por player. Cada ronda do PDF/livegolfscoring é gross dessa ronda.
@@ -707,10 +934,16 @@ function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup): RFEGDetail {
 }
 type DobLookup = Record<string, DobLookupEntry>;
 
-function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup): RFEGDetail {
+function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup): RFEGDetail {
   const enrich = (licencia: string | null) => {
     if (!licencia || !dobLookup) return null;
     return dobLookup[licencia.trim()] || null;
+  };
+  // Helper: HCP via lookup global se o player não tem (cross-reference torneios)
+  const hcpFromLookup = (licencia: string | null): number | null => {
+    if (!licencia || !hcpLookup) return null;
+    const key = licencia.trim().toUpperCase();
+    return hcpLookup[key]?.hcp ?? null;
   };
 
   const lbPlayers: RFEGPlayer[] = [];
@@ -733,7 +966,8 @@ function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup): RFEGDetail {
         name: p.name,
         licencia: p.licencia ?? null,
         pais: "ESPAÑA",
-        hcp: p.hcp ?? null,
+        // Fallback ao lookup global se o player não tem HCP no torneio
+        hcp: p.hcp ?? hcpFromLookup(p.licencia ?? null),
         catEdad: p.nivel ?? (e ? e.catEdad : null),
         sexo: e ? e.sex : null,
         club: e ? e.club : null,
@@ -752,7 +986,7 @@ function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup): RFEGDetail {
       name: p.name,
       licencia: p.licencia ?? null,
       pais: "ESPAÑA",
-      hcp: p.hcp ?? null,
+      hcp: p.hcp ?? hcpFromLookup(p.licencia ?? null),
       catEdad: p.nivel ?? (e ? e.catEdad : null),
       sexo: e ? e.sex : null,
       club: e ? e.club : null,
@@ -798,6 +1032,11 @@ function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup): RFEGDetail {
     },
     coursePar: (nc.course?.par && Array.isArray(nc.course.par) && nc.course.par.length > 0) ? nc.course.par : null,
     parConfidence: nc.course?.parConfidence,
+    // Horarios (draw / tee times) — passar adiante para a tab Draw saída
+    _ncHorarios: Array.isArray(nc.horarios) ? nc.horarios : null,
+    // Guardar SI e metros do NextCaddy para o adapter ncToFPGTournament passar adiante
+    _ncCourseSi: (nc.course?.si && Array.isArray(nc.course.si) && nc.course.si.length === 18) ? nc.course.si : null,
+    _ncCourseMeters: (nc.course?.meters && Array.isArray(nc.course.meters) && nc.course.meters.length === 18) ? nc.course.meters : null,
     inscritos: {
       admitidos,
       reservas: [],
@@ -814,14 +1053,18 @@ function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup): RFEGDetail {
         provisional: 0,
       },
     },
-  };
+  } as RFEGDetail & { _ncCourseSi?: number[] | null; _ncCourseMeters?: number[] | null };
 }
 
 /* ── TournamentDetail ──────────────────────────────────── */
 
 /* ── ResultsTable ────────────────────────────────────────
    Renderiza leaderboard final RFEGolf. Quando há grupos
-   (Final + Categoria + Sexo separados), tem selector. */
+   (Final + Categoria + Sexo separados), tem selector.
+   ⚠ LEGACY — substituído por IntlTournView na refactor 2026-05-09.
+   Mantido como fallback para casos em que o adapter rfegolfToFPGTournament
+   não consiga produzir um FPGTournament válido. */
+// @ts-expect-error TS6133: kept as legacy fallback, will be re-wired if rfegolfToFPGTournament cannot produce results
 function ResultsTable({ results, dobLookup, dateRef }: {
   results: NonNullable<RFEGDetail["results"]>;
   dobLookup?: DobLookup;
@@ -968,44 +1211,131 @@ function ResultsTable({ results, dobLookup, dateRef }: {
   );
 }
 
-function TournamentDetail({ entry, dobLookup }: { entry: RFEGIndexEntry; dobLookup?: DobLookup }) {
+type RFEGTab = "scorecards" | "inscritos" | "draw";
+
+/* ── DrawSaidaView ──────────────────────────────────────────
+ * Tab "Draw saída" do RFEGPage — reusa o componente DrawTab partilhado para
+ * coerência visual com FPG. Converte NC horarios → FpgDraw shape. */
+function DrawSaidaView({ detail, entry }: {
+  detail: RFEGDetail & { _ncHorarios?: NCHorario[] | null };
+  entry: RFEGIndexEntry;
+}) {
+  const horarios = detail._ncHorarios;
+  const [activeRound, setActiveRound] = useState<number>(1);
+
+  // Construir FpgDraw a partir dos NC horarios para a ronda activa
+  const drawForRound = useMemo<FpgDraw | null>(() => {
+    if (!horarios || horarios.length === 0) return null;
+    const r = horarios.find(rd => rd.round === activeRound) || horarios[0];
+    if (!r || !r.players || r.players.length === 0) return null;
+
+    // Agrupar por (time, tee) → flights
+    const flights: FpgDrawFlight[] = [];
+    let curKey = "";
+    for (const p of r.players) {
+      const k = `${p.time}|${p.tee}`;
+      if (k !== curKey) {
+        flights.push({
+          teeTime: p.time || "",
+          startHole: p.tee != null ? p.tee : null,
+          tee: null,
+          players: [],
+        });
+        curKey = k;
+      }
+      flights[flights.length - 1].players.push({
+        nome: formatPlayerName(p.name),
+        clube: null,                    // NC não expõe clube no draw
+        fed: p.jid || null,             // jid NC ≠ fed FPG, mas dá identidade única
+        hcp: p.hcp,
+      });
+    }
+    return {
+      name: detail.meta.name || `Tour ${entry.id}`,
+      date: detail.meta.dateStart || undefined,
+      totalJogadores: r.players.length,
+      groups: flights,
+    };
+  }, [horarios, activeRound, detail, entry]);
+
+  if (!horarios || horarios.length === 0) {
+    return <EmptyState message={
+      entry.source === "nextcaddy"
+        ? "Sem horarios publicados para este torneio."
+        : "Tee times disponíveis apenas para torneios NextCaddy. Para LGS/RFEGolf, consulta o Microsite oficial."
+    } />;
+  }
+  if (!drawForRound) return <EmptyState message="Sem dados de draw para esta ronda." />;
+
+  return (
+    <div>
+      {horarios.length > 1 && (
+        <div style={{ display: "flex", gap: 4, flexWrap: "wrap", marginBottom: 12 }}>
+          {horarios.map(r => (
+            <button
+              key={r.round}
+              type="button"
+              className={`chip ${activeRound === r.round ? "active" : ""}`}
+              onClick={() => setActiveRound(r.round)}
+              style={{ cursor: "pointer", fontSize: 12, padding: "3px 10px" }}
+            >
+              R{r.round} · {r.players.length} jog
+            </button>
+          ))}
+        </div>
+      )}
+      <DrawTab
+        draw={drawForRound}
+        roundNum={activeRound}
+        tournamentDate={detail.meta.dateStart}
+        playersDB={undefined}
+      />
+    </div>
+  );
+}
+
+function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEntry; dobLookup?: DobLookup; hcpLookup?: HcpLookup }) {
   const [data, setData] = useState<RFEGDetail | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [tab, setTab] = useState<RFEGTab>("scorecards");
   const [list, setList] = useState<ListKind>("admitidos");
-  const [showResults, setShowResults] = useState(false);
 
   useEffect(() => {
     setData(null);
     setError(null);
     setList("admitidos");
-    setShowResults(false);
+    setTab("scorecards");
     cachedFetchJson<RFEGDetail | NCDetail | LgsDetail>(`/data/${entry.filePath}`)
       .then((d) => {
-        if (!d) {
-          setError("Ficheiro não encontrado");
-          return;
-        }
+        if (!d) { setError("Ficheiro não encontrado"); return; }
         if (entry.source === "nextcaddy") {
-          setData(adaptNextCaddy(d as NCDetail, dobLookup));
+          setData(adaptNextCaddy(d as NCDetail, dobLookup, hcpLookup));
         } else if (entry.source === "livegolfscoring") {
-          const adapted = adaptLgs(d as LgsDetail, dobLookup);
-          setData(adapted);
-          if (adapted.results && adapted.results.some(r => r.players && r.players.length > 0)) {
-            setShowResults(true);
-          }
+          setData(adaptLgs(d as LgsDetail, dobLookup, hcpLookup));
         } else {
-          // RFEGolf: actualmente sem par[] (limitação documentada do scraper).
-          // Mantemos coursePar=null para que o ScorecardLeaderboard caia em fallback.
           const detail = d as RFEGDetail;
           setData({ ...detail, coursePar: detail.coursePar ?? null });
-          // Se há resultados publicados, abrir directamente nessa tab.
-          if (detail.results && detail.results.some(r => r.players && r.players.length > 0)) {
-            setShowResults(true);
-          }
         }
       })
       .catch((e) => setError(String(e?.message ?? e)));
-  }, [entry.filePath, entry.source, dobLookup]);
+  }, [entry.filePath, entry.source, dobLookup, hcpLookup]);
+
+  // FPGTournament uniforme — usado pelo IntlTournView na tab Resultados (scorecards).
+  // Construído por adapter consoante a fonte.
+  const fpgTournament: FPGTournament | null = useMemo(() => {
+    if (!data) return null;
+    if (entry.source === "livegolfscoring" && (data as any)._lgsRounds?.length > 0) {
+      return lgsToFPGTournament({
+        id: data.compId,
+        meta: { name: data.meta.name, course: data.meta.course, dateRange: data.meta.dateStart, dateIso: data.meta.dateStart },
+        rounds: (data as any)._lgsRounds,
+        _hcpLookup: hcpLookup,
+      } as any, dobLookup);
+    }
+    if (entry.source === "nextcaddy") return ncToFPGTournament(data, dobLookup);
+    if (entry.source === "rfegolf") return rfegolfToFPGTournament(data, dobLookup);
+    return null;
+  }, [data, entry.source, dobLookup, hcpLookup]);
 
   if (error) return <EmptyState message={`Erro: ${error}`} />;
   if (!data) return <LoadingState message="A carregar dados..." />;
@@ -1014,31 +1344,22 @@ function TournamentDetail({ entry, dobLookup }: { entry: RFEGIndexEntry; dobLook
   const c = data.inscritos.counts;
   const sourceUrl = entry.source === "rfegolf"
     ? `https://rfegolf.es/CompetenciaPaginas/CompetitionMicrosite.aspx?CompId=${entry.compId}`
-    : `https://www.nextcaddy.com/tour/${entry.tourId}`;
+    : entry.source === "nextcaddy"
+      ? `https://www.nextcaddy.com/tour/${entry.tourId}`
+      : `https://rfegolf.livegolfscoring.es/torneos/clasificacion/${entry.id}`;
   const scoringUrl = entry.source === "rfegolf"
     ? `https://rfegolf.es/CompetenciaPaginas/LiveScoring.aspx?CompId=${entry.compId}`
-    : `https://www.nextcaddy.com/tour/${entry.tourId}/clasificaciones`;
+    : entry.source === "nextcaddy"
+      ? `https://www.nextcaddy.com/tour/${entry.tourId}/clasificaciones`
+      : `https://rfegolf.livegolfscoring.es/torneos/hoyoahoyo/${entry.id}`;
 
   const listsAvailable: ListKind[] = (Object.keys(c) as ListKind[]).filter((k) => c[k] > 0);
   const effectiveList: ListKind = c[list] > 0 ? list : (listsAvailable[0] || "admitidos");
   const currentList = data.inscritos[effectiveList];
 
-  // Quando é LGS com resultados, render simplificado (estilo BJGT/FPG): IntlTournView
-  // tem header e tabs próprios, não duplicamos.
-  const hasLgs = entry.source === "livegolfscoring" && (data as any)._lgsRounds && (data as any)._lgsRounds.length > 0;
-  if (hasLgs) {
-    return (
-      <IntlTournView
-        tournament={lgsToFPGTournament({
-          id: data.compId,
-          meta: { name: m.name, course: m.course, dateRange: m.dateStart, dateIso: m.dateStart },
-          rounds: (data as any)._lgsRounds,
-        }, dobLookup)}
-        scOptions={lgsScorecardOptions()}
-        siLabel="m"
-      />
-    );
-  }
+  const hasResults = fpgTournament !== null && fpgTournament.players.length > 0;
+  const inscritosTotal = listsAvailable.reduce((s, k) => s + c[k], 0);
+  const sourceLabel = entry.source === "rfegolf" ? "RFEGolf" : entry.source === "nextcaddy" ? "NextCaddy" : "LGS";
 
   return (
     <>
@@ -1047,7 +1368,7 @@ function TournamentDetail({ entry, dobLookup }: { entry: RFEGIndexEntry; dobLook
         sub={
           <>
             <span className="muted">
-              🇪🇸 {entry.source === "rfegolf" ? "RFEGolf" : "NextCaddy"}
+              🇪🇸 {sourceLabel}
               {m.style && <> · {m.style}</>}
               {m.mode && <> · {m.mode}</>}
               <> · 📅 {dateRange(m.dateStart, m.dateEnd)}</>
@@ -1064,71 +1385,403 @@ function TournamentDetail({ entry, dobLookup }: { entry: RFEGIndexEntry; dobLook
       />
 
       <div className="card" style={{ margin: "8px 0", padding: "8px 12px", display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center", fontSize: 13 }}>
-        {m.category && <span className={catPillClass(m.category)}>{m.category}</span>}
-        {m.sex && <span className="p p-sm">{m.sex}</span>}
-        {(m.hcpLimitMen != null) && <span className="muted" title="Limite hcp masculino">Hcp♂ ≤ {m.hcpLimitMen}</span>}
-        {(m.hcpLimitWomen != null) && <span className="muted" title="Limite hcp femenino">Hcp♀ ≤ {m.hcpLimitWomen}</span>}
-        {m.players != null && <span className="muted">🏆 {m.players} jogadores limit</span>}
-        {m.federation && <span className="muted">🏛️ {m.federation}</span>}
-        {data.coursePar && data.coursePar.length > 0 && (
-          <span className="muted" title={`Par total ${data.coursePar.reduce((a, b) => a + b, 0)} · ${data.parConfidence === "low" ? "confiança baixa (não bate com par_total)" : data.parConfidence === "medium" ? "confiança média (sem par_total)" : "confiança alta"} · inferido a partir dos scores top-50%`}>
-            ⛳ Par {data.coursePar.reduce((a, b) => a + b, 0)} (inferido{data.parConfidence === "low" ? " · ⚠" : ""})
-          </span>
-        )}
-      </div>
-
-      <div className="detail-toolbar" style={{ flexWrap: "wrap", gap: 4, padding: "6px 0", borderBottom: "1px solid var(--border)" }}>
-        {data.results && data.results.some(r => r.players && r.players.length > 0) && (
-          <button
-            type="button"
-            className={`tourn-tab ${showResults ? "active" : ""}`}
-            onClick={() => setShowResults(true)}
-            title="Leaderboard final"
-          >
-            🏆 Resultados
-            <span className="chip" style={{ marginLeft: 4, fontSize: 10 }}>
-              {data.results.reduce((a, r) => a + (r.players?.length || 0), 0)}
-            </span>
-          </button>
-        )}
-        {(Object.keys(c) as ListKind[]).map((k) => {
-          const enabled = c[k] > 0;
-          const active = !showResults && effectiveList === k;
+        {entry.category && <span className={catPillClass(entry.category)}>{entry.category}</span>}
+        {(() => {
+          // Pill de sexo: usa SexBadge (componente global, NUNCA símbolos Unicode).
+          // Prioridade a entry.sex; se vazio, derivar das categorias do JSON
+          // detalhado (NextCaddy lista "Señoras"/"Caballeros" que o index não
+          // converte para M/F/Mixto).
+          let sx = entry.sex as string | null;
+          const cats = ((entry.categories || []) as string[]);
+          if (!sx && cats.length) {
+            const hasM = cats.some(c => /Caballeros|Masculino/i.test(c));
+            const hasF = cats.some(c => /Señoras|Senoras|Femenino/i.test(c));
+            sx = hasM && hasF ? "Mixto" : hasM ? "M" : hasF ? "F" : null;
+          }
+          if (!sx) return null;
+          if (sx === "M") return <SexBadge sex="M" />;
+          if (sx === "F") return <SexBadge sex="F" />;
+          // Mixto: dois badges lado-a-lado (não há SexBadge "Mixto")
           return (
-            <button
-              key={k}
-              type="button"
-              disabled={!enabled}
-              className={`tourn-tab ${active ? "active" : ""}`}
-              onClick={() => { if (enabled) { setShowResults(false); setList(k); } }}
-              style={{ cursor: enabled ? "pointer" : "default", opacity: enabled ? 1 : 0.4 }}
-              title={`${LIST_LABELS[k]} (${c[k]})`}
-            >
-              {LIST_LABELS[k]} <span className="chip" style={{ marginLeft: 4, fontSize: 10 }}>{c[k]}</span>
-            </button>
+            <span style={{ display: "inline-flex", gap: 2 }}>
+              <SexBadge sex="M" />
+              <SexBadge sex="F" />
+            </span>
           );
-        })}
+        })()}
+        {(m.hcpLimitMen != null) && <span className="muted" title="Limite hcp masculino">Hcp <SexBadge sex="M" /> ≤ {m.hcpLimitMen}</span>}
+        {(m.hcpLimitWomen != null) && <span className="muted" title="Limite hcp femenino">Hcp <SexBadge sex="F" /> ≤ {m.hcpLimitWomen}</span>}
+        {m.federation && <span className="muted">🏛️ {m.federation}</span>}
       </div>
 
+      {/* ── Tabs principais (3): Resultados/Scorecards | Inscritos | Draw ── */}
+      <div className="detail-toolbar" style={{ flexWrap: "wrap", gap: 4, padding: "6px 0", borderBottom: "1px solid var(--border)" }}>
+        <button
+          type="button"
+          className={`tourn-tab ${tab === "scorecards" ? "active" : ""}`}
+          onClick={() => setTab("scorecards")}
+          disabled={!hasResults}
+          style={{ opacity: hasResults ? 1 : 0.4 }}
+          title="Resultados ronda-a-ronda + scorecards"
+        >
+          📋 Resultados {hasResults && <span className="chip" style={{ marginLeft: 4, fontSize: 10 }}>{fpgTournament!.players.length}</span>}
+        </button>
+        <button
+          type="button"
+          className={`tourn-tab ${tab === "inscritos" ? "active" : ""}`}
+          onClick={() => setTab("inscritos")}
+          disabled={inscritosTotal === 0}
+          style={{ opacity: inscritosTotal > 0 ? 1 : 0.4 }}
+        >
+          👥 Inscritos <span className="chip" style={{ marginLeft: 4, fontSize: 10 }}>{inscritosTotal}</span>
+        </button>
+        <button
+          type="button"
+          className={`tourn-tab ${tab === "draw" ? "active" : ""}`}
+          onClick={() => setTab("draw")}
+          title="Draw / Tee times (em construção)"
+        >
+          🕐 Draw saída
+        </button>
+      </div>
+
+      {/* ── Conteúdo da tab ───────────────────────────────────────── */}
       <div style={{ marginTop: 8 }}>
-        {showResults && data.results && data.results.some(r => r.players && r.players.length > 0) ? (
-          <ResultsTable results={data.results} dobLookup={dobLookup} dateRef={m.dateStart} />
-        ) : listsAvailable.length === 0 ? (
-          <EmptyState message="Sem inscritos publicados ainda." />
-        ) : (
-          <PlayerTable
-            players={currentList}
-            dateRef={m.dateStart}
-            coursePar={data.coursePar}
-            parConfidence={data.parConfidence}
-          />
+        {tab === "scorecards" && (
+          hasResults ? (
+            <IntlTournView
+              tournament={fpgTournament!}
+              scOptions={lgsScorecardOptions()}
+              siLabel={entry.source === "livegolfscoring" ? "m" : "SI"}
+              // Para Espanha: ESC visível (Sub-N pill), HCP visível, CLUBE escondido
+              accShowCols={{ esc: true, fed: false, tee: false, club: false, hcp: true }}
+            />
+          ) : (
+            <EmptyState message="Sem resultados publicados — ver tab Inscritos." />
+          )
+        )}
+
+        {tab === "inscritos" && (
+          listsAvailable.length === 0 ? (
+            <EmptyState message="Sem inscritos publicados." />
+          ) : (
+            <>
+              <div style={{ display: "flex", gap: 4, flexWrap: "wrap", marginBottom: 8 }}>
+                {(Object.keys(c) as ListKind[]).map((k) => {
+                  const enabled = c[k] > 0;
+                  const active = effectiveList === k;
+                  return (
+                    <button
+                      key={k}
+                      type="button"
+                      disabled={!enabled}
+                      className={`chip ${active ? "active" : ""}`}
+                      onClick={() => { if (enabled) setList(k); }}
+                      style={{ cursor: enabled ? "pointer" : "default", opacity: enabled ? 1 : 0.4, fontSize: 11, padding: "3px 8px" }}
+                    >
+                      {LIST_LABELS[k]} ({c[k]})
+                    </button>
+                  );
+                })}
+              </div>
+              <PlayerTable
+                players={currentList}
+                dateRef={m.dateStart}
+                coursePar={data.coursePar}
+                parConfidence={data.parConfidence}
+              />
+            </>
+          )
+        )}
+
+        {tab === "draw" && (
+          <DrawSaidaView detail={data} entry={entry} />
         )}
       </div>
 
       <p className="muted" style={{ marginTop: 16, fontSize: 11 }}>
-        Fonte: {entry.source === "rfegolf" ? "rfegolf.es" : "nextcaddy.com"} · ID {entry.id} · scrape: {data.scrapedAt}
+        Fonte: {sourceLabel.toLowerCase()} · ID {entry.id} · scrape: {data.scrapedAt}
       </p>
     </>
+  );
+}
+
+/* ── RFEGCategoriesView (Categorías de edad RFEG — info no body) ─────── */
+
+interface RFEGCategory {
+  /** Nome oficial RFEG (ALEVÍN, INFANTIL, CADETE, BENJAMÍN, ...). */
+  name: string;
+  /** Equivalente moderno Sub-N (Sub-10, Sub-12, ...). */
+  subN: string;
+  /** Idades (anos cumpridos no ano civil). */
+  age: string;
+  /** Faixa de millésime (ano de nascimento) para o ano de referência (2026). */
+  millesime: string;
+  /** Equivalente internacional (U-age). */
+  intl: string;
+  /** Equivalente FPG (escalão português). */
+  fpg: string;
+  /** Equivalente FFG (categoria francesa). */
+  ffg: string;
+  /** Cor do pill (matches catPillClass). */
+  pillClass?: string;
+}
+
+/**
+ * Categorias oficiais da RFEG (Real Federación Española de Golf).
+ *
+ * Fonte: art. comum do regulamento RFEG (imagem original do utilizador
+ * "CADETE: 15 y 16 años | INFANTIL: 13 y 14 años | ALEVÍN: 11 y 12 años |
+ * BENJAMIN: ..., 7, 8, 9 y 10 años") + dados que aparecem nos torneios
+ * scrapados (rfegolf-resultats-index.json contém Benjamín, Alevín, Infantil,
+ * Cadete, Junior, Juvenil, Sub-14/16/18/21/25).
+ *
+ * O ano civil é o critério (igual à FPG): para o ano Y, "Sub-N" significa
+ * (Y - ano de nascimento) ≤ N. As tradicionais Benjamín/Alevín/Infantil/Cadete
+ * são intervalos exactos.
+ *
+ * Nota: a tabela usa 2026 como ano de referência; os millésimes deslocam +1
+ * por cada ano que passa.
+ */
+const RFEG_CATEGORIES: RFEGCategory[] = [
+  {
+    name: "BENJAMÍN",
+    subN: "Sub-10",
+    age: "≤ 10 anos (7, 8, 9, 10)",
+    millesime: "2016-2019",
+    intl: "U10",
+    fpg: "Sub-10",
+    ffg: "Poucet / Poussin",
+    pillClass: "p p-sub10 p-sm",
+  },
+  {
+    name: "ALEVÍN",
+    subN: "Sub-12",
+    age: "11-12 anos",
+    millesime: "2014-2015",
+    intl: "U12",
+    fpg: "Sub-12",
+    ffg: "Poussin",
+    pillClass: "p p-sub10 p-sm",
+  },
+  {
+    name: "INFANTIL",
+    subN: "Sub-14",
+    age: "13-14 anos",
+    millesime: "2012-2013",
+    intl: "U14",
+    fpg: "Sub-14",
+    ffg: "Benjamin",
+    pillClass: "p p-sub12 p-sm",
+  },
+  {
+    name: "CADETE",
+    subN: "Sub-16",
+    age: "15-16 anos",
+    millesime: "2010-2011",
+    intl: "U16",
+    fpg: "Sub-16",
+    ffg: "Minime",
+    pillClass: "p p-sub14 p-sm",
+  },
+  {
+    name: "JUNIOR / BOY",
+    subN: "Sub-18",
+    age: "17-18 anos",
+    millesime: "2008-2009",
+    intl: "U18",
+    fpg: "Sub-18",
+    ffg: "Cadet",
+    pillClass: "p p-sm",
+  },
+  {
+    name: "JUVENIL",
+    subN: "Sub-21",
+    age: "≤ 21 anos (regra ampla)",
+    millesime: "≥ 2005",
+    intl: "U21",
+    fpg: "Sub-21",
+    ffg: "Espoir",
+    pillClass: "p p-sm p-muted",
+  },
+  {
+    name: "SUB-25",
+    subN: "Sub-25",
+    age: "≤ 25 anos",
+    millesime: "≥ 2001",
+    intl: "U25",
+    fpg: "Sub-25",
+    ffg: "—",
+    pillClass: "p p-sm p-muted",
+  },
+];
+
+function RFEGCategoriesView({ catCounts }: { catCounts: Record<string, number> }) {
+  const refYear = 2026;
+  return (
+    <div style={{ padding: "12px 16px" }}>
+      <DetailHeader
+        title="📚 Categorías de edad RFEG"
+        sub={
+          <>
+            <span className="muted">
+              Real Federación Española de Golf — categorias oficiais por idade (ano de
+              referência {refYear})
+            </span>
+            <ExtLink
+              href="https://rfegolf.es/"
+              className="tourn-ext-link"
+              style={{ marginLeft: 8 }}
+            >
+              🔗 rfegolf.es
+            </ExtLink>
+          </>
+        }
+      />
+
+      <div style={{ marginTop: 12, padding: "10px 12px", background: "var(--bg-muted, #fff7e6)", border: "1px solid var(--border, #f1bf00)", borderRadius: 6, fontSize: 12 }}>
+        <strong>⚠ Espanha não tem federação única.</strong> A RFEG (federação
+        nacional) coexiste com 17 federações autonómicas (Andalucía, Madrid,
+        Catalunya, Valencia, ...). Os resultados aparecem dispersos por três
+        plataformas: <code>rfegolf.es</code> (campeonatos nacionais),{" "}
+        <code>livegolfscoring.es</code> (scorecards hbh) e{" "}
+        <code>nextcaddy.com</code> (circuitos regionais Andaluzia/Madrid).
+      </div>
+
+      <div style={{ overflowX: "auto", marginTop: 16 }}>
+        <table className="data-table" style={{ width: "100%" }}>
+          <thead>
+            <tr>
+              <th style={{ textAlign: "left" }}>Categoría RFEG</th>
+              <th>Sub-N moderno</th>
+              <th>Idade</th>
+              <th>Millésime ({refYear})</th>
+              <th>Internacional</th>
+              <th>FPG 🇵🇹</th>
+              <th>FFG 🇫🇷</th>
+              <th>Torneios no índice</th>
+            </tr>
+          </thead>
+          <tbody>
+            {RFEG_CATEGORIES.map((c) => {
+              const subShort = c.subN.replace("Sub-", "");
+              const subRfeg = `Sub-${subShort}`;
+              // Conta torneios para este escalão (somando o nome tradicional + Sub-N)
+              const traditionalKey = c.name === "JUNIOR / BOY" ? "Junior" : (c.name === "BENJAMÍN" ? "Benjamín" : c.name === "ALEVÍN" ? "Alevín" : c.name === "INFANTIL" ? "Infantil" : c.name === "CADETE" ? "Cadete" : c.name === "JUVENIL" ? "Juvenil" : c.name);
+              const trad = catCounts[traditionalKey] || 0;
+              const sub = catCounts[subRfeg] || 0;
+              const total = trad + sub;
+              return (
+                <tr key={c.name}>
+                  <td>
+                    <span className={c.pillClass || "p p-sm"}>{c.name}</span>
+                  </td>
+                  <td style={{ textAlign: "center", fontFamily: "monospace" }}>
+                    <strong>{c.subN}</strong>
+                  </td>
+                  <td style={{ textAlign: "center" }}>{c.age}</td>
+                  <td style={{ textAlign: "center", fontFamily: "monospace" }}>
+                    {c.millesime}
+                  </td>
+                  <td style={{ textAlign: "center", fontFamily: "monospace" }}>
+                    {c.intl}
+                  </td>
+                  <td style={{ textAlign: "center" }}>{c.fpg}</td>
+                  <td style={{ textAlign: "center", color: "var(--text-2)" }}>
+                    {c.ffg}
+                  </td>
+                  <td style={{ textAlign: "right", fontFamily: "monospace" }}>
+                    {total > 0 ? (
+                      <span title={`${trad} como "${traditionalKey}" + ${sub} como "${subRfeg}"`}>
+                        {total}
+                        {trad > 0 && sub > 0 && (
+                          <span className="muted" style={{ fontSize: 10 }}>
+                            {" "}({trad}+{sub})
+                          </span>
+                        )}
+                      </span>
+                    ) : (
+                      <span className="muted">—</span>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      <div style={{ marginTop: 24 }}>
+        <h3 style={{ marginBottom: 8 }}>📐 Critério de cálculo do escalão</h3>
+        <p className="fs-12">
+          Tal como na FPG, o escalão é determinado pelo <strong>ano civil</strong>
+          {" "}(year-based), não pela idade exacta na data do torneio. A fórmula é:
+        </p>
+        <pre style={{
+          padding: 12,
+          background: "var(--bg-muted, #f5f5f5)",
+          border: "1px solid var(--border)",
+          borderRadius: 4,
+          fontSize: 12,
+          overflow: "auto",
+        }}>
+          {`escalão = ano_torneio − ano_nascimento
+
+p.ex. jogador nascido em 2014, em 2026:
+  escalão = 2026 − 2014 = 12 → ALEVÍN (Sub-12)`}
+        </pre>
+      </div>
+
+      <div style={{ marginTop: 24 }}>
+        <h3 style={{ marginBottom: 8 }}>🗂️ Nomenclatura dupla</h3>
+        <p className="fs-12">
+          Nos torneios scrapados aparecem <em>simultaneamente</em> as duas
+          nomenclaturas:
+        </p>
+        <ul style={{ fontSize: 12, marginTop: 8 }}>
+          <li>
+            <strong>Tradicional</strong> — nomes históricos (Benjamín, Alevín,
+            Infantil, Cadete, Junior, Juvenil). Usados sobretudo nos campeonatos
+            regionais e em torneios mais antigos. Vêm directamente do nome do
+            torneio na <code>rfegolf.es</code>.
+          </li>
+          <li>
+            <strong>Moderno Sub-N</strong> — Sub-14, Sub-16, Sub-18, Sub-21, Sub-25.
+            Usados em campeonatos nacionais juvenis recentes e nos
+            inter-territoriais. Aparecem em "Campeonato Nacional Sub 16
+            Masculino", etc.
+          </li>
+        </ul>
+        <p className="muted fs-11" style={{ marginTop: 8 }}>
+          A coluna <strong>Torneios no índice</strong> soma ocorrências das duas
+          nomenclaturas. Em algumas categorias (p.ex. Sub-21/Juvenil) os
+          critérios de idade variam ligeiramente entre torneios — verificar
+          regulamento específico.
+        </p>
+      </div>
+
+      <div className="muted fs-11" style={{ marginTop: 24 }}>
+        <strong>Notas:</strong>
+        <ul style={{ marginTop: 4 }}>
+          <li>
+            <em>Benjamín</em> abrange tipicamente 7-10 anos (raramente &lt;7,
+            depende do clube/comité). O critério é só o limite superior.
+          </li>
+          <li>
+            <em>Juvenil</em> é o termo histórico amplo para idades 17-21+ — em
+            alguns torneios é equivalente a Sub-18, noutros estende até Sub-21.
+          </li>
+          <li>
+            <em>Junior</em> e <em>Boy/Girl</em> são intercambiáveis em RFEG;
+            <em> Boy</em> aparece em torneios internacionais.
+          </li>
+          <li>
+            Distância de saída e número de buracos são definidos pelo Comité da
+            prova (regulamento RFEG Art. comum).
+          </li>
+        </ul>
+      </div>
+    </div>
   );
 }
 
@@ -1140,9 +1793,20 @@ interface DobLookupFile {
   lookup: DobLookup;
 }
 
+/** Lookup global de HCP por licença (gerado por build-licencia-hcp-lookup.js).
+ *  Usado para preencher HCP em falta nos players (cross-reference entre torneios). */
+interface HcpLookupEntry { hcp: number; source: string; tourneyId?: number; dateIso?: string | null }
+type HcpLookup = Record<string, HcpLookupEntry>;
+interface HcpLookupFile {
+  generatedAt: string;
+  total: number;
+  lookup: HcpLookup;
+}
+
 export default function RFEGPage() {
   const [index, setIndex] = useState<RFEGIndex | null>(null);
   const [dobLookup, setDobLookup] = useState<DobLookup | undefined>(undefined);
+  const [hcpLookup, setHcpLookup] = useState<HcpLookup | undefined>(undefined);
   const [error, setError] = useState<string | null>(null);
   const md = useMasterDetail(true);
   const navigate = useNavigate();
@@ -1154,6 +1818,8 @@ export default function RFEGPage() {
   const [filterCategory, setFilterCategory] = useState<string>("all");
   const [filterSex, setFilterSex] = useState<string>("all");
   const [filterSource, setFilterSource] = useState<string>("all");
+  /** Quando true, mostra a vista de categorias em vez do detalhe de torneio. */
+  const [showCategories, setShowCategories] = useState(false);
 
   useEffect(() => {
     cachedFetchJson<RFEGIndex>("/data/rfegolf-resultats-index.json")
@@ -1169,25 +1835,54 @@ export default function RFEGPage() {
     cachedFetchJson<DobLookupFile>("/data/licencia-dob-lookup.json")
       .then((d) => { if (d && d.lookup) setDobLookup(d.lookup); })
       .catch(() => {});
+    // Lookup HCP global — agrega HCP de todos os torneios para preencher onde falta.
+    cachedFetchJson<HcpLookupFile>("/data/licencia-hcp-lookup.json")
+      .then((d) => { if (d && d.lookup) setHcpLookup(d.lookup); })
+      .catch(() => {});
+  }, []);
+
+  /** Sinónimos: dado um termo canónico (Alevín), devolver lista de aliases
+   *  reais que aparecem no dataset (Alevín + Sub-12). Declarado antes de
+   *  `visible` (que o usa) para evitar ReferenceError em hot-reload. */
+  const categoryAliases = useMemo<Record<string, string[]>>(() => {
+    const m: Record<string, string[]> = {};
+    for (const [sub, es] of Object.entries(SUB_TO_ES_TERM)) {
+      const canonical = es;
+      m[canonical] = m[canonical] || [];
+      m[canonical].push(es, sub);
+    }
+    return m;
   }, []);
 
   const visible = useMemo(() => {
     if (!index) return [];
     let arr = index.tournaments;
-    // Filtrar torneios SEM dados publicados — poluem o sidebar com entradas
-    // vazias. Acontece em dois cenários:
-    //   - Futuros: ainda não há inscritos publicados.
-    //   - Passados duplicados: o microsite RFEGolf existe mas o leaderboard
-    //     publicado está em livegolfscoring com outro id (ex: Sub-16 M/F 2026 =
-    //     LGS 366+367, microsite RFEGolf 16209 fica vazio).
-    // Mantemos só os com counts.admitidos > 0 OU leaderboardPlayers > 0.
+    // Filtrar torneios SEM dados úteis OU não-juvenis — poluem o sidebar.
+    // Regras estritas:
+    //   A. SÓ JUVENIS — `category` tem de estar preenchida (Alevín/Benjamín/Infantil/
+    //      Cadete/Junior/Juvenil/Sub-N). Torneios de adultos (Caballeros, Señoras,
+    //      Senior, Empresas, Liga Social, etc.) ficam fora porque o build-rfegolf-index
+    //      não atribui categoria a torneios cujo nome+categories não tem escalão.
+    //   B. SÓ COM RESULTADOS — leaderboardPlayers > 0. Torneios apenas com inscritos
+    //      (sem leaderboard) não interessam para análise — só mostrar quando há
+    //      scorecards/totais para ver. Futuros (sem leaderboard) também caem aqui.
     arr = arr.filter((t) => {
-      const hasData = (t.counts?.admitidos || 0) > 0 || (t.leaderboardPlayers || 0) > 0;
-      return hasData;
+      if (!t.category) return false;
+      if ((t.leaderboardPlayers || 0) === 0) return false;
+      return true;
     });
     if (filterYear !== "all") arr = arr.filter((t) => String(t.year) === filterYear);
-    if (filterCategory !== "all") arr = arr.filter((t) => t.category === filterCategory);
-    if (filterSex !== "all") arr = arr.filter((t) => t.sex === filterSex);
+    if (filterCategory !== "all") {
+      // O filtro guarda o termo canónico (ex: "Alevín"); aceitar tanto "Alevín"
+      // como "Sub-12" no dataset → bater em qualquer alias.
+      const aliases = new Set(categoryAliases[filterCategory] || [filterCategory]);
+      arr = arr.filter((t) => t.category != null && aliases.has(t.category));
+    }
+    if (filterSex !== "all") {
+      // M só M; F só F. "Mixto" foi removido do dropdown — usar "all" (M+F)
+      // que mostra tudo (incluindo Mixto).
+      arr = arr.filter((t) => t.sex === filterSex);
+    }
     if (filterSource !== "all") arr = arr.filter((t) => t.source === filterSource);
     if (filterText.trim()) {
       const q = filterText.toLowerCase();
@@ -1223,11 +1918,21 @@ export default function RFEGPage() {
       return parseInt(b, 10) - parseInt(a, 10);
     });
   }, [index]);
-  const categories = useMemo(() => {
+  /** Categorias agrupadas: Sub-N e termo RFEG são contados juntos sob a chave
+   *  RFEG (Alevín, Benjamín, etc). Resultado é Map<termoRFEG, count>. */
+  const categories = useMemo<Array<{ key: string; count: number }>>(() => {
     if (!index) return [];
-    return Object.keys(index.byCategory);
+    const merged: Record<string, number> = {};
+    for (const [cat, n] of Object.entries(index.byCategory)) {
+      // Mapear Sub-N → termo RFEG; manter Alevín etc. como estão
+      const canonical = SUB_TO_ES_TERM[cat] || cat;
+      merged[canonical] = (merged[canonical] || 0) + n;
+    }
+    // Ordenar pelo nº de torneios (descendente)
+    return Object.entries(merged)
+      .map(([key, count]) => ({ key, count }))
+      .sort((a, b) => b.count - a.count);
   }, [index]);
-
   if (error) return <EmptyState message={`Erro: ${error}`} />;
   if (!index) return <LoadingState message="A carregar índice RFEGolf..." />;
 
@@ -1252,13 +1957,14 @@ export default function RFEGPage() {
         </select>
         <select className="input" value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)} style={{ padding: "3px 6px", fontSize: 12 }}>
           <option value="all">🏆 Categorias</option>
-          {categories.map((c) => <option key={c} value={c}>{c} ({index.byCategory[c]})</option>)}
+          {categories.map(({ key, count }) => (
+            <option key={key} value={key}>{key} ({count})</option>
+          ))}
         </select>
         <select className="input" value={filterSex} onChange={(e) => setFilterSex(e.target.value)} style={{ padding: "3px 6px", fontSize: 12 }}>
           <option value="all">M+F</option>
           <option value="M">Masculino</option>
           <option value="F">Femenino</option>
-          <option value="Mixto">Mixto</option>
         </select>
         <select className="input" value={filterSource} onChange={(e) => setFilterSource(e.target.value)} style={{ padding: "3px 6px", fontSize: 12 }}>
           <option value="all">Fontes</option>
@@ -1279,12 +1985,31 @@ export default function RFEGPage() {
 
       <div className="master-detail">
         <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
+          {/* ── Item info: Categorías de edad RFEG ── */}
+          <button
+            className={`course-item ${showCategories ? "active" : ""}`}
+            onClick={() => {
+              setShowCategories(true);
+              md.onSelect();
+            }}
+            style={{ borderLeft: "3px solid #aa151b" }}
+          >
+            <div className="course-item-name">📚 Categorías de edad RFEG</div>
+            <div className="course-item-meta">
+              {RFEG_CATEGORIES.length} categorias · Benjamín → Sub-25
+            </div>
+            <div className="course-item-meta" style={{ fontSize: 10 }}>
+              Tradicional + Sub-N · Equiv. FPG/FFG/Internacional
+            </div>
+          </button>
+
           {years.map((y, yIdx) => {
             const yearEntries = visible.filter((t) => (t.year ? String(t.year) : "—") === y);
             if (yearEntries.length === 0) return null;
             return (
               <React.Fragment key={`rfeg-${y}`}>
-                {yIdx === 0 && (
+                
+{yIdx === 0 && (
                   <SidebarSectionTitle dark color="#aa151b" textColor="#ffffff" borderColor="#f1bf00" letterSpacing="0.08em">
                     🇪🇸 RFEG — Torneios juvenis
                   </SidebarSectionTitle>
@@ -1298,15 +2023,27 @@ export default function RFEGPage() {
                   return (
                     <button
                       key={`${entry.source}-${entry.id}`}
-                      className={`course-item ${active ? "active" : ""}`}
-                      onClick={() => { navigate(`/rfeg/${entry.source}/${entry.id}`); md.onSelect(); }}
+                      className={`course-item ${active && !showCategories ? "active" : ""}`}
+                      onClick={() => { setShowCategories(false); navigate(`/rfeg/${entry.source}/${entry.id}`); md.onSelect(); }}
                     >
                       <div className="course-item-name">{entry.name}</div>
                       <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginTop: 4, alignItems: "center" }}>
                         <span className="chip" style={{ fontSize: 9, background: sourceColor, color: sourceFg, padding: "1px 6px", borderRadius: 8 }}>{sourceLabel}</span>
-                        {entry.category && <span className={catPillClass(entry.category)}>{entry.category}</span>}
-                        {entry.sex && <span className="chip" style={{ fontSize: 9, padding: "1px 6px", borderRadius: 8 }}>{entry.sex}</span>}
-                        {(entry.leaderboardPlayers && entry.leaderboardPlayers > 0) ? <RoundPill nR={1} /> : null}
+                        {entry.category && (() => {
+                          const cat = SUB_TO_ES_TERM[entry.category] || entry.category;
+                          return <EscPill esc={cat} />;
+                        })()}
+                        {entry.sex === "M" && <SexBadge sex="M" />}
+                        {entry.sex === "F" && <SexBadge sex="F" />}
+                        {entry.sex === "Mixto" && (
+                          <span style={{ display: "inline-flex", gap: 2 }}>
+                            <SexBadge sex="M" />
+                            <SexBadge sex="F" />
+                          </span>
+                        )}
+                        {((entry.leaderboardPlayers || 0) > 0) && (
+                          <RoundPill nR={entry.nRounds && entry.nRounds > 0 ? entry.nRounds : 1} />
+                        )}
                       </div>
                       {entry.dateStart && (
                         <div className="course-item-meta" style={{ fontSize: 11, marginTop: 4 }}>📅 {dateRange(entry.dateStart, entry.dateEnd)}</div>
@@ -1334,7 +2071,13 @@ export default function RFEGPage() {
         </div>
 
         <div className="course-detail">
-          {cur ? <TournamentDetail entry={cur} dobLookup={dobLookup} /> : <EmptyState message="Escolhe um torneio na barra lateral." />}
+          {showCategories ? (
+            <RFEGCategoriesView catCounts={index.byCategory} />
+          ) : cur ? (
+            <TournamentDetail entry={cur} dobLookup={dobLookup} hcpLookup={hcpLookup} />
+          ) : (
+            <EmptyState message="Escolhe um torneio na barra lateral." />
+          )}
         </div>
       </div>
     </div>

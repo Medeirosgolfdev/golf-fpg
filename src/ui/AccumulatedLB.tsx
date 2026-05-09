@@ -28,7 +28,7 @@ export function AccumulatedLB({
   nRounds: number;
   escLookup: EscLookup;
   playersDB: PlayersDB;
-  showCols?: { esc?: boolean; fed?: boolean; tee?: boolean };
+  showCols?: { esc?: boolean; fed?: boolean; tee?: boolean; club?: boolean; hcp?: boolean };
   extraColumns?: ExtraColumn<MRRow & { _pos?: number | null }>[];
   renderName?: (row: MRRow) => React.ReactNode;
 }) {

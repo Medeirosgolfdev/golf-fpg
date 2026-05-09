@@ -23,7 +23,7 @@ import DetailHeader from "../ui/DetailHeader";
 import KpiCard from "../ui/KpiCard";
 import ExtLink from "../ui/ExternalLink";
 import SidebarSectionTitle from "../ui/SidebarSectionTitle";
-import { buildAutoRivals, normName, getScorecards, uskTournNames, uskFieldSizes, fpgTournNames, ffgolfTournNames, getLoadedKidsFiles, type KidsFileMeta, type AutoRivalPlayer } from "../data/KIDSdataLoader";
+import { buildAutoRivals, normName, getScorecards, uskTournNames, uskFieldSizes, fpgTournNames, ffgolfTournNames, ncScoringType, getLoadedKidsFiles, type KidsFileMeta, type AutoRivalPlayer } from "../data/KIDSdataLoader";
 import { cachedFetchJson } from "../data/fetchCache";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 import { FIELD_2025, VP_PAR, VP_SI, VP_M, VP_WJGC26_PAR, VP_WJGC26_SI, VP_WJGC26_M, VP_ALFERINI_PAR, VP_ALFERINI_SI, VP_ALFERINI_M, LT_FORET_PAR, LT_FORET_SI, LT_FORET_M, MS_USKIDS_M_B1011, MS_USKIDS_M_B12, DORAL_GP_M_B1011, DORAL_SF_M_B1213, FIELD_CARDS } from "../data/rivalData";
@@ -220,13 +220,14 @@ function getSignupanytimeUrl(tid: string): string | undefined {
  *  - uskidsUrl: quando existe no T[] ou AUTO_TOURN_META
  *  - fpgUrl: classif FPG pública para tids fpg{tcode}
  *  - ffgolfUrl: página resultats-details do FFGolf para tids ff{trnId}_U{N} */
-function getTournLinks(tid: string, manualUrl?: string): { signupanytimeUrl?: string; uskidsUrl?: string; fpgUrl?: string; ffgolfUrl?: string; lgsUrl?: string } {
+function getTournLinks(tid: string, manualUrl?: string): { signupanytimeUrl?: string; uskidsUrl?: string; fpgUrl?: string; ffgolfUrl?: string; lgsUrl?: string; ncUrl?: string } {
   const uskidsUrl = manualUrl ?? AUTO_TOURN_META[tid]?.url;
   const signupanytimeUrl = getSignupanytimeUrl(tid);
   const fpgUrl = getFpgUrl(tid);
   const ffgolfUrl = getFfgolfUrl(tid);
   const lgsUrl = getLgsUrl(tid);
-  return { signupanytimeUrl, uskidsUrl, fpgUrl, ffgolfUrl, lgsUrl };
+  const ncUrl = getNextCaddyUrl(tid);
+  return { signupanytimeUrl, uskidsUrl, fpgUrl, ffgolfUrl, lgsUrl, ncUrl };
 }
 
 /** Para tids LGS ("lgs{id}") devolve URL para clasificacion do livegolfscoring. */
@@ -234,6 +235,13 @@ function getLgsUrl(tid: string): string | undefined {
   const m = tid.match(/^lgs(\d+)$/);
   if (!m) return undefined;
   return `https://rfegolf.livegolfscoring.es/torneos/clasificacion/${m[1]}`;
+}
+
+/** Para tids NextCaddy ("nc{tourId}_{ageKey}") devolve URL para nextcaddy.com. */
+function getNextCaddyUrl(tid: string): string | undefined {
+  const m = tid.match(/^nc(\d+)/);
+  if (!m) return undefined;
+  return `https://www.nextcaddy.com/tour/${m[1]}/clasificaciones`;
 }
 
 /** Para tids FPG ("fpg{tcode}"), constrói URL para a classif pública FPG.
@@ -315,6 +323,11 @@ function getTournInfo(tid: string): { name: string; short: string; date: string;
   if (tid.startsWith("lgs")) {
     const lgs = uskTournNames.get(tid);
     if (lgs) return { name: lgs.name, short: lgs.short, date: lgs.date, dateExact: lgs.dateExact };
+  }
+  // RFEGolf NextCaddy: "nc{tourId}_{ageKey}" — registado por processRfegolfRivals (mesmo path)
+  if (tid.startsWith("nc")) {
+    const nc = uskTournNames.get(tid);
+    if (nc) return { name: nc.name, short: nc.short, date: nc.date, dateExact: nc.dateExact };
   }
   return { name: tid, short: tid, date: "?", dateExact: "9999" };
 }
@@ -1526,7 +1539,7 @@ function playerMatchesFilter(p: RivalPlayer, fids: Set<string>): boolean {
       t.startsWith("gg") || t.startsWith("qdl") || t.startsWith("fpg")
     );
     if (fid === "fr")       return tids.some(t => t.startsWith("ff"));
-    if (fid === "es")       return tids.some(t => t.startsWith("lgs"));
+    if (fid === "es")       return tids.some(t => t.startsWith("lgs") || t.startsWith("nc"));
     return true;
   });
 }
@@ -2909,7 +2922,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
                         )}
                         {/* Links */}
                         {(() => {
-                          const { signupanytimeUrl, uskidsUrl, fpgUrl, ffgolfUrl, lgsUrl } = getTournLinks(t.id, t.url);
+                          const { signupanytimeUrl, uskidsUrl, fpgUrl, ffgolfUrl, lgsUrl, ncUrl } = getTournLinks(t.id, t.url);
                           const linkStyle: React.CSSProperties = {
                             display:"inline-flex", alignItems:"center", gap:2, fontSize:10,
                             fontWeight:600, textDecoration:"none", padding:"1px 5px",
@@ -2952,6 +2965,34 @@ function RivalDetail({ playerName }: { playerName: string }) {
                                   ↗ RFEG
                                 </ExtLink>
                               )}
+                              {ncUrl && (
+                                <ExtLink href={ncUrl}
+                                  onClick={e => e.stopPropagation()} title="Clasificación NextCaddy (RFGA Andaluzia / FGM Madrid)"
+                                  style={{ ...linkStyle, color:"var(--accent)", border:"1px solid var(--accent)" }}>
+                                  ↗ RFEG
+                                </ExtLink>
+                              )}
+                              {(() => {
+                                // Pill colorido SCRATCH/HANDICAP para torneios NC.
+                                // Scratch (gross) = âmbar/amarelo; Handicap (net) = azul.
+                                const sct = ncScoringType.get(t.id);
+                                if (!sct) return null;
+                                const isScratch = sct === "SCRATCH";
+                                return (
+                                  <span title={isScratch
+                                      ? "Scratch — pontuação bruta (gross)"
+                                      : "Handicap — pontuação líquida (net = gross − handicap)"}
+                                    style={{
+                                      ...linkStyle,
+                                      cursor: "help",
+                                      background: isScratch ? "#fef3c7" : "#dbeafe",
+                                      color: isScratch ? "#92400e" : "#1e40af",
+                                      border: `1px solid ${isScratch ? "#f59e0b" : "#3b82f6"}`,
+                                    }}>
+                                    {isScratch ? "Scratch" : "Handicap"}
+                                  </span>
+                                );
+                              })()}
                             </>
                           );
                         })()}
@@ -3289,40 +3330,39 @@ function RivaisIntlContent() {
       }}>
         {SIDEBAR_FILTERS.filter(f => f.id !== "all").map(f => {
           const active = fids.has(f.id);
-          return (
-            <button key={f.id}
-              className={"tourn-tab tourn-tab-sm" + (active ? " active" : " tourn-tab-muted")}
-              style={{ flexShrink: 0 }}
-              onClick={() => toggleFid(f.id)}>
-              {f.label}
-            </button>
-          );
-        })}
-      </div>
+            return (
+              <button key={f.id}
+                className={"tourn-tab tourn-tab-sm" + (active ? " active" : " tourn-tab-muted")}
+                style={{ flexShrink: 0 }}
+                onClick={() => toggleFid(f.id)}>
+                {f.label}
+              </button>
+            );
+          })}
+        </div>
 
-      {/* Master-detail */}
-      <div className="master-detail">
-        <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
-          <RivaisSidebar
-            selected={selectedPlayer}
-            onSelect={handleSelectPlayer}
-            fids={fids} q={q}
-            paisFilter={paisFilter}
-            tierFilter={tierFilter}
-            minTorn={minTorn}
-            apenasDirectos={apenasDirectos}
-            playerTypeMap={playerTypeMap}
-          />
-        </div>
-        <div className="course-detail" ref={md.detailRef}>
-          {selectedPlayer ? (
-            <RivalDetail playerName={selectedPlayer} />
-          ) : (
-            <div className="muted p-16">Selecciona um rival na lista à esquerda.</div>
-          )}
+        <div className="master-detail">
+          <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
+            <RivaisSidebar
+              selected={selectedPlayer}
+              onSelect={handleSelectPlayer}
+              fids={fids} q={q}
+              paisFilter={paisFilter}
+              tierFilter={tierFilter}
+              minTorn={minTorn}
+              apenasDirectos={apenasDirectos}
+              playerTypeMap={playerTypeMap}
+            />
+          </div>
+          <div className="course-detail" ref={md.detailRef}>
+            {selectedPlayer ? (
+              <RivalDetail playerName={selectedPlayer} />
+            ) : (
+              <div className="muted p-16">Selecciona um rival à esquerda.</div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
     </DataSourcesProvider>
     </ScoringStatsCtx.Provider>
     </MemberHistCtx.Provider>

@@ -7,8 +7,8 @@
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Club Deportivo Añoreta Golf",
     "courseCode": "AM75",
-    "dateStart": null,
-    "dateEnd": null,
+    "dateStart": "14 feb 2026",
+    "dateEnd": "14 feb 2026",
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Benjamín",
@@ -19,7 +19,8 @@
       "benjamin",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-02-14"
   },
   "course": {
     "par": [
@@ -1157,5 +1158,148 @@
         }
       ]
     }
-  }
+  },
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Gonzalo Bernal Suarez",
+          "hcp": 10.9,
+          "ins": "2253074",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Ana Gross Paneque",
+          "hcp": 18.4,
+          "ins": "2246356",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Pau Caceres Gago",
+          "hcp": 21.2,
+          "ins": "2248376",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Santiago Viera Villalba",
+          "hcp": 21.6,
+          "ins": "2246313",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Marcos Sanchez Navas",
+          "hcp": 22.5,
+          "ins": "2246358",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Nikita Elchaninov",
+          "hcp": 24.8,
+          "ins": "2246394",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Alvaro Quiros Lopez",
+          "hcp": 25.3,
+          "ins": "2246311",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Daniel Hernandez Ruiz",
+          "hcp": 25.6,
+          "ins": "2246800",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Martin Quiros Lopez",
+          "hcp": 25.4,
+          "ins": "2246312",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Antonio Merchan Casado",
+          "hcp": 25.9,
+          "ins": "2246373",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Javier Del Cid Gomez",
+          "hcp": 30.5,
+          "ins": "2246393",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Hugo Carrere Aguiar",
+          "hcp": 34.8,
+          "ins": "2256965",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Enrique Alvarez-Net Gonzalez",
+          "hcp": 36.1,
+          "ins": "2255095",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Liane Gavira Rodriguez",
+          "hcp": 37.7,
+          "ins": "2248620",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Ramiro Amaya Cozzi",
+          "hcp": 37.8,
+          "ins": "2246915",
+          "jid": "64671",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "horariosScrapedAt": "2026-05-09T12:11:58.029Z"
 }

@@ -1,0 +1,188 @@
+{
+  "tourId": 68513,
+  "url": "https://www.nextcaddy.com/tour/68513",
+  "scrapedAt": "2026-05-09T09:58:11.035Z",
+  "meta": {
+    "name": "VI  Liga Promesas 2025-2026",
+    "organizer": null,
+    "course": "Escuela de Golf Miguel ángel Jiménez",
+    "courseCode": "AMI5",
+    "dateStart": "14 mar 2026",
+    "dateEnd": "14 mar 2026",
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-03-14"
+  },
+  "course": null,
+  "leaderboard": [
+    {
+      "category": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Juan Jose Muñoz Mora",
+          "licencia": "AMI5467648",
+          "hcp": 25.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 68,
+          "toPar": 14,
+          "inscribedId": 2278978
+        },
+        {
+          "pos": 2,
+          "name": "Jose Luis Garcia Perez",
+          "licencia": "AM15488988",
+          "hcp": 24.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 79,
+          "toPar": 25,
+          "inscribedId": 2277364
+        },
+        {
+          "pos": 3,
+          "name": "Juan Garrido Muñoz",
+          "licencia": "AMI5099867",
+          "hcp": 34.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 89,
+          "toPar": 35,
+          "inscribedId": 2277561
+        }
+      ]
+    }
+  ],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Jose Luis Garcia Perez",
+      "licencia": "AM15488988",
+      "hcp": 24.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Juan Garrido Muñoz",
+      "licencia": "AMI5099867",
+      "hcp": 34.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Juan Jose Muñoz Mora",
+      "licencia": "AMI5467648",
+      "hcp": 25.3,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Fecha Inscripción",
+      "hcp": null,
+      "nivel": "Licencia"
+    },
+    {
+      "orden": 1,
+      "name": "Jose Luis Garcia Perez",
+      "licencia": "09-03-26 13:22",
+      "hcp": 24.1,
+      "nivel": "AM15488988"
+    },
+    {
+      "orden": 2,
+      "name": "Juan Garrido Muñoz",
+      "licencia": "09-03-26 19:10",
+      "hcp": 34.3,
+      "nivel": "AMI5099867"
+    },
+    {
+      "orden": 3,
+      "name": "Juan Jose Muñoz Mora",
+      "licencia": "11-03-26 15:21",
+      "hcp": 25.3,
+      "nivel": "AMI5467648"
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73137
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Castellanos Osorio, Carlos",
+          "holeNumber": 7,
+          "createdAt": "19/08/25 18:15:32"
+        }
+      ]
+    }
+  },
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "13:30",
+          "tee": 1,
+          "name": "Jose Luis Garcia Perez",
+          "hcp": 24.1,
+          "ins": "2277364",
+          "jid": "73137",
+          "nivel": "M"
+        },
+        {
+          "time": "13:30",
+          "tee": 1,
+          "name": "Juan Jose Muñoz Mora",
+          "hcp": 25.3,
+          "ins": "2278978",
+          "jid": "73137",
+          "nivel": "S"
+        },
+        {
+          "time": "13:30",
+          "tee": 1,
+          "name": "Juan Garrido Muñoz",
+          "hcp": 34.3,
+          "ins": "2277561",
+          "jid": "73137",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
+  "horariosScrapedAt": "2026-05-09T12:12:25.663Z"
+}

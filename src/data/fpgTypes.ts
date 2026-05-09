@@ -81,6 +81,9 @@ export interface ScorecardOptions {
   hideEsc?: boolean;      // ocultar coluna ESC (escalão)
   hideFed?: boolean;      // ocultar coluna FED (federação)
   hideTee?: boolean;      // ocultar coluna TEE
+  hideClub?: boolean;     // ocultar coluna CLUB (usado em RFEG: clube é irrelevante)
+  showAge?: boolean;      // mostrar coluna IDADE (separada da ESC, sortable; usa player._age)
+  noPlayerLink?: boolean; // não criar link /jogadores/{fed} no nome (usado em RFEG: licenças espanholas não correspondem a fed codes FPG)
   clubLabel?: string;     // label alternativo para coluna Clube (ex: "País")
   startHole?: number;     // buraco inicial (default 1, back-9: 10)
   /** Decorador que envolve o conteúdo do nome (ex: para adicionar ↗ Kids link). */

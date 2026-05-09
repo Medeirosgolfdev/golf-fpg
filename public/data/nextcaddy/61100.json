@@ -7,8 +7,8 @@
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Granada Club de Golf",
     "courseCode": "AM65",
-    "dateStart": null,
-    "dateEnd": null,
+    "dateStart": "14 mar 2026",
+    "dateEnd": "14 mar 2026",
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,7 +17,8 @@
       "Juvenil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-03-14"
   },
   "course": {
     "par": [
@@ -758,5 +759,139 @@
         }
       ]
     }
-  }
+  },
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Rafael Valle Garcia-Valdecasas",
+          "hcp": 36.3,
+          "ins": "2259825",
+          "jid": "64715",
+          "nivel": "B"
+        },
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Tiago Dos Santos Vicente",
+          "hcp": 41.7,
+          "ins": "2272820",
+          "jid": "64715",
+          "nivel": "B"
+        },
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Paloma Fernandez Nuñez",
+          "hcp": 44.2,
+          "ins": "2270791",
+          "jid": "64715",
+          "nivel": "A"
+        },
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Ainara Vanesa Azpitarte Perea",
+          "hcp": 49.2,
+          "ins": "2275436",
+          "jid": "64715",
+          "nivel": "B"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "David Prieto Perez",
+          "hcp": 44.8,
+          "ins": "2276006",
+          "jid": "64715",
+          "nivel": "B"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Mario Dos Santos Vicente",
+          "hcp": 45.7,
+          "ins": "2272819",
+          "jid": "64715",
+          "nivel": "B"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Juan Alberto Muñoz Del Pozo Salinas",
+          "hcp": 46.4,
+          "ins": "2276964",
+          "jid": "64715",
+          "nivel": "B"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Manuel Quesada Jimenez",
+          "hcp": 54,
+          "ins": "2276655",
+          "jid": "64715",
+          "nivel": "A"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Juan Jimenez Garcia",
+          "hcp": 52.8,
+          "ins": "2276681",
+          "jid": "64715",
+          "nivel": "B"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Hugo Marin Maza",
+          "hcp": 53.8,
+          "ins": "2274295",
+          "jid": "64715",
+          "nivel": "B"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Javier Quesada Jimenez",
+          "hcp": 54,
+          "ins": "2276657",
+          "jid": "64715",
+          "nivel": "B"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Cloe Arambuena Vela",
+          "hcp": 54,
+          "ins": "2276540",
+          "jid": "64715",
+          "nivel": "B"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Maria Jimenez Garcia",
+          "hcp": 54,
+          "ins": "2276682",
+          "jid": "64715",
+          "nivel": "B"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Paula Martinez Skaudickaite",
+          "hcp": 54,
+          "ins": "2263282",
+          "jid": "64715",
+          "nivel": "A"
+        }
+      ]
+    }
+  ],
+  "horariosScrapedAt": "2026-05-09T12:11:59.018Z"
 }

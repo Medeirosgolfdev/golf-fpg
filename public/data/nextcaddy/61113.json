@@ -7,8 +7,8 @@
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Aguilon Golf",
     "courseCode": "AMF8",
-    "dateStart": null,
-    "dateEnd": null,
+    "dateStart": "12 abr 2026",
+    "dateEnd": "12 abr 2026",
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Benjamín",
@@ -18,7 +18,8 @@
       "Juvenil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-04-12"
   },
   "course": {
     "par": [
@@ -309,5 +310,22 @@
         }
       ]
     }
-  }
+  },
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Rafael Valle Garcia-Valdecasas",
+          "hcp": 36.3,
+          "ins": "2288902",
+          "jid": "64728",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "horariosScrapedAt": "2026-05-09T12:11:59.463Z"
 }

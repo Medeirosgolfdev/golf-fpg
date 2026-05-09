@@ -1,0 +1,211 @@
+{
+  "tourId": 67477,
+  "url": "https://www.nextcaddy.com/tour/67477",
+  "scrapedAt": "2026-05-09T09:57:37.371Z",
+  "meta": {
+    "name": "V  Liga Promesas 2025-2026",
+    "organizer": null,
+    "course": "Escuela de Golf Miguel ángel Jiménez",
+    "courseCode": "AMI5",
+    "dateStart": "14 feb 2026",
+    "dateEnd": "14 feb 2026",
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-02-14"
+  },
+  "course": null,
+  "leaderboard": [
+    {
+      "category": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jose Luis Garcia Perez",
+          "licencia": "AM15488988",
+          "hcp": 26.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2255278
+        },
+        {
+          "pos": 2,
+          "name": "Carlos Colombo Flethes",
+          "licencia": "AMI5097186",
+          "hcp": 29.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2257682
+        },
+        {
+          "pos": 3,
+          "name": "Juan Jose Muñoz Mora",
+          "licencia": "AMI5467648",
+          "hcp": 25.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2257798
+        },
+        {
+          "pos": 4,
+          "name": "Sergio Planell Litzius",
+          "licencia": "AM83256173",
+          "hcp": 21.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2257845
+        }
+      ]
+    }
+  ],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Jose Luis Garcia Perez",
+      "licencia": "AM15488988",
+      "hcp": 26.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Carlos Colombo Flethes",
+      "licencia": "AMI5097186",
+      "hcp": 29.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Juan Jose Muñoz Mora",
+      "licencia": "AMI5467648",
+      "hcp": 25.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Sergio Planell Litzius",
+      "licencia": "AM83256173",
+      "hcp": 21.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Fecha Inscripción",
+      "hcp": null,
+      "nivel": "Licencia"
+    },
+    {
+      "orden": 1,
+      "name": "Jose Luis Garcia Perez",
+      "licencia": "03-02-26 17:56",
+      "hcp": 26.1,
+      "nivel": "AM15488988"
+    },
+    {
+      "orden": 2,
+      "name": "Carlos Colombo Flethes",
+      "licencia": "10-02-26 10:29",
+      "hcp": 29.8,
+      "nivel": "AMI5097186"
+    },
+    {
+      "orden": 3,
+      "name": "Juan Jose Muñoz Mora",
+      "licencia": "10-02-26 13:59",
+      "hcp": 25.3,
+      "nivel": "AMI5467648"
+    },
+    {
+      "orden": 4,
+      "name": "Sergio Planell Litzius",
+      "licencia": "10-02-26 16:39",
+      "hcp": 21.5,
+      "nivel": "AM83256173"
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71937
+    }
+  ],
+  "scoreTypes": [],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "01:15",
+          "tee": 1,
+          "name": "Sergio Planell Litzius",
+          "hcp": 21.5,
+          "ins": "2257845",
+          "jid": "71937",
+          "nivel": "M"
+        },
+        {
+          "time": "01:15",
+          "tee": 1,
+          "name": "Juan Jose Muñoz Mora",
+          "hcp": 25.3,
+          "ins": "2257798",
+          "jid": "71937",
+          "nivel": "S"
+        },
+        {
+          "time": "01:15",
+          "tee": 1,
+          "name": "Jose Luis Garcia Perez",
+          "hcp": 26.1,
+          "ins": "2255278",
+          "jid": "71937",
+          "nivel": "M"
+        },
+        {
+          "time": "01:15",
+          "tee": 1,
+          "name": "Carlos Colombo Flethes",
+          "hcp": 29.8,
+          "ins": "2257682",
+          "jid": "71937",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
+  "horariosScrapedAt": "2026-05-09T12:12:08.186Z"
+}

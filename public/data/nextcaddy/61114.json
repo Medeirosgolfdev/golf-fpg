@@ -7,8 +7,8 @@
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Alborán Golf",
     "courseCode": "AMC7",
-    "dateStart": null,
-    "dateEnd": null,
+    "dateStart": "18 abr 2026",
+    "dateEnd": "18 abr 2026",
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,7 +17,8 @@
       "Juvenil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-04-18"
   },
   "course": {
     "par": null,
@@ -468,5 +469,130 @@
         ]
       }
     }
-  }
+  },
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Tiago Dos Santos Vicente",
+          "hcp": 38.9,
+          "ins": "2293757",
+          "jid": "64729",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Juan Alberto Muñoz Del Pozo Salinas",
+          "hcp": 42.9,
+          "ins": "2292716",
+          "jid": "64729",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Mario Dos Santos Vicente",
+          "hcp": 44.3,
+          "ins": "2293756",
+          "jid": "64729",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "David Prieto Perez",
+          "hcp": 44.3,
+          "ins": "2297798",
+          "jid": "64729",
+          "nivel": "B"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Jose Manuel Farfan Ubeda",
+          "hcp": 51.5,
+          "ins": "2297259",
+          "jid": "64729",
+          "nivel": "B"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Ignacio García Zazo",
+          "hcp": 54,
+          "ins": "2297166",
+          "jid": "64729",
+          "nivel": "A"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Javier Martin Picon",
+          "hcp": 54,
+          "ins": "2297298",
+          "jid": "64729",
+          "nivel": "B"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Carlos Villegas Martinez",
+          "hcp": 54,
+          "ins": "2297227",
+          "jid": "64729",
+          "nivel": "B"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Lucas Lope De Lima",
+          "hcp": 54,
+          "ins": "2295307",
+          "jid": "64729",
+          "nivel": "B"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Maria Martin Sabiote",
+          "hcp": 54,
+          "ins": "2297375",
+          "jid": "64729",
+          "nivel": "A"
+        },
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Jose Antonio Sanchez Montes",
+          "hcp": 54,
+          "ins": "2296546",
+          "jid": "64729",
+          "nivel": "B"
+        },
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Ismael Rincon Arango",
+          "hcp": 54,
+          "ins": "2297879",
+          "jid": "64729",
+          "nivel": "A"
+        },
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Jesus Villegas Martinez",
+          "hcp": 54,
+          "ins": "2297226",
+          "jid": "64729",
+          "nivel": "A"
+        }
+      ]
+    }
+  ],
+  "horariosScrapedAt": "2026-05-09T12:11:59.648Z"
 }

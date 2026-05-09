@@ -19,6 +19,7 @@ import {
 } from "./multiRoundTypes";
 import { ScorecardLeaderboard } from "./ScorecardLeaderboard";
 import { EscPill } from "./PillBadge";
+import SexBadge from "./SexBadge";
 import SortableHdr from "./SortableHdr";
 import EmptyState from "./EmptyState";
 import PlayerLink from "./PlayerLink";
@@ -48,7 +49,7 @@ const PName = ({
 }) => <TournPName name={name} fedCode={fedCode} playersDB={playersDB} />;
 
 /* SortKey — usado pelo ScorecardLB */
-type SortKey = "pos" | "name" | "club" | "esc" | "hcp" | "gross" | "toPar" | "tee" | "sd";
+type SortKey = "pos" | "name" | "club" | "esc" | "age" | "hcp" | "gross" | "toPar" | "tee" | "sd";
 
 export function ScorecardLB({
   tournament,
@@ -70,13 +71,17 @@ export function ScorecardLB({
   const hideEsc = options?.hideEsc ?? false;
   const hideFed = options?.hideFed ?? false;
   const hideTee = options?.hideTee ?? false;
+  const hideClub_ = options?.hideClub ?? false;
+  const showAge_ = options?.showAge ?? false;
   const clubLabel_ = options?.clubLabel ?? "CLUBE";
   const startHole_ = options?.startHole ?? 1;
   const nameDecorator_ = options?.nameDecorator;
-  // Calcular colSpan dinâmico: base 5 (ESC+FED+CLUBE+HCP+TEE) menos as colunas ocultas
+  // Calcular colSpan dinâmico: base 5 (ESC+FED+CLUBE+HCP+TEE) menos as colunas
+  // ocultas, mais 1 se IDADE estiver ligada (showAge)
   const parLabelColSpan =
     parLabelColSpanProp ??
-    (5 - (hideEsc ? 1 : 0) - (hideFed ? 1 : 0) - (hideHCP_ ? 1 : 0) - (hideTee ? 1 : 0));
+    (5 - (hideEsc ? 1 : 0) - (hideFed ? 1 : 0) - (hideClub_ ? 1 : 0) - (hideHCP_ ? 1 : 0) - (hideTee ? 1 : 0)
+       + (showAge_ ? 1 : 0));
   const { sortKey, sortDir, toggleSort: handleSort } = useSort<SortKey>("pos");
   const [showScorecard, setShowScorecard] = useState(true);
   const [filter, setFilter] = useState<PlayerFilter>(EMPTY_FILTER);
@@ -157,8 +162,12 @@ export function ScorecardLB({
           bv = b.club || "";
           break;
         case "esc":
-          av = resolveEsc(a, escLookup, { tournamentDate: tournament.date, playersDB, fedBirthdates }) || "";
-          bv = resolveEsc(b, escLookup, { tournamentDate: tournament.date, playersDB, fedBirthdates }) || "";
+          av = (a.escalao || resolveEsc(a, escLookup, { tournamentDate: tournament.date, playersDB, fedBirthdates }) || "");
+          bv = (b.escalao || resolveEsc(b, escLookup, { tournamentDate: tournament.date, playersDB, fedBirthdates }) || "");
+          break;
+        case "age":
+          av = (a as any)._age ?? 999;
+          bv = (b as any)._age ?? 999;
           break;
         case "hcp":
           av = a.hcpExact ?? 999;
@@ -233,22 +242,31 @@ export function ScorecardLB({
       isPortuguese: rowPortuguese,
       fedCode: p.fedCode || undefined,
       nameContent: ((): React.ReactNode => {
+        const sex = (p as any)._sex as ("M" | "F" | null | undefined);
+        const noLink = options?.noPlayerLink === true;
+        // Em RFEG (noPlayerLink), licenças espanholas não correspondem a fed codes
+        // FPG — render plain text para não criar link /jogadores/{fed} inútil.
+        const baseInner = noLink ? (
+          <span style={{ fontWeight: isManuel(p) ? 700 : undefined }}>{p.name}</span>
+        ) : (
+          <PName
+            name={p.name}
+            fedCode={p.fedCode}
+            playersDB={playersDB}
+            highlight={isManuel(p)}
+          />
+        );
+        // Pill de sexo após o nome (só renderiza se _sex foi injectado pelo
+        // adapter da página — RFEG/intl). Usa SexBadge (NUNCA texto/símbolo Unicode).
+        const decorated = sex === "M" || sex === "F" ? (
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+            {baseInner}
+            <SexBadge sex={sex} />
+          </span>
+        ) : baseInner;
         const base: React.ReactNode = nameDecorator_
-          ? nameDecorator_(
-              p.name,
-              <PName
-                name={p.name}
-                fedCode={p.fedCode}
-                playersDB={playersDB}
-                highlight={isManuel(p)}
-              />
-            )
-          : <PName
-              name={p.name}
-              fedCode={p.fedCode}
-              playersDB={playersDB}
-              highlight={isManuel(p)}
-            />;
+          ? nameDecorator_(p.name, decorated)
+          : decorated;
         // Marker para jogadores acrescentados de torneio simultâneo (ex: Sub 12
         // que jogou no Absoluto). _absolutoNote dá o tooltip completo.
         if (!(p as any)._fromAbsoluto) return base;
@@ -268,11 +286,25 @@ export function ScorecardLB({
       })(),
       prefixCells: (
         <>
+          {showAge_ && (
+            // Coluna IDADE (separada de ESC, sortable por número)
+            <td className="lb-age" style={{ width: 44, minWidth: 44, textAlign: "center" }}>
+              {(() => {
+                const age = (p as any)._age as (number | null | undefined);
+                if (age == null || age < 0) return <span className="muted">–</span>;
+                return (
+                  <span className="p p-sm" style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent" }}>{age}a</span>
+                );
+              })()}
+            </td>
+          )}
           {!hideEsc && (
-            <td className="lb-esc">{esc ? <EscPill esc={esc} /> : <span className="muted">–</span>}</td>
+            <td className="lb-esc" style={{ width: 70, minWidth: 70, whiteSpace: "nowrap" }}>
+              {esc ? <EscPill esc={esc} /> : <span className="muted">–</span>}
+            </td>
           )}
           {!hideFed && <td className="lb-fed">{p.fedCode || "–"}</td>}
-          <td className="lb-club">{p.club || "–"}</td>
+          {!hideClub_ && <td className="lb-club">{p.club || "–"}</td>}
           {!hideHCP_ && <td className="lb-hcp">{fmtHcp(p.hcpExact)}</td>}
           {!hideTee && (
             <td className="lb-tee">
@@ -340,6 +372,18 @@ export function ScorecardLB({
       }
       prefixHeaderCells={
         <>
+          {showAge_ && (
+            <SortableHdr
+              k="age"
+              sortKey={sortKey}
+              sortDir={sortDir}
+              onSort={handleSort}
+              className="lb-age"
+              style={{ width: 44, minWidth: 44 }}
+            >
+              IDADE
+            </SortableHdr>
+          )}
           {!hideEsc && (
             <SortableHdr
               k="esc"
@@ -347,20 +391,23 @@ export function ScorecardLB({
               sortDir={sortDir}
               onSort={handleSort}
               className="lb-esc"
+              style={{ width: 70, minWidth: 70 }}
             >
               ESC.
             </SortableHdr>
           )}
           {!hideFed && <th className="lb-fed">FED</th>}
-          <SortableHdr
-            k="club"
-            sortKey={sortKey}
-            sortDir={sortDir}
-            onSort={handleSort}
-            className="lb-club"
-          >
-            {clubLabel_}
-          </SortableHdr>
+          {!hideClub_ && (
+            <SortableHdr
+              k="club"
+              sortKey={sortKey}
+              sortDir={sortDir}
+              onSort={handleSort}
+              className="lb-club"
+            >
+              {clubLabel_}
+            </SortableHdr>
+          )}
           {!hideHCP_ && (
             <SortableHdr
               k="hcp"
@@ -375,7 +422,7 @@ export function ScorecardLB({
           {!hideTee && (
             <SortableHdr
               k="tee"
-              sortKey={sortKey}
+Key={sortKey}
               sortDir={sortDir}
               onSort={handleSort}
               className="lb-tee"
@@ -390,6 +437,9 @@ export function ScorecardLB({
           {!hideSD_ && (
             <SortableHdr
               k="sd"
+              sortKey={sortKey}
+              sortDir={sortDir}
+          
               sortKey={sortKey}
               sortDir={sortDir}
               onSort={handleSort}

@@ -47,6 +47,8 @@ export interface IntlTournViewProps {
    * Receives the AccumulatedLB element. Replaces accHeader + default rendering + accExtra.
    */
   renderAccSection?: (leaderboard: React.ReactNode) => React.ReactNode;
+  /** Override das colunas do AccumulatedLB (default: { esc: false, fed: false, tee: false }). */
+  accShowCols?: { esc?: boolean; fed?: boolean; tee?: boolean; club?: boolean; hcp?: boolean };
 }
 
 export function IntlTournView({
@@ -60,6 +62,7 @@ export function IntlTournView({
   siLabel,
   renderRoundSection,
   renderAccSection,
+  accShowCols,
 }: IntlTournViewProps) {
   const nR = tournament.rounds || 1;
   const isMulti = nR > 1;
@@ -109,7 +112,7 @@ export function IntlTournView({
     <AccumulatedLB
       tournament={curT} nRounds={nR}
       escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB}
-      showCols={{ esc: false, fed: false, tee: false }}
+      showCols={accShowCols ?? { esc: false, fed: false, tee: false }}
       extraColumns={evoCols}
       renderName={renderNameFn}
     />

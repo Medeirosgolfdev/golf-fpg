@@ -144,9 +144,10 @@ for (const file of ncFiles) {
     const inscCount = (j.inscritos || []).length;
     const lbCount = (j.leaderboard || []).reduce((acc, t) => acc + (t.players ? t.players.length : 0), 0);
 
-    // Tentativa 1: parsear "07 mar 2026" do pageHeaderText
-    const pageText = (meta.pageHeaderText || "") + " " + (j.url || "") + " " + name + " " + (meta.format || "");
-    const dateIso = parseEsDateLong(pageText) || null;
+    // Tentativa 1: dateIso já injectado pelo enrich (a partir do discover scope)
+    // Tentativa 2: parsear "07 mar 2026" do pageHeaderText, dateStart, etc.
+    const pageText = (meta.pageHeaderText || "") + " " + (j.url || "") + " " + name + " " + (meta.format || "") + " " + (meta.dateStart || "");
+    const dateIso = (meta.dateIso || null) || parseEsDateLong(pageText) || null;
     // Tentativa 2: extractYearFromName procura "20XX" em qualquer string
     let year = dateIso ? parseInt(dateIso.slice(0, 4), 10) : null;
     if (!year) year = extractYearFromName(name);
@@ -157,12 +158,22 @@ for (const file of ncFiles) {
       if (sm) year = parseInt(sm[1], 10);
     }
 
-    let category = null;
-    if (Array.isArray(meta.categories) && meta.categories.length) {
+    // Prioridade: nome do torneio (quando explicita escalão) → categories[].
+    // Se o NOME não menciona escalão juvenil, NÃO marcar como juvenil só porque
+    // a lista de categories tem "Infantil" — muitos torneios adultos têm
+    // categorias subordinadas para 1-2 inscritos juvenis.
+    let category = extractCategoryFromName(name);
+    if (!category && Array.isArray(meta.categories) && meta.categories.length) {
       const juvCat = meta.categories.find(c => /Alev[ií]n|Benjam[ií]n|Infantil|Cadete|Junior|Juvenil|Sub/i.test(c));
-      category = juvCat ? extractCategoryFromName(juvCat) : extractCategoryFromName(meta.categories[0]);
+      // Só usar o cats fallback se há indicação clara de torneio juvenil
+      // (não todos os categories).
+      if (juvCat && !meta.categories.some(c => /Caballeros|Se[ñn]oras|Senior|Profesional|Adult/i.test(c))) {
+        category = extractCategoryFromName(juvCat);
+      } else if (juvCat && meta.categories.length <= 3) {
+        // Torneios pequenos com 2-3 categorias juvenis — provavelmente são juvenis
+        category = extractCategoryFromName(juvCat);
+      }
     }
-    if (!category) category = extractCategoryFromName(name);
 
     let sex = extractSexFromName(name);
     if (!sex && Array.isArray(meta.categories)) {
@@ -265,4 +276,3 @@ fs.writeFileSync(OUT, JSON.stringify(out, null, 2), "utf-8");
 console.log(`Index built: ${tournaments.length} torneios (rfegolf=${bySource.rfegolf || 0}, nextcaddy=${bySource.nextcaddy || 0}), skipped=${skipped}`);
 console.log(`  -> ${OUT}`);
 console.log(`  byYear: ${JSON.stringify(byYear)}`);
-console.log('  bySource: ' + JSON.stringify(bySource));

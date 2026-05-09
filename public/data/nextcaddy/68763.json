@@ -1,0 +1,899 @@
+{
+  "tourId": 68763,
+  "url": "https://www.nextcaddy.com/tour/68763",
+  "scrapedAt": "2026-05-09T10:38:24.381Z",
+  "meta": {
+    "name": "Campeonato de Las Palmas Juvenil 9 Hoyos (Benjamín)",
+    "organizer": null,
+    "course": "Meloneras Golf",
+    "courseCode": "CP27",
+    "dateStart": "18 abr 2026",
+    "dateEnd": "18 abr 2026",
+    "format": "Medal Play (Scratch)  Caballeros  Señora",
+    "categories": [
+      "Juvenil",
+      "Benjamín",
+      "Caballeros",
+      "Señoras",
+      "Benjamin",
+      "Infantil",
+      "Profesional",
+      "Senior"
+    ],
+    "dateIso": "2026-04-18"
+  },
+  "course": {
+    "par": [
+      4,
+      4,
+      3,
+      5,
+      3,
+      4,
+      3,
+      4,
+      5,
+      4,
+      4,
+      3,
+      5,
+      4,
+      3,
+      4,
+      4,
+      5
+    ],
+    "si": [
+      15,
+      5,
+      7,
+      9,
+      17,
+      1,
+      13,
+      3,
+      11,
+      18,
+      4,
+      10,
+      2,
+      6,
+      14,
+      16,
+      8,
+      12
+    ],
+    "meters": [
+      274,
+      295,
+      130,
+      380,
+      69,
+      333,
+      65,
+      329,
+      362,
+      224,
+      262,
+      93,
+      420,
+      279,
+      99,
+      236,
+      257,
+      368
+    ]
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Sara Henningsen Suarez",
+          "licencia": "CP01061295",
+          "hcp": 37.5,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 50
+            },
+            {
+              "round": 2,
+              "gross": 50
+            }
+          ],
+          "total": 100,
+          "toPar": 30,
+          "inscribedId": 2293649,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Gaia Bastianoni",
+          "licencia": "CP20491047",
+          "hcp": 43.3,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 58
+            },
+            {
+              "round": 2,
+              "gross": 55
+            }
+          ],
+          "total": 113,
+          "toPar": 43,
+          "inscribedId": 2291914,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Maximo Cabezas De Herrera Mendez",
+          "licencia": "CP02052226",
+          "hcp": 23.8,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 43
+            },
+            {
+              "round": 2,
+              "gross": 45
+            }
+          ],
+          "total": 88,
+          "toPar": 18,
+          "inscribedId": 2293088,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Miguel Galindo Aguado",
+          "licencia": "CP05496235",
+          "hcp": 25.9,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 50
+            },
+            {
+              "round": 2,
+              "gross": 45
+            }
+          ],
+          "total": 95,
+          "toPar": 25,
+          "inscribedId": 2292757,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Tomas Diaz De Juan",
+          "licencia": "CP05497242",
+          "hcp": 44.8,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 49
+            },
+            {
+              "round": 2,
+              "gross": 50
+            }
+          ],
+          "total": 99,
+          "toPar": 29,
+          "inscribedId": 2292498,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Quim Rosales Grau",
+          "licencia": "CP26003513",
+          "hcp": 33.6,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 53
+            },
+            {
+              "round": 2,
+              "gross": 46
+            }
+          ],
+          "total": 99,
+          "toPar": 29,
+          "inscribedId": 2289491,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Jaime Bravo De Laguna Mora",
+          "licencia": "CP01475679",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 60
+            },
+            {
+              "round": 2,
+              "gross": 55
+            }
+          ],
+          "total": 115,
+          "toPar": 45,
+          "inscribedId": 2296795,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Manuel Da Costa Herrera",
+          "licencia": "CP01474918",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 57
+            },
+            {
+              "round": 2,
+              "gross": 62
+            }
+          ],
+          "total": 119,
+          "toPar": 49,
+          "inscribedId": 2297344,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Maximo Cabezas De Herrera Mendez",
+          "licencia": "CP02052226",
+          "hcp": 23.8,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 43
+            },
+            {
+              "round": 2,
+              "gross": 45
+            }
+          ],
+          "total": 88,
+          "toPar": 18,
+          "inscribedId": 2293088,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Miguel Galindo Aguado",
+          "licencia": "CP05496235",
+          "hcp": 25.9,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 50
+            },
+            {
+              "round": 2,
+              "gross": 45
+            }
+          ],
+          "total": 95,
+          "toPar": 25,
+          "inscribedId": 2292757,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Tomas Diaz De Juan",
+          "licencia": "CP05497242",
+          "hcp": 44.8,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 49
+            },
+            {
+              "round": 2,
+              "gross": 50
+            }
+          ],
+          "total": 99,
+          "toPar": 29,
+          "inscribedId": 2292498,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Quim Rosales Grau",
+          "licencia": "CP26003513",
+          "hcp": 33.6,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 53
+            },
+            {
+              "round": 2,
+              "gross": 46
+            }
+          ],
+          "total": 99,
+          "toPar": 29,
+          "inscribedId": 2289491,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Sara Henningsen Suarez",
+          "licencia": "CP01061295",
+          "hcp": 37.5,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 50
+            },
+            {
+              "round": 2,
+              "gross": 50
+            }
+          ],
+          "total": 100,
+          "toPar": 30,
+          "inscribedId": 2293649,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Gaia Bastianoni",
+          "licencia": "CP20491047",
+          "hcp": 43.3,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 58
+            },
+            {
+              "round": 2,
+              "gross": 55
+            }
+          ],
+          "total": 113,
+          "toPar": 43,
+          "inscribedId": 2291914,
+          "roundScores": []
+        },
+        {
+          "pos": 7,
+          "name": "Jaime Bravo De Laguna Mora",
+          "licencia": "CP01475679",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 60
+            },
+            {
+              "round": 2,
+              "gross": 55
+            }
+          ],
+          "total": 115,
+          "toPar": 45,
+          "inscribedId": 2296795,
+          "roundScores": []
+        },
+        {
+          "pos": 8,
+          "name": "Manuel Da Costa Herrera",
+          "licencia": "CP01474918",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 57
+            },
+            {
+              "round": 2,
+              "gross": 62
+            }
+          ],
+          "total": 119,
+          "toPar": 49,
+          "inscribedId": 2297344,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 4,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Maximo Cabezas De Herrera Mendez",
+          "licencia": "CP02052226",
+          "hcp": 23.8,
+          "nivel": "B",
+          "rounds": [],
+          "total": 43,
+          "toPar": 8,
+          "inscribedId": 2293088,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Tomas Diaz De Juan",
+          "licencia": "CP05497242",
+          "hcp": 44.8,
+          "nivel": "B",
+          "rounds": [],
+          "total": 49,
+          "toPar": 14,
+          "inscribedId": 2292498,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Sara Henningsen Suarez",
+          "licencia": "CP01061295",
+          "hcp": 37.5,
+          "nivel": "B",
+          "rounds": [],
+          "total": 50,
+          "toPar": 15,
+          "inscribedId": 2293649,
+          "roundScores": []
+        },
+        {
+          "pos": null,
+          "name": "Miguel Galindo Aguado",
+          "licencia": "CP05496235",
+          "hcp": 25.9,
+          "nivel": "B",
+          "rounds": [],
+          "total": 50,
+          "toPar": 15,
+          "inscribedId": 2292757,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Quim Rosales Grau",
+          "licencia": "CP26003513",
+          "hcp": 33.6,
+          "nivel": "B",
+          "rounds": [],
+          "total": 53,
+          "toPar": 18,
+          "inscribedId": 2289491,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Manuel Da Costa Herrera",
+          "licencia": "CP01474918",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 57,
+          "toPar": 22,
+          "inscribedId": 2297344,
+          "roundScores": []
+        },
+        {
+          "pos": 7,
+          "name": "Gaia Bastianoni",
+          "licencia": "CP20491047",
+          "hcp": 43.3,
+          "nivel": "B",
+          "rounds": [],
+          "total": 58,
+          "toPar": 23,
+          "inscribedId": 2291914,
+          "roundScores": []
+        },
+        {
+          "pos": 8,
+          "name": "Jaime Bravo De Laguna Mora",
+          "licencia": "CP01475679",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 60,
+          "toPar": 25,
+          "inscribedId": 2296795,
+          "roundScores": []
+        }
+      ]
+    }
+  ],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Quim Rosales Grau",
+      "licencia": "CP26003513",
+      "hcp": 33.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Tomas Diaz De Juan",
+      "licencia": "CP05497242",
+      "hcp": 44.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Miguel Galindo Aguado",
+      "licencia": "CP05496235",
+      "hcp": 25.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Maximo Cabezas De Herrera Mendez",
+      "licencia": "CP02052226",
+      "hcp": 23.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Jaime Bravo De Laguna Mora",
+      "licencia": "CP01475679",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Manuel Da Costa Herrera",
+      "licencia": "CP01474918",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Gaia Bastianoni",
+      "licencia": "CP20491047",
+      "hcp": 43.3,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Sara Henningsen Suarez",
+      "licencia": "CP01061295",
+      "hcp": 37.5,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Quim Rosales Grau",
+      "licencia": "CP26003513",
+      "hcp": 33.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Gaia Bastianoni",
+      "licencia": "CP20491047",
+      "hcp": 43.3,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Tomas Diaz De Juan",
+      "licencia": "CP05497242",
+      "hcp": 44.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Miguel Galindo Aguado",
+      "licencia": "CP05496235",
+      "hcp": 25.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Maximo Cabezas De Herrera Mendez",
+      "licencia": "CP02052226",
+      "hcp": 23.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Sara Henningsen Suarez",
+      "licencia": "CP01061295",
+      "hcp": 37.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Jaime Bravo De Laguna Mora",
+      "licencia": "CP01475679",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "Manuel Da Costa Herrera",
+      "licencia": "CP01474918",
+      "hcp": 54,
+      "nivel": "B"
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73435
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 73436
+    }
+  ],
+  "scoreTypes": [],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Maximo Cabezas De Herrera Mendez",
+          "hcp": 23.8,
+          "ins": "2293088",
+          "jid": "73435",
+          "nivel": "B"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Miguel Galindo Aguado",
+          "hcp": 25.9,
+          "ins": "2292757",
+          "jid": "73435",
+          "nivel": "B"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Quim Rosales Grau",
+          "hcp": 33.6,
+          "ins": "2289491",
+          "jid": "73435",
+          "nivel": "B"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "Sara Henningsen Suarez",
+          "hcp": 37.5,
+          "ins": "2293649",
+          "jid": "73435",
+          "nivel": "B"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "Gaia Bastianoni",
+          "hcp": 43.3,
+          "ins": "2291914",
+          "jid": "73435",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Tomas Diaz De Juan",
+          "hcp": 44.8,
+          "ins": "2292498",
+          "jid": "73435",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Jaime Bravo De Laguna Mora",
+          "hcp": 54,
+          "ins": "2296795",
+          "jid": "73435",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Manuel Da Costa Herrera",
+          "hcp": 54,
+          "ins": "2297344",
+          "jid": "73435",
+          "nivel": "B"
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "players": [
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Maximo Cabezas De Herrera Mendez",
+          "hcp": 23.8,
+          "ins": "2293088",
+          "jid": "73436",
+          "nivel": "B"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Tomas Diaz De Juan",
+          "hcp": 44.8,
+          "ins": "2292498",
+          "jid": "73436",
+          "nivel": "B"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Miguel Galindo Aguado",
+          "hcp": 25.9,
+          "ins": "2292757",
+          "jid": "73436",
+          "nivel": "B"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "Sara Henningsen Suarez",
+          "hcp": 37.5,
+          "ins": "2293649",
+          "jid": "73436",
+          "nivel": "B"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "Gaia Bastianoni",
+          "hcp": 43.3,
+          "ins": "2291914",
+          "jid": "73436",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Quim Rosales Grau",
+          "hcp": 33.6,
+          "ins": "2289491",
+          "jid": "73436",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Manuel Da Costa Herrera",
+          "hcp": 54,
+          "ins": "2297344",
+          "jid": "73436",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Jaime Bravo De Laguna Mora",
+          "hcp": 54,
+          "ins": "2296795",
+          "jid": "73436",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "horariosScrapedAt": "2026-05-09T12:12:29.322Z"
+}

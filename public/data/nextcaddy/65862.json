@@ -7,8 +7,8 @@
     "organizer": "Federacion de Golf de Madrid",
     "course": "Palacio del Negralejo S A",
     "courseCode": "CM33",
-    "dateStart": null,
-    "dateEnd": null,
+    "dateStart": "11 ene 2026",
+    "dateEnd": "11 ene 2026",
     "format": "Stableford (Scratch) Circuito Alevín Y B",
     "categories": [
       "Benjamín",
@@ -21,7 +21,8 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-01-11"
   },
   "course": {
     "par": [
@@ -975,5 +976,184 @@
         }
       ]
     }
-  }
+  },
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "14:30",
+          "tee": 5,
+          "name": "Antonio Javier Payo Gil",
+          "hcp": 15.8,
+          "ins": "2239779",
+          "jid": "70055",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 5,
+          "name": "Matias Aparicio Matamoros",
+          "hcp": 22.2,
+          "ins": "2240267",
+          "jid": "70055",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 5,
+          "name": "Juan Agudo Goenechea",
+          "hcp": 24.5,
+          "ins": "2239355",
+          "jid": "70055",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 5,
+          "name": "Roberto Martinez De Murguia Garcia",
+          "hcp": 25.6,
+          "ins": "2240734",
+          "jid": "70055",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 6,
+          "name": "Aritz Alarza Marques",
+          "hcp": 26.9,
+          "ins": "2239336",
+          "jid": "70055",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 6,
+          "name": "Marcos Ceballos Redondo",
+          "hcp": 27.4,
+          "ins": "2239575",
+          "jid": "70055",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 6,
+          "name": "Jacobo Tarrero Carril",
+          "hcp": 27.5,
+          "ins": "2239380",
+          "jid": "70055",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 6,
+          "name": "Fabian Rodriguez Martos",
+          "hcp": 28.2,
+          "ins": "2239010",
+          "jid": "70055",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 7,
+          "name": "Jorge Diez Del Potro",
+          "hcp": 28.2,
+          "ins": "2239796",
+          "jid": "70055",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 7,
+          "name": "Marcos Lozano Davila",
+          "hcp": 26.9,
+          "ins": "2239047",
+          "jid": "70055",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 7,
+          "name": "Paula Ruiperez Mendoza",
+          "hcp": 29.5,
+          "ins": "2239603",
+          "jid": "70055",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 7,
+          "name": "Diego Guijarro Pulido",
+          "hcp": 30.9,
+          "ins": "2239701",
+          "jid": "70055",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 8,
+          "name": "Beltran Idiazabal Velasco",
+          "hcp": 33.5,
+          "ins": "2239163",
+          "jid": "70055",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 8,
+          "name": "Alejandra Massana Arias",
+          "hcp": 34.2,
+          "ins": "2239170",
+          "jid": "70055",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 8,
+          "name": "Valeria Fernandez Gallardo",
+          "hcp": 34.4,
+          "ins": "2239248",
+          "jid": "70055",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 8,
+          "name": "Lucia Yarte Delgado",
+          "hcp": 35.9,
+          "ins": "2240025",
+          "jid": "70055",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 9,
+          "name": "Manuel Martinez De Murguia Garcia",
+          "hcp": 36.7,
+          "ins": "2240737",
+          "jid": "70055",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 9,
+          "name": "Alejandra Sevillano Sanchez",
+          "hcp": 38,
+          "ins": "2239045",
+          "jid": "70055",
+          "nivel": "B"
+        },
+        {
+          "time": "14:30",
+          "tee": 9,
+          "name": "Manuela Triguero Fernandez",
+          "hcp": 39.9,
+          "ins": "2239058",
+          "jid": "70055",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "horariosScrapedAt": "2026-05-09T12:12:02.845Z"
 }

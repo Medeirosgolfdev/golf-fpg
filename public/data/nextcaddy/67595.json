@@ -1,0 +1,446 @@
+{
+  "tourId": 67595,
+  "url": "https://www.nextcaddy.com/tour/67595",
+  "scrapedAt": "2026-05-09T10:38:53.161Z",
+  "meta": {
+    "name": "Equipo de Competición Junior Sherry Golf -  Sábado 17 Enero 2026",
+    "organizer": null,
+    "course": "Sherry Golf Jerez",
+    "courseCode": "AMC3",
+    "dateStart": "17 ene 2026",
+    "dateEnd": "17 ene 2026",
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Junior",
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-01-17"
+  },
+  "course": {
+    "par": [
+      4,
+      4,
+      5,
+      3,
+      5,
+      4,
+      3,
+      4,
+      4,
+      4,
+      5,
+      3,
+      4,
+      3,
+      4,
+      4,
+      5,
+      4
+    ],
+    "si": [
+      2,
+      13,
+      14,
+      8,
+      9,
+      15,
+      17,
+      3,
+      7,
+      10,
+      5,
+      18,
+      1,
+      11,
+      6,
+      12,
+      16,
+      4
+    ],
+    "meters": [
+      269,
+      305,
+      384,
+      114,
+      459,
+      221,
+      111,
+      296,
+      318,
+      242,
+      428,
+      96,
+      328,
+      105,
+      296,
+      200,
+      375,
+      323
+    ]
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jose Pascual Carrasco",
+          "licencia": "AMC3060217",
+          "hcp": 25.3,
+          "nivel": "A",
+          "rounds": [],
+          "total": 43,
+          "toPar": -7,
+          "inscribedId": 2247680,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                5,
+                5,
+                3,
+                6,
+                5,
+                3,
+                5,
+                4,
+                5,
+                7,
+                4,
+                4,
+                4,
+                5,
+                3,
+                5,
+                5
+              ],
+              "total": 84
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Alejandro Gomez Morillo",
+          "licencia": "AMF7965735",
+          "hcp": 16.5,
+          "nivel": "I",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2247686,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                5,
+                5,
+                3,
+                6,
+                6,
+                3,
+                5,
+                5,
+                5,
+                7,
+                3,
+                6,
+                3,
+                6,
+                4,
+                6,
+                5
+              ],
+              "total": 88
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Borja Enriquez Sáinz De La Flor",
+          "licencia": "AM05946296",
+          "hcp": 12.5,
+          "nivel": "A",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2247683,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Carlos Breijo Cegarra",
+          "licencia": "AMC3984695",
+          "hcp": 26.2,
+          "nivel": "A",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2247685,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Hugo Lopez Diaz",
+          "licencia": "AM71373692",
+          "hcp": 25.3,
+          "nivel": "A",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2247737,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Marta Breijo Cegarra",
+          "licencia": "AMC3984693",
+          "hcp": 24.1,
+          "nivel": "I",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2247681,
+          "roundScores": []
+        },
+        {
+          "pos": 7,
+          "name": "Fermin Elizburu Mostaza",
+          "licencia": "AMC3061797",
+          "hcp": 39.3,
+          "nivel": "A",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2247684,
+          "roundScores": []
+        }
+      ]
+    }
+  ],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Jose Pascual Carrasco",
+      "licencia": "AMC3060217",
+      "hcp": 25.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Borja Enriquez Sáinz De La Flor",
+      "licencia": "AM05946296",
+      "hcp": 12.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "Fermin Elizburu Mostaza",
+      "licencia": "AMC3061797",
+      "hcp": 39.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Carlos Breijo Cegarra",
+      "licencia": "AMC3984695",
+      "hcp": 26.2,
+      "nivel": "A"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Marta Breijo Cegarra",
+      "licencia": "AMC3984693",
+      "hcp": 24.1,
+      "nivel": "I"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Alejandro Gomez Morillo",
+      "licencia": "AMF7965735",
+      "hcp": 16.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Hugo Lopez Diaz",
+      "licencia": "AM71373692",
+      "hcp": 25.3,
+      "nivel": "A"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Fecha Inscripción",
+      "hcp": null,
+      "nivel": "Licencia"
+    },
+    {
+      "orden": 1,
+      "name": "Jose Pascual Carrasco",
+      "licencia": "16-01-26 12:54",
+      "hcp": 25.3,
+      "nivel": "AMC3060217"
+    },
+    {
+      "orden": 2,
+      "name": "Marta Breijo Cegarra",
+      "licencia": "16-01-26 12:55",
+      "hcp": 24.1,
+      "nivel": "AMC3984693"
+    },
+    {
+      "orden": 3,
+      "name": "Borja Enriquez Sáinz De La Flor",
+      "licencia": "16-01-26 12:55",
+      "hcp": 12.5,
+      "nivel": "AM05946296"
+    },
+    {
+      "orden": 4,
+      "name": "Fermin Elizburu Mostaza",
+      "licencia": "16-01-26 12:56",
+      "hcp": 39.3,
+      "nivel": "AMC3061797"
+    },
+    {
+      "orden": 5,
+      "name": "Carlos Breijo Cegarra",
+      "licencia": "16-01-26 12:56",
+      "hcp": 26.2,
+      "nivel": "AMC3984695"
+    },
+    {
+      "orden": 6,
+      "name": "Alejandro Gomez Morillo",
+      "licencia": "16-01-26 12:57",
+      "hcp": 16.5,
+      "nivel": "AMF7965735"
+    },
+    {
+      "orden": 7,
+      "name": "Hugo Lopez Diaz",
+      "licencia": "16-01-26 14:21",
+      "hcp": 25.3,
+      "nivel": "AM71373692"
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72076
+    }
+  ],
+  "scoreTypes": [],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:00",
+          "tee": 10,
+          "name": "Borja Enriquez Sáinz De La Flor",
+          "hcp": 12.5,
+          "ins": "2247683",
+          "jid": "72076",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 10,
+          "name": "Alejandro Gomez Morillo",
+          "hcp": 16.5,
+          "ins": "2247686",
+          "jid": "72076",
+          "nivel": "I"
+        },
+        {
+          "time": "10:00",
+          "tee": 10,
+          "name": "Jose Pascual Carrasco",
+          "hcp": 25.3,
+          "ins": "2247680",
+          "jid": "72076",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 10,
+          "name": "Hugo Lopez Diaz",
+          "hcp": 25.3,
+          "ins": "2247737",
+          "jid": "72076",
+          "nivel": "A"
+        },
+        {
+          "time": "10:10",
+          "tee": 10,
+          "name": "Marta Breijo Cegarra",
+          "hcp": 24.1,
+          "ins": "2247681",
+          "jid": "72076",
+          "nivel": "I"
+        },
+        {
+          "time": "10:10",
+          "tee": 10,
+          "name": "Carlos Breijo Cegarra",
+          "hcp": 26.2,
+          "ins": "2247685",
+          "jid": "72076",
+          "nivel": "A"
+        },
+        {
+          "time": "10:10",
+          "tee": 10,
+          "name": "Fermin Elizburu Mostaza",
+          "hcp": 39.3,
+          "ins": "2247684",
+          "jid": "72076",
+          "nivel": "A"
+        }
+      ]
+    }
+  ],
+  "horariosScrapedAt": "2026-05-09T12:12:10.538Z"
+}

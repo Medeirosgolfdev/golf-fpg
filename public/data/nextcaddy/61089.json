@@ -7,8 +7,8 @@
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Campo de Golf Dehesa Montenmedio",
     "courseCode": "AM27",
-    "dateStart": null,
-    "dateEnd": null,
+    "dateStart": "01 mar 2026",
+    "dateEnd": "01 mar 2026",
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Benjamin",
@@ -19,7 +19,8 @@
       "benjamin",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-03-01"
   },
   "course": {
     "par": [
@@ -1066,5 +1067,130 @@
         }
       ]
     }
-  }
+  },
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Thiago Gonzalez Bernases",
+          "hcp": 20.6,
+          "ins": "2257897",
+          "jid": "64702",
+          "nivel": "B"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Nikita Elchaninov",
+          "hcp": 24.8,
+          "ins": "2257785",
+          "jid": "64702",
+          "nivel": "B"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Carlos Perez Pedraza",
+          "hcp": 28,
+          "ins": "2262124",
+          "jid": "64702",
+          "nivel": "B"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Ignacio De Lope Gomez",
+          "hcp": 34.5,
+          "ins": "2259322",
+          "jid": "64702",
+          "nivel": "B"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Lucas Santos Conde",
+          "hcp": 35.7,
+          "ins": "2257941",
+          "jid": "64702",
+          "nivel": "B"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Lucas Nuño Medinilla",
+          "hcp": 38.6,
+          "ins": "2261894",
+          "jid": "64702",
+          "nivel": "B"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Claudia Bermudo Del Rio",
+          "hcp": 35.2,
+          "ins": "2263291",
+          "jid": "64702",
+          "nivel": "B"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Mª Asuncion Sedeño Martin",
+          "hcp": 35.7,
+          "ins": "2257829",
+          "jid": "64702",
+          "nivel": "B"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Gadea Geldinovski Ruiz",
+          "hcp": 41.3,
+          "ins": "2266910",
+          "jid": "64702",
+          "nivel": "B"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Marcos Fernandez Pina",
+          "hcp": 38.9,
+          "ins": "2264256",
+          "jid": "64702",
+          "nivel": "B"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Ivan Duran Campos",
+          "hcp": 38.9,
+          "ins": "2259156",
+          "jid": "64702",
+          "nivel": "B"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Pablo Camacho Manuel De Villena",
+          "hcp": 40,
+          "ins": "2267041",
+          "jid": "64702",
+          "nivel": "B"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Rafael Ribeiro Crisostomo",
+          "hcp": 42.9,
+          "ins": "2266498",
+          "jid": "64702",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "horariosScrapedAt": "2026-05-09T12:11:58.536Z"
 }

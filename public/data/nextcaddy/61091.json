@@ -7,8 +7,8 @@
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Club de Golf la Cañada",
     "courseCode": "AM11",
-    "dateStart": null,
-    "dateEnd": null,
+    "dateStart": "29 mar 2026",
+    "dateEnd": "29 mar 2026",
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Benjamín",
@@ -18,7 +18,8 @@
       "Juvenil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-03-29"
   },
   "course": {
     "par": [
@@ -953,5 +954,166 @@
         ]
       }
     }
-  }
+  },
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "13:30",
+          "tee": 1,
+          "name": "Gonzalo Bernal Suarez",
+          "hcp": 10.4,
+          "ins": "2281036",
+          "jid": "64704",
+          "nivel": "B"
+        },
+        {
+          "time": "13:30",
+          "tee": 1,
+          "name": "Santiago Viera Villalba",
+          "hcp": 20.5,
+          "ins": "2259270",
+          "jid": "64704",
+          "nivel": "B"
+        },
+        {
+          "time": "13:30",
+          "tee": 1,
+          "name": "Pau Caceres Gago",
+          "hcp": 22,
+          "ins": "2259724",
+          "jid": "64704",
+          "nivel": "B"
+        },
+        {
+          "time": "13:30",
+          "tee": 1,
+          "name": "Alvaro Quiros Lopez",
+          "hcp": 24.2,
+          "ins": "2258930",
+          "jid": "64704",
+          "nivel": "B"
+        },
+        {
+          "time": "13:40",
+          "tee": 1,
+          "name": "Marcos Sanchez Navas",
+          "hcp": 22.4,
+          "ins": "2260904",
+          "jid": "64704",
+          "nivel": "B"
+        },
+        {
+          "time": "13:40",
+          "tee": 1,
+          "name": "Daniel Hernandez Ruiz",
+          "hcp": 23.7,
+          "ins": "2263152",
+          "jid": "64704",
+          "nivel": "B"
+        },
+        {
+          "time": "13:40",
+          "tee": 1,
+          "name": "Martin Quiros Lopez",
+          "hcp": 25.2,
+          "ins": "2258931",
+          "jid": "64704",
+          "nivel": "B"
+        },
+        {
+          "time": "13:40",
+          "tee": 1,
+          "name": "Antonio Merchan Casado",
+          "hcp": 25.4,
+          "ins": "2261285",
+          "jid": "64704",
+          "nivel": "B"
+        },
+        {
+          "time": "13:50",
+          "tee": 1,
+          "name": "Ana Gross Paneque",
+          "hcp": 17.8,
+          "ins": "2259189",
+          "jid": "64704",
+          "nivel": "B"
+        },
+        {
+          "time": "13:50",
+          "tee": 1,
+          "name": "Liane Gavira Rodriguez",
+          "hcp": 38.3,
+          "ins": "2260881",
+          "jid": "64704",
+          "nivel": "B"
+        },
+        {
+          "time": "13:50",
+          "tee": 1,
+          "name": "Marta Gil Ortega",
+          "hcp": 38.4,
+          "ins": "2259665",
+          "jid": "64704",
+          "nivel": "B"
+        },
+        {
+          "time": "14:00",
+          "tee": 1,
+          "name": "Javier Del Cid Gomez",
+          "hcp": 27.3,
+          "ins": "2259155",
+          "jid": "64704",
+          "nivel": "B"
+        },
+        {
+          "time": "14:00",
+          "tee": 1,
+          "name": "Hugo Carrere Aguiar",
+          "hcp": 33.6,
+          "ins": "2267313",
+          "jid": "64704",
+          "nivel": "B"
+        },
+        {
+          "time": "14:00",
+          "tee": 1,
+          "name": "Enrique Alvarez-Net Gonzalez",
+          "hcp": 33.6,
+          "ins": "2263387",
+          "jid": "64704",
+          "nivel": "B"
+        },
+        {
+          "time": "14:10",
+          "tee": 1,
+          "name": "Iker Barragan Jimenez",
+          "hcp": 34.8,
+          "ins": "2267335",
+          "jid": "64704",
+          "nivel": "B"
+        },
+        {
+          "time": "14:10",
+          "tee": 1,
+          "name": "Ramiro Amaya Cozzi",
+          "hcp": 37.8,
+          "ins": "2259060",
+          "jid": "64704",
+          "nivel": "B"
+        },
+        {
+          "time": "14:10",
+          "tee": 1,
+          "name": "Hugo Zambrano Gonzalez",
+          "hcp": 41.9,
+          "ins": "2258918",
+          "jid": "64704",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "horariosScrapedAt": "2026-05-09T12:11:58.658Z"
 }

@@ -7,8 +7,8 @@
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": null,
-    "dateEnd": null,
+    "dateStart": "11 abr 2026",
+    "dateEnd": "11 abr 2026",
     "format": "Medal Play (Scratch)  Junior Femenino  C",
     "categories": [
       "Junior Femenino",
@@ -20,7 +20,8 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-04-11"
   },
   "course": {
     "par": [
@@ -237,5 +238,67 @@
         }
       ]
     }
-  ]
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "11:54",
+          "tee": 1,
+          "name": "Irene Elias Gonzalez",
+          "hcp": 5.9,
+          "ins": "2292029",
+          "jid": "74199",
+          "nivel": "I"
+        },
+        {
+          "time": "11:54",
+          "tee": 1,
+          "name": "Teresa Basconcillos Rodriguez",
+          "hcp": 7.8,
+          "ins": "2291058",
+          "jid": "74199",
+          "nivel": "I"
+        },
+        {
+          "time": "11:54",
+          "tee": 1,
+          "name": "Daniela Pascual Calleja",
+          "hcp": 12.5,
+          "ins": "2292810",
+          "jid": "74199",
+          "nivel": "C"
+        },
+        {
+          "time": "12:03",
+          "tee": 1,
+          "name": "Martina Ocejo Gomez",
+          "hcp": 15.3,
+          "ins": "2292383",
+          "jid": "74199",
+          "nivel": "C"
+        },
+        {
+          "time": "12:03",
+          "tee": 1,
+          "name": "Paloma De Nicolas Peral",
+          "hcp": 16.3,
+          "ins": "2293325",
+          "jid": "74199",
+          "nivel": "C"
+        },
+        {
+          "time": "12:03",
+          "tee": 1,
+          "name": "Angela Basconcillos Rodriguez",
+          "hcp": 40.8,
+          "ins": "2291254",
+          "jid": "74199",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "horariosScrapedAt": "2026-05-09T12:12:53.747Z"
 }

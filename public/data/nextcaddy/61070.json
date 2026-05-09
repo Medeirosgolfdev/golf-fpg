@@ -7,8 +7,8 @@
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": null,
-    "dateEnd": null,
+    "dateStart": "15 feb 2026",
+    "dateEnd": "15 feb 2026",
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Benjamín",
@@ -19,7 +19,8 @@
       "benjamin",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-02-15"
   },
   "course": {
     "par": [
@@ -756,5 +757,112 @@
         }
       ]
     }
-  ]
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "13:00",
+          "tee": 10,
+          "name": "Thiago Gonzalez Bernases",
+          "hcp": 21.8,
+          "ins": "2246269",
+          "jid": "64673",
+          "nivel": "B"
+        },
+        {
+          "time": "13:00",
+          "tee": 10,
+          "name": "Carlos Perez Pedraza",
+          "hcp": 28,
+          "ins": "2254560",
+          "jid": "64673",
+          "nivel": "B"
+        },
+        {
+          "time": "13:00",
+          "tee": 10,
+          "name": "Ignacio De Lope Gomez",
+          "hcp": 34.5,
+          "ins": "2252819",
+          "jid": "64673",
+          "nivel": "B"
+        },
+        {
+          "time": "13:10",
+          "tee": 10,
+          "name": "Lucas Santos Conde",
+          "hcp": 35.7,
+          "ins": "2246353",
+          "jid": "64673",
+          "nivel": "B"
+        },
+        {
+          "time": "13:10",
+          "tee": 10,
+          "name": "Lucas Nuño Medinilla",
+          "hcp": 38.6,
+          "ins": "2255522",
+          "jid": "64673",
+          "nivel": "B"
+        },
+        {
+          "time": "13:10",
+          "tee": 10,
+          "name": "Marcos Fernandez Pina",
+          "hcp": 39.4,
+          "ins": "2256266",
+          "jid": "64673",
+          "nivel": "B"
+        },
+        {
+          "time": "13:10",
+          "tee": 10,
+          "name": "Pablo Camacho Manuel De Villena",
+          "hcp": 40.2,
+          "ins": "2256286",
+          "jid": "64673",
+          "nivel": "B"
+        },
+        {
+          "time": "13:20",
+          "tee": 10,
+          "name": "Claudia Bermudo Del Rio",
+          "hcp": 35.1,
+          "ins": "2248669",
+          "jid": "64673",
+          "nivel": "B"
+        },
+        {
+          "time": "13:20",
+          "tee": 10,
+          "name": "Mª Asuncion Sedeño Martin",
+          "hcp": 35.7,
+          "ins": "2247833",
+          "jid": "64673",
+          "nivel": "B"
+        },
+        {
+          "time": "13:20",
+          "tee": 10,
+          "name": "Marta Gil Ortega",
+          "hcp": 41.4,
+          "ins": "2251751",
+          "jid": "64673",
+          "nivel": "B"
+        },
+        {
+          "time": "13:20",
+          "tee": 10,
+          "name": "Gadea Geldinovski Ruiz",
+          "hcp": 42.3,
+          "ins": "2252817",
+          "jid": "64673",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "horariosScrapedAt": "2026-05-09T12:11:58.012Z"
 }

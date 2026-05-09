@@ -25,7 +25,7 @@ export default function TournScorecard({ par, si, meters, rounds }: { par: reado
           <th className="hole-header col-total">TOT</th>
         </tr></thead>
         <tbody>
-          {meters && (
+          {meters && meters.length >= par.length && meters.some(m => m > 0) && (
             <tr className="meta-row">
               <td className="row-label fs-10 c-text-3">m</td>
               {meters.slice(0, 9).map((m, i) => <td key={i} className="fs-10 c-text-3">{m}</td>)}
@@ -35,7 +35,7 @@ export default function TournScorecard({ par, si, meters, rounds }: { par: reado
               <td className="col-total fs-10 c-text-3">{totalM}</td>
             </tr>
           )}
-          {si && (
+          {si && si.length >= par.length && si.some(s => s > 0) && (
             <tr className="meta-row">
               <td className="row-label fs-10">SI</td>
               {si.slice(0, 9).map((s, i) => <td key={i}>{s}</td>)}

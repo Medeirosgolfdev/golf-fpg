@@ -7,8 +7,8 @@
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": null,
-    "dateEnd": null,
+    "dateStart": "21 feb 2026",
+    "dateEnd": "21 feb 2026",
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,7 +17,8 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-02-21"
   },
   "course": null,
   "leaderboard": [],
@@ -334,5 +335,67 @@
         }
       ]
     }
-  }
+  },
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "13:36",
+          "tee": 1,
+          "name": "Antonio Garcia Pique",
+          "hcp": 39.6,
+          "ins": "2249871",
+          "jid": "72065",
+          "nivel": "A"
+        },
+        {
+          "time": "13:36",
+          "tee": 1,
+          "name": "Matias Martin Martin",
+          "hcp": 43.7,
+          "ins": "2248655",
+          "jid": "72065",
+          "nivel": "A"
+        },
+        {
+          "time": "13:46",
+          "tee": 1,
+          "name": "Sergio Cerezal Criado",
+          "hcp": 44.4,
+          "ins": "2248283",
+          "jid": "72065",
+          "nivel": "I"
+        },
+        {
+          "time": "13:46",
+          "tee": 1,
+          "name": "Diego Bermejo Martin",
+          "hcp": 52.3,
+          "ins": "2248668",
+          "jid": "72065",
+          "nivel": "I"
+        },
+        {
+          "time": "13:56",
+          "tee": 1,
+          "name": "David Cerezal Criado",
+          "hcp": 52.7,
+          "ins": "2248281",
+          "jid": "72065",
+          "nivel": "B"
+        },
+        {
+          "time": "13:56",
+          "tee": 1,
+          "name": "Alejandro Sanchez Garcia",
+          "hcp": 54,
+          "ins": "2249288",
+          "jid": "72065",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "horariosScrapedAt": "2026-05-09T12:12:10.301Z"
 }

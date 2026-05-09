@@ -198,16 +198,46 @@ export function escTabStyle(
   };
 }
 
-/** Escalão — usa classes CSS globais (.p-sub14, etc.) */
+/** Mapeamento dos termos da federação espanhola (RFEG) → Sub-N CSS class.
+ *  Permite que `<EscPill esc="Alevín" />` use a mesma cor que `<EscPill esc="Sub-12" />`. */
+const ES_TERM_TO_SUB: Record<string, string> = {
+  benjamin: "sub10",
+  benjamín: "sub10",
+  alevin: "sub12",
+  alevín: "sub12",
+  infantil: "sub14",
+  cadete: "sub16",
+  junior: "sub18",
+  juvenil: "sub21",
+};
+/** Mapeamento inverso (Sub-N → termo RFEG) — usado pelo RFEGPage para uniformizar. */
+export const SUB_TO_ES_TERM: Record<string, string> = {
+  "Sub-10": "Benjamín",
+  "Sub-12": "Alevín",
+  "Sub-14": "Infantil",
+  "Sub-16": "Cadete",
+  "Sub-18": "Junior",
+  "Sub-21": "Juvenil",
+  "Sub-25": "Sub-25",
+};
+
+/** Escalão — usa classes CSS globais (.p-sub14, etc.).
+ *  Aceita também termos da RFEG (Alevín, Benjamín, etc.) → mapeados ao Sub-N
+ *  equivalente para herdar a cor canónica do projecto. */
 export function EscPill({ esc }: { esc: string }) {
   if (!esc) return null;
   const key = esc.toLowerCase().replace(/[\s-]/g, "");
-  // Fallback para inline style se não houver classe CSS
-  const s = ESC_STYLE[key] ?? ESC_STYLE.default;
+  // 1) Termos espanhois (Alevín, etc.) → mapear para Sub-N CSS
+  const esSubKey = ES_TERM_TO_SUB[key];
+  if (esSubKey) {
+    return <span className={`p p-sm p-${esSubKey}`}>{esc}</span>;
+  }
+  // 2) Sub-N directo
   const hasCssClass = ["sub10","sub12","sub14","sub16","sub18","sub21","sub24","absoluto","senior"].includes(key);
-  return hasCssClass
-    ? <span className={`p p-sm p-${key}`}>{esc}</span>
-    : <span className="p p-sm" style={{ background: s.bg, color: s.color, borderColor: "transparent" }}>{esc}</span>;
+  if (hasCssClass) return <span className={`p p-sm p-${key}`}>{esc}</span>;
+  // 3) Fallback inline style
+  const s = ESC_STYLE[key] ?? ESC_STYLE.default;
+  return <span className="p p-sm" style={{ background: s.bg, color: s.color, borderColor: "transparent" }}>{esc}</span>;
 }
 
 /** REGIONAL / NACIONAL / INTL / PJA — substitui PillBadge.tsx */

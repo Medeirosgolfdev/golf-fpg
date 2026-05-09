@@ -7,8 +7,8 @@
     "organizer": "Federacion de Golf de Madrid",
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": null,
-    "dateEnd": null,
+    "dateStart": "12 dic 2026",
+    "dateEnd": "12 dic 2026",
     "format": "Stableford (Handicap) Circuito De 3ª Cat",
     "categories": [
       "Caballeros",
@@ -17,7 +17,8 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-12-12"
   },
   "course": null,
   "leaderboard": [],
@@ -433,5 +434,7 @@
         }
       ]
     }
-  }
+  },
+  "horarios": [],
+  "horariosScrapedAt": "2026-05-09T12:12:43.702Z"
 }
