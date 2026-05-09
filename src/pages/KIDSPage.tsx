@@ -982,6 +982,12 @@ function useAutoRivals() {
         if (ap.dob && !ex.dob) ex.dob = fpgDobToPt(ap.dob);
         if (apCoCanon === "Portugal" && !ex.isM) ex.co = "Portugal";
         if (ap.memberId && !(ex as any).memberId) (ex as any).memberId = ap.memberId;
+        // Identidades por federação
+        if (ap.esLicencia && !(ex as any).esLicencia) (ex as any).esLicencia = ap.esLicencia;
+        if (ap.esClub && !(ex as any).esClub) (ex as any).esClub = ap.esClub;
+        if (ap.esFullName && !(ex as any).esFullName) (ex as any).esFullName = ap.esFullName;
+        if (ap.ptFed && !(ex as any).ptFed) (ex as any).ptFed = ap.ptFed;
+        if (ap.frFed && !(ex as any).frFed) (ex as any).frFed = ap.frFed;
       };
 
       // Helper: cria um novo RivalPlayer a partir de um AutoRivalPlayer
@@ -993,6 +999,11 @@ function useAutoRivals() {
         if (ap.fpgClub) (newPlayer as any).fpgClub = ap.fpgClub;
         if (ap.dob) newPlayer.dob = fpgDobToPt(ap.dob);
         if (ap.memberId) (newPlayer as any).memberId = ap.memberId;
+        if (ap.esLicencia) (newPlayer as any).esLicencia = ap.esLicencia;
+        if (ap.esClub) (newPlayer as any).esClub = ap.esClub;
+        if (ap.esFullName) (newPlayer as any).esFullName = ap.esFullName;
+        if (ap.ptFed) (newPlayer as any).ptFed = ap.ptFed;
+        if (ap.frFed) (newPlayer as any).frFed = ap.frFed;
         return newPlayer;
       };
 
@@ -1683,10 +1694,10 @@ function RivaisSidebar({ selected, onSelect, fids, q, paisFilter, tierFilter, mi
             </span>
           )}
           {mhCnt > 0 && <span style={{ fontSize: 10, color: "var(--accent)", fontWeight: 600 }} title={`${mhCnt} torneios USKids`}>📊</span>}
-          {(p as any).fpgClub && (
+          {((p as any).fpgClub || (p as any).esClub) && (
             <span style={{ fontSize: 9, color: "var(--color-good-dark)", fontWeight: 600, opacity: 0.85 }}
-              title="Clube FPG">
-              🏌️ {(p as any).fpgClub}
+              title={(p as any).fpgClub ? "Clube FPG" : "Clube espanhol"}>
+              🏌️ {(p as any).fpgClub || (p as any).esClub}
             </span>
           )}
           {p.up.length > 0 && <span style={{ color: "var(--color-good-dark)", fontWeight: 700, marginLeft: "auto" }}>▲</span>}
@@ -2606,6 +2617,13 @@ function RivalDetail({ playerName }: { playerName: string }) {
               <div style={{ fontSize: 26, fontWeight: 900, color: "var(--text)", lineHeight: 1.1, letterSpacing: "-0.02em" }}>
                 {playerName}
               </div>
+              {/* Nome RFEG completo (entre parêntesis) quando difere */}
+              {rival && (rival as any).esFullName && (
+                <span className="fs-12 fw-500" style={{ color: "var(--text-2)", fontStyle: "italic" }}
+                  title="Nome completo na federação espanhola">
+                  ({(rival as any).esFullName})
+                </span>
+              )}
               {/* Player type badge (getPlayerType) */}
               {playerType && (
                 <span className="fs-12 fw-800 shrink-0" style={{ padding: "3px 10px", borderRadius: 20, background: playerType.bg, color: playerType.fg, letterSpacing: "0.02em" }}>
@@ -2628,9 +2646,30 @@ function RivalDetail({ playerName }: { playerName: string }) {
             {/* Pills: país · trend · DOB · rank · ano activo */}
             <div className="flex-wrap mb-8" style={{ display: "flex", gap: 5, alignItems: "center" }}>
               {rival && !isManuel && <span className="p p-sm p-muted fs-12" >{rival.co}</span>}
-              {rival && !isManuel && (rival as any).fpgClub && (
-                <span className="p p-sm p-club fs-11"  title="Clube FPG">
+              {/* Identidade FPG (nfed + clube PT) */}
+              {rival && !isManuel && (rival as any).ptFed && (
+                <span className="p p-sm p-club fs-11" title={`FPG nfed ${(rival as any).ptFed}`}
+                  style={{ background: "var(--bg-portugal-pale, #fff5f5)", color: "var(--color-portugal, #c41e3a)", border: "1px solid var(--color-portugal-light, #f5b8c0)" }}>
+                  🇵🇹 {(rival as any).ptFed}
+                </span>
+              )}
+              {/* Identidade RFEG/Espanha (licença + clube ES) */}
+              {rival && !isManuel && (rival as any).esLicencia && (
+                <span className="p p-sm p-club fs-11" title="Licença RFEG"
+                  style={{ background: "#fef9e7", color: "#854d0e", border: "1px solid #facc15" }}>
+                  🇪🇸 {(rival as any).esLicencia}
+                </span>
+              )}
+              {/* Clube FPG (já tem cor distinta) */}
+              {rival && !isManuel && (rival as any).fpgClub && rival.co === "Portugal" && (
+                <span className="p p-sm p-club fs-11" title="Clube FPG">
                   🏌️ {(rival as any).fpgClub}
+                </span>
+              )}
+              {/* Clube ES — só renderiza se for diferente do FPG (evita duplicado) */}
+              {rival && !isManuel && (rival as any).esClub && (rival as any).esClub !== (rival as any).fpgClub && (
+                <span className="p p-sm p-club fs-11" title="Clube espanhol">
+                  🏌️ {(rival as any).esClub}
                 </span>
               )}
               {isManuel && <span className="p p-outline p-sm">REF</span>}
@@ -3320,49 +3359,48 @@ function RivaisIntlContent() {
         </span>
       </Toolbar>
 
-      {/* ── Toolbar row 2: filtros de circuito (multi-select) ── */}
       <div style={{
-        display: "flex", alignItems: "center", gap: 5,
-        padding: "4px 10px 5px", overflowX: "auto", flexWrap: "nowrap",
-        scrollbarWidth: "none",
-        background: "var(--bg-card)", borderBottom: "1px solid var(--border-light)",
+        display: "flex", gap: 6, padding: "6px 10px",
+        overflowX: "auto", whiteSpace: "nowrap",
+        borderBottom: "1px solid var(--border-light)",
+        background: "var(--bg)",
         flexShrink: 0,
       }}>
         {SIDEBAR_FILTERS.filter(f => f.id !== "all").map(f => {
           const active = fids.has(f.id);
-            return (
-              <button key={f.id}
-                className={"tourn-tab tourn-tab-sm" + (active ? " active" : " tourn-tab-muted")}
-                style={{ flexShrink: 0 }}
-                onClick={() => toggleFid(f.id)}>
-                {f.label}
-              </button>
-            );
-          })}
-        </div>
+          return (
+            <button key={f.id}
+              className={"tourn-tab tourn-tab-sm" + (active ? " active" : " tourn-tab-muted")}
+              style={{ flexShrink: 0 }}
+              onClick={() => toggleFid(f.id)}>
+              {f.label}
+            </button>
+          );
+        })}
+      </div>
 
-        <div className="master-detail">
-          <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
-            <RivaisSidebar
-              selected={selectedPlayer}
-              onSelect={handleSelectPlayer}
-              fids={fids} q={q}
-              paisFilter={paisFilter}
-              tierFilter={tierFilter}
-              minTorn={minTorn}
-              apenasDirectos={apenasDirectos}
-              playerTypeMap={playerTypeMap}
-            />
-          </div>
-          <div className="course-detail" ref={md.detailRef}>
-            {selectedPlayer ? (
-              <RivalDetail playerName={selectedPlayer} />
-            ) : (
-              <div className="muted p-16">Selecciona um rival à esquerda.</div>
-            )}
-          </div>
+      <div className="master-detail">
+        <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
+          <RivaisSidebar
+            selected={selectedPlayer}
+            onSelect={handleSelectPlayer}
+            fids={fids} q={q}
+            paisFilter={paisFilter}
+            tierFilter={tierFilter}
+            minTorn={minTorn}
+            apenasDirectos={apenasDirectos}
+            playerTypeMap={playerTypeMap}
+          />
+        </div>
+        <div className="course-detail" ref={md.detailRef}>
+          {selectedPlayer ? (
+            <RivalDetail playerName={selectedPlayer} />
+          ) : (
+            <div className="muted p-16">Selecciona um rival à esquerda.</div>
+          )}
         </div>
       </div>
+    </div>
     </DataSourcesProvider>
     </ScoringStatsCtx.Provider>
     </MemberHistCtx.Provider>

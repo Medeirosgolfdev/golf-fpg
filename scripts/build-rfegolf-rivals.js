@@ -257,4 +257,4 @@ fs.writeFileSync(OUT, JSON.stringify(out));
 const size = (fs.statSync(OUT).size / 1024 / 1024).toFixed(2);
 console.log("Built rfegolf-rivals: LGS " + lgsKept + "/" + (lgsKept + lgsSkipped) +
             ", NC " + ncKept + " files (" + ncEntriesAdded + " cats) -> " +
-            out.total + " torneios, " + dedupedPlayers + " dedup -> " + OUT + " (" + size + " MB)");
+            out.total + " torneios -> " + OUT + " (" + size + " MB)");

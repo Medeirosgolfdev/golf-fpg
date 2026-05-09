@@ -92,6 +92,12 @@ export interface AutoRivalPlayer {
   fpgClub?: string;   // clube FPG quando o jogador está na base de dados portuguesa
   dob?: string;       // data de nascimento (YYYY-MM-DD) da base de dados FPG
   memberId?: string;  // ID único USKids (numérico) — chave do uskids-member-history-slim.json
+  // ─── Identidades por federação (quando conhecidas) ───
+  esLicencia?: string;  // RFEG/Espanha (ex: "AM84955303")
+  esClub?: string;      // Clube espanhol (ex: "LA HACIENDA")
+  esFullName?: string;  // Nome RFEG completo quando difere de `n` (ex: "Niko Eduardo Alvarez Van Der Walt")
+  ptFed?: string;       // FPG/Portugal (ex: "52884")
+  frFed?: string;       // FFGolf/França (futuro)
 }
 
 async function fetchJson(path: string): Promise<unknown> {
@@ -215,21 +221,46 @@ export function processWjgc(data: unknown, tid: string): AutoRivalPlayer[] {
   };
   const par = d.par || [];
   const si = d.si || [];
-  return (d.players || []).filter(p => p.rounds?.length > 0).map(p => {
+  const valid = (d.players || []).filter(p => p.rounds?.length > 0);
+
+  // Computar posições localmente quando o scraper devolveu pos=null mas há
+  // result/total para todos. Bug recorrente: bluegolf só apanha pos dos top,
+  // os restantes ficam pos=null. Ordenar por result (toPar) e atribuir.
+  const completed = valid.filter(p => typeof p.result === "number");
+  const computedPos = new Map<string, number>();
+  if (completed.length > 0) {
+    completed.sort((a, b) => (a.result! - b.result!));
+    let lastResult: number | null = null;
+    let lastPos = 0;
+    completed.forEach((p, i) => {
+      if (lastResult !== null && p.result === lastResult) {
+        computedPos.set(p.name, lastPos);  // tied — same pos
+      } else {
+        lastPos = i + 1;
+        lastResult = p.result;
+        computedPos.set(p.name, lastPos);
+      }
+    });
+  }
+
+  return valid.map(p => {
     const rd = p.rounds.map(r => r.gross).filter(g => g > 0);
     const norm = normName(p.name.trim());
-    // Store hole-by-hole scorecard if available
     const holeRounds = p.rounds
       .map(r => r.scores || [])
       .filter(s => s.length === 18);
     if (holeRounds.length > 0 && par.length === 18) {
       addScorecard(norm, { tid, playerName: p.name.trim(), par, si, meters: [], rounds: holeRounds });
     }
+    // pos: usar valor do scraper se for número, senão usar pos calculada
+    const posVal: number | null = typeof p.pos === "number"
+      ? p.pos
+      : (computedPos.get(p.name) ?? null);
     return {
       n: p.name.trim(),
       co: co(p.country),
       r: { [tid]: {
-        p: typeof p.pos === "number" ? p.pos : null,
+        p: posVal,
         t: rd.length ? rd.reduce((a,b)=>a+b,0) : null,
         tp: p.result ?? null,
         rd,
@@ -1783,17 +1814,19 @@ async function _buildAutoRivalsInternal(
       _loadedFiles.push({ path: `${base}players.json`, status: "loaded", group: "enrich" });
       type FpgPlayer = { name: string; dob: string; club: { short: string }; co?: string };
       const fpg = playersRaw as Record<string, FpgPlayer>;
-      // Mapa nome_normalizado → dados FPG
-      const fpgByName = new Map<string, FpgPlayer>();
-      for (const p of Object.values(fpg)) {
-        if (p.name) fpgByName.set(normName(p.name), p);
+      // Mapa nome_normalizado → dados FPG. Também guardamos o nfed (chave) para
+      // popular `ptFed` no rival.
+      const fpgByName = new Map<string, { p: FpgPlayer; nfed: string }>();
+      for (const [nfed, p] of Object.entries(fpg)) {
+        if (p.name) fpgByName.set(normName(p.name), { p, nfed });
       }
       for (const rival of map.values()) {
         const match = fpgByName.get(normName(rival.n));
         if (!match) continue;
         rival.co = "Portugal";
-        rival.fpgClub = match.club?.short ?? undefined;
-        if (!rival.dob && match.dob) rival.dob = match.dob;
+        rival.fpgClub = match.p.club?.short ?? undefined;
+        if (!rival.dob && match.p.dob) rival.dob = match.p.dob;
+        if (!rival.ptFed) rival.ptFed = match.nfed;
       }
     } else {
       _loadedFiles.push({ path: `${base}players.json`, status: "error", error: "null", group: "enrich" });
@@ -1827,6 +1860,11 @@ async function _buildAutoRivalsInternal(
         for (const [tid, res] of Object.entries(rival.r || {})) {
           const ag = res.ageGroup;
           if (!ag) continue;
+          // ⚠ Skipar "Sub-N" — significa "menor de N", não "idade N". Um Sub-16
+          // pode ter 11, 12, 13, 14 ou 15 anos (o cap é 15). Para o purpose de
+          // estimar DOB, não dá info útil — só introduz falsos positivos.
+          // Daniel Avila Sanz (Benjamín, 12 anos) jogou um Sub-16 → bug evitado.
+          if (/^\s*Sub\b/i.test(ag)) continue;
           const m = /\b(\d{1,2})\b/.exec(ag);
           if (!m) continue;
           const age = parseInt(m[1], 10);
@@ -1836,6 +1874,36 @@ async function _buildAutoRivalsInternal(
         if (ageGroups.length === 0) return null;
         let bestYear = 0, bestAge = 0;
         for (const { age, tid } of ageGroups) {
+          // ⚠ Tids LGS/NC contêm SÓ um id interno (sem ano). Nunca tentar
+          // extrair ano deles — `lgs332` daria yy=32 → 2032 (errado).
+          // Usar dateExact registado em uskTournNames para esses tids.
+          if (tid.startsWith("lgs") || tid.startsWith("nc")) {
+            const meta = uskTournNames.get(tid);
+            const ym = meta?.dateExact ? /^(\d{4})/.exec(meta.dateExact) : null;
+            if (ym) {
+              const year = parseInt(ym[1], 10);
+              if (year > bestYear) { bestYear = year; bestAge = age; }
+            }
+            continue;
+          }
+          // ⚠ Tids USKids "usk{tcode}_b{age}" — o tcode é id interno (não ano).
+          // `usk20429_b11` (Spanish Open 2025) ia dar 2042 com regex /20(\d{2})/
+          // — e usk13568 (EC 2023) ia dar 1356 → null com m4 + 68 com m2 → 2068.
+          // Usar uskTournNames.get("usk{tcode}").dateExact em vez de regex.
+          if (tid.startsWith("usk")) {
+            const tcodeMatch = /^usk(\d+)/.exec(tid);
+            if (tcodeMatch) {
+              const meta = uskTournNames.get(`usk${tcodeMatch[1]}`);
+              const ym = meta?.dateExact ? /^(\d{4})/.exec(meta.dateExact) : null;
+              if (ym) {
+                const year = parseInt(ym[1], 10);
+                if (year > bestYear) { bestYear = year; bestAge = age; }
+              }
+            }
+            continue;
+          }
+          // Tids restantes (wjgc25, doral25, qdl25, gg26, marco26, venice25,
+          // rome25, eowagr25, brjgt25...) seguem padrão "{nome}{YY}" onde YY é o ano.
           const m4 = /20(\d{2})/.exec(tid);
           const m2 = /(\d{2})(?:_|$)/.exec(tid);
           let year: number | null = null;
@@ -1850,24 +1918,116 @@ async function _buildAutoRivalsInternal(
         return bestYear - bestAge;
       }
 
-      let matched = 0, rejected = 0;
+      // ── Fuzzy match por superset de tokens (ÍNDICE INVERTIDO) ──
+      // Permite apanhar:
+      //   "Niko Alvarez Van Der Walt" → "Alvarez Van Der Walt Niko Eduardo"
+      //   "Álex Carrón" → "Alex Carron Miron"
+      //
+      // Performance: O(N*K) em vez de O(N*M). Indexamos por token mais raro
+      // — para um rival com tokens [niko, alvarez, van, der, walt], vamos só
+      // iterar as entries que contêm o token mais raro (provavelmente "walt").
+      type SpEntryT = typeof byName[string];
+      // Indexar { entry, tokenSet } — tokenSet construído a partir do KEY do byName,
+      // que já está normalizado (sem vírgulas, etc) pelo build-spain-players-export.
+      // Re-normalizar entry.name produzia tokens incorrectos como "walt," (vírgula).
+      type IndexedEntry = { entry: SpEntryT; tokens: Set<string> };
+      const tokenIndex = new Map<string, IndexedEntry[]>();
+      // Após JSON.parse byName tem múltiplas KEYs (variante "apelido nome" e
+      // "nome apelido") com objects DISTINTOS — não partilham referência mesmo
+      // apontando para o mesmo dado. Dedupe por LICENÇA (chave única).
+      const byLic = new Map<string, IndexedEntry>();
+      for (const [k, v] of Object.entries(byName)) {
+        if (!v.licencia) continue;
+        const tokens = k.split(/\s+/).filter(t => t.length >= 2);
+        if (tokens.length < 2) continue;
+        let idx = byLic.get(v.licencia);
+        if (!idx) {
+          idx = { entry: v, tokens: new Set() };
+          byLic.set(v.licencia, idx);
+        }
+        // Adicionar tokens desta variante ao set acumulado
+        for (const t of tokens) idx.tokens.add(t);
+      }
+      // Agora popular o tokenIndex com cada IndexedEntry (1× por licença)
+      for (const idx of byLic.values()) {
+        for (const t of idx.tokens) {
+          let arr = tokenIndex.get(t);
+          if (!arr) { arr = []; tokenIndex.set(t, arr); }
+          arr.push(idx);
+        }
+      }
+      function findFuzzy(rivalKey: string): SpEntryT | null {
+        const tokens = rivalKey.split(/\s+/).filter(t => t.length >= 2);
+        if (tokens.length < 2) return null;
+        // Escolher token mais raro para iterar
+        let rareList: IndexedEntry[] | null = null;
+        for (const t of tokens) {
+          const list = tokenIndex.get(t);
+          if (!list) return null;
+          if (rareList == null || list.length < rareList.length) rareList = list;
+        }
+        if (!rareList) return null;
+        const rivalTokenSet = new Set(tokens);
+        let match: SpEntryT | null = null;
+        for (const cand of rareList) {
+          if (cand.tokens.size <= rivalTokenSet.size) continue;  // superset estrito
+          let allIn = true;
+          for (const t of rivalTokenSet) if (!cand.tokens.has(t)) { allIn = false; break; }
+          if (!allIn) continue;
+          if (match && match.licencia !== cand.entry.licencia) return null;  // ambíguo
+          match = cand.entry;
+        }
+        return match;
+      }
+
+      let matched = 0, fuzzy = 0, rejected = 0;
+      type SpEntry = { name: string; dob: string; dobIso: string; sex: string | null; club: string | null; licencia: string };
       for (const rival of map.values()) {
-        const e = byName[normName(rival.n)];
+        const rivalKey = normName(rival.n);
+        let e: SpEntry | null = byName[rivalKey] ?? null;
+        let viaFuzzy = false;
+        if (!e) {
+          e = findFuzzy(rivalKey);
+          if (e) viaFuzzy = true;
+        }
         if (!e) continue;
         const espYear = dobYearOf(e.dob);
-        if (!espYear) continue;
-        const existingYear = dobYearOf(rival.dob);
-        const estimatedYear = existingYear ?? estimateBirthYear(rival);
-        if (estimatedYear != null && Math.abs(espYear - estimatedYear) > 1) {
-          rejected++;
+        if (!espYear) {
+          if (e.licencia && !rival.esLicencia) rival.esLicencia = e.licencia;
+          if (e.club && !rival.esClub) rival.esClub = e.club;
+          if (viaFuzzy) fuzzy++;
           continue;
         }
+        // Validação de idade: só aplicar a fuzzy matches (alto risco de homónimo).
+        // Para exact match em byName, confiar 100% — o nome/licença batem certo.
+        // Eliminámos casos onde DOB inferido errado (e.g. Sub-N como age=16)
+        // rejeitava enriquecimentos válidos. Se exact match, atribuir tudo.
+        if (viaFuzzy) {
+          const existingYear = dobYearOf(rival.dob);
+          const estimatedYear = existingYear ?? estimateBirthYear(rival);
+          if (estimatedYear != null && Math.abs(espYear - estimatedYear) > 1) {
+            rejected++;
+            continue;
+          }
+        }
         if (!rival.dob && e.dob) rival.dob = e.dob;
-        if (!rival.fpgClub && e.club) rival.fpgClub = e.club;
+        // ⚠ NÃO popular `fpgClub` aqui — esse campo é exclusivo da FPG (Portugal).
+        // Para players espanhois, popular APENAS `esClub`. Senão o hero esconde
+        // o pill via condição `esClub !== fpgClub` (igualdade trivial).
+        if (!rival.esLicencia && e.licencia) rival.esLicencia = e.licencia;
+        if (!rival.esClub && e.club) rival.esClub = e.club;
         if (!rival.co) rival.co = "Spain";
+        // Guardar nome RFEG completo em esFullName se difere do nome usado no
+        // torneio (rival.n). Útil para mostrar no hero "Niko Alvarez Van Der Walt
+        // (também: Niko Eduardo Alvarez Van Der Walt)".
+        if (!rival.esFullName && e.name) {
+          const fullCanon = rfegolfNameToCanonical(e.name);
+          if (normName(fullCanon) !== normName(rival.n)) rival.esFullName = fullCanon;
+        }
+        if (viaFuzzy) fuzzy++;
         matched++;
       }
-      _loadedFiles.push({ path: `spain-enrich:matched=${matched},rejected=${rejected}`, status: "loaded", group: "enrich" });
+      _loadedFiles.push({ path: `spain-enrich:matched=${matched},fuzzy=${fuzzy},rejected=${rejected}`, status: "loaded", group: "enrich" });
     } else {
       _loadedFiles.push({ path: `${base}spain-players.json`, status: "error", error: "null", group: "enrich" });
     }

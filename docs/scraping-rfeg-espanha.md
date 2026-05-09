@@ -1,7 +1,35 @@
 # Pipeline de scrape Espanha (RFEG / RFEGolf / livegolfscoring / NextCaddy)
 
 Este documento consolida tudo o que aprendemos sobre as fontes de dados de
-torneios espanhois e os scripts/JSONs que produzem. Estado: 2026-05-08.
+torneios espanhois e os scripts/JSONs que produzem. Estado: 2026-05-09.
+
+## ⚡ Update 2026-05-09 — sumário das mudanças
+
+- **NextCaddy expõe par/SI/metros via `/tarjeta-aux/{inscribedId}/-1`** (não na
+  página `/tour/{id}` directamente). O scraper antigo não corria isto; agora
+  com `--scorecards` apanha tudo. **A nota anterior "NextCaddy NÃO expõe
+  par/SI/metros" está obsoleta** — só era verdade no endpoint do leaderboard.
+- **Scrape massivo NextCaddy** — todos os 1281 tours descobertos. ~60 ficheiros
+  têm scorecards hbh (juvenis re-scrapados com `--scorecards`).
+- **Novo endpoint NC: `POST /getListadoHorarios`** com `id={tourId}` devolve
+  HTML com tee times por ronda. Scraper dedicado:
+  `scripts/scrape-nextcaddy-horarios.js` (873 tours processados, 159 com draws
+  reais publicados).
+- **Lookup global `licencia-hcp-lookup.json`** (17.229 licenças) cruza HCP
+  entre todos os tournament JSONs — usado pela RFEGPage para preencher HCP em
+  falta.
+- **`rfegolf-rivals.json` triplicou** (66 → 186 torneios) ao incluir entries
+  NC com hbh. Cada entry tem agora `scoringType: "SCRATCH" | "HANDICAP"`
+  detectado por heurística (NC tours têm leaderboards duplicados — Scratch
+  para gross e Handicap para net).
+- **RFEGPage refeito** com vista única IntlTournView (igual FFG), 3 tabs
+  Resultados/Inscritos/Draw. Coluna Idade separada de Escalão (sortable),
+  termos sempre em RFEG (Alevín/Benjamín/...), pill SCRATCH (gross, amarelo)
+  ou HANDICAP (net, azul). Filtro de categorias agrupa Sub-N + termo RFEG.
+- **KIDSpage consome NextCaddy** via tids `nc{tourId}_{ageKey}`. Filtro 🇪🇸
+  Espanha aceita `lgs*` e `nc*`. Pill SCRATCH/HANDICAP renderizada por torneio.
+- **TournScorecard** esconde linhas `m` e `SI` quando array vazio ou só zeros
+  (LGS não tem meters; antes mostrava "0 0 0" parcial).
 
 ## Fontes — três sites distintos
 
@@ -46,15 +74,25 @@ RFEGolf CompId ↔ LGS id — temos de cruzar por nome+ano+clube.
 
 ```
 GET  /tour/{id}                              → metadata HTML
-POST /getListadoClasificaciones (id=N)       → leaderboard
+POST /getListadoClasificaciones (id=N)       → leaderboard (categorias múltiplas)
 POST /getListadoInscritos (id=N)             → inscritos
+POST /getListadoHorarios (id=N)              → HTML com tee times por ronda
+GET  /tarjeta-aux/{inscribedId}/-1           → scorecard hbh + par/SI/metros REAIS ✓
 GET  /stats/rounds/{n}                       → JSON rondas
 GET  /competiciones-comite                   → discovery (todas as zonas)
 ```
 
-⚠ **NextCaddy NÃO expõe par/SI/metros do campo** — só scores hole-by-hole.
-O par tem de ser inferido a partir dos scores top-50% dos finishers
-(script `scripts/infer-nextcaddy-par.js`).
+✓ **NextCaddy EXPÕE par/SI/metros do campo** via `/tarjeta-aux/...` (descoberto
+2026-05-09). O scraper apanha-os quando corrido com `--scorecards`. Para
+torneios sem scorecards individuais publicados, fallback é o
+`scripts/infer-nextcaddy-par.js` (par inferido dos scores top-50%).
+
+⚠ **Categorias NC: Scratch vs Handicap.** Cada NC tour expõe múltiplos blocos
+de leaderboard. Tipicamente um é a classificação Scratch (gross) e outro a
+Handicap (net = gross − handicap). Os blocos têm o mesmo player mas com
+`total` diferente — isto é intencional e está propagado em `rfegolf-rivals.json`
+via campo `scoringType`. Heurística de detecção: comparar `player.total` com
+`sum(roundScores[].scores)`. Iguais → SCRATCH. Diferentes → HANDICAP.
 
 ## Scripts criados (`scripts/*.js`)
 
@@ -81,12 +119,27 @@ O par tem de ser inferido a partir dos scores top-50% dos finishers
   267 ficheiros (24-368).
 
 - **`scrape-nextcaddy.js`** — Scrape de circuitos regionais Andaluzia/Madrid.
+  Sem `--scorecards`: leaderboard + inscritos. Com `--scorecards`: também faz
+  fetch a `/tarjeta-aux/{inscribedId}/-1` por player → par/SI/metros + scores
+  hbh. Tipicamente +5s por torneio com scorecards.
   ```bash
   node scripts/scrape-nextcaddy.js --tour 61094
+  node scripts/scrape-nextcaddy.js --tour 61131 --scorecards
   node scripts/scrape-nextcaddy.js --discover --comite 1
-  node scripts/scrape-nextcaddy.js --scope scripts/nextcaddy-scope.json
+  node scripts/scrape-nextcaddy.js --scope scripts/nextcaddy-scope.json --concurrency 8 --skip-existing
   ```
-  Output: `public/data/nextcaddy/{tourId}.json`. Estado: 139 ficheiros.
+  Output: `public/data/nextcaddy/{tourId}.json`. Estado 2026-05-09: **1281
+  ficheiros** (todos os tours descobertos).
+
+- **`scrape-nextcaddy-horarios.js`** ⭐ NOVO 2026-05-09 — Tab Draw saída.
+  Endpoint: `POST /getListadoHorarios` parsado em HTML para extrair tee
+  times agrupados por flight (time, tee, players[]). Adiciona campo
+  `horarios: [{round, players[]}]` aos JSONs NC existentes.
+  ```bash
+  node scripts/scrape-nextcaddy-horarios.js --tour 61131
+  node scripts/scrape-nextcaddy-horarios.js --all --concurrency 8 --skip-existing
+  ```
+  Estado 2026-05-09: 873 tours actualizados, 159 com draws reais.
 
 - **`enrich-lgs-dates.js`** — Enriquece JSONs LGS sem `meta.year` fazendo
   fetch a `/torneos/imprimir/{id}` e extraindo `Fecha: dd/mm/yyyy`.
@@ -106,7 +159,9 @@ O par tem de ser inferido a partir dos scores top-50% dos finishers
   ```bash
   node scripts/build-rfegolf-index.js
   ```
-  Estado: 814 torneios (408 RFEGolf + 267 LGS + 139 NextCaddy).
+  Estado 2026-05-09: **1956 torneios** (408 RFEGolf + 267 LGS + 1281 NextCaddy).
+  No sidebar do RFEGPage só aparecem ~166 (filtro: ter `category` juvenil
+  preenchida E `leaderboardPlayers > 0`).
 
 - **`build-livegolfscoring-index.js`** — Índice dedicado LGS com `nRounds`,
   `players` count, `dateRange`. Para a UI filtrar.
@@ -128,9 +183,23 @@ O par tem de ser inferido a partir dos scores top-50% dos finishers
   `public/data/spain-players.json` (1.15 MB, 3948 entries no `byName`
   com 3 variantes ortográficas — "marcus latt", "latt marcus", etc.).
 
-- **`build-rfegolf-rivals.js`** — Filtra LGS apenas juvenil + scorecards
-  válidos e produz `public/data/rfegolf-rivals.json` (0.88 MB, 66 torneios)
-  consumido em runtime pelo KIDSdataLoader. Tem `sc[]` (scores hbh por ronda).
+- **`build-rfegolf-rivals.js`** — Junta LGS + NextCaddy juvenis com scorecards
+  válidos e produz `public/data/rfegolf-rivals.json` (~1.05 MB, **186 torneios**:
+  66 LGS + 120 NC) consumido pelo KIDSdataLoader. Tem `sc[]` (scores hbh) +
+  `meters[]` + `si[]` (NC) + `scoringType` ("SCRATCH" ou "HANDICAP" — só NC).
+  Tids: `lgs{id}` para LGS, `nc{id}_{ageKey}` para NC (1 entrada por categoria
+  juvenil; ageKey = "alevín", "infantil", etc.).
+  ```bash
+  node scripts/build-rfegolf-rivals.js
+  ```
+
+- **`build-licencia-hcp-lookup.js`** ⭐ NOVO 2026-05-09 — Cruza HCP de TODOS os
+  JSONs scrapados (NC + RFEGolf), agrega por licença e mantém o mais recente.
+  Output: `public/data/licencia-hcp-lookup.json` com 17.229 licenças. Usado
+  pela RFEGPage para preencher HCP em falta (ex: LGS não expõe HCP por player).
+  ```bash
+  node scripts/build-licencia-hcp-lookup.js
+  ```
 
 ## Dados produzidos — pasta `public/data/`
 
@@ -138,11 +207,12 @@ O par tem de ser inferido a partir dos scores top-50% dos finishers
 |---|---|---|---|
 | `rfegolf-resultats/*.json` | scrape-rfegolf-node | 408 ficheiros | Metadata + inscritos + palmarés + PDFs parseados |
 | `rfegolf-livegolfscoring/*.json` | scrape-livegolfscoring | 267 ficheiros | Leaderboard + scorecards hbh + par real |
-| `nextcaddy/*.json` | scrape-nextcaddy | 139 ficheiros | Leaderboard regional Andaluzia/Madrid |
+| `nextcaddy/*.json` | scrape-nextcaddy + scrape-nextcaddy-horarios | **1281 ficheiros** | Leaderboard + horarios + (com `--scorecards`) hbh + par/SI/metros |
 | `rfegolf-resultats-index.json` | build-rfegolf-index | ~140KB | Índice consolidado das 3 fontes — RFEGPage |
 | `licencia-dob-lookup.json` | build-licencia-dob-lookup | 0.56 MB | DOB+sexo+clube por licencia |
+| `licencia-hcp-lookup.json` | build-licencia-hcp-lookup ⭐ NOVO | ~0.5 MB | HCP por licença (17.229 entries) — cross-reference para preencher HCP em falta |
 | `spain-players.json` | build-spain-players-export | 1.15 MB | Lookup para KIDSpage (byName + byLicencia, 3 variantes) |
-| `rfegolf-rivals.json` | build-rfegolf-rivals | 0.88 MB | 66 torneios LGS juvenis para KIDSdataLoader processar |
+| `rfegolf-rivals.json` | build-rfegolf-rivals | ~1.05 MB | **186 torneios** (66 LGS + 120 NC) com scoringType — KIDSdataLoader |
 
 ## Características importantes dos dados
 
@@ -189,23 +259,45 @@ Daí o passo extra `enrich-lgs-dates.js`.
 
 ## Integração na app
 
-### RFEGPage (`/rfeg`)
+### RFEGPage (`/rfeg`) — refeito 2026-05-09
 
-Lê `rfegolf-resultats-index.json` e mostra todos os torneios com:
-- Filtro por ano, categoria, sexo, fonte (LGS / RFEGolf / NextCaddy)
-- Ao clicar num LGS → `IntlTournView` com par real + scorecards hbh
-- Ao clicar num RFEGolf → tabela de inscritos com DOB/sexo/clube
-- Ao clicar num NextCaddy → leaderboard com scorecards hbh + par inferido
+Vista única coerente — **todas as fontes** (LGS, NextCaddy, RFEGolf)
+renderizam pelo `IntlTournView` (mesmo componente da FFG/FPG). 3 tabs:
 
-### KIDSpage (`/kids`)
+- **📋 Resultados** — `IntlTournView` com tabs R1/R2/.../Resumo + Scorecards.
+  Adapters dedicados convertem cada source para `FPGTournament`:
+  `lgsToFPGTournament`, `ncToFPGTournament`, `rfegolfToFPGTournament`.
+- **👥 Inscritos** — `PlayerTable` clássica com DOB/sexo/clube.
+- **🕐 Draw saída** — usa `DrawTab` partilhado (mesmo do FPG). Apenas para NC
+  por agora (LGS/RFEGolf não publicam tee times).
 
-- Filtro 🇪🇸 Espanha — só rivais com `tids.startsWith("lgs")`
-- Cada rival com participação espanhola tem entries `r["lgs{id}"]` no perfil
-- DOB e clube enriquecidos via `spain-players.json` quando o nome bate
-- Validação de idade: rejeita match se `birthYear` espanhol difere >1 ano
-  do `birthYear` estimado pelos `ageGroup` dos torneios
-- Token-set merge consolida "Adriana Garcia Terol" e "Garcia Terol Adriana"
-  num único rival (preserva o nome mais detalhado, funde os `r[tid]`)
+**Coluna ESC desdobrada em 2 pills sortable** (idade neutral cinza + escalão
+colorido). Termos sempre em RFEG (Alevín, Benjamín, etc.) — `EscPill` mapeia
+"Alevín" → mesma cor que "Sub-12" via `ES_TERM_TO_SUB`. Filtro de categorias
+agrupa Sub-N + RFEG (ex: "Alevín (53)" inclui torneios marcados como Alevín
+ou Sub-12).
+
+Sidebar: torneios filtrados por `category` preenchida E
+`leaderboardPlayers > 0` (oculta adultos e futuros sem dados). `SexBadge` +
+`RoundPill` consistentes com o resto da app (sem texto "Masculino" nem
+símbolos Unicode ♂/♀).
+
+Item info "📚 Categorías de edad RFEG" — vista com tabela das 7 categorias
+oficiais (Benjamín → Sub-25), millésime por ano de referência, equivalentes
+internacional/FPG/FFG.
+
+### KIDSpage (`/kids`) — extensões 2026-05-09
+
+- Filtro 🇪🇸 Espanha aceita ambos `lgs*` e `nc*` tids
+- `processRfegolfRivals` no `KIDSdataLoader` regista `co: "Spain"` directamente
+  e popula `uskTournNames` para os tids NC/LGS
+- Pill colorido **Scratch** (gross, fundo amarelo) ou **Handicap** (net, fundo
+  azul) por torneio NC — lido de `ncScoringType` Map
+- Link `↗ RFEG` para NC abre `nextcaddy.com/tour/{id}/clasificaciones`
+- `TournScorecard.tsx` esconde linhas `m` e `SI` quando array vazio ou só
+  zeros (LGS não tem meters; antes mostrava "0 0 0" parcial)
+
+_Secção movida acima — ver "KIDSpage extensões 2026-05-09"._
 
 ## Próximos passos — onde procurar mais torneios 2026
 
@@ -256,12 +348,19 @@ node scripts/scrape-livegolfscoring.js --range 369-500 --concurrency 10 --skip-e
 # Re-enrich LGS dates
 node scripts/enrich-lgs-dates.js
 
+# NextCaddy — discovery + scrape novo + scorecards juvenis + horarios
+node scripts/scrape-nextcaddy.js --discover --out scripts/nextcaddy-scope-all.json
+node scripts/scrape-nextcaddy.js --scope scripts/nextcaddy-scope-all.json --concurrency 8 --skip-existing
+node scripts/scrape-nextcaddy.js --scope scripts/nextcaddy-juvenil-need-scorecards.json --scorecards --concurrency 4
+node scripts/scrape-nextcaddy-horarios.js --all --concurrency 8 --skip-existing
+
 # Re-build tudo
 node scripts/build-rfegolf-index.js
 node scripts/build-licencia-dob-lookup.js
+node scripts/build-licencia-hcp-lookup.js   # NOVO 2026-05-09
 node scripts/build-spain-players-export.js
 node scripts/build-rfegolf-rivals.js
-node scripts/infer-nextcaddy-par.js
+node scripts/infer-nextcaddy-par.js          # fallback para NC sem --scorecards
 
 # Validar
 npm test
@@ -280,8 +379,18 @@ npm test
    rejeita matches falsos (homónimos com idades diferentes).
 5. **Token-set merge** — consolidação O(n) no fim do load para fundir
    "Adriana Garcia Terol" e "Garcia Terol Adriana".
-6. **Par inferido NextCaddy**: NextCaddy não expõe par real; usamos a
-   mediana dos scores dos top-50% finishers reconciliada com `total - toPar`.
+6. **Par/SI/metros NextCaddy** — `tarjeta-aux` por player expõe-os
+   directamente (descoberto 2026-05-09). Fallback `infer-nextcaddy-par.js`
+   continua útil para NC sem scorecards individuais publicados.
+7. **Scratch vs Handicap NC** — NC tem leaderboards duplicados (Scratch=gross,
+   Handicap=net). Detecção heurística por comparação `total` vs
+   `sum(scoresByRound)`. KIDSpage e RFEGPage mostram pill colorido para o user
+   distinguir.
+8. **Lookup HCP global** (2026-05-09) — agrega HCPs de todos os JSONs por
+   licença para preencher onde uma fonte não tem (ex: LGS não expõe HCP).
+9. **Termos RFEG sempre** — UI usa "Alevín/Benjamín/Infantil/Cadete/Junior/
+   Juvenil" em vez de "Sub-N". `EscPill` mapeia ambos para a mesma cor CSS
+   via `ES_TERM_TO_SUB`.
 
 ## Insights operacionais
 
