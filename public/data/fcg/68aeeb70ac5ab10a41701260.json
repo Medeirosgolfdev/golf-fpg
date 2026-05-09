@@ -1,0 +1,167 @@
+{
+  "gameId": "68aeeb70ac5ab10a41701260",
+  "fetchedAt": "2026-05-09T19:54:03.617Z",
+  "game": {
+    "_id": "68aeeb70ac5ab10a41701260",
+    "name": "CAMPIONAT DE CATALUNYA MATCH-PLAY SOTS-14 2025",
+    "status": "scheduled",
+    "scheduleStartDate": "2025-09-20T07:00:00.000Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "matchPlay",
+    "defaultTeeColorMale": "yellow",
+    "defaultTeeColorFemale": "red",
+    "tournament": {
+      "_id": "68aeeb70ac5ab10a4170128b",
+      "name": "CAMPIONAT DE CATALUNYA MATCH-PLAY SOTS-14 2025",
+      "clientName": "Federación Catalana de Golf",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de79a6e4d36dfe90dea330d",
+      "name": "CLUB DE GOLF COSTA BRAVA",
+      "city": null,
+      "state": null,
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "5de79a6e4d36dfe90dea3315",
+      "name": "COSTA BRAVA - Verde",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 65.4,
+        "slope": 116,
+        "par": 70,
+        "_id": "68aeeb70ac5ab10a41701334"
+      },
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 69.2,
+        "slope": 130,
+        "par": 70,
+        "_id": "68aeeb70ac5ab10a4170136d"
+      },
+      {
+        "gender": "M",
+        "color": "orange",
+        "lap": "lap18",
+        "rating": 68.4,
+        "slope": 129,
+        "par": 70,
+        "_id": "68aeeb70ac5ab10a417013b9"
+      },
+      {
+        "gender": "M",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 66.4,
+        "slope": 118,
+        "par": 70,
+        "_id": "68aeeb70ac5ab10a417013a6"
+      },
+      {
+        "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 70.1,
+        "slope": 132,
+        "par": 70,
+        "_id": "68aeeb70ac5ab10a41701380"
+      },
+      {
+        "gender": "M",
+        "color": "gold",
+        "lap": "lap18",
+        "rating": 64.9,
+        "slope": 121,
+        "par": 70,
+        "_id": "68aeeb70ac5ab10a41701347"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 71.5,
+        "slope": 127,
+        "par": 70,
+        "_id": "68aeeb70ac5ab10a41701393"
+      },
+      {
+        "gender": "F",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 76.2,
+        "slope": 134,
+        "par": 70,
+        "_id": "68aeeb70ac5ab10a417013cc"
+      },
+      {
+        "gender": "F",
+        "color": "gold",
+        "lap": "lap18",
+        "rating": 69.2,
+        "slope": 124,
+        "par": 70,
+        "_id": "68aeeb70ac5ab10a41701321"
+      },
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 70.4,
+        "slope": 126,
+        "par": 70,
+        "_id": "68aeeb70ac5ab10a4170135a"
+      },
+      {
+        "gender": "F",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 74.8,
+        "slope": 131,
+        "par": 70,
+        "_id": "68aeeb70ac5ab10a417013df"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "68aeeb70ac5ab10a4170129d",
+      "name": "SCRATCH",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "68aeeb70ac5ab10a417012a0",
+      "name": "HANDICAP",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}

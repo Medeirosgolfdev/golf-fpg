@@ -1,0 +1,5705 @@
+{
+  "gameId": "67584aa81d0390d2bc725c66",
+  "fetchedAt": "2026-05-09T19:51:03.511Z",
+  "game": {
+    "_id": "67584aa81d0390d2bc725c66",
+    "name": "Jornada 1 - Fourballs",
+    "status": "finished",
+    "scheduleStartDate": "2025-01-25T08:00:00.000Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "strokePlay",
+    "defaultTeeColorMale": "white",
+    "defaultTeeColorFemale": "blue",
+    "tournament": {
+      "_id": "67584aa81d0390d2bc725c89",
+      "name": "CAMPIONAT DE CATALUNYA DOBLES 2025",
+      "clientName": "Federación Catalana de Golf",
+      "isSingleGame": false
+    },
+    "club": {
+      "_id": "5de79a6e4d36dfe90dea32c9",
+      "name": "CLUB DE GOLF TERRAMAR",
+      "city": null,
+      "state": null,
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "614bfc6784d7dc28292a8df9",
+      "name": "TERRAMAR - Terramar",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "orange",
+        "lap": "lap18",
+        "rating": 61.9,
+        "slope": 105,
+        "par": 72,
+        "_id": "67584aa81d0390d2bc725d60"
+      },
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 70.7,
+        "slope": 133,
+        "par": 72,
+        "_id": "67584aa81d0390d2bc725d72"
+      },
+      {
+        "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 72.6,
+        "slope": 137,
+        "par": 72,
+        "_id": "67584aa81d0390d2bc725d06"
+      },
+      {
+        "gender": "M",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 68.1,
+        "slope": 120,
+        "par": 72,
+        "_id": "67584aa81d0390d2bc725d2a"
+      },
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 66.4,
+        "slope": 119,
+        "par": 72,
+        "_id": "67584aa81d0390d2bc725d84"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 76.7,
+        "slope": 132,
+        "par": 72,
+        "_id": "67584aa81d0390d2bc725d96"
+      },
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 71.6,
+        "slope": 120,
+        "par": 72,
+        "_id": "67584aa81d0390d2bc725d3c"
+      },
+      {
+        "gender": "F",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 78.7,
+        "slope": 136,
+        "par": 72,
+        "_id": "67584aa81d0390d2bc725da8"
+      },
+      {
+        "gender": "F",
+        "color": "orange",
+        "lap": "lap18",
+        "rating": 66.3,
+        "slope": 111,
+        "par": 72,
+        "_id": "67584aa81d0390d2bc725d4e"
+      },
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 73.9,
+        "slope": 128,
+        "par": 72,
+        "_id": "67584aa81d0390d2bc725d18"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "67584aa81d0390d2bc725c9b",
+      "name": "SCR MASCULINA",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:10",
+          "teeTime": "2025-01-25T08:10:00.000Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 1,
+              "ranking": "1",
+              "realRanking": 1,
+              "result": -10,
+              "onlyGross": -10,
+              "onlyNet": -9,
+              "strokeNumber": 62,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 1,
+              "ranking": "1",
+              "realRanking": 1,
+              "result": -10,
+              "onlyGross": -10,
+              "onlyNet": -9,
+              "strokeNumber": 62,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 1,
+                "ranking": "1",
+                "realRanking": 1,
+                "result": -10,
+                "onlyGross": -10,
+                "onlyNet": -9,
+                "strokeNumber": 62,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 1,
+                "ranking": "1",
+                "realRanking": 1,
+                "result": -10,
+                "onlyGross": -10,
+                "onlyNet": -9,
+                "strokeNumber": 62,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:20",
+          "teeTime": "2025-01-25T08:20:00.000Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 2,
+              "ranking": "2",
+              "realRanking": 2,
+              "result": -8,
+              "onlyGross": -8,
+              "onlyNet": -8,
+              "strokeNumber": 64,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 2,
+              "ranking": "2",
+              "realRanking": 2,
+              "result": -8,
+              "onlyGross": -8,
+              "onlyNet": -8,
+              "strokeNumber": 64,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 2,
+                "ranking": "2",
+                "realRanking": 2,
+                "result": -8,
+                "onlyGross": -8,
+                "onlyNet": -8,
+                "strokeNumber": 64,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 2,
+                "ranking": "2",
+                "realRanking": 2,
+                "result": -8,
+                "onlyGross": -8,
+                "onlyNet": -8,
+                "strokeNumber": 64,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:00",
+          "teeTime": "2025-01-25T09:00:00.000Z",
+          "teeNumber": 10,
+          "view": {
+            "day": {
+              "rankingPosition": 3,
+              "ranking": "3",
+              "realRanking": 3,
+              "result": -7,
+              "onlyGross": -7,
+              "onlyNet": -9,
+              "strokeNumber": 65,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 3,
+              "ranking": "3",
+              "realRanking": 3,
+              "result": -7,
+              "onlyGross": -7,
+              "onlyNet": -9,
+              "strokeNumber": 65,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 3,
+                "ranking": "3",
+                "realRanking": 3,
+                "result": -7,
+                "onlyGross": -7,
+                "onlyNet": -9,
+                "strokeNumber": 65,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 3,
+                "ranking": "3",
+                "realRanking": 3,
+                "result": -7,
+                "onlyGross": -7,
+                "onlyNet": -9,
+                "strokeNumber": 65,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:40",
+          "teeTime": "2025-01-25T09:40:00.000Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 4,
+              "ranking": "4",
+              "realRanking": 4,
+              "result": -6,
+              "onlyGross": -6,
+              "onlyNet": -9,
+              "strokeNumber": 66,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 4,
+              "ranking": "4",
+              "realRanking": 4,
+              "result": -6,
+              "onlyGross": -6,
+              "onlyNet": -9,
+              "strokeNumber": 66,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 4,
+                "ranking": "4",
+                "realRanking": 4,
+                "result": -6,
+                "onlyGross": -6,
+                "onlyNet": -9,
+                "strokeNumber": 66,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 4,
+                "ranking": "4",
+                "realRanking": 4,
+                "result": -6,
+                "onlyGross": -6,
+                "onlyNet": -9,
+                "strokeNumber": 66,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:50",
+          "teeTime": "2025-01-25T09:50:00.000Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 5,
+              "ranking": "5",
+              "realRanking": 5,
+              "result": -6,
+              "onlyGross": -6,
+              "onlyNet": -7,
+              "strokeNumber": 66,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 5,
+              "ranking": "5",
+              "realRanking": 5,
+              "result": -6,
+              "onlyGross": -6,
+              "onlyNet": -7,
+              "strokeNumber": 66,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 5,
+                "ranking": "5",
+                "realRanking": 5,
+                "result": -6,
+                "onlyGross": -6,
+                "onlyNet": -7,
+                "strokeNumber": 66,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 5,
+                "ranking": "5",
+                "realRanking": 5,
+                "result": -6,
+                "onlyGross": -6,
+                "onlyNet": -7,
+                "strokeNumber": 66,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:40",
+          "teeTime": "2025-01-25T08:40:00.000Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 6,
+              "ranking": "6",
+              "realRanking": 6,
+              "result": -6,
+              "onlyGross": -6,
+              "onlyNet": -6,
+              "strokeNumber": 66,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 6,
+              "ranking": "6",
+              "realRanking": 6,
+              "result": -6,
+              "onlyGross": -6,
+              "onlyNet": -6,
+              "strokeNumber": 66,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 6,
+                "ranking": "6",
+                "realRanking": 6,
+                "result": -6,
+                "onlyGross": -6,
+                "onlyNet": -6,
+                "strokeNumber": 66,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 6,
+                "ranking": "6",
+                "realRanking": 6,
+                "result": -6,
+                "onlyGross": -6,
+                "onlyNet": -6,
+                "strokeNumber": 66,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:40",
+          "teeTime": "2025-01-25T09:40:00.000Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 7,
+              "ranking": "7",
+              "realRanking": 7,
+              "result": -5,
+              "onlyGross": -5,
+              "onlyNet": -7,
+              "strokeNumber": 67,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 7,
+              "ranking": "7",
+              "realRanking": 7,
+              "result": -5,
+              "onlyGross": -5,
+              "onlyNet": -7,
+              "strokeNumber": 67,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 7,
+                "ranking": "7",
+                "realRanking": 7,
+                "result": -5,
+                "onlyGross": -5,
+                "onlyNet": -7,
+                "strokeNumber": 67,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 7,
+                "ranking": "7",
+                "realRanking": 7,
+                "result": -5,
+                "onlyGross": -5,
+                "onlyNet": -7,
+                "strokeNumber": 67,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:10",
+          "teeTime": "2025-01-25T08:10:00.000Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 8,
+              "ranking": "8",
+              "realRanking": 8,
+              "result": -5,
+              "onlyGross": -5,
+              "onlyNet": -3,
+              "strokeNumber": 67,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 8,
+              "ranking": "8",
+              "realRanking": 8,
+              "result": -5,
+              "onlyGross": -5,
+              "onlyNet": -3,
+              "strokeNumber": 67,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 8,
+                "ranking": "8",
+                "realRanking": 8,
+                "result": -5,
+                "onlyGross": -5,
+                "onlyNet": -3,
+                "strokeNumber": 67,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 8,
+                "ranking": "8",
+                "realRanking": 8,
+                "result": -5,
+                "onlyGross": -5,
+                "onlyNet": -3,
+                "strokeNumber": 67,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:30",
+          "teeTime": "2025-01-25T09:30:00.000Z",
+          "teeNumber": 10,
+          "view": {
+            "day": {
+              "rankingPosition": 9,
+              "ranking": "9",
+              "realRanking": 9,
+              "result": -5,
+              "onlyGross": -5,
+              "onlyNet": -8,
+              "strokeNumber": 67,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 9,
+              "ranking": "9",
+              "realRanking": 9,
+              "result": -5,
+              "onlyGross": -5,
+              "onlyNet": -8,
+              "strokeNumber": 67,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 9,
+                "ranking": "9",
+                "realRanking": 9,
+                "result": -5,
+                "onlyGross": -5,
+                "onlyNet": -8,
+                "strokeNumber": 67,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 9,
+                "ranking": "9",
+                "realRanking": 9,
+                "result": -5,
+                "onlyGross": -5,
+                "onlyNet": -8,
+                "strokeNumber": 67,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:30",
+          "teeTime": "2025-01-25T09:30:00.000Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 10,
+              "ranking": "10",
+              "realRanking": 10,
+              "result": -4,
+              "onlyGross": -4,
+              "onlyNet": -4,
+              "strokeNumber": 68,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 10,
+              "ranking": "10",
+              "realRanking": 10,
+              "result": -4,
+              "onlyGross": -4,
+              "onlyNet": -4,
+              "strokeNumber": 68,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 10,
+                "ranking": "10",
+                "realRanking": 10,
+                "result": -4,
+                "onlyGross": -4,
+                "onlyNet": -4,
+                "strokeNumber": 68,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 10,
+                "ranking": "10",
+                "realRanking": 10,
+                "result": -4,
+                "onlyGross": -4,
+                "onlyNet": -4,
+                "strokeNumber": 68,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:00",
+          "teeTime": "2025-01-25T09:00:00.000Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 11,
+              "ranking": "11",
+              "realRanking": 11,
+              "result": -4,
+              "onlyGross": -4,
+              "onlyNet": -4,
+              "strokeNumber": 68,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 11,
+              "ranking": "11",
+              "realRanking": 11,
+              "result": -4,
+              "onlyGross": -4,
+              "onlyNet": -4,
+              "strokeNumber": 68,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 11,
+                "ranking": "11",
+                "realRanking": 11,
+                "result": -4,
+                "onlyGross": -4,
+                "onlyNet": -4,
+                "strokeNumber": 68,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 11,
+                "ranking": "11",
+                "realRanking": 11,
+                "result": -4,
+                "onlyGross": -4,
+                "onlyNet": -4,
+                "strokeNumber": 68,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:00",
+          "teeTime": "2025-01-25T09:00:00.000Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 12,
+              "ranking": "12",
+              "realRanking": 12,
+              "result": -4,
+              "onlyGross": -4,
+              "onlyNet": -5,
+              "strokeNumber": 68,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 12,
+              "ranking": "12",
+              "realRanking": 12,
+              "result": -4,
+              "onlyGross": -4,
+              "onlyNet": -5,
+              "strokeNumber": 68,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 12,
+                "ranking": "12",
+                "realRanking": 12,
+                "result": -4,
+                "onlyGross": -4,
+                "onlyNet": -5,
+                "strokeNumber": 68,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 12,
+                "ranking": "12",
+                "realRanking": 12,
+                "result": -4,
+                "onlyGross": -4,
+                "onlyNet": -5,
+                "strokeNumber": 68,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:40",
+          "teeTime": "2025-01-25T08:40:00.000Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 13,
+              "ranking": "13",
+              "realRanking": 13,
+              "result": -4,
+              "onlyGross": -4,
+              "onlyNet": -5,
+              "strokeNumber": 68,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 13,
+              "ranking": "13",
+              "realRanking": 13,
+              "result": -4,
+              "onlyGross": -4,
+              "onlyNet": -5,
+              "strokeNumber": 68,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 13,
+                "ranking": "13",
+                "realRanking": 13,
+                "result": -4,
+                "onlyGross": -4,
+                "onlyNet": -5,
+                "strokeNumber": 68,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 13,
+                "ranking": "13",
+                "realRanking": 13,
+                "result": -4,
+                "onlyGross": -4,
+                "onlyNet": -5,
+                "strokeNumber": 68,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:20",
+          "teeTime": "2025-01-25T09:20:00.000Z",
+          "teeNumber": 10,
+          "view": {
+            "day": {
+              "rankingPosition": 14,
+              "ranking": "14",
+              "realRanking": 14,
+              "result": -3,
+              "onlyGross": -3,
+              "onlyNet": -5,
+              "strokeNumber": 69,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 14,
+              "ranking": "14",
+              "realRanking": 14,
+              "result": -3,
+              "onlyGross": -3,
+              "onlyNet": -5,
+              "strokeNumber": 69,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 14,
+                "ranking": "14",
+                "realRanking": 14,
+                "result": -3,
+                "onlyGross": -3,
+                "onlyNet": -5,
+                "strokeNumber": 69,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 14,
+                "ranking": "14",
+                "realRanking": 14,
+                "result": -3,
+                "onlyGross": -3,
+                "onlyNet": -5,
+                "strokeNumber": 69,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:00",
+          "teeTime": "2025-01-25T08:00:00.000Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 15,
+              "ranking": "15",
+              "realRanking": 15,
+              "result": -3,
+              "onlyGross": -3,
+              "onlyNet": 0,
+              "strokeNumber": 69,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 15,
+              "ranking": "15",
+              "realRanking": 15,
+              "result": -3,
+              "onlyGross": -3,
+              "onlyNet": 0,
+              "strokeNumber": 69,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 15,
+                "ranking": "15",
+                "realRanking": 15,
+                "result": -3,
+                "onlyGross": -3,
+                "onlyNet": 0,
+                "strokeNumber": 69,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 15,
+                "ranking": "15",
+                "realRanking": 15,
+                "result": -3,
+                "onlyGross": -3,
+                "onlyNet": 0,
+                "strokeNumber": 69,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:00",
+          "teeTime": "2025-01-25T08:00:00.000Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 16,
+              "ranking": "16",
+              "realRanking": 16,
+              "result": -2,
+              "onlyGross": -2,
+              "onlyNet": -1,
+              "strokeNumber": 70,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 16,
+              "ranking": "16",
+              "realRanking": 16,
+              "result": -2,
+              "onlyGross": -2,
+              "onlyNet": -1,
+              "strokeNumber": 70,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 16,
+                "ranking": "16",
+                "realRanking": 16,
+                "result": -2,
+                "onlyGross": -2,
+                "onlyNet": -1,
+                "strokeNumber": 70,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 16,
+                "ranking": "16",
+                "realRanking": 16,
+                "result": -2,
+                "onlyGross": -2,
+                "onlyNet": -1,
+                "strokeNumber": 70,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:10",
+          "teeTime": "2025-01-25T09:10:00.000Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 17,
+              "ranking": "17",
+              "realRanking": 17,
+              "result": -2,
+              "onlyGross": -2,
+              "onlyNet": -3,
+              "strokeNumber": 70,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 17,
+              "ranking": "17",
+              "realRanking": 17,
+              "result": -2,
+              "onlyGross": -2,
+              "onlyNet": -3,
+              "strokeNumber": 70,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 17,
+                "ranking": "17",
+                "realRanking": 17,
+                "result": -2,
+                "onlyGross": -2,
+                "onlyNet": -3,
+                "strokeNumber": 70,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 17,
+                "ranking": "17",
+                "realRanking": 17,
+                "result": -2,
+                "onlyGross": -2,
+                "onlyNet": -3,
+                "strokeNumber": 70,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:50",
+          "teeTime": "2025-01-25T08:50:00.000Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 18,
+              "ranking": "18",
+              "realRanking": 18,
+              "result": -2,
+              "onlyGross": -2,
+              "onlyNet": -3,
+              "strokeNumber": 70,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 18,
+              "ranking": "18",
+              "realRanking": 18,
+              "result": -2,
+              "onlyGross": -2,
+              "onlyNet": -3,
+              "strokeNumber": 70,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 18,
+                "ranking": "18",
+                "realRanking": 18,
+                "result": -2,
+                "onlyGross": -2,
+                "onlyNet": -3,
+                "strokeNumber": 70,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 18,
+                "ranking": "18",
+                "realRanking": 18,
+                "result": -2,
+                "onlyGross": -2,
+                "onlyNet": -3,
+                "strokeNumber": 70,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:00",
+          "teeTime": "2025-01-25T09:00:00.000Z",
+          "teeNumber": 10,
+          "view": {
+            "day": {
+              "rankingPosition": 19,
+              "ranking": "19",
+              "realRanking": 19,
+              "result": -1,
+              "onlyGross": -1,
+              "onlyNet": -3,
+              "strokeNumber": 71,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 19,
+              "ranking": "19",
+              "realRanking": 19,
+              "result": -1,
+              "onlyGross": -1,
+              "onlyNet": -3,
+              "strokeNumber": 71,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 19,
+                "ranking": "19",
+                "realRanking": 19,
+                "result": -1,
+                "onlyGross": -1,
+                "onlyNet": -3,
+                "strokeNumber": 71,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 19,
+                "ranking": "19",
+                "realRanking": 19,
+                "result": -1,
+                "onlyGross": -1,
+                "onlyNet": -3,
+                "strokeNumber": 71,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:20",
+          "teeTime": "2025-01-25T09:20:00.000Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 20,
+              "ranking": "20",
+              "realRanking": 20,
+              "result": -1,
+              "onlyGross": -1,
+              "onlyNet": -2,
+              "strokeNumber": 71,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 20,
+              "ranking": "20",
+              "realRanking": 20,
+              "result": -1,
+              "onlyGross": -1,
+              "onlyNet": -2,
+              "strokeNumber": 71,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 20,
+                "ranking": "20",
+                "realRanking": 20,
+                "result": -1,
+                "onlyGross": -1,
+                "onlyNet": -2,
+                "strokeNumber": 71,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 20,
+                "ranking": "20",
+                "realRanking": 20,
+                "result": -1,
+                "onlyGross": -1,
+                "onlyNet": -2,
+                "strokeNumber": 71,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:20",
+          "teeTime": "2025-01-25T08:20:00.000Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 21,
+              "ranking": "21",
+              "realRanking": 21,
+              "result": -1,
+              "onlyGross": -1,
+              "onlyNet": 0,
+              "strokeNumber": 71,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 21,
+              "ranking": "21",
+              "realRanking": 21,
+              "result": -1,
+              "onlyGross": -1,
+              "onlyNet": 0,
+              "strokeNumber": 71,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 21,
+                "ranking": "21",
+                "realRanking": 21,
+                "result": -1,
+                "onlyGross": -1,
+                "onlyNet": 0,
+                "strokeNumber": 71,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 21,
+                "ranking": "21",
+                "realRanking": 21,
+                "result": -1,
+                "onlyGross": -1,
+                "onlyNet": 0,
+                "strokeNumber": 71,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:30",
+          "teeTime": "2025-01-25T08:30:00.000Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 22,
+              "ranking": "22",
+              "realRanking": 22,
+              "result": -1,
+              "onlyGross": -1,
+              "onlyNet": 0,
+              "strokeNumber": 71,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 22,
+              "ranking": "22",
+              "realRanking": 22,
+              "result": -1,
+              "onlyGross": -1,
+              "onlyNet": 0,
+              "strokeNumber": 71,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 22,
+                "ranking": "22",
+                "realRanking": 22,
+                "result": -1,
+                "onlyGross": -1,
+                "onlyNet": 0,
+                "strokeNumber": 71,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 22,
+                "ranking": "22",
+                "realRanking": 22,
+                "result": -1,
+                "onlyGross": -1,
+                "onlyNet": 0,
+                "strokeNumber": 71,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:10",
+          "teeTime": "2025-01-25T09:10:00.000Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 23,
+              "ranking": "23",
+              "realRanking": 23,
+              "result": -1,
+              "onlyGross": -1,
+              "onlyNet": -2,
+              "strokeNumber": 71,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 23,
+              "ranking": "23",
+              "realRanking": 23,
+              "result": -1,
+              "onlyGross": -1,
+              "onlyNet": -2,
+              "strokeNumber": 71,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 23,
+                "ranking": "23",
+                "realRanking": 23,
+                "result": -1,
+                "onlyGross": -1,
+                "onlyNet": -2,
+                "strokeNumber": 71,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 23,
+                "ranking": "23",
+                "realRanking": 23,
+                "result": -1,
+                "onlyGross": -1,
+                "onlyNet": -2,
+                "strokeNumber": 71,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:20",
+          "teeTime": "2025-01-25T09:20:00.000Z",
+          "teeNumber": 10,
+          "view": {
+            "day": {
+              "rankingPosition": 24,
+              "ranking": "24",
+              "realRanking": 24,
+              "result": -1,
+              "onlyGross": -1,
+              "onlyNet": -4,
+              "strokeNumber": 71,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 24,
+              "ranking": "24",
+              "realRanking": 24,
+              "result": -1,
+              "onlyGross": -1,
+              "onlyNet": -4,
+              "strokeNumber": 71,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 24,
+                "ranking": "24",
+                "realRanking": 24,
+                "result": -1,
+                "onlyGross": -1,
+                "onlyNet": -4,
+                "strokeNumber": 71,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 24,
+                "ranking": "24",
+                "realRanking": 24,
+                "result": -1,
+                "onlyGross": -1,
+                "onlyNet": -4,
+                "strokeNumber": 71,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:50",
+          "teeTime": "2025-01-25T09:50:00.000Z",
+          "teeNumber": 10,
+          "view": {
+            "day": {
+              "rankingPosition": 25,
+              "ranking": "25",
+              "realRanking": 25,
+              "result": 0,
+              "onlyGross": 0,
+              "onlyNet": -4,
+              "strokeNumber": 72,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 25,
+              "ranking": "25",
+              "realRanking": 25,
+              "result": 0,
+              "onlyGross": 0,
+              "onlyNet": -4,
+              "strokeNumber": 72,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 25,
+                "ranking": "25",
+                "realRanking": 25,
+                "result": 0,
+                "onlyGross": 0,
+                "onlyNet": -4,
+                "strokeNumber": 72,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 25,
+                "ranking": "25",
+                "realRanking": 25,
+                "result": 0,
+                "onlyGross": 0,
+                "onlyNet": -4,
+                "strokeNumber": 72,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:40",
+          "teeTime": "2025-01-25T09:40:00.000Z",
+          "teeNumber": 10,
+          "view": {
+            "day": {
+              "rankingPosition": 26,
+              "ranking": "26",
+              "realRanking": 26,
+              "result": 0,
+              "onlyGross": 0,
+              "onlyNet": -2,
+              "strokeNumber": 72,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 26,
+              "ranking": "26",
+              "realRanking": 26,
+              "result": 0,
+              "onlyGross": 0,
+              "onlyNet": -2,
+              "strokeNumber": 72,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 26,
+                "ranking": "26",
+                "realRanking": 26,
+                "result": 0,
+                "onlyGross": 0,
+                "onlyNet": -2,
+                "strokeNumber": 72,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 26,
+                "ranking": "26",
+                "realRanking": 26,
+                "result": 0,
+                "onlyGross": 0,
+                "onlyNet": -2,
+                "strokeNumber": 72,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:50",
+          "teeTime": "2025-01-25T09:50:00.000Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 27,
+              "ranking": "27",
+              "realRanking": 27,
+              "result": 0,
+              "onlyGross": 0,
+              "onlyNet": -2,
+              "strokeNumber": 72,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 27,
+              "ranking": "27",
+              "realRanking": 27,
+              "result": 0,
+              "onlyGross": 0,
+              "onlyNet": -2,
+              "strokeNumber": 72,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 27,
+                "ranking": "27",
+                "realRanking": 27,
+                "result": 0,
+                "onlyGross": 0,
+                "onlyNet": -2,
+                "strokeNumber": 72,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 27,
+                "ranking": "27",
+                "realRanking": 27,
+                "result": 0,
+                "onlyGross": 0,
+                "onlyNet": -2,
+                "strokeNumber": 72,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:50",
+          "teeTime": "2025-01-25T08:50:00.000Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 28,
+              "ranking": "28",
+              "realRanking": 28,
+              "result": 0,
+              "onlyGross": 0,
+              "onlyNet": -1,
+              "strokeNumber": 72,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 28,
+              "ranking": "28",
+              "realRanking": 28,
+              "result": 0,
+              "onlyGross": 0,
+              "onlyNet": -1,
+              "strokeNumber": 72,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 28,
+                "ranking": "28",
+                "realRanking": 28,
+                "result": 0,
+                "onlyGross": 0,
+                "onlyNet": -1,
+                "strokeNumber": 72,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 28,
+                "ranking": "28",
+                "realRanking": 28,
+                "result": 0,
+                "onlyGross": 0,
+                "onlyNet": -1,
+                "strokeNumber": 72,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:50",
+          "teeTime": "2025-01-25T09:50:00.000Z",
+          "teeNumber": 10,
+          "view": {
+            "day": {
+              "rankingPosition": 29,
+              "ranking": "29",
+              "realRanking": 29,
+              "result": 1,
+              "onlyGross": 1,
+              "onlyNet": -2,
+              "strokeNumber": 73,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 29,
+              "ranking": "29",
+              "realRanking": 29,
+              "result": 1,
+              "onlyGross": 1,
+              "onlyNet": -2,
+              "strokeNumber": 73,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 29,
+                "ranking": "29",
+                "realRanking": 29,
+                "result": 1,
+                "onlyGross": 1,
+                "onlyNet": -2,
+                "strokeNumber": 73,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 29,
+                "ranking": "29",
+                "realRanking": 29,
+                "result": 1,
+                "onlyGross": 1,
+                "onlyNet": -2,
+                "strokeNumber": 73,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:10",
+          "teeTime": "2025-01-25T09:10:00.000Z",
+          "teeNumber": 10,
+          "view": {
+            "day": {
+              "rankingPosition": 30,
+              "ranking": "30",
+              "realRanking": 30,
+              "result": 1,
+              "onlyGross": 1,
+              "onlyNet": -1,
+              "strokeNumber": 73,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 30,
+              "ranking": "30",
+              "realRanking": 30,
+              "result": 1,
+              "onlyGross": 1,
+              "onlyNet": -1,
+              "strokeNumber": 73,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 30,
+                "ranking": "30",
+                "realRanking": 30,
+                "result": 1,
+                "onlyGross": 1,
+                "onlyNet": -1,
+                "strokeNumber": 73,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 30,
+                "ranking": "30",
+                "realRanking": 30,
+                "result": 1,
+                "onlyGross": 1,
+                "onlyNet": -1,
+                "strokeNumber": 73,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:30",
+          "teeTime": "2025-01-25T09:30:00.000Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 31,
+              "ranking": "31",
+              "realRanking": 31,
+              "result": 1,
+              "onlyGross": 1,
+              "onlyNet": -1,
+              "strokeNumber": 73,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 31,
+              "ranking": "31",
+              "realRanking": 31,
+              "result": 1,
+              "onlyGross": 1,
+              "onlyNet": -1,
+              "strokeNumber": 73,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 31,
+                "ranking": "31",
+                "realRanking": 31,
+                "result": 1,
+                "onlyGross": 1,
+                "onlyNet": -1,
+                "strokeNumber": 73,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 31,
+                "ranking": "31",
+                "realRanking": 31,
+                "result": 1,
+                "onlyGross": 1,
+                "onlyNet": -1,
+                "strokeNumber": 73,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:40",
+          "teeTime": "2025-01-25T09:40:00.000Z",
+          "teeNumber": 10,
+          "view": {
+            "day": {
+              "rankingPosition": 32,
+              "ranking": "32",
+              "realRanking": 32,
+              "result": 1,
+              "onlyGross": 1,
+              "onlyNet": -3,
+              "strokeNumber": 73,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 32,
+              "ranking": "32",
+              "realRanking": 32,
+              "result": 1,
+              "onlyGross": 1,
+              "onlyNet": -3,
+              "strokeNumber": 73,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 32,
+                "ranking": "32",
+                "realRanking": 32,
+                "result": 1,
+                "onlyGross": 1,
+                "onlyNet": -3,
+                "strokeNumber": 73,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 32,
+                "ranking": "32",
+                "realRanking": 32,
+                "result": 1,
+                "onlyGross": 1,
+                "onlyNet": -3,
+                "strokeNumber": 73,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:10",
+          "teeTime": "2025-01-25T09:10:00.000Z",
+          "teeNumber": 10,
+          "view": {
+            "day": {
+              "rankingPosition": 33,
+              "ranking": "33",
+              "realRanking": 33,
+              "result": 2,
+              "onlyGross": 2,
+              "onlyNet": -1,
+              "strokeNumber": 74,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 33,
+              "ranking": "33",
+              "realRanking": 33,
+              "result": 2,
+              "onlyGross": 2,
+              "onlyNet": -1,
+              "strokeNumber": 74,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 33,
+                "ranking": "33",
+                "realRanking": 33,
+                "result": 2,
+                "onlyGross": 2,
+                "onlyNet": -1,
+                "strokeNumber": 74,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 33,
+                "ranking": "33",
+                "realRanking": 33,
+                "result": 2,
+                "onlyGross": 2,
+                "onlyNet": -1,
+                "strokeNumber": 74,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:30",
+          "teeTime": "2025-01-25T08:30:00.000Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 34,
+              "ranking": "34",
+              "realRanking": 34,
+              "result": 4,
+              "onlyGross": 4,
+              "onlyNet": 1,
+              "strokeNumber": 76,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 34,
+              "ranking": "34",
+              "realRanking": 34,
+              "result": 4,
+              "onlyGross": 4,
+              "onlyNet": 1,
+              "strokeNumber": 76,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 34,
+                "ranking": "34",
+                "realRanking": 34,
+                "result": 4,
+                "onlyGross": 4,
+                "onlyNet": 1,
+                "strokeNumber": 76,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 34,
+                "ranking": "34",
+                "realRanking": 34,
+                "result": 4,
+                "onlyGross": 4,
+                "onlyNet": 1,
+                "strokeNumber": 76,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:30",
+          "teeTime": "2025-01-25T09:30:00.000Z",
+          "teeNumber": 10,
+          "view": {
+            "day": {
+              "rankingPosition": 35,
+              "ranking": "35",
+              "realRanking": 35,
+              "result": 4,
+              "onlyGross": 4,
+              "onlyNet": 2,
+              "strokeNumber": 76,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 35,
+              "ranking": "35",
+              "realRanking": 35,
+              "result": 4,
+              "onlyGross": 4,
+              "onlyNet": 2,
+              "strokeNumber": 76,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 35,
+                "ranking": "35",
+                "realRanking": 35,
+                "result": 4,
+                "onlyGross": 4,
+                "onlyNet": 2,
+                "strokeNumber": 76,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 35,
+                "ranking": "35",
+                "realRanking": 35,
+                "result": 4,
+                "onlyGross": 4,
+                "onlyNet": 2,
+                "strokeNumber": 76,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:20",
+          "teeTime": "2025-01-25T09:20:00.000Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 36,
+              "ranking": "36",
+              "realRanking": 36,
+              "result": 4,
+              "onlyGross": 4,
+              "onlyNet": 2,
+              "strokeNumber": 76,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 36,
+              "ranking": "36",
+              "realRanking": 36,
+              "result": 4,
+              "onlyGross": 4,
+              "onlyNet": 2,
+              "strokeNumber": 76,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 36,
+                "ranking": "36",
+                "realRanking": 36,
+                "result": 4,
+                "onlyGross": 4,
+                "onlyNet": 2,
+                "strokeNumber": 76,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 36,
+                "ranking": "36",
+                "realRanking": 36,
+                "result": 4,
+                "onlyGross": 4,
+                "onlyNet": 2,
+                "strokeNumber": 76,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        }
+      ],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "67584aa81d0390d2bc725c9e",
+      "name": "SCR FEMENINA",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:30",
+          "teeTime": "2025-01-25T08:30:00.000Z",
+          "teeNumber": 10,
+          "view": {
+            "day": {
+              "rankingPosition": 1,
+              "ranking": "1",
+              "realRanking": 1,
+              "result": 0,
+              "onlyGross": 0,
+              "onlyNet": -4,
+              "strokeNumber": 72,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 1,
+              "ranking": "1",
+              "realRanking": 1,
+              "result": 0,
+              "onlyGross": 0,
+              "onlyNet": -4,
+              "strokeNumber": 72,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 1,
+                "ranking": "1",
+                "realRanking": 1,
+                "result": 0,
+                "onlyGross": 0,
+                "onlyNet": -4,
+                "strokeNumber": 72,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 1,
+                "ranking": "1",
+                "realRanking": 1,
+                "result": 0,
+                "onlyGross": 0,
+                "onlyNet": -4,
+                "strokeNumber": 72,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:10",
+          "teeTime": "2025-01-25T08:10:00.000Z",
+          "teeNumber": 10,
+          "view": {
+            "day": {
+              "rankingPosition": 2,
+              "ranking": "2",
+              "realRanking": 2,
+              "result": 1,
+              "onlyGross": 1,
+              "onlyNet": -2,
+              "strokeNumber": 73,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 2,
+              "ranking": "2",
+              "realRanking": 2,
+              "result": 1,
+              "onlyGross": 1,
+              "onlyNet": -2,
+              "strokeNumber": 73,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 2,
+                "ranking": "2",
+                "realRanking": 2,
+                "result": 1,
+                "onlyGross": 1,
+                "onlyNet": -2,
+                "strokeNumber": 73,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 2,
+                "ranking": "2",
+                "realRanking": 2,
+                "result": 1,
+                "onlyGross": 1,
+                "onlyNet": -2,
+                "strokeNumber": 73,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:50",
+          "teeTime": "2025-01-25T08:50:00.000Z",
+          "teeNumber": 10,
+          "view": {
+            "day": {
+              "rankingPosition": 3,
+              "ranking": "3",
+              "realRanking": 3,
+              "result": 2,
+              "onlyGross": 2,
+              "onlyNet": -9,
+              "strokeNumber": 74,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 3,
+              "ranking": "3",
+              "realRanking": 3,
+              "result": 2,
+              "onlyGross": 2,
+              "onlyNet": -9,
+              "strokeNumber": 74,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 3,
+                "ranking": "3",
+                "realRanking": 3,
+                "result": 2,
+                "onlyGross": 2,
+                "onlyNet": -9,
+                "strokeNumber": 74,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 3,
+                "ranking": "3",
+                "realRanking": 3,
+                "result": 2,
+                "onlyGross": 2,
+                "onlyNet": -9,
+                "strokeNumber": 74,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:30",
+          "teeTime": "2025-01-25T08:30:00.000Z",
+          "teeNumber": 10,
+          "view": {
+            "day": {
+              "rankingPosition": 4,
+              "ranking": "4",
+              "realRanking": 4,
+              "result": 2,
+              "onlyGross": 2,
+              "onlyNet": -3,
+              "strokeNumber": 74,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 4,
+              "ranking": "4",
+              "realRanking": 4,
+              "result": 2,
+              "onlyGross": 2,
+              "onlyNet": -3,
+              "strokeNumber": 74,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 4,
+                "ranking": "4",
+                "realRanking": 4,
+                "result": 2,
+                "onlyGross": 2,
+                "onlyNet": -3,
+                "strokeNumber": 74,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 4,
+                "ranking": "4",
+                "realRanking": 4,
+                "result": 2,
+                "onlyGross": 2,
+                "onlyNet": -3,
+                "strokeNumber": 74,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:20",
+          "teeTime": "2025-01-25T08:20:00.000Z",
+          "teeNumber": 10,
+          "view": {
+            "day": {
+              "rankingPosition": 5,
+              "ranking": "5",
+              "realRanking": 5,
+              "result": 2,
+              "onlyGross": 2,
+              "onlyNet": -1,
+              "strokeNumber": 74,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 5,
+              "ranking": "5",
+              "realRanking": 5,
+              "result": 2,
+              "onlyGross": 2,
+              "onlyNet": -1,
+              "strokeNumber": 74,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 5,
+                "ranking": "5",
+                "realRanking": 5,
+                "result": 2,
+                "onlyGross": 2,
+                "onlyNet": -1,
+                "strokeNumber": 74,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 5,
+                "ranking": "5",
+                "realRanking": 5,
+                "result": 2,
+                "onlyGross": 2,
+                "onlyNet": -1,
+                "strokeNumber": 74,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:00",
+          "teeTime": "2025-01-25T08:00:00.000Z",
+          "teeNumber": 10,
+          "view": {
+            "day": {
+              "rankingPosition": 6,
+              "ranking": "6",
+              "realRanking": 6,
+              "result": 2,
+              "onlyGross": 2,
+              "onlyNet": -1,
+              "strokeNumber": 74,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 6,
+              "ranking": "6",
+              "realRanking": 6,
+              "result": 2,
+              "onlyGross": 2,
+              "onlyNet": -1,
+              "strokeNumber": 74,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 6,
+                "ranking": "6",
+                "realRanking": 6,
+                "result": 2,
+                "onlyGross": 2,
+                "onlyNet": -1,
+                "strokeNumber": 74,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 6,
+                "ranking": "6",
+                "realRanking": 6,
+                "result": 2,
+                "onlyGross": 2,
+                "onlyNet": -1,
+                "strokeNumber": 74,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:00",
+          "teeTime": "2025-01-25T08:00:00.000Z",
+          "teeNumber": 10,
+          "view": {
+            "day": {
+              "rankingPosition": 7,
+              "ranking": "7",
+              "realRanking": 7,
+              "result": 3,
+              "onlyGross": 3,
+              "onlyNet": 1,
+              "strokeNumber": 75,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 7,
+              "ranking": "7",
+              "realRanking": 7,
+              "result": 3,
+              "onlyGross": 3,
+              "onlyNet": 1,
+              "strokeNumber": 75,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 7,
+                "ranking": "7",
+                "realRanking": 7,
+                "result": 3,
+                "onlyGross": 3,
+                "onlyNet": 1,
+                "strokeNumber": 75,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 7,
+                "ranking": "7",
+                "realRanking": 7,
+                "result": 3,
+                "onlyGross": 3,
+                "onlyNet": 1,
+                "strokeNumber": 75,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:10",
+          "teeTime": "2025-01-25T08:10:00.000Z",
+          "teeNumber": 10,
+          "view": {
+            "day": {
+              "rankingPosition": 8,
+              "ranking": "8",
+              "realRanking": 8,
+              "result": 5,
+              "onlyGross": 5,
+              "onlyNet": 1,
+              "strokeNumber": 77,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 8,
+              "ranking": "8",
+              "realRanking": 8,
+              "result": 5,
+              "onlyGross": 5,
+              "onlyNet": 1,
+              "strokeNumber": 77,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 8,
+                "ranking": "8",
+                "realRanking": 8,
+                "result": 5,
+                "onlyGross": 5,
+                "onlyNet": 1,
+                "strokeNumber": 77,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 8,
+                "ranking": "8",
+                "realRanking": 8,
+                "result": 5,
+                "onlyGross": 5,
+                "onlyNet": 1,
+                "strokeNumber": 77,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:40",
+          "teeTime": "2025-01-25T08:40:00.000Z",
+          "teeNumber": 10,
+          "view": {
+            "day": {
+              "rankingPosition": 9,
+              "ranking": "9",
+              "realRanking": 9,
+              "result": 5,
+              "onlyGross": 5,
+              "onlyNet": -1,
+              "strokeNumber": 77,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 9,
+              "ranking": "9",
+              "realRanking": 9,
+              "result": 5,
+              "onlyGross": 5,
+              "onlyNet": -1,
+              "strokeNumber": 77,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 9,
+                "ranking": "9",
+                "realRanking": 9,
+                "result": 5,
+                "onlyGross": 5,
+                "onlyNet": -1,
+                "strokeNumber": 77,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 9,
+                "ranking": "9",
+                "realRanking": 9,
+                "result": 5,
+                "onlyGross": 5,
+                "onlyNet": -1,
+                "strokeNumber": 77,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:40",
+          "teeTime": "2025-01-25T08:40:00.000Z",
+          "teeNumber": 10,
+          "view": {
+            "day": {
+              "rankingPosition": 10,
+              "ranking": "10",
+              "realRanking": 10,
+              "result": 7,
+              "onlyGross": 7,
+              "onlyNet": -3,
+              "strokeNumber": 79,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 10,
+              "ranking": "10",
+              "realRanking": 10,
+              "result": 7,
+              "onlyGross": 7,
+              "onlyNet": -3,
+              "strokeNumber": 79,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 10,
+                "ranking": "10",
+                "realRanking": 10,
+                "result": 7,
+                "onlyGross": 7,
+                "onlyNet": -3,
+                "strokeNumber": 79,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 10,
+                "ranking": "10",
+                "realRanking": 10,
+                "result": 7,
+                "onlyGross": 7,
+                "onlyNet": -3,
+                "strokeNumber": 79,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:50",
+          "teeTime": "2025-01-25T08:50:00.000Z",
+          "teeNumber": 10,
+          "view": {
+            "day": {
+              "rankingPosition": 11,
+              "ranking": "11",
+              "realRanking": 11,
+              "result": 9,
+              "onlyGross": 9,
+              "onlyNet": 1,
+              "strokeNumber": 81,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 11,
+              "ranking": "11",
+              "realRanking": 11,
+              "result": 9,
+              "onlyGross": 9,
+              "onlyNet": 1,
+              "strokeNumber": 81,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 11,
+                "ranking": "11",
+                "realRanking": 11,
+                "result": 9,
+                "onlyGross": 9,
+                "onlyNet": 1,
+                "strokeNumber": 81,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 11,
+                "ranking": "11",
+                "realRanking": 11,
+                "result": 9,
+                "onlyGross": 9,
+                "onlyNet": 1,
+                "strokeNumber": 81,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        },
+        {
+          "_id": null,
+          "firstName": null,
+          "surname": null,
+          "gender": null,
+          "license": null,
+          "country": null,
+          "hcpExact": null,
+          "hcpGame": null,
+          "gameTeeColor": null,
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:20",
+          "teeTime": "2025-01-25T08:20:00.000Z",
+          "teeNumber": 10,
+          "view": {
+            "day": {
+              "rankingPosition": 12,
+              "ranking": "12",
+              "realRanking": 12,
+              "result": 10,
+              "onlyGross": 10,
+              "onlyNet": 5,
+              "strokeNumber": 82,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 12,
+              "ranking": "12",
+              "realRanking": 12,
+              "result": 10,
+              "onlyGross": 10,
+              "onlyNet": 5,
+              "strokeNumber": 82,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 12,
+                "ranking": "12",
+                "realRanking": 12,
+                "result": 10,
+                "onlyGross": 10,
+                "onlyNet": 5,
+                "strokeNumber": 82,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 12,
+                "ranking": "12",
+                "realRanking": 12,
+                "result": 10,
+                "onlyGross": 10,
+                "onlyNet": 5,
+                "strokeNumber": 82,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": null
+        }
+      ],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": [
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-01-25T08:00:00.000Z",
+      "gameConfig": {
+        "gameMode": "fourBall",
+        "maxPlayers": 0,
+        "maxGroups": 2,
+        "maxPlayersByGroup": 2,
+        "_id": "5de79a77c09cb5e94be31edf"
+      },
+      "players": [],
+      "groups": [
+        {
+          "name": "DE CHECA MATO / BRAGULAT IBARZ",
+          "players": [
+            {
+              "firstName": "BOSCO",
+              "surname": "DE CHECA MATO",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -3,
+              "hcpGame": -3,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "677e58fb6605e9917b0e623d"
+            },
+            {
+              "firstName": "JUAN ANTONIO",
+              "surname": "BRAGULAT IBARZ",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -2,
+              "hcpGame": -2,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "677e58fb6605e9917b0e62e8"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "677e58fb6605e9917b0e7375"
+        },
+        {
+          "name": "HEDBERG BERTRAND / ALBERTI QUINLAN",
+          "players": [
+            {
+              "firstName": "ERIK",
+              "surname": "HEDBERG BERTRAND",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -1.2,
+              "hcpGame": -1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "6788cec08e34d30847081718"
+            },
+            {
+              "firstName": "GENIS",
+              "surname": "ALBERTI QUINLAN",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -2.2,
+              "hcpGame": -2,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "6788cec08e34d308470817c3"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "6788cec08e34d30847081832"
+        }
+      ],
+      "_id": "6790a673e39414a656341978"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-01-25T08:10:00.000Z",
+      "gameConfig": {
+        "gameMode": "fourBall",
+        "maxPlayers": 0,
+        "maxGroups": 2,
+        "maxPlayersByGroup": 2,
+        "_id": "5de79a77c09cb5e94be31edf"
+      },
+      "players": [],
+      "groups": [
+        {
+          "name": "DE PINEDA LUGSTENMANN / AYORA GOMEZ",
+          "players": [
+            {
+              "firstName": "IGNACIO",
+              "surname": "DE PINEDA LUGSTENMANN",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -2.3,
+              "hcpGame": -2,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "677cf28e6605e9917b9dccfc"
+            },
+            {
+              "firstName": "MARIANO",
+              "surname": "AYORA GOMEZ",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -0.5,
+              "hcpGame": 0,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "677cf28e6605e9917b9dcda1"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "677cf28e6605e9917b9dce03"
+        },
+        {
+          "name": "ALIE ZANINI / DOMINGO HOSPITAL",
+          "players": [
+            {
+              "firstName": "EDUARDO",
+              "surname": "ALIE ZANINI",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -2.8,
+              "hcpGame": -2,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "677e4bffb02736a9287a64b4"
+            },
+            {
+              "firstName": "AGUSTIN",
+              "surname": "DOMINGO HOSPITAL",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 0,
+              "hcpGame": 1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "677e4bffb02736a9287a655c"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "677e4bffb02736a9287a65be"
+        }
+      ],
+      "_id": "6790a673e39414a65634197a"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-01-25T08:20:00.000Z",
+      "gameConfig": {
+        "gameMode": "fourBall",
+        "maxPlayers": 0,
+        "maxGroups": 2,
+        "maxPlayersByGroup": 2,
+        "_id": "5de79a77c09cb5e94be31edf"
+      },
+      "players": [],
+      "groups": [
+        {
+          "name": "FARRE ARIÑO / BEREA CELLIER",
+          "players": [
+            {
+              "firstName": "JAN",
+              "surname": "FARRE ARIÑO",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -2.2,
+              "hcpGame": -2,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "67794ef81afe90eb1fe9ced2"
+            },
+            {
+              "firstName": "IGNACIO",
+              "surname": "BEREA CELLIER",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -0.4,
+              "hcpGame": 0,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "67794ef81afe90eb1fe9cf7d"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "67794ef81afe90eb1fe9cfe9"
+        },
+        {
+          "name": "ALBIÑANA TORNE / DALMAU GALLARDO",
+          "players": [
+            {
+              "firstName": "ALEX",
+              "surname": "ALBIÑANA TORNE",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -1.1,
+              "hcpGame": -1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "6788190dfa54973c9e6bac1b"
+            },
+            {
+              "firstName": "PABLO",
+              "surname": "DALMAU GALLARDO",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -1.4,
+              "hcpGame": -1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "6788190dfa54973c9e6bacc0"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "6788190dfa54973c9e6bad22"
+        }
+      ],
+      "_id": "6790a673e39414a65634197c"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-01-25T08:30:00.000Z",
+      "gameConfig": {
+        "gameMode": "fourBall",
+        "maxPlayers": 0,
+        "maxGroups": 2,
+        "maxPlayersByGroup": 2,
+        "_id": "5de79a77c09cb5e94be31edf"
+      },
+      "players": [],
+      "groups": [
+        {
+          "name": "NEBOT MOLAS / RAMIREZ MARTIN",
+          "players": [
+            {
+              "firstName": "ALBERT",
+              "surname": "NEBOT MOLAS",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 0.3,
+              "hcpGame": 1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "676991cdd35fcb3f84d071f2"
+            },
+            {
+              "firstName": "JOEL",
+              "surname": "RAMIREZ MARTIN",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -2,
+              "hcpGame": -2,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "676991cdd35fcb3f84d0729a"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "676991ced35fcb3f84d072ff"
+        },
+        {
+          "name": "RIBAS MUNDI / KNUTH MARTEN",
+          "players": [
+            {
+              "firstName": "JAN",
+              "surname": "RIBAS MUNDI",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 2.1,
+              "hcpGame": 3,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "677d3b7f6605e9917b627124"
+            },
+            {
+              "firstName": "JORGE",
+              "surname": "KNUTH MARTEN",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 2.6,
+              "hcpGame": 3,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "677d3b7f6605e9917b6271cf"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "677d3b7f6605e9917b627234"
+        }
+      ],
+      "_id": "6790a673e39414a65634197e"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-01-25T08:40:00.000Z",
+      "gameConfig": {
+        "gameMode": "fourBall",
+        "maxPlayers": 0,
+        "maxGroups": 2,
+        "maxPlayersByGroup": 2,
+        "_id": "5de79a77c09cb5e94be31edf"
+      },
+      "players": [],
+      "groups": [
+        {
+          "name": "OLMOS PEREZ / BELLA GARCIA",
+          "players": [
+            {
+              "firstName": "JORGE",
+              "surname": "OLMOS PEREZ",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -0.7,
+              "hcpGame": 0,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "676fcbfb356957e595ce9bfa"
+            },
+            {
+              "firstName": "MARC",
+              "surname": "BELLA GARCIA",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -0.5,
+              "hcpGame": 0,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "676fcbfb356957e595ce9ca5"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "676fcbfb356957e595ce9d0a"
+        },
+        {
+          "name": "GARCIA CHACON / GUERRERO GARCIA",
+          "players": [
+            {
+              "firstName": "JOSE MARIA",
+              "surname": "GARCIA CHACON",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 0.6,
+              "hcpGame": 1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "6777b04ee7ae65156fef9e85"
+            },
+            {
+              "firstName": "BORJA",
+              "surname": "GUERRERO GARCIA",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -1.6,
+              "hcpGame": -1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "6777b04fe7ae65156fef9f30"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "6777b04fe7ae65156fef9f95"
+        }
+      ],
+      "_id": "6790a673e39414a656341980"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-01-25T08:50:00.000Z",
+      "gameConfig": {
+        "gameMode": "fourBall",
+        "maxPlayers": 0,
+        "maxGroups": 2,
+        "maxPlayersByGroup": 2,
+        "_id": "5de79a77c09cb5e94be31edf"
+      },
+      "players": [],
+      "groups": [
+        {
+          "name": "TERUEL ROCA / YAGUE CUADROS",
+          "players": [
+            {
+              "firstName": "POL",
+              "surname": "TERUEL ROCA",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -1.2,
+              "hcpGame": -1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "67704e8eb0bad37ed65b8e10"
+            },
+            {
+              "firstName": "XAVI",
+              "surname": "YAGUE CUADROS",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 0.9,
+              "hcpGame": 1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "67704e8fb0bad37ed65b8ec2"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "67704e8fb0bad37ed65b8f27"
+        },
+        {
+          "name": "RUBIO RIVERO / LEACH CUCURELLA",
+          "players": [
+            {
+              "firstName": "JORGE",
+              "surname": "RUBIO RIVERO",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 0.1,
+              "hcpGame": 1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "677a511a37af6e2169acf0fe"
+            },
+            {
+              "firstName": "JUAN",
+              "surname": "LEACH CUCURELLA",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -0.2,
+              "hcpGame": 0,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "677a511a37af6e2169acf1ad"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "677a511a37af6e2169acf214"
+        }
+      ],
+      "_id": "6790a673e39414a656341982"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-01-25T09:00:00.000Z",
+      "gameConfig": {
+        "gameMode": "fourBall",
+        "maxPlayers": 0,
+        "maxGroups": 2,
+        "maxPlayersByGroup": 2,
+        "_id": "5de79a77c09cb5e94be31edf"
+      },
+      "players": [],
+      "groups": [
+        {
+          "name": "RUIZ DE ALDA DE LA ROSA / DURAN CARASSO",
+          "players": [
+            {
+              "firstName": "JULIO ANDRES",
+              "surname": "RUIZ DE ALDA DE LA ROSA",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -0.9,
+              "hcpGame": 0,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "67825103410786e4c5e7dc55"
+            },
+            {
+              "firstName": "CARLOS",
+              "surname": "DURAN CARASSO",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 1,
+              "hcpGame": 2,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "67825103410786e4c5e7de53"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "67825103410786e4c5e7deb5"
+        },
+        {
+          "name": "MESTRE CARCELLER / CAMI HARTMANN",
+          "players": [
+            {
+              "firstName": "VICENTE",
+              "surname": "MESTRE CARCELLER",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 0.5,
+              "hcpGame": 1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "678dee0ee39414a6569fdf1f"
+            },
+            {
+              "firstName": "BRUNO",
+              "surname": "CAMI HARTMANN",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -0.5,
+              "hcpGame": 0,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "678dee0ee39414a6569fdfcc"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "678dee0ee39414a6569fe02e"
+        }
+      ],
+      "_id": "6790a673e39414a656341984"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-01-25T09:10:00.000Z",
+      "gameConfig": {
+        "gameMode": "fourBall",
+        "maxPlayers": 0,
+        "maxGroups": 2,
+        "maxPlayersByGroup": 2,
+        "_id": "5de79a77c09cb5e94be31edf"
+      },
+      "players": [],
+      "groups": [
+        {
+          "name": "CAMACHO RAMONET / BREA GARCIA",
+          "players": [
+            {
+              "firstName": "NIL",
+              "surname": "CAMACHO RAMONET",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 0.8,
+              "hcpGame": 1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "677d00da4152fea4255e3173"
+            },
+            {
+              "firstName": "ERIC",
+              "surname": "BREA GARCIA",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -0.5,
+              "hcpGame": 0,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "677d00da4152fea4255e321e"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "677d00da4152fea4255e3283"
+        },
+        {
+          "name": "CASTRO QUESADA / DE CASTRO PIERA",
+          "players": [
+            {
+              "firstName": "BRUNO",
+              "surname": "CASTRO QUESADA",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 0.2,
+              "hcpGame": 1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "6786200ae3f344c6403e0fa1"
+            },
+            {
+              "firstName": "JUAN",
+              "surname": "DE CASTRO PIERA",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 0,
+              "hcpGame": 1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "6786200ae3f344c6403e1053"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "6786200ae3f344c6403e10bf"
+        }
+      ],
+      "_id": "6790a673e39414a656341986"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-01-25T09:20:00.000Z",
+      "gameConfig": {
+        "gameMode": "fourBall",
+        "maxPlayers": 0,
+        "maxGroups": 2,
+        "maxPlayersByGroup": 2,
+        "_id": "5de79a77c09cb5e94be31edf"
+      },
+      "players": [],
+      "groups": [
+        {
+          "name": "MARTINEZ MARCO / FRADERA GONZALEZ",
+          "players": [
+            {
+              "firstName": "ORIOL",
+              "surname": "MARTINEZ MARCO",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 2.3,
+              "hcpGame": 3,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "677ff8c19cc827b7556b4b64"
+            },
+            {
+              "firstName": "JOAN",
+              "surname": "FRADERA GONZALEZ",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -1.7,
+              "hcpGame": -1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "677ff8c19cc827b7556b4c09"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "677ff8c29cc827b7556b4c6b"
+        },
+        {
+          "name": "JIMENEZ DE LA CHICA / FELIU CAMIN",
+          "players": [
+            {
+              "firstName": "IGNACIO",
+              "surname": "JIMENEZ DE LA CHICA",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -1.4,
+              "hcpGame": -1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "678ed25ee4aeb74c7d3b1575"
+            },
+            {
+              "firstName": "NICOLAS",
+              "surname": "FELIU CAMIN",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 2.1,
+              "hcpGame": 3,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "678ed25ee4aeb74c7d3b1627"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "678ed25fe4aeb74c7d3b1693"
+        }
+      ],
+      "_id": "6790a673e39414a656341988"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-01-25T09:30:00.000Z",
+      "gameConfig": {
+        "gameMode": "fourBall",
+        "maxPlayers": 0,
+        "maxGroups": 2,
+        "maxPlayersByGroup": 2,
+        "_id": "5de79a77c09cb5e94be31edf"
+      },
+      "players": [],
+      "groups": [
+        {
+          "name": "MASANA PRECIADO / CORBERA SABATE",
+          "players": [
+            {
+              "firstName": "PAU",
+              "surname": "MASANA PRECIADO",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 1.4,
+              "hcpGame": 2,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "677b9a5c6605e9917bd425f6"
+            },
+            {
+              "firstName": "JAVIER",
+              "surname": "CORBERA SABATE",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -0.4,
+              "hcpGame": 0,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "677b9a5c6605e9917bd426a1"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "677b9a5c6605e9917bd4270d"
+        },
+        {
+          "name": "HABABOU KELLAL / LLUSERA SAINZ DE LA MAZA",
+          "players": [
+            {
+              "firstName": "NASSIM",
+              "surname": "HABABOU KELLAL",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 0.1,
+              "hcpGame": 1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "678e2174e7331acfb3a2b9c2"
+            },
+            {
+              "firstName": "PEPE",
+              "surname": "LLUSERA SAINZ DE LA MAZA",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 1.4,
+              "hcpGame": 2,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "678e2174e7331acfb3a2ba74"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "678e2174e7331acfb3a2bae0"
+        }
+      ],
+      "_id": "6790a673e39414a65634198a"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-01-25T09:40:00.000Z",
+      "gameConfig": {
+        "gameMode": "fourBall",
+        "maxPlayers": 0,
+        "maxGroups": 2,
+        "maxPlayersByGroup": 2,
+        "_id": "5de79a77c09cb5e94be31edf"
+      },
+      "players": [],
+      "groups": [
+        {
+          "name": "RICART CENDRA / MOLAS BOU",
+          "players": [
+            {
+              "firstName": "MAX",
+              "surname": "RICART CENDRA",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -0.4,
+              "hcpGame": 0,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "678d509bcf79ed2e250052c2"
+            },
+            {
+              "firstName": "NICOLAU",
+              "surname": "MOLAS BOU",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 2.1,
+              "hcpGame": 3,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "678d509bcf79ed2e25005374"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "678d509bcf79ed2e250053d9"
+        },
+        {
+          "name": "GIMENEZ CRESPO / JULIA COMAS",
+          "players": [
+            {
+              "firstName": "ALEX",
+              "surname": "GIMENEZ CRESPO",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 1.9,
+              "hcpGame": 2,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "678e101ce39414a6560532b9"
+            },
+            {
+              "firstName": "JON",
+              "surname": "JULIA COMAS",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -0.2,
+              "hcpGame": 0,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "678e101ce39414a65605336b"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "678e101ce39414a6560533d7"
+        }
+      ],
+      "_id": "6790a673e39414a65634198c"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-01-25T09:50:00.000Z",
+      "gameConfig": {
+        "gameMode": "fourBall",
+        "maxPlayers": 0,
+        "maxGroups": 2,
+        "maxPlayersByGroup": 2,
+        "_id": "5de79a77c09cb5e94be31edf"
+      },
+      "players": [],
+      "groups": [
+        {
+          "name": "RIERA ROIG / CASES POLO",
+          "players": [
+            {
+              "firstName": "MIQUEL",
+              "surname": "RIERA ROIG",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 0.1,
+              "hcpGame": 1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "6777bd45364b6d65113d6526"
+            },
+            {
+              "firstName": "ALBERT",
+              "surname": "CASES POLO",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 1.6,
+              "hcpGame": 2,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "6777bd45364b6d65113d6648"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "6777bd45364b6d65113d66b4"
+        },
+        {
+          "name": "MARTIN REY / CIERCO PALAU",
+          "players": [
+            {
+              "firstName": "MANUEL ANGEL",
+              "surname": "MARTIN REY",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -0.1,
+              "hcpGame": 0,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "6782c803410786e4c54ca9c3"
+            },
+            {
+              "firstName": "ALEX",
+              "surname": "CIERCO PALAU",
+              "nameSufix": null,
+              "country": "AND",
+              "hcpExact": 2.3,
+              "hcpGame": 3,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "6782c803410786e4c54caa6b"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "6782c803410786e4c54caad7"
+        }
+      ],
+      "_id": "6790a673e39414a65634198e"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-01-25T08:00:00.000Z",
+      "gameConfig": {
+        "gameMode": "fourBall",
+        "maxPlayers": 0,
+        "maxGroups": 2,
+        "maxPlayersByGroup": 2,
+        "_id": "5de79a77c09cb5e94be31edf"
+      },
+      "players": [],
+      "groups": [
+        {
+          "name": "VALERO MAGAS / MITJANS BARDALET",
+          "players": [
+            {
+              "firstName": "RAISA",
+              "surname": "VALERO MAGAS",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 1.7,
+              "hcpGame": 3,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "blue",
+                "_id": "67584aa81d0390d2bc725d18"
+              },
+              "_id": "676ebcba9b56d683a872a65d"
+            },
+            {
+              "firstName": "MARINA",
+              "surname": "MITJANS BARDALET",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -0.6,
+              "hcpGame": 1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "blue",
+                "_id": "67584aa81d0390d2bc725d18"
+              },
+              "_id": "676ebcba9b56d683a872a70c"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "676ebcba9b56d683a872a76e"
+        },
+        {
+          "name": "VIDAL MORA / ROQUETA VIÑAS",
+          "players": [
+            {
+              "firstName": "MAR",
+              "surname": "VIDAL MORA",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 1.2,
+              "hcpGame": 3,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "blue",
+                "_id": "67584aa81d0390d2bc725d18"
+              },
+              "_id": "677cea346605e9917b6c387b"
+            },
+            {
+              "firstName": "BRUNA",
+              "surname": "ROQUETA VIÑAS",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 0.5,
+              "hcpGame": 2,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "blue",
+                "_id": "67584aa81d0390d2bc725d18"
+              },
+              "_id": "677cea346605e9917b6c3920"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "677cea346605e9917b6c3982"
+        }
+      ],
+      "_id": "679004c46fb20632732f1862"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-01-25T08:10:00.000Z",
+      "gameConfig": {
+        "gameMode": "fourBall",
+        "maxPlayers": 0,
+        "maxGroups": 2,
+        "maxPlayersByGroup": 2,
+        "_id": "5de79a77c09cb5e94be31edf"
+      },
+      "players": [],
+      "groups": [
+        {
+          "name": "TRALLERO SANTAMARIA / TRILLO GALINDO",
+          "players": [
+            {
+              "firstName": "MARIA",
+              "surname": "TRALLERO SANTAMARIA",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 3,
+              "hcpGame": 5,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "blue",
+                "_id": "67584aa81d0390d2bc725d18"
+              },
+              "_id": "677e9d816ef37f5438815570"
+            },
+            {
+              "firstName": "MARTA",
+              "surname": "TRILLO GALINDO",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -0.8,
+              "hcpGame": 1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "blue",
+                "_id": "67584aa81d0390d2bc725d18"
+              },
+              "_id": "677e9d816ef37f543881562e"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "677e9d816ef37f5438815693"
+        },
+        {
+          "name": "BADIA CAMATS / BIARGE DUEÑAS",
+          "players": [
+            {
+              "firstName": "MARTA",
+              "surname": "BADIA CAMATS",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 3.7,
+              "hcpGame": 5,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "blue",
+                "_id": "67584aa81d0390d2bc725d18"
+              },
+              "_id": "678f71bce4aeb74c7d4e75f6"
+            },
+            {
+              "firstName": "VALERIA",
+              "surname": "BIARGE DUEÑAS",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 0.6,
+              "hcpGame": 2,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "blue",
+                "_id": "67584aa81d0390d2bc725d18"
+              },
+              "_id": "678f71bce4aeb74c7d4e769e"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "678f71bce4aeb74c7d4e770a"
+        }
+      ],
+      "_id": "679004c46fb20632732f1864"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-01-25T08:20:00.000Z",
+      "gameConfig": {
+        "gameMode": "fourBall",
+        "maxPlayers": 0,
+        "maxGroups": 2,
+        "maxPlayersByGroup": 2,
+        "_id": "5de79a77c09cb5e94be31edf"
+      },
+      "players": [],
+      "groups": [
+        {
+          "name": "FLORAN CAÑADELL / PAMIES BOILLOS",
+          "players": [
+            {
+              "firstName": "MARIA CARMEN",
+              "surname": "FLORAN CAÑADELL",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 0.5,
+              "hcpGame": 2,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "blue",
+                "_id": "67584aa81d0390d2bc725d18"
+              },
+              "_id": "67837d9d5477229bb21d4c77"
+            },
+            {
+              "firstName": "CRISTINA",
+              "surname": "PAMIES BOILLOS",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 4.8,
+              "hcpGame": 6,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "blue",
+                "_id": "67584aa81d0390d2bc725d18"
+              },
+              "_id": "67837d9d5477229bb21d4d1f"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "67837d9d5477229bb21d4da7"
+        },
+        {
+          "name": "SANCHEZ FERNANDEZ / ELIZALDE MALDONADO",
+          "players": [
+            {
+              "firstName": "SONIA",
+              "surname": "SANCHEZ FERNANDEZ",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 1.8,
+              "hcpGame": 3,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "blue",
+                "_id": "67584aa81d0390d2bc725d18"
+              },
+              "_id": "67825013f7ab4469e1a26089"
+            },
+            {
+              "firstName": "MARIA",
+              "surname": "ELIZALDE MALDONADO",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 3.5,
+              "hcpGame": 5,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "blue",
+                "_id": "67584aa81d0390d2bc725d18"
+              },
+              "_id": "67825013f7ab4469e1a2612e"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "67825014f7ab4469e1a26190"
+        }
+      ],
+      "_id": "679004c46fb20632732f1866"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-01-25T08:30:00.000Z",
+      "gameConfig": {
+        "gameMode": "fourBall",
+        "maxPlayers": 0,
+        "maxGroups": 2,
+        "maxPlayersByGroup": 2,
+        "_id": "5de79a77c09cb5e94be31edf"
+      },
+      "players": [],
+      "groups": [
+        {
+          "name": "ALTARRIBA CODINACH / DEL OLMO BAK",
+          "players": [
+            {
+              "firstName": "BLANCA",
+              "surname": "ALTARRIBA CODINACH",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 4.3,
+              "hcpGame": 6,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "blue",
+                "_id": "67584aa81d0390d2bc725d18"
+              },
+              "_id": "676feaf5d75c1412187c3911"
+            },
+            {
+              "firstName": "FIONA",
+              "surname": "DEL OLMO BAK",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 2.3,
+              "hcpGame": 4,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "blue",
+                "_id": "67584aa81d0390d2bc725d18"
+              },
+              "_id": "676feaf5d75c1412187c39bc"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "676feaf5d75c1412187c3a83"
+        },
+        {
+          "name": "RIBOT SOLER-CABOT / CABANES CISNEROS",
+          "players": [
+            {
+              "firstName": "OLIVIA",
+              "surname": "RIBOT SOLER-CABOT",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 4.2,
+              "hcpGame": 6,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "blue",
+                "_id": "67584aa81d0390d2bc725d18"
+              },
+              "_id": "67719f898a331c43691a2e26"
+            },
+            {
+              "firstName": "LOLA",
+              "surname": "CABANES CISNEROS",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 2.5,
+              "hcpGame": 4,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "blue",
+                "_id": "67584aa81d0390d2bc725d18"
+              },
+              "_id": "67719f898a331c43691a2ed1"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "67719f898a331c43691a2f36"
+        }
+      ],
+      "_id": "679004c46fb20632732f1868"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-01-25T08:40:00.000Z",
+      "gameConfig": {
+        "gameMode": "fourBall",
+        "maxPlayers": 0,
+        "maxGroups": 2,
+        "maxPlayersByGroup": 2,
+        "_id": "5de79a77c09cb5e94be31edf"
+      },
+      "players": [],
+      "groups": [
+        {
+          "name": "LIZARRITURRY PAREJA / SANCHO ARAGONES",
+          "players": [
+            {
+              "firstName": "MINEA",
+              "surname": "LIZARRITURRY PAREJA",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 4.4,
+              "hcpGame": 6,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "blue",
+                "_id": "67584aa81d0390d2bc725d18"
+              },
+              "_id": "676dc3919b56d683a8adbfce"
+            },
+            {
+              "firstName": "CHLOE",
+              "surname": "SANCHO ARAGONES",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 7.7,
+              "hcpGame": 9,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "blue",
+                "_id": "67584aa81d0390d2bc725d18"
+              },
+              "_id": "676dc3919b56d683a8adc079"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "676dc3919b56d683a8adc0e5"
+        },
+        {
+          "name": "CAPO SOLA / ASTRUELLS PUJOL",
+          "players": [
+            {
+              "firstName": "SOFIA",
+              "surname": "CAPO SOLA",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 8.4,
+              "hcpGame": 10,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "blue",
+                "_id": "67584aa81d0390d2bc725d18"
+              },
+              "_id": "677c4f93baaf08b1532595d2"
+            },
+            {
+              "firstName": "M. DEL MAR",
+              "surname": "ASTRUELLS PUJOL",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 7.7,
+              "hcpGame": 9,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "blue",
+                "_id": "67584aa81d0390d2bc725d18"
+              },
+              "_id": "677c4f93baaf08b153259684"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "677c4f93baaf08b1532596e9"
+        }
+      ],
+      "_id": "679004c46fb20632732f186a"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-01-25T08:50:00.000Z",
+      "gameConfig": {
+        "gameMode": "fourBall",
+        "maxPlayers": 0,
+        "maxGroups": 2,
+        "maxPlayersByGroup": 2,
+        "_id": "5de79a77c09cb5e94be31edf"
+      },
+      "players": [],
+      "groups": [
+        {
+          "name": "MARQUEZ COZAR / TILLSTRAND",
+          "players": [
+            {
+              "firstName": "RAQUEL",
+              "surname": "MARQUEZ COZAR",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 6.8,
+              "hcpGame": 8,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "blue",
+                "_id": "67584aa81d0390d2bc725d18"
+              },
+              "_id": "677c1ce96605e9917bd15237"
+            },
+            {
+              "firstName": "TRACEY",
+              "surname": "TILLSTRAND",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 11.3,
+              "hcpGame": 12,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "blue",
+                "_id": "67584aa81d0390d2bc725d18"
+              },
+              "_id": "677c1ce96605e9917bd152e9"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "677c1cea6605e9917bd1534f"
+        },
+        {
+          "name": "CAILA CARAGOL / JOVER FONTANALS",
+          "players": [
+            {
+              "firstName": "MARIA",
+              "surname": "CAILA CARAGOL",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 6.3,
+              "hcpGame": 8,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "blue",
+                "_id": "67584aa81d0390d2bc725d18"
+              },
+              "_id": "678e0f67a552a600e217dcb9"
+            },
+            {
+              "firstName": "CRISTINA",
+              "surname": "JOVER FONTANALS",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 9.9,
+              "hcpGame": 11,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "blue",
+                "_id": "67584aa81d0390d2bc725d18"
+              },
+              "_id": "678e0f67a552a600e217dd61"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "678e0f67a552a600e217ddc6"
+        }
+      ],
+      "_id": "679004c46fb20632732f186c"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-01-25T09:00:00.000Z",
+      "gameConfig": {
+        "gameMode": "fourBall",
+        "maxPlayers": 0,
+        "maxGroups": 2,
+        "maxPlayersByGroup": 2,
+        "_id": "5de79a77c09cb5e94be31edf"
+      },
+      "players": [],
+      "groups": [
+        {
+          "name": "GUERIN ALMAZOR / CASCANTE RODRIGUEZ",
+          "players": [
+            {
+              "firstName": "ALVARO",
+              "surname": "GUERIN ALMAZOR",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -1.5,
+              "hcpGame": -1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "677d66686605e9917b7831ae"
+            },
+            {
+              "firstName": "CARLOS",
+              "surname": "CASCANTE RODRIGUEZ",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 3.9,
+              "hcpGame": 5,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "677d66686605e9917b783256"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "677d66686605e9917b7832b8"
+        },
+        {
+          "name": "BARDAJI FELEZ / LUIS VIDAL",
+          "players": [
+            {
+              "firstName": "MANEL",
+              "surname": "BARDAJI FELEZ",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 1.2,
+              "hcpGame": 2,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "6785460448269479c6b33c4b"
+            },
+            {
+              "firstName": "ORIOL",
+              "surname": "LUIS VIDAL",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 1,
+              "hcpGame": 2,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "6785460548269479c6b33cfd"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "6785460548269479c6b33d69"
+        }
+      ],
+      "_id": "6790baf4e39414a656bfae71"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-01-25T09:10:00.000Z",
+      "gameConfig": {
+        "gameMode": "fourBall",
+        "maxPlayers": 0,
+        "maxGroups": 2,
+        "maxPlayersByGroup": 2,
+        "_id": "5de79a77c09cb5e94be31edf"
+      },
+      "players": [],
+      "groups": [
+        {
+          "name": "JANE SALOMON / SANCHEZ SALINAS",
+          "players": [
+            {
+              "firstName": "JOAN PAU",
+              "surname": "JANE SALOMON",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 2.2,
+              "hcpGame": 3,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "677975f69db541df96de3382"
+            },
+            {
+              "firstName": "CARLES",
+              "surname": "SANCHEZ SALINAS",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 0.2,
+              "hcpGame": 1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "677975f69db541df96de342a"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "677975f69db541df96de348c"
+        },
+        {
+          "name": "MALET FAURA / PEREZ-ROSALES MARIMON",
+          "players": [
+            {
+              "firstName": "BORJA",
+              "surname": "MALET FAURA",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 0.9,
+              "hcpGame": 1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "6780593a9cc827b755f47857"
+            },
+            {
+              "firstName": "ALFONSO",
+              "surname": "PEREZ-ROSALES MARIMON",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 1.6,
+              "hcpGame": 2,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "6780593a9cc827b755f478fc"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "6780593a9cc827b755f4795e"
+        }
+      ],
+      "_id": "6790baf4e39414a656bfae77"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-01-25T09:20:00.000Z",
+      "gameConfig": {
+        "gameMode": "fourBall",
+        "maxPlayers": 0,
+        "maxGroups": 2,
+        "maxPlayersByGroup": 2,
+        "_id": "5de79a77c09cb5e94be31edf"
+      },
+      "players": [],
+      "groups": [
+        {
+          "name": "LORENZANA TORNS / CAROT ORTIZ",
+          "players": [
+            {
+              "firstName": "CARLOS",
+              "surname": "LORENZANA TORNS",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 1.4,
+              "hcpGame": 2,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "6775432e364b6d65112d0814"
+            },
+            {
+              "firstName": "ROGER",
+              "surname": "CAROT ORTIZ",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 1.7,
+              "hcpGame": 2,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "6775432e364b6d65112d08bf"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "6775432e364b6d65112d0924"
+        },
+        {
+          "name": "LEACH MARISTANY / PARELLADA LEACH",
+          "players": [
+            {
+              "firstName": "MATEO",
+              "surname": "LEACH MARISTANY",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 2.7,
+              "hcpGame": 3,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "677c58ea4152fea42596b104"
+            },
+            {
+              "firstName": "PABLO",
+              "surname": "PARELLADA LEACH",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 0.3,
+              "hcpGame": 1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "677c58eb4152fea425970cf9"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "677c58eb4152fea425970d83"
+        }
+      ],
+      "_id": "6790baf4e39414a656bfae7d"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-01-25T09:30:00.000Z",
+      "gameConfig": {
+        "gameMode": "fourBall",
+        "maxPlayers": 0,
+        "maxGroups": 2,
+        "maxPlayersByGroup": 2,
+        "_id": "5de79a77c09cb5e94be31edf"
+      },
+      "players": [],
+      "groups": [
+        {
+          "name": "ROS BADIA / CABANES CISNEROS",
+          "players": [
+            {
+              "firstName": "JAN",
+              "surname": "ROS BADIA",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 2.9,
+              "hcpGame": 3,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "6773b277e7ae65156fc3b3d3"
+            },
+            {
+              "firstName": "BIEL",
+              "surname": "CABANES CISNEROS",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 0.3,
+              "hcpGame": 1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "6773b277e7ae65156fc3b47e"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "6773b277e7ae65156fc3b4e3"
+        },
+        {
+          "name": "PEREZ-CALVO SOLER / VERGES BUENO",
+          "players": [
+            {
+              "firstName": "MARIO",
+              "surname": "PEREZ-CALVO SOLER",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 1.8,
+              "hcpGame": 2,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "6782ce2070aacb528bd85c95"
+            },
+            {
+              "firstName": "JAVIER",
+              "surname": "VERGES BUENO",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 2,
+              "hcpGame": 3,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "6782ce2070aacb528bd85d40"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "6782ce2070aacb528bd85da5"
+        }
+      ],
+      "_id": "6790baf4e39414a656bfae83"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-01-25T09:40:00.000Z",
+      "gameConfig": {
+        "gameMode": "fourBall",
+        "maxPlayers": 0,
+        "maxGroups": 2,
+        "maxPlayersByGroup": 2,
+        "_id": "5de79a77c09cb5e94be31edf"
+      },
+      "players": [],
+      "groups": [
+        {
+          "name": "MANENT CODINA / SAENZ COLOMA",
+          "players": [
+            {
+              "firstName": "ALEJANDRO",
+              "surname": "MANENT CODINA",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 1.1,
+              "hcpGame": 2,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "676e7bc145a265651dd34c93"
+            },
+            {
+              "firstName": "JAVIER",
+              "surname": "SAENZ COLOMA",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 3,
+              "hcpGame": 4,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "676e7bc245a265651dd37051"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "676e7bc245a265651dd3776e"
+        },
+        {
+          "name": "ARQUILLO ABBELOOS / SANCHEZ CALLOL",
+          "players": [
+            {
+              "firstName": "IVAN",
+              "surname": "ARQUILLO ABBELOOS",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": -1.9,
+              "hcpGame": -1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "6781649570aacb528bfd8dba"
+            },
+            {
+              "firstName": "ROBERT",
+              "surname": "SANCHEZ CALLOL",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 6.2,
+              "hcpGame": 7,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "6781649570aacb528bfd8e6c"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "6781649670aacb528bfd8ed8"
+        }
+      ],
+      "_id": "6790baf4e39414a656bfae89"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-01-25T09:50:00.000Z",
+      "gameConfig": {
+        "gameMode": "fourBall",
+        "maxPlayers": 0,
+        "maxGroups": 2,
+        "maxPlayersByGroup": 2,
+        "_id": "5de79a77c09cb5e94be31edf"
+      },
+      "players": [],
+      "groups": [
+        {
+          "name": "MONTAÑOLA BUSQUETS / GONGORA CARMONA",
+          "players": [
+            {
+              "firstName": "ROGER",
+              "surname": "MONTAÑOLA BUSQUETS",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 3.7,
+              "hcpGame": 4,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "6777ba2be934eed1d46fceae"
+            },
+            {
+              "firstName": "FRANCISCO DE A.",
+              "surname": "GONGORA CARMONA",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 0.7,
+              "hcpGame": 1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "6777ba2be934eed1d46fcf59"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "6777ba2be934eed1d46fcfbe"
+        },
+        {
+          "name": "CAMPOLIER BASSAGANYAS / GIRALT BALASCH",
+          "players": [
+            {
+              "firstName": "PAU",
+              "surname": "CAMPOLIER BASSAGANYAS",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 4,
+              "hcpGame": 5,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "67826e89f7ab4469e1a309a6"
+            },
+            {
+              "firstName": "ERNESTO",
+              "surname": "GIRALT BALASCH",
+              "nameSufix": null,
+              "country": "ESP",
+              "hcpExact": 0.7,
+              "hcpGame": 1,
+              "saceValue": 9999,
+              "sacePPValue": 9999,
+              "team": null,
+              "gameTee": {
+                "color": "white",
+                "_id": "67584aa81d0390d2bc725d06"
+              },
+              "_id": "67826e89f7ab4469e1a30a51"
+            }
+          ],
+          "gameConfig": {
+            "gameMode": "fourBall",
+            "maxPlayers": 0,
+            "maxGroups": 2,
+            "maxPlayersByGroup": 2,
+            "_id": "5de79a77c09cb5e94be31edf"
+          },
+          "_id": "67826e89f7ab4469e1a30abd"
+        }
+      ],
+      "_id": "6790baf4e39414a656bfae8f"
+    }
+  ]
+}

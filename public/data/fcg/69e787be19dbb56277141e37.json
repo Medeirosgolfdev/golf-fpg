@@ -1,0 +1,167 @@
+{
+  "gameId": "69e787be19dbb56277141e37",
+  "fetchedAt": "2026-05-09T19:41:23.884Z",
+  "game": {
+    "_id": "69e787be19dbb56277141e37",
+    "name": "CAMPIONAT DE CATALUNYA BENJAMÍ 2026 - Costa Brava",
+    "status": "scheduled",
+    "scheduleStartDate": "2026-05-16T07:00:39.750Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap9b",
+    "pointMode": "strokePlay",
+    "defaultTeeColorMale": "red",
+    "defaultTeeColorFemale": "red",
+    "tournament": {
+      "_id": "69e787be19dbb56277141e62",
+      "name": "CAMPIONAT DE CATALUNYA BENJAMÍ 2026 - Costa Brava",
+      "clientName": "Federación Catalana de Golf",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de79a6e4d36dfe90dea330d",
+      "name": "CLUB DE GOLF COSTA BRAVA",
+      "city": null,
+      "state": null,
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "5de79a6e4d36dfe90dea3315",
+      "name": "COSTA BRAVA - Verde",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap9b",
+        "rating": 33.9,
+        "slope": 119,
+        "par": 36,
+        "_id": "69e787be19dbb56277141f0b"
+      },
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap9b",
+        "rating": 35.8,
+        "slope": 136,
+        "par": 36,
+        "_id": "69e787be19dbb56277141f44"
+      },
+      {
+        "gender": "M",
+        "color": "gold",
+        "lap": "lap9b",
+        "rating": 33.5,
+        "slope": 123,
+        "par": 36,
+        "_id": "69e787be19dbb56277141f1e"
+      },
+      {
+        "gender": "M",
+        "color": "blue",
+        "lap": "lap9b",
+        "rating": 34.3,
+        "slope": 121,
+        "par": 36,
+        "_id": "69e787be19dbb56277141f7d"
+      },
+      {
+        "gender": "M",
+        "color": "white",
+        "lap": "lap9b",
+        "rating": 36.2,
+        "slope": 138,
+        "par": 36,
+        "_id": "69e787be19dbb56277141f57"
+      },
+      {
+        "gender": "M",
+        "color": "orange",
+        "lap": "lap9b",
+        "rating": 35.3,
+        "slope": 131,
+        "par": 36,
+        "_id": "69e787be19dbb56277141f90"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "gold",
+        "lap": "lap9b",
+        "rating": 35.9,
+        "slope": 128,
+        "par": 36,
+        "_id": "69e787be19dbb56277141ef8"
+      },
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap9b",
+        "rating": 37,
+        "slope": 130,
+        "par": 36,
+        "_id": "69e787be19dbb56277141f6a"
+      },
+      {
+        "gender": "F",
+        "color": "yellow",
+        "lap": "lap9b",
+        "rating": 38.7,
+        "slope": 144,
+        "par": 36,
+        "_id": "69e787be19dbb56277141fb6"
+      },
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap9b",
+        "rating": 36.4,
+        "slope": 128,
+        "par": 36,
+        "_id": "69e787be19dbb56277141f31"
+      },
+      {
+        "gender": "F",
+        "color": "white",
+        "lap": "lap9b",
+        "rating": 39.4,
+        "slope": 146,
+        "par": 36,
+        "_id": "69e787be19dbb56277141fa3"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "69e787be19dbb56277141e74",
+      "name": "BENJAMÍ MASCULÍ",
+      "gender": "M",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "69e787be19dbb56277141e77",
+      "name": "BENJAMÍ FEMENÍ",
+      "gender": "F",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}

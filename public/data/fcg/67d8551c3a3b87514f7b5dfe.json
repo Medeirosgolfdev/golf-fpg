@@ -1,0 +1,140 @@
+{
+  "gameId": "67d8551c3a3b87514f7b5dfe",
+  "fetchedAt": "2026-05-09T19:52:34.682Z",
+  "game": {
+    "_id": "67d8551c3a3b87514f7b5dfe",
+    "name": "inscripciones - Copa Catalunya Femenina 2025",
+    "status": "finished",
+    "scheduleStartDate": "2025-05-16T07:00:00.000Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "strokePlay",
+    "defaultTeeColorMale": "white",
+    "defaultTeeColorFemale": "blue",
+    "tournament": {
+      "_id": "67d8551c3a3b87514f7b5e20",
+      "name": "inscripciones - Copa Catalunya Femenina 2025",
+      "clientName": "Federación Catalana de Golf",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de79a6f4d36dfe90dea33f5",
+      "name": "GOLF LLEIDA & COUNTRY CLUB",
+      "city": "RAÏMAT",
+      "state": "LLEIDA",
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "5de79a6f4d36dfe90dea33f6",
+      "name": "GOLF LLEIDA & COUNTRY CLUB",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 72.8,
+        "slope": 131,
+        "par": 72,
+        "_id": "67d8551c3a3b87514f7b5ea4"
+      },
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 71.4,
+        "slope": 129,
+        "par": 73,
+        "_id": "67d8551c3a3b87514f7b5eca"
+      },
+      {
+        "gender": "M",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 67.9,
+        "slope": 122,
+        "par": 73,
+        "_id": "67d8551c3a3b87514f7b5edd"
+      },
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 67,
+        "slope": 119,
+        "par": 73,
+        "_id": "67d8551c3a3b87514f7b5ef0"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 73.3,
+        "slope": 126,
+        "par": 73,
+        "_id": "67d8551c3a3b87514f7b5eb7"
+      },
+      {
+        "gender": "F",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 77.5,
+        "slope": 138,
+        "par": 73,
+        "_id": "67d8551c3a3b87514f7b5f03"
+      },
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 72.3,
+        "slope": 124,
+        "par": 73,
+        "_id": "67d8551c3a3b87514f7b5e91"
+      },
+      {
+        "gender": "F",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 79.1,
+        "slope": 142,
+        "par": 72,
+        "_id": "67d8551c3a3b87514f7b5f16"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "67d8551c3a3b87514f7b5e32",
+      "name": "SCRATCH GENERAL",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "67d8551c3a3b87514f7b5e35",
+      "name": "SCRATCH SUB16",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}

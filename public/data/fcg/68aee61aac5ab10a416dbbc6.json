@@ -1,0 +1,140 @@
+{
+  "gameId": "68aee61aac5ab10a416dbbc6",
+  "fetchedAt": "2026-05-09T19:54:02.877Z",
+  "game": {
+    "_id": "68aee61aac5ab10a416dbbc6",
+    "name": "CAMPIONAT DE CATALUNYA MATCH-PLAY SOTS-18 2025",
+    "status": "scheduled",
+    "scheduleStartDate": "2025-09-20T07:00:00.000Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "matchPlay",
+    "defaultTeeColorMale": "white",
+    "defaultTeeColorFemale": "blue",
+    "tournament": {
+      "_id": "68aee61aac5ab10a416dbbf0",
+      "name": "CAMPIONAT DE CATALUNYA MATCH-PLAY SOTS-18 2025",
+      "clientName": "Federación Catalana de Golf",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de79a6f4d36dfe90dea342d",
+      "name": "CLUB DE GOLF D'ARO",
+      "city": "PLATJA D'ARO",
+      "state": "GIRONA",
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "5de79a6f4d36dfe90dea342e",
+      "name": "GOLF D'ARO",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 72.5,
+        "slope": 133,
+        "par": 72,
+        "_id": "68aee61aac5ab10a416dbc61"
+      },
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 67.2,
+        "slope": 125,
+        "par": 72,
+        "_id": "68aee61aac5ab10a416dbcad"
+      },
+      {
+        "gender": "M",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 68.3,
+        "slope": 128,
+        "par": 72,
+        "_id": "68aee61aac5ab10a416dbcc0"
+      },
+      {
+        "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 73.6,
+        "slope": 135,
+        "par": 72,
+        "_id": "68aee61aac5ab10a416dbc87"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 73.6,
+        "slope": 126,
+        "par": 72,
+        "_id": "68aee61aac5ab10a416dbc9a"
+      },
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 72.2,
+        "slope": 122,
+        "par": 72,
+        "_id": "68aee61aac5ab10a416dbc74"
+      },
+      {
+        "gender": "F",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 78.8,
+        "slope": 139,
+        "par": 72,
+        "_id": "68aee61aac5ab10a416dbcd3"
+      },
+      {
+        "gender": "F",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 80.2,
+        "slope": 141,
+        "par": 72,
+        "_id": "68aee61aac5ab10a416dbce6"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "68aee61aac5ab10a416dbc02",
+      "name": "SCRATCH",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "68aee61aac5ab10a416dbc05",
+      "name": "HANDICAP",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}
