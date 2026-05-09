@@ -244,7 +244,8 @@ export function RivalDetail({ playerName }: { playerName: string }) {
     ...Object.entries(rival.r)
       .filter(([tid, res]) => {
         if (manualTournIds.has(tid) || autoIsCoveredByManual(tid)) return false;
-        if (!res?.rd?.length) return false;
+        // Aceitar tids com rd hbh OU pos/total (cp00 maioria sem hbh)
+        if (!res || (!res.rd?.length && res.p == null && res.t == null && res.tp == null)) return false;
         return true;
       })
       .map(([tid, res]) => {

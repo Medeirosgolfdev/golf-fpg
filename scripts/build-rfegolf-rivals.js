@@ -17,6 +17,33 @@ const LGS_DIR = path.resolve(__dirname, "../public/data/rfegolf-livegolfscoring"
 const NC_DIR = path.resolve(__dirname, "../public/data/nextcaddy");
 const OUT = path.resolve(__dirname, "../public/data/rfegolf-rivals.json");
 
+// Build dateIso lookup from all scope files (NC discovery has dates that aren't
+// in per-tour /tour/{id} pages). Map tourId → "YYYY-MM-DD"
+const NC_DATE_LOOKUP = (() => {
+  const map = {};
+  const MONTHS_ES = { ene: "01", feb: "02", mar: "03", abr: "04", may: "05", jun: "06",
+                      jul: "07", ago: "08", sep: "09", oct: "10", nov: "11", dic: "12" };
+  const scopeFiles = fs.readdirSync(__dirname).filter(f => /^nextcaddy-scope-.+\.json$/.test(f));
+  for (const f of scopeFiles) {
+    try {
+      const sc = JSON.parse(fs.readFileSync(path.join(__dirname, f), "utf-8"));
+      const tours = sc.tours || sc.tournaments || [];
+      for (const t of tours) {
+        const id = t.tourId || t.id;
+        if (!id || map[id]) continue;
+        const date = t.date || "";
+        // "DD mmm YYYY" → ISO
+        const m = /(\d{1,2})\s+(\w{3,4})\s+(\d{4})/.exec(date);
+        if (m && MONTHS_ES[m[2].toLowerCase()]) {
+          map[id] = `${m[3]}-${MONTHS_ES[m[2].toLowerCase()]}-${m[1].padStart(2, "0")}`;
+        }
+      }
+    } catch {}
+  }
+  console.log(`[NC dates] loaded ${Object.keys(map).length} dateIso from ${scopeFiles.length} scope files`);
+  return map;
+})();
+
 function isJuvenil(name) {
   return /\b(Sub-?\d+|Alev[íi]n|Benjam[íi]n|Infantil|Cadete|Junior|Juvenil)\b/i.test(name || "");
 }
@@ -150,7 +177,7 @@ for (const f of ncFiles) {
     if (!Array.isArray(par) || (par.length !== 18 && par.length !== 9)) { ncSkipped++; continue; }
     const nholes = par.length;
     const parTotal = par.reduce((a, b) => a + b, 0);
-    const dateIso = d.meta?.dateIso || null;
+    const dateIso = d.meta?.dateIso || NC_DATE_LOOKUP[tourId] || null;
     const year = dateIso ? parseInt(dateIso.slice(0, 4), 10) : null;
 
     const lb = Array.isArray(d.leaderboard) ? d.leaderboard : [];
@@ -252,7 +279,7 @@ for (const f of ncFiles) {
       }
       out.torneios[tid] = {
         name,
-        categoryName: catName,    // descritivo: "Final Alevin Scratch Indistinto"
+        categoryName: catName,
         year, ageGroup,
         dateIso, dateRange: d.meta?.dateStart || null,
         par, parTotal,
@@ -260,7 +287,7 @@ for (const f of ncFiles) {
         si,
         nholes: expectedHoles, nRounds,
         source: "nextcaddy",
-        scoringType,   // "SCRATCH" | "HANDICAP"
+        scoringType,
         players: enriched,
       };
       ncEntriesAdded++;

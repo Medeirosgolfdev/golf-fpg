@@ -1039,8 +1039,9 @@ export function getCanonicalTids(p: RivalPlayer): Set<string> {
 }
 
 export function nPlayed(p: RivalPlayer) {
-  const total = Object.values(p.r).filter(r => r && (r.tp != null || r.rd?.length > 0)).length;
-  return total - hiddenTids(p).size;
+  // Usar a mesma fonte de verdade que tournResults em RivalDetail:
+  // getCanonicalTids garante consistência sidebar↔página (mesmo set de tids).
+  return getCanonicalTids(p).size;
 }
 
 /* ─────────────────────────────────────────────────────────────

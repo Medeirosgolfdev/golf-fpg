@@ -1,0 +1,506 @@
+{
+  "tourId": 61681,
+  "url": "https://www.nextcaddy.com/tour/61681",
+  "scrapedAt": "2026-05-09T18:26:32.943Z",
+  "meta": {
+    "name": "XXXV CAMPEONATO JUVENIL  DE CyL  2025 (HCP MAYOR DE 36,0)",
+    "organizer": null,
+    "course": null,
+    "courseCode": null,
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "JUVENIL",
+      "Caballeros",
+      "Señoras",
+      "Juvenil",
+      "Infantil",
+      "Profesional",
+      "Senior"
+    ]
+  },
+  "course": {
+    "par": [
+      5,
+      4,
+      4,
+      3,
+      5,
+      4,
+      4,
+      3,
+      4,
+      4,
+      5,
+      4,
+      3,
+      4,
+      4,
+      4,
+      3,
+      5
+    ],
+    "si": [
+      7,
+      11,
+      1,
+      17,
+      15,
+      9,
+      5,
+      13,
+      3,
+      10,
+      6,
+      8,
+      4,
+      14,
+      12,
+      16,
+      18,
+      2
+    ],
+    "meters": [
+      432,
+      230,
+      315,
+      113,
+      349,
+      297,
+      266,
+      130,
+      303,
+      289,
+      355,
+      238,
+      113,
+      265,
+      270,
+      271,
+      86,
+      381
+    ]
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Benjamin Handicap No Nacional Individual",
+      "expectedJugadores": 3,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Rodrigo Garabito De Las Heras",
+          "licencia": "7709344278",
+          "hcp": 47.1,
+          "nivel": "B",
+          "rounds": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2070951,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Matias Martin Martin",
+          "licencia": "7759097829",
+          "hcp": 52.4,
+          "nivel": "B",
+          "rounds": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2071781,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "David Cerezal Criado",
+          "licencia": "7759968499",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2066669,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Alevin Handicap No Nacional Individual",
+      "expectedJugadores": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Sergio Cerezal Criado",
+          "licencia": "7759935670",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2066671,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Infantil Handicap No Nacional Individual",
+      "expectedJugadores": 3,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Carmen Garcia Anaya",
+          "licencia": "7709995369",
+          "hcp": 54,
+          "nivel": "I",
+          "rounds": [],
+          "total": 22,
+          "toPar": -4,
+          "inscribedId": 2068310,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Susana Santibañez Moreno",
+          "licencia": "7706995788",
+          "hcp": 45.3,
+          "nivel": "I",
+          "rounds": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2056963,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Miguel Catela Inestal",
+          "licencia": "7706091752",
+          "hcp": 36.2,
+          "nivel": "I",
+          "rounds": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2069027,
+          "roundScores": []
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Benjamin Handicap No Nacional Individual",
+      "jugadores": 3
+    },
+    "2": {
+      "name": "Alevin Handicap No Nacional Individual",
+      "jugadores": 1
+    },
+    "3": {
+      "name": "Infantil Handicap No Nacional Individual",
+      "jugadores": 3
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Susana Santibañez Moreno",
+      "licencia": "7706995788",
+      "hcp": 45.3,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Carmen Garcia Anaya",
+      "licencia": "7709995369",
+      "hcp": 54,
+      "nivel": "I"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "David Cerezal Criado",
+      "licencia": "7759968499",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Sergio Cerezal Criado",
+      "licencia": "7759935670",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "Miguel Catela Inestal",
+      "licencia": "7706091752",
+      "hcp": 36.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Rodrigo Garabito De Las Heras",
+      "licencia": "7709344278",
+      "hcp": 47.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Matias Martin Martin",
+      "licencia": "7759097829",
+      "hcp": 52.4,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Susana Santibañez Moreno",
+      "licencia": "7706995788",
+      "hcp": 45.3,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "David Cerezal Criado",
+      "licencia": "7759968499",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Sergio Cerezal Criado",
+      "licencia": "7759935670",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Carmen Garcia Anaya",
+      "licencia": "7709995369",
+      "hcp": 54,
+      "nivel": "I"
+    },
+    {
+      "orden": 5,
+      "name": "Miguel Catela Inestal",
+      "licencia": "7706091752",
+      "hcp": 36.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 6,
+      "name": "Rodrigo Garabito De Las Heras",
+      "licencia": "7709344278",
+      "hcp": 47.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Matias Martin Martin",
+      "licencia": "7759097829",
+      "hcp": 52.4,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Miguel Catela Inestal",
+          "hcp": 36.2,
+          "ins": "2069027",
+          "jid": "65432",
+          "nivel": "I"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Susana Santibañez Moreno",
+          "hcp": 45.3,
+          "ins": "2056963",
+          "jid": "65432",
+          "nivel": "I"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Rodrigo Garabito De Las Heras",
+          "hcp": 47.1,
+          "ins": "2070951",
+          "jid": "65432",
+          "nivel": "B"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Matias Martin Martin",
+          "hcp": 52.4,
+          "ins": "2071781",
+          "jid": "65432",
+          "nivel": "B"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "David Cerezal Criado",
+          "hcp": 54,
+          "ins": "2066669",
+          "jid": "65432",
+          "nivel": "B"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Sergio Cerezal Criado",
+          "hcp": 54,
+          "ins": "2066671",
+          "jid": "65432",
+          "nivel": "A"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Carmen Garcia Anaya",
+          "hcp": 54,
+          "ins": "2068310",
+          "jid": "65432",
+          "nivel": "I"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 65432
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Diez Contreras, Franscisco",
+          "holeNumber": 6,
+          "createdAt": "27/10/24 15:41:54"
+        },
+        {
+          "playerName": "Barroso Camacho, Francisco",
+          "holeNumber": 6,
+          "createdAt": "27/10/24 15:41:54"
+        },
+        {
+          "playerName": "Guardia Lopez, Francisco",
+          "holeNumber": 4,
+          "createdAt": "27/10/24 15:41:55"
+        },
+        {
+          "playerName": "Obando Carrasco, Joaquin",
+          "holeNumber": 8,
+          "createdAt": "27/10/24 15:41:55"
+        },
+        {
+          "playerName": "Redaño Garcia, Antonio",
+          "holeNumber": 1,
+          "createdAt": "27/10/24 15:41:56"
+        },
+        {
+          "playerName": "Houghton, Ian",
+          "holeNumber": 1,
+          "createdAt": "27/10/24 15:41:56"
+        },
+        {
+          "playerName": "Diaz Martinez, Joaquin",
+          "holeNumber": 5,
+          "createdAt": "27/10/24 15:41:58"
+        },
+        {
+          "playerName": "Rivas Castro, Manuel Francisco",
+          "holeNumber": 4,
+          "createdAt": "27/10/24 15:41:58"
+        },
+        {
+          "playerName": "Quelis Duran, Freddy",
+          "holeNumber": 6,
+          "createdAt": "27/10/24 15:41:59"
+        },
+        {
+          "playerName": "Jimenez Exposito, Marco Antonio",
+          "holeNumber": 4,
+          "createdAt": "27/10/24 15:42:00"
+        },
+        {
+          "playerName": "Curto  Oliva, Gemma Maria",
+          "holeNumber": 9,
+          "createdAt": "27/10/24 15:42:02"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/2750763492_cuadro_de_honor.pdf",
+    "/uploads/circulares/cirfgcyl2025-1.pdf",
+    "/uploads/competiciones/pdf/1115589288_reglas_locales_zarapicos.pdf"
+  ]
+}
