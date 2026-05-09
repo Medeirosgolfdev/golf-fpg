@@ -17,6 +17,7 @@ import PasswordGate from "../ui/PasswordGate";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import { RoundPill } from "../ui/PillBadge";
+import SexBadge from "../ui/SexBadge";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import EmptyState from "../ui/EmptyState";
 import DetailHeader from "../ui/DetailHeader";
@@ -329,7 +330,23 @@ function getTournInfo(tid: string): { name: string; short: string; date: string;
     const nc = uskTournNames.get(tid);
     if (nc) return { name: nc.name, short: nc.short, date: nc.date, dateExact: nc.dateExact };
   }
-  return { name: tid, short: tid, date: "?", dateExact: "9999" };
+  // ── Fallback graceful — Maps ainda não populados (HMR / load incompleto) ──
+  // Em vez de devolver o tid bruto + dateExact "9999" (que renderiza como
+  // "1 janeiro"), tentamos reconstruir algo legível do próprio tid e usar
+  // dateExact vazio (a UI ignora datas vazias).
+  if (tid.startsWith("ff")) {
+    const m = /^ff(\d+)_(U\d+)$/.exec(tid);
+    if (m) return { name: `GP Jeunes ${m[2]}`, short: `FFG ${m[2]}`, date: "", dateExact: "" };
+    return { name: "FFGolf", short: "FFG", date: "", dateExact: "" };
+  }
+  if (tid.startsWith("lgs")) return { name: "LiveGolfScoring", short: "LGS", date: "", dateExact: "" };
+  if (tid.startsWith("nc")) {
+    const m = /^nc\d+_(.+)$/.exec(tid);
+    return { name: m ? `RFEG ${m[1]}` : "RFEG", short: "RFEG", date: "", dateExact: "" };
+  }
+  if (tid.startsWith("usk")) return { name: "USKids", short: "USK", date: "", dateExact: "" };
+  if (tid.startsWith("fpg")) return { name: "FPG Jovens", short: "FPG", date: "", dateExact: "" };
+  return { name: tid, short: tid, date: "", dateExact: "" };
 }
 
 /* ═══════════════════════════════════
@@ -435,6 +452,44 @@ interface DobConstraint {
   ageMin: number;      // minimum age bracket
   ageMax: number;      // maximum age bracket (same as min when exact)
   tid: string;
+}
+
+/** Calcula o escalão internacional Sub-N (Sub-10/12/14/16/18/21) prefirindo
+ *  a idade actual (DOB exacto), com fallback para a categoria RFEG (catEdad). */
+function escalaoIntl(rival: RivalPlayer): string | null {
+  const ageToSub = (a: number): string | null => {
+    if (a <= 9) return "Sub-10";
+    if (a <= 11) return "Sub-12";
+    if (a <= 13) return "Sub-14";
+    if (a <= 15) return "Sub-16";
+    if (a <= 17) return "Sub-18";
+    if (a <= 21) return "Sub-21";
+    return null;
+  };
+  // 1) DOB exacto → idade actual
+  if (rival.dob) {
+    try {
+      const d = parseDob(rival.dob);
+      const today = new Date();
+      let a = today.getFullYear() - d.getFullYear();
+      const beforeBirthday = today.getMonth() < d.getMonth()
+        || (today.getMonth() === d.getMonth() && today.getDate() < d.getDate());
+      if (beforeBirthday) a--;
+      const sub = ageToSub(a);
+      if (sub) return sub;
+    } catch {}
+  }
+  // 2) Fallback: catEdad RFEG → mapeamento standard
+  const cat = (rival as any).esCatEdad as string | undefined;
+  if (cat) {
+    const c = cat.toUpperCase();
+    if (/BENJAM/.test(c)) return "Sub-10";
+    if (/ALEV/.test(c)) return "Sub-12";
+    if (/INFANT/.test(c)) return "Sub-14";
+    if (/CADETE/.test(c)) return "Sub-16";
+    if (/JUNIOR|JUVENIL/.test(c)) return "Sub-18";
+  }
+  return null;
 }
 
 function computeDobInfo(p: RivalPlayer, mhPlayer?: MHPlayer | null): DobInfo {
@@ -964,6 +1019,10 @@ function useAutoRivals() {
   const [fileMeta, setFileMeta] = React.useState<KidsFileMeta[]>([]);
 
   React.useEffect(() => {
+    // HMR safety: se os Maps globais estão vazios (foram reset pelo Vite HMR
+    // mas o cache _autoRivalsCache também foi reset), buildAutoRivals vai
+    // re-correr e repopular tudo. Se os Maps já estão populados (load fresco),
+    // a cache devolve o resultado cached imediatamente.
     buildAutoRivals((p) => setProgress({ ...p })).then(autoPlayers => {
       setFileMeta(getLoadedKidsFiles());
       // Trabalhar sobre uma cópia profunda de D — canonicalizar `co` na origem
@@ -986,6 +1045,11 @@ function useAutoRivals() {
         if (ap.esLicencia && !(ex as any).esLicencia) (ex as any).esLicencia = ap.esLicencia;
         if (ap.esClub && !(ex as any).esClub) (ex as any).esClub = ap.esClub;
         if (ap.esFullName && !(ex as any).esFullName) (ex as any).esFullName = ap.esFullName;
+        if (ap.esSex && !(ex as any).esSex) (ex as any).esSex = ap.esSex;
+        if (ap.esCatEdad && !(ex as any).esCatEdad) (ex as any).esCatEdad = ap.esCatEdad;
+        if (ap.esRegion && !(ex as any).esRegion) (ex as any).esRegion = ap.esRegion;
+        if (ap.esHcp != null && (ex as any).esHcp == null) (ex as any).esHcp = ap.esHcp;
+        if (ap.esHcpDate && !(ex as any).esHcpDate) (ex as any).esHcpDate = ap.esHcpDate;
         if (ap.ptFed && !(ex as any).ptFed) (ex as any).ptFed = ap.ptFed;
         if (ap.frFed && !(ex as any).frFed) (ex as any).frFed = ap.frFed;
       };
@@ -1002,6 +1066,11 @@ function useAutoRivals() {
         if (ap.esLicencia) (newPlayer as any).esLicencia = ap.esLicencia;
         if (ap.esClub) (newPlayer as any).esClub = ap.esClub;
         if (ap.esFullName) (newPlayer as any).esFullName = ap.esFullName;
+        if (ap.esSex) (newPlayer as any).esSex = ap.esSex;
+        if (ap.esCatEdad) (newPlayer as any).esCatEdad = ap.esCatEdad;
+        if (ap.esRegion) (newPlayer as any).esRegion = ap.esRegion;
+        if (ap.esHcp != null) (newPlayer as any).esHcp = ap.esHcp;
+        if (ap.esHcpDate) (newPlayer as any).esHcpDate = ap.esHcpDate;
         if (ap.ptFed) (newPlayer as any).ptFed = ap.ptFed;
         if (ap.frFed) (newPlayer as any).frFed = ap.frFed;
         return newPlayer;
@@ -2670,6 +2739,42 @@ function RivalDetail({ playerName }: { playerName: string }) {
               {rival && !isManuel && (rival as any).esClub && (rival as any).esClub !== (rival as any).fpgClub && (
                 <span className="p p-sm p-club fs-11" title="Clube espanhol">
                   🏌️ {(rival as any).esClub}
+                </span>
+              )}
+              {/* Comunidade Autónoma (RFEG) — inferida do clube */}
+              {rival && !isManuel && (rival as any).esRegion && (
+                <span className="p p-sm fs-11" title="Comunidade Autónoma"
+                  style={{ background: "#fef3c7", color: "#92400e", border: "1px solid #fcd34d" }}>
+                  📍 {(rival as any).esRegion}
+                </span>
+              )}
+              {/* Categoria oficial RFEG (Benjamín/Alevín/Infantil/Cadete/Junior/Juvenil) */}
+              {rival && !isManuel && (rival as any).esCatEdad && (
+                <span className="p p-sm fs-11" title="Categoria RFEG"
+                  style={{ background: "#dbeafe", color: "#1e40af", border: "1px solid #93c5fd", fontWeight: 600 }}>
+                  {(rival as any).esCatEdad}
+                </span>
+              )}
+              {/* Escalão internacional Sub-N (calculado da idade ou catEdad) */}
+              {rival && !isManuel && (() => {
+                const sub = escalaoIntl(rival);
+                if (!sub) return null;
+                return (
+                  <span className="p p-sm fs-11" title="Escalão internacional"
+                    style={{ background: "#ede9fe", color: "#6d28d9", border: "1px solid #c4b5fd", fontWeight: 600 }}>
+                    {sub}
+                  </span>
+                );
+              })()}
+              {/* Sexo (M/F) com cor — usa SexBadge para coerência global */}
+              {rival && !isManuel && (rival as any).esSex && (
+                <SexBadge sex={(rival as any).esSex} />
+              )}
+              {/* HCP exacto RFEG */}
+              {rival && !isManuel && typeof (rival as any).esHcp === "number" && (
+                <span className="p p-sm fs-11" title={(rival as any).esHcpDate ? `HCP em ${(rival as any).esHcpDate}` : "HCP RFEG"}
+                  style={{ background: "#ecfdf5", color: "#065f46", border: "1px solid #6ee7b7", fontWeight: 700 }}>
+                  HCP {(rival as any).esHcp.toFixed(1)}
                 </span>
               )}
               {isManuel && <span className="p p-outline p-sm">REF</span>}

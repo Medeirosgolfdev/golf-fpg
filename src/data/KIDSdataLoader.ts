@@ -96,6 +96,11 @@ export interface AutoRivalPlayer {
   esLicencia?: string;  // RFEG/Espanha (ex: "AM84955303")
   esClub?: string;      // Clube espanhol (ex: "LA HACIENDA")
   esFullName?: string;  // Nome RFEG completo quando difere de `n` (ex: "Niko Eduardo Alvarez Van Der Walt")
+  esSex?: "M" | "F";    // Sexo registado em RFEG
+  esCatEdad?: string;   // Categoria oficial RFEG: Benjamín/Alevín/Infantil/Cadete/Junior/Juvenil/Senior
+  esHcp?: number;       // HCP exacto (último snapshot conhecido)
+  esHcpDate?: string;   // Data ISO do snapshot HCP (YYYY-MM-DD)
+  esRegion?: string;    // Comunidade Autónoma inferida do clube (ex: "Canárias")
   ptFed?: string;       // FPG/Portugal (ex: "52884")
   frFed?: string;       // FFGolf/França (futuro)
 }
@@ -1651,6 +1656,8 @@ async function _buildAutoRivalsInternal(
   const playersJsonPromise = fetchJson(`${base}players.json`).catch(() => null);
   // Arrancar spain-players.json em paralelo (DOB+sexo+clube de espanhois RFEGolf)
   const spainPlayersPromise = fetchJson(`${base}spain-players.json`).catch(() => null);
+  // Arrancar licencia-hcp-lookup.json em paralelo (HCP por licença RFEG)
+  const spainHcpPromise = fetchJson(`${base}licencia-hcp-lookup.json`).catch(() => null);
   // Arrancar rfegolf-rivals.json em paralelo (66 torneios LGS juvenis consolidados)
   const rfegRivalsPromise = fetchJson(`${base}rfegolf-rivals.json`).catch(() => null);
 
@@ -1835,6 +1842,28 @@ async function _buildAutoRivalsInternal(
     _loadedFiles.push({ path: `${base}players.json`, status: "error", error: String(e), group: "enrich" });
   }
 
+  // ── Inferência de Comunidade Autónoma a partir do nome do clube ──
+  // Heurística por keywords. Não cobre todos os clubes mas apanha os hubs principais.
+  function inferEsRegion(club: string | null | undefined): string | null {
+    if (!club) return null;
+    const c = club.toUpperCase();
+    if (/TECINA|TENERIFE|GRAN CANARIA|LANZAROTE|FUERTEVENTURA|GOLF DEL SUR|MELONERAS|ANFI|AMARILLA|COSTA ADEJE|ABAMA|REAL CLUB DE GOLF DE LAS PALMAS|EL CORTIJO|MASPALOMAS|SALOBRE|CHAPARRAL/.test(c)) return "Canárias";
+    if (/SOTOGRANDE|VALDERRAMA|GUADALMINA|FINCA CORTESIN|LA CALA|CASARES|ATALAYA|MIJAS|ALCAIDESA|VILLA PADIERNA|EL PARAISO|ALOHA|MAGNA MARBELLA|RIO REAL|CABOPINO|LOS NARANJOS|LA QUINTA|LAURO|GUADALHORCE|ANTEQUERA|LA HACIENDA|SANTA CLARA|FLAMINGOS|LAS BRISAS|MARBELLA|MALAGA|GRANADA|JEREZ|CADIZ|HUELVA|SEVILLA|ALMERIA|ALMENARA|ZAGALEJO|NUEVA ANDALUCIA|ESTEPONA|MONTECASTILLO|LA RESERVA|SAN ROQUE|MEDITERRANEO|BENAHAV|AZATA|PLAYA SERENA|EL ROMPIDO|ISLANTILLA|COSTA BALLENA/.test(c)) return "Andalucía";
+    if (/EL PRAT|TERRAMAR|VALLROMANES|EMPORDA|PALS|PERELADA|CALDES|MASIA BACH|MASNOU|SANT VICENC|BARCELONA|CATALU|CAN CUYAS|BONMONT|GIRONA|LLAVANERAS|BARBANZA|REAL CLUB DE GOLF DE BARCELONA|REUS|TARRAGONA/.test(c)) return "Cataluña";
+    if (/CENTRO NACIONAL|JARAMA|HERRERIA|VALDELAGUILA|RETAMARES|PUERTA DE HIERRO|REAL SOCIEDAD HIPICA|FED.*MADRID|MADRID|LA MORALEJA|LOMAS BOSQUE|VILLA MIRA|EL ESCORIAL|RACE|MIRAFLORES|OLIVAR DE LA HINOJOSA|SOMOSAGUAS|LAS REJAS|EL ENCIN|LA DEHESA/.test(c)) return "Madrid";
+    if (/MALLORCA|IBIZA|MENORCA|SON GUAL|SON ANTEM|SON VIDA|PULA|BENDINAT|CANYAMEL|CAPDEPERA|ALCANADA|VALL D OR|SON SERVERA/.test(c)) return "Baleares";
+    if (/VALENCIA|CASTELLON|ESCORPION|EL SALER|BONALBA|ALENDA|ALICANTE|FONT DEL LLOP|LA SELLA|MASIA DE LAS ESTRELLAS|MEDITERRANEO GOLF|EL BOSQUE|VILLAITANA|ALTORREAL|MURCIA|HACIENDA RIQUELME|LA TORRE|LA MANGA|MAR MENOR|LA SERENA/.test(c)) return "Valencia/Murcia";
+    if (/CORUÑA|CORUNA|GALICIA|VIGO|CANTOR|MEIS|SANTIAGO|PONTEVEDRA|REAL AERO CLUB DE SANTIAGO/.test(c)) return "Galicia";
+    if (/BASOZABAL|BILBAO|NEGURI|LAUKARIZ|LARRABEA|MEAZTEGI|GIPUZKOA|EUSKADI/.test(c)) return "País Vasco";
+    if (/CANTABRIA|SANTANDER|PEDREÑA|MATALEÑAS|ABRA DEL PAS/.test(c)) return "Cantabria";
+    if (/ASTURIAS|OVIEDO|GIJON|BARGANIZA|CASTIELLO|VILLAVICIOSA|LA LLOREA/.test(c)) return "Asturias";
+    if (/NORBA|CACERES|VALLADOLID|SALAMANCA|LEON GOLF|EL ENCIN|ENTREPINOS|ZAUDIN/.test(c)) return "Castilla y León/Extremadura";
+    if (/ZARAGOZA|HUESCA|JACA|LA PEÑAZA|AUGUSTA|ARAGON/.test(c)) return "Aragón";
+    if (/PAMPLONA|CASTILLO DE GORRAIZ|SIGNATURE/.test(c)) return "Navarra";
+    if (/LOGRO|RIOJA|CAMPO DE LOGROÑO/.test(c)) return "La Rioja";
+    return null;
+  }
+
   // ── Enriquecimento ESP: spain-players.json → DOB + sex + club ──
   // Cruza por nome com lookup RFEGolf (2186 federados juvenis a jogar em Espanha).
   // Validação de idade: se o rival já tem `dob` de outra fonte (FPG players.json,
@@ -1844,9 +1873,12 @@ async function _buildAutoRivalsInternal(
   // Só não sobrescrevemos `co` quando já está definido (Marcus Latt EST mantém EST).
   try {
     const spainRaw = await spainPlayersPromise;
+    const spainHcpRaw = await spainHcpPromise;
+    const hcpLookup = (spainHcpRaw && (spainHcpRaw as any).lookup) as Record<string, { hcp: number; source?: string; dateIso?: string }> | undefined;
     if (spainRaw && (spainRaw as any).byName) {
       _loadedFiles.push({ path: `${base}spain-players.json`, status: "loaded", group: "enrich" });
-      const byName = (spainRaw as any).byName as Record<string, { name: string; dob: string; dobIso: string; sex: string | null; club: string | null; licencia: string }>;
+      if (hcpLookup) _loadedFiles.push({ path: `${base}licencia-hcp-lookup.json`, status: "loaded", group: "enrich" });
+      const byName = (spainRaw as any).byName as Record<string, { name: string; dob: string; dobIso: string; sex: string | null; club: string | null; catEdad: string | null; licencia: string }>;
       function dobYearOf(dobStr: string | undefined): number | null {
         if (!dobStr) return null;
         const isoM = /^(\d{4})-(\d{2})-(\d{2})/.exec(dobStr);
@@ -1981,13 +2013,13 @@ async function _buildAutoRivalsInternal(
       }
 
       let matched = 0, fuzzy = 0, rejected = 0;
-      type SpEntry = { name: string; dob: string; dobIso: string; sex: string | null; club: string | null; licencia: string };
+      type SpEntry = { name: string; dob: string; dobIso: string; sex: string | null; club: string | null; catEdad: string | null; licencia: string };
       for (const rival of map.values()) {
         const rivalKey = normName(rival.n);
         let e: SpEntry | null = byName[rivalKey] ?? null;
         let viaFuzzy = false;
         if (!e) {
-          e = findFuzzy(rivalKey);
+          e = findFuzzy(rivalKey) as SpEntry | null;
           if (e) viaFuzzy = true;
         }
         if (!e) continue;
@@ -1995,13 +2027,24 @@ async function _buildAutoRivalsInternal(
         if (!espYear) {
           if (e.licencia && !rival.esLicencia) rival.esLicencia = e.licencia;
           if (e.club && !rival.esClub) rival.esClub = e.club;
+          if ((e.sex === "M" || e.sex === "F") && !rival.esSex) rival.esSex = e.sex;
+          if (e.catEdad && !rival.esCatEdad) rival.esCatEdad = e.catEdad;
+          if (!rival.esRegion) {
+            const region = inferEsRegion(e.club);
+            if (region) rival.esRegion = region;
+          }
+          if (!rival.esHcp && hcpLookup && e.licencia) {
+            const h = hcpLookup[e.licencia];
+            if (h && typeof h.hcp === "number") {
+              rival.esHcp = h.hcp;
+              if (h.dateIso) rival.esHcpDate = h.dateIso;
+            }
+          }
           if (viaFuzzy) fuzzy++;
           continue;
         }
         // Validação de idade: só aplicar a fuzzy matches (alto risco de homónimo).
         // Para exact match em byName, confiar 100% — o nome/licença batem certo.
-        // Eliminámos casos onde DOB inferido errado (e.g. Sub-N como age=16)
-        // rejeitava enriquecimentos válidos. Se exact match, atribuir tudo.
         if (viaFuzzy) {
           const existingYear = dobYearOf(rival.dob);
           const estimatedYear = existingYear ?? estimateBirthYear(rival);
@@ -2011,15 +2054,22 @@ async function _buildAutoRivalsInternal(
           }
         }
         if (!rival.dob && e.dob) rival.dob = e.dob;
-        // ⚠ NÃO popular `fpgClub` aqui — esse campo é exclusivo da FPG (Portugal).
-        // Para players espanhois, popular APENAS `esClub`. Senão o hero esconde
-        // o pill via condição `esClub !== fpgClub` (igualdade trivial).
         if (!rival.esLicencia && e.licencia) rival.esLicencia = e.licencia;
         if (!rival.esClub && e.club) rival.esClub = e.club;
+        if (!rival.esSex && (e.sex === "M" || e.sex === "F")) rival.esSex = e.sex;
+        if (!rival.esCatEdad && e.catEdad) rival.esCatEdad = e.catEdad;
+        if (!rival.esRegion) {
+          const region = inferEsRegion(e.club);
+          if (region) rival.esRegion = region;
+        }
+        if (!rival.esHcp && hcpLookup && e.licencia) {
+          const h = hcpLookup[e.licencia];
+          if (h && typeof h.hcp === "number") {
+            rival.esHcp = h.hcp;
+            if (h.dateIso) rival.esHcpDate = h.dateIso;
+          }
+        }
         if (!rival.co) rival.co = "Spain";
-        // Guardar nome RFEG completo em esFullName se difere do nome usado no
-        // torneio (rival.n). Útil para mostrar no hero "Niko Alvarez Van Der Walt
-        // (também: Niko Eduardo Alvarez Van Der Walt)".
         if (!rival.esFullName && e.name) {
           const fullCanon = rfegolfNameToCanonical(e.name);
           if (normName(fullCanon) !== normName(rival.n)) rival.esFullName = fullCanon;
