@@ -34,6 +34,7 @@ import { IntlTournView } from "../ui/IntlTournView";
 import DrawTab from "../ui/DrawTab";
 import type { FpgDraw, FpgDrawFlight } from "../data/nacional2026Loader";
 import type { Tournament as FPGTournament, Player as FPGPlayer, RoundScore as FPGRoundScore, ScorecardOptions } from "./FPGPage";
+import { RFEGFederationsView } from "./rfeg/FederationsView";
 
 /* ── Types ──────────────────────────────────────────────── */
 
@@ -1820,6 +1821,7 @@ export default function RFEGPage() {
   const [filterSource, setFilterSource] = useState<string>("all");
   /** Quando true, mostra a vista de categorias em vez do detalhe de torneio. */
   const [showCategories, setShowCategories] = useState(false);
+  const [showFederations, setShowFederations] = useState(false);
 
   useEffect(() => {
     cachedFetchJson<RFEGIndex>("/data/rfegolf-resultats-index.json")
@@ -1990,6 +1992,7 @@ export default function RFEGPage() {
             className={`course-item ${showCategories ? "active" : ""}`}
             onClick={() => {
               setShowCategories(true);
+              setShowFederations(false);
               md.onSelect();
             }}
             style={{ borderLeft: "3px solid #aa151b" }}
@@ -2000,6 +2003,25 @@ export default function RFEGPage() {
             </div>
             <div className="course-item-meta" style={{ fontSize: 10 }}>
               Tradicional + Sub-N · Equiv. FPG/FFG/Internacional
+            </div>
+          </button>
+
+          {/* ── Item info: Federaciones de Golf España ── */}
+          <button
+            className={`course-item ${showFederations ? "active" : ""}`}
+            onClick={() => {
+              setShowFederations(true);
+              setShowCategories(false);
+              md.onSelect();
+            }}
+            style={{ borderLeft: "3px solid #aa151b" }}
+          >
+            <div className="course-item-name">🏛️ Federaciones de Golf España</div>
+            <div className="course-item-meta">
+              19 territoriais · 4 NextCaddy · 13 sites próprios
+            </div>
+            <div className="course-item-meta" style={{ fontSize: 10 }}>
+              RFEG + Andaluza/Madrid/Canaria/CyL/Catalana/...
             </div>
           </button>
 
@@ -2024,7 +2046,7 @@ export default function RFEGPage() {
                     <button
                       key={`${entry.source}-${entry.id}`}
                       className={`course-item ${active && !showCategories ? "active" : ""}`}
-                      onClick={() => { setShowCategories(false); navigate(`/rfeg/${entry.source}/${entry.id}`); md.onSelect(); }}
+                      onClick={() => { setShowCategories(false); setShowFederations(false); navigate(`/rfeg/${entry.source}/${entry.id}`); md.onSelect(); }}
                     >
                       <div className="course-item-name">{entry.name}</div>
                       <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginTop: 4, alignItems: "center" }}>
@@ -2054,7 +2076,6 @@ export default function RFEGPage() {
                       {entry.counts && entry.counts.admitidos > 0 && (
                         <div className="course-item-meta" style={{ fontSize: 11, marginTop: 2 }}>
                           🏌️ {entry.counts.admitidos} {entry.source === "livegolfscoring" ? "resultados" : "inscritos"}
-                          {entry.leaderboardPlayers && entry.source !== "livegolfscoring" ? ` · 📊 ${entry.leaderboardPlayers} resultados` : ""}
                         </div>
                       )}
                     </button>
@@ -2064,14 +2085,16 @@ export default function RFEGPage() {
             );
           })}
           {visible.length === 0 && (
-            <div style={{ padding: 16 }}>
+            <div style={{ padding: 20, textAlign: "center" }}>
               <EmptyState size="sm" message="Sem torneios para os filtros actuais." />
             </div>
           )}
         </div>
 
         <div className="course-detail">
-          {showCategories ? (
+          {showFederations ? (
+            <RFEGFederationsView />
+          ) : showCategories ? (
             <RFEGCategoriesView catCounts={index.byCategory} />
           ) : cur ? (
             <TournamentDetail entry={cur} dobLookup={dobLookup} hcpLookup={hcpLookup} />

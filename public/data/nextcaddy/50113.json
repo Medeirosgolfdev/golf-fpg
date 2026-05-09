@@ -1,0 +1,497 @@
+{
+  "tourId": 50113,
+  "url": "https://www.nextcaddy.com/tour/50113",
+  "scrapedAt": "2026-05-09T18:32:17.947Z",
+  "meta": {
+    "name": "Puntuable Acceso Campeonato de España 2023 (Benjamín)",
+    "organizer": null,
+    "course": null,
+    "courseCode": null,
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Medal Play (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Benjamín",
+      "Caballeros",
+      "Señoras",
+      "Juvenil",
+      "Infantil",
+      "Profesional",
+      "Senior"
+    ]
+  },
+  "course": {
+    "par": [
+      3,
+      3,
+      4,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      5,
+      3,
+      4,
+      3,
+      3
+    ],
+    "si": [
+      16,
+      9,
+      8,
+      13,
+      11,
+      3,
+      18,
+      6,
+      2,
+      10,
+      17,
+      12,
+      15,
+      1,
+      14,
+      4,
+      5,
+      7
+    ],
+    "meters": [
+      84,
+      146,
+      243,
+      116,
+      131,
+      61,
+      96,
+      171,
+      71,
+      133,
+      62,
+      126,
+      95,
+      419,
+      70,
+      245,
+      102,
+      157
+    ]
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Scratch Final",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Pablo Herguedas Sanz",
+          "licencia": "7752053507",
+          "hcp": 15.9,
+          "nivel": "B",
+          "rounds": [],
+          "total": 37,
+          "toPar": 9,
+          "inscribedId": 1660258,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Thiago Peralvo Vaquero",
+          "licencia": "7706970248",
+          "hcp": 50.2,
+          "nivel": "B",
+          "rounds": [],
+          "total": 39,
+          "toPar": 11,
+          "inscribedId": 1665708,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Ignacio Rodriguez Jordan",
+          "licencia": "7709069178",
+          "hcp": 33.9,
+          "nivel": "B",
+          "rounds": [],
+          "total": 42,
+          "toPar": 14,
+          "inscribedId": 1664642,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Miguel Alvarez Vazquez",
+          "licencia": "7773993648",
+          "hcp": 48,
+          "nivel": "B",
+          "rounds": [],
+          "total": 47,
+          "toPar": 19,
+          "inscribedId": 1660366,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Nuria Montero Hoya",
+          "licencia": "7700986856",
+          "hcp": 50.9,
+          "nivel": "B",
+          "rounds": [],
+          "total": 51,
+          "toPar": 23,
+          "inscribedId": 1664534,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Olivia Gallego Sanchez",
+          "licencia": "7709092740",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 52,
+          "toPar": 24,
+          "inscribedId": 1665965,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Handicap Final",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Thiago Peralvo Vaquero",
+          "licencia": "7706970248",
+          "hcp": 50.2,
+          "nivel": "B",
+          "rounds": [],
+          "total": 19,
+          "toPar": -9,
+          "inscribedId": 1665708,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Miguel Alvarez Vazquez",
+          "licencia": "7773993648",
+          "hcp": 48,
+          "nivel": "B",
+          "rounds": [],
+          "total": 28,
+          "toPar": null,
+          "inscribedId": 1660366,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Ignacio Rodriguez Jordan",
+          "licencia": "7709069178",
+          "hcp": 33.9,
+          "nivel": "B",
+          "rounds": [],
+          "total": 29,
+          "toPar": 1,
+          "inscribedId": 1664642,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Nuria Montero Hoya",
+          "licencia": "7700986856",
+          "hcp": 50.9,
+          "nivel": "B",
+          "rounds": [],
+          "total": 29,
+          "toPar": 1,
+          "inscribedId": 1664534,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Olivia Gallego Sanchez",
+          "licencia": "7709092740",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 29,
+          "toPar": 1,
+          "inscribedId": 1665965,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Pablo Herguedas Sanz",
+          "licencia": "7752053507",
+          "hcp": 15.9,
+          "nivel": "B",
+          "rounds": [],
+          "total": 31,
+          "toPar": 3,
+          "inscribedId": 1660258,
+          "roundScores": []
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Final",
+      "jugadores": 6
+    },
+    "2": {
+      "name": "Handicap Final",
+      "jugadores": 6
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Pablo Herguedas Sanz",
+      "licencia": "7752053507",
+      "hcp": 15.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Miguel Alvarez Vazquez",
+      "licencia": "7773993648",
+      "hcp": 48,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Ignacio Rodriguez Jordan",
+      "licencia": "7709069178",
+      "hcp": 33.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Thiago Peralvo Vaquero",
+      "licencia": "7706970248",
+      "hcp": 50.2,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Nuria Montero Hoya",
+      "licencia": "7700986856",
+      "hcp": 50.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Olivia Gallego Sanchez",
+      "licencia": "7709092740",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Pablo Herguedas Sanz",
+      "licencia": "7752053507",
+      "hcp": 15.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Miguel Alvarez Vazquez",
+      "licencia": "7773993648",
+      "hcp": 48,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Nuria Montero Hoya",
+      "licencia": "7700986856",
+      "hcp": 50.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Ignacio Rodriguez Jordan",
+      "licencia": "7709069178",
+      "hcp": 33.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Thiago Peralvo Vaquero",
+      "licencia": "7706970248",
+      "hcp": 50.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Olivia Gallego Sanchez",
+      "licencia": "7709092740",
+      "hcp": 54,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Pablo Herguedas Sanz",
+          "hcp": 15.9,
+          "ins": "1660258",
+          "jid": "52430",
+          "nivel": "B"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Ignacio Rodriguez Jordan",
+          "hcp": 33.9,
+          "ins": "1664642",
+          "jid": "52430",
+          "nivel": "B"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Miguel Alvarez Vazquez",
+          "hcp": 48,
+          "ins": "1660366",
+          "jid": "52430",
+          "nivel": "B"
+        },
+        {
+          "time": "11:09",
+          "tee": 1,
+          "name": "Thiago Peralvo Vaquero",
+          "hcp": 50.2,
+          "ins": "1665708",
+          "jid": "52430",
+          "nivel": "B"
+        },
+        {
+          "time": "11:09",
+          "tee": 1,
+          "name": "Nuria Montero Hoya",
+          "hcp": 50.9,
+          "ins": "1664534",
+          "jid": "52430",
+          "nivel": "B"
+        },
+        {
+          "time": "11:09",
+          "tee": 1,
+          "name": "Olivia Gallego Sanchez",
+          "hcp": 54,
+          "ins": "1665965",
+          "jid": "52430",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 52430
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Abad Jimenez, Bartolome",
+          "holeNumber": 11,
+          "createdAt": "11/02/23 15:14:47"
+        },
+        {
+          "playerName": "Gomez Mohedano, Juan Antonio",
+          "holeNumber": 18,
+          "createdAt": "11/02/23 15:14:47"
+        },
+        {
+          "playerName": "Diaz Aguilera, Pablo",
+          "holeNumber": 3,
+          "createdAt": "11/02/23 15:14:47"
+        },
+        {
+          "playerName": "Pastor Ayllon, Andres",
+          "holeNumber": 2,
+          "createdAt": "11/02/23 15:14:48"
+        },
+        {
+          "playerName": "Miguel Alvarez, Gabriel",
+          "holeNumber": 1,
+          "createdAt": "11/02/23 15:14:48"
+        },
+        {
+          "playerName": "Miguel Alvarez, Gabriel",
+          "holeNumber": 2,
+          "createdAt": "11/02/23 15:14:48"
+        },
+        {
+          "playerName": "Rodriguez Julian, Rafael",
+          "holeNumber": 11,
+          "createdAt": "11/02/23 15:14:49"
+        }
+      ]
+    }
+  },
+  "pdfs": []
+}

@@ -1,0 +1,126 @@
+{
+  "tourId": 64566,
+  "url": "https://www.nextcaddy.com/tour/64566",
+  "scrapedAt": "2026-05-09T18:28:13.731Z",
+  "meta": {
+    "name": "Campeonato Juvenil Villamayor Benjamines (Hcp Nacional)",
+    "organizer": null,
+    "course": null,
+    "courseCode": null,
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Medal Play (Scratch)  Señoras  Caballero",
+    "categories": [
+      "Juvenil",
+      "Benjamin",
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior"
+    ]
+  },
+  "course": {
+    "par": null,
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Marco Rojas Alonso",
+          "licencia": "7776372629",
+          "hcp": 18.2,
+          "nivel": "B",
+          "rounds": [],
+          "total": 42,
+          "toPar": 6,
+          "inscribedId": 2158700,
+          "roundScores": []
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 1
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Marco Rojas Alonso",
+      "licencia": "7776372629",
+      "hcp": 18.2,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Fecha Inscripción",
+      "hcp": null,
+      "nivel": "Licencia"
+    },
+    {
+      "orden": 1,
+      "name": "Marco Rojas Alonso",
+      "licencia": "27-08-25 10:26",
+      "hcp": 18.2,
+      "nivel": "7776372629"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Marco Rojas Alonso",
+          "hcp": 18.2,
+          "ins": "2158700",
+          "jid": "68646",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 68646
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/2495677097_campeonato_juvenil_villamayor_28_del_9.pdf",
+    "/uploads/competiciones/pdf/1009504572_reglas_locales_villamayor.pdf"
+  ]
+}

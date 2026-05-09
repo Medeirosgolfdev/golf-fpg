@@ -1,0 +1,771 @@
+{
+  "tourId": 64565,
+  "url": "https://www.nextcaddy.com/tour/64565",
+  "scrapedAt": "2026-05-09T18:28:12.122Z",
+  "meta": {
+    "name": "Campeonato Juvenil Entrepinos 9 Hoyos",
+    "organizer": null,
+    "course": null,
+    "courseCode": null,
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Medal Play (Handicap)  Infantil Masculin",
+    "categories": [
+      "Juvenil",
+      "Infantil Masculino",
+      "Benjamin Femenino",
+      "Alevin Masculino",
+      "Benjamin Masculino",
+      "Alevin Femenino",
+      "Infantil Femenino",
+      "Infantil",
+      "Profesional",
+      "Senior"
+    ]
+  },
+  "course": {
+    "par": [
+      5,
+      3,
+      4,
+      4,
+      3,
+      4,
+      3,
+      4,
+      5,
+      3,
+      5,
+      4,
+      4,
+      4,
+      4,
+      3,
+      4,
+      3
+    ],
+    "si": [
+      3,
+      17,
+      1,
+      15,
+      13,
+      11,
+      5,
+      7,
+      9,
+      16,
+      4,
+      8,
+      14,
+      6,
+      2,
+      12,
+      10,
+      18
+    ],
+    "meters": [
+      449,
+      122,
+      327,
+      268,
+      142,
+      273,
+      133,
+      225,
+      402,
+      119,
+      397,
+      222,
+      295,
+      315,
+      251,
+      119,
+      319,
+      86
+    ]
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Individual Scratch General",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Covadonga Lopez Millan",
+          "licencia": "7709153767",
+          "hcp": 46,
+          "nivel": "A",
+          "rounds": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2170269,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                5,
+                8,
+                5,
+                6,
+                5,
+                5,
+                7,
+                5,
+                5
+              ],
+              "total": 51
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Anna Rodriguez Gomez",
+          "licencia": "7709307028",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 2,
+          "toPar": 16,
+          "inscribedId": 2170740,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                7,
+                10,
+                5,
+                6,
+                7,
+                5,
+                6,
+                7,
+                5
+              ],
+              "total": 58
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Carmen Lopez Millan",
+          "licencia": "7709309949",
+          "hcp": 52.2,
+          "nivel": "B",
+          "rounds": [],
+          "total": 2,
+          "toPar": 16,
+          "inscribedId": 2169147,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                6,
+                10,
+                8,
+                7,
+                7,
+                7,
+                4,
+                7,
+                4
+              ],
+              "total": 60
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Rodrigo Garabito De Las Heras",
+          "licencia": "7709344278",
+          "hcp": 38.6,
+          "nivel": "B",
+          "rounds": [],
+          "total": 2,
+          "toPar": 16,
+          "inscribedId": 2168452,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                5,
+                15,
+                5,
+                10,
+                7,
+                6,
+                4,
+                7,
+                6
+              ],
+              "total": 65
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "Alejandra Rodriguez Gomez",
+          "licencia": "7709306877",
+          "hcp": 52.5,
+          "nivel": "A",
+          "rounds": [],
+          "total": 1,
+          "toPar": 17,
+          "inscribedId": 2170741,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                6,
+                9,
+                6,
+                8,
+                8,
+                6,
+                5,
+                5,
+                7
+              ],
+              "total": 60
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Individual Handicap General",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Covadonga Lopez Millan",
+          "licencia": "7709153767",
+          "hcp": 46,
+          "nivel": "A",
+          "rounds": [],
+          "total": 24,
+          "toPar": -6,
+          "inscribedId": 2170269,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                5,
+                8,
+                5,
+                6,
+                5,
+                5,
+                7,
+                5,
+                5
+              ],
+              "total": 51
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Anna Rodriguez Gomez",
+          "licencia": "7709307028",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2170740,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                7,
+                10,
+                5,
+                6,
+                7,
+                5,
+                6,
+                7,
+                5
+              ],
+              "total": 58
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Carmen Lopez Millan",
+          "licencia": "7709309949",
+          "hcp": 52.2,
+          "nivel": "B",
+          "rounds": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2169147,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                6,
+                10,
+                8,
+                7,
+                7,
+                7,
+                4,
+                7,
+                4
+              ],
+              "total": 60
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Alejandra Rodriguez Gomez",
+          "licencia": "7709306877",
+          "hcp": 52.5,
+          "nivel": "A",
+          "rounds": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2170741,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                6,
+                9,
+                6,
+                8,
+                8,
+                6,
+                5,
+                5,
+                7
+              ],
+              "total": 60
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "Rodrigo Garabito De Las Heras",
+          "licencia": "7709344278",
+          "hcp": 38.6,
+          "nivel": "B",
+          "rounds": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2168452,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                5,
+                15,
+                5,
+                10,
+                7,
+                6,
+                4,
+                7,
+                6
+              ],
+              "total": 65
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Scratch General",
+      "jugadores": 5
+    },
+    "2": {
+      "name": "Individual Handicap General",
+      "jugadores": 5
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Rodrigo Garabito De Las Heras",
+      "licencia": "7709344278",
+      "hcp": 38.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Marco Rojas Alonso",
+      "licencia": "7776372629",
+      "hcp": 18.7,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Carmen Lopez Millan",
+      "licencia": "7709309949",
+      "hcp": 52.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Anna Rodriguez Gomez",
+      "licencia": "7709307028",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Paula Casas Fernandez",
+      "licencia": "7770474202",
+      "hcp": 24.1,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Covadonga Lopez Millan",
+      "licencia": "7709153767",
+      "hcp": 46,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Alejandra Rodriguez Gomez",
+      "licencia": "7709306877",
+      "hcp": 52.5,
+      "nivel": "A"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Fecha Inscripción",
+      "hcp": null,
+      "nivel": "Licencia"
+    },
+    {
+      "orden": 1,
+      "name": "Rodrigo Garabito De Las Heras",
+      "licencia": "13-09-25 09:50",
+      "hcp": 38.6,
+      "nivel": "7709344278"
+    },
+    {
+      "orden": 2,
+      "name": "Carmen Lopez Millan",
+      "licencia": "15-09-25 08:56",
+      "hcp": 52.2,
+      "nivel": "7709309949"
+    },
+    {
+      "orden": 3,
+      "name": "Covadonga Lopez Millan",
+      "licencia": "16-09-25 09:04",
+      "hcp": 46,
+      "nivel": "7709153767"
+    },
+    {
+      "orden": 4,
+      "name": "Anna Rodriguez Gomez",
+      "licencia": "16-09-25 22:04",
+      "hcp": 54,
+      "nivel": "7709307028"
+    },
+    {
+      "orden": 5,
+      "name": "Alejandra Rodriguez Gomez",
+      "licencia": "16-09-25 22:09",
+      "hcp": 52.5,
+      "nivel": "7709306877"
+    },
+    {
+      "orden": 6,
+      "name": "Marco Rojas Alonso",
+      "licencia": "20-09-25 15:18",
+      "hcp": 18.7,
+      "nivel": "7776372629"
+    },
+    {
+      "orden": 7,
+      "name": "Paula Casas Fernandez",
+      "licencia": "20-09-25 15:19",
+      "hcp": 24.1,
+      "nivel": "7770474202"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "11:40",
+          "tee": 10,
+          "name": "Rodrigo Garabito De Las Heras",
+          "hcp": 38.6,
+          "ins": "2168452",
+          "jid": "68645",
+          "nivel": "B"
+        },
+        {
+          "time": "11:50",
+          "tee": 10,
+          "name": "Covadonga Lopez Millan",
+          "hcp": 46,
+          "ins": "2170269",
+          "jid": "68645",
+          "nivel": "A"
+        },
+        {
+          "time": "11:50",
+          "tee": 10,
+          "name": "Alejandra Rodriguez Gomez",
+          "hcp": 52.5,
+          "ins": "2170741",
+          "jid": "68645",
+          "nivel": "A"
+        },
+        {
+          "time": "12:00",
+          "tee": 10,
+          "name": "Carmen Lopez Millan",
+          "hcp": 52.2,
+          "ins": "2169147",
+          "jid": "68645",
+          "nivel": "B"
+        },
+        {
+          "time": "12:00",
+          "tee": 10,
+          "name": "Anna Rodriguez Gomez",
+          "hcp": 54,
+          "ins": "2170740",
+          "jid": "68645",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 68645
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Vega Espinar, Carlos",
+          "holeNumber": 10,
+          "createdAt": "15/03/25 09:48:19"
+        },
+        {
+          "playerName": "Sanchez Gutierrez, Bernardo",
+          "holeNumber": 13,
+          "createdAt": "15/03/25 10:21:08"
+        },
+        {
+          "playerName": "Rodriguez Roldan, Jose",
+          "holeNumber": 12,
+          "createdAt": "15/03/25 10:33:52"
+        },
+        {
+          "playerName": "Naranjo Alba, Daniel",
+          "holeNumber": 14,
+          "createdAt": "15/03/25 10:37:04"
+        },
+        {
+          "playerName": "Vega Espinar, Carlos",
+          "holeNumber": 14,
+          "createdAt": "15/03/25 10:38:31"
+        },
+        {
+          "playerName": "Sanchez Gutierrez, Bernardo",
+          "holeNumber": 17,
+          "createdAt": "15/03/25 11:17:58"
+        },
+        {
+          "playerName": "Aguilar Magan, Juan Manuel",
+          "holeNumber": 14,
+          "createdAt": "15/03/25 11:25:12"
+        },
+        {
+          "playerName": "Naranjo Alba, Daniel",
+          "holeNumber": 17,
+          "createdAt": "15/03/25 11:29:07"
+        },
+        {
+          "playerName": "Quintanilla Gutierrez, Noelia",
+          "holeNumber": 16,
+          "createdAt": "15/03/25 11:36:33"
+        },
+        {
+          "playerName": "Naranjo Alba, Daniel",
+          "holeNumber": 1,
+          "createdAt": "15/03/25 11:57:36"
+        },
+        {
+          "playerName": "Oviedo Granados, Jose Luis",
+          "holeNumber": 2,
+          "createdAt": "15/03/25 13:24:26"
+        },
+        {
+          "playerName": "Quintanilla Gutierrez, Noelia",
+          "holeNumber": 6,
+          "createdAt": "15/03/25 13:31:33"
+        },
+        {
+          "playerName": "Quintanilla Gutierrez, Bosco",
+          "holeNumber": 7,
+          "createdAt": "15/03/25 13:31:39"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/2337915774_campeonato_ranking_sub14_entrepinos.pdf",
+    "/uploads/competiciones/pdf/3148067187_reglas_locales_-_ninros.pdf"
+  ]
+}

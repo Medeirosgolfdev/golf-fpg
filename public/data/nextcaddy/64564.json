@@ -1,0 +1,431 @@
+{
+  "tourId": 64564,
+  "url": "https://www.nextcaddy.com/tour/64564",
+  "scrapedAt": "2026-05-09T18:28:11.760Z",
+  "meta": {
+    "name": "Campeonato Juvenil Entrepinos Benjamines (Hcp Nacional)",
+    "organizer": null,
+    "course": null,
+    "courseCode": null,
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Medal Play (Scratch)  Caballeros  Señora",
+    "categories": [
+      "Juvenil",
+      "Benjamin",
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior"
+    ]
+  },
+  "course": {
+    "par": [
+      5,
+      3,
+      4,
+      4,
+      3,
+      4,
+      3,
+      4,
+      5,
+      3,
+      5,
+      4,
+      4,
+      4,
+      4,
+      3,
+      4,
+      3
+    ],
+    "si": [
+      3,
+      17,
+      1,
+      15,
+      13,
+      11,
+      5,
+      7,
+      9,
+      16,
+      4,
+      8,
+      14,
+      6,
+      2,
+      12,
+      10,
+      18
+    ],
+    "meters": [
+      449,
+      122,
+      327,
+      268,
+      142,
+      273,
+      133,
+      225,
+      402,
+      119,
+      397,
+      222,
+      295,
+      315,
+      251,
+      119,
+      319,
+      86
+    ]
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Individual Scratch General",
+      "expectedJugadores": 2,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Marco Rojas Alonso",
+          "licencia": "7776372629",
+          "hcp": 18.7,
+          "nivel": "B",
+          "rounds": [],
+          "total": 39,
+          "toPar": 5,
+          "inscribedId": 2160408,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                3,
+                6,
+                4,
+                5,
+                5,
+                5,
+                3,
+                4,
+                4
+              ],
+              "total": 39
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Paula Casas Fernandez",
+          "licencia": "7770474202",
+          "hcp": 24.1,
+          "nivel": "B",
+          "rounds": [],
+          "total": 47,
+          "toPar": 13,
+          "inscribedId": 2166834,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                3,
+                8,
+                5,
+                6,
+                6,
+                4,
+                4,
+                6,
+                5
+              ],
+              "total": 47
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Individual Handicap General",
+      "expectedJugadores": 2,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Marco Rojas Alonso",
+          "licencia": "7776372629",
+          "hcp": 18.7,
+          "nivel": "B",
+          "rounds": [],
+          "total": 32,
+          "toPar": -2,
+          "inscribedId": 2160408,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                3,
+                6,
+                4,
+                5,
+                5,
+                5,
+                3,
+                4,
+                4
+              ],
+              "total": 39
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Paula Casas Fernandez",
+          "licencia": "7770474202",
+          "hcp": 24.1,
+          "nivel": "B",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2166834,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                3,
+                8,
+                5,
+                6,
+                6,
+                4,
+                4,
+                6,
+                5
+              ],
+              "total": 47
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Scratch General",
+      "jugadores": 2
+    },
+    "2": {
+      "name": "Individual Handicap General",
+      "jugadores": 2
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Marco Rojas Alonso",
+      "licencia": "7776372629",
+      "hcp": 18.7,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Paula Casas Fernandez",
+      "licencia": "7770474202",
+      "hcp": 24.1,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Fecha Inscripción",
+      "hcp": null,
+      "nivel": "Licencia"
+    },
+    {
+      "orden": 1,
+      "name": "Marco Rojas Alonso",
+      "licencia": "30-08-25 16:27",
+      "hcp": 18.7,
+      "nivel": "7776372629"
+    },
+    {
+      "orden": 2,
+      "name": "Paula Casas Fernandez",
+      "licencia": "10-09-25 12:29",
+      "hcp": 24.1,
+      "nivel": "7770474202"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "11:40",
+          "tee": 10,
+          "name": "Marco Rojas Alonso",
+          "hcp": 18.7,
+          "ins": "2160408",
+          "jid": "68644",
+          "nivel": "B"
+        },
+        {
+          "time": "11:40",
+          "tee": 10,
+          "name": "Paula Casas Fernandez",
+          "hcp": 24.1,
+          "ins": "2166834",
+          "jid": "68644",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 68644
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Ingham, John Richard",
+          "holeNumber": 4,
+          "createdAt": "25/02/25 13:24:50"
+        },
+        {
+          "playerName": "Ingham, John Richard",
+          "holeNumber": 6,
+          "createdAt": "25/02/25 13:24:50"
+        },
+        {
+          "playerName": "Ingham, John Richard",
+          "holeNumber": 13,
+          "createdAt": "25/02/25 13:24:51"
+        },
+        {
+          "playerName": "Spencer Terry, Geoffrey",
+          "holeNumber": 8,
+          "createdAt": "25/02/25 13:25:50"
+        },
+        {
+          "playerName": "Murphy, Jason",
+          "holeNumber": 14,
+          "createdAt": "25/02/25 13:28:49"
+        },
+        {
+          "playerName": "Dakers, Anthony",
+          "holeNumber": 14,
+          "createdAt": "25/02/25 13:36:25"
+        },
+        {
+          "playerName": "Waters, Paul",
+          "holeNumber": 17,
+          "createdAt": "25/02/25 13:37:02"
+        },
+        {
+          "playerName": "John Mcleod, Ewan",
+          "holeNumber": 3,
+          "createdAt": "25/02/25 13:37:32"
+        },
+        {
+          "playerName": "John Mcleod, Ewan",
+          "holeNumber": 14,
+          "createdAt": "25/02/25 13:37:32"
+        },
+        {
+          "playerName": "John Mcleod, Ewan",
+          "holeNumber": 15,
+          "createdAt": "25/02/25 13:37:32"
+        },
+        {
+          "playerName": "Dent, Joey Vanney",
+          "holeNumber": 7,
+          "createdAt": "25/02/25 15:17:26"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/660920201_campeonato_ranking_sub14_entrepinos.pdf"
+  ]
+}

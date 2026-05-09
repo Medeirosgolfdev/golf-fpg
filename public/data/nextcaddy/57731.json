@@ -1,0 +1,402 @@
+{
+  "tourId": 57731,
+  "url": "https://www.nextcaddy.com/tour/57731",
+  "scrapedAt": "2026-05-09T18:30:15.338Z",
+  "meta": {
+    "name": "II Prueba del Pequecircuito (Benjamines menos de Hcp 36)",
+    "organizer": null,
+    "course": null,
+    "courseCode": null,
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Medal Play (Handicap)  Benjamin Masculin",
+    "categories": [
+      "Benjamin",
+      "Benjamin Masculino",
+      "Benjamin Femenino",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ]
+  },
+  "course": {
+    "par": [
+      5,
+      4,
+      4,
+      3,
+      4,
+      3,
+      4,
+      4,
+      4,
+      3,
+      4,
+      3,
+      4,
+      4,
+      4,
+      4,
+      5,
+      4
+    ],
+    "si": [
+      2,
+      12,
+      8,
+      14,
+      15,
+      16,
+      3,
+      17,
+      11,
+      7,
+      1,
+      5,
+      18,
+      4,
+      9,
+      13,
+      6,
+      10
+    ],
+    "meters": [
+      426,
+      225,
+      299,
+      161,
+      259,
+      136,
+      334,
+      276,
+      274,
+      157,
+      347,
+      156,
+      235,
+      264,
+      261,
+      263,
+      425,
+      279
+    ]
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Scratch",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Pablo Herguedas Sanz",
+          "licencia": "7752053507",
+          "hcp": 14.9,
+          "nivel": "B",
+          "rounds": [],
+          "total": 40,
+          "toPar": 5,
+          "inscribedId": 1938244,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Marco Rojas Alonso",
+          "licencia": "7776372629",
+          "hcp": 34.1,
+          "nivel": "B",
+          "rounds": [],
+          "total": 44,
+          "toPar": 9,
+          "inscribedId": 1938340,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Jaime Pardo Gonzalez",
+          "licencia": "7706966957",
+          "hcp": 28.8,
+          "nivel": "B",
+          "rounds": [],
+          "total": 44,
+          "toPar": 9,
+          "inscribedId": 1938793,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Diego San Sebastian Alonso",
+          "licencia": "7760993876",
+          "hcp": 30.1,
+          "nivel": "B",
+          "rounds": [],
+          "total": 46,
+          "toPar": 11,
+          "inscribedId": 1942212,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Pablo Rodriguez Molina",
+          "licencia": "7706966959",
+          "hcp": 29.5,
+          "nivel": "B",
+          "rounds": [],
+          "total": 57,
+          "toPar": 22,
+          "inscribedId": 1941558,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Clasificación Hándicap",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Marco Rojas Alonso",
+          "licencia": "7776372629",
+          "hcp": 34.1,
+          "nivel": "B",
+          "rounds": [],
+          "total": 31,
+          "toPar": -4,
+          "inscribedId": 1938340,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Jaime Pardo Gonzalez",
+          "licencia": "7706966957",
+          "hcp": 28.8,
+          "nivel": "B",
+          "rounds": [],
+          "total": 33,
+          "toPar": -2,
+          "inscribedId": 1938793,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Diego San Sebastian Alonso",
+          "licencia": "7760993876",
+          "hcp": 30.1,
+          "nivel": "B",
+          "rounds": [],
+          "total": 34,
+          "toPar": -1,
+          "inscribedId": 1942212,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Pablo Herguedas Sanz",
+          "licencia": "7752053507",
+          "hcp": 14.9,
+          "nivel": "B",
+          "rounds": [],
+          "total": 36,
+          "toPar": 1,
+          "inscribedId": 1938244,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Pablo Rodriguez Molina",
+          "licencia": "7706966959",
+          "hcp": 29.5,
+          "nivel": "B",
+          "rounds": [],
+          "total": 46,
+          "toPar": 11,
+          "inscribedId": 1941558,
+          "roundScores": []
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Scratch",
+      "jugadores": 5
+    },
+    "2": {
+      "name": "Clasificación Hándicap",
+      "jugadores": 5
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Pablo Herguedas Sanz",
+      "licencia": "7752053507",
+      "hcp": 14.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Marco Rojas Alonso",
+      "licencia": "7776372629",
+      "hcp": 34.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Jaime Pardo Gonzalez",
+      "licencia": "7706966957",
+      "hcp": 28.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Pablo Rodriguez Molina",
+      "licencia": "7706966959",
+      "hcp": 29.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Diego San Sebastian Alonso",
+      "licencia": "7760993876",
+      "hcp": 30.1,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Pablo Herguedas Sanz",
+      "licencia": "7752053507",
+      "hcp": 14.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Marco Rojas Alonso",
+      "licencia": "7776372629",
+      "hcp": 34.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Jaime Pardo Gonzalez",
+      "licencia": "7706966957",
+      "hcp": 28.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Pablo Rodriguez Molina",
+      "licencia": "7706966959",
+      "hcp": 29.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Diego San Sebastian Alonso",
+      "licencia": "7760993876",
+      "hcp": 30.1,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Pablo Herguedas Sanz",
+          "hcp": 14.9,
+          "ins": "1938244",
+          "jid": "60878",
+          "nivel": "B"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Jaime Pardo Gonzalez",
+          "hcp": 28.8,
+          "ins": "1938793",
+          "jid": "60878",
+          "nivel": "B"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Pablo Rodriguez Molina",
+          "hcp": 29.5,
+          "ins": "1941558",
+          "jid": "60878",
+          "nivel": "B"
+        },
+        {
+          "time": "12:29",
+          "tee": 1,
+          "name": "Diego San Sebastian Alonso",
+          "hcp": 30.1,
+          "ins": "1942212",
+          "jid": "60878",
+          "nivel": "B"
+        },
+        {
+          "time": "12:29",
+          "tee": 1,
+          "name": "Marco Rojas Alonso",
+          "hcp": 34.1,
+          "ins": "1938340",
+          "jid": "60878",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 60878
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": []
+}

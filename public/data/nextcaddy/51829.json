@@ -1,0 +1,324 @@
+{
+  "tourId": 51829,
+  "url": "https://www.nextcaddy.com/tour/51829",
+  "scrapedAt": "2026-05-09T18:33:20.520Z",
+  "meta": {
+    "name": "Final Adulcircuito",
+    "organizer": null,
+    "course": null,
+    "courseCode": null,
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ]
+  },
+  "course": {
+    "par": [
+      4,
+      5,
+      4,
+      3,
+      4,
+      4,
+      5,
+      3,
+      4,
+      3,
+      4,
+      3,
+      4,
+      4,
+      5,
+      3,
+      5,
+      4
+    ],
+    "si": [
+      9,
+      17,
+      3,
+      7,
+      11,
+      5,
+      15,
+      13,
+      1,
+      18,
+      2,
+      16,
+      12,
+      6,
+      10,
+      14,
+      8,
+      4
+    ],
+    "meters": [
+      324,
+      464,
+      354,
+      175,
+      300,
+      361,
+      474,
+      160,
+      334,
+      127,
+      331,
+      136,
+      309,
+      335,
+      457,
+      180,
+      455,
+      346
+    ]
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap",
+      "expectedJugadores": 3,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jose Miguel Martin Pedrosa",
+          "licencia": "7709764475",
+          "hcp": 15.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 1745207,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                5,
+                5,
+                3,
+                6,
+                null,
+                6,
+                4,
+                6,
+                3,
+                4,
+                5,
+                4,
+                6,
+                6,
+                3,
+                8,
+                5
+              ],
+              "total": null
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Ivan Garcia Langa",
+          "licencia": "7706938582",
+          "hcp": 15.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 1745266,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                5,
+                6,
+                3,
+                5,
+                7,
+                6,
+                4,
+                4,
+                5,
+                4,
+                4,
+                6,
+                6,
+                5,
+                5,
+                5,
+                5
+              ],
+              "total": 92
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Javier Balmori Calvo",
+          "licencia": "7759461352",
+          "hcp": 21.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 1745277,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                6,
+                4,
+                6,
+                7,
+                5,
+                6,
+                4,
+                7,
+                null,
+                null,
+                4,
+                6,
+                5,
+                null,
+                4,
+                7,
+                5
+              ],
+              "total": null
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap",
+      "jugadores": 3
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Jose Miguel Martin Pedrosa",
+      "licencia": "7709764475",
+      "hcp": 15.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Ivan Garcia Langa",
+      "licencia": "7706938582",
+      "hcp": 15.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Javier Balmori Calvo",
+      "licencia": "7759461352",
+      "hcp": 21.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Jose Miguel Martin Pedrosa",
+      "licencia": "7709764475",
+      "hcp": 15.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Ivan Garcia Langa",
+      "licencia": "7706938582",
+      "hcp": 15.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Javier Balmori Calvo",
+      "licencia": "7759461352",
+      "hcp": 21.9,
+      "nivel": "Mid"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Jose Miguel Martin Pedrosa",
+          "hcp": 15.3,
+          "ins": "1745207",
+          "jid": "54241",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Ivan Garcia Langa",
+          "hcp": 15.4,
+          "ins": "1745266",
+          "jid": "54241",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Javier Balmori Calvo",
+          "hcp": 21.9,
+          "ins": "1745277",
+          "jid": "54241",
+          "nivel": "M"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 54241
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": []
+}

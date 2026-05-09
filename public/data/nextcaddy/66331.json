@@ -1,0 +1,553 @@
+{
+  "tourId": 66331,
+  "url": "https://www.nextcaddy.com/tour/66331",
+  "scrapedAt": "2026-05-09T18:28:51.827Z",
+  "meta": {
+    "name": "2ª PRUEBA VIII LIGUILLA BENJAMÍN Y ALEVÍN DE CASTILLA Y LEÓN (2ª Vuelta)",
+    "organizer": null,
+    "course": null,
+    "courseCode": null,
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Medal Play (Scratch)  Alevin Masculino",
+    "categories": [
+      "BENJAMÍN",
+      "ALEVÍN",
+      "Alevin Masculino",
+      "Benjamin Femenino",
+      "Benjamin Masculino",
+      "Alevin Femenino",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ]
+  },
+  "course": {
+    "par": [
+      3,
+      3,
+      4,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      5,
+      3,
+      4,
+      3,
+      3
+    ],
+    "si": [
+      16,
+      9,
+      8,
+      13,
+      11,
+      3,
+      18,
+      6,
+      2,
+      10,
+      17,
+      12,
+      15,
+      1,
+      14,
+      4,
+      5,
+      7
+    ],
+    "meters": [
+      84,
+      146,
+      243,
+      116,
+      131,
+      61,
+      96,
+      171,
+      71,
+      133,
+      62,
+      126,
+      95,
+      419,
+      70,
+      245,
+      102,
+      157
+    ]
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Individual Scratch General",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 2,
+          "name": "Rodrigo Garabito De Las Heras",
+          "licencia": "7709344278",
+          "hcp": 37.9,
+          "nivel": "B",
+          "rounds": [],
+          "total": 35,
+          "toPar": 7,
+          "inscribedId": 2219733,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Paula Casas Fernandez",
+          "licencia": "7770474202",
+          "hcp": 23.4,
+          "nivel": "B",
+          "rounds": [],
+          "total": 37,
+          "toPar": 9,
+          "inscribedId": 2221952,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Antonio Garcia Pique",
+          "licencia": "7706077911",
+          "hcp": 41.3,
+          "nivel": "B",
+          "rounds": [],
+          "total": 39,
+          "toPar": 11,
+          "inscribedId": 2220933,
+          "roundScores": []
+        },
+        {
+          "pos": 7,
+          "name": "Angela Basconcillos Rodriguez",
+          "licencia": "7712416189",
+          "hcp": 48.5,
+          "nivel": "B",
+          "rounds": [],
+          "total": 40,
+          "toPar": 12,
+          "inscribedId": 2221927,
+          "roundScores": []
+        },
+        {
+          "pos": 8,
+          "name": "Matias Martin Martin",
+          "licencia": "7759097829",
+          "hcp": 44.4,
+          "nivel": "B",
+          "rounds": [],
+          "total": 40,
+          "toPar": 12,
+          "inscribedId": 2222970,
+          "roundScores": []
+        },
+        {
+          "pos": 10,
+          "name": "Erik Bautista Musina",
+          "licencia": "7700354371",
+          "hcp": 31.1,
+          "nivel": "B",
+          "rounds": [],
+          "total": 40,
+          "toPar": 12,
+          "inscribedId": 2219726,
+          "roundScores": []
+        },
+        {
+          "pos": 13,
+          "name": "Carmen Lopez Millan",
+          "licencia": "7709309949",
+          "hcp": 50.5,
+          "nivel": "B",
+          "rounds": [],
+          "total": 50,
+          "toPar": 22,
+          "inscribedId": 2221100,
+          "roundScores": []
+        },
+        {
+          "pos": 14,
+          "name": "Martina Herguedas Sanz",
+          "licencia": "7752003829",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 55,
+          "toPar": 27,
+          "inscribedId": 2222230,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Individual Handicap General",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Rodrigo Garabito De Las Heras",
+          "licencia": "7709344278",
+          "hcp": 37.9,
+          "nivel": "B",
+          "rounds": [],
+          "total": 21,
+          "toPar": -7,
+          "inscribedId": 2219733,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Angela Basconcillos Rodriguez",
+          "licencia": "7712416189",
+          "hcp": 48.5,
+          "nivel": "B",
+          "rounds": [],
+          "total": 21,
+          "toPar": -7,
+          "inscribedId": 2221927,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Antonio Garcia Pique",
+          "licencia": "7706077911",
+          "hcp": 41.3,
+          "nivel": "B",
+          "rounds": [],
+          "total": 23,
+          "toPar": -5,
+          "inscribedId": 2220933,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Matias Martin Martin",
+          "licencia": "7759097829",
+          "hcp": 44.4,
+          "nivel": "B",
+          "rounds": [],
+          "total": 23,
+          "toPar": -5,
+          "inscribedId": 2222970,
+          "roundScores": []
+        },
+        {
+          "pos": 7,
+          "name": "Paula Casas Fernandez",
+          "licencia": "7770474202",
+          "hcp": 23.4,
+          "nivel": "B",
+          "rounds": [],
+          "total": 28,
+          "toPar": null,
+          "inscribedId": 2221952,
+          "roundScores": []
+        },
+        {
+          "pos": 8,
+          "name": "Erik Bautista Musina",
+          "licencia": "7700354371",
+          "hcp": 31.1,
+          "nivel": "B",
+          "rounds": [],
+          "total": 28,
+          "toPar": null,
+          "inscribedId": 2219726,
+          "roundScores": []
+        },
+        {
+          "pos": 12,
+          "name": "Carmen Lopez Millan",
+          "licencia": "7709309949",
+          "hcp": 50.5,
+          "nivel": "B",
+          "rounds": [],
+          "total": 31,
+          "toPar": 3,
+          "inscribedId": 2221100,
+          "roundScores": []
+        },
+        {
+          "pos": 13,
+          "name": "Martina Herguedas Sanz",
+          "licencia": "7752003829",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 34,
+          "toPar": 6,
+          "inscribedId": 2222230,
+          "roundScores": []
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Scratch General",
+      "jugadores": 8
+    },
+    "2": {
+      "name": "Individual Handicap General",
+      "jugadores": 8
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Erik Bautista Musina",
+      "licencia": "7700354371",
+      "hcp": 31.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Rodrigo Garabito De Las Heras",
+      "licencia": "7709344278",
+      "hcp": 37.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Antonio Garcia Pique",
+      "licencia": "7706077911",
+      "hcp": 41.3,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Matias Martin Martin",
+      "licencia": "7759097829",
+      "hcp": 44.4,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Carmen Lopez Millan",
+      "licencia": "7709309949",
+      "hcp": 50.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Angela Basconcillos Rodriguez",
+      "licencia": "7712416189",
+      "hcp": 48.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Paula Casas Fernandez",
+      "licencia": "7770474202",
+      "hcp": 23.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Martina Herguedas Sanz",
+      "licencia": "7752003829",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Fecha Inscripción",
+      "hcp": null,
+      "nivel": "Licencia"
+    },
+    {
+      "orden": 1,
+      "name": "Erik Bautista Musina",
+      "licencia": "21-11-25 12:46",
+      "hcp": 31.1,
+      "nivel": "7700354371"
+    },
+    {
+      "orden": 2,
+      "name": "Rodrigo Garabito De Las Heras",
+      "licencia": "21-11-25 13:03",
+      "hcp": 37.9,
+      "nivel": "7709344278"
+    },
+    {
+      "orden": 3,
+      "name": "Antonio Garcia Pique",
+      "licencia": "24-11-25 09:03",
+      "hcp": 41.3,
+      "nivel": "7706077911"
+    },
+    {
+      "orden": 4,
+      "name": "Carmen Lopez Millan",
+      "licencia": "24-11-25 11:11",
+      "hcp": 50.5,
+      "nivel": "7709309949"
+    },
+    {
+      "orden": 5,
+      "name": "Angela Basconcillos Rodriguez",
+      "licencia": "25-11-25 13:20",
+      "hcp": 48.5,
+      "nivel": "7712416189"
+    },
+    {
+      "orden": 6,
+      "name": "Paula Casas Fernandez",
+      "licencia": "25-11-25 14:12",
+      "hcp": 23.4,
+      "nivel": "7770474202"
+    },
+    {
+      "orden": 7,
+      "name": "Martina Herguedas Sanz",
+      "licencia": "26-11-25 08:42",
+      "hcp": 54,
+      "nivel": "7752003829"
+    },
+    {
+      "orden": 8,
+      "name": "Matias Martin Martin",
+      "licencia": "26-11-25 22:51",
+      "hcp": 44.4,
+      "nivel": "7759097829"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "13:24",
+          "tee": 1,
+          "name": "Paula Casas Fernandez",
+          "hcp": 23.4,
+          "ins": "2221952",
+          "jid": "70634",
+          "nivel": "B"
+        },
+        {
+          "time": "13:24",
+          "tee": 1,
+          "name": "Erik Bautista Musina",
+          "hcp": 31.1,
+          "ins": "2219726",
+          "jid": "70634",
+          "nivel": "B"
+        },
+        {
+          "time": "13:33",
+          "tee": 1,
+          "name": "Rodrigo Garabito De Las Heras",
+          "hcp": 37.9,
+          "ins": "2219733",
+          "jid": "70634",
+          "nivel": "B"
+        },
+        {
+          "time": "13:33",
+          "tee": 1,
+          "name": "Antonio Garcia Pique",
+          "hcp": 41.3,
+          "ins": "2220933",
+          "jid": "70634",
+          "nivel": "B"
+        },
+        {
+          "time": "13:33",
+          "tee": 1,
+          "name": "Angela Basconcillos Rodriguez",
+          "hcp": 48.5,
+          "ins": "2221927",
+          "jid": "70634",
+          "nivel": "B"
+        },
+        {
+          "time": "13:42",
+          "tee": 1,
+          "name": "Matias Martin Martin",
+          "hcp": 44.4,
+          "ins": "2222970",
+          "jid": "70634",
+          "nivel": "B"
+        },
+        {
+          "time": "13:51",
+          "tee": 1,
+          "name": "Carmen Lopez Millan",
+          "hcp": 50.5,
+          "ins": "2221100",
+          "jid": "70634",
+          "nivel": "B"
+        },
+        {
+          "time": "13:51",
+          "tee": 1,
+          "name": "Martina Herguedas Sanz",
+          "hcp": 54,
+          "ins": "2222230",
+          "jid": "70634",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 70634
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": []
+}

@@ -1,0 +1,516 @@
+{
+  "tourId": 57667,
+  "url": "https://www.nextcaddy.com/tour/57667",
+  "scrapedAt": "2026-05-09T18:30:33.705Z",
+  "meta": {
+    "name": "Campeonato Juvenil de CyL de P&P (Alevín y Benjamín mayor Hcp 36)",
+    "organizer": null,
+    "course": null,
+    "courseCode": null,
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Juvenil",
+      "Alevín",
+      "Benjamín",
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior"
+    ]
+  },
+  "course": {
+    "par": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "si": [
+      15,
+      7,
+      5,
+      3,
+      13,
+      11,
+      9,
+      1,
+      17,
+      16,
+      8,
+      6,
+      4,
+      14,
+      12,
+      10,
+      2,
+      18
+    ],
+    "meters": [
+      70,
+      101,
+      106,
+      95,
+      86,
+      56,
+      65,
+      109,
+      59,
+      70,
+      101,
+      106,
+      95,
+      86,
+      56,
+      65,
+      109,
+      59
+    ]
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Oliver Gonzalez Gil",
+          "licencia": "7760069967",
+          "hcp": 41.4,
+          "nivel": "B",
+          "rounds": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 1944057,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                4,
+                4,
+                4,
+                4,
+                3,
+                3,
+                3,
+                3,
+                5,
+                3,
+                3,
+                4,
+                3,
+                5,
+                3
+              ],
+              "total": 67
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Carmen Garabito De Las Heras",
+          "licencia": "7709055250",
+          "hcp": 37,
+          "nivel": "A",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 1944119,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                6,
+                3,
+                5,
+                3,
+                4,
+                3,
+                4,
+                3,
+                7,
+                5,
+                5,
+                4,
+                3,
+                3,
+                3,
+                4,
+                3
+              ],
+              "total": 74
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Olivia Gallego Sanchez",
+          "licencia": "7709092740",
+          "hcp": 36.8,
+          "nivel": "A",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 1943917,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                3,
+                3,
+                6,
+                4,
+                4,
+                2,
+                6,
+                5,
+                4,
+                3,
+                4,
+                4,
+                6,
+                5,
+                5,
+                4,
+                3
+              ],
+              "total": 74
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Covadonga Lopez Millan",
+          "licencia": "7709153767",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 1944888,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                5,
+                5,
+                5,
+                5,
+                3,
+                3,
+                4,
+                6,
+                5,
+                3,
+                7,
+                4,
+                8,
+                6,
+                6,
+                4,
+                3
+              ],
+              "total": 88
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "Rodrigo Garabito De Las Heras",
+          "licencia": "7709344278",
+          "hcp": 51.8,
+          "nivel": "B",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 1944121,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                4,
+                4,
+                5,
+                5,
+                3,
+                5,
+                4,
+                9,
+                5,
+                7,
+                6,
+                8,
+                5,
+                8,
+                4,
+                5
+              ],
+              "total": 94
+            }
+          ]
+        },
+        {
+          "pos": 6,
+          "name": "Carmen Lopez Millan",
+          "licencia": "7709309949",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 1944889,
+          "roundScores": []
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 6
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Olivia Gallego Sanchez",
+      "licencia": "7709092740",
+      "hcp": 36.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Carmen Garabito De Las Heras",
+      "licencia": "7709055250",
+      "hcp": 37,
+      "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "Covadonga Lopez Millan",
+      "licencia": "7709153767",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Carmen Lopez Millan",
+      "licencia": "7709309949",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Oliver Gonzalez Gil",
+      "licencia": "7760069967",
+      "hcp": 41.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Rodrigo Garabito De Las Heras",
+      "licencia": "7709344278",
+      "hcp": 51.8,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Olivia Gallego Sanchez",
+      "licencia": "7709092740",
+      "hcp": 36.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Oliver Gonzalez Gil",
+      "licencia": "7760069967",
+      "hcp": 41.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Carmen Garabito De Las Heras",
+      "licencia": "7709055250",
+      "hcp": 37,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Rodrigo Garabito De Las Heras",
+      "licencia": "7709344278",
+      "hcp": 51.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Covadonga Lopez Millan",
+      "licencia": "7709153767",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 6,
+      "name": "Carmen Lopez Millan",
+      "licencia": "7709309949",
+      "hcp": 54,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:30",
+          "tee": 8,
+          "name": "Olivia Gallego Sanchez",
+          "hcp": 36.8,
+          "ins": "1943917",
+          "jid": "60813",
+          "nivel": "A"
+        },
+        {
+          "time": "10:30",
+          "tee": 8,
+          "name": "Carmen Garabito De Las Heras",
+          "hcp": 37,
+          "ins": "1944119",
+          "jid": "60813",
+          "nivel": "A"
+        },
+        {
+          "time": "10:30",
+          "tee": 8,
+          "name": "Oliver Gonzalez Gil",
+          "hcp": 41.4,
+          "ins": "1944057",
+          "jid": "60813",
+          "nivel": "B"
+        },
+        {
+          "time": "10:30",
+          "tee": 9,
+          "name": "Rodrigo Garabito De Las Heras",
+          "hcp": 51.8,
+          "ins": "1944121",
+          "jid": "60813",
+          "nivel": "B"
+        },
+        {
+          "time": "10:30",
+          "tee": 9,
+          "name": "Covadonga Lopez Millan",
+          "hcp": 54,
+          "ins": "1944888",
+          "jid": "60813",
+          "nivel": "A"
+        },
+        {
+          "time": "10:30",
+          "tee": 9,
+          "name": "Carmen Lopez Millan",
+          "hcp": 54,
+          "ins": "1944889",
+          "jid": "60813",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 60813
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Diaz Sanchez, Maria Jose",
+          "holeNumber": 6,
+          "createdAt": "14/03/24 19:46:17"
+        },
+        {
+          "playerName": "Balaguer Alvarez, Maria Del Pilar",
+          "holeNumber": 2,
+          "createdAt": "14/03/24 19:46:18"
+        },
+        {
+          "playerName": "Daroca Bruño, Purificacion",
+          "holeNumber": 4,
+          "createdAt": "14/03/24 19:46:19"
+        },
+        {
+          "playerName": "Medina Echavarria, Clementina",
+          "holeNumber": 8,
+          "createdAt": "14/03/24 19:46:21"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/57667_cartel_40.pdf"
+  ]
+}

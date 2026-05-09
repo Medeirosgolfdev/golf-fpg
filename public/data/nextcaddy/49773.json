@@ -1,0 +1,616 @@
+{
+  "tourId": 49773,
+  "url": "https://www.nextcaddy.com/tour/49773",
+  "scrapedAt": "2026-05-09T18:32:04.294Z",
+  "meta": {
+    "name": "Campeonato Juvenil de Castilla y León (HCP No Nacional)",
+    "organizer": null,
+    "course": null,
+    "courseCode": null,
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Juvenil",
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior"
+    ]
+  },
+  "course": {
+    "par": [
+      4,
+      5,
+      4,
+      3,
+      4,
+      4,
+      5,
+      3,
+      4,
+      3,
+      4,
+      3,
+      4,
+      4,
+      5,
+      3,
+      5,
+      4
+    ],
+    "si": [
+      9,
+      17,
+      3,
+      7,
+      11,
+      5,
+      15,
+      13,
+      1,
+      18,
+      2,
+      16,
+      12,
+      6,
+      10,
+      14,
+      8,
+      4
+    ],
+    "meters": [
+      272,
+      374,
+      298,
+      158,
+      273,
+      268,
+      361,
+      145,
+      259,
+      107,
+      291,
+      107,
+      233,
+      301,
+      406,
+      146,
+      399,
+      301
+    ]
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Luis Garcia Pique",
+          "licencia": "7706957001",
+          "hcp": 43.6,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 17
+            },
+            {
+              "round": 2,
+              "gross": 21
+            }
+          ],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 1653744,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Daniela Pascual Calleja",
+          "licencia": "7752983055",
+          "hcp": 37.8,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 17
+            },
+            {
+              "round": 2,
+              "gross": 17
+            }
+          ],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 1654003,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Teresa Basconcillos Rodriguez",
+          "licencia": "7712095904",
+          "hcp": 44.9,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 15
+            },
+            {
+              "round": 2,
+              "gross": 16
+            }
+          ],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 1649022,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Diego San Sebastian Alonso",
+          "licencia": "7760993876",
+          "hcp": 47,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 15
+            },
+            {
+              "round": 2,
+              "gross": 14
+            }
+          ],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 1654077,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Irene Elias Gonzalez",
+          "licencia": "7772981136",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 8
+            },
+            {
+              "round": 2,
+              "gross": 18
+            }
+          ],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 1654116,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Nuria Montero Hoya",
+          "licencia": "7700986856",
+          "hcp": 50.9,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 12
+            },
+            {
+              "round": 2,
+              "gross": 11
+            }
+          ],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 1652968,
+          "roundScores": []
+        },
+        {
+          "pos": 7,
+          "name": "Paloma De Nicolas Peral",
+          "licencia": "7709944170",
+          "hcp": 38.3,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 6
+            },
+            {
+              "round": 2,
+              "gross": 15
+            }
+          ],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 1653951,
+          "roundScores": []
+        },
+        {
+          "pos": 8,
+          "name": "Olivia Gallego Sanchez",
+          "licencia": "7709092740",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 10
+            },
+            {
+              "round": 2,
+              "gross": 7
+            }
+          ],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 1643001,
+          "roundScores": []
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap",
+      "jugadores": 8
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Olivia Gallego Sanchez",
+      "licencia": "7709092740",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Teresa Basconcillos Rodriguez",
+      "licencia": "7712095904",
+      "hcp": 44.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "Nuria Montero Hoya",
+      "licencia": "7700986856",
+      "hcp": 50.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Paloma De Nicolas Peral",
+      "licencia": "7709944170",
+      "hcp": 38.3,
+      "nivel": "I"
+    },
+    {
+      "orden": 5,
+      "name": "Daniela Pascual Calleja",
+      "licencia": "7752983055",
+      "hcp": 37.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 6,
+      "name": "Irene Elias Gonzalez",
+      "licencia": "7772981136",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Luis Garcia Pique",
+      "licencia": "7706957001",
+      "hcp": 43.6,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Diego San Sebastian Alonso",
+      "licencia": "7760993876",
+      "hcp": 47,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Olivia Gallego Sanchez",
+      "licencia": "7709092740",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Teresa Basconcillos Rodriguez",
+      "licencia": "7712095904",
+      "hcp": 44.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "Nuria Montero Hoya",
+      "licencia": "7700986856",
+      "hcp": 50.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Luis Garcia Pique",
+      "licencia": "7706957001",
+      "hcp": 43.6,
+      "nivel": "A"
+    },
+    {
+      "orden": 5,
+      "name": "Paloma De Nicolas Peral",
+      "licencia": "7709944170",
+      "hcp": 38.3,
+      "nivel": "I"
+    },
+    {
+      "orden": 6,
+      "name": "Daniela Pascual Calleja",
+      "licencia": "7752983055",
+      "hcp": 37.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 7,
+      "name": "Diego San Sebastian Alonso",
+      "licencia": "7760993876",
+      "hcp": 47,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "Irene Elias Gonzalez",
+      "licencia": "7772981136",
+      "hcp": 54,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "12:35",
+          "tee": 1,
+          "name": "Daniela Pascual Calleja",
+          "hcp": 37.8,
+          "ins": "1654003",
+          "jid": "51961",
+          "nivel": "A"
+        },
+        {
+          "time": "12:35",
+          "tee": 1,
+          "name": "Paloma De Nicolas Peral",
+          "hcp": 38.3,
+          "ins": "1653951",
+          "jid": "51961",
+          "nivel": "I"
+        },
+        {
+          "time": "12:43",
+          "tee": 1,
+          "name": "Luis Garcia Pique",
+          "hcp": 43.6,
+          "ins": "1653744",
+          "jid": "51961",
+          "nivel": "A"
+        },
+        {
+          "time": "12:43",
+          "tee": 1,
+          "name": "Diego San Sebastian Alonso",
+          "hcp": 47,
+          "ins": "1654077",
+          "jid": "51961",
+          "nivel": "B"
+        },
+        {
+          "time": "12:51",
+          "tee": 1,
+          "name": "Teresa Basconcillos Rodriguez",
+          "hcp": 44.9,
+          "ins": "1649022",
+          "jid": "51961",
+          "nivel": "A"
+        },
+        {
+          "time": "12:51",
+          "tee": 1,
+          "name": "Nuria Montero Hoya",
+          "hcp": 50.9,
+          "ins": "1652968",
+          "jid": "51961",
+          "nivel": "B"
+        },
+        {
+          "time": "12:59",
+          "tee": 1,
+          "name": "Olivia Gallego Sanchez",
+          "hcp": 54,
+          "ins": "1643001",
+          "jid": "51961",
+          "nivel": "B"
+        },
+        {
+          "time": "12:59",
+          "tee": 1,
+          "name": "Irene Elias Gonzalez",
+          "hcp": 54,
+          "ins": "1654116",
+          "jid": "51961",
+          "nivel": "B"
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "players": [
+        {
+          "time": "11:45",
+          "tee": 1,
+          "name": "Luis Garcia Pique",
+          "hcp": 43.6,
+          "ins": "1653744",
+          "jid": "51962",
+          "nivel": "A"
+        },
+        {
+          "time": "11:45",
+          "tee": 1,
+          "name": "Diego San Sebastian Alonso",
+          "hcp": 47,
+          "ins": "1654077",
+          "jid": "51962",
+          "nivel": "B"
+        },
+        {
+          "time": "11:55",
+          "tee": 1,
+          "name": "Daniela Pascual Calleja",
+          "hcp": 37.8,
+          "ins": "1654003",
+          "jid": "51962",
+          "nivel": "A"
+        },
+        {
+          "time": "11:55",
+          "tee": 1,
+          "name": "Teresa Basconcillos Rodriguez",
+          "hcp": 44.9,
+          "ins": "1649022",
+          "jid": "51962",
+          "nivel": "A"
+        },
+        {
+          "time": "12:05",
+          "tee": 1,
+          "name": "Nuria Montero Hoya",
+          "hcp": 50.9,
+          "ins": "1652968",
+          "jid": "51962",
+          "nivel": "B"
+        },
+        {
+          "time": "12:05",
+          "tee": 1,
+          "name": "Olivia Gallego Sanchez",
+          "hcp": 54,
+          "ins": "1643001",
+          "jid": "51962",
+          "nivel": "B"
+        },
+        {
+          "time": "12:15",
+          "tee": 1,
+          "name": "Paloma De Nicolas Peral",
+          "hcp": 38.3,
+          "ins": "1653951",
+          "jid": "51962",
+          "nivel": "I"
+        },
+        {
+          "time": "12:15",
+          "tee": 1,
+          "name": "Irene Elias Gonzalez",
+          "hcp": 54,
+          "ins": "1654116",
+          "jid": "51962",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 51961
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 51962
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Tostado Marcos, Carlos",
+          "holeNumber": 18,
+          "createdAt": "11/02/23 17:14:03"
+        },
+        {
+          "playerName": "Gil Gonzalez, Juan Carlos",
+          "holeNumber": 18,
+          "createdAt": "11/02/23 17:14:21"
+        },
+        {
+          "playerName": "Martin Price, Talia",
+          "holeNumber": 4,
+          "createdAt": "11/02/23 17:14:51"
+        },
+        {
+          "playerName": "Salcedo Alvarez De Perea, Lourdes",
+          "holeNumber": 13,
+          "createdAt": "11/02/23 17:34:15"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/49773_cartel_57.pdf",
+    "/uploads/competiciones/pdf/2226415827_reglas_locales_villa_mayor_2023.pdf"
+  ]
+}

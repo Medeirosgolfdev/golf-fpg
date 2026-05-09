@@ -1,0 +1,262 @@
+{
+  "tourId": 64562,
+  "url": "https://www.nextcaddy.com/tour/64562",
+  "scrapedAt": "2026-05-09T18:27:48.063Z",
+  "meta": {
+    "name": "Campeonato Juvenil la Valmuza Benjamines (Hcp Nacional)",
+    "organizer": null,
+    "course": null,
+    "courseCode": null,
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Medal Play (Scratch)  Señoras  Caballero",
+    "categories": [
+      "Juvenil",
+      "Benjamin",
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior"
+    ]
+  },
+  "course": {
+    "par": null,
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Individual Scratch General",
+      "expectedJugadores": 3,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Marco Rojas Alonso",
+          "licencia": "7776372629",
+          "hcp": 19.7,
+          "nivel": "B",
+          "rounds": [],
+          "total": 39,
+          "toPar": 3,
+          "inscribedId": 2158697,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Paula Casas Fernandez",
+          "licencia": "7770474202",
+          "hcp": 24.8,
+          "nivel": "B",
+          "rounds": [],
+          "total": 46,
+          "toPar": 10,
+          "inscribedId": 2160962,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Juan Aparicio Gonzalez",
+          "licencia": "7707094609",
+          "hcp": 29.4,
+          "nivel": "B",
+          "rounds": [],
+          "total": 48,
+          "toPar": 12,
+          "inscribedId": 2167022,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Individual Handicap General",
+      "expectedJugadores": 3,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Marco Rojas Alonso",
+          "licencia": "7776372629",
+          "hcp": 19.7,
+          "nivel": "B",
+          "rounds": [],
+          "total": 33,
+          "toPar": -3,
+          "inscribedId": 2158697,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Paula Casas Fernandez",
+          "licencia": "7770474202",
+          "hcp": 24.8,
+          "nivel": "B",
+          "rounds": [],
+          "total": 34,
+          "toPar": -2,
+          "inscribedId": 2160962,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Juan Aparicio Gonzalez",
+          "licencia": "7707094609",
+          "hcp": 29.4,
+          "nivel": "B",
+          "rounds": [],
+          "total": 37,
+          "toPar": 1,
+          "inscribedId": 2167022,
+          "roundScores": []
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Scratch General",
+      "jugadores": 3
+    },
+    "2": {
+      "name": "Individual Handicap General",
+      "jugadores": 3
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Marco Rojas Alonso",
+      "licencia": "7776372629",
+      "hcp": 19.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Juan Aparicio Gonzalez",
+      "licencia": "7707094609",
+      "hcp": 29.4,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Paula Casas Fernandez",
+      "licencia": "7770474202",
+      "hcp": 24.8,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Fecha Inscripción",
+      "hcp": null,
+      "nivel": "Licencia"
+    },
+    {
+      "orden": 1,
+      "name": "Marco Rojas Alonso",
+      "licencia": "27-08-25 10:21",
+      "hcp": 19.7,
+      "nivel": "7776372629"
+    },
+    {
+      "orden": 2,
+      "name": "Paula Casas Fernandez",
+      "licencia": "01-09-25 10:05",
+      "hcp": 24.8,
+      "nivel": "7770474202"
+    },
+    {
+      "orden": 3,
+      "name": "Juan Aparicio Gonzalez",
+      "licencia": "10-09-25 16:42",
+      "hcp": 29.4,
+      "nivel": "7707094609"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Marco Rojas Alonso",
+          "hcp": 19.7,
+          "ins": "2158697",
+          "jid": "68642",
+          "nivel": "B"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Juan Aparicio Gonzalez",
+          "hcp": 29.4,
+          "ins": "2167022",
+          "jid": "68642",
+          "nivel": "B"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Paula Casas Fernandez",
+          "hcp": 24.8,
+          "ins": "2160962",
+          "jid": "68642",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 68642
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [
+    "/uploads/competiciones/pdf/2410308138_suspension_valmuza.pdf",
+    "/uploads/2025/08/Prueba-acceso-cyl-LA-VALMUZA-13-septiembre-2025-OK-OK.pdf",
+    "/uploads/competiciones/pdf/1638651844_rrll__la_valmuza.pdf"
+  ]
+}

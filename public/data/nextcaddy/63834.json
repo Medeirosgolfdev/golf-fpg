@@ -1,0 +1,717 @@
+{
+  "tourId": 63834,
+  "url": "https://www.nextcaddy.com/tour/63834",
+  "scrapedAt": "2026-05-09T18:28:33.189Z",
+  "meta": {
+    "name": "Final Adulcircuito",
+    "organizer": null,
+    "course": null,
+    "courseCode": null,
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Juvenil",
+      "Junior",
+      "Infantil",
+      "Profesional",
+      "Senior"
+    ]
+  },
+  "course": {
+    "par": [
+      4,
+      5,
+      4,
+      3,
+      4,
+      4,
+      5,
+      3,
+      4,
+      3,
+      4,
+      3,
+      4,
+      4,
+      4,
+      3,
+      5,
+      4
+    ],
+    "si": [
+      9,
+      17,
+      3,
+      7,
+      11,
+      5,
+      15,
+      13,
+      1,
+      18,
+      2,
+      16,
+      12,
+      6,
+      10,
+      14,
+      8,
+      4
+    ],
+    "meters": [
+      324,
+      464,
+      354,
+      175,
+      300,
+      361,
+      474,
+      160,
+      334,
+      127,
+      331,
+      136,
+      309,
+      335,
+      311,
+      180,
+      455,
+      346
+    ]
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Individual Handicap General",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Miguel Lopez Gobernado",
+          "licencia": "7709670936",
+          "hcp": 19.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2197159,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                5,
+                5,
+                4,
+                6,
+                5,
+                6,
+                3,
+                5,
+                3,
+                5,
+                5,
+                5,
+                6,
+                5,
+                4,
+                6,
+                4
+              ],
+              "total": 87
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Alejandro Vaca Vela",
+          "licencia": "7709953382",
+          "hcp": 3.5,
+          "nivel": "J",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2199247,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Eliakin Fuentes Fernandez",
+          "licencia": "7776078558",
+          "hcp": 16.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2206443,
+          "roundScores": []
+        },
+        {
+          "pos": 4,
+          "name": "Eduardo Rojas Carracedo",
+          "licencia": "7776400674",
+          "hcp": 11.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2187427,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Oscar Torres Garcia",
+          "licencia": "7707980946",
+          "hcp": 17.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2206170,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Maria Jesus Hoya Rubio",
+          "licencia": "7759979222",
+          "hcp": 25.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2198443,
+          "roundScores": []
+        },
+        {
+          "pos": 7,
+          "name": "Demetrio Calvo Gutierrez",
+          "licencia": "7770904548",
+          "hcp": 13.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2187655,
+          "roundScores": []
+        },
+        {
+          "pos": 8,
+          "name": "Jesus Montero Garcia",
+          "licencia": "7759979221",
+          "hcp": 19,
+          "nivel": "S",
+          "rounds": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2198448,
+          "roundScores": []
+        },
+        {
+          "pos": 9,
+          "name": "Alejandro Castillo Vega",
+          "licencia": "7721492568",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2198120,
+          "roundScores": []
+        },
+        {
+          "pos": 10,
+          "name": "Alfredo Garabito Cebrian",
+          "licencia": "7709957497",
+          "hcp": 28.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 12,
+          "toPar": 24,
+          "inscribedId": 2185231,
+          "roundScores": []
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Individual Scratch General",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Alejandro Vaca Vela",
+          "licencia": "7709953382",
+          "hcp": 3.5,
+          "nivel": "J",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2199247,
+          "roundScores": []
+        },
+        {
+          "pos": 2,
+          "name": "Eduardo Rojas Carracedo",
+          "licencia": "7776400674",
+          "hcp": 11.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2187427,
+          "roundScores": []
+        },
+        {
+          "pos": 3,
+          "name": "Miguel Lopez Gobernado",
+          "licencia": "7709670936",
+          "hcp": 19.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2197159,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                5,
+                5,
+                4,
+                6,
+                5,
+                6,
+                3,
+                5,
+                3,
+                5,
+                5,
+                5,
+                6,
+                5,
+                4,
+                6,
+                4
+              ],
+              "total": 87
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Eliakin Fuentes Fernandez",
+          "licencia": "7776078558",
+          "hcp": 16.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2206443,
+          "roundScores": []
+        },
+        {
+          "pos": 5,
+          "name": "Oscar Torres Garcia",
+          "licencia": "7707980946",
+          "hcp": 17.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 15,
+          "toPar": 21,
+          "inscribedId": 2206170,
+          "roundScores": []
+        },
+        {
+          "pos": 6,
+          "name": "Demetrio Calvo Gutierrez",
+          "licencia": "7770904548",
+          "hcp": 13.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 15,
+          "toPar": 21,
+          "inscribedId": 2187655,
+          "roundScores": []
+        },
+        {
+          "pos": 7,
+          "name": "Jesus Montero Garcia",
+          "licencia": "7759979221",
+          "hcp": 19,
+          "nivel": "S",
+          "rounds": [],
+          "total": 10,
+          "toPar": 26,
+          "inscribedId": 2198448,
+          "roundScores": []
+        },
+        {
+          "pos": 8,
+          "name": "Maria Jesus Hoya Rubio",
+          "licencia": "7759979222",
+          "hcp": 25.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 9,
+          "toPar": 27,
+          "inscribedId": 2198443,
+          "roundScores": []
+        },
+        {
+          "pos": 9,
+          "name": "Alejandro Castillo Vega",
+          "licencia": "7721492568",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 3,
+          "toPar": 33,
+          "inscribedId": 2198120,
+          "roundScores": []
+        },
+        {
+          "pos": 10,
+          "name": "Alfredo Garabito Cebrian",
+          "licencia": "7709957497",
+          "hcp": 28.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 3,
+          "toPar": 33,
+          "inscribedId": 2185231,
+          "roundScores": []
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Handicap General",
+      "jugadores": 10
+    },
+    "2": {
+      "name": "Individual Scratch General",
+      "jugadores": 10
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Alfredo Garabito Cebrian",
+      "licencia": "7709957497",
+      "hcp": 28.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Eduardo Rojas Carracedo",
+      "licencia": "7776400674",
+      "hcp": 11.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Demetrio Calvo Gutierrez",
+      "licencia": "7770904548",
+      "hcp": 13.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Miguel Lopez Gobernado",
+      "licencia": "7709670936",
+      "hcp": 19.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Alejandro Castillo Vega",
+      "licencia": "7721492568",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 6,
+      "name": "Jesus Montero Garcia",
+      "licencia": "7759979221",
+      "hcp": 19,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Alejandro Vaca Vela",
+      "licencia": "7709953382",
+      "hcp": 3.5,
+      "nivel": "J"
+    },
+    {
+      "orden": 8,
+      "name": "Oscar Torres Garcia",
+      "licencia": "7707980946",
+      "hcp": 17.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 9,
+      "name": "Eliakin Fuentes Fernandez",
+      "licencia": "7776078558",
+      "hcp": 16.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Maria Jesus Hoya Rubio",
+      "licencia": "7759979222",
+      "hcp": 25.5,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Fecha Inscripción",
+      "hcp": null,
+      "nivel": "Licencia"
+    },
+    {
+      "orden": 1,
+      "name": "Alfredo Garabito Cebrian",
+      "licencia": "06-10-25 21:19",
+      "hcp": 28.5,
+      "nivel": "7709957497"
+    },
+    {
+      "orden": 2,
+      "name": "Eduardo Rojas Carracedo",
+      "licencia": "09-10-25 17:31",
+      "hcp": 11.1,
+      "nivel": "7776400674"
+    },
+    {
+      "orden": 3,
+      "name": "Demetrio Calvo Gutierrez",
+      "licencia": "10-10-25 10:33",
+      "hcp": 13.9,
+      "nivel": "7770904548"
+    },
+    {
+      "orden": 4,
+      "name": "Miguel Lopez Gobernado",
+      "licencia": "20-10-25 15:25",
+      "hcp": 19.2,
+      "nivel": "7709670936"
+    },
+    {
+      "orden": 5,
+      "name": "Alejandro Castillo Vega",
+      "licencia": "22-10-25 09:48",
+      "hcp": 36,
+      "nivel": "7721492568"
+    },
+    {
+      "orden": 6,
+      "name": "Maria Jesus Hoya Rubio",
+      "licencia": "22-10-25 12:04",
+      "hcp": 25.5,
+      "nivel": "7759979222"
+    },
+    {
+      "orden": 7,
+      "name": "Jesus Montero Garcia",
+      "licencia": "22-10-25 12:12",
+      "hcp": 19,
+      "nivel": "7759979221"
+    },
+    {
+      "orden": 8,
+      "name": "Alejandro Vaca Vela",
+      "licencia": "22-10-25 20:29",
+      "hcp": 3.5,
+      "nivel": "7709953382"
+    },
+    {
+      "orden": 9,
+      "name": "Oscar Torres Garcia",
+      "licencia": "02-11-25 08:17",
+      "hcp": 17.6,
+      "nivel": "7707980946"
+    },
+    {
+      "orden": 10,
+      "name": "Eliakin Fuentes Fernandez",
+      "licencia": "02-11-25 15:13",
+      "hcp": 16.4,
+      "nivel": "7776078558"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Alejandro Vaca Vela",
+          "hcp": 3.5,
+          "ins": "2199247",
+          "jid": "67880",
+          "nivel": "J"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Eduardo Rojas Carracedo",
+          "hcp": 11.1,
+          "ins": "2187427",
+          "jid": "67880",
+          "nivel": "M"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Demetrio Calvo Gutierrez",
+          "hcp": 13.9,
+          "ins": "2187655",
+          "jid": "67880",
+          "nivel": "M"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Eliakin Fuentes Fernandez",
+          "hcp": 16.4,
+          "ins": "2206443",
+          "jid": "67880",
+          "nivel": "M"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Oscar Torres Garcia",
+          "hcp": 17.6,
+          "ins": "2206170",
+          "jid": "67880",
+          "nivel": "M"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Jesus Montero Garcia",
+          "hcp": 19,
+          "ins": "2198448",
+          "jid": "67880",
+          "nivel": "S"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Miguel Lopez Gobernado",
+          "hcp": 19.2,
+          "ins": "2197159",
+          "jid": "67880",
+          "nivel": "S"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Maria Jesus Hoya Rubio",
+          "hcp": 25.5,
+          "ins": "2198443",
+          "jid": "67880",
+          "nivel": "S"
+        },
+        {
+          "time": "13:00",
+          "tee": 1,
+          "name": "Alfredo Garabito Cebrian",
+          "hcp": 28.5,
+          "ins": "2185231",
+          "jid": "67880",
+          "nivel": "M"
+        },
+        {
+          "time": "13:00",
+          "tee": 1,
+          "name": "Alejandro Castillo Vega",
+          "hcp": 36,
+          "ins": "2198120",
+          "jid": "67880",
+          "nivel": "M"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 67880
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Del Rio Schoneseiffen, Regina - Cuadrado Diez, Paloma",
+          "holeNumber": 6,
+          "createdAt": "10/09/25 10:59:07"
+        },
+        {
+          "playerName": "Del Rio Schoneseiffen, Regina - Cuadrado Diez, Paloma",
+          "holeNumber": 17,
+          "createdAt": "10/09/25 13:36:59"
+        },
+        {
+          "playerName": "Corrales Rodrigañez, Maria - Marquez Pastrana, Pilar",
+          "holeNumber": 17,
+          "createdAt": "10/09/25 14:33:29"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/3837971884_cuadro_de_honor_peque_y_adul_2025.pdf"
+  ]
+}
