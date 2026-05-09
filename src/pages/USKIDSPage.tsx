@@ -4,28 +4,43 @@ import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 import { useMasterDetail } from "../hooks/useMasterDetail";
+import React from "react";
 import SectionErrorBoundary from "../ui/SectionErrorBoundary";
 import LoadingState from "../ui/LoadingState";
 import { useSearchParams } from "react-router-dom";
-import { isoDate, fmtDate, monthLabel } from "../utils/format";
+import { C } from "../utils/colors";
+import { scClass, fmtToParRivais } from "../utils/scoreDisplay";
+import { MONTHS_PT, isoDate, fmtDate, fmtToPar, monthLabel, displayName } from "../utils/format";
+import { flag, normPaisDisplay } from "../utils/flagUtils";
 import EmptyState from "../ui/EmptyState";
-import ExtLink from "../ui/ExternalLink";
+import WdBadge from "../ui/WdBadge";
+import KpiCard from "../ui/KpiCard";
+import DetailHeader from "../ui/DetailHeader";
+import { tpColor } from "../ui/tournamentPrimitives";
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import { SIDEBAR_ACCENT, ManuelPill } from "../ui/PillBadge";
-import TabResultados from "../ui/TabResultados";
+import {
+  ScorecardLB, AccumulatedLB, AllRoundsScorecardLB, expandMultiRound,
+  type Tournament as TATournament,
+} from "./FPGPage";
+import TabResultados, { EscalaoTabs, EscalaoSection, escalaoToTournament, SecaoGreatgolf } from "../ui/TabResultados";
 import TabCampoDetalhe, { KidsLink } from "../ui/TabCampoDetalhe";
 import TorneioRivaisDetalhe from "../ui/TorneioRivaisDetalhe";
 import { converterTorneioCompleto } from "../ui/converterTorneioCompleto";
 import {
-  REGIONAL_CHAMPIONSHIPS,
-  isTerminado,
-  ArMapCtx, type TorneioComManuel,
-  torneioRegiao, isUSKidsTorneio,
+  TEES_LOOKUP, LINKS_EXTRA, REGIONAL_CHAMPIONSHIPS,
+  isWD, badgeVagas, fmtTs, diasAte, isTerminado,
+  ArMapCtx, type TorneioComManuel, seriesBase, playerSeriesResult, fmtPosRivais,
+  shortTornName, tornCanon, hasCanon, torneioRegiao, isUSKidsTorneio,
 } from "../ui/USKIDSPageHelpers";
-import { buildAutoRivals, normName as normNameAuto, type AutoRivalPlayer } from "../data/KIDSdataLoader";
+import { buildAutoRivals, normName as normNameAuto, type AutoRivalPlayer, uskTournNames, uskFieldSizes } from "../data/KIDSdataLoader";
 import { cachedFetchJson } from "../data/fetchCache";
 import { escalaoManuelParaData, isManuelByName as isManuel } from "../constants/manuel";
+import { FieldEscalaoTable } from "../ui/FieldEscalaoTable";
+import { MultiRoundLeaderboard } from "../ui/MultiRoundLeaderboard";
+import type { MultiRoundRow } from "../ui/multiRoundTypes";
 import TabelaGlobal from "../ui/TabelaGlobal";
+import { ESCALOES_DESTAQUE_USKIDS } from "../ui/uskidsData";
 
 
 
@@ -50,6 +65,11 @@ interface Torneio {
   ultima_atualizacao: string;
   sem_flights?: boolean; erro?: string;
   url_uskids?: string | null;
+}
+interface GGEntry { pos: number | null; name: string; fed: string | null; club: string; toPar: number | null; gross: number | null; status: string; }
+interface GreatgolfData {
+  name: string; course: string; dates: string[];
+  results: { d1: GGEntry[]; sub14: GGEntry[]; sub12: GGEntry[] };
 }
 
 
@@ -188,6 +208,17 @@ function applyResultOverrides(resultados: TorneioResult[]): void {
 /* ════════════════════════════════════════════════════════════════
    RivCell — célula de resultado passado (score + posição)
    ════════════════════════════════════════════════════════════════ */
+function RivCell({ tp, pos, fieldSize }: { tp: number | null; pos: number; fieldSize: number }) {
+  const { text: tpText, color: tpColor } = fmtToParRivais(tp);
+  const posText = fmtPosRivais(pos, fieldSize);
+  return (
+    <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:1, lineHeight:1.2 }}>
+      <span className="fs-13 fw-800" style={{ color: tpColor }}>{tpText}</span>
+      <span className="fs-11 c-text-3">{posText}</span>
+    </div>
+  );
+}
+
 /* ════════════════════════════════════════════════════════════════
    TabRivais — componente principal
    ════════════════════════════════════════════════════════════════ */
@@ -277,6 +308,32 @@ function TabRivais({ resultados, fieldData, torneiosComManuel, selectedT, setSel
           </button>
         );
       })}
+    </div>
+  );
+}
+
+function Secao({ titulo, sub, count, corTitulo, defaultOpen, children }: {
+  titulo: string; sub?: string; count: number; corTitulo?: string;
+  defaultOpen?: boolean; children: React.ReactNode;
+}) {
+  const [open, setOpen] = useState(defaultOpen ?? false);
+  if (!count) return null;
+  return (
+    <div>
+      <button onClick={() => setOpen(v => !v)} style={{
+        display:"flex", alignItems:"baseline", gap:8, background:"none", border:"none",
+        cursor:"pointer", padding:0, marginBottom: open ? 4 : 0, width:"100%", textAlign:"left",
+      }}>
+        <span className="fs-11 fw-700" style={{ color: corTitulo ?? "var(--text-3)",
+          textTransform:"uppercase", letterSpacing:"0.06em" }}>
+          {titulo} ({count})
+        </span>
+        <span className="fs-11 c-text-3" style={{ marginLeft:"auto" }}>{open ? "▲" : "▼"}</span>
+      </button>
+      {sub && open && (
+        <div className="fs-11 c-text-3" style={{ marginBottom:8 }}>{sub}</div>
+      )}
+      {open && children}
     </div>
   );
 }
@@ -383,7 +440,7 @@ export default function USKidsFieldPage() {
         })
         .catch((): ResultsData => ({ gerado_em: "", resultados: [] })),
       // ficheiros históricos permanentes (usam cachedFetchJson — cached em memória na sessão)
-      ...historicosUrls.map((url) => cachedFetchJson(url).then(d => {
+      ...historicosUrls.map((url, i) => cachedFetchJson(url).then(d => {
         upsertFileMeta({ path: url, status: "loaded", group: "completos" });
         return d;
       }).catch(e => {
@@ -753,11 +810,11 @@ export default function USKidsFieldPage() {
             </span>
           )}
           {t.urlResultados && (
-            <ExtLink href={t.urlResultados}
+            <a href={t.urlResultados} target="_blank" rel="noopener noreferrer"
               onClick={e => e.stopPropagation()}
               className="p p-sm p-muted td-none">
               Resultados ↗
-            </ExtLink>
+            </a>
           )}
         </>
       );
@@ -838,7 +895,7 @@ export default function USKidsFieldPage() {
             className={`tourn-tab tourn-tab-sm${tab === tb.id ? " active" : ""}`}
             style={tab === tb.id ? { flexShrink:0 } : { flexShrink:0, background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)" }}>
             {tb.label}
-            {tb.badge != null && tb.badge > 0 && (
+            {tb.badge > 0 && (
               <span className="fs-10 fw-700" style={{ marginLeft:4, padding:"0 5px", borderRadius:8,
                 background: tab === tb.id ? "rgba(255,255,255,0.25)" : "var(--bg-hover)",
                 color: tab === tb.id ? "#fff" : "var(--text-3)",
@@ -858,10 +915,10 @@ export default function USKidsFieldPage() {
           </button>
         </>)}
         <div style={{ flex:1, minWidth:8 }} />
-        <ExtLink href="https://uskids-golf.vercel.app/"
+        <a href="https://uskids-golf.vercel.app/" target="_blank" rel="noopener noreferrer"
           className="fs-11 fw-600" style={{ flexShrink:0, color:"var(--accent)", border:"1px solid var(--accent)", borderRadius:5, padding:"3px 8px", textDecoration:"none", whiteSpace:"nowrap", display:"inline-flex", alignItems:"center", gap:3 }}>
           Histórico ↗
-        </ExtLink>
+        </a>
         <span className="chip" style={{ flexShrink:0 }}>{allTorneios.length} torn.</span>
       </Toolbar>
 
