@@ -450,24 +450,3 @@ export function fcgToFPGTournament(detail: MinimalRFEGShape, dobLookup?: DobLook
     players,
   };
 }
-    });
-    }
-  }
-
-  // Ordenar por posição (pos), depois por nome
-  players.sort((a, b) => {
-    const pa = a.pos ?? 999, pb = b.pos ?? 999;
-    if (pa !== pb) return pa - pb;
-    return a.name.localeCompare(b.name);
-  });
-
-  return {
-    name: detail.meta.name || `FCG ${detail.compId}`,
-    tcode: String(detail.compId),
-    date: detail.meta.dateStart || "",
-    campo: detail.meta.course || "",
-    rounds: 1,
-    playerCount: players.length,
-    players,
-  };
-}

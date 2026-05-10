@@ -24,7 +24,15 @@ const norm = s => (s || "")
   .normalize("NFD").replace(/[̀-ͯ]/g, "")
   .toLowerCase().replace(/\s+/g, " ").trim();
 
-// Top-level files (USKids, WJGC/EOWAGR/Doral, FPG nacionais, slims)
+// Top-level files — APENAS fontes que produzem rivais em /kids.
+//
+// EXCLUÍDOS (apesar de terem nomes válidos):
+//   - fpg-nacionais-historico.json: jogadores 100% PT, NÃO entram em /kids
+//     (a Fase 4a do KIDSdataLoader corre em modo enrich-only — só enriquece
+//     rivais que já existam de fontes internacionais).
+//   - spain-players.json: ~50K federados RFEG, a maioria não é rival.
+//     A enrich espanhola usa-os por fuzzy match mas só os que casam viram
+//     rivais. Os outros não devem ter ↗ Kids no FPGPage.
 const topFiles = fs.readdirSync(DATA).filter(f =>
   f.startsWith("wjgc_") ||
   f.startsWith("eowagr") ||
@@ -32,9 +40,7 @@ const topFiles = fs.readdirSync(DATA).filter(f =>
   f.startsWith("uskids_torneios_completos") ||
   f === "uskids-results.json" ||
   f === "uskids-member-history-slim.json" ||
-  f === "fpg-nacionais-historico.json" ||
   f === "ffgolf-juniors-slim.json" ||
-  f === "spain-players.json" ||
   f === "rfegolf-rivals.json" ||
   f === "fcg-rivals.json" ||
   f === "gg_ffgolf_all.json"
