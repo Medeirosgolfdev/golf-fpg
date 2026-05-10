@@ -592,7 +592,7 @@ function useAutoRivals() {
     // mas o cache _autoRivalsCache também foi reset), buildAutoRivals vai
     // re-correr e repopular tudo. Se os Maps já estão populados (load fresco),
     // a cache devolve o resultado cached imediatamente.
-    buildAutoRivals((p) => setProgress({ ...p })).then(autoPlayers => {
+    buildAutoRivals((p) => setProgress({ ...p })).then(async autoPlayers => {
       setFileMeta(getLoadedKidsFiles());
       // Trabalhar sobre uma cópia profunda de D — canonicalizar `co` na origem
       // para que entradas estáticas ("Russian Federation", "Great Britain")
@@ -684,6 +684,30 @@ function useAutoRivals() {
           }
         }
       }
+      // ── France enrich (similar à spain-enrich): carrega france-players.json
+      // e injeta frFed (license), frClub, frRegion, frHcp, frSex em rivais
+      // que casem por nome. Hero do RivalDetail mostra estes campos.
+      try {
+        const fr = await fetch("/data/france-players.json").then(r => r.ok ? r.json() : null).catch(() => null);
+        if (fr?.byName) {
+          let frMatched = 0;
+          for (const rival of map.values()) {
+            const e = fr.byName[normName(rival.n)];
+            if (!e) continue;
+            const r = rival as any;
+            if (e.license && !r.frFed) r.frFed = e.license;
+            if (e.club && !r.frClub) r.frClub = e.club;
+            if (e.region && !r.frRegion) r.frRegion = e.region;
+            if (typeof e.hcp === "number" && r.frHcp == null) r.frHcp = e.hcp;
+            if ((e.sex === "M" || e.sex === "F") && !r.frSex) r.frSex = e.sex;
+            // co fallback: se o rival não tem co, pôr "France"
+            if (!rival.co && e.country === "FRA") rival.co = "France";
+            frMatched++;
+          }
+          console.log(`[france-enrich] ${frMatched} rivais enriquecidos`);
+        }
+      } catch { /* ignore */ }
+
       setMerged(Array.from(map.values()));
       setLoaded(true);
     }).catch(err => {

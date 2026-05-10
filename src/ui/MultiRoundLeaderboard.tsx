@@ -1,6 +1,7 @@
 // @refresh reset
 import { MultiRoundRow, PlayerFilter, EMPTY_FILTER, ExtraColumn } from "./multiRoundTypes";
 import { fmtHcp, medal } from "../utils/format";
+import { flag as flagOf, normCountry } from "../utils/flagUtils";
 import { useSort } from "../hooks/useSort";
 import FilterChip from "../ui/FilterChip";
 import WdBadge from "../ui/WdBadge";
@@ -63,24 +64,54 @@ import { EscPill, ESC_STYLE } from "../ui/PillBadge";
    FILTRO
    ══════════════════════════════════════════════════════════════ */
 
-function filterRows(rows: MultiRoundRow[], f: PlayerFilter): MultiRoundRow[] {
+/** Resolve sexo de uma row via row.sex, fed→playersDB[fed].sex, ou nome
+ *  via playersDB. Replica a lógica do PlayerFilterBar partilhado. */
+function resolveSex(row: MultiRoundRow, playersDB?: PlayersDB, byName?: Map<string, string>): "M" | "F" | undefined {
+  const s = row.sex || (row.fed && playersDB?.[row.fed]?.sex);
+  if (s === "M" || s === "F") return s;
+  if (row.name && byName) {
+    const norm = (x: string) => x.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+    const v = byName.get(norm(row.name));
+    if (v === "M" || v === "F") return v;
+  }
+  return undefined;
+}
+
+function buildSexByName(playersDB?: PlayersDB): Map<string, string> {
+  const m = new Map<string, string>();
+  if (!playersDB) return m;
+  const norm = (x: string) => x.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+  for (const k in playersDB) {
+    const e = (playersDB as any)[k];
+    if ((e?.sex === "M" || e?.sex === "F") && e?.name) {
+      const nn = norm(e.name);
+      if (!m.has(nn)) m.set(nn, e.sex);
+    }
+  }
+  return m;
+}
+
+function filterRows(rows: MultiRoundRow[], f: PlayerFilter, playersDB?: PlayersDB, byName?: Map<string, string>): MultiRoundRow[] {
   let ps = rows;
   if (f.name) { const q = f.name.toLowerCase(); ps = ps.filter(r => r.name.toLowerCase().includes(q) || (r.club || "").toLowerCase().includes(q)); }
   if (f.escs.length) ps = ps.filter(r => r.esc != null && f.escs.includes(r.esc));
   if (f.tees.length) ps = ps.filter(r => r.teeName != null && f.tees.includes(r.teeName));
   if (f.club) ps = ps.filter(r => r.club === f.club);
+  if (f.sex) ps = ps.filter(r => resolveSex(r, playersDB, byName) === f.sex);
   return ps;
 }
 
-function PlayerFilterBar({ rows, filter, onChange, total }: {
-  rows: MultiRoundRow[]; filter: PlayerFilter; onChange: (f: PlayerFilter) => void; total: number;
+function PlayerFilterBar({ rows, filter, onChange, total, playersDB }: {
+  rows: MultiRoundRow[]; filter: PlayerFilter; onChange: (f: PlayerFilter) => void; total: number; playersDB?: PlayersDB;
 }) {
   const availEsc   = useMemo(() => { const s = new Set<string>(); for (const r of rows) if (r.esc) s.add(r.esc); return [...s].sort((a,b) => a.localeCompare(b)); }, [rows]);
   const availTees  = useMemo(() => { const s = new Set<string>(); for (const r of rows) if (r.teeName) s.add(r.teeName); return [...s].sort(); }, [rows]);
   const availClubs = useMemo(() => { const s = new Set<string>(); for (const r of rows) if (r.club) s.add(r.club); return [...s].sort((a,b) => a.localeCompare(b,"pt")); }, [rows]);
-  const isActive = filter.name || filter.escs.length || filter.tees.length || filter.club;
-  const filtered = useMemo(() => filterRows(rows, filter), [rows, filter]);
-  const hasOpts = availClubs.length > 1 || availEsc.length > 1 || availTees.length > 1;
+  const sexByName = useMemo(() => buildSexByName(playersDB), [playersDB]);
+  const availSex   = useMemo(() => { const s = new Set<string>(); for (const r of rows) { const sx = resolveSex(r, playersDB, sexByName); if (sx) s.add(sx); } return [...s] as ("M"|"F")[]; }, [rows, playersDB, sexByName]);
+  const isActive = filter.name || filter.escs.length || filter.tees.length || filter.club || filter.sex;
+  const filtered = useMemo(() => filterRows(rows, filter, playersDB, sexByName), [rows, filter, playersDB, sexByName]);
+  const hasOpts = availClubs.length > 1 || availEsc.length > 1 || availTees.length > 1 || availSex.length === 2;
   if (total < 8 && !isActive) return null;
 
   return (
@@ -100,6 +131,12 @@ function PlayerFilterBar({ rows, filter, onChange, total }: {
         </FilterChip>
       ); })}
       {availClubs.length > 2 && <select value={filter.club} onChange={e => onChange({ ...filter, club:e.target.value })} style={{ fontSize:11, padding:"3px 6px", borderRadius:6, border:`1px solid ${filter.club?"var(--accent)":"var(--border)"}`, background:"var(--bg-card,#fff)", color:"var(--text)", cursor:"pointer", fontWeight:filter.club?700:400 }}><option value="">Todos os clubes</option>{availClubs.map(c => <option key={c} value={c}>{c}</option>)}</select>}
+      {availSex.length === 2 && (
+        <>
+          <FilterChip active={filter.sex === "M"} onClick={() => onChange({ ...filter, sex: filter.sex === "M" ? "" : "M" })} color="var(--badge-male, #2563eb)">M</FilterChip>
+          <FilterChip active={filter.sex === "F"} onClick={() => onChange({ ...filter, sex: filter.sex === "F" ? "" : "F" })} color="var(--badge-female, #ec4899)">F</FilterChip>
+        </>
+      )}
       {isActive && <><span style={{ fontSize:10, color:"var(--text-muted)", marginLeft:2 }}>{filtered.length} de {total}</span><button onClick={() => onChange(EMPTY_FILTER)} className="filter-clear-btn" style={{ fontSize:10, color:"var(--text-muted)" }}>✕ limpar</button></>}
     </div>
   );
@@ -160,8 +197,12 @@ export function MultiRoundLeaderboard({
     roundToPar: wantRoundToPar = true,
   } = showCols;
 
-  // Auto-hide: mesmo que showCols permita, esconder se NENHUM row tem dados
-  const hasAnyEsc  = useMemo(() => rows.some(r => r.esc != null && r.esc !== ""), [rows]);
+  // Auto-hide: mesmo que showCols permita, esconder se NENHUM row tem dados.
+  // Para ESC, também conta com rows que têm DOB no playersDB (idade computável).
+  const hasAnyEsc  = useMemo(
+    () => rows.some(r => (r.esc != null && r.esc !== "") || (r.fed && playersDB[r.fed]?.dob)),
+    [rows, playersDB]
+  );
   const hasAnyFed  = useMemo(() => rows.some(r => r.fed != null && r.fed !== ""), [rows]);
   const hasAnyClub = useMemo(() => rows.some(r => r.club != null && r.club !== ""), [rows]);
   const hasAnyHcp  = useMemo(() => rows.some(r => r.hcp != null), [rows]);
@@ -201,10 +242,11 @@ export function MultiRoundLeaderboard({
     }));
   }, [rows]);
 
-  /* Filtro */
-  const filteredComplete   = useMemo(() => filterRows(withPos.filter(r => !r.isIncomplete && !r.isWD), filter), [withPos, filter]);
-  const filteredIncomplete = useMemo(() => filterRows(withPos.filter(r =>  r.isIncomplete && !r.isWD), filter), [withPos, filter]);
-  const filteredWD         = useMemo(() => filterRows(withPos.filter(r =>  r.isWD), filter),                   [withPos, filter]);
+  /* Filtro — passa playersDB para resolver sexo de jogadores sem fedCode */
+  const sexByName = useMemo(() => buildSexByName(playersDB), [playersDB]);
+  const filteredComplete   = useMemo(() => filterRows(withPos.filter(r => !r.isIncomplete && !r.isWD), filter, playersDB, sexByName), [withPos, filter, playersDB, sexByName]);
+  const filteredIncomplete = useMemo(() => filterRows(withPos.filter(r =>  r.isIncomplete && !r.isWD), filter, playersDB, sexByName), [withPos, filter, playersDB, sexByName]);
+  const filteredWD         = useMemo(() => filterRows(withPos.filter(r =>  r.isWD), filter, playersDB, sexByName),                   [withPos, filter, playersDB, sexByName]);
 
   /* Sort */
   function cmp(a: RowWithPos, b: RowWithPos): number {
@@ -242,7 +284,7 @@ export function MultiRoundLeaderboard({
   return (
     <div>
       {filterable && (
-        <PlayerFilterBar rows={withPos} filter={filter} onChange={setFilter} total={rows.length} />
+        <PlayerFilterBar rows={withPos} filter={filter} onChange={setFilter} total={rows.length} playersDB={playersDB} />
       )}
       <div className="bjgt-chart-scroll">
         <table className={"sc-lb sc-lb-lbd" + (isMulti ? " sc-lb-multi" : "")}>
@@ -343,9 +385,40 @@ export function MultiRoundLeaderboard({
                     }
                     {isInc && <span className="badge-inc">INC</span>}
                   </td>
-                  {showEsc && <td className="lb-esc">{row.esc ? <EscPill esc={row.esc} /> : <span className="muted">–</span>}</td>}
+                  {showEsc && <td className="lb-esc">{(() => {
+                    if (row.esc) return <EscPill esc={row.esc} />;
+                    // Fallback: idade exacta se temos DOB no playersDB
+                    const dob = row.fed && playersDB[row.fed]?.dob;
+                    const tDate = roundDates?.[roundDates.length - 1] || roundDates?.[0];
+                    if (dob && tDate) {
+                      const d = new Date(dob); const t = new Date(tDate);
+                      if (!isNaN(+d) && !isNaN(+t)) {
+                        let age = t.getFullYear() - d.getFullYear();
+                        const m = t.getMonth() - d.getMonth();
+                        if (m < 0 || (m === 0 && t.getDate() < d.getDate())) age--;
+                        if (age >= 0 && age < 100) {
+                          return <span className="p p-sm" title={`${dob} (${age} anos)`}
+                            style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent" }}>{age}a</span>;
+                        }
+                      }
+                    }
+                    return <span className="muted">–</span>;
+                  })()}</td>}
                   {showFed && <td className="lb-fed">{row.fed || "–"}</td>}
-                  {showClub && <td className="lb-club">{row.club || "–"}</td>}
+                  {showClub && (() => {
+                    // Em torneios internacionais o "clube" é frequentemente
+                    // um código ISO-3 (FRA, ESP, SUI, EST). Mostrar bandeira
+                    // em vez do código quando reconhecível.
+                    const club = row.club || "";
+                    const upper = club.trim().toUpperCase();
+                    const isCC = /^[A-Z]{2,3}$/.test(upper);
+                    const fl = isCC ? flagOf(club) : null;
+                    if (isCC && fl && fl !== "🏳️") {
+                      const code = normCountry(club).toUpperCase();
+                      return <td className="lb-club" title={code}><span style={{ fontSize: "1.1em" }}>{fl}</span></td>;
+                    }
+                    return <td className="lb-club">{club || "–"}</td>;
+                  })()}
                   {showHcp && <td className="lb-hcp">{fmtHcp(row.hcp)}</td>}
                   {showTee && <td className="lb-tee"><TeeDot teeName={row.teeName} /></td>}
 
@@ -423,5 +496,4 @@ export function MultiRoundLeaderboard({
         </table>
       </div>
     </div>
-  );
-}
+  );}

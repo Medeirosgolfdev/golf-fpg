@@ -52,7 +52,33 @@ export function PlayerFilterBar({
     for (const p of players) if (p.club) s.add(p.club);
     return [...s].sort((a, b) => a.localeCompare(b, "pt"));
   }, [players]);
-  const isActive = filter.name || filter.escs.length || filter.tees.length || filter.club;
+  // Sexos disponíveis nos jogadores actuais. Resolve via:
+  //  1. _sex injectado pelo adapter da página (RFEG)
+  //  2. playersDB[fedCode].sex (federados FPG via players-nationality)
+  //  3. Lookup por nome em playersDB (entries kids:* com sex de FFG resultats)
+  // Só mostra o filtro se houver AMBOS sexos representados.
+  const availSex = useMemo(() => {
+    // Index por nome normalizado para lookup O(1) — replica getNameIndex
+    const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+    const byName = new Map<string, string>();
+    for (const k in playersDB) {
+      const e = (playersDB as any)[k];
+      const sx = e?.sex;
+      const nm = e?.name;
+      if ((sx === "M" || sx === "F") && nm) {
+        const nn = norm(nm);
+        if (!byName.has(nn)) byName.set(nn, sx);
+      }
+    }
+    const s = new Set<string>();
+    for (const p of players) {
+      let psex = (p as any)._sex || (p.fedCode && playersDB[p.fedCode]?.sex);
+      if (!psex && p.name) psex = byName.get(norm(p.name));
+      if (psex === "M" || psex === "F") s.add(psex);
+    }
+    return [...s] as ("M" | "F")[];
+  }, [players, playersDB]);
+  const isActive = filter.name || filter.escs.length || filter.tees.length || filter.club || filter.sex;
   const filtered = useMemo(
     () => filterPlayers(players, filter, escLookup, playersDB, { tournamentDate, fedBirthdates }),
     [players, filter, escLookup, playersDB, tournamentDate, fedBirthdates]
@@ -123,6 +149,20 @@ export function PlayerFilterBar({
             </option>
           ))}
         </select>
+      )}
+      {availSex.length === 2 && (
+        <>
+          <FilterChip
+            active={filter.sex === "M"}
+            onClick={() => onChange({ ...filter, sex: filter.sex === "M" ? "" : "M" })}
+            color="var(--badge-male, #2563eb)"
+          >M</FilterChip>
+          <FilterChip
+            active={filter.sex === "F"}
+            onClick={() => onChange({ ...filter, sex: filter.sex === "F" ? "" : "F" })}
+            color="var(--badge-female, #ec4899)"
+          >F</FilterChip>
+        </>
       )}
       {isActive && (
         <>

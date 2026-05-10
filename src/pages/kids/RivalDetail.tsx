@@ -699,6 +699,33 @@ export function RivalDetail({ playerName }: { playerName: string }) {
                   HCP {(rival as any).esHcp.toFixed(1)}
                 </span>
               )}
+              {/* Identidade FFG/França — license + clube + região */}
+              {rival && !isManuel && (rival as any).frFed && (
+                <span className="p p-sm p-club fs-11" title="Licença FFGolf"
+                  style={{ background: "#eff6ff", color: "#1e40af", border: "1px solid #93c5fd" }}>
+                  🇫🇷 {(rival as any).frFed}
+                </span>
+              )}
+              {rival && !isManuel && (rival as any).frClub && (
+                <span className="p p-sm p-club fs-11" title="Clube FFG">
+                  🏌️ {(rival as any).frClub}
+                </span>
+              )}
+              {rival && !isManuel && (rival as any).frRegion && (
+                <span className="p p-sm fs-11" title="Région FFGolf"
+                  style={{ background: "#fef3c7", color: "#92400e", border: "1px solid #fcd34d" }}>
+                  📍 {(rival as any).frRegion}
+                </span>
+              )}
+              {rival && !isManuel && (rival as any).frSex && !((rival as any).esSex) && (
+                <SexBadge sex={(rival as any).frSex} />
+              )}
+              {rival && !isManuel && typeof (rival as any).frHcp === "number" && (
+                <span className="p p-sm fs-11" title="HCP FFGolf"
+                  style={{ background: "#ecfdf5", color: "#065f46", border: "1px solid #6ee7b7", fontWeight: 700 }}>
+                  HCP {(rival as any).frHcp.toFixed(1)}
+                </span>
+              )}
               {isManuel && <span className="p p-outline p-sm">REF</span>}
               {rank != null && (
                 <span className={`sidebar-rank fs-11 ${rank <= 3 ? "sidebar-rank-top3" : rank <= 10 ? "sidebar-rank-top10" : "sidebar-rank-rest"}`}

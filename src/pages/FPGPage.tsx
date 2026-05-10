@@ -247,18 +247,25 @@ function Content() {
           try {
             const nat = await natResp.json();
             const byFed: Record<string, string> = nat?.byFed || {};
+            // info: { fed: {country, dob, sex, name} } — fonte de DOB para
+            // os ~58K federados (activos+inactivos).
+            const info: Record<string, { country?: string; dob?: string; sex?: string; name?: string }> = nat?.info || {};
             for (const fed in byFed) {
               const cc = byFed[fed];
               if (!cc) continue;
+              const inf = info[fed] || {};
               const entry = (pdb as any)[fed];
               if (entry) {
-                // só sobrepõe se ainda não tiver country definido
                 if (!entry.country) entry.country = cc;
+                if (!entry.dob && inf.dob) entry.dob = inf.dob;
+                if (!entry.sex && inf.sex) entry.sex = inf.sex;
               } else {
-                // entry não existe (federado em federados-inativos.json mas não
-                // em players.json) — cria stub mínimo só com country, suficiente
-                // para o TournPName renderizar bandeira numa scorecard.
-                (pdb as any)[fed] = { country: cc };
+                (pdb as any)[fed] = {
+                  country: cc,
+                  ...(inf.dob ? { dob: inf.dob } : {}),
+                  ...(inf.sex ? { sex: inf.sex } : {}),
+                  ...(inf.name ? { name: inf.name } : {}),
+                };
               }
             }
           } catch { /* ignore */ }
@@ -292,18 +299,20 @@ function Content() {
           try {
             const kt = await kidsTrackedResp.json();
             const namesMap: Record<string, string | null> = kt?.names || {};
+            // Meta extra: { sex?, country? } por normName (de FFG resultats etc.)
+            const metaMap: Record<string, { sex?: "M" | "F"; country?: string }> = kt?.meta || {};
             for (const normName in namesMap) {
               if (!normName) continue;
               const memberId = namesMap[normName];
+              const m = metaMap[normName] || {};
               const key = "kids:" + normName.replace(/\s+/g, "_");
               if ((pdb as any)[key]) continue; // já populado por kids-links.json
-              // displayName: usa o nome normalizado em Title Case como fallback.
-              // O matching no TournPName é por nome normalizado, portanto o
-              // case display não importa para o lookup.
               const displayName = normName.replace(/\b\w/g, c => c.toUpperCase());
               (pdb as any)[key] = {
                 name: displayName,
                 kidsHash: memberId || encodeURIComponent(displayName),
+                ...(m.sex ? { sex: m.sex } : {}),
+                ...(m.country ? { country: m.country } : {}),
               };
             }
           } catch { /* ignore */ }

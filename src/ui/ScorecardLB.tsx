@@ -12,7 +12,8 @@ import type { Player, Tournament, ScorecardOptions, PlayerFilter } from "../data
 import { numGross, resolveEsc, computeSD, filterPlayers } from "../data/fpgUtils";
 import { useSort } from "../hooks/useSort";
 import { scClass } from "../utils/scoreDisplay";
-import { fmtToPar, fmtHcp, abreviarNome } from "../utils/format";
+import { fmtToPar, fmtHcp, abreviarNome, ageAtDate } from "../utils/format";
+import { flag as flagOf, normCountry } from "../utils/flagUtils";
 import {
   EMPTY_FILTER,
   type ScorecardRow,
@@ -300,11 +301,55 @@ export function ScorecardLB({
           )}
           {!hideEsc && (
             <td className="lb-esc" style={{ width: 70, minWidth: 70, whiteSpace: "nowrap" }}>
-              {esc ? <EscPill esc={esc} /> : <span className="muted">–</span>}
+              {(() => {
+                if (esc) return <EscPill esc={esc} />;
+                // Sem escalão — tentar idade via DOB (playersDB[fed].dob,
+                // fedBirthdates, ou lookup por nome em playersDB).
+                let dob: string | undefined =
+                  (p.fedCode && playersDB[p.fedCode]?.dob)
+                  || (p.fedCode ? fedBirthdates.get(p.fedCode) : undefined);
+                if (!dob && p.name) {
+                  const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+                  const nn = norm(p.name);
+                  for (const k in playersDB) {
+                    const e = (playersDB as any)[k];
+                    if (e?.dob && e?.name && norm(e.name) === nn) { dob = e.dob; break; }
+                  }
+                }
+                const age = ageAtDate(dob, tournament.date);
+                if (age != null && age >= 0 && age < 100) {
+                  return (
+                    <span className="p p-sm" title={dob ? `${dob} (${age} anos no torneio)` : ""}
+                      style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent" }}>
+                      {age}a
+                    </span>
+                  );
+                }
+                return <span className="muted">–</span>;
+              })()}
             </td>
           )}
           {!hideFed && <td className="lb-fed">{p.fedCode || "–"}</td>}
-          {!hideClub_ && <td className="lb-club">{p.club || "–"}</td>}
+          {!hideClub_ && (() => {
+            // Em torneios internacionais (ex: Castro Marim U14), o "clube"
+            // é frequentemente um código de país ISO-3 (FRA, ESP, SUI, EST,
+            // POR, USA). Detectar e mostrar bandeira em vez do código —
+            // mantém compatibilidade com clubes normais (Vila Sol, Belas).
+            const club = p.club || "";
+            const upper = club.trim().toUpperCase();
+            // Critério: 2-3 letras maiúsculas + flag conhecida (não 🏳️)
+            const isCountryCode = /^[A-Z]{2,3}$/.test(upper);
+            const flagEmoji = isCountryCode ? flagOf(club) : null;
+            if (isCountryCode && flagEmoji && flagEmoji !== "🏳️") {
+              const code = normCountry(club).toUpperCase();
+              return (
+                <td className="lb-club" title={code}>
+                  <span style={{ fontSize: "1.1em" }}>{flagEmoji}</span>
+                </td>
+              );
+            }
+            return <td className="lb-club">{club || "–"}</td>;
+          })()}
           {!hideHCP_ && <td className="lb-hcp">{fmtHcp(p.hcpExact)}</td>}
           {!hideTee && (
             <td className="lb-tee">
@@ -419,10 +464,11 @@ export function ScorecardLB({
               HCP
             </SortableHdr>
           )}
-          {!hideTee && (
+          {!
+hideTee && (
             <SortableHdr
               k="tee"
-Key={sortKey}
+              sortKey={sortKey}
               sortDir={sortDir}
               onSort={handleSort}
               className="lb-tee"
@@ -438,7 +484,8 @@ Key={sortKey}
             <SortableHdr
               k="sd"
               sortKey={sortKey}
-              sortDir={sortDir}
+              sor
+tDir={sortDir}
               onSort={handleSort}
               className="lb-sd"
             >

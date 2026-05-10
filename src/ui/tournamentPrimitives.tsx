@@ -108,11 +108,41 @@ export interface PlayersDBEntry {
    *  federados FPG, ou de kids-links.json para internacionais). Se preenchido
    *  e ≠ "PT", o TournPName prepende a bandeira ao nome. */
   country?: string;
+  /** Data de nascimento (YYYY-MM-DD). Vem de players.json, players-nationality
+   *  info ou kids-links. Usado para calcular idade exacta na data do torneio. */
+  dob?: string;
 }
 export type PlayersDB = Record<string, PlayersDBEntry>;
 
 export const EMPTY_ESC_LOOKUP = new Map<string, string>();
 export const EMPTY_PLAYERS_DB: PlayersDB = {} as PlayersDB;
+
+/** Strip diacríticos + lowercase + espaços únicos. Usado para lookup rápido. */
+const normNameLocal = (s: string | undefined) =>
+  (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+
+/** Cache de índices por nome para cada `playersDB` distinto. WeakMap permite
+ *  GC quando o playersDB é substituído (não causa memory leak entre renders). */
+const _nameIndexCache = new WeakMap<PlayersDB, Map<string, PlayersDBEntry[]>>();
+
+/** Constrói (ou devolve cached) índice {normName → [entries com esse nome]}.
+ *  Por que array: múltiplos entries podem partilhar o mesmo normName (ex:
+ *  Joe Short tem o entry "51804" do players.json E o entry "intl:joe_short"
+ *  do kids-links). Devolvemos todos para o caller escolher por campo. */
+function getNameIndex(playersDB: PlayersDB): Map<string, PlayersDBEntry[]> {
+  let idx = _nameIndexCache.get(playersDB);
+  if (idx) return idx;
+  idx = new Map<string, PlayersDBEntry[]>();
+  for (const k in playersDB) {
+    const e = playersDB[k];
+    const nn = normNameLocal(e.name);
+    if (!nn) continue;
+    const arr = idx.get(nn);
+    if (arr) arr.push(e); else idx.set(nn, [e]);
+  }
+  _nameIndexCache.set(playersDB, idx);
+  return idx;
+}
 
 export function TournPName({
   name,
@@ -145,28 +175,18 @@ export function TournPName({
   // específico — caso contrário o `Object.values().find()` apanha o entry
   // FPG (que não tem kidsHash) ANTES do entry intl:* (que tem), dado que
   // ambos têm name="Joe Short" e a iteração segue insertion order.
-  // Normalização strip-diacríticos para casar com kids-tracked-names.json
-  // (que armazena "García" como "garcia"). Sem isto, jogadores com acentos
-  // não fariam match com o índice /kids gerado.
-  const normStr = (s: string | undefined) =>
-    (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
-  const normN = normStr(name);
-  // Match exacto OU por prefixo (FPG abrevia "Marcos Ledesma Orozco" → "Marcos
-  // Ledesma"). Exigimos pelo menos 2 palavras e que o prefixo termine em
-  // boundary de palavra para não casar "John" com "Johnson".
-  const matchesName = (e: PlayersDBEntry) => {
-    const en = normStr(e.name);
-    if (en === normN) return true;
-    if (!en || !normN || normN.split(" ").length < 2) return false;
-    return en.startsWith(normN + " ") || normN.startsWith(en + " ");
-  };
+  // Lookup O(1) via índice cached: getNameIndex(playersDB) devolve um Map
+  // construído UMA vez por playersDB. Antes era Object.values().find() = O(N)
+  // por jogador × 3 campos × 100+ jogadores por tabela = 18M operações. Lento.
+  const normN = normNameLocal(name);
   const directEntry = fedKey && playersDB ? playersDB[fedKey] : undefined;
-  const sex = directEntry?.sex
-    ?? (playersDB ? Object.values(playersDB).find(e => matchesName(e) && e.sex)?.sex : undefined);
-  const kidsHash = directEntry?.kidsHash
-    ?? (playersDB ? Object.values(playersDB).find(e => matchesName(e) && e.kidsHash)?.kidsHash : undefined);
-  const country = directEntry?.country
-    ?? (playersDB ? Object.values(playersDB).find(e => matchesName(e) && e.country)?.country : undefined);
+  const candidates: PlayersDBEntry[] = playersDB ? (getNameIndex(playersDB).get(normN) ?? []) : [];
+  // Para cada campo (sex/kidsHash/country): preferir directEntry; fallback aos
+  // candidates por nome (filtrar pelo campo desejado para evitar apanhar entry
+  // FPG sem kidsHash quando há um intl: com kidsHash).
+  const sex = directEntry?.sex ?? candidates.find(e => e.sex)?.sex;
+  const kidsHash = directEntry?.kidsHash ?? candidates.find(e => e.kidsHash)?.kidsHash;
+  const country = directEntry?.country ?? candidates.find(e => e.country)?.country;
   const flagEmoji = country && country.toUpperCase() !== "PT" ? flagOf(country) : null;
 
   const titleMsg = hasLink && !hasProfile ? "Federado (perfil limitado — dados do federados.json)" : undefined;
@@ -177,7 +197,8 @@ export function TournPName({
       )}
       {truncName}
       {star && <span className="fs-10 print-hide-star" style={{ marginLeft: 3 }}>⭐</span>}
-      {sex && <SexBadge sex={sex} size="sm" className="ml-4" />}
+      {sex &&
+ <SexBadge sex={sex} size="sm" className="ml-4" />}
     </>
   );
   const nameEl = hasLink ? (
@@ -200,7 +221,8 @@ export function TournPName({
           href={`/kids#${kidsHash}`}
           target="_blank"
           rel="noopener noreferrer"
-          title="Ver em Kids"
+          title="Ver em Kids
+"
           style={{ marginLeft: 4, fontWeight: 800, color: "var(--color-good-dark)", fontSize: 11, textDecoration: "none" }}>
           ↗
         </a>

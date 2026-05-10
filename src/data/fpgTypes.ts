@@ -100,4 +100,6 @@ export interface PlayerFilter {
   escs: string[];
   tees: string[];
   club: string;
+  /** Filtro M/F: "" = todos, "M" = só masculino, "F" = só feminino. */
+  sex?: "" | "M" | "F";
 }

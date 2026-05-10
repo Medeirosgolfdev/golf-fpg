@@ -139,9 +139,15 @@ const CODE_ALIAS: Record<string, string> = {
   svn:"si", hrv:"hr", mne:"me", bih:"ba", alb:"al", mac:"ma",
   tun:"tn", geo:"ge", arm:"am", aze:"az", tur:"tr", isl:"is",
   irl:"ie", fin:"fi", eng:"gb", sct:"gb", wls:"gb", nir:"gb",
-  // ISO 3166-1 alpha-3 codes (FFG/FFGolf usa estes em vez dos IOC)
+  // ISO 3166-1 alpha-3 codes (FFG/FFGolf/FPG resultats usam estes em vez dos IOC).
+  // Apenas adicionados os que não duplicam IOC acima (sui≠sgp, etc.).
   gbr:"gb", deu:"de", nld:"nl", nzl:"nz", prt:"pt", swe:"se", zaf:"za",
   che:"ch", dnk:"dk", jpn:"jp", lux:"lu", ncl:"nc", en1:"gb", cod:"cd",
+  sui:"ch", rou:"ro", bgr:"bg", lva:"lv", mar:"ma", are:"ae", kaz:"kz",
+  vnm:"vn", pry:"py", nga:"ng", omn:"om", pri:"pr", cri:"cr", jey:"je",
+  cyp:"cy", lbn:"lb", idn:"id", hkg:"hk", col:"co", brb:"bb", bhs:"bs",
+  bol:"bo", dom:"do", dza:"dz", ecu:"ec", grc:"gr", isr:"il", mlt:"mt",
+  per:"pe", uru:"uy", ven:"ve", sau:"sa", egy:"eg",
 };
 
 /** Normaliza país para código ISO-2 */
@@ -210,7 +216,8 @@ export function flag(p: string): string {
   return "🏳️";
 }
 
-/** Title-case: "united states" → "United States" */
+/** Title-case: "united states" → "United S
+tates" */
 function toTitleCase(s: string): string {
   return s.replace(/\b\w/g, c => c.toUpperCase());
 }
@@ -220,7 +227,6 @@ export const FL: Record<string, string> = Object.fromEntries(
   Object.entries({ ...COUNTRY_TO_CODE }).flatMap(([name, code]) => {
     const emoji = FLAG[code.toUpperCase()] ?? "🏳️";
     const titleKey = toTitleCase(name);
-    // Also add exact original (e.g. "viet nam" → "Viet nam" may appear in old data)
     const firstCapKey = name.charAt(0).toUpperCase() + name.slice(1);
     return titleKey === firstCapKey
       ? [[titleKey, emoji]]

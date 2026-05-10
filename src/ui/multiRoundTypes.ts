@@ -68,6 +68,8 @@ export interface PlayerFilter {
   escs: string[];
   tees: string[];
   club: string;
+  /** Filtro M/F: "" = todos, "M" = só masculino, "F" = só feminino. */
+  sex?: "" | "M" | "F";
 }
 
-export const EMPTY_FILTER: PlayerFilter = { name: "", escs: [], tees: [], club: "" };
+export const EMPTY_FILTER: PlayerFilter = { name: "", escs: [], tees: [], club: "", sex: "" };

@@ -174,6 +174,24 @@ export function filterPlayers(
   if (f.escs.length) ps = ps.filter(p => f.escs.includes(resolveEsc(p, escLookup, { tournamentDate: opts?.tournamentDate, playersDB, temporalEscLookup: opts?.temporalEscLookup, fedBirthdates: opts?.fedBirthdates })));
   if (f.tees.length) ps = ps.filter(p => p.teeName != null && f.tees.includes(p.teeName));
   if (f.club) ps = ps.filter(p => p.club === f.club);
+  if (f.sex) {
+    // Resolve sexo via _sex, playersDB[fed].sex, OU lookup por nome em
+    // playersDB (entries kids:* com sex extraído de FFG resultats).
+    const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+    const sexByName = new Map<string, string>();
+    for (const k in playersDB) {
+      const e = (playersDB as any)[k];
+      if ((e?.sex === "M" || e?.sex === "F") && e?.name) {
+        const nn = norm(e.name);
+        if (!sexByName.has(nn)) sexByName.set(nn, e.sex);
+      }
+    }
+    ps = ps.filter(p => {
+      let psex = (p as any)._sex || (p.fedCode && playersDB[p.fedCode]?.sex);
+      if (!psex && p.name) psex = sexByName.get(norm(p.name));
+      return psex === f.sex;
+    });
+  }
   return ps;
 }
 
@@ -368,10 +386,6 @@ export function buildDisplayList(tournaments: Tournament[]): Tournament[] {
   }
 
   const standalone = tournaments.filter(t => !hiddenTcodes.has(t.tcode));
-  // Sort por data DESC com tie-breaker estável (ccode/tcode). Sem tie-breaker,
-  // torneios com a mesma data podem trocar de ordem entre re-cálculos quando
-  // o array source chega em batches async — isto causava `displayList[N]` a
-  // mudar entre renders, com `selected` a apontar para o torneio errado.
   return [...standalone, ...synthetics].sort((a, b) => {
     const d = (b.date || "").localeCompare(a.date || "");
     if (d !== 0) return d;

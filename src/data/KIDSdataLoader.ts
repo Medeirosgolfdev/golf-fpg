@@ -2404,7 +2404,7 @@ async function _buildAutoRivalsInternal(
 enrich:error`, status: "error", error: String(e), group: "phase 3 enrich" });
   }
 
-  _autoRivalsCache = Array.from(map.values());
-  onUpdate?.(Array.from(map.values()));
-  return Array.from(map.values());
+  const result = Array.from(map.values());
+  onUpdate?.(result);
+  return result;
 }
