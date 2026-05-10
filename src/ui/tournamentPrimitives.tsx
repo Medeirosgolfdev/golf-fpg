@@ -34,6 +34,7 @@ import { getTeeHex, teeBorder } from "../utils/teeColors";
 import { sdClassByHcp } from "../utils/scoreDisplay";
 import { C } from "../utils/colors";
 import { fmtToPar } from "../utils/format";
+import { flag as flagOf } from "../utils/flagUtils";
 
 /* ─── Constante do jogador especial (re-export de constants/manuel) ─── */
 import { MANUEL_FED as _MANUEL_FED, isManuel } from "../constants/manuel";
@@ -45,9 +46,9 @@ export const fmtTP = (v: number | null | undefined): string => fmtToPar(v, "–"
 
 export function tpColor(v: number | null | undefined): string | undefined {
   if (v == null) return undefined;
-  if (v < 0) return "var(--color-good)";   // abaixo do par → bom
-  if (v > 0) return "var(--color-danger)"; // acima do par → mau
-  return undefined;                         // par (E) → neutro
+  if (v < 0) return "var(--color-good)";
+  if (v > 0) return "var(--color-danger)";
+  return undefined;
 }
 
 /* ─── Escalão pill ─── */
@@ -93,10 +94,7 @@ export function SDPill({
   );
 }
 
-/* ─── Nome do jogador ─────────────────────────────────────────
-   Props unificadas: aceita `fed` (Drive) ou `fedCode` (Diversos).
-   highlight=true → mostra a estrela ⭐ (sobrepõe-se à detecção automática).
-   ─────────────────────────────────────────────────────────── */
+/* ─── Nome do jogador ───────────────────────────────────────── */
 export interface PlayersDBEntry {
   escalao?: string;
   name?: string;
@@ -105,11 +103,14 @@ export interface PlayersDBEntry {
   hcp?: number;
   hcpExact?: number;
   region?: string;
-  kidsHash?: string;  // memberId ou nome encodificado para link /kids#hash
+  kidsHash?: string;
+  /** Código ISO-2 da nacionalidade (vem de players-nationality.json para
+   *  federados FPG, ou de kids-links.json para internacionais). Se preenchido
+   *  e ≠ "PT", o TournPName prepende a bandeira ao nome. */
+  country?: string;
 }
 export type PlayersDB = Record<string, PlayersDBEntry>;
 
-/** Defaults vazios para leaderboards sem dados FPG (BJGTPage, DORALPage, etc.) */
 export const EMPTY_ESC_LOOKUP = new Map<string, string>();
 export const EMPTY_PLAYERS_DB: PlayersDB = {} as PlayersDB;
 
@@ -125,36 +126,55 @@ export function TournPName({
   fed?: string;
   fedCode?: string;
   playersDB?: PlayersDB;
-  /** Força estrela. Se omitido, detecta automaticamente via isManuel() */
   highlight?: boolean;
   maxLen?: number;
 }) {
   const fedKey = fed || fedCode;
-  // hasLink: basta ter fed — a página /jogadores/{fed} sempre renderiza algo
-  //   (perfil completo se em players.json, senão FederadoOnlyDetail a partir de federados.json).
-  // hasProfile: dados curados completos (usado para mostrar SexBadge, clube, etc.).
   const hasLink = !!fedKey;
   const hasProfile = !!(fedKey && playersDB && playersDB[fedKey]);
-  const sex = fedKey && playersDB ? playersDB[fedKey]?.sex : undefined;
   const star = highlight ?? isManuel({ name, fed, fedCode });
   const truncName = name.length > maxLen ? name.substring(0, maxLen - 2) + "…" : name;
 
-  // Kids link: procura por fedKey (quando presente) ou pelo nome normalizado
-  const normN = name.toLowerCase().replace(/\s+/g, " ").trim();
-  const kidsEntry = playersDB
-    ? (fedKey && playersDB[fedKey]?.kidsHash
-        ? playersDB[fedKey]
-        : Object.values(playersDB).find(e => e.name?.toLowerCase().replace(/\s+/g, " ").trim() === normN))
-    : undefined;
-  const kidsHash = kidsEntry?.kidsHash;
+  // Lookup duplo independente: por fedKey directo (federados FPG → sex+country
+  // de players.json + players-nationality.json) e por nome normalizado
+  // (entries virtuais "intl:..." de kids-links.json → kidsHash). Para um
+  // federado FPG estrangeiro como Joe Short (51804), ambos resolvem:
+  // directo → country=GB; nome → kidsHash="Joe%20Short".
+  //
+  // CADA CAMPO faz a sua própria pesquisa por nome exigindo o campo
+  // específico — caso contrário o `Object.values().find()` apanha o entry
+  // FPG (que não tem kidsHash) ANTES do entry intl:* (que tem), dado que
+  // ambos têm name="Joe Short" e a iteração segue insertion order.
+  // Normalização strip-diacríticos para casar com kids-tracked-names.json
+  // (que armazena "García" como "garcia"). Sem isto, jogadores com acentos
+  // não fariam match com o índice /kids gerado.
+  const normStr = (s: string | undefined) =>
+    (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+  const normN = normStr(name);
+  // Match exacto OU por prefixo (FPG abrevia "Marcos Ledesma Orozco" → "Marcos
+  // Ledesma"). Exigimos pelo menos 2 palavras e que o prefixo termine em
+  // boundary de palavra para não casar "John" com "Johnson".
+  const matchesName = (e: PlayersDBEntry) => {
+    const en = normStr(e.name);
+    if (en === normN) return true;
+    if (!en || !normN || normN.split(" ").length < 2) return false;
+    return en.startsWith(normN + " ") || normN.startsWith(en + " ");
+  };
+  const directEntry = fedKey && playersDB ? playersDB[fedKey] : undefined;
+  const sex = directEntry?.sex
+    ?? (playersDB ? Object.values(playersDB).find(e => matchesName(e) && e.sex)?.sex : undefined);
+  const kidsHash = directEntry?.kidsHash
+    ?? (playersDB ? Object.values(playersDB).find(e => matchesName(e) && e.kidsHash)?.kidsHash : undefined);
+  const country = directEntry?.country
+    ?? (playersDB ? Object.values(playersDB).find(e => matchesName(e) && e.country)?.country : undefined);
+  const flagEmoji = country && country.toUpperCase() !== "PT" ? flagOf(country) : null;
 
-  // Usar <a href> em vez de window.open via onClick — assim o browser
-  // preserva right-click "abrir em nova aba", Ctrl/Cmd+click, middle-click,
-  // preview de link, arrastar para favoritos, etc. Todos estes gestos ficam
-  // quebrados quando se usa um span com onClick=window.open.
   const titleMsg = hasLink && !hasProfile ? "Federado (perfil limitado — dados do federados.json)" : undefined;
   const inner = (
     <>
+      {flagEmoji && (
+        <span aria-label={country} title={country} style={{ marginRight: 4, fontSize: "1em", lineHeight: 1 }}>{flagEmoji}</span>
+      )}
       {truncName}
       {star && <span className="fs-10 print-hide-star" style={{ marginLeft: 3 }}>⭐</span>}
       {sex && <SexBadge sex={sex} size="sm" className="ml-4" />}
@@ -181,8 +201,7 @@ export function TournPName({
           target="_blank"
           rel="noopener noreferrer"
           title="Ver em Kids"
-          style={{ marginLeft: 4, fontWeight: 800, color: "var(--color-good-dark)",
-            fontSize: 11, textDecoration: "none" }}>
+          style={{ marginLeft: 4, fontWeight: 800, color: "var(--color-good-dark)", fontSize: 11, textDecoration: "none" }}>
           ↗
         </a>
       )}

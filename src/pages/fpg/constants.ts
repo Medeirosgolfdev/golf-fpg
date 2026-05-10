@@ -1,0 +1,65 @@
+/**
+ * constants.ts — Constantes e tipos da FPGPage extraídos para reuso.
+ *
+ * Reusável por outras páginas que precisem de:
+ *  - Filtrar torneios por ano (PRE_2020_KEY, yearMatchesFilter)
+ *  - Reconhecer torneios PJA pelo tcode (TOURN_PILLS)
+ *  - Carregar pull-torneios*.json (DATA_BASE_URL, dataUrl, FileMeta, DriveData)
+ */
+import type { Tournament } from "../../data/fpgTypes";
+
+/* ─────────────────────────────────────────────
+   CONFIGURAÇÃO
+   ───────────────────────────────────────────── */
+export const DATA_BASE_URL = "/data/pull-torneios";   // prefixo dos ficheiros
+export const DATA_EXT      = ".json";                  // extensão
+export const DATA_DIGITS   = 3;                        // 000, 001, 002 ...
+export const DATA_MAX      = 50;                       // segurança: parar após N ficheiros
+
+export type TournPill = "REGIONAL" | "NACIONAL" | "INTL" | "PJA" | "SSERRA";
+
+/** Chave especial do filtro de ano que agrupa tudo o que é anterior a 2020.
+ *  Evita ter 15+ botões individuais para anos com 1 entrada cada (Nacionais
+ *  Jovens históricos 2005-2019). */
+export const PRE_2020_KEY = "<2020";
+
+/** Verifica se um ano (string "YYYY") corresponde ao filtro activo.
+ *  - filter null → sempre true (sem filtro)
+ *  - filter "<2020" → ano < 2020
+ *  - filter "YYYY" → ano === filter */
+export function yearMatchesFilter(year: string | undefined | null, filter: string | null): boolean {
+  if (!filter) return true;
+  const y = String(year ?? "");
+  if (filter === PRE_2020_KEY) return !!y && y < "2020";
+  return y === filter;
+}
+
+/**
+ * Mapa tcode → pill de torneio.
+ * Adicionar aqui novos torneios conforme necessário.
+ */
+export const TOURN_PILLS: Record<string, TournPill> = {
+  "10444": "PJA",   // AT&T PEBBLE BEACH PRO-AM BY TITLEIST (Royal Óbidos, 2025-02-01)
+  "10492": "PJA",   // Aroeira Master by Details (Fev 2025)
+  "10036": "PJA",   // Ribagolfe Oaks Masters 2025
+  "10260": "PJA",   // Greatgolf Junior Open w/ Luis Figo Foundation (Vilamoura Millennium, 2025-03-02) — confirmado oficial PJA pelo Excel da comissão técnica
+  "10019": "PJA",   // Race to Dunas G. Final (Comporta Dunas, 2025-11-29) — Grande Final 2025
+};
+
+
+/** Constrói o URL de um índice: 0 → /data/pull-torneios000.json */
+export function dataUrl(idx: number): string {
+  return DATA_BASE_URL + String(idx).padStart(DATA_DIGITS, "0") + DATA_EXT;
+}
+
+export interface FileMeta {
+  file: string; index: number;
+  lastUpdated?: string; source?: string; count: number;
+}
+
+export interface DriveData {
+  lastUpdated?: string; source?: string;
+  totalTournaments: number; totalPlayers: number;
+  tournaments: Tournament[];
+}
+

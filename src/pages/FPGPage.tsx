@@ -15,18 +15,18 @@
  *   • Suporte a 9H e 18H, 1 a N rondas
  */
 import React, { useEffect, useState, useMemo, useRef } from "react";
-import { Link, Navigate, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Navigate, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import { loadPlayers } from "../data/loader";
 import { buildEscLookup, type EscLookup, normalizePlayer } from "../utils/playerUtils";
-import { PILL_SSERRA, SIDEBAR_ACCENT, EscPill, PillBadge, RoundPill, NineHPill, SserraPill, NacionalPill, JuniorPill, ClubePill, ManuelPill } from "../ui/PillBadge";
+import { PILL_SSERRA, SIDEBAR_ACCENT, EscPill, PillBadge } from "../ui/PillBadge";
 import { TournSidebarItem, SSERRA_CCODE, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import ExtLink from "../ui/ExternalLink";
 import LoadingState from "../ui/LoadingState";
 import { useMasterDetail } from "../hooks/useMasterDetail";
-import { fmtDate, monthLabel, fpgDrawUrl, fpgScoringUrl, fpgAdmissionsUrl, tournamentUrl, parseTournKey } from "../utils/format";
+import { monthLabel, tournamentUrl, parseTournKey } from "../utils/format";
 import {
   isManuel,
   type PlayersDB,
@@ -34,842 +34,31 @@ import {
 import { PJARankingView } from "../ui/PJARankingView";
 import ClubesGruposView from "../ui/ClubesGruposView";
 // Tipos e utilitários FPG — fonte canónica em ../data/fpgTypes.ts e ../data/fpgUtils.ts
-import type { Tournament, GrupoEntry } from "../data/fpgTypes";
-import { expandMultiRound, buildDisplayList, tournamentHasManuel } from "../data/fpgUtils";
+import type { Tournament } from "../data/fpgTypes";
+import { buildDisplayList, tournamentHasManuel } from "../data/fpgUtils";
 import { isDNS } from "../ui/driveUtils";
 // Leaderboard components — extraídos para fpg/LeaderboardComponents.tsx
-import { ScorecardLB, AccumulatedLB, AllRoundsScorecardLB } from "../ui/LeaderboardComponents";
-import Aroeira2AnaliseView from "../ui/Aroeira2AnaliseView";
-import { LinksBar } from "../ui/LinksBar";
 // Inscrições e Jovens — extraídos para fpg/InscricoesComponents.tsx
 import { InscricoesPanel, buildJovensGroups, buildEventGroups, type JovensGroup, type EventGroup } from "../ui/InscricoesComponents";
 // Admissions + draws (browser scrape + merge) — ver CLAUDE.md
 import { loadFpgAdmissionsDraws, indexFpgAdmissionsDraws, NACIONAL_2026_META, NACIONAL_2026_TCODES, type FpgTournamentData } from "../data/nacional2026Loader";
-import AdmissionsTab from "../ui/AdmissionsTab";
-import DrawTab from "../ui/DrawTab";
-import PrintButton from "../ui/PrintButton";
-import PrintPJAButton from "../ui/PrintPJAButton";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 // Re-exports para consumidores que ainda importam de FPGPage
 export type { RoundScore, Player, Tournament, ScorecardOptions } from "../data/fpgTypes";
 export { expandMultiRound } from "../data/fpgUtils";
 export { ScorecardLB, AccumulatedLB, AllRoundsScorecardLB } from "../ui/LeaderboardComponents";
+export { TournamentDetail } from "./fpg/TournamentDetail";
 
-/* ─────────────────────────────────────────────
-   CONFIGURAÇÃO
-   ───────────────────────────────────────────── */
-const DATA_BASE_URL = "/data/pull-torneios";   // prefixo dos ficheiros
-const DATA_EXT      = ".json";                  // extensão
-const DATA_DIGITS   = 3;                        // 000, 001, 002 ...
-const DATA_MAX      = 50;                       // segurança: parar após N ficheiros
-
-type TournPill = "REGIONAL" | "NACIONAL" | "INTL" | "PJA" | "SSERRA";
-
-/** Chave especial do filtro de ano que agrupa tudo o que é anterior a 2020.
- *  Evita ter 15+ botões individuais para anos com 1 entrada cada (Nacionais
- *  Jovens históricos 2005-2019). */
-const PRE_2020_KEY = "<2020";
-
-/** Verifica se um ano (string "YYYY") corresponde ao filtro activo.
- *  - filter null → sempre true (sem filtro)
- *  - filter "<2020" → ano < 2020
- *  - filter "YYYY" → ano === filter */
-function yearMatchesFilter(year: string | undefined | null, filter: string | null): boolean {
-  if (!filter) return true;
-  const y = String(year ?? "");
-  if (filter === PRE_2020_KEY) return !!y && y < "2020";
-  return y === filter;
-}
-
-/* ─────────────────────────────────────────────
-   TIPOS + DADOS — Campeonato Nacional de Clubes
-   ───────────────────────────────────────────── */
-// GrupoJogador e GrupoEntry importados de fpgTypes
-
-const CLUBES_GRUPOS: Record<"sub14" | "sub18", GrupoEntry[]> = {
-  sub14: [
-    { grupo: "A", clube: "Club de Golf de Miramar", suplente: "Raul Pazos", capitao: "Sérgio Ribeiro", jogadores: [
-      { nome: "Tomás Rente",           fed: "46311", hcp: 6.9 },
-      { nome: "Margarida Silva Pinto", fed: "46310", hcp: 4.1 },
-      { nome: "Francisco Nunes (jr)",  fed: "46299", hcp: 5.4 },
-      { nome: "Henrique Pereira",      fed: "53646", hcp: 12.5 },
-      { nome: "Raul Pazos",            fed: "46296", hcp: 0 },
-    ]},
-    { grupo: "B", clube: "Clube de Golfe Citynorte", capitao: "Cândida Santos", jogadores: [
-      { nome: "Gil Ribeiro",           fed: "47810", hcp: 22.9 },
-      { nome: "Madalena Policarpo",    fed: "45608", hcp: 15.7 },
-      { nome: "João Pedro Frade",      fed: "45424", hcp: 18.5 },
-      { nome: "Pedro Luís Fernandes",  fed: "52168", hcp: 17.0 },
-    ]},
-    { grupo: "C", clube: "Clube de Golf do Estoril", suplente: "Salvador Ivo de Carvalho", capitao: "Tiago Cruz", jogadores: [
-      { nome: "João Rocha",              fed: "48297", hcp: 6.1 },
-      { nome: "Ruiqi Li",                fed: "49076", hcp: 3.8 },
-      { nome: "Nuno Palmares Jr.",       fed: "49124", hcp: 3.9 },
-      { nome: "Ricardo Castro Ferreira", fed: "49085", hcp: 7.4 },
-      { nome: "Salvador Ivo de Carvalho", fed: "43968", hcp: 0 },
-    ]},
-    { grupo: "D", clube: "Clube de Golfe de Vilamoura", suplente: "Tomás Valério", capitao: "Hugo Santos", jogadores: [
-      { nome: "Catarina Valério",           fed: "46873", hcp: 18.1 },
-      { nome: "Catarina Sousa Conceição",   fed: "48794", hcp: 10.7 },
-      { nome: "Tomás Lima Pinto",           fed: "46037", hcp: 8.9  },
-      { nome: "Sabrina Ribeiro Crisóstomo", fed: "48971", hcp: 8.0  },
-      { nome: "Tomás Valério",              fed: "50011", hcp: 0 },
-    ]},
-    { grupo: "E", clube: "Oporto Golf Clube A", suplente: "Lucas Amorim", capitao: "Miguel Valença", jogadores: [
-      { nome: "Sebastião Soares",      fed: "47341", hcp: 15.3 },
-      { nome: "Afonso de Sousa Pinto", fed: "46480", hcp: 10.3 },
-      { nome: "Francisco Saraiva",     fed: "39097", hcp: 7.9  },
-      { nome: "Santiago Dias",         fed: "42908", hcp: 1.0  },
-      { nome: "Lucas Pereira Amorim",  fed: "54330", hcp: 0 },
-    ]},
-    { grupo: "F", clube: "Clube de Golf da Quinta do Peru", capitao: "Cláudia Dantas", jogadores: [
-      { nome: "David Filip Jr",     fed: "51949", hcp: 9.7  },
-      { nome: "Mário Novaes Moura", fed: "53939", hcp: 38.3 },
-      { nome: "Beatriz Mendes",     fed: "46026", hcp: 36.0 },
-      { nome: "William Gao",        fed: "51524", hcp: 9.5  },
-    ]},
-    { grupo: "G", clube: "Oporto Golf Clube B", capitao: "Ricardo Garcia", jogadores: [
-      { nome: "Catarina Loureiro", fed: "49328", hcp: 20.1 },
-      { nome: "Maksim Mutalapov",  fed: "54475", hcp: 32.1 },
-      { nome: "Ricardo Ferreira",  fed: "45366", hcp: 23.1 },
-      { nome: "Diogo Guilherme",   fed: "56632", hcp: 19.0 },
-    ]},
-    { grupo: "H", clube: "Lisbon Sports Club", capitao: "Catarina Inocentes", jogadores: [
-      { nome: "Filipe Delicado",             fed: "53124", hcp: 36.6 },
-      { nome: "Guilherme Pereira",           fed: "47658", hcp: 37.2 },
-      { nome: "David Stocksreiter Ferreira", fed: "48164", hcp: 35.4 },
-      { nome: "Diogo Vaz Pinto Jr.",         fed: "51432", hcp: 32.9 },
-    ]},
-    { grupo: "I", clube: "Clube de Golfe Citynorte A", suplente: "Tomás Araújo", capitao: "Cândida Santos", jogadores: [
-      { nome: "Marc Costa",               fed: "46308", hcp: 13.7 },
-      { nome: "Tomás Sarmento de Beires", fed: "48046", hcp: 16.2 },
-      { nome: "Afonso Paiva Gonçalves",   fed: "47819", hcp: 14.5 },
-      { nome: "Diogo Lima",               fed: "49717", hcp: 12.0 },
-      { nome: "Tomás Araújo",             fed: "49011", hcp: 0 },
-    ]},
-    { grupo: "J", clube: "Club de Golf de Miramar B", capitao: "Sérgio Ribeiro", jogadores: [
-      { nome: "José Maria Pereira",     fed: "53645", hcp: 20.7 },
-      { nome: "Eduardo Rocha Ferreira", fed: "51182", hcp: 22.4 },
-      { nome: "Ricardo Rocha Ferreira", fed: "51180", hcp: 17.3 },
-      { nome: "João Balixa",            fed: "46038", hcp: 9.5  },
-    ]},
-    { grupo: "K", clube: "Quinta das Lágrimas Clube de Golfe", suplente: "Vicente Poeira", jogadores: [
-      { nome: "Guido Martins Gonçalves", fed: "46414", hcp: 14.6 },
-      { nome: "Gil Martins Gonçalves",   fed: "46415", hcp: 18.7 },
-      { nome: "Miguel Silva",            fed: "45661", hcp: 36.9 },
-      { nome: "Valentin Iria",           fed: "57233", hcp: 31.8 },
-      { nome: "Vicente Poeira",          fed: "50885", hcp: 39.7 },
-    ]},
-  ],
-  sub18: [
-    { grupo: "A", clube: "CG Vilamoura", suplente: "Igor Kostyn", capitao: "Hugo Santos", jogadores: [
-      { nome: "Rodrigo Sousa Correia", fed: "44934", hcp: 3.4     },
-      { nome: "Francisco Reis",        fed: "40534", hcp: 0.3     },
-      { nome: "Martim Pinto Johansen", fed: "40115", hcp: "+0.8"  },
-      { nome: "Jack Murtagh",          fed: "41593", hcp: 8.4     },
-    ]},
-    { grupo: "B", clube: "Clube de Golf da Quinta do Peru", capitao: "Cláudia Dantas", jogadores: [
-      { nome: "Salvador Paulo Rodrigues", fed: "58051", hcp: 29.3 },
-      { nome: "Angelina Gao",             fed: "51523", hcp: 3.9  },
-      { nome: "Diogo Sequeira",           fed: "56654", hcp: 3.6  },
-      { nome: "João Setúbal",             fed: "43732", hcp: 0.2  },
-    ]},
-    { grupo: "C", clube: "Club de Golf de Miramar", suplente: "Margarida Alves", capitao: "Sérgio Ribeiro", jogadores: [
-      { nome: "Afonso Silva Pinto",          fed: "46309", hcp: 5.4    },
-      { nome: "Gaspard Maes",                fed: "51074", hcp: 1.8    },
-      { nome: "Camila Pazos",                fed: "46297", hcp: 2.9    },
-      { nome: "Francisca Ferreira Da Costa", fed: "40981", hcp: "+1.8" },
-    ]},
-    { grupo: "D", clube: "Clube Palheiro Golfe", capitao: "Edgar Rodrigues", jogadores: [
-      { nome: "André Gonçalves",    fed: "41121", hcp: 6.7 },
-      { nome: "Maria Cunha",        fed: "46482", hcp: 4.6 },
-      { nome: "Salvador Rodrigues", fed: "39465", hcp: 6.2 },
-      { nome: "José Pedro Miranda", fed: "38976", hcp: 7.0 },
-    ]},
-    { grupo: "E", clube: "Estela Golf Club", suplente: "Afonso Polery", capitao: "Luís Cameira", jogadores: [
-      { nome: "Gabriel Marques Guerreiro", fed: "43053", hcp: 4.4  },
-      { nome: "André Von Hafe",            fed: "40473", hcp: 15.4 },
-      { nome: "Manuel Rouco Castro",       fed: "47576", hcp: 16.3 },
-      { nome: "Afonso Poiarez",            fed: "46079", hcp: 16.2 },
-    ]},
-    { grupo: "F", clube: "Oporto Golf Club A", suplente: "Henrique Montenegro", capitao: "Miguel Valença", jogadores: [
-      { nome: "Eva Silva",                fed: "46437", hcp: 1.4    },
-      { nome: "Pedro Ferreira",           fed: "43810", hcp: 0.7    },
-      { nome: "Guilherme Grabner Moreira",fed: "42205", hcp: 0.6    },
-      { nome: "Luis António Silva",       fed: "42845", hcp: "+3.0" },
-      { nome: "Henrique Montenegro",      fed: "39552", hcp: 2.2    },
-    ]},
-    { grupo: "G", clube: "Clube de Golf da Ilha Terceira", suplente: "Tomás Valadão", capitao: "Michael Duarte", jogadores: [
-      { nome: "João Lucas Fagundes",           fed: "44677", hcp: 17.8 },
-      { nome: "Madalena Alexandra Van Zeller", fed: "47078", hcp: 8.0  },
-      { nome: "Maria Fonseca Azevedo",         fed: "44019", hcp: 14.9 },
-      { nome: "Rafael Ourique Azevedo",        fed: "44018", hcp: 27.0 },
-      { nome: "Tomás Valadão",                 fed: "36625", hcp: 0    },
-    ]},
-    { grupo: "H", clube: "Clube de Golfe de Belas", suplente: "Frederico Almeida da Silva", capitao: "José Augusto", jogadores: [
-      { nome: "Clara Trindade",           fed: "45812", hcp: 8.2 },
-      { nome: "Henrique Almeida da Silva",fed: "41612", hcp: 6.4 },
-      { nome: "Ryan Dantas",              fed: "45439", hcp: 6.9 },
-      { nome: "Filipe Pinheiro",          fed: "46591", hcp: 3.1 },
-    ]},
-    { grupo: "I", clube: "Oporto Golf Clube B", suplente: "Gonçalo Maia", capitao: "Miguel Montenegro", jogadores: [
-      { nome: "Teresa Ferreira",          fed: "46589", hcp: 6.7 },
-      { nome: "Jorge Xavier Graça Silva", fed: "48705", hcp: 8.0 },
-      { nome: "Maria Francisca Santos",   fed: "46853", hcp: 4.6 },
-      { nome: "Maria Loureiro",           fed: "46489", hcp: 5.8 },
-    ]},
-    { grupo: "J", clube: "P.G.C. - Paredes Golfe Clube", suplente: "Guilherme Alves", capitao: "Tomás Ribeiro", jogadores: [
-      { nome: "Rafael Nogueira", fed: null, hcp: 15.5 },
-      { nome: "João Oliveira",   fed: null, hcp: 29.3 },
-      { nome: "Gustavo Castro",  fed: null, hcp: 16.7 },
-      { nome: "Elisa Garcez",    fed: null, hcp: 4.9  },
-    ]},
-    { grupo: "K", clube: "Clube de Golf do Estoril", suplente: "Reuben Thapa", capitao: "Miguel Nunes Pedro", jogadores: [
-      { nome: "Paul Devillers",             fed: "49770", hcp: 2.5    },
-      { nome: "João Maria Ivo de Carvalho", fed: "38334", hcp: "+1.8" },
-      { nome: "Duarte Soares Franco",       fed: "48531", hcp: 8.1    },
-      { nome: "Pedro Costa Alemão",         fed: "46706", hcp: 4.0    },
-      { nome: "Reuben Thapa",               fed: "47552", hcp: 3.6    },
-    ]},
-    { grupo: "L", clube: "Lisbon Sports Club", capitao: "Rita Nunes", jogadores: [
-      { nome: "Francisca Vilela", fed: "36700", hcp: 16.3 },
-      { nome: "Manuel Vaz Pinto", fed: "51430", hcp: 17.8 },
-      { nome: "João Gomes",       fed: "53715", hcp: 10.5 },
-      { nome: "Ana Bianchi",      fed: "36861", hcp: 13.9 },
-    ]},
-  ],
-};
-
-/* ── Grupos 2025 ─────────────────────────────────────────────────────────── */
-const CLUBES_GRUPOS_2025: Record<"sub14" | "sub18", GrupoEntry[]> = {
-  sub18: [
-    { grupo: "A", clube: "CG Vilamoura", jogadores: [
-      { nome: "João Crasi Alves",           fed: "39701", hcp: 0 },
-      { nome: "João Maria Ivo de Carvalho", fed: "38334", hcp: 0 },
-      { nome: "Francisco Reis",             fed: "40534", hcp: 0 },
-      { nome: "Martim Pinto Johansen",      fed: "40115", hcp: 0 },
-    ]},
-    { grupo: "B", clube: "Oporto Golf Clube A", jogadores: [
-      { nome: "Guilherme Grabner Moreira",  fed: "42205", hcp: 0 },
-      { nome: "Luis António Silva",         fed: "42845", hcp: 0 },
-      { nome: "Henrique Montenegro",        fed: "39552", hcp: 0 },
-      { nome: "Pedro Ferreira",             fed: "43810", hcp: 0 },
-    ]},
-    { grupo: "C", clube: "Club de Golf de Miramar", jogadores: [
-      { nome: "Tomás Afonso Araujo",        fed: "35849", hcp: 0 },
-      { nome: "Francisca Ferreira Da Costa",fed: "40981", hcp: 0 },
-      { nome: "João Alvim",                 fed: "45340", hcp: 0 },
-      { nome: "Margarida Alves",            fed: "45499",    hcp: 0 },
-      { nome: "Henrique Ferreira da Costa", fed: "41080", hcp: 0 },
-    ]},
-    { grupo: "D", clube: "Clube de Golf do Estoril", jogadores: [
-      { nome: "Reuben Thapa",              fed: "47552", hcp: 0 },
-      { nome: "Gino Vassily Sganzerla",    fed: "41461", hcp: 0 },
-      { nome: "Eleonora Savanovich",       fed: "51319", hcp: 0 },
-      { nome: "Paul Devillers",            fed: "49770",    hcp: 0 },
-    ]},
-    { grupo: "E", clube: "Clube Palheiro Golfe", jogadores: [
-      { nome: "André Gonçalves",           fed: "41121", hcp: 0 },
-      { nome: "José Pedro Miranda",        fed: "38976", hcp: 0 },
-      { nome: "Maria Cunha",               fed: "46482", hcp: 0 },
-      { nome: "Salvador Rodrigues",        fed: "39465", hcp: 0 },
-    ]},
-    { grupo: "F", clube: "Oporto Golf Clube B", jogadores: [
-      { nome: "Sebastiao Sardinha Saraiva",fed: "46195", hcp: 0 },
-      { nome: "Eva Silva",                 fed: "46437", hcp: 0 },
-      { nome: "Maria Loureiro",            fed: "46489", hcp: 0 },
-      { nome: "Teresa Ferreira",           fed: "46589", hcp: 0 },
-      { nome: "Gonçalo Maia",              fed: "46395",    hcp: 0 },
-    ]},
-    { grupo: "G", clube: "Clube de Golfe de Belas", jogadores: [
-      { nome: "Henrique Almeida da Silva", fed: "41612", hcp: 0 },
-      { nome: "Martim Sousa de Morais",    fed: "41609", hcp: 0 },
-      { nome: "Callum Ferguson",           fed: "55697", hcp: 0 },
-      { nome: "Carolina Gaspar",           fed: "44581", hcp: 0 },
-      { nome: "Luís Pinheiro Jr.",         fed: "46590",    hcp: 0 },
-    ]},
-    { grupo: "H", clube: "Lisbon Sports Club", jogadores: [
-      { nome: "Francisco Anahory Assis",      fed: "46009", hcp: 0 },
-      { nome: "Lourenço de Castro Fernandes", fed: "37633", hcp: 0 },
-      { nome: "Ana Bianchi",                  fed: "36861",    hcp: 0 },
-      { nome: "João Gomes",                   fed: "53715", hcp: 0 },
-      { nome: "Francisca Vilela",             fed: "36700", hcp: 0 },
-    ]},
-    { grupo: "I", clube: "CityGolf", jogadores: [
-      { nome: "Diogo Afonso",             fed: "45343", hcp: 0 },
-      { nome: "Francisco Costa Mendes",   fed: "40318", hcp: 0 },
-      { nome: "Pedro Aires",              fed: "42068", hcp: 0 },
-    ]},
-    { grupo: "J", clube: "Clube de Golf da Ilha Terceira", jogadores: [
-      { nome: "Bia Sampaio Mesquita",              fed: "51937", hcp: 0 },
-      { nome: "Madalena Alexandra Van Zeller",     fed: "47078", hcp: 0 },
-      { nome: "João Lucas Fagundes",               fed: "44677", hcp: 0 },
-      { nome: "Maria Fonseca Azevedo",             fed: "44019", hcp: 0 },
-    ]},
-  ],
-  sub14: [
-    { grupo: "A", clube: "Club de Golf de Miramar", jogadores: [
-      { nome: "Santiago Dias",             fed: "42908", hcp: 0 },
-      { nome: "Gaspard Maes",              fed: "51074", hcp: 0 },
-      { nome: "Afonso Silva Pinto",        fed: "46309", hcp: 0 },
-      { nome: "Maria Francisca Santos",    fed: "46853",    hcp: 0 },
-      { nome: "Camila Pazos",              fed: "46297", hcp: 0 },
-    ]},
-    { grupo: "B", clube: "CG Vilamoura", jogadores: [
-      { nome: "Rodrigo Sousa Correia",     fed: "44934", hcp: 0 },
-      { nome: "João Setúbal",              fed: "43732", hcp: 0 },
-      { nome: "Grace Gordon",              fed: "55270", hcp: 0 },
-      { nome: "Salvador Ivo de Carvalho",  fed: "43968", hcp: 0 },
-    ]},
-    { grupo: "C", clube: "Clube de Golfe de Belas", jogadores: [
-      { nome: "Filipe Pinheiro",           fed: "46591", hcp: 0 },
-      { nome: "Frederico Almeida da Silva",fed: "41613", hcp: 0 },
-      { nome: "Clara Trindade",            fed: "45812", hcp: 0 },
-      { nome: "Ryan Dantas",               fed: "45439", hcp: 0 },
-      { nome: "Martim Moreira",            fed: "42985", hcp: 0 },
-    ]},
-    { grupo: "D", clube: "Clube de Golf do Estoril", jogadores: [
-      { nome: "Pedro Costa Alemão",        fed: "46706", hcp: 0 },
-      { nome: "Ruiqi Li",                  fed: "49076", hcp: 0 },
-      { nome: "Nuno Palmares Jr.",         fed: "49124", hcp: 0 },
-      { nome: "Ricardo Castro Ferreira",   fed: "49085",    hcp: 0 },
-      { nome: "João Rocha",                fed: "48297", hcp: 0 },
-    ]},
-    { grupo: "E", clube: "Club de Golf de Miramar B", jogadores: [
-      { nome: "Tomás Rente",               fed: "46311", hcp: 0 },
-      { nome: "Margarida Silva Pinto",     fed: "46310", hcp: 0 },
-      { nome: "Francisco Nunes (jr)",      fed: "46299", hcp: 0 },
-      { nome: "Raul Pazos (jr)",           fed: "46296",    hcp: 0 },
-      { nome: "João Balixa",               fed: "46038", hcp: 0 },
-    ]},
-    { grupo: "F", clube: "CG Vilamoura B", jogadores: [
-      { nome: "Finn Gordon",               fed: "55269", hcp: 0 },
-      { nome: "Catarina Sousa Conceição",  fed: "48794", hcp: 0 },
-      { nome: "Tomás Lima Pinto",          fed: "46037", hcp: 0 },
-      { nome: "Sabrina Ribeiro Crisóstomo",fed: "48971", hcp: 0 },
-    ]},
-    { grupo: "G", clube: "CityGolf", jogadores: [
-      { nome: "João Araújo",               fed: "49012", hcp: 0 },
-      { nome: "Marc Costa",                fed: "46308", hcp: 0 },
-      { nome: "Afonso Paiva Gonçalves",    fed: "47819", hcp: 0 },
-      { nome: "João Pedro Frade",          fed: "45424", hcp: 0 },
-      { nome: "Diogo Lima",                fed: "49717", hcp: 0 },
-    ]},
-    { grupo: "H", clube: "Oporto Golf Clube", jogadores: [
-      { nome: "Dinis Seabra",              fed: "44821", hcp: 0 },
-      { nome: "Diogo Guilherme",           fed: "56632", hcp: 0 },
-      { nome: "Sebastião Soares",          fed: "47341", hcp: 0 },
-      { nome: "Francisco Saraiva",         fed: "39097", hcp: 0 },
-      { nome: "Afonso de Sousa Pinto",     fed: "46480", hcp: 0 },
-    ]},
-    { grupo: "I", clube: "Estela Golf Club", jogadores: [
-      { nome: "Afonso Poiarez",                              fed: "46079", hcp: 0 },
-      { nome: "António R. P. Monteiro",                      fed: "55094", hcp: 0 },
-      { nome: "Afonso Polery",                               fed: "55093", hcp: 0 },
-      { nome: "Julio Brito",                                 fed: "55092", hcp: 0 },
-    ]},
-    { grupo: "J", clube: "Santo Serra Golf Club", jogadores: [
-      { nome: "Manuel Goulartt Medeiros",  fed: "52884", hcp: 0 },
-      { nome: "Mateus Penucho",            fed: "52393", hcp: 0 },
-      { nome: "Gonçalo Gouveia",           fed: "50398", hcp: 0 },
-    ]},
-    { grupo: "K", clube: "Lisbon Sports Club", jogadores: [
-      { nome: "David Stocksreiter Ferreira",fed: "48164", hcp: 0 },
-      { nome: "Francisco Trinité",          fed: "52044", hcp: 0 },
-      { nome: "David Filip",                fed: "51949",    hcp: 0 },
-      { nome: "Filipe Delicado",            fed: "53124", hcp: 0 },
-      { nome: "Diogo Vaz Pinto Jr.",        fed: "51432", hcp: 0 },
-    ]},
-  ],
-};
-
-/** Lookup de grupos por ano — adicionar anos futuros aqui */
-const CLUBES_GRUPOS_BY_YEAR: Record<string, Record<"sub14" | "sub18", GrupoEntry[]>> = {
-  "2026": CLUBES_GRUPOS,
-  "2025": CLUBES_GRUPOS_2025,
-  "2024": {
-    sub14: [
-      { grupo: "A", clube: "CG Vilamoura A", jogadores: [
-        { nome: "Martim Pinto Johansen",       fed: "40115", hcp: 0 },
-        { nome: "Francisco Reis",              fed: "40534", hcp: 0 },
-        { nome: "Brooks Barker",               fed: "43359", hcp: 0 },
-        { nome: "Rodrigo Sousa Correia",       fed: "44934", hcp: 0 },
-      ]},
-      { grupo: "B", clube: "Club de Golf de Miramar Azul", jogadores: [
-        { nome: "João Alvim",                  fed: "45340", hcp: 0 },
-        { nome: "Santiago Dias",               fed: "42908", hcp: 0 },
-        { nome: "Francisca Ferreira da Costa", fed: "40981", hcp: 0 },
-        { nome: "Gaspard Maes",                fed: "51074",    hcp: 0 },
-        { nome: "Henrique Ferreira da Costa",  fed: "41080", hcp: 0 },
-      ]},
-      { grupo: "C", clube: "CG Vilamoura B", jogadores: [
-        { nome: "Grace Gordon",                fed: "55270", hcp: 0 },
-        { nome: "Finn Gordon",                 fed: "55269", hcp: 0 },
-        { nome: "Salvador Ivo de Carvalho",    fed: "43968", hcp: 0 },
-        { nome: "Tomás Lima Pinto",            fed: "46037", hcp: 0 },
-      ]},
-      { grupo: "D", clube: "Club de Golf de Miramar Branco", jogadores: [
-        { nome: "Margarida Alves",             fed: "45499", hcp: 0 },
-        { nome: "Camila Pazos",                fed: "46297", hcp: 0 },
-        { nome: "Maria Francisca Santos",      fed: "46853", hcp: 0 },
-        { nome: "Raul Pazos (jr)",             fed: "46296",    hcp: 0 },
-        { nome: "Francisco Nunes (jr)",        fed: "46299", hcp: 0 },
-      ]},
-      { grupo: "E", clube: "Clube de Golfe Citynorte", jogadores: [
-        { nome: "Afonso Silva Pinto",          fed: "46309", hcp: 0 },
-        { nome: "Francisco Saraiva",           fed: "39097", hcp: 0 },
-        { nome: "Tomás Rente",                 fed: "46311", hcp: 0 },
-        { nome: "Margarida Silva Pinto",       fed: "46310", hcp: 0 },
-      ]},
-      { grupo: "F", clube: "Clube de Golfe de Belas", jogadores: [
-        { nome: "Filipe Pinheiro",             fed: "46591", hcp: 0 },
-        { nome: "Frederico Almeida da Silva",  fed: "41613", hcp: 0 },
-        { nome: "Martim Moreira",              fed: "42985", hcp: 0 },
-        { nome: "João Rocha",                  fed: "48297", hcp: 0 },
-      ]},
-      { grupo: "G", clube: "Oporto Golf Clube", jogadores: [
-        { nome: "Eva Silva",                   fed: "46437", hcp: 0 },
-        { nome: "Gonçalo Maia",                fed: "46395", hcp: 0 },
-        { nome: "Afonso de Sousa Pinto",       fed: "46480", hcp: 0 },
-        { nome: "Dinis Seabra",                fed: "44821", hcp: 0 },
-      ]},
-    ],
-    sub18: [
-      { grupo: "A", clube: "Aroeira Golf Club", jogadores: [
-        { nome: "Inês Belchior",               fed: "38424", hcp: 0 },
-        { nome: "Rodrigo Marques Santos",      fed: "37152", hcp: 0 },
-        { nome: "António Teixeira e Costa",    fed: "37680", hcp: 0 },
-        { nome: "Pedro Santos Pereira",        fed: "46577", hcp: 0 },
-      ]},
-      { grupo: "B", clube: "Oporto Golf Clube A", jogadores: [
-        { nome: "Francisca Rocha",             fed: "40958", hcp: 0 },
-        { nome: "Luis António Silva",          fed: "42845", hcp: 0 },
-        { nome: "Henrique Montenegro",         fed: "39552", hcp: 0 },
-        { nome: "André Neto Lopes",            fed: "41173",    hcp: 0 },
-        { nome: "Guilherme Grabner Moreira",   fed: "42205", hcp: 0 },
-      ]},
-      { grupo: "C", clube: "Club de Golf de Miramar", jogadores: [
-        { nome: "Diogo Silva Pinto Rocha",     fed: "34186", hcp: 0 },
-        { nome: "Bernardo Costa Pinheiro",     fed: "40682", hcp: 0 },
-        { nome: "Miguel Silveira",             fed: "35404", hcp: 0 },
-        { nome: "Tomás Afonso Araujo",         fed: "35849",    hcp: 0 },
-        { nome: "Duarte Gonçalves",            fed: "35814", hcp: 0 },
-      ]},
-      { grupo: "D", clube: "Clube de Golf do Estoril", jogadores: [
-        { nome: "Konstantin Mikirtumov",       fed: "34238", hcp: 0 },
-        { nome: "José Miguel Franco de Sousa", fed: "40112", hcp: 0 },
-        { nome: "Leonardo Miguel Tilly Alves", fed: "44453", hcp: 0 },
-        { nome: "Reuben Thapa",                fed: "47552", hcp: 0 },
-      ]},
-      { grupo: "E", clube: "CG Vilamoura", jogadores: [
-        { nome: "Tiago Abrantes",              fed: "38315", hcp: 0 },
-        { nome: "João Crasi Alves",            fed: "39701", hcp: 0 },
-        { nome: "Dinis Silva Rebelo",          fed: "36678", hcp: 0 },
-        { nome: "João Maria Ivo de Carvalho",  fed: "38334", hcp: 0 },
-      ]},
-      { grupo: "F", clube: "Oporto Golf Clube B", jogadores: [
-        { nome: "Pedro Ferreira",              fed: "43810", hcp: 0 },
-        { nome: "Miguel Dinis Ferreira",       fed: "41744", hcp: 0 },
-        { nome: "Simão Oliveira",              fed: "47002", hcp: 0 },
-        { nome: "Teresa Ferreira",             fed: "46589", hcp: 0 },
-      ]},
-      { grupo: "G", clube: "Clube de Golfe Citynorte", jogadores: [
-        { nome: "Diogo Marques Lopes",         fed: "35874", hcp: 0 },
-        { nome: "Pedro Aires",                 fed: "42068", hcp: 0 },
-        { nome: "Diogo Afonso",                fed: "45343", hcp: 0 },
-        { nome: "Diogo Vieira",                fed: "45475", hcp: 0 },
-      ]},
-      { grupo: "H", clube: "Clube de Golfe de Belas", jogadores: [
-        { nome: "Sebastião Cadete",            fed: "43972", hcp: 0 },
-        { nome: "Ricardo Morna",               fed: "39899", hcp: 0 },
-        { nome: "Pedro Castro Mendes",         fed: "44561", hcp: 0 },
-        { nome: "Henrique Almeida da Silva",   fed: "41612", hcp: 0 },
-      ]},
-      { grupo: "I", clube: "Vale de Janelas Golf Club", jogadores: [
-        { nome: "Francisca Salgado",           fed: "43832", hcp: 0 },
-        { nome: "Mafalda Bandeira",            fed: "46646", hcp: 0 },
-        { nome: "Marie Pinto da Cunha",        fed: "48049", hcp: 0 },
-        { nome: "Maximilian Hermelin",         fed: "46434", hcp: 0 },
-      ]},
-      { grupo: "J", clube: "Lisbon Sports Club", jogadores: [
-        { nome: "Lourenço de Castro Fernandes",fed: "37633", hcp: 0 },
-        { nome: "Vasco Dias Agudo",            fed: "36810", hcp: 0 },
-        { nome: "Ana Bianchi",                 fed: "36861", hcp: 0 },
-        { nome: "Joaquim Gomes",               fed: "53714", hcp: 0 },
-      ]},
-      { grupo: "K", clube: "Clube de Golf da Ilha Terceira", jogadores: [
-        { nome: "Bia Sampaio Mesquita",              fed: "51937", hcp: 0 },
-        { nome: "Madalena Alexandra Van Zeller",     fed: "47078", hcp: 0 },
-        { nome: "Maria Fonseca Azevedo",             fed: "44019", hcp: 0 },
-        { nome: "João Lucas Fagundes",               fed: "44677", hcp: 0 },
-      ]},
-    ],
-  },
-};
-
-/**
- * Mapa tcode → pill de torneio.
- * Adicionar aqui novos torneios conforme necessário.
- */
-const TOURN_PILLS: Record<string, TournPill> = {
-  "10444": "PJA",   // AT&T PEBBLE BEACH PRO-AM BY TITLEIST (Royal Óbidos, 2025-02-01)
-  "10492": "PJA",   // Aroeira Master by Details (Fev 2025)
-  "10036": "PJA",   // Ribagolfe Oaks Masters 2025
-  "10260": "PJA",   // Greatgolf Junior Open w/ Luis Figo Foundation (Vilamoura Millennium, 2025-03-02) — confirmado oficial PJA pelo Excel da comissão técnica
-  "10019": "PJA",   // Race to Dunas G. Final (Comporta Dunas, 2025-11-29) — Grande Final 2025
-};
-
-
-/** Constrói o URL de um índice: 0 → /data/pull-torneios000.json */
-function dataUrl(idx: number): string {
-  return DATA_BASE_URL + String(idx).padStart(DATA_DIGITS, "0") + DATA_EXT;
-}
-
-interface FileMeta {
-  file: string; index: number;
-  lastUpdated?: string; source?: string; count: number;
-}
-
-/* PlayersDB, MANUEL_FED importados de tournamentPrimitives */
-
-interface DriveData {
-  lastUpdated?: string; source?: string;
-  totalTournaments: number; totalPlayers: number;
-  tournaments: Tournament[];
-}
-
-
-export function TournamentDetail({ tournament, escLookup, playersDB }: { tournament: Tournament; escLookup: EscLookup; playersDB: PlayersDB }) {
-  const isMulti = (tournament.rounds || 1) > 1 && tournament.players.some(p => (p.roundScores?.length ?? 0) > 1);
-  const nRounds = tournament.rounds || 1;
-  const hasAnyRounds = (tournament.players?.length ?? 0) > 0;
-
-  // Dados extra (admissions + draws) — injectados no loader Jovens
-  const admissions = (tournament as any)._admissions as import("../data/nacional2026Loader").FpgAdmissions | undefined;
-  const draws      = (tournament as any)._draws as Record<string, import("../data/nacional2026Loader").FpgDraw> | undefined;
-  const hasAdmissions = !!admissions && !admissions.error && (admissions.players?.length ?? 0) > 0;
-  const drawsByRound = useMemo(() => {
-    const out = new Map<number, import("../data/nacional2026Loader").FpgDraw>();
-    if (draws) for (const [k, d] of Object.entries(draws)) {
-      if (d && (d.groups?.length ?? 0) > 0) out.set(parseInt(k, 10), d);
-    }
-    return out;
-  }, [draws]);
-
-  // Expanded list: R1, R2, ..., Resumo
-  const expanded = useMemo(() => expandMultiRound(tournament), [tournament]);
-
-  /**
-   * Ordem canónica das tabs:
-   *   Inscrições → Draw R1 → R1 → Draw R2 → R2 → Draw R3 → R3 → Resumo → 📋 Scorecards
-   * Só aparecem tabs cujos dados existem.
-   *
-   * Internamente cada tab é identificada por uma chave:
-   *   "admissions", "draw:N" (N=1..3), "round:I" (I=índice em expanded, exclui Resumo),
-   *   "resumo", "scorecards"
-   */
-  const COMBINED_TAB = "📋 Scorecards";
-  type TabDef = { key: string; label: string };
-  const tabs: TabDef[] = useMemo(() => {
-    const out: TabDef[] = [];
-    if (hasAdmissions) out.push({ key: "admissions", label: "Inscrições" });
-    if (isMulti) {
-      // expanded é [R1, R2, ..., RN, Resumo] — últio elemento é o Resumo.
-      const rondas = expanded.filter((e: any) => !e._isTotal);
-      const temResumo = expanded.some((e: any) => e._isTotal);
-      for (let i = 0; i < rondas.length; i++) {
-        const roundNum = i + 1;
-        if (drawsByRound.has(roundNum)) {
-          out.push({ key: `draw:${roundNum}`, label: `Draw R${roundNum}` });
-        }
-        out.push({ key: `round:${i}`, label: (rondas[i] as any)._roundLabel || `R${roundNum}` });
-      }
-      if (temResumo) out.push({ key: "resumo", label: "Resumo" });
-      out.push({ key: "scorecards", label: COMBINED_TAB });
-      // Tab "Análise Aroeira II" — só para o PJA Aroeira Masters 2026 (029/10543)
-      if (tournament.ccode === "029" && tournament.tcode === "10543") {
-        out.push({ key: "analise-aroeira2", label: "🎯 Análise" });
-      }
-    } else if (hasAnyRounds) {
-      // 1-round OU multi-round parcialmente jogado (ex: R1 com scorecards, R2
-      // ainda só draw publicado). Mostrar:
-      //   - Draw R1 (se existir) → Scorecard (R1) → Draw R2..N (se houver)
-      if (drawsByRound.has(1)) out.push({ key: "draw:1", label: "Draw R1" });
-      out.push({ key: "round:0", label: nRounds > 1 ? "R1" : "Scorecard" });
-      // Draws de rondas futuras ainda não jogadas (R2, R3, ...)
-      const futureDraws = [...drawsByRound.keys()].filter(r => r >= 2).sort((a, b) => a - b);
-      for (const r of futureDraws) {
-        out.push({ key: `draw:${r}`, label: `Draw R${r}` });
-      }
-    } else {
-      // Sem rondas jogadas — pode ter só draws (torneio prestes a começar)
-      const drawKeys = [...drawsByRound.keys()].sort((a, b) => a - b);
-      for (const r of drawKeys) out.push({ key: `draw:${r}`, label: `Draw R${r}` });
-    }
-    return out;
-  }, [hasAdmissions, isMulti, expanded, drawsByRound, hasAnyRounds]);
-
-  // Tab activa = URL state (?tab=KEY). Permite deep-links como
-  //   /FPG/torneio/000-10935?tab=draw:1   → abre directo no Draw R1
-  //   /FPG/torneio/000-10935?tab=admissions
-  // Quando o URL não traz `tab` (ou traz uma key que não existe neste torneio)
-  // selecciona-se o tab mais avançado na progressão natural do torneio:
-  //   Inscrições → Draw R1 → R1 → Draw R2 → R2 → ... → Resumo
-  // Assim, quem abre o torneio vai sempre para a fase mais recente disponível
-  // (admissions enquanto só houver inscrições, draw R1 quando o sorteio sair,
-  // R1 quando se jogar, draw R2 quando publicado, etc.). Os tabs de agregação
-  // ("📋 Scorecards", "🎯 Análise") são vistas alternativas e ficam fora do
-  // auto-select — quem quer essas vai por link explícito.
-  const [searchParams] = useSearchParams();
-  const urlTabKey = searchParams.get("tab");
-  const urlTabIdx = urlTabKey ? tabs.findIndex(t => t.key === urlTabKey) : -1;
-  const lastProgressionIdx = useMemo(() => {
-    const SKIP = new Set(["scorecards", "analise-aroeira2"]);
-    for (let i = tabs.length - 1; i >= 0; i--) {
-      if (!SKIP.has(tabs[i].key)) return i;
-    }
-    return 0;
-  }, [tabs]);
-  const tab = urlTabIdx >= 0 ? urlTabIdx : lastProgressionIdx;
-
-  const activeTab = tabs[Math.min(tab, Math.max(0, tabs.length - 1))];
-  const activeKey = activeTab?.key || "";
-  const isAdmissionsTab = activeKey === "admissions";
-  const isDrawTab = activeKey.startsWith("draw:");
-  const drawRoundNum = isDrawTab ? parseInt(activeKey.slice(5), 10) : 0;
-  const isResumoTab = activeKey === "resumo";
-  const isCombinedTab = activeKey === "scorecards";
-  const isAnaliseAroeiraTab = activeKey === "analise-aroeira2";
-  const isRoundTab = activeKey.startsWith("round:");
-  const roundIdx = isRoundTab ? parseInt(activeKey.slice(6), 10) : 0;
-
-  // curT só é relevante para round/resumo tabs (lógica existente)
-  const expandedIdxForCurT = isResumoTab
-    ? expanded.findIndex((e: any) => e._isTotal)
-    : isRoundTab
-      ? expanded.findIndex((e: any, i: number) => !e._isTotal && expanded.filter((x: any, j: number) => !x._isTotal && j <= i).length === roundIdx + 1)
-      : -1;
-  const curT = expandedIdxForCurT >= 0 && expanded[expandedIdxForCurT] ? expanded[expandedIdxForCurT] : tournament;
-  const isAcc = isResumoTab;
-  const isCombined = isCombinedTab;
-
-  // Info about tournament
-  const refPlayer = tournament.players[0];
-  const nholes = refPlayer?.nholes || refPlayer?.par?.length || refPlayer?.roundScores?.[0]?.pars?.length || 18;
-  const parTotal = refPlayer?.parTotal || refPlayer?.par?.reduce((a, b) => a + b, 0) || refPlayer?.roundScores?.[0]?.pars.reduce((a, b) => a + b, 0) || 0;
-
-
-  return (
-    <div>
-      {/* Cabeçalho */}
-      <div className="detail-header">
-        <div className="flex-wrap gap-8" style={{ display: "flex", alignItems: "baseline" }}>
-          {/* Título clicável: link canónico `/FPG/torneio/{ccode}-{tcode}`.
-              Preserva right-click "abrir em nova aba", Ctrl/Cmd+click, middle-click,
-              preview de URL. O próprio h2 continua visualmente inalterado. */}
-          {(() => {
-            const canonicalUrl = tournamentUrl("FPG", tournament.ccode, tournament.tcode);
-            return canonicalUrl ? (
-              <a
-                href={canonicalUrl}
-                title="Link canónico do torneio (abrir em nova aba para partilhar)"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ color: "inherit", textDecoration: "none" }}>
-                <h2 className="detail-title" style={{ margin: 0 }}>{tournament.name}</h2>
-              </a>
-            ) : (
-              <h2 className="detail-title" style={{ margin: 0 }}>{tournament.name}</h2>
-            );
-          })()}
-          <div className="gap-4" style={{ display: "flex", alignItems: "center" }}>
-            {tournament.ccode && (
-              <span title="tclub" className="fs-10 fw-600 mono" style={{
-                background: "var(--bg-hover)", color: "var(--text-muted)",
-                border: "1px solid var(--border)",
-                borderRadius: 4, padding: "1px 6px", letterSpacing: "0.02em",
-                userSelect: "all", cursor: "text",
-              }}>
-                {tournament.ccode}
-              </span>
-            )}
-            {tournament.tcode && (
-              <span title="tcode" className="fs-10 fw-700 mono" style={{
-                background: "var(--accent)", color: "#fff",
-                borderRadius: 4, padding: "1px 6px", letterSpacing: "0.02em",
-                userSelect: "all", cursor: "text",
-              }}>
-                {tournament.tcode}
-              </span>
-            )}
-            {/* Botões INSCRIÇÕES + DRAW + SCORING — todos mesmo tamanho/estilo.
-                Uniformizados para consistência em todas as páginas de torneio. */}
-            {tournament._isSynthetic
-              ? (tournament._subRounds ?? []).map((sr, i) => (
-                  sr.ccode && sr.tcode
-                    ? <React.Fragment key={sr.tcode}>
-                        <a href={fpgAdmissionsUrl(sr.ccode, sr.tcode)}
-                          target="_blank" rel="noopener noreferrer"
-                          title={`Inscrições do Dia ${i + 1}`}
-                          className="tourn-ext-link">
-                          Inscrições D{i + 1} ↗
-                        </a>
-                        <a href={fpgDrawUrl(sr.ccode, sr.tcode)}
-                          target="_blank" rel="noopener noreferrer"
-                          title={`Draw do Dia ${i + 1}`}
-                          className="tourn-ext-link">
-                          Draw D{i + 1} ↗
-                        </a>
-                        <a href={fpgScoringUrl(sr.ccode, sr.tcode)}
-                          target="_blank" rel="noopener noreferrer"
-                          title={`Classificação do Dia ${i + 1}`}
-                          className="tourn-ext-link">
-                          Scoring D{i + 1} ↗
-                        </a>
-                      </React.Fragment>
-                    : null
-                ))
-              : tournament.ccode && tournament.tcode && (
-                  <>
-                    <a href={fpgAdmissionsUrl(tournament.ccode, tournament.tcode)}
-                      target="_blank" rel="noopener noreferrer"
-                      title="Inscrições (tournAdmissions) na Federação"
-                      className="tourn-ext-link">
-                      Inscrições ↗
-                    </a>
-                    <a href={fpgDrawUrl(tournament.ccode, tournament.tcode)}
-                      target="_blank" rel="noopener noreferrer"
-                      title="Emparelhamentos (Draw) na Federação"
-                      className="tourn-ext-link">
-                      Draw ↗
-                    </a>
-                    <a href={fpgScoringUrl(tournament.ccode, tournament.tcode)}
-                      target="_blank" rel="noopener noreferrer"
-                      title="Classificação (Scoring) na Federação"
-                      className="tourn-ext-link">
-                      Scoring ↗
-                    </a>
-                  </>
-                )
-            }
-            {/* Links extra específicos do torneio — regulamento, página do
-                clube/evento, etc. Carregados de Tournament.extraLinks. */}
-            {(tournament.extraLinks || []).map((lnk) => (
-              <a key={lnk.url} href={lnk.url}
-                target="_blank" rel="noopener noreferrer"
-                title={lnk.label}
-                className="tourn-ext-link">
-                {lnk.icon ? `${lnk.icon} ` : ""}{lnk.label} ↗
-              </a>
-            ))}
-            <PrintButton />
-            {/* PrintPJAButton carrega pja-members.json sozinho — só aparece
-                se houver lista para o ano do torneio. */}
-            <PrintPJAButton year={(tournament.date || "").substring(0, 4)} />
-          </div>
-        </div>
-        <div className="detail-sub">
-          {tournament.campo && <span className="muted">📍 {tournament.campo}</span>}
-          <span className="muted ml-8" >{fmtDate(tournament.date)}</span>
-          {/* Pills individuais — reutilizam os componentes globais (consistência com a sidebar).
-              Ordem: stats básicos (jog, ronda, 9H, par) → características do torneio (escalão,
-              NACIONAL, JUNIOR, SSerra, Clube, Manuel). */}
-          <span className="gap-4 ml-8" style={{ display: "inline-flex", alignItems: "center", flexWrap: "wrap" }}>
-            {tournament.playerCount != null && (
-              <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)", border: "1px solid var(--border)" }}>
-                {tournament.playerCount} jog
-              </span>
-            )}
-            {nRounds > 1 && <RoundPill nR={nRounds} />}
-            {nholes <= 9 && <NineHPill />}
-            {parTotal > 0 && (
-              <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)", border: "1px solid var(--border)" }}>
-                Par {parTotal}
-              </span>
-            )}
-            {tournament.escalao && <EscPill esc={tournament.escalao} />}
-            {/NACIONAL/i.test(tournament.name || "") && <NacionalPill />}
-            {/JUNIOR|J[ÚU]NIOR/i.test(tournament.name || "") && <JuniorPill />}
-            {tournament.ccode === SSERRA_CCODE && <SserraPill />}
-            {tournament.ccode !== SSERRA_CCODE && <ClubePill clube={tournament.clube} ccode={tournament.ccode} />}
-            {tournamentHasManuel(tournament) && <ManuelPill />}
-          </span>
-
-        </div>
-        <LinksBar links={tournament.links} escalao={tournament.escalao} />
-      </div>
-
-      {/* Nota editorial do torneio (_note) — usada para contexto cross-torneio
-          (ex: "alguns jogadores jogaram simultaneamente no Absoluto").
-          Estilo de ALERTA (amber/warning) para chamar à atenção. */}
-      {(tournament as any)._note && (
-        <div className="fs-12 fw-600" style={{
-          padding: "10px 14px", margin: "8px 12px",
-          background: "var(--bg-warn-subtle, #fef3c7)",
-          border: "1px solid var(--color-warn, #f59e0b)",
-          borderRadius: 6,
-          color: "var(--text-1, #1f2937)", lineHeight: 1.45,
-        }}>
-          ⚠️ {(tournament as any)._note}
-        </div>
-      )}
-
-      {/* Tabs renderizadas como Link → cada tab tem URL próprio (?tab=KEY),
-          deep-linkable e copiável via right-click. Só mostra se há >1 tab. */}
-      {tabs.length > 1 && (
-        <div className="tab-bar">
-          {tabs.map((t, i) => {
-            const sp = new URLSearchParams(searchParams);
-            sp.set("tab", t.key);
-            return (
-              <Link
-                key={t.key}
-                to={{ search: `?${sp.toString()}` }}
-                replace
-                className={`tab-under${tab === i ? " active" : ""}`}
-                style={{ textDecoration: "none" }}
-              >
-                {t.label}
-              </Link>
-            );
-          })}
-        </div>
-      )}
-
-      {/* Conteúdo */}
-      {isAdmissionsTab && admissions
-        ? <AdmissionsTab
-            admissions={admissions}
-            playersDB={playersDB as any}
-            date={tournament.date}
-            fpgUrl={tournament.ccode && tournament.tcode ? `https://scoring.fpg.pt/lists/tournAdmissions.aspx?ccode=${tournament.ccode}&tcode=${tournament.tcode}` : undefined}
-            tournamentEscalao={tournament.escalao || undefined}
-            tournamentSex={/\bF\b|\bS\b|Feminino/i.test(tournament.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(tournament.name || "") ? "M" : undefined}
-          />
-        : isDrawTab
-          ? <DrawTab
-              draw={drawsByRound.get(drawRoundNum) || { groups: [] }}
-              roundNum={drawRoundNum}
-              playersDB={playersDB as any}
-              tournamentEscalao={tournament.escalao || undefined}
-              tournamentSex={/\bF\b|\bS\b|Feminino/i.test(tournament.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(tournament.name || "") ? "M" : undefined}
-              tournamentDate={tournament.date}
-              admissions={admissions}
-              fpgUrl={tournament.ccode && tournament.tcode ? `https://scoring.fpg.pt/lists/linkpage.aspx?page=draw&club=${tournament.ccode}&tourn=${tournament.tcode}&round=${drawRoundNum}&ack=8428ACK987` : undefined}
-            />
-          : isCombined
-            ? <AllRoundsScorecardLB tournament={tournament} escLookup={escLookup} playersDB={playersDB} />
-            : isAnaliseAroeiraTab
-              ? <Aroeira2AnaliseView tournament={tournament} />
-              : isAcc
-              ? <AccumulatedLB tournament={curT} nRounds={nRounds} escLookup={escLookup} playersDB={playersDB} />
-              : isRoundTab || !isMulti
-                ? <ScorecardLB tournament={curT} escLookup={escLookup} playersDB={playersDB} />
-                : null /* sem tabs válidas — pode ser torneio futuro sem admissions (unlikely) */
-      }
-    </div>
-  );
-}
+// ── Módulos extraídos (refactor 2026-05-09) ──────────────────────────────
+import {
+  DATA_MAX, PRE_2020_KEY, yearMatchesFilter, dataUrl,
+  TOURN_PILLS, type TournPill, type FileMeta, type DriveData,
+} from "./fpg/constants";
+import {
+  type SeriesKey, URL_TO_FILTER, URL_TO_NAV, NAV_TO_URL, FILTER_TO_URL, INSCRITOS_SHORTCUTS,
+} from "./fpg/routes";
+import { CLUBES_GRUPOS_BY_YEAR } from "../data/clubesGruposData";
+import { TournamentDetail } from "./fpg/TournamentDetail";
 
 /* ─────────────────────────────────────────────
    MAIN CONTENT
@@ -877,41 +66,6 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
 
 
 /* InscricoesPanel, buildJovensGroups, TERMOS_COMPETICAO, JovensGroup — importados de fpg/InscricoesComponents */
-
-// Mapa URL-segment ↔ seriesFilter — usado para sincronizar URL e estado.
-type SeriesKey = "" | "circuit" | "santo" | "clubes" | "jovens";
-const URL_TO_FILTER: Record<string, SeriesKey> = {
-  jovens:  "jovens",
-  clubes:  "clubes",
-  sto:     "santo",
-  santo:   "santo",    // alias
-  pja:     "circuit",
-  circuit: "circuit",  // alias
-};
-
-// Mapa URL-segment ↔ navMode (tabs "Torneios" / "Ranking PJA" / "Ranking Sub-12").
-// ⚠ As chaves têm de ser lowercase porque `urlSeg = params.filter.toLowerCase()`.
-// Para preservar leitura natural na URL ("rankingPJA"), usamos redirect no lookup.
-const URL_TO_NAV: Record<string, "torneios" | "ranking-pja" | "ranking-sub12"> = {
-  rankingpja:   "ranking-pja",
-  rankingsub12: "ranking-sub12",
-};
-// URLs geradas — mantemos o case "camelCase" para leitura, mas o comparison
-// com urlSeg é sempre lowercase.
-const NAV_TO_URL: Record<"torneios" | "ranking-pja" | "ranking-sub12", string> = {
-  "torneios":      "",
-  "ranking-pja":   "rankingPJA",
-  "ranking-sub12": "rankingSub12",
-};
-const FILTER_TO_URL: Record<SeriesKey, string> = {
-  "":        "",
-  jovens:    "jovens",
-  clubes:    "clubes",
-  santo:     "sto",
-  circuit:   "pja",
-};
-// Atalhos que abrem directamente JOVENS com o painel de inscrições (case-insensitive)
-const INSCRITOS_SHORTCUTS = new Set(["inscritoscn", "inscritos"]);
 
 function Content() {
   const location = useLocation();
@@ -1079,14 +233,39 @@ function Content() {
       try {
         // loadPlayers() usa fetchCache — 1 único fetch por sessão mesmo que FPGPage,
         // DrivePage e App.tsx o peçam em simultâneo.
-        const [pdb, linksResp, kidsLinksResp] = await Promise.all([
+        const [pdb, linksResp, kidsLinksResp, natResp, kidsTrackedResp] = await Promise.all([
           loadPlayers().catch(() => ({} as PlayersDB)),
           fetch("/data/tournament-links.json").catch(() => null),
           fetch("/data/kids-links.json").catch(() => null),
+          fetch("/data/players-nationality.json").catch(() => null),
+          fetch("/data/kids-tracked-names.json").catch(() => null),
         ]);
-        // Merge kids-links.json no playersDB — adiciona entries virtuais com
-        // fedKey sintético "intl:<name>" para jogadores internacionais, para que
-        // o TournPName encontre o `kidsHash` via name-match e rendirize ↗ Kids.
+        // Merge players-nationality.json no playersDB — para cada federado FPG
+        // estrangeiro (Joe Short→GB, Peter Yao→CN, etc.) injecta `country` no
+        // entry existente, para o TournPName renderizar 🇬🇧 antes do nome.
+        if (natResp?.ok) {
+          try {
+            const nat = await natResp.json();
+            const byFed: Record<string, string> = nat?.byFed || {};
+            for (const fed in byFed) {
+              const cc = byFed[fed];
+              if (!cc) continue;
+              const entry = (pdb as any)[fed];
+              if (entry) {
+                // só sobrepõe se ainda não tiver country definido
+                if (!entry.country) entry.country = cc;
+              } else {
+                // entry não existe (federado em federados-inativos.json mas não
+                // em players.json) — cria stub mínimo só com country, suficiente
+                // para o TournPName renderizar bandeira numa scorecard.
+                (pdb as any)[fed] = { country: cc };
+              }
+            }
+          } catch { /* ignore */ }
+        }
+        // Merge kids-links.json no playersDB — entries CURADOS para
+        // jogadores internacionais sem fedCode português (Emile Cuanalo,
+        // George Campbell, etc.). Mantém precedência sobre auto-derived.
         if (kidsLinksResp?.ok) {
           try {
             const kl = await kidsLinksResp.json();
@@ -1099,6 +278,32 @@ function Content() {
                 ...(entry.country ? { country: entry.country } : {}),
                 ...(entry.escalao ? { escalao: entry.escalao } : {}),
                 ...(entry.sex ? { sex: entry.sex } : {}),
+              };
+            }
+          } catch { /* ignore */ }
+        }
+        // Merge kids-tracked-names.json — índice fino (~150KB) com todos os
+        // nomes que aparecem nalguma fonte /kids (USKids, WJGC, Doral, etc.).
+        // Para cada nome aqui, cria entry virtual com kidsHash = memberId
+        // (preferido — link directo via ID) ou nome encodificado (fallback).
+        // Isto resolve o problema de ↗ aparecer em jogadores que NÃO estão
+        // em /kids: agora só aparece quando há match REAL com a fonte.
+        if (kidsTrackedResp?.ok) {
+          try {
+            const kt = await kidsTrackedResp.json();
+            const namesMap: Record<string, string | null> = kt?.names || {};
+            for (const normName in namesMap) {
+              if (!normName) continue;
+              const memberId = namesMap[normName];
+              const key = "kids:" + normName.replace(/\s+/g, "_");
+              if ((pdb as any)[key]) continue; // já populado por kids-links.json
+              // displayName: usa o nome normalizado em Title Case como fallback.
+              // O matching no TournPName é por nome normalizado, portanto o
+              // case display não importa para o lookup.
+              const displayName = normName.replace(/\b\w/g, c => c.toUpperCase());
+              (pdb as any)[key] = {
+                name: displayName,
+                kidsHash: memberId || encodeURIComponent(displayName),
               };
             }
           } catch { /* ignore */ }

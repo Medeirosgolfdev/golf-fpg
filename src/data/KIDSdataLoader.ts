@@ -1149,6 +1149,127 @@ export function processFpgJuniorTourns(d: unknown): AutoRivalPlayer[] {
   return all;
 }
 
+/**
+ * Variante de processFpgJuniorTourns usada na Fase 4a (jovens_YYYY.json).
+ * Diferenças:
+ *   - Aceita QUALQUER escalão "Sub *" (Sub 10/12/14/16/18/21, etc.) e variantes
+ *     ("Sub 10&12", "Sub 14 a 24"). Não filtra por idade — o uso enrich-only
+ *     no caller garante que só rivais já existentes ficam.
+ *   - ageMin/ageMax são derivados do escalão para registo em fpgTournNames.
+ *
+ * Tcodes em PULL_TCODE_TO_TID são ignorados (tratados pelo processPullTorneios).
+ */
+export function processFpgJovensAll(d: unknown): AutoRivalPlayer[] {
+  const data = d as {
+    tournaments?: Array<{
+      name: string; ccode?: string; tcode?: string; date?: string; campo?: string;
+      escalao?: string; rounds?: number;
+      players?: Array<{
+        pos?: number; name: string; club?: string; fedCode?: string;
+        grossTotal?: number; toPar?: number; nholes?: number;
+        roundScores?: Array<{
+          round: number; gross: number;
+          scores?: number[]; pars?: number[]; si?: number[]; meters?: number[];
+        }>;
+      }>;
+    }>;
+  };
+  if (!data?.tournaments?.length) return [];
+
+  // Detecta escalão "Sub N" ou "Sub N&M" ou "Sub N a M" — devolve [ageMin, ageMax]
+  const parseEscAges = (escalao: string): [number, number] | null => {
+    const s = (escalao || "").trim();
+    if (!s) return null;
+    // "Sub N&M" ou "Sub N e M"
+    const dual = s.match(/Sub\s*(\d+)\s*[&e]\s*(\d+)/i);
+    if (dual) return [Math.min(+dual[1], +dual[2]) - 1, Math.max(+dual[1], +dual[2])];
+    // "Sub N a M"
+    const range = s.match(/Sub\s*(\d+)\s*a\s*(\d+)/i);
+    if (range) return [Math.min(+range[1], +range[2]) - 1, Math.max(+range[1], +range[2])];
+    // "Sub N"
+    const single = s.match(/Sub\s*(\d+)/i);
+    if (single) return [+single[1] - 1, +single[1]];
+    return null;
+  };
+
+  // Detecta torneio juvenil mesmo sem `escalao` definido — o nome pode ter
+  // "Sub-N", "U-N", "Junior", "Júnior" (após strip de diacríticos). Necessário
+  // para drive-data-*.json e pull-torneios*.json onde campo `escalao` falha.
+  const JUV_NAME_RE = /\b(juniors?|sub[\s-]?\d{1,2}|u\d{1,2})\b/i;
+  const stripAccLocal = (s: string) =>
+    (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "");
+
+  const all: AutoRivalPlayer[] = [];
+  for (const tourn of data.tournaments) {
+    const escalao = (tourn.escalao || "").trim();
+    const isJuvByEsc = !!escalao && /Sub/i.test(escalao);
+    const isJuvByName = JUV_NAME_RE.test(stripAccLocal(tourn.name || ""));
+    if (!isJuvByEsc && !isJuvByName) continue;
+    if (!tourn.tcode) continue;
+    if (PULL_TCODE_TO_TID[tourn.tcode]) continue;     // tratado pelo pull autoritativo
+
+    const tid = `fpg${tourn.tcode}`;
+    const dateExact = (tourn.date || "").slice(0, 10);
+    const ages = parseEscAges(escalao);
+
+    if (!fpgTournNames.has(tid)) {
+      fpgTournNames.set(tid, {
+        name: tourn.name || `t${tourn.tcode}`,
+        short: shortenFpgTournName(tourn.name || "", escalao),
+        date: fpgDateToLabel(dateExact),
+        dateExact,
+        escalao,
+        ageMin: ages ? ages[0] : 0,
+        ageMax: ages ? ages[1] : 99,
+        ccode: tourn.ccode || "000",
+        tcode: tourn.tcode,
+      });
+    }
+
+    let validPlayers = 0;
+    for (const player of tourn.players || []) {
+      if (!player.name) continue;
+      const rounds = (player.roundScores || []).slice().sort((a, b) => a.round - b.round);
+      const validRounds = rounds.filter(rs => typeof rs.gross === "number" && rs.gross > 0);
+      if (!validRounds.length && !player.grossTotal) continue;
+
+      const rd = validRounds.map(rs => rs.gross);
+      const t = player.grossTotal ?? (rd.length ? rd.reduce((a, b) => a + b, 0) : null);
+      const tp = typeof player.toPar === "number" ? player.toPar : null;
+      const p = player.pos ?? null;
+
+      const r0 = validRounds.find(rs => rs.scores?.length && rs.pars?.length);
+      if (r0 && r0.scores && r0.pars && r0.pars.length === r0.scores.length) {
+        const holeRounds = validRounds
+          .map(rs => rs.scores || [])
+          .filter(s => s.length === r0.scores!.length && s.some(v => v > 0));
+        if (holeRounds.length > 0) {
+          addScorecard(normName(player.name), {
+            tid, playerName: player.name,
+            par: r0.pars,
+            si: r0.si || [],
+            meters: r0.meters || [],
+            rounds: holeRounds,
+          });
+        }
+      }
+
+      all.push({
+        n: player.name,
+        co: "",
+        r: { [tid]: {
+          p, t, tp, rd,
+          ageGroup: escalao,
+          nholes: player.nholes || (r0?.scores?.length ?? 18),
+        } },
+      });
+      validPlayers++;
+    }
+    if (validPlayers > 0) uskFieldSizes.set(tid, validPlayers);
+  }
+  return all;
+}
+
 export function processPullTorneios(d: unknown): AutoRivalPlayer[] {
   const data = d as {
     tournaments: Array<{
@@ -1767,7 +1888,10 @@ async function _buildAutoRivalsInternal(
   // ── FASE 2: member history (ficheiro slim único em vez de 46 ficheiros) ──
   const MEMBER_HIST_SLIM = "uskids-member-history-slim.json";
 
-  const totalTasks = coreTasks.length + 2; // +1 slim +1 pull
+  // Total: coreTasks (Fase 1) + 1 slim (Fase 2) + 1 pull autoritativo (Fase 3)
+  // + 7 ficheiros FPG Jovens (Fase 4a: 4 jovens_YYYY + 2 pull-torneios + 1 historico)
+  const FPG_JOVENS_TASK_COUNT = 7;
+  const totalTasks = coreTasks.length + 2 + FPG_JOVENS_TASK_COUNT;
   let done = 0;
   const report = (label: string) => {
     done++;
@@ -1855,8 +1979,67 @@ async function _buildAutoRivalsInternal(
     report("Torneios PT");
   }
 
-  // [Fase 4 FPG-locais removida — KIDSPage foca em juniores internacionais.
-  //  processFpgJuniorTourns continua exportada para uso ad-hoc, mas não corre aqui.]
+  // ── Fase 4a: FPG Jovens — modo enriquecimento ──
+  // Carrega APENAS jovens_YYYY.json (2026/2025/2024/2023) — os mesmos
+  // ficheiros do tab /FPG/jovens. Cobrem Campeonatos Nacionais e Regionais
+  // de Jovens (Sub-10/12/14/16/18) nos últimos 4 anos.
+  //
+  // Filtro juvenil em processFpgJovensAll: (escalão Sub-*) OU (nome contendo
+  // "Junior"/"Sub-N"/"U-N"). Tcodes em PULL_TCODE_TO_TID ficam de fora (já
+  // tratados pela Fase 3 autoritativa).
+  //
+  // Modo enrich-only: cada torneio só dá merge nos rivais que JÁ existam em
+  // `map` (criados pelas fontes internacionais USKids/WJGC/RFEG/FFG/etc.).
+  // Não cria novos rivais — não inundamos /kids com jogadores PT puros.
+  {
+    const FPG_JOVENS_FILES = [
+      "jovens_2026.json", "jovens_2025.json", "jovens_2024.json", "jovens_2023.json",
+      // pull-torneios000.json + 002.json contêm torneios Junior de clubes
+      // (GJG, Vila Sol Junior, Junior 9 hole, etc.) que aparecem em
+      // /FPG/jovens via filtro por nome. Tcodes em PULL_TCODE_TO_TID são
+      // ignorados pela função (Fase 3 trata-os).
+      "pull-torneios000.json", "pull-torneios002.json",
+      // fpg-nacionais-historico.json: histórico dos Campeonatos Nacionais Jovens
+      // (Sub-10/12/14/16/18) 2005-2026. Aparece em /FPG/jovens com label
+      // "Nacional" e fornece os Campeonatos pré-2019 que não estão em jovens_*.json.
+      "fpg-nacionais-historico.json",
+    ];
+    // Aliases — variantes longas mapeadas para o nome canónico que a entrada
+    // D[] do KIDSPage usa. Sem isto, "Manuel Goulartt Medeiros" (FPG) é
+    // rejeitado pelo enrich-only por não casar com a key "manuel medeiros".
+    // Espelha PLAYER_ALIASES em src/pages/KIDSPage.tsx.
+    const NAME_ALIASES: Record<string, string> = {
+      "manuel francisco medeiros": "manuel medeiros",
+      "manuel goulartt medeiros":  "manuel medeiros",
+      "manuel f medeiros":         "manuel medeiros",
+    };
+    await Promise.all(FPG_JOVENS_FILES.map(async (file) => {
+      const path = `${base}${file}`;
+      try {
+        const d = await fetchJson(path);
+        const players = processFpgJovensAll(d);
+        // Enrich-only com alias resolution: rivais existentes (match directo
+        // por normName, ou via NAME_ALIASES quando o nome FPG é variante longa).
+        // Se for via alias, rebaptiza p.n para o canónico ANTES do mergeInto.
+        const existing: AutoRivalPlayer[] = [];
+        for (const p of players) {
+          const nname = normName(p.n);
+          if (map.has(nname)) { existing.push(p); continue; }
+          const alias = NAME_ALIASES[nname];
+          if (alias && map.has(alias)) {
+            existing.push({ ...p, n: map.get(alias)!.n });
+          }
+        }
+        mergeInto(map, existing);
+        _loadedFiles.push({
+          path, status: "loaded", group: "phase 4 fpg-jovens",
+        });
+      } catch (e) {
+        _loadedFiles.push({ path, status: "error", error: String(e), group: "phase 4 fpg-jovens" });
+      }
+      report("FPG Jovens");
+    }));
+  }
 
   // ── Fase 4: FFGolf (Fédération Française de Golf) — torneios juniores FR ──
   // (a) ffgolf-juniors-slim.json: ~560 torneios consolidados U10/U12/U14 desde 2022.
@@ -2217,7 +2400,8 @@ async function _buildAutoRivalsInternal(
       _loadedFiles.push({ path: `spain-enrich:matched=${matched},fuzzy=${fuzzy},rejected=${rejected}`, status: "loaded", group: "phase 3 enrich" });
     }
   } catch (e) {
-    _loadedFiles.push({ path: `spain-enrich:error`, status: "error", error: String(e), group: "phase 3 enrich" });
+    _loadedFiles.push({ path: `spain-
+enrich:error`, status: "error", error: String(e), group: "phase 3 enrich" });
   }
 
   _autoRivalsCache = Array.from(map.values());

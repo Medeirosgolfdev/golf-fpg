@@ -24,13 +24,14 @@ import H2HSortableTable from "./H2HSortableTable";
 import AnaliseSection from "./AnaliseSection";
 import { MemberHistTable } from "./MemberHistTable";
 import { EvolucaoChart, TorneiosRecorrentes, H2HTable, inferNholes } from "./RivalCharts";
-import { D, T, UP, ageLabel, findCard, getPlayerType, getTournInfo, getTournLinks, getTournUrl, getTournWeight, hiddenTids, manuel, nPlayed, tornCanonK, useMH, useRivals, useScoringStatsCtx, yearOf, rankMap, totalRanked, AUTO_TOURN_NAMES, AUTO_TOURN_META } from "../KIDSPage";
+import { D, T, UP, ageLabel, findCard, getPlayerType, getTournInfo, getTournLinks, getTournUrl, getTournWeight, hiddenTids, manuel, nPlayed, tornCanonK, useMH, useRivals, useRivalsLoaded, useScoringStatsCtx, yearOf, rankMap, totalRanked, AUTO_TOURN_NAMES, AUTO_TOURN_META } from "../KIDSPage";
 import { computeDobInfo, escalaoIntl, T_MAP } from "./dobInference";
 import { EOWAGR25_CARDS, EOWAGR25_M, EOWAGR25_PAR, EOWAGR25_SI, WJGC26_1213_CARDS, WJGC26_1213_M, WJGC26_1213_PAR, WJGC26_1213_SI, WJGC26_CARDS, WJGC26_M, WJGC26_PAR, WJGC26_SI } from "./courseScorecards";
 import type { MHPlayer, MHTournament, RivalPlayer, TournDef } from "../KIDSPage";
 
 export function RivalDetail({ playerName }: { playerName: string }) {
   const rivals = useRivals();
+  const rivalsLoaded = useRivalsLoaded();
   const memberHist = useMH();
   const scoringStats = useScoringStatsCtx();
   // Debug mode: activar com ?debug=1 na URL (funciona em prod e dev)
@@ -582,7 +583,10 @@ export function RivalDetail({ playerName }: { playerName: string }) {
       <div className="muted">
         {/^\d+$/.test(playerName)
           ? "⏳ A identificar jogador…"
-          : `Sem dados para ${playerName}`}
+          : !rivalsLoaded
+            // Pipeline ainda a carregar — pode aparecer dados a meio do load
+            ? `⏳ A carregar dados de ${playerName}…`
+            : `Sem dados para ${playerName}`}
       </div>
     </DetailHeader>
   );
@@ -632,9 +636,9 @@ export function RivalDetail({ playerName }: { playerName: string }) {
 
             {/* Pills: país · trend · DOB · rank · ano activo */}
             <div className="flex-wrap mb-8" style={{ display: "flex", gap: 5, alignItems: "center" }}>
-              {rival && !isManuel && <span className="p p-sm p-muted fs-12" >{rival.co}</span>}
+              {rival && <span className="p p-sm p-muted fs-12" >{rival.co}</span>}
               {/* Identidade FPG (nfed + clube PT) */}
-              {rival && !isManuel && (rival as any).ptFed && (
+              {rival && (rival as any).ptFed && (
                 <span className="p p-sm p-club fs-11" title={`FPG nfed ${(rival as any).ptFed}`}
                   style={{ background: "var(--bg-portugal-pale, #fff5f5)", color: "var(--color-portugal, #c41e3a)", border: "1px solid var(--color-portugal-light, #f5b8c0)" }}>
                   🇵🇹 {(rival as any).ptFed}
@@ -648,7 +652,7 @@ export function RivalDetail({ playerName }: { playerName: string }) {
                 </span>
               )}
               {/* Clube FPG (já tem cor distinta) */}
-              {rival && !isManuel && (rival as any).fpgClub && rival.co === "Portugal" && (
+              {rival && (rival as any).fpgClub && rival.co === "Portugal" && (
                 <span className="p p-sm p-club fs-11" title="Clube FPG">
                   🏌️ {(rival as any).fpgClub}
                 </span>
@@ -674,7 +678,7 @@ export function RivalDetail({ playerName }: { playerName: string }) {
                 </span>
               )}
               {/* Escalão internacional Sub-N (calculado da idade ou catEdad) */}
-              {rival && !isManuel && (() => {
+              {rival && (() => {
                 const sub = escalaoIntl(rival);
                 if (!sub) return null;
                 return (

@@ -3,23 +3,181 @@
   "_formato": "Lista de entries com {name, kidsHash}. Adicionar manualmente jogadores que aparecem em draws/resultados FPG mas não têm fedCode português — tipicamente internacionais que competem em eventos PJA / Greatgolf / Drive Tour.",
   "_campos_opcionais": "country (ISO-2 ou ISO-3), escalao, sex — usados para mostrar bandeira/escalão em tabelas que normalmente só têm isso via fedCode português.",
   "players": [
-    { "name": "Emile Cuanalo",   "kidsHash": "Emile%20Cuanalo", "country": "GB" },
-    { "name": "Lucas Imperatriz", "kidsHash": "Lucas%20Imperatriz", "country": "BR", "escalao": "Sub 14", "sex": "M" },
-    { "name": "Javier Cobiella",  "kidsHash": "Javier%20Cobiella" },
-    { "name": "Doyeon Kim",       "kidsHash": "Doyeon%20Kim" },
-    { "name": "Min Sung Seo",     "kidsHash": "Min%20Sung%20Seo" },
-    { "name": "Ethan Prybys Orton","kidsHash": "Ethan%20Prybys%20Orton" },
-    { "name": "Finn Gordon",      "kidsHash": "Finn%20Gordon" },
-    { "name": "Seb Toft",         "kidsHash": "Seb%20Toft" },
-    { "name": "Yoon Jun Lee",     "kidsHash": "Yoon%20Jun%20Lee" },
-    { "name": "Alfie Kelley",     "kidsHash": "Alfie%20Kelley" },
-    { "name": "Joe Short",        "kidsHash": "Joe%20Short" },
-    { "name": "Benji Botham",     "kidsHash": "Benji%20Botham" },
-    { "name": "Harley Botham",    "kidsHash": "Harley%20Botham" },
-    { "name": "Harry Seabrook",   "kidsHash": "Harry%20Seabrook" },
-    { "name": "Marek Pejas",      "kidsHash": "Marek%20Pejas" },
-    { "name": "George Campbell",  "kidsHash": "George%20Campbell" },
-    { "name": "Yeonjin Seo",      "kidsHash": "Yeonjin%20Seo" },
-    { "name": "Ruiqi Li",         "kidsHash": "Ruiqi%20Li" }
+    {
+      "name": "Emile Cuanalo",
+      "kidsHash": "Emile%20Cuanalo",
+      "country": "GB"
+    },
+    {
+      "name": "Lucas Imperatriz",
+      "kidsHash": "Lucas%20Imperatriz",
+      "country": "BR",
+      "escalao": "Sub 14",
+      "sex": "M"
+    },
+    {
+      "name": "Javier Cobiella",
+      "kidsHash": "Javier%20Cobiella"
+    },
+    {
+      "name": "Doyeon Kim",
+      "kidsHash": "Doyeon%20Kim"
+    },
+    {
+      "name": "Min Sung Seo",
+      "kidsHash": "Min%20Sung%20Seo"
+    },
+    {
+      "name": "Ethan Prybys Orton",
+      "kidsHash": "Ethan%20Prybys%20Orton"
+    },
+    {
+      "name": "Finn Gordon",
+      "kidsHash": "Finn%20Gordon"
+    },
+    {
+      "name": "Seb Toft",
+      "kidsHash": "Seb%20Toft"
+    },
+    {
+      "name": "Yoon Jun Lee",
+      "kidsHash": "Yoon%20Jun%20Lee"
+    },
+    {
+      "name": "Alfie Kelley",
+      "kidsHash": "Alfie%20Kelley"
+    },
+    {
+      "name": "Joe Short",
+      "kidsHash": "Joe%20Short"
+    },
+    {
+      "name": "Benji Botham",
+      "kidsHash": "Benji%20Botham"
+    },
+    {
+      "name": "Harley Botham",
+      "kidsHash": "Harley%20Botham"
+    },
+    {
+      "name": "Harry Seabrook",
+      "kidsHash": "Harry%20Seabrook"
+    },
+    {
+      "name": "Marek Pejas",
+      "kidsHash": "Marek%20Pejas"
+    },
+    {
+      "name": "George Campbell",
+      "kidsHash": "George%20Campbell"
+    },
+    {
+      "name": "Yeonjin Seo",
+      "kidsHash": "Yeonjin%20Seo"
+    },
+    {
+      "name": "Ruiqi Li",
+      "kidsHash": "Ruiqi%20Li"
+    },
+    {
+      "name": "Abigail Pickett",
+      "kidsHash": "Abigail%20Pickett",
+      "country": "US"
+    },
+    {
+      "name": "Alvaro Gonzalez",
+      "kidsHash": "607049",
+      "country": "DE"
+    },
+    {
+      "name": "Caleb Pickett",
+      "kidsHash": "591601",
+      "country": "US"
+    },
+    {
+      "name": "Daniela Ramos",
+      "kidsHash": "Daniela%20Ramos",
+      "country": "BR"
+    },
+    {
+      "name": "David Kim",
+      "kidsHash": "579631",
+      "country": "KR"
+    },
+    {
+      "name": "Gavin Davis",
+      "kidsHash": "531474",
+      "country": "GB"
+    },
+    {
+      "name": "Isaac Chin",
+      "kidsHash": "619468",
+      "country": "GB"
+    },
+    {
+      "name": "James Miller",
+      "kidsHash": "553919",
+      "country": "NL"
+    },
+    {
+      "name": "James Smith",
+      "kidsHash": "549109",
+      "country": "GB"
+    },
+    {
+      "name": "John Moran",
+      "kidsHash": "567464",
+      "country": "GB"
+    },
+    {
+      "name": "Migel Mutikainen",
+      "kidsHash": "570902",
+      "country": "FI"
+    },
+    {
+      "name": "Nicholas Brown",
+      "kidsHash": "513791",
+      "country": "GB"
+    },
+    {
+      "name": "Oliver Smith",
+      "kidsHash": "572324",
+      "country": "GB"
+    },
+    {
+      "name": "Oliver Smith",
+      "kidsHash": "572324",
+      "country": "GB"
+    },
+    {
+      "name": "Patrick Myers",
+      "kidsHash": "498853",
+      "country": "IE"
+    },
+    {
+      "name": "Paul Fletcher",
+      "kidsHash": "524281",
+      "country": "GB"
+    },
+    {
+      "name": "Phebe Pickett",
+      "kidsHash": "Phebe%20Pickett",
+      "country": "US"
+    },
+    {
+      "name": "Ryan Pickett Jr",
+      "kidsHash": "585531",
+      "country": "US"
+    },
+    {
+      "name": "Simon Hall",
+      "kidsHash": "530614",
+      "country": "GB"
+    },
+    {
+      "name": "Zeyn Lababedi",
+      "kidsHash": "Zeyn%20Lababedi",
+      "country": "GB"
+    }
   ]
 }

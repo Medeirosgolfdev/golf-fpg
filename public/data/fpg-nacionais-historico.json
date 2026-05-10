@@ -168516,33 +168516,7 @@
           "country": "PT"
         }
       ]
-    },
-    {
-      "name": "Campeonato Nacional de Jovens Sub 10 S",
-      "ccode": "000",
-      "tcode": "10944",
-      "date": "2026-04-30",
-      "campo": "PGA  Aroeira No.2 - CNJ FPG",
-      "circuit": "Nacional",
-      "escalao": "Sub 10",
-      "tipo": "Nacional Jovens",
-      "rounds": 3,
-      "playerCount": 0,
-      "players": [],
-      "_note": "Sem inscritos — torneio cancelado",
-      "admissions": {
-        "name": "Campeonato Nacional de Jovens Sub 10 S",
-        "date": "2026-05-01",
-        "totalInscritos": 0,
-        "reservas": 0,
-        "status": "Inscrições fechadas",
-        "tcode": "10944",
-        "ccode": "000",
-        "players": []
-      },
-      "draws": {},
-      "expectedYear": "2026"
     }
   ],
-  "_consolidationNote": "2026-05-05: Nacional Jovens 2026 Aroeira (tcodes 10935,10936,10937,10938,10939,10940,10941,10942,10943,10944) consolidado neste ficheiro. Inclui results+admissions+draws. Removido de pull-torneios002.json, pull-torneios006.json, jovens_2026.json, fpg-admissions-draws.json. Loaders das páginas afectadas têm fallback para este ficheiro."
+  "_consolidationNote": "2026-05-05: Nacional Jovens 2026 Aroeira (tcodes 10935,10936,10937,10938,10939,10940,10941,10942,10943) consolidado neste ficheiro. Inclui results+admissions+draws. Removido de pull-torneios002.json, pull-torneios006.json, jovens_2026.json, fpg-admissions-draws.json. Loaders das páginas afectadas têm fallback para este ficheiro. Tcode 10944 (Sub 10 F) cancelado por falta de inscritos — removido 2026-05-10."
 }

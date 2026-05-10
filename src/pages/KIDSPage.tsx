@@ -896,6 +896,12 @@ export function getPlayerType(rival: RivalPlayer): { label: string; bg: string; 
 const RivalsCtx = React.createContext<RivalPlayer[]>(D);
 export function useRivals() { return React.useContext(RivalsCtx); }
 
+/** True quando o pipeline async (buildAutoRivals) ainda não terminou. Usado
+ *  pelo RivalDetail para distinguir "ainda a carregar" de "definitivamente
+ *  sem dados" — evita o falso "Sem dados para X" durante o load inicial. */
+const RivalsLoadedCtx = React.createContext<boolean>(false);
+export function useRivalsLoaded() { return React.useContext(RivalsLoadedCtx); }
+
 const MemberHistCtx = React.createContext<MHData | null>(null);
 export function useMH() { return React.useContext(MemberHistCtx); }
 
@@ -1239,6 +1245,7 @@ function RivaisIntlContent() {
 
   return (
     <RivalsCtx.Provider value={rivals}>
+    <RivalsLoadedCtx.Provider value={loaded}>
     <MemberHistCtx.Provider value={memberHist}>
     <ScoringStatsCtx.Provider value={scoringStats}>
     <DataSourcesProvider tournaments={[]}>
@@ -1366,6 +1373,7 @@ function RivaisIntlContent() {
     </DataSourcesProvider>
     </ScoringStatsCtx.Provider>
     </MemberHistCtx.Provider>
+    </RivalsLoadedCtx.Provider>
     </RivalsCtx.Provider>
   );
 }
