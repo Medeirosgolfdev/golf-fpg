@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-05-10T04:51:37.614Z",
+  "lastUpdated": "2026-05-10T20:39:03.104Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
   "today": "2026-05-10",
   "summary": {
     "total": 1139,
-    "complete": 1125,
-    "in_progress": 0,
+    "complete": 1124,
+    "in_progress": 1,
     "future": 0,
     "missing_admissions": 0,
     "missing_classif": 13,
@@ -14,6 +14,24 @@
     "unknown": 0
   },
   "tournaments": [
+    {
+      "ccode": "002",
+      "tcode": "11297",
+      "name": "109ª Lisbon Cup",
+      "date": "2026-05-09",
+      "rounds": 2,
+      "has_admissions": false,
+      "admissions_count": 0,
+      "has_draws": true,
+      "draws_rounds_with_data": 2,
+      "draws_players_total": 164,
+      "has_classif": true,
+      "player_count": 89,
+      "players_with_scorecards": 81,
+      "scorecards_source": "pull-torneios002.json",
+      "scorecards_ratio": 0.91,
+      "status": "in_progress"
+    },
     {
       "ccode": "007",
       "tcode": "11020",
@@ -30,24 +48,6 @@
       "players_with_scorecards": 115,
       "scorecards_source": "pull-torneios002.json",
       "scorecards_ratio": 1,
-      "status": "complete"
-    },
-    {
-      "ccode": "002",
-      "tcode": "11297",
-      "name": "109ª Lisbon Cup",
-      "date": "2026-05-08",
-      "rounds": 2,
-      "has_admissions": false,
-      "admissions_count": 0,
-      "has_draws": false,
-      "draws_rounds_with_data": 0,
-      "draws_players_total": 0,
-      "has_classif": true,
-      "player_count": 89,
-      "players_with_scorecards": 81,
-      "scorecards_source": "pull-torneios002.json",
-      "scorecards_ratio": 0.91,
       "status": "complete"
     },
     {
