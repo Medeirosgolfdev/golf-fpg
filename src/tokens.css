@@ -233,14 +233,11 @@
   --tier-bad:          #ef4444;   /* vermelho */
 
 
-  /* ── 10. Escalão (sub-10 … sub-24) ────────────────────────── */
+  /* ── 10. Escalão (sub-10 … super sénior) ──────────────────── */
   /* Fundo e texto para EscPill e tabelas de resultados.
-     Gradiente ROXO: Sub-10 CLARO (mais novo) → Sub-21/24 ESCURO (mais velho).
-     Paleta baseada em Tailwind purple-100 → purple-950. Roxo é uma cor
-     praticamente não usada no resto do projecto (os únicos usos são
-     chartPurple #7c3aed e USKids #9c27b0, que não conflituam com esta
-     escala) — dá-nos separação visual forte dos verdes (good/SSerra),
-     azuis (accent/links) e âmbares (warn/tourn) presentes na UI. */
+     Gradiente ROXO juvenil: Sub-10 CLARO (mais novo) → Sub-24 ESCURO.
+     Adultos (Absoluto/Sénior/SuperSénior) usam cinzentos/slates para
+     se distinguirem dos roxos juvenis. */
   --esc-sub10-bg:   #f3e8ff;   /* purple-100 */
   --esc-sub10-fg:   #581c87;
   --esc-sub12-bg:   #d8b4fe;   /* purple-300 */
@@ -255,6 +252,13 @@
   --esc-sub21-fg:   #ffffff;
   --esc-sub24-bg:   #3b0764;   /* purple-950 */
   --esc-sub24-fg:   #ffffff;
+  /* Adultos — paleta slate (neutra, distinta do roxo juvenil) */
+  --esc-absoluto-bg:     #e2e8f0;   /* slate-200 */
+  --esc-absoluto-fg:     #1e293b;   /* slate-800 */
+  --esc-senior-bg:       #475569;   /* slate-600 */
+  --esc-senior-fg:       #ffffff;
+  --esc-supersenior-bg:  #1e293b;   /* slate-800 */
+  --esc-supersenior-fg:  #ffffff;
 
 
   /* ── 11. Medals ────────────────────────────────────────────── */
@@ -302,7 +306,7 @@
   --shadow:    0 2px 8px rgba(30, 50, 20, 0.08);
   --shadow-lg: 0 4px 16px rgba(30, 50, 20, 0.10);
 
-  --space-section: 12px;   /* gap entre secções principais */
-  --space-inner:   14px;   /* padding interior de cards */
+  --space-section: 12px;
+  --space-inner:   14px;
 
 }

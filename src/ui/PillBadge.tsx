@@ -146,9 +146,19 @@ export function Pill({
   );
 }
 
-/** Chave CSS normalizada para um escalão: "Sub 12" → "sub12", "Sub-14" → "sub14". */
+/** Chave CSS normalizada para um escalão.
+ *   "Sub 12"        → "sub12"
+ *   "Sub-14"        → "sub14"
+ *   "Sénior"        → "senior"   (acentos removidos)
+ *   "Super Sénior"  → "supersenior"
+ *   "MidAmateur"    → "midamateur"
+ */
 export function escKey(esc: string | null | undefined): string {
-  return (esc || "").toLowerCase().replace(/[\s-]/g, "");
+  return (esc || "")
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[\s-]/g, "");
 }
 
 /** Style inline para tabs/botões de escalão.
@@ -165,7 +175,7 @@ export function escTabStyle(
   sex?: "M" | "F" | null
 ): CSSProperties {
   const key = escKey(esc);
-  const hasCssClass = ["sub10","sub12","sub14","sub16","sub18","sub21","sub24","absoluto","senior"].includes(key);
+  const hasCssClass = ["sub10","sub12","sub14","sub16","sub18","sub21","sub24","absoluto","midamateur","senior","supersenior"].includes(key);
   const sexBorder = sex === "M" ? "var(--badge-male)" : sex === "F" ? "var(--badge-female)" : null;
   if (!hasCssClass) {
     // Escalões não mapeados (Absoluto, etc.) — neutro
@@ -232,8 +242,8 @@ export function EscPill({ esc }: { esc: string }) {
   if (esSubKey) {
     return <span className={`p p-sm p-${esSubKey}`}>{esc}</span>;
   }
-  // 2) Sub-N directo
-  const hasCssClass = ["sub10","sub12","sub14","sub16","sub18","sub21","sub24","absoluto","senior"].includes(key);
+  // 2) Sub-N directo ou escalão adulto (absoluto/midamateur/senior/supersenior)
+  const hasCssClass = ["sub10","sub12","sub14","sub16","sub18","sub21","sub24","absoluto","midamateur","senior","supersenior"].includes(key);
   if (hasCssClass) return <span className={`p p-sm p-${key}`}>{esc}</span>;
   // 3) Fallback inline style
   const s = ESC_STYLE[key] ?? ESC_STYLE.default;

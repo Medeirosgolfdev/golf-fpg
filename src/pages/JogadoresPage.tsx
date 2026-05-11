@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import type { Player, SexFilter } from "../data/types";
 import { useAppContext } from "../context/AppContext";
-import { norm, shortDate, fmtSign, fmtToPar } from "../utils/format";
+import { norm, shortDate, fmtSign, fmtToPar, fpgScoringUrl } from "../utils/format";
 import { getTeeHex, textOnColor, normKey, teeBorder } from "../utils/teeColors";
 import { clubShort, clubLong, hcpDisplay, escCls } from "../utils/playerUtils";
 import { numSafe, meanArr, stdevArr, minArr, maxArr, linearSlope } from "../utils/mathUtils";
@@ -210,7 +210,7 @@ function EventInfo({ name, origin, pill, links, fed, tcode, ccode, course }: {
     : null;
   const effectiveCcode = ccode || ccodeFromCourse(course);
   const tcodeUrl = !classifUrl && tcode && effectiveCcode
-    ? `https://scoring.fpg.pt/lists/Classifications.aspx?ccode=${effectiveCcode}&tcode=${tcode}&score=`
+    ? fpgScoringUrl(effectiveCcode, tcode)
     : null;
   const isFpgTorn = (origin || "").trim().toUpperCase() === "TORN";
   const fallbackFpgUrl = !classifUrl && !tcodeUrl && isFpgTorn && fed

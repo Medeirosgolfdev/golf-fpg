@@ -2872,6 +2872,12 @@ tr.cross-current { background: var(--bg-success); }
 .p-sub18 { background: var(--esc-sub18-bg); color: var(--esc-sub18-fg); }
 .p-sub21 { background: var(--esc-sub21-bg); color: var(--esc-sub21-fg); }
 .p-sub24 { background: var(--esc-sub24-bg); color: var(--esc-sub24-fg); }
+/* Adultos — Absoluto (25-49), Sénior (50-69), Super Sénior (70+) */
+.p-absoluto    { background: var(--esc-absoluto-bg); color: var(--esc-absoluto-fg); }
+.p-senior      { background: var(--esc-senior-bg); color: var(--esc-senior-fg); }
+.p-supersenior { background: var(--esc-supersenior-bg); color: var(--esc-supersenior-fg); }
+/* Alias para "MidAmateur" (sinónimo FPG de "Absoluto") */
+.p-midamateur  { background: var(--esc-absoluto-bg); color: var(--esc-absoluto-fg); }
 
 /* ─── Restored: fs combos e utilitários ─── */
 .stats { display: flex; gap: 8px; }
@@ -3323,7 +3329,7 @@ tr.cross-current { background: var(--bg-success); }
   text-decoration: underline;
 }
 .player-list-name-link::after {
-  content: "↗";
+  content: "external";
   font-size: 9px;
   margin-left: 3px;
   opacity: 0.5;

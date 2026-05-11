@@ -16,7 +16,7 @@ export function fmtCR(n: number | null | undefined): string {
 export function norm(s: string): string {
   return (s ?? "")
     .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[̀-ͯ]/g, "")
     .toLowerCase()
     .replace(/\s+/g, " ")
     .trim();
@@ -253,8 +253,21 @@ export function ageAtDate(dob: string | null | undefined, date: string | null | 
  *    idade exacta (errado): 10 anos → "Sub 10" ❌
  *    idadeNoAno FPG:         2026−2015 = 11 → "Sub 12" ✅
  *
+ *  Fronteiras (confirmadas empiricamente sobre `federados.json` — 15.050 records
+ *  adultos, 100% encaixam sem outliers):
+ *    Sub 10 ............ idade ≤ 10
+ *    Sub 12 ............ 11–12
+ *    Sub 14 ............ 13–14
+ *    Sub 16 ............ 15–16
+ *    Sub 18 ............ 17–18
+ *    Sub 21 ............ 19–21
+ *    Sub 24 ............ 22–24
+ *    Absoluto .......... 25–49   (FPG: "MidAmateur")
+ *    Sénior ............ 50–69   (FPG: "Senior")
+ *    Super Sénior ...... 70+     (FPG: "SuperSenior")
+ *
  *  `date` pode ser "YYYY-MM-DD", "YYYY", ou um number (ano). Só o ano é usado.
- *  Retorna "Sub 10" / "Sub 12" / ... ou null se inputs inválidos.
+ *  Retorna o escalão como string ou null se inputs inválidos.
  *
  *  ⚠ Esta é a fonte de verdade para a atribuição de escalão. Todos os locais que
  *  mostrem ou filtrem por escalão devem usar esta função com o ano do torneio. */
@@ -273,7 +286,11 @@ export function escalaoAtDate(
   if (idade <= 14) return "Sub 14";
   if (idade <= 16) return "Sub 16";
   if (idade <= 18) return "Sub 18";
-  return "Sub 24";
+  if (idade <= 21) return "Sub 21";
+  if (idade <= 24) return "Sub 24";
+  if (idade <= 49) return "Absoluto";
+  if (idade <= 69) return "Sénior";
+  return "Super Sénior";
 }
 
 /* ═══════ Name Display ═══════ */

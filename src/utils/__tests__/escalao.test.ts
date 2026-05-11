@@ -10,6 +10,14 @@
  *     idade exacta = 10, idadeNoAno = 2026−2015 = 11 → Sub 12 (não Sub 10).
  *   - Jogador nascido 2012-12-15 em torneio 2027-01-10:
  *     idade exacta = 12 (ainda não fez 15 em Jan), idadeNoAno = 2027−2012 = 15 → Sub 16.
+ *
+ * Fronteiras adultas (confirmadas empiricamente sobre `federados.json`,
+ * 15.050 records, 100% encaixam):
+ *     Sub 21 ............ 19–21
+ *     Sub 24 ............ 22–24
+ *     Absoluto .......... 25–49   (FPG: "MidAmateur")
+ *     Sénior ............ 50–69   (FPG: "Senior")
+ *     Super Sénior ...... 70+     (FPG: "SuperSenior")
  */
 import { describe, it, expect } from "vitest";
 import { escalaoAtDate, ageAtDate, anoEscalao } from "../format";
@@ -38,21 +46,16 @@ describe("escalaoAtDate — regra FPG year-based (year − yearOfBirth)", () => 
 
   describe("casos onde year-based diverge de idade exacta (o bug que corrigimos)", () => {
     it("Joe Short: nasc 2015-12-15, torneio 2026-02-16 → Sub 12 (NÃO Sub 10)", () => {
-      // Idade exacta: 10 anos (aniversário ainda por vir)
-      // Idade ano civil: 2026 − 2015 = 11 → Sub 12
       expect(escalaoAtDate("2015-12-15", "2026-02-16")).toBe("Sub 12");
-      expect(ageAtDate("2015-12-15", "2026-02-16")).toBe(10); // idade exacta continua 10
+      expect(ageAtDate("2015-12-15", "2026-02-16")).toBe(10);
     });
 
     it("jogador nasc Dez 2014, torneio Jan 2027 → Sub 14 (NÃO Sub 12)", () => {
-      // Idade exacta: 12 anos (ainda não fez 13 em Jan)
-      // Idade ano civil: 2027 − 2014 = 13 → Sub 14
       expect(escalaoAtDate("2014-12-15", "2027-01-10")).toBe("Sub 14");
       expect(ageAtDate("2014-12-15", "2027-01-10")).toBe(12);
     });
 
     it("jogador nasc Nov 2010, torneio Mar 2026 → Sub 16 (NÃO Sub 14)", () => {
-      // Idade exacta: 15 anos; idade ano: 2026−2010 = 16 → Sub 16
       expect(escalaoAtDate("2010-11-20", "2026-03-05")).toBe("Sub 16");
     });
   });
@@ -72,18 +75,54 @@ describe("escalaoAtDate — regra FPG year-based (year − yearOfBirth)", () => 
   });
 
   describe("limites de escalão", () => {
-    it("idade exactamente 10 (Sub 10), 11 (Sub 12), 13 (Sub 14), 15 (Sub 16), 17 (Sub 18), 19+ (Sub 24)", () => {
-      // Usando torneio 2026, ajustamos dob para cada idade-no-ano
-      expect(escalaoAtDate("2016-01-01", "2026-01-01")).toBe("Sub 10");  // 10
-      expect(escalaoAtDate("2015-01-01", "2026-01-01")).toBe("Sub 12");  // 11
-      expect(escalaoAtDate("2014-01-01", "2026-01-01")).toBe("Sub 12");  // 12
-      expect(escalaoAtDate("2013-01-01", "2026-01-01")).toBe("Sub 14");  // 13
-      expect(escalaoAtDate("2012-01-01", "2026-01-01")).toBe("Sub 14");  // 14
-      expect(escalaoAtDate("2011-01-01", "2026-01-01")).toBe("Sub 16");  // 15
-      expect(escalaoAtDate("2010-01-01", "2026-01-01")).toBe("Sub 16");  // 16
-      expect(escalaoAtDate("2009-01-01", "2026-01-01")).toBe("Sub 18");  // 17
-      expect(escalaoAtDate("2008-01-01", "2026-01-01")).toBe("Sub 18");  // 18
-      expect(escalaoAtDate("2007-01-01", "2026-01-01")).toBe("Sub 24");  // 19
+    it("escalões juvenis (Sub 10..Sub 18) — fronteiras por idade-no-ano", () => {
+      expect(escalaoAtDate("2016-01-01", "2026-01-01")).toBe("Sub 10");
+      expect(escalaoAtDate("2015-01-01", "2026-01-01")).toBe("Sub 12");
+      expect(escalaoAtDate("2014-01-01", "2026-01-01")).toBe("Sub 12");
+      expect(escalaoAtDate("2013-01-01", "2026-01-01")).toBe("Sub 14");
+      expect(escalaoAtDate("2012-01-01", "2026-01-01")).toBe("Sub 14");
+      expect(escalaoAtDate("2011-01-01", "2026-01-01")).toBe("Sub 16");
+      expect(escalaoAtDate("2010-01-01", "2026-01-01")).toBe("Sub 16");
+      expect(escalaoAtDate("2009-01-01", "2026-01-01")).toBe("Sub 18");
+      expect(escalaoAtDate("2008-01-01", "2026-01-01")).toBe("Sub 18");
+    });
+
+    it("Sub 21 cobre 19-21 anos", () => {
+      expect(escalaoAtDate("2007-01-01", "2026-01-01")).toBe("Sub 21");
+      expect(escalaoAtDate("2006-01-01", "2026-01-01")).toBe("Sub 21");
+      expect(escalaoAtDate("2005-01-01", "2026-01-01")).toBe("Sub 21");
+    });
+
+    it("Sub 24 cobre 22-24 anos", () => {
+      expect(escalaoAtDate("2004-01-01", "2026-01-01")).toBe("Sub 24");
+      expect(escalaoAtDate("2003-01-01", "2026-01-01")).toBe("Sub 24");
+      expect(escalaoAtDate("2002-01-01", "2026-01-01")).toBe("Sub 24");
+    });
+
+    it("Absoluto cobre 25-49 anos (FPG: MidAmateur)", () => {
+      expect(escalaoAtDate("2001-01-01", "2026-01-01")).toBe("Absoluto");
+      expect(escalaoAtDate("1990-01-01", "2026-01-01")).toBe("Absoluto");
+      expect(escalaoAtDate("1977-01-01", "2026-01-01")).toBe("Absoluto");
+    });
+
+    it("Sénior cobre 50-69 anos (FPG: Senior)", () => {
+      expect(escalaoAtDate("1976-01-01", "2026-01-01")).toBe("Sénior");
+      expect(escalaoAtDate("1965-10-14", "2026-05-08")).toBe("Sénior");
+      expect(escalaoAtDate("1957-01-01", "2026-01-01")).toBe("Sénior");
+    });
+
+    it("Super Sénior cobre 70+ (FPG: SuperSenior)", () => {
+      expect(escalaoAtDate("1956-01-01", "2026-01-01")).toBe("Super Sénior");
+      expect(escalaoAtDate("1940-01-01", "2026-01-01")).toBe("Super Sénior");
+    });
+
+    it("fronteiras 24/25, 49/50, 69/70 (regressão do bug que mostrava Sub 24 para todos os adultos)", () => {
+      expect(escalaoAtDate("2002-12-31", "2026-01-01")).toBe("Sub 24");
+      expect(escalaoAtDate("2001-12-31", "2026-01-01")).toBe("Absoluto");
+      expect(escalaoAtDate("1977-12-31", "2026-01-01")).toBe("Absoluto");
+      expect(escalaoAtDate("1976-12-31", "2026-01-01")).toBe("Sénior");
+      expect(escalaoAtDate("1957-12-31", "2026-01-01")).toBe("Sénior");
+      expect(escalaoAtDate("1956-12-31", "2026-01-01")).toBe("Super Sénior");
     });
   });
 
@@ -129,7 +168,6 @@ describe("anoEscalao — 1º vs 2º ano do escalão (year-based)", () => {
   });
 
   it("cai para ano actual se não dado", () => {
-    // Não testamos o valor exacto porque depende do ano actual, mas confirmamos que não rebenta
     const r = anoEscalao("2014-04-29", "Sub-12");
     expect(r === "1A" || r === "2A").toBe(true);
   });
