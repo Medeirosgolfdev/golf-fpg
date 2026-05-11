@@ -39,6 +39,7 @@ const REPO_ROOT = path.resolve(__dirname, "..");
 const OUTPUT_DIR = path.join(REPO_ROOT, "public", "data");
 const BASE_URL = "https://scoring.datagolf.pt/pt";
 const UA = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36";
+const ACK_TOURNLIST = "XH256YF45T";
 
 const argv = process.argv.slice(2);
 const getArg = (flag, def) => {
@@ -101,6 +102,31 @@ function loadCookies() {
 }
 
 const COOKIE = loadCookies();
+
+// ═══════════════════════════════════════════════════════════
+// WARMUP — entry-gate cross-domain (copiado de scrape-fpg-admissions-draws-node.js
+// Fonte 3, linha 350). Reactiva sessão ASP.NET expirada por inactividade antes
+// do primeiro POST. O `ack` é universal — não é o hash dinâmico do browser.
+// Se falhar, o script continua; o erro real é apanhado em dgPost com mensagem
+// detalhada sobre cookies expirados.
+// ═══════════════════════════════════════════════════════════
+async function warmupEntryGate() {
+  const warmupUrl = `https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club=ALL&ack=${ACK_TOURNLIST}`;
+  try {
+    const r = await fetch(warmupUrl, {
+      headers: {
+        "User-Agent": UA, "Cookie": COOKIE,
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "pt-PT,pt;q=0.9",
+      },
+      redirect: "follow",
+    });
+    await r.text();
+    log(`warmup entry-gate HTTP ${r.status}`);
+  } catch (e) {
+    warn(`warmup entry-gate falhou: ${e.message} — continuar mesmo assim`);
+  }
+}
 
 // ═══════════════════════════════════════════════════════════
 // FETCH WRAPPER
@@ -386,6 +412,11 @@ function writeIfChanged(filepath, newObj) {
 (async () => {
   log(`═══ Scrape Drive+Aquapor — ${YEAR_FROM} a ${YEAR_TO} ═══`);
   if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+
+  // Fase 0 — warmup: reactivar a sessão ASP.NET antes do primeiro POST.
+  // Especialmente importante em GitHub Actions, onde podem passar 12+ horas
+  // entre a captura dos cookies e o run agendado.
+  await warmupEntryGate();
 
   // Fase 1 — descoberta
   log("FASE 1: descobrir torneios");
