@@ -31,4 +31,20 @@ jobs:
           git merge origin/main --no-edit --strategy-option=ours
           git add public/data/uskids-field.json public/data/uskids-discovery-cache.json
           git commit -m "data: USKids field [$(date -u '+%Y-%m-%d %H:%M UTC')]"
-          git push
+          # Push robusto: retry com pull --rebase em cada tentativa.
+          # Em runs manuais (sem o cron offset) podemos colidir com outro
+          # workflow a fazer push em paralelo → non-fast-forward.
+          PUSH_OK=0
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
+              PUSH_OK=1
+              break
+            fi
+            git rebase --abort 2>/dev/null || true
+            echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
+            sleep $((i * 5))
+          done
+          if [ "$PUSH_OK" != "1" ]; then
+            echo "❌ Push falhou após 5 tentativas"
+            exit 1
+          fi

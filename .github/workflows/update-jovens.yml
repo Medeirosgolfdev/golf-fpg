@@ -113,9 +113,24 @@ jobs:
           DATE=$(date +'%Y-%m-%d %H:%M')
           CHANGED=$(git diff --staged --name-only | wc -l)
           git commit -m "data: update JOVENS ${DATE} (${CHANGED} ficheiros)"
-          # Rebase em cima de qualquer commit que tenha entrado entretanto.
-          # --autostash lida com quaisquer ficheiros unstaged que tenham ficado
-          # para trás do git add (stashes automaticamente e repõe após o pull).
-          git pull --rebase --autostash origin ${GITHUB_REF_NAME} || git rebase --abort
-          git push
+          # Push robusto: retry com pull --rebase em cada tentativa.
+          # Em runs manuais (sem o cron offset) podemos colidir com outro
+          # workflow a fazer push em paralelo → non-fast-forward. O retry
+          # apanha esse caso. Aumentamos o sleep a cada tentativa para
+          # dispersar pushes concorrentes.
+          PUSH_OK=0
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
+              PUSH_OK=1
+              break
+            fi
+            # Se o rebase ficou meio-feito, abortar antes do próximo retry
+            git rebase --abort 2>/dev/null || true
+            echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
+            sleep $((i * 5))
+          done
+          if [ "$PUSH_OK" != "1" ]; then
+            echo "❌ Push falhou após 5 tentativas"
+            exit 1
+          fi
           echo "✓ Commit feito — ${CHANGED} ficheiros actualizados"
