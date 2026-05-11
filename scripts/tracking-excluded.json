@@ -1,0 +1,12 @@
+{
+  "_description": "Lista de torneios a EXCLUIR permanentemente do tracking dinâmico. O build-tournaments-tracking.js força status='excluded' para estes, e o scrape-classif-node.js --auto-from-tracking ignora-os. Útil para torneios que não ocorreram, foram cancelados, ou aparecem nas listas mas não devem ser puxados.",
+  "_format": "key: '<ccode>/<tcode>' (ccode zero-padded a 3 dígitos)",
+  "excluded": [
+    {
+      "key": "000/10944",
+      "name": "Campeonato Nacional de Jovens Sub 10 S",
+      "date": "2026-05-01",
+      "reason": "Não ocorreu — escalão Sub-10 Feminino não teve inscritos suficientes / não foi realizado em Aroeira 2026"
+    }
+  ]
+}

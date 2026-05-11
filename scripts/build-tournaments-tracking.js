@@ -1,46 +1,4 @@
 #!/usr/bin/env node
-/**
- * scripts/build-tournaments-tracking.js (2026-04-22)
- * ═════════════════════════════════════════════════════════════════════════
- * Cruza todas as fontes de dados de torneios FPG para produzir um registo
- * único com o estado de cada torneio: tem admissions? tem draws? tem classif?
- * tem scorecards? O que falta?
- *
- * Fontes lidas:
- *   - public/data/fpg-admissions-draws.json         (admissions + draws)
- *   - public/data/pull-torneios*.json               (classif + scorecards manual)
- *   - public/data/pull-torneios-node.json           (idem, gerado pelo novo Node)
- *   - public/data/drive-data-*.json                 (Drive Tour)
- *   - public/data/aquapor-data-*.json               (Aquapor)
- *   - public/data/jovens_*.json                     (Nacionais Jovens)
- *   - public/data/santo-da-serra-tournaments.json   (CGSS)
- *
- * Output: public/data/fpg-tournaments-tracking.json
- *
- * Por cada torneio (keyed por ccode/tcode):
- *   - has_admissions: true se tem pelo menos 1 jogador em admissions.players
- *   - has_draws: true se tem pelo menos 1 ronda com groups.length > 0
- *   - has_classif: true se encontrado em alguma fonte de classif com playerCount > 0
- *   - players_with_scorecards: count de players onde roundScores.length > 0
- *   - scorecards_ratio: players_with_scorecards / playerCount
- *   - status: "future" | "in_progress" | "complete" | "missing_classif" |
- *             "missing_scorecards" | "missing_draws" | "missing_admissions" | "stale"
- *
- * Status decision tree (aplicado após apurar has_*):
- *   • date > hoje          → "future"
- *   • date <= hoje <= date+3d → "in_progress"
- *   • date+3d < hoje:
- *       - !has_classif           → "missing_classif"
- *       - has_classif && scorecards_ratio < 0.5 → "missing_scorecards"
- *       - !has_draws && tournRounds > 0         → "missing_draws"
- *       - has tudo               → "complete"
- *       - admissions arquivadas: !has_admissions é OK para torneios passados
- *
- * Exit codes:
- *   0 — sucesso
- *   1 — erro fatal
- * ═════════════════════════════════════════════════════════════════════════
- */
 "use strict";
 
 const fs = require("fs");
@@ -49,14 +7,28 @@ const path = require("path");
 const REPO = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(REPO, "public", "data");
 const OUT_FILE = path.join(DATA_DIR, "fpg-tournaments-tracking.json");
+const EXCLUDED_FILE = path.join(__dirname, "tracking-excluded.json");
 
 const TODAY = new Date().toISOString().slice(0, 10);
 const daysBetween = (a, b) => Math.round((new Date(b) - new Date(a)) / 86400000);
 
-/* ── Normalização ccode (3 dígitos zero-padded) ─────────────────────────── */
-const k = (ccode, tcode) => `${String(ccode).padStart(3, "0")}/${tcode}`;
+function loadExcluded() {
+  if (!fs.existsSync(EXCLUDED_FILE)) return new Map();
+  const map = new Map();
+  try {
+    const j = JSON.parse(fs.readFileSync(EXCLUDED_FILE, "utf8"));
+    for (const e of (j.excluded || [])) {
+      if (e.key) map.set(e.key, { name: e.name, date: e.date, reason: e.reason });
+    }
+  } catch (e) {
+    console.warn("[tracking] falhou ler " + EXCLUDED_FILE + ": " + e.message);
+  }
+  return map;
+}
+const EXCLUDED = loadExcluded();
 
-/* ── 1) Ler admissions + draws ──────────────────────────────────────────── */
+const k = (ccode, tcode) => String(ccode).padStart(3, "0") + "/" + tcode;
+
 function readAdmissionsDraws() {
   const fp = path.join(DATA_DIR, "fpg-admissions-draws.json");
   if (!fs.existsSync(fp)) return new Map();
@@ -70,7 +42,7 @@ function readAdmissionsDraws() {
     const drawsWithGroups = Object.values(draws).filter(d => d && d.groups && d.groups.length > 0);
     const hasDraws = drawsWithGroups.length > 0;
     const totalPlayersDraws = drawsWithGroups.reduce((s, d) =>
-      s + d.groups.reduce((gs, g) => gs + (g.players?.length || 0), 0), 0);
+      s + d.groups.reduce((gs, g) => gs + ((g.players && g.players.length) || 0), 0), 0);
     map.set(key, {
       ccode: String(t.ccode).padStart(3, "0"),
       tcode: String(t.tcode),
@@ -86,7 +58,6 @@ function readAdmissionsDraws() {
   return map;
 }
 
-/* ── 2) Ler classif + scorecards de múltiplos ficheiros ─────────────────── */
 function readClassifSources() {
   const patterns = [
     /^pull-torneios.*\.json$/,
@@ -107,21 +78,25 @@ function readClassifSources() {
         if (!t.ccode || !t.tcode) continue;
         const key = k(t.ccode, t.tcode);
         const players = Array.isArray(t.players) ? t.players : [];
-        const playerCount = t.playerCount ?? players.length;
-        // Um jogador "tem scorecard" se tem roundScores com pelo menos 1 entrada
-        // que tenha scores/gross preenchidos
+        const playerCount = t.playerCount != null ? t.playerCount : players.length;
+        const tournRounds = t.rounds || 1;
+        const isRoundFilled = r => r && (r.gross != null || (r.scores && r.scores.length > 0));
         const withSc = players.filter(p => {
           const rs = p.roundScores || [];
-          return rs.length > 0 && rs.some(r => r && (r.gross != null || (r.scores && r.scores.length > 0)));
+          return rs.length > 0 && rs.some(isRoundFilled);
+        }).length;
+        const withFullSc = players.filter(p => {
+          const rs = p.roundScores || [];
+          const filled = rs.filter(isRoundFilled).length;
+          return filled >= tournRounds;
         }).length;
         const existing = map.get(key);
-        // Preserva o registo com MAIS scorecards (merge de múltiplas fontes)
         if (!existing || withSc > existing.players_with_scorecards) {
           map.set(key, {
             player_count: playerCount,
             players_with_scorecards: withSc,
-            rounds: t.rounds || 1,
-            // name/date também — para torneios que não estão em fpg-admissions-draws.json
+            players_with_full_scorecards: withFullSc,
+            rounds: tournRounds,
             name: t.name || t.description || null,
             date: t.date || t.data || null,
             _source: f,
@@ -129,55 +104,58 @@ function readClassifSources() {
         }
       }
     } catch (e) {
-      console.warn(`[tracking] falhou ler ${f}: ${e.message}`);
+      console.warn("[tracking] falhou ler " + f + ": " + e.message);
     }
   }
   return map;
 }
 
-/* ── Status decision ────────────────────────────────────────────────────── */
+const STALE_AFTER_DAYS = 30;
+
 function deriveStatus(t) {
   const days = daysBetween(t.date, TODAY);
   const rounds = t.rounds || 1;
-  const tournEndOffset = rounds - 1;  // R1 começa dia 0, R3 acaba dia +2
+  const tournEndOffset = rounds - 1;
   if (days < 0) return "future";
   if (days <= tournEndOffset) return "in_progress";
-  // Janela de "acabou de acabar" (+3 dias após fim, consistente com scope dinâmico)
   if (days <= tournEndOffset + 3) {
-    if (!t.has_classif) return "in_progress";  // ainda está a decorrer a atribuição de dados
-    // fall-through para classificar completeness
+    if (!t.has_classif) return "in_progress";
   }
-  // Passados
+  if (days > tournEndOffset + STALE_AFTER_DAYS) {
+    return t.has_classif ? "complete" : "stale";
+  }
   if (!t.has_classif) return "missing_classif";
   if (t.player_count > 0) {
     const ratio = t.players_with_scorecards / t.player_count;
     if (ratio < 0.5) return "missing_scorecards";
+    if (rounds > 1) {
+      const fullRatio = (t.players_with_full_scorecards || 0) / t.player_count;
+      if (fullRatio < 0.5) return "missing_scorecards";
+    }
   }
   if (!t.has_draws && t.admissions_count > 1) return "missing_draws";
   return "complete";
 }
 
-/* ── Main ───────────────────────────────────────────────────────────────── */
 function main() {
-  console.log(`[tracking] A ler fontes...`);
+  console.log("[tracking] A ler fontes...");
   const admMap = readAdmissionsDraws();
   const classifMap = readClassifSources();
-  console.log(`[tracking] admissions/draws: ${admMap.size} torneios`);
-  console.log(`[tracking] classif/scorecards: ${classifMap.size} torneios`);
+  console.log("[tracking] admissions/draws: " + admMap.size + " torneios");
+  console.log("[tracking] classif/scorecards: " + classifMap.size + " torneios");
 
-  // Union de chaves (alguns torneios podem só estar numa das fontes)
-  const allKeys = new Set([...admMap.keys(), ...classifMap.keys()]);
+  const allKeys = new Set([...admMap.keys(), ...classifMap.keys(), ...EXCLUDED.keys()]);
   const tournaments = [];
   for (const key of allKeys) {
     const adm = admMap.get(key) || {};
     const cls = classifMap.get(key) || {};
-    // Chave pode não ter admissions (ex: Drive/Aquapor old só com classif)
+    const exc = EXCLUDED.get(key);
     const [ccode, tcode] = key.split("/");
     const t = {
       ccode: adm.ccode || ccode,
       tcode: adm.tcode || tcode,
-      name: adm.name || cls.name || null,
-      date: adm.date || cls.date || null,
+      name: adm.name || cls.name || (exc && exc.name) || null,
+      date: adm.date || cls.date || (exc && exc.date) || null,
       rounds: cls.rounds || 1,
       has_admissions: adm.has_admissions || false,
       admissions_count: adm.admissions_count || 0,
@@ -187,21 +165,29 @@ function main() {
       has_classif: classifMap.has(key),
       player_count: cls.player_count || 0,
       players_with_scorecards: cls.players_with_scorecards || 0,
+      players_with_full_scorecards: cls.players_with_full_scorecards || 0,
       scorecards_source: cls._source || null,
     };
     t.scorecards_ratio = t.player_count > 0
       ? +(t.players_with_scorecards / t.player_count).toFixed(3)
       : 0;
-    t.status = t.date ? deriveStatus(t) : "unknown";
+    t.full_scorecards_ratio = t.player_count > 0
+      ? +(t.players_with_full_scorecards / t.player_count).toFixed(3)
+      : 0;
+    if (exc) {
+      t.status = "excluded";
+      t.excluded_reason = exc.reason || null;
+    } else {
+      t.status = t.date ? deriveStatus(t) : "unknown";
+    }
     tournaments.push(t);
   }
 
   tournaments.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
 
-  // Summary
   const summary = {
     total: tournaments.length,
-    complete: 0, in_progress: 0, future: 0,
+    complete: 0, in_progress: 0, future: 0, stale: 0, excluded: 0,
     missing_admissions: 0, missing_classif: 0, missing_scorecards: 0, missing_draws: 0,
     unknown: 0,
   };
@@ -216,9 +202,9 @@ function main() {
   };
 
   fs.writeFileSync(OUT_FILE, JSON.stringify(output, null, 2));
-  console.log(`[tracking] ✓ Gravado ${path.relative(REPO, OUT_FILE)}`);
-  console.log(`[tracking] Resumo:`);
-  Object.entries(summary).forEach(([k, v]) => { if (v > 0) console.log(`   ${k.padEnd(20)} ${v}`); });
+  console.log("[tracking] Gravado " + path.relative(REPO, OUT_FILE));
+  console.log("[tracking] Resumo:");
+  Object.entries(summary).forEach(([k, v]) => { if (v > 0) console.log("   " + k.padEnd(20) + " " + v); });
 }
 
 try { main(); } catch (e) { console.error("[tracking] ERRO:", e); process.exit(1); }
