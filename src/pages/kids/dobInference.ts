@@ -122,19 +122,54 @@ export interface DobConstraint {
   tid: string;
 }
 
+/** Calcula a categoria RFEG (Benjamín/Alevín/Infantil/Cadete/Juvenil/Junior)
+ *  a partir do ano de nascimento, pela regra oficial: idade que o jogador
+ *  faz NO ANO CIVIL em curso.
+ *
+ *  - até 10 anos → Benjamín
+ *  - 11-12 anos → Alevín
+ *  - 13-14 anos → Infantil
+ *  - 15-16 anos → Cadete
+ *  - 17-18 anos → Juvenil  (também chamado Boy/Girl em alguns escalões)
+ *  - 19-21 anos → Junior
+ *
+ *  Devolve a forma masculina por convenção da app — o pill de sexo já mostra M/F.
+ *  Retorna null se DOB não parseável ou idade fora dos escalões juvenis.
+ */
+export function categoriaRFEGFromDob(dobStr?: string | null, today: Date = new Date()): string | null {
+  if (!dobStr) return null;
+  let d: Date;
+  try { d = parseDob(dobStr); } catch { return null; }
+  const ageThisYear = today.getFullYear() - d.getFullYear();
+  if (ageThisYear <= 10) return "Benjamín";
+  if (ageThisYear <= 12) return "Alevín";
+  if (ageThisYear <= 14) return "Infantil";
+  if (ageThisYear <= 16) return "Cadete";
+  if (ageThisYear <= 18) return "Juvenil";
+  if (ageThisYear <= 21) return "Junior";
+  return null;
+}
+
 /** Calcula o escalão internacional Sub-N (Sub-10/12/14/16/18/21) prefirindo
  *  a idade actual (DOB exacto), com fallback para a categoria RFEG (catEdad). */
 export function escalaoIntl(rival: RivalPlayer): string | null {
+  // Convenção USKids/FPG: Sub-N inclui jogadores de N anos (Boys 12 → Sub-12).
+  // Alinhado com escalaoManuelParaData (constants/manuel.ts) e RivalDetail.tsx.
   const ageToSub = (a: number): string | null => {
-    if (a <= 9) return "Sub-10";
-    if (a <= 11) return "Sub-12";
-    if (a <= 13) return "Sub-14";
-    if (a <= 15) return "Sub-16";
-    if (a <= 17) return "Sub-18";
+    if (a <= 10) return "Sub-10";
+    if (a <= 12) return "Sub-12";
+    if (a <= 14) return "Sub-14";
+    if (a <= 16) return "Sub-16";
+    if (a <= 18) return "Sub-18";
     if (a <= 21) return "Sub-21";
     return null;
   };
-  // 1) DOB exacto → idade actual
+  // 1) DOB exacto → idade actual (a fonte mais fiável).
+  //    Convenção USKids/FPG: jogadores de 12 anos competem em Boys 12 / Sub-12.
+  //    Aplica-se ao Manuel e a qualquer rival com data de nascimento conhecida,
+  //    incluindo espanhóis (a categoria RFEG `esCatEdad` Benjamín/Alevín/etc.
+  //    é mostrada num pill separado no header e NÃO deve sobrepor-se aqui:
+  //    um Benjamín de 11 anos pela idade actual é Sub-12, não Sub-10).
   if (rival.dob) {
     try {
       const d = parseDob(rival.dob);
@@ -147,15 +182,18 @@ export function escalaoIntl(rival: RivalPlayer): string | null {
       if (sub) return sub;
     } catch {}
   }
-  // 2) Fallback: catEdad RFEG → mapeamento standard
+  // 2) Fallback (sem DOB): categoria RFEG → equivalente Sub-N standard.
+  //    Aproximação grosseira porque cada categoria RFEG cobre 2 anos
+  //    (Benjamín = 10-11 anos), mas é melhor que nada quando a idade real
+  //    do jogador é desconhecida.
   const cat = (rival as any).esCatEdad as string | undefined;
   if (cat) {
     const c = cat.toUpperCase();
-    if (/BENJAM/.test(c)) return "Sub-10";
-    if (/ALEV/.test(c)) return "Sub-12";
-    if (/INFANT/.test(c)) return "Sub-14";
-    if (/CADETE/.test(c)) return "Sub-16";
-    if (/JUNIOR|JUVENIL/.test(c)) return "Sub-18";
+    if (/BENJAM/.test(c)) return "Sub-12";
+    if (/ALEV/.test(c)) return "Sub-14";
+    if (/INFANT/.test(c)) return "Sub-16";
+    if (/CADETE/.test(c)) return "Sub-18";
+    if (/JUNIOR|JUVENIL/.test(c)) return "Sub-21";
   }
   return null;
 }

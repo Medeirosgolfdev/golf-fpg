@@ -27,6 +27,7 @@ import LoadingState from "../ui/LoadingState";
 import { COURSE_KEYWORDS, TOURN } from "../data/rivalData";
 import FieldPlayerDetail from "../ui/FieldPlayerDetail";
 import ContestLeaderboard from "../ui/ContestLeaderboard";
+import RivaisDashboard from "../ui/RivaisDashboard";
 import TabRow from "../ui/TabRow";
 import Counter from "../ui/Counter";
 import type {
@@ -463,6 +464,30 @@ for (const t of T) {
   }
 }
 
+// Tournament prestige weight: rounds (40%) + field size (35%) + internationality (25%)
+const T_WEIGHTS: Record<string, number> = (() => {
+  const maxR = Math.max(...T.map(t => t.intendedRounds || t.rounds));
+  const maxF = Math.max(...T.map(t => t.field));
+  const maxN = Math.max(...T.map(t => t.nations));
+  const w: Record<string, number> = {};
+  for (const t of T) {
+    const rNorm = (t.intendedRounds || t.rounds) / maxR;
+    const fNorm = t.field / maxF;
+    const nNorm = t.nations / maxN;
+    w[t.id] = 0.40 * rNorm + 0.35 * fNorm + 0.25 * nNorm;
+  }
+  return w;
+})();
+
+// Próximos torneios (UP) — onde os rivais estão inscritos
+const UP: Array<{ id: string; name: string; short?: string; url?: string }> = [
+  { id: "marco26", name: "Marco Simone Inv.", short: "M.SIMONE", url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516989/marco-simone-invitational-2026/field" },
+  { id: "eurochamp26", name: "European Championship 2026", short: "EUROPEAN", url: "https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=21131" },
+];
+
+const manuel: RivalPlayer = D.find(x => x.isM)!;
+const allCountries: string[] = [...new Set(D.map(p => p.co))].sort();
+
 export default function BJGTAnalysisPage({ playerFed }: { playerFed?: string }) {
   const { unlocked, unlock } = usePasswordGate();
 
@@ -478,6 +503,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
   const [tab, setTab] = useState<ContestKey>("26_1011");
   const md = useMasterDetail();
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
+  const [showRivais, setShowRivais] = useState(false);
 
   /* ── Analysis ── */
   const A = useMemo(() => {
@@ -1050,9 +1076,91 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
         <TabRow
           tabs={CONTEST_KEYS.map(k => ({ key: k, label: CONTEST_LABELS[k] }))}
           active={tab}
-          onChange={setTab}
+          onChange={(k) => { setTab(k); setShowRivais(false); setSelectedPlayer(null); }}
         />
-        <Counter ml="auto">{fmtFieldInfo(CONTEST_MAP[tab].players.filter(p=>typeof p.p==="number").length, CONTEST_MAP[tab].nRounds, `Par ${CONTEST_MAP[tab].par}`)}</Counter>
+        <button
+          className={"tourn-tab tourn-tab-sm" + (showRivais ? " active" : " tourn-tab-muted")}
+          style={{ flexShrink: 0, marginLeft: 6 }}
+          onClick={() => { setShowRivais(v => !v); setSelectedPlayer(null); }}
+          title="Tabela de rivais internacionais — performance histórica + próximos torneios">
+          🌐 Rivais
+        </button>
+        <Counter ml="auto">
+          {showRivais
+            ? `${D.length - 1} rivais · ${T.length} torneios`
+            : fmtFieldInfo(CONTEST_MAP[tab].players.filter(p=>typeof p.p==="number").length, CONTEST_MAP[tab].nRounds, `Par ${CONTEST_MAP[tab].par}`)}
+        </Counter>
+      </Toolbar>
+
+      {/* ── Master-detail ── */}
+      <div className="master-detail">
+        {/* Sidebar: Contest players */}
+        <div className={`sidebar${md.open ? "" : " sidebar-closed"}`}>
+          <div className="sidebar-section-title">
+            {showRivais ? "🌐 Rivais internacionais" : CONTEST_LABELS[tab]}
+          </div>
+          {showRivais
+            ? D.filter(p => !p.isM).map((p, idx) => {
+                const played = T.filter(t => p.r[t.id] && p.r[t.id].tp != null).length;
+                return (
+                  <div key={idx} className="course-item"
+                    style={{padding:"6px 12px",display:"flex",justifyContent:"space-between",alignItems:"center",borderBottom:"1px solid var(--border-subtle)",cursor:"pointer"}}
+                    onClick={() => setSelectedPlayer(p.n)}>
+                    <div className="course-item-name">{firstName(p.n)}</div>
+                    <div className="course-item-meta" style={{fontVariantNumeric:"tabular-nums"}}>{played}T</div>
+                  </div>
+                );
+              })
+            : CONTEST_MAP[tab].players.filter(p => p.rd.length > 0).map((p, idx) => (
+                <div key={idx} className="course-item" style={{padding:"6px 12px",display:"flex",justifyContent:"space-between",alignItems:"center",borderBottom:"1px solid var(--border-subtle)", background: p.isM ? "var(--bg-success-subtle)" : undefined}}>
+                  <div className="course-item-name">
+                    <span className="fs-11 fw-800" style={{ minWidth: 22, color: typeof p.p === "number" && p.p <= 3 ? "var(--color-warn-dark)" : "var(--text-3)" }}>{typeof p.p === "number" ? `${p.p}.` : ""}</span>
+                    {p.fl} {firstName(p.n)}
+                  </div>
+                  <div className="course-item-meta" style={{fontVariantNumeric:"tabular-nums"}}>
+                    {p.t} ({fmtToPar(p.tp)})
+                  </div>
+                </div>
+              ))}
+        </div>
+
+        {/* Detail: content */}
+        <div className="course-detail">
+
+      {/* ═══ RIVAIS DASHBOARD (toggle global) ═══ */}
+      {showRivais && !selectedPlayer && (
+        <RivaisDashboard
+          onSelectPlayer={setSelectedPlayer}
+          D={D}
+          T={T}
+          UP={UP}
+          manuel={manuel}
+          T_WEIGHTS={T_WEIGHTS}
+          AVG_R={AVG_R}
+          allCountries={allCountries}
+        />
+      )}
+
+      {/* ═══ PLAYER DETAIL (from sidebar click) ═══ */}
+      {selectedPlayer && (
+        <FieldPlayerDetail playerName={selectedPlayer} onBack={() => setSelectedPlayer(null)} T={T} D={D} />
+      )}
+
+      {/* ═══ CONTEST LEADERBOARD (all 4 tabs) ═══ */}
+      {!showRivais && !selectedPlayer && (
+        <ContestLeaderboard
+          contest={CONTEST_MAP[tab]}
+          evo={tab === "26_1011" ? EVOLUTION.filter(e => e.to === "10-11") : tab === "26_1213" ? EVOLUTION.filter(e => e.to === "12-13") : undefined}
+        />
+      )}
+
+        </div>
+      </div>
+    </div>
+  );
+}
+ds, `Par ${CONTEST_MAP[tab].par}`)}
+        </Counter>
       </Toolbar>
 
       {/* ── Master-detail ── */}
@@ -1078,13 +1186,98 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
         {/* Detail: content */}
         <div className="course-detail">
 
+      {/* ═══ RIVAIS DASHBOARD (toggle global) ═══ */}
+      {showRivais && !selectedPlayer && (
+        <RivaisDashboard
+          onSelectPlayer={setSelectedPlayer}
+          D={D}
+          T={T}
+          UP={UP}
+          manuel={manuel}
+          T_WEIGHTS={T_WEIGHTS}
+          AVG_R={AVG_R}
+          allCountries={allCountries}
+        />
+      )}
+
       {/* ═══ PLAYER DETAIL (from sidebar click) ═══ */}
       {selectedPlayer && (
         <FieldPlayerDetail playerName={selectedPlayer} onBack={() => setSelectedPlayer(null)} T={T} D={D} />
       )}
 
       {/* ═══ CONTEST LEADERBOARD (all 4 tabs) ═══ */}
-      {!selectedPlayer && (
+      {!showRivais && !selectedPlayer && (
+        <ContestLeaderboard
+          contest={CONTEST_MAP[tab]}
+          evo={tab === "26_1011" ? EVOLUTION.filter(e => e.to === "10-11") : tab === "26_1213" ? EVOLUTION.filter(e => e.to === "12-13") : undefined}
+        />
+      )}
+
+        </div>
+      </div>
+    </div>
+  );
+}
+ds, `Par ${CONTEST_MAP[tab].par}`)}
+        </Counter>
+      </Toolbar>
+
+      {/* ── Master-detail ── */}
+      <div className="master-detail">
+        {/* Sidebar: Contest players */}
+        <div className={`sidebar${md.open ? "" : " sidebar-closed"}`}>
+          <div className="sidebar-section-title">
+            {showRivais ? "🌐 Rivais internacionais" : CONTEST_LABELS[tab]}
+          </div>
+          {showRivais
+            ? D.filter(p => !p.isM).map((p, idx) => {
+                const played = T.filter(t => p.r[t.id] && p.r[t.id].tp != null).length;
+                return (
+                  <div key={idx} className="course-item"
+                    style={{padding:"6px 12px",display:"flex",justifyContent:"space-between",alignItems:"center",borderBottom:"1px solid var(--border-subtle)",cursor:"pointer"}}
+                    onClick={() => setSelectedPlayer(p.n)}>
+                    <div className="course-item-name">{firstName(p.n)}</div>
+                    <div className="course-item-meta" style={{fontVariantNumeric:"tabular-nums"}}>{played}T</div>
+                  </div>
+                );
+              })
+            : CONTEST_MAP[tab].players.filter(p => p.rd.length > 0).map((p, idx) => (
+                <div key={idx} className="course-item" style={{padding:"6px 12px",display:"flex",justifyContent:"space-between",alignItems:"center",borderBottom:"1px solid var(--border-subtle)", background: p.isM ? "var(--bg-success-subtle)" : undefined}}>
+                  <div className="course-item-name">
+                    <span className="fs-11 fw-800" style={{ minWidth: 22, color: typeof p.p === "number" && p.p <= 3 ? "var(--color-warn-dark)" : "var(--text-3)" }}>{typeof p.p === "number" ? `${p.p}.` : ""}</span>
+                    {p.fl} {firstName(p.n)}
+                  </div>
+                  <div className="course-item-meta" style={{fontVariantNumeric:"tabular-nums"}}>
+                    {p.t} ({fmtToPar(p.tp)})
+                  </div>
+                </div>
+              ))}
+        </div>
+
+        {/* Detail: content */}
+        <div className="course-detail">
+
+      {/* ═══ RIVAIS DASHBOARD (toggle global) ═══ */}
+      {showRivais && !selectedPlayer && (
+        <RivaisDashboard
+          onSelectPlayer={setSelectedPlayer}
+          D={D}
+          T={T}
+          UP={UP}
+          manuel={manuel}
+          T_WEIGHTS={T_WEIGHTS}
+          AVG_R={AVG_R}
+          allCountries={allCountries}
+        />
+      )}
+
+      {/* ═══ PLAYER DETAIL (from sidebar click) ═══ */}
+      {selectedPlayer && (
+        <FieldPlayerDetail playerName={selectedPlayer} onBack={() => setSelectedPlayer(null)} T={T} D={D} />
+      )}
+
+      {/* ═══ CONTEST LEADERBOARD (all 4 tabs) ═══ */}
+      {!showRivais && !selectedPlayer && (
         <ContestLeaderboard
           contest={CONTEST_MAP[tab]}
           evo={tab === "26_1011" ? EVOLUTION.filter(e => e.to === "10-11") : tab === "26_1213" ? EVOLUTION.filter(e => e.to === "12-13") : undefined}
