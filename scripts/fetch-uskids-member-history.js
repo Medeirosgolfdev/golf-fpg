@@ -122,12 +122,36 @@ async function descobrirFlights(page, tcode) {
   }
 }
 
-async function pageJSON(page, url) {
-  return page.evaluate(async (u) => {
-    const r = await fetch(u, { credentials: 'include' });
+async function pageJSON(page, url, method = 'GET') {
+  return page.evaluate(async ({ u, m }) => {
+    const r = await fetch(u, { method: m, credentials: 'include' });
     if (!r.ok) throw new Error('HTTP ' + r.status);
     return r.json();
-  }, url);
+  }, { u: url, m: method });
+}
+
+// GetPlayerTeeTimes com endpoint correcto descoberto via Chrome DevTools 2026-05-12:
+// POST + t=1 (final results, funciona para tcodes encerrados E vivos) +
+// params extra obrigatórios pt=undefined&jbgr={timestamp}&c=1.
+// Fallback automático para t=0 (live tee times) se t=1 vier vazio.
+async function getPlayerTeeTimes(page, fid, round, pageNum) {
+  const jbgr = Date.now();
+  // Tentar t=1 primeiro (universal — funciona para closed e most live)
+  let d = await pageJSON(
+    page,
+    `${API}?op=GetPlayerTeeTimes&f=${fid}&r=${round}&p=${pageNum}&t=1&pt=undefined&jbgr=${jbgr}&c=1`,
+    'POST'
+  );
+  if (d?.flight_players && Object.keys(d.flight_players).length) return d;
+  // Fallback: t=0 (legacy — live tee times sem resultados finais)
+  try {
+    d = await pageJSON(
+      page,
+      `${API}?op=GetPlayerTeeTimes&f=${fid}&r=${round}&p=${pageNum}&t=0&pt=undefined&jbgr=${jbgr}&c=1`,
+      'POST'
+    );
+  } catch {}
+  return d;
 }
 
 function strokesKey(arr) {
@@ -370,7 +394,8 @@ async function main() {
         try {
           const totalPages = Math.ceil((memberIds.length || 20) / 20);
           for (let p = 1; p <= totalPages; p++) {
-            const d = await pageJSON(page, `${API}?op=GetPlayerTeeTimes&f=${fid}&r=1&p=${p}&t=0`);
+            const d = await getPlayerTeeTimes(page, fid, 1, p);
+            if (!d) continue;
 
             for (const [pid, pl] of Object.entries(d.flight_players || {})) {
               const name    = `${(pl.first || '').trim()} ${(pl.last || '').trim()}`.trim();

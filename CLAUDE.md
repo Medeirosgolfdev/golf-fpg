@@ -79,10 +79,11 @@ npm run login     # login FPG (gera sessão)
 | O quê | Valor |
 |-------|-------|
 | Manuel — FPG nfed | `52884` |
-| Manuel — USKids playerID | `630106` |
+| Manuel — USKids playerID (actual) | `630106` |
+| Manuel — USKids playerID (legacy 2023) | `605933` — validado 2026-05-13. Conta abandonada: única aparição no El Prat 2023 Boys 9 (gross 44, place 3). **Nome USKids antigo:** "Manuel Francisco Goulartt De Medeiros". Ambos os IDs estão em `MANUEL_PLAYER_IDS` em `src/constants/manuel.ts`. |
 | Manuel — USKids accountUID | `762810` |
 | Manuel — DOB | `29/04/2014` (MANUEL_BIRTH_YEAR = 2014) |
-| TORNEIOS_COMPLETOS_COUNT | `22` (constante em USKIDSPage.tsx — atualizar ao adicionar completos; espelhar em KIDSdataLoader.ts) |
+| TORNEIOS_COMPLETOS_COUNT | `29` (constante em USKIDSPage.tsx — atualizar ao adicionar completos; espelhar em KIDSdataLoader.ts) |
 | Signupanytime ax — intl | `1129` |
 | Signupanytime ax — Marco Simone 2025 | `2739` |
 | Signupanytime ax — El Prat | `2760` |
@@ -1649,7 +1650,9 @@ Na barra de distribuição de scores, o segmento de par usa branco/transparente,
 
 **Separação de pipelines USKids vs não-USKids** — Torneios não-USKids (Doral, WJGC, Greatgolf, QDL, EOWAGR) devem alimentar **apenas** a tab Rivais via `buildAutoRivals()`. A tab Resultados carrega **exclusivamente** de `uskids-results.json` e `uskids_torneios_completos(1-22).json`. Este bug voltou várias vezes.
 
-**Manuel tem 3 variantes de nome** — "Manuel Medeiros", "Manuel Francisco Medeiros", "Manuel Goulartt Medeiros". Usar sempre `autoRivals.filter(d => d.isM)` (não `find()`) e fazer merge de todas as entradas.
+**Manuel tem 4 variantes de nome + 2 contas USKids** — "Manuel Medeiros", "Manuel Francisco Medeiros", "Manuel Goulartt Medeiros", e "Manuel Francisco Goulartt De Medeiros" (este último era da **conta USKids antiga**, antes da migração para mid `630106`). Usar sempre `autoRivals.filter(d => d.isM)` (não `find()`) e fazer merge de todas as entradas. `isManuelByName()` em `src/constants/manuel.ts` já apanha as 4 variantes. Para mid USKids legacy, ver `MANUEL_PLAYER_IDS` (array) — adicionar lá o mid antigo quando validado via `scripts/verify-manuel-legacy-mid.js`.
+
+**Manuel — conta USKids antiga (legacy)** — jogou em 2023 (Real Club de Golf El Prat tcode 15573 Boys 9, gross 44, place 3) com **mid 605933** (validado 2026-05-13 via GetTournamentPlayers&f=198807 + GetMemberTournamentResults — única aparição na carreira). Conta abandonada depois desse torneio; conta nova `630106` criada para a temporada seguinte. O nome aparecia como "Manuel Francisco Goulartt De Medeiros". Histórico, confrontos H2H e progressão de escalões mergeam os dois IDs como um único jogador via `MANUEL_PLAYER_IDS = ["630106", "605933"]` em `src/constants/manuel.ts`.
 
 **Referências estáticas a dados fora de componentes React ficam stale** — `const manuel = D_BASE.find(x => x.isM)` fora de um componente referencia dados pré-merge. Fazer lookup dentro do componente via state.
 

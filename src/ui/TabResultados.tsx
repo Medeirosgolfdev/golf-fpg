@@ -190,7 +190,7 @@ function EscalaoSection({ escalao: e, torneio: t, arMap }: {
           ? <AllRoundsScorecardLB tournament={tournament} escLookup={new Map()} playersDB={kidsDB} />
           : isAccTab
             ? <AccumulatedLB tournament={curT} nRounds={rondasComDados.length} escLookup={new Map()} playersDB={kidsDB} />
-            : <ScorecardLB tournament={curT} escLookup={new Map()} playersDB={kidsDB} siLabel="m" parLabelColSpan={6} />;
+            : <ScorecardLB tournament={curT} escLookup={new Map()} playersDB={kidsDB} siLabel="m" />;
       })()}
 
     </div>

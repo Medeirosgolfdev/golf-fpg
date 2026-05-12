@@ -64,20 +64,33 @@ function converterTorneioCompleto(raw: any): TorneioResult | null {
       const esc = escalaoMap.get(agId)!;
 
       // Extrair par e metros (de jardas) por ronda do course_info (R1/R2/R3...)
+      // IMPORTANTE: alinhar metros com par — em flights 9H o GetMeta devolve `holes[]`
+      // com 18 entries (yards completos do percurso), mas só as 9 jogadas têm `par > 0`.
+      // Filtrar AMBOS pelos índices onde par > 0 para garantir alinhamento.
       const courseInfo: Record<string, any> = flight.course_info ?? {};
       for (const [rKey, rInfo] of Object.entries(courseInfo)) {
         const rn = parseInt(rKey.replace(/^R/, ''));
         if (isNaN(rn)) continue;
         const holes_arr: any[] = rInfo.holes ?? [];
-        if (!esc.parPorRonda.has(rn)) {
-          const par = holes_arr.map((h: any) => h.par as number).filter(p => p > 0);
-          if (par.length > 0) esc.parPorRonda.set(rn, par);
+        // Índices onde realmente houve buraco jogado (par > 0)
+        const playedIdx = holes_arr
+          .map((h: any, i: number) => ((h.par ?? 0) > 0 ? i : -1))
+          .filter((i: number) => i >= 0);
+
+        if (!esc.parPorRonda.has(rn) && playedIdx.length > 0) {
+          const par = playedIdx.map((i: number) => holes_arr[i].par as number);
+          esc.parPorRonda.set(rn, par);
         }
-        if (!esc.metrosPorRonda.has(rn)) {
-          const metros = holes_arr.map((h: any) => Math.round((h.yards ?? 0) * 0.9144)).filter(m => m > 0);
-          if (metros.length > 0) esc.metrosPorRonda.set(rn, metros);
+        if (!esc.metrosPorRonda.has(rn) && playedIdx.length > 0) {
+          const metros = playedIdx
+            .map((i: number) => Math.round((holes_arr[i].yards ?? 0) * 0.9144));
+          // só guardar se algum metro real (> 0)
+          if (metros.some((m: number) => m > 0)) esc.metrosPorRonda.set(rn, metros);
         }
-        if (!esc.campo && rInfo.courseName) esc.campo = rInfo.courseName;
+        // Campo preferencial: vem do flight (course_name específico daquele escalão)
+        if (!esc.campo) {
+          esc.campo = rInfo.course_name ?? rInfo.courseName ?? null;
+        }
       }
 
       // Players estão directamente em flight.flight_players (sem rounds_data)
@@ -108,9 +121,20 @@ function converterTorneioCompleto(raw: any): TorneioResult | null {
       }
     }
 
-    // Campo: primeiro curso listado
-    const firstCourse = Object.values(raw.courses ?? {})[0] as any;
-    const campo = firstCourse?.name ?? null;
+    // Campo do torneio: usar o curso MAIS COMUM entre os flights (não o primeiro
+    // listado em raw.courses — esse pode ser de outro torneio do mesmo organizador).
+    // Fallback: primeiro courses[] se nenhum flight tiver course_name.
+    const campoTally: Map<string, number> = new Map();
+    for (const esc of escalaoMap.values()) {
+      if (esc.campo) campoTally.set(esc.campo, (campoTally.get(esc.campo) ?? 0) + 1);
+    }
+    let campo: string | null = null;
+    if (campoTally.size > 0) {
+      campo = [...campoTally.entries()].sort((a, b) => b[1] - a[1])[0][0];
+    } else {
+      const firstCourse = Object.values(raw.courses ?? {})[0] as any;
+      campo = firstCourse?.name ?? null;
+    }
 
     const escaloes: EscalaoResult[] = [];
     for (const esc of escalaoMap.values()) {

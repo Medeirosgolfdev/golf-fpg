@@ -1880,7 +1880,7 @@ async function _buildAutoRivalsInternal(
     { kind: "tournMeta",  file: "t_de_tournaments_do_uskids.json" },
     // ⚠ Manter em sincronia com o número real de ficheiros uskids_torneios_completos(N).json
     // em public/data/. Também definido em USKIDSPage.tsx como TORNEIOS_COMPLETOS_COUNT.
-    ...Array.from({ length: 22 }, (_, i) =>
+    ...Array.from({ length: 40 }, (_, i) =>
       ({ kind: "completo" as const, file: `uskids_torneios_completos(${i + 1}).json` })
     ),
   ];

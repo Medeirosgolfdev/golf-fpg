@@ -36,14 +36,24 @@ const fs   = require('fs');
 const path = require('path');
 
 // ── Config ───────────────────────────────────────────────────────────
-const ARCHIVE_DIR = path.join(__dirname, '..', 'public', 'data-archive');
+const argArchiveDir = (process.argv.find(a => a.startsWith('--archive-dir=')) || '').split('=')[1];
+const ARCHIVE_DIR   = argArchiveDir
+  ? path.resolve(argArchiveDir)
+  : path.join(__dirname, '..', 'public', 'data-archive');
 
 const argTargetMb = (process.argv.find(a => a.startsWith('--target-mb=')) || '').split('=')[1];
 const TARGET_MB   = argTargetMb ? parseInt(argTargetMb, 10) : 85;   // default 85 MB (margem contra 100 MB)
 const TARGET_SIZE = TARGET_MB * 1024 * 1024;
 
 const argInput = (process.argv.find(a => a.startsWith('--input=')) || '').split('=')[1];
+// Se INPUT não for passado, default é o monolítico em ARCHIVE_DIR.
+// Se for passado e for uma DIRECTORIA, consolida todos os chunks dela primeiro.
 const INPUT    = argInput ? path.resolve(argInput) : path.join(ARCHIVE_DIR, 'uskids-member-history.json');
+
+// Flag --from-chunks: lê os chunks existentes em ARCHIVE_DIR e re-distribui
+// (sem precisar de monolítico). Útil quando o ficheiro 001.json passou >100MB
+// e os outros já existem mas em tamanhos desequilibrados.
+const FROM_CHUNKS = process.argv.includes('--from-chunks');
 
 const KEEP_MONOLITH = process.argv.includes('--keep-monolith');
 
@@ -71,29 +81,83 @@ function writeChunk(idx, torneios, jogadoresSlice, geradoEm) {
   return { path: outPath, size: Buffer.byteLength(str, 'utf8') };
 }
 
-// ── Main ─────────────────────────────────────────────────────────────
-function main() {
-  if (!fs.existsSync(INPUT)) {
-    console.error(`❌ Input não encontrado: ${INPUT}`);
+// Consolida todos os chunks da pasta `dir` num único objecto in-memory.
+// Merge: prioridade aos jogadores com `name` (não-vazio, não "?"). Para
+// torneios, prioridade ao registo mais completo (mais campos não-vazios).
+function consolidateChunks(dir) {
+  const files = fs.readdirSync(dir)
+    .filter(f => CHUNK_RE.test(f))
+    .map(f => path.join(dir, f))
+    .sort();
+  if (!files.length) {
+    console.error(`❌ Nenhum chunk encontrado em ${dir}`);
     process.exit(1);
   }
+  console.log(`📂 A consolidar ${files.length} chunks de ${path.relative(process.cwd(), dir)}…`);
+  const torneios = {};
+  const jogadores = {};
+  let geradoEm = '';
+  for (const fn of files) {
+    const stat = fs.statSync(fn);
+    console.log(`   • ${path.basename(fn)} (${humanBytes(stat.size)})`);
+    const d = JSON.parse(fs.readFileSync(fn, 'utf8'));
+    if (d.gerado_em && d.gerado_em > geradoEm) geradoEm = d.gerado_em;
+    for (const [tid, t] of Object.entries(d.torneios || {})) {
+      if (!torneios[tid]) torneios[tid] = t;
+    }
+    for (const [mid, p] of Object.entries(d.jogadores || {})) {
+      const existing = jogadores[mid];
+      if (!existing) { jogadores[mid] = p; continue; }
+      // Preferir nome real sobre "?" / vazio
+      const goodName = (n) => n && n !== '?';
+      if (!goodName(existing.name) && goodName(p.name)) {
+        jogadores[mid] = { ...existing, ...p, torneios: { ...(existing.torneios || {}), ...(p.torneios || {}) } };
+      } else {
+        // Merge torneios (mais é melhor)
+        existing.torneios = { ...(existing.torneios || {}), ...(p.torneios || {}) };
+        if (!existing.country && p.country) existing.country = p.country;
+        if (!existing.ageGroup && p.ageGroup) existing.ageGroup = p.ageGroup;
+      }
+    }
+  }
+  return { torneios, jogadores, geradoEm: geradoEm || new Date().toISOString() };
+}
 
-  const statIn = fs.statSync(INPUT);
-  console.log('══════════════════════════════════════════════');
-  console.log('✂️   split-member-history.js');
-  console.log(`    input:  ${path.relative(process.cwd(), INPUT)} (${humanBytes(statIn.size)})`);
-  console.log(`    target: ≤ ${TARGET_MB} MB por chunk`);
-  console.log('══════════════════════════════════════════════\n');
+// ── Main ─────────────────────────────────────────────────────────────
+function main() {
+  let data;
+  if (FROM_CHUNKS) {
+    data = consolidateChunks(ARCHIVE_DIR);
+    console.log('══════════════════════════════════════════════');
+    console.log('✂️   split-member-history.js (--from-chunks)');
+    console.log(`    archive-dir: ${path.relative(process.cwd(), ARCHIVE_DIR)}`);
+    console.log(`    target:      ≤ ${TARGET_MB} MB por chunk`);
+    console.log('══════════════════════════════════════════════\n');
+  } else {
+    if (!fs.existsSync(INPUT)) {
+      console.error(`❌ Input não encontrado: ${INPUT}`);
+      console.error(`   Dica: usa --from-chunks para consolidar os chunks existentes em ${ARCHIVE_DIR}`);
+      process.exit(1);
+    }
+    const statIn = fs.statSync(INPUT);
+    console.log('══════════════════════════════════════════════');
+    console.log('✂️   split-member-history.js');
+    console.log(`    input:       ${path.relative(process.cwd(), INPUT)} (${humanBytes(statIn.size)})`);
+    console.log(`    archive-dir: ${path.relative(process.cwd(), ARCHIVE_DIR)}`);
+    console.log(`    target:      ≤ ${TARGET_MB} MB por chunk`);
+    console.log('══════════════════════════════════════════════\n');
+    console.log('📂 A ler monolítico…');
+    const raw = fs.readFileSync(INPUT, 'utf8');
+    const parsed = JSON.parse(raw);
+    data = {
+      torneios: parsed.torneios || {},
+      jogadores: parsed.jogadores || {},
+      geradoEm: parsed.gerado_em || new Date().toISOString()
+    };
+  }
 
-  console.log('📂 A ler monolítico…');
-  const raw = fs.readFileSync(INPUT, 'utf8');
-  const data = JSON.parse(raw);
-
-  const torneios  = data.torneios  || {};
-  const jogadores = data.jogadores || {};
-  const geradoEm  = data.gerado_em || new Date().toISOString();
-  const mids      = Object.keys(jogadores);
-
+  const { torneios, jogadores, geradoEm } = data;
+  const mids = Object.keys(jogadores);
   console.log(`   ${Object.keys(torneios).length} torneios, ${mids.length} jogadores\n`);
 
   // Apagar chunks antigos
