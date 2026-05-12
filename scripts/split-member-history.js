@@ -235,10 +235,12 @@ function main() {
     process.exit(1);
   }
 
-  // Apagar monolítico
+  // Apagar monolítico (só se existia — em modo --from-chunks pode não existir)
   if (!KEEP_MONOLITH) {
-    fs.unlinkSync(INPUT);
-    console.log(`\n🗑️   monolítico removido: ${path.relative(process.cwd(), INPUT)}`);
+    if (!FROM_CHUNKS && fs.existsSync(INPUT)) {
+      fs.unlinkSync(INPUT);
+      console.log(`\n🗑️   monolítico removido: ${path.relative(process.cwd(), INPUT)}`);
+    }
   } else {
     console.log(`\n📌 --keep-monolith: monolítico mantido`);
   }

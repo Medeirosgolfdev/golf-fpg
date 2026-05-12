@@ -370,12 +370,18 @@ node scrape-golfgenius.js ftm_doral_2024.json https://2024firstteemiamidoraljrcl
 Base: `https://www.signupanytime.com/plugins/links/admin/LinksAJAX.aspx?op={OP}&…`
 Em Playwright, navegar primeiro para o iframe: `…/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t={t}`
 
-| Endpoint | Descrição | Retorna |
-|----------|-----------|---------|
-| `GetMeta&t={tcode}` | Metadados: flights, age_groups, **flight_courses** (par+yards reais!), courses | tournament, flights, age_groups, flight_courses{pars[], lengths[]}, flight_rounds |
-| `GetTournamentPlayers&t={tcode}&f={fid}` | Lista de memberIDs num flight | PlayerNodeId: number[] |
-| `GetPlayerTeeTimes&f={fid}&r={round}&p={page}&t=0` | **Scores buraco-a-buraco.** Paginado, 20/pág | flight_players com strokes[18], country, place, status |
-| `GetMemberTournamentResults&m={memberID}` | Histórico completo de carreira | Todos os torneios com rounds, strokes[], course, gross |
+| Endpoint | Método | Descrição | Retorna |
+|----------|--------|-----------|---------|
+| `GetMeta&t={tcode}` | GET | Metadados: flights, age_groups, **flight_courses** (par+yards reais!), courses, flight_rounds | tournament, flights, age_groups, flight_courses{pars[], lengths[]}, flight_rounds |
+| `GetTournamentPlayers&t={tcode}&f={fid}` | GET | Lista de **memberIDs USKids globais** num flight (não pids locais) | PlayerNodeId: number[] |
+| `GetPlayerTeeTimes&f={fid}&r={round}&p={page}&t=1&pt=undefined&jbgr={ts}&c=1` | **POST** | **Scores buraco-a-buraco + nomes + país.** Paginado, 20/pág. **⚠️ Tem de ser POST (não GET) e tem de incluir `t=1` + `pt=undefined&jbgr={Date.now()}&c=1`.** Endpoint descoberto via DevTools Network 2026-05-12 (validado em t=15573 e nos 6 tcodes PT 2023). Old endpoint `GET t=0` devolve `flight_players: {}` silenciosamente para torneios encerrados | `flight_players: {[pid]: {first,last,country,place(cidade!),rounds:{[rn]:{strokes[],num_strokes,num_holes,course_name}}}}` |
+| `GetMemberTournamentResults&m={memberID}` | GET | Histórico completo de carreira | `{[tcode]: {t_name, t_start_date, p_age_group, p_place, p_strokes, p_country?, p_rounds:{[rn]:{strokes, course_name, num_strokes, num_holes}}}}` |
+
+**Armadilhas críticas dos endpoints USKids:**
+- O `pid` no `flight_players` (ex: `1108352`) é **local ao flight, NÃO é o memberID USKids global** (ex: `591440`). Para mapear nome→mid usa o `GetTournamentPlayers` em paralelo + match por strokes/place/gross dentro de (tcode, ageGroup).
+- O `place` no `flight_players` é a **CIDADE** (ex: "Lisbon, Lisboa"), não a posição. A posição calcula-se ordenando por `num_strokes`.
+- `flight_courses` no `GetMeta` é indexado por `flight_round_id`, **NÃO por flight_id**. Para mapear: `flight_rounds[frId].flight === flightId && flight_rounds[frId].round === 1` → `flight_courses[frId].{pars,lengths}`.
+- Em flights 9H, `flight_courses[].pars` tem 18 entries mas só as 9 jogadas têm `par > 0`; `flight_courses[].lengths` tem yards completos do percurso (todos > 0). **Filtrar AMBOS pelos índices onde par > 0 para alinhamento.**
 
 Em Playwright: intercettar `GetMeta` via `page.on('response')` é mais fiável do que chamar directamente.
 
