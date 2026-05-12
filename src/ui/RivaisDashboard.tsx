@@ -13,6 +13,18 @@ import { TIER } from "../data/rivalData";
 import { TIER_L, TR_I } from "../constants/config";
 import type { RivalPlayer, TournDef, RoundAvg } from "./bjgtAnalysisTypes";
 
+// DOB formatter — aceita YYYY-MM-DD, DD/MM/YYYY, ou outro; devolve "DD/MM/YY"
+function fmtDob(dob?: string): string {
+  if (!dob) return "";
+  // YYYY-MM-DD
+  let m = dob.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (m) return `${m[3]}/${m[2]}/${m[1].slice(2)}`;
+  // DD/MM/YYYY
+  m = dob.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if (m) return `${m[1].padStart(2, "0")}/${m[2].padStart(2, "0")}/${m[3].slice(2)}`;
+  return dob;
+}
+
 interface RivaisDashboardProps {
   onSelectPlayer?: (name: string) => void;
   // Global data passed from parent (BJGTContent)
@@ -23,6 +35,13 @@ interface RivaisDashboardProps {
   T_WEIGHTS: Record<string, number>;
   AVG_R: Record<string, RoundAvg[] | undefined>;
   allCountries: string[];
+  showManuelKpis?: boolean;
+  seriesBoundaries?: Set<string>;
+  // Modo "field" (tabela por torneio futuro): esconde Rank/Trend/UP/vsM,
+  // adiciona Média18H, Melhor18H, Top10, Idade
+  fieldMode?: boolean;
+  /** Data de referência (ISO) para calcular idade no torneio. Se ausente, usa hoje. */
+  tournamentDate?: string;
 }
 
 export default function RivaisDashboard({
@@ -34,6 +53,10 @@ export default function RivaisDashboard({
   T_WEIGHTS,
   AVG_R,
   allCountries,
+  showManuelKpis = true,
+  seriesBoundaries,
+  fieldMode = false,
+  tournamentDate,
 }: RivaisDashboardProps) {
   const [fTour, setFTour] = useState("all");
   const [fUp, setFUp] = useState("all");
@@ -75,11 +98,43 @@ export default function RivaisDashboard({
         const uid = sort.slice(3);
         cmp = (a.up.includes(uid) ? 0 : 1) - (b.up.includes(uid) ? 0 : 1);
         if (cmp === 0) cmp = a.n.localeCompare(b.n);
+      } else if (sort === "avg18" || sort === "best18" || sort === "top10" || sort === "age") {
+        const stat = (x: RivalPlayer): number => {
+          if (sort === "top10") {
+            let n = 0;
+            for (const td of T) {
+              const r = x.r[td.id];
+              if (r && typeof r.p === "number" && r.p <= 10) n++;
+            }
+            return -n; // mais top10 primeiro quando asc
+          }
+          if (sort === "age") {
+            if (!x.dob) return 9999;
+            const dm = x.dob.match(/^(\d{4})-(\d{2})-(\d{2})/) || x.dob.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+            if (!dm) return 9999;
+            let y, m, d;
+            if (dm[0].includes("-")) { y = +dm[1]; m = +dm[2]; d = +dm[3]; }
+            else { d = +dm[1]; m = +dm[2]; y = +dm[3]; }
+            return -new Date(y, m - 1, d).getTime(); // mais velho primeiro
+          }
+          // avg18 / best18
+          const gross18: number[] = [];
+          for (const td of T) {
+            if ((td.holes ?? 18) < 18) continue;
+            const r = x.r[td.id];
+            if (!r || !r.rd) continue;
+            for (const g of r.rd) if (g > 0) gross18.push(g);
+          }
+          if (gross18.length === 0) return 9999;
+          if (sort === "best18") return Math.min(...gross18);
+          return gross18.reduce((a, b) => a + b, 0) / gross18.length;
+        };
+        cmp = stat(a) - stat(b);
       }
       return dir === "desc" ? -cmp : cmp;
     });
     return pl;
-  }, [fTour, fUp, fCo, q, sort, dir, dOnly, D]);
+  }, [fTour, fUp, fCo, q, sort, dir, dOnly, D, T]);
 
   const doSort = (c: string) => {
     if (sort === c) setDir(d => (d === "asc" ? "desc" : "asc"));
@@ -129,29 +184,31 @@ export default function RivaisDashboard({
 
   return (
     <div className="tourn-section">
-      {/* Manuel KPIs */}
-      <div className="kpis" style={{ gridTemplateColumns: `repeat(${T.length}, 1fr)` }}>
-        {T.map(t => {
-          const res = manuel.r[t.id];
-          if (!res)
+      {/* Manuel KPIs (opcional) */}
+      {showManuelKpis && (
+        <div className="kpis" style={{ gridTemplateColumns: `repeat(${T.length}, 1fr)` }}>
+          {T.map(t => {
+            const res = manuel.r[t.id];
+            if (!res)
+              return (
+                <div key={t.id} className="kpi op-4">
+                  <div className="kpi-lbl">{t.short}</div>
+                  <div className="kpi-val fs-16">–</div>
+                </div>
+              );
             return (
-              <div key={t.id} className="kpi op-4">
-                <div className="kpi-lbl">{t.short}</div>
-                <div className="kpi-val fs-16">–</div>
-              </div>
+              <KpiCard
+                key={t.id}
+                label={t.short}
+                value={fmtSign(res.tp!)}
+                sub={`#${res.p} · ${res.rd.join("-")}`}
+                color={res.tp! <= 0 ? "var(--color-good-dark)" : undefined}
+                size="sm"
+              />
             );
-          return (
-            <KpiCard
-              key={t.id}
-              label={t.short}
-              value={fmtSign(res.tp!)}
-              sub={`#${res.p} · ${res.rd.join("-")}`}
-              color={res.tp! <= 0 ? "var(--color-good-dark)" : undefined}
-              size="sm"
-            />
-          );
-        })}
-      </div>
+          })}
+        </div>
+      )}
 
       {/* Filters */}
       <div className="detail-toolbar">
@@ -256,11 +313,12 @@ export default function RivaisDashboard({
                   const w = T_WEIGHTS[t.id];
                   const stars =
                     w >= 0.9 ? "★★★" : w >= 0.6 ? "★★" : w >= 0.4 ? "★" : "½";
+                  const isBoundary = seriesBoundaries?.has(t.id);
                   return (
                     <th
                       key={t.id}
                       className="rivais-th pointer ta-c"
-                      style={{ minWidth: 56 }}
+                      style={{ minWidth: 56, borderLeft: isBoundary ? "1px solid var(--border)" : undefined }}
                       onClick={() => doSort("t:" + t.id)}
                     >
                       {t.url ? (
@@ -281,15 +339,17 @@ export default function RivaisDashboard({
                     </th>
                   );
                 })}
-                <th
-                  className="rivais-th pointer ta-c"
-                  style={{ borderLeft: "3px solid var(--text-muted)", minWidth: 56 }}
-                  onClick={() => doSort("zrank")}
-                >
-                  Rank{sortArrow("zrank", sort, dir)}
-                </th>
-                <th className="rivais-th ta-c">▲</th>
-                {UP.map(u => (
+                {!fieldMode && (
+                  <th
+                    className="rivais-th pointer ta-c"
+                    style={{ borderLeft: "3px solid var(--text-muted)", minWidth: 56 }}
+                    onClick={() => doSort("zrank")}
+                  >
+                    Rank{sortArrow("zrank", sort, dir)}
+                  </th>
+                )}
+                {!fieldMode && <th className="rivais-th ta-c">▲</th>}
+                {!fieldMode && UP.map(u => (
                   <th
                     key={u.id}
                     className="rivais-th pointer ta-c"
@@ -311,13 +371,38 @@ export default function RivaisDashboard({
                     {sortArrow("up:" + u.id, sort, dir)}
                   </th>
                 ))}
-                {vsOn && (
+                {!fieldMode && vsOn && (
                   <th
                     className="rivais-th pointer ta-c"
                     onClick={() => doSort("vsManuel")}
                   >
                     vs M{sortArrow("vsManuel", sort, dir)}
                   </th>
+                )}
+                {fieldMode && (
+                  <>
+                    <th className="rivais-th pointer ta-c"
+                        style={{ borderLeft: "3px solid var(--text-muted)", minWidth: 56 }}
+                        onClick={() => doSort("avg18")}
+                        title="Média 18H em torneios USKids 18 buracos">
+                      Méd 18H{sortArrow("avg18", sort, dir)}
+                    </th>
+                    <th className="rivais-th pointer ta-c"
+                        onClick={() => doSort("best18")}
+                        title="Melhor ronda 18H">
+                      Best 18H{sortArrow("best18", sort, dir)}
+                    </th>
+                    <th className="rivais-th pointer ta-c"
+                        onClick={() => doSort("top10")}
+                        title="Número de top-10s">
+                      T10{sortArrow("top10", sort, dir)}
+                    </th>
+                    <th className="rivais-th pointer ta-c"
+                        onClick={() => doSort("age")}
+                        title="Idade no torneio (anos)">
+                      Idade{sortArrow("age", sort, dir)}
+                    </th>
+                  </>
                 )}
               </tr>
             </thead>
@@ -333,33 +418,45 @@ export default function RivaisDashboard({
                   <tr
                     key={p.n}
                     className={isM ? "rivais-row-ref" : ""}
+                    style={{ height: 52 }}
                   >
                     {/* Player name — clickable */}
-                    <td className="rivais-player-name">
-                      <span className="rivais-flag" title={p.co}>
-                        {flag}
-                      </span>
-                      {onSelectPlayer ? (
-                        <button
-                          className="btn-link fs-12 fw-600"
-                          style={{
-                            color: isM ? "var(--text)" : "var(--text-2)",
-                          }}
-                          onClick={() => onSelectPlayer(p.n)}
-                        >
-                          {p.n}
-                        </button>
-                      ) : (
-                        <span
-                          className={`fs-12${isM ? " fw-700" : " fw-600"}`}
-                          style={{
-                            color: isM ? "var(--text)" : "var(--text-2)",
-                          }}
-                        >
-                          {p.n}
+                    <td className="rivais-player-name" style={{ verticalAlign: "middle" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                        <span className="rivais-flag" title={p.co}>
+                          {flag}
                         </span>
-                      )}
-                      {isM && <span className="p p-sm p-outline ml-4">REF</span>}
+                        <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15 }}>
+                          {onSelectPlayer ? (
+                            <button
+                              className="btn-link fs-12 fw-600"
+                              style={{
+                                color: isM ? "var(--text)" : "var(--text-2)",
+                                padding: 0,
+                                textAlign: "left",
+                              }}
+                              onClick={() => onSelectPlayer(p.n)}
+                            >
+                              {p.n}
+                            </button>
+                          ) : (
+                            <span
+                              className={`fs-12${isM ? " fw-700" : " fw-600"}`}
+                              style={{
+                                color: isM ? "var(--text)" : "var(--text-2)",
+                              }}
+                            >
+                              {p.n}
+                            </span>
+                          )}
+                          {p.dob && (
+                            <span className="fs-10 c-text-3" style={{ marginTop: 1 }}>
+                              {fmtDob(p.dob)}
+                            </span>
+                          )}
+                        </div>
+                        {isM && <span className="p p-sm p-outline ml-4">REF</span>}
+                      </div>
                     </td>
 
                     {/* # tournaments played */}
@@ -369,12 +466,16 @@ export default function RivaisDashboard({
 
                     {/* One cell per tournament: ±par colored + position */}
                     {T.map(t => {
+                      const isBoundary = seriesBoundaries?.has(t.id);
+                      const boundaryStyle: React.CSSProperties = isBoundary
+                        ? { borderLeft: "1px solid var(--border)" }
+                        : {};
                       const res = p.r[t.id];
                       if (!res || (res.tp == null && res.p !== "WD"))
-                        return <td key={t.id} />;
+                        return <td key={t.id} style={boundaryStyle} />;
                       if (res.p === "WD")
                         return (
-                          <td key={t.id}>
+                          <td key={t.id} style={boundaryStyle}>
                             <WdBadge muted />
                           </td>
                         );
@@ -436,6 +537,7 @@ export default function RivaisDashboard({
                           style={{
                             background: st?.bg || "transparent",
                             padding: "5px 4px",
+                            ...boundaryStyle,
                           }}
                         >
                           <div
@@ -459,66 +561,70 @@ export default function RivaisDashboard({
                       );
                     })}
 
-                    {/* Rank */}
-                    <td
-                      className="ta-c"
-                      style={{
-                        borderLeft: "3px solid var(--border-light)",
-                        padding: "4px 6px",
-                      }}
-                    >
-                      {rankMap[p.n] != null ? (
-                        <div
-                          title={`z-score: ${(
-                            (getAvgZ as unknown as (
-                              p: RivalPlayer
-                            ) => number | null)(p) ?? 0
-                          ).toFixed(2)} · ${nRounds(p)} rondas`}
-                        >
+                    {/* Rank — só em modo clássico */}
+                    {!fieldMode && (
+                      <td
+                        className="ta-c"
+                        style={{
+                          borderLeft: "3px solid var(--border-light)",
+                          padding: "4px 6px",
+                        }}
+                      >
+                        {rankMap[p.n] != null ? (
                           <div
-                            className="fw-800 fs-13"
-                            style={{
-                              color:
-                                rankMap[p.n] <= 10
-                                  ? "var(--color-good-dark)"
-                                  : rankMap[p.n] <= 30
-                                    ? "var(--text)"
-                                    : "var(--text-3)",
-                            }}
+                            title={`z-score: ${(
+                              (getAvgZ as unknown as (
+                                p: RivalPlayer
+                              ) => number | null)(p) ?? 0
+                            ).toFixed(2)} · ${nRounds(p)} rondas`}
                           >
-                            {rankMap[p.n]}º
+                            <div
+                              className="fw-800 fs-13"
+                              style={{
+                                color:
+                                  rankMap[p.n] <= 10
+                                    ? "var(--color-good-dark)"
+                                    : rankMap[p.n] <= 30
+                                      ? "var(--text)"
+                                      : "var(--text-3)",
+                              }}
+                            >
+                              {rankMap[p.n]}º
+                            </div>
+                            <div className="fs-10 c-text-3">
+                              {nPlayed(p)}T
+                              {nRounds(p) > 1 && (
+                                <>
+                                  {" "}
+                                  · <RoundPill nR={nRounds(p)} />
+                                </>
+                              )}
+                            </div>
                           </div>
-                          <div className="fs-10 c-text-3">
-                            {nPlayed(p)}T
-                            {nRounds(p) > 1 && (
-                              <>
-                                {" "}
-                                · <RoundPill nR={nRounds(p)} />
-                              </>
-                            )}
-                          </div>
-                        </div>
-                      ) : (
-                        <span className="fs-10 c-border">s/d</span>
-                      )}
-                    </td>
+                        ) : (
+                          <span className="fs-10 c-border">s/d</span>
+                        )}
+                      </td>
+                    )}
 
-                    {/* Trend */}
-                    <td className="ta-c">
-                      {tr ? (
-                        <span
-                          className="fw-700 fs-13"
-                          style={{ color: TR_I[tr].c }}
-                        >
-                          {TR_I[tr].i}
-                        </span>
-                      ) : (
-                        <span className="c-border">—</span>
-                      )}
-                    </td>
+                    {/* Trend — só em modo clássico */}
+                    {!fieldMode && (
+                      <td className="ta-c">
+                        {tr ? (
+                          <span
+                            className="fw-700 fs-13"
+                            style={{ color: TR_I[tr].c }}
+                          >
+                            {TR_I[tr].i}
+                          </span>
+                        ) : (
+                          <span className="c-border">—</span>
+                        )}
+                      </td>
+                    )}
 
-                    {/* Upcoming tournaments */}
-                    {UP.map(u => (
+                    {/* Upcoming tournaments — só em modo clássico */}
+                    {!fieldMode && UP.map(u => (
                       <td key={u.id} className="ta-c fs-12">
                         {p.up.includes(u.id) ? (
                           <span className="fw-700 c-good-dark">✓</span>
@@ -528,8 +634,8 @@ export default function RivaisDashboard({
                       </td>
                     ))}
 
-                    {/* vs Manuel average */}
-                    {vsOn && (
+                    {/* vs Manuel average — só em modo clássico */}
+                    {!fieldMode && vsOn && (
                       <td className="ta-c">
                         {isM ? (
                           <span className="fs-10 c-border">—</span>
@@ -545,6 +651,71 @@ export default function RivaisDashboard({
                         )}
                       </td>
                     )}
+
+                    {/* === Field mode: Média 18H, Melhor 18H, # Top-10, Idade === */}
+                    {fieldMode && (() => {
+                      // Acumular gross em torneios 18H (par_torneio >= 70, rounds tem 18 strokes)
+                      const gross18: number[] = [];
+                      let nTop10 = 0;
+                      for (const td of T) {
+                        const res = p.r[td.id];
+                        if (!res || !res.rd || res.rd.length === 0) continue;
+                        // Heurística: par >= 64 (torneios 18H vs 9H que têm ~32-36)
+                        if ((td.holes ?? 18) >= 18) {
+                          for (const g of res.rd) if (g > 0) gross18.push(g);
+                        }
+                        if (typeof res.p === "number" && res.p <= 10) nTop10++;
+                      }
+                      const avg18 = gross18.length ? Math.round((gross18.reduce((a, b) => a + b, 0) / gross18.length) * 10) / 10 : null;
+                      const best18 = gross18.length ? Math.min(...gross18) : null;
+                      // Idade no torneio
+                      let ageStr: string | null = null;
+                      if (p.dob && tournamentDate) {
+                        const dobMatch = p.dob.match(/^(\d{4})-(\d{2})-(\d{2})/) || p.dob.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+                        if (dobMatch) {
+                          let y, m, d;
+                          if (dobMatch[0].includes("-")) { y = +dobMatch[1]; m = +dobMatch[2]; d = +dobMatch[3]; }
+                          else { d = +dobMatch[1]; m = +dobMatch[2]; y = +dobMatch[3]; }
+                          const dob = new Date(y, m - 1, d);
+                          const td = new Date(tournamentDate);
+                          const diffMs = td.getTime() - dob.getTime();
+                          const diffYears = diffMs / (365.25 * 86400000);
+                          ageStr = diffYears.toFixed(1);
+                        }
+                      }
+                      return (
+                        <>
+                          <td className="ta-c"
+                              style={{ borderLeft: "3px solid var(--border-light)", padding: "4px 6px" }}>
+                            {avg18 != null ? (
+                              <span className="fw-700 fs-13"
+                                    style={{ color: avg18 < 78 ? "var(--color-good-dark)" : avg18 < 84 ? "var(--text)" : "var(--text-3)" }}>
+                                {avg18}
+                              </span>
+                            ) : <span className="fs-10 c-border">—</span>}
+                            <div className="fs-10 c-text-3">{gross18.length} r.</div>
+                          </td>
+                          <td className="ta-c">
+                            {best18 != null ? (
+                              <span className="fw-700 fs-13">{best18}</span>
+                            ) : <span className="fs-10 c-border">—</span>}
+                          </td>
+                          <td className="ta-c">
+                            {nTop10 > 0 ? (
+                              <span className="fw-700 fs-13"
+                                    style={{ color: nTop10 >= 3 ? "var(--color-good-dark)" : "var(--text)" }}>
+                                {nTop10}
+                              </span>
+                            ) : <span className="fs-10 c-border">0</span>}
+                          </td>
+                          <td className="ta-c">
+                            {ageStr ? (
+                              <span className="fw-600 fs-12">{ageStr}</span>
+                            ) : <span className="fs-10 c-border">—</span>}
+                          </td>
+                        </>
+                      );
+                    })()}
                   </tr>
                 );
               })}

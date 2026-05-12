@@ -276,6 +276,7 @@ export default function App() {
                 <Route path="/bjgt/:fed?" element={<BJGTPage />} />
                 <Route path="/bjgt-analysis/:fed?" element={<BJGTAnalysisPage />} />
                 <Route path="/kids" element={<KIDSPage />} />
+                <Route path="/kids/next-t" element={<KIDSPage />} />
                 <Route path="/uskids" element={<USKIDSPage />} />
                 <Route path="/FPG" element={<FPGPage />} />
                 {/* Deep-link canónico de torneio FPG: /FPG/torneio/{ccode}-{tcode}.

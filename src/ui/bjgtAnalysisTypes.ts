@@ -15,6 +15,7 @@ export interface RivalPlayer {
   isM?: boolean;
   r: Record<string, TournResult>;
   up: string[];
+  dob?: string;
 }
 
 export interface TournDef {
@@ -28,6 +29,8 @@ export interface TournDef {
   nations: number;
   intendedRounds?: number;
   url: string;
+  /** Buracos por ronda (9 ou 18). Default 18 se ausente. */
+  holes?: number;
 }
 
 /** Shape of a single hole sample for distance-band analysis */

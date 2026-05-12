@@ -14,9 +14,12 @@
  * Output: public/data-archive/uskids-member-history.json
  *
  * Uso:
- *   node fetch-uskids-member-history.js            # processa novos + actualiza histórico
- *   node fetch-uskids-member-history.js --clean    # re-match nomes offline
- *   node fetch-uskids-member-history.js --force    # re-fetch todos (ignora cache)
+ *   node fetch-uskids-member-history.js               # processa novos + actualiza histórico
+ *   node fetch-uskids-member-history.js --clean       # re-match nomes offline
+ *   node fetch-uskids-member-history.js --force       # re-fetch todos os descobertos (ignora cache)
+ *   node fetch-uskids-member-history.js --refresh-all # re-fetch TODOS os memberIDs em cache
+ *                                                     # (apanha torneios novos fora dos ALL_TCODES;
+ *                                                     #  ~2.600 jogadores × 150ms ≈ 7-10 minutos)
  */
 
 const fs   = require('fs');
@@ -274,17 +277,25 @@ function cleanAndRematch() {
 // ── Main ─────────────────────────────────────
 
 async function main() {
-  const forceAll = process.argv.includes('--force');
+  const forceAll   = process.argv.includes('--force');
+  const refreshAll = process.argv.includes('--refresh-all');
 
   if (process.argv.includes('--clean')) { cleanAndRematch(); return; }
 
-  const tcodes = [...ALL_TCODES];
+  // Em modo --refresh-all não precisamos de descobrir memberIDs novos —
+  // iteramos sobre todos os já em cache. Saltamos completamente a Fase 1.
+  const tcodes = refreshAll ? [] : [...ALL_TCODES];
 
   console.log('══════════════════════════════════════');
   console.log('📊  USKids Member History');
   console.log(`    ${new Date().toLocaleString('pt-PT')}`);
-  console.log(`    ${tcodes.length} torneios a processar`);
-  if (forceAll) console.log('    ⚠️  Modo --force: re-fetch de todos os membros');
+  if (refreshAll) {
+    console.log('    🔄  Modo --refresh-all: re-fetch de TODOS os memberIDs em cache');
+    console.log('         (apanha torneios novos fora dos ALL_TCODES)');
+  } else {
+    console.log(`    ${tcodes.length} torneios a processar`);
+    if (forceAll) console.log('    ⚠️  Modo --force: re-fetch de todos os membros descobertos');
+  }
   console.log('══════════════════════════════════════');
 
   // Carregar cache existente (monolítico ou chunks — ver loadCache())
@@ -423,28 +434,50 @@ async function main() {
       }
     }
 
-    console.log(`\n  🗺️  Nomes directos por node_id: ${memberNameMap.size}/${allMemberIds.size}`);
+    if (!refreshAll) {
+      console.log(`\n  🗺️  Nomes directos por node_id: ${memberNameMap.size}/${allMemberIds.size}`);
+    }
 
     // ══════════════════════════════════════════════
     // FASE 2: Histórico + matching
     // Processa:
-    //   A) Membros completamente novos
+    //   A) Membros completamente novos (modo default)
     //   B) Membros em cache mas que aparecem num torneio novo para eles
+    //   C) [--refresh-all] TODOS os memberIDs em cache (para apanhar
+    //      torneios novos fora dos ALL_TCODES)
     // ══════════════════════════════════════════════
+
+    // Em --refresh-all a Fase 1 foi saltada; precisamos de inicializar a
+    // página numa URL signupanytime válida para que pageJSON() tenha contexto.
+    if (refreshAll) {
+      const seedTcode = ALL_TCODES[0];
+      console.log(`\n  🌐 Init page (seed t=${seedTcode}) para sessão signupanytime...`);
+      await initPage(page, seedTcode);
+    }
 
     // Determinar quais membros precisam de re-fetch
     const toProcess = [];
-    for (const mid of allMemberIds) {
-      const midStr = String(mid);
-      if (forceAll || !existingMembers.has(midStr)) {
-        // Novo ou --force
-        toProcess.push({ mid, isNew: true });
-      } else {
-        // Já em cache — verificar se aparece em algum torneio que ainda não tem
-        const cached = cachedTorneios.get(midStr) || new Set();
-        const mFlights = memberFlights.get(mid) || [];
-        const hasNewTourn = mFlights.some(({ tcode }) => !cached.has(String(tcode)));
-        if (hasNewTourn) toProcess.push({ mid, isNew: false });
+    if (refreshAll) {
+      // Iterar sobre TODOS os memberIDs em cache, independentemente de
+      // aparecerem em ALL_TCODES neste run. Marcamos isNew=false porque
+      // têm sempre entrada prévia (o name é preservado pelo fallback
+      // "cached.name" em Phase 2).
+      for (const midStr of existingMembers) {
+        toProcess.push({ mid: midStr, isNew: false });
+      }
+    } else {
+      for (const mid of allMemberIds) {
+        const midStr = String(mid);
+        if (forceAll || !existingMembers.has(midStr)) {
+          // Novo ou --force
+          toProcess.push({ mid, isNew: true });
+        } else {
+          // Já em cache — verificar se aparece em algum torneio que ainda não tem
+          const cached = cachedTorneios.get(midStr) || new Set();
+          const mFlights = memberFlights.get(mid) || [];
+          const hasNewTourn = mFlights.some(({ tcode }) => !cached.has(String(tcode)));
+          if (hasNewTourn) toProcess.push({ mid, isNew: false });
+        }
       }
     }
 
@@ -453,10 +486,16 @@ async function main() {
 
     console.log(`\n══════════════════════════════════════`);
     console.log(`📊 FASE 2 — Histórico de jogadores`);
-    console.log(`   Total inscritos: ${allMemberIds.size}`);
-    console.log(`   Novos:           ${nNovos}`);
-    console.log(`   A actualizar:    ${nActualizar} (já em cache mas torneio novo)`);
-    console.log(`   Em cache OK:     ${allMemberIds.size - toProcess.length}`);
+    if (refreshAll) {
+      console.log(`   Modo --refresh-all`);
+      console.log(`   Total em cache:  ${existingMembers.size}`);
+      console.log(`   A re-fetch:      ${toProcess.length}`);
+    } else {
+      console.log(`   Total inscritos: ${allMemberIds.size}`);
+      console.log(`   Novos:           ${nNovos}`);
+      console.log(`   A actualizar:    ${nActualizar} (já em cache mas torneio novo)`);
+      console.log(`   Em cache OK:     ${allMemberIds.size - toProcess.length}`);
+    }
     console.log(`══════════════════════════════════════\n`);
 
     let processed = 0;

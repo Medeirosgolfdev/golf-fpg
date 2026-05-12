@@ -1,0 +1,71 @@
+name: USKids Refresh All
+on:
+  schedule:
+    # Dia 1 de cada mês às 17:00 UTC (30 min depois do daily das 16:30 para
+    # evitar colisões). Re-fetch completo de todos os memberIDs em cache —
+    # apanha torneios que jogadores conhecidos jogaram fora dos ALL_TCODES.
+    - cron: '0 17 1 * *'
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Razão para correr manualmente (opcional)'
+        required: false
+        default: ''
+permissions:
+  contents: write
+jobs:
+  refresh:
+    name: 🔄 Refresh All Members
+    runs-on: ubuntu-latest
+    # Timeout generoso: ~2.600 jogadores × 150ms ≈ 7-10 min em teoria,
+    # mas com latência variável e checkpoints pode chegar a 30-40 min.
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: '${{ secrets.GITHUB_TOKEN }}'
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with: { node-version: '20', cache: 'npm' }
+      - run: npm ci
+      - run: npx playwright install chromium --with-deps
+      - name: Re-fetch todos os memberIDs em cache
+        run: node scripts/fetch-uskids-member-history.js --refresh-all
+      # O fetch produz um monolítico uskids-member-history.json que já passa
+      # dos 300 MB — acima do limite de 100 MB do GitHub. O split parte-o em
+      # chunks ≤ 85 MB e apaga o monolítico. Os chunks alimentam o build-slim
+      # e ficam em git como cache para o próximo run do fetch.
+      - run: node scripts/split-member-history.js
+      - run: node scripts/build-member-history-slim.js
+      - name: Commit se houve alterações
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # -A apanha tanto novos chunks como deletions de chunks antigos
+          # (o número de chunks varia entre runs).
+          git add -A public/data-archive/uskids-member-history-*.json
+          git add public/data/uskids-member-history-slim.json
+          git diff --cached --quiet && exit 0
+          git fetch origin main
+          git merge origin/main --no-edit --strategy-option=ours
+          git add -A public/data-archive/uskids-member-history-*.json
+          git add public/data/uskids-member-history-slim.json
+          git commit -m "data: refresh-all USKids histórico [$(date -u '+%Y-%m-%d %H:%M UTC')]"
+          # Push robusto: retry com pull --rebase em cada tentativa.
+          # Em runs manuais (sem o cron offset) podemos colidir com outro
+          # workflow a fazer push em paralelo → non-fast-forward.
+          PUSH_OK=0
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
+              PUSH_OK=1
+              break
+            fi
+            git rebase --abort 2>/dev/null || true
+            echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
+            sleep $((i * 5))
+          done
+          if [ "$PUSH_OK" != "1" ]; then
+            echo "❌ Push falhou após 5 tentativas"
+            exit 1
+          fi

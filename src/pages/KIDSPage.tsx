@@ -6,7 +6,7 @@
  */
 import React, { useMemo, useState } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from "recharts";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { fmtToPar, fmtSign, MONTHS_PT, MONTHS_PT_FULL, isoDate, medal, sortArrow } from "../utils/format";
 /* useSort movido para ./kids/H2HSortableTable.tsx */
 import { normPaisDisplay, flag as flagOf } from "../utils/flagUtils";
@@ -1156,6 +1156,7 @@ import { inferNholes, tprNorm, EvolucaoChart, TorneiosRecorrentes, H2HTable } fr
    ═══════════════════════════════════ */
 /* RivalDetail extraído para kids/RivalDetail.tsx */
 import { RivalDetail } from "./kids/RivalDetail";
+import FieldRivaisDashboard from "./kids/FieldRivaisDashboard";
 
 
 
@@ -1197,6 +1198,13 @@ function RivaisIntlContent() {
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(
     locationPlayer ?? hashPlayer ?? "Manuel Medeiros"
   );
+  const navigate = useNavigate();
+  // /kids/next-t → tabela activa; /kids → tabela inactiva
+  const isOnNextTUrl = location.pathname === "/kids/next-t";
+  const [showFieldDashboard, setShowFieldDashboard] = useState(isOnNextTUrl);
+  React.useEffect(() => {
+    setShowFieldDashboard(isOnNextTUrl);
+  }, [isOnNextTUrl]);
   const md = useMasterDetail();
 
   // ── Resolução do jogador do hash ─────────────────────────────────────────────
@@ -1347,6 +1355,13 @@ function RivaisIntlContent() {
           </button>
         )}
         <div className="flex-1" />
+        <button
+          className={"tourn-tab tourn-tab-sm" + (showFieldDashboard ? " active" : " tourn-tab-muted")}
+          style={{ flexShrink: 0 }}
+          onClick={() => navigate(showFieldDashboard ? "/kids" : "/kids/next-t")}
+          title="Tabela cruzada — inscritos num torneio futuro × torneios USKids passados">
+          📋 Por torneio futuro
+        </button>
         <span className="chip shrink-0" >
           {rivals.filter(p => (nPlayed(p) > 0 || p.isM) && playerMatchesFilter(p, fids)).length}
         </span>
@@ -1386,7 +1401,14 @@ function RivaisIntlContent() {
           />
         </div>
         <div className="course-detail" ref={md.detailRef}>
-          {selectedPlayer ? (
+          {showFieldDashboard ? (
+            <FieldRivaisDashboard
+              defaultT={21131}
+              defaultEscalao="Boys 12"
+              autoRivals={rivals}
+              onSelectPlayer={(name) => { setSelectedPlayer(name); navigate("/kids"); }}
+            />
+          ) : selectedPlayer ? (
             <RivalDetail playerName={selectedPlayer} />
           ) : (
             <div className="muted p-16">Selecciona um rival à esquerda.</div>

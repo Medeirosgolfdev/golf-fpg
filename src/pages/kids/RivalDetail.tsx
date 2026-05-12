@@ -637,6 +637,19 @@ export function RivalDetail({ playerName }: { playerName: string }) {
             {/* Pills: país · trend · DOB · rank · ano activo */}
             <div className="flex-wrap mb-8" style={{ display: "flex", gap: 5, alignItems: "center" }}>
               {rival && <span className="p p-sm p-muted fs-12" >{rival.co}</span>}
+              {/* Identidade USKids (memberID do signupanytime) */}
+              {mhPlayer?.memberId && (
+                <a
+                  href={`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=memberresults&fmt=nohead&ax=1129&m=${mhPlayer.memberId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p p-sm fs-11"
+                  title={`USKids memberID ${mhPlayer.memberId} — abrir no signupanytime.com`}
+                  style={{ background: "#fff7ed", color: "#9a3412", border: "1px solid #fdba74", fontWeight: 600, textDecoration: "none" }}
+                >
+                  ⛳ USKids #{mhPlayer.memberId} ↗
+                </a>
+              )}
               {/* Identidade FPG (nfed + clube PT) */}
               {rival && (rival as any).ptFed && (
                 <span className="p p-sm p-club fs-11" title={`FPG nfed ${(rival as any).ptFed}`}
