@@ -12,12 +12,34 @@ arvore.txt
 reorganizar.ps1
 output/assets/
 output/index.html
+output/cross-stats-cache.json
 # output/data/ é onde `npm run build` (Vite) copia public/data/ — cópia 1:1
 # duplicada (~191 MB). Não deve estar tracked. O output/{fed}/* do scraper FPG
 # fica tracked normalmente porque não casa com este padrão.
 output/data/
 players.json.backup-*
 tmp/
+
+# Ficheiros temporários de debug/preview na raiz — não comitar
+preview.txt
+removidos-preview.txt
+dbg-out.txt
+build.log
+*.log
+
+# Snippets temporários de exploração (browser console copy-paste, etc.)
+**/_*.txt
+**/_tmp-*
+**/_tmp.*
+public/data-archive/_*.txt
+public/data-archive/verify-*.json
+public/data-archive/check-*-report.json
+public/data-archive/apply-*-report.json
+public/data-archive/integrate-*-report.json
+public/data-archive/resolve-*.json
+public/data-archive/resolved-*.json
+public/data-archive/verified-*.json
+public/data-archive/BD_*.json
 
 # Backups locais de scripts (atomic-write, sync, merge, etc.) — não commitar
 **/*.pre-*.json

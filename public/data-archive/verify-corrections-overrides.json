@@ -1,8 +1,13 @@
 {
   "gerado_em": "2026-05-13T15:30:00.000Z",
   "filosofia": "Aplicar APENAS quando e' normalizacao pura (casing/espacos) ou bug objectivo. NUNCA quando muda info do nome (apelido extra, middle name, Jr., etc.) - essas variacoes podem ser usadas para cross-matching com outras fontes (BJGT, FPG, Drive, WJGC).",
-  "total": 9,
+  "total": 10,
   "corrections": {
+    "576306": {
+      "name": "Ricardo Castro Ferreira",
+      "country": "PT",
+      "reason": "ALL CAPS + hifen incorreto -> Title Case sem hifen (forma canonica em pt confirmada)"
+    },
     "590169": {
       "name": "Jonathan Schultz",
       "country": "US",
