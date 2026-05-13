@@ -23,22 +23,27 @@ jobs:
       - run: node scripts/fetch-uskids-member-history.js
       # O fetch produz um monolítico uskids-member-history.json que já passa
       # dos 300 MB — acima do limite de 100 MB do GitHub. O split parte-o em
-      # chunks ≤ 85 MB e apaga o monolítico. Os chunks alimentam o build-slim
+      # chunks ≤ 70 MB e apaga o monolítico. Os chunks alimentam o build-slim
       # e ficam em git como cache para o próximo run do fetch.
-      - run: node scripts/split-member-history.js
+      # Target 70 MB (não 85) para ficar ~30 % abaixo do hard-limit de 100 MB
+      # e dentro do recommended-soft-limit do GitHub (warning a partir de 50 MB).
+      - run: node scripts/split-member-history.js --target-mb=70
       - run: node scripts/build-member-history-slim.js
       - name: Commit se houve alterações
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # -A apanha tanto novos chunks como deletions de chunks antigos
-          # (o número de chunks varia entre runs).
-          git add -A public/data-archive/uskids-member-history-*.json
+          # IMPORTANTE: o glob TEM de estar entre aspas. Sem aspas, o bash
+          # expande-o antes do git ver e só passa os ficheiros que ainda
+          # existem no disco — as deletions de chunks antigos (003-046, etc.)
+          # são silenciosamente ignoradas. Com aspas, é o git a fazer o
+          # pathspec matching, que inclui o índice e apanha as deletions.
+          git add -A 'public/data-archive/uskids-member-history-*.json'
           git add public/data/uskids-member-history-slim.json
           git diff --cached --quiet && exit 0
           git fetch origin main
           git merge origin/main --no-edit --strategy-option=ours
-          git add -A public/data-archive/uskids-member-history-*.json
+          git add -A 'public/data-archive/uskids-member-history-*.json'
           git add public/data/uskids-member-history-slim.json
           git commit -m "data: histórico USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]"
           # Push robusto: retry com pull --rebase em cada tentativa.

@@ -1,0 +1,71 @@
+name: Build juniors canonical
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'public/data/uskids-*.json'
+      - 'public/data/uskids_torneios_completos*.json'
+      - 'public/data/t_de_tournaments_do_uskids.json'
+      - 'public/data/players.json'
+      - 'public/data/pull-torneios*.json'
+      - 'public/data/drive-data-*.json'
+      - 'public/data/aquapor-data-*.json'
+      - 'public/data/spain-players.json'
+      - 'public/data/rfegolf-rivals.json'
+      - 'public/data/france-players.json'
+      - 'public/data/ffgolf-juniors-slim.json'
+      - 'public/data/ffgolf-resultats-index.json'
+      - 'public/data/wjgc_*.json'
+      - 'public/data/bjgt_*.json'
+      - 'public/data/eowagr*.json'
+      - 'public/data/ftm_doral_*.json'
+      - 'public/data/juniors-overrides.json'
+      - 'scripts/aggregator/**'
+      - '.github/workflows/build-juniors.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: build-juniors
+      cancel-in-progress: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run aggregator
+        id: run
+        run: |
+          node scripts/aggregator/index.js
+          echo "exit=$?" >> $GITHUB_OUTPUT
+
+      - name: Detect changes
+        id: diff
+        run: |
+          if git diff --quiet public/data/juniors.json public/data/juniors-tournaments.json public/data/tournament-catalog.json; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "Sem mudanças nos outputs canónicos"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            git diff --stat public/data/juniors.json public/data/juniors-tournaments.json public/data/tournament-catalog.json
+          fi
+
+      - name: Commit outputs
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/juniors.json public/data/juniors-tournaments.json public/data/tournament-catalog.json
+          git commit -m "build: rebuild juniors canonical"
+          git push

@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "_note": "Overrides manuais para casos em que o matcher automático não consegue resolver. Editar à mão sempre que se descobrir um caso novo.",
+  "forceMerge": [
+    {
+      "sourceKeys": [
+        "uskids:549578",
+        "rfeg:AM84955303",
+        "fpg:anon|dmitrii elchaninov|RU"
+      ],
+      "manualHistoricalIds": {
+        "rfeg": [
+          {
+            "lic": "AM11955303",
+            "club": "CLUB DE GOLF LA CAÑADA",
+            "catEdad": "Benjamín",
+            "note": "Licença anterior, antes de mudar para La Hacienda"
+          }
+        ]
+      },
+      "reason": "Dmitrii Elchaninov — russo federado em Espanha. Joga ocasionalmente em torneios FPG sem fedCode. Licença anterior AM11955303 não está no portal actual (RFEG só expõe licença activa) mas é o mesmo jogador."
+    },
+    {
+      "sourceKeys": [
+        "uskids:630106",
+        "uskids:605933",
+        "fpg:52884"
+      ],
+      "preferStrongKey": {
+        "uskids": "630106"
+      },
+      "manualHistoricalIds": {
+        "uskids": [
+          {
+            "memberId": "605933",
+            "note": "Conta legacy 2023 (Manuel Francisco Goulartt De Medeiros) — uma única participação no El Prat 2023 Boys 9 antes de migrar para 630106."
+          }
+        ]
+      },
+      "reason": "Manuel teve 2 contas USKids: 605933 (2023, El Prat, abandonada) e 630106 (actual). Mesma pessoa."
+    },
+    {
+      "sourceKeys": [
+        "fpg:49085",
+        "ffgolf:519172399"
+      ],
+      "reason": "Ricardo Castro Ferreira - mesma pessoa, residencia dupla PT/FR (federado em ambas as federacoes)."
+    }
+  ],
+  "forceSplit": [],
+  "manualPlayers": []
+}

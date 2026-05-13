@@ -296,8 +296,8 @@ export function getTournInfo(tid: string): { name: string; short: string; date: 
     const base = uskTournNames.get(uskMatch[1]);
     if (base) return { name: base.name, short: base.short, date: base.date, dateExact: base.dateExact };
   }
-  // FPG juniores: "fpg{tcode}" — tcode pode conter + para torneios pré-fundidos (jovens_2023)
-  if (/^fpg[\d+]+$/.test(tid)) {
+  // FPG juniores: "fpg{tcode}" ou "fpg{tcode}_{date}_{escSlug}" (formato canónico V2)
+  if (tid.startsWith("fpg")) {
     const fpg = fpgTournNames.get(tid);
     if (fpg) return { name: fpg.name, short: fpg.short, date: fpg.date, dateExact: fpg.dateExact };
   }
@@ -1238,7 +1238,11 @@ function RivaisIntlContent() {
   const [tierFilter, setTierFilter]     = useState("");
   const [minTorn, setMinTorn]           = useState(0);
   const [apenasDirectos, setApenasDirectos] = useState(false);
-  const [q, setQ]                       = useState("");
+  const [qInput, setQ]                  = useState("");
+  // useDeferredValue causava o filtro a nunca convergir com 6800+ rivais
+  // (render era demasiado lento → React adiava indefinidamente o update).
+  // Passar qInput directo: render acontece a cada keystroke mas filtro é fast.
+  const q = qInput;
 
   const toggleFid = (id: string) => setFids(prev => {
     const next = new Set(prev);
@@ -1246,7 +1250,7 @@ function RivaisIntlContent() {
     return next;
   });
 
-  const hasActiveFilters = !!(q || paisFilter || tierFilter || minTorn > 0 || apenasDirectos || fids.size > 0);
+  const hasActiveFilters = !!(qInput || paisFilter || tierFilter || minTorn > 0 || apenasDirectos || fids.size > 0);
 
   // Países disponíveis
   const paises = useMemo(() => {
@@ -1268,12 +1272,17 @@ function RivaisIntlContent() {
     return m;
   }, [rivals]);
 
+  const filteredCount = useMemo(
+    () => rivals.filter(p => (nPlayed(p) > 0 || p.isM) && playerMatchesFilter(p, fids)).length,
+    [rivals, fids]
+  );
+
   const resetFilters = () => { setPaisFilter(""); setTierFilter(""); setMinTorn(0); setApenasDirectos(false); setFids(new Set()); setQ(""); };
 
-  const handleSelectPlayer = (name: string) => {
+  const handleSelectPlayer = React.useCallback((name: string) => {
     setSelectedPlayer(name);
     md.onSelect();
-  };
+  }, [md.onSelect]);
 
   return (
     <RivalsCtx.Provider value={rivals}>
@@ -1305,9 +1314,9 @@ function RivaisIntlContent() {
         </span>
         <ToolbarSep />
         {/* Pesquisa */}
-        <input type="text" value={q} onChange={e => setQ(e.target.value)}
+        <input type="text" value={qInput} onChange={e => setQ(e.target.value)}
           placeholder="🔎 Pesquisar rival…" className="input fs-12 shrink-0"
-          
+
           style={{ width: 150, height: 26 }} />
         <ToolbarSep />
         {/* Filtros avançados: país, tipo, presenças, directos, limpar */}
@@ -1363,7 +1372,7 @@ function RivaisIntlContent() {
           📋 Por torneio futuro
         </button>
         <span className="chip shrink-0" >
-          {rivals.filter(p => (nPlayed(p) > 0 || p.isM) && playerMatchesFilter(p, fids)).length}
+          {filteredCount}
         </span>
       </Toolbar>
 

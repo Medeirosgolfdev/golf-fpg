@@ -1,0 +1,146 @@
+/**
+ * scripts/aggregator/sources/ffgolf.js
+ *
+ * Adapter FFGolf (Fédération française de golf).
+ *
+ * Lê:
+ *   - france-players.json (roster por byName, ~12191 jogadores com hcp+clube+região)
+ *   - ffgolf-juniors-slim.json (torneios juvenis FFG: GP Jeunes + Championnats)
+ *   - ffgolf-resultats-index.json (índice de torneios; metadata mas sem resultados)
+ *
+ * FFG NÃO expõe DOB no portal. Cross-source pode preencher via USKids/RFEG.
+ */
+
+const { DATA, readJsonSafe } = require("../util/io");
+const { displayName, dobToIso, countryToIso2, normName } = require("../util/names");
+const { seriesId } = require("../util/id");
+
+const SOURCE_ID = "ffgolf";
+const SOURCE_LABEL = "Fédération française de golf";
+
+function load(opts) {
+  const france = readJsonSafe(DATA.ffgFrancePlayers, { byName: {} });
+  const slim = readJsonSafe(DATA.ffgJuniorsSlim, { tournaments: [] });
+
+  // 1) Roster — agrupar por licença (france-players.json tem byName com várias entries por jogador)
+  const byLic = new Map();
+  for (const [, p] of Object.entries(france.byName || {})) {
+    if (!p?.license) continue;
+    const lic = String(p.license);
+    const existing = byLic.get(lic);
+    // Preferir a entrada com nome capitalizado normalmente (não-ALLCAPS)
+    if (!existing) byLic.set(lic, p);
+    else if (isBetterName(p.name, existing.name)) byLic.set(lic, p);
+  }
+
+  const players = [];
+  for (const [lic, p] of byLic) {
+    const country = countryToIso2(p.country) || "FR";
+    const cleanName = displayName(p.name || "");
+    if (!cleanName) continue;
+    players.push({
+      sourceKey: lic,
+      name: cleanName,
+      sex: p.sex || null,
+      country,
+      region: p.region || null,
+      club: p.club ? String(p.club).trim() : null,
+      hcp: typeof p.hcp === "number" ? p.hcp : null,
+      extra: {
+        glfLic: p.glfLic || null,
+      },
+    });
+  }
+
+  // 2) Torneios — slim tem array .tournaments com flat players[] (sem flights — todos no mesmo array por torneio)
+  const tournaments = [];
+  for (const t of slim.tournaments || []) {
+    const tt = normalizeFfgTournament(t);
+    if (tt) tournaments.push(tt);
+  }
+
+  return {
+    sourceId: SOURCE_ID,
+    sourceLabel: SOURCE_LABEL,
+    players,
+    tournaments,
+  };
+}
+
+function isBetterName(candidate, current) {
+  if (!candidate) return false;
+  if (!current) return true;
+  // Title Case > ALL CAPS
+  const ucCand = (candidate.match(/[A-Z]/g) || []).length;
+  const lcCand = (candidate.match(/[a-z]/g) || []).length;
+  const ucCur = (current.match(/[A-Z]/g) || []).length;
+  const lcCur = (current.match(/[a-z]/g) || []).length;
+  const candRatio = ucCand / Math.max(1, ucCand + lcCand);
+  const curRatio = ucCur / Math.max(1, ucCur + lcCur);
+  return candRatio < curRatio;
+}
+
+function normalizeFfgTournament(t) {
+  if (!t || !t.trnId) return null;
+  const series = ffgSeries(t);
+  const flightLabel = t.serieLabel || t.ageGroup || "Geral";
+  const sex = (t.serieLabel || "").endsWith("F") ? "F" : (t.serieLabel || "").endsWith("G") ? "M" : null;
+
+  const flightPlayers = Array.isArray(t.players) ? t.players : [];
+  const results = flightPlayers.map((pl) => ({
+    playerSourceKey: pl.license ? String(pl.license) : null,
+    playerName: displayName(pl.name || ""),
+    pos: typeof pl.pos === "number" ? pl.pos : null,
+    status: "OK",
+    totalGross: typeof pl.total === "number" ? pl.total : null,
+    toPar: null,
+    rounds: Array.isArray(pl.rounds) ? pl.rounds.map((r) => ({
+      round: r.r,
+      gross: typeof r.gross === "number" ? r.gross : null,
+      strokes: Array.isArray(r.scores) ? r.scores : undefined,
+    })) : [],
+  }));
+
+  return {
+    sourceKey: String(t.trnId),
+    name: t.name || `FFG ${t.trnId}`,
+    date: t.dateIso || null,
+    startDate: t.dateIso || null,
+    seriesId: series.id,
+    seriesLabel: series.label,
+    course: t.courseTerrain || null,
+    parTotal: typeof t.parTotal === "number" ? t.parTotal : null,
+    flights: [{
+      flightKey: (t.serieLabel || "geral").toLowerCase().replace(/[^a-z0-9]+/g, "_"),
+      label: flightLabel,
+      ageMin: typeof t.ageMin === "number" ? t.ageMin : null,
+      ageMax: typeof t.ageMax === "number" ? t.ageMax : null,
+      sex,
+      par: Array.isArray(t.parPerHole) ? t.parPerHole : undefined,
+      fieldSize: flightPlayers.length,
+      results,
+    }],
+    extra: {
+      typeCompetition: t.typeCompetition || null,
+      ligue: t.ligue || null,
+    },
+  };
+}
+
+function ffgSeries(t) {
+  const name = t.name || "";
+  if (/GRAND PRIX JEUNES|GP JEUNES/i.test(name)) {
+    return { id: "ffgolf-gp-jeunes", label: "GP Jeunes" };
+  }
+  if (/CHAMPIONNAT|CHAMPS DE FRANCE/i.test(name)) {
+    return { id: "ffgolf-championnats-france", label: "Championnats de France" };
+  }
+  if (/INTERNATIONAUX/i.test(name)) {
+    return { id: "ffgolf-internationaux", label: "Internationaux U14/U18" };
+  }
+  // Fallback por slug do nome sem ano
+  const noYear = name.replace(/\b20\d{2}\b/g, "").trim();
+  return { id: `ffgolf-${seriesId(noYear)}`, label: noYear };
+}
+
+module.exports = { load, SOURCE_ID, SOURCE_LABEL };

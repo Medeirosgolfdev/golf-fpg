@@ -11,7 +11,7 @@
 
 import type { TorneioResult, EscalaoResult, RondaResult, RondaJogador } from './uskidsTypes';
 
-function converterTorneioCompleto(raw: any): TorneioResult | null {
+export function converterTorneioCompleto(raw: any): TorneioResult | null {
   // Detectar formato pela presença de signupanytime_t (novo) vs t+meta (antigo)
   const isNovoFormato = !!raw?.signupanytime_t;
 
@@ -240,45 +240,19 @@ function converterTorneioCompleto(raw: any): TorneioResult | null {
             start_time: rd.start_time  ?? '',
             grupo:      rd.group_number ?? 0,
             strokes:    rd.strokes ?? [],
-            to_par:     null,
           });
         }
       }
     }
-
-    const escaloes: EscalaoResult[] = [];
-    for (const esc of escalaoMap.values()) {
-      const rondas: RondaResult[] = [];
-      for (const [rn, leaderboard] of esc.roundsMap) {
-        const par = esc.parPorRonda.get(rn) ?? [];
-        rondas.push({
-          ronda: rn,
-          par,
-          si: [],
-          buracos: esc.holes,
-          total_par: par.length === esc.holes ? par.reduce((a, b) => a + b, 0) : null,
-          leaderboard,
-        });
-      }
-      rondas.sort((a, b) => a.ronda - b.ronda);
-      escaloes.push({
-        age_group: esc.age_group, nome: esc.nome,
-        holes: esc.holes, is_manuel: false, rondas,
-      });
-    }
-
-    return {
-      t:           raw.t,
-      name:        tourn.name,
-      date_inicio: tourn.start_date  ?? '',
-      date_fim:    tourn.end_date,
-      campo:       tourn.courses ? String(tourn.courses).split(',')[0].trim() : null,
-      rondas_total: tourn.rounds ?? 1,
-      escaloes,
-      ultima_atualizacao: '',
-    };
   }
+  // converter Maps em objects para output JSON-friendly
+  return Array.from(escaloesMap.values()).map((esc: any) => ({
+    nome: esc.nome,
+    flightId: esc.flightId,
+    rondas: Array.from(esc.roundsMap.entries() as IterableIterator<[number, any[]]>).map(([rn, jogadores]: [number, any[]]) => ({
+      numero: rn,
+      par: esc.parPorRonda.get(rn) ?? [],
+      jogadores,
+    })),
+  }));
 }
-
-export default converterTorneioCompleto;
-export { converterTorneioCompleto };

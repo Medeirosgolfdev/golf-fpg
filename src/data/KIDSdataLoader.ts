@@ -1,116 +1,98 @@
 /**
- * rivaisDataLoader.ts
- * Carrega todos os JSON de torneios via fetch (public/data/)
- * e converte em AutoRivalPlayer[] para merge na RivaisIntlPage.
+ * KIDSdataLoader.ts
+ *
+ * Loader unificado que consome os 3 ficheiros canónicos produzidos pelo
+ * agregador (scripts/aggregator/):
+ *   - /data/juniors.json              — roster cross-federação
+ *   - /data/juniors-tournaments.json  — torneios com results já mapeados a juniorId
+ *   - /data/tournament-catalog.json   — séries de torneios indexadas
+ *
+ * Substitui o loader antigo que carregava 50+ JSONs separados e fazia merge
+ * no browser. A identidade dos jogadores é resolvida em build-time pelo
+ * agregador (corre via `node scripts/aggregator/index.js` ou GitHub Action).
  */
+
+import { MONTHS_PT } from "../utils/format";
+import { cachedFetchJson } from "../data/fetchCache";
 import { normPaisDisplay } from "../utils/flagUtils";
 
+// ═════════════════════════════════════════════════════════════════════
+// Helpers de string
+// ═════════════════════════════════════════════════════════════════════
+
 const CC: Record<string, string> = {
-  US:"United States",GB:"United Kingdom",ES:"Spain",IT:"Italy",
-  FR:"France",DE:"Germany",CH:"Switzerland",NO:"Norway",
-  SE:"Sweden",PT:"Portugal",RU:"Russian Federation",BG:"Bulgaria",
-  NL:"Netherlands",LT:"Lithuania",TH:"Thailand",PH:"Philippines",
-  CN:"China",RO:"Romania",UA:"Ukraine",SI:"Slovenia",
-  BE:"Belgium",DK:"Denmark",CA:"Canada",BR:"Brazil",
-  MX:"Mexico",AT:"Austria",HU:"Hungary",SK:"Slovakia",
-  ZA:"South Africa",SG:"Singapore",IN:"India",TR:"Turkey",
-  KR:"South Korea",LV:"Latvia",CZ:"Czech Republic",PL:"Poland",
-  PY:"Paraguay",CL:"Chile",CO:"Colombia",PR:"Puerto Rico",
-  IE:"Ireland",CY:"Cyprus",OM:"Oman",LB:"Lebanon",
-  AE:"United Arab Emirates",KZ:"Kazakhstan",VN:"Viet Nam",
-  JE:"Jersey",NG:"Nigeria",CR:"Costa Rica",AR:"Argentina",
-  // Extra codes found in USKids completo files
-  UK:"United Kingdom",PHL:"Philippines",
-  AU:"Australia",JP:"Japan",NZ:"New Zealand",FI:"Finland",
-  TW:"Taiwan",HK:"Hong Kong",ID:"Indonesia",EE:"Estonia",
-  AM:"Armenia",BB:"Barbados",BS:"Bahamas",BO:"Bolivia",
-  DO:"Dominican Republic",DZ:"Algeria",EC:"Ecuador",
-  GT:"Guatemala",HN:"Honduras",KE:"Kenya",KH:"Cambodia",
-  MA:"Morocco",NI:"Nicaragua",PA:"Panama",PE:"Peru",
-  RE:"Réunion",SV:"El Salvador",UG:"Uganda",
-  UY:"Uruguay",VE:"Venezuela",
+  US: "United States", GB: "United Kingdom", ES: "Spain", IT: "Italy",
+  FR: "France", DE: "Germany", CH: "Switzerland", NO: "Norway",
+  SE: "Sweden", PT: "Portugal", RU: "Russian Federation", BG: "Bulgaria",
+  NL: "Netherlands", LT: "Lithuania", TH: "Thailand", PH: "Philippines",
+  CN: "China", RO: "Romania", UA: "Ukraine", SI: "Slovenia",
+  BE: "Belgium", DK: "Denmark", CA: "Canada", BR: "Brazil",
+  MX: "Mexico", AT: "Austria", HU: "Hungary", SK: "Slovakia",
+  ZA: "South Africa", SG: "Singapore", IN: "India", TR: "Turkey",
+  KR: "South Korea", LV: "Latvia", CZ: "Czech Republic", PL: "Poland",
+  PY: "Paraguay", CL: "Chile", CO: "Colombia", PR: "Puerto Rico",
+  IE: "Ireland", CY: "Cyprus", OM: "Oman", LB: "Lebanon",
+  AE: "United Arab Emirates", KZ: "Kazakhstan", VN: "Viet Nam",
+  JE: "Jersey", NG: "Nigeria", CR: "Costa Rica", AR: "Argentina",
+  UK: "United Kingdom", PHL: "Philippines",
+  AU: "Australia", JP: "Japan", NZ: "New Zealand", FI: "Finland",
+  TW: "Taiwan", HK: "Hong Kong", ID: "Indonesia", EE: "Estonia",
+  AM: "Armenia", BB: "Barbados", BS: "Bahamas", BO: "Bolivia",
+  DO: "Dominican Republic", DZ: "Algeria", EC: "Ecuador",
+  GT: "Guatemala", HN: "Honduras", KE: "Kenya", KH: "Cambodia",
+  MA: "Morocco", NI: "Nicaragua", PA: "Panama", PE: "Peru",
+  RE: "Réunion", SV: "El Salvador", UG: "Uganda",
+  UY: "Uruguay", VE: "Venezuela",
 };
 
-/**
- * Normaliza qualquer representação de país (código ISO-2/3, nome EN ou PT,
- * com/sem acentos, PT-PT ou PT-BR) num único nome canónico em inglês.
- * Garante que dados de fontes diferentes (USKids ISO-2, BlueGolf PT, FPG)
- * ficam dedup'áveis pelo mesmo valor de `co`.
- *
- *   co("PT") → "Portugal"
- *   co("US") → "United States"
- *   co("UK") → "United Kingdom"
- *   co("França") → "France"
- *   co("Franca") → "France"
- *   co("Federação Russa") → "Russia"
- *   co("Estônia") → "Estonia"  (PT-BR)
- *   co("XYZ") → "XYZ"  (não mapeado: devolve input)
- *   co("") → ""
- */
+/** Normaliza qualquer representação de país num nome canónico em inglês. */
 export function co(raw: string): string {
   const t = (raw || "").trim();
   if (!t) return "";
-  // Sempre canonicaliza via normPaisDisplay para garantir UM nome único por
-  // país (evita "Russia" + "Russian Federation", "Vietnam" + "Viet Nam", etc.).
-  // Se normPaisDisplay devolver o input inalterado (não-mapeado), tenta CC como
-  // último recurso (códigos ISO-2 que possam não estar no normPaisDisplay).
   const canon = normPaisDisplay(t);
   if (canon !== t) return canon;
   return CC[t] || CC[t.toUpperCase()] || t;
 }
 
-import { MONTHS_PT } from "../utils/format";
-import { cachedFetchJson } from "../data/fetchCache";
-import { MANUEL_BIRTH_YEAR } from "../constants/manuel";
-
+/** Normaliza nome para comparação (lowercase, sem acentos, espaços condensados). */
 export function normName(n: string): string {
   return n.trim().toLowerCase()
-    // Tratar hífens, apóstrofes e pontos como espaços para que variantes como
-    // "Castro-Ferreira" / "Castro Ferreira", "D'Souza" / "D Souza" resolvam para
-    // a mesma chave canónica.
     .replace(/[-'’.·]+/g, " ")
-    .replace(/\s+/g," ")
+    .replace(/\s+/g, " ")
     .trim()
-    .normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+    .normalize("NFD").replace(/[̀-ͯ]/g, "");
 }
 
+// ═════════════════════════════════════════════════════════════════════
+// Tipos públicos
+// ═════════════════════════════════════════════════════════════════════
+
 export interface AutoTournResult {
-  /** Posição final. `"WD"` quando o jogador não terminou todas as rondas
-   *  (caso típico FFGolf — o `pos` raw seria parcial mid-tournament). */
   p: number | "WD" | null;
   t: number | null;
   tp: number | null;
   rd: number[];
   ageGroup?: string;
-  nholes?: number;   // 9 ou 18 — definido por holes_per_round do age group
+  nholes?: number;
 }
 
 export interface AutoRivalPlayer {
   n: string;
   co: string;
   r: Record<string, AutoTournResult>;
-  fpgClub?: string;   // clube FPG quando o jogador está na base de dados portuguesa
-  dob?: string;       // data de nascimento (YYYY-MM-DD) da base de dados FPG
-  memberId?: string;  // ID único USKids (numérico) — chave do uskids-member-history-slim.json
-  // ─── Identidades por federação (quando conhecidas) ───
-  esLicencia?: string;  // RFEG/Espanha (ex: "AM84955303")
-  esClub?: string;      // Clube espanhol (ex: "LA HACIENDA")
-  esFullName?: string;  // Nome RFEG completo quando difere de `n` (ex: "Niko Eduardo Alvarez Van Der Walt")
-  esSex?: "M" | "F";    // Sexo registado em RFEG
-  esCatEdad?: string;   // Categoria oficial RFEG: Benjamín/Alevín/Infantil/Cadete/Junior/Juvenil/Senior
-  esHcp?: number;       // HCP exacto (último snapshot conhecido)
-  esHcpDate?: string;   // Data ISO do snapshot HCP (YYYY-MM-DD)
-  esRegion?: string;    // Comunidade Autónoma inferida do clube (ex: "Canárias")
-  ptFed?: string;       // FPG/Portugal (ex: "52884")
-  frFed?: string;       // FFGolf/França (futuro)
-}
-
-async function fetchJson(path: string): Promise<unknown> {
-  // Usa cachedFetchJson: URLs sem "?" são cached globalmente entre páginas.
-  // URLs com "?" (ex: ?v=timestamp) contornam a cache automaticamente.
-  const data = await cachedFetchJson(path);
-  if (data === null) throw new Error(`Ficheiro não encontrado: ${path}`);
-  return data;
+  fpgClub?: string;
+  dob?: string;
+  memberId?: string;
+  esLicencia?: string;
+  esClub?: string;
+  esFullName?: string;
+  esSex?: "M" | "F";
+  esCatEdad?: string;
+  esHcp?: number;
+  esHcpDate?: string;
+  esRegion?: string;
+  ptFed?: string;
+  frFed?: string;
 }
 
 export interface AutoScorecard {
@@ -118,81 +100,53 @@ export interface AutoScorecard {
   playerName: string;
   par: number[];
   si: number[];
-  meters: number[];   // distâncias em metros por buraco (0 se não disponível)
-  rounds: number[][];  // each round = 18 hole scores
+  meters: number[];
+  rounds: number[][];
 }
 
-// Global scorecard store: key = normName(playerName), value = list of scorecards
-const _scorecards: Map<string, AutoScorecard[]> = new Map();
+export type LoadProgress = { done: number; total: number; label: string };
 
-// t-codes dos 15 ficheiros USKids World Championship / major events
-const USKIDS_KNOWN_TCODES = new Set([
-  11604, 14029, 15807, 18124,
-  8300, 13568, 15704, 18242,
-  12229, 14302, 16428, 19418,  // Venice +2025
-  14218, 12093, 16705, 18719,
-  18438, 15573, 21239,
-  20175, 21080, 21004, 20895,  // Rome 2025, Marco 2026, Desert 2026, Sandestin 2026
-]);
+export interface KidsFileMeta {
+  path: string;
+  status: "loaded" | "error";
+  error?: string;
+  group: string;
+}
 
-// Nomes fixos para os t-codes conhecidos (fallback caso o JSON não seja parseable)
-const USKIDS_TCODE_META: Record<number, { name: string; short: string; dateExact: string }> = {
-  11604: { name: "World Championship 2022",           short: "WC 2022",  dateExact: "2022-08-04" },
-  14029: { name: "World Championship 2023",           short: "WC 2023",  dateExact: "2023-08-03" },
-  15807: { name: "World Championship 2024",           short: "WC 2024",  dateExact: "2024-08-01" },
-  18124: { name: "World Championship 2025",           short: "WC 2025",  dateExact: "2025-07-31" },
-   8300: { name: "European Championship 2022",        short: "EC 2022",  dateExact: "2022-05-31" },
-  13568: { name: "European Championship 2023",        short: "EC 2023",  dateExact: "2023-05-30" },
-  15704: { name: "European Championship 2024",        short: "EC 2024",  dateExact: "2024-05-28" },
-  18242: { name: "European Championship 2025",        short: "EC 2025",  dateExact: "2025-05-27" },
-  12229: { name: "Venice Open 2022",                  short: "Venice 22",dateExact: "2022-08-18" },
-  14302: { name: "Venice Open 2023",                  short: "Venice 23",dateExact: "2023-08-17" },
-  16428: { name: "Venice Open 2024",                  short: "Venice 24",dateExact: "2024-08-15" },
-  19418: { name: "Venice Open 2025",                  short: "Venice 25",dateExact: "2025-08-14" },
-  20175: { name: "Rome Classic 2025",                 short: "Rome 25",  dateExact: "2025-10-18" },
-  21080: { name: "Marco Simone Invitational 2026",    short: "Marco 26", dateExact: "2026-03-14" },
-  12093: { name: "Red White & Blue Inv. 2022",        short: "RWB 2022", dateExact: "2022-07-02" },
-  14218: { name: "Red White & Blue Inv. 2023",        short: "RWB 2023", dateExact: "2023-07-01" },
-  16705: { name: "Red White & Blue Inv. 2024",        short: "RWB 2024", dateExact: "2024-07-06" },
-  18719: { name: "Red White & Blue Inv. 2025",        short: "RWB 2025", dateExact: "2025-07-05" },
-  18438: { name: "Marco Simone Invitational 2025",    short: "Marco 25", dateExact: "2025-03-15" },
-  15573: { name: "Real Club de Golf El Prat",          short: "El Prat",  dateExact: "2023-10-01" },
-  21239: { name: "Mississippi State Invitational 2026",short: "MS State 26", dateExact: "2026-03-01" },
-};
+export interface FieldData {
+  tid: string;
+  players: AutoRivalPlayer[];
+}
 
-// USKids completo tournament names: key = tid prefix "usk{tcode}", value = {name, short, date}
-// Pre-populated with known names; updated from JSON during processUskidsCompleto
-export const uskTournNames: Map<string, { name: string; short: string; date: string; dateExact: string }> = (() => {
-  const m = new Map<string, { name: string; short: string; date: string; dateExact: string }>();
-  for (const [tcode, meta] of Object.entries(USKIDS_TCODE_META as Record<string, { name: string; short: string; dateExact: string }>)) {
-    const [yr, mo] = meta.dateExact.split("-").map(Number);
-    const date = `${MONTHS_PT[mo - 1]} ${yr}`;
-    m.set(`usk${tcode}`, { name: meta.name, short: meta.short, date, dateExact: meta.dateExact });
-  }
-  return m;
-})();
-// Field sizes per tid: "usk{tcode}_b{n}" → number of players
+// ═════════════════════════════════════════════════════════════════════
+// Maps globais — populados pelo loader, consumidos por dobInference,
+// USKIDSPage, etc.
+// ═════════════════════════════════════════════════════════════════════
+
+export const uskTournNames: Map<string, { name: string; short: string; date: string; dateExact: string }> = new Map();
 export const uskFieldSizes: Map<string, number> = new Map();
-
-/** Scoring type por tid de NextCaddy (nc...) — "SCRATCH" (gross) ou
- *  "HANDICAP" (net). Usado para renderizar pill na KIDSPage. */
 export const ncScoringType: Map<string, "SCRATCH" | "HANDICAP"> = new Map();
+export const fpgTournNames: Map<string, {
+  name: string; short: string; date: string; dateExact: string;
+  ageMin?: number; ageMax?: number; sex?: "M" | "F"; escalao?: string;
+}> = new Map();
+export const ffgolfTournNames: Map<string, {
+  name: string; short: string; date: string; dateExact: string;
+  ageMin?: number; ageMax?: number; sex?: "M" | "F"; ageGroup?: string;
+}> = new Map();
 
-function addScorecard(normN: string, sc: AutoScorecard) {
-  if (!_scorecards.has(normN)) _scorecards.set(normN, []);
-  _scorecards.get(normN)!.push(sc);
-}
+const _scorecards: Map<string, AutoScorecard[]> = new Map();
+let _loadedFiles: KidsFileMeta[] = [];
+let _autoRivalsCache: Promise<AutoRivalPlayer[]> | null = null;
 
 export function getScorecards(playerName: string): AutoScorecard[] {
   const key = normName(playerName);
-  // Exact match first
   const exact = _scorecards.get(key);
   if (exact?.length) return exact;
-  // Fuzzy: match by first + last word (handles middle names like "Goulartt")
   const parts = key.split(" ").filter(Boolean);
   if (parts.length < 2) return [];
   const first = parts[0];
-  const last  = parts[parts.length - 1];
+  const last = parts[parts.length - 1];
   for (const [k, v] of _scorecards.entries()) {
     const kp = k.split(" ").filter(Boolean);
     if (kp[0] === first && kp[kp.length - 1] === last) return v;
@@ -200,2211 +154,364 @@ export function getScorecards(playerName: string): AutoScorecard[] {
   return [];
 }
 
-/**
- * Devolve todos os scorecards de um tid (todos os jogadores do escalão
- * desse torneio). Usado para comparação jogador-vs-field na Análise.
- * Cada tid já inclui o escalão no sufixo (ex: usk18242_b11, wjgc26, doral25_b1011).
- */
 export function getScorecardsByTid(tid: string): Array<AutoScorecard & { normName: string }> {
   const out: Array<AutoScorecard & { normName: string }> = [];
-  for (const [normN, scs] of _scorecards.entries()) {
+  for (const [n, scs] of _scorecards.entries()) {
     for (const sc of scs) {
-      if (sc.tid === tid) out.push({ ...sc, normName: normN });
+      if (sc.tid === tid) out.push({ ...sc, normName: n });
     }
   }
   return out;
 }
 
-export function processWjgc(data: unknown, tid: string): AutoRivalPlayer[] {
-  const d = data as {
-    par?: number[]; si?: number[];
-    players: Array<{
-      name: string; country: string;
-      pos: number|string|null; result: number|null;
-      rounds: Array<{ gross: number; scores?: number[] }>;
-    }>;
-  };
-  const par = d.par || [];
-  const si = d.si || [];
-  const valid = (d.players || []).filter(p => p.rounds?.length > 0);
-
-  // Computar posições localmente quando o scraper devolveu pos=null mas há
-  // result/total para todos. Bug recorrente: bluegolf só apanha pos dos top,
-  // os restantes ficam pos=null. Ordenar por result (toPar) e atribuir.
-  const completed = valid.filter(p => typeof p.result === "number");
-  const computedPos = new Map<string, number>();
-  if (completed.length > 0) {
-    completed.sort((a, b) => (a.result! - b.result!));
-    let lastResult: number | null = null;
-    let lastPos = 0;
-    completed.forEach((p, i) => {
-      if (lastResult !== null && p.result === lastResult) {
-        computedPos.set(p.name, lastPos);  // tied — same pos
-      } else {
-        lastPos = i + 1;
-        lastResult = p.result;
-        computedPos.set(p.name, lastPos);
-      }
-    });
-  }
-
-  return valid.map(p => {
-    const rd = p.rounds.map(r => r.gross).filter(g => g > 0);
-    const norm = normName(p.name.trim());
-    const holeRounds = p.rounds
-      .map(r => r.scores || [])
-      .filter(s => s.length === 18);
-    if (holeRounds.length > 0 && par.length === 18) {
-      addScorecard(norm, { tid, playerName: p.name.trim(), par, si, meters: [], rounds: holeRounds });
-    }
-    // pos: usar valor do scraper se for número, senão usar pos calculada
-    const posVal: number | null = typeof p.pos === "number"
-      ? p.pos
-      : (computedPos.get(p.name) ?? null);
-    return {
-      n: p.name.trim(),
-      co: co(p.country),
-      r: { [tid]: {
-        p: posVal,
-        t: rd.length ? rd.reduce((a,b)=>a+b,0) : null,
-        tp: p.result ?? null,
-        rd,
-      }},
-    };
-  });
-}
-
-/** Converte nome do RFEGolf/LGS no formato "APELIDO , Nomes" (com vírgula
- *  e maiúsculas) para o formato canónico "Nomes Apelido" usado pelo USKids/FFG.
- *  Crítico para o mergeInto bater chaves: senão "GROSS PANEQUE, Diego" e
- *  "Diego Gross Paneque" ficam como rivais distintos.
- */
-function rfegolfNameToCanonical(raw: string): string {
-  if (!raw) return "";
-  const s = raw.trim();
-  // Detectar "APELIDO , Nomes" ou "APELIDO, Nomes"
-  const m = s.match(/^([A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ\s'\-.]+?)\s*,\s*(.+)$/);
-  if (!m) return s;
-  const apelido = m[1].trim();
-  const nomes = m[2].trim();
-  function titleCase(str: string): string {
-    return str.toLowerCase().split(/(\s+|-)/).map(part =>
-      part.match(/^[a-zà-ÿ]/) ? part.charAt(0).toUpperCase() + part.slice(1) : part
-    ).join("");
-  }
-  return `${titleCase(nomes)} ${titleCase(apelido)}`;
-}
-
-/** processRfegolfRivals — consolida torneios LGS (livegolfscoring.es) num map de rivais.
- *  Input: ficheiro `rfegolf-rivals.json` (gerado por scripts/build-rfegolf-rivals.js).
- *  Cria entries `rival.r["lgs{id}"] = { p, t, tp, rd, ageGroup, nholes }` e regista
- *  scorecards hole-by-hole para o KIDSdataLoader scorecards map.
- */
-export function processRfegolfRivals(data: unknown): AutoRivalPlayer[] {
-  const d = data as {
-    torneios?: Record<string, {
-      name: string;
-      year: number | null;
-      ageGroup: string | null;
-      dateIso?: string | null;
-      dateRange?: string | null;
-      par: number[];
-      parTotal: number;
-      meters?: number[] | null;
-      si?: number[] | null;
-      nholes: number;
-      nRounds: number;
-      /** "SCRATCH" (gross) | "HANDICAP" (net) — só para NC, undefined para LGS. */
-      scoringType?: "SCRATCH" | "HANDICAP";
-      players: Array<{
-        n: string;
-        p: number | null;
-        t: number | null;
-        tp: number | null;
-        rd: number[];
-        sc?: number[][];   // scores hole-by-hole por ronda — alimenta addScorecard
-      }>;
-    }>;
-  };
-  if (!d || !d.torneios) return [];
-
-  /** Formata data em PT amigável: "27 junio 2025" → "27 jun 2025" ou "Jun 2025" */
-  const ES_TO_PT_MONTH: Record<string, string> = {
-    "enero": "jan", "febrero": "fev", "marzo": "mar", "abril": "abr",
-    "mayo": "mai", "junio": "jun", "julio": "jul", "agosto": "ago",
-    "septiembre": "set", "octubre": "out", "noviembre": "nov", "diciembre": "dez",
-  };
-  function formatLgsDate(t: { year: number | null; dateIso?: string | null; dateRange?: string | null }): string {
-    if (t.dateRange && t.year) {
-      // "25 junio - 27 junio" → "27 jun 2025"
-      const m = /(\d+)\s+([a-zá-ú]+)/i.exec(t.dateRange);
-      if (m) {
-        const day = m[1];
-        const monthEn = ES_TO_PT_MONTH[m[2].toLowerCase()] || m[2].slice(0, 3);
-        return `${day} ${monthEn} ${t.year}`;
-      }
-    }
-    if (t.dateIso) {
-      const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(t.dateIso);
-      if (m) {
-        const monthIdx = parseInt(m[2], 10) - 1;
-        const months = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
-        return `${parseInt(m[3], 10)} ${months[monthIdx]} ${m[1]}`;
-      }
-    }
-    return t.year ? String(t.year) : "";
-  }
-
-  const all: AutoRivalPlayer[] = [];
-  for (const [tid, t] of Object.entries(d.torneios)) {
-    // Registar nome do torneio em uskTournNames para o KIDSpage exibir bem
-    if (!uskTournNames.has(tid)) {
-      uskTournNames.set(tid, {
-        name: t.name,
-        short: t.name.length > 30 ? t.name.slice(0, 30) + "…" : t.name,
-        date: formatLgsDate(t),
-        dateExact: t.dateIso || (t.year ? `${t.year}-01-01` : ""),
-      });
-    }
-    // Registar scoringType (Scratch/Handicap) por tid — usado pela KIDSPage
-    // para renderizar pill colorido de aviso.
-    if (t.scoringType) {
-      ncScoringType.set(tid, t.scoringType);
-    }
-    // Field size — usado pela UI para mostrar "X jogadores" sob título.
-    // Conta TODOS os players com nome+total ou pos (mesmo sem hbh).
-    const fieldSize = (t.players || []).filter(p =>
-      p.n && (typeof p.t === "number" || p.p != null)
-    ).length;
-    if (fieldSize > 0) uskFieldSizes.set(tid, fieldSize);
-    for (const p of t.players || []) {
-      if (!p.n) continue;
-      // Aceitar players sem scorecards individuais (rd=[]) desde que tenham
-      // total — typical para PDF-only ou tournaments com leaderboard agregado.
-      const hasRd = Array.isArray(p.rd) && p.rd.length > 0;
-      const hasTotal = typeof p.t === "number" && p.t > 0;
-      if (!hasRd && !hasTotal) continue;
-      // Converter "APELIDO, Nomes" → "Nomes Apelido" para casar com USKids/FFG
-      // (senão Marcus Latt aparece como 2 rivais distintos: "Marcus Latt" e "LATT, Marcus")
-      const canonicalName = rfegolfNameToCanonical(p.n);
-      // Total raw — soma das rondas se o `t` não estiver definido
-      const total = typeof p.t === "number" ? p.t : p.rd.reduce((a, b) => a + b, 0);
-      const toPar = typeof p.tp === "number" ? p.tp : (total - t.parTotal * t.nRounds);
-      // Registar scorecard hole-by-hole quando há scores válidos (18 buracos por ronda)
-      const norm = normName(canonicalName);
-      const validScores = (p.sc || []).filter(s => Array.isArray(s) && s.length === 18);
-      if (validScores.length > 0 && Array.isArray(t.par) && t.par.length === 18) {
-        addScorecard(norm, {
-          tid,
-          playerName: canonicalName,
-          par: t.par,
-          si: (t.si && t.si.length === 18) ? t.si : [],
-          meters: (t.meters && t.meters.length === 18) ? t.meters : [],
-          rounds: validScores,
-        });
-      }
-      all.push({
-        n: canonicalName,
-        co: "Spain",   // rfegolf-rivals.json é por definição espanhol (LGS + NextCaddy)
-        r: { [tid]: {
-          p: typeof p.p === "number" ? p.p : null,
-          t: total,
-          tp: toPar,
-          // rd vazio quando só temos total agregado (sem scorecard hbh) — mantém compatibilidade
-          rd: hasRd ? p.rd : [],
-          ageGroup: t.ageGroup || undefined,
-          nholes: t.nholes,
-        }},
-      });
-    }
-  }
-  return all;
-}
-
-/** processFcgRivals — variante para fcg-rivals.json (Catalã via golfdirecto).
- *  Estruturalmente idêntico ao formato rfegolf-rivals, mas cada player tem
- *  campos extra: license (CB.../AD...), country, sex, dobIso. Usa o country
- *  do próprio player em vez de hardcoded "Spain" (Andorra cai em "Andorra").
- */
-export function processFcgRivals(data: unknown): AutoRivalPlayer[] {
-  const d = data as {
-    torneios?: Record<string, {
-      name: string;
-      year: number | null;
-      ageGroup: string | null;
-      dateIso?: string | null;
-      par: number[];
-      parTotal: number;
-      meters?: number[] | null;
-      si?: number[] | null;
-      nholes: number;
-      nRounds: number;
-      players: Array<{
-        n: string;
-        p: number | null;
-        t: number | null;
-        tp: number | null;
-        rd: number[];
-        sc?: number[][];
-        license?: string;
-        country?: string;
-        sex?: "M" | "F" | null;
-        dob?: string | null;
-        dobIso?: string | null;
-        club?: string | null;
-      }>;
-    }>;
-  };
-  if (!d || !d.torneios) return [];
-
-  const all: AutoRivalPlayer[] = [];
-  for (const [tid, t] of Object.entries(d.torneios)) {
-    if (!uskTournNames.has(tid)) {
-      // FCG dates já estão em ISO directamente
-      let formatted = "";
-      if (t.dateIso) {
-        const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(t.dateIso);
-        if (m) {
-          const months = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
-          formatted = `${parseInt(m[3], 10)} ${months[parseInt(m[2], 10) - 1]} ${m[1]}`;
-        }
-      }
-      uskTournNames.set(tid, {
-        name: t.name,
-        short: t.name.length > 30 ? t.name.slice(0, 30) + "…" : t.name,
-        date: formatted || (t.year ? String(t.year) : ""),
-        dateExact: t.dateIso || (t.year ? `${t.year}-01-01` : ""),
-      });
-    }
-    const fieldSize = (t.players || []).filter(p =>
-      p.n && (typeof p.t === "number" || p.p != null)
-    ).length;
-    if (fieldSize > 0) uskFieldSizes.set(tid, fieldSize);
-
-    for (const p of t.players || []) {
-      if (!p.n) continue;
-      const hasRd = Array.isArray(p.rd) && p.rd.length > 0;
-      const hasTotal = typeof p.t === "number" && p.t > 0;
-      if (!hasRd && !hasTotal) continue;
-
-      const canonicalName = rfegolfNameToCanonical(p.n);
-      const total = typeof p.t === "number" ? p.t : p.rd.reduce((a, b) => a + b, 0);
-      const toPar = typeof p.tp === "number" ? p.tp : (total - t.parTotal * t.nRounds);
-
-      const norm = normName(canonicalName);
-      const validScores = (p.sc || []).filter(s => Array.isArray(s) && s.length === 18);
-      if (validScores.length > 0 && Array.isArray(t.par) && t.par.length === 18) {
-        addScorecard(norm, {
-          tid,
-          playerName: canonicalName,
-          par: t.par,
-          si: (t.si && t.si.length === 18) ? t.si : [],
-          meters: (t.meters && t.meters.length === 18) ? t.meters : [],
-          rounds: validScores,
-        });
-      }
-
-      // Country: ESP → Spain, AND → Andorra, ITA → Italy, FRA → France, etc.
-      // Cross-ref via co map global se já existir; fallback "Spain" para CB licenças.
-      const ccMap: Record<string, string> = {
-        ESP: "Spain", AND: "Andorra", ITA: "Italy", FRA: "France",
-        GBR: "United Kingdom", USA: "USA", PRT: "Portugal", CHN: "China",
-        TUR: "Turkey", DEU: "Germany", NLD: "Netherlands",
-      };
-      const country = (p.country && ccMap[p.country]) || (p.license?.startsWith("AD") ? "Andorra" : "Spain");
-
-      all.push({
-        n: canonicalName,
-        co: country,
-        dob: p.dob || undefined,
-        r: { [tid]: {
-          p: typeof p.p === "number" ? p.p : null,
-          t: total,
-          tp: toPar,
-          rd: hasRd ? p.rd : [],
-          ageGroup: t.ageGroup || undefined,
-          nholes: t.nholes,
-        }},
-      });
-    }
-  }
-  return all;
-}
-
-export function processDoral(data: unknown): AutoRivalPlayer[] {
-  const d = data as {
-    year?: number;
-    divisions: Array<{
-      name: string; par?: number[];
-      players: Array<{
-        name: string; country: string;
-        pos: number|null; toPar: number|null;
-        r1Gross: number; r2Gross: number;
-        rounds?: Array<{ scores?: number[]; gross: number }>;
-      }>;
-    }>;
-  };
-  const yr = String(d.year ?? 2025).slice(2); // "25", "24", etc.
-  const divMap: Record<string,string> = {
-    "Boys 8 & 9 Division":   `doral${yr}_b89`,
-    "Boys 10 & 11 Division": `doral${yr}_b1011`,
-    "Boys 12 & 13 Division": `doral${yr}_b1213`,
-  };
-  const all: AutoRivalPlayer[] = [];
-  for (const div of d.divisions || []) {
-    const tid = divMap[div.name];
-    if (!tid) continue;
-    const divPar: number[] = div.par || [];
-
-    // Collect entries for this division
-    type DEntry = { name: string; co: string; rd: number[]; t: number; tp: number | null; holeRounds: number[][] };
-    const entries: DEntry[] = [];
-    for (const p of div.players || []) {
-      const name = p.name.includes(",")
-        ? p.name.split(",").map(s=>s.trim()).reverse().join(" ")
-        : p.name.trim();
-      const rd = [p.r1Gross, p.r2Gross].filter(g => g > 0);
-      if (!rd.length) continue;
-      const holeRounds = (p.rounds || []).map(r => r.scores || []).filter(s => s.length === 18);
-      entries.push({ name, co: co(p.country), rd, t: rd.reduce((a,b)=>a+b,0), tp: p.toPar ?? null, holeRounds });
-    }
-
-    // Sort and assign positions
-    const maxRds = entries.length ? Math.max(...entries.map(e => e.rd.length)) : 0;
-    entries.sort((a, b) => b.rd.length - a.rd.length || a.t - b.t);
-    let pos = 1;
-    for (let i = 0; i < entries.length; i++) {
-      if (i > 0 && entries[i].rd.length === entries[i-1].rd.length && entries[i].t === entries[i-1].t) {
-        // empate — mantém pos anterior
-      } else { pos = i + 1; }
-      const e = entries[i];
-      if (e.holeRounds.length > 0 && divPar.length === 18)
-        addScorecard(normName(e.name), { tid, playerName: e.name, par: divPar, si: [], meters: [], rounds: e.holeRounds });
-      all.push({
-        n: e.name, co: e.co,
-        r: { [tid]: { p: e.rd.length < maxRds ? null : pos, t: e.t, tp: e.tp, rd: e.rd }},
-      });
-    }
-    // Store field size
-    const full = entries.filter(e => e.rd.length >= maxRds).length;
-    if (full > 0) uskFieldSizes.set(tid, full);
-  }
-  return all;
-}
-
-const USKIDS_ID: Record<string,string> = {
-  // Venice 2025, Rome 2025, Marco 2025, Marco 2026 removidos — têm ficheiros completos próprios
-  "Desert Shootout 2026":                "desert26",
-  "Sandestin Championship 2026":         "sandestin26",
-  "2026 Mississippi State Invitational": "msstate26",
-  "2026 South Carolina State Invitational": "scstate26",
-  "Real Club de Golf El Prat":           "elprat23",
-};
-
-// Par by tournament (t code) and age group code — mirrors TEES_LOOKUP in USKidsFieldPage
-// Key: "tCode-ageGroup", value: par array
-const USKIDS_PAR: Record<string, number[]> = {
-  // Rome Classic 2025 (t=20175) — par 72 todos os escalões
-  "20175-2102": [4,5,3,4,4,4,4,5,3, 4,5,4,3,4,4,3,5,4],
-  "20175-2103": [4,5,3,4,4,4,4,5,3, 4,5,4,3,4,4,3,5,4],
-  "20175-2104": [4,5,3,4,4,4,4,5,3, 4,5,4,3,4,4,3,5,4],
-  "20175-2105": [4,5,3,4,4,4,4,5,3, 4,5,4,3,4,4,3,5,4],
-  // Venice Open 2025 (t=19418)
-  "19418-2102": [4,5,4,3,4,3,4,5,4, 5,3,4,4,4,4,3,4,5], // Boys 9 Green+White
-  "19418-2103": [4,3,5,4,4,4,4,3,5, 4,5,4,3,4,3,4,5,4], // Boys 10 Red+Green
-  "19418-2104": [5,3,4,4,4,4,3,4,5, 4,3,5,4,4,4,4,3,5], // Boys 11 White+Red
-  "19418-2105": [5,3,4,4,4,4,3,4,5, 4,3,5,4,4,4,4,3,5], // Boys 12 White+Red
-  // Marco Simone Invitational 2025 (t=18438) — par 72 todos os escalões
-  "18438-2102": [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], // Boys 9
-  "18438-2103": [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], // Boys 10
-  "18438-2104": [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], // Boys 11
-  "18438-2105": [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], // Boys 12
-  // Marco Simone Invitational 2026 (t=21080) — par 72 todos os escalões
-  "21080-2104": [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], // Boys 11
-  "21080-2105": [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], // Boys 12
-  // 2026 South Carolina State Invitational (t=21237) — par 72
-  "21237-87":  [4,4,4,3,3,4,4,5,5, 4,4,4,3,4,5,3,4,5], // Boys 11
-  "21237-88":  [4,4,4,3,3,4,4,5,5, 4,4,4,3,4,5,3,4,5], // Boys 12
-};
-
-// ── Manual overrides for players excluded by scraper (IE/WD status) ──
-// These entries are injected after processUskids runs, so they survive
-// auto-regeneration of uskids-results.json.
-const MANUEL_OVERRIDES: Array<{
-  tid: string;
-  name: string;
-  country: string;
-  rounds: { score: number; strokes: number[] }[];
-  par: number[];
-  ageGroup: string;
-}> = [
-  {
-    // Marco Simone 2026 – Manuel was marked IE (Ineligible) due to scorecard signing error.
-    // Official scores: R1=86 (hole 5 penalty removed: real stroke 5), R2=79
-    tid: "marco26_b11",
-    name: "Manuel Medeiros",
-    country: "PT",
-    rounds: [
-      { score: 86, strokes: [5,5,4,3,5,4,4,9,5, 6,4,5,3,4,4,5,6,5] },
-      { score: 79, strokes: [4,5,4,3,3,5,4,4,5, 4,4,5,4,4,5,5,5,6] },
-    ],
-    par: [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5],
-    ageGroup: "Boys 11",
-  },
-];
-
-export function processManuelOverrides(): AutoRivalPlayer[] {
-  const all: AutoRivalPlayer[] = [];
-  for (const ov of MANUEL_OVERRIDES) {
-    const rd = ov.rounds.map(r => r.score);
-    const t = rd.reduce((a, b) => a + b, 0);
-    const parTotal = ov.par.reduce((a, b) => a + b, 0);
-    const tp = t - parTotal * ov.rounds.length;
-    const holeRounds = ov.rounds.map(r => r.strokes).filter(s => s.length === 18);
-    if (holeRounds.length > 0) {
-      addScorecard(normName(ov.name), {
-        tid: ov.tid, playerName: ov.name, par: ov.par, si: [], meters: [], rounds: holeRounds,
-      });
-    }
-    all.push({
-      n: ov.name, co: co(ov.country),
-      r: { [ov.tid]: { p: null, t, tp, rd, ageGroup: ov.ageGroup } },
-    });
-  }
-  return all;
-}
-
-export function processUskids(data: unknown): AutoRivalPlayer[] {
-  const d = data as {
-    resultados: Array<{
-      t: number;
-      name: string;
-      escaloes: Array<{
-        nome: string;
-        age_group: number;
-        rondas: Array<{
-          ronda: number;
-          buracos?: number;
-          par?: number[];
-          leaderboard: Array<{
-            nome: string; pais: string; score: number; buracos: number;
-            to_par?: number | null;
-            strokes?: number[];
-            rondas?: Record<string, { strokes?: number[] }>;
-          }>;
-        }>;
-      }>;
-    }>;
-  };
-  const all: AutoRivalPlayer[] = [];
-  for (const tourn of d.resultados || []) {
-    const baseId = USKIDS_ID[tourn.name];
-    if (!baseId) continue;
-    for (const esc of tourn.escaloes || []) {
-      const ageNum = parseInt(esc.nome.replace(/\D/g,""), 10);
-      if (!ageNum) continue;
-      const tid = `${baseId}_b${ageNum}`;
-
-      interface PEntry {
-        co: string; scores: Record<number,number>; origName: string;
-        holeScores: Record<number, number[]>;
-        par: number[];          // buraco-a-buraco (pode ficar vazio)
-        toParByRound: Record<number, number>; // ronda → to_par do jogador
-      }
-      const pm: Record<string, PEntry> = {};
-
-      for (const ronda of esc.rondas || []) {
-        // Par por buraco: preferir ronda.par, depois USKIDS_PAR lookup
-        const rPar: number[] =
-          ronda.par?.length === (ronda.buracos || 18) ? ronda.par :
-          (USKIDS_PAR[`${tourn.t}-${esc.age_group}`] || []);
-
-        for (const jog of ronda.leaderboard || []) {
-          const key = normName(jog.nome);
-          if (!pm[key]) pm[key] = { co: co(jog.pais), scores: {}, origName: jog.nome.trim(), holeScores: {}, par: rPar, toParByRound: {} };
-          if (jog.score > 0 && jog.buracos === 18)
-            pm[key].scores[ronda.ronda] = jog.score;
-          // Guardar to_par por ronda para calcular tp total
-          if (jog.to_par != null)
-            pm[key].toParByRound[ronda.ronda] = jog.to_par;
-          // Strokes buraco-a-buraco
-          const strokes: number[] = jog.strokes?.length ? jog.strokes
-            : (jog.rondas?.["1"]?.strokes ?? []);
-          if (strokes.length === 18)
-            pm[key].holeScores[ronda.ronda] = strokes;
-          if (rPar.length === 18 && pm[key].par.length !== 18)
-            pm[key].par = rPar;
-        }
-      }
-
-      // Pre-compute all entries for ranking
-      type UEntry = { origName: string; co: string; rd: number[]; t: number; tp: number | null; holeRounds: number[][] };
-      const entries: UEntry[] = [];
-      for (const info of Object.values(pm)) {
-        const rdEntries = Object.entries(info.scores).sort(([a],[b]) => Number(a)-Number(b));
-        const rd = rdEntries.map(([,v]) => v);
-        if (!rd.length) continue;
-        const tpEntries = Object.entries(info.toParByRound).sort(([a],[b]) => Number(a)-Number(b));
-        const tp = tpEntries.length === rdEntries.length
-          ? tpEntries.reduce((acc, [,v]) => acc + v, 0) : null;
-        const holeRounds = Object.entries(info.holeScores)
-          .sort(([a],[b]) => Number(a)-Number(b))
-          .map(([,v]) => v)
-          .filter(r => r.length === 18 && r.some(s => s > 0));
-        entries.push({ origName: info.origName, co: info.co, rd, t: rd.reduce((a,b)=>a+b,0), tp, holeRounds });
-      }
-      // Sort by total, assign positions
-      const maxRds = entries.length ? Math.max(...entries.map(e => e.rd.length)) : 0;
-      entries.sort((a, b) => b.rd.length - a.rd.length || a.t - b.t);
-      let pos = 1;
-      for (let i = 0; i < entries.length; i++) {
-        if (i > 0 && entries[i].rd.length === entries[i-1].rd.length && entries[i].t === entries[i-1].t) {
-          // empate
-        } else { pos = i + 1; }
-        const e = entries[i];
-        if (e.holeRounds.length > 0)
-          addScorecard(normName(e.origName), { tid, playerName: e.origName, par: pm[normName(e.origName)]?.par ?? [], si: [], meters: [], rounds: e.holeRounds });
-        all.push({
-          n: e.origName, co: e.co,
-          r: { [tid]: { p: e.rd.length < maxRds ? null : pos, t: e.t, tp: e.tp, rd: e.rd, ageGroup: esc.nome }},
-        });
-      }
-      // Store field size
-      const fullField = entries.filter(e => e.rd.length >= maxRds).length;
-      if (fullField > 0) uskFieldSizes.set(tid, fullField);
-    }
-  }
-  return all;
-}
-
-export function mergeInto(map: Map<string, AutoRivalPlayer>, players: AutoRivalPlayer[], forceTids?: ReadonlySet<string>) {
-  for (const p of players) {
-    const key = normName(p.n);
-    if (map.has(key)) {
-      const ex = map.get(key)!;
-      for (const [tid, res] of Object.entries(p.r)) {
-        if (forceTids?.has(tid) || !ex.r[tid] || res.rd.length > ex.r[tid].rd.length)
-          ex.r[tid] = res;
-      }
-      if (p.memberId && !ex.memberId) ex.memberId = p.memberId;
-    } else {
-      map.set(key, { ...p, r: { ...p.r } });
-    }
-  }
-}
-
-// Mapeamento tcode (pull-torneios000.json) → tid interno
-// Inclui apenas torneios relevantes para rivais internacionais
-const PULL_TCODE_TO_TID: Record<string, string> = {
-  "10260": "gg25",      // Greatgolf Junior Open 2025 - Open
-  "10080": "qdl25",     // Quinta do Lago Junior Open 2025 - U12
-  "10296": "gg26",      // Greatgolf Junior Open 2026 - U12
-  "10295": "gg26_u14",  // Greatgolf Junior Open 2026 - U14
-  "10294": "gg26_open", // Greatgolf Junior Open 2026 - open (todos escalões)
-};
-
-// ── FFGolf (Fédération Française de Golf) — registo de torneios juniores FR ──
-// Cada torneio FR vira tid "ff{trnId}" para os ficheiros gg_*.json (golf-genius)
-// e "ffr{file_basename}_s{serieId}" para os ficheiros ffgolf-resultats/*.json.
-export const ffgolfTournNames: Map<string, {
-  name: string; short: string; date: string; dateExact: string;
-  ageGroup?: string;
-  // Identificadores para reconstruir URL FFGolf (pages.ffgolf.org/resultats/)
-  trnId?: string;
-  partKey?: string;
-  typeCompetition?: string;
-  ligue?: string;
-}> = new Map();
-
-/** Torneios FFGolf relevantes para o tracker (formato gg_*.json — golf-genius scrape).
- *  Só os de stroke-play (skip match-play que retorna scores 1..N). */
-const FFGOLF_GG_TOURNAMENTS: Array<{ file: string; tid: string; name: string; short: string; date: string; dateExact: string; ageMin: number; ageMax: number }> = [
-  { file: "gg_champ_france_benjamins_2025.json",        tid: "ffcfbenj25",  name: "Champ. France Benjamins 2025",  short: "CF Benj 25",  date: "Jul 2025", dateExact: "2025-07-08", ageMin: 11, ageMax: 12 },
-  { file: "gg_champ_france_benjamines_2025.json",       tid: "ffcfbenf25",  name: "Champ. France Benjamines 2025", short: "CF Benf 25",  date: "Jul 2025", dateExact: "2025-07-08", ageMin: 11, ageMax: 12 },
-  { file: "gg_internationaux_france_u18_gar_ons_2026.json", tid: "ffintu18g26", name: "Internationaux France U18 Garçons 2026", short: "Int FR U18 26", date: "Abr 2026", dateExact: "2026-04-09", ageMin: 17, ageMax: 18 },
-];
-
-/** Abreviatura curta para nomes de torneios FFGolf (ffgolf-resultats/*.json). */
-function shortenFfgolfName(name: string): string {
-  return (name || "")
-    .replace(/GRAND\s+PRIX\s+JEUNES?/i, "GP Jeunes")
-    .replace(/CHAMPIONNAT/i, "Champ.")
-    .replace(/INTERNATIONAUX/i, "Int.")
-    .replace(/U(\d+)/gi, "U$1")
-    .replace(/\s+/g, " ").trim().slice(0, 24);
-}
-
-/**
- * Processa o ffgolf-juniors-slim.json — consolidação de ~560 torneios juniores
- * franceses (U10/U12/U14) extraídos do ffgolf-resultats/* (1771 ficheiros).
- *
- * Cada torneio×escalão gera um tid único: "ff{trnId}_{ageGroup}".
- * Names já vêm capitalizados pelo build script.
- */
-export function processFfgolfSlim(d: unknown): AutoRivalPlayer[] {
-  const data = d as {
-    tournaments?: Array<{
-      trnId: string; name: string; dateIso: string; year: number;
-      ageGroup: "U10" | "U12" | "U14"; ageMin: number; ageMax: number;
-      serieLabel: string; courseTerrain: string;
-      parTotal: number | null; parPerHole: number[] | null;
-      partKey?: string; typeCompetition?: string; ligue?: string;
-      players: Array<{
-        name: string; flag?: string; license?: string;
-        hcp?: number | null; club?: string;
-        pos: number | null; total: number | null;
-        rounds: Array<{ r: number; gross: number; scores?: number[] }>;
-      }>;
-    }>;
-  };
-  if (!data?.tournaments?.length) return [];
-
-  const all: AutoRivalPlayer[] = [];
-  for (const tourn of data.tournaments) {
-    const tid = `ff${tourn.trnId}_${tourn.ageGroup}`;
-
-    if (!ffgolfTournNames.has(tid)) {
-      const isoMatch = tourn.dateIso.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-      const dateLabel = isoMatch
-        ? `${MONTHS_PT[parseInt(isoMatch[2]) - 1]} ${isoMatch[1]}`
-        : "";
-      const short = tourn.name
-        .replace(/GRAND\s+PRIX\s+JEUNES?/i, "GP")
-        .replace(/CHAMPIONNAT/i, "Champ.")
-        .replace(/QUALIFICATION/i, "Qualif.")
-        .replace(/DE\s+LA\s+LIGUE/i, "")
-        .replace(/PARIS\s+ILE-DE-FRANCE/i, "PIDF")
-        .replace(/\s+/g, " ").trim().slice(0, 22);
-      ffgolfTournNames.set(tid, {
-        name: tourn.name,
-        short: `${short} ${tourn.ageGroup}`.trim(),
-        date: dateLabel,
-        dateExact: tourn.dateIso,
-        ageGroup: tourn.ageGroup,
-        trnId: tourn.trnId,
-        partKey: tourn.partKey,
-        typeCompetition: tourn.typeCompetition,
-        ligue: tourn.ligue,
-      });
-    }
-
-    let validPlayers = 0;
-    // Detectar nº de rondas "esperado" do torneio: máximo de rondas válidas
-    // entre jogadores que têm pelo menos 2 rondas (filtra outliers que não
-    // jogaram). Permite marcar como WD jogadores que pararam a meio.
-    const roundsCounts = tourn.players
-      .map(p => (p.rounds || []).filter(r => typeof r.gross === "number" && r.gross >= 30 && r.gross <= 200).length);
-    const expectedRounds = roundsCounts.length
-      ? Math.max(...roundsCounts.filter(c => c >= 2), ...roundsCounts)
-      : 0;
-
-    for (const player of tourn.players) {
-      if (!player.name) continue;
-      const rounds = (player.rounds || []).slice().sort((a, b) => a.r - b.r);
-      const validRounds = rounds.filter(rs => typeof rs.gross === "number" && rs.gross >= 30 && rs.gross <= 200);
-      if (!validRounds.length && !player.total) continue;
-
-      const rd = validRounds.map(rs => rs.gross);
-      const t  = player.total ?? rd.reduce((a, b) => a + b, 0);
-      const tp = (tourn.parTotal && t)
-        ? t - tourn.parTotal * validRounds.length
-        : null;
-
-      // Pos: se o jogador não terminou todas as rondas do torneio (WD após
-      // R1/R2), o `pos` do FFGolf é apenas o ranking parcial da última ronda
-      // jogada — pode estar artificialmente alto. Marcar como "WD" para
-      // distinguir de classificações finais reais.
-      const isIncomplete = expectedRounds > 0 && validRounds.length < expectedRounds;
-      const finalPos: number | "WD" | null = isIncomplete ? "WD" : (player.pos ?? null);
-
-      const r0 = validRounds.find(rs => rs.scores?.length === 18);
-      if (r0 && r0.scores && tourn.parPerHole?.length === 18) {
-        const holeRounds = validRounds
-          .map(rs => rs.scores || [])
-          .filter(s => s.length === 18 && s.some(v => v > 0));
-        if (holeRounds.length > 0) {
-          addScorecard(normName(player.name), {
-            tid, playerName: player.name,
-            par: tourn.parPerHole, si: [], meters: [],
-            rounds: holeRounds,
-          });
-        }
-      }
-
-      all.push({
-        n: player.name,
-        co: "France",
-        r: { [tid]: { p: finalPos, t, tp, rd, ageGroup: tourn.ageGroup, nholes: 18 } },
-      });
-      validPlayers++;
-    }
-    if (validPlayers > 0) uskFieldSizes.set(tid, validPlayers);
-  }
-  return all;
-}
-
-/**
- * Processa ficheiros gg_*.json (golf-genius FFGolf scrape).
- * Heurística: aceita rondas com gross válido (>=27 numa ronda 9H, >=50 numa 18H);
- * rejeita match-play (scores [1,2,3,4,5...] são tally de buracos ganhos, não strokes).
- */
-export function processFfgolfGG(d: unknown, meta: typeof FFGOLF_GG_TOURNAMENTS[number]): AutoRivalPlayer[] {
-  const data = d as {
-    tournament?: string;
-    players?: Array<{
-      name: string; country?: string; pos?: number | null;
-      total?: number | null; toPar?: number | null;
-      rounds?: Array<{ day?: number; gross?: number; scores?: number[]; course?: string }>;
-    }>;
-  };
-  if (!data?.players?.length) return [];
-
-  // Registar metadata do torneio
-  if (!ffgolfTournNames.has(meta.tid)) {
-    ffgolfTournNames.set(meta.tid, {
-      name: meta.name, short: meta.short, date: meta.date, dateExact: meta.dateExact,
-      ageGroup: `U${meta.ageMax}`,
-    });
-  }
-
-  const all: AutoRivalPlayer[] = [];
-  let validPlayers = 0;
-  for (const player of data.players) {
-    if (!player.name) continue;
-    const rounds = (player.rounds || []).slice().sort((a, b) => (a.day ?? 0) - (b.day ?? 0));
-    // Filtra rondas com gross plausível (golf real)
-    const validRounds = rounds.filter(rs => typeof rs.gross === "number" && rs.gross >= 50 && rs.gross <= 200);
-    if (!validRounds.length) continue;
-
-    const rd = validRounds.map(rs => rs.gross!);
-    const t  = player.total ?? rd.reduce((a, b) => a + b, 0);
-    const tp = typeof player.toPar === "number" ? player.toPar : null;
-    const p  = player.pos ?? null;
-
-    // Capitalizar: nomes FFGolf vêm como "LEPETIT Leopold" → "Lepetit Leopold"
-    const niceName = player.name.replace(/^([A-ZÉÈÊËÀÂÔÛÇ]{2,})/, m => m.charAt(0) + m.slice(1).toLowerCase());
-
-    // Scorecard hole-by-hole (se disponível)
-    const r0 = validRounds.find(rs => rs.scores?.length === 18);
-    if (r0 && r0.scores) {
-      const holeRounds = validRounds.map(rs => rs.scores || []).filter(s => s.length === 18 && s.every(v => v >= 1 && v <= 12));
-      if (holeRounds.length > 0) {
-        addScorecard(normName(niceName), {
-          tid: meta.tid, playerName: niceName,
-          par: [], si: [], meters: [],  // FFGolf gg_ não expõe par buraco-a-buraco
-          rounds: holeRounds,
-        });
-      }
-    }
-
-    all.push({
-      n: niceName,
-      co: "France",  // FFGolf é federação francesa — players são franceses por default
-      r: { [meta.tid]: { p, t, tp, rd, ageGroup: `U${meta.ageMax}`, nholes: 18 } },
-    });
-    validPlayers++;
-  }
-  if (validPlayers > 0) uskFieldSizes.set(meta.tid, validPlayers);
-  return all;
-}
-
-// ── FPG (Federação Portuguesa de Golfe) — registo de torneios juniores ────
-// Cada torneio FPG vira tid "fpg{tcode}" (escalão é implícito porque cada
-// torneio FPG tem um único escalão definido no campo `escalao` do JSON).
-export const fpgTournNames: Map<string, {
-  name: string; short: string; date: string; dateExact: string;
-  escalao: string; ageMin: number; ageMax: number;
-  ccode: string; tcode: string;
-}> = new Map();
-
-// Escalões FPG considerados juniores relevantes para a KIDSPage.
-// Manuel está actualmente no Sub-12 → incluímos Sub-10/12/13/14 (±2 escalões).
-const FPG_JUNIOR_ESCALOES: Record<string, { ageMin: number; ageMax: number }> = {
-  "Sub 10": { ageMin: 8,  ageMax: 10 },
-  "Sub 12": { ageMin: 11, ageMax: 12 },
-  "Sub 13": { ageMin: 11, ageMax: 13 },
-  "Sub 14": { ageMin: 13, ageMax: 14 },
-};
-
-/** Abreviatura curta de nomes de torneios FPG (cabeçalho da tabela). */
-function shortenFpgTournName(name: string, escalao: string): string {
-  let s = (name || "")
-    .replace(/Campeonato\s+Nacional\s+(de\s+)?/i, "Nac. ")
-    .replace(/Campeonato\s+Regional\s+(de\s+)?/i, "Reg. ")
-    .replace(/\bDrive\s+Tour\b/i, "Drive")
-    .replace(/\bAquapor\b/i, "Aquapor")
-    .replace(/\bJunior\s+Open\b/i, "Jr Open")
-    .replace(/\bJovens\b/gi, "")
-    .replace(/\bSub\s*\d+(?:\s*[&e]\s*\d+)?\b/gi, "")
-    .replace(/[—-]\s*[HFMS]?\s*$/, "")
-    .replace(/\s+/g, " ").trim();
-  s = s.slice(0, 16).trim();
-  const escNorm = escalao.replace(/Sub\s*/i, "U");
-  return `${s} ${escNorm}`.trim();
-}
-
-/** Converte "YYYY-MM-DD" em "Mês YYYY". */
-function fpgDateToLabel(iso: string): string {
-  const m = iso.match(/^(\d{4})-(\d{2})-(\d{2})/);
-  if (!m) return "";
-  const yr = parseInt(m[1]); const mo = parseInt(m[2]);
-  if (mo < 1 || mo > 12) return "";
-  return `${MONTHS_PT[mo - 1]} ${yr}`;
-}
-
-/**
- * Processa qualquer ficheiro pull-style FPG (jovens_*.json, clubes_sub_*.json,
- * pull-torneios*.json, drive-data-*.json, aquapor-data-*.json) e extrai os
- * torneios juniores (Sub-10/12/13/14) como AutoRivalPlayer.
- *
- * - Cada torneio gera um tid único: "fpg{tcode}".
- * - Players assumem co="Portugal" (refinado depois por players.json).
- * - Suporta rondas de 9 ou 18 buracos.
- * - Tcodes em PULL_TCODE_TO_TID são ignorados aqui (geridos pelo
- *   processPullTorneios com tid curado).
- */
-export function processFpgJuniorTourns(d: unknown): AutoRivalPlayer[] {
-  const data = d as {
-    tournaments?: Array<{
-      name: string; ccode?: string; tcode?: string; date?: string; campo?: string;
-      escalao?: string; rounds?: number;
-      players?: Array<{
-        pos?: number; name: string; club?: string; fedCode?: string;
-        grossTotal?: number; toPar?: number; nholes?: number;
-        roundScores?: Array<{
-          round: number; gross: number;
-          scores?: number[]; pars?: number[]; si?: number[]; meters?: number[];
-        }>;
-      }>;
-    }>;
-  };
-  if (!data?.tournaments?.length) return [];
-
-  const all: AutoRivalPlayer[] = [];
-  for (const tourn of data.tournaments) {
-    const escalao = (tourn.escalao || "").trim();
-    const ageInfo = FPG_JUNIOR_ESCALOES[escalao];
-    if (!ageInfo) continue;
-    if (!tourn.tcode) continue;
-    if (PULL_TCODE_TO_TID[tourn.tcode]) continue;
-
-    const tid = `fpg${tourn.tcode}`;
-    const dateExact = (tourn.date || "").slice(0, 10);
-
-    if (!fpgTournNames.has(tid)) {
-      fpgTournNames.set(tid, {
-        name: tourn.name || `t${tourn.tcode}`,
-        short: shortenFpgTournName(tourn.name || "", escalao),
-        date: fpgDateToLabel(dateExact),
-        dateExact,
-        escalao,
-        ageMin: ageInfo.ageMin,
-        ageMax: ageInfo.ageMax,
-        ccode: tourn.ccode || "000",
-        tcode: tourn.tcode,
-      });
-    }
-
-    let validPlayers = 0;
-    for (const player of tourn.players || []) {
-      if (!player.name) continue;
-      const rounds = (player.roundScores || []).slice().sort((a, b) => a.round - b.round);
-      const validRounds = rounds.filter(rs => typeof rs.gross === "number" && rs.gross > 0);
-      if (!validRounds.length && !player.grossTotal) continue;
-
-      const rd = validRounds.map(rs => rs.gross);
-      const t  = player.grossTotal ?? (rd.length ? rd.reduce((a, b) => a + b, 0) : null);
-      const tp = typeof player.toPar === "number" ? player.toPar : null;
-      const p  = player.pos ?? null;
-
-      const r0 = validRounds.find(rs => rs.scores?.length && rs.pars?.length);
-      if (r0 && r0.scores && r0.pars && r0.pars.length === r0.scores.length) {
-        const holeRounds = validRounds
-          .map(rs => rs.scores || [])
-          .filter(s => s.length === r0.scores!.length && s.some(v => v > 0));
-        if (holeRounds.length > 0) {
-          addScorecard(normName(player.name), {
-            tid, playerName: player.name,
-            par: r0.pars,
-            si: r0.si || [],
-            meters: r0.meters || [],
-            rounds: holeRounds,
-          });
-        }
-      }
-
-      all.push({
-        n: player.name,
-        co: "",  // sem assumir nacionalidade — players.json refina para os FPG-federados
-        r: { [tid]: {
-          p, t, tp, rd,
-          ageGroup: escalao,
-          nholes: player.nholes || (r0?.scores?.length ?? 18),
-        } },
-      });
-      validPlayers++;
-    }
-    if (validPlayers > 0) uskFieldSizes.set(tid, validPlayers);
-  }
-  return all;
-}
-
-/**
- * Variante de processFpgJuniorTourns usada na Fase 4a (jovens_YYYY.json).
- * Diferenças:
- *   - Aceita QUALQUER escalão "Sub *" (Sub 10/12/14/16/18/21, etc.) e variantes
- *     ("Sub 10&12", "Sub 14 a 24"). Não filtra por idade — o uso enrich-only
- *     no caller garante que só rivais já existentes ficam.
- *   - ageMin/ageMax são derivados do escalão para registo em fpgTournNames.
- *
- * Tcodes em PULL_TCODE_TO_TID são ignorados (tratados pelo processPullTorneios).
- */
-export function processFpgJovensAll(d: unknown): AutoRivalPlayer[] {
-  const data = d as {
-    tournaments?: Array<{
-      name: string; ccode?: string; tcode?: string; date?: string; campo?: string;
-      escalao?: string; rounds?: number;
-      players?: Array<{
-        pos?: number; name: string; club?: string; fedCode?: string;
-        grossTotal?: number; toPar?: number; nholes?: number;
-        roundScores?: Array<{
-          round: number; gross: number;
-          scores?: number[]; pars?: number[]; si?: number[]; meters?: number[];
-        }>;
-      }>;
-    }>;
-  };
-  if (!data?.tournaments?.length) return [];
-
-  // Detecta escalão "Sub N" ou "Sub N&M" ou "Sub N a M" — devolve [ageMin, ageMax]
-  const parseEscAges = (escalao: string): [number, number] | null => {
-    const s = (escalao || "").trim();
-    if (!s) return null;
-    // "Sub N&M" ou "Sub N e M"
-    const dual = s.match(/Sub\s*(\d+)\s*[&e]\s*(\d+)/i);
-    if (dual) return [Math.min(+dual[1], +dual[2]) - 1, Math.max(+dual[1], +dual[2])];
-    // "Sub N a M"
-    const range = s.match(/Sub\s*(\d+)\s*a\s*(\d+)/i);
-    if (range) return [Math.min(+range[1], +range[2]) - 1, Math.max(+range[1], +range[2])];
-    // "Sub N"
-    const single = s.match(/Sub\s*(\d+)/i);
-    if (single) return [+single[1] - 1, +single[1]];
-    return null;
-  };
-
-  // Detecta torneio juvenil mesmo sem `escalao` definido — o nome pode ter
-  // "Sub-N", "U-N", "Junior", "Júnior" (após strip de diacríticos). Necessário
-  // para drive-data-*.json e pull-torneios*.json onde campo `escalao` falha.
-  const JUV_NAME_RE = /\b(juniors?|sub[\s-]?\d{1,2}|u\d{1,2})\b/i;
-  const stripAccLocal = (s: string) =>
-    (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "");
-
-  const all: AutoRivalPlayer[] = [];
-  for (const tourn of data.tournaments) {
-    const escalao = (tourn.escalao || "").trim();
-    const isJuvByEsc = !!escalao && /Sub/i.test(escalao);
-    const isJuvByName = JUV_NAME_RE.test(stripAccLocal(tourn.name || ""));
-    if (!isJuvByEsc && !isJuvByName) continue;
-    if (!tourn.tcode) continue;
-    if (PULL_TCODE_TO_TID[tourn.tcode]) continue;     // tratado pelo pull autoritativo
-
-    const tid = `fpg${tourn.tcode}`;
-    const dateExact = (tourn.date || "").slice(0, 10);
-    const ages = parseEscAges(escalao);
-
-    if (!fpgTournNames.has(tid)) {
-      fpgTournNames.set(tid, {
-        name: tourn.name || `t${tourn.tcode}`,
-        short: shortenFpgTournName(tourn.name || "", escalao),
-        date: fpgDateToLabel(dateExact),
-        dateExact,
-        escalao,
-        ageMin: ages ? ages[0] : 0,
-        ageMax: ages ? ages[1] : 99,
-        ccode: tourn.ccode || "000",
-        tcode: tourn.tcode,
-      });
-    }
-
-    let validPlayers = 0;
-    for (const player of tourn.players || []) {
-      if (!player.name) continue;
-      const rounds = (player.roundScores || []).slice().sort((a, b) => a.round - b.round);
-      const validRounds = rounds.filter(rs => typeof rs.gross === "number" && rs.gross > 0);
-      if (!validRounds.length && !player.grossTotal) continue;
-
-      const rd = validRounds.map(rs => rs.gross);
-      const t = player.grossTotal ?? (rd.length ? rd.reduce((a, b) => a + b, 0) : null);
-      const tp = typeof player.toPar === "number" ? player.toPar : null;
-      const p = player.pos ?? null;
-
-      const r0 = validRounds.find(rs => rs.scores?.length && rs.pars?.length);
-      if (r0 && r0.scores && r0.pars && r0.pars.length === r0.scores.length) {
-        const holeRounds = validRounds
-          .map(rs => rs.scores || [])
-          .filter(s => s.length === r0.scores!.length && s.some(v => v > 0));
-        if (holeRounds.length > 0) {
-          addScorecard(normName(player.name), {
-            tid, playerName: player.name,
-            par: r0.pars,
-            si: r0.si || [],
-            meters: r0.meters || [],
-            rounds: holeRounds,
-          });
-        }
-      }
-
-      all.push({
-        n: player.name,
-        co: "",
-        r: { [tid]: {
-          p, t, tp, rd,
-          ageGroup: escalao,
-          nholes: player.nholes || (r0?.scores?.length ?? 18),
-        } },
-      });
-      validPlayers++;
-    }
-    if (validPlayers > 0) uskFieldSizes.set(tid, validPlayers);
-  }
-  return all;
-}
-
-export function processPullTorneios(d: unknown): AutoRivalPlayer[] {
-  const data = d as {
-    tournaments: Array<{
-      name: string; tcode: string; date: string; campo?: string;
-      players: Array<{
-        pos: number; name: string; club?: string;
-        grossTotal?: number; toPar?: number;
-        roundScores: Array<{
-          round: number; gross: number;
-          scores: number[]; pars: number[]; si: number[]; meters?: number[];
-        }>;
-      }>;
-    }>;
-  };
-
-  const all: AutoRivalPlayer[] = [];
-  for (const tourn of data.tournaments || []) {
-    const tid = PULL_TCODE_TO_TID[tourn.tcode];
-    if (!tid) continue;
-
-    for (const player of tourn.players || []) {
-      const validRounds = player.roundScores
-        .filter(rs => rs.scores?.length === 18 && rs.scores.some(s => s > 0))
-        .sort((a, b) => a.round - b.round);
-
-      if (!validRounds.length) continue;
-
-      const rd = validRounds.map(rs => rs.gross);
-      const tp = player.toPar ?? null;
-      const t  = player.grossTotal ?? (rd.reduce((a, b) => a + b, 0) || null);
-      const p  = player.pos ?? null;
-
-      // Scorecard: use pars/si/meters from first round (consistent across rounds on same course)
-      const par = validRounds[0].pars;
-      const si  = validRounds[0].si;
-      const meters = validRounds[0].meters ?? [];
-      if (par.length === 18) {
-        addScorecard(normName(player.name), {
-          tid,
-          playerName: player.name,
-          par,
-          si,
-          meters,
-          rounds: validRounds.map(rs => rs.scores),
-        });
-      }
-
-      all.push({
-        n: player.name,
-        co: "",  // sem inferir nacionalidade — players.json refina, USKids/BlueGolf prevalecem
-        r: { [tid]: { p, t, tp, rd } },
-      });
-    }
-  }
-  return all;
-}
-
-/**
- * Processa ficheiros no formato "uskids_torneios_completos".
- * Suporta dois formatos:
- *   ANTIGO (v1): array [{t, meta:{tournament,age_groups,flight_courses,...}, flights:[...]}]
- *   NOVO  (v2): objecto {signupanytime_t, name, start_date, age_groups, flights:{fid:{category,course_info,flight_players}}}
- * - Carrega escalões Boys ±1 do que Manuel teria jogado na altura (9H e 18H incluídos)
- * - tid gerado como "usk{tcode}_b{minAge}"
- */
-export function processUskidsCompleto(data: unknown): AutoRivalPlayer[] {
-  type AgeGroup = { name: string; gender: string; min_age: number; holes_per_round: number };
-  type PlayerRoundData = { strokes: number[]; flight_round?: string | number };
-  type FlightPlayer = {
-    first: string; last: string; country: string;
-    rounds: Record<string, PlayerRoundData>;
-  };
-
-  // Normalizar para lista de torneios no formato canónico interno
-  type NormTourn = {
-    tcode: number;
-    name: string;
-    startDate: string; // "M/D/YYYY"
-    ageGroups: Record<string, AgeGroup>;
-    // fid → {agName, holes, parPorRonda: {rn→par[]}, players: Record<key, FP>}
-    flights: Record<string, {
-      agName: string; holes: number;
-      parPorRonda: Record<number, number[]>;
-      players: Record<string, FlightPlayer>;
-    }>;
-  };
-
-  function normalizar(raw: unknown): NormTourn[] {
-    if (!raw || typeof raw !== "object") return [];
-    const r = raw as Record<string, unknown>;
-
-    // ── NOVO FORMATO (v2): tem signupanytime_t ──────────────────────────────
-    if (r.signupanytime_t) {
-      const tcode = Number(r.signupanytime_t);
-      const ageGroups = (r.age_groups ?? {}) as Record<string, AgeGroup>;
-      const flightsRaw = (r.flights ?? {}) as Record<string, any>;
-      // Par do flight_courses (fallback se course_info não tiver par)
-      const fcPars: Record<string, number[]> = {};
-      for (const [, fc] of Object.entries((r.flight_courses ?? {}) as Record<string, any>)) {
-        if (fc.flightId && fc.pars?.length) {
-          const pars = (fc.pars as number[]).filter(p => p > 0);
-          if (pars.length) fcPars[String(fc.flightId)] = fcPars[String(fc.flightId)] ?? pars;
-        }
-      }
-      const flights: NormTourn["flights"] = {};
-      for (const [fid, flight] of Object.entries(flightsRaw)) {
-        const agName: string = flight.category ?? "";
-        if (!agName) continue;
-        const agEntry = Object.entries(ageGroups).find(([, v]) => v.name === agName);
-        const holes = agEntry ? agEntry[1].holes_per_round : 9;
-        const parPorRonda: Record<number, number[]> = {};
-        // course_info.R1.holes[].par  (fonte preferida)
-        for (const [rKey, rInfo] of Object.entries((flight.course_info ?? {}) as Record<string, any>)) {
-          const rn = parseInt(rKey.replace(/^R/, ""));
-          if (!isNaN(rn) && !parPorRonda[rn]) {
-            const par = ((rInfo.holes ?? []) as any[]).map((h: any) => h.par as number).filter(p => p > 0);
-            if (par.length) parPorRonda[rn] = par;
-          }
-        }
-        // fallback: flight_courses por flightId
-        if (!Object.keys(parPorRonda).length && fcPars[fid]) {
-          parPorRonda[1] = fcPars[fid];
-        }
-        flights[fid] = { agName, holes, parPorRonda, players: flight.flight_players ?? {} };
-      }
-      return [{ tcode, name: r.name as string, startDate: r.start_date as string, ageGroups, flights }];
-    }
-
-    // ── FORMATO ANTIGO (v1): array ──────────────────────────────────────────
-    if (Array.isArray(raw)) {
-      return (raw as any[]).map(tourn => {
-        const meta = tourn.meta ?? {};
-        const ageGroups = (meta.age_groups ?? {}) as Record<string, AgeGroup>;
-        const fcPars: Record<number, number[]> = {};
-        for (const [frid, fc] of Object.entries(meta.flight_courses ?? {})) {
-          const pars = ((fc as any).pars ?? []).filter((p: number) => p > 0);
-          if (pars.length) fcPars[Number(frid)] = pars;
-        }
-        const flights: NormTourn["flights"] = {};
-        for (const flight of (tourn.flights ?? []) as any[]) {
-          const fid = String(flight.flight_id);
-          const fn = flight.flight_name;
-          const agId: number | undefined =
-            typeof fn === "object" && fn !== null && "age_group" in fn
-              ? fn.age_group
-              : meta.flights?.[fid]?.age_group;
-          if (agId == null) continue;
-          const ag = ageGroups[String(agId)];
-          if (!ag) continue;
-          const holes = ag.holes_per_round ?? 9;
-          // Recolher players de todos os rounds_data (desduplicar por nome+ronda)
-          const players: Record<string, FlightPlayer> = {};
-          const parPorRonda: Record<number, number[]> = {};
-          for (const roundData of Object.values(flight.rounds_data ?? {}) as any[]) {
-            for (const [pid, p] of Object.entries(roundData.flight_players ?? {}) as [string, any][]) {
-              if (!players[pid]) players[pid] = { first: p.first, last: p.last, country: p.country, rounds: {} };
-              for (const [rnStr, rd] of Object.entries(p.rounds ?? {}) as [string, any][]) {
-                const rn = Number(rnStr);
-                if (!players[pid].rounds[rnStr]) players[pid].rounds[rnStr] = rd;
-                if (!parPorRonda[rn] && rd.flight_round) {
-                  const par = fcPars[Number(rd.flight_round)];
-                  if (par?.length) parPorRonda[rn] = par;
-                }
-              }
-            }
-          }
-          flights[fid] = { agName: ag.name, holes, parPorRonda, players };
-        }
-        return { tcode: tourn.t, name: meta.tournament?.name ?? "", startDate: meta.tournament?.start_date ?? "", ageGroups, flights };
-      });
-    }
-
-    return [];
-  }
-
-  const tournaments = normalizar(data);
-  if (!tournaments.length) return [];
-
-  const all: AutoRivalPlayer[] = [];
-
-  for (const tourn of tournaments) {
-    // Aceitar qualquer tcode dos ficheiros completos (são curados manualmente)
-
-    const tcode = tourn.tcode;
-
-    // Ano do torneio → idade do Manuel nessa época
-    const startParts = tourn.startDate.split("/").map(Number);
-    const tournYear = startParts[2];
-    const manuelAge = tournYear - MANUEL_BIRTH_YEAR;
-
-    // Guardar nome/data do torneio
-    if (!uskTournNames.has(`usk${tcode}`)) {
-      const rawName = tourn.name;
-      const mo = startParts[0];
-      const dateStr = `${MONTHS_PT[(mo - 1) % 12]} ${tournYear}`;
-      const short = rawName
-        .replace(/World Championship/i, "WC")
-        .replace(/European Championship/i, "EC")
-        .replace(/\b(Invitational|Open|Classic|Championship|Junior|Tour)\b/gi, "")
-        .replace(/\s+/g, " ").trim()
-        .slice(0, 12);
-      const mo2 = String(mo).padStart(2,"0");
-      const da2 = String(startParts[1]).padStart(2,"0");
-      uskTournNames.set(`usk${tcode}`, { name: rawName, short, date: dateStr, dateExact: `${tournYear}-${mo2}-${da2}` });
-    }
-
-    // Escalões Boys únicos por min_age
-    const seenMinAge = new Set<number>();
-    const boysAgs = Object.entries(tourn.ageGroups)
-      .filter(([, ag]) => ag.gender === "Boys")
-      .sort((a, b) => a[1].min_age - b[1].min_age)
-      .reduce((acc, [id, ag]) => {
-        if (!seenMinAge.has(ag.min_age)) {
-          seenMinAge.add(ag.min_age);
-          acc.push({ id: Number(id), minAge: ag.min_age, holes: ag.holes_per_round, name: ag.name });
-        }
-        return acc;
-      }, [] as { id: number; minAge: number; holes: number; name: string }[]);
-
-    const manuelIdx = boysAgs.findIndex(ag => ag.minAge === manuelAge);
-    const pivotIdx = manuelIdx >= 0
-      ? manuelIdx
-      : boysAgs.reduce((best, ag, i) =>
-          Math.abs(ag.minAge - manuelAge) < Math.abs(boysAgs[best].minAge - manuelAge) ? i : best, 0);
-
-    const wantedMinAges = new Set(
-      boysAgs.slice(Math.max(0, pivotIdx - 1), pivotIdx + 2).map(ag => ag.minAge)
-    );
-
-    // Processar cada flight normalizado
-    const processedAgNames = new Set<string>();
-
-    for (const flight of Object.values(tourn.flights)) {
-      const { agName, holes, parPorRonda, players } = flight;
-
-      // Encontrar boysAg pelo nome
-      const agInfo = boysAgs.find(ag => ag.name === agName);
-      if (!agInfo || !wantedMinAges.has(agInfo.minAge)) continue;
-      if (processedAgNames.has(agName)) continue;
-      processedAgNames.add(agName);
-
-      const agLabel = agInfo.name;
-      const tid = `usk${tcode}_b${agInfo.minAge}`;
-
-      // Agregar jogadores por nome
-      const pm: Record<string, {
-        name: string; country: string;
-        rounds: Record<number, number[]>;
-        par: number[];
-      }> = {};
-
-      for (const p of Object.values(players)) {
-        const fullName = `${p.first} ${p.last}`.trim();
-        const key = normName(fullName);
-        if (!pm[key]) pm[key] = { name: fullName, country: p.country, rounds: {}, par: [] };
-
-        for (const [rnumStr, rdata] of Object.entries(p.rounds)) {
-          const rnum = Number(rnumStr);
-          const strokes = rdata.strokes || [];
-          const grossStrokes = strokes.reduce((a: number, b: number) => a + b, 0);
-          // Só aceitar rondas em que o gross >= nholes (mínimo 1 pancada por buraco)
-          // Evita arrays com zeros (buracos sem dados) que produzem tp absurdamente negativos
-          if (strokes.length === holes && grossStrokes >= holes) {
-            if (!pm[key].rounds[rnum]) pm[key].rounds[rnum] = strokes;
-            if (!pm[key].par.length) {
-              const par = parPorRonda[rnum] ?? parPorRonda[1] ?? [];
-              if (par.length === holes) pm[key].par = par;
-            }
-          }
-        }
-      }
-
-      // Pré-calcular totais para ranking
-      type Computed = { name: string; country: string; rd: number[]; t: number; tp: number | null; par: number[]; rdRaw: number[][] };
-      const computed: Computed[] = [];
-      for (const info of Object.values(pm)) {
-        const rdEntries = Object.entries(info.rounds).sort(([a], [b]) => Number(a) - Number(b));
-        if (!rdEntries.length) continue;
-        const rdRaw = rdEntries.map(([, v]) => v);
-        const rd = rdRaw.map(v => v.reduce((a, b) => a + b, 0));
-        const t = rd.reduce((a, b) => a + b, 0);
-        const tp = info.par.length === holes
-          ? t - info.par.reduce((a, b) => a + b, 0) * rdEntries.length
-          : null;
-        computed.push({ name: info.name, country: info.country, rd, t, tp, par: info.par, rdRaw });
-      }
-
-      // Ordenar por total (quem jogou menos rondas fica no fim)
-      const maxRds = Math.max(...computed.map(c => c.rd.length), 0);
-      computed.sort((a, b) => {
-        if (a.rd.length !== b.rd.length) return b.rd.length - a.rd.length;
-        return a.t - b.t;
-      });
-
-      // Atribuir posição com empates
-      let pos = 1;
-      for (let i = 0; i < computed.length; i++) {
-        if (i > 0 && computed[i].rd.length === computed[i - 1].rd.length && computed[i].t === computed[i - 1].t) {
-          // empate — mesma posição
-        } else {
-          pos = i + 1;
-        }
-        const c = computed[i];
-        addScorecard(normName(c.name), {
-          tid, playerName: c.name, par: c.par, si: [], meters: [],
-          rounds: c.rdRaw,
-        });
-        all.push({
-          n: c.name, co: co(c.country),
-          r: { [tid]: { p: c.rd.length < maxRds ? null : pos, t: c.t, tp: c.tp, rd: c.rd, ageGroup: agLabel, nholes: holes } },
-        });
-      }
-      // Store full field size (only players who completed all rounds)
-      const fullField = computed.filter(c => c.rd.length >= maxRds).length;
-      if (fullField > 0) uskFieldSizes.set(tid, fullField);
-    }
-  }
-
-  return all;
-}
-
-// ── Abreviatura de nome de torneio USKids ─────────────────────────
-export function shortenTournName(name: string): string {
-  const n = name.trim();
-  // World Championship
-  if (/world championship/i.test(n)) { const y = n.match(/\d{4}/)?.[0]; return y ? `WC ${y.slice(2)}` : "WC"; }
-  // European Championship
-  if (/european championship/i.test(n)) { const y = n.match(/\d{4}/)?.[0]; return y ? `EC ${y.slice(2)}` : "EC"; }
-  // Venice Open
-  if (/venice/i.test(n)) { const y = n.match(/\d{4}/)?.[0]; return y ? `Venice ${y.slice(2)}` : "Venice"; }
-  // Marco Simone
-  if (/marco simone/i.test(n)) { const y = n.match(/\d{4}/)?.[0]; return y ? `Marco ${y.slice(2)}` : "Marco"; }
-  // Rome
-  if (/rome/i.test(n)) { const y = n.match(/\d{4}/)?.[0]; return y ? `Rome ${y.slice(2)}` : "Rome"; }
-  // Red White Blue
-  if (/red white/i.test(n)) { const y = n.match(/\d{4}/)?.[0]; return y ? `RWB ${y.slice(2)}` : "RWB"; }
-  // El Prat
-  if (/prat/i.test(n)) return "El Prat";
-  // Genérico: primeiras 10 letras + ano se houver
-  const y = n.match(/\d{4}/)?.[0];
-  const base = n.replace(/\d{4}/g,"").trim().slice(0, 10).trim();
-  return y ? `${base} ${y.slice(2)}` : base;
-}
-
-// ── processMemberHistory ──────────────────────────────────────────
-// Converte uskids-member-history-slim.json em AutoRivalPlayer[].
-// Cada jogador × torneio gera uma entrada com tid = usk{tcode}_b{minAge}.
-// Usado como fonte complementar: fornece torneios não cobertos pelos
-// ficheiros uskids_torneios_completos ou uskids-results.json.
-//
-// Formato slim: par[], yards[], name e startDate estão em d.torneios[tcode]
-// (partilhados por todos os jogadores), não em cada jogador×torneio.
-export function processMemberHistory(data: unknown): AutoRivalPlayer[] {
-  const d = data as {
-    gerado_em: string;
-    // Dados partilhados do torneio (uma entrada por tcode)
-    torneios: Record<string, {
-      name: string; startDate: string; holesPerRound: number;
-      par: number[] | null; yards: number[] | null;
-    }>;
-    jogadores: Record<string, {
-      name: string; country: string; ageGroup: string;
-      torneios: Record<string, {
-        ageGroup: string;
-        place: number | null;
-        rounds: Record<string, { gross: number; strokes: number[] }>;
-      }>;
-    }>;
-  };
-
-  const all: AutoRivalPlayer[] = [];
-
-  for (const [memberId, player] of Object.entries(d.jogadores || {})) {
-    // Ignorar jogadores sem nome identificado
-    if (!player.name || player.name === "?" || player.name === null) continue;
-
-    const r: Record<string, AutoTournResult> = {};
-
-    for (const [tcodeStr, tourn] of Object.entries(player.torneios || {})) {
-      // Extrair idade mínima do escalão: "Boys 12" → 12, "Boys 13-14" → 13
-      const agMatch = (tourn.ageGroup || "").match(/boys\s+(\d+)/i);
-      if (!agMatch) continue;
-      const minAge = parseInt(agMatch[1]);
-      // Apenas Boys 9-13 (foco do tracker)
-      if (minAge < 9 || minAge > 13) continue;
-
-      const tcode = parseInt(tcodeStr);
-      if (isNaN(tcode)) continue;
-
-      const tid = `usk${tcode}_b${minAge}`;
-
-      // Dados partilhados do torneio (name, startDate, par, yards)
-      const shared = d.torneios?.[tcodeStr];
-
-      // Registar nome do torneio em uskTournNames (se ainda não conhecido)
-      if (!uskTournNames.has(`usk${tcode}`) && shared) {
-        const ds = shared.startDate || "";
-        const dp = ds.split("/");
-        let dateExact = "";
-        let dateLabel = "";
-        if (dp.length === 3) {
-          dateExact = `${dp[2]}-${dp[0].padStart(2,"0")}-${dp[1].padStart(2,"0")}`;
-          const yr = parseInt(dp[2]);
-          const mo = parseInt(dp[0]);
-          if (yr > 0 && mo >= 1 && mo <= 12)
-            dateLabel = `${MONTHS_PT[mo - 1]} ${yr}`;
-        }
-        const tname = shared.name || `t=${tcode}`;
-        uskTournNames.set(`usk${tcode}`, {
-          name: tname,
-          short: shortenTournName(tname),
-          date: dateLabel,
-          dateExact,
-        });
-      }
-
-      // Construir rd[] a partir dos grosses por ronda
-      const rdEntries = Object.entries(tourn.rounds || {})
-        .sort(([a], [b]) => Number(a) - Number(b));
-      const rd = rdEntries.map(([, rnd]) => rnd.gross).filter(g => g > 0);
-      if (!rd.length) continue;
-
-      const t = rd.reduce((a, b) => a + b, 0);
-
-      const holesPerRound: number = shared?.holesPerRound || 18;
-      const parArr = Array.isArray(shared?.par) ? shared!.par! : [];
-
-      // tp só é calculado se temos o scorecard por buraco completo e consistente.
-      // Sem scorecard (só gross total), não sabemos se é 9H ou 18H → tp = null.
-      const holeRounds = rdEntries
-        .map(([, rnd]) => rnd.strokes || [])
-        .filter(s => s.length === holesPerRound && s.every((v: number) => v > 0));
-
-      let tp: number | null = null;
-      if (holeRounds.length === rdEntries.length && holeRounds.length > 0 && parArr.length > 0) {
-        const parSliced = parArr.slice(0, holesPerRound);
-        const parPerRound = parSliced.reduce((a, b) => a + b, 0);
-        if (parPerRound > 0) tp = t - parPerRound * rd.length;
-      }
-
-      // Posição (place=0, null ou negativo = sem posição / WD)
-      const p = (tourn.place != null && tourn.place > 0) ? tourn.place : null;
-
-      // Actualizar uskFieldSizes com o máximo de posições conhecidas
-      if (p != null) {
-        const current = uskFieldSizes.get(tid) ?? 0;
-        if (p > current) uskFieldSizes.set(tid, p);
-      }
-
-      // Scorecards buraco-a-buraco (guardar se válidos)
-      if (holeRounds.length > 0 && parArr.length > 0) {
-        addScorecard(normName(player.name), {
-          tid, playerName: player.name, par: parArr.slice(0, holesPerRound), si: [], meters: [], rounds: holeRounds,
-        });
-      }
-
-      r[tid] = { p, t, tp, rd, ageGroup: tourn.ageGroup, nholes: holesPerRound };
-    }
-
-    if (Object.keys(r).length === 0) continue;
-
-    all.push({ n: player.name, co: co(player.country || ""), r, memberId });
-  }
-
-  return all;
-}
-
-export type LoadProgress = { done: number; total: number; label: string };
-
-/** Meta de cada ficheiro carregado pelo buildAutoRivals — usado pelo painel DataSourcesChip. */
-export interface KidsFileMeta {
-  path: string;
-  status: "loaded" | "error";
-  error?: string;
-  /** Grupo visual: "phase 1 core", "phase 2 history", "phase 3 pull", "enrich" */
-  group: string;
-}
-let _loadedFiles: KidsFileMeta[] = [];
 export function getLoadedKidsFiles(): KidsFileMeta[] {
   return _loadedFiles;
 }
 
-// Cache da Promise de buildAutoRivals
-let _autoRivalsCache: Promise<AutoRivalPlayer[]> | null = null;
-
 export function invalidateAutoRivalsCache(): void {
   _autoRivalsCache = null;
-  _loadedFiles = [];
+}
+
+// ═════════════════════════════════════════════════════════════════════
+// Mapeamento canónico → tid legacy
+// Os tids antigos (e.g. "wjgc26", "usk21080_b11", "doral25_b1011") ainda são
+// referenciados em vários componentes (KIDSPage, RivalDetail, dobInference).
+// Mantém-se o formato.
+// ═════════════════════════════════════════════════════════════════════
+
+/** WJGC/EOWAGR/Doral usavam tids hardcoded por sourceKey de ficheiro. */
+const FILE_TO_LEGACY_TID: Record<string, string> = {
+  "wjgc_2025_b89": "wjgc25_b89",
+  "wjgc_2025_contest34": "wjgc25_b1011",
+  "wjgc_2026_b1011_3r": "wjgc26",
+  "wjgc_2026_contest33": "wjgc26_1213",
+  "eowagr25_contest121": "eowagr25_b78",
+  "eowagr25_contest13": "eowagr25_b910",
+  "eowagr25_scorecards": "eowagr25",
+  "eowagr25_contest77": "eowagr25_b1314",
+  "ftm_doral_2024": "doral24",
+  "ftm_doral_2025": "doral25",
+};
+
+interface CanonicalTournament {
+  id: string;
+  sourceId: string;
+  sourceKey: string;
+  name?: string;
+  date?: string;
+  parTotal?: number;
+  holesPerRound?: number;
+  flights: CanonicalFlight[];
+}
+
+interface CanonicalFlight {
+  flightKey: string;
+  label: string;
+  ageMin?: number | null;
+  ageMax?: number | null;
+  sex?: "M" | "F" | "mixed" | null;
+  par?: number[];
+  yards?: number[];
+  fieldSize?: number | null;
+  results: CanonicalResult[];
+}
+
+interface CanonicalResult {
+  juniorId: string;
+  playerNameInSource?: string;
+  pos?: number | null;
+  status?: string;
+  totalGross?: number | null;
+  toPar?: number | null;
+  rounds?: Array<{ round: number; gross?: number | null; strokes?: number[] }>;
+}
+
+interface CanonicalJunior {
+  id: string;
+  canonicalName: string;
+  aliases?: string[];
+  dob?: string;
+  sex?: "M" | "F";
+  country?: string;
+  nationality?: string;
+  region?: string;
+  club?: string;
+  sources?: any;
+  tournamentIds?: string[];
+}
+
+function legacyTid(t: CanonicalTournament, f: CanonicalFlight): string | null {
+  const sid = t.sourceId;
+  const skey = t.sourceKey;
+
+  if (sid === "uskids") {
+    if (f.ageMin == null && f.ageMax == null) return `usk${skey}`;
+    const sexCh = f.sex === "F" ? "g" : "b";
+    const age = f.ageMin ?? f.ageMax;
+    return `usk${skey}_${sexCh}${age}`;
+  }
+  if (sid === "wjgc" || sid === "eowagr") {
+    return FILE_TO_LEGACY_TID[skey] || `${sid}-${skey}`;
+  }
+  if (sid === "doral") {
+    const base = FILE_TO_LEGACY_TID[skey] || `doral${(t.date || "").slice(2, 4)}`;
+    if (f.ageMin == null && f.ageMax == null) return base;
+    const ages = `${f.ageMin || ""}${f.ageMax && f.ageMax !== f.ageMin ? f.ageMax : ""}`;
+    return `${base}_b${ages}`;
+  }
+  if (sid === "fpg") {
+    // sourceKey: "ccode-tcode-date-escSlug" → tid: "fpg{tcode}_{date}_{escSlug}"
+    const parts = String(skey).split("-");
+    const tcode = parts[1] || parts[0] || skey;
+    const date = parts[2] || "";
+    const esc = parts[3] || "";
+    return `fpg${tcode}${date ? "_" + date : ""}${esc && esc !== "all" ? "_" + esc : ""}`;
+  }
+  if (sid === "rfeg") return String(skey); // já vem no formato "nc{id}_{escalão}" ou "lgs{id}"
+  if (sid === "ffgolf") return `ff-${skey}`;
+  return `${sid}-${skey}`;
+}
+
+function shortNameOf(name: string): string {
+  return String(name || "").replace(/\s+/g, " ").trim().slice(0, 20);
+}
+
+function ptDate(iso: string | null | undefined): string {
+  if (!iso) return "";
+  const [y, m] = String(iso).split("-").map(Number);
+  if (!y || !m) return "";
+  return `${MONTHS_PT[m - 1]} ${y}`;
+}
+
+// ═════════════════════════════════════════════════════════════════════
+// Loader principal
+// ═════════════════════════════════════════════════════════════════════
+
+async function fetchJson(path: string): Promise<unknown> {
+  const data = await cachedFetchJson(path);
+  if (data === null) throw new Error(`Ficheiro não encontrado: ${path}`);
+  return data;
 }
 
 export async function buildAutoRivals(
   onProgress?: (p: LoadProgress) => void,
   opts?: { force?: boolean; onUpdate?: (players: AutoRivalPlayer[]) => void; ageGroups?: string[] }
 ): Promise<AutoRivalPlayer[]> {
-  // Reutilizar a Promise em cache mesmo quando há onProgress/onUpdate.
-  // Razão: React.StrictMode em dev faz o useEffect correr 2× → sem reuso, o
-  // loader fazia tudo duas vezes (incl. push em _loadedFiles → ficheiros
-  // duplicados na lista de fontes). Em cache hits, o callback de progresso
-  // simplesmente não dispara (a Promise já estava resolvida).
   if (!opts?.force && _autoRivalsCache) return _autoRivalsCache;
-  _autoRivalsCache = _buildAutoRivalsInternal(onProgress, opts?.onUpdate, opts);
+  _autoRivalsCache = _buildAutoRivalsInternal(onProgress, opts?.onUpdate);
   return _autoRivalsCache;
-}
-
-/** Carrega uskids-field-sizes.json e popula uskFieldSizes.
- *  Formato: { [tcode]: { escaloes: { "Boys 10": { inscritos: N }, ... } } }
- *  Para grupos com range ("Boys 9-10"), popula TODAS as idades do range:
- *    usk{tcode}_b9 e usk{tcode}_b10 → ambos com o mesmo inscritos
- */
-function processFieldSizes(data: unknown): void {
-  const d = data as Record<string, {
-    escaloes?: Record<string, { inscritos?: number }>;
-  }>;
-  for (const [tcodeStr, entry] of Object.entries(d)) {
-    if (tcodeStr === "_gerado_em") continue;
-    const tcode = parseInt(tcodeStr);
-    if (isNaN(tcode)) continue;
-    for (const [agName, info] of Object.entries(entry.escaloes ?? {})) {
-      const inscritos = info?.inscritos;
-      if (!inscritos || inscritos <= 0) continue;
-      // Extrair todos os números do nome ("Boys 9-10" → [9,10], "Boys 13-14" → [13,14], "Boys 11" → [11])
-      const nums = [...agName.matchAll(/(\d+)/g)]
-        .map(m => parseInt(m[1]))
-        .filter(n => n >= 7 && n <= 18);
-      if (!nums.length) continue;
-      const minAge = Math.min(...nums);
-      const maxAge = Math.max(...nums);
-      // Popular todas as idades do range — assim _b9 e _b10 ficam ambos cobertos
-      for (let age = minAge; age <= maxAge; age++) {
-        const tid = `usk${tcode}_b${age}`;
-        if (!uskFieldSizes.has(tid)) {
-          uskFieldSizes.set(tid, inscritos);
-        }
-      }
-    }
-  }
-}
-
-/** Carrega t_de_tournaments_do_uskids.json e popula uskTournNames com nomes e datas.
- *  Formato: [{ t: 14200, name: "...", date: "M/D/YYYY" }, ...]
- *  Só adiciona entradas que ainda não existam (os hardcoded têm prioridade).
- */
-function processTournMeta(data: unknown): void {
-  const entries = data as Array<{ t: number; name: string; date: string }>;
-  if (!Array.isArray(entries)) return;
-  for (const e of entries) {
-    const tcode = e.t;
-    if (!tcode || typeof tcode !== "number") continue;
-    const key = `usk${tcode}`;
-    if (uskTournNames.has(key)) continue; // já definido (hardcoded tem prioridade)
-    const name = (e.name || "").trim();
-    if (!name) continue;
-    // Converter data "M/D/YYYY" → "YYYY-MM-DD"
-    const parts = (e.date || "").split("/");
-    let dateExact = "";
-    let date = "";
-    if (parts.length === 3) {
-      dateExact = `${parts[2]}-${parts[0].padStart(2,"0")}-${parts[1].padStart(2,"0")}`;
-      const mo = parseInt(parts[0]);
-      const yr = parseInt(parts[2]);
-      if (mo >= 1 && mo <= 12 && yr > 2000) date = `${MONTHS_PT[mo - 1]} ${yr}`;
-    }
-    const short = shortenTournName(name).slice(0, 12);
-    uskTournNames.set(key, { name, short, date, dateExact });
-  }
 }
 
 async function _buildAutoRivalsInternal(
   onProgress?: (p: LoadProgress) => void,
-  onUpdate?: (players: AutoRivalPlayer[]) => void,
-  options?: { ageGroups?: string[] }
+  onUpdate?: (players: AutoRivalPlayer[]) => void
 ): Promise<AutoRivalPlayer[]> {
   _scorecards.clear();
   uskTournNames.clear();
+  uskFieldSizes.clear();
+  ncScoringType.clear();
   fpgTournNames.clear();
   ffgolfTournNames.clear();
-  _loadedFiles = [];  // reset file tracker por cada reload
-  for (const [tcode, meta] of Object.entries(USKIDS_TCODE_META as Record<string, { name: string; short: string; dateExact: string }>)) {
-    const [yr, mo] = meta.dateExact.split("-").map(Number);
-    uskTournNames.set(`usk${tcode}`, { name: meta.name, short: meta.short, date: `${MONTHS_PT[mo - 1]} ${yr}`, dateExact: meta.dateExact });
-  }
-  uskFieldSizes.clear();
+  _loadedFiles = [];
 
-  const base = "/data/";
-
-  type FileTask =
-    | { kind: "wjgc"; tid: string; file: string }
-    | { kind: "doral" | "uskids" | "memberHist" | "fieldSizes" | "tournMeta"; file: string }
-    | { kind: "completo"; file: string };
-
-  // Tids autoritativos do pull-torneios — nunca devem ser sobrescritos por outras fontes
-  const PULL_TIDS = new Set(Object.values(PULL_TCODE_TO_TID));
-
-  // ── FASE 1: ficheiros essenciais (carregam em paralelo, excl. pull) ──
-  const coreTasks: FileTask[] = [
-    { kind: "wjgc", tid: "wjgc25_b89",    file: "wjgc_2025_b89.json" },
-    { kind: "wjgc", tid: "wjgc25_b1011",  file: "wjgc_2025_contest34.json" },
-    { kind: "wjgc", tid: "wjgc26",        file: "wjgc_2026_b1011_3r.json" },
-    { kind: "wjgc", tid: "wjgc26_1213",   file: "wjgc_2026_contest33.json" },
-    { kind: "wjgc", tid: "eowagr25_b78",  file: "eowagr25_contest121.json" },
-    { kind: "wjgc", tid: "eowagr25_b910", file: "eowagr25_contest13.json" },
-    { kind: "wjgc", tid: "eowagr25",      file: "eowagr25_scorecards.json" },
-    { kind: "wjgc", tid: "eowagr25_b1314",file: "eowagr25_contest77.json" },
-    { kind: "doral",      file: "ftm_doral_2025.json" },
-    { kind: "doral",      file: "ftm_doral_2024.json" },
-    { kind: "uskids",     file: "uskids-results.json" },
-    { kind: "fieldSizes", file: "uskids-field-sizes.json" },
-    { kind: "tournMeta",  file: "t_de_tournaments_do_uskids.json" },
-    // ⚠ Manter em sincronia com o número real de ficheiros uskids_torneios_completos(N).json
-    // em public/data/. Também definido em USKIDSPage.tsx como TORNEIOS_COMPLETOS_COUNT.
-    ...Array.from({ length: 40 }, (_, i) =>
-      ({ kind: "completo" as const, file: `uskids_torneios_completos(${i + 1}).json` })
-    ),
-  ];
-
-  // ── FASE 2: member history (ficheiro slim único em vez de 46 ficheiros) ──
-  const MEMBER_HIST_SLIM = "uskids-member-history-slim.json";
-
-  // Total: coreTasks (Fase 1) + 1 slim (Fase 2) + 1 pull autoritativo (Fase 3)
-  // + 7 ficheiros FPG Jovens (Fase 4a: 4 jovens_YYYY + 2 pull-torneios + 1 historico)
-  const FPG_JOVENS_TASK_COUNT = 7;
-  const totalTasks = coreTasks.length + 2 + FPG_JOVENS_TASK_COUNT;
+  const total = 3;
   let done = 0;
-  const report = (label: string) => {
-    done++;
-    onProgress?.({ done, total: totalTasks, label });
-  };
+  const report = (label: string) => { done++; onProgress?.({ done, total, label }); };
 
-  // Arrancar players.json em paralelo (base de dados FPG para enriquecimento)
-  const playersJsonPromise = fetchJson(`${base}players.json`).catch(() => null);
-  // Arrancar spain-players.json em paralelo (DOB+sexo+clube de espanhois RFEGolf)
-  const spainPlayersPromise = fetchJson(`${base}spain-players.json`).catch(() => null);
-  // Arrancar licencia-hcp-lookup.json em paralelo (HCP por licença RFEG)
-  const spainHcpPromise = fetchJson(`${base}licencia-hcp-lookup.json`).catch(() => null);
-  // Arrancar rfegolf-rivals.json em paralelo (66 torneios LGS juvenis consolidados)
-  const rfegRivalsPromise = fetchJson(`${base}rfegolf-rivals.json`).catch(() => null);
-  // Arrancar fcg-rivals.json em paralelo (torneios catalães via golfdirecto)
-  const fcgRivalsPromise = fetchJson(`${base}fcg-rivals.json`).catch(() => null);
+  const [juniorsData, tournamentsData] = await Promise.all([
+    fetchJson("/data/juniors.json")
+      .then(d => { _loadedFiles.push({ path: "/data/juniors.json", status: "loaded", group: "canonical" }); report("Juniors"); return d; })
+      .catch(e => { _loadedFiles.push({ path: "/data/juniors.json", status: "error", error: String(e), group: "canonical" }); report("Juniors"); return null; }),
+    fetchJson("/data/juniors-tournaments.json")
+      .then(d => { _loadedFiles.push({ path: "/data/juniors-tournaments.json", status: "loaded", group: "canonical" }); report("Tournaments"); return d; })
+      .catch(e => { _loadedFiles.push({ path: "/data/juniors-tournaments.json", status: "error", error: String(e), group: "canonical" }); report("Tournaments"); return null; }),
+    fetchJson("/data/tournament-catalog.json")
+      .then(d => { _loadedFiles.push({ path: "/data/tournament-catalog.json", status: "loaded", group: "canonical" }); report("Catalog"); return d; })
+      .catch(e => { _loadedFiles.push({ path: "/data/tournament-catalog.json", status: "error", error: String(e), group: "canonical" }); report("Catalog"); return null; }),
+  ]);
 
-  const labelFor = (t: FileTask): string => {
-    if (t.kind === "wjgc") return t.tid.replace(/_/g," ").toUpperCase();
-    if (t.kind === "doral") return "Doral";
-    if (t.kind === "uskids") return "USKids Results";
-    if (t.kind === "memberHist") return "Member History";
-    if (t.kind === "fieldSizes") return "Field Sizes";
-    if (t.kind === "tournMeta")  return "Tourn Meta";
-    const m = t.file.match(/\((\d+)\)/);
-    return m ? `USKids #${m[1]}` : t.file;
-  };
+  if (!juniorsData || !tournamentsData) {
+    console.error("[KIDSdataLoader] Falhou carregar canónicos. Correr `node scripts/aggregator/index.js` primeiro.");
+    return [];
+  }
 
-  const map = new Map<string, AutoRivalPlayer>();
+  const juniors: CanonicalJunior[] = (juniorsData as any).juniors || [];
+  const tournaments: CanonicalTournament[] = (tournamentsData as any).tournaments || [];
 
-  // ── Arrancar o fetch do slim IMEDIATAMENTE — descarrega em paralelo com a Fase 1 ──
-  const slimPromise = fetchJson(`${base}${MEMBER_HIST_SLIM}`).catch(() => null);
+  const flightTids = new Map<string, string>();
+  for (const t of tournaments) {
+    for (const f of t.flights) {
+      const tid = legacyTid(t, f);
+      if (!tid) continue;
+      flightTids.set(`${t.id}|${f.flightKey}`, tid);
 
-  // ── Fase 1: paralelo (sem pull-torneios — este corre na Fase 3 autoritativa) ──
-  await Promise.all(coreTasks.map(async task => {
-    const path = `${base}${task.file}`;
-    try {
-      const d = await fetchJson(path);
-      if (task.kind === "wjgc")       mergeInto(map, processWjgc(d, task.tid));
-      if (task.kind === "doral")      mergeInto(map, processDoral(d));
-      if (task.kind === "uskids")     mergeInto(map, processUskids(d));
-      if (task.kind === "completo")   mergeInto(map, processUskidsCompleto(d));
-      if (task.kind === "fieldSizes") processFieldSizes(d);
-      if (task.kind === "tournMeta")  processTournMeta(d);
-      _loadedFiles.push({ path, status: "loaded", group: "phase 1 core" });
-    } catch (e) {
-      _loadedFiles.push({ path, status: "error", error: String(e), group: "phase 1 core" });
-    }
-    report(labelFor(task));
-  }));
-
-  mergeInto(map, processManuelOverrides());
-
-  // ── Fase 2: aguardar o slim (já estava a descarregar em paralelo) ──
-  {
-    const path = `${base}${MEMBER_HIST_SLIM}`;
-    try {
-      const d = await slimPromise;
-      if (d) {
-        mergeInto(map, processMemberHistory(d));
-        _loadedFiles.push({ path, status: "loaded", group: "phase 2 history" });
-      } else {
-        _loadedFiles.push({ path, status: "error", error: "null", group: "phase 2 history" });
+      if (t.sourceId === "uskids") {
+        const baseTid = `usk${t.sourceKey}`;
+        if (!uskTournNames.has(baseTid) && t.name) {
+          uskTournNames.set(baseTid, {
+            name: t.name,
+            short: shortNameOf(t.name),
+            date: ptDate(t.date),
+            dateExact: t.date || "",
+          });
+        }
+        if (f.fieldSize) uskFieldSizes.set(tid, f.fieldSize);
       }
-    } catch (e) {
-      _loadedFiles.push({ path, status: "error", error: String(e), group: "phase 2 history" });
+      // RFEG: populamos uskTournNames com tid (e.g. "nc61067_alevín") porque
+      // o KIDSPage faz lookup partilhado nesse map para tids "nc"/"lgs".
+      if (t.sourceId === "rfeg" && t.name) {
+        uskTournNames.set(tid, {
+          name: t.name,
+          short: shortNameOf(t.name),
+          date: ptDate(t.date),
+          dateExact: t.date || "",
+        });
+        if (f.fieldSize) uskFieldSizes.set(tid, f.fieldSize);
+      }
+      if (t.sourceId === "fpg" && t.name) {
+        fpgTournNames.set(tid, {
+          name: t.name,
+          short: shortNameOf(t.name),
+          date: ptDate(t.date),
+          dateExact: t.date || "",
+          ageMin: f.ageMin ?? undefined,
+          ageMax: f.ageMax ?? undefined,
+          sex: (f.sex === "M" || f.sex === "F") ? f.sex : undefined,
+          escalao: f.label,
+        });
+      }
+      if (t.sourceId === "ffgolf" && t.name) {
+        ffgolfTournNames.set(tid, {
+          name: t.name,
+          short: shortNameOf(t.name),
+          date: ptDate(t.date),
+          dateExact: t.date || "",
+          ageMin: f.ageMin ?? undefined,
+          ageMax: f.ageMax ?? undefined,
+          sex: (f.sex === "M" || f.sex === "F") ? f.sex : undefined,
+          ageGroup: f.label,
+        });
+      }
     }
-    report("Member History");
   }
 
-  // ── Fase 3: pull-torneios (autoritativo — sobrescreve dados incompletos de outras fontes) ──
-  // GG25, QDL25, GG26, etc. vêm SEMPRE daqui; completos e member history podem ter versões parciais.
-  {
-    const path = `${base}pull-torneios000.json`;
-    try {
-      const d = await fetchJson(path);
-      // Só processa os tids mapeados em PULL_TCODE_TO_TID (gg25, qdl25, gg26, etc.) —
-      // torneios FPG locais (Sub-10/12/14 Nacionais) NÃO entram no tracker de rivais
-      // internacionais, conforme decisão de produto (KIDSPage = juniores estrangeiros).
-      mergeInto(map, processPullTorneios(d), PULL_TIDS);
-      _loadedFiles.push({ path, status: "loaded", group: "phase 3 pull" });
-    } catch (e) {
-      _loadedFiles.push({ path, status: "error", error: String(e), group: "phase 3 pull" });
+  const juniorResults = new Map<string, Array<{ tid: string; result: CanonicalResult; flight: CanonicalFlight; tournament: CanonicalTournament }>>();
+  for (const t of tournaments) {
+    for (const f of t.flights) {
+      const tid = flightTids.get(`${t.id}|${f.flightKey}`);
+      if (!tid) continue;
+      for (const r of f.results || []) {
+        const jId = r.juniorId;
+        if (!jId) continue;
+        let arr = juniorResults.get(jId);
+        if (!arr) { arr = []; juniorResults.set(jId, arr); }
+        arr.push({ tid, result: r, flight: f, tournament: t });
+      }
     }
-    report("Torneios PT");
   }
 
-  // ── Fase 4a: FPG Jovens — modo enriquecimento ──
-  // Carrega APENAS jovens_YYYY.json (2026/2025/2024/2023) — os mesmos
-  // ficheiros do tab /FPG/jovens. Cobrem Campeonatos Nacionais e Regionais
-  // de Jovens (Sub-10/12/14/16/18) nos últimos 4 anos.
-  //
-  // Filtro juvenil em processFpgJovensAll: (escalão Sub-*) OU (nome contendo
-  // "Junior"/"Sub-N"/"U-N"). Tcodes em PULL_TCODE_TO_TID ficam de fora (já
-  // tratados pela Fase 3 autoritativa).
-  //
-  // Modo enrich-only: cada torneio só dá merge nos rivais que JÁ existam em
-  // `map` (criados pelas fontes internacionais USKids/WJGC/RFEG/FFG/etc.).
-  // Não cria novos rivais — não inundamos /kids com jogadores PT puros.
-  {
-    const FPG_JOVENS_FILES = [
-      "jovens_2026.json", "jovens_2025.json", "jovens_2024.json", "jovens_2023.json",
-      // pull-torneios000.json + 002.json contêm torneios Junior de clubes
-      // (GJG, Vila Sol Junior, Junior 9 hole, etc.) que aparecem em
-      // /FPG/jovens via filtro por nome. Tcodes em PULL_TCODE_TO_TID são
-      // ignorados pela função (Fase 3 trata-os).
-      "pull-torneios000.json", "pull-torneios002.json",
-      // fpg-nacionais-historico.json: histórico dos Campeonatos Nacionais Jovens
-      // (Sub-10/12/14/16/18) 2005-2026. Aparece em /FPG/jovens com label
-      // "Nacional" e fornece os Campeonatos pré-2019 que não estão em jovens_*.json.
-      "fpg-nacionais-historico.json",
-    ];
-    // Aliases — variantes longas mapeadas para o nome canónico que a entrada
-    // D[] do KIDSPage usa. Sem isto, "Manuel Goulartt Medeiros" (FPG) é
-    // rejeitado pelo enrich-only por não casar com a key "manuel medeiros".
-    // Espelha PLAYER_ALIASES em src/pages/KIDSPage.tsx.
-    const NAME_ALIASES: Record<string, string> = {
-      "manuel francisco medeiros": "manuel medeiros",
-      "manuel goulartt medeiros":  "manuel medeiros",
-      "manuel f medeiros":         "manuel medeiros",
+  const players: AutoRivalPlayer[] = [];
+  for (const j of juniors) {
+    const p: AutoRivalPlayer = {
+      n: j.canonicalName,
+      co: j.country ? co(j.country) : (j.nationality ? co(j.nationality) : ""),
+      r: {},
     };
-    await Promise.all(FPG_JOVENS_FILES.map(async (file) => {
-      const path = `${base}${file}`;
-      try {
-        const d = await fetchJson(path);
-        const players = processFpgJovensAll(d);
-        // Enrich-only com alias resolution: rivais existentes (match directo
-        // por normName, ou via NAME_ALIASES quando o nome FPG é variante longa).
-        // Se for via alias, rebaptiza p.n para o canónico ANTES do mergeInto.
-        const existing: AutoRivalPlayer[] = [];
-        for (const p of players) {
-          const nname = normName(p.n);
-          if (map.has(nname)) { existing.push(p); continue; }
-          const alias = NAME_ALIASES[nname];
-          if (alias && map.has(alias)) {
-            existing.push({ ...p, n: map.get(alias)!.n });
-          }
-        }
-        mergeInto(map, existing);
-        _loadedFiles.push({
-          path, status: "loaded", group: "phase 4 fpg-jovens",
-        });
-      } catch (e) {
-        _loadedFiles.push({ path, status: "error", error: String(e), group: "phase 4 fpg-jovens" });
-      }
-      report("FPG Jovens");
-    }));
-  }
-
-  // ── Fase 4: FFGolf (Fédération Française de Golf) — torneios juniores FR ──
-  // (a) ffgolf-juniors-slim.json: ~560 torneios consolidados U10/U12/U14 desde 2022.
-  //     Inclui Grand Prix Jeunes regionais, Qualifications CFJ, etc.
-  // (b) gg_*.json: campeonatos majores (Champ. France Benjamins, Internationaux U18).
-  {
-    const path = `${base}ffgolf-juniors-slim.json`;
-    try {
-      const d = await fetchJson(path);
-      mergeInto(map, processFfgolfSlim(d));
-      _loadedFiles.push({ path, status: "loaded", group: "phase 4 ffgolf" });
-    } catch (e) {
-      _loadedFiles.push({ path, status: "error", error: String(e), group: "phase 4 ffgolf" });
+    if (j.dob) p.dob = j.dob;
+    if (j.sources?.uskids?.memberId) p.memberId = j.sources.uskids.memberId;
+    if (j.sources?.fpg?.fed) {
+      p.ptFed = j.sources.fpg.fed;
+      p.fpgClub = j.sources.fpg.club || undefined;
     }
-  }
-
-  await Promise.all(FFGOLF_GG_TOURNAMENTS.map(async meta => {
-    const path = `${base}${meta.file}`;
-    try {
-      const d = await fetchJson(path);
-      mergeInto(map, processFfgolfGG(d, meta));
-      _loadedFiles.push({ path, status: "loaded", group: "phase 4 ffgolf" });
-    } catch (e) {
-      _loadedFiles.push({ path, status: "error", error: String(e), group: "phase 4 ffgolf" });
+    if (j.sources?.rfeg?.lic) {
+      p.esLicencia = j.sources.rfeg.lic;
+      p.esClub = j.sources.rfeg.club || undefined;
+      p.esCatEdad = j.sources.rfeg.catEdad || undefined;
+      p.esHcp = j.sources.rfeg.hcp;
+      p.esSex = j.sources.rfeg.sex || undefined;
     }
-  }));
-
-  // ── Fase 2.5: rfegolf-rivals.json (torneios espanhois LGS consolidados) ──
-  try {
-    const rfegRaw = await rfegRivalsPromise;
-    if (rfegRaw) {
-      mergeInto(map, processRfegolfRivals(rfegRaw));
-      _loadedFiles.push({ path: `${base}rfegolf-rivals.json`, status: "loaded", group: "phase 2.5 esp" });
-
-      // Consolidação por token-set: indexar por sorted-tokens (bucket único)
-      // — match só quando os tokens são idênticos (após sort). Casos como
-      // "Adriana GARCIA TEROL" e "Garcia Terol Adriana" → ambos viram
-      // "adriana garcia terol" sorted → mesmo bucket → fundir.
-      // Performance: O(n) em vez de O(n²).
-      const byTokensSorted = new Map<string, AutoRivalPlayer[]>();
-      for (const r of map.values()) {
-        const tokens = normName(r.n).split(/\s+/).filter(t => t.length >= 2);
-        if (tokens.length < 2) continue;
-        const key = [...tokens].sort().join(" ");
-        const arr = byTokensSorted.get(key) || [];
-        arr.push(r);
-        byTokensSorted.set(key, arr);
-      }
-      let consolidated = 0;
-      for (const [, group] of byTokensSorted) {
-        if (group.length < 2) continue;
-        // Winner: o que tem mais tokens no nome canónico (ou primeiro se empate).
-        // Heurística para "mais detalhado": prefere "Diego Gross Paneque" a "Diego Gross".
-        const winner = group.reduce((best, r) => {
-          const lenR = normName(r.n).split(/\s+/).length;
-          const lenB = normName(best.n).split(/\s+/).length;
-          return lenR > lenB ? r : best;
-        });
-        for (const loser of group) {
-          if (loser === winner) continue;
-          for (const [tid, res] of Object.entries(loser.r)) {
-            if (!winner.r[tid]) winner.r[tid] = res;
-          }
-          if (!winner.dob && loser.dob) winner.dob = loser.dob;
-          if (!winner.co && loser.co) winner.co = loser.co;
-          if (!winner.fpgClub && loser.fpgClub) winner.fpgClub = loser.fpgClub;
-          if (!winner.memberId && loser.memberId) winner.memberId = loser.memberId;
-          map.delete(normName(loser.n));
-          consolidated++;
-        }
-      }
-      _loadedFiles.push({ path: `rfeg-tokenset-merge:${consolidated}`, status: "loaded", group: "phase 2.5 esp" });
-    } else {
-      _loadedFiles.push({ path: `${base}rfegolf-rivals.json`, status: "error", error: "null", group: "phase 2.5 esp" });
+    if (j.sources?.ffgolf?.lic) {
+      p.frFed = j.sources.ffgolf.lic;
     }
-  } catch (e) {
-    _loadedFiles.push({ path: `${base}rfegolf-rivals.json`, status: "error", error: String(e), group: "phase 2.5 esp" });
-  }
 
-  // ── Fase 2.6: fcg-rivals.json (torneios catalães via golfdirecto) ──
-  try {
-    const fcgRaw = await fcgRivalsPromise;
-    if (fcgRaw) {
-      mergeInto(map, processFcgRivals(fcgRaw));
-      _loadedFiles.push({ path: `${base}fcg-rivals.json`, status: "loaded", group: "phase 2.6 fcg" });
-    } else {
-      _loadedFiles.push({ path: `${base}fcg-rivals.json`, status: "error", error: "null", group: "phase 2.6 fcg" });
+    const results = juniorResults.get(j.id) || [];
+    for (const { tid, result, flight, tournament } of results) {
+      const grossTotal = typeof result.totalGross === "number" ? result.totalGross : null;
+      const toPar = typeof result.toPar === "number" ? result.toPar : null;
+      const rd: number[] = [];
+      for (const r of result.rounds || []) {
+        if (typeof r.gross === "number") rd.push(r.gross);
+      }
+      const status = result.status;
+      let pos: number | "WD" | null;
+      if (status === "WD" || status === "DNS" || status === "DQ" || status === "IE") pos = "WD";
+      else if (typeof result.pos === "number") pos = result.pos;
+      else pos = null;
+
+      const tr: AutoTournResult = {
+        p: pos,
+        t: grossTotal,
+        tp: toPar,
+        rd,
+        ageGroup: flight.label,
+        nholes: tournament.holesPerRound || 18,
+      };
+      const existing = p.r[tid];
+      if (!existing) p.r[tid] = tr;
+      else if (tr.rd.length >= (existing.rd?.length || 0)) p.r[tid] = tr;
+
+      for (const round of result.rounds || []) {
+        if (!Array.isArray(round.strokes) || round.strokes.length < 9) continue;
+        const k = normName(p.n);
+        if (!_scorecards.has(k)) _scorecards.set(k, []);
+        const scs = _scorecards.get(k)!;
+        let sc = scs.find((s) => s.tid === tid);
+        if (!sc) {
+          // Canónico guarda yards (vindo de USKids/WJGC/etc.). Converter para metros para display.
+          // FPG e RFEG já devolvem metros — não converter quando flight.par + flight.yards vêm dessas fontes.
+          const yardsArr = (flight.yards || []) as number[];
+          const isYardsSource = tournament.sourceId === "uskids" || tournament.sourceId === "wjgc" || tournament.sourceId === "eowagr" || tournament.sourceId === "doral";
+          const metersArr = isYardsSource
+            ? yardsArr.map((y) => (typeof y === "number" && y > 0 ? Math.round(y * 0.9144) : 0))
+            : yardsArr;
+          sc = {
+            tid,
+            playerName: p.n,
+            par: (flight.par || []) as number[],
+            si: [],
+            meters: metersArr,
+            rounds: [],
+          };
+          scs.push(sc);
+        }
+        sc.rounds.push(round.strokes);
+      }
     }
-  } catch (e) {
-    _loadedFiles.push({ path: `${base}fcg-rivals.json`, status: "error", error: String(e), group: "phase 2.6 fcg" });
+
+    players.push(p);
   }
 
-  // ── Enriquecimento FPG: players.json → corrigir co + adicionar fpgClub e dob ──
-  // Jogadores portugueses no USKids podem ter o nome do clube como país.
-  // Cruzamos por nome e sobrescrevemos co="Portugal", fpgClub e dob.
-  try {
-    const playersRaw = await playersJsonPromise;
-    if (playersRaw) {
-      _loadedFiles.push({ path: `${base}players.json`, status: "loaded", group: "enrich" });
-      type FpgPlayer = { name: string; dob: string; club: { short: string }; co?: string };
-      const fpg = playersRaw as Record<string, FpgPlayer>;
-      // Mapa nome_normalizado → dados FPG. Também guardamos o nfed (chave) para
-      // popular `ptFed` no rival.
-      const fpgByName = new Map<string, { p: FpgPlayer; nfed: string }>();
-      for (const [nfed, p] of Object.entries(fpg)) {
-        if (p.name) fpgByName.set(normName(p.name), { p, nfed });
-      }
-      for (const rival of map.values()) {
-        const match = fpgByName.get(normName(rival.n));
-        if (!match) continue;
-        rival.co = "Portugal";
-        rival.fpgClub = match.p.club?.short ?? undefined;
-        if (!rival.dob && match.p.dob) rival.dob = match.p.dob;
-        if (!rival.ptFed) rival.ptFed = match.nfed;
-      }
-    } else {
-      _loadedFiles.push({ path: `${base}players.json`, status: "error", error: "null", group: "enrich" });
-    }
-  } catch (e) {
-    _loadedFiles.push({ path: `${base}players.json`, status: "error", error: String(e), group: "enrich" });
-  }
-
-  // ── Inferência de Comunidade Autónoma a partir do nome do clube ──
-  // Heurística por keywords. Não cobre todos os clubes mas apanha os hubs principais.
-  function inferEsRegion(club: string | null | undefined): string | null {
-    if (!club) return null;
-    const c = club.toUpperCase();
-    if (/TECINA|TENERIFE|GRAN CANARIA|LANZAROTE|FUERTEVENTURA|GOLF DEL SUR|MELONERAS|ANFI|AMARILLA|COSTA ADEJE|ABAMA|REAL CLUB DE GOLF DE LAS PALMAS|EL CORTIJO|MASPALOMAS|SALOBRE|CHAPARRAL/.test(c)) return "Canárias";
-    if (/SOTOGRANDE|VALDERRAMA|GUADALMINA|FINCA CORTESIN|LA CALA|CASARES|ATALAYA|MIJAS|ALCAIDESA|VILLA PADIERNA|EL PARAISO|ALOHA|MAGNA MARBELLA|RIO REAL|CABOPINO|LOS NARANJOS|LA QUINTA|LAURO|GUADALHORCE|ANTEQUERA|LA HACIENDA|SANTA CLARA|FLAMINGOS|LAS BRISAS|MARBELLA|MALAGA|GRANADA|JEREZ|CADIZ|HUELVA|SEVILLA|ALMERIA|ALMENARA|ZAGALEJO|NUEVA ANDALUCIA|ESTEPONA|MONTECASTILLO|LA RESERVA|SAN ROQUE|MEDITERRANEO|BENAHAV|AZATA|PLAYA SERENA|EL ROMPIDO|ISLANTILLA|COSTA BALLENA/.test(c)) return "Andalucía";
-    if (/EL PRAT|TERRAMAR|VALLROMANES|EMPORDA|PALS|PERELADA|CALDES|MASIA BACH|MASNOU|SANT VICENC|BARCELONA|CATALU|CAN CUYAS|BONMONT|GIRONA|LLAVANERAS|BARBANZA|REAL CLUB DE GOLF DE BARCELONA|REUS|TARRAGONA/.test(c)) return "Cataluña";
-    if (/CENTRO NACIONAL|JARAMA|HERRERIA|VALDELAGUILA|RETAMARES|PUERTA DE HIERRO|REAL SOCIEDAD HIPICA|FED.*MADRID|MADRID|LA MORALEJA|LOMAS BOSQUE|VILLA MIRA|EL ESCORIAL|RACE|MIRAFLORES|OLIVAR DE LA HINOJOSA|SOMOSAGUAS|LAS REJAS|EL ENCIN|LA DEHESA/.test(c)) return "Madrid";
-    if (/MALLORCA|IBIZA|MENORCA|SON GUAL|SON ANTEM|SON VIDA|PULA|BENDINAT|CANYAMEL|CAPDEPERA|ALCANADA|VALL D OR|SON SERVERA/.test(c)) return "Baleares";
-    if (/VALENCIA|CASTELLON|ESCORPION|EL SALER|BONALBA|ALENDA|ALICANTE|FONT DEL LLOP|LA SELLA|MASIA DE LAS ESTRELLAS|MEDITERRANEO GOLF|EL BOSQUE|VILLAITANA|ALTORREAL|MURCIA|HACIENDA RIQUELME|LA TORRE|LA MANGA|MAR MENOR|LA SERENA/.test(c)) return "Valencia/Murcia";
-    if (/CORUÑA|CORUNA|GALICIA|VIGO|CANTOR|MEIS|SANTIAGO|PONTEVEDRA|REAL AERO CLUB DE SANTIAGO/.test(c)) return "Galicia";
-    if (/BASOZABAL|BILBAO|NEGURI|LAUKARIZ|LARRABEA|MEAZTEGI|GIPUZKOA|EUSKADI/.test(c)) return "País Vasco";
-    if (/CANTABRIA|SANTANDER|PEDREÑA|MATALEÑAS|ABRA DEL PAS/.test(c)) return "Cantabria";
-    if (/ASTURIAS|OVIEDO|GIJON|BARGANIZA|CASTIELLO|VILLAVICIOSA|LA LLOREA/.test(c)) return "Asturias";
-    if (/NORBA|CACERES|VALLADOLID|SALAMANCA|LEON GOLF|EL ENCIN|ENTREPINOS|ZAUDIN/.test(c)) return "Castilla y León/Extremadura";
-    if (/ZARAGOZA|HUESCA|JACA|LA PEÑAZA|AUGUSTA|ARAGON/.test(c)) return "Aragón";
-    if (/PAMPLONA|CASTILLO DE GORRAIZ|SIGNATURE/.test(c)) return "Navarra";
-    if (/LOGRO|RIOJA|CAMPO DE LOGROÑO/.test(c)) return "La Rioja";
-    return null;
-  }
-
-  // ── Enriquecimento ESP: spain-players.json → DOB + sex + club ──
-  // Cruza por nome com lookup RFEGolf (2186 federados juvenis a jogar em Espanha).
-  // Validação de idade: se o rival já tem `dob` de outra fonte (FPG players.json,
-  // USKids member-history) e o ano de nascimento do RFEGolf difere por >1 ano,
-  // rejeitar — provável homónimo. Se o rival tem ageGroup nos torneios (ex:
-  // "Boys 11" em 2024), inferimos birthYear esperado e aplicamos a mesma regra.
-  // Só não sobrescrevemos `co` quando já está definido (Marcus Latt EST mantém EST).
-  try {
-    const spainRaw = await spainPlayersPromise;
-    const spainHcpRaw = await spainHcpPromise;
-    const hcpLookup = (spainHcpRaw && (spainHcpRaw as any).lookup) as Record<string, { hcp: number; source?: string; dateIso?: string }> | undefined;
-    if (spainRaw && (spainRaw as any).byName) {
-      _loadedFiles.push({ path: `${base}spain-players.json`, status: "loaded", group: "enrich" });
-      if (hcpLookup) _loadedFiles.push({ path: `${base}licencia-hcp-lookup.json`, status: "loaded", group: "enrich" });
-      const byName = (spainRaw as any).byName as Record<string, { name: string; dob: string; dobIso: string; sex: string | null; club: string | null; catEdad: string | null; licencia: string }>;
-      function dobYearOf(dobStr: string | undefined): number | null {
-        if (!dobStr) return null;
-        const isoM = /^(\d{4})-(\d{2})-(\d{2})/.exec(dobStr);
-        if (isoM) return parseInt(isoM[1], 10);
-        const ddmm = /^\d{1,2}\/\d{1,2}\/(\d{4})/.exec(dobStr);
-        if (ddmm) return parseInt(ddmm[1], 10);
-        return null;
-      }
-      function estimateBirthYear(rival: AutoRivalPlayer): number | null {
-        const ageGroups: Array<{ age: number; tid: string }> = [];
-        for (const [tid, res] of Object.entries(rival.r || {})) {
-          const ag = res.ageGroup;
-          if (!ag) continue;
-          // ⚠ Skipar "Sub-N" — significa "menor de N", não "idade N". Um Sub-16
-          // pode ter 11, 12, 13, 14 ou 15 anos (o cap é 15). Para o purpose de
-          // estimar DOB, não dá info útil — só introduz falsos positivos.
-          // Daniel Avila Sanz (Benjamín, 12 anos) jogou um Sub-16 → bug evitado.
-          if (/^\s*Sub\b/i.test(ag)) continue;
-          const m = /\b(\d{1,2})\b/.exec(ag);
-          if (!m) continue;
-          const age = parseInt(m[1], 10);
-          if (age < 6 || age > 19) continue;
-          ageGroups.push({ age, tid });
-        }
-        if (ageGroups.length === 0) return null;
-        let bestYear = 0, bestAge = 0;
-        for (const { age, tid } of ageGroups) {
-          // ⚠ Tids LGS/NC contêm SÓ um id interno (sem ano). Nunca tentar
-          // extrair ano deles — `lgs332` daria yy=32 → 2032 (errado).
-          // Usar dateExact registado em uskTournNames para esses tids.
-          if (tid.startsWith("lgs") || tid.startsWith("nc")) {
-            const meta = uskTournNames.get(tid);
-            const ym = meta?.dateExact ? /^(\d{4})/.exec(meta.dateExact) : null;
-            if (ym) {
-              const year = parseInt(ym[1], 10);
-              if (year > bestYear) { bestYear = year; bestAge = age; }
-            }
-            continue;
-          }
-          // ⚠ Tids USKids "usk{tcode}_b{age}" — o tcode é id interno (não ano).
-          // `usk20429_b11` (Spanish Open 2025) ia dar 2042 com regex /20(\d{2})/
-          // — e usk13568 (EC 2023) ia dar 1356 → null com m4 + 68 com m2 → 2068.
-          // Usar uskTournNames.get("usk{tcode}").dateExact em vez de regex.
-          if (tid.startsWith("usk")) {
-            const tcodeMatch = /^usk(\d+)/.exec(tid);
-            if (tcodeMatch) {
-              const meta = uskTournNames.get(`usk${tcodeMatch[1]}`);
-              const ym = meta?.dateExact ? /^(\d{4})/.exec(meta.dateExact) : null;
-              if (ym) {
-                const year = parseInt(ym[1], 10);
-                if (year > bestYear) { bestYear = year; bestAge = age; }
-              }
-            }
-            continue;
-          }
-          // Tids restantes (wjgc25, doral25, qdl25, gg26, marco26, venice25,
-          // rome25, eowagr25, brjgt25...) seguem padrão "{nome}{YY}" onde YY é o ano.
-          const m4 = /20(\d{2})/.exec(tid);
-          const m2 = /(\d{2})(?:_|$)/.exec(tid);
-          let year: number | null = null;
-          if (m4) year = 2000 + parseInt(m4[1], 10);
-          else if (m2) {
-            const yy = parseInt(m2[1], 10);
-            if (yy >= 18 && yy <= 35) year = 2000 + yy;
-          }
-          if (year && year > bestYear) { bestYear = year; bestAge = age; }
-        }
-        if (bestYear === 0) return null;
-        return bestYear - bestAge;
-      }
-
-      // ── Fuzzy match por superset de tokens (ÍNDICE INVERTIDO) ──
-      // Permite apanhar:
-      //   "Niko Alvarez Van Der Walt" → "Alvarez Van Der Walt Niko Eduardo"
-      //   "Álex Carrón" → "Alex Carron Miron"
-      //
-      // Performance: O(N*K) em vez de O(N*M). Indexamos por token mais raro
-      // — para um rival com tokens [niko, alvarez, van, der, walt], vamos só
-      // iterar as entries que contêm o token mais raro (provavelmente "walt").
-      type SpEntryT = typeof byName[string];
-      // Indexar { entry, tokenSet } — tokenSet construído a partir do KEY do byName,
-      // que já está normalizado (sem vírgulas, etc) pelo build-spain-players-export.
-      // Re-normalizar entry.name produzia tokens incorrectos como "walt," (vírgula).
-      type IndexedEntry = { entry: SpEntryT; tokens: Set<string> };
-      const tokenIndex = new Map<string, IndexedEntry[]>();
-      // Após JSON.parse byName tem múltiplas KEYs (variante "apelido nome" e
-      // "nome apelido") com objects DISTINTOS — não partilham referência mesmo
-      // apontando para o mesmo dado. Dedupe por LICENÇA (chave única).
-      const byLic = new Map<string, IndexedEntry>();
-      for (const [k, v] of Object.entries(byName)) {
-        if (!v.licencia) continue;
-        const tokens = k.split(/\s+/).filter(t => t.length >= 2);
-        if (tokens.length < 2) continue;
-        let idx = byLic.get(v.licencia);
-        if (!idx) {
-          idx = { entry: v, tokens: new Set() };
-          byLic.set(v.licencia, idx);
-        }
-        // Adicionar tokens desta variante ao set acumulado
-        for (const t of tokens) idx.tokens.add(t);
-      }
-      // Agora popular o tokenIndex com cada IndexedEntry (1× por licença)
-      for (const idx of byLic.values()) {
-        for (const t of idx.tokens) {
-          let arr = tokenIndex.get(t);
-          if (!arr) { arr = []; tokenIndex.set(t, arr); }
-          arr.push(idx);
-        }
-      }
-      function findFuzzy(rivalKey: string): SpEntryT | null {
-        const tokens = rivalKey.split(/\s+/).filter(t => t.length >= 2);
-        if (tokens.length < 2) return null;
-        // Escolher token mais raro para iterar
-        let rareList: IndexedEntry[] | null = null;
-        for (const t of tokens) {
-          const list = tokenIndex.get(t);
-          if (!list) return null;
-          if (rareList == null || list.length < rareList.length) rareList = list;
-        }
-        if (!rareList) return null;
-        const rivalTokenSet = new Set(tokens);
-        let match: SpEntryT | null = null;
-        for (const cand of rareList) {
-          if (cand.tokens.size <= rivalTokenSet.size) continue;  // superset estrito
-          let allIn = true;
-          for (const t of rivalTokenSet) if (!cand.tokens.has(t)) { allIn = false; break; }
-          if (!allIn) continue;
-          if (match && match.licencia !== cand.entry.licencia) return null;  // ambíguo
-          match = cand.entry;
-        }
-        return match;
-      }
-
-      let matched = 0, fuzzy = 0, rejected = 0;
-      type SpEntry = { name: string; dob: string; dobIso: string; sex: string | null; club: string | null; catEdad: string | null; licencia: string };
-      for (const rival of map.values()) {
-        const rivalKey = normName(rival.n);
-        let e: SpEntry | null = byName[rivalKey] ?? null;
-        let viaFuzzy = false;
-        if (!e) {
-          e = findFuzzy(rivalKey) as SpEntry | null;
-          if (e) viaFuzzy = true;
-        }
-        if (!e) continue;
-        const espYear = dobYearOf(e.dob);
-        if (!espYear) {
-          if (e.licencia && !rival.esLicencia) rival.esLicencia = e.licencia;
-          if (e.club && !rival.esClub) rival.esClub = e.club;
-          if ((e.sex === "M" || e.sex === "F") && !rival.esSex) rival.esSex = e.sex;
-          if (e.catEdad && !rival.esCatEdad) rival.esCatEdad = e.catEdad;
-          if (!rival.esRegion) {
-            const region = inferEsRegion(e.club);
-            if (region) rival.esRegion = region;
-          }
-          if (!rival.esHcp && hcpLookup && e.licencia) {
-            const h = hcpLookup[e.licencia];
-            if (h && typeof h.hcp === "number") {
-              rival.esHcp = h.hcp;
-              if (h.dateIso) rival.esHcpDate = h.dateIso;
-            }
-          }
-          if (viaFuzzy) fuzzy++;
-          continue;
-        }
-        // Validação de idade: só aplicar a fuzzy matches (alto risco de homónimo).
-        // Para exact match em byName, confiar 100% — o nome/licença batem certo.
-        if (viaFuzzy) {
-          const existingYear = dobYearOf(rival.dob);
-          const estimatedYear = existingYear ?? estimateBirthYear(rival);
-          if (estimatedYear != null && Math.abs(espYear - estimatedYear) > 1) {
-            rejected++;
-            continue;
-          }
-        }
-        if (!rival.dob && e.dob) rival.dob = e.dob;
-        if (!rival.esLicencia && e.licencia) rival.esLicencia = e.licencia;
-        if (!rival.esClub && e.club) rival.esClub = e.club;
-        if (!rival.esSex && (e.sex === "M" || e.sex === "F")) rival.esSex = e.sex;
-        if (!rival.esCatEdad && e.catEdad) rival.esCatEdad = e.catEdad;
-        if (!rival.esRegion) {
-          const region = inferEsRegion(e.club);
-          if (region) rival.esRegion = region;
-        }
-        if (!rival.esHcp && hcpLookup && e.licencia) {
-          const h = hcpLookup[e.licencia];
-          if (h && typeof h.hcp === "number") {
-            rival.esHcp = h.hcp;
-            if (h.dateIso) rival.esHcpDate = h.dateIso;
-          }
-        }
-        if (!rival.co) rival.co = "Spain";
-        if (!rival.esFullName && e.name) {
-          const fullCanon = rfegolfNameToCanonical(e.name);
-          if (normName(fullCanon) !== normName(rival.n)) rival.esFullName = fullCanon;
-        }
-        if (viaFuzzy) fuzzy++;
-        matched++;
-      }
-      _loadedFiles.push({ path: `spain-enrich:matched=${matched},fuzzy=${fuzzy},rejected=${rejected}`, status: "loaded", group: "phase 3 enrich" });
-    }
-  } catch (e) {
-    _loadedFiles.push({ path: `spain-
-enrich:error`, status: "error", error: String(e), group: "phase 3 enrich" });
-  }
-
-  const result = Array.from(map.values());
-  onUpdate?.(result);
-  return result;
+  onUpdate?.(players);
+  return players;
 }
+
+// ═════════════════════════════════════════════════════════════════════
+// Stubs para process* — alguns componentes podem ainda importar; devolvem
+// [] silenciosamente. Manter para compat até refactor completo.
+// ═════════════════════════════════════════════════════════════════════
+
+export function mergeInto(_map: Map<string, AutoRivalPlayer>, _players: AutoRivalPlayer[], _forceTids?: ReadonlySet<string>): void {}
+export function processWjgc(_data: unknown, _tid: string): AutoRivalPlayer[] { return []; }
+export function processDoral(_data: unknown): AutoRivalPlayer[] { return []; }
+export function processManuelOverrides(): AutoRivalPlayer[] { return []; }
+export function processUskids(_data: unknown): AutoRivalPlayer[] { return []; }
+export function processUskidsCompleto(_data: unknown): AutoRivalPlayer[] { return []; }
+export function processMemberHistory(_data: unknown): AutoRivalPlayer[] { return []; }
+export function processPullTorneios(_data: unknown): AutoRivalPlayer[] { return []; }
+export function processFpgJuniorTourns(_data: unknown): AutoRivalPlayer[] { return []; }
+export function processFpgJovensAll(_data: unknown): AutoRivalPlayer[] { return []; }
+export function processFfgolfSlim(_data: unknown): AutoRivalPlayer[] { return []; }
+export function processFfgolfGG(_data: unknown, _meta: unknown): AutoRivalPlayer[] { return []; }
+export function processRfegolfRivals(_data: unknown): AutoRivalPlayer[] { return []; }
+export function processFcgRivals(_data: unknown): AutoRivalPlayer[] { return []; }
+export function shortenTournName(name: string): string { return shortNameOf(name); }

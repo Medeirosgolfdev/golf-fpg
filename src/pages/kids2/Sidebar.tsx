@@ -1,0 +1,392 @@
+/**
+ * kids2/Sidebar.tsx
+ *
+ * Sidebar de rivais. Filtra por search + país + circuito.
+ * "Todos" agrupados por país, com headers sticky.
+ */
+
+import React, { useMemo, useState } from "react";
+import type { CanonicalData, Junior } from "./data";
+import { getSharedTournamentIds } from "./data";
+import { flag as flagOf } from "../../utils/flagUtils";
+
+const MAX_VISIBLE = 400;
+
+type SourceKey = "uskids" | "fpg" | "rfeg" | "ffgolf" | "wjgc" | "eowagr" | "doral";
+
+const SOURCE_PILLS: { key: SourceKey; label: string }[] = [
+  { key: "uskids", label: "USKids" },
+  { key: "fpg", label: "FPG" },
+  { key: "rfeg", label: "RFEG" },
+  { key: "ffgolf", label: "FFG" },
+  { key: "wjgc", label: "WJGC" },
+  { key: "eowagr", label: "EOWAGR" },
+  { key: "doral", label: "Doral" },
+];
+
+function juniorHasSource(j: Junior, src: SourceKey, tournamentById: Map<string, { sourceId: string }>): boolean {
+  if (src === "uskids") return !!j.sources.uskids?.memberId;
+  if (src === "fpg") return !!j.sources.fpg?.fed;
+  if (src === "rfeg") return !!j.sources.rfeg?.lic;
+  if (src === "ffgolf") return !!j.sources.ffgolf?.lic;
+  for (const tid of j.tournamentIds) {
+    const t = tournamentById.get(tid);
+    if (t && t.sourceId === src) return true;
+  }
+  return false;
+}
+
+function juniorHasWin(j: Junior, tournamentById: Map<string, any>): boolean {
+  for (const tid of j.tournamentIds) {
+    const t = tournamentById.get(tid);
+    if (!t) continue;
+    for (const f of t.flights) {
+      const r = f.results.find((x: any) => x.juniorId === j.id);
+      if (r?.pos === 1) return true;
+    }
+  }
+  return false;
+}
+
+function juniorCountry(j: Junior): string {
+  return (j.country || j.nationality || "—").trim() || "—";
+}
+
+interface Props {
+  data: CanonicalData;
+  selectedId: string | null;
+  onSelect: (id: string) => void;
+  q: string;
+  onQChange: (q: string) => void;
+  countryFilter: string;
+  onCountryFilterChange: (c: string) => void;
+}
+
+export default function Sidebar({ data, selectedId, onSelect, q, onQChange, countryFilter }: Props) {
+  const manuel = data.manuel;
+  const [activeSources, setActiveSources] = useState<Set<SourceKey>>(new Set());
+  const [onlyVsManuel, setOnlyVsManuel] = useState(false);
+  const [onlyWins, setOnlyWins] = useState(false);
+  const [collapsedCountries, setCollapsedCountries] = useState<Set<string>>(new Set());
+
+  const toggleSource = (k: SourceKey) => {
+    setActiveSources((prev) => {
+      const next = new Set(prev);
+      if (next.has(k)) next.delete(k); else next.add(k);
+      return next;
+    });
+  };
+
+  const toggleCountry = (c: string) => {
+    setCollapsedCountries((prev) => {
+      const next = new Set(prev);
+      if (next.has(c)) next.delete(c); else next.add(c);
+      return next;
+    });
+  };
+
+  const { directos, byCountry, totalFiltered, totalShown } = useMemo(() => {
+    const ql = q.trim().toLowerCase();
+    const manuelTids = manuel ? new Set(manuel.tournamentIds) : new Set<string>();
+    const seen = new Set<string>();
+    const srcArr = Array.from(activeSources);
+
+    const matched: Junior[] = [];
+    for (const j of data.juniors) {
+      if (seen.has(j.id)) continue;
+      seen.add(j.id);
+      if (countryFilter && j.country !== countryFilter && j.nationality !== countryFilter) continue;
+      if (ql) {
+        const inName = j.canonicalName.toLowerCase().includes(ql)
+          || (j.aliases || []).some((a) => a.toLowerCase().includes(ql));
+        const inCountry = (j.country || "").toLowerCase().includes(ql)
+          || (j.nationality || "").toLowerCase().includes(ql);
+        if (!inName && !inCountry) continue;
+      }
+      if (srcArr.length > 0) {
+        const okSrc = srcArr.some((s) => juniorHasSource(j, s, data.tournamentById));
+        if (!okSrc) continue;
+      }
+      if (onlyWins && !juniorHasWin(j, data.tournamentById)) continue;
+      if (onlyVsManuel) {
+        if (!manuel || j.id === manuel.id) continue;
+        const cruzou = j.tournamentIds.some((tid) => manuelTids.has(tid));
+        if (!cruzou) continue;
+      }
+      matched.push(j);
+    }
+
+    const dir: Junior[] = [];
+    const oth: Junior[] = [];
+    const inDir = new Set<string>();
+    const inOth = new Set<string>();
+    for (const j of matched) {
+      if (manuel && j.id === manuel.id) {
+        if (!inDir.has(j.id)) { dir.unshift(j); inDir.add(j.id); }
+        continue;
+      }
+      const shared = manuelTids.size && j.tournamentIds.some((tid) => manuelTids.has(tid));
+      if (shared) {
+        if (!inDir.has(j.id)) { dir.push(j); inDir.add(j.id); }
+      } else {
+        if (!inOth.has(j.id)) { oth.push(j); inOth.add(j.id); }
+      }
+    }
+
+    dir.sort((a, b) => {
+      if (manuel && a.id === manuel.id) return -1;
+      if (manuel && b.id === manuel.id) return 1;
+      return b.tournamentIds.length - a.tournamentIds.length;
+    });
+
+    const countryMap = new Map<string, Junior[]>();
+    for (const j of oth) {
+      const c = juniorCountry(j);
+      let arr = countryMap.get(c);
+      if (!arr) { arr = []; countryMap.set(c, arr); }
+      arr.push(j);
+    }
+    for (const arr of countryMap.values()) {
+      arr.sort((a, b) => b.tournamentIds.length - a.tournamentIds.length);
+    }
+    const sortedCountries: { country: string; juniors: Junior[] }[] = Array.from(countryMap.entries())
+      .map(([country, juniors]) => ({ country, juniors }))
+      .sort((a, b) => b.juniors.length - a.juniors.length);
+
+    let remaining = Math.max(0, MAX_VISIBLE - dir.length);
+    const byCountry: { country: string; juniors: Junior[]; totalInCountry: number }[] = [];
+    for (const { country, juniors } of sortedCountries) {
+      if (remaining <= 0) break;
+      const slice = juniors.slice(0, remaining);
+      byCountry.push({ country, juniors: slice, totalInCountry: juniors.length });
+      remaining -= slice.length;
+    }
+
+    const shown = dir.length + byCountry.reduce((a, b) => a + b.juniors.length, 0);
+    return {
+      directos: dir,
+      byCountry,
+      totalFiltered: matched.length,
+      totalShown: shown,
+    };
+  }, [data, manuel, q, countryFilter, activeSources, onlyVsManuel, onlyWins]);
+
+  return (
+    <div className="kids2-sidebar" style={{
+      width: 300,
+      flexShrink: 0,
+      borderRight: "1px solid var(--border)",
+      display: "flex",
+      flexDirection: "column",
+      height: "100%",
+    }}>
+      <div style={{ padding: "10px 12px", borderBottom: "1px solid var(--border-light)" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 11, color: "var(--text-3)", marginBottom: 8 }}>
+          <strong style={{ fontSize: 13, color: "var(--text)" }}>Kids 2</strong>
+          <span style={{ marginLeft: "auto" }}>
+            {totalFiltered === totalShown
+              ? `${totalFiltered} de ${data.juniors.length}`
+              : `${totalShown} de ${totalFiltered} · top ${MAX_VISIBLE}`}
+          </span>
+        </div>
+        <input
+          type="text"
+          value={q}
+          onChange={(e) => onQChange(e.target.value)}
+          placeholder="Pesquisar rival..."
+          style={{
+            width: "100%",
+            padding: "6px 10px",
+            border: "1px solid var(--border)",
+            borderRadius: 6,
+            fontSize: 13,
+            background: "var(--bg)",
+            color: "var(--text)",
+            marginBottom: 8,
+          }}
+        />
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 6 }}>
+          {SOURCE_PILLS.map((p) => {
+            const active = activeSources.has(p.key);
+            return (
+              <button
+                key={p.key}
+                onClick={() => toggleSource(p.key)}
+                style={pillStyle(active)}
+                title={`Filtrar por fonte: ${p.label}`}
+              >
+                {p.label}
+              </button>
+            );
+          })}
+        </div>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+          <button
+            onClick={() => setOnlyVsManuel((v) => !v)}
+            style={pillStyle(onlyVsManuel, "var(--color-good-dark)")}
+            title="Só rivais que cruzaram com Manuel"
+            disabled={!manuel}
+          >
+            ⚔️ vs Manuel
+          </button>
+          <button
+            onClick={() => setOnlyWins((v) => !v)}
+            style={pillStyle(onlyWins, "var(--color-warn-dark, #92400e)")}
+            title="Só rivais com pelo menos 1 vitória"
+          >
+            🏆 c/ vitórias
+          </button>
+          {(activeSources.size > 0 || onlyVsManuel || onlyWins) && (
+            <button
+              onClick={() => { setActiveSources(new Set()); setOnlyVsManuel(false); setOnlyWins(false); }}
+              style={{ ...pillStyle(false), color: "var(--color-danger-dark)", borderColor: "var(--color-danger-dark)" }}
+              title="Limpar filtros"
+            >
+              ✕ limpar
+            </button>
+          )}
+        </div>
+      </div>
+
+      <div style={{ flex: 1, overflowY: "auto" }}>
+        {directos.length > 0 && (
+          <>
+            <SectionHeader color="var(--color-good-dark)" icon="⚔️">
+              Cruzou com Manuel ({directos.length})
+            </SectionHeader>
+            {directos.map((j) => (
+              <RivalRow key={j.id} junior={j} manuel={manuel} selected={selectedId === j.id} onSelect={onSelect} />
+            ))}
+          </>
+        )}
+        {byCountry.length > 0 && byCountry.map(({ country, juniors, totalInCountry }) => {
+          const collapsed = collapsedCountries.has(country);
+          const flagE = flagOf(country);
+          return (
+            <React.Fragment key={country}>
+              <SectionHeader
+                color="var(--text-2)"
+                onClick={() => toggleCountry(country)}
+                icon={flagE || "🌐"}
+              >
+                <span style={{ flex: 1 }}>{country || "Sem país"}</span>
+                <span style={{ fontSize: 10, opacity: 0.7, fontWeight: 600, marginRight: 4 }}>
+                  {juniors.length}{totalInCountry > juniors.length ? `/${totalInCountry}` : ""}
+                </span>
+                <span style={{ fontSize: 9, opacity: 0.5 }}>{collapsed ? "▶" : "▼"}</span>
+              </SectionHeader>
+              {!collapsed && juniors.map((j) => (
+                <RivalRow key={j.id} junior={j} manuel={manuel} selected={selectedId === j.id} onSelect={onSelect} />
+              ))}
+            </React.Fragment>
+          );
+        })}
+        {directos.length === 0 && byCountry.length === 0 && (
+          <div style={{ padding: "20px 12px", textAlign: "center", color: "var(--text-3)", fontSize: 12 }}>
+            Sem rivais com estes filtros
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function pillStyle(active: boolean, accent?: string): React.CSSProperties {
+  const baseAccent = accent || "var(--color-info-dark)";
+  return {
+    fontSize: 10,
+    fontWeight: 600,
+    padding: "2px 7px",
+    borderRadius: 10,
+    border: `1px solid ${active ? baseAccent : "var(--border)"}`,
+    background: active ? baseAccent : "var(--bg)",
+    color: active ? "var(--bg)" : "var(--text-2)",
+    cursor: "pointer",
+    lineHeight: 1.4,
+    letterSpacing: 0.2,
+  };
+}
+
+function SectionHeader({ children, color, icon, onClick }: {
+  children: React.ReactNode;
+  color: string;
+  icon?: string;
+  onClick?: () => void;
+}) {
+  return (
+    <div
+      onClick={onClick}
+      style={{
+        padding: "6px 12px",
+        fontSize: 11,
+        fontWeight: 700,
+        background: "var(--bg-muted)",
+        color,
+        borderBottom: "1px solid var(--border-light)",
+        borderTop: "1px solid var(--border-light)",
+        position: "sticky",
+        top: 0,
+        zIndex: 1,
+        cursor: onClick ? "pointer" : "default",
+        display: "flex",
+        alignItems: "center",
+        gap: 6,
+        textTransform: "uppercase",
+        letterSpacing: 0.4,
+      }}
+    >
+      {icon && <span style={{ fontSize: 13, lineHeight: 1 }}>{icon}</span>}
+      {children}
+    </div>
+  );
+}
+
+function RivalRow({ junior, manuel, selected, onSelect }: {
+  junior: Junior;
+  manuel: Junior | null;
+  selected: boolean;
+  onSelect: (id: string) => void;
+}) {
+  const isManuel = manuel?.id === junior.id;
+  const flagEmoji = flagOf(junior.country || junior.nationality || "");
+  const tournCount = junior.tournamentIds.length;
+  const shared = manuel && !isManuel ? getSharedTournamentIds(junior, manuel).length : 0;
+
+  const club = junior.sources.fpg?.club || junior.sources.rfeg?.club || junior.sources.ffgolf?.club || junior.club;
+
+  return (
+    <button
+      onClick={() => onSelect(junior.id)}
+      className={`kids2-rival-row${selected ? " active" : ""}`}
+      style={{
+        display: "block",
+        width: "100%",
+        padding: "8px 12px",
+        border: 0,
+        borderLeft: `3px solid ${selected ? "var(--accent)" : "transparent"}`,
+        borderBottom: "1px solid var(--border-light)",
+        background: selected ? "var(--bg-active, rgba(0,0,0,0.04))" : "transparent",
+        textAlign: "left",
+        cursor: "pointer",
+        fontSize: 12,
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+        <span style={{ fontSize: 13, flexShrink: 0 }}>{flagEmoji}</span>
+        <span style={{ flex: 1, fontWeight: selected ? 700 : 600, color: "var(--text)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+          {junior.canonicalName}
+          {isManuel && <span style={{ marginLeft: 4, fontSize: 9, padding: "1px 5px", borderRadius: 4, background: "var(--bg-success-subtle)", color: "var(--color-good-dark)", fontWeight: 700 }}>REF</span>}
+        </span>
+        <span style={{ flexShrink: 0, fontSize: 11, fontWeight: 600, color: "var(--text-3)" }}>{tournCount}</span>
+      </div>
+      <div style={{ paddingLeft: 19, display: "flex", alignItems: "center", gap: 6, fontSize: 10, color: "var(--text-3)", marginTop: 2 }}>
+        {club && <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>🏌️ {club}</span>}
+        {shared > 0 && (
+          <span style={{ marginLeft: "auto", padding: "0 5px", borderRadius: 4, background: "var(--bg-warn-subtle, #fffbeb)", color: "var(--color-warn-dark, #92400e)", fontWeight: 700 }}>
+            {shared}× M
+          </span>
+        )}
+      </div>
+    </button>
+  );
+}

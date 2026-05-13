@@ -10,7 +10,7 @@ import { flag as flagOf } from "../../utils/flagUtils";
 import { useRivals, useMH, getCanonicalTids, getPlayerType, hiddenTids, nPlayed, playerMatchesFilter, rankMap, totalRanked } from "../KIDSPage";
 import type { RivalPlayer, MHPlayer } from "../KIDSPage";
 
-export function RivaisSidebar({ selected, onSelect, fids, q, paisFilter, tierFilter, minTorn, apenasDirectos, playerTypeMap }: {
+export const RivaisSidebar = React.memo(function RivaisSidebar({ selected, onSelect, fids, q, paisFilter, tierFilter, minTorn, apenasDirectos, playerTypeMap }: {
   selected: string | null;
   onSelect: (n: string) => void;
   fids: Set<string>;
@@ -195,4 +195,4 @@ export function RivaisSidebar({ selected, onSelect, fids, q, paisFilter, tierFil
       </div>
     </div>
   );
-}
+});

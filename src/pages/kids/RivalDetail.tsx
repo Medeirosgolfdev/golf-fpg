@@ -29,7 +29,7 @@ import { computeDobInfo, escalaoIntl, T_MAP } from "./dobInference";
 import { EOWAGR25_CARDS, EOWAGR25_M, EOWAGR25_PAR, EOWAGR25_SI, WJGC26_1213_CARDS, WJGC26_1213_M, WJGC26_1213_PAR, WJGC26_1213_SI, WJGC26_CARDS, WJGC26_M, WJGC26_PAR, WJGC26_SI } from "./courseScorecards";
 import type { MHPlayer, MHTournament, RivalPlayer, TournDef } from "../KIDSPage";
 
-export function RivalDetail({ playerName }: { playerName: string }) {
+export const RivalDetail = React.memo(function RivalDetail({ playerName }: { playerName: string }) {
   const rivals = useRivals();
   const rivalsLoaded = useRivalsLoaded();
   const memberHist = useMH();
@@ -194,81 +194,92 @@ export function RivalDetail({ playerName }: { playerName: string }) {
     return null;
   }
 
-  const autoScorecards = rival ? getScorecards(rival.n) : [];
+  const autoScorecards = React.useMemo(() => (rival ? getScorecards(rival.n) : []), [rival]);
 
-  const tournResults = rival ? [
-    // 1. Torneios do array T manual com resultados
-    ...T.filter(t => rival.r[t.id] && rival.r[t.id].rd?.length > 0
-      // Ocultar brjgt25 se wjgc25_b1011 existir (o JSON tem info completa)
-      && !(t.id === "brjgt25" && rival.r["wjgc25_b1011"]?.rd?.length > 0)
-    ).map(t => ({
-      t,
-      res: rival.r[t.id],
-      // Auto-scorecard: para tourns com card dedicado usa-o; caso contrário (ou se não existe para este jogador) usa auto
-      autoCard: (() => {
-        const isKnownDedicated = ["brjgt25","wjgc26","eowagr25","wjgc26_1213"].includes(t.id);
-        const dedicatedMissing =
-          (t.id === "brjgt25" && !bjgtCard) ||
-          (t.id === "wjgc26" && !wjgcCard) ||
-          (t.id === "eowagr25" && !eowagr25Card) ||
-          (t.id === "wjgc26_1213" && !wjgc26_1213Card);
-        if (isKnownDedicated && !dedicatedMissing) return null;
-        return findAutoScorecard(t.id);
-      })(),
-      hasCard: (() => {
-        if (t.id === "brjgt25")     return !!bjgtCard      || !!findAutoScorecard("brjgt25");
-        if (t.id === "wjgc26")      return !!wjgcCard      || !!findAutoScorecard("wjgc26");
-        if (t.id === "eowagr25")    return !!eowagr25Card  || !!findAutoScorecard("eowagr25");
-        if (t.id === "wjgc26_1213") return !!wjgc26_1213Card;
-        return !!findAutoScorecard(t.id);
-      })(),
-      // ageGroup: primeiro dos MANUAL_AUTO_TIDS, depois usk{tcode}_b{n} por nome, depois fallback
-      ageGroup: (() => {
-        const fromOld = (MANUAL_AUTO_TIDS[t.id] || []).reduce((found: string | null, atid) =>
-          found || ((rival.r[atid] as any)?.ageGroup ?? null), null);
-        if (fromOld) return fromOld;
-        const nameNorm = t.name.toLowerCase().replace(/\s*\d{4}$/, "").trim();
-        for (const [rTid, rRes] of Object.entries(rival.r)) {
-          const m = rTid.match(/^(usk\d+)_b\d+$/);
-          if (!m) continue;
-          const info = uskTournNames.get(m[1]);
-          if (!info) continue;
-          if (info.name.toLowerCase().replace(/\s*\d{4}$/, "").trim() !== nameNorm) continue;
-          const ag = (rRes as any)?.ageGroup;
-          if (ag) return ag;
-        }
-        return ageLabel(t.ageMin, t.ageMax);
-      })() as string | null,
-      isAuto: false,
-    })),
-    // 2. Torneios auto-loaded não presentes em T e não cobertos por T
-    ...Object.entries(rival.r)
-      .filter(([tid, res]) => {
-        if (manualTournIds.has(tid) || autoIsCoveredByManual(tid)) return false;
-        // Aceitar tids com rd hbh OU pos/total (cp00 maioria sem hbh)
-        if (!res || (!res.rd?.length && res.p == null && res.t == null && res.tp == null)) return false;
-        return true;
-      })
-      .map(([tid, res]) => {
-        const info = getTournInfo(tid);
-        const autoMeta = AUTO_TOURN_META[tid];
-        const tmap = T_MAP[tid];
-        const uskField = uskFieldSizes.get(tid) ?? 0;
-        const fakeDef = {
-          id: tid, name: info.name, short: info.short, date: info.date,
-          dateExact: tmap?.dateExact ?? info.dateExact,
-          rounds: res.rd.length, par: autoMeta?.par ?? 72,
-          field: autoMeta?.field ?? uskField, nations: autoMeta?.nations ?? 0,
-          intendedRounds: res.rd.length, url: getTournUrl(tid, autoMeta?.url),
-        } as unknown as TournDef;
-        const autoCard = autoScorecards.find(sc => sc.tid === tid) || null;
-        return { t: fakeDef, res, hasCard: !!autoCard, autoCard, ageGroup: ((res as any).ageGroup ?? null) as string | null, isAuto: true };
-      }),
-  ].sort((a, b) => {
-    const da = a.t.dateExact ?? a.t.date;
-    const db = b.t.dateExact ?? b.t.date;
-    return db.localeCompare(da);  // mais recente primeiro
-  }) : [];
+  const tournResults = React.useMemo(() => {
+    if (!rival) return [] as Array<{
+      t: TournDef;
+      res: any;
+      autoCard: any;
+      hasCard: boolean;
+      ageGroup: string | null;
+      isAuto: boolean;
+    }>;
+    return [
+      // 1. Torneios do array T manual com resultados
+      ...T.filter(t => rival.r[t.id] && rival.r[t.id].rd?.length > 0
+        // Ocultar brjgt25 se wjgc25_b1011 existir (o JSON tem info completa)
+        && !(t.id === "brjgt25" && rival.r["wjgc25_b1011"]?.rd?.length > 0)
+      ).map(t => ({
+        t,
+        res: rival.r[t.id],
+        // Auto-scorecard: para tourns com card dedicado usa-o; caso contrário (ou se não existe para este jogador) usa auto
+        autoCard: (() => {
+          const isKnownDedicated = ["brjgt25","wjgc26","eowagr25","wjgc26_1213"].includes(t.id);
+          const dedicatedMissing =
+            (t.id === "brjgt25" && !bjgtCard) ||
+            (t.id === "wjgc26" && !wjgcCard) ||
+            (t.id === "eowagr25" && !eowagr25Card) ||
+            (t.id === "wjgc26_1213" && !wjgc26_1213Card);
+          if (isKnownDedicated && !dedicatedMissing) return null;
+          return findAutoScorecard(t.id);
+        })(),
+        hasCard: (() => {
+          if (t.id === "brjgt25")     return !!bjgtCard      || !!findAutoScorecard("brjgt25");
+          if (t.id === "wjgc26")      return !!wjgcCard      || !!findAutoScorecard("wjgc26");
+          if (t.id === "eowagr25")    return !!eowagr25Card  || !!findAutoScorecard("eowagr25");
+          if (t.id === "wjgc26_1213") return !!wjgc26_1213Card;
+          return !!findAutoScorecard(t.id);
+        })(),
+        // ageGroup: primeiro dos MANUAL_AUTO_TIDS, depois usk{tcode}_b{n} por nome, depois fallback
+        ageGroup: (() => {
+          const fromOld = (MANUAL_AUTO_TIDS[t.id] || []).reduce((found: string | null, atid) =>
+            found || ((rival.r[atid] as any)?.ageGroup ?? null), null);
+          if (fromOld) return fromOld;
+          const nameNorm = t.name.toLowerCase().replace(/\s*\d{4}$/, "").trim();
+          for (const [rTid, rRes] of Object.entries(rival.r)) {
+            const m = rTid.match(/^(usk\d+)_b\d+$/);
+            if (!m) continue;
+            const info = uskTournNames.get(m[1]);
+            if (!info) continue;
+            if (info.name.toLowerCase().replace(/\s*\d{4}$/, "").trim() !== nameNorm) continue;
+            const ag = (rRes as any)?.ageGroup;
+            if (ag) return ag;
+          }
+          return ageLabel(t.ageMin, t.ageMax);
+        })() as string | null,
+        isAuto: false,
+      })),
+      // 2. Torneios auto-loaded não presentes em T e não cobertos por T
+      ...Object.entries(rival.r)
+        .filter(([tid, res]) => {
+          if (manualTournIds.has(tid) || autoIsCoveredByManual(tid)) return false;
+          // Aceitar tids com rd hbh OU pos/total (cp00 maioria sem hbh)
+          if (!res || (!res.rd?.length && res.p == null && res.t == null && res.tp == null)) return false;
+          return true;
+        })
+        .map(([tid, res]) => {
+          const info = getTournInfo(tid);
+          const autoMeta = AUTO_TOURN_META[tid];
+          const tmap = T_MAP[tid];
+          const uskField = uskFieldSizes.get(tid) ?? 0;
+          const fakeDef = {
+            id: tid, name: info.name, short: info.short, date: info.date,
+            dateExact: tmap?.dateExact ?? info.dateExact,
+            rounds: res.rd.length, par: autoMeta?.par ?? 72,
+            field: autoMeta?.field ?? uskField, nations: autoMeta?.nations ?? 0,
+            intendedRounds: res.rd.length, url: getTournUrl(tid, autoMeta?.url),
+          } as unknown as TournDef;
+          const autoCard = autoScorecards.find(sc => sc.tid === tid) || null;
+          return { t: fakeDef, res, hasCard: !!autoCard, autoCard, ageGroup: ((res as any).ageGroup ?? null) as string | null, isAuto: true };
+        }),
+    ].sort((a, b) => {
+      const da = a.t.dateExact ?? a.t.date;
+      const db = b.t.dateExact ?? b.t.date;
+      return db.localeCompare(da);  // mais recente primeiro
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rival, bjgtCard, wjgcCard, eowagr25Card, wjgc26_1213Card, autoScorecards, T_BY_NAME]);
 
   // Contadores baseados em tournResults (deduplicados) — fonte de verdade para o detalhe
   const playedDedup = tournResults.length;
@@ -637,19 +648,46 @@ export function RivalDetail({ playerName }: { playerName: string }) {
             {/* Pills: país · trend · DOB · rank · ano activo */}
             <div className="flex-wrap mb-8" style={{ display: "flex", gap: 5, alignItems: "center" }}>
               {rival && <span className="p p-sm p-muted fs-12" >{rival.co}</span>}
-              {/* Identidade USKids (memberID do signupanytime) */}
-              {mhPlayer?.memberId && (
-                <a
-                  href={`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=memberresults&fmt=nohead&ax=1129&m=${mhPlayer.memberId}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p p-sm fs-11"
-                  title={`USKids memberID ${mhPlayer.memberId} — abrir no signupanytime.com`}
-                  style={{ background: "#fff7ed", color: "#9a3412", border: "1px solid #fdba74", fontWeight: 600, textDecoration: "none" }}
-                >
-                  ⛳ USKids #{mhPlayer.memberId} ↗
-                </a>
-              )}
+              {/* Identidade USKids (memberID + link para último torneio no signupanytime).
+                  Nota: signupanytime não expõe perfil HTML público por memberID
+                  (v=memberresults&m=... devolve "JSON_DATA is null"). O melhor que
+                  conseguimos linkar é o leaderboard do torneio mais recente onde o
+                  jogador apareceu — daí descobrir-se o resto da carreira manualmente. */}
+              {mhPlayer?.memberId && (() => {
+                const parseDate = (s?: string): string => {
+                  if (!s) return "0000-00-00";
+                  const p = s.split("/");
+                  return p.length === 3
+                    ? `${p[2]}-${p[0].padStart(2,"0")}-${p[1].padStart(2,"0")}`
+                    : s;
+                };
+                const recent = Object.entries(mhPlayer.torneios || {})
+                  .map(([tcode, t]) => ({ tcode, d: parseDate(t.startDate) }))
+                  .filter(x => /^\d+$/.test(x.tcode) && x.d !== "0000-00-00")
+                  .sort((a, b) => b.d.localeCompare(a.d))[0];
+                const baseStyle = { background: "#fff7ed", color: "#9a3412", border: "1px solid #fdba74", fontWeight: 600, textDecoration: "none" };
+                if (!recent) {
+                  return (
+                    <span className="p p-sm fs-11"
+                      title={`USKids memberID ${mhPlayer.memberId}`}
+                      style={baseStyle}>
+                      ⛳ USKids #{mhPlayer.memberId}
+                    </span>
+                  );
+                }
+                return (
+                  <a
+                    href={`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${recent.tcode}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p p-sm fs-11"
+                    title={`USKids memberID ${mhPlayer.memberId} — abrir leaderboard do torneio mais recente (t=${recent.tcode})`}
+                    style={baseStyle}
+                  >
+                    ⛳ USKids #{mhPlayer.memberId} ↗
+                  </a>
+                );
+              })()}
               {/* Identidade FPG (nfed + clube PT) */}
               {rival && (rival as any).ptFed && (
                 <span className="p p-sm p-club fs-11" title={`FPG nfed ${(rival as any).ptFed}`}
@@ -1231,4 +1269,4 @@ export function RivalDetail({ playerName }: { playerName: string }) {
       )}
     </>
   );
-}
+});

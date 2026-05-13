@@ -429,7 +429,6 @@ export function dobRangeStrict(p: RivalPlayer): [Date | null, Date | null] {
       if (!hi || latest < hi) hi = latest;
     }
     if (ageMax != null) {
-      // Tinha NO MÁXIMO ageMax → DOB > tDate - (ageMax+1) anos (earliest possível)
       const earliest = new Date(tDate); earliest.setFullYear(earliest.getFullYear() - ageMax - 1);
       earliest.setDate(earliest.getDate() + 1);
       if (!lo || earliest > lo) lo = earliest;
@@ -439,46 +438,25 @@ export function dobRangeStrict(p: RivalPlayer): [Date | null, Date | null] {
 }
 
 /**
- * Verifica se dois jogadores podem coerentemente ser a mesma pessoa.
- * Conservador: SÓ bloqueia merge quando há evidência FORTE de pessoas diferentes.
+ * Testa se dois RivalPlayer podem ser a MESMA pessoa.
+ * Retorna `false` apenas quando há EVIDÊNCIA FORTE de que são pessoas diferentes:
+ *   1. Ambos têm `memberId` explícito (USKids) e são distintos
+ *   2. Ambos têm `dob` explícita ("DD/MM/YYYY") e são distintas
+ * Caso contrário, retorna `true` (permitir merge).
  *
- * Bloqueia se:
- *   1. memberId definido em ambos e diferente
- *   2. DOB explícita em ambos e diferem por > 30 dias
- *
- * NÃO bloqueia em janelas DOB inferidas (demasiado ruidosas — kids jogam em
- * escalões adjacentes, dados podem ter pequenas inconsistências). Janelas
- * com gap > 1 ano contra DOB explícita vão soltar a flag.
- *
- * Para Manuel: nunca bloqueia (resolvePlayerKey + isM já tratam dele).
+ * NOTA: não usar ranges DOB inferidos aqui — escalões adjacentes (Boys 10/11)
+ * podem produzir ranges disjuntos para a MESMA pessoa apenas por causa de
+ * boundaries de idade ↔ data de torneio. Isso provoca duplicação no slot
+ * alternativo e chaves React duplicadas no render.
  */
 export function arePlayersCompatible(a: RivalPlayer, b: RivalPlayer): boolean {
-  if (a.isM || b.isM) return true;
+  // 1) memberId mismatch (ambos definidos e distintos)
+  const midA = (a as any).memberId as string | undefined;
+  const midB = (b as any).memberId as string | undefined;
+  if (midA && midB && midA !== midB) return false;
 
-  const aMid = (a as any).memberId, bMid = (b as any).memberId;
-  if (aMid && bMid && aMid !== bMid) return false;
-
-  // DOB explícita em ambos: têm de coincidir (tolerância 30 dias)
-  if (a.dob && b.dob) {
-    const da = parseDob(a.dob), db = parseDob(b.dob);
-    const diffDays = Math.abs(da.getTime() - db.getTime()) / 86400000;
-    if (diffDays > 30) return false;
-  }
-
-  // DOB explícita vs janela inferida do outro: bloqueia só se gap > 12 meses
-  const explicit = a.dob ? parseDob(a.dob) : (b.dob ? parseDob(b.dob) : null);
-  const other = a.dob ? b : (b.dob ? a : null);
-  if (explicit && other) {
-    const [lo, hi] = dobRangeStrict(other);
-    if (lo && explicit < lo) {
-      const months = (lo.getTime() - explicit.getTime()) / (30.44 * 86400000);
-      if (months > 12) return false;
-    }
-    if (hi && explicit > hi) {
-      const months = (explicit.getTime() - hi.getTime()) / (30.44 * 86400000);
-            if (months > 12) return false;
-    }
-  }
+  // 2) DOB explícitas distintas
+  if (a.dob && b.dob && a.dob !== b.dob) return false;
 
   return true;
 }

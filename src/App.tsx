@@ -34,6 +34,9 @@ const CalendarioPage = lazy(() => import("./pages/CalendarioPage"));
 const BJGTPage = lazy(() => import("./pages/BJGTPage"));
 const BJGTAnalysisPage = lazy(() => import("./pages/BJGTAnalysisPage"));
 const KIDSPage = lazy(() => import("./pages/KIDSPage"));
+const KIDS2Page = lazy(() => import("./pages/KIDS2Page"));
+const KIDS2ScoutView = lazy(() => import("./pages/kids2/ScoutView"));
+const KIDS2NextTournaments = lazy(() => import("./pages/kids2/NextTournaments"));
 const CompararPage = lazy(() => import("./pages/CompararPage"));
 const DrivePage = lazy(() => import("./pages/DrivePage"));
 const USKIDSPage = lazy(() => import("./pages/USKIDSPage"));
@@ -277,6 +280,11 @@ export default function App() {
                 <Route path="/bjgt-analysis/:fed?" element={<BJGTAnalysisPage />} />
                 <Route path="/kids" element={<KIDSPage />} />
                 <Route path="/kids/next-t" element={<KIDSPage />} />
+                {/* KIDS2 — rebuild canonical-first; coexiste com /kids até estar estável. */}
+                <Route path="/kids2" element={<KIDS2Page />} />
+                <Route path="/kids2/next-t" element={<KIDS2NextTournaments />} />
+                <Route path="/kids2/scout/:tid" element={<KIDS2ScoutView />} />
+                <Route path="/kids2/:juniorId" element={<KIDS2Page />} />
                 <Route path="/uskids" element={<USKIDSPage />} />
                 <Route path="/FPG" element={<FPGPage />} />
                 {/* Deep-link canónico de torneio FPG: /FPG/torneio/{ccode}-{tcode}.
@@ -297,11 +305,7 @@ export default function App() {
                 <Route path="/titulos" element={<TitulosPage />} />
                 <Route path="/titulos/:tab" element={<TitulosPage />} />
                 {/* Compat: URLs antigas continuam a funcionar (redirect) */}
-                <Route path="/nacionais-jovens" element={<Navigate to="/titulos/nacional" replace />} />
-                <Route path="/nacionais" element={<Navigate to="/titulos/nacional" replace />} />
-                {/* Manter NacionaisJovensPage acessivel via rota antiga (caso de bookmarks) */}
-                <Route path="/nacionais-jovens-legacy" element={<NacionaisJovensPage />} />
-                <Route path="*" element={<Navigate to={`/jogadores/${MANUEL_FED}`} replace />} />
+                <Route path="/*" element={<Navigate to="/" replace />} />
               </Routes>
             </Suspense>
           </main>
@@ -310,3 +314,4 @@ export default function App() {
     </div>
   );
 }
+

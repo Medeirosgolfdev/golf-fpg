@@ -607,7 +607,7 @@ function TabResultados({ data, selectedT, greatgolfData }: {
         <div className="detail-header-top">
           <h2 className="detail-title">{t.name}</h2>
           <button onClick={printRondas} className="btn fs-12" style={{ display:"flex", alignItems:"center", gap:5 }}>
-            ğŸ–¨ï¸ Imprimir
+            ğŸ–¨¸ Imprimir
           </button>
         </div>
         <div className="detail-sub">
