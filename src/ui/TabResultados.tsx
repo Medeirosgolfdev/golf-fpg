@@ -225,7 +225,7 @@ function EscalaoTabs({ escaloes, torneio: t, defaultIdx, arMap }: {
         {escaloes.map((es, i) => {
           const isME = t.escalao_manuel
             ? es.age_group === t.escalao_manuel
-            : (es.is_manuel === true && es.nome === escalaoEsperado);
+            : (es.is_manuel === true && es.age_group === escalaoEsperado);
           const tInfo = TEES_LOOKUP[t.t]?.[es.age_group];
           const dist = tInfo?.metros?.length === 18
             ? tInfo.metros.reduce((a: number, b: number) => a + b, 0) : null;
@@ -387,7 +387,7 @@ function TabResultados({ data, selectedT, greatgolfData }: {
       if (!rondasComDados.length) return "";
       const isManuelEscalao = t.escalao_manuel
         ? e.age_group === t.escalao_manuel
-        : (e.is_manuel === true && e.nome === escalaoEsperado);
+        : (e.is_manuel === true && e.age_group === escalaoEsperado);
       const teeInfo = TEES_LOOKUP[t.t]?.[e.age_group];
 
       const escalaoTitle = `<h2>${isManuelEscalao ? "★ " : ""}${e.nome}</h2>`;
@@ -662,7 +662,7 @@ function TabResultados({ data, selectedT, greatgolfData }: {
         const escalaoEsperado = escalaoManuelParaData(t.date_inicio);
         const manuelIdx = escaloes.findIndex(e =>
           t.escalao_manuel ? e.age_group === t.escalao_manuel
-            : (e.is_manuel === true && e.nome === escalaoEsperado)
+            : (e.is_manuel === true && e.age_group === escalaoEsperado)
         );
         return <EscalaoTabs escaloes={escaloes} torneio={t} defaultIdx={manuelIdx >= 0 ? manuelIdx : 0} arMap={arMap} />;
       })()}

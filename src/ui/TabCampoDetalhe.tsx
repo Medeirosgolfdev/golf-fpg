@@ -38,7 +38,8 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
   const escalaoM = escalaoManuelParaData(t.date_inicio);
   const sBase = seriesBase(t.name);
   const currentYear = parseInt((isoDate(t.date_inicio) || `${new Date().getFullYear()}-01-01`).slice(0, 4));
-  const b12     = t.escaloes.find(e => e.nome === escalaoM);
+  // escalaoManuelParaData retorna NUMBER; comparar com age_group, não com nome string
+  const b12     = t.escaloes.find(e => e.age_group === escalaoM);
   const ptTotal = t.escaloes.flatMap(e => e.jogadores ?? []).filter(j => j.pais === "PT");
   const dias    = diasAte(t.date_inicio);
   const urgente = b12 && b12.vagas <= 3 && b12.vagas > 0;
@@ -97,7 +98,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                   color: urgente ? bd.cor : "var(--text-2)",
                   border:`1px solid ${bd.bg}`, padding:"3px 12px",
                 }}>
-                  ★ {escalaoM}: {b12.inscritos}/{b12.maximo}
+                  ★ {b12.nome}: {b12.inscritos}/{b12.maximo}
                   <span style={{ marginLeft:5, opacity:.8 }}>({bd.label})</span>
                 </span>
               ) : null;
@@ -150,7 +151,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
             {sortEscaloes(t.escaloes).map(e => {
               const bd  = badgeVagas(e.vagas, e.maximo);
               const dst = ESCALOES_DESTAQUE_USKIDS.has(e.nome);
-              const man = e.nome === escalaoM;
+              const man = e.age_group === escalaoM;
               const novos7d = (e.jogadores || []).filter(j => j.firstSeen && (Date.now() - new Date(j.firstSeen).getTime()) < 7 * 86400_000).length;
               return (
                 <div key={e.age_group} className="card" style={{
