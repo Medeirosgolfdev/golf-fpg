@@ -175,11 +175,33 @@ Consolidou 47 chunks (610 MB total, com duplicação massiva do campo `torneios`
 
 ## 8. Pendente (próxima sessão)
 
-1. **Verificar deploy Vercel** — em `https://golf-fpg.vercel.app/uskids` confirmar que os 17 torneios PT Local Tour aparecem (2016/2017/2023)
+1. **Verificar deploy Vercel** — em `https://golf-fpg.vercel.app/uskids` confirmar que os 17 torneios PT Local Tour aparecem (2016/2017/2023). **Update 2026-05-13 tarde:** o deploy quebrou (commits `68b9364` + `fc5903e` falharam por bloco JSX órfão em FPGPage.tsx). Fix no commit `f982090b8`. Re-verificar quando próximo deploy automático correr.
 2. **Validar Manuel multi-mid em prática** — na KIDSpage, ver se os jogadores do El Prat 2023 aparecem ligados ao perfil dele
-3. **Resolver os 1.601 nomes "?" restantes** — agora que o `fetch-uskids-member-history.js` está patched (POST + t=1), próximos runs do workflow `uskids-member-history.yml` vão resolver progressivamente nomes de tcodes antigos
+3. **Resolver os 1.601 nomes "?" restantes** — agora que o `fetch-uskids-member-history.js` está patched (POST + t=1), próximos runs do workflow `uskids-member-history.yml` vão resolver progressivamente nomes de tcodes antigos. **Update 2026-05-13 tarde:** trabalho parcialmente avançado via scripts `browser-verify-*.js` (arquivados em `scripts/_archive/verify-names-2026-05/`)
 4. **Considerar Git LFS** — `output/data-archive/uskids-member-history-001.json` está nos 80 MB; vai voltar a passar 100 MB quando a cache crescer mais. Git LFS é a solução durável
 5. **Cleanup dos `parLabelColSpan` noutros consumidores** — DrivePage, AdmissionsTab, etc. podem ter o mesmo bug se algum hardcoded outro valor
+
+---
+
+## 8b. Addendum 2026-05-13 (tarde)
+
+Trabalho adicional feito hoje à tarde (não relacionado com USKids — fix de deploy + cleanup):
+
+### Fix Vercel deploy
+- 2 commits dos bots (`68b9364` USKids field + `fc5903e` classif FPG) tinham `X 0/1` (Vercel deploy failed).
+- Causa: bloco JSX órfão pós-`export default` em `FPGPage.tsx:2721` (`on key=...` em vez de `<button key=...`).
+- Fix: removidas linhas 2720-2759.
+
+### Cleanup geral (commit `f982090b8`)
+- ~20 imports não usados removidos em 6 ficheiros TSX (FPGPage, BJGTAnalysisPage, BJGTPage, USKIDSPage, DrivePage, TabelaGlobal).
+- Deduplicação: `TG_TIER_L`/`TG_TR_I` em TabelaGlobal → re-export de `constants/config.ts`.
+- 26 ficheiros temporários apagados (snippets `_mids-*`, reports verify/check/resolve, backups `BD_*.json`, etc.).
+- 7 scripts ad-hoc do trabalho "verify names" movidos para `scripts/_archive/verify-names-2026-05/`.
+- `.gitignore` reforçado contra regressão.
+
+### Validação
+- `npx esbuild` OK nos 6 ficheiros TSX editados.
+- 139/139 testes passam.
 
 ---
 

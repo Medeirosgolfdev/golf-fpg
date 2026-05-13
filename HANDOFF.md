@@ -1,7 +1,8 @@
 # HANDOFF — Próxima sessão
 
 > Documento de continuidade. Lê isto primeiro ao recomeçar uma sessão.
-> Última actualização: 2026-05-13 (sessão PT Local Tour + KIKO + Manuel multi-mid).
+> Última actualização: 2026-05-13 tarde (fix build Vercel + cleanup geral).
+> Sessão anterior: 2026-05-12/13 (PT Local Tour + KIKO + Manuel multi-mid).
 
 ---
 
@@ -169,9 +170,11 @@ e executa em F12 do signupanytime.
    — actualmente 80 MB. Quando crescer, vai voltar a falhar push. Solução durável:
    Git LFS.
 
-2. **1.601 mids ainda sem nome** — em vários ficheiros member-history. Plano A
-   (workflow) deve resolver com o tempo; Plano B (script dedicado) ainda não foi
-   escrito.
+2. **1.601 mids ainda sem nome** — em vários ficheiros member-history. Trabalho
+   parcialmente avançado em 2026-05-13 tarde via os scripts `browser-verify-*.js`
+   + `apply-corrections.py` (arquivados em `scripts/_archive/verify-names-2026-05/`).
+   Workflow `uskids-member-history.yml` deve continuar a resolver com o tempo agora
+   que o endpoint POST+t=1 está patched.
 
 3. **`parLabelColSpan` hardcoded em outros componentes?** — só fixei
    `TabResultados.tsx`. Verificar `DrivePage.tsx`, `AdmissionsTab.tsx`,
@@ -181,6 +184,33 @@ e executa em F12 do signupanytime.
    — o patch ao `fetch-uskids-member-history.js` foi pushed mas o próximo cron
    ainda não correu. Verificar `.github/workflows/uskids-member-history.yml` para
    schedule e correr manualmente se quiseres acelerar.
+
+5. **Vercel deploy a falhar (2026-05-13 manhã) → resolvido na tarde**
+   — commits `68b9364` (USKids field 08:58 UTC) e `fc5903e` (classif FPG 04:44)
+   marcavam "X 0/1". Causa: bloco JSX órfão pós-`export default` em
+   `FPGPage.tsx:2721` (`on key={...}` em vez de `<button key={...}`). Fix no
+   commit `f982090b8`. Próximo deploy automático deve passar; **verificar
+   Vercel dashboard** ao recomeçar para confirmar.
+
+---
+
+## 5b. Trabalho de 2026-05-13 (tarde)
+
+### Fix build Vercel
+- **Problema:** `FPGPage.tsx:2721` tinha bloco JSX órfão (`on key=...`) + `export default` duplicado depois.
+- **Causa:** copy-paste mal feito que duplicou ~40 linhas do tab de escalões Jovens DEPOIS do encerramento do componente.
+- **Fix:** removidas as linhas 2720-2759.
+- **Validação:** esbuild OK, 139/139 testes passam.
+
+### Cleanup geral (commit `f982090b8`)
+- **Imports não usados removidos** em 6 ficheiros TSX (FPGPage, BJGTAnalysisPage, BJGTPage, USKIDSPage, DrivePage, TabelaGlobal).
+- **Duplicação:** `TG_TIER_L`/`TG_TR_I` em TabelaGlobal substituídos por re-export de `constants/config.ts`.
+- **26 ficheiros temporários apagados:**
+  - Raiz: `preview.txt`, `removidos-preview.txt`, `dbg-out.txt`, `build.log`
+  - `scripts/`: `_test-sync.txt`, `_tmp-check.js`
+  - `public/data-archive/`: 7 snippets `_mids-*.txt`, 13 reports verify/check/apply/integrate/resolve/verified, 2 backups `BD_*.json`
+- **7 scripts ad-hoc do trabalho "verify names" arquivados** em `scripts/_archive/verify-names-2026-05/`: `browser-verify-2/3/A/A2/B/rest.js` + `apply-corrections.py`.
+- **`.gitignore` reforçado:** `*.log`, `**/_*.txt`, `**/_tmp-*`, `verify-*.json`, `check-*-report.json`, `apply-*-report.json`, `integrate-*-report.json`, `resolve-*.json`, `verified-*.json`, `BD_*.json`, `output/cross-stats-cache.json`.
 
 ---
 
