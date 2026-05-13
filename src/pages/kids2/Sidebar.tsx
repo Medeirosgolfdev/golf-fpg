@@ -1,8 +1,9 @@
 /**
  * kids2/Sidebar.tsx
  *
- * Sidebar de rivais. Filtra por search + país + circuito.
- * "Todos" agrupados por país, com headers sticky.
+ * Sidebar de rivais. Filtros (search + país) locais; pills de fonte e toggles
+ * especiais (vs Manuel / vitórias) vêm de cima (via props) — são renderizados
+ * pela toolbar da KIDS2Page.
  */
 
 import React, { useMemo, useState } from "react";
@@ -10,19 +11,9 @@ import type { CanonicalData, Junior } from "./data";
 import { getSharedTournamentIds } from "./data";
 import { flag as flagOf } from "../../utils/flagUtils";
 
-const MAX_VISIBLE = 400;
+const MAX_VISIBLE = 8000;
 
 type SourceKey = "uskids" | "fpg" | "rfeg" | "ffgolf" | "wjgc" | "eowagr" | "doral";
-
-const SOURCE_PILLS: { key: SourceKey; label: string }[] = [
-  { key: "uskids", label: "USKids" },
-  { key: "fpg", label: "FPG" },
-  { key: "rfeg", label: "RFEG" },
-  { key: "ffgolf", label: "FFG" },
-  { key: "wjgc", label: "WJGC" },
-  { key: "eowagr", label: "EOWAGR" },
-  { key: "doral", label: "Doral" },
-];
 
 function juniorHasSource(j: Junior, src: SourceKey, tournamentById: Map<string, { sourceId: string }>): boolean {
   if (src === "uskids") return !!j.sources.uskids?.memberId;
@@ -60,22 +51,18 @@ interface Props {
   onQChange: (q: string) => void;
   countryFilter: string;
   onCountryFilterChange: (c: string) => void;
+  // Filtros vindos da toolbar superior
+  activeSources: Set<SourceKey>;
+  onlyVsManuel: boolean;
+  onlyWins: boolean;
 }
 
-export default function Sidebar({ data, selectedId, onSelect, q, onQChange, countryFilter }: Props) {
+export default function Sidebar({
+  data, selectedId, onSelect, q, onQChange,
+  countryFilter, activeSources, onlyVsManuel, onlyWins,
+}: Props) {
   const manuel = data.manuel;
-  const [activeSources, setActiveSources] = useState<Set<SourceKey>>(new Set());
-  const [onlyVsManuel, setOnlyVsManuel] = useState(false);
-  const [onlyWins, setOnlyWins] = useState(false);
   const [collapsedCountries, setCollapsedCountries] = useState<Set<string>>(new Set());
-
-  const toggleSource = (k: SourceKey) => {
-    setActiveSources((prev) => {
-      const next = new Set(prev);
-      if (next.has(k)) next.delete(k); else next.add(k);
-      return next;
-    });
-  };
 
   const toggleCountry = (c: string) => {
     setCollapsedCountries((prev) => {
@@ -178,7 +165,7 @@ export default function Sidebar({ data, selectedId, onSelect, q, onQChange, coun
       borderRight: "1px solid var(--border)",
       display: "flex",
       flexDirection: "column",
-      height: "100%",
+      minHeight: 0,
     }}>
       <div style={{ padding: "10px 12px", borderBottom: "1px solid var(--border-light)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 11, color: "var(--text-3)", marginBottom: 8 }}>
@@ -186,7 +173,7 @@ export default function Sidebar({ data, selectedId, onSelect, q, onQChange, coun
           <span style={{ marginLeft: "auto" }}>
             {totalFiltered === totalShown
               ? `${totalFiltered} de ${data.juniors.length}`
-              : `${totalShown} de ${totalFiltered} · top ${MAX_VISIBLE}`}
+              : `${totalShown} de ${totalFiltered}`}
           </span>
         </div>
         <input
@@ -202,50 +189,8 @@ export default function Sidebar({ data, selectedId, onSelect, q, onQChange, coun
             fontSize: 13,
             background: "var(--bg)",
             color: "var(--text)",
-            marginBottom: 8,
           }}
         />
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 6 }}>
-          {SOURCE_PILLS.map((p) => {
-            const active = activeSources.has(p.key);
-            return (
-              <button
-                key={p.key}
-                onClick={() => toggleSource(p.key)}
-                style={pillStyle(active)}
-                title={`Filtrar por fonte: ${p.label}`}
-              >
-                {p.label}
-              </button>
-            );
-          })}
-        </div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
-          <button
-            onClick={() => setOnlyVsManuel((v) => !v)}
-            style={pillStyle(onlyVsManuel, "var(--color-good-dark)")}
-            title="Só rivais que cruzaram com Manuel"
-            disabled={!manuel}
-          >
-            ⚔️ vs Manuel
-          </button>
-          <button
-            onClick={() => setOnlyWins((v) => !v)}
-            style={pillStyle(onlyWins, "var(--color-warn-dark, #92400e)")}
-            title="Só rivais com pelo menos 1 vitória"
-          >
-            🏆 c/ vitórias
-          </button>
-          {(activeSources.size > 0 || onlyVsManuel || onlyWins) && (
-            <button
-              onClick={() => { setActiveSources(new Set()); setOnlyVsManuel(false); setOnlyWins(false); }}
-              style={{ ...pillStyle(false), color: "var(--color-danger-dark)", borderColor: "var(--color-danger-dark)" }}
-              title="Limpar filtros"
-            >
-              ✕ limpar
-            </button>
-          )}
-        </div>
       </div>
 
       <div style={{ flex: 1, overflowY: "auto" }}>
@@ -289,22 +234,6 @@ export default function Sidebar({ data, selectedId, onSelect, q, onQChange, coun
       </div>
     </div>
   );
-}
-
-function pillStyle(active: boolean, accent?: string): React.CSSProperties {
-  const baseAccent = accent || "var(--color-info-dark)";
-  return {
-    fontSize: 10,
-    fontWeight: 600,
-    padding: "2px 7px",
-    borderRadius: 10,
-    border: `1px solid ${active ? baseAccent : "var(--border)"}`,
-    background: active ? baseAccent : "var(--bg)",
-    color: active ? "var(--bg)" : "var(--text-2)",
-    cursor: "pointer",
-    lineHeight: 1.4,
-    letterSpacing: 0.2,
-  };
 }
 
 function SectionHeader({ children, color, icon, onClick }: {

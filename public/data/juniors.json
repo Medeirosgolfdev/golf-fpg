@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-13T18:13:43.312Z",
+  "generatedAt": "2026-05-13T18:29:45.475Z",
   "juniors": [
     {
       "id": "u433800",
@@ -1063,10 +1063,8 @@
     },
     {
       "id": "u470281",
-      "canonicalName": "Niko Gordic-Ronderos",
-      "aliases": [
-        "Niko Joaquin Gordic-Ronderos"
-      ],
+      "canonicalName": "Niko Joaquin Gordic-Ronderos",
+      "aliases": [],
       "dob": null,
       "sex": null,
       "nationality": "US",
@@ -1077,13 +1075,7 @@
         "uskids": {
           "memberId": "470281",
           "ageGroupCurrent": "Boys 13-14"
-        },
-        "_secondary": [
-          {
-            "sourceId": "doral",
-            "key": "doral-1875120444"
-          }
-        ]
+        }
       },
       "tournamentIds": [
         "uskids-3871",
@@ -1198,18 +1190,15 @@
         "uskids-20255",
         "uskids-20256",
         "uskids-20257",
-        "uskids-20258",
-        "doral-ftm_doral_2024"
+        "uskids-20258"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:470281",
-          "doral:doral-1875120444"
+          "uskids:470281"
         ],
         "mergedFromSources": [
-          "uskids",
-          "doral"
+          "uskids"
         ]
       }
     },
@@ -39033,33 +39022,18 @@
     },
     {
       "id": "u521022",
-      "canonicalName": "Martim Moreira",
-      "aliases": [
-        "Martim Shipitsyn Moreira"
-      ],
-      "dob": "2012-02-16",
-      "sex": "M",
+      "canonicalName": "Martim Shipitsyn Moreira",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
       "nationality": "PT",
       "country": "PT",
-      "region": "Lisboa",
-      "club": "Belas",
+      "region": null,
+      "club": null,
       "sources": {
         "uskids": {
           "memberId": "521022",
           "ageGroupCurrent": "Boys 12"
-        },
-        "fpg": {
-          "fed": "42985",
-          "club": "Belas",
-          "clubCode": "068",
-          "clubLong": "Clube de Golfe de Belas",
-          "hcpExact": 9.9,
-          "hcpDate": "2026-05-02",
-          "sex": "M",
-          "tags": [
-            "PJA"
-          ],
-          "primary": true
         }
       },
       "tournamentIds": [
@@ -39087,24 +39061,15 @@
         "uskids-11683",
         "uskids-11684",
         "uskids-11685",
-        "uskids-13702",
-        "fpg-152-10368-20240305-all",
-        "fpg-013-10092-20240618-all",
-        "fpg-191-10021-20241004-all",
-        "fpg-192-10005-20241130-all",
-        "fpg-000-10825-20250414-sub_14",
-        "fpg-038-10651-20250530-all"
+        "uskids-13702"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:521022",
-          "fpg:42985",
-          "dob:2012-02-16"
+          "uskids:521022"
         ],
         "mergedFromSources": [
-          "uskids",
-          "fpg"
+          "uskids"
         ]
       }
     },
@@ -50054,11 +50019,8 @@
     },
     {
       "id": "u526416",
-      "canonicalName": "Saul Yanez",
-      "aliases": [
-        "Saul Gerardo Yanez",
-        "Saul Emiliano Yanez"
-      ],
+      "canonicalName": "Saul Gerardo Yanez",
+      "aliases": [],
       "dob": null,
       "sex": null,
       "nationality": "US",
@@ -50069,21 +50031,7 @@
         "uskids": {
           "memberId": "526416",
           "ageGroupCurrent": "Boys 12-14"
-        },
-        "_secondary": [
-          {
-            "sourceId": "doral",
-            "key": "doral-1874715111"
-          },
-          {
-            "sourceId": "doral",
-            "key": "doral-1875120421"
-          },
-          {
-            "sourceId": "doral",
-            "key": "doral-2173605274"
-          }
-        ]
+        }
       },
       "tournamentIds": [
         "uskids-5046",
@@ -50189,21 +50137,15 @@
         "uskids-19731",
         "uskids-19732",
         "uskids-20554",
-        "uskids-20555",
-        "doral-ftm_doral_2024",
-        "doral-ftm_doral_2025"
+        "uskids-20555"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:526416",
-          "doral:doral-1874715111",
-          "doral:doral-1875120421",
-          "doral:doral-2173605274"
+          "uskids:526416"
         ],
         "mergedFromSources": [
-          "uskids",
-          "doral"
+          "uskids"
         ]
       }
     },
@@ -50221,7 +50163,17 @@
         "uskids": {
           "memberId": "526417",
           "ageGroupCurrent": "Boys 12-14"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "doral",
+            "key": "doral-1874715111"
+          },
+          {
+            "sourceId": "doral",
+            "key": "doral-2173605274"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-6901",
@@ -50315,15 +50267,20 @@
         "uskids-19731",
         "uskids-19732",
         "uskids-20554",
-        "uskids-20555"
+        "uskids-20555",
+        "doral-ftm_doral_2024",
+        "doral-ftm_doral_2025"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:526417"
+          "uskids:526417",
+          "doral:doral-1874715111",
+          "doral:doral-2173605274"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "doral"
         ]
       }
     },
@@ -105637,10 +105594,8 @@
     },
     {
       "id": "u548842",
-      "canonicalName": "Harry Mody",
-      "aliases": [
-        "Harry Kirson Mody"
-      ],
+      "canonicalName": "Harry Kirson Mody",
+      "aliases": [],
       "dob": null,
       "sex": null,
       "nationality": "GB",
@@ -105651,13 +105606,7 @@
         "uskids": {
           "memberId": "548842",
           "ageGroupCurrent": "Boys 14"
-        },
-        "_secondary": [
-          {
-            "sourceId": "wjgc",
-            "key": "harry mody|"
-          }
-        ]
+        }
       },
       "tournamentIds": [
         "uskids-8300",
@@ -105670,18 +105619,15 @@
         "uskids-9776",
         "uskids-12191",
         "uskids-18242",
-        "uskids-16020",
-        "wjgc-wjgc_2026_contest33"
+        "uskids-16020"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:548842",
-          "wjgc:harry mody|"
+          "uskids:548842"
         ],
         "mergedFromSources": [
-          "uskids",
-          "wjgc"
+          "uskids"
         ]
       }
     },
@@ -106867,16 +106813,23 @@
       "id": "u549346",
       "canonicalName": "Patrik Grulich",
       "aliases": [],
-      "dob": null,
-      "sex": null,
+      "dob": "2010-01-26",
+      "sex": "M",
       "nationality": "CZ",
       "country": "CZ",
       "region": null,
-      "club": null,
+      "club": "ALHAURÍN GOLF HOTEL & RESORT",
       "sources": {
         "uskids": {
           "memberId": "549346",
           "ageGroupCurrent": "Boys 12"
+        },
+        "rfeg": {
+          "lic": "AM22990714",
+          "club": "ALHAURÍN GOLF HOTEL & RESORT",
+          "catEdad": "Infantil",
+          "sex": "M",
+          "historicalLicenses": []
         }
       },
       "tournamentIds": [
@@ -106886,10 +106839,13 @@
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:549346"
+          "uskids:549346",
+          "rfeg:AM22990714",
+          "dob:2010-01-26"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "rfeg"
         ]
       }
     },
@@ -117749,28 +117705,18 @@
     },
     {
       "id": "u552199",
-      "canonicalName": "Candide Remoleur",
-      "aliases": [
-        "Candide Chasseloup Remoleur"
-      ],
+      "canonicalName": "Candide Chasseloup Remoleur",
+      "aliases": [],
       "dob": null,
-      "sex": "M",
+      "sex": null,
       "nationality": "FR",
       "country": "FR",
-      "region": "NOUVELLE-AQUITAINE",
-      "club": "Hossegor",
+      "region": null,
+      "club": null,
       "sources": {
         "uskids": {
           "memberId": "552199",
           "ageGroupCurrent": "Boys 11"
-        },
-        "ffgolf": {
-          "lic": "526458308",
-          "club": "Hossegor",
-          "hcp": 0.9,
-          "region": "NOUVELLE-AQUITAINE",
-          "sex": "M",
-          "glfLic": "0040"
         }
       },
       "tournamentIds": [
@@ -117780,29 +117726,15 @@
         "uskids-12892",
         "uskids-12888",
         "uskids-12890",
-        "uskids-12891",
-        "ffgolf-2601424402",
-        "ffgolf-2501364544",
-        "ffgolf-2501352691",
-        "ffgolf-2501335024",
-        "ffgolf-2501321524",
-        "ffgolf-2401269568",
-        "ffgolf-2401274803",
-        "ffgolf-2401234312",
-        "ffgolf-2401181232",
-        "ffgolf-2401165647",
-        "ffgolf-2301042901",
-        "ffgolf-2300994570"
+        "uskids-12891"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:552199",
-          "ffgolf:526458308"
+          "uskids:552199"
         ],
         "mergedFromSources": [
-          "uskids",
-          "ffgolf"
+          "uskids"
         ]
       }
     },
@@ -120619,9 +120551,7 @@
     {
       "id": "u553143",
       "canonicalName": "Jake Johnston",
-      "aliases": [
-        "Jake Jeff-Johnston"
-      ],
+      "aliases": [],
       "dob": null,
       "sex": null,
       "nationality": "US",
@@ -120632,13 +120562,7 @@
         "uskids": {
           "memberId": "553143",
           "ageGroupCurrent": "Boys 11"
-        },
-        "_secondary": [
-          {
-            "sourceId": "eowagr",
-            "key": "jake jeff-johnston|"
-          }
-        ]
+        }
       },
       "tournamentIds": [
         "uskids-8610",
@@ -120687,18 +120611,15 @@
         "uskids-17506",
         "uskids-17508",
         "uskids-17505",
-        "uskids-16955",
-        "eowagr-eowagr25_contest77"
+        "uskids-16955"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:553143",
-          "eowagr:jake jeff-johnston|"
+          "uskids:553143"
         ],
         "mergedFromSources": [
-          "uskids",
-          "eowagr"
+          "uskids"
         ]
       }
     },
@@ -187567,31 +187488,41 @@
     },
     {
       "id": "u576306",
-      "canonicalName": "Ricardo Ferreira",
+      "canonicalName": "Ricardo Castro-Ferreira",
       "aliases": [
-        "Ricardo Castro-Ferreira"
+        "Ricardo Castro Ferreira"
       ],
-      "dob": "2012-04-12",
+      "dob": "2015-07-02",
       "sex": "M",
       "nationality": "PT",
       "country": "PT",
-      "region": null,
-      "club": "Oporto",
+      "region": "Lisboa",
+      "club": "Estoril",
       "sources": {
         "uskids": {
           "memberId": "576306",
           "ageGroupCurrent": "Boys 9"
         },
         "fpg": {
-          "fed": "45366",
-          "club": "Oporto",
-          "clubCode": "001",
-          "clubLong": "Oporto",
-          "hcpExact": 20.9,
+          "fed": "49085",
+          "club": "Estoril",
+          "clubCode": "004",
+          "clubLong": "Clube de Golf do Estoril",
+          "hcpExact": 5.5,
           "hcpDate": "2026-05-02",
           "sex": "M",
-          "tags": [],
+          "tags": [
+            "PJA"
+          ],
           "primary": true
+        },
+        "ffgolf": {
+          "lic": "519172399",
+          "club": "St Germain",
+          "hcp": 5.5,
+          "region": "PARIS-ILE-DE-FRANCE",
+          "sex": "M",
+          "glfLic": "0006"
         }
       },
       "tournamentIds": [
@@ -187607,18 +187538,39 @@
         "uskids-16795",
         "uskids-11682",
         "uskids-11683",
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10647-20230704-sub_10",
+        "fpg-152-10368-20240305-all",
+        "fpg-002-11022-20240317-all",
+        "fpg-013-10092-20240618-all",
+        "fpg-000-10772-20240624-sub_10",
+        "fpg-191-10021-20241004-all",
+        "fpg-192-10005-20241130-all",
+        "fpg-935-10260-20250302-all",
+        "fpg-038-10651-20250530-all",
+        "fpg-125-10370-20250823-all",
+        "fpg-125-10371-20250824-all",
+        "fpg-192-10013-20250912-all",
+        "fpg-017-10189-20251024-all",
+        "fpg-935-10296-20260216-all",
+        "fpg-962-10081-20251229-all",
+        "fpg-000-10898-20260330-sub_14",
+        "ffgolf-2601405023",
+        "ffgolf-2601405022",
+        "ffgolf-2601415551",
+        "ffgolf-2501308499"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "uskids:576306",
-          "fpg:45366",
-          "dob:2012-04-12"
+          "fpg:49085",
+          "ffgolf:519172399",
+          "dob:2015-07-02"
         ],
         "mergedFromSources": [
           "uskids",
-          "fpg"
+          "fpg",
+          "ffgolf"
         ]
       }
     },
@@ -201786,16 +201738,23 @@
       "id": "u582664",
       "canonicalName": "Dechuan Meng",
       "aliases": [],
-      "dob": null,
-      "sex": null,
+      "dob": "2013-08-15",
+      "sex": "M",
       "nationality": "CN",
       "country": "CN",
       "region": null,
-      "club": null,
+      "club": "CLUB DE GOLF ARANJUEZ",
       "sources": {
         "uskids": {
           "memberId": "582664",
           "ageGroupCurrent": "Boys 10"
+        },
+        "rfeg": {
+          "lic": "CM66964850",
+          "club": "CLUB DE GOLF ARANJUEZ",
+          "catEdad": "Benjamín",
+          "sex": "M",
+          "historicalLicenses": []
         }
       },
       "tournamentIds": [
@@ -201808,10 +201767,13 @@
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:582664"
+          "uskids:582664",
+          "rfeg:CM66964850",
+          "dob:2013-08-15"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "rfeg"
         ]
       }
     },
@@ -222670,9 +222632,7 @@
     {
       "id": "u592971",
       "canonicalName": "Edward Millar",
-      "aliases": [
-        "Edward (Bear) Millar"
-      ],
+      "aliases": [],
       "dob": null,
       "sex": null,
       "nationality": "GB",
@@ -222683,13 +222643,7 @@
         "uskids": {
           "memberId": "592971",
           "ageGroupCurrent": "Boys 11"
-        },
-        "_secondary": [
-          {
-            "sourceId": "wjgc",
-            "key": "edward (bear) millar|"
-          }
-        ]
+        }
       },
       "tournamentIds": [
         "uskids-15704",
@@ -222723,18 +222677,15 @@
         "uskids-21683",
         "uskids-16459",
         "uskids-21682",
-        "uskids-16457",
-        "wjgc-wjgc_2025_contest34"
+        "uskids-16457"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:592971",
-          "wjgc:edward (bear) millar|"
+          "uskids:592971"
         ],
         "mergedFromSources": [
-          "uskids",
-          "wjgc"
+          "uskids"
         ]
       }
     },
@@ -226863,25 +226814,23 @@
     },
     {
       "id": "u595481",
-      "canonicalName": "Guillermo Quintana Menendez",
-      "aliases": [
-        "Guillermo Garcia Menendez"
-      ],
-      "dob": "2008-10-29",
+      "canonicalName": "Guillermo Garcia Menendez",
+      "aliases": [],
+      "dob": "2012-05-11",
       "sex": "M",
       "nationality": "ES",
       "country": "ES",
       "region": null,
-      "club": "CAMPO DE GOLF ABRA DEL PAS",
+      "club": "REAL CLUB DE GOLF LA BARGANIZA",
       "sources": {
         "uskids": {
           "memberId": "595481",
           "ageGroupCurrent": "Boys 13"
         },
         "rfeg": {
-          "lic": "1106087337",
-          "club": "CAMPO DE GOLF ABRA DEL PAS",
-          "catEdad": "Cadete",
+          "lic": "0202915832",
+          "club": "REAL CLUB DE GOLF LA BARGANIZA",
+          "catEdad": "BENJAMIN",
           "sex": "M",
           "historicalLicenses": []
         }
@@ -226895,17 +226844,14 @@
         "uskids-14330",
         "uskids-14331",
         "uskids-14332",
-        "uskids-14327",
-        "rfeg-nc65945_sub21",
-        "rfeg-nc67197_cadete",
-        "rfeg-nc67197_juvenil"
+        "uskids-14327"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "uskids:595481",
-          "rfeg:1106087337",
-          "dob:2008-10-29"
+          "rfeg:0202915832",
+          "dob:2012-05-11"
         ],
         "mergedFromSources": [
           "uskids",
@@ -239410,26 +239356,17 @@
     {
       "id": "u605568",
       "canonicalName": "Alvaro Gonzalez",
-      "aliases": [
-        "Alvaro Diaz Gonzalez"
-      ],
-      "dob": "2008-06-16",
-      "sex": "M",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
       "nationality": "ES",
       "country": "ES",
       "region": null,
-      "club": "REAL CLUB DE GOLF DE CASTIELLO",
+      "club": null,
       "sources": {
         "uskids": {
           "memberId": "605568",
           "ageGroupCurrent": "Boys 13-14"
-        },
-        "rfeg": {
-          "lic": "0201887429",
-          "club": "REAL CLUB DE GOLF DE CASTIELLO",
-          "catEdad": "INFANTIL",
-          "sex": "M",
-          "historicalLicenses": []
         }
       },
       "tournamentIds": [
@@ -239447,13 +239384,10 @@
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:605568",
-          "rfeg:0201887429",
-          "dob:2008-06-16"
+          "uskids:605568"
         ],
         "mergedFromSources": [
-          "uskids",
-          "rfeg"
+          "uskids"
         ]
       }
     },
@@ -239863,8 +239797,7 @@
       "canonicalName": "Manuel Medeiros",
       "aliases": [
         "Manuel Francisco Goulartt De Medeiros",
-        "Manuel Goulartt Medeiros",
-        "Manuel Francisco Medeiros"
+        "Manuel Goulartt Medeiros"
       ],
       "dob": "2014-04-29",
       "sex": "M",
@@ -239906,10 +239839,6 @@
             "key": "manuel medeiros|PT"
           },
           {
-            "sourceId": "wjgc",
-            "key": "manuel francisco medeiros|PT"
-          },
-          {
             "sourceId": "doral",
             "key": "doral-2173590307"
           }
@@ -239934,7 +239863,6 @@
         "fpg-935-10296-20260216-all",
         "eowagr-eowagr25_scorecards",
         "wjgc-wjgc_2025_contest34",
-        "wjgc-wjgc_2026_b1011_3r",
         "doral-ftm_doral_2025"
       ],
       "_match": {
@@ -239944,7 +239872,6 @@
           "fpg:52884",
           "eowagr:manuel medeiros|PT",
           "wjgc:manuel medeiros|PT",
-          "wjgc:manuel francisco medeiros|PT",
           "doral:doral-2173590307",
           "uskids:630106",
           "dob:2014-04-29"
@@ -240538,16 +240465,23 @@
       "id": "u607021",
       "canonicalName": "Thadee Regis",
       "aliases": [],
-      "dob": null,
-      "sex": null,
+      "dob": "2015-03-07",
+      "sex": "M",
       "nationality": "FR",
       "country": "FR",
       "region": null,
-      "club": null,
+      "club": "REAL CLUB DE GOLF \"EL PRAT\"",
       "sources": {
         "uskids": {
           "memberId": "607021",
           "ageGroupCurrent": "Boys 8"
+        },
+        "rfeg": {
+          "lic": "CB05092116",
+          "club": "REAL CLUB DE GOLF \"EL PRAT\"",
+          "catEdad": "Alevín",
+          "sex": "M",
+          "historicalLicenses": []
         }
       },
       "tournamentIds": [
@@ -240556,10 +240490,13 @@
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:607021"
+          "uskids:607021",
+          "rfeg:CB05092116",
+          "dob:2015-03-07"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "rfeg"
         ]
       }
     },
@@ -240666,9 +240603,7 @@
     {
       "id": "u607049",
       "canonicalName": "Alvaro Gonzalez",
-      "aliases": [
-        "Alvaro Fernandez Gonzalez"
-      ],
+      "aliases": [],
       "dob": null,
       "sex": null,
       "nationality": "ES",
@@ -240679,13 +240614,6 @@
         "uskids": {
           "memberId": "607049",
           "ageGroupCurrent": "Boys 12"
-        },
-        "rfeg": {
-          "lic": "AM74605832",
-          "club": null,
-          "catEdad": "S",
-          "sex": null,
-          "historicalLicenses": []
         }
       },
       "tournamentIds": [
@@ -240694,12 +240622,10 @@
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:607049",
-          "rfeg:AM74605832"
+          "uskids:607049"
         ],
         "mergedFromSources": [
-          "uskids",
-          "rfeg"
+          "uskids"
         ]
       }
     },
@@ -241624,52 +241550,36 @@
     {
       "id": "u607315",
       "canonicalName": "Alejandro Diaz",
-      "aliases": [
-        "Alejandro Huerta Diaz"
-      ],
-      "dob": "2011-04-03",
-      "sex": "M",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
       "nationality": "ES",
       "country": "ES",
       "region": null,
-      "club": "DON TELLO GOLF",
+      "club": null,
       "sources": {
         "uskids": {
           "memberId": "607315",
           "ageGroupCurrent": "Boys 13-14"
-        },
-        "rfeg": {
-          "lic": "9908940614",
-          "club": "DON TELLO GOLF",
-          "catEdad": "Alevín",
-          "sex": "M",
-          "historicalLicenses": []
         }
       },
       "tournamentIds": [
-        "uskids-15573",
-        "rfeg-nc54247_infantil_sc",
-        "rfeg-nc59512_sub14"
+        "uskids-15573"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:607315",
-          "rfeg:9908940614",
-          "dob:2011-04-03"
+          "uskids:607315"
         ],
         "mergedFromSources": [
-          "uskids",
-          "rfeg"
+          "uskids"
         ]
       }
     },
     {
       "id": "u607316",
       "canonicalName": "Nicolas Diaz",
-      "aliases": [
-        "Nicolas Carrasco Diaz"
-      ],
+      "aliases": [],
       "dob": null,
       "sex": null,
       "nationality": "ES",
@@ -241680,13 +241590,6 @@
         "uskids": {
           "memberId": "607316",
           "ageGroupCurrent": "Boys 10"
-        },
-        "rfeg": {
-          "lic": "AM11050501",
-          "club": null,
-          "catEdad": "S",
-          "sex": null,
-          "historicalLicenses": []
         }
       },
       "tournamentIds": [
@@ -241695,12 +241598,10 @@
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:607316",
-          "rfeg:AM11050501"
+          "uskids:607316"
         ],
         "mergedFromSources": [
-          "uskids",
-          "rfeg"
+          "uskids"
         ]
       }
     },
@@ -241907,10 +241808,8 @@
     },
     {
       "id": "u607404",
-      "canonicalName": "Pablo Lubary Gonzalez",
-      "aliases": [
-        "Pablo Santos González"
-      ],
+      "canonicalName": "Pablo Santos González",
+      "aliases": [],
       "dob": null,
       "sex": null,
       "nationality": "ES",
@@ -241921,29 +241820,18 @@
         "uskids": {
           "memberId": "607404",
           "ageGroupCurrent": "Boys 7"
-        },
-        "rfeg": {
-          "lic": "CP02912213",
-          "club": null,
-          "catEdad": "C",
-          "sex": null,
-          "historicalLicenses": []
         }
       },
       "tournamentIds": [
-        "uskids-15573",
-        "rfeg-nc59673_cadete",
-        "rfeg-nc59673_juvenil"
+        "uskids-15573"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:607404",
-          "rfeg:CP02912213"
+          "uskids:607404"
         ],
         "mergedFromSources": [
-          "uskids",
-          "rfeg"
+          "uskids"
         ]
       }
     },
@@ -242844,28 +242732,18 @@
     },
     {
       "id": "u608282",
-      "canonicalName": "Theo Zhao",
-      "aliases": [
-        "Théo Jiaheng ZHAO"
-      ],
+      "canonicalName": "Théo Jiaheng ZHAO",
+      "aliases": [],
       "dob": null,
-      "sex": "M",
+      "sex": null,
       "nationality": "FR",
       "country": "FR",
-      "region": "PARIS-ILE-DE-FRANCE",
-      "club": "St Nom La Breteche",
+      "region": null,
+      "club": null,
       "sources": {
         "uskids": {
           "memberId": "608282",
           "ageGroupCurrent": "Boys 10"
-        },
-        "ffgolf": {
-          "lic": "048276374",
-          "club": "St Nom La Breteche",
-          "hcp": 14.3,
-          "region": "PARIS-ILE-DE-FRANCE",
-          "sex": "M",
-          "glfLic": "0064"
         }
       },
       "tournamentIds": [
@@ -242889,21 +242767,15 @@
         "uskids-17873",
         "uskids-22196",
         "uskids-19679",
-        "uskids-22195",
-        "ffgolf-2601405023",
-        "ffgolf-2601405040",
-        "ffgolf-2601405022",
-        "ffgolf-2501308499"
+        "uskids-22195"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:608282",
-          "ffgolf:048276374"
+          "uskids:608282"
         ],
         "mergedFromSources": [
-          "uskids",
-          "ffgolf"
+          "uskids"
         ]
       }
     },
@@ -257280,28 +257152,18 @@
     },
     {
       "id": "u623753",
-      "canonicalName": "Alex Hayden",
-      "aliases": [
-        "Alex Martino Hayden"
-      ],
+      "canonicalName": "Alex Martino Hayden",
+      "aliases": [],
       "dob": null,
-      "sex": "M",
+      "sex": null,
       "nationality": "IT",
       "country": "IT",
-      "region": "PROVENCE-ALPES-CÔTE-D'AZUR",
-      "club": "Royal Mougins",
+      "region": null,
+      "club": null,
       "sources": {
         "uskids": {
           "memberId": "623753",
           "ageGroupCurrent": "Boys 15-18"
-        },
-        "ffgolf": {
-          "lic": "529360381",
-          "club": "Royal Mougins",
-          "hcp": 3.3,
-          "region": "PROVENCE-ALPES-CÔTE-D'AZUR",
-          "sex": "M",
-          "glfLic": "1051"
         }
       },
       "tournamentIds": [
@@ -257324,46 +257186,32 @@
         "uskids-20867",
         "uskids-20868",
         "uskids-21156",
-        "uskids-17370",
-        "ffgolf-2501310510",
-        "ffgolf-2401245043"
+        "uskids-17370"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:623753",
-          "ffgolf:529360381"
+          "uskids:623753"
         ],
         "mergedFromSources": [
-          "uskids",
-          "ffgolf"
+          "uskids"
         ]
       }
     },
     {
       "id": "u623754",
-      "canonicalName": "Beck Hayden",
-      "aliases": [
-        "Beck Martino Hayden"
-      ],
+      "canonicalName": "Beck Martino Hayden",
+      "aliases": [],
       "dob": null,
-      "sex": "M",
+      "sex": null,
       "nationality": "IT",
       "country": "IT",
-      "region": "PROVENCE-ALPES-CÔTE-D'AZUR",
-      "club": "Royal Mougins",
+      "region": null,
+      "club": null,
       "sources": {
         "uskids": {
           "memberId": "623754",
           "ageGroupCurrent": "Boys 15-18"
-        },
-        "ffgolf": {
-          "lic": "529362389",
-          "club": "Royal Mougins",
-          "hcp": 0.6,
-          "region": "PROVENCE-ALPES-CÔTE-D'AZUR",
-          "sex": "M",
-          "glfLic": "1051"
         }
       },
       "tournamentIds": [
@@ -257385,12 +257233,10 @@
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:623754",
-          "ffgolf:529362389"
+          "uskids:623754"
         ],
         "mergedFromSources": [
-          "uskids",
-          "ffgolf"
+          "uskids"
         ]
       }
     },
@@ -265751,6 +265597,50 @@
       }
     },
     {
+      "id": "f42985",
+      "canonicalName": "Martim Moreira",
+      "aliases": [],
+      "dob": "2012-02-16",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Lisboa",
+      "club": "Belas",
+      "sources": {
+        "fpg": {
+          "fed": "42985",
+          "club": "Belas",
+          "clubCode": "068",
+          "clubLong": "Clube de Golfe de Belas",
+          "hcpExact": 9.9,
+          "hcpDate": "2026-05-02",
+          "sex": "M",
+          "tags": [
+            "PJA"
+          ],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-152-10368-20240305-all",
+        "fpg-013-10092-20240618-all",
+        "fpg-191-10021-20241004-all",
+        "fpg-192-10005-20241130-all",
+        "fpg-000-10825-20250414-sub_14",
+        "fpg-038-10651-20250530-all"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:42985",
+          "dob:2012-02-16"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
       "id": "f43053",
       "canonicalName": "Gabriel Marques Guerreiro",
       "aliases": [],
@@ -266224,6 +266114,43 @@
         "evidence": [
           "fpg:45009",
           "dob:2013-04-30"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f45366",
+      "canonicalName": "Ricardo Ferreira",
+      "aliases": [],
+      "dob": "2012-04-12",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": "Oporto",
+      "sources": {
+        "fpg": {
+          "fed": "45366",
+          "club": "Oporto",
+          "clubCode": "001",
+          "clubLong": "Oporto",
+          "hcpExact": 20.9,
+          "hcpDate": "2026-05-02",
+          "sex": "M",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10898-20260330-sub_14"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:45366",
+          "dob:2012-04-12"
         ],
         "mergedFromSources": [
           "fpg"
@@ -267902,74 +267829,6 @@
       }
     },
     {
-      "id": "f49085",
-      "canonicalName": "Ricardo Castro Ferreira",
-      "aliases": [],
-      "dob": "2015-07-02",
-      "sex": "M",
-      "nationality": "PT",
-      "country": "PT",
-      "region": "Lisboa",
-      "club": "Estoril",
-      "sources": {
-        "fpg": {
-          "fed": "49085",
-          "club": "Estoril",
-          "clubCode": "004",
-          "clubLong": "Clube de Golf do Estoril",
-          "hcpExact": 5.5,
-          "hcpDate": "2026-05-02",
-          "sex": "M",
-          "tags": [
-            "PJA"
-          ],
-          "primary": true
-        },
-        "ffgolf": {
-          "lic": "519172399",
-          "club": "St Germain",
-          "hcp": 5.5,
-          "region": "PARIS-ILE-DE-FRANCE",
-          "sex": "M",
-          "glfLic": "0006"
-        }
-      },
-      "tournamentIds": [
-        "fpg-000-10647-20230704-sub_10",
-        "fpg-152-10368-20240305-all",
-        "fpg-002-11022-20240317-all",
-        "fpg-013-10092-20240618-all",
-        "fpg-000-10772-20240624-sub_10",
-        "fpg-191-10021-20241004-all",
-        "fpg-192-10005-20241130-all",
-        "fpg-935-10260-20250302-all",
-        "fpg-038-10651-20250530-all",
-        "fpg-125-10370-20250823-all",
-        "fpg-125-10371-20250824-all",
-        "fpg-192-10013-20250912-all",
-        "fpg-017-10189-20251024-all",
-        "fpg-935-10296-20260216-all",
-        "fpg-962-10081-20251229-all",
-        "fpg-000-10898-20260330-sub_14",
-        "ffgolf-2601405023",
-        "ffgolf-2601405022",
-        "ffgolf-2601415551",
-        "ffgolf-2501308499"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "fpg:49085",
-          "ffgolf:519172399",
-          "dob:2015-07-02"
-        ],
-        "mergedFromSources": [
-          "fpg",
-          "ffgolf"
-        ]
-      }
-    },
-    {
       "id": "f49328",
       "canonicalName": "Catarina Loureiro",
       "aliases": [],
@@ -268790,10 +268649,8 @@
     },
     {
       "id": "f52856",
-      "canonicalName": "Francisco Carvalho",
-      "aliases": [
-        "Francisco Vilardell Carvalho"
-      ],
+      "canonicalName": "Francisco Vilardell Carvalho",
+      "aliases": [],
       "dob": "2013-03-20",
       "sex": "M",
       "nationality": "PT",
@@ -268813,31 +268670,22 @@
             "PJA"
           ],
           "primary": true
-        },
-        "_secondary": [
-          {
-            "sourceId": "wjgc",
-            "key": "francisco carvalho|PT"
-          }
-        ]
+        }
       },
       "tournamentIds": [
         "fpg-125-10370-20250823-all",
         "fpg-125-10371-20250824-all",
         "fpg-192-10013-20250912-all",
-        "fpg-962-10080-20251229-all",
-        "wjgc-wjgc_2026_contest33"
+        "fpg-962-10080-20251229-all"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "fpg:52856",
-          "wjgc:francisco carvalho|PT",
           "dob:2013-03-20"
         ],
         "mergedFromSources": [
-          "fpg",
-          "wjgc"
+          "fpg"
         ]
       }
     },
@@ -270151,15 +269999,13 @@
       }
     },
     {
-      "id": "rAM96963175",
+      "id": "x317aa9e5b4",
       "canonicalName": "Jack Barton",
-      "aliases": [
-        "Jack Zelazny Barton"
-      ],
+      "aliases": [],
       "dob": null,
       "sex": null,
-      "nationality": "ES",
-      "country": "ES",
+      "nationality": null,
+      "country": null,
       "region": null,
       "club": "Internacional",
       "sources": {
@@ -270168,28 +270014,18 @@
             "sourceId": "fpg-anon",
             "key": "anon|jack barton|"
           }
-        ],
-        "rfeg": {
-          "lic": "AM96963175",
-          "club": null,
-          "catEdad": "C",
-          "sex": null,
-          "historicalLicenses": []
-        }
+        ]
       },
       "tournamentIds": [
-        "fpg-935-10260-20250302-all",
-        "rfeg-nc61104_infantil"
+        "fpg-935-10260-20250302-all"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "fpg:anon|jack barton|",
-          "rfeg:AM96963175"
+          "fpg:anon|jack barton|"
         ],
         "mergedFromSources": [
-          "fpg",
-          "rfeg"
+          "fpg"
         ]
       }
     },
@@ -271271,11 +271107,9 @@
     {
       "id": "f32437",
       "canonicalName": "Sofia Barroso Sá",
-      "aliases": [
-        "Sofia Barros Sa"
-      ],
+      "aliases": [],
       "dob": null,
-      "sex": "F",
+      "sex": null,
       "nationality": "PT",
       "country": "PT",
       "region": null,
@@ -271286,14 +271120,6 @@
           "club": "POR",
           "hcpExact": -5.4,
           "primary": false
-        },
-        "ffgolf": {
-          "lic": "E49406539",
-          "club": "",
-          "hcp": 0,
-          "region": null,
-          "sex": "F",
-          "glfLic": "0000"
         }
       },
       "tournamentIds": [
@@ -271302,12 +271128,10 @@
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "fpg:32437",
-          "ffgolf:E49406539"
+          "fpg:32437"
         ],
         "mergedFromSources": [
-          "fpg",
-          "ffgolf"
+          "fpg"
         ]
       }
     },
@@ -272181,11 +272005,9 @@
       }
     },
     {
-      "id": "rCB44937304",
+      "id": "rCB65937304",
       "canonicalName": "Minea Lizarriturry Pareja",
-      "aliases": [
-        "Minea Lizarriurry Pareja"
-      ],
+      "aliases": [],
       "dob": "2009-04-21",
       "sex": "F",
       "nationality": "ES",
@@ -272200,9 +272022,9 @@
           }
         ],
         "rfeg": {
-          "lic": "CB44937304",
-          "club": "CLUB DE GOLF D'ARO",
-          "catEdad": "Alevín",
+          "lic": "CB65937304",
+          "club": "PGA CATALUNYA RESORT",
+          "catEdad": "Infantil",
           "sex": "F",
           "historicalLicenses": []
         }
@@ -272214,7 +272036,7 @@
         "confidence": "strong",
         "evidence": [
           "fpg:anon|minea lizarriturry pareja|ES",
-          "rfeg:CB44937304",
+          "rfeg:CB65937304",
           "dob:2009-04-21"
         ],
         "mergedFromSources": [
@@ -273367,6 +273189,41 @@
         "evidence": [
           "rfeg:CM01926741",
           "dob:2011-06-30"
+        ],
+        "mergedFromSources": [
+          "rfeg"
+        ]
+      }
+    },
+    {
+      "id": "r1106087337",
+      "canonicalName": "Guillermo Quintana Menendez",
+      "aliases": [],
+      "dob": "2008-10-29",
+      "sex": "M",
+      "nationality": "ES",
+      "country": "ES",
+      "region": null,
+      "club": "CAMPO DE GOLF ABRA DEL PAS",
+      "sources": {
+        "rfeg": {
+          "lic": "1106087337",
+          "club": "CAMPO DE GOLF ABRA DEL PAS",
+          "catEdad": "Cadete",
+          "sex": "M",
+          "historicalLicenses": []
+        }
+      },
+      "tournamentIds": [
+        "rfeg-nc65945_sub21",
+        "rfeg-nc67197_cadete",
+        "rfeg-nc67197_juvenil"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "rfeg:1106087337",
+          "dob:2008-10-29"
         ],
         "mergedFromSources": [
           "rfeg"
@@ -274925,9 +274782,7 @@
     {
       "id": "rCM11883785",
       "canonicalName": "Elena Juanas Crowe",
-      "aliases": [
-        "Elena (U18) Juanas-Crowe"
-      ],
+      "aliases": [],
       "dob": "2007-11-20",
       "sex": "F",
       "nationality": "ES",
@@ -274941,14 +274796,6 @@
           "catEdad": "Infantil",
           "sex": "F",
           "historicalLicenses": []
-        },
-        "ffgolf": {
-          "lic": "E66717944",
-          "club": "",
-          "hcp": -0.7,
-          "region": null,
-          "sex": "F",
-          "glfLic": "0000"
         }
       },
       "tournamentIds": [
@@ -274958,12 +274805,10 @@
         "confidence": "strong",
         "evidence": [
           "rfeg:CM11883785",
-          "ffgolf:E66717944",
           "dob:2007-11-20"
         ],
         "mergedFromSources": [
-          "rfeg",
-          "ffgolf"
+          "rfeg"
         ]
       }
     },
@@ -283160,6 +283005,40 @@
         "evidence": [
           "rfeg:CM02942019",
           "dob:2010-08-11"
+        ],
+        "mergedFromSources": [
+          "rfeg"
+        ]
+      }
+    },
+    {
+      "id": "r9908940614",
+      "canonicalName": "Alejandro Huerta Diaz",
+      "aliases": [],
+      "dob": "2011-04-03",
+      "sex": "M",
+      "nationality": "ES",
+      "country": "ES",
+      "region": null,
+      "club": "DON TELLO GOLF",
+      "sources": {
+        "rfeg": {
+          "lic": "9908940614",
+          "club": "DON TELLO GOLF",
+          "catEdad": "Alevín",
+          "sex": "M",
+          "historicalLicenses": []
+        }
+      },
+      "tournamentIds": [
+        "rfeg-nc54247_infantil_sc",
+        "rfeg-nc59512_sub14"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "rfeg:9908940614",
+          "dob:2011-04-03"
         ],
         "mergedFromSources": [
           "rfeg"
@@ -298658,6 +298537,39 @@
       }
     },
     {
+      "id": "rCP02912213",
+      "canonicalName": "Pablo Lubary Gonzalez",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "ES",
+      "country": "ES",
+      "region": null,
+      "club": null,
+      "sources": {
+        "rfeg": {
+          "lic": "CP02912213",
+          "club": null,
+          "catEdad": "C",
+          "sex": null,
+          "historicalLicenses": []
+        }
+      },
+      "tournamentIds": [
+        "rfeg-nc59673_cadete",
+        "rfeg-nc59673_juvenil"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "rfeg:CP02912213"
+        ],
+        "mergedFromSources": [
+          "rfeg"
+        ]
+      }
+    },
+    {
       "id": "rCP06476335",
       "canonicalName": "Pelayo Tosal Tosal",
       "aliases": [],
@@ -306242,6 +306154,38 @@
       }
     },
     {
+      "id": "rAM96963175",
+      "canonicalName": "Jack Zelazny Barton",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "ES",
+      "country": "ES",
+      "region": null,
+      "club": null,
+      "sources": {
+        "rfeg": {
+          "lic": "AM96963175",
+          "club": null,
+          "catEdad": "C",
+          "sex": null,
+          "historicalLicenses": []
+        }
+      },
+      "tournamentIds": [
+        "rfeg-nc61104_infantil"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "rfeg:AM96963175"
+        ],
+        "mergedFromSources": [
+          "rfeg"
+        ]
+      }
+    },
+    {
       "id": "rAMG8948451",
       "canonicalName": "Manuel Rosa Curcho",
       "aliases": [],
@@ -310588,52 +310532,6 @@
       }
     },
     {
-      "id": "rCM18375186",
-      "canonicalName": "Jon Ortiz",
-      "aliases": [
-        "Jon De La Maza Ortiz"
-      ],
-      "dob": null,
-      "sex": "M",
-      "nationality": "ES",
-      "country": "ES",
-      "region": "NOUVELLE-AQUITAINE",
-      "club": "Chantaco",
-      "sources": {
-        "rfeg": {
-          "lic": "CM18375186",
-          "club": null,
-          "catEdad": "Mid",
-          "sex": null,
-          "historicalLicenses": []
-        },
-        "ffgolf": {
-          "lic": "043103374",
-          "club": "Chantaco",
-          "hcp": 15.4,
-          "region": "NOUVELLE-AQUITAINE",
-          "sex": "M",
-          "glfLic": "0008"
-        }
-      },
-      "tournamentIds": [
-        "ffgolf-2601409754",
-        "ffgolf-2501380841",
-        "ffgolf-2401269568"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "rfeg:CM18375186",
-          "ffgolf:043103374"
-        ],
-        "mergedFromSources": [
-          "rfeg",
-          "ffgolf"
-        ]
-      }
-    },
-    {
       "id": "rAMD5948895",
       "canonicalName": "Julio Mañas Guillen",
       "aliases": [],
@@ -311668,49 +311566,6 @@
         ],
         "mergedFromSources": [
           "ffgolf"
-        ]
-      }
-    },
-    {
-      "id": "g515281260",
-      "canonicalName": "William Wang",
-      "aliases": [
-        "William Ottesen Wang"
-      ],
-      "dob": null,
-      "sex": "M",
-      "nationality": "FR",
-      "country": "FR",
-      "region": "PARIS-ILE-DE-FRANCE",
-      "club": "Golf De Paris",
-      "sources": {
-        "ffgolf": {
-          "lic": "515281260",
-          "club": "Golf De Paris",
-          "hcp": 11.7,
-          "region": "PARIS-ILE-DE-FRANCE",
-          "sex": "M",
-          "glfLic": "0426"
-        },
-        "_secondary": [
-          {
-            "sourceId": "wjgc",
-            "key": "william ottesen wang|"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "wjgc-wjgc_2026_contest33"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "ffgolf:515281260",
-          "wjgc:william ottesen wang|"
-        ],
-        "mergedFromSources": [
-          "ffgolf",
-          "wjgc"
         ]
       }
     },
@@ -347957,6 +347812,50 @@
       }
     },
     {
+      "id": "g526458308",
+      "canonicalName": "Candide Remoleur",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "NOUVELLE-AQUITAINE",
+      "club": "Hossegor",
+      "sources": {
+        "ffgolf": {
+          "lic": "526458308",
+          "club": "Hossegor",
+          "hcp": 0.9,
+          "region": "NOUVELLE-AQUITAINE",
+          "sex": "M",
+          "glfLic": "0040"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601424402",
+        "ffgolf-2501364544",
+        "ffgolf-2501352691",
+        "ffgolf-2501335024",
+        "ffgolf-2501321524",
+        "ffgolf-2401269568",
+        "ffgolf-2401274803",
+        "ffgolf-2401234312",
+        "ffgolf-2401181232",
+        "ffgolf-2401165647",
+        "ffgolf-2301042901",
+        "ffgolf-2300994570"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:526458308"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
       "id": "g528465314",
       "canonicalName": "Gabriel Marre",
       "aliases": [],
@@ -379543,6 +379442,41 @@
       }
     },
     {
+      "id": "g043103374",
+      "canonicalName": "Jon Ortiz",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "ES",
+      "country": "ES",
+      "region": "NOUVELLE-AQUITAINE",
+      "club": "Chantaco",
+      "sources": {
+        "ffgolf": {
+          "lic": "043103374",
+          "club": "Chantaco",
+          "hcp": 15.4,
+          "region": "NOUVELLE-AQUITAINE",
+          "sex": "M",
+          "glfLic": "0008"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601409754",
+        "ffgolf-2501380841",
+        "ffgolf-2401269568"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:043103374"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
       "id": "g528030337",
       "canonicalName": "Eliott Monge Dassonville",
       "aliases": [],
@@ -387474,6 +387408,42 @@
         "confidence": "strong",
         "evidence": [
           "ffgolf:047654357"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g048276374",
+      "canonicalName": "Theo Zhao",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "PARIS-ILE-DE-FRANCE",
+      "club": "St Nom La Breteche",
+      "sources": {
+        "ffgolf": {
+          "lic": "048276374",
+          "club": "St Nom La Breteche",
+          "hcp": 14.3,
+          "region": "PARIS-ILE-DE-FRANCE",
+          "sex": "M",
+          "glfLic": "0064"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601405023",
+        "ffgolf-2601405040",
+        "ffgolf-2601405022",
+        "ffgolf-2501308499"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:048276374"
         ],
         "mergedFromSources": [
           "ffgolf"
@@ -400355,6 +400325,40 @@
       }
     },
     {
+      "id": "g529360381",
+      "canonicalName": "Alex Hayden",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "IT",
+      "country": "IT",
+      "region": "PROVENCE-ALPES-CÔTE-D'AZUR",
+      "club": "Royal Mougins",
+      "sources": {
+        "ffgolf": {
+          "lic": "529360381",
+          "club": "Royal Mougins",
+          "hcp": 3.3,
+          "region": "PROVENCE-ALPES-CÔTE-D'AZUR",
+          "sex": "M",
+          "glfLic": "1051"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2501310510",
+        "ffgolf-2401245043"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:529360381"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
       "id": "g526653347",
       "canonicalName": "Arthur Sansonetti",
       "aliases": [],
@@ -409598,6 +409602,37 @@
       }
     },
     {
+      "id": "xdde86f1b79",
+      "canonicalName": "Jake Jeff-Johnston",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "jake jeff-johnston|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest77"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "eowagr:jake jeff-johnston|"
+        ],
+        "mergedFromSources": [
+          "eowagr"
+        ]
+      }
+    },
+    {
       "id": "xda0d8a088b",
       "canonicalName": "Filip Babcan",
       "aliases": [],
@@ -410267,6 +410302,37 @@
       }
     },
     {
+      "id": "x411d006b10",
+      "canonicalName": "Edward (Bear) Millar",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "edward (bear) millar|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_contest34"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:edward (bear) millar|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
       "id": "xca23996246",
       "canonicalName": "Harvey Eastwood",
       "aliases": [],
@@ -410416,6 +410482,37 @@
         "confidence": "strong",
         "evidence": [
           "wjgc:weilian sun|CN"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x651b517503",
+      "canonicalName": "Manuel Francisco Medeiros",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "manuel francisco medeiros|PT"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_b1011_3r"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:manuel francisco medeiros|PT"
         ],
         "mergedFromSources": [
           "wjgc"
@@ -410671,6 +410768,37 @@
       }
     },
     {
+      "id": "x46143bb029",
+      "canonicalName": "Harry Mody",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "harry mody|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_contest33"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:harry mody|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
       "id": "x1c7d5a09a0",
       "canonicalName": "Memphis Greenwood",
       "aliases": [],
@@ -410857,6 +410985,37 @@
       }
     },
     {
+      "id": "x076ac7dfa9",
+      "canonicalName": "Francisco Carvalho",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "francisco carvalho|PT"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_contest33"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:francisco carvalho|PT"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
       "id": "x16f68944d2",
       "canonicalName": "George Wilson",
       "aliases": [],
@@ -410912,6 +411071,37 @@
         "confidence": "strong",
         "evidence": [
           "wjgc:fredrik sonsteby|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x80acadbfe2",
+      "canonicalName": "William Ottesen Wang",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "william ottesen wang|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_contest33"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:william ottesen wang|"
         ],
         "mergedFromSources": [
           "wjgc"
@@ -411911,6 +412101,37 @@
       }
     },
     {
+      "id": "xa6cb40e9d0",
+      "canonicalName": "Niko Gordic-Ronderos",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "US",
+      "country": "US",
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "doral",
+            "key": "doral-1875120444"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "doral-ftm_doral_2024"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "doral:doral-1875120444"
+        ],
+        "mergedFromSources": [
+          "doral"
+        ]
+      }
+    },
+    {
       "id": "x9dc7ea7c8b",
       "canonicalName": "Victor Larens",
       "aliases": [],
@@ -412158,6 +412379,37 @@
         "confidence": "strong",
         "evidence": [
           "doral:doral-1875120425"
+        ],
+        "mergedFromSources": [
+          "doral"
+        ]
+      }
+    },
+    {
+      "id": "xb15a326aad",
+      "canonicalName": "Saul Yanez",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "US",
+      "country": "US",
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "doral",
+            "key": "doral-1875120421"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "doral-ftm_doral_2024"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "doral:doral-1875120421"
         ],
         "mergedFromSources": [
           "doral"
@@ -414013,13 +414265,13 @@
     }
   ],
   "stats": {
-    "total": 7532,
-    "droppedNoTourn": 21612,
-    "strong": 7527,
+    "total": 7547,
+    "droppedNoTourn": 21625,
+    "strong": 7542,
     "probable": 5,
     "manual": 0,
     "strongMerges": 7,
-    "probableMerges": 504,
+    "probableMerges": 476,
     "manualMerges": 2
   }
 }

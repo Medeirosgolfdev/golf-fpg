@@ -88,10 +88,23 @@ function normalize(data, fileName, playerMap) {
   const ageMax = ageRange ? +ageRange[2] : null;
   const sex = /^Boys/i.test(category) ? "M" : /^Girls/i.test(category) ? "F" : null;
 
+  // Determinar data — prioridade: data explícita > inferida do nome > default Aug
+  let dateIso = data.date || data.startDate || null;
+  // Se não há, extrair year do nome se estiver lá (mais fiável que `year` field)
+  let effectiveYear = year;
+  const yrInName = /\b(20\d{2})\b/.exec(name);
+  if (yrInName) effectiveYear = +yrInName[1];
+  if (!dateIso && effectiveYear) {
+    // Default: 1 Agosto (WJGC/Daily Mail são tipicamente Jul-Ago)
+    dateIso = series.id === "eowagr" ? `${effectiveYear}-07-01`
+            : `${effectiveYear}-08-01`;
+  }
+
   return {
     sourceKey,
     name,
-    date: year ? `${year}-01-01` : null,
+    date: dateIso,
+    startDate: dateIso,
     seriesId: series.id,
     seriesLabel: series.label,
     course: data.course || null,

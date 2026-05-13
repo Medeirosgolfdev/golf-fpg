@@ -140,26 +140,53 @@ function resolve(rawSources, overrides) {
   // Permite mesma fonte para fontes "fracas" (wjgc/eowagr/doral) onde variantes
   // de nome ou de filename criam entidades separadas para a MESMA pessoa.
   let probableMerges = 0;
+  // PASS 1: probable matches APERTADOS — normName completo igual (tokens iguais
+  // após normalização). Captura "Ricardo Castro-Ferreira" ↔ "Ricardo Castro
+  // Ferreira" mas REJEITA "Ricardo Ferreira" (Oporto) ↔ "Ricardo Castro
+  // Ferreira" (Estoril) que partilhariam só firstName+lastName.
   for (const [key, arr] of byFirstLast) {
     if (arr.length < 2) continue;
     for (let i = 0; i < arr.length; i++) {
       for (let j = i + 1; j < arr.length; j++) {
         const a = arr[i], b = arr[j];
-        // Bloquear mesma fonte SE for fonte forte (cada chave forte = pessoa única).
-        // Fontes fracas podem ter duplicados internos por variantes de nome.
         if (a.sourceId === b.sourceId && STRONG_SOURCES.has(a.sourceId)) continue;
         if (find(a.entityKey) === find(b.entityKey)) continue;
         if (dobConflict(a.raw.dob, b.raw.dob)) continue;
-        // Probable match requer evidência adicional: DOB partilhada OU país compatível
-        const dobMatch = a.raw.dob && b.raw.dob && a.raw.dob === b.raw.dob;
+        if (a.normName !== b.normName) continue; // EXIGIR full match — não basta first+last
+        const dobCompat = dobsCompatible(a.raw, b.raw);
         const countryMatch = a.raw.country && b.raw.country && a.raw.country === b.raw.country;
         const oneMissingCountry = !a.raw.country || !b.raw.country;
-        if (!dobMatch && !countryMatch && !oneMissingCountry) continue;
-        // Middle names diferentes: requer DOB OU country match (não missing)
-        const aMid = a.normName.split(" ").slice(1, -1).join(" ");
-        const bMid = b.normName.split(" ").slice(1, -1).join(" ");
-        const middleConflict = aMid && bMid && aMid !== bMid;
-        if (middleConflict && !dobMatch && !countryMatch) continue;
+        // Aceitar se dob compatível OU country compatível OU country missing
+        if (!dobCompat && !countryMatch && !oneMissingCountry) continue;
+        if (tryUnion(a.entityKey, b.entityKey)) probableMerges++;
+      }
+    }
+  }
+
+  // PASS 2: probable matches LENIENT — só firstName+lastName + tokens
+  // adicionais COMPATÍVEIS (subset). Ex: "Manuel Goulartt Medeiros" ↔ "Manuel
+  // Medeiros" — o segundo é subset do primeiro. Captura variantes com middle
+  // names omitidos, sem aceitar nomes diferentes ("Castro Ferreira" vs só
+  // "Ferreira"). REQUER DOB match (não basta country) para evitar falsos
+  // positivos entre pessoas diferentes no mesmo país.
+  for (const [key, arr] of byFirstLast) {
+    if (arr.length < 2) continue;
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = i + 1; j < arr.length; j++) {
+        const a = arr[i], b = arr[j];
+        if (a.sourceId === b.sourceId && STRONG_SOURCES.has(a.sourceId)) continue;
+        if (find(a.entityKey) === find(b.entityKey)) continue;
+        if (dobConflict(a.raw.dob, b.raw.dob)) continue;
+        if (a.normName === b.normName) continue; // já tratado em pass 1
+        // Tokens médios: o conjunto menor tem de ser subset do maior
+        const aTokens = a.normName.split(" ");
+        const bTokens = b.normName.split(" ");
+        const aSet = new Set(aTokens);
+        const bSet = new Set(bTokens);
+        const isSubset = aTokens.every((t) => bSet.has(t)) || bTokens.every((t) => aSet.has(t));
+        if (!isSubset) continue;
+        // EXIGIR DOB compatível — exacta OU dobRange (do USKids age groups)
+        if (!dobsCompatible(a.raw, b.raw)) continue;
         if (tryUnion(a.entityKey, b.entityKey)) probableMerges++;
       }
     }
@@ -544,6 +571,34 @@ function mostFrequent(arr) {
   let best = null, bestCount = -1;
   for (const [v, c] of counts) if (c > bestCount) { best = v; bestCount = c; }
   return best;
+}
+
+
+
+function dobInRange(dob, range) {
+  if (!dob || !range || !range.lo || !range.hi) return false;
+  return dob >= range.lo && dob <= range.hi;
+}
+
+function dobRangesOverlap(a, b) {
+  if (!a || !b) return false;
+  if (!a.lo || !a.hi || !b.lo || !b.hi) return false;
+  return a.lo <= b.hi && b.lo <= a.hi;
+}
+
+/**
+ * dobsCompatible — devolve true se há evidência (DOB exacta ou range) que
+ * concorde entre as duas entidades. Usado em Pass 2 do probable matching.
+ */
+function dobsCompatible(a, b) {
+  // Ambas DOB exactas
+  if (a.dob && b.dob) return a.dob === b.dob;
+  // Uma DOB, outra range
+  if (a.dob && b.dobRange) return dobInRange(a.dob, b.dobRange);
+  if (b.dob && a.dobRange) return dobInRange(b.dob, a.dobRange);
+  // Ambas range
+  if (a.dobRange && b.dobRange) return dobRangesOverlap(a.dobRange, b.dobRange);
+  return false;
 }
 
 module.exports = { resolve };

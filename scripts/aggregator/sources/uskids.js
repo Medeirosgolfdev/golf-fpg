@@ -135,13 +135,53 @@ async function load(opts) {
   const playerMap = new Map();
   const players = [];
 
+  // Calcula dobRange (intersecção das janelas possíveis) a partir das
+  // participações: para cada torneio com ageMin/ageMax + date, kid had age
+  // [ageMin..ageMax] em date → DOB ∈ (date - (ageMax+1)yrs, date - ageMin yrs].
+  // Intersect todas as janelas.
+  function computeDobRange(participations) {
+    let lo = null, hi = null; // YYYY-MM-DD strings
+    for (const part of participations) {
+      const { date, ageMin, ageMax } = part;
+      if (!date || ageMin == null || ageMax == null) continue;
+      const d = new Date(date + "T00:00:00Z");
+      if (isNaN(d.getTime())) continue;
+      // Janela: DOB > (date - (ageMax+1) anos) e DOB <= (date - ageMin anos)
+      const dobLo = new Date(d);
+      dobLo.setUTCFullYear(d.getUTCFullYear() - (ageMax + 1));
+      dobLo.setUTCDate(dobLo.getUTCDate() + 1);
+      const dobHi = new Date(d);
+      dobHi.setUTCFullYear(d.getUTCFullYear() - ageMin);
+      const loStr = dobLo.toISOString().slice(0, 10);
+      const hiStr = dobHi.toISOString().slice(0, 10);
+      if (lo === null || loStr > lo) lo = loStr;
+      if (hi === null || hiStr < hi) hi = hiStr;
+    }
+    if (lo !== null && hi !== null && lo <= hi) return { lo, hi };
+    return null;
+  }
+
+
   for (const [memberId, p] of Object.entries(slim.jogadores || {})) {
     const iso2 = countryToIso2(p.country);
+    // Recolher participações com ageMin/ageMax + data do torneio
+    const participations = [];
+    for (const [tcode, tres] of Object.entries(p.torneios || {})) {
+      const flightInfo = parseFlight(tres.ageGroup);
+      const tInfo = getTourn(tcode);
+      const date = tInfo?.startDate || tInfo?.date;
+      if (date && flightInfo.ageMin != null && flightInfo.ageMax != null) {
+        participations.push({ date, ageMin: flightInfo.ageMin, ageMax: flightInfo.ageMax });
+      }
+    }
+    const dobRange = computeDobRange(participations);
+
     const player = {
       sourceKey: String(memberId),
       name: displayName(p.name || ""),
       country: iso2 || (p.country || null),
       ageGroupCurrent: p.ageGroup || null,
+      dobRange: dobRange,
       extra: {
         slimAgeGroupCurrent: p.ageGroup || null,
         totalTorneios: p.totalTorneios || Object.keys(p.torneios || {}).length,
