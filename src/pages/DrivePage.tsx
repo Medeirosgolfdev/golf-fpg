@@ -1689,11 +1689,14 @@ function DriveContent() {
           {data.lastUpdated && <span className="muted fs-10 shrink-0"  style={{ whiteSpace: "nowrap" }}>{data.lastUpdated}</span>}
         </Toolbar>
 
-        {/* Linha 2: regiões + escalões — scroll horizontal */}
+        {/* Linha 2: regiões + escalões — wrap em mobile, scroll horizontal em desktop */}
         {navMode === "torneios" && (availRegions.length > 1 || availEscs.length > 0) && (
           <div style={{
-            display: "flex", alignItems: "center", gap: 6,
-            padding: "4px 10px 6px", overflowX: "auto", flexWrap: "nowrap",
+            display: "flex", alignItems: "center", gap: md.isMobile ? 4 : 6,
+            padding: md.isMobile ? "4px 6px 6px" : "4px 10px 6px",
+            overflowX: md.isMobile ? "visible" : "auto",
+            flexWrap: md.isMobile ? "wrap" : "nowrap",
+            rowGap: md.isMobile ? 4 : undefined,
             scrollbarWidth: "none", WebkitOverflowScrolling: "touch",
             borderTop: "1px solid var(--border-light)",
           }}>

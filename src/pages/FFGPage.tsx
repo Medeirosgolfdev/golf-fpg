@@ -2030,7 +2030,7 @@ function Content() {
 
           {/* ── Barra de filtros FFG (estilo FPGPage) ── */}
           {ffgResAll.length > 0 && (
-            <div className="detail-toolbar" style={{ flexWrap: "nowrap", gap: 8, padding: "8px 12px", borderBottom: "1px solid var(--border)", background: "var(--bg-muted, #fafafa)", overflowX: "auto", whiteSpace: "nowrap", alignItems: "center" }}>
+            <div className="detail-toolbar" style={{ flexWrap: md.isMobile ? "wrap" : "nowrap", gap: md.isMobile ? 4 : 8, padding: md.isMobile ? "6px 8px" : "8px 12px", borderBottom: "1px solid var(--border)", background: "var(--bg-muted, #fafafa)", overflowX: md.isMobile ? "visible" : "auto", whiteSpace: md.isMobile ? "normal" : "nowrap", alignItems: "center", rowGap: md.isMobile ? 4 : undefined }}>
               <div style={{ position: "relative", flex: "1 1 220px", minWidth: 180, maxWidth: 320 }}>
                 <input
                   className="input"
