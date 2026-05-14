@@ -1734,6 +1734,7 @@ function DriveContent() {
               }))}
               active={escFilter}
               onToggle={(e) => setEscFilter(prev => prev.includes(e) ? prev.filter(x => x !== e) : [...prev, e])}
+              style={md.isMobile ? { display: "contents" } : undefined}
             />
           </div>
         )}
