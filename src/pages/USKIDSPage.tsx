@@ -519,12 +519,16 @@ export default function USKidsFieldPage() {
       if (!t.t || !t.name) continue;
       if (!isUSKidsTorneio(t.name)) continue; // Filtrar torneios não-USKids
       const em = escalaoManuelParaData(t.date_inicio);
-      const esc = t.escaloes?.find((e: any) => e.nome === em);
+      // escalaoManuelParaData retorna NUMBER (idade); comparar com age_group, não com nome ("Boys 11")
+      const esc = t.escaloes?.find((e: any) => e.age_group === em);
       const ended = isTerminado(t.date_fim, t.date_inicio);
-      // Verificar se Manuel está inscrito na lista de jogadores do escalão
-      const manuelInscrito = esc?.jogadores?.some((j: any) => isManuel(j.nome)) ?? false;
+      // Verificar se Manuel está inscrito em QUALQUER escalão (escalões agrupados como "Boys 9-10" podem
+      // não bater certo com a idade exacta — ser permissivo aqui evita falsos negativos no filtro Manuel)
+      const manuelInscrito = t.escaloes?.some((e: any) =>
+        (e.jogadores ?? []).some((j: any) => isManuel(j.nome))
+      ) ?? false;
       map.set(t.t, { t: t.t, name: t.name, date: t.date_inicio, dateFim: t.date_fim ?? undefined, temResultados: false, temCampo: true,
-        inscritos: esc?.inscritos, maximo: esc?.maximo, vagas: esc?.vagas, escalaoManuel: em,
+        inscritos: esc?.inscritos, maximo: esc?.maximo, vagas: esc?.vagas, escalaoManuel: esc?.nome ?? `Boys ${em}`,
         rondas: t.rondas ?? undefined,
         fee: t.fee_18 ? parseFloat(t.fee_18) : undefined,
         campo: t.campo ?? undefined,
@@ -682,7 +686,7 @@ export default function USKidsFieldPage() {
         <button
           className={`course-item${showRivaisTabela ? " active" : ""}`}
           style={{ padding:"10px 14px", display:"block", width:"100%", textAlign:"left", borderBottom:"2px solid var(--border-light)" }}
-          onClick={() => { setShowRivaisTabela(true); setSelectedT(null); }}>
+          onClick={() => { setShowRivaisTabela(true); setSelectedT(null); md.onSelect(); }}>
           <div style={{ display:"flex", alignItems:"center", gap:8 }}>
             <span style={{ fontSize:15 }}>📊</span>
             <span className="fs-13 fw-700" style={{ color: showRivaisTabela ? "var(--accent)" : "var(--text)" }}>
@@ -710,7 +714,7 @@ export default function USKidsFieldPage() {
             <button key={t.t}
               className={`course-item${active ? " active" : ""}`}
               style={{ padding:"9px 10px 9px 12px", textAlign:"left", width:"100%", display:"block" }}
-              onClick={() => { setShowRivaisTabela(false); setSelectedT(t.t); }}>
+              onClick={() => { setShowRivaisTabela(false); setSelectedT(t.t); md.onSelect(); }}>
               <div className="fs-13" style={{ fontWeight: active ? 700 : 600, color:"var(--text)",
                 overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", marginBottom:3 }}>
                 {t.name.replace(/\s*\d{4}$/, "")} <span className="fs-12 fw-400 c-text-3">'{isoDate(t.date_inicio).slice(2,4)}</span>

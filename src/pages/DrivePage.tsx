@@ -1689,29 +1689,34 @@ function DriveContent() {
           {data.lastUpdated && <span className="muted fs-10 shrink-0"  style={{ whiteSpace: "nowrap" }}>{data.lastUpdated}</span>}
         </Toolbar>
 
-        {/* Linha 2: regiões + escalões — scroll horizontal */}
+        {/* Linha 2: regiões + escalões — wrap em mobile, scroll horizontal em desktop */}
         {navMode === "torneios" && (availRegions.length > 1 || availEscs.length > 0) && (
           <div style={{
-            display: "flex", alignItems: "center", gap: 6,
-            padding: "4px 10px 6px", overflowX: "auto", flexWrap: "nowrap",
+            display: "flex", alignItems: "center", gap: md.isMobile ? 4 : 6,
+            padding: md.isMobile ? "4px 6px 6px" : "4px 10px 6px",
+            overflowX: md.isMobile ? "visible" : "auto",
+            flexWrap: md.isMobile ? "wrap" : "nowrap",
+            rowGap: md.isMobile ? 4 : undefined,
             scrollbarWidth: "none", WebkitOverflowScrolling: "touch",
             borderTop: "1px solid var(--border-light)",
           }}>
             {availRegions.length > 1 && (<>
               <button className={"tourn-tab tourn-tab-sm shrink-0" + (regionFilter === null ? " active" : "")}
                 onClick={() => setRegionFilter(null)}>
-                Todas ({countEvents(seriesT)})
+                {md.isMobile ? `Todas ${countEvents(seriesT)}` : `Todas (${countEvents(seriesT)})`}
               </button>
               {availRegions.map(reg => {
                 const rt = seriesT.filter(t => t.region === reg.id);
+                const nT = countEvents(rt);
+                const nJ = uniquePC(rt);
                 return (
                   <button key={reg.id}
                     className={"tourn-tab tourn-tab-sm" + (regionFilter === reg.id ? " active" : " tourn-tab-muted")}
                     onClick={() => setRegionFilter(reg.id)}
-                    style={regionFilter === reg.id
-                      ? { flexShrink: 0 }
-                      : { flexShrink: 0 }}>
-                    {reg.emoji} {reg.label} ({countEvents(rt)}T · {uniquePC(rt)} jog)
+                    style={{ flexShrink: 0 }}>
+                    {md.isMobile
+                      ? `${reg.label} ${nT}·${nJ}`
+                      : `${reg.emoji} ${reg.label} (${nT}T · ${nJ} jog)`}
                   </button>
                 );
               })}
@@ -1719,7 +1724,7 @@ function DriveContent() {
             </>)}
             <button className={"tourn-tab tourn-tab-sm shrink-0" + (escFilter.length === 0 ? " active" : "")}
               onClick={() => setEscFilter([])}>
-              Todos ({uniquePCRegion} jog)
+              {md.isMobile ? `Todos ${uniquePCRegion}` : `Todos (${uniquePCRegion} jog)`}
             </button>
             <FilterPills
               items={(["Sub 10","Sub 12","Sub 14","Sub 16","Sub 18","Absoluto","Sénior"] as const).map(e => ({
@@ -1729,6 +1734,7 @@ function DriveContent() {
               }))}
               active={escFilter}
               onToggle={(e) => setEscFilter(prev => prev.includes(e) ? prev.filter(x => x !== e) : [...prev, e])}
+              style={md.isMobile ? { display: "contents" } : undefined}
             />
           </div>
         )}
@@ -1752,7 +1758,7 @@ function DriveContent() {
               return (
                 <button key={s.key}
                   className={`course-item ${active ? "active" : ""}`}
-                  onClick={() => { setSub12Series(s.key); setSub12View("grid"); setSub12Player(null); }}>
+                  onClick={() => { setSub12Series(s.key); setSub12View("grid"); setSub12Player(null); md.onSelect(); }}>
                   <div className="course-item-name">{s.emoji} {s.label}</div>
                   <div className="course-item-sub">{c.tourns} torneios · {c.players} jog · {s.holes}</div>
                 </button>
@@ -1766,7 +1772,7 @@ function DriveContent() {
               return (
                 <button key={v}
                   className={`course-item ${sub12View === v ? "active" : ""}`}
-                  onClick={() => setSub12View(v)}>
+                  onClick={() => { setSub12View(v); md.onSelect(); }}>
                   <div className="course-item-name">{labels[v]}</div>
                 </button>
               );
@@ -1845,7 +1851,7 @@ function DriveContent() {
           <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
             <button
               className={`course-item ${selectedGroupKey === null ? "active" : ""}`}
-              onClick={() => { setSelectedGroupKey(null); setRoundIdx(0); }}>
+              onClick={() => { setSelectedGroupKey(null); setRoundIdx(0); md.onSelect(); }}>
               <div className="course-item-name">📋 Resumo temporada</div>
               <div className="course-item-sub">{filteredGroups.length} torneios · {uniquePCFiltered} jog</div>
             </button>

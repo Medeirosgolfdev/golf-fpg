@@ -495,9 +495,10 @@ function InfoRow({ icon, label }: { icon: string; label: string }) {
   </div>);
 }
 
-function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalEvent) => void }) {
+function ListView({ events, onSelect, scrollSignal = 0 }: { events: CalEvent[]; onSelect: (e: CalEvent) => void; scrollSignal?: number }) {
   const today = new Date();
   const todayMonthRef = useRef<HTMLDivElement>(null);
+  const firstUpcomingRef = useRef<HTMLDivElement>(null);
   const grouped = useMemo(() => {
     const m = new Map<number, CalEvent[]>();
     for (const e of events) { const k = e.date.getMonth(); if (!m.has(k)) m.set(k, []); m.get(k)!.push(e); }
@@ -505,9 +506,21 @@ function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalE
     const cur = today.getMonth();
     return [...all.filter(([k]) => k >= cur), ...all.filter(([k]) => k < cur)];
   }, [events]);
+
+  // Primeiro evento hoje-ou-futuro — para ancorar o scroll no DIA (não só no mês).
+  const todayKey = useMemo(() => {
+    const t0 = new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime();
+    const up = events.find(e => {
+      const ed = new Date(e.date.getFullYear(), e.date.getMonth(), e.date.getDate()).getTime();
+      return ed >= t0;
+    });
+    return up?.id ?? null;
+  }, [events]);
+
   useEffect(() => {
-    todayMonthRef.current?.scrollIntoView({ behavior: "instant", block: "start" });
-  }, []);
+    const target = firstUpcomingRef.current || todayMonthRef.current;
+    target?.scrollIntoView({ behavior: "instant", block: "start" });
+  }, [todayKey, scrollSignal]);
   return (
     <div className="cal-page-inner">
       {grouped.map(([month, evts]) => {
@@ -523,8 +536,11 @@ function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalE
               const c = calColor(e);
               const hl = HIGHLIGHT[e.calId];
               const isPast = (e.endDate || e.date) < today;
+              const isFirstUpcoming = e.id === todayKey;
               return (
-                <div key={e.id} onClick={() => onSelect(e)} {...clickableA11y(() => onSelect(e))}
+                <div key={e.id}
+                  ref={isFirstUpcoming ? firstUpcomingRef : undefined}
+                  onClick={() => onSelect(e)} {...clickableA11y(() => onSelect(e))}
                   style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 10px",
                     borderRadius: hl ? 8 : "var(--radius)", cursor: "pointer", transition: "background 0.15s",
                     background: hl ? `${hl.bg}18` : "transparent",
@@ -637,11 +653,13 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
     return [...EVENTS, ...bdayEvs];
   }, [players]);
 
+  const [listScrollSignal, setListScrollSignal] = useState(0);
   const goToday = () => {
     const now = new Date();
     const m = now.getFullYear() === 2026 ? now.getMonth() : 1;
     setCurrentMonth(m);
     setSelectedDate(now.getFullYear() === 2026 ? now : null);
+    setListScrollSignal(v => v + 1);
   };
 
   /* Search */
@@ -998,7 +1016,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
               </div>
             </div>
           ) : (
-            <ListView events={visibleEvents} onSelect={setSelectedEvent} />
+            <ListView events={visibleEvents} onSelect={setSelectedEvent} scrollSignal={listScrollSignal} />
           )}
         </div>
       </div>

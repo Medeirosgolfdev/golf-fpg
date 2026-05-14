@@ -1489,11 +1489,14 @@ function Content() {
           </>)}
         </Toolbar>
 
-        {/* Linha 2: filtros de série */}
+        {/* Linha 2: filtros de série — wrap em mobile */}
         {!loading && navMode === "torneios" && (
           <div style={{
-            display: "flex", alignItems: "center", gap: 6,
-            padding: "4px 10px 6px", overflowX: "auto", flexWrap: "nowrap",
+            display: "flex", alignItems: "center", gap: md.isMobile ? 4 : 6,
+            padding: md.isMobile ? "4px 6px 6px" : "4px 10px 6px",
+            overflowX: md.isMobile ? "visible" : "auto",
+            flexWrap: md.isMobile ? "wrap" : "nowrap",
+            rowGap: md.isMobile ? 4 : undefined,
             scrollbarWidth: "none", WebkitOverflowScrolling: "touch",
             borderTop: "1px solid var(--border-light)",
           }}>
