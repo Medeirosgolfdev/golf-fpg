@@ -196,18 +196,22 @@ function normalizeRfegTournament(tid, t) {
 }
 
 /** Constrói o array `links` para um torneio RFEG.
- *  - tid "lgs105" → LiveGolfScoring https://rfegolf.livegolfscoring.es/torneos/hoyoahoyo/105
- *  - tid "nc48139" → NextCaddy https://www.nextcaddy.com/tour/48139
- *  - outros → vazio */
+ *  - tid "lgs105" ou "lgs105_alevin" → LiveGolfScoring .../hoyoahoyo/105
+ *  - tid "nc48139" ou "nc61067_alevín" → NextCaddy .../tour/48139
+ *  - outros → vazio
+ *
+ *  Os sufixos (_alevín, _infantil, _juvenil) aparecem em alguns torneios
+ *  multi-escalão onde o mesmo tour ID expõe vários flights — o número é o
+ *  identificador real do torneio. */
 function buildRfegLinks(tid) {
-  const lgsMatch = /^lgs(\d+)$/i.exec(tid);
+  const lgsMatch = /^lgs(\d+)(?:_|$)/i.exec(tid);
   if (lgsMatch) {
     return [{
       label: "LiveGolfScoring",
       url: `https://rfegolf.livegolfscoring.es/torneos/hoyoahoyo/${lgsMatch[1]}`,
     }];
   }
-  const ncMatch = /^nc(\d+)$/i.exec(tid);
+  const ncMatch = /^nc(\d+)(?:_|$)/i.exec(tid);
   if (ncMatch) {
     return [{
       label: "NextCaddy",
