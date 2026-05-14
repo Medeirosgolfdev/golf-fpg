@@ -1595,6 +1595,15 @@ tr.cross-current { background: var(--bg-success); }
  .sidebar-toggle  { width: 30px; height: 30px; font-size: 12px; }
 }
 
+ /* Botões com tap target mais confortável em mobile */
+ .tourn-tab, .tourn-tab-sm, .nav-btn, .course-item {
+  min-height: 32px;
+ }
+ /* Separator vertical fica visualmente solto quando a toolbar faz wrap.
+    Em mobile, esconder os toolbar-sep individuais — wrap natural já separa. */
+ .toolbar .toolbar-sep { display: none; }
+}
+
 @media (max-width: 480px) {
  .brand-title  { display: none; }
  .topbar       { gap: 4px; padding: 0 6px; height: 40px; }

@@ -1377,8 +1377,12 @@ function RivaisIntlContent() {
       </Toolbar>
 
       <div style={{
-        display: "flex", gap: 6, padding: "6px 10px",
-        overflowX: "auto", whiteSpace: "nowrap",
+        display: "flex", gap: md.isMobile ? 4 : 6,
+        padding: md.isMobile ? "5px 6px" : "6px 10px",
+        overflowX: md.isMobile ? "visible" : "auto",
+        whiteSpace: md.isMobile ? "normal" : "nowrap",
+        flexWrap: md.isMobile ? "wrap" : "nowrap",
+        rowGap: md.isMobile ? 4 : undefined,
         borderBottom: "1px solid var(--border-light)",
         background: "var(--bg)",
         flexShrink: 0,
