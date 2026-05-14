@@ -2,18 +2,22 @@
  * KIDS2Page.tsx — rebuild canonical-first.
  *
  * Layout:
- *   - Toolbar superior (filtros de fonte + special toggles + link)
- *   - Sidebar (só search + lista agrupada por país)
+ *   - Toolbar global (SidebarToggle + título + DataSourcesChip + filtros)
+ *   - Sidebar (master-detail) com search + lista por país
  *   - Painel direito (PlayerProfile)
  */
 
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { useJuniorsCanonical } from "./kids2/data";
+import { useJuniorsCanonical, normName } from "./kids2/data";
 import Sidebar from "./kids2/Sidebar";
 import PlayerProfile from "./kids2/PlayerProfile";
 import EmptyState from "../ui/EmptyState";
 import LoadingState from "../ui/LoadingState";
+import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
+import SidebarToggle from "../ui/SidebarToggle";
+import { DataSourcesChip } from "../ui/DataSources";
+import { useMasterDetail } from "../hooks/useMasterDetail";
 
 export type Kids2SourceKey = "uskids" | "fpg" | "rfeg" | "ffgolf" | "wjgc" | "eowagr" | "doral";
 
@@ -31,8 +35,8 @@ export default function KIDS2Page() {
   const status = useJuniorsCanonical();
   const params = useParams<{ juniorId?: string }>();
   const navigate = useNavigate();
+  const md = useMasterDetail(true);
 
-  const [q, setQ] = useState("");
   const [countryFilter, setCountryFilter] = useState<string>("");
   const [activeSources, setActiveSources] = useState<Set<Kids2SourceKey>>(new Set());
   const [onlyVsManuel, setOnlyVsManuel] = useState(false);
@@ -52,6 +56,30 @@ export default function KIDS2Page() {
     setOnlyWins(false);
   };
 
+  // Resolver retro-compat: /kids2#memberId ou /kids2#NomeJogador → /kids2/:juniorId
+  // (5 linkers do site continuam a passar hashes; após resolver, navegamos para a URL canónica)
+  useEffect(() => {
+    if (status.kind !== "ready") return;
+    if (params.juniorId) return; // já temos juniorId na URL — nada a fazer
+    if (typeof window === "undefined") return;
+    const raw = window.location.hash.replace(/^#/, "");
+    if (!raw) return;
+    let resolved: string | null = null;
+    // 1) Tentar como USKids memberId (uma string numérica de 5-7 dígitos)
+    const decoded = decodeURIComponent(raw);
+    const byMember = status.data.juniorByUskidsMember.get(decoded);
+    if (byMember) resolved = byMember.id;
+    // 2) Tentar como normName (decoded vs raw)
+    if (!resolved) {
+      const candidates = status.data.juniorByNormName.get(normName(decoded));
+      if (candidates && candidates.length > 0) resolved = candidates[0].id;
+    }
+    if (resolved) {
+      // Limpa hash e navega para URL canónica
+      navigate(`/kids2/${resolved}`, { replace: true });
+    }
+  }, [status, params.juniorId, navigate]);
+
   if (status.kind === "loading") return <LoadingState />;
   if (status.kind === "error") return <EmptyState size="md" message={`Falhou carregar canónicos: ${status.error}`} />;
 
@@ -62,23 +90,25 @@ export default function KIDS2Page() {
 
   const handleSelect = (id: string) => {
     navigate(`/kids2/${id}`, { replace: true });
+    md.onSelect();
   };
 
   const hasActiveFilter = activeSources.size > 0 || onlyVsManuel || onlyWins;
 
   return (
-    <div className="kids2-page" style={{ display: "flex", flexDirection: "column", height: "100%", minHeight: "calc(100vh - 60px)" }}>
-      {/* Toolbar superior: filtros + link próximos torneios */}
-      <div style={{
-        display: "flex",
-        alignItems: "center",
-        gap: 8,
-        padding: "10px 16px",
-        borderBottom: "1px solid var(--border)",
-        background: "var(--bg-muted)",
-        flexWrap: "wrap",
-      }}>
-        <span style={{ fontSize: 11, fontWeight: 700, color: "var(--text-3)", letterSpacing: 0.4, textTransform: "uppercase", marginRight: 2 }}>
+    <div className="tourn-layout">
+      {/* ── Toolbar global (padrão do projecto) ── */}
+      <Toolbar>
+        <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
+        <ToolbarTitle>🌍 Kids 2</ToolbarTitle>
+        <DataSourcesChip sources={data.sources} />
+        <ToolbarSep />
+        <span className="toolbar-meta shrink-0" style={{ fontSize: 10, color: "var(--color-good-dark)", fontWeight: 700 }}>
+          {data.juniors.length} juniors · {data.tournaments.length} torneios · ✓
+        </span>
+        <ToolbarSep />
+        {/* Pills de fonte */}
+        <span style={{ fontSize: 10, fontWeight: 700, color: "var(--text-3)", letterSpacing: 0.4, textTransform: "uppercase", flexShrink: 0 }}>
           Fonte
         </span>
         {SOURCE_PILLS.map((p) => {
@@ -86,26 +116,29 @@ export default function KIDS2Page() {
           return (
             <button
               key={p.key}
+              className={"tourn-tab tourn-tab-sm" + (active ? " active" : " tourn-tab-muted")}
+              style={{ flexShrink: 0 }}
               onClick={() => toggleSource(p.key)}
-              style={pillStyle(active)}
               title={`Filtrar: ${p.label}`}
             >
               {p.label}
             </button>
           );
         })}
-        <span style={{ width: 1, height: 18, background: "var(--border)", margin: "0 4px" }} />
+        <ToolbarSep />
         <button
+          className={"tourn-tab tourn-tab-sm" + (onlyVsManuel ? " active" : " tourn-tab-muted")}
+          style={{ flexShrink: 0 }}
           onClick={() => setOnlyVsManuel((v) => !v)}
-          style={pillStyle(onlyVsManuel, "var(--color-good-dark)")}
           title="Só rivais que cruzaram com Manuel"
           disabled={!manuel}
         >
           ⚔️ vs Manuel
         </button>
         <button
+          className={"tourn-tab tourn-tab-sm" + (onlyWins ? " active" : " tourn-tab-muted")}
+          style={{ flexShrink: 0 }}
           onClick={() => setOnlyWins((v) => !v)}
-          style={pillStyle(onlyWins, "var(--color-warn-dark, #92400e)")}
           title="Só rivais com pelo menos 1 vitória"
         >
           🏆 c/ vitórias
@@ -113,43 +146,39 @@ export default function KIDS2Page() {
         {hasActiveFilter && (
           <button
             onClick={clearFilters}
-            style={{ ...pillStyle(false), color: "var(--color-danger-dark)", borderColor: "var(--color-danger-dark)" }}
+            className="tourn-tab tourn-tab-sm"
+            style={{ flexShrink: 0, background: "var(--bg-danger)", color: "var(--color-danger-dark)", borderColor: "var(--color-danger)" }}
             title="Limpar filtros"
           >
-            ✕ limpar
+            ✕
           </button>
         )}
+        <div className="flex-1" />
         <Link
           to="/kids2/next-t"
-          style={{
-            marginLeft: "auto",
-            fontSize: 12, fontWeight: 600,
-            color: "var(--color-info-dark, #1e3a8a)",
-            textDecoration: "none",
-            padding: "4px 10px",
-            border: "1px solid var(--border)",
-            borderRadius: 6,
-            background: "var(--bg)",
-          }}
+          className="tourn-tab tourn-tab-sm tourn-tab-muted"
+          style={{ flexShrink: 0, textDecoration: "none" }}
           title="Ver próximos torneios do Manuel"
-        >📅 Próximos torneios</Link>
-      </div>
+        >
+          📅 Próximos torneios
+        </Link>
+      </Toolbar>
 
-      {/* Layout principal: sidebar + detail */}
-      <div style={{ display: "flex", flex: 1, minHeight: 0 }}>
-        <Sidebar
-          data={data}
-          selectedId={selectedId || null}
-          onSelect={handleSelect}
-          q={q}
-          onQChange={setQ}
-          countryFilter={countryFilter}
-          onCountryFilterChange={setCountryFilter}
-          activeSources={activeSources}
-          onlyVsManuel={onlyVsManuel}
-          onlyWins={onlyWins}
-        />
-        <div className="kids2-detail" style={{ flex: 1, overflowY: "auto", padding: "16px 20px" }}>
+      {/* ── Layout master-detail ── */}
+      <div className="master-detail">
+        <div className={md.sidebarClass}>
+          <Sidebar
+            data={data}
+            selectedId={selectedId || null}
+            onSelect={handleSelect}
+            countryFilter={countryFilter}
+            onCountryFilterChange={setCountryFilter}
+            activeSources={activeSources}
+            onlyVsManuel={onlyVsManuel}
+            onlyWins={onlyWins}
+          />
+        </div>
+        <div className="course-detail" ref={md.detailRef}>
           {selected ? (
             <PlayerProfile data={data} junior={selected} />
           ) : (
@@ -159,20 +188,4 @@ export default function KIDS2Page() {
       </div>
     </div>
   );
-}
-
-function pillStyle(active: boolean, accent?: string): React.CSSProperties {
-  const baseAccent = accent || "var(--color-info-dark)";
-  return {
-    fontSize: 11,
-    fontWeight: 600,
-    padding: "4px 10px",
-    borderRadius: 999,
-    border: `1px solid ${active ? baseAccent : "var(--border)"}`,
-    background: active ? baseAccent : "var(--bg)",
-    color: active ? "var(--bg)" : "var(--text-2)",
-    cursor: "pointer",
-    lineHeight: 1.4,
-    letterSpacing: 0.2,
-  };
 }

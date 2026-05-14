@@ -8,7 +8,7 @@
 
 import React, { useMemo, useState } from "react";
 import type { CanonicalData, Junior } from "./data";
-import { getSharedTournamentIds } from "./data";
+import { getSharedFlightTids } from "./data";
 import { flag as flagOf } from "../../utils/flagUtils";
 
 const MAX_VISIBLE = 8000;
@@ -47,8 +47,6 @@ interface Props {
   data: CanonicalData;
   selectedId: string | null;
   onSelect: (id: string) => void;
-  q: string;
-  onQChange: (q: string) => void;
   countryFilter: string;
   onCountryFilterChange: (c: string) => void;
   // Filtros vindos da toolbar superior
@@ -58,9 +56,12 @@ interface Props {
 }
 
 export default function Sidebar({
-  data, selectedId, onSelect, q, onQChange,
+  data, selectedId, onSelect,
   countryFilter, activeSources, onlyVsManuel, onlyWins,
 }: Props) {
+  // Estado local da search — evita propagar para KIDS2Page e re-renderizar o detail
+  // a cada keystroke. É a única razão deste estado existir.
+  const [q, setQ] = useState("");
   const manuel = data.manuel;
   const [collapsedCountries, setCollapsedCountries] = useState<Set<string>>(new Set());
 
@@ -72,11 +73,23 @@ export default function Sidebar({
     });
   };
 
-  const { directos, byCountry, totalFiltered, totalShown } = useMemo(() => {
+  const { directos, byCountry, totalFiltered, totalShown, sharedCountByJunior } = useMemo(() => {
     const ql = q.trim().toLowerCase();
-    const manuelTids = manuel ? new Set(manuel.tournamentIds) : new Set<string>();
     const seen = new Set<string>();
     const srcArr = Array.from(activeSources);
+
+    // Pré-calcula nº de confrontos REAIS (mesmo flight) por junior. "Cruzou
+    // com Manuel" passa a significar "competiu no mesmo escalão", não "esteve
+    // no mesmo evento em escalão diferente". Usado também para a pill "Nx M".
+    const sharedFlightCountMap = new Map<string, number>();
+    if (manuel) {
+      for (const j of data.juniors) {
+        if (j.id === manuel.id) continue;
+        const c = getSharedFlightTids(j, manuel, data.tournamentById).length;
+        if (c > 0) sharedFlightCountMap.set(j.id, c);
+      }
+    }
+    const sharedFlightSet = new Set(sharedFlightCountMap.keys());
 
     const matched: Junior[] = [];
     for (const j of data.juniors) {
@@ -97,8 +110,7 @@ export default function Sidebar({
       if (onlyWins && !juniorHasWin(j, data.tournamentById)) continue;
       if (onlyVsManuel) {
         if (!manuel || j.id === manuel.id) continue;
-        const cruzou = j.tournamentIds.some((tid) => manuelTids.has(tid));
-        if (!cruzou) continue;
+        if (!sharedFlightSet.has(j.id)) continue;
       }
       matched.push(j);
     }
@@ -112,8 +124,7 @@ export default function Sidebar({
         if (!inDir.has(j.id)) { dir.unshift(j); inDir.add(j.id); }
         continue;
       }
-      const shared = manuelTids.size && j.tournamentIds.some((tid) => manuelTids.has(tid));
-      if (shared) {
+      if (sharedFlightSet.has(j.id)) {
         if (!inDir.has(j.id)) { dir.push(j); inDir.add(j.id); }
       } else {
         if (!inOth.has(j.id)) { oth.push(j); inOth.add(j.id); }
@@ -155,21 +166,19 @@ export default function Sidebar({
       byCountry,
       totalFiltered: matched.length,
       totalShown: shown,
+      sharedCountByJunior: sharedFlightCountMap,
     };
   }, [data, manuel, q, countryFilter, activeSources, onlyVsManuel, onlyWins]);
 
   return (
     <div className="kids2-sidebar" style={{
-      width: 300,
-      flexShrink: 0,
-      borderRight: "1px solid var(--border)",
       display: "flex",
       flexDirection: "column",
       minHeight: 0,
+      height: "100%",
     }}>
       <div style={{ padding: "10px 12px", borderBottom: "1px solid var(--border-light)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 11, color: "var(--text-3)", marginBottom: 8 }}>
-          <strong style={{ fontSize: 13, color: "var(--text)" }}>Kids 2</strong>
           <span style={{ marginLeft: "auto" }}>
             {totalFiltered === totalShown
               ? `${totalFiltered} de ${data.juniors.length}`
@@ -179,7 +188,7 @@ export default function Sidebar({
         <input
           type="text"
           value={q}
-          onChange={(e) => onQChange(e.target.value)}
+          onChange={(e) => setQ(e.target.value)}
           placeholder="Pesquisar rival..."
           style={{
             width: "100%",
@@ -200,7 +209,7 @@ export default function Sidebar({
               Cruzou com Manuel ({directos.length})
             </SectionHeader>
             {directos.map((j) => (
-              <RivalRow key={j.id} junior={j} manuel={manuel} selected={selectedId === j.id} onSelect={onSelect} />
+              <RivalRow key={j.id} junior={j} manuel={manuel} selected={selectedId === j.id} onSelect={onSelect} sharedCount={sharedCountByJunior.get(j.id) || 0} />
             ))}
           </>
         )}
@@ -221,7 +230,7 @@ export default function Sidebar({
                 <span style={{ fontSize: 9, opacity: 0.5 }}>{collapsed ? "▶" : "▼"}</span>
               </SectionHeader>
               {!collapsed && juniors.map((j) => (
-                <RivalRow key={j.id} junior={j} manuel={manuel} selected={selectedId === j.id} onSelect={onSelect} />
+                <RivalRow key={j.id} junior={j} manuel={manuel} selected={selectedId === j.id} onSelect={onSelect} sharedCount={sharedCountByJunior.get(j.id) || 0} />
               ))}
             </React.Fragment>
           );
@@ -270,16 +279,18 @@ function SectionHeader({ children, color, icon, onClick }: {
   );
 }
 
-function RivalRow({ junior, manuel, selected, onSelect }: {
+function RivalRow({ junior, manuel, selected, onSelect, sharedCount }: {
   junior: Junior;
   manuel: Junior | null;
   selected: boolean;
   onSelect: (id: string) => void;
+  /** Nº de confrontos REAIS (mesmo flight) com Manuel — pré-calculado pelo Sidebar. */
+  sharedCount: number;
 }) {
   const isManuel = manuel?.id === junior.id;
   const flagEmoji = flagOf(junior.country || junior.nationality || "");
   const tournCount = junior.tournamentIds.length;
-  const shared = manuel && !isManuel ? getSharedTournamentIds(junior, manuel).length : 0;
+  const shared = sharedCount;
 
   const club = junior.sources.fpg?.club || junior.sources.rfeg?.club || junior.sources.ffgolf?.club || junior.club;
 

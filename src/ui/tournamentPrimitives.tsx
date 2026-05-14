@@ -218,7 +218,7 @@ export function TournPName({
       {nameEl}
       {kidsHash && (
         <a
-          href={`/kids#${kidsHash}`}
+          href={`/kids2#${kidsHash}`}
           target="_blank"
           rel="noopener noreferrer"
           title="Ver em Kids

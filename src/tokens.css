@@ -262,9 +262,36 @@
 
 
   /* ── 11. Medals ────────────────────────────────────────────── */
-  --medal-gold:   #f59e0b;   /* 1.º lugar */
-  --medal-silver: #94a3b8;   /* 2.º lugar */
-  --medal-bronze: #b45309;   /* 3.º lugar */
+  /* Cores sólidas (círculos sparkline, bordas, troféus em SVG) */
+  --medal-gold:   #f59e0b;   /* 1.º lugar — âmbar quente */
+  --medal-silver: #94a3b8;   /* 2.º lugar — slate */
+  --medal-bronze: #b45309;   /* 3.º lugar — bronze escuro */
+
+  /* Pills de troféu (background + foreground).
+   * HIERARQUIA VISUAL OBRIGATÓRIA: gold tem MAIS peso visual que silver/bronze
+   * (mais saturado, contraste fg/bg mais alto). Silver e bronze são pálidos
+   * para não competir com gold. Validar luminância: gold-bg ~85%, silver-bg ~95%,
+   * bronze-bg ~92%. NUNCA inverter — o 1º lugar tem de saltar à vista. */
+  --medal-gold-bg:    #fde68a;   /* amber-200 saturado */
+  --medal-gold-fg:    #78350f;   /* amber-900 */
+  --medal-silver-bg:  #cbd5e1;   /* slate-300 — visível contra fundo claro mas sem competir com gold */
+  --medal-silver-fg:  #334155;   /* slate-700 — contraste forte */
+  --medal-bronze-bg:  #fed7aa;   /* orange-200 pálido */
+  --medal-bronze-fg:  #9a3412;   /* orange-900 */
+
+  /* Trophy "borders" para sparklines/pills (matiz forte para realce) */
+  --medal-gold-strong:    #b45309;   /* amber-700 */
+  --medal-silver-strong:  #64748b;   /* slate-500 */
+  --medal-bronze-strong:  #9a3412;   /* orange-900 */
+
+  /* ── 11b. Source colors (fontes de dados kids2) ─────────────── */
+  --source-uskids: #2563eb;   /* azul */
+  --source-fpg:    #16a34a;   /* verde */
+  --source-rfeg:   #f59e0b;   /* âmbar */
+  --source-ffgolf: #dc2626;   /* vermelho */
+  --source-wjgc:   #7c3aed;   /* roxo */
+  --source-eowagr: #0891b2;   /* ciano */
+  --source-doral:  #db2777;   /* rosa */
 
 
   /* ── 12. Borders ───────────────────────────────────────────── */

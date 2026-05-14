@@ -2,12 +2,22 @@
  * KIDSdataLoader.test.ts
  *
  * Testes para as funções core do loader de rivais internacionais.
- * Foco nos bugs documentados no CLAUDE.md:
+ *
+ * NOTA — Migração KIDS → KIDS2 (2026-05-14):
+ * A maior parte das funções deste loader foram stubbadas em
+ * `src/data/KIDSdataLoader.ts` (linhas 503-517) — devolvem `[]` ou `{}`.
+ * O KIDS2 lê directamente dos canónicos (`juniors.json` +
+ * `juniors-tournaments-*.json` + `tournament-catalog.json`), tornando
+ * estas funções desnecessárias. Os describes abaixo que dependiam dessas
+ * funções estão marcados com `.skip` até o KIDSdataLoader ser removido
+ * de vez (Fase 8 da migração). Os testes activos cobrem só funções
+ * partilhadas que continuam a ser usadas (`normName`, `co`).
+ *
+ * Bugs históricos documentados no CLAUDE.md (cobertos quando reactivados):
  *   - Scores negativos em torneios de 9 buracos
  *   - tp só calculado com scorecards completos
  *   - Filtro Boys 9-13
  *   - mergeInto dedup e forceTids
- *   - normName diacríticos
  *   - Formato v1 vs v2 dos torneios completos
  */
 import { describe, it, expect, beforeEach } from "vitest";
@@ -134,7 +144,7 @@ describe("co", () => {
 /* ═══════════════════════════════════════════
    processFpgJuniorTourns — torneios FPG juniores
    ═══════════════════════════════════════════ */
-describe("processFpgJuniorTourns", () => {
+describe.skip("processFpgJuniorTourns (stubbed — KIDS2 migration)", () => {
   beforeEach(() => fpgTournNames.clear());
 
   it("regista torneios Sub-10/12/14 e ignora Sub-18", () => {
@@ -204,7 +214,7 @@ describe("processFpgJuniorTourns", () => {
 /* ═══════════════════════════════════════════
    shortenTournName — abreviatura de nomes
    ═══════════════════════════════════════════ */
-describe("shortenTournName", () => {
+describe.skip("shortenTournName (stubbed — KIDS2 migration)", () => {
   it("World Championship → WC + ano", () => {
     expect(shortenTournName("World Championship 2025")).toBe("WC 25");
   });
@@ -237,7 +247,7 @@ describe("shortenTournName", () => {
 /* ═══════════════════════════════════════════
    mergeInto — merge de jogadores com dedup
    ═══════════════════════════════════════════ */
-describe("mergeInto", () => {
+describe.skip("mergeInto (stubbed — KIDS2 migration)", () => {
   it("adiciona jogador novo ao map", () => {
     const map = new Map<string, AutoRivalPlayer>();
     const players: AutoRivalPlayer[] = [
@@ -304,7 +314,7 @@ describe("mergeInto", () => {
    processUskidsCompleto — formato v1
    Bug documentado: scores negativos em 9 buracos
    ═══════════════════════════════════════════ */
-describe("processUskidsCompleto", () => {
+describe.skip("processUskidsCompleto (stubbed — KIDS2 migration)", () => {
   beforeEach(() => {
     uskTournNames.clear();
     uskFieldSizes.clear();
@@ -469,7 +479,7 @@ describe("processUskidsCompleto", () => {
    processMemberHistory — formato slim
    Bug documentado: tp com scorecards incompletos
    ═══════════════════════════════════════════ */
-describe("processMemberHistory", () => {
+describe.skip("processMemberHistory (stubbed — KIDS2 migration)", () => {
   beforeEach(() => {
     uskTournNames.clear();
     uskFieldSizes.clear();
@@ -614,7 +624,7 @@ describe("processMemberHistory", () => {
 /* ═══════════════════════════════════════════
    processWjgc — formato bluegolf
    ═══════════════════════════════════════════ */
-describe("processWjgc", () => {
+describe.skip("processWjgc (stubbed — KIDS2 migration)", () => {
   it("processa formato bluegolf com scores 18H", () => {
     const data = {
       tournament: "Test WJGC",
@@ -650,7 +660,7 @@ describe("processWjgc", () => {
 /* ═══════════════════════════════════════════
    processManuelOverrides — injeção manual
    ═══════════════════════════════════════════ */
-describe("processManuelOverrides", () => {
+describe.skip("processManuelOverrides (stubbed — KIDS2 migration)", () => {
   it("injeta os overrides do Manuel", () => {
     const result = processManuelOverrides();
     expect(result.length).toBeGreaterThan(0);

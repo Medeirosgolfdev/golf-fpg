@@ -205,25 +205,28 @@ export default function AnaliseSection({ data, junior, filterTids }: Props) {
         </span>
       </div>
 
-      {/* Selector de torneio/escalão */}
+      {/* Selector de torneio/escalão como dropdown (em vez de N pills) */}
       {flightOpts.length > 1 && (
-        <div style={{ display: "flex", gap: 5, flexWrap: "wrap", marginBottom: 10 }}>
-          <button
-            onClick={() => setSelectedFlight("ALL")}
-            style={tabPillStyle(selectedFlight === "ALL")}
+        <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 10 }}>
+          <label style={{ fontSize: 11, color: "var(--text-3)", fontWeight: 600 }}>
+            Torneio / escalão
+          </label>
+          <select
+            value={selectedFlight}
+            onChange={(e) => setSelectedFlight(e.target.value)}
+            style={{
+              flex: 1, maxWidth: 460, padding: "5px 8px",
+              fontSize: 12, fontWeight: 500,
+              border: "1px solid var(--border)", borderRadius: 6,
+              background: "var(--bg)", color: "var(--text)",
+              cursor: "pointer",
+            }}
           >
-            Todos ({valid.length})
-          </button>
-          {flightOpts.map((o) => (
-            <button
-              key={o.key}
-              onClick={() => setSelectedFlight(o.key)}
-              style={tabPillStyle(selectedFlight === o.key)}
-              title={`${o.tid} · ${o.flightKey}`}
-            >
-              {o.label}
-            </button>
-          ))}
+            <option value="ALL">Todos os {valid.length} torneios</option>
+            {flightOpts.map((o) => (
+              <option key={o.key} value={o.key}>{o.label}</option>
+            ))}
+          </select>
         </div>
       )}
 
@@ -262,20 +265,6 @@ export default function AnaliseSection({ data, junior, filterTids }: Props) {
       {subTab === "holes" && <HolesPane player={aggregated} field={fieldAgg} />}
     </section>
   );
-}
-
-function tabPillStyle(active: boolean): React.CSSProperties {
-  return {
-    fontSize: 11,
-    padding: "3px 10px",
-    borderRadius: 999,
-    border: `1px solid ${active ? "var(--accent)" : "var(--border-light)"}`,
-    background: active ? "var(--accent)" : "var(--bg)",
-    color: active ? "var(--bg)" : "var(--text-2)",
-    cursor: "pointer",
-    fontWeight: 600,
-    whiteSpace: "nowrap",
-  };
 }
 
 function shortenTournLabel(s: string): string {

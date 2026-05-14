@@ -359,7 +359,7 @@ function ScoutContent({ data, tournament, onSelect }: {
                   })() : <span style={{ color: "var(--text-3)", fontSize: 10 }}>—</span>}
                 </td>
                 <td style={{ ...tdStyle, textAlign: "center" }}>{row.bestPos != null ? `#${row.bestPos}` : "—"}</td>
-                <td style={{ ...tdStyle, textAlign: "center", color: row.recentPos != null && row.recentPos <= 3 ? "var(--color-good-dark)" : undefined }}>
+                <td style={{ ...tdStyle, textAlign: "center", color: row.recentPos != null && row.recentPos <= 3 ? "var(--medal-gold-strong)" : undefined }}>
                   {row.recentPos != null ? `#${row.recentPos}` : "—"}
                 </td>
                 {!isFuture && (
@@ -368,7 +368,7 @@ function ScoutContent({ data, tournament, onSelect }: {
                   </td>
                 )}
                 {manuel && (
-                  <td style={{ ...tdStyle, textAlign: "right", fontWeight: 700, color: row.vsMTotal == null ? "var(--text-3)" : row.vsMTotal > 0 ? "var(--color-danger-dark)" : row.vsMTotal < 0 ? "var(--color-good-dark)" : "var(--text-3)" }}>
+                  <td style={{ ...tdStyle, textAlign: "right", fontWeight: 700, color: row.vsMTotal == null ? "var(--text-3)" : row.vsMTotal > 0 ? "var(--color-danger-dark)" : row.vsMTotal < 0 ? "var(--medal-gold-strong)" : "var(--text-3)" }}>
                     {row.vsMTotal == null ? "—" : row.vsMTotal === 0 ? "0" : row.vsMTotal > 0 ? `+${row.vsMTotal.toFixed(1)}` : row.vsMTotal.toFixed(1)}
                   </td>
                 )}
@@ -398,8 +398,10 @@ function flightPillStyle(active: boolean, isManuelFlight = false): React.CSSProp
 }
 
 function KpiCard({ label, value, sub, tone }: { label: string; value: number; sub: string; tone: "good" | "info" | "danger" }) {
-  const bg = tone === "danger" ? "var(--bg-warn-subtle, #fffbeb)" : tone === "info" ? "var(--bg-info-subtle, #eff6ff)" : "var(--bg-success-subtle, #ecfdf5)";
-  const fg = tone === "danger" ? "var(--color-warn-dark, #92400e)" : tone === "info" ? "var(--color-info-dark, #1e3a8a)" : "var(--color-good-dark)";
+  // tone="good" NÃO usa --color-good-dark (verde — reservado ao Manuel).
+  // Usa medal-gold-strong sobre bg-muted para indicar "stat positivo" do junior.
+  const bg = tone === "danger" ? "var(--bg-warn-subtle, #fffbeb)" : tone === "info" ? "var(--bg-info-subtle, #eff6ff)" : "var(--bg-muted)";
+  const fg = tone === "danger" ? "var(--color-warn-dark, #92400e)" : tone === "info" ? "var(--color-info-dark, #1e3a8a)" : "var(--medal-gold-strong)";
   return (
     <div style={{ background: bg, padding: "8px 10px", borderRadius: 6, border: `1px solid ${fg}` }}>
       <div style={{ fontSize: 10, fontWeight: 700, color: fg, textTransform: "uppercase", letterSpacing: 0.3 }}>{label}</div>

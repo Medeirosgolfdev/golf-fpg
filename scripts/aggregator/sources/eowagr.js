@@ -76,6 +76,9 @@ function normalize(data, fileName, playerMap) {
   const ageMax = ageRange ? +ageRange[2] : null;
   const sex = /^Boys/i.test(category) ? "M" : /^Girls/i.test(category) ? "F" : null;
 
+  // Links: preferir data.source (URL do leaderboard BlueGolf gravado pelo scrape)
+  const links = data.source ? [{ label: "BlueGolf", url: data.source }] : [];
+
   return {
     sourceKey,
     name,
@@ -90,6 +93,7 @@ function normalize(data, fileName, playerMap) {
       fieldSize: results.length,
       results,
     }],
+    links,
   };
 }
 

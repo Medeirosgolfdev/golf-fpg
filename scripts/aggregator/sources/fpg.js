@@ -276,8 +276,34 @@ function normalizeTournament(t, kind, playerMap) {
       label: "FPG",
       url: `https://scoring.fpg.pt/lists/linkpage.aspx?page=classif&club=${t.ccode || "000"}&tourn=${t.tcode}&ack=8428ACK987`,
     }],
-    extra: { kind, ccode: t.ccode, tcode: t.tcode, circuit: t.circuit || null, region: t.region || null },
+    extra: {
+      kind,
+      ccode: t.ccode,
+      tcode: t.tcode,
+      circuit: t.circuit || null,
+      region: t.region || null,
+      // Heurística de scoringType:
+      //   Campeonatos Nacionais + PJA + Internacional (CNI) → SCRATCH
+      //   Drive Tour + Aquapor + Pequeninos + restos → HANDICAP
+      // Pode ser refinada se a fonte tiver um campo explícito no futuro.
+      scoringType: detectScoringType(t),
+    },
   };
+}
+
+/** Devolve "SCRATCH" ou "HANDICAP" com base no nome/kind/escalão do torneio. */
+function detectScoringType(t) {
+  const name = String(t.name || "").toLowerCase();
+  const kindStr = String(t.kind || "").toLowerCase();
+  const circuit = String(t.circuit || "").toLowerCase();
+  // Sinais fortes de SCRATCH (competição de jovens elite, scoring gross)
+  if (/campeonato\s+nacional|^pja\b|portuguese\s+championship|internacional/i.test(t.name || "")) return "SCRATCH";
+  if (/^nacional$|^nacional-jovens$|^pja$/.test(kindStr)) return "SCRATCH";
+  // Drive Tour e Aquapor são HANDICAP por convenção FPG (Drive é o circuito amador)
+  if (/drive\s*tour|grande\s+final\s+drive|aquapor|pequeninos|jovens\s+regional/i.test(name)) return "HANDICAP";
+  if (/^drive$|^aquapor$/.test(circuit)) return "HANDICAP";
+  // Default conservador: HANDICAP (mais comum entre torneios FPG)
+  return "HANDICAP";
 }
 
 module.exports = { load, SOURCE_ID, SOURCE_LABEL };

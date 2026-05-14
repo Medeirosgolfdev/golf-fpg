@@ -14,6 +14,19 @@ const fs = require("fs");
 const DELAY_MS = 600;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+/** Extrai número da ronda do label (ex: "Round 1", "R2", "Day 3 - Feb 27").
+ *  Devolve null se não conseguir parsear. */
+function extractRoundNum(label) {
+  if (!label || typeof label !== "string") return null;
+  // Procurar primeiro número que apareça (geralmente é o nº da ronda)
+  const m = /\b(?:round|rd|day|volta|r)\s*[\.#]?\s*(\d+)/i.exec(label);
+  if (m) return parseInt(m[1], 10);
+  // Fallback: primeiro número standalone
+  const m2 = /\d+/.exec(label);
+  if (m2) return parseInt(m2[0], 10);
+  return null;
+}
+
 /* ─── Esperar CAPTCHA ─── */
 async function waitForHuman(page) {
   const title = await page.title();
@@ -83,9 +96,15 @@ async function extractScorecard(page) {
           }
         }
 
-        // Scores: <tr class="scores"> — uma por round
+        // Scores: <tr class="scores"> — uma por round.
+        // Captura também o LABEL da primeira <td> (ex: "Round 1", "R1",
+        // "Day 1 - Feb 26") para depois conseguir ordenar correctamente —
+        // o BlueGolf por vezes lista as rondas em ordem cronológica REVERSA.
         for (const tr of table.querySelectorAll("tr.scores")) {
-          const tds = Array.from(tr.querySelectorAll("td")).slice(1); // skip label
+          const allTds = Array.from(tr.querySelectorAll("td"));
+          const labelTd = allTds[0];
+          const label = labelTd ? labelTd.textContent.trim() : "";
+          const tds = allTds.slice(1);
           const scores = [];
           for (const td of tds) {
             const n = parseInt(td.textContent.trim(), 10);
@@ -96,7 +115,7 @@ async function extractScorecard(page) {
             // Também ignorar NaN (células "&nbsp;" etc)
           }
           if (scores.length >= 9) {
-            result.rounds.push(scores);
+            result.rounds.push({ scores, label });
           }
         }
       }
@@ -180,6 +199,40 @@ async function extractScorecard(page) {
   const tournamentTitle = pageTitle.replace(/ \| .*$/, "").replace(" Leaderboard", "").trim();
   console.log(`   Torneio: ${tournamentTitle}`);
 
+  // Extrair categoria + course da página (eram hardcoded "" antes)
+  const meta = await page.evaluate(() => {
+    const out = { category: "", course: "" };
+    // Categoria: tipicamente aparece num h1/h2/.bg-event-title como "Boys 10-11"
+    // ou está embebida no título da página. Tentar várias fontes.
+    const titleEls = [
+      ...document.querySelectorAll(".bg-event-title, .event-title, h1, h2, .breadcrumb-item.active"),
+    ];
+    for (const el of titleEls) {
+      const txt = (el.textContent || "").trim();
+      const m = /\b(Boys|Girls)\s+(\d+)(?:\s*[-–]\s*(\d+))?/i.exec(txt);
+      if (m) {
+        const prefix = m[1].charAt(0).toUpperCase() + m[1].slice(1).toLowerCase();
+        out.category = m[3] ? `${prefix} ${m[2]}-${m[3]}` : `${prefix} ${m[2]}`;
+        break;
+      }
+    }
+    // Course: tipicamente em .bg-event-meta ou em meta-info
+    const courseEl = document.querySelector(".bg-event-course, .event-course, [data-course]");
+    if (courseEl) out.course = (courseEl.textContent || "").trim();
+    return out;
+  });
+  // Fallback: extrair category do título da página se a página não tem element próprio
+  let category = meta.category;
+  if (!category) {
+    const m = /\b(Boys|Girls)\s+(\d+)(?:\s*[-–]\s*(\d+))?/i.exec(tournamentTitle);
+    if (m) {
+      const prefix = m[1].charAt(0).toUpperCase() + m[1].slice(1).toLowerCase();
+      category = m[3] ? `${prefix} ${m[2]}-${m[3]}` : `${prefix} ${m[2]}`;
+    }
+  }
+  const course = meta.course || "";
+  console.log(`   Categoria: ${category || "(não detectada)"} | Course: ${course || "(não detectado)"}`);
+
   // Extrair contestant IDs
   const contestants = await page.evaluate(() => {
     const links = document.querySelectorAll('a[href*="contestant"]');
@@ -229,11 +282,30 @@ async function extractScorecard(page) {
       if (!si && sc.si.length >= 9) si = sc.si.length > 18 ? sc.si.slice(0, 18) : sc.si;
 
       const name = sc.name || c.name;
-      const rounds = sc.rounds.map((scores, idx) => {
+      // Ordena as rondas pela ordem cronológica deduzida do label.
+      // Cada item de sc.rounds é { scores, label } onde label vem da 1ª <td>
+      // da tr.scores (ex: "Round 1", "R1", "Day 2 - Feb 27"). Extraímos o
+      // número da ronda do label e ordenamos ascendente. Se o label estiver
+      // ausente ou todos forem iguais, preserva ordem original.
+      const enrichedRounds = sc.rounds.map((rd, idx) => ({
+        scores: rd.scores,
+        label: rd.label || "",
+        origIdx: idx,
+        roundNum: extractRoundNum(rd.label) || (idx + 1),
+      }));
+      enrichedRounds.sort((a, b) => a.roundNum - b.roundNum);
+      const rounds = enrichedRounds.map((rd, idx) => {
+        const scores = rd.scores;
         const f9 = scores.slice(0, 9).reduce((a, b) => a + b, 0);
         const b9 = scores.length > 9 ? scores.slice(9, 18).reduce((a, b) => a + b, 0) : 0;
         const gross = scores.reduce((a, b) => a + b, 0);
-        return { day: idx + 1, scores, f9, ...(scores.length > 9 ? { b9 } : {}), gross };
+        return {
+          day: idx + 1,             // renumerado após sort
+          scores, f9,
+          ...(scores.length > 9 ? { b9 } : {}),
+          gross,
+          label: rd.label || undefined,  // preserva o label original para debug
+        };
       });
 
       const total = rounds.length > 0 ? rounds.reduce((a, r) => a + r.gross, 0) : sc.total;
@@ -265,11 +337,20 @@ async function extractScorecard(page) {
   const parB9 = par && par.length > 9 ? par.slice(9).reduce((a, b) => a + b, 0) : null;
   const pTotal = par ? par.reduce((a, b) => a + b, 0) : null;
 
+  // Year: tenta extrair do título (mais fiável que Date.now()).
+  let outYear = new Date().getFullYear();
+  const yrMatch = /\b(20\d{2})\b/.exec(tournamentTitle);
+  if (yrMatch) outYear = +yrMatch[1];
+
   const output = {
     tournament: tournamentTitle,
-    category: "",
-    course: "",
-    year: new Date().getFullYear(),
+    category,
+    course,
+    year: outYear,
+    // URL canónico do leaderboard — o adapter wjgc/eowagr usa isto para
+    // popular tournament.links. Sem este campo, os botões SAT/BlueGolf
+    // não aparecem na UI.
+    source: leaderboardUrl,
     par: par || [],
     ...(si && si.length > 0 ? { si } : {}),
     parF9, parB9, parTotal: pTotal,

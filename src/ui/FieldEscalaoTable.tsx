@@ -248,13 +248,13 @@ export function FieldEscalaoTable({ escalaoNome, players, isFuture, torneioT, re
                     <span style={{ display:"flex", alignItems:"center", gap:6, flexWrap:"wrap" }}>
                       <span>{displayName(p.nome)}</span>
                       {kidsName && (
-                        <a href="/kids"
+                        <a href="/kids2"
                           onClick={e => {
                             e.preventDefault();
-                            // Preferir memberId (ID único USKids) — resolve no KIDSPage antes dos 45 ficheiros
+                            // Preferir memberId (ID único USKids) — KIDS2Page resolve via canonicals
                             const memberId = arEntry?.memberId;
                             const hash = memberId ?? encodeURIComponent(kidsName);
-                            window.open(`/kids#${hash}`, "_blank");
+                            window.open(`/kids2#${hash}`, "_blank");
                           }}
                           title="Ver em Kids"
                           style={{ fontWeight:800, color:"var(--color-good-dark)", fontSize:14, cursor:"pointer", textDecoration:"none", flexShrink:0 }}>

@@ -1,0 +1,79 @@
+{
+  "gerado_em": "2026-05-13T15:30:00.000Z",
+  "filosofia": "Aplicar APENAS quando e' normalizacao pura (casing/espacos) ou bug objectivo. NUNCA quando muda info do nome (apelido extra, middle name, Jr., etc.) - essas variacoes podem ser usadas para cross-matching com outras fontes (BJGT, FPG, Drive, WJGC).",
+  "total": 10,
+  "corrections": {
+    "576306": {
+      "name": "Ricardo Castro Ferreira",
+      "country": "PT",
+      "reason": "ALL CAPS + hifen incorreto -> Title Case sem hifen (forma canonica em pt confirmada)"
+    },
+    "590169": {
+      "name": "Jonathan Schultz",
+      "country": "US",
+      "reason": "Removido espaco duplo entre Jonathan e Schultz"
+    },
+    "572678": {
+      "name": "Hudson Weikle",
+      "country": "US",
+      "reason": "Removido espaco duplo entre Hudson e Weikle"
+    },
+    "537014": {
+      "name": "Evan SEO",
+      "country": "US",
+      "reason": "ALL CAPS -> Title Case (parcial; API preservou ALL CAPS no apelido)"
+    },
+    "530930": {
+      "name": "Jacob Eagan",
+      "country": "US",
+      "reason": "ALL CAPS -> Title Case"
+    },
+    "567257": {
+      "name": "Alejandro Higuera Garcia",
+      "country": "MX",
+      "reason": "ALL CAPS -> Title Case"
+    },
+    "593633": {
+      "name": "Alejandro Gonzalez",
+      "country": "MX",
+      "reason": "ALL CAPS -> Title Case"
+    },
+    "526923": {
+      "name": "Jaimin Shah",
+      "country": "IN",
+      "reason": "Removido espaco duplo entre Jaimin e Shah"
+    },
+    "646392": {
+      "name": "Cristian Lotrean",
+      "country": "RO",
+      "reason": "Cache tinha 'Cristian Lotrean | ?' (split entre chunks); ? era um mid sem nome no mesmo registo"
+    },
+    "599276": {
+      "name": "Paul Jules Nischk",
+      "country": "DE",
+      "reason": "BUG OBJECTIVO: chunk 002 atribuiu nome errado (Freddie Foschini, que e' o mid 550286). API confirmou que 599276 e' Paul Jules Nischk DE Boys 7. Mid 550286 mantem-se como Freddie Foschini."
+    }
+  },
+  "investigar_manualmente": {
+    "529514": {
+      "cache": "Jerry GUO",
+      "api": "JIARUI GUO",
+      "nota": "Provavelmente mesma pessoa: Jerry = anglicizacao de Jiarui. Manter cache."
+    },
+    "601377": {
+      "cache": "Junhang Wu",
+      "api": "Jayden Wu",
+      "nota": "Manter cache. Pode ser duplo nome (chines/anglo) ou identidades distintas no mesmo mid."
+    },
+    "523984": {
+      "cache": "Dragon Vorodriguez",
+      "api": "Logan Vorodriguez",
+      "nota": "Dragon parece nickname; Logan provavelmente o nome real. Suspeito de bug historico no scrape ou mid reciclado."
+    },
+    "509055": {
+      "cache": "Zude Xu",
+      "api": "Jude Xu",
+      "nota": "Possivel typo de teclado (Z vs J). NAO automatizar - pode ser nome legitimo asiatico."
+    }
+  }
+}

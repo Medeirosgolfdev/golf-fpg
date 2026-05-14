@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-13T18:29:45.475Z",
+  "generatedAt": "2026-05-14T17:44:47.856Z",
   "juniors": [
     {
       "id": "u433800",
@@ -1684,7 +1684,7 @@
       "sources": {
         "uskids": {
           "memberId": "471043",
-          "ageGroupCurrent": "Boys 13-14"
+          "ageGroupCurrent": "Boys 11"
         }
       },
       "tournamentIds": [
@@ -3612,7 +3612,7 @@
       "sources": {
         "uskids": {
           "memberId": "490176",
-          "ageGroupCurrent": "Boys 14"
+          "ageGroupCurrent": "Boys 15-18"
         }
       },
       "tournamentIds": [
@@ -4501,7 +4501,13 @@
         "uskids": {
           "memberId": "491728",
           "ageGroupCurrent": "Boys 14"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "harry howell|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-2079",
@@ -4511,15 +4517,18 @@
         "uskids-2250",
         "uskids-5095",
         "uskids-2586",
-        "uskids-1108"
+        "uskids-1108",
+        "wjgc-wjgc_2025_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:491728"
+          "uskids:491728",
+          "wjgc:harry howell|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc"
         ]
       }
     },
@@ -5117,7 +5126,7 @@
       "sources": {
         "uskids": {
           "memberId": "493406",
-          "ageGroupCurrent": "Boys 13-14"
+          "ageGroupCurrent": "Boys 7 & Under"
         }
       },
       "tournamentIds": [
@@ -12395,7 +12404,13 @@
         "uskids": {
           "memberId": "502273",
           "ageGroupCurrent": "Boys 15-18"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "vihaan punde|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-3361",
@@ -12466,15 +12481,18 @@
         "uskids-8011",
         "uskids-8013",
         "uskids-19130",
-        "uskids-19736"
+        "uskids-19736",
+        "wjgc-wjgc_2026_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:502273"
+          "uskids:502273",
+          "wjgc:vihaan punde|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc"
         ]
       }
     },
@@ -15710,7 +15728,13 @@
         "uskids": {
           "memberId": "504848",
           "ageGroupCurrent": "Boys 14"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "thomas richardson|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-4010",
@@ -15720,15 +15744,18 @@
         "uskids-6713",
         "uskids-5095",
         "uskids-2586",
-        "uskids-4009"
+        "uskids-4009",
+        "wjgc-wjgc_2025_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:504848"
+          "uskids:504848",
+          "wjgc:thomas richardson|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc"
         ]
       }
     },
@@ -26896,7 +26923,13 @@
         "uskids": {
           "memberId": "512914",
           "ageGroupCurrent": "Boys 13"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "fraser walters|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-5663",
@@ -26918,15 +26951,18 @@
         "uskids-7761",
         "uskids-7762",
         "uskids-13598",
-        "uskids-13599"
+        "uskids-13599",
+        "wjgc-wjgc_2025_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:512914"
+          "uskids:512914",
+          "wjgc:fraser walters|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc"
         ]
       }
     },
@@ -43036,7 +43072,13 @@
         "uskids": {
           "memberId": "523488",
           "ageGroupCurrent": "Boys 13-14"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "tiernan bradley|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-8300",
@@ -43103,15 +43145,18 @@
         "uskids-12696",
         "uskids-13670",
         "uskids-13671",
-        "uskids-13672"
+        "uskids-13672",
+        "wjgc-wjgc_2025_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:523488"
+          "uskids:523488",
+          "wjgc:tiernan bradley|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc"
         ]
       }
     },
@@ -49761,7 +49806,13 @@
         "uskids": {
           "memberId": "526147",
           "ageGroupCurrent": "Boys 15-18"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "daniel hobbs|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-8300",
@@ -49800,15 +49851,18 @@
         "uskids-17839",
         "uskids-17840",
         "uskids-17841",
-        "uskids-20429"
+        "uskids-20429",
+        "wjgc-wjgc_2025_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:526147"
+          "uskids:526147",
+          "wjgc:daniel hobbs|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc"
         ]
       }
     },
@@ -51397,12 +51451,12 @@
     },
     {
       "id": "u526923",
-      "canonicalName": "Jaimin  Shah",
+      "canonicalName": "Jaimin Shah",
       "aliases": [],
       "dob": null,
       "sex": null,
-      "nationality": "US",
-      "country": "US",
+      "nationality": "IN",
+      "country": "IN",
       "region": null,
       "club": null,
       "sources": {
@@ -52565,7 +52619,17 @@
         "uskids": {
           "memberId": "527411",
           "ageGroupCurrent": "Boys 13-14"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "roman kulyk|"
+          },
+          {
+            "sourceId": "doral",
+            "key": "doral-1875120439"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-5663",
@@ -52604,15 +52668,21 @@
         "uskids-5900",
         "uskids-12003",
         "uskids-12004",
-        "uskids-21319"
+        "uskids-21319",
+        "wjgc-wjgc_2026_bwagr",
+        "doral-ftm_doral_2024"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:527411"
+          "uskids:527411",
+          "wjgc:roman kulyk|",
+          "doral:doral-1875120439"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc",
+          "doral"
         ]
       }
     },
@@ -57209,7 +57279,7 @@
         "uskids-15807",
         "uskids-18242",
         "uskids-12000",
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -77013,7 +77083,13 @@
         "uskids": {
           "memberId": "535961",
           "ageGroupCurrent": "Boys 13-14"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "john ferrazza|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-15704",
@@ -77160,15 +77236,18 @@
         "uskids-20461",
         "uskids-20462",
         "uskids-21812",
-        "uskids-21813"
+        "uskids-21813",
+        "wjgc-wjgc_2025_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:535961"
+          "uskids:535961",
+          "wjgc:john ferrazza|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc"
         ]
       }
     },
@@ -78636,7 +78715,7 @@
         "uskids-15143",
         "uskids-15144",
         "uskids-15147",
-        "wjgc-wjgc_2025_contest34",
+        "wjgc-wjgc_2025_b1011",
         "doral-ftm_doral_2024",
         "doral-ftm_doral_2025"
       ],
@@ -80938,7 +81017,7 @@
         "ffgolf-2300991197",
         "ffgolf-2300979851",
         "ffgolf-2300979828",
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -88343,7 +88422,13 @@
         "uskids": {
           "memberId": "539669",
           "ageGroupCurrent": "Boys 12"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "alfie turner|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-8300",
@@ -88351,15 +88436,18 @@
         "uskids-13826",
         "uskids-7314",
         "uskids-9776",
-        "uskids-12191"
+        "uskids-12191",
+        "wjgc-wjgc_2025_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:539669"
+          "uskids:539669",
+          "wjgc:alfie turner|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc"
         ]
       }
     },
@@ -102207,7 +102295,7 @@
         "uskids-20648",
         "uskids-20649",
         "uskids-20650",
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -105575,7 +105663,7 @@
         "uskids-16615",
         "uskids-9186",
         "uskids-8391",
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -106127,8 +106215,8 @@
         "uskids-9776",
         "uskids-15147",
         "fpg-962-10080-20251229-all",
-        "wjgc-wjgc_2025_contest34",
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2025_b1011",
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -106766,7 +106854,7 @@
         "uskids-9186",
         "uskids-20429",
         "uskids-15666",
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -107474,8 +107562,8 @@
         "rfeg-nc61109_infantil",
         "rfeg-nc61131_juvenil",
         "eowagr-eowagr25_scorecards",
-        "wjgc-wjgc_2025_contest34",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2025_b1011",
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -108317,7 +108405,13 @@
           "region": "AUVERGNE-RHÔNE-ALPES",
           "sex": "M",
           "glfLic": "0225"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "arthur goossens|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-14302",
@@ -108346,17 +108440,20 @@
         "ffgolf-2401144212",
         "ffgolf-2401154023",
         "ffgolf-2300978452",
-        "ffgolf-2300973614"
+        "ffgolf-2300973614",
+        "wjgc-wjgc_2026_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "uskids:549912",
-          "ffgolf:519065308"
+          "ffgolf:519065308",
+          "wjgc:arthur goossens|"
         ],
         "mergedFromSources": [
           "uskids",
-          "ffgolf"
+          "ffgolf",
+          "wjgc"
         ]
       }
     },
@@ -108408,7 +108505,7 @@
         "uskids-20340",
         "uskids-20343",
         "uskids-13215",
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -117163,7 +117260,7 @@
         "uskids-16854",
         "uskids-13691",
         "uskids-15765",
-        "wjgc-wjgc_2026_contest33",
+        "wjgc-wjgc_2026_b1213",
         "doral-ftm_doral_2025"
       ],
       "_match": {
@@ -139178,7 +139275,13 @@
         "uskids": {
           "memberId": "558834",
           "ageGroupCurrent": "Boys 9"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "nihaal cheema|IN"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-15704",
@@ -139208,15 +139311,18 @@
         "uskids-17062",
         "uskids-17063",
         "uskids-17064",
-        "uskids-17065"
+        "uskids-17065",
+        "wjgc-wjgc_2025_b7u"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:558834"
+          "uskids:558834",
+          "wjgc:nihaal cheema|IN"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc"
         ]
       }
     },
@@ -149092,7 +149198,13 @@
           "catEdad": "Benjamín",
           "sex": "M",
           "historicalLicenses": []
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "alvaro herrero bernal|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-15704",
@@ -149109,18 +149221,21 @@
         "uskids-14327",
         "uskids-16712",
         "rfeg-nc67849_sub16",
-        "rfeg-nc67853_infantil"
+        "rfeg-nc67853_infantil",
+        "wjgc-wjgc_2026_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "uskids:562091",
           "rfeg:CM41919727",
+          "wjgc:alvaro herrero bernal|",
           "dob:2011-04-25"
         ],
         "mergedFromSources": [
           "uskids",
-          "rfeg"
+          "rfeg",
+          "wjgc"
         ]
       }
     },
@@ -155499,7 +155614,7 @@
         "uskids-13214",
         "uskids-22196",
         "uskids-13212",
-        "wjgc-wjgc_2025_contest34"
+        "wjgc-wjgc_2025_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -156053,7 +156168,7 @@
         "ffgolf-2501323091",
         "ffgolf-2401150105",
         "ffgolf-2401147573",
-        "wjgc-wjgc_2025_contest34"
+        "wjgc-wjgc_2025_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -156857,7 +156972,8 @@
         "uskids-16879",
         "uskids-16880",
         "uskids-20644",
-        "wjgc-wjgc_2025_b89"
+        "wjgc-wjgc_2025_b89",
+        "wjgc-wjgc_2026_b89"
       ],
       "_match": {
         "confidence": "strong",
@@ -157413,7 +157529,7 @@
         "ffgolf-2501326036",
         "ffgolf-2501323091",
         "wjgc-wjgc_2025_b89",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -157494,7 +157610,7 @@
         "ffgolf-2601405022",
         "ffgolf-2501375703",
         "ffgolf-2501381877",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -158220,8 +158336,8 @@
         "uskids-13212",
         "ffgolf-2501391907",
         "eowagr-eowagr25_contest13",
-        "wjgc-wjgc_2025_contest34",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2025_b1011",
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -158630,7 +158746,7 @@
         "ffgolf-2401151683",
         "ffgolf-2401150105",
         "ffgolf-2401147573",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -158698,8 +158814,8 @@
         "uskids-19958",
         "uskids-19960",
         "uskids-14889",
-        "wjgc-wjgc_2025_contest34",
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2025_b1011",
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -158766,7 +158882,7 @@
         "uskids-19960",
         "uskids-14889",
         "wjgc-wjgc_2025_b89",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -161962,7 +162078,7 @@
       "sources": {
         "uskids": {
           "memberId": "567036",
-          "ageGroupCurrent": "Boys 10"
+          "ageGroupCurrent": "Boys 11"
         }
       },
       "tournamentIds": [
@@ -164203,7 +164319,7 @@
         "uskids-16878",
         "uskids-16879",
         "uskids-16880",
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -167595,7 +167711,7 @@
         "uskids-17458",
         "uskids-18295",
         "wjgc-wjgc_2025_b89",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -178063,7 +178179,7 @@
         "uskids-12693",
         "uskids-13840",
         "uskids-18340",
-        "wjgc-wjgc_2025_contest34",
+        "wjgc-wjgc_2025_b1011",
         "doral-ftm_doral_2024",
         "doral-ftm_doral_2025"
       ],
@@ -178240,7 +178356,7 @@
     },
     {
       "id": "u572678",
-      "canonicalName": "Hudson  Weikle",
+      "canonicalName": "Hudson Weikle",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -178738,8 +178854,8 @@
         "uskids-19993",
         "uskids-18844",
         "uskids-19475",
-        "wjgc-wjgc_2025_contest34",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2025_b1011",
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -179267,7 +179383,7 @@
       "sources": {
         "uskids": {
           "memberId": "573256",
-          "ageGroupCurrent": "Boys 13-14"
+          "ageGroupCurrent": "Boys 13"
         }
       },
       "tournamentIds": [
@@ -186208,6 +186324,7 @@
         "uskids-18296",
         "uskids-18297",
         "uskids-21683",
+        "uskids-21684",
         "uskids-13793",
         "eowagr-eowagr25_contest121",
         "wjgc-wjgc_2025_b89"
@@ -186380,7 +186497,7 @@
       "sources": {
         "uskids": {
           "memberId": "575803",
-          "ageGroupCurrent": "Boys 10"
+          "ageGroupCurrent": "Boys 9"
         },
         "fpg": {
           "fed": "44160",
@@ -186913,7 +187030,7 @@
       "sources": {
         "uskids": {
           "memberId": "575909",
-          "ageGroupCurrent": "Girls 11-12"
+          "ageGroupCurrent": "Girls 9-10"
         },
         "fpg": {
           "fed": "46873",
@@ -188791,7 +188908,7 @@
       "sources": {
         "uskids": {
           "memberId": "577027",
-          "ageGroupCurrent": "Boys 10"
+          "ageGroupCurrent": "Boys 11"
         }
       },
       "tournamentIds": [
@@ -190113,7 +190230,13 @@
           "region": "GRAND-EST",
           "sex": "M",
           "glfLic": "0779"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "mathieu razafitombo|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-14302",
@@ -190129,17 +190252,20 @@
         "uskids-14073",
         "uskids-11795",
         "uskids-11798",
-        "ffgolf-2301067845"
+        "ffgolf-2301067845",
+        "wjgc-wjgc_2025_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "uskids:577532",
-          "ffgolf:519522340"
+          "ffgolf:519522340",
+          "wjgc:mathieu razafitombo|"
         ],
         "mergedFromSources": [
           "uskids",
-          "ffgolf"
+          "ffgolf",
+          "wjgc"
         ]
       }
     },
@@ -191142,7 +191268,7 @@
       "sources": {
         "uskids": {
           "memberId": "577982",
-          "ageGroupCurrent": "Boys 12"
+          "ageGroupCurrent": "Boys 10"
         },
         "fpg": {
           "fed": "48297",
@@ -191705,8 +191831,8 @@
         "uskids-15144",
         "uskids-15147",
         "fpg-962-10080-20251229-all",
-        "wjgc-wjgc_2025_contest34",
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2025_b1011",
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -192749,8 +192875,8 @@
         "uskids-16308",
         "uskids-21350",
         "uskids-21351",
-        "wjgc-wjgc_2025_contest34",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2025_b1011",
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -193745,6 +193871,10 @@
           {
             "sourceId": "fpg-anon",
             "key": "anon|ralph barnett|GB"
+          },
+          {
+            "sourceId": "wjgc",
+            "key": "ralph barnett|"
           }
         ]
       },
@@ -193757,17 +193887,21 @@
         "uskids-15143",
         "uskids-15144",
         "uskids-15147",
-        "fpg-962-10079-20251229-all"
+        "fpg-962-10079-20251229-all",
+        "wjgc-wjgc_2025_bwagr",
+        "wjgc-wjgc_2026_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "uskids:578970",
-          "fpg:anon|ralph barnett|GB"
+          "fpg:anon|ralph barnett|GB",
+          "wjgc:ralph barnett|"
         ],
         "mergedFromSources": [
           "uskids",
-          "fpg"
+          "fpg",
+          "wjgc"
         ]
       }
     },
@@ -195428,7 +195562,13 @@
         "uskids": {
           "memberId": "579923",
           "ageGroupCurrent": "Boys 9"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "wayne koonce v|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-14218",
@@ -195513,15 +195653,18 @@
         "uskids-12745",
         "uskids-15039",
         "uskids-16872",
-        "uskids-15087"
+        "uskids-15087",
+        "wjgc-wjgc_2026_b89"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:579923"
+          "uskids:579923",
+          "wjgc:wayne koonce v|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc"
         ]
       }
     },
@@ -196749,8 +196892,8 @@
         "uskids-17459",
         "uskids-17457",
         "uskids-18296",
-        "wjgc-wjgc_2025_contest34",
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2025_b1011",
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -197978,7 +198121,7 @@
         "uskids-16851",
         "uskids-16531",
         "uskids-21185",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -200945,16 +201088,30 @@
       "canonicalName": "Louis Harran",
       "aliases": [],
       "dob": null,
-      "sex": null,
+      "sex": "M",
       "nationality": "CH",
       "country": "CH",
-      "region": null,
-      "club": null,
+      "region": "AUVERGNE-RHÔNE-ALPES",
+      "club": "Evian Resort",
       "sources": {
         "uskids": {
           "memberId": "582200",
           "ageGroupCurrent": "Boys 9"
-        }
+        },
+        "ffgolf": {
+          "lic": "541288357",
+          "club": "Evian Resort",
+          "hcp": 15.4,
+          "region": "AUVERGNE-RHÔNE-ALPES",
+          "sex": "M",
+          "glfLic": "0003"
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "louis harran|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-15704",
@@ -200996,15 +201153,27 @@
         "uskids-13215",
         "uskids-13211",
         "uskids-13212",
-        "uskids-20341"
+        "uskids-20341",
+        "ffgolf-2601422617",
+        "ffgolf-2601423981",
+        "ffgolf-2601408553",
+        "ffgolf-2501391907",
+        "ffgolf-2601403797",
+        "ffgolf-2501326036",
+        "ffgolf-2401148155",
+        "wjgc-wjgc_2026_b89"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:582200"
+          "uskids:582200",
+          "ffgolf:541288357",
+          "wjgc:louis harran|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "ffgolf",
+          "wjgc"
         ]
       }
     },
@@ -202007,7 +202176,7 @@
         "fpg-935-10296-20260216-all",
         "fpg-962-10081-20251229-all",
         "wjgc-wjgc_2025_b89",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -202047,6 +202216,10 @@
           {
             "sourceId": "fpg-anon",
             "key": "anon|harley botham|GB"
+          },
+          {
+            "sourceId": "wjgc",
+            "key": "harley botham|"
           }
         ]
       },
@@ -202092,18 +202265,22 @@
         "uskids-18852",
         "uskids-18844",
         "fpg-935-10296-20260216-all",
-        "fpg-962-10081-20251229-all"
+        "fpg-962-10081-20251229-all",
+        "wjgc-wjgc_2025_b7u",
+        "wjgc-wjgc_2026_b89"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "uskids:582754",
           "fpg:anon|harley botham|",
-          "fpg:anon|harley botham|GB"
+          "fpg:anon|harley botham|GB",
+          "wjgc:harley botham|"
         ],
         "mergedFromSources": [
           "uskids",
-          "fpg"
+          "fpg",
+          "wjgc"
         ]
       }
     },
@@ -203658,7 +203835,7 @@
       "sources": {
         "uskids": {
           "memberId": "583510",
-          "ageGroupCurrent": "Boys 11"
+          "ageGroupCurrent": "Boys 12"
         }
       },
       "tournamentIds": [
@@ -205092,6 +205269,10 @@
           {
             "sourceId": "eowagr",
             "key": "nikita elchaninov|"
+          },
+          {
+            "sourceId": "wjgc",
+            "key": "nikita elchaninov|"
           }
         ],
         "rfeg": {
@@ -205133,7 +205314,9 @@
         "rfeg-nc61089_benjamín",
         "rfeg-nc61089_juvenil",
         "rfeg-nc61129_infantil",
-        "eowagr-eowagr25_contest121"
+        "eowagr-eowagr25_contest121",
+        "wjgc-wjgc_2025_b7u",
+        "wjgc-wjgc_2026_b89"
       ],
       "_match": {
         "confidence": "strong",
@@ -205142,13 +205325,15 @@
           "fpg:anon|nikita elchaninov|RU",
           "rfeg:AM84081325",
           "eowagr:nikita elchaninov|",
+          "wjgc:nikita elchaninov|",
           "dob:2017-08-08"
         ],
         "mergedFromSources": [
           "uskids",
           "fpg",
           "rfeg",
-          "eowagr"
+          "eowagr",
+          "wjgc"
         ]
       }
     },
@@ -207602,7 +207787,7 @@
         "uskids-16902",
         "fpg-962-10080-20251229-all",
         "eowagr-eowagr25_scorecards",
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -211820,7 +212005,13 @@
         "uskids": {
           "memberId": "587355",
           "ageGroupCurrent": "Boys 13-18"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "finn colinet|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-15704",
@@ -211871,15 +212062,18 @@
         "uskids-21743",
         "uskids-21744",
         "uskids-21745",
-        "uskids-21760"
+        "uskids-21760",
+        "wjgc-wjgc_2026_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:587355"
+          "uskids:587355",
+          "wjgc:finn colinet|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc"
         ]
       }
     },
@@ -216609,7 +216803,7 @@
     },
     {
       "id": "u590169",
-      "canonicalName": "Jonathan  Schultz",
+      "canonicalName": "Jonathan Schultz",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -218006,7 +218200,7 @@
       "sources": {
         "uskids": {
           "memberId": "591035",
-          "ageGroupCurrent": "Boys 12"
+          "ageGroupCurrent": "Boys 13"
         }
       },
       "tournamentIds": [
@@ -218286,7 +218480,7 @@
       "sources": {
         "uskids": {
           "memberId": "591233",
-          "ageGroupCurrent": "Girls 10"
+          "ageGroupCurrent": "Girls 9-10"
         },
         "fpg": {
           "fed": "49076",
@@ -218395,22 +218589,31 @@
         "uskids": {
           "memberId": "591315",
           "ageGroupCurrent": "Boys 15-18"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "alain messmer|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-14302",
         "uskids-16428",
         "uskids-19418",
         "uskids-14670",
-        "uskids-13708"
+        "uskids-13708",
+        "wjgc-wjgc_2026_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:591315"
+          "uskids:591315",
+          "wjgc:alain messmer|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc"
         ]
       }
     },
@@ -218666,7 +218869,7 @@
       "sources": {
         "uskids": {
           "memberId": "591440",
-          "ageGroupCurrent": "Boys 8"
+          "ageGroupCurrent": "Boys 7"
         },
         "fpg": {
           "fed": "50011",
@@ -219710,7 +219913,7 @@
       "sources": {
         "uskids": {
           "memberId": "591602",
-          "ageGroupCurrent": "Girls 13-14"
+          "ageGroupCurrent": "Girls 10"
         },
         "fpg": {
           "fed": "50216",
@@ -220270,7 +220473,7 @@
         "uskids-16020",
         "uskids-13792",
         "wjgc-wjgc_2025_b89",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -220815,7 +221018,13 @@
         "uskids": {
           "memberId": "592130",
           "ageGroupCurrent": "Boys 8"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "ryan hicham|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-14029",
@@ -220859,15 +221068,19 @@
         "uskids-20626",
         "uskids-21211",
         "uskids-21212",
-        "uskids-21221"
+        "uskids-21221",
+        "wjgc-wjgc_2025_b7u",
+        "wjgc-wjgc_2026_b89"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:592130"
+          "uskids:592130",
+          "wjgc:ryan hicham|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc"
         ]
       }
     },
@@ -221188,7 +221401,13 @@
         "uskids": {
           "memberId": "592334",
           "ageGroupCurrent": "Boys 9"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "sander lamooi|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-14302",
@@ -221210,15 +221429,18 @@
         "uskids-22069",
         "uskids-22070",
         "uskids-22072",
-        "uskids-19396"
+        "uskids-19396",
+        "wjgc-wjgc_2026_b89"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:592334"
+          "uskids:592334",
+          "wjgc:sander lamooi|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc"
         ]
       }
     },
@@ -221277,7 +221499,8 @@
         "uskids-18851",
         "uskids-18852",
         "uskids-18844",
-        "wjgc-wjgc_2025_b89"
+        "wjgc-wjgc_2025_b89",
+        "wjgc-wjgc_2026_b89"
       ],
       "_match": {
         "confidence": "strong",
@@ -224331,7 +224554,7 @@
       "sources": {
         "uskids": {
           "memberId": "593677",
-          "ageGroupCurrent": "Boys 13-14"
+          "ageGroupCurrent": "Boys 13"
         },
         "ffgolf": {
           "lic": "530313349",
@@ -226074,7 +226297,7 @@
         "ffgolf-2401151683",
         "ffgolf-2401150105",
         "ffgolf-2401147573",
-        "wjgc-wjgc_2025_contest34"
+        "wjgc-wjgc_2025_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -226324,7 +226547,13 @@
         "uskids": {
           "memberId": "595083",
           "ageGroupCurrent": "Boys 9"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "nicolas stoica|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-14302",
@@ -226349,15 +226578,18 @@
         "uskids-20834",
         "uskids-20835",
         "uskids-21922",
-        "uskids-21923"
+        "uskids-21923",
+        "wjgc-wjgc_2026_b89"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:595083"
+          "uskids:595083",
+          "wjgc:nicolas stoica|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc"
         ]
       }
     },
@@ -230387,7 +230619,13 @@
         "uskids": {
           "memberId": "598282",
           "ageGroupCurrent": "Boys 8"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "pietro salvati|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-14302",
@@ -230419,15 +230657,19 @@
         "uskids-16308",
         "uskids-19200",
         "uskids-19202",
-        "uskids-19203"
+        "uskids-19203",
+        "wjgc-wjgc_2025_b7u",
+        "wjgc-wjgc_2026_b89"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:598282"
+          "uskids:598282",
+          "wjgc:pietro salvati|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc"
         ]
       }
     },
@@ -232014,7 +232256,13 @@
         "uskids": {
           "memberId": "599300",
           "ageGroupCurrent": "Boys 8"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "theo hughes|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-15704",
@@ -232053,15 +232301,18 @@
         "uskids-18844",
         "uskids-18473",
         "uskids-17025",
-        "uskids-19484"
+        "uskids-19484",
+        "wjgc-wjgc_2025_b7u"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:599300"
+          "uskids:599300",
+          "wjgc:theo hughes|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc"
         ]
       }
     },
@@ -232192,7 +232443,13 @@
         "uskids": {
           "memberId": "599382",
           "ageGroupCurrent": "Boys 14"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "mihael blatnik|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-14302",
@@ -232200,15 +232457,18 @@
         "uskids-16428",
         "uskids-19418",
         "uskids-14670",
-        "uskids-16749"
+        "uskids-16749",
+        "wjgc-wjgc_2026_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:599382"
+          "uskids:599382",
+          "wjgc:mihael blatnik|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc"
         ]
       }
     },
@@ -235134,7 +235394,8 @@
         "uskids-16031",
         "uskids-17284",
         "uskids-19485",
-        "wjgc-wjgc_2025_b89"
+        "wjgc-wjgc_2025_b89",
+        "wjgc-wjgc_2026_b89"
       ],
       "_match": {
         "confidence": "strong",
@@ -235343,7 +235604,7 @@
         "uskids-20651",
         "uskids-16494",
         "uskids-16495",
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -236159,7 +236420,7 @@
         "uskids-19886",
         "uskids-20652",
         "uskids-21012",
-        "wjgc-wjgc_2025_contest34"
+        "wjgc-wjgc_2025_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -238849,8 +239110,8 @@
         "uskids-17607",
         "uskids-16621",
         "uskids-17609",
-        "wjgc-wjgc_2025_contest34",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2025_b1011",
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -239264,7 +239525,13 @@
         "uskids": {
           "memberId": "605519",
           "ageGroupCurrent": "Boys 9"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "karel strasser|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-21080",
@@ -239286,15 +239553,18 @@
         "uskids-18829",
         "uskids-17608",
         "uskids-16621",
-        "uskids-17609"
+        "uskids-17609",
+        "wjgc-wjgc_2026_b89"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:605519"
+          "uskids:605519",
+          "wjgc:karel strasser|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc"
         ]
       }
     },
@@ -239339,7 +239609,7 @@
         "uskids-17608",
         "uskids-16621",
         "uskids-17609",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -239797,7 +240067,8 @@
       "canonicalName": "Manuel Medeiros",
       "aliases": [
         "Manuel Francisco Goulartt De Medeiros",
-        "Manuel Goulartt Medeiros"
+        "Manuel Goulartt Medeiros",
+        "Manuel Francisco Medeiros"
       ],
       "dob": "2014-04-29",
       "sex": "M",
@@ -239839,6 +240110,10 @@
             "key": "manuel medeiros|PT"
           },
           {
+            "sourceId": "wjgc",
+            "key": "manuel francisco medeiros|PT"
+          },
+          {
             "sourceId": "doral",
             "key": "doral-2173590307"
           }
@@ -239862,7 +240137,8 @@
         "fpg-962-10080-20251229-all",
         "fpg-935-10296-20260216-all",
         "eowagr-eowagr25_scorecards",
-        "wjgc-wjgc_2025_contest34",
+        "wjgc-wjgc_2025_b1011",
+        "wjgc-wjgc_2026_b1011",
         "doral-ftm_doral_2025"
       ],
       "_match": {
@@ -239872,6 +240148,7 @@
           "fpg:52884",
           "eowagr:manuel medeiros|PT",
           "wjgc:manuel medeiros|PT",
+          "wjgc:manuel francisco medeiros|PT",
           "doral:doral-2173590307",
           "uskids:630106",
           "dob:2014-04-29"
@@ -240331,7 +240608,13 @@
           "region": "PROVENCE-ALPES-CÔTE-D'AZUR",
           "sex": "M",
           "glfLic": "1013"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "pierre ravot|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-15704",
@@ -240356,17 +240639,20 @@
         "ffgolf-2501355114",
         "ffgolf-2501344817",
         "ffgolf-2501310510",
-        "ffgolf-2401157978"
+        "ffgolf-2401157978",
+        "wjgc-wjgc_2026_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "uskids:606805",
-          "ffgolf:530207366"
+          "ffgolf:530207366",
+          "wjgc:pierre ravot|"
         ],
         "mergedFromSources": [
           "uskids",
-          "ffgolf"
+          "ffgolf",
+          "wjgc"
         ]
       }
     },
@@ -242716,7 +243002,7 @@
         "uskids-21216",
         "uskids-21217",
         "wjgc-wjgc_2025_b89",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -243970,7 +244256,7 @@
         "uskids-15666",
         "uskids-18045",
         "uskids-20780",
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -244998,23 +245284,30 @@
           {
             "sourceId": "fpg-anon",
             "key": "anon|james matthews|GB"
+          },
+          {
+            "sourceId": "wjgc",
+            "key": "james matthews|"
           }
         ]
       },
       "tournamentIds": [
         "uskids-15704",
         "uskids-18242",
-        "fpg-962-10078-20251229-all"
+        "fpg-962-10078-20251229-all",
+        "wjgc-wjgc_2025_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "uskids:609786",
-          "fpg:anon|james matthews|GB"
+          "fpg:anon|james matthews|GB",
+          "wjgc:james matthews|"
         ],
         "mergedFromSources": [
           "uskids",
-          "fpg"
+          "fpg",
+          "wjgc"
         ]
       }
     },
@@ -249383,7 +249676,7 @@
         "uskids-20004",
         "uskids-20005",
         "uskids-20006",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -250169,7 +250462,7 @@
         "uskids-20175",
         "eowagr-eowagr25_contest13",
         "wjgc-wjgc_2025_b89",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -250737,7 +251030,8 @@
         "uskids-17458",
         "uskids-21034",
         "eowagr-eowagr25_contest121",
-        "wjgc-wjgc_2025_b89"
+        "wjgc-wjgc_2025_b89",
+        "wjgc-wjgc_2026_b89"
       ],
       "_match": {
         "confidence": "strong",
@@ -250902,7 +251196,13 @@
         "uskids": {
           "memberId": "614740",
           "ageGroupCurrent": "Boys 8"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "matias aparicio|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-15807",
@@ -250913,15 +251213,18 @@
         "uskids-16708",
         "uskids-16709",
         "uskids-16713",
-        "uskids-16711"
+        "uskids-16711",
+        "wjgc-wjgc_2025_b7u"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:614740"
+          "uskids:614740",
+          "wjgc:matias aparicio|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc"
         ]
       }
     },
@@ -251321,6 +251624,10 @@
           {
             "sourceId": "eowagr",
             "key": "leo craddock|"
+          },
+          {
+            "sourceId": "wjgc",
+            "key": "leo craddock|"
           }
         ]
       },
@@ -251360,17 +251667,20 @@
         "uskids-21032",
         "uskids-21033",
         "uskids-21034",
-        "eowagr-eowagr25_contest121"
+        "eowagr-eowagr25_contest121",
+        "wjgc-wjgc_2025_b7u"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "uskids:615362",
-          "eowagr:leo craddock|"
+          "eowagr:leo craddock|",
+          "wjgc:leo craddock|"
         ],
         "mergedFromSources": [
           "uskids",
-          "eowagr"
+          "eowagr",
+          "wjgc"
         ]
       }
     },
@@ -251516,8 +251826,8 @@
         "uskids-20653",
         "uskids-20429",
         "uskids-20780",
-        "wjgc-wjgc_2025_contest34",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2025_b1011",
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -252611,7 +252921,13 @@
         "uskids": {
           "memberId": "616852",
           "ageGroupCurrent": "Boys 7 & Under"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "shane cooper|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-19722",
@@ -252627,15 +252943,18 @@
         "uskids-21031",
         "uskids-21032",
         "uskids-21033",
-        "uskids-21034"
+        "uskids-21034",
+        "wjgc-wjgc_2025_b7u"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:616852"
+          "uskids:616852",
+          "wjgc:shane cooper|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc"
         ]
       }
     },
@@ -253053,6 +253372,10 @@
           {
             "sourceId": "eowagr",
             "key": "billy stott|"
+          },
+          {
+            "sourceId": "wjgc",
+            "key": "billy stott|"
           }
         ]
       },
@@ -253077,17 +253400,20 @@
         "uskids-21032",
         "uskids-21033",
         "uskids-21034",
-        "eowagr-eowagr25_contest121"
+        "eowagr-eowagr25_contest121",
+        "wjgc-wjgc_2025_b7u"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "uskids:617290",
-          "eowagr:billy stott|"
+          "eowagr:billy stott|",
+          "wjgc:billy stott|"
         ],
         "mergedFromSources": [
           "uskids",
-          "eowagr"
+          "eowagr",
+          "wjgc"
         ]
       }
     },
@@ -254364,7 +254690,13 @@
         "uskids": {
           "memberId": "619025",
           "ageGroupCurrent": "Boys 8"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "mikell zachary guico|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-18124",
@@ -254388,15 +254720,18 @@
         "uskids-21566",
         "uskids-18677",
         "uskids-18678",
-        "uskids-20708"
+        "uskids-20708",
+        "wjgc-wjgc_2026_b89"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:619025"
+          "uskids:619025",
+          "wjgc:mikell zachary guico|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc"
         ]
       }
     },
@@ -254681,6 +255016,10 @@
           {
             "sourceId": "eowagr",
             "key": "ethan chin|"
+          },
+          {
+            "sourceId": "wjgc",
+            "key": "ethan chin|"
           }
         ]
       },
@@ -254719,17 +255058,20 @@
         "uskids-21032",
         "uskids-21033",
         "uskids-21034",
-        "eowagr-eowagr25_contest121"
+        "eowagr-eowagr25_contest121",
+        "wjgc-wjgc_2026_b89"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "uskids:619411",
-          "eowagr:ethan chin|"
+          "eowagr:ethan chin|",
+          "wjgc:ethan chin|"
         ],
         "mergedFromSources": [
           "uskids",
-          "eowagr"
+          "eowagr",
+          "wjgc"
         ]
       }
     },
@@ -255566,22 +255908,31 @@
         "uskids": {
           "memberId": "620363",
           "ageGroupCurrent": "Boys 9"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "jaylun wu|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-16784",
         "uskids-19014",
         "uskids-19016",
         "uskids-19018",
-        "uskids-19017"
+        "uskids-19017",
+        "wjgc-wjgc_2026_b89"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:620363"
+          "uskids:620363",
+          "wjgc:jaylun wu|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc"
         ]
       }
     },
@@ -256175,7 +256526,8 @@
       "tournamentIds": [
         "uskids-18242",
         "uskids-19418",
-        "wjgc-wjgc_2025_b89"
+        "wjgc-wjgc_2025_b89",
+        "wjgc-wjgc_2026_b89"
       ],
       "_match": {
         "confidence": "strong",
@@ -257855,7 +258207,13 @@
         "uskids": {
           "memberId": "625467",
           "ageGroupCurrent": "Boys 8"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "younes mechiche alami|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-18242",
@@ -257882,15 +258240,18 @@
         "uskids-21212",
         "uskids-21221",
         "uskids-18504",
-        "uskids-20622"
+        "uskids-20622",
+        "wjgc-wjgc_2026_b89"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:625467"
+          "uskids:625467",
+          "wjgc:younes mechiche alami|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc"
         ]
       }
     },
@@ -258809,7 +259170,8 @@
         "uskids-19516",
         "uskids-20600",
         "uskids-20602",
-        "wjgc-wjgc_2025_b89"
+        "wjgc-wjgc_2025_b89",
+        "wjgc-wjgc_2026_b89"
       ],
       "_match": {
         "confidence": "strong",
@@ -259156,7 +259518,9 @@
     {
       "id": "u627939",
       "canonicalName": "Can Pamir Pakoz",
-      "aliases": [],
+      "aliases": [
+        "Can Pamir Paköz"
+      ],
       "dob": null,
       "sex": null,
       "nationality": "TR",
@@ -259167,7 +259531,13 @@
         "uskids": {
           "memberId": "627939",
           "ageGroupCurrent": "Boys 9"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "can pamir paköz|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-18242",
@@ -259183,15 +259553,18 @@
         "uskids-21007",
         "uskids-21008",
         "uskids-21009",
-        "uskids-21010"
+        "uskids-21010",
+        "wjgc-wjgc_2026_b89"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:627939"
+          "uskids:627939",
+          "wjgc:can pamir paköz|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc"
         ]
       }
     },
@@ -262703,8 +263076,8 @@
         "rfeg-nc61088_alevín",
         "rfeg-nc61109_infantil",
         "rfeg-nc61131_juvenil",
-        "wjgc-wjgc_2025_contest34",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2025_b1011",
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -263340,7 +263713,7 @@
         "fpg-935-10296-20260216-all",
         "fpg-962-10081-20251229-all",
         "wjgc-wjgc_2025_b89",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -264065,8 +264438,8 @@
         "uskids-20429",
         "uskids-21087",
         "uskids-21091",
-        "wjgc-wjgc_2025_contest34",
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2025_b1011",
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -264339,19 +264712,28 @@
         "uskids": {
           "memberId": "645585",
           "ageGroupCurrent": "Boys 15-18"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "erik groth|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-20429",
-        "uskids-21319"
+        "uskids-21319",
+        "wjgc-wjgc_2025_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:645585"
+          "uskids:645585",
+          "wjgc:erik groth|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "wjgc"
         ]
       }
     },
@@ -266311,6 +266693,51 @@
         ],
         "mergedFromSources": [
           "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f46009",
+      "canonicalName": "Francisco Anahory Assis",
+      "aliases": [],
+      "dob": "2008-03-13",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Lisboa",
+      "club": "Lisbon SC",
+      "sources": {
+        "fpg": {
+          "fed": "46009",
+          "club": "Lisbon SC",
+          "clubCode": "002",
+          "clubLong": "Lisbon Sports Club",
+          "hcpExact": -0.5,
+          "hcpDate": "2026-02-27",
+          "sex": "M",
+          "tags": [],
+          "primary": true
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "francisco anahory assis|PT"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:46009",
+          "wjgc:francisco anahory assis|PT",
+          "dob:2008-03-13"
+        ],
+        "mergedFromSources": [
+          "fpg",
+          "wjgc"
         ]
       }
     },
@@ -268397,20 +268824,29 @@
             "inscrito-nacional"
           ],
           "primary": true
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "rafael ribeiro crisóstomo|PT"
+          }
+        ]
       },
       "tournamentIds": [
         "fpg-000-10772-20240624-sub_10",
-        "fpg-962-10081-20251229-all"
+        "fpg-962-10081-20251229-all",
+        "wjgc-wjgc_2025_b7u"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "fpg:51880",
+          "wjgc:rafael ribeiro crisóstomo|PT",
           "dob:2017-07-11"
         ],
         "mergedFromSources": [
-          "fpg"
+          "fpg",
+          "wjgc"
         ]
       }
     },
@@ -269304,7 +269740,7 @@
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -270456,8 +270892,8 @@
       "tournamentIds": [
         "fpg-962-10080-20251229-all",
         "eowagr-eowagr25_scorecards",
-        "wjgc-wjgc_2025_contest34",
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2025_b1011",
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "probable",
@@ -270810,7 +271246,7 @@
       },
       "tournamentIds": [
         "fpg-935-10295-20260216-all",
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -270995,19 +271431,27 @@
           {
             "sourceId": "fpg-anon",
             "key": "anon|jamie jackson|GB"
+          },
+          {
+            "sourceId": "wjgc",
+            "key": "jamie jackson|"
           }
         ]
       },
       "tournamentIds": [
-        "fpg-962-10078-20251229-all"
+        "fpg-962-10078-20251229-all",
+        "wjgc-wjgc_2025_bwagr",
+        "wjgc-wjgc_2026_bwagr"
       ],
       "_match": {
-        "confidence": "strong",
+        "confidence": "probable",
         "evidence": [
-          "fpg:anon|jamie jackson|GB"
+          "fpg:anon|jamie jackson|GB",
+          "wjgc:jamie jackson|"
         ],
         "mergedFromSources": [
-          "fpg"
+          "fpg",
+          "wjgc"
         ]
       }
     },
@@ -271706,7 +272150,7 @@
       }
     },
     {
-      "id": "xd65794be8e",
+      "id": "rEXX1911384",
       "canonicalName": "Emily Peaford",
       "aliases": [],
       "dob": null,
@@ -271720,19 +272164,35 @@
           {
             "sourceId": "fpg-anon",
             "key": "anon|emily peaford|GB"
+          },
+          {
+            "sourceId": "wjgc",
+            "key": "emily peaford|"
           }
-        ]
+        ],
+        "rfeg": {
+          "lic": "EXX1911384",
+          "club": null,
+          "catEdad": "C",
+          "sex": null,
+          "historicalLicenses": []
+        }
       },
       "tournamentIds": [
-        "fpg-962-10078-20251229-all"
+        "fpg-962-10078-20251229-all",
+        "wjgc-wjgc_2026_gwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "fpg:anon|emily peaford|GB"
+          "fpg:anon|emily peaford|GB",
+          "rfeg:EXX1911384",
+          "wjgc:emily peaford|"
         ],
         "mergedFromSources": [
-          "fpg"
+          "fpg",
+          "rfeg",
+          "wjgc"
         ]
       }
     },
@@ -271979,6 +272439,10 @@
           {
             "sourceId": "fpg-anon",
             "key": "anon|amy elizabeth gay|ES"
+          },
+          {
+            "sourceId": "wjgc",
+            "key": "amy elizabeth gay|"
           }
         ],
         "rfeg": {
@@ -271990,17 +272454,20 @@
         }
       },
       "tournamentIds": [
-        "fpg-962-10078-20251229-all"
+        "fpg-962-10078-20251229-all",
+        "wjgc-wjgc_2026_gwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "fpg:anon|amy elizabeth gay|ES",
-          "rfeg:MM22088611"
+          "rfeg:MM22088611",
+          "wjgc:amy elizabeth gay|"
         ],
         "mergedFromSources": [
           "fpg",
-          "rfeg"
+          "rfeg",
+          "wjgc"
         ]
       }
     },
@@ -272538,19 +273005,26 @@
           {
             "sourceId": "fpg-anon",
             "key": "anon|maybel brooks|GB"
+          },
+          {
+            "sourceId": "wjgc",
+            "key": "maybel brooks|"
           }
         ]
       },
       "tournamentIds": [
-        "fpg-962-10079-20251229-all"
+        "fpg-962-10079-20251229-all",
+        "wjgc-wjgc_2025_g1213"
       ],
       "_match": {
-        "confidence": "strong",
+        "confidence": "probable",
         "evidence": [
-          "fpg:anon|maybel brooks|GB"
+          "fpg:anon|maybel brooks|GB",
+          "wjgc:maybel brooks|"
         ],
         "mergedFromSources": [
-          "fpg"
+          "fpg",
+          "wjgc"
         ]
       }
     },
@@ -276774,19 +277248,28 @@
           "catEdad": "Infantil",
           "sex": "F",
           "historicalLicenses": []
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "mia ingham|"
+          }
+        ]
       },
       "tournamentIds": [
-        "rfeg-nc61049_infantil"
+        "rfeg-nc61049_infantil",
+        "wjgc-wjgc_2026_gwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "rfeg:MM01925903",
+          "wjgc:mia ingham|",
           "dob:2008-08-08"
         ],
         "mergedFromSources": [
-          "rfeg"
+          "rfeg",
+          "wjgc"
         ]
       }
     },
@@ -277764,6 +278247,47 @@
       }
     },
     {
+      "id": "rAM15888507",
+      "canonicalName": "Andres Lara Robles",
+      "aliases": [],
+      "dob": "2009-04-12",
+      "sex": "M",
+      "nationality": "ES",
+      "country": "ES",
+      "region": null,
+      "club": "REAL GUADALHORCE CLUB DE GOLF",
+      "sources": {
+        "rfeg": {
+          "lic": "AM15888507",
+          "club": "REAL GUADALHORCE CLUB DE GOLF",
+          "catEdad": "Infantil",
+          "sex": "M",
+          "historicalLicenses": []
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "andres lara robles|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "rfeg:AM15888507",
+          "wjgc:andres lara robles|",
+          "dob:2009-04-12"
+        ],
+        "mergedFromSources": [
+          "rfeg",
+          "wjgc"
+        ]
+      }
+    },
+    {
       "id": "rAM67913244",
       "canonicalName": "Ivan Diaz Betin",
       "aliases": [],
@@ -278396,20 +278920,29 @@
           "catEdad": "Alevín",
           "sex": "F",
           "historicalLicenses": []
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "carlota marcos cortezo|"
+          }
+        ]
       },
       "tournamentIds": [
         "rfeg-nc48206_sub16_sc",
-        "rfeg-nc61049_infantil"
+        "rfeg-nc61049_infantil",
+        "wjgc-wjgc_2026_gwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "rfeg:CM11164685",
+          "wjgc:carlota marcos cortezo|",
           "dob:2009-12-05"
         ],
         "mergedFromSources": [
-          "rfeg"
+          "rfeg",
+          "wjgc"
         ]
       }
     },
@@ -278564,20 +279097,29 @@
           "catEdad": "Alevín",
           "sex": "F",
           "historicalLicenses": []
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "pilar montells jimenez|"
+          }
+        ]
       },
       "tournamentIds": [
         "rfeg-nc48206_sub16_sc",
-        "rfeg-nc61049_infantil"
+        "rfeg-nc61049_infantil",
+        "wjgc-wjgc_2026_gwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "rfeg:CM41168220",
+          "wjgc:pilar montells jimenez|",
           "dob:2010-11-10"
         ],
         "mergedFromSources": [
-          "rfeg"
+          "rfeg",
+          "wjgc"
         ]
       }
     },
@@ -279842,20 +280384,29 @@
           "catEdad": "Benjamín",
           "sex": "F",
           "historicalLicenses": []
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "sofia gamilla karpa|"
+          }
+        ]
       },
       "tournamentIds": [
         "rfeg-nc61049_infantil",
-        "rfeg-nc61088_cadete"
+        "rfeg-nc61088_cadete",
+        "wjgc-wjgc_2025_g1213"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "rfeg:AM11956657",
+          "wjgc:sofia gamilla karpa|",
           "dob:2012-02-24"
         ],
         "mergedFromSources": [
-          "rfeg"
+          "rfeg",
+          "wjgc"
         ]
       }
     },
@@ -279981,20 +280532,29 @@
           "catEdad": "Benjamín",
           "sex": "F",
           "historicalLicenses": []
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "paula puerta revuelta|"
+          }
+        ]
       },
       "tournamentIds": [
         "rfeg-nc61049_infantil",
-        "rfeg-nc67853_sub18"
+        "rfeg-nc67853_sub18",
+        "wjgc-wjgc_2025_g1213"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "rfeg:CM66931174",
+          "wjgc:paula puerta revuelta|",
           "dob:2011-07-30"
         ],
         "mergedFromSources": [
-          "rfeg"
+          "rfeg",
+          "wjgc"
         ]
       }
     },
@@ -280107,7 +280667,9 @@
     {
       "id": "rAM51914494",
       "canonicalName": "Yaiza Morales Vazquez",
-      "aliases": [],
+      "aliases": [
+        "Yaiza Morales Vázquez"
+      ],
       "dob": "2010-10-22",
       "sex": "F",
       "nationality": "ES",
@@ -280121,7 +280683,13 @@
           "catEdad": "Alevín",
           "sex": "F",
           "historicalLicenses": []
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "yaiza morales vázquez|"
+          }
+        ]
       },
       "tournamentIds": [
         "rfeg-nc61049_infantil",
@@ -280129,16 +280697,19 @@
         "rfeg-nc61075_sub16",
         "rfeg-nc61088_infantil",
         "rfeg-nc61109_alevín",
-        "rfeg-nc69630_cadete"
+        "rfeg-nc69630_cadete",
+        "wjgc-wjgc_2026_gwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "rfeg:AM51914494",
+          "wjgc:yaiza morales vázquez|",
           "dob:2010-10-22"
         ],
         "mergedFromSources": [
-          "rfeg"
+          "rfeg",
+          "wjgc"
         ]
       }
     },
@@ -281257,8 +281828,8 @@
       "tournamentIds": [
         "rfeg-nc54247_alevín_sc",
         "rfeg-nc59512_sub12",
-        "wjgc-wjgc_2025_contest34",
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2025_b1011",
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -282026,8 +282597,8 @@
         "rfeg-nc61109_cadete",
         "rfeg-nc69630_cadete",
         "rfeg-nc69630_juvenil",
-        "wjgc-wjgc_2025_contest34",
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2025_b1011",
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -282072,8 +282643,8 @@
         "rfeg-nc61088_alevín",
         "rfeg-nc61109_infantil",
         "rfeg-nc61131_juvenil",
-        "wjgc-wjgc_2025_contest34",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2025_b1011",
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -283679,6 +284250,47 @@
       }
     },
     {
+      "id": "rAM15935763",
+      "canonicalName": "Javier Quesada Chaves",
+      "aliases": [],
+      "dob": "2011-11-29",
+      "sex": "M",
+      "nationality": "ES",
+      "country": "ES",
+      "region": null,
+      "club": "REAL GUADALHORCE CLUB DE GOLF",
+      "sources": {
+        "rfeg": {
+          "lic": "AM15935763",
+          "club": "REAL GUADALHORCE CLUB DE GOLF",
+          "catEdad": "Alevín",
+          "sex": "M",
+          "historicalLicenses": []
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "javier quesada chaves|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "rfeg:AM15935763",
+          "wjgc:javier quesada chaves|",
+          "dob:2011-11-29"
+        ],
+        "mergedFromSources": [
+          "rfeg",
+          "wjgc"
+        ]
+      }
+    },
+    {
       "id": "rAM22935763",
       "canonicalName": "Javier Quesada Chaves",
       "aliases": [],
@@ -284013,23 +284625,32 @@
           "catEdad": "Alevín",
           "sex": "F",
           "historicalLicenses": []
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "claudia casasola garcia|"
+          }
+        ]
       },
       "tournamentIds": [
         "rfeg-nc61067_cadete",
         "rfeg-nc61075_sub16",
         "rfeg-nc61088_cadete",
         "rfeg-nc69630_cadete",
-        "rfeg-nc69630_infantil"
+        "rfeg-nc69630_infantil",
+        "wjgc-wjgc_2025_g1213"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "rfeg:AM83947915",
+          "wjgc:claudia casasola garcia|",
           "dob:2012-07-25"
         ],
         "mergedFromSources": [
-          "rfeg"
+          "rfeg",
+          "wjgc"
         ]
       }
     },
@@ -284874,7 +285495,7 @@
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2025_contest34"
+        "wjgc-wjgc_2025_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -284918,7 +285539,7 @@
         "rfeg-nc61109_cadete",
         "rfeg-nc69630_cadete",
         "rfeg-nc69630_juvenil",
-        "wjgc-wjgc_2025_contest34"
+        "wjgc-wjgc_2025_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -287191,6 +287812,47 @@
       }
     },
     {
+      "id": "rAM95900309",
+      "canonicalName": "Amelia Toquero Flores",
+      "aliases": [],
+      "dob": "2011-03-03",
+      "sex": "F",
+      "nationality": "ES",
+      "country": "ES",
+      "region": null,
+      "club": "CLUB ZAUDÍN GOLF",
+      "sources": {
+        "rfeg": {
+          "lic": "AM95900309",
+          "club": "CLUB ZAUDÍN GOLF",
+          "catEdad": "Infantil",
+          "sex": "F",
+          "historicalLicenses": []
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "amelia toquero flores|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_gwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "rfeg:AM95900309",
+          "wjgc:amelia toquero flores|",
+          "dob:2011-03-03"
+        ],
+        "mergedFromSources": [
+          "rfeg",
+          "wjgc"
+        ]
+      }
+    },
+    {
       "id": "rAMF7900309",
       "canonicalName": "Amelia Toquero Flores",
       "aliases": [],
@@ -288166,7 +288828,8 @@
         "rfeg-nc61091_benjamín",
         "rfeg-nc61091_juvenil",
         "rfeg-nc61129_infantil",
-        "wjgc-wjgc_2025_b89"
+        "wjgc-wjgc_2025_b89",
+        "wjgc-wjgc_2026_b89"
       ],
       "_match": {
         "confidence": "strong",
@@ -288307,7 +288970,13 @@
           "catEdad": "Benjamín",
           "sex": "M",
           "historicalLicenses": []
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "antonio javier payo gil|"
+          }
+        ]
       },
       "tournamentIds": [
         "rfeg-nc65862_benjamín",
@@ -288315,16 +288984,19 @@
         "rfeg-nc67775_juvenil",
         "rfeg-nc67775_benjamín",
         "rfeg-nc67777_juvenil",
-        "rfeg-nc67777_benjamín"
+        "rfeg-nc67777_benjamín",
+        "wjgc-wjgc_2026_b89"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "rfeg:CM41322611",
+          "wjgc:antonio javier payo gil|",
           "dob:2016-04-02"
         ],
         "mergedFromSources": [
-          "rfeg"
+          "rfeg",
+          "wjgc"
         ]
       }
     },
@@ -289199,7 +289871,7 @@
         "rfeg-nc68891_junior",
         "rfeg-nc69288_infantil",
         "rfeg-nc70139_infantil",
-        "wjgc-wjgc_2025_contest34"
+        "wjgc-wjgc_2025_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -289993,7 +290665,7 @@
         "rfeg-nc61088_alevín",
         "rfeg-nc61109_infantil",
         "rfeg-nc61131_juvenil",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -290112,7 +290784,7 @@
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -290505,7 +291177,8 @@
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2025_b89"
+        "wjgc-wjgc_2025_b89",
+        "wjgc-wjgc_2026_b89"
       ],
       "_match": {
         "confidence": "strong",
@@ -290915,6 +291588,49 @@
         ],
         "mergedFromSources": [
           "rfeg"
+        ]
+      }
+    },
+    {
+      "id": "rLV02169384",
+      "canonicalName": "Ruben Valiente Novella",
+      "aliases": [
+        "Rubén Valiente Novella"
+      ],
+      "dob": "2018-05-03",
+      "sex": "M",
+      "nationality": "ES",
+      "country": "ES",
+      "region": null,
+      "club": "REAL CLUB DE GOLF DE MANISES",
+      "sources": {
+        "rfeg": {
+          "lic": "LV02169384",
+          "club": "REAL CLUB DE GOLF DE MANISES",
+          "catEdad": "Benjamín",
+          "sex": "M",
+          "historicalLicenses": []
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "rubén valiente novella|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_b7u"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "rfeg:LV02169384",
+          "wjgc:rubén valiente novella|",
+          "dob:2018-05-03"
+        ],
+        "mergedFromSources": [
+          "rfeg",
+          "wjgc"
         ]
       }
     },
@@ -297655,7 +298371,7 @@
         "rfeg-nc61088_alevín",
         "rfeg-nc61109_infantil",
         "rfeg-nc61131_juvenil",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -297741,7 +298457,7 @@
         "rfeg-nc61067_alevín",
         "rfeg-nc61109_infantil",
         "rfeg-nc61131_juvenil",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -298291,6 +299007,46 @@
         ],
         "mergedFromSources": [
           "rfeg"
+        ]
+      }
+    },
+    {
+      "id": "rEXX1467550",
+      "canonicalName": "Kayden Wissanji",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "ES",
+      "country": "ES",
+      "region": null,
+      "club": null,
+      "sources": {
+        "rfeg": {
+          "lic": "EXX1467550",
+          "club": null,
+          "catEdad": "M",
+          "sex": null,
+          "historicalLicenses": []
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "kayden wissanji|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "rfeg:EXX1467550",
+          "wjgc:kayden wissanji|"
+        ],
+        "mergedFromSources": [
+          "rfeg",
+          "wjgc"
         ]
       }
     },
@@ -302368,7 +303124,7 @@
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -302442,8 +303198,8 @@
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2025_contest34",
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2025_b1011",
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -305188,6 +305944,46 @@
       }
     },
     {
+      "id": "rAM52020125",
+      "canonicalName": "Ondrej Vano",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "ES",
+      "country": "ES",
+      "region": null,
+      "club": null,
+      "sources": {
+        "rfeg": {
+          "lic": "AM52020125",
+          "club": null,
+          "catEdad": "C",
+          "sex": null,
+          "historicalLicenses": []
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "ondrej vano|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "rfeg:AM52020125",
+          "wjgc:ondrej vano|"
+        ],
+        "mergedFromSources": [
+          "rfeg",
+          "wjgc"
+        ]
+      }
+    },
+    {
       "id": "rAM11083043",
       "canonicalName": "James Charles Olivera",
       "aliases": [],
@@ -305217,6 +306013,46 @@
         ],
         "mergedFromSources": [
           "rfeg"
+        ]
+      }
+    },
+    {
+      "id": "rAM92930966",
+      "canonicalName": "Thomas Vervaet",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "ES",
+      "country": "ES",
+      "region": null,
+      "club": null,
+      "sources": {
+        "rfeg": {
+          "lic": "AM92930966",
+          "club": null,
+          "catEdad": "C",
+          "sex": null,
+          "historicalLicenses": []
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "thomas vervaet|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "rfeg:AM92930966",
+          "wjgc:thomas vervaet|"
+        ],
+        "mergedFromSources": [
+          "rfeg",
+          "wjgc"
         ]
       }
     },
@@ -306634,6 +307470,48 @@
         ],
         "mergedFromSources": [
           "rfeg"
+        ]
+      }
+    },
+    {
+      "id": "rEXX1911428",
+      "canonicalName": "Charlotte Gosling-Evans",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "ES",
+      "country": "ES",
+      "region": null,
+      "club": null,
+      "sources": {
+        "rfeg": {
+          "lic": "EXX1911428",
+          "club": null,
+          "catEdad": "J",
+          "sex": null,
+          "historicalLicenses": [
+            "AM84519574"
+          ]
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "charlotte gosling-evans|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_g1213"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "rfeg:EXX1911428",
+          "wjgc:charlotte gosling-evans|"
+        ],
+        "mergedFromSources": [
+          "rfeg",
+          "wjgc"
         ]
       }
     },
@@ -311951,6 +312829,47 @@
       }
     },
     {
+      "id": "g528705304",
+      "canonicalName": "Esteban Cruz Bonilla",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "PARIS-ILE-DE-FRANCE",
+      "club": "Bondues",
+      "sources": {
+        "ffgolf": {
+          "lic": "528705304",
+          "club": "Bondues",
+          "hcp": 2.1,
+          "region": "PARIS-ILE-DE-FRANCE",
+          "sex": "M",
+          "glfLic": "0089"
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "esteban cruz bonilla|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:528705304",
+          "wjgc:esteban cruz bonilla|"
+        ],
+        "mergedFromSources": [
+          "ffgolf",
+          "wjgc"
+        ]
+      }
+    },
+    {
       "id": "g511564293",
       "canonicalName": "Ernest Padieu",
       "aliases": [],
@@ -312180,6 +313099,47 @@
         ],
         "mergedFromSources": [
           "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g531241282",
+      "canonicalName": "Enzo De Troia",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "PARIS-ILE-DE-FRANCE",
+      "club": "St Germain",
+      "sources": {
+        "ffgolf": {
+          "lic": "531241282",
+          "club": "St Germain",
+          "hcp": 5.9,
+          "region": "PARIS-ILE-DE-FRANCE",
+          "sex": "M",
+          "glfLic": "0006"
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "enzo de troia|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:531241282",
+          "wjgc:enzo de troia|"
+        ],
+        "mergedFromSources": [
+          "ffgolf",
+          "wjgc"
         ]
       }
     },
@@ -312536,6 +313496,47 @@
         ],
         "mergedFromSources": [
           "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g047825289",
+      "canonicalName": "Arthur Inchauspe",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "NOUVELLE-AQUITAINE",
+      "club": "Arcangues",
+      "sources": {
+        "ffgolf": {
+          "lic": "047825289",
+          "club": "Arcangues",
+          "hcp": 26,
+          "region": "NOUVELLE-AQUITAINE",
+          "sex": "M",
+          "glfLic": "0903"
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "arthur inchauspe|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:047825289",
+          "wjgc:arthur inchauspe|"
+        ],
+        "mergedFromSources": [
+          "ffgolf",
+          "wjgc"
         ]
       }
     },
@@ -317077,21 +318078,30 @@
           "region": "OCCITANIE",
           "sex": "M",
           "glfLic": "0147"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "samuel pereira|"
+          }
+        ]
       },
       "tournamentIds": [
         "ffgolf-2501378076",
         "ffgolf-2401289201",
         "ffgolf-2401164089",
-        "ffgolf-2301067845"
+        "ffgolf-2301067845",
+        "wjgc-wjgc_2026_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "ffgolf:003907295"
+          "ffgolf:003907295",
+          "wjgc:samuel pereira|"
         ],
         "mergedFromSources": [
-          "ffgolf"
+          "ffgolf",
+          "wjgc"
         ]
       }
     },
@@ -320844,19 +321854,28 @@
           "region": "AUVERGNE-RHÔNE-ALPES",
           "sex": "M",
           "glfLic": "1002"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "maxim moreau|"
+          }
+        ]
       },
       "tournamentIds": [
         "ffgolf-2301067845",
-        "ffgolf-2301049194"
+        "ffgolf-2301049194",
+        "wjgc-wjgc_2026_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "ffgolf:511185309"
+          "ffgolf:511185309",
+          "wjgc:maxim moreau|"
         ],
         "mergedFromSources": [
-          "ffgolf"
+          "ffgolf",
+          "wjgc"
         ]
       }
     },
@@ -324388,18 +325407,27 @@
           "region": "OCCITANIE",
           "sex": "M",
           "glfLic": "0115"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "auguste park|"
+          }
+        ]
       },
       "tournamentIds": [
-        "ffgolf-2401203392"
+        "ffgolf-2401203392",
+        "wjgc-wjgc_2026_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "ffgolf:049342314"
+          "ffgolf:049342314",
+          "wjgc:auguste park|"
         ],
         "mergedFromSources": [
-          "ffgolf"
+          "ffgolf",
+          "wjgc"
         ]
       }
     },
@@ -332178,7 +333206,13 @@
           "region": "AUVERGNE-RHÔNE-ALPES",
           "sex": "F",
           "glfLic": "0309"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "marie malhomme|"
+          }
+        ]
       },
       "tournamentIds": [
         "ffgolf-2501364544",
@@ -332192,15 +333226,18 @@
         "ffgolf-2301067839",
         "ffgolf-2301049194",
         "ffgolf-2301037948",
-        "ffgolf-2301024193"
+        "ffgolf-2301024193",
+        "wjgc-wjgc_2025_g1213"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "ffgolf:523488344"
+          "ffgolf:523488344",
+          "wjgc:marie malhomme|"
         ],
         "mergedFromSources": [
-          "ffgolf"
+          "ffgolf",
+          "wjgc"
         ]
       }
     },
@@ -343650,7 +344687,7 @@
         "ffgolf-2301078417",
         "ffgolf-2301118517",
         "ffgolf-2300979851",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -389926,45 +390963,6 @@
       }
     },
     {
-      "id": "g541288357",
-      "canonicalName": "Louis Harran",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "FR",
-      "country": "FR",
-      "region": "AUVERGNE-RHÔNE-ALPES",
-      "club": "Evian Resort",
-      "sources": {
-        "ffgolf": {
-          "lic": "541288357",
-          "club": "Evian Resort",
-          "hcp": 15.4,
-          "region": "AUVERGNE-RHÔNE-ALPES",
-          "sex": "M",
-          "glfLic": "0003"
-        }
-      },
-      "tournamentIds": [
-        "ffgolf-2601422617",
-        "ffgolf-2601423981",
-        "ffgolf-2601408553",
-        "ffgolf-2501391907",
-        "ffgolf-2601403797",
-        "ffgolf-2501326036",
-        "ffgolf-2401148155"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "ffgolf:541288357"
-        ],
-        "mergedFromSources": [
-          "ffgolf"
-        ]
-      }
-    },
-    {
       "id": "g536354295",
       "canonicalName": "Maxence Collangettes",
       "aliases": [],
@@ -404487,6 +405485,47 @@
       }
     },
     {
+      "id": "g042644387",
+      "canonicalName": "Ashling Poynton",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "BE",
+      "country": "BE",
+      "region": "AUVERGNE-RHÔNE-ALPES",
+      "club": "Bondues",
+      "sources": {
+        "ffgolf": {
+          "lic": "042644387",
+          "club": "Bondues",
+          "hcp": 1.8,
+          "region": "AUVERGNE-RHÔNE-ALPES",
+          "sex": "F",
+          "glfLic": "0089"
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "ashling poynton|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_g1213"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:042644387",
+          "wjgc:ashling poynton|"
+        ],
+        "mergedFromSources": [
+          "ffgolf",
+          "wjgc"
+        ]
+      }
+    },
+    {
       "id": "g522663343",
       "canonicalName": "Ferdinand Joos De Ter Beerst",
       "aliases": [],
@@ -409354,19 +410393,27 @@
           {
             "sourceId": "eowagr",
             "key": "cooper cassius barnes|"
+          },
+          {
+            "sourceId": "wjgc",
+            "key": "cooper cassius barnes|"
           }
         ]
       },
       "tournamentIds": [
-        "eowagr-eowagr25_contest121"
+        "eowagr-eowagr25_contest121",
+        "wjgc-wjgc_2025_b7u",
+        "wjgc-wjgc_2026_b89"
       ],
       "_match": {
-        "confidence": "strong",
+        "confidence": "probable",
         "evidence": [
-          "eowagr:cooper cassius barnes|"
+          "eowagr:cooper cassius barnes|",
+          "wjgc:cooper cassius barnes|"
         ],
         "mergedFromSources": [
-          "eowagr"
+          "eowagr",
+          "wjgc"
         ]
       }
     },
@@ -409394,7 +410441,7 @@
       },
       "tournamentIds": [
         "eowagr-eowagr25_contest13",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "probable",
@@ -409709,19 +410756,26 @@
           {
             "sourceId": "eowagr",
             "key": "luca lancaster|"
+          },
+          {
+            "sourceId": "wjgc",
+            "key": "luca lancaster|"
           }
         ]
       },
       "tournamentIds": [
-        "eowagr-eowagr25_contest77"
+        "eowagr-eowagr25_contest77",
+        "wjgc-wjgc_2026_bwagr"
       ],
       "_match": {
-        "confidence": "strong",
+        "confidence": "probable",
         "evidence": [
-          "eowagr:luca lancaster|"
+          "eowagr:luca lancaster|",
+          "wjgc:luca lancaster|"
         ],
         "mergedFromSources": [
-          "eowagr"
+          "eowagr",
+          "wjgc"
         ]
       }
     },
@@ -409802,19 +410856,26 @@
           {
             "sourceId": "eowagr",
             "key": "jakub horansky|"
+          },
+          {
+            "sourceId": "wjgc",
+            "key": "jakub horansky|"
           }
         ]
       },
       "tournamentIds": [
-        "eowagr-eowagr25_contest77"
+        "eowagr-eowagr25_contest77",
+        "wjgc-wjgc_2026_bwagr"
       ],
       "_match": {
-        "confidence": "strong",
+        "confidence": "probable",
         "evidence": [
-          "eowagr:jakub horansky|"
+          "eowagr:jakub horansky|",
+          "wjgc:jakub horansky|"
         ],
         "mergedFromSources": [
-          "eowagr"
+          "eowagr",
+          "wjgc"
         ]
       }
     },
@@ -409966,7 +411027,7 @@
       },
       "tournamentIds": [
         "eowagr-eowagr25_scorecards",
-        "wjgc-wjgc_2025_contest34"
+        "wjgc-wjgc_2025_b1011"
       ],
       "_match": {
         "confidence": "probable",
@@ -410004,7 +411065,7 @@
       },
       "tournamentIds": [
         "eowagr-eowagr25_scorecards",
-        "wjgc-wjgc_2025_contest34"
+        "wjgc-wjgc_2025_b1011"
       ],
       "_match": {
         "confidence": "probable",
@@ -410050,6 +411111,445 @@
       }
     },
     {
+      "id": "x0a9dcd1dca",
+      "canonicalName": "Harry-James Odell",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "harry-james odell|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_b1011"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:harry-james odell|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x13c2a895cb",
+      "canonicalName": "Henry Atkinson",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "henry atkinson|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_b1011"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:henry atkinson|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xee4f00d9cd",
+      "canonicalName": "Álex Carrón",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "álex carrón|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_b1011",
+        "wjgc-wjgc_2026_b1011"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:álex carrón|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x40eb77e9fb",
+      "canonicalName": "Edward Fearnley",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "edward fearnley|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_b1011"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:edward fearnley|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xe06fb04a9b",
+      "canonicalName": "Kirill Sedov",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "kirill sedov|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_b1011",
+        "wjgc-wjgc_2026_b1213"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:kirill sedov|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xf169360775",
+      "canonicalName": "Niko Alvarez Van Der Walt",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "niko alvarez van der walt|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_b1011",
+        "wjgc-wjgc_2026_b1011"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:niko alvarez van der walt|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x411d006b10",
+      "canonicalName": "Edward (Bear) Millar",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "edward (bear) millar|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_b1011"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:edward (bear) millar|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xca23996246",
+      "canonicalName": "Harvey Eastwood",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "harvey eastwood|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_b1011"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:harvey eastwood|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xf29b61ff3a",
+      "canonicalName": "Alexis Beringer",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "alexis beringer|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_b1011",
+        "wjgc-wjgc_2026_b1011"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:alexis beringer|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x32dc66e45b",
+      "canonicalName": "Jamie Murray",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "jamie murray|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_b1011"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:jamie murray|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xb7495976de",
+      "canonicalName": "Lewis Ikeji Dandyson",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "lewis ikeji dandyson|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_b1011"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:lewis ikeji dandyson|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xdb415d3585",
+      "canonicalName": "Teddy Robertson",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "teddy robertson|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_b7u"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:teddy robertson|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x652c84adfc",
+      "canonicalName": "Jasper Ansell",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "jasper ansell|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_b7u",
+        "wjgc-wjgc_2026_b89"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:jasper ansell|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x38a9235981",
+      "canonicalName": "Rafferty Fry",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "rafferty fry|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_b7u"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:rafferty fry|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
       "id": "x1866f2d9d6",
       "canonicalName": "Isaac Cawrey",
       "aliases": [],
@@ -410069,7 +411569,7 @@
       },
       "tournamentIds": [
         "wjgc-wjgc_2025_b89",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -410113,8 +411613,8 @@
       }
     },
     {
-      "id": "x0a9dcd1dca",
-      "canonicalName": "Harry-James Odell",
+      "id": "x391d163806",
+      "canonicalName": "Gethin Lewis",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -410126,17 +411626,17 @@
         "_secondary": [
           {
             "sourceId": "wjgc",
-            "key": "harry-james odell|"
+            "key": "gethin lewis|"
           }
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2025_contest34"
+        "wjgc-wjgc_2025_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "wjgc:harry-james odell|"
+          "wjgc:gethin lewis|"
         ],
         "mergedFromSources": [
           "wjgc"
@@ -410144,8 +411644,8 @@
       }
     },
     {
-      "id": "x13c2a895cb",
-      "canonicalName": "Henry Atkinson",
+      "id": "x4c5b776983",
+      "canonicalName": "Jonnie Summerfield",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -410157,17 +411657,17 @@
         "_secondary": [
           {
             "sourceId": "wjgc",
-            "key": "henry atkinson|"
+            "key": "jonnie summerfield|"
           }
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2025_contest34"
+        "wjgc-wjgc_2025_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "wjgc:henry atkinson|"
+          "wjgc:jonnie summerfield|"
         ],
         "mergedFromSources": [
           "wjgc"
@@ -410175,8 +411675,8 @@
       }
     },
     {
-      "id": "xee4f00d9cd",
-      "canonicalName": "Álex Carrón",
+      "id": "x34fe9fa464",
+      "canonicalName": "Oliver Brightman",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -410188,18 +411688,18 @@
         "_secondary": [
           {
             "sourceId": "wjgc",
-            "key": "álex carrón|"
+            "key": "oliver brightman|"
           }
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2025_contest34",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2025_bwagr",
+        "wjgc-wjgc_2026_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "wjgc:álex carrón|"
+          "wjgc:oliver brightman|"
         ],
         "mergedFromSources": [
           "wjgc"
@@ -410207,8 +411707,8 @@
       }
     },
     {
-      "id": "x40eb77e9fb",
-      "canonicalName": "Edward Fearnley",
+      "id": "x6bcd4a40c0",
+      "canonicalName": "Ben Lovell",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -410220,17 +411720,17 @@
         "_secondary": [
           {
             "sourceId": "wjgc",
-            "key": "edward fearnley|"
+            "key": "ben lovell|"
           }
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2025_contest34"
+        "wjgc-wjgc_2025_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "wjgc:edward fearnley|"
+          "wjgc:ben lovell|"
         ],
         "mergedFromSources": [
           "wjgc"
@@ -410238,8 +411738,8 @@
       }
     },
     {
-      "id": "xe06fb04a9b",
-      "canonicalName": "Kirill Sedov",
+      "id": "xb8db33622c",
+      "canonicalName": "Ezra Hartland",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -410251,18 +411751,18 @@
         "_secondary": [
           {
             "sourceId": "wjgc",
-            "key": "kirill sedov|"
+            "key": "ezra hartland|"
           }
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2025_contest34",
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2025_bwagr",
+        "wjgc-wjgc_2026_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "wjgc:kirill sedov|"
+          "wjgc:ezra hartland|"
         ],
         "mergedFromSources": [
           "wjgc"
@@ -410270,8 +411770,8 @@
       }
     },
     {
-      "id": "xf169360775",
-      "canonicalName": "Niko Alvarez Van Der Walt",
+      "id": "xbf1bc85556",
+      "canonicalName": "Munesu Chimhini",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -410283,18 +411783,17 @@
         "_secondary": [
           {
             "sourceId": "wjgc",
-            "key": "niko alvarez van der walt|"
+            "key": "munesu chimhini|"
           }
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2025_contest34",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2025_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "wjgc:niko alvarez van der walt|"
+          "wjgc:munesu chimhini|"
         ],
         "mergedFromSources": [
           "wjgc"
@@ -410302,8 +411801,8 @@
       }
     },
     {
-      "id": "x411d006b10",
-      "canonicalName": "Edward (Bear) Millar",
+      "id": "x1225ef93fd",
+      "canonicalName": "Tobias Brejnik",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -410315,17 +411814,18 @@
         "_secondary": [
           {
             "sourceId": "wjgc",
-            "key": "edward (bear) millar|"
+            "key": "tobias brejnik|"
           }
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2025_contest34"
+        "wjgc-wjgc_2025_bwagr",
+        "wjgc-wjgc_2026_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "wjgc:edward (bear) millar|"
+          "wjgc:tobias brejnik|"
         ],
         "mergedFromSources": [
           "wjgc"
@@ -410333,8 +411833,8 @@
       }
     },
     {
-      "id": "xca23996246",
-      "canonicalName": "Harvey Eastwood",
+      "id": "x987e61d0df",
+      "canonicalName": "Freddie Raven",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -410346,17 +411846,17 @@
         "_secondary": [
           {
             "sourceId": "wjgc",
-            "key": "harvey eastwood|"
+            "key": "freddie raven|"
           }
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2025_contest34"
+        "wjgc-wjgc_2025_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "wjgc:harvey eastwood|"
+          "wjgc:freddie raven|"
         ],
         "mergedFromSources": [
           "wjgc"
@@ -410364,8 +411864,8 @@
       }
     },
     {
-      "id": "xf29b61ff3a",
-      "canonicalName": "Alexis Beringer",
+      "id": "x0fbff7972f",
+      "canonicalName": "Marko Salitros",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -410377,18 +411877,18 @@
         "_secondary": [
           {
             "sourceId": "wjgc",
-            "key": "alexis beringer|"
+            "key": "marko salitros|"
           }
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2025_contest34",
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2025_bwagr",
+        "wjgc-wjgc_2026_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "wjgc:alexis beringer|"
+          "wjgc:marko salitros|"
         ],
         "mergedFromSources": [
           "wjgc"
@@ -410396,8 +411896,8 @@
       }
     },
     {
-      "id": "x32dc66e45b",
-      "canonicalName": "Jamie Murray",
+      "id": "x71f84dc6ad",
+      "canonicalName": "Alexander Mills",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -410409,17 +411909,17 @@
         "_secondary": [
           {
             "sourceId": "wjgc",
-            "key": "jamie murray|"
+            "key": "alexander mills|"
           }
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2025_contest34"
+        "wjgc-wjgc_2025_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "wjgc:jamie murray|"
+          "wjgc:alexander mills|"
         ],
         "mergedFromSources": [
           "wjgc"
@@ -410427,8 +411927,8 @@
       }
     },
     {
-      "id": "xb7495976de",
-      "canonicalName": "Lewis Ikeji Dandyson",
+      "id": "x7490fecc23",
+      "canonicalName": "Vidar Hrafn Victorsson",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -410440,17 +411940,1229 @@
         "_secondary": [
           {
             "sourceId": "wjgc",
-            "key": "lewis ikeji dandyson|"
+            "key": "vidar hrafn victorsson|"
           }
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2025_contest34"
+        "wjgc-wjgc_2025_bwagr"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "wjgc:lewis ikeji dandyson|"
+          "wjgc:vidar hrafn victorsson|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xf33eb007fb",
+      "canonicalName": "Mark Strunk",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "mark strunk|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:mark strunk|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x9fe9cd10fe",
+      "canonicalName": "Ludvig Carlsson",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "ludvig carlsson|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:ludvig carlsson|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x4506982832",
+      "canonicalName": "Veer Zoravar Singh",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "veer zoravar singh|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:veer zoravar singh|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x0a31301c14",
+      "canonicalName": "Jake Gunby",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "jake gunby|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:jake gunby|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xfeb1f17915",
+      "canonicalName": "Harry Dagger",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "harry dagger|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:harry dagger|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xd46f5d7520",
+      "canonicalName": "Sebastian Aigner",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "sebastian aigner|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:sebastian aigner|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xb0608dd691",
+      "canonicalName": "William Adams",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "william adams|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:william adams|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x4120c8083f",
+      "canonicalName": "Mathias Višňovský",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "mathias višňovský|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:mathias višňovský|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x34b209e001",
+      "canonicalName": "Leopold Kostylev",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "leopold kostylev|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:leopold kostylev|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x429eae49dd",
+      "canonicalName": "Zach Mathews",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "zach mathews|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:zach mathews|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x3b28e4dea9",
+      "canonicalName": "Arjun Sawhney",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "arjun sawhney|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:arjun sawhney|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xd6d7534c21",
+      "canonicalName": "William Paas",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "william paas|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:william paas|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x3a342af422",
+      "canonicalName": "Coby Hall",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "coby hall|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr",
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:coby hall|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xdd5ca7cd62",
+      "canonicalName": "Rohan Patel",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "rohan patel|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:rohan patel|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xdaa58c6f9d",
+      "canonicalName": "Austin Eastwood",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "austin eastwood|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:austin eastwood|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x746d543a92",
+      "canonicalName": "Joppe Haneveer",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "joppe haneveer|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:joppe haneveer|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x619f28f672",
+      "canonicalName": "Will Mulholland",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "will mulholland|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:will mulholland|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xd276aff1d0",
+      "canonicalName": "Joab Atkins",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "joab atkins|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:joab atkins|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x9a035b22f1",
+      "canonicalName": "Jack Mahoney",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "jack mahoney|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr",
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:jack mahoney|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xb2e42e938d",
+      "canonicalName": "Zak Sandle",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "zak sandle|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:zak sandle|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x7e8ba330ea",
+      "canonicalName": "Fraser Brammall",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "fraser brammall|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:fraser brammall|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x911aef905b",
+      "canonicalName": "Raphael Aigner",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "raphael aigner|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:raphael aigner|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x95b8223753",
+      "canonicalName": "Bradley Whittle",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "bradley whittle|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:bradley whittle|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xf86953e511",
+      "canonicalName": "Oliver Housden",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "oliver housden|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:oliver housden|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xa3cc831d7f",
+      "canonicalName": "George Pendleton-Nash",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "george pendleton-nash|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:george pendleton-nash|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x91aa64f966",
+      "canonicalName": "Luke Jackson",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "luke jackson|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:luke jackson|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x81782c5feb",
+      "canonicalName": "Barnaby Gough",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "barnaby gough|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:barnaby gough|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xbfd1e7473d",
+      "canonicalName": "Andrii Zhalkovskyi",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "andrii zhalkovskyi|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:andrii zhalkovskyi|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x537add56a9",
+      "canonicalName": "Alfie Batten",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "alfie batten|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:alfie batten|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xc1472b2c6b",
+      "canonicalName": "Ziming Gong",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "ziming gong|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:ziming gong|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x131ab96e29",
+      "canonicalName": "Alex Mills",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "alex mills|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:alex mills|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x6f811c7dee",
+      "canonicalName": "Harry Wang",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "harry wang|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_bwagr",
+        "wjgc-wjgc_2026_b1213"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:harry wang|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x98157e0d75",
+      "canonicalName": "Stella Walters",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "stella walters|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_g1213"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:stella walters|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x01c3c5f3bb",
+      "canonicalName": "Daniela Lozano",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "daniela lozano|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_g1213"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:daniela lozano|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x1b577bbd25",
+      "canonicalName": "Tereza Hajkova",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "tereza hajkova|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_g1213"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:tereza hajkova|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x37df22c8e0",
+      "canonicalName": "Ava Gadsby",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "ava gadsby|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_g1213"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:ava gadsby|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xd7f64c8a1f",
+      "canonicalName": "Polina Klymenko",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "polina klymenko|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_g1213"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:polina klymenko|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x834ffa9071",
+      "canonicalName": "Veronika Kogan",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "veronika kogan|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_g1213"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:veronika kogan|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x40dd53e5a1",
+      "canonicalName": "Charlotte Grenson",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "charlotte grenson|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2025_g1213"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:charlotte grenson|"
         ],
         "mergedFromSources": [
           "wjgc"
@@ -410476,43 +413188,12 @@
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "wjgc:weilian sun|CN"
-        ],
-        "mergedFromSources": [
-          "wjgc"
-        ]
-      }
-    },
-    {
-      "id": "x651b517503",
-      "canonicalName": "Manuel Francisco Medeiros",
-      "aliases": [],
-      "dob": null,
-      "sex": null,
-      "nationality": "PT",
-      "country": "PT",
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "wjgc",
-            "key": "manuel francisco medeiros|PT"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "wjgc-wjgc_2026_b1011_3r"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "wjgc:manuel francisco medeiros|PT"
         ],
         "mergedFromSources": [
           "wjgc"
@@ -410538,7 +413219,7 @@
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -410569,7 +413250,7 @@
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -410600,43 +413281,12 @@
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "wjgc:kai russell|"
-        ],
-        "mergedFromSources": [
-          "wjgc"
-        ]
-      }
-    },
-    {
-      "id": "x0c43cfccdc",
-      "canonicalName": "Joseph Robinson",
-      "aliases": [],
-      "dob": null,
-      "sex": null,
-      "nationality": null,
-      "country": null,
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "wjgc",
-            "key": "joseph robinson|"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "wjgc-wjgc_2026_b1011_3r"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "wjgc:joseph robinson|"
         ],
         "mergedFromSources": [
           "wjgc"
@@ -410662,7 +413312,7 @@
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2026_b1011_3r"
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
@@ -410675,8 +413325,8 @@
       }
     },
     {
-      "id": "x6f811c7dee",
-      "canonicalName": "Harry Wang",
+      "id": "x0c43cfccdc",
+      "canonicalName": "Joseph Robinson",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -410688,17 +413338,17 @@
         "_secondary": [
           {
             "sourceId": "wjgc",
-            "key": "harry wang|"
+            "key": "joseph robinson|"
           }
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "wjgc:harry wang|"
+          "wjgc:joseph robinson|"
         ],
         "mergedFromSources": [
           "wjgc"
@@ -410724,7 +413374,7 @@
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -410755,7 +413405,7 @@
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -410786,7 +413436,7 @@
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -410817,7 +413467,7 @@
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -410848,7 +413498,7 @@
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -410879,7 +413529,7 @@
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -410910,43 +413560,12 @@
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "wjgc:david filip|"
-        ],
-        "mergedFromSources": [
-          "wjgc"
-        ]
-      }
-    },
-    {
-      "id": "x4da63469ff",
-      "canonicalName": "Jack Austin",
-      "aliases": [],
-      "dob": null,
-      "sex": null,
-      "nationality": null,
-      "country": null,
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "wjgc",
-            "key": "jack austin|"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "wjgc-wjgc_2026_contest33"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "wjgc:jack austin|"
         ],
         "mergedFromSources": [
           "wjgc"
@@ -410972,12 +413591,43 @@
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "wjgc:beau wheeler|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x4da63469ff",
+      "canonicalName": "Jack Austin",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "jack austin|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_b1213"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:jack austin|"
         ],
         "mergedFromSources": [
           "wjgc"
@@ -411003,7 +413653,7 @@
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -411034,7 +413684,7 @@
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -411065,7 +413715,7 @@
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -411096,7 +413746,7 @@
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
@@ -411127,12 +413777,2003 @@
         ]
       },
       "tournamentIds": [
-        "wjgc-wjgc_2026_contest33"
+        "wjgc-wjgc_2026_b1213"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "wjgc:daniel parizek|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xff6809b2e9",
+      "canonicalName": "Matthew Lamble",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "matthew lamble|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_b89"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:matthew lamble|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xf7d6861188",
+      "canonicalName": "Yu Hsiang Kayvius Lee",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "yu hsiang kayvius lee|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_b89"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:yu hsiang kayvius lee|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x2d5730b48e",
+      "canonicalName": "Thomas Van Der Merwe",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "thomas van der merwe|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_b89"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:thomas van der merwe|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x3ed1c1bf8b",
+      "canonicalName": "George Thornton-Evans",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "george thornton-evans|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_b89"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:george thornton-evans|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xab60c2ef91",
+      "canonicalName": "Carlos Bom",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "carlos bom|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_b89"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:carlos bom|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x41698bb9c4",
+      "canonicalName": "Brandon Berkley",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "US",
+      "country": "US",
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "brandon berkley|"
+          },
+          {
+            "sourceId": "doral",
+            "key": "doral-2173559376"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_b89",
+        "doral-ftm_doral_2025"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "wjgc:brandon berkley|",
+          "doral:doral-2173559376"
+        ],
+        "mergedFromSources": [
+          "wjgc",
+          "doral"
+        ]
+      }
+    },
+    {
+      "id": "xe253865c18",
+      "canonicalName": "Zaïn Ali Rhazali",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "zaïn ali rhazali|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_b89"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:zaïn ali rhazali|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xa9a0ed1ab8",
+      "canonicalName": "Jad Loualid",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "jad loualid|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_b89"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:jad loualid|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xc27f52c002",
+      "canonicalName": "Ralph Cooper",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "ralph cooper|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_b89"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:ralph cooper|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xec6a2f3b37",
+      "canonicalName": "Stan Hollyhomes",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "stan hollyhomes|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:stan hollyhomes|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xf6a4e474b2",
+      "canonicalName": "Ivo Gardev",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "ivo gardev|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:ivo gardev|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x71bba13a4e",
+      "canonicalName": "Vincent Grip",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "vincent grip|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:vincent grip|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x74ea021347",
+      "canonicalName": "Jonas Müller",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "jonas müller|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:jonas müller|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x6227b29662",
+      "canonicalName": "Gleb Ponomarev",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "gleb ponomarev|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:gleb ponomarev|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x1e162aec4d",
+      "canonicalName": "Shaun Viljoen",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "shaun viljoen|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:shaun viljoen|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x452cd8b729",
+      "canonicalName": "Antonin Mucha",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "antonin mucha|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:antonin mucha|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x0939eea7d5",
+      "canonicalName": "Ellis Carpenter",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "ellis carpenter|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:ellis carpenter|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xfe8675afe8",
+      "canonicalName": "Ronnie Seagroat",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "ronnie seagroat|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:ronnie seagroat|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x229f8f8f17",
+      "canonicalName": "Tiago Fernandes",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "tiago fernandes|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:tiago fernandes|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x72d22a7753",
+      "canonicalName": "Aron Christopher Helsvig",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "aron christopher helsvig|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:aron christopher helsvig|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x6ff3ae575d",
+      "canonicalName": "Yordan Yanakiev",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "yordan yanakiev|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:yordan yanakiev|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x757eb6cecd",
+      "canonicalName": "Alex Mowbray",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "alex mowbray|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:alex mowbray|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x90aae540a3",
+      "canonicalName": "Harald Sandelin",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "harald sandelin|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:harald sandelin|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xe63ff9cd8c",
+      "canonicalName": "Oliver Newman",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "oliver newman|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:oliver newman|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x052be3860d",
+      "canonicalName": "Charlie Hamer",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "charlie hamer|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:charlie hamer|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x01b7587ad5",
+      "canonicalName": "Lenny Key",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "lenny key|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:lenny key|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xb198f0d018",
+      "canonicalName": "Wojciech Grzegorzek",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "wojciech grzegorzek|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:wojciech grzegorzek|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x1c14b9bfe4",
+      "canonicalName": "Oliver O'Dell",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "oliver o'dell|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:oliver o'dell|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xb2a8c7e470",
+      "canonicalName": "Axel Sandelin",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "axel sandelin|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:axel sandelin|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x263fb53d94",
+      "canonicalName": "Tate Daly",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "tate daly|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:tate daly|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x9fe4ecde45",
+      "canonicalName": "Marek Zahradnik",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "marek zahradnik|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:marek zahradnik|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x64bdc282d0",
+      "canonicalName": "Michał Cygan",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "michał cygan|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:michał cygan|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x4176203509",
+      "canonicalName": "Benjamin Valgardsson",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "benjamin valgardsson|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:benjamin valgardsson|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x149bd5859f",
+      "canonicalName": "Charlie Reynolds",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "charlie reynolds|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:charlie reynolds|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xbf45839736",
+      "canonicalName": "Aleksej Djukanovic",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "aleksej djukanovic|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:aleksej djukanovic|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x2d56a9a713",
+      "canonicalName": "Jakub Zahradnik",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "jakub zahradnik|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:jakub zahradnik|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xdf5c4fa7e5",
+      "canonicalName": "Corey Canning",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "corey canning|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:corey canning|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xe5580b6e8d",
+      "canonicalName": "Archibald Liechti",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "archibald liechti|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:archibald liechti|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xec882ae3f0",
+      "canonicalName": "Fin Gower",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "fin gower|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:fin gower|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xa5b89fa3d5",
+      "canonicalName": "Lucas Betancourt-Horneman",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "lucas betancourt-horneman|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:lucas betancourt-horneman|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x609e840a26",
+      "canonicalName": "Markus Jin",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "markus jin|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:markus jin|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xb79dc28bd5",
+      "canonicalName": "Johann Schmitt",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "johann schmitt|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:johann schmitt|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xbcababad7f",
+      "canonicalName": "Benjamin Fitzgerald",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "benjamin fitzgerald|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:benjamin fitzgerald|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xd71c6c9a4e",
+      "canonicalName": "Geraint Barnes",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "geraint barnes|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:geraint barnes|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x120f06bc63",
+      "canonicalName": "Benjamin Mác",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "benjamin mác|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:benjamin mác|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x4c57f6f2aa",
+      "canonicalName": "Nikolaj Pagh",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "nikolaj pagh|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:nikolaj pagh|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xa66a894a8a",
+      "canonicalName": "Andrejs Miklaševičs",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "andrejs miklaševičs|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:andrejs miklaševičs|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x4915208a1e",
+      "canonicalName": "Rayyan Faraz",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "rayyan faraz|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:rayyan faraz|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x0ae32d2fc8",
+      "canonicalName": "Sophie Jordan",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "sophie jordan|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_gwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:sophie jordan|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x8acee73acf",
+      "canonicalName": "Marie Sandtorv Lussand",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "marie sandtorv lussand|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_gwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:marie sandtorv lussand|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x77dd763632",
+      "canonicalName": "Kankawee Linjongsubongkot",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "kankawee linjongsubongkot|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_gwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:kankawee linjongsubongkot|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xa7f77cf8c5",
+      "canonicalName": "Maria Khristenko",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "maria khristenko|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_gwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:maria khristenko|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x15b173dd01",
+      "canonicalName": "Aleksandra Buczkowska",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "aleksandra buczkowska|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_gwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:aleksandra buczkowska|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x49966bc050",
+      "canonicalName": "Nora Sophie Johnsen",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "nora sophie johnsen|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_gwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:nora sophie johnsen|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x473cd865d4",
+      "canonicalName": "Mila Dodds",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "mila dodds|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_gwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:mila dodds|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x354b3784f8",
+      "canonicalName": "Ava McDaid",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "ava mcdaid|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_gwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:ava mcdaid|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xe9c10647ee",
+      "canonicalName": "Amelia McGinty",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "amelia mcginty|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_gwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:amelia mcginty|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x1aefaf9b28",
+      "canonicalName": "Sophie McKelvie",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "sophie mckelvie|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_gwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:sophie mckelvie|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x7d66b2db67",
+      "canonicalName": "Izabella Donnelly",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "izabella donnelly|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_gwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:izabella donnelly|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xa81ddd623d",
+      "canonicalName": "Ameli Tran",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "ameli tran|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_gwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:ameli tran|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xf8a84d0e4e",
+      "canonicalName": "Evie Stone",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "evie stone|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_gwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:evie stone|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x32bc37bc3d",
+      "canonicalName": "Abigail Tang",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "abigail tang|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_gwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:abigail tang|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x5fc7922be9",
+      "canonicalName": "Eliza Alupa",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "eliza alupa|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_gwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:eliza alupa|"
+        ],
+        "mergedFromSources": [
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xe9e82e7910",
+      "canonicalName": "Luisa Marizzi",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "luisa marizzi|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "wjgc-wjgc_2026_gwagr"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "wjgc:luisa marizzi|"
         ],
         "mergedFromSources": [
           "wjgc"
@@ -412931,37 +417572,6 @@
       }
     },
     {
-      "id": "x91e6efb8af",
-      "canonicalName": "Roman Kulyk",
-      "aliases": [],
-      "dob": null,
-      "sex": null,
-      "nationality": "US",
-      "country": "US",
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "doral",
-            "key": "doral-1875120439"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "doral-ftm_doral_2024"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "doral:doral-1875120439"
-        ],
-        "mergedFromSources": [
-          "doral"
-        ]
-      }
-    },
-    {
       "id": "x3b59cc1c0f",
       "canonicalName": "Joshua Katz",
       "aliases": [],
@@ -413079,37 +417689,6 @@
         "confidence": "strong",
         "evidence": [
           "doral:doral-2173559373"
-        ],
-        "mergedFromSources": [
-          "doral"
-        ]
-      }
-    },
-    {
-      "id": "x41698bb9c4",
-      "canonicalName": "Brandon Berkley",
-      "aliases": [],
-      "dob": null,
-      "sex": null,
-      "nationality": "US",
-      "country": "US",
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "doral",
-            "key": "doral-2173559376"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "doral-ftm_doral_2025"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "doral:doral-2173559376"
         ],
         "mergedFromSources": [
           "doral"
@@ -414265,13 +418844,13 @@
     }
   ],
   "stats": {
-    "total": 7547,
-    "droppedNoTourn": 21625,
-    "strong": 7542,
-    "probable": 5,
+    "total": 7672,
+    "droppedNoTourn": 21611,
+    "strong": 7661,
+    "probable": 11,
     "manual": 0,
     "strongMerges": 7,
-    "probableMerges": 476,
-    "manualMerges": 2
+    "probableMerges": 552,
+    "manualMerges": 3
   }
 }

@@ -13,6 +13,7 @@
 
 import { useEffect, useState } from "react";
 import { cachedFetchJson } from "../../data/fetchCache";
+import type { DataSource } from "../../ui/DataSources";
 
 // ═════════════════════════════════════════════════════════════════════
 // Types canónicos (espelham scripts/aggregator/types.js)
@@ -144,6 +145,8 @@ export interface CanonicalData {
   tournamentById: Map<string, Tournament>;
   seriesById: Map<string, TournamentSeries>;
   manuel: Junior | null;
+  /** Ficheiros canónicos lidos pelo loader — alimenta DataSourcesChip na toolbar. */
+  sources: DataSource[];
 }
 
 // ═════════════════════════════════════════════════════════════════════
@@ -159,25 +162,59 @@ function normName(s: string): string {
     .normalize("NFD").replace(/[̀-ͯ]/g, "");
 }
 
-async function loadCanonical(): Promise<CanonicalData> {
-  const [juniorsResp, tournamentsResp, catalogResp] = await Promise.all([
-    cachedFetchJson("/data/juniors.json"),
-    cachedFetchJson("/data/juniors-tournaments.json"),
-    cachedFetchJson("/data/tournament-catalog.json"),
-  ]);
+async function fetchWithSource(path: string, group?: string): Promise<{ data: unknown; source: DataSource }> {
+  try {
+    const data = await cachedFetchJson(path);
+    const d = data as any;
+    // Conta heurística: tournaments | juniors | series | shards
+    let count: number | undefined;
+    if (Array.isArray(d?.tournaments)) count = d.tournaments.length;
+    else if (Array.isArray(d?.juniors)) count = d.juniors.length;
+    else if (Array.isArray(d?.series)) count = d.series.length;
+    else if (Array.isArray(d?.shards)) count = d.shards.length;
+    return {
+      data,
+      source: {
+        path,
+        status: "loaded",
+        count,
+        source: d?.generatedBy || d?.source,
+        lastUpdated: d?.generatedAt || d?.lastUpdated,
+        group,
+      },
+    };
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err);
+    return {
+      data: null,
+      source: { path, status: "error", error: message, group },
+    };
+  }
+}
 
-  const juniors: Junior[] = (juniorsResp as any)?.juniors || [];
-  const series: TournamentSeries[] = (catalogResp as any)?.series || [];
+async function loadCanonical(): Promise<CanonicalData> {
+  const sources: DataSource[] = [];
+
+  const [juniorsLoad, tournamentsLoad, catalogLoad] = await Promise.all([
+    fetchWithSource("/data/juniors.json", "main"),
+    fetchWithSource("/data/juniors-tournaments.json", "main"),
+    fetchWithSource("/data/tournament-catalog.json", "main"),
+  ]);
+  sources.push(juniorsLoad.source, tournamentsLoad.source, catalogLoad.source);
+
+  const juniors: Junior[] = (juniorsLoad.data as any)?.juniors || [];
+  const series: TournamentSeries[] = (catalogLoad.data as any)?.series || [];
 
   // Tournaments podem vir num ficheiro único OU em shards (manifest sharded:true)
   let tournaments: Tournament[] = [];
-  const tResp = tournamentsResp as any;
+  const tResp = tournamentsLoad.data as any;
   if (tResp?.sharded && Array.isArray(tResp.shards)) {
-    const shardResponses = await Promise.all(
-      tResp.shards.map((fn: string) => cachedFetchJson(`/data/${fn}`)),
+    const shardLoads = await Promise.all(
+      tResp.shards.map((fn: string) => fetchWithSource(`/data/${fn}`, "shards")),
     );
-    for (const sr of shardResponses) {
-      const arr = (sr as any)?.tournaments;
+    for (const sl of shardLoads) {
+      sources.push(sl.source);
+      const arr = (sl.data as any)?.tournaments;
       if (Array.isArray(arr)) tournaments.push(...arr);
     }
   } else if (Array.isArray(tResp?.tournaments)) {
@@ -231,6 +268,7 @@ async function loadCanonical(): Promise<CanonicalData> {
     tournamentById,
     seriesById,
     manuel,
+    sources,
   };
 }
 
@@ -274,6 +312,32 @@ export function getSharedTournamentIds(junior: Junior, manuel: Junior | null): s
   if (!manuel) return [];
   const manuelTids = new Set(manuel.tournamentIds);
   return junior.tournamentIds.filter((tid) => manuelTids.has(tid));
+}
+
+/** Devolve tids onde junior e Manuel jogaram no MESMO FLIGHT (mesmo escalão).
+ *  Confronto real — distinto de getSharedTournamentIds que pode incluir
+ *  cross-flight (Boys 11 vs Boys 12 no mesmo Venice Open). */
+export function getSharedFlightTids(junior: Junior, manuel: Junior | null, tournamentById: Map<string, Tournament>): string[] {
+  if (!manuel) return [];
+  const manuelTids = new Set(manuel.tournamentIds);
+  const out: string[] = [];
+  for (const tid of junior.tournamentIds) {
+    if (!manuelTids.has(tid)) continue;
+    const t = tournamentById.get(tid);
+    if (!t) continue;
+    // Procurar flight onde AMBOS estão presentes
+    const ok = t.flights.some((f) =>
+      f.results.some((r) => r.juniorId === junior.id) &&
+      f.results.some((r) => r.juniorId === manuel.id)
+    );
+    if (ok) out.push(tid);
+  }
+  return out;
+}
+
+/** True se junior teve pelo menos 1 confronto real (mesmo flight) com Manuel. */
+export function hasRealConfrontWithManuel(junior: Junior, manuel: Junior | null, tournamentById: Map<string, Tournament>): boolean {
+  return getSharedFlightTids(junior, manuel, tournamentById).length > 0;
 }
 
 export function getResultInTournament(junior: Junior, tournament: Tournament): { flight: Flight; result: Result } | null {
@@ -320,12 +384,15 @@ const TIER_LABELS: Record<TierKey, string> = {
   beginner: "Iniciante",
 };
 
+// ⚠ REGRA: var(--color-good-dark) e var(--bg-success-subtle) são RESERVADOS
+//   ao Manuel (badge "Tu", "REF", "Cruzou com Manuel", bg da row vs Manuel).
+//   Para tier badges de outros juniors usar paleta diferenciada.
 const TIER_COLORS: Record<TierKey, { bg: string; fg: string }> = {
   elite:      { bg: "var(--bg-warn-subtle, #fffbeb)", fg: "var(--color-warn-dark, #92400e)" },
-  strong:     { bg: "var(--bg-success-subtle, #ecfdf5)", fg: "var(--color-good-dark)" },
+  strong:     { bg: "var(--medal-bronze-bg)",         fg: "var(--medal-bronze-fg)" },
   solid:      { bg: "var(--bg-info-subtle, #eff6ff)", fg: "var(--color-info-dark, #1e3a8a)" },
-  developing: { bg: "var(--bg-muted)", fg: "var(--text-2)" },
-  beginner:   { bg: "var(--bg)", fg: "var(--text-3)" },
+  developing: { bg: "var(--bg-muted)",                fg: "var(--text-2)" },
+  beginner:   { bg: "var(--bg)",                      fg: "var(--text-3)" },
 };
 
 export function computeTier(j: Junior, tournamentById: Map<string, Tournament>): TierKey | null {
@@ -365,6 +432,77 @@ export function getTierLabel(tier: TierKey): string {
 
 export function getTierColors(tier: TierKey): { bg: string; fg: string } {
   return TIER_COLORS[tier];
+}
+
+/** Estatísticas agregadas das rondas de um junior. Útil para KPI cards.
+ *  - mean, sd: média e desvio padrão dos `gross` por ronda.
+ *  - bestToPar / worstToPar: melhor e pior diferencial ±par por ronda.
+ *  - subParPct: percentagem de rondas com gross < par (apenas rondas com par conhecido).
+ *  - total: nº de rondas usadas no cálculo (com gross numérico).
+ */
+export interface RoundStats {
+  total: number;
+  mean: number | null;
+  sd: number | null;
+  bestToPar: { value: number; tournamentId: string; round: number } | null;
+  worstToPar: { value: number; tournamentId: string; round: number } | null;
+  subParPct: number | null;
+}
+
+export function computeRoundStats(junior: Junior, tournamentById: Map<string, Tournament>, filterTids?: Set<string> | null): RoundStats {
+  const grosses: number[] = [];
+  const toPars: Array<{ value: number; tournamentId: string; round: number }> = [];
+  let subParCount = 0;
+  let withParCount = 0;
+  for (const tid of junior.tournamentIds) {
+    if (filterTids && !filterTids.has(tid)) continue;
+    const t = tournamentById.get(tid);
+    if (!t) continue;
+    for (const f of t.flights) {
+      const r = f.results.find((x) => x.juniorId === junior.id);
+      if (!r?.rounds) continue;
+      // ⚠ Filtra 9H — comparar +3 num 9H (par 36) com +0 num 18H (par 72) é
+      // enganador. Para "Melhor ±par" agregado da carreira só consideramos
+      // rondas 18H. Se quisermos um KPI separado para 9H, criar à parte.
+      const parArr = f.par || [];
+      const par18 = parArr.length === 18 && parArr.filter((p) => p > 0).length === 18;
+      if (!par18) continue;
+      const parTotal = parArr.reduce((a, b) => a + (b || 0), 0);
+      if (parTotal < 60) continue; // sanity — par 18H deve ser ≥ 60
+      for (const rd of r.rounds) {
+        if (typeof rd.gross !== "number") continue;
+        // Sanity: gross de 18H deve ser ≥ 50 (alguém com nível profissional)
+        // ou ≤ 200. Valores fora disto são bugs de scrape.
+        if (rd.gross < 50 || rd.gross > 200) continue;
+        grosses.push(rd.gross);
+        withParCount++;
+        const diff = rd.gross - parTotal;
+        toPars.push({ value: diff, tournamentId: tid, round: rd.round });
+        if (diff < 0) subParCount++;
+      }
+    }
+  }
+  if (grosses.length === 0) {
+    return { total: 0, mean: null, sd: null, bestToPar: null, worstToPar: null, subParPct: null };
+  }
+  const mean = grosses.reduce((a, b) => a + b, 0) / grosses.length;
+  const variance = grosses.reduce((a, b) => a + (b - mean) ** 2, 0) / grosses.length;
+  const sd = Math.sqrt(variance);
+  // Melhor = menor diff (pode ser negativo); pior = maior diff
+  let best: typeof toPars[0] | null = null;
+  let worst: typeof toPars[0] | null = null;
+  for (const tp of toPars) {
+    if (!best || tp.value < best.value) best = tp;
+    if (!worst || tp.value > worst.value) worst = tp;
+  }
+  return {
+    total: grosses.length,
+    mean: Math.round(mean * 10) / 10,
+    sd: Math.round(sd * 10) / 10,
+    bestToPar: best,
+    worstToPar: worst,
+    subParPct: withParCount > 0 ? Math.round((subParCount / withParCount) * 100) : null,
+  };
 }
 
 export function bestRoundGross(junior: Junior, tournamentById: Map<string, Tournament>): { gross: number; tournamentId: string; round: number } | null {

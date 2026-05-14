@@ -7,9 +7,11 @@
  * Sem qualquer indicador de sexo (sem SexBadge, sem Unicode ♂/♀).
  */
 
-import React from "react";
-import type { CanonicalData, Junior } from "../data";
-import { computeTier, getTierLabel, getTierColors } from "../data";
+import React, { useMemo } from "react";
+import type { CanonicalData, Junior, Tournament } from "../data";
+import { computeTier, getTierLabel, getTierColors, hasRealConfrontWithManuel } from "../data";
+import { computeDobInfo, escalaoIntl, type DobInfo } from "../dobInfo";
+import { getTournWeight } from "../tournWeight";
 import { flag as flagOf } from "../../../utils/flagUtils";
 import { MANUEL_DOB } from "../../../constants/manuel";
 
@@ -28,11 +30,19 @@ export default function HeroIdentity({ data, junior }: Props) {
   const escUskids = junior.sources.uskids?.ageGroupCurrent;
   const escRfeg = junior.sources.rfeg?.catEdad;
   const escFpgTag = junior.sources.fpg?.tags?.find((t) => /^(PJA|Sub-?\d+)/i.test(t));
+  const escIntl = escalaoIntl(junior, data.tournamentById);
 
-  const ageInfo = junior.dob ? computeAge(junior.dob) : null;
-  const ageDiff = !isManuel && junior.dob ? compareAgeToManuel(junior.dob) : null;
+  const dobInfo = computeDobInfo(junior, data.tournamentById);
+  // ageDiff só faz sentido para juniors com DOB conhecida (known/range/inferred)
+  const ageDiff = !isManuel && dobInfo.dobIso ? compareAgeToManuel(dobInfo.dobIso, dobInfo.state) : null;
 
-  const tier = !isManuel ? computeTier(junior, data.tournamentById) : null;
+  // Tier badge ("Elite", "Forte Competidor", etc.) só faz sentido para juniors
+  // que realmente confrontaram o Manuel em mesmo escalão. Para juniors que
+  // partilham só torneios em escalões diferentes (ex: Manuel B11 vs Rafael B12
+  // no mesmo Venice Open), o tier seria enganador — escondemos.
+  const tier = (!isManuel && hasRealConfrontWithManuel(junior, data.manuel, data.tournamentById))
+    ? computeTier(junior, data.tournamentById)
+    : null;
 
   const mainClub = junior.sources.fpg?.club || junior.sources.rfeg?.club || junior.sources.ffgolf?.club || junior.club || null;
   const mainClubSource = junior.sources.fpg?.club ? "FPG" : junior.sources.rfeg?.club ? "RFEG" : junior.sources.ffgolf?.club ? "FFG" : null;
@@ -45,6 +55,12 @@ export default function HeroIdentity({ data, junior }: Props) {
   const ajga = (junior.meta as any)?.ajgaRank ?? (junior.computed as any)?.ajgaRank;
   const wagr = (junior.meta as any)?.wagrRank ?? (junior.computed as any)?.wagrRank;
   const eowagr = (junior.meta as any)?.eowagrRank ?? (junior.computed as any)?.eowagrRank;
+
+  // Palmarès — todas as vitórias do junior ordenadas por peso de torneio (desc),
+  // depois pela data (mais recente primeiro). Mostra Top 5 inline + "+N restantes".
+  const wins = useMemo(() => collectWins(junior, data.tournamentById), [junior, data.tournamentById]);
+  const topWins = wins.slice(0, 5);
+  const hiddenWinsCount = Math.max(0, wins.length - topWins.length);
 
   return (
     <div style={{
@@ -105,13 +121,23 @@ export default function HeroIdentity({ data, junior }: Props) {
 
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 8, fontSize: 13, color: "var(--text-2)", flexWrap: "wrap" }}>
             <span>📍 {country || "—"}</span>
-            {junior.region && <><span style={{ opacity: 0.4 }}>·</span><span>{junior.region}</span></>}
-            {junior.dob && ageInfo && (
+            {junior.nationality && junior.country && junior.nationality !== junior.country && (
               <>
                 <span style={{ opacity: 0.4 }}>·</span>
-                <span>🎂 {fmtDobPt(junior.dob)}</span>
+                <span title="Nacionalidade distinta do país onde reside/joga" style={{
+                  fontSize: 11, padding: "2px 8px", borderRadius: 999,
+                  background: "var(--bg-muted)", color: "var(--text-2)", fontWeight: 600,
+                  border: "1px solid var(--border-light)",
+                }}>
+                  {flagOf(junior.nationality)} {junior.nationality}
+                </span>
+              </>
+            )}
+            {junior.region && <><span style={{ opacity: 0.4 }}>·</span><span>{junior.region}</span></>}
+            {dobInfo.state !== "unknown" && (
+              <>
                 <span style={{ opacity: 0.4 }}>·</span>
-                <span style={{ fontWeight: 600 }}>{ageInfo.label}</span>
+                <DobPill info={dobInfo} isManuel={isManuel} />
               </>
             )}
             {ageDiff && (
@@ -180,6 +206,36 @@ export default function HeroIdentity({ data, junior }: Props) {
               {eowagr && <RankPill label="EOWAGR" value={eowagr} />}
             </div>
           )}
+
+          {wins.length > 0 && (
+            <div style={{ marginTop: 10, display: "flex", flexWrap: "wrap", gap: 5, alignItems: "center" }}>
+              <span style={{ fontSize: 10, fontWeight: 700, color: "var(--text-3)", letterSpacing: 0.4, textTransform: "uppercase", marginRight: 4 }}>
+                🏆 Palmarès
+              </span>
+              {topWins.map((w, i) => (
+                <span key={i} title={`${w.fmtDate} · ${w.flightLabel}${w.parts ? " · " + w.parts : ""}`} style={{
+                  // Discreto: sem fundo, só border subtil + estrela dourada pequena.
+                  fontSize: 11, padding: "2px 8px", borderRadius: 999,
+                  background: "var(--bg)",
+                  border: "1px solid var(--border-light)",
+                  color: "var(--text-2)", fontWeight: 500,
+                  display: "inline-flex", alignItems: "center", gap: 4,
+                  whiteSpace: "nowrap",
+                }}>
+                  <span style={{ color: "var(--medal-gold-strong)", letterSpacing: 0.2, fontSize: 10 }}>
+                    {"★".repeat(w.stars)}
+                  </span>
+                  <span>{w.shortName}</span>
+                  <span style={{ opacity: 0.55, fontSize: 10 }}>· {w.year}</span>
+                </span>
+              ))}
+              {hiddenWinsCount > 0 && (
+                <span style={{ fontSize: 10, color: "var(--text-3)", fontWeight: 500 }}>
+                  +{hiddenWinsCount} {hiddenWinsCount === 1 ? "vitória" : "vitórias"}
+                </span>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
@@ -213,12 +269,21 @@ export default function HeroIdentity({ data, junior }: Props) {
         <FedCard
           label="FFG"
           value={junior.sources.ffgolf?.lic}
-          subtitle={[junior.sources.ffgolf?.club, junior.sources.ffgolf?.region].filter(Boolean).join(" · ")}
+          subtitle={[
+            junior.sources.ffgolf?.club,
+            junior.sources.ffgolf?.region,
+            junior.sources.ffgolf?.glfLic && junior.sources.ffgolf.glfLic !== junior.sources.ffgolf.lic
+              ? `Lic GLF ${junior.sources.ffgolf.glfLic}`
+              : null,
+          ].filter(Boolean).join(" · ")}
+          historical={junior.sources.ffgolf?.historicalLicenses}
+          historicalLabel={(h: any) => `antiga ${typeof h === "string" ? h : h.lic}`}
         />
       </div>
 
-      {(escUskids || escRfeg || escFpgTag || hcps.length > 0) && (
+      {(escIntl || escUskids || escRfeg || escFpgTag || hcps.length > 0) && (
         <div style={{ display: "flex", gap: 6, marginTop: 14, flexWrap: "wrap" }}>
+          {escIntl && <EscPill label={escIntl} accent strong />}
           {escUskids && <EscPill label={`${escUskids} · USKids`} />}
           {escRfeg && <EscPill label={`${escRfeg} · RFEG`} />}
           {escFpgTag && <EscPill label={`${escFpgTag} · FPG`} />}
@@ -280,7 +345,19 @@ function FedCard({ label, value, subtitle, historical, historicalLabel }: {
   );
 }
 
-function EscPill({ label }: { label: string }) {
+function EscPill({ label, accent, strong }: { label: string; accent?: boolean; strong?: boolean }) {
+  // accent + strong = pill "primary" (escalão unificado Sub-N) — fundo escuro destacado
+  if (accent && strong) {
+    return (
+      <span style={{
+        background: "var(--color-info-dark, #1e3a8a)",
+        color: "var(--bg)",
+        fontSize: 12, padding: "3px 11px", borderRadius: 999,
+        fontWeight: 700,
+        letterSpacing: 0.3,
+      }}>{label}</span>
+    );
+  }
   return (
     <span style={{
       background: "var(--bg-info-subtle, #eff6ff)",
@@ -289,6 +366,63 @@ function EscPill({ label }: { label: string }) {
       fontWeight: 600,
       border: "1px solid var(--color-info-dark, #1e3a8a)",
     }}>{label}</span>
+  );
+}
+
+/** Pill da DOB — 4 estados visuais (known/range/inferred/unknown).
+ *  O verde (--color-good-dark) é cor RESERVADA AO MANUEL (badge "★ Tu referência").
+ *  Para outros juniores usamos cores neutras. */
+function DobPill({ info, isManuel }: { info: DobInfo; isManuel: boolean }) {
+  // Para o Manuel: verde (consistente com identidade dele).
+  // Para outros: neutro bege/cinzento.
+  const known = isManuel ? {
+    background: "var(--bg-success-subtle, #ecfdf5)",
+    color: "var(--color-good-dark)",
+    border: "1px solid var(--color-good-dark)",
+  } : {
+    background: "var(--bg-muted)",
+    color: "var(--text-2)",
+    border: "1px solid var(--border)",
+  };
+  const range = isManuel ? {
+    background: "var(--bg-success-subtle, #ecfdf5)",
+    color: "var(--color-good-dark)",
+    border: "1px dashed var(--color-good-dark)",
+  } : {
+    background: "var(--bg-muted)",
+    color: "var(--text-2)",
+    border: "1px dashed var(--border)",
+  };
+  const styles: Record<DobInfo["state"], React.CSSProperties> = {
+    known,
+    range,
+    inferred: {
+      background: "var(--bg-muted)",
+      color: "var(--text-2)",
+      border: "1px dashed var(--border)",
+    },
+    unknown: { display: "none" },
+  };
+  const title =
+    info.state === "known" ? "Data de nascimento confirmada"
+    : info.state === "range" ? "Janela de DOB pré-calculada"
+    : info.state === "inferred" ? "DOB inferida a partir dos torneios + escalões"
+    : "DOB desconhecida";
+  return (
+    <span title={title} style={{
+      ...styles[info.state],
+      fontSize: 11, padding: "2px 9px", borderRadius: 999,
+      fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 5,
+    }}>
+      🎂 {info.dobLabel}
+      <span style={{ opacity: 0.7 }}>·</span>
+      <span style={{ fontWeight: 700 }}>{info.ageLabel}</span>
+      {info.nextBdayDays != null && info.nextBdayDays <= 30 && info.nextAge != null && (
+        <span style={{ marginLeft: 4, fontSize: 10, opacity: 0.85 }}>
+          🎉 {info.nextAge} em {info.nextBdayDays}d
+        </span>
+      )}
+    </span>
   );
 }
 
@@ -306,22 +440,82 @@ function RankPill({ label, value }: { label: string; value: number | string }) {
   );
 }
 
-function computeAge(dobIso: string): { label: string } | null {
-  const [y, m, d] = dobIso.split("-").map(Number);
-  if (!y || !m || !d) return null;
-  const today = new Date();
-  const dob = new Date(y, m - 1, d);
-  let age = today.getFullYear() - dob.getFullYear();
-  const mo = today.getMonth() - dob.getMonth();
-  if (mo < 0 || (mo === 0 && today.getDate() < dob.getDate())) age--;
-  const next = new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
-  if (next < today) next.setFullYear(today.getFullYear() + 1);
-  const daysToNext = Math.ceil((next.getTime() - today.getTime()) / 86400000);
-  if (daysToNext <= 7) return { label: `${age} anos · faz ${age + 1} em ${daysToNext}d` };
-  return { label: `${age} anos` };
+interface WinEntry {
+  tid: string;
+  fmtDate: string;
+  year: string;
+  flightLabel: string;
+  shortName: string;
+  stars: number;
+  parts: string | null;
 }
 
-function compareAgeToManuel(dobIso: string): string | null {
+/** Junta todas as vitórias (pos===1) do junior, ordenadas por peso de torneio (desc)
+ *  com desempate por data (mais recente primeiro). */
+function collectWins(junior: Junior, tournamentById: Map<string, Tournament>): WinEntry[] {
+  const out: WinEntry[] = [];
+  for (const tid of junior.tournamentIds) {
+    const t = tournamentById.get(tid);
+    if (!t) continue;
+    for (const f of t.flights || []) {
+      const r = f.results.find((x) => x.juniorId === junior.id);
+      if (r?.pos !== 1) continue;
+      const w = getTournWeight(t);
+      const date = t.date || t.startDate || "";
+      out.push({
+        tid,
+        fmtDate: date,
+        year: date.slice(0, 4) || "?",
+        flightLabel: f.label || "Geral",
+        shortName: shortenTournName(t.name || t.shortName || tid),
+        stars: w.stars,
+        parts: `rondas ${w.parts.rounds.toFixed(2)} · field ${w.parts.field.toFixed(2)}${w.parts.nations != null ? ` · nações ${w.parts.nations.toFixed(2)}` : ""}`,
+      });
+      break; // 1 win por torneio (não inflar com pos===1 em escalões duplicados)
+    }
+  }
+  // Ordena: prioriza recência (últimos 24 meses) e empurra apenas vitórias
+  // realmente marcantes (★★★+) do passado para cima. Vitórias antigas com
+  // poucas estrelas ficam no fim — não interessam destacar.
+  const now = Date.now();
+  const MS_IN_MONTH = 1000 * 60 * 60 * 24 * 30;
+  out.sort((a, b) => {
+    const sa = scoreWin(a, now);
+    const sb = scoreWin(b, now);
+    return sb - sa;
+  });
+  return out;
+
+  function scoreWin(w: WinEntry, ref: number): number {
+    const t = w.fmtDate ? new Date(w.fmtDate).getTime() : 0;
+    const monthsAgo = t > 0 ? (ref - t) / MS_IN_MONTH : 999;
+    // Bónus de recência: 24 (1 mês atrás) → 0 (24+ meses)
+    const recency = Math.max(0, 24 - monthsAgo);
+    // Stars × 6 só sobe vitórias 3★+ acima dos recentes 2★ → recentes têm prioridade
+    // para 2★, mas Marco Simone ★★★★ de 3 anos ainda salta para cima.
+    return w.stars * 6 + recency;
+  }
+}
+
+function shortenTournName(s: string): string {
+  return s
+    .replace(/^\d{4}\s+/, "")            // remove ano à frente "2025 ..."
+    .replace(/\s+\d{4}$/, "")            // remove ano no fim "... 2025"
+    .replace(/Campeonato\s+Nacional\s+de\s+Sub[\s-]*(\d+)\s*[HS]?/i, "Nac Sub-$1")
+    .replace(/Greatgolf\s+Junior\s+Open/i, "Greatgolf")
+    .replace(/Quinta\s+do\s+Lago\s+Junior\s+Open/i, "QdL")
+    .replace(/USKids?\s+European\s+Championship/i, "USKids Euro")
+    .replace(/USKids?\s+World\s+Championship/i, "USKids World")
+    .replace(/Marco\s+Simone\s+Invitational/i, "Marco Simone")
+    .replace(/Venice\s+Open/i, "Venice")
+    .replace(/Rome\s+Classic/i, "Rome")
+    .replace(/Real\s+Club\s+de\s+Golf\s+El\s+Prat/i, "El Prat")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 30);
+}
+
+function compareAgeToManuel(dobIso: string, state: DobInfo["state"]): string | null {
   const [y, m, d] = dobIso.split("-").map(Number);
   if (!y || !m || !d) return null;
   const dob = new Date(y, m - 1, d);
@@ -330,6 +524,17 @@ function compareAgeToManuel(dobIso: string): string | null {
   if (diffMs === 0) return "Mesma idade que Manuel";
   const diffDays = Math.abs(diffMs / 86400000);
   const olderThanManuel = diffMs > 0;
+  // Para estados inferidos/range, não dizemos "12d mais velho" porque é falsa
+  // precisão. Só damos resolução fina quando DOB é conhecida.
+  if (state !== "known") {
+    if (diffDays < 90) return olderThanManuel ? "~mesma idade (lig. mais velho)" : "~mesma idade (lig. mais novo)";
+    if (diffDays < 365) {
+      const months = Math.round(diffDays / 30);
+      return `~${months} ${months === 1 ? "mês" : "meses"} ${olderThanManuel ? "mais velho" : "mais novo"} que Manuel`;
+    }
+    const years = Math.round(diffDays / 365.25);
+    return `~${years} ${years === 1 ? "ano" : "anos"} ${olderThanManuel ? "mais velho" : "mais novo"} que Manuel`;
+  }
   if (diffDays < 31) {
     const days = Math.round(diffDays);
     return `${days}d ${olderThanManuel ? "mais velho" : "mais novo"} que Manuel`;
@@ -343,10 +548,4 @@ function compareAgeToManuel(dobIso: string): string | null {
   const isWhole = Math.abs(yearsRound - Math.round(yearsRound)) < 0.05;
   const label = isWhole ? `${Math.round(yearsRound)} ${Math.round(yearsRound) === 1 ? "ano" : "anos"}` : `${yearsRound.toFixed(1)} anos`;
   return `${label} ${olderThanManuel ? "mais velho" : "mais novo"} que Manuel`;
-}
-
-function fmtDobPt(dobIso: string): string {
-  const [y, m, d] = dobIso.split("-");
-  if (!y || !m || !d) return dobIso;
-  return `${d}/${m}/${y}`;
 }

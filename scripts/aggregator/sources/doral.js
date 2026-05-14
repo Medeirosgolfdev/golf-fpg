@@ -66,10 +66,31 @@ function normalize(data, fileName, playerMap) {
           },
         });
       }
-      const rounds = (Array.isArray(pl.rounds) ? pl.rounds : []).map((r) => ({
-        round: r.day || rounds?.length + 1,
+      // ⚠ O scraper GolfGenius por vezes numera as rondas pela ORDEM em que o
+      // jogador entrou (day=1 = primeira ronda dele) e não cronologicamente.
+      // Para o Doral 2025, o Manuel tem rounds[0]={day:1, date:"Fri Dec 19", gross:79}
+      // e rounds[1]={day:2, date:"Thu Dec 18", gross:98} — mas Dec 18 é antes
+      // de Dec 19 logo o REAL Day 1 foi 98 (mau) e o Day 2 foi 79 (recuperou).
+      //
+      // Ordenamos as rondas pela DATA quando disponível (e re-numeramos), para
+      // que a UI mostre R1/R2 na ordem cronológica que reflicta o que aconteceu.
+      const rawRounds = Array.isArray(pl.rounds) ? pl.rounds.slice() : [];
+      const datedRounds = rawRounds.map((r, i) => ({
+        _origIndex: i,
+        _ts: parseDoralDate(r.date),
+        day: r.day,
         gross: typeof r.gross === "number" ? r.gross : null,
         strokes: Array.isArray(r.scores) ? r.scores : undefined,
+      }));
+      // Se todas as rondas têm date parseável, ordena cronologicamente.
+      const allDated = datedRounds.length > 0 && datedRounds.every((r) => r._ts != null);
+      if (allDated) {
+        datedRounds.sort((a, b) => (a._ts - b._ts));
+      }
+      const rounds = datedRounds.map((r, i) => ({
+        round: i + 1, // re-numera após ordenação cronológica
+        gross: r.gross,
+        strokes: r.strokes,
       }));
       // Algumas entradas têm r1Gross/r2Gross sem rounds detalhados
       if (rounds.length === 0) {
@@ -86,6 +107,11 @@ function normalize(data, fileName, playerMap) {
         rounds,
       });
     }
+
+    // Inferir pos para players que vieram com pos:null mas têm total numérico
+    // (scraper GolfGenius por vezes falha a coluna POS — calcular pelo ranking
+    // de total ascendente dentro do flight).
+    inferMissingPositions(results);
 
     flights.push({
       flightKey: divKey.toLowerCase().replace(/[^a-z0-9]+/g, "_"),
@@ -107,6 +133,50 @@ function normalize(data, fileName, playerMap) {
     flights,
     links: data.source ? [{ label: "GolfGenius", url: data.source }] : [],
   };
+}
+
+/** Parse de datas do GolfGenius tipo "Thu, December 18" / "Fri, December 19".
+ *  Devolve timestamp ms ou null se não parseável. Ano não vem no string —
+ *  para ordenação dentro do mesmo torneio é irrelevante (assumimos ano 2000). */
+function parseDoralDate(s) {
+  if (!s || typeof s !== "string") return null;
+  // "Thu, December 18" → extract "December 18"
+  const m = /(?:[A-Za-z]+,\s*)?([A-Za-z]+)\s+(\d{1,2})/.exec(s);
+  if (!m) return null;
+  const monthName = m[1];
+  const day = parseInt(m[2], 10);
+  if (!day) return null;
+  const months = {
+    January: 0, February: 1, March: 2, April: 3, May: 4, June: 5,
+    July: 6, August: 7, September: 8, October: 9, November: 10, December: 11,
+  };
+  const mi = months[monthName];
+  if (mi === undefined) return null;
+  // Ano fixo (2000) — só importa a ordem dentro do torneio.
+  return new Date(2000, mi, day).getTime();
+}
+
+/** Atribui pos a players que estavam com pos:null mas têm totalGross numérico.
+ *  Ordena por totalGross ascendente; empates partilham a mesma pos (no padrão
+ *  golf "T-N"). Players sem total continuam null (WD/DNF). */
+function inferMissingPositions(results) {
+  const withTotal = results.filter((r) => typeof r.totalGross === "number");
+  if (withTotal.length === 0) return;
+  // Se há pelo menos 1 com pos já atribuído, presumimos que o JSON tem
+  // posições parciais. Vamos preencher os null sem reescrever os existentes.
+  const sorted = [...withTotal].sort((a, b) => (a.totalGross || 0) - (b.totalGross || 0));
+  let lastTotal = -1;
+  let lastPos = 0;
+  for (let i = 0; i < sorted.length; i++) {
+    const r = sorted[i];
+    const t = r.totalGross || 0;
+    const pos = t === lastTotal ? lastPos : i + 1;
+    if (r.pos === null || r.pos === undefined) {
+      r.pos = pos;
+    }
+    lastTotal = t;
+    lastPos = pos;
+  }
 }
 
 module.exports = { load, SOURCE_ID, SOURCE_LABEL };

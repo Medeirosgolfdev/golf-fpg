@@ -20,8 +20,8 @@ export function KidsLink({ nome }: { nome: string }) {
   const hash = memberId ?? encodeURIComponent(arEntry.n);
   return (
     <a
-      href="/kids"
-      onClick={e => { e.preventDefault(); window.open(`/kids#${hash}`, "_blank"); }}
+      href="/kids2"
+      onClick={e => { e.preventDefault(); window.open(`/kids2#${hash}`, "_blank"); }}
       title="Ver em Kids"
       style={{ fontWeight: 800, color: "var(--color-good-dark)", fontSize: 13,
         cursor: "pointer", textDecoration: "none", flexShrink: 0, marginLeft: 4 }}>

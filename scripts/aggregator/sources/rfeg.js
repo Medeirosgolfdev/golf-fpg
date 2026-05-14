@@ -167,6 +167,9 @@ function normalizeRfegTournament(tid, t) {
   } else if (/Gran Premio|GP\s/i.test(tname)) {
     seriesId = "rfeg-gran-premio"; seriesLabel = "Gran Premio";
   }
+  // Links: derivar do prefix do tid (lgs = LiveGolfScoring, nc = NextCaddy)
+  const links = buildRfegLinks(String(tid));
+
   return {
     sourceKey: String(tid),
     name: tname || `RFEG ${tid}`,
@@ -188,7 +191,30 @@ function normalizeRfegTournament(tid, t) {
       fieldSize: players.length,
       results,
     }],
+    links,
   };
+}
+
+/** Constrói o array `links` para um torneio RFEG.
+ *  - tid "lgs105" → LiveGolfScoring https://rfegolf.livegolfscoring.es/torneos/hoyoahoyo/105
+ *  - tid "nc48139" → NextCaddy https://www.nextcaddy.com/tour/48139
+ *  - outros → vazio */
+function buildRfegLinks(tid) {
+  const lgsMatch = /^lgs(\d+)$/i.exec(tid);
+  if (lgsMatch) {
+    return [{
+      label: "LiveGolfScoring",
+      url: `https://rfegolf.livegolfscoring.es/torneos/hoyoahoyo/${lgsMatch[1]}`,
+    }];
+  }
+  const ncMatch = /^nc(\d+)$/i.exec(tid);
+  if (ncMatch) {
+    return [{
+      label: "NextCaddy",
+      url: `https://www.nextcaddy.com/tour/${ncMatch[1]}`,
+    }];
+  }
+  return [];
 }
 
 module.exports = { load, SOURCE_ID, SOURCE_LABEL };

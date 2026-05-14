@@ -7,6 +7,10 @@
 import React from "react";
 import type { CanonicalData, Junior } from "../data";
 import { getSharedTournamentIds, getResultInTournament } from "../data";
+import { useSort } from "../../../hooks/useSort";
+import SortableHdr from "../../../ui/SortableHdr";
+
+type SortKey = "date" | "name" | "flight" | "jGross" | "jPos" | "mGross" | "mPos" | "diff";
 
 interface Props {
   data: CanonicalData;
@@ -15,15 +19,26 @@ interface Props {
 }
 
 export default function MatchupVsManuel({ data, junior, manuel }: Props) {
+  const { sortKey, sortDir, toggleSort } = useSort<SortKey>("date", "desc", {
+    date: "desc", name: "asc", flight: "asc",
+    jGross: "asc", jPos: "asc", mGross: "asc", mPos: "asc", diff: "asc",
+  });
+
   const sharedIds = getSharedTournamentIds(junior, manuel);
   if (sharedIds.length === 0) return null;
 
+  // ⚠ IMPORTANTE: torneios USKids/USKids-completos podem ter MÚLTIPLOS flights
+  // (Boys 11 + Boys 12) sob o mesmo tournamentId. Se Rafael jogou B12 e Manuel
+  // jogou B11, NÃO é confronto — escalões diferentes. Filtrar para apenas
+  // pares onde ambos estiveram no MESMO flight (flightKey igual).
   const rows = sharedIds.map((tid) => {
     const t = data.tournamentById.get(tid);
     if (!t) return null;
     const rJ = getResultInTournament(junior, t);
     const rM = getResultInTournament(manuel, t);
     if (!rJ || !rM) return null;
+    // Se rJ e rM estão em flights diferentes (escalões diferentes), saltar.
+    if (rJ.flight.flightKey !== rM.flight.flightKey) return null;
     const diff = (rJ.result.totalGross ?? 0) - (rM.result.totalGross ?? 0);
     return { t, rJ, rM, diff };
   }).filter(Boolean) as Array<{ t: any; rJ: any; rM: any; diff: number }>;
@@ -43,6 +58,27 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
     if (Math.abs(r.diff) > Math.abs(worst)) worst = r.diff;
   }
   const avgDiff = rows.length > 0 ? (diffSum / rows.length) : 0;
+
+  // Ordenação aplicada antes do render
+  const sortedRows = [...rows].sort((a, b) => {
+    const mul = sortDir === "asc" ? 1 : -1;
+    const getVal = (r: typeof a, key: SortKey): string | number => {
+      switch (key) {
+        case "date": return r.t.date || "";
+        case "name": return (r.t.name || r.t.shortName || r.t.id || "").toLowerCase();
+        case "flight": return r.rJ.flight.label || "";
+        case "jGross": return r.rJ.result.totalGross ?? Number.POSITIVE_INFINITY;
+        case "jPos": return typeof r.rJ.result.pos === "number" ? r.rJ.result.pos : Number.POSITIVE_INFINITY;
+        case "mGross": return r.rM.result.totalGross ?? Number.POSITIVE_INFINITY;
+        case "mPos": return typeof r.rM.result.pos === "number" ? r.rM.result.pos : Number.POSITIVE_INFINITY;
+        case "diff": return r.diff;
+      }
+    };
+    const va = getVal(a, sortKey);
+    const vb = getVal(b, sortKey);
+    if (typeof va === "number" && typeof vb === "number") return (va - vb) * mul;
+    return String(va).localeCompare(String(vb)) * mul;
+  });
 
   return (
     <div style={{
@@ -68,18 +104,18 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
       <table style={{ width: "100%", fontSize: 12, borderCollapse: "collapse", background: "var(--bg)", borderRadius: 6, overflow: "hidden", border: "1px solid var(--border-light)" }}>
         <thead>
           <tr style={{ background: "var(--bg-muted)", color: "var(--text-2)" }}>
-            <th style={th}>Data</th>
-            <th style={th}>Torneio</th>
-            <th style={th}>Escalão</th>
-            <th style={{ ...th, textAlign: "right" }}>{junior.canonicalName.split(" ")[0]}</th>
-            <th style={{ ...th, textAlign: "center" }}>Pos</th>
-            <th style={{ ...th, textAlign: "right" }}>Manuel</th>
-            <th style={{ ...th, textAlign: "center" }}>Pos</th>
-            <th style={{ ...th, textAlign: "right" }}>diff</th>
+            <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={th}>Data</SortableHdr>
+            <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={th}>Torneio</SortableHdr>
+            <SortableHdr k="flight" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={th}>Escalão</SortableHdr>
+            <SortableHdr k="jGross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...th, textAlign: "right" }}>{junior.canonicalName.split(" ")[0]}</SortableHdr>
+            <SortableHdr k="jPos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...th, textAlign: "center" }}>Pos</SortableHdr>
+            <SortableHdr k="mGross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...th, textAlign: "right" }}>Manuel</SortableHdr>
+            <SortableHdr k="mPos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...th, textAlign: "center" }}>Pos</SortableHdr>
+            <SortableHdr k="diff" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...th, textAlign: "right" }}>diff</SortableHdr>
           </tr>
         </thead>
         <tbody>
-          {rows.sort((a, b) => (b.t.date || "").localeCompare(a.t.date || "")).map((r, i) => (
+          {sortedRows.map((r, i) => (
             <tr key={i} style={{ borderBottom: "1px solid var(--border-light)" }}>
               <td style={td}>{fmtDateShort(r.t.date)}</td>
               <td style={td}>
@@ -97,7 +133,7 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
                 <RoundsCell result={r.rM.result} />
               </td>
               <td style={{ ...td, textAlign: "center" }}><PosTrophy pos={r.rM.result.pos} /></td>
-              <td style={{ ...td, textAlign: "right", fontWeight: 700, color: r.diff > 0 ? "var(--color-danger-dark)" : r.diff < 0 ? "var(--color-good-dark)" : "var(--text-3)" }}>
+              <td style={{ ...td, textAlign: "right", fontWeight: 700, color: r.diff > 0 ? "var(--color-danger-dark)" : r.diff < 0 ? "var(--medal-gold-strong)" : "var(--text-3)" }}>
                 {fmtDiff(r.diff)}
               </td>
             </tr>
@@ -141,8 +177,8 @@ function RoundsCell({ result }: { result: any }) {
 function PosTrophy({ pos }: { pos: any }) {
   if (typeof pos !== "number") return <span style={{ color: "var(--text-3)" }}>—</span>;
   if (pos <= 3) {
-    const bg = pos === 1 ? "#FAEEDA" : pos === 2 ? "#D3D1C7" : "#F5C4B3";
-    const fg = pos === 1 ? "#854F0B" : pos === 2 ? "#2C2C2A" : "#993C1D";
+    const bg = pos === 1 ? "var(--medal-gold-bg)" : pos === 2 ? "var(--medal-silver-bg)" : "var(--medal-bronze-bg)";
+    const fg = pos === 1 ? "var(--medal-gold-fg)" : pos === 2 ? "var(--medal-silver-fg)" : "var(--medal-bronze-fg)";
     return <span style={{ background: bg, color: fg, fontWeight: 700, padding: "1px 6px", borderRadius: 4, fontSize: 11 }}>🏆 #{pos}</span>;
   }
   return <span>#{pos}</span>;

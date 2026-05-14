@@ -121,6 +121,20 @@ async function main() {
   }
   console.log("");
 
+  // 3b. Enrichment — calcula campos derivados a partir do estado pós-matcher.
+  //     Hoje: `extra.nationsCount` por torneio (precisa de junior.country/nationality).
+  //     Mantém-se separado do matcher porque depende de cruzar juniors↔tournaments.
+  step("Enrichment");
+  try {
+    const beforeNations = matchResult.tournaments.filter((t) => t.extra && typeof t.extra.nationsCount === "number").length;
+    enrichTournaments(matchResult);
+    const afterNations = matchResult.tournaments.filter((t) => t.extra && typeof t.extra.nationsCount === "number").length;
+    sub(`extra.nationsCount: ${beforeNations} → ${afterNations} torneios`);
+  } catch (err) {
+    warn(`Enrichment falhou: ${err.message}`);
+  }
+  console.log("");
+
   // 4. Sanity checks
   step("Sanity checks");
   try {
@@ -259,6 +273,37 @@ function stubResolve(rawSources) {
     }
   }
   return { juniors, tournaments, stats: { strong: juniors.length, probable: 0, manual: 0 } };
+}
+
+/**
+ * Pós-processa matchResult para preencher campos derivados que requerem
+ * cruzar juniors com tournaments. Modifica `matchResult.tournaments` in-place.
+ *
+ * Campos calculados:
+ *   • tournament.extra.nationsCount — contagem de nacionalidades distintas entre
+ *     os juniors que participaram. Útil para o peso de prestígio (USKids European
+ *     Championship com ~17 nações vs. um torneio FPG local com 1).
+ */
+function enrichTournaments(matchResult) {
+  const juniorById = new Map();
+  for (const j of matchResult.juniors) juniorById.set(j.id, j);
+  for (const t of matchResult.tournaments) {
+    const nations = new Set();
+    for (const f of t.flights || []) {
+      for (const r of f.results || []) {
+        const j = juniorById.get(r.juniorId);
+        if (!j) continue;
+        // Preferir `nationality` (passport) sobre `country` (residência)
+        // porque para o peso de prestígio queremos diversidade de origem.
+        const nat = j.nationality || j.country;
+        if (nat) nations.add(String(nat).toUpperCase());
+      }
+    }
+    if (nations.size > 0) {
+      if (!t.extra) t.extra = {};
+      t.extra.nationsCount = nations.size;
+    }
+  }
 }
 
 function buildCatalog(tournaments) {

@@ -12,6 +12,12 @@
 
 import React, { useMemo, useState } from "react";
 import type { CanonicalData, Junior, Tournament, Flight, Result } from "../data";
+import { useSort } from "../../../hooks/useSort";
+import SortableHdr from "../../../ui/SortableHdr";
+import { getTournWeight, formatStars } from "../tournWeight";
+import { categorizeTournamentLinks } from "../tournamentLinks";
+
+type EdSortKey = "year" | "flight" | "pos" | "rounds" | "toPar" | "topPct";
 
 interface Props {
   data: CanonicalData;
@@ -56,7 +62,7 @@ export default function HistoryByTournament({ data, junior, filterTids }: Props)
       }
     }
 
-    const ms: Array<{ seriesId: string; editions: Edition[]; label: string; score: number }> = [];
+    const ms: Array<{ seriesId: string; editions: Edition[]; label: string; score: number; stars: number }> = [];
     const oo: Edition[] = [...singles];
     for (const [sid, eds] of bySeries) {
       if (eds.length >= 2) {
@@ -64,13 +70,21 @@ export default function HistoryByTournament({ data, junior, filterTids }: Props)
         const label = data.seriesById.get(sid)?.label || eds[0].tournament.seriesLabel || sid;
         const wins = eds.filter((e) => e.result.pos === 1).length;
         const podiums = eds.filter((e) => typeof e.result.pos === "number" && e.result.pos <= 3).length;
-        const score = eds.length * 10 + wins * 50 + podiums * 5;
-        ms.push({ seriesId: sid, editions: eds, label, score });
+        // Usar peso da edição mais recente como representativo da série.
+        // Score: estrelas dominam (★ = 1000pts), depois vitórias/pódios/frequência.
+        const lastEd = eds[eds.length - 1];
+        const stars = getTournWeight(lastEd.tournament).stars;
+        const score = stars * 1000 + wins * 50 + podiums * 5 + eds.length;
+        ms.push({ seriesId: sid, editions: eds, label, score, stars });
       } else {
         oo.push(...eds);
       }
     }
-    ms.sort((a, b) => b.score - a.score);
+    // Ordenar séries: estrelas desc, depois score composto desc
+    ms.sort((a, b) => {
+      if (b.stars !== a.stars) return b.stars - a.stars;
+      return b.score - a.score;
+    });
 
     let wins = 0;
     for (const tid of junior.tournamentIds) {
@@ -101,7 +115,7 @@ export default function HistoryByTournament({ data, junior, filterTids }: Props)
 
       <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
         {displayedSeries.map((s) => (
-          <SeriesRow key={s.seriesId} label={s.label} editions={s.editions} />
+          <SeriesRow key={s.seriesId} label={s.label} editions={s.editions} data={data} />
         ))}
       </div>
 
@@ -161,13 +175,50 @@ export default function HistoryByTournament({ data, junior, filterTids }: Props)
   );
 }
 
-function SeriesRow({ label, editions }: { label: string; editions: Edition[] }) {
+function SeriesRow({ label, editions, data }: { label: string; editions: Edition[]; data: CanonicalData }) {
+  const manuel = data.manuel;
   const [expanded, setExpanded] = useState(false);
+  const { sortKey, sortDir, toggleSort } = useSort<EdSortKey>("year", "desc", {
+    year: "desc", flight: "asc", pos: "asc", rounds: "asc", toPar: "asc", topPct: "asc",
+  });
   const wins = editions.filter((e) => e.result.pos === 1).length;
   const podiums = editions.filter((e) => typeof e.result.pos === "number" && e.result.pos <= 3).length;
   const last = editions[editions.length - 1];
   const lastPos = last?.result.pos;
   const trend = computeSeriesTrend(editions);
+
+  // Prestígio da série — usa o peso da edição mais recente (representativa)
+  const tournWeight = useMemo(() => getTournWeight(last.tournament), [last.tournament]);
+
+  const sortedEditions = useMemo(() => {
+    const mul = sortDir === "asc" ? 1 : -1;
+    const getVal = (ed: Edition, key: EdSortKey): string | number => {
+      const parTotal = ed.flight.par?.reduce((a, b) => a + (b || 0), 0) || ed.tournament.parTotal;
+      const rounds = ed.result.rounds || [];
+      const grosses = rounds.map((r) => r.gross).filter((g): g is number => typeof g === "number");
+      const total = ed.result.totalGross ?? (grosses.length ? grosses.reduce((a, b) => a + b, 0) : null);
+      const toPar = ed.result.toPar ?? (total != null && parTotal && rounds.length ? total - parTotal * rounds.length : null);
+      switch (key) {
+        case "year": return ed.tournament.date || "";
+        case "flight": return (ed.flight.label || "").toLowerCase();
+        case "pos": return typeof ed.result.pos === "number" ? ed.result.pos : Number.POSITIVE_INFINITY;
+        case "rounds": return total ?? Number.POSITIVE_INFINITY;
+        case "toPar": return toPar ?? Number.POSITIVE_INFINITY;
+        case "topPct": {
+          const pos = ed.result.pos;
+          const fs = ed.flight.fieldSize ?? null;
+          if (typeof pos !== "number" || !fs || fs <= 0) return Number.POSITIVE_INFINITY;
+          return pos / fs;
+        }
+      }
+    };
+    return [...editions].sort((a, b) => {
+      const va = getVal(a, sortKey);
+      const vb = getVal(b, sortKey);
+      if (typeof va === "number" && typeof vb === "number") return (va - vb) * mul;
+      return String(va).localeCompare(String(vb)) * mul;
+    });
+  }, [editions, sortKey, sortDir]);
 
   return (
     <div style={{
@@ -192,8 +243,20 @@ function SeriesRow({ label, editions }: { label: string; editions: Edition[] }) 
           {expanded ? "▼" : "▶"}
         </span>
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: "var(--text)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-            {label}
+          <div style={{ display: "flex", alignItems: "center", gap: 6, overflow: "hidden", flexWrap: "wrap" }}>
+            <div style={{ fontSize: 13, fontWeight: 700, color: "var(--text)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              {label}
+            </div>
+            <span
+              title={`Prestígio: ${tournWeight.stars}/5 · rondas ${tournWeight.parts.rounds.toFixed(2)} · field ${tournWeight.parts.field.toFixed(2)}${tournWeight.parts.nations != null ? ` · nações ${tournWeight.parts.nations.toFixed(2)}` : " · (sem nationsCount)"}`}
+              style={{
+                fontSize: 11, letterSpacing: 0.5, color: "var(--medal-gold-strong)", flexShrink: 0,
+              }}
+            >
+              {formatStars(tournWeight.stars)}
+            </span>
+            <SeriesScoringPill tournament={last.tournament} />
+            <SeriesNineHolesPill tournament={last.tournament} flight={last.flight} />
           </div>
           <div style={{ fontSize: 10, color: "var(--text-3)", marginTop: 1 }}>
             {editions.length} {editions.length === 1 ? "edição" : "edições"}
@@ -223,31 +286,74 @@ function SeriesRow({ label, editions }: { label: string; editions: Edition[] }) 
           <table style={{ width: "100%", fontSize: 11, borderCollapse: "collapse", fontVariantNumeric: "tabular-nums" }}>
             <thead>
               <tr style={{ color: "var(--text-3)", fontSize: 10, textTransform: "uppercase", letterSpacing: 0.3 }}>
-                <th style={tdH}>Ano</th>
-                <th style={tdH}>Escalão</th>
-                <th style={{ ...tdH, textAlign: "center" }}>Pos</th>
-                <th style={{ ...tdH, textAlign: "right" }}>Rondas</th>
-                <th style={{ ...tdH, textAlign: "right" }}>±par</th>
+                <SortableHdr k="year" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={tdH}>Ano</SortableHdr>
+                <SortableHdr k="flight" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={tdH}>Escalão</SortableHdr>
+                <SortableHdr k="pos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...tdH, textAlign: "center" }}>Pos</SortableHdr>
+                <SortableHdr k="topPct" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...tdH, textAlign: "center" }} title="Posição como percentil do field">Top%</SortableHdr>
+                <SortableHdr k="rounds" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...tdH, textAlign: "right" }}>Rondas</SortableHdr>
+                <SortableHdr k="toPar" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...tdH, textAlign: "right" }}>±par</SortableHdr>
+                {manuel && manuel.id !== editions[0]?.result.juniorId && <th style={{ ...tdH, textAlign: "center", width: 60 }} title="Posição do Manuel quando também jogou">M</th>}
+                <th style={{ ...tdH, textAlign: "right" }}>↗</th>
               </tr>
             </thead>
             <tbody>
-              {editions.slice().reverse().map((ed, i) => {
+              {sortedEditions.map((ed, i) => {
                 const parTotal = ed.flight.par?.reduce((a, b) => a + (b || 0), 0) || ed.tournament.parTotal;
                 const rounds = ed.result.rounds || [];
                 const grosses = rounds.map((r) => r.gross).filter((g): g is number => typeof g === "number");
                 const total = ed.result.totalGross ?? (grosses.length ? grosses.reduce((a, b) => a + b, 0) : null);
                 const toPar = ed.result.toPar ?? (total != null && parTotal && rounds.length ? total - parTotal * rounds.length : null);
+                const fs = ed.flight.fieldSize ?? null;
+                const topPct = typeof ed.result.pos === "number" && fs && fs > 0
+                  ? Math.round((ed.result.pos / fs) * 100)
+                  : null;
+                // Só conta como "Manuel também esteve" se jogou no MESMO flight
+                // (escalão) que o junior — escalões diferentes não são confronto.
+                const manuelPos = manuel && manuel.id !== ed.result.juniorId
+                  ? findManuelPosInFlight(ed.flight, manuel.id)
+                  : null;
+                const links = categorizeTournamentLinks(ed.tournament);
                 return (
                   <tr key={i} style={{ borderTop: "1px solid var(--border-light)" }}>
                     <td style={tdC}>{fmtYear(ed.tournament.date)}</td>
                     <td style={{ ...tdC, color: "var(--text-3)" }}>{ed.flight.label}</td>
                     <td style={{ ...tdC, textAlign: "center" }}><PosBadge pos={ed.result.pos} /></td>
+                    <td style={{ ...tdC, textAlign: "center", color: topPct != null ? (topPct <= 10 ? "var(--medal-gold-strong)" : topPct <= 25 ? "var(--text-2)" : "var(--text-3)") : "var(--text-3)" }}>
+                      {topPct != null ? `${topPct}%` : "—"}
+                    </td>
                     <td style={{ ...tdC, textAlign: "right" }}>
                       {grosses.length ? grosses.join("·") : total ?? "—"}
                       {total != null && grosses.length > 1 && <span style={{ color: "var(--text-3)", marginLeft: 4 }}>({total})</span>}
                     </td>
-                    <td style={{ ...tdC, textAlign: "right", color: toPar != null && toPar < 0 ? "var(--color-good-dark)" : toPar != null && toPar > 0 ? "var(--color-danger-dark)" : "var(--text-3)", fontWeight: toPar != null && toPar !== 0 ? 700 : 400 }}>
+                    <td style={{ ...tdC, textAlign: "right", color: toPar != null && toPar < 0 ? "var(--medal-gold-strong)" : toPar != null && toPar > 0 ? "var(--color-danger-dark)" : "var(--text-3)", fontWeight: toPar != null && toPar !== 0 ? 700 : 400 }}>
                       {toPar == null ? "—" : toPar === 0 ? "E" : toPar > 0 ? `+${toPar}` : String(toPar)}
+                    </td>
+                    {manuel && manuel.id !== ed.result.juniorId && (
+                      <td style={{ ...tdC, textAlign: "center" }}>
+                        {manuelPos != null ? (
+                          <span title={`Manuel ficou em #${manuelPos} neste torneio`} style={{
+                            fontSize: 10, padding: "1px 5px", borderRadius: 3,
+                            background: "var(--bg-success-subtle, #ecfdf5)", color: "var(--color-good-dark)",
+                            fontWeight: 700, border: "1px solid var(--color-good-dark)",
+                            whiteSpace: "nowrap",
+                          }}>★M #{manuelPos}</span>
+                        ) : <span style={{ color: "var(--text-3)" }}>—</span>}
+                      </td>
+                    )}
+                    <td style={{ ...tdC, textAlign: "right" }}>
+                      <span style={{ display: "inline-flex", gap: 3, flexWrap: "nowrap" }}>
+                        {links.map((l) => (
+                          <a key={l.key + l.url} href={l.url} target="_blank" rel="noreferrer"
+                            title={`Abrir em ${l.label}`}
+                            style={{
+                              fontSize: 9, padding: "1px 4px", borderRadius: 3, fontWeight: 700,
+                              color: `var(${l.colorVar})`, border: `1px solid var(${l.colorVar})`,
+                              textDecoration: "none", lineHeight: 1.3, background: "var(--bg)",
+                              whiteSpace: "nowrap",
+                            }}
+                          >{l.label}</a>
+                        ))}
+                      </span>
                     </td>
                   </tr>
                 );
@@ -301,7 +407,7 @@ function Sparkline({ editions }: { editions: Edition[] }) {
       {path && <path d={path} stroke="var(--text-3)" strokeWidth={1.5} fill="none" opacity={0.6} />}
       {pts.map((pt, i) => {
         if (pt.y === null) return null;
-        const color = pt.pos === 1 ? "#BA7517" : pt.pos === 2 ? "#7A7873" : pt.pos === 3 ? "#993C1D" : "var(--text-2)";
+        const color = pt.pos === 1 ? "var(--medal-gold-strong)" : pt.pos === 2 ? "var(--medal-silver-strong)" : pt.pos === 3 ? "var(--medal-bronze-strong)" : "var(--text-2)";
         return (
           <circle key={i} cx={pt.x} cy={pt.y} r={pt.pos && pt.pos <= 3 ? 4 : 3} fill={color}>
             <title>{fmtYear(pt.ed.tournament.date)}: #{pt.pos}</title>
@@ -337,8 +443,8 @@ function OneOffPill({ ed }: { ed: Edition }) {
 function PosBadge({ pos, small }: { pos: number | null | undefined; small?: boolean }) {
   if (typeof pos !== "number") return <span style={{ fontSize: small ? 10 : 11, color: "var(--text-3)" }}>—</span>;
   if (pos <= 3) {
-    const bg = pos === 1 ? "#FAEEDA" : pos === 2 ? "#D3D1C7" : "#F5C4B3";
-    const fg = pos === 1 ? "#854F0B" : pos === 2 ? "#2C2C2A" : "#993C1D";
+    const bg = pos === 1 ? "var(--medal-gold-bg)" : pos === 2 ? "var(--medal-silver-bg)" : "var(--medal-bronze-bg)";
+    const fg = pos === 1 ? "var(--medal-gold-fg)" : pos === 2 ? "var(--medal-silver-fg)" : "var(--medal-bronze-fg)";
     return (
       <span style={{
         background: bg,
@@ -353,11 +459,53 @@ function PosBadge({ pos, small }: { pos: number | null | undefined; small?: bool
   return <span style={{ fontSize: small ? 10 : 11, color: "var(--text-3)", fontWeight: 600 }}>#{pos}</span>;
 }
 
+/** Procura a posição do Manuel APENAS no flight indicado. Devolve null se não
+ *  jogou nesse escalão (jogou em flight diferente = não é confronto). */
+function findManuelPosInFlight(flight: Flight, manuelId: string): number | null {
+  const r = flight.results.find((x) => x.juniorId === manuelId);
+  if (r && typeof r.pos === "number") return r.pos;
+  return null;
+}
+
 function trophyColor(pos: number | null | undefined): string {
-  if (pos === 1) return "#BA7517";
-  if (pos === 2) return "#7A7873";
-  if (pos === 3) return "#993C1D";
+  if (pos === 1) return "var(--medal-gold-strong)";
+  if (pos === 2) return "var(--medal-silver-strong)";
+  if (pos === 3) return "var(--medal-bronze-strong)";
   return "var(--border)";
+}
+
+/** Pill SCRATCH/HCP no header de uma série — usa o tournament.extra.scoringType
+ *  da edição mais recente como representativo de toda a série. */
+function SeriesScoringPill({ tournament }: { tournament: Tournament }) {
+  const st = (tournament.extra as any)?.scoringType as string | undefined;
+  if (!st) return null;
+  const isScratch = /SCRATCH/i.test(st);
+  return (
+    <span title={isScratch ? "Competição scratch (gross)" : "Competição com handicap (net)"} style={{
+      fontSize: 9, padding: "1px 5px", borderRadius: 3, fontWeight: 700,
+      background: isScratch ? "var(--bg-warn-subtle, #fffbeb)" : "var(--bg-info-subtle, #eff6ff)",
+      color: isScratch ? "var(--color-warn-dark, #92400e)" : "var(--color-info-dark, #1e3a8a)",
+      border: `1px solid ${isScratch ? "var(--color-warn-dark, #92400e)" : "var(--color-info-dark, #1e3a8a)"}`,
+      lineHeight: 1.4, flexShrink: 0,
+    }}>
+      {isScratch ? "SCRATCH" : "HCP"}
+    </span>
+  );
+}
+
+function SeriesNineHolesPill({ tournament, flight }: { tournament: Tournament; flight: Flight }) {
+  const is9 = tournament.holesPerRound === 9 ||
+    (Array.isArray(flight.par) && flight.par.filter((p) => p > 0).length === 9);
+  if (!is9) return null;
+  return (
+    <span title="Torneio de 9 buracos" style={{
+      fontSize: 9, padding: "1px 5px", borderRadius: 3, fontWeight: 700,
+      background: "var(--bg-muted)", color: "var(--text-2)",
+      border: "1px solid var(--border-light)", lineHeight: 1.4, flexShrink: 0,
+    }}>
+      9H
+    </span>
+  );
 }
 
 function fmtYear(iso: string | undefined): string {

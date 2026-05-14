@@ -42,7 +42,10 @@ function load(opts) {
 
 function normalize(data, fileName, playerMap) {
   const name = data.tournament || fileName.replace(/\.json$/, "");
-  const category = data.category || "Geral";
+  // Quando o scrape grava `category: ""` (bug histórico do scrape-bluegolf.js
+  // que não preenchia category), tentamos inferir do título do torneio.
+  // Suporta "Boys 10-11", "Girls 12-13", "B10-11", "Boys 8-9" etc.
+  const category = data.category || extractCategoryFromName(name) || "Geral";
   const par = Array.isArray(data.par) ? data.par : null;
   const parTotal = typeof data.parTotal === "number" ? data.parTotal : (par ? par.reduce((a, b) => a + (b || 0), 0) : null);
   const year = data.year || null;
@@ -88,23 +91,35 @@ function normalize(data, fileName, playerMap) {
   const ageMax = ageRange ? +ageRange[2] : null;
   const sex = /^Boys/i.test(category) ? "M" : /^Girls/i.test(category) ? "F" : null;
 
-  // Determinar data — prioridade: data explícita > inferida do nome > default Aug
-  let dateIso = data.date || data.startDate || null;
-  // Se não há, extrair year do nome se estiver lá (mais fiável que `year` field)
+  // Determinar data — preferir dados reais. Se não há startDate/date no
+  // ficheiro, fabricar um mês/dia aproximado a partir do nome do torneio.
+  //
+  // ⚠ ATENÇÃO — a UI (EvolutionChart, HistoryByTournament, ResultsTimeline)
+  // FILTRA torneios sem date. Deixar null tornaria estes torneios invisíveis
+  // no kids2. Por isso fabricamos data plausível por convenção do torneio:
+  //   • Daily Mail WJGC      → final de Fevereiro (Villa Padierna)
+  //   • European Open WAGR   → início de Agosto
+  //   • BJGT generic         → meio do ano (fallback)
+  // O year vem preferencialmente do nome do torneio (mais fiável que data.year).
   let effectiveYear = year;
   const yrInName = /\b(20\d{2})\b/.exec(name);
   if (yrInName) effectiveYear = +yrInName[1];
+  let dateIso = data.date || data.startDate || null;
   if (!dateIso && effectiveYear) {
-    // Default: 1 Agosto (WJGC/Daily Mail são tipicamente Jul-Ago)
-    dateIso = series.id === "eowagr" ? `${effectiveYear}-07-01`
-            : `${effectiveYear}-08-01`;
+    dateIso = inferDateFromName(name, effectiveYear);
   }
+
+  // Links: preferir data.source (novo scrape-bluegolf grava o URL completo).
+  // Fallback: hardcoded por filename para JSONs antigos que não têm source.
+  const sourceUrl = data.source || inferBluegolfUrlFromFilename(sourceKey);
+  const links = sourceUrl ? [{ label: "BlueGolf", url: sourceUrl }] : [];
 
   return {
     sourceKey,
     name,
     date: dateIso,
     startDate: dateIso,
+    year: effectiveYear, // pelo menos preserva ano para ordenação na UI
     seriesId: series.id,
     seriesLabel: series.label,
     course: data.course || null,
@@ -119,7 +134,65 @@ function normalize(data, fileName, playerMap) {
       fieldSize: results.length,
       results,
     }],
+    links,
   };
+}
+
+/** Fallback URL para JSONs WJGC scrapados antes do source ser gravado.
+ *  Mapping baseado no `RE-SCRAPE-WJGC.md` — contest IDs conhecidos. */
+function inferBluegolfUrlFromFilename(sourceKey) {
+  // Daily Mail WJGC 2025 — event brjgt251
+  const map2025 = {
+    "wjgc_2025_b7u":   "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/20/leaderboard.htm",
+    "wjgc_2025_b1011": "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/34/leaderboard.htm",
+    "wjgc_2025_g1213": "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/43/leaderboard.htm",
+    "wjgc_2025_bwagr": "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/101/leaderboard.htm",
+  };
+  // Daily Mail WJGC 2026 — event brjgt2537
+  const map2026 = {
+    "wjgc_2026_b89":   "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/25/leaderboard.htm",
+    "wjgc_2026_b1011": "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/73/leaderboard.htm",
+    "wjgc_2026_b1213": "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/33/leaderboard.htm",
+    "wjgc_2026_bwagr": "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/5/leaderboard.htm",
+    "wjgc_2026_gwagr": "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/69/leaderboard.htm",
+  };
+  return map2025[sourceKey] || map2026[sourceKey] || null;
+}
+
+/** Extrai categoria (ex: "Boys 10-11") do título do torneio.
+ *  Usado quando data.category vem vazio do scrape (bug histórico).
+ *  Devolve string canónica "Boys N-M" ou "Girls N-M" ou null. */
+function extractCategoryFromName(name) {
+  if (!name) return null;
+  // "Boys 10-11", "Girls 12-13" (com espaço a separar)
+  let m = /\b(Boys|Girls)\s+(\d+)\s*[-–]\s*(\d+)/i.exec(name);
+  if (m) return `${m[1].charAt(0).toUpperCase()}${m[1].slice(1).toLowerCase()} ${m[2]}-${m[3]}`;
+  // "Boys 10" / "Girls 12" (idade única — gera Sub-N artificial)
+  m = /\b(Boys|Girls)\s+(\d+)\b/i.exec(name);
+  if (m) return `${m[1].charAt(0).toUpperCase()}${m[1].slice(1).toLowerCase()} ${m[2]}`;
+  // "B10-11", "G12-13" (abreviado, raro mas seguro)
+  m = /\b([BG])(\d+)-(\d+)\b/i.exec(name);
+  if (m) {
+    const prefix = m[1].toUpperCase() === "B" ? "Boys" : "Girls";
+    return `${prefix} ${m[2]}-${m[3]}`;
+  }
+  return null;
+}
+
+/** Infere data plausível (YYYY-MM-DD) a partir do nome do torneio.
+ *  Necessário porque o scrape-bluegolf.js não preenche `date` e a UI filtra
+ *  torneios sem date. As datas são aproximadas — preferir startDate real
+ *  quando estiver disponível no ficheiro. */
+function inferDateFromName(name, year) {
+  if (!name || !year) return null;
+  // Daily Mail WJGC — Villa Padierna, final de Fevereiro
+  if (/Daily\s*Mail|WJGC|World\s+Junior/i.test(name)) return `${year}-02-26`;
+  // European Open WAGR — início de Agosto
+  if (/EOWAGR|European Open WAGR/i.test(name)) return `${year}-08-01`;
+  // BJGT genérico — meio do ano (fallback)
+  if (/BJGT/i.test(name)) return `${year}-07-01`;
+  // Sem heurística específica — usar 1 de Janeiro (preserva ano para ordenação)
+  return `${year}-01-01`;
 }
 
 function wjgcSeries(name) {

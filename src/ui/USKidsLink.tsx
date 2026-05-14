@@ -16,10 +16,10 @@ export default function KidsLink({ nome }: KidsLinkProps) {
   const hash = memberId ?? encodeURIComponent(arEntry.n);
   return (
     <a
-      href="/kids"
+      href="/kids2"
       onClick={(e) => {
         e.preventDefault();
-        window.open(`/kids#${hash}`, "_blank");
+        window.open(`/kids2#${hash}`, "_blank");
       }}
       title="Ver em Kids"
       style={{

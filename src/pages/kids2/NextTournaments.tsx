@@ -51,7 +51,11 @@ function NextContent({ data, scope, onScopeChange }: {
       let flightLabel: string | null = null;
       let fieldSize = 0;
       for (const f of t.flights) {
-        fieldSize += f.results.length;
+        // Preferir `fieldSize` real do aggregator. Fallback para results.length
+        // (sub-conjunto trackado nos canónicos) quando o aggregator não populou.
+        fieldSize += typeof f.fieldSize === "number" && f.fieldSize > 0
+          ? f.fieldSize
+          : f.results.length;
         if (manuel && f.results.some((r) => r.juniorId === manuel.id)) {
           manuelInField = true;
           flightLabel = f.label;
