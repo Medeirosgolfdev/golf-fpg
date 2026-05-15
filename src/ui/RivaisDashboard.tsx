@@ -339,21 +339,6 @@ export default function RivaisDashboard({
                         {g.label}
                       </th>
                     ))}
-                    {/* Bloco "Resumo" no field mode */}
-                    <th
-                      colSpan={4}
-                      style={{
-                        textAlign: "center",
-                        fontSize: 11,
-                        fontWeight: 500,
-                        color: "var(--text-3)",
-                        padding: "5px 4px",
-                        borderLeft: "3px solid var(--text-muted)",
-                        borderBottom: "1px solid var(--border)",
-                      }}
-                    >
-                      Resumo
-                    </th>
                   </tr>
                 );
               })()}
@@ -441,31 +426,9 @@ export default function RivaisDashboard({
                     vs M{sortArrow("vsManuel", sort, dir)}
                   </th>
                 )}
-                {fieldMode && (
-                  <>
-                    <th className="rivais-th pointer ta-c"
-                        style={{ borderLeft: "3px solid var(--text-muted)", minWidth: 56 }}
-                        onClick={() => doSort("avg18")}
-                        title="Média 18H em torneios USKids 18 buracos">
-                      Méd 18H{sortArrow("avg18", sort, dir)}
-                    </th>
-                    <th className="rivais-th pointer ta-c"
-                        onClick={() => doSort("best18")}
-                        title="Melhor ronda 18H">
-                      Best 18H{sortArrow("best18", sort, dir)}
-                    </th>
-                    <th className="rivais-th pointer ta-c"
-                        onClick={() => doSort("top10")}
-                        title="Número de top-10s">
-                      T10{sortArrow("top10", sort, dir)}
-                    </th>
-                    <th className="rivais-th pointer ta-c"
-                        onClick={() => doSort("age")}
-                        title="Idade no torneio (anos)">
-                      Idade{sortArrow("age", sort, dir)}
-                    </th>
-                  </>
-                )}
+                {/* Em fieldMode não há mais bloco "Resumo" — a idade vai
+                    inline com o nome do jogador (sub-texto) e o #T no início
+                    serve de indicador de volume de dados. */}
               </tr>
             </thead>
             <tbody>
@@ -476,34 +439,6 @@ export default function RivaisDashboard({
                 const vsAvg = vsOn ? getVsAvg(p) : null;
                 const played = nPlayed(p);
 
-                // Tier dominante do jogador (só em fieldMode — usado para o ponto
-                // colorido à esquerda do nome). Conta tiers por torneio e pega o
-                // mais frequente. Empate → "strong".
-                let playerTier: keyof typeof TIER | null = null;
-                if (fieldMode) {
-                  const counts: Record<string, number> = {};
-                  for (const td of T) {
-                    const r = p.r[td.id];
-                    if (!r || r.tp == null) continue;
-                    const pa = r.t! / td.rounds;
-                    const ras = AVG_R[td.id] as RoundAvg[] | undefined;
-                    if (!ras || ras.length === 0) continue;
-                    const ms = ras.filter((x): x is { m: number; s: number } => x != null).map(x => x.m);
-                    const ss = ras.filter((x): x is { m: number; s: number } => x != null).map(x => x.s);
-                    if (ms.length === 0) continue;
-                    const fm = ms.reduce((a, b) => a + b, 0) / ms.length;
-                    const fs = ss.reduce((a, b) => a + b, 0) / ss.length;
-                    const ti = zTier(pa, { m: fm, s: fs });
-                    if (ti) counts[ti] = (counts[ti] || 0) + 1;
-                  }
-                  let best: string | null = null;
-                  let bestN = 0;
-                  for (const [k, n] of Object.entries(counts)) {
-                    if (n > bestN) { best = k; bestN = n; }
-                  }
-                  if (best) playerTier = best as keyof typeof TIER;
-                }
-
                 return (
                   <tr
                     key={p.n}
@@ -513,19 +448,6 @@ export default function RivaisDashboard({
                     {/* Player name — clickable */}
                     <td className="rivais-player-name" style={{ verticalAlign: "middle" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                        {fieldMode && (
-                          <span
-                            title={playerTier ? TIER_L[playerTier as keyof typeof TIER_L] : "sem dados"}
-                            style={{
-                              display: "inline-block",
-                              width: 7,
-                              height: 7,
-                              borderRadius: "50%",
-                              background: playerTier ? TIER[playerTier].c : "var(--border)",
-                              flexShrink: 0,
-                            }}
-                          />
-                        )}
                         <span className="rivais-flag" title={p.co}>
                           {flag}
                         </span>
@@ -552,11 +474,31 @@ export default function RivaisDashboard({
                               {p.n}
                             </span>
                           )}
-                          {p.dob && (
-                            <span className="fs-10 c-text-3" style={{ marginTop: 1 }}>
-                              {fmtDob(p.dob)}
-                            </span>
-                          )}
+                          {p.dob && (() => {
+                            // Em fieldMode + tournamentDate mostra idade calculada
+                            // ("11.8 anos"). Sem tournamentDate cai no DOB cru.
+                            let label = fmtDob(p.dob);
+                            if (fieldMode && tournamentDate) {
+                              const dm = p.dob.match(/^(\d{4})-(\d{2})-(\d{2})/) || p.dob.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+                              if (dm) {
+                                let y, m, d;
+                                if (dm[0].includes("-")) { y = +dm[1]; m = +dm[2]; d = +dm[3]; }
+                                else { d = +dm[1]; m = +dm[2]; y = +dm[3]; }
+                                const dob = new Date(y, m - 1, d);
+                                const tdt = new Date(tournamentDate);
+                                const diffMs = tdt.getTime() - dob.getTime();
+                                const diffYears = diffMs / (365.25 * 86400000);
+                                if (!isNaN(diffYears) && diffYears > 0) {
+                                  label = diffYears.toFixed(1) + " anos";
+                                }
+                              }
+                            }
+                            return (
+                              <span className="fs-10 c-text-3" style={{ marginTop: 1 }}>
+                                {label}
+                              </span>
+                            );
+                          })()}
                         </div>
                         {isM && <span className="p p-sm p-outline ml-4">REF</span>}
                       </div>
@@ -633,12 +575,18 @@ export default function RivaisDashboard({
                         vsM = res.tp! - manuel.r[t.id].tp!;
                       }
 
+                      // Em fieldMode reduzimos o ruído visual: só pintamos o
+                      // fundo da célula nos extremos (elite e beginner). Para os
+                      // tiers intermédios (strong/solid/developing) ficamos só
+                      // com a cor do texto a marcar o ±par.
+                      const showBg = !fieldMode || ti === "elite" || ti === "beginner";
+                      const cellBg = showBg ? (st?.bg || "transparent") : "transparent";
                       return (
                         <td
                           key={t.id}
                           className="ta-c"
                           style={{
-                            background: st?.bg || "transparent",
+                            background: cellBg,
                             padding: "5px 4px",
                             ...boundaryStyle,
                           }}
@@ -755,67 +703,9 @@ export default function RivaisDashboard({
                       </td>
                     )}
 
-                    {/* === Field mode: Média 18H, Melhor 18H, # Top-10, Idade === */}
-                    {fieldMode && (() => {
-                      const gross18: number[] = [];
-                      let nTop10 = 0;
-                      for (const td of T) {
-                        const res = p.r[td.id];
-                        if (!res || !res.rd || res.rd.length === 0) continue;
-                        if ((td.holes ?? 18) >= 18) {
-                          for (const g of res.rd) if (g > 0) gross18.push(g);
-                        }
-                        if (typeof res.p === "number" && res.p <= 10) nTop10++;
-                      }
-                      const avg18 = gross18.length ? Math.round((gross18.reduce((a, b) => a + b, 0) / gross18.length) * 10) / 10 : null;
-                      const best18 = gross18.length ? Math.min(...gross18) : null;
-                      let ageStr: string | null = null;
-                      if (p.dob && tournamentDate) {
-                        const dobMatch = p.dob.match(/^(\d{4})-(\d{2})-(\d{2})/) || p.dob.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
-                        if (dobMatch) {
-                          let y, m, d;
-                          if (dobMatch[0].includes("-")) { y = +dobMatch[1]; m = +dobMatch[2]; d = +dobMatch[3]; }
-                          else { d = +dobMatch[1]; m = +dobMatch[2]; y = +dobMatch[3]; }
-                          const dob = new Date(y, m - 1, d);
-                          const td = new Date(tournamentDate);
-                          const diffMs = td.getTime() - dob.getTime();
-                          const diffYears = diffMs / (365.25 * 86400000);
-                          ageStr = diffYears.toFixed(1);
-                        }
-                      }
-                      return (
-                        <>
-                          <td className="ta-c"
-                              style={{ borderLeft: "3px solid var(--border-light)", padding: "4px 6px" }}>
-                            {avg18 != null ? (
-                              <span className="fw-700 fs-13"
-                                    style={{ color: avg18 < 78 ? "var(--color-good-dark)" : avg18 < 84 ? "var(--text)" : "var(--text-3)" }}>
-                                {avg18}
-                              </span>
-                            ) : <span className="fs-10 c-border">—</span>}
-                            <div className="fs-10 c-text-3">{gross18.length} r.</div>
-                          </td>
-                          <td className="ta-c">
-                            {best18 != null ? (
-                              <span className="fw-700 fs-13">{best18}</span>
-                            ) : <span className="fs-10 c-border">—</span>}
-                          </td>
-                          <td className="ta-c">
-                            {nTop10 > 0 ? (
-                              <span className="fw-700 fs-13"
-                                    style={{ color: nTop10 >= 3 ? "var(--color-good-dark)" : "var(--text)" }}>
-                                {nTop10}
-                              </span>
-                            ) : <span className="fs-10 c-border">0</span>}
-                          </td>
-                          <td className="ta-c">
-                            {ageStr ? (
-                              <span className="fw-600 fs-12">{ageStr}</span>
-                            ) : <span className="fs-10 c-border">—</span>}
-                          </td>
-                        </>
-                      );
-                    })()}
+                    {/* Field mode: o bloco de resumo (Méd 18H + Best 18H + T10
+                        + Idade) foi removido. A idade aparece agora como
+                        sub-texto do nome do jogador. */}
                   </tr>
                 );
               })}
@@ -830,3 +720,4 @@ export default function RivaisDashboard({
     </div>
   );
 }
+

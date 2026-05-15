@@ -793,7 +793,41 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
     return { D, T, UP: UP_TORN, manuel, AVG_R, T_WEIGHTS, allCountries, seriesBoundaries };
   }, [field, mh, torneioT, escalaoNome, autoRivals, futureTorneios]);
 
-  // Render
+  // Detectar "famílias" de torneios — séries recorrentes que aparecem múltiplas
+  // vezes por ano/escalão (Doral, WJGC, EOWAGR). Quando a família tem >1 edição,
+  // o dropdown principal mostra apenas uma entrada e o segundo dropdown deixa
+  // o utilizador escolher (Ano × Escalão).
+  // IMPORTANTE: este useMemo TEM de vir antes dos early returns abaixo, senão
+  // o React queixa-se de "more hooks than during the previous render".
+  const familyOf = (ft: FieldTorneio): string | null => {
+    const m = ft.name.match(/^(WJGC|Doral|EOWAGR)\b/);
+    return m ? m[1] : null;
+  };
+  const familias = useMemo(() => {
+    const m = new Map<string, FieldTorneio[]>();
+    for (const ft of futureTorneios) {
+      const fam = familyOf(ft);
+      if (!fam) continue;
+      if (!m.has(fam)) m.set(fam, []);
+      m.get(fam)!.push(ft);
+    }
+    // Manter só famílias com >1 entrada (senão fica como entrada normal)
+    for (const [k, v] of [...m.entries()]) {
+      if (v.length < 2) m.delete(k);
+    }
+    // Ordenar cada família por ano desc (mais recente primeiro)
+    for (const arr of m.values()) {
+      arr.sort((a, b) => {
+        const ya = parseInt(a.name.match(/(\d{4})/)?.[1] || "0", 10);
+        const yb = parseInt(b.name.match(/(\d{4})/)?.[1] || "0", 10);
+        if (yb !== ya) return yb - ya;
+        return (a.escaloes[0]?.nome || "").localeCompare(b.escaloes[0]?.nome || "");
+      });
+    }
+    return m;
+  }, [futureTorneios]);
+
+  // Render — early returns DEPOIS de todos os hooks acima estarem chamados.
   if (!field || !mh) {
     return <div className="muted p-16">A carregar dados de torneios futuros…</div>;
   }
@@ -803,6 +837,9 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
 
   // Torneio actual seleccionado — usado para mostrar data/campo na barra
   const torneioSelecionado = futureTorneios.find(x => x.t === torneioT) || null;
+  const currentFamilia = torneioSelecionado ? familyOf(torneioSelecionado) : null;
+  const isFamilyMode = !!(currentFamilia && familias.has(currentFamilia));
+  const dropdown1Value = isFamilyMode ? `family:${currentFamilia}` : String(torneioT);
 
   return (
     <div>
@@ -817,37 +854,44 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
         borderRadius: 8,
       }}>
         <span style={{ fontSize: 12, color: "var(--text-3)", fontWeight: 500 }}>Torneio</span>
-        <select className="select fs-13" value={torneioT}
+        <select
+          className="select fs-13"
+          value={dropdown1Value}
           onChange={e => {
-            const newT = parseInt(e.target.value);
+            const v = e.target.value;
+            // Famílias agrupadas (Doral/WJGC/EOWAGR) — escolher a edição mais
+            // recente como default; o utilizador afina depois no dropdown ao lado.
+            if (v.startsWith("family:")) {
+              const fam = v.slice("family:".length);
+              const entries = familias.get(fam) || [];
+              if (entries.length > 0) {
+                const first = entries[0];
+                setTorneioT(first.t);
+                setEscalaoNome(first.escaloes[0]?.nome ?? "");
+              }
+              return;
+            }
+            const newT = parseInt(v);
             setTorneioT(newT);
-            // Reset escalão se já não existir no novo torneio
             const newTorn = futureTorneios.find(x => x.t === newT);
             const newEsc = newTorn?.escaloes.find(e => e.nome === escalaoNome);
             if (!newEsc) setEscalaoNome(newTorn?.escaloes[0]?.nome ?? "");
-          }}>
+          }}
+        >
           {(() => {
-            // Agrupar torneios para o dropdown:
-            //   • UP_TORN futuros (t > 0 & em UP_TORN) → "Próximos torneios"
-            //   • mh past USKids (t > 0 & não em UP_TORN) → "Passados USKids"
-            //   • Dyn extras (t ≤ -200): nome começa com "WJGC " / "Doral " / "EOWAGR " — group = primeiro token + ano
-            //   • FFG (t entre -101 e -199): "Internationaux U14"
             const UP_T_SET = new Set(UP_TORN.map(u => u.tcode));
             const groupOf = (e: FieldTorneio): string => {
               if (e.t > 0) {
                 if (UP_T_SET.has(String(e.t))) return "Próximos torneios";
                 return "Passados USKids (Manuel)";
               }
-              // Negativos
               if (e.t > -100) return "Outros";
               if (e.t > -200) return "FFG · Internationaux U14";
-              // -200+ : EXTRA dinâmico
-              // Extrair "WJGC 2026" / "Doral 2025" / "EOWAGR 2025" do nome
-              const m = e.name.match(/^(WJGC|Doral|EOWAGR)\s+(\d{4})/);
-              if (m) return `${m[1]} ${m[2]}`;
+              // -200+: famílias agrupáveis aparecem só como o nome da série.
+              const fam = familyOf(e);
+              if (fam) return fam;
               return "Outros";
             };
-            // Agrupar mantendo ordem original dentro de cada grupo
             const groups = new Map<string, FieldTorneio[]>();
             for (const ft of futureTorneios) {
               const g = groupOf(ft);
@@ -855,13 +899,12 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
               if (!arr) { arr = []; groups.set(g, arr); }
               arr.push(ft);
             }
-            // Ordem dos grupos no dropdown
             const groupOrder = [
               "Próximos torneios",
               "Passados USKids (Manuel)",
-              "WJGC 2026", "WJGC 2025",
-              "Doral 2025", "Doral 2024", "Doral 2023", "Doral 2022", "Doral 2021", "Doral 2020", "Doral 2019", "Doral 2018",
-              "EOWAGR 2025",
+              "WJGC",
+              "Doral",
+              "EOWAGR",
               "FFG · Internationaux U14",
               "Outros",
             ];
@@ -873,18 +916,95 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
             for (const [g, arr] of groups) {
               if (!seen.has(g)) ordered.push([g, arr]);
             }
-            return ordered.map(([groupLabel, items]) => (
-              <optgroup key={groupLabel} label={groupLabel}>
-                {items.map(t => (
-                  <option key={t.t} value={t.t}>{t.name} ({t.date_inicio})</option>
-                ))}
-              </optgroup>
-            ));
+            return ordered.map(([groupLabel, items]) => {
+              // Família agrupada: 1 só opção (a escolha de ano/escalão vai
+              // para o segundo dropdown).
+              if (familias.has(groupLabel)) {
+                return (
+                  <option key={`family-${groupLabel}`} value={`family:${groupLabel}`}>
+                    {(() => {
+                      // Contar anos únicos (edição = ano), não combinações
+                      // ano×escalão. Ex: Doral B10-11 2018-2025 + B12-13 2024 →
+                      // 8 anos, não 9 entradas.
+                      const anos = new Set<string>();
+                      for (const ft of items) {
+                        const y = ft.name.match(/(\d{4})/)?.[1];
+                        if (y) anos.add(y);
+                      }
+                      const n = anos.size || items.length;
+                      return `${groupLabel} (${n} ${n === 1 ? "edição" : "edições"})`;
+                    })()}
+                  </option>
+                );
+              }
+              return (
+                <optgroup key={groupLabel} label={groupLabel}>
+                  {items.map(t => (
+                    <option key={t.t} value={t.t}>{t.name} ({t.date_inicio})</option>
+                  ))}
+                </optgroup>
+              );
+            });
           })()}
         </select>
-        <span style={{ fontSize: 12, color: "var(--text-3)", fontWeight: 500 }}>Escalão</span>
-        <select className="select fs-13" value={escalaoNome} onChange={e => setEscalaoNome(e.target.value)}>
-          {escaloesDisponiveis.map(n => <option key={n} value={n}>{n}</option>)}
+        <span style={{ fontSize: 12, color: "var(--text-3)", fontWeight: 500 }}>
+          {isFamilyMode ? "Edição" : "Escalão"}
+        </span>
+        <select
+          className="select fs-13"
+          value={isFamilyMode ? `esc:${escalaoNome}` : escalaoNome}
+          onChange={e => {
+            if (isFamilyMode) {
+              const v = e.target.value;
+              const escolhido = v.startsWith("esc:") ? v.slice("esc:".length) : v;
+              // Encontrar a edição mais recente desse escalão na família
+              // (familia já vem ordenada por ano desc, logo o primeiro match
+              // é o mais recente). O torneio principal usado na tab Jogadores
+              // passa a ser essa edição; a tab Scores agrega todas as edições
+              // do escalão automaticamente.
+              const family = familias.get(currentFamilia!) || [];
+              const target = family.find(ft => (ft.escaloes[0]?.nome || "Geral") === escolhido);
+              if (target) {
+                setTorneioT(target.t);
+                setEscalaoNome(escolhido);
+              }
+            } else {
+              setEscalaoNome(e.target.value);
+            }
+          }}
+        >
+          {isFamilyMode
+            ? (() => {
+                // Escalões únicos da família — sem repetir por ano. A escolha
+                // de "Boys 10-11" agrega todas as edições disponíveis na vista.
+                const seen = new Set<string>();
+                const opts: string[] = [];
+                for (const ft of (familias.get(currentFamilia!) || [])) {
+                  const esc = ft.escaloes[0]?.nome || "Geral";
+                  if (!seen.has(esc)) { seen.add(esc); opts.push(esc); }
+                }
+                // Ordenar por idade ascendente. Escalões sem range numérico
+                // (WAGR, Girls WAGR, Geral) ficam no fim. Boys antes de Girls
+                // quando idades iguais.
+                const sortKey = (esc: string): [number, number, string] => {
+                  const range = parseEscalaoRange(esc);
+                  if (!range) return [9999, 0, esc.toLowerCase()];
+                  const isGirls = /girls/i.test(esc);
+                  return [range[0], isGirls ? 1 : 0, esc.toLowerCase()];
+                };
+                opts.sort((a, b) => {
+                  const ka = sortKey(a);
+                  const kb = sortKey(b);
+                  if (ka[0] !== kb[0]) return ka[0] - kb[0];
+                  if (ka[1] !== kb[1]) return ka[1] - kb[1];
+                  return ka[2].localeCompare(kb[2]);
+                });
+                return opts.map(esc => (
+                  <option key={esc} value={`esc:${esc}`}>{esc}</option>
+                ));
+              })()
+            : escaloesDisponiveis.map(n => <option key={n} value={n}>{n}</option>)
+          }
         </select>
         {torneioSelecionado && (
           <span style={{
@@ -1048,6 +1168,9 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
         return null;
       };
       const escalaoOfTid = (tid: string): string => {
+        // Mantém em sincronia com a derivação em futureTorneios — qualquer
+        // escalão não capturado cai em "Geral" e passa por escalaoMatches
+        // sempre, o que provoca mistura de escalões na tabela. Cobrir tudo.
         const bCompact = tid.match(/_b(\d{2,4})(?:[_\-]|$)/);
         if (bCompact) {
           const a = bCompact[1];
@@ -1058,15 +1181,33 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
         if (/_1213(?:[_\-]|$)/.test(tid)) return "Boys 12-13";
         if (/_89(?:[_\-]|$)/.test(tid))   return "Boys 8-9";
         if (/_1011(?:[_\-]|$)/.test(tid)) return "Boys 10-11";
+        if (/_b7u(?:[_\-]|$)/.test(tid))  return "Boys 7&Under";
+        if (/_bwagr(?:[_\-]|$)/.test(tid))return "WAGR";
+        if (/_gwagr(?:[_\-]|$)/.test(tid))return "Girls WAGR";
+        if (/_g1213(?:[_\-]|$)/.test(tid))return "Girls 12-13";
+        if (/_b7(?:[_\-]|$)/.test(tid))   return "Boys 7";
         if (/^wjgc\d{2}$/.test(tid))      return "Boys 10-11";
         return "Geral";
+      };
+      // Match local: respeita o range numérico mas também aceita match exacto
+      // por nome (case-insensitive) para escalões não-numéricos (WAGR, etc.).
+      const escalaoMatchesLocal = (userEsc: string, candEsc: string): boolean => {
+        if (!candEsc) return true;
+        if (candEsc.toLowerCase() === userEsc.toLowerCase()) return true;
+        return escalaoMatches(userEsc, candEsc);
       };
       const parOfTid = (tid: string): number | undefined => {
         if (tid.startsWith("wjgc25"))   return 71;
         if (tid.startsWith("wjgc26"))   return 72;
-        if (tid.startsWith("doral24"))  return 71;
-        if (tid.startsWith("doral25"))  return 71;
         if (tid.startsWith("eowagr"))   return 72;
+        if (tid.startsWith("doral")) {
+          // Boys 7 / 8-9 / 7&Under jogam 9 buracos → par ~36.
+          // Boys 10-11 / 12-13 e restantes 18H → par ~71.
+          if (/_b89(?:[_\-]|$)/.test(tid)
+              || /_b7u(?:[_\-]|$)/.test(tid)
+              || /_b7(?:[_\-]|$)/.test(tid)) return 36;
+          return 71;
+        }
         return undefined;
       };
 
@@ -1077,7 +1218,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
         const yr = yearOfTid(tid);
         if (yr == null) continue;
         const escTid = escalaoOfTid(tid);
-        if (!escalaoMatches(escalaoNome, escTid)) continue;
+        if (!escalaoMatchesLocal(escalaoNome, escTid)) continue;
         let count = 0;
         for (const p of autoRivals) { if (p.r[tid]) count++; }
         if (count === 0) continue;

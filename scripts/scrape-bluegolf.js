@@ -6,10 +6,17 @@
  *
  * USO:
  *   node scrape-bluegolf.js "https://brjgt.bluegolf.com/.../contest/73/leaderboard.htm" output.json
+ *     → modo "contest": scrape de UM leaderboard específico para um ficheiro
+ *
+ *   node scrape-bluegolf.js "https://www.bluegolf.com/junior/events/brjgt243/index.html"
+ *     → modo "event": descobre todos os contests do evento e gera 1 JSON por
+ *       contest com nome auto-derivado (ex: brjgt243_boys_10-11.json).
+ *       Pode-se passar um directório como 2º arg para guardar lá os outputs.
  */
 
 const { chromium } = require("playwright");
 const fs = require("fs");
+const path = require("path");
 
 const DELAY_MS = 600;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -18,10 +25,8 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
  *  Devolve null se não conseguir parsear. */
 function extractRoundNum(label) {
   if (!label || typeof label !== "string") return null;
-  // Procurar primeiro número que apareça (geralmente é o nº da ronda)
   const m = /\b(?:round|rd|day|volta|r)\s*[\.#]?\s*(\d+)/i.exec(label);
   if (m) return parseInt(m[1], 10);
-  // Fallback: primeiro número standalone
   const m2 = /\d+/.exec(label);
   if (m2) return parseInt(m2[0], 10);
   return null;
@@ -45,20 +50,16 @@ async function extractScorecard(page) {
   return page.evaluate(() => {
     const result = { name: "", country: "", pos: null, result: "", total: null, par: [], si: [], rounds: [] };
 
-    // ── Nome: <h3> dentro de .bg-profile-header contém <a> com nome
     const nameLink = document.querySelector(".bg-profile-header h3 a");
     if (nameLink) {
-      // Tirar só o texto do nome (ignorar ícones e flags)
       const clone = nameLink.cloneNode(true);
       clone.querySelectorAll("i, img, span, svg").forEach(el => el.remove());
       result.name = clone.textContent.replace(/\s+/g, " ").trim();
     }
 
-    // ── País: <p class="mb-0 text-muted"> dentro de .bg-profile-header
     const countryEl = document.querySelector(".bg-profile-header p.text-muted");
     if (countryEl) result.country = countryEl.textContent.trim();
 
-    // ── Posição e resultado: tabela scorecard-profile
     const profileCells = document.querySelectorAll("table.scorecard-profile tr");
     for (const tr of profileCells) {
       const tds = tr.querySelectorAll("td");
@@ -70,19 +71,14 @@ async function extractScorecard(page) {
       if (label.includes("tacada") || label.includes("stroke")) result.total = parseInt(val, 10) || null;
     }
 
-    // ── Usar tabela DESKTOP (tem 18 buracos numa row)
-    //    Está dentro de .row.d-none.d-md-block
     const desktopBlock = document.querySelector(".row.d-none.d-md-block");
     if (desktopBlock) {
       const table = desktopBlock.querySelector("table.bg-tbl-scorecard");
       if (table) {
-        // Par: extrair dos data-par nos hidden inputs
         const holeInputs = table.querySelectorAll('input[type="hidden"][data-par]');
         for (const inp of holeInputs) {
           result.par.push(parseInt(inp.getAttribute("data-par"), 10));
         }
-
-        // SI: row com label "tee.handicap" ou "Hcp" (está hidden por defeito)
         for (const tr of table.querySelectorAll("tr")) {
           const firstTd = tr.querySelector("td");
           if (!firstTd) continue;
@@ -95,11 +91,6 @@ async function extractScorecard(page) {
             break;
           }
         }
-
-        // Scores: <tr class="scores"> — uma por round.
-        // Captura também o LABEL da primeira <td> (ex: "Round 1", "R1",
-        // "Day 1 - Feb 26") para depois conseguir ordenar correctamente —
-        // o BlueGolf por vezes lista as rondas em ordem cronológica REVERSA.
         for (const tr of table.querySelectorAll("tr.scores")) {
           const allTds = Array.from(tr.querySelectorAll("td"));
           const labelTd = allTds[0];
@@ -108,11 +99,7 @@ async function extractScorecard(page) {
           const scores = [];
           for (const td of tds) {
             const n = parseInt(td.textContent.trim(), 10);
-            // Scores de golf 1-15; subtotais (Out/In/Total) são > 18
-            if (!isNaN(n) && n >= 1 && n <= 15) {
-              scores.push(n);
-            }
-            // Também ignorar NaN (células "&nbsp;" etc)
+            if (!isNaN(n) && n >= 1 && n <= 15) scores.push(n);
           }
           if (scores.length >= 9) {
             result.rounds.push({ scores, label });
@@ -121,11 +108,9 @@ async function extractScorecard(page) {
       }
     }
 
-    // ── Fallback mobile: tabelas separadas front/back
     if (result.rounds.length === 0) {
       const allTables = document.querySelectorAll("table.bg-tbl-scorecard");
       const mobileScores = [];
-
       for (const table of allTables) {
         for (const tr of table.querySelectorAll("tr")) {
           if (tr.classList.contains("bg-light")) continue;
@@ -141,15 +126,12 @@ async function extractScorecard(page) {
             if (scores.length >= 9) mobileScores.push(scores);
           }
         }
-        // Par fallback
         if (result.par.length === 0) {
           for (const inp of table.querySelectorAll('input[type="hidden"][data-par]')) {
             result.par.push(parseInt(inp.getAttribute("data-par"), 10));
           }
         }
       }
-
-      // Mobile: front+back separados → combinar pares
       if (mobileScores.length >= 2 && mobileScores[0].length === 9) {
         for (let i = 0; i + 1 < mobileScores.length; i += 2) {
           result.rounds.push([...mobileScores[i], ...mobileScores[i + 1]]);
@@ -163,34 +145,52 @@ async function extractScorecard(page) {
   });
 }
 
-/* ─── Main ─── */
-(async () => {
-  const args = process.argv.slice(2);
-  if (args.length < 1) {
-    console.error("Uso: node scrape-bluegolf.js <leaderboard_url> [output.json]");
-    process.exit(1);
-  }
+/* ─── Detectar contests dentro de uma página de evento ─────────────────
+ * A página `/junior/events/{slug}/index.html` tipicamente lista os escalões
+ * ("Boys 10-11", "Boys 12-13", etc.). Cada um tem um link para o leaderboard
+ * do contest correspondente. Devolve [{ url, label }]. */
+async function discoverContests(page, eventUrl) {
+  await page.goto(eventUrl, { waitUntil: "domcontentloaded" });
+  await waitForHuman(page);
+  await page.waitForLoadState("networkidle");
 
-  const leaderboardUrl = args[0];
-  const outFile = args[1] || "bluegolf_scorecards.json";
+  const contests = await page.evaluate(() => {
+    const out = [];
+    const seen = new Set();
+    // Procurar TODOS os links que apontem para contest/N/leaderboard*
+    for (const a of document.querySelectorAll("a[href]")) {
+      const href = a.getAttribute("href") || "";
+      const abs = a.href;
+      // Match contest/N/leaderboard.htm OR contest/N (raiz do contest)
+      const m = abs.match(/\/contest\/(\d+)(?:\/(?:leaderboard|index)\.htm)?(?:[?#].*)?$/i);
+      if (!m) continue;
+      const contestId = m[1];
+      if (seen.has(contestId)) continue;
+      seen.add(contestId);
+      // Tentar capturar label do link ou do row pai
+      let label = (a.textContent || "").replace(/\s+/g, " ").trim();
+      const tr = a.closest("tr");
+      if (tr && (!label || label.length < 3)) {
+        // Procurar primeira <td> com texto significativo
+        const firstTd = Array.from(tr.querySelectorAll("td")).find(td => (td.textContent || "").trim().length > 0);
+        if (firstTd) label = firstTd.textContent.replace(/\s+/g, " ").trim();
+      }
+      // URL canónico do leaderboard
+      const base = abs.replace(/\/(?:leaderboard|index)\.htm.*$/i, "").replace(/\/+$/, "");
+      out.push({ url: `${base}/leaderboard.htm`, contestId, label: label || `contest ${contestId}` });
+    }
+    return out;
+  });
+  return contests;
+}
 
+/* ─── Scrape de UM contest (leaderboard + scorecards) — devolve {output, info} */
+async function scrapeContest(page, leaderboardUrl) {
   const contestMatch = leaderboardUrl.match(/^(https?:\/\/.+\/contest\/\d+)/);
-  if (!contestMatch) {
-    console.error("URL inválida. Esperado: https://.../contest/NN/leaderboard.htm");
-    process.exit(1);
-  }
+  if (!contestMatch) throw new Error(`URL inválida (sem /contest/N/): ${leaderboardUrl}`);
   const contestBase = contestMatch[1];
 
-  console.log(`🏌️  BlueGolf Scorecard Scraper`);
-  console.log(`   URL: ${leaderboardUrl}\n`);
-
-  const browser = await chromium.launch({ headless: false });
-  const context = await browser.newContext();
-  const page = await context.newPage();
-  page.setDefaultTimeout(30_000);
-
-  /* ═══ PASSO 1 — Leaderboard ═══ */
-  console.log("📋 A carregar leaderboard...");
+  console.log(`\n📋 ${leaderboardUrl}`);
   await page.goto(leaderboardUrl, { waitUntil: "domcontentloaded" });
   await waitForHuman(page);
   await page.waitForLoadState("networkidle");
@@ -199,11 +199,8 @@ async function extractScorecard(page) {
   const tournamentTitle = pageTitle.replace(/ \| .*$/, "").replace(" Leaderboard", "").trim();
   console.log(`   Torneio: ${tournamentTitle}`);
 
-  // Extrair categoria + course da página (eram hardcoded "" antes)
   const meta = await page.evaluate(() => {
     const out = { category: "", course: "" };
-    // Categoria: tipicamente aparece num h1/h2/.bg-event-title como "Boys 10-11"
-    // ou está embebida no título da página. Tentar várias fontes.
     const titleEls = [
       ...document.querySelectorAll(".bg-event-title, .event-title, h1, h2, .breadcrumb-item.active"),
     ];
@@ -216,12 +213,10 @@ async function extractScorecard(page) {
         break;
       }
     }
-    // Course: tipicamente em .bg-event-meta ou em meta-info
     const courseEl = document.querySelector(".bg-event-course, .event-course, [data-course]");
     if (courseEl) out.course = (courseEl.textContent || "").trim();
     return out;
   });
-  // Fallback: extrair category do título da página se a página não tem element próprio
   let category = meta.category;
   if (!category) {
     const m = /\b(Boys|Girls)\s+(\d+)(?:\s*[-–]\s*(\d+))?/i.exec(tournamentTitle);
@@ -233,7 +228,6 @@ async function extractScorecard(page) {
   const course = meta.course || "";
   console.log(`   Categoria: ${category || "(não detectada)"} | Course: ${course || "(não detectado)"}`);
 
-  // Extrair contestant IDs
   const contestants = await page.evaluate(() => {
     const links = document.querySelectorAll('a[href*="contestant"]');
     const seen = new Map();
@@ -249,17 +243,11 @@ async function extractScorecard(page) {
     return Array.from(seen.values());
   });
 
-  console.log(`   Jogadores: ${contestants.length}\n`);
-
+  console.log(`   Jogadores: ${contestants.length}`);
   if (contestants.length === 0) {
-    const html = await page.content();
-    fs.writeFileSync("debug_leaderboard.html", html);
-    console.error("❌ Nenhum contestant. HTML guardado em debug_leaderboard.html");
-    await browser.close();
-    process.exit(1);
+    return null;
   }
 
-  /* ═══ PASSO 2 — Scorecards ═══ */
   const players = [];
   let par = null;
   let si = null;
@@ -267,30 +255,20 @@ async function extractScorecard(page) {
   for (let i = 0; i < contestants.length; i++) {
     const c = contestants[i];
     const url = `${contestBase}/contestant/${c.id}/scorecard.htm`;
-
     process.stdout.write(`\r🔍 [${i + 1}/${contestants.length}] ${c.name.padEnd(35).slice(0, 35)}`);
 
     try {
       await page.goto(url, { waitUntil: "domcontentloaded" });
       await waitForHuman(page);
-      // Esperar pela tabela de scorecard
       await page.waitForSelector("table.bg-tbl-scorecard, table.scorecard-profile", { timeout: 12_000 }).catch(() => {});
 
       const sc = await extractScorecard(page);
-
       if (!par && sc.par.length >= 9) par = sc.par.length > 18 ? sc.par.slice(0, 18) : sc.par;
       if (!si && sc.si.length >= 9) si = sc.si.length > 18 ? sc.si.slice(0, 18) : sc.si;
 
       const name = sc.name || c.name;
-      // Ordena as rondas pela ordem cronológica deduzida do label.
-      // Cada item de sc.rounds é { scores, label } onde label vem da 1ª <td>
-      // da tr.scores (ex: "Round 1", "R1", "Day 2 - Feb 27"). Extraímos o
-      // número da ronda do label e ordenamos ascendente. Se o label estiver
-      // ausente ou todos forem iguais, preserva ordem original.
       const enrichedRounds = sc.rounds.map((rd, idx) => ({
-        scores: rd.scores,
-        label: rd.label || "",
-        origIdx: idx,
+        scores: rd.scores, label: rd.label || "", origIdx: idx,
         roundNum: extractRoundNum(rd.label) || (idx + 1),
       }));
       enrichedRounds.sort((a, b) => a.roundNum - b.roundNum);
@@ -299,57 +277,34 @@ async function extractScorecard(page) {
         const f9 = scores.slice(0, 9).reduce((a, b) => a + b, 0);
         const b9 = scores.length > 9 ? scores.slice(9, 18).reduce((a, b) => a + b, 0) : 0;
         const gross = scores.reduce((a, b) => a + b, 0);
-        return {
-          day: idx + 1,             // renumerado após sort
-          scores, f9,
-          ...(scores.length > 9 ? { b9 } : {}),
-          gross,
-          label: rd.label || undefined,  // preserva o label original para debug
-        };
+        return { day: idx + 1, scores, f9, ...(scores.length > 9 ? { b9 } : {}), gross, label: rd.label || undefined };
       });
-
       const total = rounds.length > 0 ? rounds.reduce((a, r) => a + r.gross, 0) : sc.total;
       const parTotal = par ? par.reduce((a, b) => a + b, 0) : 0;
       const result = parTotal > 0 && rounds.length > 0 ? total - parTotal * rounds.length : null;
 
       players.push({ name, country: sc.country || "", pos: sc.pos, result, total, rounds });
-
       const nRounds = rounds.length;
       const nHoles = nRounds > 0 ? rounds[0].scores.length : 0;
-      if (nRounds === 0) {
-        process.stdout.write(" ⚠️ sem scores");
-      } else {
-        process.stdout.write(` ✅ ${nRounds}R ${nHoles}H gross=${total}`);
-      }
+      process.stdout.write(nRounds === 0 ? " ⚠️ sem scores" : ` ✅ ${nRounds}R ${nHoles}H gross=${total}`);
     } catch (err) {
       process.stdout.write(` ❌ ${err.message.slice(0, 40)}`);
       players.push({ name: c.name, country: "", pos: null, result: null, total: null, rounds: [], _error: err.message });
     }
-
     await sleep(DELAY_MS);
   }
+  console.log("");
 
-  console.log("\n");
-  await browser.close();
-
-  /* ═══ PASSO 3 — Output ═══ */
   const parF9 = par ? par.slice(0, 9).reduce((a, b) => a + b, 0) : null;
   const parB9 = par && par.length > 9 ? par.slice(9).reduce((a, b) => a + b, 0) : null;
   const pTotal = par ? par.reduce((a, b) => a + b, 0) : null;
-
-  // Year: tenta extrair do título (mais fiável que Date.now()).
   let outYear = new Date().getFullYear();
   const yrMatch = /\b(20\d{2})\b/.exec(tournamentTitle);
   if (yrMatch) outYear = +yrMatch[1];
 
   const output = {
     tournament: tournamentTitle,
-    category,
-    course,
-    year: outYear,
-    // URL canónico do leaderboard — o adapter wjgc/eowagr usa isto para
-    // popular tournament.links. Sem este campo, os botões SAT/BlueGolf
-    // não aparecem na UI.
+    category, course, year: outYear,
     source: leaderboardUrl,
     par: par || [],
     ...(si && si.length > 0 ? { si } : {}),
@@ -360,15 +315,96 @@ async function extractScorecard(page) {
       return 0;
     }),
   };
+  return { output, category, tournamentTitle, year: outYear, parTotal: pTotal };
+}
 
-  fs.writeFileSync(outFile, JSON.stringify(output, null, 2), "utf-8");
+/** Slugifica "Boys 10-11" → "boys_10-11" para usar no nome do ficheiro. */
+function slugCategory(cat) {
+  return (cat || "").toLowerCase().replace(/\s+/g, "_").replace(/[^a-z0-9_\-]/g, "");
+}
 
-  const ok = players.filter(p => p.rounds.length > 0).length;
-  const errs = players.filter(p => p._error).length;
+/** Slug do evento a partir da URL — ex: "brjgt243" de
+ *  "https://www.bluegolf.com/junior/events/brjgt243/index.html". */
+function slugEvent(eventUrl) {
+  const m = eventUrl.match(/\/events\/([^\/]+)/i);
+  return m ? m[1].toLowerCase() : "event";
+}
 
-  console.log(`✅ Concluído!`);
-  console.log(`   ${players.length} jogadores | ${ok} com scorecards | ${errs} erros`);
-  if (par) console.log(`   Par: [${par.join(",")}] = ${pTotal}`);
-  if (si && si.length > 0) console.log(`   SI:  [${si.join(",")}]`);
-  console.log(`   Ficheiro: ${outFile}`);
+/* ─── Main ─── */
+(async () => {
+  const args = process.argv.slice(2);
+  if (args.length < 1) {
+    console.error("Uso:");
+    console.error("  node scrape-bluegolf.js <leaderboard_url> [output.json]");
+    console.error("  node scrape-bluegolf.js <event_index_url>  [output_dir]");
+    process.exit(1);
+  }
+
+  const url = args[0];
+  const isContest = /\/contest\/\d+/.test(url);
+  const isEvent = !isContest && /\/(?:junior\/)?events?\/[^\/]+\/(?:index\.htm|$)/i.test(url);
+
+  if (!isContest && !isEvent) {
+    console.error("URL não reconhecida. Esperado:");
+    console.error("  https://.../contest/NN/leaderboard.htm  (contest individual)");
+    console.error("  https://www.bluegolf.com/junior/events/SLUG/index.html (evento c/ vários contests)");
+    process.exit(1);
+  }
+
+  console.log(`🏌️  BlueGolf Scraper · ${isEvent ? "MODO EVENTO" : "MODO CONTEST"}`);
+  console.log(`   URL: ${url}\n`);
+
+  const browser = await chromium.launch({ headless: false });
+  const context = await browser.newContext();
+  const page = await context.newPage();
+  page.setDefaultTimeout(30_000);
+
+  if (isContest) {
+    const outFile = args[1] || "bluegolf_scorecards.json";
+    const res = await scrapeContest(page, url);
+    if (!res) {
+      console.error("❌ Nenhum contestant.");
+      await browser.close(); process.exit(1);
+    }
+    fs.writeFileSync(outFile, JSON.stringify(res.output, null, 2), "utf-8");
+    console.log(`✅ Ficheiro: ${outFile}`);
+    await browser.close();
+    return;
+  }
+
+  // MODO EVENTO
+  const outDir = args[1] || ".";
+  if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
+  const evSlug = slugEvent(url);
+
+  console.log("🔎 A descobrir contests...");
+  const contests = await discoverContests(page, url);
+  console.log(`   ${contests.length} contests encontrados:`);
+  contests.forEach((c, i) => console.log(`   ${i + 1}. ${c.label}  →  ${c.url}`));
+
+  if (contests.length === 0) {
+    console.error("\n❌ Nenhum contest descoberto na página de evento.");
+    await browser.close(); process.exit(1);
+  }
+
+  const summary = [];
+  for (const c of contests) {
+    try {
+      const res = await scrapeContest(page, c.url);
+      if (!res) { summary.push({ contestId: c.contestId, label: c.label, status: "empty" }); continue; }
+      const catSlug = slugCategory(res.category) || `contest_${c.contestId}`;
+      const fname = `${evSlug}_${catSlug}.json`;
+      const fpath = path.join(outDir, fname);
+      fs.writeFileSync(fpath, JSON.stringify(res.output, null, 2), "utf-8");
+      summary.push({ contestId: c.contestId, label: c.label, category: res.category, file: fname, players: res.output.players.length });
+      console.log(`   💾 ${fname}  (${res.output.players.length} jogadores)`);
+    } catch (err) {
+      summary.push({ contestId: c.contestId, label: c.label, status: "error", error: err.message });
+      console.log(`   ❌ ${c.label}: ${err.message}`);
+    }
+  }
+
+  console.log("\n📊 Resumo:");
+  summary.forEach(s => console.log(`   • ${s.label}  →  ${s.file || s.status || s.error}`));
+  await browser.close();
 })();

@@ -19,6 +19,7 @@ import { usePasswordGate } from "../../hooks/usePasswordGate";
 import PasswordGate from "../../ui/PasswordGate";
 import FieldRivaisDashboard from "../kids/FieldRivaisDashboard";
 import { buildAutoRivals, type AutoRivalPlayer } from "../../data/KIDSdataLoader";
+import { enrichWithDoralLegacy } from "../../data/doralLegacyLoader";
 
 export default function NextTournaments() {
   const { unlocked, unlock } = usePasswordGate();
@@ -40,7 +41,13 @@ function NextTournamentsContent() {
         onUpdate: (players) => { if (alive) setAutoRivals(players); },
       },
     )
-      .then((players) => { if (alive) setAutoRivals(players); })
+      .then(async (players) => {
+        if (!alive) return;
+        // Enriquecer com Doral 2018-2023 (ficheiros que existem mas ainda
+        // não estão no tournament-catalog). Mutação in-place.
+        try { await enrichWithDoralLegacy(players); } catch { /* ignora */ }
+        if (alive) setAutoRivals([...players]);
+      })
       .catch((e) => { if (alive) setError(String(e?.message || e)); });
     return () => { alive = false; };
   }, []);
