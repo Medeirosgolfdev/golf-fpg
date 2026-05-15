@@ -8,12 +8,40 @@
  */
 
 import React, { useMemo } from "react";
+import { Link } from "react-router-dom";
 import type { CanonicalData, Junior, Tournament } from "../data";
 import { computeTier, getTierLabel, getTierColors, hasRealConfrontWithManuel } from "../data";
 import { computeDobInfo, escalaoIntl, type DobInfo } from "../dobInfo";
 import { getTournWeight } from "../tournWeight";
 import { flag as flagOf } from "../../../utils/flagUtils";
 import { MANUEL_DOB } from "../../../constants/manuel";
+
+/** Bandeira por federação — mostrada junto ao número de licença. */
+const SOURCE_FLAGS: Record<string, string> = {
+  USKIDS: flagOf("United States"),
+  FPG: flagOf("Portugal"),
+  RFEG: flagOf("Spain"),
+  FFG: flagOf("France"),
+};
+
+/** Conta TODAS as rondas válidas (com gross numérico) do junior em todas as
+ *  fontes — incluindo 9H. Usado no pill global "N rondas" do hero.
+ *  Diferente de computeRoundStats.total que filtra para 18H. */
+function countTotalRounds(junior: Junior, tournamentById: Map<string, Tournament>): number {
+  let n = 0;
+  for (const tid of junior.tournamentIds) {
+    const t = tournamentById.get(tid);
+    if (!t) continue;
+    for (const f of t.flights) {
+      const r = f.results.find((x) => x.juniorId === junior.id);
+      if (!r?.rounds) continue;
+      for (const rd of r.rounds) {
+        if (typeof rd.gross === "number") n++;
+      }
+    }
+  }
+  return n;
+}
 
 interface Props {
   data: CanonicalData;
@@ -61,6 +89,9 @@ export default function HeroIdentity({ data, junior }: Props) {
   const wins = useMemo(() => collectWins(junior, data.tournamentById), [junior, data.tournamentById]);
   const topWins = wins.slice(0, 5);
   const hiddenWinsCount = Math.max(0, wins.length - topWins.length);
+
+  // Total de rondas jogadas (todas as fontes, incluindo 9H) — pill global no rodapé.
+  const totalRounds = useMemo(() => countTotalRounds(junior, data.tournamentById), [junior, data.tournamentById]);
 
   return (
     <div style={{
@@ -258,6 +289,7 @@ export default function HeroIdentity({ data, junior }: Props) {
           subtitle={junior.sources.fpg?.club}
           historical={junior.sources.fpg?.historicalFeds}
           historicalLabel={(h: any) => `antigo #${typeof h === "string" ? h : h.fed}`}
+          linkTo={junior.sources.fpg?.fed ? `/jogadores/${junior.sources.fpg.fed}` : null}
         />
         <FedCard
           label="RFEG"
@@ -281,7 +313,7 @@ export default function HeroIdentity({ data, junior }: Props) {
         />
       </div>
 
-      {(escIntl || escUskids || escRfeg || escFpgTag || hcps.length > 0) && (
+      {(escIntl || escUskids || escRfeg || escFpgTag || hcps.length > 0 || totalRounds > 0) && (
         <div style={{ display: "flex", gap: 6, marginTop: 14, flexWrap: "wrap" }}>
           {escIntl && <EscPill label={escIntl} accent strong />}
           {escUskids && <EscPill label={`${escUskids} · USKids`} />}
@@ -297,37 +329,78 @@ export default function HeroIdentity({ data, junior }: Props) {
               🎯 HCP {h.value?.toFixed(1)} <span style={{ color: "var(--text-3)", marginLeft: 3 }}>· {h.source}</span>
             </span>
           ))}
+          {totalRounds > 0 && (
+            <span title="Total de rondas jogadas em todas as fontes (inclui 9H)" style={{
+              background: "var(--bg-muted)",
+              fontSize: 11, padding: "3px 9px", borderRadius: 999,
+              fontWeight: 600, color: "var(--text-2)",
+              border: "1px solid var(--border-light)",
+            }}>
+              ⛳ {totalRounds} {totalRounds === 1 ? "ronda" : "rondas"}
+            </span>
+          )}
         </div>
       )}
     </div>
   );
 }
 
-function FedCard({ label, value, subtitle, historical, historicalLabel }: {
+function FedCard({ label, value, subtitle, historical, historicalLabel, linkTo }: {
   label: string;
   value: string | null | undefined;
   subtitle?: string | null;
   historical?: Array<any>;
   historicalLabel?: (h: any) => string;
+  /** Quando definido, o card inteiro fica clicável e linka para a rota dada
+   *  (usado p.ex. para FPG → /jogadores/{fed}). */
+  linkTo?: string | null;
 }) {
   const empty = !value;
-  return (
-    <div style={{
-      background: empty ? "var(--bg-muted)" : "var(--bg)",
-      border: empty ? "1px dashed var(--border-light)" : "1px solid var(--border)",
-      borderRadius: 8,
-      padding: "10px 12px",
-      opacity: empty ? 0.65 : 1,
-    }}>
+  const flag = SOURCE_FLAGS[label] || "";
+  const isClickable = !!linkTo && !empty;
+
+  const cardStyle: React.CSSProperties = {
+    background: empty ? "var(--bg-muted)" : "var(--bg)",
+    border: empty ? "1px dashed var(--border-light)" : "1px solid var(--border)",
+    borderRadius: 8,
+    padding: "10px 12px",
+    opacity: empty ? 0.65 : 1,
+    transition: isClickable ? "border-color 120ms, box-shadow 120ms" : undefined,
+    cursor: isClickable ? "pointer" : undefined,
+    textDecoration: "none",
+    color: "inherit",
+    display: "block",
+  };
+
+  const inner = (
+    <>
       <div style={{
         fontSize: 11,
         color: empty ? "var(--text-3)" : "var(--accent, var(--color-info-dark))",
         fontWeight: 800,
         letterSpacing: 0.6,
         textTransform: "uppercase",
-      }}>{label}</div>
-      <div style={{ fontSize: 15, fontWeight: 700, marginTop: 3, color: empty ? "var(--text-3)" : "var(--text)", fontVariantNumeric: "tabular-nums" }}>
-        {value || "sem registo"}
+        display: "flex",
+        alignItems: "center",
+        gap: 5,
+      }}>
+        <span>{label}</span>
+        {flag && <span style={{ fontSize: 12, lineHeight: 1, opacity: empty ? 0.5 : 1 }} title={`Federação: ${label}`}>{flag}</span>}
+      </div>
+      <div style={{
+        fontSize: 15,
+        fontWeight: 700,
+        marginTop: 3,
+        color: empty ? "var(--text-3)" : "var(--text)",
+        fontVariantNumeric: "tabular-nums",
+        display: "flex",
+        alignItems: "baseline",
+        gap: 6,
+      }}>
+        <span>{value || "sem registo"}</span>
+        {isClickable && (
+          <span style={{ fontSize: 10, color: "var(--color-info-dark, #1e3a8a)", fontWeight: 600 }} title="Abrir ficha do jogador">↗</span>
+        )}
       </div>
       {subtitle && (
         <div style={{ fontSize: 11, color: "var(--text-2)", marginTop: 2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
@@ -341,8 +414,33 @@ function FedCard({ label, value, subtitle, historical, historicalLabel }: {
           ))}
         </div>
       )}
-    </div>
+    </>
   );
+
+  if (isClickable && linkTo) {
+    // Regra global do projecto: TODOS os links abrem em janela nova.
+    // react-router-dom <Link> respeita target/rel quando passados.
+    return (
+      <Link
+        to={linkTo}
+        target="_blank"
+        rel="noreferrer"
+        style={cardStyle}
+        onMouseEnter={(e) => {
+          (e.currentTarget as HTMLElement).style.borderColor = "var(--color-info-dark, #1e3a8a)";
+          (e.currentTarget as HTMLElement).style.boxShadow = "0 0 0 1px var(--color-info-dark, #1e3a8a)";
+        }}
+        onMouseLeave={(e) => {
+          (e.currentTarget as HTMLElement).style.borderColor = "var(--border)";
+          (e.currentTarget as HTMLElement).style.boxShadow = "none";
+        }}
+      >
+        {inner}
+      </Link>
+    );
+  }
+
+  return <div style={cardStyle}>{inner}</div>;
 }
 
 function EscPill({ label, accent, strong }: { label: string; accent?: boolean; strong?: boolean }) {
@@ -545,7 +643,8 @@ function compareAgeToManuel(dobIso: string, state: DobInfo["state"]): string | n
   }
   const years = diffDays / 365.25;
   const yearsRound = Math.round(years * 10) / 10;
-  const isWhole = Math.abs(yearsRound - Math.round(yearsRound)) < 0.05;
-  const label = isWhole ? `${Math.round(yearsRound)} ${Math.round(yearsRound) === 1 ? "ano" : "anos"}` : `${yearsRound.toFixed(1)} anos`;
-  return `${label} ${olderThanManuel ? "mais velho" : "mais novo"} que Manuel`;
+  const yearsWhole = Math.round(yearsRound);
+  const isWholeYear = Math.abs(yearsRound - yearsWhole) < 0.05;
+  const label = isWholeYear ? yearsWhole + " " + (yearsWhole === 1 ? "ano" : "anos") : yearsRound.toFixed(1) + " anos";
+  return label + " " + (olderThanManuel ? "mais velho" : "mais novo") + " que Manuel";
 }

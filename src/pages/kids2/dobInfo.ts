@@ -312,3 +312,277 @@ export function escalaoIntl(junior: Junior, tournamentById: Map<string, Tourname
   }
   return null;
 }
+
+// ═══════════════════════════════════════════════════════════════════════
+// Categoria oficial RFEG (Espanha)
+// ═══════════════════════════════════════════════════════════════════════
+
+/** Categorias oficiais RFEG (Real Federación Española de Golf). Calculadas
+ *  pela idade que o jogador faz no ANO CIVIL em curso (regra oficial RFEG). */
+export type CategoriaRFEG = "Benjamín" | "Alevín" | "Infantil" | "Cadete" | "Juvenil" | "Junior";
+
+const CATEGORIA_RFEG_RANGES: ReadonlyArray<{ ageMax: number; cat: CategoriaRFEG }> = [
+  { ageMax: 10, cat: "Benjamín" },
+  { ageMax: 12, cat: "Alevín" },
+  { ageMax: 14, cat: "Infantil" },
+  { ageMax: 16, cat: "Cadete" },
+  { ageMax: 18, cat: "Juvenil" },
+  { ageMax: 21, cat: "Junior" },
+];
+
+/** Calcula a categoria RFEG a partir da idade no ano civil. Retorna null
+ *  se idade fora dos escalões juvenis (<6 ou >21). */
+export function categoriaFromAgeThisYear(ageThisYear: number): CategoriaRFEG | null {
+  if (ageThisYear <= 0) return null;
+  for (const r of CATEGORIA_RFEG_RANGES) {
+    if (ageThisYear <= r.ageMax) return r.cat;
+  }
+  return null;
+}
+
+/** Indica se o jogador é "1º ano" ou "2º ano" da categoria (cada categoria
+ *  RFEG cobre 2 anos: ex. Alevín = 11+12; quem tem 11 anos no ano civil
+ *  está no 1º ano de Alevín, quem tem 12 está no 2º). Retorna 1 ou 2. */
+export function anoNaCategoria(ageThisYear: number, cat: CategoriaRFEG): 1 | 2 {
+  // Cada categoria começa numa idade par: Benjamín 9-10, Alevín 11-12, etc.
+  // Excepção: Benjamín é mono-faixa (só ageMax 10) — assumimos sempre 2º.
+  const starts: Record<CategoriaRFEG, number> = {
+    "Benjamín": 9,
+    "Alevín":   11,
+    "Infantil": 13,
+    "Cadete":   15,
+    "Juvenil":  17,
+    "Junior":   19,
+  };
+  const lo = starts[cat];
+  return ageThisYear === lo ? 1 : 2;
+}
+
+export interface CategoriaRFEGInfo {
+  cat: CategoriaRFEG;
+  ano: 1 | 2;
+  /** "Alevín 2º ano" — pronto para mostrar num pill. */
+  label: string;
+  /** Origem do cálculo: "dob" (DOB conhecido), "inferred" (DOB inferido),
+   *  "source" (catEdad veio directamente da licença RFEG). */
+  source: "dob" | "inferred" | "source";
+}
+
+/** Calcula a categoria RFEG do junior, preferindo DOB conhecido,
+ *  caindo para DOB inferido via torneios, e finalmente para `catEdad`
+ *  bruto vindo da licença RFEG.
+ *
+ *  Alarga a função antiga `categoriaRFEGFromDob` (kids/dobInference.ts)
+ *  com:
+ *    - input Junior em vez de string solta
+ *    - tighten via `computeDobInfo` quando DOB exacta não existe
+ *    - inferência do "ano" dentro da categoria (1º ou 2º)
+ *    - origem do cálculo (para mostrar tooltip "calculado vs declarado") */
+export function categoriaRFEG(
+  junior: Junior,
+  tournamentById?: Map<string, Tournament>,
+  today: Date = new Date(),
+): CategoriaRFEGInfo | null {
+  const yearNow = today.getFullYear();
+
+  // Preferência 1: DOB exacta
+  if (junior.dob) {
+    const dob = parseIsoDate(junior.dob);
+    if (dob) {
+      const ageThisYear = yearNow - dob.getFullYear();
+      const cat = categoriaFromAgeThisYear(ageThisYear);
+      if (cat) {
+        const ano = anoNaCategoria(ageThisYear, cat);
+        return { cat, ano, label: `${cat} ${ano}º ano`, source: "dob" };
+      }
+    }
+  }
+
+  // Preferência 2: DOB inferido via torneios
+  if (tournamentById) {
+    const info = computeDobInfo(junior, tournamentById);
+    if (info.dobIso) {
+      const dob = parseIsoDate(info.dobIso);
+      if (dob) {
+        const ageThisYear = yearNow - dob.getFullYear();
+        const cat = categoriaFromAgeThisYear(ageThisYear);
+        if (cat) {
+          const ano = anoNaCategoria(ageThisYear, cat);
+          // Quando inferido, não temos certeza absoluta sobre o ano dentro
+          // da categoria — mostrar mesmo assim, mas marcar a fonte.
+          return { cat, ano, label: `${cat} ${ano}º ano`, source: "inferred" };
+        }
+      }
+    }
+  }
+
+  // Preferência 3: catEdad vinda da licença RFEG (string bruta)
+  const raw = junior.sources.rfeg?.catEdad;
+  if (raw) {
+    const c = raw.toUpperCase();
+    let cat: CategoriaRFEG | null = null;
+    if (/BENJAM/.test(c)) cat = "Benjamín";
+    else if (/ALEV/.test(c)) cat = "Alevín";
+    else if (/INFANT/.test(c)) cat = "Infantil";
+    else if (/CADETE/.test(c)) cat = "Cadete";
+    else if (/JUVENIL/.test(c)) cat = "Juvenil";
+    else if (/JUNIOR/.test(c)) cat = "Junior";
+    if (cat) {
+      // Não temos o ano na fonte — assumir 2º (pior caso para idade)
+      return { cat, ano: 2, label: cat, source: "source" };
+    }
+  }
+
+  return null;
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// dobRangeStrict — versão permissiva (constraints parciais)
+// ═══════════════════════════════════════════════════════════════════════
+
+/** Versão permissiva de `computeDobInfo` que aceita constraints parciais.
+ *
+ *  O `computeDobInfo` exige uma faixa etária completa (ageMin E ageMax)
+ *  para considerar o torneio. Esta variante aceita também:
+ *    - só ageMin presente (o jogador tinha PELO MENOS X anos → DOB ≤ data−X)
+ *    - só ageMax presente (o jogador tinha NO MÁXIMO X anos → DOB ≥ data−X−1+1d)
+ *
+ *  Útil para juniors que aparecem em poucos torneios (ex: 1-2 inscrições
+ *  com escalão "Sub 14" mas sem limite inferior, ou "Open" com idade máx).
+ *
+ *  Retorna `[lo, hi]` em ISO ("YYYY-MM-DD") ou `[null, null]` se nada se
+ *  pôde inferir. */
+export function dobRangeStrict(
+  junior: Junior,
+  tournamentById: Map<string, Tournament>,
+): [string | null, string | null] {
+  // Quando DOB é conhecida, é o range exacto.
+  if (junior.dob) {
+    const d = parseIsoDate(junior.dob);
+    if (d) {
+      const iso = toIso(d);
+      return [iso, iso];
+    }
+  }
+
+  let lo: Date | null = null;
+  let hi: Date | null = null;
+
+  for (const tid of junior.tournamentIds) {
+    const t = tournamentById.get(tid);
+    if (!t) continue;
+    const dateIso = t.date || t.startDate;
+    const date = parseIsoDate(dateIso);
+    if (!date) continue;
+    for (const f of t.flights) {
+      const r = f.results.find((x) => x.juniorId === junior.id);
+      if (!r) continue;
+      const ageMin = typeof f.ageMin === "number" ? f.ageMin : null;
+      const ageMax = typeof f.ageMax === "number" ? f.ageMax : null;
+      if (ageMin == null && ageMax == null) continue;
+      // Sanity: ranges absurdos saltam-se
+      if (ageMin != null && (ageMin < 5 || ageMin > 25)) continue;
+      if (ageMax != null && (ageMax < 5 || ageMax > 25)) continue;
+      if (ageMin != null && ageMax != null && ageMin > ageMax) continue;
+
+      // ageMin presente → tinha pelo menos ageMin anos → DOB ≤ data − ageMin anos
+      if (ageMin != null) {
+        const latest = new Date(date);
+        latest.setFullYear(latest.getFullYear() - ageMin);
+        if (!hi || latest < hi) hi = latest;
+      }
+      // ageMax presente → tinha no máximo ageMax anos → DOB ≥ data − (ageMax+1) anos + 1 dia
+      if (ageMax != null) {
+        const earliest = new Date(date);
+        earliest.setFullYear(earliest.getFullYear() - ageMax - 1);
+        earliest.setDate(earliest.getDate() + 1);
+        if (!lo || earliest > lo) lo = earliest;
+      }
+    }
+  }
+
+  return [lo ? toIso(lo) : null, hi ? toIso(hi) : null];
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// arePlayersCompatible — auditoria de qualidade do merge
+// ═══════════════════════════════════════════════════════════════════════
+
+export interface CompatibilityResult {
+  /** True se os 2 juniors PODEM ser a mesma pessoa. */
+  compatible: boolean;
+  /** Razão para incompatibilidade ('memberId-mismatch', 'dob-mismatch',
+   *  'sex-mismatch', 'rfeg-lic-mismatch', 'fpg-fed-mismatch') ou null se compatíveis. */
+  reason: string | null;
+  /** Detalhes adicionais para mostrar em ferramenta de debug. */
+  detail?: string;
+}
+
+/** Testa se 2 juniors PODEM ser a mesma pessoa.
+ *
+ *  Retorna `compatible: false` apenas com EVIDÊNCIA FORTE de que são
+ *  pessoas diferentes:
+ *    1. memberIds USKids ambos definidos e distintos (e nenhum aparece
+ *       no historicalMemberIds do outro)
+ *    2. DOBs ISO ambas definidas e distintas
+ *    3. Sexos ambos definidos e distintos
+ *    4. Licenças RFEG ambas definidas e distintas (e nenhuma aparece
+ *       no historicalLicenses do outro)
+ *    5. fed FPG ambos definidos e distintos (e nenhum aparece no
+ *       historicalFeds do outro)
+ *
+ *  Caso contrário retorna `compatible: true`. NÃO usa ranges DOB inferidos
+ *  porque escalões adjacentes (Boys 10/11) podem produzir ranges disjuntos
+ *  para a MESMA pessoa devido a boundaries de idade × data de torneio.
+ *
+ *  Útil para auditar o output do aggregator: se alguma vez o aggregator
+ *  fundir 2 juniors com `compatible: false`, isso indica bug de matching
+ *  (e deve ser usado para flag em ferramenta de admin/debug). */
+export function arePlayersCompatible(a: Junior, b: Junior): CompatibilityResult {
+  // 1) USKids memberId mismatch
+  const midA = a.sources.uskids?.memberId;
+  const midB = b.sources.uskids?.memberId;
+  if (midA && midB && midA !== midB) {
+    const histA = (a.sources.uskids?.historicalMemberIds || []).map((h) => typeof h === "string" ? h : h.memberId);
+    const histB = (b.sources.uskids?.historicalMemberIds || []).map((h) => typeof h === "string" ? h : h.memberId);
+    if (!histA.includes(midB) && !histB.includes(midA)) {
+      return { compatible: false, reason: "memberId-mismatch", detail: `${midA} vs ${midB}` };
+    }
+  }
+
+  // 2) DOB mismatch
+  if (a.dob && b.dob && a.dob !== b.dob) {
+    return { compatible: false, reason: "dob-mismatch", detail: `${a.dob} vs ${b.dob}` };
+  }
+
+  // 3) Sexo mismatch
+  const sxA = a.sex || a.sources.fpg?.sex || a.sources.rfeg?.sex || a.sources.ffgolf?.sex;
+  const sxB = b.sex || b.sources.fpg?.sex || b.sources.rfeg?.sex || b.sources.ffgolf?.sex;
+  if (sxA && sxB && sxA !== sxB) {
+    return { compatible: false, reason: "sex-mismatch", detail: `${sxA} vs ${sxB}` };
+  }
+
+  // 4) RFEG lic mismatch
+  const licA = a.sources.rfeg?.lic;
+  const licB = b.sources.rfeg?.lic;
+  if (licA && licB && licA !== licB) {
+    const histA = (a.sources.rfeg?.historicalLicenses || []).map((h) => typeof h === "string" ? h : h.lic);
+    const histB = (b.sources.rfeg?.historicalLicenses || []).map((h) => typeof h === "string" ? h : h.lic);
+    if (!histA.includes(licB) && !histB.includes(licA)) {
+      return { compatible: false, reason: "rfeg-lic-mismatch", detail: `${licA} vs ${licB}` };
+    }
+  }
+
+  // 5) FPG fed mismatch
+  const fedA = a.sources.fpg?.fed;
+  const fedB = b.sources.fpg?.fed;
+  if (fedA && fedB && fedA !== fedB) {
+    const histA = (a.sources.fpg?.historicalFeds || []).map((h) => typeof h === "string" ? h : h.fed);
+    const histB = (b.sources.fpg?.historicalFeds || []).map((h) => typeof h === "string" ? h : h.fed);
+    if (!histA.includes(fedB) && !histB.includes(fedA)) {
+      return { compatible: false, reason: "fpg-fed-mismatch", detail: `${fedA} vs ${fedB}` };
+    }
+  }
+
+  return { compatible: true, reason: null };
+}

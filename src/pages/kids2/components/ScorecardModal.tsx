@@ -10,9 +10,10 @@
  */
 
 import React from "react";
-import type { Tournament, Flight, Result } from "../data";
+import type { Tournament, Flight, Result, Junior } from "../data";
 import { scClass, toParClass } from "../../../utils/scoreDisplay";
 import { fmtSign } from "../../../utils/format";
+import { getKnownScorecard, mergeFlightWithKnown } from "../knownScorecards";
 
 interface Props {
   open: boolean;
@@ -23,20 +24,28 @@ interface Props {
   /** Ronda focada — só usada para highlight visual da linha. */
   round: number;
   playerName: string;
+  /** Se passar o junior, o componente tenta enriquecer par/yards/strokes
+   *  com os scorecards públicos hardcoded em `knownScorecards.ts` quando o
+   *  canónico não os tem. */
+  junior?: Junior;
 }
 
-export default function ScorecardModal({ open, onClose, tournament, flight, result, round, playerName }: Props) {
+export default function ScorecardModal({ open, onClose, tournament, flight, result, round, playerName, junior }: Props) {
   if (!open) return null;
 
-  const parArr = (flight.par && flight.par.length > 0 ? flight.par : []).slice();
-  const yardsArr = flight.yards && flight.yards.length > 0 ? flight.yards : [];
+  // Fallback transparente para scorecards públicos hardcoded (WJGC26, EOWAGR25, etc.)
+  const known = junior ? getKnownScorecard(junior, tournament) : null;
+  const merged = mergeFlightWithKnown(flight, result, known);
+
+  const parArr = merged.par.slice();
+  const yardsArr = merged.yards;
   const metersArr = yardsArr.length > 0
     ? yardsArr.map((y) => (y && y > 0 ? Math.round(y * 0.9144) : 0))
     : [];
 
   // Determinar nº de buracos pelo par ou pela primeira ronda com strokes.
   const holesFromPar = parArr.filter((p) => p > 0).length;
-  const allRounds = (result.rounds || []).filter((r) => r && (r.strokes?.length || typeof r.gross === "number"));
+  const allRounds = merged.rounds.filter((r) => r && (r.strokes?.length || typeof r.gross === "number"));
   const firstStrokes = allRounds[0]?.strokes || [];
   const holesFromStrokes = firstStrokes.filter((s) => s > 0).length;
   const holes = holesFromPar > 0 ? holesFromPar : (holesFromStrokes <= 9 && holesFromStrokes > 0 ? 9 : 18);
@@ -252,6 +261,18 @@ export default function ScorecardModal({ open, onClose, tournament, flight, resu
           </table>
         </div>
 
+        {merged.fallbackSource && (
+          <div style={{
+            marginTop: 10,
+            padding: "6px 10px",
+            fontSize: 11,
+            color: "var(--text-3)",
+            fontStyle: "italic",
+            borderTop: "1px dashed var(--border-light)",
+          }}>
+            Fonte: {merged.fallbackSource}
+          </div>
+        )}
       </div>
     </div>
   );

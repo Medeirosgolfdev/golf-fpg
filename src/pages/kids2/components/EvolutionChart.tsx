@@ -217,9 +217,13 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
         </div>
       </div>
 
-      <div style={{ background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 8, padding: "10px 6px 6px" }}>
-        <div style={{ width: "100%", height: 240 }}>
-          <ResponsiveContainer>
+      <div style={{ background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 8, padding: "10px 6px 6px", minWidth: 0 }}>
+        {/* minWidth: 0 no inner + width/height "100%" explícitos no ResponsiveContainer
+            evita o erro "width(-1) height(-1)" do Recharts quando o chart está dentro
+            de um pai flex/grid que ainda não tem dimensões calculadas (ex: sidebar
+            fechada, container colapsado). */}
+        <div style={{ width: "100%", height: 240, minWidth: 0 }}>
+          <ResponsiveContainer width="100%" height="100%">
             <ComposedChart data={visiblePoints} margin={{ top: 6, right: 12, left: 0, bottom: 16 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border-light)" />
               <XAxis
@@ -365,16 +369,9 @@ function CustomTooltip({ active, payload, yMode }: any) {
 function btnStyle(active: boolean): React.CSSProperties {
   return {
     fontSize: 11, fontWeight: 600,
-    padding: "3px 10px", borderRadius: 6,
-    border: `1px solid ${active ? "var(--color-info-dark)" : "var(--border)"}`,
+    border: "1px solid " + (active ? "var(--color-info-dark)" : "var(--border-light)"),
     background: active ? "var(--color-info-dark)" : "var(--bg)",
     color: active ? "var(--bg)" : "var(--text-2)",
     cursor: "pointer",
   };
-}
-
-function fmtDate(iso: string): string {
-  const [y, m, d] = iso.split("-");
-  if (!y || !m || !d) return iso;
-  return `${d}/${m}/${y.slice(2)}`;
 }

@@ -14,10 +14,18 @@ import { useJuniorsCanonical } from "./data";
 import type { CanonicalData, Tournament } from "./data";
 import LoadingState from "../../ui/LoadingState";
 import EmptyState from "../../ui/EmptyState";
+import { usePasswordGate } from "../../hooks/usePasswordGate";
+import PasswordGate from "../../ui/PasswordGate";
 
 const MONTHS_PT = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
 
 export default function NextTournaments() {
+  const { unlocked, unlock } = usePasswordGate();
+  if (!unlocked) return <PasswordGate onUnlock={unlock} />;
+  return <NextTournamentsContent />;
+}
+
+function NextTournamentsContent() {
   const status = useJuniorsCanonical();
   const [scope, setScope] = useState<"manuel" | "all">("manuel");
 

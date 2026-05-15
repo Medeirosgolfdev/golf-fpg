@@ -109,8 +109,8 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
             <SortableHdr k="flight" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={th}>Escalão</SortableHdr>
             <SortableHdr k="jGross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...th, textAlign: "right" }}>{junior.canonicalName.split(" ")[0]}</SortableHdr>
             <SortableHdr k="jPos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...th, textAlign: "center" }}>Pos</SortableHdr>
-            <SortableHdr k="mGross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...th, textAlign: "right" }}>Manuel</SortableHdr>
-            <SortableHdr k="mPos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...th, textAlign: "center" }}>Pos</SortableHdr>
+            <SortableHdr k="mGross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...th, ...thManuel, textAlign: "right" }}>Manuel</SortableHdr>
+            <SortableHdr k="mPos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...th, ...thManuel, textAlign: "center" }}>Pos</SortableHdr>
             <SortableHdr k="diff" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...th, textAlign: "right" }}>diff</SortableHdr>
           </tr>
         </thead>
@@ -129,10 +129,10 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
                 <RoundsCell result={r.rJ.result} />
               </td>
               <td style={{ ...td, textAlign: "center" }}><PosTrophy pos={r.rJ.result.pos} /></td>
-              <td style={{ ...td, textAlign: "right", fontVariantNumeric: "tabular-nums" }}>
+              <td style={{ ...td, ...tdManuel, textAlign: "right", fontVariantNumeric: "tabular-nums" }}>
                 <RoundsCell result={r.rM.result} />
               </td>
-              <td style={{ ...td, textAlign: "center" }}><PosTrophy pos={r.rM.result.pos} /></td>
+              <td style={{ ...td, ...tdManuel, textAlign: "center" }}><PosTrophy pos={r.rM.result.pos} /></td>
               <td style={{ ...td, textAlign: "right", fontWeight: 700, color: r.diff > 0 ? "var(--color-danger-dark)" : r.diff < 0 ? "var(--medal-gold-strong)" : "var(--text-3)" }}>
                 {fmtDiff(r.diff)}
               </td>
@@ -147,6 +147,14 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
 const th: React.CSSProperties = { padding: "6px 8px", fontSize: 11, fontWeight: 600, textAlign: "left" };
 const td: React.CSSProperties = { padding: "6px 8px", fontSize: 12 };
 const tdMuted: React.CSSProperties = { ...td, color: "var(--text-3)" };
+
+// "Cor Manuel" — token reservado no projecto para destacar tudo o que está
+// ligado ao Manuel (row highlight, sticky cols, gross pill no print).
+// Definida em tokens.css: --bg-success-subtle (#d1fae5) e --bg-manuel-sticky
+// (#c3f5dc, ligeiramente mais escuro para colunas).
+// Mesma cor usada nas linhas vs-Manuel do ResultsTimeline.
+const thManuel: React.CSSProperties = { background: "color-mix(in srgb, var(--bg-manuel-sticky) 35%, transparent)" };
+const tdManuel: React.CSSProperties = { background: "color-mix(in srgb, var(--bg-success-subtle) 35%, transparent)" };
 
 function Stat({ value, label }: { value: string; label: string }) {
   return (
@@ -184,9 +192,16 @@ function PosTrophy({ pos }: { pos: any }) {
   return <span>#{pos}</span>;
 }
 
+/** Formata diff com sinal e máximo 3 casas decimais. Inteiros não recebem
+ *  ponto decimal; floats são arredondados para 3 casas e zeros à direita
+ *  são removidos (ex: -14.7777 → "-14.778"; -14.5 → "-14.5"; -14 → "-14"). */
 function fmtDiff(n: number): string {
   if (n === 0) return "0";
-  return n > 0 ? `+${n}` : String(n);
+  if (Number.isInteger(n)) return n > 0 ? `+${n}` : String(n);
+  // Round to 3 decimals, then trim trailing zeros and lonely dot.
+  const rounded = Math.round(n * 1000) / 1000;
+  const fmt = rounded.toFixed(3).replace(/\.?0+$/, "");
+  return rounded > 0 ? `+${fmt}` : fmt;
 }
 
 function fmtDateShort(iso: string | undefined): string {

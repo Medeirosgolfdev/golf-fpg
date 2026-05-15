@@ -23,6 +23,8 @@ import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import LoadingState from "../../ui/LoadingState";
 import EmptyState from "../../ui/EmptyState";
+import { usePasswordGate } from "../../hooks/usePasswordGate";
+import PasswordGate from "../../ui/PasswordGate";
 
 type ScoutKey = "name" | "country" | "age" | "tier" | "pos" | "vsM" | "form";
 
@@ -39,6 +41,12 @@ interface ScoutRow {
 }
 
 export default function ScoutView() {
+  const { unlocked, unlock } = usePasswordGate();
+  if (!unlocked) return <PasswordGate onUnlock={unlock} />;
+  return <ScoutViewContent />;
+}
+
+function ScoutViewContent() {
   const status = useJuniorsCanonical();
   const params = useParams<{ tid: string }>();
   const navigate = useNavigate();

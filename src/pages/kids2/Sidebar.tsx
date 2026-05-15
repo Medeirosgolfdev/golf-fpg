@@ -131,9 +131,16 @@ export default function Sidebar({
       }
     }
 
+    // Manuel sempre no topo; restantes ordenados por nº de confrontos REAIS
+    // (mesmo flight) — não pelo total de torneios. Faz com que os rivais
+    // mais relevantes (que já cruzaram mais vezes com o Manuel) fiquem em
+    // cima. Empate: nº total de torneios como tie-breaker estável.
     dir.sort((a, b) => {
       if (manuel && a.id === manuel.id) return -1;
       if (manuel && b.id === manuel.id) return 1;
+      const sa = sharedFlightCountMap.get(a.id) || 0;
+      const sb = sharedFlightCountMap.get(b.id) || 0;
+      if (sa !== sb) return sb - sa;
       return b.tournamentIds.length - a.tournamentIds.length;
     });
 

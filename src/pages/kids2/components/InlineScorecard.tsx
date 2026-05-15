@@ -9,9 +9,10 @@
  */
 
 import React from "react";
-import type { Tournament, Flight, Result } from "../data";
+import type { Tournament, Flight, Result, Junior } from "../data";
 import { scClass, toParClass } from "../../../utils/scoreDisplay";
 import { fmtSign } from "../../../utils/format";
+import { getKnownScorecard, mergeFlightWithKnown } from "../knownScorecards";
 
 interface Props {
   tournament: Tournament;
@@ -22,17 +23,26 @@ interface Props {
   playerName: string;
   /** Botão fechar (opcional). */
   onClose?: () => void;
+  /** Se passar o junior, o componente tenta enriquecer par/yards/strokes
+   *  com os scorecards públicos hardcoded em `knownScorecards.ts` quando o
+   *  canónico não os tem. Mostra rodapé "Fonte: …" quando algum dado vem do fallback. */
+  junior?: Junior;
 }
 
-export default function InlineScorecard({ tournament, flight, result, focusedRound, playerName, onClose }: Props) {
-  const parArr = (flight.par && flight.par.length > 0 ? flight.par : []).slice();
-  const yardsArr = flight.yards && flight.yards.length > 0 ? flight.yards : [];
+export default function InlineScorecard({ tournament, flight, result, focusedRound, playerName, onClose, junior }: Props) {
+  // Fallback transparente para scorecards públicos hardcoded (WJGC26, EOWAGR25, etc.)
+  const known = junior ? getKnownScorecard(junior, tournament) : null;
+  const merged = mergeFlightWithKnown(flight, result, known);
+
+  const parArr = merged.par.slice();
+  const yardsArr = merged.yards;
+  // (merged.si fica disponível para futura coluna SI no scorecard.)
   const metersArr = yardsArr.length > 0
     ? yardsArr.map((y) => (y && y > 0 ? Math.round(y * 0.9144) : 0))
     : [];
 
   const holesFromPar = parArr.filter((p) => p > 0).length;
-  const allRounds = (result.rounds || []).filter((r) => r && (r.strokes?.length || typeof r.gross === "number"));
+  const allRounds = merged.rounds.filter((r) => r && (r.strokes?.length || typeof r.gross === "number"));
   const firstStrokes = allRounds[0]?.strokes || [];
   const holesFromStrokes = firstStrokes.filter((s) => s > 0).length;
   const holes = holesFromPar > 0 ? holesFromPar : (holesFromStrokes <= 9 && holesFromStrokes > 0 ? 9 : 18);
@@ -224,6 +234,18 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
         </table>
       </div>
 
+      {merged.fallbackSource && (
+        <div style={{
+          marginTop: 8,
+          padding: "5px 8px",
+          fontSize: 10,
+          color: "var(--text-3)",
+          fontStyle: "italic",
+          borderTop: "1px dashed var(--border-light)",
+        }}>
+          Fonte: {merged.fallbackSource}
+        </div>
+      )}
     </div>
   );
 }

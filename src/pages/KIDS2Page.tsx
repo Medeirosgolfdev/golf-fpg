@@ -18,6 +18,8 @@ import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import SidebarToggle from "../ui/SidebarToggle";
 import { DataSourcesChip } from "../ui/DataSources";
 import { useMasterDetail } from "../hooks/useMasterDetail";
+import { usePasswordGate } from "../hooks/usePasswordGate";
+import PasswordGate from "../ui/PasswordGate";
 
 export type Kids2SourceKey = "uskids" | "fpg" | "rfeg" | "ffgolf" | "wjgc" | "eowagr" | "doral";
 
@@ -32,6 +34,12 @@ const SOURCE_PILLS: { key: Kids2SourceKey; label: string }[] = [
 ];
 
 export default function KIDS2Page() {
+  const { unlocked, unlock } = usePasswordGate();
+  if (!unlocked) return <PasswordGate onUnlock={unlock} />;
+  return <KIDS2PageContent />;
+}
+
+function KIDS2PageContent() {
   const status = useJuniorsCanonical();
   const params = useParams<{ juniorId?: string }>();
   const navigate = useNavigate();

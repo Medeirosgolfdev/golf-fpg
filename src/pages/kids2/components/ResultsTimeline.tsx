@@ -12,6 +12,7 @@ import { useSort } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";
 import InlineScorecard from "./InlineScorecard";
 import { categorizeTournamentLinks } from "../tournamentLinks";
+import { RoundPill, NineHPill } from "../../../ui/PillBadge";
 
 type ResKey = "date" | "type" | "pos" | "name" | "flight" | "rounds" | "toPar" | "vsM";
 
@@ -243,6 +244,7 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
                       result={expandedScorecard.row.result}
                       focusedRound={expandedScorecard.round}
                       playerName={junior.canonicalName}
+                      junior={junior}
                       onClose={() => setExpandedScorecard(null)}
                     />
                   );
@@ -346,10 +348,15 @@ function YearTable({ rows, onOpenRound, expandedKey, expandedScorecardNode }: {
   );
 }
 
+// "Cor Manuel" — token oficial reservado no projecto. Partilhado com as 2
+// colunas Manuel em MatchupVsManuel. Definido em tokens.css como
+// --bg-success-subtle (comentário literal "highlight row Manuel"). Mesma
+// cor que .row-manuel em App.css.
+const MANUEL_TINT = "color-mix(in srgb, var(--bg-success-subtle) 35%, transparent)";
+
 function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: Row, round: number) => void; isExpanded?: boolean }) {
-  // bg verde só quando jogou com Manuel; isExpanded adiciona destaque subtil
   const bg = r.vsManuelDiff != null
-    ? "var(--bg-success-subtle, #ecfdf5)"
+    ? MANUEL_TINT
     : isExpanded ? "var(--bg-muted)" : undefined;
   const parTotal = r.flight.par?.reduce((a, b) => a + (b || 0), 0) || r.tournament.parTotal;
   const rounds = r.result.rounds || [];
@@ -381,8 +388,16 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
       <td style={tdStyle}>
         <div style={{ display: "flex", alignItems: "center", gap: 5, flexWrap: "wrap" }}>
           <span>{r.tournament.name || r.tournament.shortName || r.tid}</span>
+          {(() => {
+            const nR = (r.result.rounds || []).filter((rd) => typeof rd.gross === "number").length;
+            return <RoundPill nR={nR} />;
+          })()}
           <ScoringPill tournament={r.tournament} flight={r.flight} />
-          <NineHolesPill tournament={r.tournament} flight={r.flight} />
+          {(() => {
+            const is9 = r.tournament.holesPerRound === 9 ||
+              (Array.isArray(r.flight.par) && r.flight.par.filter((p) => p > 0).length === 9);
+            return is9 ? <NineHPill /> : null;
+          })()}
           {categorizedLinks.map((l) => (
             <a
               key={l.key + l.url}
@@ -475,12 +490,17 @@ function PosBadgeSmall({ pos }: { pos: number | null | undefined }) {
   return <span style={{ color: "var(--text-3)" }}>#{pos}</span>;
 }
 
-/** Pill SCRATCH/HANDICAP — só aparece quando tournament.extra.scoringType existe.
- *  Cor: SCRATCH = âmbar (gross competition), HANDICAP = info (handicap-adjusted). */
+/** Pill SCRATCH/HANDICAP — SÓ se aplica a torneios RFEG, onde o eixo
+ *  scratch vs handicap é metadado oficial publicado pela federação. Outras
+ *  federações (USKids, FPG, FFG, BJGT, ...) não publicam este atributo
+ *  formalmente — não mostramos o pill nesses casos para não criar leitura
+ *  falsa. Quando RFEG, cor: SCRATCH=âmbar (gross), HANDICAP=info (net). */
 function ScoringPill({ tournament, flight }: { tournament: Tournament; flight: Flight }) {
+  if (tournament.sourceId !== "rfeg") return null;
   const st = (tournament.extra as any)?.scoringType as string | undefined;
   if (!st) return null;
   const isScratch = /SCRATCH/i.test(st);
+  void flight; // reservado para futuras heurísticas (flight-level override)
   return (
     <span title={isScratch ? "Competição scratch (gross)" : "Competição com handicap (net)"} style={{
       fontSize: 9, padding: "1px 5px", borderRadius: 3, fontWeight: 700,
@@ -490,25 +510,6 @@ function ScoringPill({ tournament, flight }: { tournament: Tournament; flight: F
       lineHeight: 1.4,
     }}>
       {isScratch ? "SCRATCH" : "HCP"}
-    </span>
-  );
-  // Suprime warning unused param `flight` — reservado para futuras heurísticas (e.g. flight-level override)
-  void flight;
-}
-
-/** Pill 9H — quando o torneio/flight é de 9 buracos (em vez dos 18 standard). */
-function NineHolesPill({ tournament, flight }: { tournament: Tournament; flight: Flight }) {
-  const is9 = tournament.holesPerRound === 9 ||
-    (Array.isArray(flight.par) && flight.par.filter((p) => p > 0).length === 9);
-  if (!is9) return null;
-  return (
-    <span title="Torneio de 9 buracos" style={{
-      fontSize: 9, padding: "1px 5px", borderRadius: 3, fontWeight: 700,
-      background: "var(--bg-muted)", color: "var(--text-2)",
-      border: "1px solid var(--border-light)",
-      lineHeight: 1.4,
-    }}>
-      9H
     </span>
   );
 }
