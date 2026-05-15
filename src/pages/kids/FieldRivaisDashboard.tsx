@@ -71,12 +71,100 @@ const EXTRA_TIDS: ExtraTidDef[] = [
   { tid: "doral25_b1213",name: "Doral 2025 B12-13",short: "Doral '25 B12-13", rounds: 2, par: 71, sortDate: "2025-12-15" },
 ];
 
-// Próximos torneios (UP) — onde os rivais podem aparecer inscritos
+// EXTRA_TIDS são tids string (ex: "wjgc26"). Para os encaixar na lista do
+// dropdown (que usa FieldTorneio.t: number) atribuímos IDs negativos estáveis.
+// Mapeamento: tid string -> tcode negativo. Reverso usado em dataset useMemo.
+const EXTRA_NEG_IDS: Record<string, number> = (() => {
+  const m: Record<string, number> = {};
+  EXTRA_TIDS.forEach((def, i) => { m[def.tid] = -(i + 1); });
+  return m;
+})();
+const EXTRA_TID_BY_NEG: Record<number, string> = (() => {
+  const m: Record<number, string> = {};
+  for (const [tid, neg] of Object.entries(EXTRA_NEG_IDS)) m[neg] = tid;
+  return m;
+})();
+
+/** Extrai escalao a partir do nome do EXTRA_TID (ex: "WJGC 2026 B10-11" → "Boys 10-11"). */
+function extraEscalaoFromName(name: string): string {
+  // "WJGC 2026 B10-11" → "Boys 10-11"; "Doral 2024 B10-11" → "Boys 10-11"
+  // "EOWAGR 2025" → "Geral" (sem escalao específico)
+  const m = name.match(/B(\d+(?:-\d+)?)$/);
+  if (m) return `Boys ${m[1]}`;
+  return "Geral";
+}
+
+/** Parse "Boys 12" → [12, 12]; "Boys 10-11" → [10, 11]; "U14" → [0, 14]. */
+function parseEscalaoRange(esc: string): [number, number] | null {
+  if (!esc) return null;
+  // "U14" / "U12" / "U10"
+  const u = esc.match(/^U(\d+)$/i);
+  if (u) return [0, parseInt(u[1], 10)];
+  // "Boys 12" / "Boys 10-11" / "Boys 10 & 11" / "Boys 10 - 11"
+  const m = esc.match(/(\d+)\s*[-&]\s*(\d+)/);
+  if (m) return [parseInt(m[1], 10), parseInt(m[2], 10)];
+  const s = esc.match(/(\d+)/);
+  if (s) { const n = parseInt(s[1], 10); return [n, n]; }
+  return null;
+}
+
+/** True se o escalão "user" (ex: Boys 12) está incluído no escalão "candidato"
+ *  (ex: Boys 12-13 ou Boys 11-12 ou U14). Geral/null → sempre matcha. */
+function escalaoMatches(userEsc: string, candEsc: string): boolean {
+  if (!candEsc || candEsc === "Geral") return true;
+  const u = parseEscalaoRange(userEsc);
+  const c = parseEscalaoRange(candEsc);
+  if (!u || !c) return false;
+  // Match se RANGES sobrepõem (qualquer overlap)
+  return u[0] <= c[1] && c[0] <= u[1];
+}
+
+// Próximos torneios (UP) — onde os rivais podem aparecer inscritos.
+// Tcodes têm de estar em /data/uskids-field.json (validado em runtime pelo filtro
+// de futureTorneios). Ordenados por data ascendente.
+// NOTA: Marco Simone Local Tour 2026 (tcode 21573) ficou fora porque é uma
+// série de eventos locais não-coberta pelo scraper signupanytime. Quando a
+// FPG publicar field também desse torneio, adicionar aqui.
 const UP_TORN: Array<{ id: string; name: string; short?: string; url?: string; tcode?: string }> = [
-  { id: "european26", tcode: "21131", name: "European Championship 2026", short: "EU '26", url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/521131/european-championship-2026/field" },
-  { id: "marcoLT26",  tcode: "21573", name: "Marco Simone Local Tour",   short: "M.SIM LT",  url: "" },
-  { id: "world26",    tcode: "21610", name: "World Championship 2026",   short: "WC '26", url: "" },
+  { id: "european26", tcode: "21131", name: "European Championship 2026", short: "EU '26",     url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/521131/european-championship-2026/field" },
+  { id: "world26",    tcode: "21610", name: "World Championship 2026",    short: "WC '26",     url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/521610/world-championship-2026/field" },
+  { id: "venice26",   tcode: "22243", name: "Venice Open 2026",           short: "Venice '26", url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/522243/venice-open-2026/field" },
 ];
+
+// Ficheiros FFG Internationaux U14 a integrar (Garçons). O escalão U14
+// abrange Boys 9-14 — qualquer escalão dentro desse range vê estes torneios.
+// Para cada um: caminho do JSON em public/data/ffgolf/, ID negativo único
+// (a partir de -100 para não colidir com EXTRA_NEG_IDS), nome a mostrar.
+interface FFGFileDef { path: string; neg: number; name: string; year: string; dateMM_DD: string }
+const FFG_FILES: FFGFileDef[] = [
+  { neg: -101, year: "2026", dateMM_DD: "4/9",
+    path: "/data/ffgolf/2026_internationaux-de-france-u14-garcons-challenge-alexis-godillot.json",
+    name: "Internationaux U14 Garçons 2026" },
+  { neg: -102, year: "2025", dateMM_DD: "4/3",
+    path: "/data/ffgolf/2025_internationaux-de-france-u14-garcons-challenge-alexis-godillot.json",
+    name: "Internationaux U14 Garçons 2025" },
+];
+const FFG_NEG_IDS = new Set(FFG_FILES.map(f => f.neg));
+
+// Tcodes a esconder do dropdown (torneios irrelevantes/eventos únicos):
+//   • 15573 = Real Club de Golf El Prat 2023 (one-off espanhol)
+//   • 21004 = USKids Desert Shootout 2026 (US-only, irrelevante para europeu)
+const HIDDEN_TCODES = new Set<string>(["15573", "21004"]);
+
+// Prefixos de tid para EXTRA detection automática (substitui EXTRA_TIDS hardcoded).
+// Qualquer tid em autoRivals.r que comece com um destes prefixos passa a ser
+// considerado uma fonte EXTRA — disponível para o dropdown.
+const EXTRA_TID_PREFIXES = ["wjgc", "doral", "eowagr"] as const;
+
+interface FFGPlayer { name?: string; country?: string; club?: string; pos?: number; total?: number;
+  rounds?: Array<{ round?: number; gross?: number; scores?: number[] }> }
+interface FFGFile {
+  tournament?: string;
+  year?: number;
+  rounds?: number;
+  course?: { name?: string; par?: number[]; meters?: number[]; metersTotal?: number; parTotal?: number };
+  players?: FFGPlayer[];
+}
 
 // ─────────────────────────────────────────────────────────────────────
 // Types do field e member-history
@@ -89,8 +177,16 @@ interface FieldData { torneios: FieldTorneio[] }
 interface MHRound { gross: number; strokes?: number[] }
 interface MHTorn { ageGroup: string; place: number | null; rounds: Record<string, MHRound> }
 interface MHPlr { name: string; country: string; torneios: Record<string, MHTorn> }
+interface MHEscalaoMeta { course?: string; yards?: number[]; par?: number[] }
 interface MHSlim {
-  torneios: Record<string, { name: string; startDate: string; holesPerRound: number; par: number[] | null }>;
+  torneios: Record<string, {
+    name: string;
+    startDate: string;
+    holesPerRound: number;
+    par: number[] | null;
+    yards?: number[] | null;
+    byEscalao?: Record<string, MHEscalaoMeta>;
+  }>;
   jogadores: Record<string, MHPlr>;
 }
 
@@ -105,8 +201,12 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
 }) {
   const [field, setField] = useState<FieldData | null>(null);
   const [mh, setMh] = useState<MHSlim | null>(null);
+  // Map neg ID → FFG file data (loaded on mount)
+  const [ffgData, setFfgData] = useState<Map<number, FFGFile>>(new Map());
   const [torneioT, setTorneioT] = useState<number>(defaultT);
   const [escalaoNome, setEscalaoNome] = useState<string>(defaultEscalao);
+  // Tab activa: PLAYERS (cross-table de rivais) ou SCORES (pancadas top-N históricas)
+  const [activeTab, setActiveTab] = useState<"players" | "scores">("players");
 
   // Load field + member history
   useEffect(() => {
@@ -114,24 +214,236 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
     cachedFetchJson<MHSlim>("/data/uskids-member-history-slim.json").then(d => d && setMh(d)).catch(() => {});
   }, []);
 
-  // Lista de torneios futuros disponíveis para escolher
-  const futureTorneios = useMemo(() => {
-    if (!field) return [];
+  // Load FFG Internationaux U14 files (carrega em paralelo, falhas silenciosas)
+  useEffect(() => {
+    let alive = true;
+    Promise.all(FFG_FILES.map(async (def) => {
+      try {
+        const d = await cachedFetchJson<FFGFile>(def.path);
+        return d ? [def.neg, d] as const : null;
+      } catch { return null; }
+    })).then(results => {
+      if (!alive) return;
+      const m = new Map<number, FFGFile>();
+      for (const r of results) { if (r) m.set(r[0], r[1]); }
+      setFfgData(m);
+    });
+    return () => { alive = false; };
+  }, []);
+
+  // Conversor de data US "M/D/YYYY" → ISO "YYYY-MM-DD"
+  const toIso = (s: string): string => {
+    const [m, d, y] = (s || "").split("/");
+    if (!y) return "";
+    return `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+  };
+
+  /** Constrói um FieldTorneio sintético a partir de member-history-slim
+   *  para um tcode passado (sem entrada em uskids-field). Os escaloes vêm dos
+   *  ageGroup únicos no histórico; jogadores agrupados por escalão. */
+  const buildSyntheticTorneio = (tcode: string): FieldTorneio | null => {
+    if (!mh) return null;
+    const meta = mh.torneios[tcode];
+    if (!meta) return null;
+    const byAgeGroup: Record<string, FieldPlayer[]> = {};
+    for (const p of Object.values(mh.jogadores)) {
+      const t = p.torneios[tcode];
+      if (!t) continue;
+      const ag = t.ageGroup || "Geral";
+      if (!byAgeGroup[ag]) byAgeGroup[ag] = [];
+      byAgeGroup[ag].push({ nome: p.name, pais: p.country || "" });
+    }
+    const escaloes = Object.entries(byAgeGroup).map(([nome, jogadores]) => ({ nome, jogadores }));
+    return {
+      t: parseInt(tcode, 10),
+      name: meta.name,
+      date_inicio: meta.startDate,
+      escaloes,
+    };
+  };
+
+  // Lista de torneios seleccionáveis no dropdown:
+  //   • FUTUROS: UP_TORN ∩ uskids-field.json (3 entradas relevantes)
+  //   • PASSADOS: todos os tcodes que Manuel jogou (de member-history-slim).
+  //
+  // Ordenados por data: futuros ascendente (próximo primeiro), passados
+  // descendente (mais recente primeiro). Junta-se as duas listas.
+  const futureTorneios = useMemo<FieldTorneio[]>(() => {
+    if (!field && !mh) return [];
     const today = new Date().toISOString().slice(0, 10);
-    return field.torneios
-      .filter(t => {
-        // converter "5/26/2026" → "2026-05-26"
-        const [m, d, y] = (t.date_inicio || "").split("/");
-        if (!y) return false;
-        const iso = `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
-        return iso >= today;
-      })
-      .sort((a, b) => {
-        const pa = (a.date_inicio || "").split("/").reverse().join("");
-        const pb = (b.date_inicio || "").split("/").reverse().join("");
-        return pa.localeCompare(pb);
-      });
-  }, [field]);
+    const out: FieldTorneio[] = [];
+    const seenTcodes = new Set<string>();
+
+    // 1) Futuros (UP_TORN ∩ field)
+    if (field) {
+      const relevantTcodes = new Set(UP_TORN.map(u => u.tcode).filter(Boolean) as string[]);
+      const fut = field.torneios
+        .filter(t => relevantTcodes.has(String(t.t)))
+        .filter(t => {
+          const iso = toIso(t.date_inicio);
+          return iso && iso >= today;
+        })
+        .sort((a, b) => toIso(a.date_inicio).localeCompare(toIso(b.date_inicio)));
+      for (const ft of fut) {
+        out.push(ft);
+        seenTcodes.add(String(ft.t));
+      }
+    }
+
+    // 2) Passados — todos os tcodes que Manuel jogou em mh.
+    //    IMPORTANTE: Manuel tem 2 mids (legacy 605933 + actual 630106). Apanhamos
+    //    TODOS os mids cujo nome normalizado bate em qualquer alias e fazemos a
+    //    UNIÃO dos torneios. Sem isto perdíamos Venice/Rome/Marco da conta actual.
+    if (mh) {
+      const manuelAliases = new Set([
+        "manuel medeiros",
+        "manuel francisco medeiros",
+        "manuel goulartt medeiros",
+        "manuel francisco goulartt de medeiros",
+      ]);
+      const manuelTcodes = new Set<string>();
+      for (const p of Object.values(mh.jogadores)) {
+        const k = normName(p.name);
+        if (!manuelAliases.has(k)) continue;
+        for (const tcode of Object.keys(p.torneios)) manuelTcodes.add(tcode);
+      }
+      const pastTcodes: Array<{ tcode: string; iso: string }> = [];
+      for (const tcode of manuelTcodes) {
+        if (seenTcodes.has(tcode)) continue;
+        if (HIDDEN_TCODES.has(tcode)) continue; // blacklist (El Prat, Desert)
+        const meta = mh.torneios[tcode];
+        if (!meta) continue;
+        // Filtro: só incluir torneios que tenham dados no escalão actual (ou
+        // num range que inclua o user — ex: Boys 12 dentro de "Boys 11-12").
+        const synth = buildSyntheticTorneio(tcode);
+        if (!synth) continue;
+        const hasEscalao = synth.escaloes.some(e => escalaoMatches(escalaoNome, e.nome) && (e.jogadores?.length ?? 0) > 0);
+        if (!hasEscalao) continue;
+        const iso = toIso(meta.startDate);
+        pastTcodes.push({ tcode, iso });
+      }
+      // Ordenar desc (mais recente primeiro)
+      pastTcodes.sort((a, b) => b.iso.localeCompare(a.iso));
+      for (const { tcode } of pastTcodes) {
+        const synth = buildSyntheticTorneio(tcode);
+        if (synth && synth.escaloes.length > 0) {
+          out.push(synth);
+          seenTcodes.add(tcode);
+        }
+      }
+    }
+
+    // 3) EXTRA via autoRivals — SCAN DINÂMICO de todos os tids cujo prefixo
+    //    é wjgc/doral/eowagr. Substitui o EXTRA_TIDS hardcoded incompleto.
+    //    Para cada tid: cria FieldTorneio sintético com todos os players que
+    //    têm resultado nesse tid.
+    if (autoRivals) {
+      // 1. Descobrir todos os tids EXTRA presentes nos dados
+      const allExtraTids = new Set<string>();
+      for (const p of autoRivals) {
+        for (const tid of Object.keys(p.r)) {
+          if (EXTRA_TID_PREFIXES.some(pre => tid.startsWith(pre))) allExtraTids.add(tid);
+        }
+      }
+      // 2. Para cada tid, construir entrada
+      interface DynExtra { tid: string; name: string; players: FieldPlayer[]; year: number; escalao: string }
+      const dyn: DynExtra[] = [];
+      const ynow = new Date().getFullYear() % 100;
+      for (const tid of allExtraTids) {
+        const players: FieldPlayer[] = [];
+        for (const p of autoRivals) {
+          if (p.r[tid]) players.push({ nome: p.n, pais: (p as any).co || "" });
+        }
+        if (players.length === 0) continue;
+        // Derivar ano + escalão do tid. Formatos possíveis:
+        //   "doral25_b1011"          → year=25, escalao=Boys 10-11
+        //   "wjgc26_1213"            → year=26, escalao=Boys 12-13
+        //   "wjgc-wjgc_2025_b1011"   → year=25 (2025), escalao=Boys 10-11 (do flightKey via canonical)
+        //   "eowagr-eowagr25_contest77" → year=25, escalao=Geral
+        let year = ynow;
+        // Procura QUALQUER sequência 20XX (4 dígitos) ou XX (2 dígitos depois de prefixo/separador)
+        const y4 = tid.match(/20(\d{2})/);
+        if (y4) {
+          year = parseInt(y4[1], 10);
+        } else {
+          // Match curto: wjgc26, doral25, eowagr25
+          const ys = tid.match(/(?:wjgc|doral|eowagr)(\d{2})(?:[_\-]|$)/);
+          if (ys) year = parseInt(ys[1], 10);
+        }
+
+        let escalao = "Geral";
+        // Padrões: _b89, _b1011, _b1213 (formato compacto)
+        const bCompact = tid.match(/_b(\d{2,4})(?:[_\-]|$)/);
+        if (bCompact) {
+          const a = bCompact[1];
+          if (a.length === 2) escalao = `Boys ${a[0]}-${a[1]}`; // "89" → "Boys 8-9"
+          else if (a.length === 4) escalao = `Boys ${a.slice(0, 2)}-${a.slice(2)}`; // "1011" → "Boys 10-11"
+          else escalao = `Boys ${a}`;
+        } else if (/_1213(?:[_\-]|$)/.test(tid)) escalao = "Boys 12-13";
+        else if (/_89(?:[_\-]|$)/.test(tid)) escalao = "Boys 8-9";
+        else if (/_1011(?:[_\-]|$)/.test(tid)) escalao = "Boys 10-11";
+        else if (/_b7u(?:[_\-]|$)/.test(tid)) escalao = "Boys 7&Under";
+        else if (/_bwagr(?:[_\-]|$)/.test(tid)) escalao = "WAGR";
+        else if (/_gwagr(?:[_\-]|$)/.test(tid)) escalao = "Girls WAGR";
+        else if (/_g1213(?:[_\-]|$)/.test(tid)) escalao = "Girls 12-13";
+        else if (/_b7(?:[_\-]|$)/.test(tid)) escalao = "Boys 7";
+        else if (/^wjgc\d{2}$/.test(tid)) escalao = "Boys 10-11"; // wjgc26 (legacy)
+        // Display name
+        const yfull = year < 50 ? 2000 + year : 1900 + year;
+        let displayName = "";
+        if (tid.startsWith("wjgc")) displayName = `WJGC ${yfull}` + (escalao !== "Geral" ? ` ${escalao}` : "");
+        else if (tid.startsWith("doral")) displayName = `Doral ${yfull}` + (escalao !== "Geral" ? ` ${escalao}` : "");
+        else if (tid.startsWith("eowagr")) displayName = `EOWAGR ${yfull}` + (escalao !== "Geral" ? ` ${escalao}` : "");
+        else displayName = tid;
+        dyn.push({ tid, name: displayName, players, year, escalao });
+      }
+      // Ordenar: ano desc, depois nome
+      dyn.sort((a, b) => b.year - a.year || a.name.localeCompare(b.name));
+      // Atribuir IDs negativos (a partir de -200 para não colidir com FFG -101..)
+      let nextNeg = -200;
+      for (const d of dyn) {
+        // dateUS de fallback (1 Jan do ano)
+        const yfull = d.year < 50 ? 2000 + d.year : 1900 + d.year;
+        const dateUS = `1/1/${yfull}`;
+        out.push({
+          t: nextNeg--,
+          name: d.name,
+          date_inicio: dateUS,
+          escaloes: [{ nome: d.escalao, jogadores: d.players }],
+        });
+      }
+    }
+
+    // 4) FFG Internationaux U14 — disponível para Boys 9-14 (U14 inclui Boys 12)
+    {
+      const userRange = parseEscalaoRange(escalaoNome);
+      // U14 = [0, 14] — mostrar se o user escalao está dentro deste range
+      const showFFG = userRange ? userRange[0] <= 14 : true;
+      if (showFFG) {
+        for (const def of FFG_FILES) {
+          const d = ffgData.get(def.neg);
+          if (!d) continue;
+          const players = (d.players || []).filter(p => p.name);
+          if (players.length === 0) continue; // edição futura sem field ainda
+          // Converter para FieldPlayer[]
+          const fps: FieldPlayer[] = players.map(p => ({
+            nome: p.name || "?",
+            pais: (p.country || "").replace(/^GB-GBN$/, "GB"),
+          }));
+          // dateUS no formato M/D/YYYY (apenas o mês/dia + ano)
+          const dateUS = `${def.dateMM_DD}/${def.year}`;
+          out.push({
+            t: def.neg,
+            name: def.name,
+            date_inicio: dateUS,
+            escaloes: [{ nome: "U14", jogadores: fps }],
+          });
+        }
+      }
+    }
+
+    return out;
+  }, [field, mh, autoRivals, ffgData, escalaoNome]);
 
   // Escalões disponíveis para o torneio escolhido
   const escaloesDisponiveis = useMemo(() => {
@@ -143,7 +455,21 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
   // Construir dataset {D, T, UP, manuel, AVG_R, T_WEIGHTS, allCountries}
   const dataset = useMemo(() => {
     if (!field || !mh) return null;
-    const torneio = field.torneios.find(t => t.t === torneioT);
+    // O torneio pode vir de 3 fontes:
+    //   • uskids-field (futuro com inscrições)
+    //   • member-history-slim (passado USKids, via buildSyntheticTorneio)
+    //   • EXTRA (WJGC/EOWAGR/Doral, tcode negativo — já construído em futureTorneios)
+    let torneio: FieldTorneio | undefined;
+    if (torneioT < 0) {
+      // EXTRA — buscar directamente em futureTorneios (já tem o synthetic populado)
+      torneio = futureTorneios.find(x => x.t === torneioT);
+    } else {
+      torneio = field.torneios.find(t => t.t === torneioT);
+      if (!torneio) {
+        const synth = buildSyntheticTorneio(String(torneioT));
+        if (synth) torneio = synth;
+      }
+    }
     if (!torneio) return null;
     const esc = torneio.escaloes.find(e => e.nome === escalaoNome);
     if (!esc?.jogadores?.length) return null;
@@ -465,7 +791,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
 
     const allCountries = [...new Set(D.map(p => p.co))].sort();
     return { D, T, UP: UP_TORN, manuel, AVG_R, T_WEIGHTS, allCountries, seriesBoundaries };
-  }, [field, mh, torneioT, escalaoNome, autoRivals]);
+  }, [field, mh, torneioT, escalaoNome, autoRivals, futureTorneios]);
 
   // Render
   if (!field || !mh) {
@@ -475,10 +801,22 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
     return <div className="muted p-16">Sem torneios futuros disponíveis.</div>;
   }
 
+  // Torneio actual seleccionado — usado para mostrar data/campo na barra
+  const torneioSelecionado = futureTorneios.find(x => x.t === torneioT) || null;
+
   return (
-    <div style={{ padding: "12px 16px" }}>
-      <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 12, flexWrap: "wrap" }}>
-        <label className="muted fs-12">Torneio:</label>
+    <div>
+      <div style={{
+        display: "flex",
+        gap: 10,
+        alignItems: "center",
+        marginBottom: 12,
+        flexWrap: "wrap",
+        padding: "10px 12px",
+        background: "var(--surface-2, var(--bg-secondary, #f1f1ee))",
+        borderRadius: 8,
+      }}>
+        <span style={{ fontSize: 12, color: "var(--text-3)", fontWeight: 500 }}>Torneio</span>
         <select className="select fs-13" value={torneioT}
           onChange={e => {
             const newT = parseInt(e.target.value);
@@ -488,40 +826,658 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
             const newEsc = newTorn?.escaloes.find(e => e.nome === escalaoNome);
             if (!newEsc) setEscalaoNome(newTorn?.escaloes[0]?.nome ?? "");
           }}>
-          {futureTorneios.map(t => (
-            <option key={t.t} value={t.t}>{t.name} ({t.date_inicio})</option>
-          ))}
+          {(() => {
+            // Agrupar torneios para o dropdown:
+            //   • UP_TORN futuros (t > 0 & em UP_TORN) → "Próximos torneios"
+            //   • mh past USKids (t > 0 & não em UP_TORN) → "Passados USKids"
+            //   • Dyn extras (t ≤ -200): nome começa com "WJGC " / "Doral " / "EOWAGR " — group = primeiro token + ano
+            //   • FFG (t entre -101 e -199): "Internationaux U14"
+            const UP_T_SET = new Set(UP_TORN.map(u => u.tcode));
+            const groupOf = (e: FieldTorneio): string => {
+              if (e.t > 0) {
+                if (UP_T_SET.has(String(e.t))) return "Próximos torneios";
+                return "Passados USKids (Manuel)";
+              }
+              // Negativos
+              if (e.t > -100) return "Outros";
+              if (e.t > -200) return "FFG · Internationaux U14";
+              // -200+ : EXTRA dinâmico
+              // Extrair "WJGC 2026" / "Doral 2025" / "EOWAGR 2025" do nome
+              const m = e.name.match(/^(WJGC|Doral|EOWAGR)\s+(\d{4})/);
+              if (m) return `${m[1]} ${m[2]}`;
+              return "Outros";
+            };
+            // Agrupar mantendo ordem original dentro de cada grupo
+            const groups = new Map<string, FieldTorneio[]>();
+            for (const ft of futureTorneios) {
+              const g = groupOf(ft);
+              let arr = groups.get(g);
+              if (!arr) { arr = []; groups.set(g, arr); }
+              arr.push(ft);
+            }
+            // Ordem dos grupos no dropdown
+            const groupOrder = [
+              "Próximos torneios",
+              "Passados USKids (Manuel)",
+              "WJGC 2026", "WJGC 2025",
+              "Doral 2025", "Doral 2024", "Doral 2023", "Doral 2022", "Doral 2021", "Doral 2020", "Doral 2019", "Doral 2018",
+              "EOWAGR 2025",
+              "FFG · Internationaux U14",
+              "Outros",
+            ];
+            const seen = new Set<string>();
+            const ordered: Array<[string, FieldTorneio[]]> = [];
+            for (const g of groupOrder) {
+              if (groups.has(g)) { ordered.push([g, groups.get(g)!]); seen.add(g); }
+            }
+            for (const [g, arr] of groups) {
+              if (!seen.has(g)) ordered.push([g, arr]);
+            }
+            return ordered.map(([groupLabel, items]) => (
+              <optgroup key={groupLabel} label={groupLabel}>
+                {items.map(t => (
+                  <option key={t.t} value={t.t}>{t.name} ({t.date_inicio})</option>
+                ))}
+              </optgroup>
+            ));
+          })()}
         </select>
-        <label className="muted fs-12">Escalão:</label>
+        <span style={{ fontSize: 12, color: "var(--text-3)", fontWeight: 500 }}>Escalão</span>
         <select className="select fs-13" value={escalaoNome} onChange={e => setEscalaoNome(e.target.value)}>
           {escaloesDisponiveis.map(n => <option key={n} value={n}>{n}</option>)}
         </select>
+        {torneioSelecionado && (
+          <span style={{
+            marginLeft: "auto",
+            fontSize: 12,
+            color: "var(--text-3)",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 6,
+          }}>
+            <span>{torneioSelecionado.date_inicio}</span>
+          </span>
+        )}
       </div>
 
-      {dataset
-        ? <RivaisDashboard
-            onSelectPlayer={onSelectPlayer}
-            D={dataset.D}
-            T={dataset.T}
-            UP={dataset.UP}
-            manuel={dataset.manuel}
-            T_WEIGHTS={dataset.T_WEIGHTS}
-            AVG_R={dataset.AVG_R}
-            allCountries={dataset.allCountries}
-            showManuelKpis={false}
-            seriesBoundaries={dataset.seriesBoundaries}
-            fieldMode={true}
-            tournamentDate={(() => {
-              // Converter date_inicio "5/26/2026" → "2026-05-26"
-              const t = futureTorneios.find(x => x.t === torneioT);
-              if (!t) return undefined;
-              const [m, d, y] = (t.date_inicio || "").split("/");
-              if (!y) return undefined;
-              return `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
-            })()}
-          />
-        : <div className="muted p-16">Sem dados para este torneio/escalão.</div>
+      {/* Tabs Jogadores / Scores — alterna entre análise dos inscritos e pancadas históricas */}
+      <div style={{
+        display: "inline-flex",
+        gap: 2,
+        marginBottom: 12,
+        padding: 2,
+        background: "var(--surface-2, var(--bg-secondary, #f1f1ee))",
+        borderRadius: 8,
+      }}>
+        <button
+          onClick={() => setActiveTab("players")}
+          style={tabBtnStyle(activeTab === "players")}
+          title="Análise dos jogadores inscritos × histórico de torneios"
+        >
+          Jogadores
+        </button>
+        <button
+          onClick={() => setActiveTab("scores")}
+          style={tabBtnStyle(activeTab === "scores")}
+          title="Pancadas necessárias para top-N nas edições passadas"
+        >
+          Scores
+        </button>
+      </div>
+
+      {activeTab === "players" ? (
+        dataset
+          ? <RivaisDashboard
+              onSelectPlayer={onSelectPlayer}
+              D={dataset.D}
+              T={dataset.T}
+              UP={dataset.UP}
+              manuel={dataset.manuel}
+              T_WEIGHTS={dataset.T_WEIGHTS}
+              AVG_R={dataset.AVG_R}
+              allCountries={dataset.allCountries}
+              showManuelKpis={false}
+              seriesBoundaries={dataset.seriesBoundaries}
+              fieldMode={true}
+              noScroll={true}
+              tournamentDate={(() => {
+                const t = futureTorneios.find(x => x.t === torneioT);
+                if (!t) return undefined;
+                const [m, d, y] = (t.date_inicio || "").split("/");
+                if (!y) return undefined;
+                return `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+              })()}
+            />
+          : <div className="muted p-16">Sem dados para este torneio/escalão.</div>
+      ) : (
+        <HistoricTopNTable mh={mh} torneio={futureTorneios.find(x => x.t === torneioT) || null} escalaoNome={escalaoNome} autoRivals={autoRivals} />
+      )}
+    </div>
+  );
+}
+
+function tabBtnStyle(active: boolean): React.CSSProperties {
+  return {
+    fontSize: 12,
+    fontWeight: 600,
+    padding: "5px 14px",
+    border: "none",
+    borderRadius: 6,
+    background: active ? "var(--surface-1, var(--bg-primary, #ffffff))" : "transparent",
+    color: active ? "var(--text)" : "var(--text-3)",
+    cursor: "pointer",
+    boxShadow: active ? "0 1px 2px rgba(0,0,0,0.04)" : "none",
+    transition: "background 0.12s, color 0.12s",
+  };
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// HistoricTopNTable — pancadas dos top-40 ao longo dos anos
+// Linhas: posição (1, 2, 3, ..., 40)
+// Colunas: para cada edição (ano) do MESMO torneio + escalão, mostra R1/R2/R3.
+// Dados: uskids-member-history-slim.json (apenas USKids).
+// ─────────────────────────────────────────────────────────────────────
+function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
+  mh: MHSlim | null;
+  torneio: FieldTorneio | null;
+  escalaoNome: string;
+  autoRivals?: AutoRivalPlayer[];
+}) {
+  const MIN_FIELD_SIZE = 10;
+  // Sem cap — mostramos o field inteiro (cada ano pode ter N diferente)
+  // Scores impossíveis (data quality): qualquer ronda 18H abaixo deste valor
+  // é descartada (jogador tratado como DNF nessa ronda). Ex: WJGC25 Parker
+  // Christianson R3=21 → upstream bug.
+  const MIN_GROSS_18H = 55;
+  const MIN_GROSS_9H = 28;
+
+  const data = useMemo(() => {
+    if (!torneio) return null;
+
+    interface RankedEntry {
+      name: string;
+      country: string;
+      total: number;
+      rounds: Record<string, number>;
+      /** Place oficial USKids (1, 2, T13...). null quando IE/DSQ/WD. */
+      officialPlace: number | null;
+      /** Posição virtual ordenada por total ASC (entre TODOS, oficiais+IE). */
+      wouldBePos?: number;
+    }
+    interface Edition {
+      tcode: string;
+      year: string;
+      nRounds: number;
+      holesPerRound: number;
+      fieldSize: number;
+      course?: string;
+      meters?: number;
+      parPerRound?: number; // par total de UMA ronda (ex: 72)
+      ranked: RankedEntry[];
+    }
+    const editions: Edition[] = [];
+
+    // ─────────────────────────────────────────────────────────────────
+    // RAMO EXTRA — séries WJGC / Doral / EOWAGR (tcode negativo ≤ -200,
+    // sem entrada em member-history-slim). Agregamos via autoRivals
+    // todos os tids da série filtrando pelo escalão do utilizador.
+    // ─────────────────────────────────────────────────────────────────
+    const seriesPrefix = (() => {
+      if (torneio.t >= 0) return null;
+      const n = torneio.name.toLowerCase();
+      if (n.startsWith("wjgc"))   return "wjgc";
+      if (n.startsWith("doral"))  return "doral";
+      if (n.startsWith("eowagr")) return "eowagr";
+      return null;
+    })();
+    if (seriesPrefix && autoRivals) {
+      // 1. Recolher todos os tids da série
+      const allTids = new Set<string>();
+      for (const p of autoRivals) {
+        for (const tid of Object.keys(p.r)) {
+          if (tid.toLowerCase().startsWith(seriesPrefix)) allTids.add(tid);
+        }
       }
+
+      // Helpers locais reusando a lógica do futureTorneios
+      const yearOfTid = (tid: string): number | null => {
+        const y4 = tid.match(/20(\d{2})/);
+        if (y4) return 2000 + parseInt(y4[1], 10);
+        const ys = tid.match(/(?:wjgc|doral|eowagr)(\d{2})(?:[_\-]|$)/);
+        if (ys) { const yy = parseInt(ys[1], 10); return yy < 50 ? 2000 + yy : 1900 + yy; }
+        return null;
+      };
+      const escalaoOfTid = (tid: string): string => {
+        const bCompact = tid.match(/_b(\d{2,4})(?:[_\-]|$)/);
+        if (bCompact) {
+          const a = bCompact[1];
+          if (a.length === 2) return `Boys ${a[0]}-${a[1]}`;
+          if (a.length === 4) return `Boys ${a.slice(0, 2)}-${a.slice(2)}`;
+          return `Boys ${a}`;
+        }
+        if (/_1213(?:[_\-]|$)/.test(tid)) return "Boys 12-13";
+        if (/_89(?:[_\-]|$)/.test(tid))   return "Boys 8-9";
+        if (/_1011(?:[_\-]|$)/.test(tid)) return "Boys 10-11";
+        if (/^wjgc\d{2}$/.test(tid))      return "Boys 10-11";
+        return "Geral";
+      };
+      const parOfTid = (tid: string): number | undefined => {
+        if (tid.startsWith("wjgc25"))   return 71;
+        if (tid.startsWith("wjgc26"))   return 72;
+        if (tid.startsWith("doral24"))  return 71;
+        if (tid.startsWith("doral25"))  return 71;
+        if (tid.startsWith("eowagr"))   return 72;
+        return undefined;
+      };
+
+      // 2. Para cada tid: filtra por escalão e agrupa por ano
+      interface Cand { tid: string; escalao: string; players: number }
+      const byYear = new Map<number, Cand[]>();
+      for (const tid of allTids) {
+        const yr = yearOfTid(tid);
+        if (yr == null) continue;
+        const escTid = escalaoOfTid(tid);
+        if (!escalaoMatches(escalaoNome, escTid)) continue;
+        let count = 0;
+        for (const p of autoRivals) { if (p.r[tid]) count++; }
+        if (count === 0) continue;
+        if (!byYear.has(yr)) byYear.set(yr, []);
+        byYear.get(yr)!.push({ tid, escalao: escTid, players: count });
+      }
+
+      // 3. Para cada ano: escolher o tid com MAIOR overlap com o escalão pedido
+      const userRange = parseEscalaoRange(escalaoNome);
+      for (const [year, list] of byYear) {
+        list.sort((a, b) => {
+          if (userRange) {
+            const ra = parseEscalaoRange(a.escalao);
+            const rb = parseEscalaoRange(b.escalao);
+            if (ra && rb) {
+              const oa = Math.min(userRange[1], ra[1]) - Math.max(userRange[0], ra[0]);
+              const ob = Math.min(userRange[1], rb[1]) - Math.max(userRange[0], rb[0]);
+              if (oa !== ob) return ob - oa;
+            }
+          }
+          return b.players - a.players;
+        });
+        const chosen = list[0];
+        const tid = chosen.tid;
+        const par = parOfTid(tid);
+
+        // Construir RankedEntry[] a partir de autoRivals
+        const ranked: RankedEntry[] = [];
+        let maxRounds = 0;
+        const minGross = MIN_GROSS_18H;
+        for (const p of autoRivals) {
+          const tr = p.r[tid];
+          if (!tr) continue;
+          const rd: Record<string, number> = {};
+          let total = 0;
+          let valid = 0;
+          const rdArr = tr.rd || [];
+          for (let i = 0; i < rdArr.length; i++) {
+            const g = rdArr[i];
+            if (!g || g <= 0 || g < minGross) continue;
+            rd[String(i + 1)] = g;
+            total += g;
+            valid++;
+          }
+          if (valid === 0) continue;
+          if (valid > maxRounds) maxRounds = valid;
+          ranked.push({
+            name: p.n,
+            country: p.co || "",
+            total,
+            rounds: rd,
+            officialPlace: typeof tr.p === "number" && tr.p > 0 ? tr.p : null,
+          });
+        }
+        const completed = ranked.filter(e => Object.keys(e.rounds).length === maxRounds);
+        if (completed.length < MIN_FIELD_SIZE) continue;
+        const byTotal = [...completed].sort((a, b) => a.total - b.total);
+        byTotal.forEach((e, i) => { e.wouldBePos = i + 1; });
+        completed.sort((a, b) => {
+          const aOff = a.officialPlace ?? Number.POSITIVE_INFINITY;
+          const bOff = b.officialPlace ?? Number.POSITIVE_INFINITY;
+          if (aOff !== bOff) return aOff - bOff;
+          return a.total - b.total;
+        });
+        editions.push({
+          tcode: tid, year: String(year),
+          nRounds: maxRounds, holesPerRound: 18,
+          fieldSize: completed.length,
+          parPerRound: par,
+          ranked: completed,
+        });
+      }
+
+      if (editions.length === 0) return null;
+      editions.sort((a, b) => b.year.localeCompare(a.year));
+      const maxPos = Math.max(...editions.map(e => e.ranked.length));
+      const seriesLabel = seriesPrefix === "wjgc" ? "WJGC" : seriesPrefix === "doral" ? "Doral" : "EOWAGR";
+      return { baseName: seriesLabel, ageGroup: escalaoNome, editions, maxPos };
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // RAMO USKids — usa member-history-slim, agrupando por nome base
+    // (ex: "European Championship" agrega 2022/2023/2024/2025).
+    // ─────────────────────────────────────────────────────────────────
+    if (!mh) return null;
+    const baseName = torneio.name.replace(/\s+\d{4}\s*$/, "").trim();
+    if (!baseName) return null;
+
+    for (const [tcode, meta] of Object.entries(mh.torneios)) {
+      if (!meta?.name) continue;
+      if (/Parent\/Child/i.test(meta.name)) continue;
+      const mBase = meta.name.replace(/\s+\d{4}\s*$/, "").trim();
+      if (mBase !== baseName) continue;
+      const yearMatch = meta.name.match(/(\d{4})/);
+      if (!yearMatch) continue;
+      const year = yearMatch[1];
+      const hpr = (meta as any).holesPerRound || 18;
+      const minGross = hpr === 9 ? MIN_GROSS_9H : MIN_GROSS_18H;
+
+      const all: RankedEntry[] = [];
+      let maxRounds = 0;
+      for (const p of Object.values(mh.jogadores)) {
+        const tEntry = p.torneios[tcode];
+        if (!tEntry) continue;
+        if (tEntry.ageGroup !== escalaoNome) continue;
+        // Aceitar TODOS os jogadores com rondas válidas (incluindo IE/DSQ/WD).
+        // Os que não têm place oficial (null) são marcados visualmente como IE.
+        const officialPlace = (typeof tEntry.place === "number" && tEntry.place > 0) ? tEntry.place : null;
+        const rd: Record<string, number> = {};
+        let total = 0;
+        let valid = 0;
+        for (const [rn, r] of Object.entries(tEntry.rounds || {})) {
+          if (!r || r.gross <= 0) continue;
+          if (r.gross < minGross) {
+            // Round impossível → ignorada (ex: gross=21 numa volta de 18H).
+            continue;
+          }
+          rd[rn] = r.gross;
+          total += r.gross;
+          valid++;
+        }
+        if (valid === 0) continue;
+        if (valid > maxRounds) maxRounds = valid;
+        all.push({
+          name: p.name || "?",
+          country: p.country || "",
+          total,
+          rounds: rd,
+          officialPlace,
+        });
+      }
+      const completed = all.filter(e => Object.keys(e.rounds).length === maxRounds);
+      if (completed.length < MIN_FIELD_SIZE) continue;
+      // Filtro de cobertura: edições antigas (2014-2019) só têm uma fracção dos
+      // jogadores no slim (scrape incompleto). Se n_jogadores_com_place / max_place
+      // < 0.8, considera-se que o field é incompleto demais para ser representativo.
+      // Ex: 2019 Boys 11 → 18 jogadores no slim mas max place=71 → ratio 0.25 → drop.
+      const placedEntries = completed.filter(e => e.officialPlace != null);
+      if (placedEntries.length > 0) {
+        const maxOfficialPlace = Math.max(...placedEntries.map(e => e.officialPlace!));
+        const coverage = placedEntries.length / maxOfficialPlace;
+        if (coverage < 0.8) continue; // field incompleto — descarta a edição
+      }
+      // Calcular "would-be position" — posição que cada jogador teria se TODOS
+      // contassem para o ranking (ordenando por total ASC). Necessária para
+      // mostrar a posição virtual dos IE/DSQ em parêntesis.
+      const byTotal = [...completed].sort((a, b) => a.total - b.total);
+      byTotal.forEach((e, i) => { e.wouldBePos = i + 1; });
+      // Ordenação final: officialPlace ASC (com place) primeiro, IE/DSQ no fim
+      // (ordenados pelo total ASC entre si).
+      completed.sort((a, b) => {
+        const aOff = a.officialPlace ?? Number.POSITIVE_INFINITY;
+        const bOff = b.officialPlace ?? Number.POSITIVE_INFINITY;
+        if (aOff !== bOff) return aOff - bOff;
+        return a.total - b.total;
+      });
+      // Tentar buscar course+yards específicos do escalão (byEscalao); fallback para o tcode-level yards
+      const escMeta = (meta as any).byEscalao?.[escalaoNome] as MHEscalaoMeta | undefined;
+      const yardsArr = escMeta?.yards || (meta as any).yards || [];
+      const yardsTotal = Array.isArray(yardsArr) ? yardsArr.reduce((a: number, b: number) => a + (b || 0), 0) : 0;
+      const meters = yardsTotal > 0 ? Math.round(yardsTotal * 0.9144) : undefined;
+      const parArr = escMeta?.par || (meta as any).par || [];
+      const parPerRound = Array.isArray(parArr) ? parArr.reduce((a: number, b: number) => a + (b || 0), 0) : 0;
+      editions.push({
+        tcode, year, nRounds: maxRounds,
+        holesPerRound: hpr,
+        fieldSize: completed.length,
+        course: escMeta?.course,
+        meters,
+        parPerRound: parPerRound > 0 ? parPerRound : undefined,
+        ranked: completed, // field inteiro — não limitamos
+      });
+    }
+
+    if (editions.length === 0) return null;
+    editions.sort((a, b) => b.year.localeCompare(a.year));
+    const maxPos = Math.max(...editions.map(e => e.ranked.length));
+    return { baseName, ageGroup: escalaoNome, editions, maxPos };
+  }, [mh, torneio, escalaoNome, autoRivals]);
+
+  type SortKey = string;
+  // Default: ordem oficial do ano mais recente (rank = índice da edição que
+  // já tem IE no fim com wouldBePos definido).
+  const defaultSortKey: SortKey = "rank";
+  const [sortKey, setSortKey] = useState<SortKey>(defaultSortKey);
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
+  useEffect(() => { setSortKey(defaultSortKey); setSortDir("asc"); }, [defaultSortKey]);
+
+  const sortedRows = useMemo(() => {
+    if (!data) return [];
+    const rows = Array.from({ length: data.maxPos }, (_, idx) => ({ rank: idx + 1, idx }));
+    const mul = sortDir === "asc" ? 1 : -1;
+    const SAFE_INF = Number.POSITIVE_INFINITY;
+    const getVal = (r: { idx: number; rank: number }): number => {
+      if (sortKey === "rank") return r.rank;
+      const us = sortKey.indexOf("_");
+      const year = sortKey.slice(0, us);
+      const col = sortKey.slice(us + 1);
+      const ed = data.editions.find(e => e.year === year);
+      if (!ed) return SAFE_INF;
+      const entry = ed.ranked[r.idx];
+      if (!entry) return SAFE_INF;
+      if (col === "T") return entry.total;
+      if (col === "TP") {
+        if (!ed.parPerRound || !ed.nRounds) return SAFE_INF;
+        return entry.total - ed.parPerRound * ed.nRounds;
+      }
+      const rn = col.replace(/^R/, "");
+      return entry.rounds[rn] ?? SAFE_INF;
+    };
+    rows.sort((a, b) => mul * (getVal(a) - getVal(b)));
+    return rows;
+  }, [data, sortKey, sortDir]);
+
+  const onSort = (k: SortKey) => {
+    if (sortKey === k) setSortDir(d => d === "asc" ? "desc" : "asc");
+    else { setSortKey(k); setSortDir("asc"); }
+  };
+  const arrow = (k: SortKey) => sortKey === k ? (sortDir === "asc" ? " ↑" : " ↓") : "";
+
+  if (!data) {
+    return (
+      <div className="muted p-16">
+        Sem histórico de pancadas para esta combinação torneio/escalão. (Edições com field &ge; {MIN_FIELD_SIZE} jogadores apenas.)
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <div style={{ marginBottom: 10, display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
+        <span style={{ fontSize: 13, fontWeight: 700, color: "var(--text)" }}>
+          Pancadas {data.maxPos === 1 ? "do jogador" : "todos os finishers"}
+        </span>
+        <span style={{ fontSize: 11, color: "var(--text-3)" }}>
+          {data.baseName} {String.fromCharCode(0xb7)} {data.ageGroup} {String.fromCharCode(0xb7)} {data.editions.length} edi{data.editions.length === 1 ? "ção" : "ções"}
+        </span>
+      </div>
+      <table className="bc-collapse" style={{ fontSize: 11, fontVariantNumeric: "tabular-nums", width: "100%" }}>
+        <thead>
+          <tr style={{ background: "var(--bg-muted)", color: "var(--text-2)", borderBottom: "1px solid var(--border)" }}>
+            <th rowSpan={2} onClick={() => onSort("rank")}
+                style={{ padding: "6px 8px", textAlign: "center", fontWeight: 700, position: "sticky", left: 0, background: "var(--bg-muted)", zIndex: 2, cursor: "pointer", userSelect: "none" }}>
+              Pos{arrow("rank")}
+            </th>
+            {data.editions.map((e, ei) => (
+              <th key={e.tcode} colSpan={e.nRounds + 2 + (e.parPerRound ? 1 : 0)}
+                  style={{ padding: "10px 10px 8px", textAlign: "center", fontWeight: 700, borderLeft: ei === 0 ? "1px solid var(--border)" : "2px solid var(--border)" }}>
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3 }}>
+                  {/* Linha 1: ANO + METROS (destaque) + link ↗ + field-size */}
+                  <div style={{ display: "flex", alignItems: "baseline", gap: 8, color: "var(--text)" }}>
+                    <span style={{ fontSize: 16, fontWeight: 700 }}>{e.year}</span>
+                    {e.meters && (
+                      <span style={{ fontSize: 13, fontWeight: 600, color: "var(--text-2)" }}>
+                        {String.fromCharCode(0xb7)} {e.meters}m
+                      </span>
+                    )}
+                    {/^\d+$/.test(e.tcode) && (
+                      <a href={`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${e.tcode}`}
+                         target="_blank" rel="noreferrer"
+                         onClick={(ev) => ev.stopPropagation()}
+                         title="Abrir resultados oficiais USKids/signupanytime"
+                         style={{ fontSize: 11, color: "var(--color-info)", textDecoration: "none", fontWeight: 700 }}>
+                        ↗
+                      </a>
+                    )}
+                    <span style={{ fontSize: 10, color: "var(--text-3)", fontWeight: 500 }}>(n={e.fieldSize})</span>
+                  </div>
+                  {/* Linha 2: NOME DO CAMPO */}
+                  {e.course && (
+                    <div style={{ fontSize: 12, color: "var(--text-2)", fontWeight: 500, lineHeight: 1.2, fontStyle: "italic" }}>
+                      {e.course}
+                    </div>
+                  )}
+                </div>
+              </th>
+            ))}
+          </tr>
+          <tr style={{ background: "var(--bg-muted)", color: "var(--text-3)", borderBottom: "1px solid var(--border)" }}>
+            {data.editions.flatMap((e, ei) => {
+              const cells = [];
+              // Nome
+              cells.push(
+                <th key={`${e.year}_name`}
+                    style={{ padding: "3px 6px", textAlign: "left", fontWeight: 600, fontSize: 10, borderLeft: ei === 0 ? "1px solid var(--border)" : "2px solid var(--border)", minWidth: 110 }}>
+                  Nome
+                </th>
+              );
+              // T (total) — antes de R1 — sortable, fundo destacado
+              const totalKey = `${e.year}_T`;
+              cells.push(
+              <th key={totalKey} onClick={() => onSort(totalKey)}
+                  style={{ padding: "3px 6px", textAlign: "center", fontWeight: 700, fontSize: 10, background: "var(--bg-card, var(--bg))", color: "var(--text-2)", cursor: "pointer", userSelect: "none" }}>
+                  T{arrow(totalKey)}
+                </th>
+              );
+              // ±par (TP) — diferença para o par total do torneio
+              if (e.parPerRound) {
+                const tpKey = `${e.year}_TP`;
+                cells.push(
+                  <th key={tpKey} onClick={() => onSort(tpKey)}
+                      title={`Par por ronda: ${e.parPerRound} (total: ${e.parPerRound * e.nRounds})`}
+                      style={{ padding: "3px 6px", textAlign: "center", fontWeight: 600, fontSize: 10, color: "var(--text-3)", cursor: "pointer", userSelect: "none" }}>
+                    ±par{arrow(tpKey)}
+                  </th>
+                );
+              }
+              // R1, R2, R3
+              for (let i = 0; i < e.nRounds; i++) {
+                const key = `${e.year}_R${i + 1}`;
+                cells.push(
+                  <th key={key} onClick={() => onSort(key)}
+                      style={{ padding: "3px 6px", textAlign: "center", fontWeight: 600, fontSize: 10, cursor: "pointer", userSelect: "none" }}>
+                    R{i + 1}{arrow(key)}
+                  </th>
+                );
+              }
+              return cells;
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {sortedRows.map((row) => {
+            const pos = row.rank;
+            const firstEd = data.editions[0];
+            const firstEntry = firstEd?.ranked[row.idx];
+            const isIE = firstEntry && firstEntry.officialPlace == null;
+            const displayPos = firstEntry?.officialPlace ?? null;
+            const medalPos = displayPos ?? 99;
+            const medal = medalPos === 1 ? "var(--medal-gold-bg)" : medalPos === 2 ? "var(--medal-silver-bg)" : medalPos === 3 ? "var(--medal-bronze-bg)" : undefined;
+            const medalFg = medalPos === 1 ? "var(--medal-gold-fg)" : medalPos === 2 ? "var(--medal-silver-fg)" : medalPos === 3 ? "var(--medal-bronze-fg)" : "var(--text-2)";
+            return (
+              <tr key={pos} style={{ borderBottom: "1px solid var(--border-light)", opacity: isIE ? 0.75 : 1 }}>
+                <td style={{ padding: "4px 8px", fontWeight: 700, color: medalFg, textAlign: "center", position: "sticky", left: 0, background: medal || "var(--bg)", zIndex: 1, whiteSpace: "nowrap" }}>
+                  {displayPos != null
+                    ? `#${displayPos}`
+                    : (
+                      <span title={firstEntry?.wouldBePos ? `Sem classificação oficial. Por total seria #${firstEntry.wouldBePos}.` : "Sem classificação oficial"}>
+                        — {firstEntry?.wouldBePos != null && (
+                          <span style={{ fontSize: 9, fontWeight: 500, color: "var(--text-3)" }}>
+                            ({firstEntry.wouldBePos})
+                          </span>
+                        )}
+                      </span>
+                    )}
+                </td>
+                {data.editions.flatMap((e, ei) => {
+                  const entry = e.ranked[row.idx];
+                  const cells = [];
+                  cells.push(
+                    <td key={e.tcode + "_name"} style={{ padding: "4px 6px", borderLeft: ei === 0 ? "1px solid var(--border)" : "2px solid var(--border)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 160 }}>
+                      {entry ? (
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+                          <a href={`/kids2#${encodeURIComponent(entry.name)}`}
+                             target="_blank" rel="noreferrer"
+                             style={{ color: entry.officialPlace == null ? "var(--text-2)" : "var(--text)", textDecoration: "none", cursor: "pointer", opacity: entry.officialPlace == null ? 0.7 : 1 }}
+                             title={entry.officialPlace == null ? `${entry.name} — IE/DSQ/WD (sem classificação oficial)` : `Abrir perfil de ${entry.name} em nova janela`}>
+                            {entry.name}
+                          </a>
+                          {entry.officialPlace == null && (
+                            <span title="Sem classificação oficial (IE / DSQ / WD)"
+                                  style={{ fontSize: 8, padding: "0 4px", borderRadius: 3, background: "var(--bg-danger-subtle, #fecaca)", color: "var(--color-danger-dark, #991b1b)", fontWeight: 700, letterSpacing: 0.3 }}>
+                              IE
+                            </span>
+                          )}
+                        </span>
+                      ) : (
+                        <span style={{ color: "var(--text-3)" }}>—</span>
+                      )}
+                    </td>
+                  );
+                  cells.push(
+                    <td key={e.tcode + "_T"} style={{ padding: "4px 6px", textAlign: "center", fontWeight: 700, background: "var(--bg-card, var(--bg))", color: entry ? "var(--text)" : "var(--text-3)" }}>
+                      {entry ? entry.total : "—"}
+                    </td>
+                  );
+                  if (e.parPerRound) {
+                    const tp = entry ? entry.total - e.parPerRound * e.nRounds : null;
+                    const tpColor = tp == null ? "var(--text-3)" : tp < 0 ? "var(--color-good-dark)" : tp > 0 ? "var(--color-danger-dark)" : "var(--text-2)";
+                    cells.push(
+                      <td key={e.tcode + "_TP"} style={{ padding: "4px 6px", textAlign: "center", fontWeight: 600, color: tpColor }}>
+                        {tp == null ? "—" : tp === 0 ? "E" : tp > 0 ? "+" + tp : String(tp)}
+                      </td>
+                    );
+                  }
+                  for (let ri = 0; ri < e.nRounds; ri++) {
+                    const v = entry?.rounds[String(ri + 1)];
+                    cells.push(
+                      <td key={e.tcode + "_r" + (ri + 1)} style={{ padding: "4px 6px", textAlign: "center", color: v ? "var(--text)" : "var(--text-3)" }}>
+                        {v || "—"}
+                      </td>
+                    );
+                  }
+                  return cells;
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </div>
   );
 }

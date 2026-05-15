@@ -68,14 +68,48 @@ const FLIGHTS_MANUAL = {
   ],
 };
 
-// Todos os torneios a processar (os manuais + os novos para auto-descoberta)
+// Todos os torneios a processar. Para cada tcode, os flights Boys 9-13 são
+// auto-descobertos via GetMeta — então adicionar uma linha basta.
+// Lista expandida para incluir TODAS as edições passadas das séries relevantes
+// (European, World, Venice, Rome Classic, Red White & Blue, Holiday Classic,
+// Marco Simone, El Prat 2023). Quem está no field destes torneios fica em cache
+// e a sua carreira completa é puxada via GetMemberTournamentResults.
 const ALL_TCODES = [
-  // já configurados manualmente acima
+  // ── Flights manuais já configurados ──
   18242, 19418, 20175, 21080, 21131,
-  // novos — flights serão auto-descobertos via GetMeta
-  8300, 11604, 12229, 13568, 14029, 14218,
-  15573, 15704, 16705, 16428, 18438, 18124,
-  21004,
+
+  // ── European Championship (2014-2026) ──
+  144, 1084, 2079, 3361, 5095, 6713, 8300, 13568, 15704,
+  // 18242 já listado, 21131 já listado
+
+  // ── World Championship (2013-2026) ──
+  35, 205, 1189, 2250, 3669, 5375, 6901, 8194, 9793,
+  11604, 14029, 15807, 18124, 21610,
+
+  // ── Venice Open (2015-2026) ──
+  1076, 2585, 4010, 5663, 7315, 9086, 10240,
+  12229, 14302, 16428, 22243,
+  // 19418 já listado
+
+  // ── Rome Classic (2021-2025) ──
+  9386, 12578, 14670, 16795,
+  // 20175 já listado
+
+  // ── Marco Simone Invitational (2025-2026) ──
+  18438,
+  // 21080 já listado
+
+  // ── Red White & Blue Invitational (2016-2026) ──
+  2508, 3772, 4967, 7170, 8192, 10118, 12093, 14218, 16705, 18719, 22187,
+
+  // ── Holiday Classic (2013-2025) ──
+  115, 509, 1964, 3235, 3777, 5047, 7644, 8510, 10306, 13273, 15480, 18000, 20878,
+
+  // ── El Prat 2023 (USKids Open Spain) ──
+  15573,
+
+  // ── 2026 USA (já estavam) ──
+  21004, // Desert Shootout 2026
 ];
 
 // Prefixos de escalão a incluir na auto-descoberta

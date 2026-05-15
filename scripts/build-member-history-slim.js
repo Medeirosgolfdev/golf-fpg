@@ -117,18 +117,43 @@ for (const filename of allFiles) {
           holesPerRound: tourn.holesPerRound || 18,
           par:           trimTrailingZeros(tourn.par)   || null,
           yards:         trimTrailingZeros(tourn.yards) || null,
+          // byEscalao: ageGroup → { course, yards } — diferentes escalões jogam
+          // tees diferentes (mais curtos para escalões menores).
+          byEscalao:     {},
         };
       } else {
         // Completar par/yards se em falta (podem aparecer noutra entrada)
         const t = torneios[tcodeStr];
         if (!t.par && tourn.par)   t.par   = trimTrailingZeros(tourn.par);
         if (!t.yards && tourn.yards) t.yards = trimTrailingZeros(tourn.yards);
+        if (!t.byEscalao) t.byEscalao = {};
         // Raro, mas pode haver entradas com arrays diferentes — merge seguro
         if (t.par && tourn.par)     t.par   = mergeArrays(t.par, trimTrailingZeros(tourn.par));
         if (t.yards && tourn.yards) t.yards = mergeArrays(t.yards, trimTrailingZeros(tourn.yards));
         // Garantir que o nome fica preenchido
         if (!t.name && tourn.name) t.name = tourn.name;
         if (!t.startDate && tourn.startDate) t.startDate = tourn.startDate;
+      }
+
+      // ── Capturar course + yards por escalão ──
+      // Cada (tcode, ageGroup) pode jogar de tee diferente. Para o byEscalao,
+      // guardamos: course (do primeiro round visto) + yards específicos do
+      // jogador (que reflectem o tee do escalão).
+      const ageGroup = tourn.ageGroup || '';
+      if (ageGroup && torneios[tcodeStr].byEscalao && !torneios[tcodeStr].byEscalao[ageGroup]) {
+        let course = '';
+        for (const r of Object.values(tourn.rounds || {})) {
+          if (r && r.course) { course = r.course.trim(); break; }
+        }
+        const yardsAg = trimTrailingZeros(tourn.yards);
+        const parAg = trimTrailingZeros(tourn.par);
+        if (course || (yardsAg && yardsAg.length > 0) || (parAg && parAg.length > 0)) {
+          torneios[tcodeStr].byEscalao[ageGroup] = {
+            ...(course ? { course } : {}),
+            ...(yardsAg && yardsAg.length > 0 ? { yards: yardsAg } : {}),
+            ...(parAg && parAg.length > 0 ? { par: parAg } : {}),
+          };
+        }
       }
 
       // ── Rounds slim (só gross + strokes sem zeros no fim) ──

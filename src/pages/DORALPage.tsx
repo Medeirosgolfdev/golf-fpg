@@ -14,7 +14,7 @@ import { fmtFieldInfo } from "../utils/format";
 import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
 import SidebarToggle from "../ui/SidebarToggle";
-import { Toolbar, ToolbarTitle, ToolbarMeta } from "../ui/Toolbar";
+import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 import DetailHeader from "../ui/DetailHeader";
 import { useMasterDetail } from "../hooks/useMasterDetail";
@@ -26,7 +26,32 @@ import EvoBadge from "../ui/EvoBadge";
 import type { ExtraColumn, MultiRoundRow } from "../ui/multiRoundTypes";
 import { IntlTournView } from "../ui/IntlTournView";
 import { useKidsLinkMap } from "../hooks/useKidsLinkMap";
-import { useEvoComparison, type EvoEntry, type EvoInput } from "../hooks/useEvoComparison";
+import { type EvoEntry } from "../hooks/useEvoComparison";
+
+/** EvoEntry estendido para Doral:
+ *  - prevYear: ano de origem da comparação (mais recente onde participou)
+ *  - history: lista completa de todas as edições anteriores (do mais
+ *    recente para o mais antigo) — usada no tooltip da coluna "Ant."
+ *  - delta sobrescreve o original: passa a ser MÉDIA DE STROKES VS PAR
+ *    POR RONDA (em vez de gross total). Necessário porque alguns escalões
+ *    jogam 3 rondas e outros 2, e o par muda entre Red Tiger / Golden
+ *    Palm / Silver Fox / Blue Monster — só média toPar/ronda permite
+ *    comparação justa cross-escalões.
+ *  - deltaIsComparable: true se cur e ant têm o mesmo nº de rondas e mesmo
+ *    par (i.e. mesmo escalão/configuração). Quando true, podemos mostrar
+ *    o delta como diferença de gross total (mais intuitivo).
+ *  - curAvgVsPar / refAvgVsPar: para o tooltip mostrar os valores brutos */
+type EvoEntryD = Omit<EvoEntry, "delta"> & {
+  prevYear: number;
+  history: { year: number; category: string; total: number; pos: number | null; parTotal: number; nR: number }[];
+  /** Diff de avg-strokes-vs-par-por-ronda (negativo = melhorou). 1 decimal. */
+  delta: number;
+  deltaIsComparable: boolean;
+  /** Diff absoluto de gross (só significativo se deltaIsComparable). */
+  deltaGross: number;
+  curAvgVsPar: number;
+  refAvgVsPar: number;
+};
 import { KidsLinkCtx } from "../ui/KidsLink";
 
 /* ── Types ─────────────────────────────────────────────────── */
@@ -93,6 +118,9 @@ interface Entry {
 }
 
 /* ── Ficheiros de dados ─────────────────────────────────────── */
+/* Todos os anos disponíveis em GolfGenius. Ficheiros em falta (404) são
+   tolerados graciosamente pelo loader — só aparecem na UI os que existirem.
+   Para scrapar um ano novo: `node scripts/scrape-golfgenius-v3.js --year YYYY` */
 const DATA_FILES: { url: string; sourceUrl: string }[] = [
   {
     url: "/data/ftm_doral_2025.json",
@@ -101,6 +129,30 @@ const DATA_FILES: { url: string; sourceUrl: string }[] = [
   {
     url: "/data/ftm_doral_2024.json",
     sourceUrl: "https://2024firstteemiamidoraljrclassic.golfgenius.com/pages/4894994",
+  },
+  {
+    url: "/data/ftm_doral_2023.json",
+    sourceUrl: "https://tftm-2023firstteemiamidoraljrclassic.golfgenius.com/pages/4282619",
+  },
+  {
+    url: "/data/ftm_doral_2022.json",
+    sourceUrl: "https://2022firstteemiamidoral.golfgenius.com/pages/3661172",
+  },
+  {
+    url: "/data/ftm_doral_2021.json",
+    sourceUrl: "https://2021firstteemiamidoral.golfgenius.com/pages/3122115",
+  },
+  {
+    url: "/data/ftm_doral_2020.json",
+    sourceUrl: "https://www.golfgenius.com/pages/2610251",
+  },
+  {
+    url: "/data/ftm_doral_2019.json",
+    sourceUrl: "https://2019doralpublix.golfgenius.com/pages/2050901",
+  },
+  {
+    url: "/data/ftm_doral_2018.json",
+    sourceUrl: "https://2018doralpublix.golfgenius.com/pages/1568091",
   },
 ];
 
@@ -141,6 +193,17 @@ function normalizeName(raw: string): string {
 /** Manuel Medeiros — mesmo critério que BJGTPage */
 /* gradToBirth removido — não usado directamente, birthYear vem no entryToTournament */
 
+/** Normaliza label de divisão GolfGenius para forma consistente.
+ *  O widget mistura "Boys 14 & 15" e "Boys 14-15" entre anos — normalizamos
+ *  para "Boys 14-15" sempre (excepto "Boys 7 & Under" que mantém-se).
+ *  Sem isto, a comparação ano-a-ano falha em divisões com tipografia diferente. */
+function normalizeCategoryLabel(raw: string): string {
+  const s = raw.replace(/\s+/g, " ").trim();
+  if (/7\s*&\s*Under/i.test(s)) return s.replace(/\s*&\s*/g, " & ");
+  // "Boys 14 & 15" → "Boys 14-15"
+  return s.replace(/(\d+)\s*&\s*(\d+)/g, "$1-$2");
+}
+
 
 function normalizeFile(raw: RawGG, sourceUrl: string): Entry[] {
   return raw.divisions.map((div): Entry => {
@@ -172,12 +235,17 @@ function normalizeFile(raw: RawGG, sourceUrl: string): Entry[] {
         if (af !== bf) return af - bf;
         return (a.total ?? 999) - (b.total ?? 999);
       });
-    const meta = DIVISION_META[div.division] ?? { course: "", metres: [], metresTotal: 0 };
+    // Lookup do DIVISION_META — normaliza o key porque o scraper guarda
+    // "Boys 14 & 15" (com ampersand) mas o DIVISION_META tem "Boys 14-15" (hífen).
+    // Tenta primeiro o raw, depois a versão normalizada.
+    const metaKeyNorm = normalizeCategoryLabel(div.division);
+    const meta = DIVISION_META[div.division] ?? DIVISION_META[metaKeyNorm] ?? { course: "", metres: [], metresTotal: 0 };
+    const normCategory = normalizeCategoryLabel(div.division);
     return {
-      id: `${raw.year}_${div.division.replace(/\s+/g,"_")}`,
-      label: `${raw.year} // ${div.division}`,
+      id: `${raw.year}_${normCategory.replace(/\s+/g,"_")}`,
+      label: `${raw.year} // ${normCategory}`,
       year: raw.year,
-      category: div.division,
+      category: normCategory,
       divisionName: div.name,
       nineHole,
       par: div.par ?? [],
@@ -231,6 +299,7 @@ function entryToTournament(entry: Entry): FPGTournament {
         par: entry.par,
         si: entry.metres,       // metros na linha SI
         meters: entry.metres,
+        course: entry.course,   // Red Tiger, Golden Palm, Silver Fox, Blue Monster — usado na linha de stats
         courseRating: entry.cr,
         slope: entry.slope,
         roundScores,
@@ -270,44 +339,73 @@ function doralScorecardOptions(entry: Entry): ScorecardOptions {
 /* DoralScorecard removido — lógica inline no DivView */
 
 /* ── DivView — usa IntlTournView (abas R1·R2·Resumo·📋 Scorecards) ── */
-function DivView({ entry, evo }: { entry: Entry; evo?: Map<string, EvoEntry> }) {
+function DivView({ entry, evo }: { entry: Entry; evo?: Map<string, EvoEntryD> }) {
   const tournament = useMemo(() => entryToTournament(entry), [entry]);
   const hasEvo = evo && evo.size > 0;
   const scOptions = useMemo(() => doralScorecardOptions(entry), [entry]);
 
-  const prevYear = entry.year - 1;
   type RowWithPos = MultiRoundRow & { _pos?: number | null };
   const evoCols: ExtraColumn<RowWithPos>[] | undefined = hasEvo ? [
     {
-      header: String(prevYear),
-      className: "ta-c fs-11 fw-600",
-      headerStyle: { width: 36, textAlign: "center" as const, padding: "0 3px", borderLeft: "2px solid var(--border)" },
+      header: "Ant.",
+      className: "ta-l fs-11 fw-600 lb-col-divider",
+      headerStyle: { width: 72, textAlign: "left" as const, padding: "0 6px" },
       cell: (row: RowWithPos) => {
         const ev = evo!.get(row.name);
-        return ev
-          ? <span className="inline-sep">{ev.otherValue}</span>
-          : <span className="c-muted inline-sep">–</span>;
+        if (!ev) return <span className="c-muted">–</span>;
+        // Tooltip: histórico completo (ano · gross · escalão)
+        const tooltip = ev.history
+          .map(h => `${h.year}: ${h.total} (${h.category}${h.pos != null ? ` #${h.pos}` : ""})`)
+          .join("\n");
+        const nEditions = ev.history.length;
+        return (
+          <span title={tooltip} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+            <span>{ev.otherValue}</span>
+            {nEditions > 1 && (
+              <span style={{
+                fontSize: 9, fontWeight: 700,
+                background: "var(--bg-muted, #eee)", color: "var(--text-2, #666)",
+                borderRadius: 8, padding: "0 5px", lineHeight: "14px",
+              }}>{nEditions}×</span>
+            )}
+          </span>
+        );
       },
     },
     {
       header: "Δ",
-      className: "ta-c fs-11 fw-700",
-      headerStyle: { width: 34, textAlign: "center" as const, padding: "0 3px" },
+      className: "ta-l fs-11 fw-700",
+      headerStyle: { width: 60, textAlign: "left" as const, padding: "0 6px" },
+      // Δ comparável (mesmo nº rondas + mesmo par): diferença de gross total
+      // Δ cross-escalões: diferença de média strokes-vs-par por ronda, sufixo "/r"
       cell: (row: RowWithPos) => {
         const ev = evo!.get(row.name);
         if (!ev) return <span className="c-muted">–</span>;
-        return <span style={{ color: ev.delta < 0 ? "var(--good-dark)" : ev.delta > 0 ? SC.danger : "var(--text-3)" }}>{ev.delta > 0 ? "+" : ""}{ev.delta}</span>;
+        const value = ev.deltaIsComparable ? ev.deltaGross : ev.delta;
+        const sign  = value > 0 ? "+" : "";
+        const suffix = ev.deltaIsComparable ? "" : <span className="c-muted" style={{ fontSize: 9, marginLeft: 1 }}>/r</span>;
+        const tooltip = ev.deltaIsComparable
+          ? `Δ vs ${ev.prevYear} (gross ${ev.otherValue}, mesmo escalão e nº de rondas)`
+          : `Δ média strokes-vs-par por ronda · ${ev.prevYear}: ${ev.refAvgVsPar.toFixed(1)} vs hoje ${ev.curAvgVsPar.toFixed(1)} (comparação cross-escalões com nº de rondas diferentes)`;
+        return (
+          <span
+            title={tooltip}
+            style={{ color: value < 0 ? "var(--good-dark)" : value > 0 ? SC.danger : "var(--text-3)" }}
+          >
+            {sign}{value}{suffix}
+          </span>
+        );
       },
     },
     {
       header: "Percurso",
-      className: "ta-c",
-      headerStyle: { width: 140, textAlign: "center" as const, padding: "0 4px" },
+      className: "ta-l",
+      headerStyle: { width: 160, textAlign: "left" as const, padding: "0 6px" },
       cell: (row: RowWithPos) => {
         const ev = evo!.get(row.name);
         return ev
           ? <EvoBadge pill={ev.pill} from={ev.from} to={ev.to} prevPos={ev.prevPos} fieldSize={ev.fieldSize} />
-          : <EvoBadge pill="NEW" />;
+          : <span className="c-muted">novo</span>;
       },
     },
   ] : undefined;
@@ -323,16 +421,29 @@ function DivView({ entry, evo }: { entry: Entry; evo?: Map<string, EvoEntry> }) 
   );
 }
 
-/** Mini-resumo de evolução ano-a-ano (preserva info do Evo sem o AccLB custom) */
-function EvoSummary({ entry, evo }: { entry: Entry; evo: Map<string, EvoEntry> }) {
+/** Mini-resumo de evolução: jogadores que já passaram pelo Doral, com
+ *  distribuição por número de edições anteriores (1x, 2x, 3x+). */
+function EvoSummary({ evo }: { entry: Entry; evo: Map<string, EvoEntryD> }) {
   if (!evo.size) return null;
-  const prevYear = entry.year - 1;
-  const returning = [...evo.values()].filter(e => e.delta !== 0);
+  const entries = [...evo.values()];
+  const returning = entries.filter(e => e.delta !== 0);
   const improved  = returning.filter(e => e.delta < 0).length;
   const total     = returning.length;
+  // Distribuição: quantos jogadores têm 1, 2, 3+ edições anteriores
+  let solo = 0, twice = 0, veteran = 0;
+  for (const e of entries) {
+    if (e.history.length === 1) solo++;
+    else if (e.history.length === 2) twice++;
+    else veteran++;
+  }
+  const breakdown: string[] = [];
+  if (solo)    breakdown.push(`${solo} c/ 1 edição`);
+  if (twice)   breakdown.push(`${twice} c/ 2`);
+  if (veteran) breakdown.push(`${veteran} c/ 3+`);
   return (
     <div className="muted fs-10 mb-8">
-      {evo.size} jogadores regressaram de {prevYear}{total > 0 ? ` · ${improved}/${total} melhoraram` : ""}
+      {evo.size} jogadores já passaram pelo Doral{breakdown.length ? ` (${breakdown.join(", ")})` : ""}
+      {total > 0 ? ` · ${improved}/${total} melhoraram` : ""}
     </div>
   );
 }
@@ -375,28 +486,144 @@ function Content() {
   const safeIdx = entries.length ? Math.min(ti, entries.length - 1) : 0;
   const cur = entries.length ? entries[safeIdx] : null;
 
-  const evoInput = useMemo((): EvoInput | null => {
-    if (!cur) return null;
-    const prevEntries = entries.filter(e => e.year === cur.year - 1 && e.category === cur.category);
-    if (!prevEntries.length) return null;
+  /* ─── Filtros da toolbar (estado local) ─── */
+  const [search, setSearch] = useState("");
+  const [country, setCountry] = useState("");
+  const [filterManuel, setFilterManuel] = useState(false);
+  const [onlyReturning, setOnlyReturning] = useState(false);
+  const [onlyUp, setOnlyUp] = useState(false);
+  const [onlyTop10, setOnlyTop10] = useState(false);
+  const [onlyPT, setOnlyPT] = useState(false);
+  const [onlyVeterans, setOnlyVeterans] = useState(false);
+  const resetFilters = () => {
+    setSearch(""); setCountry(""); setFilterManuel(false);
+    setOnlyReturning(false); setOnlyUp(false); setOnlyTop10(false);
+    setOnlyPT(false); setOnlyVeterans(false);
+  };
+  const hasActiveFilters = !!search || !!country || filterManuel || onlyReturning || onlyUp || onlyTop10 || onlyPT || onlyVeterans;
+
+  // Países disponíveis na divisão actual (para o dropdown)
+  const countries = useMemo(() => {
+    if (!cur) return [] as string[];
+    return [...new Set(cur.players.map(p => p.country).filter(Boolean))].sort();
+  }, [cur]);
+
+  // Matching de nomes — mesma lógica que useEvoComparison (firstName + lastName)
+  const nameMatch = (a: string, b: string): boolean => {
+    const na = a.toLowerCase().replace(/\s+/g, " ").trim();
+    const nb = b.toLowerCase().replace(/\s+/g, " ").trim();
+    if (na === nb) return true;
+    const aParts = na.split(" ");
+    const bParts = nb.split(" ");
+    return aParts[0] === bParts[0] && aParts[aParts.length - 1] === bParts[bParts.length - 1];
+  };
+
+  const { evo, evoYear, manuelEvo } = useMemo<{
+    evo: Map<string, EvoEntryD> | undefined;
+    evoYear: string | undefined;
+    manuelEvo: EvoEntryD | undefined;
+  }>(() => {
+    if (!cur) return { evo: undefined, evoYear: undefined, manuelEvo: undefined };
+    // Anos anteriores ao actual, do mais recente para o mais antigo.
+    const earlierYears = [...new Set(entries.map(e => e.year))]
+      .filter(y => y < cur.year).sort((a, b) => b - a);
+    if (!earlierYears.length) return { evo: undefined, evoYear: undefined, manuelEvo: undefined };
+
+    // Pré-computar fieldSize por (ano, categoria) — para o badge.
+    const fieldSizeMap = new Map<string, number>(); // "year|category" → N
+    for (const e of entries) {
+      if (e.year >= cur.year) continue;
+      const eNR = Math.max(...e.players.map(p => p.rounds.length), 0);
+      const n = e.players.filter(p => p.rounds.length === eNR && p.total != null).length;
+      fieldSizeMap.set(`${e.year}|${e.category}`, n);
+    }
+
     const nR = Math.max(...cur.players.map(p => p.rounds.length), 0);
+    const currentPlayers = cur.players.filter(p => p.total != null && p.rounds.length === nR);
+
+    const evoMap = new Map<string, EvoEntryD>();
+    let manuelEvo: EvoEntryD | undefined;
+
+    const curNR = nR;
+    const curParTotal = cur.parTotal || 71; // fallback razoável (Golden Palm)
+    const curAvgVsPar = (total: number) => (total - curParTotal * curNR) / curNR;
+
+    for (const curP of currentPlayers) {
+      // Recolher TODAS as participações anteriores.
+      const history: { year: number; category: string; total: number; pos: number | null; parTotal: number; nR: number }[] = [];
+      for (const y of earlierYears) {
+        const yearEntries = entries.filter(e => e.year === y);
+        for (const e of yearEntries) {
+          const eNR = Math.max(...e.players.map(p => p.rounds.length), 0);
+          const refP = e.players.find(p =>
+            p.total != null && p.rounds.length === eNR && nameMatch(curP.name, p.name));
+          if (refP) {
+            history.push({
+              year: y, category: e.category, total: refP.total!, pos: refP.pos ?? null,
+              parTotal: e.parTotal || 71, nR: eNR,
+            });
+            break; // 1 entrada por ano
+          }
+        }
+      }
+      if (history.length === 0) continue;
+      const mostRecent = history[0];
+
+      // Δ = média strokes vs par por ronda (cross-escalões fair)
+      const curAvgToPar = curAvgVsPar(curP.total!);
+      const refAvgToPar = (mostRecent.total - mostRecent.parTotal * mostRecent.nR) / mostRecent.nR;
+      const deltaAvg = Math.round((curAvgToPar - refAvgToPar) * 10) / 10;
+
+      // Δ comparável directo (mesmo nR + mesmo parTotal)?
+      const deltaIsComparable = curNR === mostRecent.nR && curParTotal === mostRecent.parTotal;
+      const deltaGross = curP.total! - mostRecent.total;
+
+      const entry: EvoEntryD = {
+        otherValue: mostRecent.total,
+        delta: deltaAvg,
+        deltaIsComparable,
+        deltaGross,
+        curAvgVsPar: curAvgToPar,
+        refAvgVsPar: refAvgToPar,
+        from: mostRecent.category,
+        to: cur.category,
+        pill: mostRecent.category === cur.category ? "EQ" : "UP",
+        prevPos: mostRecent.pos,
+        fieldSize: fieldSizeMap.get(`${mostRecent.year}|${mostRecent.category}`),
+        prevYear: mostRecent.year,
+        history,
+      };
+      evoMap.set(curP.name, entry);
+      if (isM(curP.name)) manuelEvo = entry;
+    }
+
     return {
-      currentPlayers: cur.players
-        .filter(p => p.total != null && p.rounds.length === nR)
-        .map(p => ({ name: p.name, value: p.total!, category: cur.category, pos: p.pos })),
-      referencePlayers: prevEntries.flatMap(e => {
-        const eNR = Math.max(...e.players.map(p => p.rounds.length), 0);
-        return e.players
-          .filter(p => p.total != null && p.rounds.length === eNR)
-          .map(p => ({ name: p.name, value: p.total!, category: e.category, pos: p.pos }));
-      }),
-      referenceYear: String(cur.year - 1),
-      includeFieldSize: true,
-      isManuel: isM,
+      evo: evoMap.size ? evoMap : undefined,
+      evoYear: String(cur.year - 1),
+      manuelEvo,
     };
   }, [cur, entries]);
 
-  const { evoMap: evo, evoYear, manuelEvo } = useEvoComparison(evoInput);
+  // Aplicar filtros à divisão actual. O `evo` continua a usar o cur completo
+  // (para conhecer todos os jogadores e suas histórias) mas o que mostramos
+  // na tabela e nos cards passa por este filtro.
+  const filteredCur = useMemo(() => {
+    if (!cur) return null;
+    if (!hasActiveFilters) return cur;
+    let players = cur.players;
+    if (search) {
+      const q = search.toLowerCase().trim();
+      players = players.filter(p => p.name.toLowerCase().includes(q));
+    }
+    if (country)        players = players.filter(p => p.country === country);
+    if (filterManuel)   players = players.filter(p => isM(p.name));
+    if (onlyReturning)  players = players.filter(p => evo?.has(p.name));
+    if (onlyUp)         players = players.filter(p => evo?.get(p.name)?.pill === "UP");
+    if (onlyTop10)      players = players.filter(p => p.pos != null && p.pos <= 10);
+    if (onlyPT)         players = players.filter(p => p.country === "Portugal" || isM(p.name));
+    if (onlyVeterans)   players = players.filter(p => (evo?.get(p.name)?.history.length ?? 0) >= 3);
+    return { ...cur, players };
+  }, [cur, evo, hasActiveFilters, search, country, filterManuel, onlyReturning, onlyUp, onlyTop10, onlyPT, onlyVeterans]);
 
   if (loading) return <LoadingState />;
   if (!entries.length || !cur) return (
@@ -419,72 +646,111 @@ function Content() {
         <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
         <ToolbarTitle>🇺🇸 Doral</ToolbarTitle>
         <DataSourcesChip sources={fileMeta} />
-        {cur && <ToolbarMeta>📍 Doral Golf Resort</ToolbarMeta>}
-        {cur && (() => {
-          const nR = Math.max(...cur.players.map(p => p.rounds.length));
-          return <Counter ml="auto">{fmtFieldInfo(cur.players.filter(p => p.rounds.length === nR).length, nR, cur.category)}</Counter>;
+        {cur && <ToolbarMeta>📍 {cur.category}</ToolbarMeta>}
+        <ToolbarSep />
+        {/* Pesquisa */}
+        <input type="text" value={search} onChange={e => setSearch(e.target.value)}
+          placeholder="🔎 Pesquisar jogador…" className="input fs-12 shrink-0"
+          style={{ width: 160, height: 26 }} />
+        {/* País */}
+        <select className="select fs-11 shrink-0" value={country} onChange={e => setCountry(e.target.value)}
+          style={{ height: 26, minWidth: 85 }}>
+          <option value="">🌍 País</option>
+          {countries.map(c => <option key={c} value={c}>{gf(c)} {c}</option>)}
+        </select>
+        {/* ★ Manuel */}
+        <button
+          className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
+          style={filterManuel
+            ? { flexShrink: 0, background: "var(--bg-success-subtle)", borderColor: "var(--color-good)", color: "var(--color-good-dark)" }
+            : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}
+          onClick={() => setFilterManuel(v => !v)}>★ Manuel</button>
+        {/* 🇵🇹 PT */}
+        <button
+          className={"tourn-tab tourn-tab-sm" + (onlyPT ? " active" : "")}
+          style={onlyPT
+            ? { flexShrink: 0, background: "var(--bg-success-subtle)", borderColor: "var(--color-good)", color: "var(--color-good-dark)" }
+            : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}
+          onClick={() => setOnlyPT(v => !v)}
+          title="Só portugueses (e Manuel)">🇵🇹 PT</button>
+        {/* ↻ Regressados */}
+        <button
+          className={"tourn-tab tourn-tab-sm" + (onlyReturning ? " active" : " tourn-tab-muted")}
+          style={{ flexShrink: 0 }}
+          onClick={() => setOnlyReturning(v => !v)}
+          title="Só jogadores que já tinham jogado o Doral noutro ano">↻ Regressados</button>
+        {/* ⬆ Subiram de escalão */}
+        <button
+          className={"tourn-tab tourn-tab-sm" + (onlyUp ? " active" : " tourn-tab-muted")}
+          style={{ flexShrink: 0 }}
+          onClick={() => setOnlyUp(v => !v)}
+          title="Só jogadores que subiram de escalão face à última edição">⬆ Subiram</button>
+        {/* 🏆 Top 10 */}
+        <button
+          className={"tourn-tab tourn-tab-sm" + (onlyTop10 ? " active" : " tourn-tab-muted")}
+          style={{ flexShrink: 0 }}
+          onClick={() => setOnlyTop10(v => !v)}
+          title="Só os 10 melhores classificados">🏆 Top 10</button>
+        {/* ★ Veteranos (3+ edições) */}
+        <button
+          className={"tourn-tab tourn-tab-sm" + (onlyVeterans ? " active" : " tourn-tab-muted")}
+          style={{ flexShrink: 0 }}
+          onClick={() => setOnlyVeterans(v => !v)}
+          title="Jogadores com 3+ edições anteriores">✦ Veteranos</button>
+        {/* Reset */}
+        {hasActiveFilters && (
+          <button onClick={resetFilters} className="tourn-tab tourn-tab-sm"
+            style={{ flexShrink: 0, background: "var(--bg-danger)", color: "var(--color-danger-dark)", borderColor: "var(--color-danger)" }}>
+            ✕
+          </button>
+        )}
+        {filteredCur && (() => {
+          const nR = Math.max(...filteredCur.players.map(p => p.rounds.length), 0);
+          const total = cur ? cur.players.filter(p => p.rounds.length === nR).length : 0;
+          const shown = filteredCur.players.filter(p => p.rounds.length === nR).length;
+          return <Counter ml="auto">{hasActiveFilters ? `${shown}/${total}` : fmtFieldInfo(shown, nR, filteredCur.category)}</Counter>;
         })()}
       </Toolbar>
 
       {/* Master-detail */}
       <div className="master-detail">
 
-        {/* Sidebar */}
+        {/* Sidebar — estilo USKIDS: 1 entrada por ANO (torneio).
+            Escalões aparecem como tabs no detalhe. */}
         <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
+          <SidebarSectionTitle dark color="var(--color-doral-dark)" textColor="var(--color-doral-text)" borderColor="var(--color-doral-mid)" letterSpacing="0.08em">
+            🇺🇸 First Tee Miami Doral Jr. Classic
+          </SidebarSectionTitle>
           {years.map(year => {
             const yearEntries = entries.filter(e => e.year === year);
+            const isActiveYear = cur?.year === year;
+            const totalPlayers = yearEntries.reduce((acc, e) => {
+              const nR = Math.max(...e.players.map(p => p.rounds.length), 0);
+              return acc + e.players.filter(p => p.rounds.length === nR).length;
+            }, 0);
+            const manuelPlayed = yearEntries.some(e => e.players.some(p => isM(p.name)));
             return (
-              <React.Fragment key={year}>
-                <SidebarSectionTitle dark color="var(--color-doral-dark)" textColor="var(--color-doral-text)" borderColor="var(--color-doral-mid)" letterSpacing="0.08em">
-                  🇺🇸 First Tee Miami Doral Jr. Classic
-                </SidebarSectionTitle>
-                <div className="sidebar-year-label" style={{
-                  padding: "2px 10px",
-                  fontSize: 10,
-                  fontWeight: 700,
-                  letterSpacing: "0.05em",
-                  color: "#ffffff",
-                  textTransform: "uppercase",
-                  marginTop: 4,
-                  background: "var(--color-doral-dark)",
-                }}>
-                  {year}
+              <div key={year}
+                role="button" tabIndex={0}
+                className={`course-item ${isActiveYear ? "active" : ""}`}
+                onClick={() => {
+                  const idx = entries.findIndex(e => e.year === year);
+                  if (idx >= 0) { setTi(idx); md.onSelect(); }
+                }}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") {
+                  const idx = entries.findIndex(en => en.year === year);
+                  if (idx >= 0) { setTi(idx); md.onSelect(); }
+                }}}
+                style={{ cursor: "pointer", borderLeft: "4px solid var(--color-doral-mid)", borderRadius: "0 6px 6px 0" }}>
+                <div className="course-item-name" style={{ fontSize: 14 }}>{year}</div>
+                <div className="course-item-meta">📍 Trump National Doral</div>
+                <div className="course-item-meta" style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
+                  <span>{yearEntries.length} escalões</span>
+                  <span className="muted">·</span>
+                  <span>{totalPlayers} jog</span>
+                  {manuelPlayed && <ManuelPill />}
                 </div>
-                {yearEntries.map(entry => {
-                  const idx = entries.indexOf(entry);
-                  const nR = Math.max(...entry.players.map(p => p.rounds.length), 0);
-                  const nP = entry.players.filter(p => p.rounds.length === nR).length;
-                  const manuelPlayed = entry.players.some(p => isM(p.name));
-                  return (
-                    <button key={entry.id}
-                      className={`course-item ${safeIdx === idx ? "active" : ""}`}
-                      onClick={() => { setTi(idx); md.onSelect(); }}>
-                      <div className="course-item-name">{entry.category}</div>
-                      {entry.course && (
-                        <div className="course-item-meta" style={{ fontWeight:600, color:"var(--text-2)" }}>
-                          ⛳ {entry.course}
-                        </div>
-                      )}
-                      <div className="course-item-meta">
-                        {nP} jog{nR > 1 && <> · <RoundPill nR={nR} /></>}{entry.nineHole ? " · 9H" : ""}
-                        {entry.metresTotal ? ` · ${entry.metresTotal.toLocaleString("pt-PT")} m` : ""}
-                      </div>
-                      {(entry.cr != null || entry.slope != null) && (
-                        <div className="course-item-meta" style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:10, color:"var(--text-3)" }}>
-                          CR {entry.cr?.toFixed(1)} · Slope {entry.slope}
-                        </div>
-                      )}
-                      {manuelPlayed && (
-                        <span style={{ display:"inline-block", marginTop:4 }}><ManuelPill /></span>
-                      )}
-                      <ExtLink href={entry.sourceUrl} className="tourn-ext-link" style={{ marginTop:4 }}
-                        onClick={e => e.stopPropagation()}>
-                        🔗 Leaderboard oficial
-                      </ExtLink>
-                    </button>
-                  );
-                })}
-              </React.Fragment>
+              </div>
             );
           })}
         </div>
@@ -494,35 +760,70 @@ function Content() {
           {cur ? (
             <>
               <DetailHeader
-                title={cur.label}
+                title={`${cur.year} · ${cur.category}`}
                 sub={<><span className="muted">📍 Doral Golf Resort — {cur.divisionName}</span><ExtLink href={cur.sourceUrl} className="tourn-ext-link" style={{ marginLeft:8 }}>🔗 Leaderboard oficial</ExtLink></>}
               />
-              <DivView entry={cur} evo={evo} />
-              {manuelEvo && (
+              {/* Tabs de escalão — estilo USKIDS (.tab-under: sublinhado simples) */}
+              {(() => {
+                const yearEntries = entries.filter(e => e.year === cur.year);
+                if (yearEntries.length <= 1) return null;
+                return (
+                  <div style={{ display: "flex", gap: 2, flexWrap: "wrap", borderBottom: "1px solid var(--border)", marginBottom: 10, overflowX: "auto" }}>
+                    {yearEntries.map(e => {
+                      const idx = entries.indexOf(e);
+                      const active = idx === safeIdx;
+                      const eNR = Math.max(...e.players.map(p => p.rounds.length), 0);
+                      const eNP = e.players.filter(p => p.rounds.length === eNR).length;
+                      const eHasManuel = e.players.some(p => isM(p.name));
+                      return (
+                        <button key={e.id}
+                          onClick={() => setTi(idx)}
+                          className={"tab-under" + (active ? " active" : "")}
+                          title={`${e.category}${e.course ? ` — ${e.course}` : ""}`}>
+                          {e.category}
+                          <span className="fs-10 muted" style={{ marginLeft: 4 }}>{eNP}</span>
+                          {eHasManuel && <span style={{ marginLeft: 4, color: "var(--color-good)" }}>★</span>}
+                        </button>
+                      );
+                    })}
+                  </div>
+                );
+              })()}
+              <DivView entry={filteredCur || cur} evo={evo} />
+              {manuelEvo && (() => {
+                const manuelCur = cur.players.find(p => isM(p.name));
+                const curGross = manuelCur?.total ?? null;
+                const dValue = manuelEvo.deltaIsComparable ? manuelEvo.deltaGross : manuelEvo.delta;
+                const dSuffix = manuelEvo.deltaIsComparable ? "" : "/r";
+                const dLabel = manuelEvo.deltaIsComparable
+                  ? `pancadas (${cur.players[0]?.rounds.length ?? 2}R)`
+                  : "strokes vs par / ronda";
+                return (
                   <div className="card" style={{ background:"var(--bg-success-subtle)", border:"1px solid var(--good)", marginTop:8 }}>
                     <div className="h-md fs-14">🇵🇹 Manuel — Evolução Doral</div>
                     <div style={{ display:"flex", gap:16, flexWrap:"wrap", alignItems:"center" }}>
                       <div style={{ textAlign:"center", flex:"1 1 100px" }}>
-                        <div className="muted fs-10">{evoYear} ({manuelEvo.from})</div>
+                        <div className="muted fs-10">{manuelEvo.prevYear} ({manuelEvo.from})</div>
                         <div className="fw-900" style={{ fontSize:24 }}>{manuelEvo.otherValue}</div>
                       </div>
                       <div style={{ fontSize:24, color:"var(--good-dark)" }}>→</div>
                       <div style={{ textAlign:"center", flex:"1 1 100px" }}>
                         <div className="muted fs-10">{cur.year} ({manuelEvo.to})</div>
-                        <div className="fw-900" style={{ fontSize:24, color: manuelEvo.delta < 0 ? "var(--good-dark)" : "var(--text-3)" }}>
-                          {manuelEvo.otherValue + manuelEvo.delta}
+                        <div className="fw-900" style={{ fontSize:24, color: dValue < 0 ? "var(--good-dark)" : "var(--text-3)" }}>
+                          {curGross != null ? curGross : "—"}
                         </div>
                       </div>
                       <div style={{ textAlign:"center", flex:"1 1 80px" }}>
                         <div className="muted fs-10">Δ</div>
-                        <div className="fw-900" style={{ fontSize:24, color: manuelEvo.delta < 0 ? "var(--good-dark)" : SC.danger }}>
-                          {manuelEvo.delta > 0 ? "+" : ""}{manuelEvo.delta}
+                        <div className="fw-900" style={{ fontSize:24, color: dValue < 0 ? "var(--good-dark)" : SC.danger }}>
+                          {dValue > 0 ? "+" : ""}{dValue}{dSuffix}
                         </div>
-                        <div className="muted fs-10">pancadas (2R)</div>
+                        <div className="muted fs-10">{dLabel}</div>
                       </div>
                     </div>
                   </div>
-              )}
+                );
+              })()}
             </>
           ) : (
             <div className="center-msg muted">Dados não disponíveis</div>

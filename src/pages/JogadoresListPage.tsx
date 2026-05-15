@@ -231,11 +231,18 @@ export default function JogadoresListPage() {
     const hMin = hcpMin === "" ? null : Number(hcpMin);
     const hMax = hcpMax === "" ? null : Number(hcpMax);
 
+    // Pesquisa por palavras independentes — cada palavra tem de existir
+    // no NOME ou no Nº FED (a caixa diz "NOME / Nº FED", logo só esses).
+    // Antes usava `includes(qNorm)` literal, o que rejeitava "manuel me"
+    // para "Manuel Goulartt Medeiros" por falta de substring contígua.
+    // Incluir o clube na haystack dava falsos positivos (ex: "manuel med"
+    // a apanhar José Manuel Teixeira quando "med" calhava num clube).
+    const words = qNorm ? qNorm.split(/\s+/).filter(Boolean) : [];
     return rows.filter(r => {
-      if (qNorm) {
-        const inName = norm(r.name).includes(qNorm);
-        const inFed = r.fed.includes(qNorm);
-        if (!inName && !inFed) return false;
+      if (words.length) {
+        const nameN = norm(r.name);
+        const fed = r.fed;
+        if (!words.every(w => nameN.includes(w) || fed.includes(w))) return false;
       }
       if (escalao !== "ALL" && r.escalao !== escalao) return false;
       // Filtro por ano de nascimento (extrai do DOB "YYYY-MM-DD")

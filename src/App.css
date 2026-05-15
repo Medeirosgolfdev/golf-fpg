@@ -2978,6 +2978,16 @@ tr.cross-current { background: var(--bg-success); }
 /* --- Score inline separators --- */
 .inline-sep { border-left:2px solid var(--border); padding:0 3px; display:inline-block; }
 
+/* Separador entre colunas — para criar uma linha vertical mais forte
+   entre grupos de colunas numa tabela (e.g. R2 → Ant. no Doral).
+   Usa !important para sobrepor border-left dos seletores .lb-* mais específicos. */
+.sc-lb th.lb-col-divider,
+.sc-lb td.lb-col-divider,
+table th.lb-col-divider,
+table td.lb-col-divider {
+  border-left: 2px solid var(--border-strong, #999) !important;
+}
+
 /* --- Common text/visual --- */
 .bg-info-subtle { background: var(--bg-info-subtle); }
 
@@ -3326,6 +3336,26 @@ tr.cross-current { background: var(--bg-success); }
   background: rgba(0, 0, 0, 0.015);
 }
 .player-list-row:nth-child(even):hover {
+  background: var(--bg-hover, rgba(0, 0, 0, 0.05));
+}
+.player-list-name-link {
+  color: var(--accent, #0d61a8);
+  text-decoration: none;
+  cursor: pointer;
+}
+.player-list-name-link:hover {
+  text-decoration: underline;
+}
+.player-list-name-link::after {
+  content: "external";
+  font-size: 9px;
+  margin-left: 3px;
+  opacity: 0.5;
+  vertical-align: super;
+}
+
+/* end of file */
+):hover {
   background: var(--bg-hover, rgba(0, 0, 0, 0.05));
 }
 .player-list-name-link {

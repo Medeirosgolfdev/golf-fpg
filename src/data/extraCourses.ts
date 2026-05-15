@@ -437,7 +437,186 @@ const leToquet_LaMer: Course = {
   },
 };
 
-/* Exportação */
+/* ─────────────────────────────────────────────────────────────────────────
+   Glen Golf Club — East Links, North Berwick, Escócia (Reino Unido)
+   Fonte (campo): scorecard oficial — 6 conjuntos de marcações.
+   Fonte (USKids): "2025 U.S. Kids Golf European Championship Yardages" PDF
+                   + "Course Rating and Slope" PDF (EUC 2025).
+   Distâncias originais em JARDAS, convertidas para METROS (×0.9144) por buraco.
+
+   Tees do campo:
+     White (M, par 70, 6275y)         — medal masculino
+     Yellow (M, par 70, 6048y)        — diária masculino
+     Red (M, par 73, 5773y)           — avançada masculino (hh.9/12/15/17 par+1)
+     Blue (M, par 67, 4801y)          — junior masculino (hh.3 par 3, hh.6 par 4)
+     Blue (F, par 69, 4801y)          — medal feminino
+     Red (F, par 69, 5773y)           — diária feminino
+
+   Tees USKids (EUC 2025 — Glen Golf Club hospeda 3 escalões):
+     Boys 14 (Tee 6, 6048y, par 72, CR 70.6 / Sl 124) — mesmas marcas que Yellow
+     Boys 12 (Tee 5, 5773y, par 72, CR 68.3 / Sl 119) — mesmas marcas que Red
+     Girls 12 (Tee 3, 4508y, par 72, CR 66.6 / Sl 110) — yardas próprias
+   ────────────────────────────────────────────────────────────────────── */
+
+// SI iguais para White, Yellow, Blue M, Red F
+const glenSImain = [9,13,7,17,3,1,15,5,11, 10,14,2,16,6,18,8,4,12];
+// SI específicos das marcações Red Men (par 73)
+const glenSIredM = [7,9,11,15,3,1,13,5,18, 2,14,12,17,4,8,10,16,6];
+// SI das Blue Women (par 69)
+const glenSIblueF = [3,9,13,17,5,11,1,7,15, 4,14,16,18,8,2,12,6,10];
+
+// Pares dos tees normais
+const glenParWhite  = [4,4,4,3,4,5,4,4,3, 4,4,4,3,4,5,3,4,4]; // 70
+const glenParYellow = glenParWhite;                            // 70
+const glenParRedM   = [4,4,4,3,4,5,4,4,4, 4,4,5,3,4,5,3,5,4]; // 73
+const glenParBlueM  = [4,4,3,3,4,4,4,4,3, 4,4,4,3,4,4,3,4,4]; // 67
+const glenParBlueF  = [4,4,4,3,4,5,4,4,3, 4,4,4,3,4,4,3,4,4]; // 69
+const glenParRedF   = glenParBlueF;                            // 69
+
+// Par USKids (Boys 14, Boys 12, Girls 12) — todos par 72
+// Diferem do par do campo nos buracos destacados a laranja no PDF EUC 2025
+const glenParUSKids = [4,4,4,3,4,5,4,5,3, 4,4,5,3,4,5,3,4,4]; // 36+36 = 72
+
+// Distâncias por buraco em METROS (yards × 0.9144, arredondado por buraco).
+// Yards originais (do scorecard oficial do campo):
+//   White : [332,372,366,180,386,536,375,425,204, 346,341,458,148,365,473,190,415,363] = 6275y
+//   Yellow: [330,361,343,178,368,488,364,409,200, 344,336,448,136,333,467,186,394,363] = 6048y
+//   Red   : [327,343,334,162,354,467,360,379,197, 340,319,432,128,321,399,179,374,358] = 5773y
+//   Blue  : [308,299,242,112,337,431,290,337,142, 253,255,315, 92,281,383,163,279,282] = 4801y
+const glenDistWhite  = [304,340,335,165,353,490,343,389,187, 316,312,419,135,334,433,174,379,332]; // 5740m
+const glenDistYellow = [302,330,314,163,336,446,333,374,183, 315,307,410,124,304,427,170,360,332]; // 5530m
+const glenDistRed    = [299,314,305,148,324,427,329,347,180, 311,292,395,117,294,365,164,342,327]; // 5280m
+const glenDistBlue   = [282,273,221,102,308,394,265,308,130, 231,233,288, 84,257,350,149,255,258]; // 4388m
+
+// USKids Girls 12 (Tee 3) — yardas próprias do PDF EUC 2025
+// Yards: [255,288,290,110,230,370,260,370,110, 253,255,335,102,280,380, 93,245,282] = 4508y
+const glenDistUKGirls12 = [233,263,265,101,210,338,238,338,101, 231,233,306, 93,256,348, 85,224,258]; // 4121m
+
+function glenHoles(par: number[], si: number[], dist: number[]): Hole[] {
+  return dist.map((d, i) => ({ hole: i + 1, par: par[i], si: si[i], distance: d }));
+}
+
+function glenDist(dist: number[]): { total: number; front9: number; back9: number; holesCount: 18; complete18: true } {
+  const front9 = dist.slice(0, 9).reduce((a, b) => a + b, 0);
+  const back9  = dist.slice(9).reduce((a, b) => a + b, 0);
+  return { total: front9 + back9, front9, back9, holesCount: 18, complete18: true };
+}
+
+// 6 tees do scorecard oficial do campo
+const glenTees: Tee[] = [
+  {
+    teeId: "glen-white",
+    sex: "M",
+    teeName: "White",
+    scorecardMeta: { teeColor: "#ffffff" },
+    ratings: { holes18: { par: 70, courseRating: null, slopeRating: null } },
+    holes: glenHoles(glenParWhite, glenSImain, glenDistWhite),
+    distances: glenDist(glenDistWhite),
+  },
+  {
+    teeId: "glen-yellow",
+    sex: "M",
+    teeName: "Yellow",
+    scorecardMeta: { teeColor: "#fbbf24" },
+    ratings: { holes18: { par: 70, courseRating: null, slopeRating: null } },
+    holes: glenHoles(glenParYellow, glenSImain, glenDistYellow),
+    distances: glenDist(glenDistYellow),
+  },
+  {
+    teeId: "glen-red-m",
+    sex: "M",
+    teeName: "Red",
+    scorecardMeta: { teeColor: "#ef4444" },
+    ratings: { holes18: { par: 73, courseRating: null, slopeRating: null } },
+    holes: glenHoles(glenParRedM, glenSIredM, glenDistRed),
+    distances: glenDist(glenDistRed),
+  },
+  {
+    teeId: "glen-blue-m",
+    sex: "M",
+    teeName: "Blue",
+    scorecardMeta: { teeColor: "#3b82f6" },
+    ratings: { holes18: { par: 67, courseRating: null, slopeRating: null } },
+    holes: glenHoles(glenParBlueM, glenSImain, glenDistBlue),
+    distances: glenDist(glenDistBlue),
+  },
+  {
+    teeId: "glen-blue-f",
+    sex: "F",
+    teeName: "Blue (F)",
+    scorecardMeta: { teeColor: "#3b82f6" },
+    ratings: { holes18: { par: 69, courseRating: null, slopeRating: null } },
+    holes: glenHoles(glenParBlueF, glenSIblueF, glenDistBlue),
+    distances: glenDist(glenDistBlue),
+  },
+  {
+    teeId: "glen-red-f",
+    sex: "F",
+    teeName: "Red (F)",
+    scorecardMeta: { teeColor: "#ef4444" },
+    ratings: { holes18: { par: 69, courseRating: null, slopeRating: null } },
+    holes: glenHoles(glenParRedF, glenSImain, glenDistRed),
+    distances: glenDist(glenDistRed),
+  },
+];
+
+// USKids European Championship 2025 — Glen hospeda 3 escalões
+// CR/Slope oficiais do PDF "Course Rating and Slope"
+const glenUSKidsTees: Tee[] = [
+  {
+    teeId: "glen-uk-boys14",
+    sex: "M",
+    teeName: "USKids Boys 14",
+    scorecardMeta: { teeColor: "#fbbf24" }, // Tee 6 = Yellow
+    ratings: { holes18: { par: 72, courseRating: 70.6, slopeRating: 124 } },
+    holes: glenHoles(glenParUSKids, glenSImain, glenDistYellow),
+    distances: glenDist(glenDistYellow),
+  },
+  {
+    teeId: "glen-uk-boys12",
+    sex: "M",
+    teeName: "USKids Boys 12",
+    scorecardMeta: { teeColor: "#ef4444" }, // Tee 5 = Red
+    ratings: { holes18: { par: 72, courseRating: 68.3, slopeRating: 119 } },
+    holes: glenHoles(glenParUSKids, glenSIredM, glenDistRed),
+    distances: glenDist(glenDistRed),
+  },
+  {
+    teeId: "glen-uk-girls12",
+    sex: "F",
+    teeName: "USKids Girls 12",
+    scorecardMeta: { teeColor: "#f97316" }, // Tee 3 = yardas próprias
+    ratings: { holes18: { par: 72, courseRating: 66.6, slopeRating: 110 } },
+    holes: glenHoles(glenParUSKids, glenSImain, glenDistUKGirls12),
+    distances: glenDist(glenDistUKGirls12),
+  },
+];
+
+const glenGolfClub: Course = {
+  courseKey: "away-glen-golf-course",
+  master: {
+    courseId: "away-glen-golf-course",
+    name: "Glen Golf Club",
+    country: "Escócia",
+    links: {
+      fpg: null,
+      scorecards: "http://www.glengolfclub.co.uk/",
+      extra: [
+        {
+          label: "US Kids EUC 2025 - Yardages",
+          url: "/data/yardages_-_euc2025.pdf",
+        },
+        {
+          label: "US Kids EUC 2025 - Course Rating & Slope",
+          url: "/data/course_rating_and_slope_-_euc_2025.pdf",
+        },
+      ],
+    },
+    tees: [...glenTees, ...glenUSKidsTees],
+  },
+};
+
+/* Exportacao */
 
 /** Campos extra adicionados manualmente (ainda sem rondas no melhorias.json) */
 export function getExtraCourses(): Course[] {
@@ -449,5 +628,6 @@ export function getExtraCourses(): Course[] {
     doralBlueMonster,
     leToquet_LaForet,
     leToquet_LaMer,
+    glenGolfClub,
   ];
 }

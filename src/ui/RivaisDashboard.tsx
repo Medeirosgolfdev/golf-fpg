@@ -42,6 +42,9 @@ interface RivaisDashboardProps {
   fieldMode?: boolean;
   /** Data de referência (ISO) para calcular idade no torneio. Se ausente, usa hoje. */
   tournamentDate?: string;
+  /** Desactiva o wrapper <div class="scroll-x"> à volta da tabela. Útil quando
+   *  o caller controla overflow no seu próprio container (ex: /kids2/next-t). */
+  noScroll?: boolean;
 }
 
 export default function RivaisDashboard({
@@ -57,6 +60,7 @@ export default function RivaisDashboard({
   seriesBoundaries,
   fieldMode = false,
   tournamentDate,
+  noScroll = false,
 }: RivaisDashboardProps) {
   const [fTour, setFTour] = useState("all");
   const [fUp, setFUp] = useState("all");
@@ -64,7 +68,9 @@ export default function RivaisDashboard({
   const [q, setQ] = useState("");
   const [sort, setSort] = useState("zrank");
   const [dir, setDir] = useState<"asc" | "desc">("asc");
-  const [dOnly, setDOnly] = useState(false);
+  // Em fieldMode (tabela /kids2/next-t) "Só com dados" arranca ON para esconder
+  // inscritos sem histórico e dar uma vista útil logo à partida.
+  const [dOnly, setDOnly] = useState(fieldMode);
   const [vsOn, setVsOn] = useState(true);
 
   const list = useMemo(() => {
@@ -290,11 +296,67 @@ export default function RivaisDashboard({
         ))}
       </div>
 
-      {/* Table */}
-      <div className="card">
-        <div className="scroll-x">
+      {/* Table — quando noScroll, omite o wrapper .card (bg branca) para a tabela
+          fluir com o background da pagina. */}
+      <div className={noScroll ? "" : "card"}>
+        <div className={noScroll ? "" : "scroll-x"}>
           <table className="bc-collapse">
             <thead>
+              {/* Header de grupo (só em fieldMode) — agrupa colunas por circuito.
+                  Usa seriesBoundaries para encontrar o início de cada grupo e
+                  conta tournments até ao próximo boundary. */}
+              {fieldMode && (() => {
+                // Compute groups: array de { label, span, start }
+                interface Grp { label: string; span: number }
+                const groups: Grp[] = [];
+                // Extrai "EU", "WC", "Venice"… do t.short ("EU '22" → "EU")
+                const seriesOf = (short: string): string => {
+                  const m = short.match(/^(.+?)\s+['′][\d]/);
+                  return m ? m[1] : short;
+                };
+                T.forEach((t, i) => {
+                  const isBoundary = i === 0 || seriesBoundaries?.has(t.id);
+                  if (isBoundary) groups.push({ label: seriesOf(t.short), span: 1 });
+                  else groups[groups.length - 1].span++;
+                });
+                return (
+                  <tr style={{ background: "var(--surface-2, var(--bg-secondary, #f7f6f1))" }}>
+                    <th colSpan={2} style={{ borderBottom: "1px solid var(--border)" }} />
+                    {groups.map((g, gi) => (
+                      <th
+                        key={gi}
+                        colSpan={g.span}
+                        style={{
+                          textAlign: "center",
+                          fontSize: 11,
+                          fontWeight: 500,
+                          color: "var(--text-3)",
+                          padding: "5px 4px",
+                          borderLeft: gi > 0 ? "1px solid var(--border)" : undefined,
+                          borderBottom: "1px solid var(--border)",
+                        }}
+                      >
+                        {g.label}
+                      </th>
+                    ))}
+                    {/* Bloco "Resumo" no field mode */}
+                    <th
+                      colSpan={4}
+                      style={{
+                        textAlign: "center",
+                        fontSize: 11,
+                        fontWeight: 500,
+                        color: "var(--text-3)",
+                        padding: "5px 4px",
+                        borderLeft: "3px solid var(--text-muted)",
+                        borderBottom: "1px solid var(--border)",
+                      }}
+                    >
+                      Resumo
+                    </th>
+                  </tr>
+                );
+              })()}
               <tr className="rivais-group-header">
                 <th
                   className="rivais-th-name pointer"
@@ -414,6 +476,34 @@ export default function RivaisDashboard({
                 const vsAvg = vsOn ? getVsAvg(p) : null;
                 const played = nPlayed(p);
 
+                // Tier dominante do jogador (só em fieldMode — usado para o ponto
+                // colorido à esquerda do nome). Conta tiers por torneio e pega o
+                // mais frequente. Empate → "strong".
+                let playerTier: keyof typeof TIER | null = null;
+                if (fieldMode) {
+                  const counts: Record<string, number> = {};
+                  for (const td of T) {
+                    const r = p.r[td.id];
+                    if (!r || r.tp == null) continue;
+                    const pa = r.t! / td.rounds;
+                    const ras = AVG_R[td.id] as RoundAvg[] | undefined;
+                    if (!ras || ras.length === 0) continue;
+                    const ms = ras.filter((x): x is { m: number; s: number } => x != null).map(x => x.m);
+                    const ss = ras.filter((x): x is { m: number; s: number } => x != null).map(x => x.s);
+                    if (ms.length === 0) continue;
+                    const fm = ms.reduce((a, b) => a + b, 0) / ms.length;
+                    const fs = ss.reduce((a, b) => a + b, 0) / ss.length;
+                    const ti = zTier(pa, { m: fm, s: fs });
+                    if (ti) counts[ti] = (counts[ti] || 0) + 1;
+                  }
+                  let best: string | null = null;
+                  let bestN = 0;
+                  for (const [k, n] of Object.entries(counts)) {
+                    if (n > bestN) { best = k; bestN = n; }
+                  }
+                  if (best) playerTier = best as keyof typeof TIER;
+                }
+
                 return (
                   <tr
                     key={p.n}
@@ -423,6 +513,19 @@ export default function RivaisDashboard({
                     {/* Player name — clickable */}
                     <td className="rivais-player-name" style={{ verticalAlign: "middle" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                        {fieldMode && (
+                          <span
+                            title={playerTier ? TIER_L[playerTier as keyof typeof TIER_L] : "sem dados"}
+                            style={{
+                              display: "inline-block",
+                              width: 7,
+                              height: 7,
+                              borderRadius: "50%",
+                              background: playerTier ? TIER[playerTier].c : "var(--border)",
+                              flexShrink: 0,
+                            }}
+                          />
+                        )}
                         <span className="rivais-flag" title={p.co}>
                           {flag}
                         </span>
@@ -654,13 +757,11 @@ export default function RivaisDashboard({
 
                     {/* === Field mode: Média 18H, Melhor 18H, # Top-10, Idade === */}
                     {fieldMode && (() => {
-                      // Acumular gross em torneios 18H (par_torneio >= 70, rounds tem 18 strokes)
                       const gross18: number[] = [];
                       let nTop10 = 0;
                       for (const td of T) {
                         const res = p.r[td.id];
                         if (!res || !res.rd || res.rd.length === 0) continue;
-                        // Heurística: par >= 64 (torneios 18H vs 9H que têm ~32-36)
                         if ((td.holes ?? 18) >= 18) {
                           for (const g of res.rd) if (g > 0) gross18.push(g);
                         }
@@ -668,7 +769,6 @@ export default function RivaisDashboard({
                       }
                       const avg18 = gross18.length ? Math.round((gross18.reduce((a, b) => a + b, 0) / gross18.length) * 10) / 10 : null;
                       const best18 = gross18.length ? Math.min(...gross18) : null;
-                      // Idade no torneio
                       let ageStr: string | null = null;
                       if (p.dob && tournamentDate) {
                         const dobMatch = p.dob.match(/^(\d{4})-(\d{2})-(\d{2})/) || p.dob.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
@@ -725,8 +825,7 @@ export default function RivaisDashboard({
       </div>
 
       <div className="section-subtitle ta-c mt-10">
-        Clica num jogador para ver detalhe · Rank ponderado por prestígio: ★★★
-        peso máximo, ½ peso mínimo · ({totalRanked} jogadores com dados)
+        Clica num jogador para ver detalhe · Rank ponderado por prestigio: estrelas, peso maximo, meio peso minimo ({totalRanked} jogadores com dados)
       </div>
     </div>
   );

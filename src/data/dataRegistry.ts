@@ -81,6 +81,12 @@ export const FILE_EOWAGR_2025_B1314 = `${BASE}eowagr25_contest77.json`;
 // Doral (First Tee Media)
 export const FILE_DORAL_2025 = `${BASE}ftm_doral_2025.json`;
 export const FILE_DORAL_2024 = `${BASE}ftm_doral_2024.json`;
+export const FILE_DORAL_2023 = `${BASE}ftm_doral_2023.json`;
+export const FILE_DORAL_2022 = `${BASE}ftm_doral_2022.json`;
+export const FILE_DORAL_2021 = `${BASE}ftm_doral_2021.json`;
+export const FILE_DORAL_2020 = `${BASE}ftm_doral_2020.json`;
+export const FILE_DORAL_2019 = `${BASE}ftm_doral_2019.json`;
+export const FILE_DORAL_2018 = `${BASE}ftm_doral_2018.json`;
 
 // USKids
 export const FILE_USKIDS_RESULTS   = `${BASE}uskids-results.json`;
@@ -767,10 +773,13 @@ Ficheiros e respectivos escalões:
   {
     id: "doral",
     label: "Doral Junior Golf Classic (First Tee Media)",
-    files: [FILE_DORAL_2025, FILE_DORAL_2024],
+    files: [
+      FILE_DORAL_2025, FILE_DORAL_2024, FILE_DORAL_2023, FILE_DORAL_2022,
+      FILE_DORAL_2021, FILE_DORAL_2020, FILE_DORAL_2019, FILE_DORAL_2018,
+    ],
     origin: "firstteemedia",
     sourceUrl: "https://firstteemediaonline.com",
-    generatedBy: "scrape-drive-aquapor-v7.js (variante Doral)",
+    generatedBy: "scripts/scrape-golfgenius-v3.js (config: scripts/doral-editions.json)",
     loader: "src/pages/DORALPage.tsx\nsrc/data/KIDSdataLoader.ts → processDoral()",
     format: "ftm-doral",
     dates: {
@@ -1535,4 +1544,15 @@ export function describeSource(id: string): string {
     sc.available && sc.crPath      ? `    CR:      ${sc.crPath}`      : "",
     `  Usado em:    ${s.usedBy.join(", ")}`,
   ].filter(Boolean).join("\n");
+}
+    `  Scorecard:   ${sc.available ? "✓" : "✗"}`,
+    sc.available && sc.scoresPath  ? `    scores:  ${sc.scoresPath}`  : "",
+    sc.available && sc.parPath     ? `    par:     ${sc.parPath}`     : "",
+    sc.available && sc.siPath      ? `    SI:      ${sc.siPath}`      : "",
+    sc.available && sc.metersPath  ? `    metros:  ${sc.metersPath}`  : "",
+    sc.available && sc.crPath      ? `    CR:      ${sc.crPath}`      : "",
+    `  Usado em:    ${s.usedBy.join(", ")}`,
+  ].filter(Boolean).join("\n");
+}
+n");
 }

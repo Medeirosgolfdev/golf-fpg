@@ -1,0 +1,93 @@
+{
+  "_doc": "Configuração das edições First Tee Miami Doral Jr. Classic. Cada entrada tem leagueId e a lista de pageIds das páginas RESULTS (algumas edições têm múltiplas páginas mas costumam partilhar a mesma league). O scraper itera por todas as divisões em DIVISIONS_ALL filtradas pelo param division=, usando o primeiro pageId como context.",
+  "editions": [
+    {
+      "year": 2018,
+      "name": "2018 Doral Publix Junior Golf Classic",
+      "leagueId": "108933",
+      "primaryPageId": "1568091",
+      "pageIds": ["1568091", "1568093"],
+      "sourceUrl": "https://2018doralpublix.golfgenius.com/pages/1568091",
+      "widgetType": "customized_tournament_results"
+    },
+    {
+      "year": 2019,
+      "name": "2019 Doral Publix Junior Golf Classic",
+      "leagueId": "152395",
+      "primaryPageId": "2050901",
+      "pageIds": ["2050901", "2341103", "2341104", "2341105", "2341106"],
+      "sourceUrl": "https://2019doralpublix.golfgenius.com/pages/2050901",
+      "widgetType": "customized_tournament_results"
+    },
+    {
+      "year": 2020,
+      "name": "2020 Doral Publix Junior Golf Classic",
+      "leagueId": "204589",
+      "primaryPageId": "2610251",
+      "pageIds": ["2610251"],
+      "sourceUrl": "https://www.golfgenius.com/pages/2610251",
+      "widgetType": "customized_tournament_results"
+    },
+    {
+      "year": 2021,
+      "name": "2021 First Tee Miami Doral Jr. Classic",
+      "leagueId": "253290",
+      "primaryPageId": "3122115",
+      "pageIds": ["3122115"],
+      "sourceUrl": "https://2021firstteemiamidoral.golfgenius.com/pages/3122115",
+      "widgetType": "customized_tournament_results"
+    },
+    {
+      "year": 2022,
+      "name": "2022 First Tee Miami Doral Jr. Classic",
+      "leagueId": "304789",
+      "primaryPageId": "3661172",
+      "pageIds": ["3661172"],
+      "sourceUrl": "https://2022firstteemiamidoral.golfgenius.com/pages/3661172",
+      "widgetType": "customized_tournament_results"
+    },
+    {
+      "year": 2023,
+      "name": "2023 First Tee Miami Doral Jr. Classic",
+      "leagueId": "365219",
+      "primaryPageId": "4282619",
+      "pageIds": ["4282619"],
+      "sourceUrl": "https://tftm-2023firstteemiamidoraljrclassic.golfgenius.com/pages/4282619",
+      "widgetType": "customized_tournament_results"
+    },
+    {
+      "year": 2024,
+      "name": "2024 First Tee Miami Doral Jr. Classic",
+      "leagueId": null,
+      "primaryPageId": "4894994",
+      "pageIds": ["4894994"],
+      "sourceUrl": "https://2024firstteemiamidoraljrclassic.golfgenius.com/pages/4894994",
+      "widgetType": "customized_tournament_results",
+      "_note": "leagueId será auto-detectado pelo scraper a partir do iframe da página"
+    },
+    {
+      "year": 2025,
+      "name": "2025 First Tee Miami Doral Jr. Classic",
+      "leagueId": null,
+      "primaryPageId": "5506943",
+      "pageIds": ["5506943"],
+      "sourceUrl": "https://2025firstteemiamidoraljrclassic.golfgenius.com/pages/5506943",
+      "widgetType": "customized_tournament_results",
+      "_note": "leagueId será auto-detectado pelo scraper a partir do iframe da página"
+    }
+  ],
+  "divisions": [
+    {"key": "Boys+7-Under",  "label": "Boys 7 & Under",  "nineHoleOnly": true,  "startingHole": 10},
+    {"key": "Boys+8-9",      "label": "Boys 8-9",        "nineHoleOnly": true,  "startingHole": 10},
+    {"key": "Boys+10-11",    "label": "Boys 10-11",      "nineHoleOnly": false, "startingHole": 1},
+    {"key": "Boys+12-13",    "label": "Boys 12-13",      "nineHoleOnly": false, "startingHole": 1},
+    {"key": "Boys+14-15",    "label": "Boys 14-15",      "nineHoleOnly": false, "startingHole": 1},
+    {"key": "Boys+16-18",    "label": "Boys 16-18",      "nineHoleOnly": false, "startingHole": 1},
+    {"key": "Girls+7-Under", "label": "Girls 7 & Under", "nineHoleOnly": true,  "startingHole": 1},
+    {"key": "Girls+8-9",     "label": "Girls 8-9",       "nineHoleOnly": true,  "startingHole": 1},
+    {"key": "Girls+10-11",   "label": "Girls 10-11",     "nineHoleOnly": true,  "startingHole": 1},
+    {"key": "Girls+12-13",   "label": "Girls 12-13",     "nineHoleOnly": false, "startingHole": 1},
+    {"key": "Girls+14-15",   "label": "Girls 14-15",     "nineHoleOnly": false, "startingHole": 1},
+    {"key": "Girls+16-18",   "label": "Girls 16-18",     "nineHoleOnly": false, "startingHole": 1}
+  ]
+}

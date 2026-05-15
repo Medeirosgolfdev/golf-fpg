@@ -189,6 +189,12 @@ const FILE_TO_LEGACY_TID: Record<string, string> = {
   "eowagr25_contest13": "eowagr25_b910",
   "eowagr25_scorecards": "eowagr25",
   "eowagr25_contest77": "eowagr25_b1314",
+  "ftm_doral_2018": "doral18",
+  "ftm_doral_2019": "doral19",
+  "ftm_doral_2020": "doral20",
+  "ftm_doral_2021": "doral21",
+  "ftm_doral_2022": "doral22",
+  "ftm_doral_2023": "doral23",
   "ftm_doral_2024": "doral24",
   "ftm_doral_2025": "doral25",
 };
@@ -318,7 +324,7 @@ async function _buildAutoRivalsInternal(
   let done = 0;
   const report = (label: string) => { done++; onProgress?.({ done, total, label }); };
 
-  const [juniorsData, tournamentsData] = await Promise.all([
+  const [juniorsData, tournamentsManifest] = await Promise.all([
     fetchJson("/data/juniors.json")
       .then(d => { _loadedFiles.push({ path: "/data/juniors.json", status: "loaded", group: "canonical" }); report("Juniors"); return d; })
       .catch(e => { _loadedFiles.push({ path: "/data/juniors.json", status: "error", error: String(e), group: "canonical" }); report("Juniors"); return null; }),
@@ -330,13 +336,34 @@ async function _buildAutoRivalsInternal(
       .catch(e => { _loadedFiles.push({ path: "/data/tournament-catalog.json", status: "error", error: String(e), group: "canonical" }); report("Catalog"); return null; }),
   ]);
 
-  if (!juniorsData || !tournamentsData) {
+  if (!juniorsData || !tournamentsManifest) {
     console.error("[KIDSdataLoader] Falhou carregar canónicos. Correr `node scripts/aggregator/index.js` primeiro.");
     return [];
   }
 
   const juniors: CanonicalJunior[] = (juniorsData as any).juniors || [];
-  const tournaments: CanonicalTournament[] = (tournamentsData as any).tournaments || [];
+
+  // juniors-tournaments.json pode ser:
+  //   • Ficheiro único com `tournaments: [...]` inline
+  //   • Manifesto sharded com `sharded: true, shards: ["juniors-tournaments-00.json", ...]`
+  // No segundo caso, temos de carregar os shards e concatenar os tournaments.
+  let tournaments: CanonicalTournament[] = [];
+  const tResp = tournamentsManifest as any;
+  if (tResp?.sharded && Array.isArray(tResp.shards)) {
+    const shardLoads = await Promise.all(
+      tResp.shards.map((fn: string) =>
+        fetchJson(`/data/${fn}`)
+          .then(d => { _loadedFiles.push({ path: `/data/${fn}`, status: "loaded", group: "canonical-shards" }); return d; })
+          .catch(e => { _loadedFiles.push({ path: `/data/${fn}`, status: "error", error: String(e), group: "canonical-shards" }); return null; })
+      )
+    );
+    for (const sd of shardLoads) {
+      const arr = (sd as any)?.tournaments;
+      if (Array.isArray(arr)) tournaments.push(...arr);
+    }
+  } else if (Array.isArray(tResp?.tournaments)) {
+    tournaments = tResp.tournaments;
+  }
 
   const flightTids = new Map<string, string>();
   for (const t of tournaments) {
@@ -513,5 +540,3 @@ export function processFpgJovensAll(_data: unknown): AutoRivalPlayer[] { return 
 export function processFfgolfSlim(_data: unknown): AutoRivalPlayer[] { return []; }
 export function processFfgolfGG(_data: unknown, _meta: unknown): AutoRivalPlayer[] { return []; }
 export function processRfegolfRivals(_data: unknown): AutoRivalPlayer[] { return []; }
-export function processFcgRivals(_data: unknown): AutoRivalPlayer[] { return []; }
-export function shortenTournName(name: string): string { return shortNameOf(name); }
