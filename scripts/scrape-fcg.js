@@ -376,7 +376,14 @@ async function main() {
   }
 
   console.log("[fcg] done: ok=" + okCount + ", skipped=" + skipped + ", errors=" + errs);
-  if (errs > 0 && okCount === 0) process.exit(1);
+  // Exit codes:
+  //   1 = falha total (nenhum game processado com sucesso, nem novo nem em disco)
+  //   2 = "sem novidades" (todos os games já existiam em disco)
+  //   0 = sucesso (pelo menos 1 ok ou 1 skipped). Errors parciais são tolerados
+  //       porque a discovery cross-domain (catgolf → golfdirecto) ocasionalmente
+  //       devolve gameIds futuros que o scoring ainda não criou (HTTP 400
+  //       "Game not found"). Esses IDs voltam a ser tentados na próxima corrida.
+  if (errs === games.length) process.exit(1);
   if (okCount === 0 && skipped === games.length) process.exit(2);
   process.exit(0);
 }
