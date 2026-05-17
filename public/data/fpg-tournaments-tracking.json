@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-05-11T12:09:52.096Z",
+  "lastUpdated": "2026-05-17T20:40:39.316Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
-  "today": "2026-05-11",
+  "today": "2026-05-17",
   "summary": {
-    "total": 1140,
+    "total": 1141,
     "complete": 1135,
-    "in_progress": 0,
+    "in_progress": 1,
     "future": 0,
     "stale": 4,
     "excluded": 1,
@@ -16,6 +16,26 @@
     "unknown": 0
   },
   "tournaments": [
+    {
+      "ccode": "000",
+      "tcode": "10877",
+      "name": "3º Torneio do Circuito Aquapor",
+      "date": "2026-05-16",
+      "rounds": 2,
+      "has_admissions": true,
+      "admissions_count": 59,
+      "has_draws": true,
+      "draws_rounds_with_data": 2,
+      "draws_players_total": 146,
+      "has_classif": true,
+      "player_count": 73,
+      "players_with_scorecards": 73,
+      "players_with_full_scorecards": 0,
+      "scorecards_source": "aquapor-data-2026-05.json",
+      "scorecards_ratio": 1,
+      "full_scorecards_ratio": 0,
+      "status": "in_progress"
+    },
     {
       "ccode": "002",
       "tcode": "11297",
