@@ -133,7 +133,9 @@ Depois: enriquecimento FPG via `players.json` (carregado em paralelo desde o in�
 
 ### MANUEL_OVERRIDES
 
-Array que injeta manualmente scores do Manuel quando ele foi excluído pelo scraper. Actualmente: Marco Simone 2026 Boys 11 — Manuel marcado IE (Ineligible) por erro de assinatura de scorecard. Scores reais R1=86, R2=79 injectados com scorecards completos.
+Array que injeta manualmente scores do Manuel quando ele foi excluído pelo scraper. Actualmente: Marco Simone 2026 Boys 11 — Manuel marcado IE (Ineligible) pela USKids porque não confirmou o scorecard da R1 (alertou a organização posteriormente e foi-lhe aplicada uma penalidade).
+
+**Política do site (2026-05-17):** mostrar SEMPRE o score **oficial com penalidade** (R1=91 com hole 5=10, R2=79) e não o score real jogado (R1=86 com hole 5=5, R2=79). O `uskids-member-history-slim.json` já regista o oficial e isso alimenta o canónico que o `KIDS2Page` consome. O override do `applyResultOverrides()` na USKIDSPage replica os mesmos valores oficiais para preencher o leaderboard de `uskids-results.json` (que continua a excluir o Manuel por IE). Para reverter para o score jogado, ver comentário no override em `USKIDSPage.tsx`.
 
 ### processUskidsCompleto — Dois formatos
 
@@ -1672,7 +1674,7 @@ Na barra de distribuição de scores, o segmento de par usa branco/transparente,
 - **Irmãos com mesmo apelido** — falsos positivos no matching de rivais. Fix: first-name prefix penalty no `scoreMatch()`.
 - **lengths[] nos completos são jardas** — converter ×0.9144 para metros.
 - **strokes[] tem sempre 18 posições** — em torneios 9H, posições não jogadas = 0. Filtrar zeros.
-- **MANUEL_OVERRIDES** — Manuel foi marcado IE (Ineligible) no Marco Simone 2026 Boys 11 por erro de assinatura de scorecard. `processManuelOverrides()` injeta os scores reais (R1=86, R2=79).
+- **MANUEL_OVERRIDES / applyResultOverrides Marco Simone 2026 Boys 11** — Manuel foi marcado IE (Ineligible) pela USKids porque não confirmou o scorecard da R1 (avisou depois → penalidade aplicada). O site mostra o score **oficial com penalidade** (R1=91 com hole 5=10, R2=79), não o score jogado (R1=86 com hole 5=5, R2=79). Detalhe completo no comentário do override em `src/pages/USKIDSPage.tsx::applyResultOverrides`.
 - **applyResultOverrides()** — em USKIDSPage.tsx, injeta resultados do Manuel quando marcado como WD/IE nos dados.
 - **Dados de 9 buracos** — torneios USKids local tour de 9 buracos geravam scores negativos impossíveis. Resolvido validando completude do scorecard (`grossStrokes >= holes`).
 - **Duplicados normCountry** — duplicados em `normCountry` (USKIDSPage) + `TW:"Taiwan"` duplicado no KIDSdataLoader causavam warnings Vite.

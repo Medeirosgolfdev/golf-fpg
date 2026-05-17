@@ -1545,14 +1545,3 @@ export function describeSource(id: string): string {
     `  Usado em:    ${s.usedBy.join(", ")}`,
   ].filter(Boolean).join("\n");
 }
-    `  Scorecard:   ${sc.available ? "✓" : "✗"}`,
-    sc.available && sc.scoresPath  ? `    scores:  ${sc.scoresPath}`  : "",
-    sc.available && sc.parPath     ? `    par:     ${sc.parPath}`     : "",
-    sc.available && sc.siPath      ? `    SI:      ${sc.siPath}`      : "",
-    sc.available && sc.metersPath  ? `    metros:  ${sc.metersPath}`  : "",
-    sc.available && sc.crPath      ? `    CR:      ${sc.crPath}`      : "",
-    `  Usado em:    ${s.usedBy.join(", ")}`,
-  ].filter(Boolean).join("\n");
-}
-n");
-}

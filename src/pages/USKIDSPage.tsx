@@ -7,7 +7,7 @@ import { useMasterDetail } from "../hooks/useMasterDetail";
 import React from "react";
 import SectionErrorBoundary from "../ui/SectionErrorBoundary";
 import LoadingState from "../ui/LoadingState";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import { C } from "../utils/colors";
 import { scClass, fmtToParRivais } from "../utils/scoreDisplay";
 import { MONTHS_PT, isoDate, fmtDate, fmtToPar, monthLabel, displayName } from "../utils/format";
@@ -131,7 +131,24 @@ function applyResultOverrides(resultados: TorneioResult[]): void {
     }>;
   }> = [
     {
-      // Marco Simone 2026 — Manuel IE (scorecard signing error)
+      // Marco Simone 2026 Boys 11 — Manuel marcado IE (Ineligible) pela USKids.
+      //
+      // O que aconteceu: o Manuel fez bogey real no buraco 5 da R1 (5 pancadas),
+      // mas não confirmou o scorecard nessa altura. Alertou a organização
+      // posteriormente e foi-lhe aplicada uma penalidade.
+      //
+      //   - Score real jogado:           R1=86 (bogey hole 5).
+      //   - Score oficial com penalidade: R1=91 (a penalidade acumula no
+      //     buraco 5, que sobe de 5 para 10). R2=79 sem alteração.
+      //
+      // Política do site (2026-05-17): mostrar SEMPRE o score oficial (com
+      // penalidade) porque é assim que aparece nos listings/rankings USKids
+      // e é o que o `uskids-member-history-slim.json` já regista (alimentando
+      // o canónico do KIDS2). Este override re-injecta o Manuel no leaderboard
+      // de `uskids-results.json` com o mesmo valor oficial.
+      //
+      // Score jogado (para referência futura): R1=86,
+      //   strokes=[5,5,4,3,5,4,4,9,5, 6,4,5,3,4,4,5,6,5], to_par=14.
       tCode: 21080,
       escalaoNome: "Boys 11",
       fixIsManuel: true,
@@ -140,10 +157,10 @@ function applyResultOverrides(resultados: TorneioResult[]): void {
           ronda: 1,
           jogador: {
             nome: "Manuel Medeiros", pais: "PT", cidade: "Funchal, Madeira",
-            tee: "Tee 4", pontos: 0, score: 86, buracos: 18,
+            tee: "Tee 4", pontos: 0, score: 91, buracos: 18,
             start_time: "", grupo: 0,
-            to_par: 14,
-            strokes: [5,5,4,3,5,4,4,9,5, 6,4,5,3,4,4,5,6,5],
+            to_par: 19,
+            strokes: [5,5,4,3,10,4,4,9,5, 6,4,5,3,4,4,5,6,5],
           } as RondaJogador,
         },
         {
@@ -291,21 +308,39 @@ function TabRivais({ resultados, fieldData, torneiosComManuel, selectedT, setSel
       {torneiosComManuel.map(t => {
         const isFuture = isoDate(t.date_inicio) > today;
         const resT = resultados.find(r => r.t === t.t);
+        // Scout view (/kids2/scout/usk{tcode}) — field intel: lista de inscritos com
+        // tier, idade e confronto vs Manuel; abre em nova aba (KIDS2).
         return (
-          <button key={t.t}
+          <div key={t.t}
             className="course-item"
-            style={{ textAlign:"left", padding:"12px 16px", display:"block", width:"100%", cursor:"pointer" }}
-            onClick={() => handleSelectTorneio(t.t)}>
-            <div className="h-md" style={{ marginBottom:4 }}>{t.name}</div>
-            <div className="detail-sub">
-              {t.date_inicio && <span className="muted">📅 {fmtDate(t.date_inicio)}</span>}
-              {t.escalaoManuel && <span className="chip">{t.escalaoManuel}</span>}
-              {isFuture
-                ? <span className="p p-sm toggle-pill-info">inscrito</span>
-                : resT && <span className="p p-sm toggle-pill-success">resultados</span>
-              }
-            </div>
-          </button>
+            style={{ display:"flex", alignItems:"stretch", width:"100%", padding:0 }}>
+            <button
+              style={{ flex:1, textAlign:"left", padding:"12px 16px", background:"transparent", border:0, cursor:"pointer", color:"inherit", font:"inherit", minWidth:0 }}
+              onClick={() => handleSelectTorneio(t.t)}>
+              <div className="h-md" style={{ marginBottom:4 }}>{t.name}</div>
+              <div className="detail-sub">
+                {t.date_inicio && <span className="muted">📅 {fmtDate(t.date_inicio)}</span>}
+                {t.escalaoManuel && <span className="chip">{t.escalaoManuel}</span>}
+                {isFuture
+                  ? <span className="p p-sm toggle-pill-info">inscrito</span>
+                  : resT && <span className="p p-sm toggle-pill-success">resultados</span>
+                }
+              </div>
+            </button>
+            <Link
+              to={`/kids2/scout/usk${t.t}`}
+              target="_blank"
+              rel="noreferrer"
+              title="Scout — campo de inscritos com tier, idade e confronto vs Manuel (abre KIDS2 em nova aba)"
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                display:"flex", alignItems:"center", justifyContent:"center",
+                padding:"0 14px", borderLeft:"1px solid var(--border)",
+                color:"var(--color-info)", textDecoration:"none", fontSize:18,
+              }}>
+              🔭
+            </Link>
+          </div>
         );
       })}
     </div>
@@ -711,31 +746,46 @@ export default function USKidsFieldPage() {
           const resT = resultsData?.resultados.find(r => r.t === t.t);
           const temResultados = !isFuture && !!resT;
           return (
-            <button key={t.t}
+            <div key={t.t}
               className={`course-item${active ? " active" : ""}`}
-              style={{ padding:"9px 10px 9px 12px", textAlign:"left", width:"100%", display:"block" }}
-              onClick={() => { setShowRivaisTabela(false); setSelectedT(t.t); md.onSelect(); }}>
-              <div className="fs-13" style={{ fontWeight: active ? 700 : 600, color:"var(--text)",
-                overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", marginBottom:3 }}>
-                {t.name.replace(/\s*\d{4}$/, "")} <span className="fs-12 fw-400 c-text-3">'{isoDate(t.date_inicio).slice(2,4)}</span>
-              </div>
-              <div style={{ display:"flex", gap:4, flexWrap:"wrap", alignItems:"center" }}>
-                <span className="fs-11 c-text-3">{fmtDate(t.date_inicio)}</span>
-                {t.escalaoManuel && (
-                  <span className="p p-sm p-muted fs-10">{t.escalaoManuel}</span>
-                )}
-                {temResultados && (
-                  <span className="p p-sm fs-10 toggle-pill-success">
-                    resultados
-                  </span>
-                )}
-                {isFuture && (
-                  <span className="p p-sm fs-10 toggle-pill-info">
-                    inscrito
-                  </span>
-                )}
-              </div>
-            </button>
+              style={{ display:"flex", alignItems:"stretch", width:"100%", padding:0 }}>
+              <button
+                style={{ flex:1, padding:"9px 10px 9px 12px", textAlign:"left", background:"transparent", border:0, cursor:"pointer", color:"inherit", font:"inherit", minWidth:0 }}
+                onClick={() => { setShowRivaisTabela(false); setSelectedT(t.t); md.onSelect(); }}>
+                <div className="fs-13" style={{ fontWeight: active ? 700 : 600, color:"var(--text)",
+                  overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", marginBottom:3 }}>
+                  {t.name.replace(/\s*\d{4}$/, "")} <span className="fs-12 fw-400 c-text-3">'{isoDate(t.date_inicio).slice(2,4)}</span>
+                </div>
+                <div style={{ display:"flex", gap:4, flexWrap:"wrap", alignItems:"center" }}>
+                  <span className="fs-11 c-text-3">{fmtDate(t.date_inicio)}</span>
+                  {t.escalaoManuel && (
+                    <span className="p p-sm p-muted fs-10">{t.escalaoManuel}</span>
+                  )}
+                  {temResultados && (
+                    <span className="p p-sm fs-10 toggle-pill-success">
+                      resultados
+                    </span>
+                  )}
+                  {isFuture && (
+                    <span className="p p-sm fs-10 toggle-pill-info">
+                      inscrito
+                    </span>
+                  )}
+                </div>
+              </button>
+              <Link
+                to={`/kids2/scout/usk${t.t}`}
+                target="_blank"
+                rel="noreferrer"
+                title="Scout — campo de inscritos com tier vs Manuel (KIDS2, nova aba)"
+                onClick={(e) => e.stopPropagation()}
+                style={{
+                  display:"flex", alignItems:"center", justifyContent:"center",
+                  padding:"0 10px", color:"var(--color-info)", textDecoration:"none", fontSize:14,
+                }}>
+                🔭
+              </Link>
+            </div>
           );
         })}
       </>

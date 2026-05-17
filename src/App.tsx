@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import "./App.css";
 import { loadMasterData, loadPlayers, loadAwayCourses } from "./data/loader";
 import { initCourseColorCache } from "./utils/teeColors";
@@ -24,6 +24,14 @@ function MinimalHeader() {
       </div>
     </header>
   );
+}
+
+/* ── Redirect /kids → /kids2 preservando hash (links cruzados de USKIDSPage,
+      TabCampoDetalhe, etc., usam /kids#playerName — Navigate normal não copia
+      o hash). Aplica-se a /kids e /kids/next-t (próximos torneios). ── */
+function KidsRedirect({ to }: { to: string }) {
+  const { hash, search } = useLocation();
+  return <Navigate to={`${to}${search}${hash}`} replace />;
 }
 
 /* ── Lazy-loaded pages (code-split per route) ── */
@@ -278,9 +286,14 @@ export default function App() {
                 <Route path="/drive/torneio/:tkey" element={<DrivePage />} />
                 <Route path="/bjgt/:fed?" element={<BJGTPage />} />
                 <Route path="/bjgt-analysis/:fed?" element={<BJGTAnalysisPage />} />
-                <Route path="/kids" element={<KIDSPage />} />
-                <Route path="/kids/next-t" element={<KIDSPage />} />
-                {/* KIDS2 — rebuild canonical-first; coexiste com /kids até estar estável. */}
+                {/* Migração para KIDS2 (2026-05): /kids → /kids2 com hash preservado.
+                    A página legacy KIDSPage continua disponível em /kids-legacy para
+                    consulta enquanto se ajustam edge-cases; pode ser removida quando
+                    estiver claro que ninguém depende dela. */}
+                <Route path="/kids" element={<KidsRedirect to="/kids2" />} />
+                <Route path="/kids/next-t" element={<KidsRedirect to="/kids2/next-t" />} />
+                <Route path="/kids-legacy" element={<KIDSPage />} />
+                <Route path="/kids-legacy/next-t" element={<KIDSPage />} />
                 <Route path="/kids2" element={<KIDS2Page />} />
                 <Route path="/kids2/next-t" element={<KIDS2NextTournaments />} />
                 <Route path="/kids2/scout/:tid" element={<KIDS2ScoutView />} />

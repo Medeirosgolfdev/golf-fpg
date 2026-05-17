@@ -33,7 +33,7 @@ const NAV_ITEMS: { tab: Tab; label: string; path: string; external?: boolean }[]
   { tab: "bjgt",       label: "🇪🇸 BJGT",    path: "/bjgt"       },
   { tab: "campos",     label: "Campos",       path: "/campos"     },
   { tab: "comparar",   label: "Comparar",     path: "/comparar"   },
-  { tab: "kids",       label: "🌍 Kids",      path: "/kids"       },
+  { tab: "kids",       label: "🌍 Kids",      path: "/kids2"      },
 ];
 
 // ── Helpers ────────────────────────────────────────────────────────
@@ -48,6 +48,7 @@ function tabFromPath(pathname: string): Tab {
     drive: "drive",
     bjgt: "bjgt",
     kids: "kids",
+    kids2: "kids",
     uskids: "uskids",
     diversos: "diversos",
     FPG: "diversos",
