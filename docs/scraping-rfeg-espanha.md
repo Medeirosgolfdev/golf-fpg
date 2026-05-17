@@ -336,7 +336,14 @@ muitos. **Hipóteses para investigar amanhã:**
    por escalão. Cada jogador no ranking pode ter um histórico de torneios
    com CompIds — mais um caminho para descobrir torneios.
 
-## Para amanhã: comandos rápidos
+## Run manual / debug
+
+> **Nota:** desde 2026-05-17, o workflow `.github/workflows/update-spain.yml`
+> corre toda esta pipeline automaticamente uma vez por semana (Segunda às
+> 04:00 UTC) com `--skip-existing` em todos os scrapers. Os comandos abaixo
+> são para corridas ad-hoc (debug, force_rebuild de um sub-conjunto, ou
+> primeira execução em ambiente novo). Para força bruta sem mexer em código,
+> usa o botão "Run workflow" no GitHub com `force_rebuild=true`.
 
 ```bash
 # Re-scrape RFEGolf (apanha torneios 2026 novos)
@@ -354,12 +361,17 @@ node scripts/scrape-nextcaddy.js --scope scripts/nextcaddy-scope-all.json --conc
 node scripts/scrape-nextcaddy.js --scope scripts/nextcaddy-juvenil-need-scorecards.json --scorecards --concurrency 4
 node scripts/scrape-nextcaddy-horarios.js --all --concurrency 8 --skip-existing
 
+# FCG (Federació Catalana — golfdirecto.com)
+node scripts/discover-fcg-scope.js --years 2025,2026
+node scripts/scrape-fcg.js --scope scripts/fcg-scope.json --concurrency 3 --skip-existing
+
 # Re-build tudo
 node scripts/build-rfegolf-index.js
 node scripts/build-licencia-dob-lookup.js
 node scripts/build-licencia-hcp-lookup.js   # NOVO 2026-05-09
 node scripts/build-spain-players-export.js
 node scripts/build-rfegolf-rivals.js
+node scripts/build-fcg-rivals.js             # NOVO 2026-05-09
 node scripts/infer-nextcaddy-par.js          # fallback para NC sem --scorecards
 
 # Validar

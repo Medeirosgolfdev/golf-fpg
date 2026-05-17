@@ -1,0 +1,242 @@
+name: Actualizar Espanha — RFEG + LGS + NextCaddy + FCG (Node puro)
+
+# Corre:
+#   - Automaticamente Segunda-feira às 02:00 UTC (madrugada Lisboa)
+#   - A pedido (botão "Run workflow" no GitHub)
+#
+# Pipeline única que cobre toda a Espanha:
+#   • RFEGolf microsite (Campeonatos Nacionais) — scrape-rfegolf-node.js
+#   • livegolfscoring.com (scorecards hbh + par real) — scrape-livegolfscoring.js
+#   • NextCaddy (RFGA Andaluzia + FGM Madrid + outras) — scrape-nextcaddy.js
+#   • Federació Catalana de Golf (golfdirecto.com) — scrape-fcg.js
+#
+# Todos os portais são públicos (sem cookies/secrets). Node puro, sem Playwright.
+#
+# Default do cron: descoberta + scrape incremental (--skip-existing) + builds.
+# Para histórico completo: workflow_dispatch com force_rebuild=true.
+#
+# Doc canónico: docs/scraping-rfeg-espanha.md
+on:
+  workflow_dispatch:
+    inputs:
+      force_rebuild:
+        description: 'Re-fetch torneios já em disco? (sem --skip-existing nos scrapers)'
+        required: false
+        default: 'false'
+        type: choice
+        options: ['false', 'true']
+      skip_discovery:
+        description: 'Saltar descoberta de scopes (usa scope files actuais)?'
+        required: false
+        default: 'false'
+        type: choice
+        options: ['false', 'true']
+      lgs_range:
+        description: 'Range de IDs livegolfscoring (ex: "1-500"). Default: "1-500".'
+        required: false
+        default: ''
+      rfegolf_range:
+        description: 'Range de compIds RFEGolf (ex: "13500-17000"). Se vazio, usa --scope.'
+        required: false
+        default: ''
+      fcg_years:
+        description: 'Anos FCG para discovery (ex: "2025,2026"). Default: "2025,2026".'
+        required: false
+        default: ''
+
+  schedule:
+    # Segunda 02:00 UTC ≈ 02:00 Lisboa (inverno) / 03:00 (BST verão)
+    # Madrugada de segunda-feira como pedido. Mesmo timing que update-ffgolf-resultats
+    # mas usa janela diferente (FFG corre antes às 02:00, depois GolfGenius às 03:00).
+    # Espanha corre depois, às 04:00, para evitar colisões no git push.
+    - cron: '0 4 * * 1'
+
+permissions:
+  contents: write
+
+jobs:
+  update-spain:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240   # 4h — pipeline pesada (4 portais + scorecards + builds)
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Decidir flags
+        id: flags
+        run: |
+          # Skip-existing por default (incremental). Force_rebuild remove a flag.
+          if [ "${{ github.event.inputs.force_rebuild }}" = "true" ]; then
+            echo "SKIP_FLAG=" >> $GITHUB_ENV
+            echo "skip_existing: false (force_rebuild)"
+          else
+            echo "SKIP_FLAG=--skip-existing" >> $GITHUB_ENV
+            echo "skip_existing: true"
+          fi
+          # Discovery
+          if [ "${{ github.event.inputs.skip_discovery }}" = "true" ]; then
+            echo "DO_DISCOVERY=false" >> $GITHUB_ENV
+          else
+            echo "DO_DISCOVERY=true" >> $GITHUB_ENV
+          fi
+          # LGS range
+          if [ -n "${{ github.event.inputs.lgs_range }}" ]; then
+            echo "LGS_RANGE=${{ github.event.inputs.lgs_range }}" >> $GITHUB_ENV
+          else
+            echo "LGS_RANGE=1-500" >> $GITHUB_ENV
+          fi
+          # RFEGolf range (se especificado, usa range em vez de scope)
+          if [ -n "${{ github.event.inputs.rfegolf_range }}" ]; then
+            echo "RFEGOLF_MODE=range" >> $GITHUB_ENV
+            echo "RFEGOLF_RANGE=${{ github.event.inputs.rfegolf_range }}" >> $GITHUB_ENV
+          else
+            echo "RFEGOLF_MODE=scope" >> $GITHUB_ENV
+          fi
+          # FCG years
+          if [ -n "${{ github.event.inputs.fcg_years }}" ]; then
+            echo "FCG_YEARS=${{ github.event.inputs.fcg_years }}" >> $GITHUB_ENV
+          else
+            echo "FCG_YEARS=2025,2026" >> $GITHUB_ENV
+          fi
+
+      # ── Descoberta de scopes (regenera scripts/{fcg,nextcaddy}-scope*.json) ──
+      - name: Discovery FCG (catgolf.com → fcg-scope.json)
+        if: env.DO_DISCOVERY == 'true'
+        continue-on-error: true
+        run: node scripts/discover-fcg-scope.js --years "$FCG_YEARS"
+
+      - name: Discovery NextCaddy (→ nextcaddy-scope-all.json)
+        if: env.DO_DISCOVERY == 'true'
+        continue-on-error: true
+        run: node scripts/scrape-nextcaddy.js --discover --out scripts/nextcaddy-scope-all.json
+
+      # ── Scrapers (paralelos seriam ideais mas mantemos sequencial pelo git push) ──
+      - name: Scrape RFEGolf (Campeonatos Nacionais)
+        continue-on-error: true
+        run: |
+          if [ "$RFEGOLF_MODE" = "range" ]; then
+            echo "Modo range: --range $RFEGOLF_RANGE --filter juvenil --concurrency 15"
+            node scripts/scrape-rfegolf-node.js --range "$RFEGOLF_RANGE" --filter juvenil --concurrency 15 $SKIP_FLAG
+          else
+            if [ -f scripts/rfegolf-scope.json ]; then
+              echo "Modo scope: scripts/rfegolf-scope.json"
+              node scripts/scrape-rfegolf-node.js --scope scripts/rfegolf-scope.json --concurrency 15 $SKIP_FLAG
+            else
+              echo "Sem scope file — a usar range default 13500-17000"
+              node scripts/scrape-rfegolf-node.js --range 13500-17000 --filter juvenil --concurrency 15 $SKIP_FLAG
+            fi
+          fi
+
+      - name: Scrape livegolfscoring (scorecards hbh)
+        continue-on-error: true
+        run: node scripts/scrape-livegolfscoring.js --range "$LGS_RANGE" --concurrency 10 $SKIP_FLAG
+
+      - name: Scrape NextCaddy (leaderboards)
+        continue-on-error: true
+        run: |
+          SCOPE_FILE="scripts/nextcaddy-scope-all.json"
+          if [ ! -f "$SCOPE_FILE" ]; then
+            SCOPE_FILE="scripts/nextcaddy-scope.json"
+          fi
+          echo "Scope: $SCOPE_FILE"
+          node scripts/scrape-nextcaddy.js --scope "$SCOPE_FILE" --concurrency 8 $SKIP_FLAG
+
+      - name: Scrape NextCaddy horários (tee times)
+        continue-on-error: true
+        run: node scripts/scrape-nextcaddy-horarios.js --all --concurrency 8 $SKIP_FLAG
+
+      - name: Scrape FCG (golfdirecto.com)
+        continue-on-error: true
+        run: |
+          if [ ! -f scripts/fcg-scope.json ]; then
+            echo "fcg-scope.json não existe — a saltar (discovery FCG falhou?)"
+            exit 0
+          fi
+          node scripts/scrape-fcg.js --scope scripts/fcg-scope.json --concurrency 3 $SKIP_FLAG
+
+      # ── Enrichment + index + lookups (rápidos, não usam rede excepto enrich-lgs-dates) ──
+      - name: Enrich LGS dates
+        continue-on-error: true
+        run: node scripts/enrich-lgs-dates.js
+
+      - name: Inferir par NextCaddy (fallback)
+        continue-on-error: true
+        run: node scripts/infer-nextcaddy-par.js
+
+      - name: Build rfegolf-resultats-index.json
+        run: node scripts/build-rfegolf-index.js
+
+      - name: Build licencia-dob-lookup.json
+        run: node scripts/build-licencia-dob-lookup.js
+
+      - name: Build licencia-hcp-lookup.json
+        run: node scripts/build-licencia-hcp-lookup.js
+
+      - name: Build spain-players.json
+        run: node scripts/build-spain-players-export.js
+
+      - name: Build rfegolf-rivals.json
+        run: node scripts/build-rfegolf-rivals.js
+
+      - name: Build fcg-rivals.json
+        run: node scripts/build-fcg-rivals.js
+
+      - name: Commit e push (se houver mudanças)
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add public/data/rfegolf-resultats/ \
+                  public/data/rfegolf-livegolfscoring/ \
+                  public/data/nextcaddy/ \
+                  public/data/fcg/ \
+                  public/data/rfegolf-resultats-index.json \
+                  public/data/licencia-dob-lookup.json \
+                  public/data/licencia-hcp-lookup.json \
+                  public/data/spain-players.json \
+                  public/data/rfegolf-rivals.json \
+                  public/data/fcg-rivals.json \
+                  scripts/fcg-scope.json \
+                  scripts/nextcaddy-scope-all.json 2>/dev/null || true
+
+          if git diff --staged --quiet; then
+            echo "ℹ️  Nenhuma alteração — sem commit."
+            exit 0
+          fi
+
+          DATE=$(date -u +'%Y-%m-%d %H:%M UTC')
+          git commit -m "data: update Espanha (RFEG + LGS + NC + FCG) ${DATE}"
+          # Rebase contra main caso outro workflow tenha commitado entretanto.
+          git fetch origin main
+          # Push robusto: retry com pull --rebase em cada tentativa.
+          # Em runs manuais (sem o cron offset) podemos colidir com outro
+          # workflow a fazer push em paralelo → non-fast-forward.
+          PUSH_OK=0
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
+              PUSH_OK=1
+              break
+            fi
+            git rebase --abort 2>/dev/null || true
+            echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
+            sleep $((i * 5))
+          done
+          if [ "$PUSH_OK" != "1" ]; then
+            echo "❌ Push falhou após 5 tentativas"
+            exit 1
+          fi
+          echo "✓ Commit feito"
