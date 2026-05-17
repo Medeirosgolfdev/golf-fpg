@@ -24,7 +24,6 @@ import { describe, it, expect, beforeEach } from "vitest";
 import {
   normName,
   co,
-  shortenTournName,
   mergeInto,
   processUskidsCompleto,
   processMemberHistory,
@@ -38,6 +37,13 @@ import {
   fpgTournNames,
   type AutoRivalPlayer,
 } from "../../data/KIDSdataLoader";
+
+// `shortenTournName` foi removido das exports do KIDSdataLoader durante a
+// migração KIDS2 (existe agora como helper local em pages/kids2/components/
+// HeroIdentity.tsx). Mantemos um stub local só para os describe.skip antigos
+// abaixo continuarem a compilar até serem apagados de vez (Fase 8).
+const shortenTournName = (_s: string): string => "";
+void shortenTournName;
 
 /* ═══════════════════════════════════════════
    normName — normalização de nomes
