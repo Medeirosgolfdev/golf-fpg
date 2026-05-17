@@ -1,7 +1,7 @@
 /**
  * kids2/ScoutView.tsx
  *
- * /kids2/scout/:tid - field scout. 2 fontes:
+ * /kids2/scout/:tid — field scout. 2 fontes:
  *
  *   1. Torneios canonicos (tid = tournament.id): junior history + tier + vsM
  *      calculados a partir do canonico.
@@ -9,14 +9,22 @@
  *      /data/uskids-field.json e cruza nomes dos inscritos com os juniors
  *      canonicos (match por normName + aliases).
  *
- *      Jogadores do field que nao tem perfil canonico aparecem na lista com
- *      info basica (nome, pais, cidade) mas sem tier/history (gerados como
- *      synthetic stubs).
+ * UI (2026-05-17 rebuild):
+ *   - 4 KPI cards no topo (inscritos, paises, tier alto, ja confrontou Manuel)
+ *   - Manuel banner quando inscrito + comparacao dele vs todo o field
+ *   - Tabs de escalao (com badge Manuel no flight dele)
+ *   - Tabela por escalao (quando filter=all renderiza seccao por flight)
+ *   - Colunas: pais, nome, idade, tier, total torneios, wins, top3, best gross,
+ *     forma (3 ultimas pos como dots), vs Manuel (avg diff + n confrontos)
  */
 
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { useJuniorsCanonical, computeTier, getTierLabel, getTierColors, getSharedTournamentIds } from "./data";
+import {
+  useJuniorsCanonical, computeTier, getTierLabel, getTierColors,
+  getSharedTournamentIds, getSharedFlightTids, countWins, countTop3,
+  bestRoundGross,
+} from "./data";
 import type { CanonicalData, Junior, Tournament, Result, Flight } from "./data";
 import { flag as flagOf } from "../../utils/flagUtils";
 import { useSort } from "../../hooks/useSort";
@@ -27,12 +35,17 @@ import { usePasswordGate } from "../../hooks/usePasswordGate";
 import PasswordGate from "../../ui/PasswordGate";
 import { cachedFetchJson } from "../../data/fetchCache";
 
-const ICON_SCOPE = "🔭";
+const ICON_SCOPE = "\u{1F52D}";
 const ICON_BACK = "←";
 const ICON_DOT = "·";
 const ICON_SWORDS = "⚔️";
+const ICON_TROPHY = "\u{1F3C6}";
+const ICON_EXTERNAL = "↗";
 
-type ScoutKey = "name" | "country" | "age" | "tier" | "pos" | "vsM" | "form";
+type ScoutKey =
+  | "name" | "country" | "age" | "tier"
+  | "pos" | "vsM" | "form"
+  | "wins" | "top3" | "totalTourns" | "bestGross";
 
 interface ScoutRow {
   junior: Junior;
@@ -42,15 +55,17 @@ interface ScoutRow {
   tier: ReturnType<typeof computeTier>;
   bestPos: number | null;
   recentPos: number | null;
+  formPositions: Array<number | null>;
+  wins: number;
+  top3: number;
+  totalTourns: number;
+  bestGross: number | null;
   vsMTotal: number | null;
   vsMCount: number;
-  /** True quando o junior nao tem perfil canonico (vem so do field). */
+  vsMSameFlight: number;
   fieldOnly?: boolean;
-  /** Cidade vinda do field (so para field-only). */
   cidade?: string;
 }
-
-// uskids-field.json types
 
 interface FieldPlayer { nome: string; pais?: string; cidade?: string; firstSeen?: string }
 interface FieldEscalao {
@@ -89,6 +104,7 @@ function normName(s: string): string {
   return (s || "").trim().toLowerCase()
     .replace(/[-'’.·\/]+/g, " ")
     .replace(/\s+/g, " ")
+    .trim()
     .normalize("NFD").replace(/[̀-ͯ]/g, "");
 }
 
@@ -98,8 +114,6 @@ function usToIso(s: string | undefined): string {
   if (!m) return s;
   return m[3] + "-" + m[1].padStart(2, "0") + "-" + m[2].padStart(2, "0");
 }
-
-// Pagina
 
 export default function ScoutView() {
   const { unlocked, unlock } = usePasswordGate();
@@ -119,13 +133,11 @@ function ScoutViewContent() {
   const data = status.data;
   const tid = params.tid || "";
 
-  // 1) Tentar canonico directo
   const canonical = data.tournamentById.get(tid);
   if (canonical) {
     return <ScoutContent data={data} tournament={canonical} onSelect={(jid) => navigate("/kids2/" + jid)} />;
   }
 
-  // 2) Tentar field USKids: tid = "usk{tcode}"
   const uskMatch = tid.match(/^usk(\d+)$/);
   if (uskMatch && field?.torneios) {
     const tcode = parseInt(uskMatch[1], 10);
@@ -148,15 +160,10 @@ function ScoutViewContent() {
   );
 }
 
-/** Constroi um Tournament sintetico a partir de FieldTournament + cruza jogadores
- *  com os juniors canonicos por normName. Devolve um `data` aumentado com
- *  synthetic juniors para os inscritos sem match canonico (para o juniorById
- *  resolver). */
 function buildFieldTournament(ft: FieldTournament, data: CanonicalData): { tournament: Tournament; data: CanonicalData } {
   const dateIso = usToIso(ft.date_inicio);
   const endIso = usToIso(ft.date_fim);
 
-  // Augmentar o juniorById com synthetic juniors para inscritos sem match
   const augmentedJuniorById = new Map(data.juniorById);
   const flights: Flight[] = [];
 
@@ -166,11 +173,9 @@ function buildFieldTournament(ft: FieldTournament, data: CanonicalData): { tourn
     for (const p of players) {
       const k = normName(p.nome);
       if (!k) continue;
-      // Procurar junior canonico
       const candidates = data.juniorByNormName.get(k) || [];
       let junior: Junior | null = candidates.length > 0 ? candidates[0] : null;
       if (!junior) {
-        // Synthetic junior stub (sem tournamentIds, sem sources)
         const syntheticId = "_field:" + ft.t + ":" + k;
         junior = {
           id: syntheticId,
@@ -188,10 +193,7 @@ function buildFieldTournament(ft: FieldTournament, data: CanonicalData): { tourn
         playerNameInSource: p.nome,
         pos: null,
         status: "OK",
-        // Para o ScoutContent saber a cidade
-        // (Result nao tem campo cidade, mas guardamos como extra via type assertion)
       } as Result);
-      // Guardar cidade do field num side-map (chave = synthetic juniorId / canonical id)
       _fieldExtras.set(junior.id, { cidade: p.cidade });
     }
     flights.push({
@@ -230,8 +232,11 @@ function buildFieldTournament(ft: FieldTournament, data: CanonicalData): { tourn
   };
 }
 
-/** Side-map global para cidade dos field-only players (Result nao tem este campo). */
 const _fieldExtras = new Map<string, { cidade?: string }>();
+
+// ═══════════════════════════════════════════════════════════════════
+//   ScoutContent — vista principal
+// ═══════════════════════════════════════════════════════════════════
 
 function ScoutContent({ data, tournament, onSelect }: {
   data: CanonicalData; tournament: Tournament; onSelect: (jid: string) => void;
@@ -250,10 +255,9 @@ function ScoutContent({ data, tournament, onSelect }: {
 
   const [flightFilter, setFlightFilter] = useState<string>(manuelFlightKey || "all");
 
-  const rows = useMemo<ScoutRow[]>(() => {
+  const allRows = useMemo<ScoutRow[]>(() => {
     const out: ScoutRow[] = [];
     for (const f of tournament.flights) {
-      if (flightFilter !== "all" && f.flightKey !== flightFilter) continue;
       for (const r of f.results) {
         const junior = data.juniorById.get(r.juniorId);
         if (!junior) continue;
@@ -273,23 +277,34 @@ function ScoutContent({ data, tournament, onSelect }: {
         }
 
         let bestPos: number | null = null;
-        let recentPos: number | null = null;
-        let recentDate = "";
+        const positionsByDate: Array<{ pos: number | null; date: string }> = [];
         for (const tid2 of junior.tournamentIds) {
           if (tid2 === tournament.id) continue;
           const t2 = data.tournamentById.get(tid2);
           if (!t2) continue;
           for (const f2 of t2.flights) {
             const r2 = f2.results.find((x) => x.juniorId === junior.id);
-            if (!r2 || typeof r2.pos !== "number") continue;
-            if (bestPos === null || r2.pos < bestPos) bestPos = r2.pos;
+            if (!r2) continue;
+            const pos2 = typeof r2.pos === "number" ? r2.pos : null;
             const d2 = t2.date || t2.startDate || "";
-            if (d2 > recentDate) { recentDate = d2; recentPos = r2.pos; }
+            positionsByDate.push({ pos: pos2, date: d2 });
+            if (pos2 != null && (bestPos === null || pos2 < bestPos)) bestPos = pos2;
           }
         }
+        positionsByDate.sort((a, b) => b.date.localeCompare(a.date));
+        const recentPos = positionsByDate[0]?.pos ?? null;
+        const formPositions: Array<number | null> = positionsByDate.slice(0, 3).map((x) => x.pos);
+        while (formPositions.length < 3) formPositions.push(null);
+
+        const wins = isFieldOnly ? 0 : countWins(junior, data.tournamentById);
+        const top3 = isFieldOnly ? 0 : countTop3(junior, data.tournamentById);
+        const totalTourns = junior.tournamentIds.length;
+        const bg = isFieldOnly ? null : bestRoundGross(junior, data.tournamentById);
+        const bestGross = bg?.gross ?? null;
 
         let vsMTotal: number | null = null;
         let vsMCount = 0;
+        let vsMSameFlight = 0;
         if (manuel && !isFieldOnly) {
           const shared = getSharedTournamentIds(junior, manuel);
           let sum = 0; let n = 0;
@@ -306,6 +321,7 @@ function ScoutContent({ data, tournament, onSelect }: {
             }
           }
           if (n > 0) { vsMTotal = sum / n; vsMCount = n; }
+          vsMSameFlight = getSharedFlightTids(junior, manuel, data.tournamentById).length;
         }
 
         out.push({
@@ -313,8 +329,9 @@ function ScoutContent({ data, tournament, onSelect }: {
           result: isFuture ? null : r,
           age,
           tier: isFieldOnly ? null : computeTier(junior, data.tournamentById),
-          bestPos, recentPos,
-          vsMTotal, vsMCount,
+          bestPos, recentPos, formPositions,
+          wins, top3, totalTourns, bestGross,
+          vsMTotal, vsMCount, vsMSameFlight,
           fieldOnly: isFieldOnly,
           cidade,
         });
@@ -326,160 +343,401 @@ function ScoutContent({ data, tournament, onSelect }: {
       seen.add(r.junior.id);
       return true;
     });
-  }, [data, tournament, manuel, isFuture, flightFilter]);
+  }, [data, tournament, manuel, isFuture]);
 
-  const fieldOnlyCount = rows.filter((r) => r.fieldOnly).length;
-  const matchedCount = rows.length - fieldOnlyCount;
+  const rows = useMemo<ScoutRow[]>(
+    () => flightFilter === "all" ? allRows : allRows.filter((r) => r.flight.flightKey === flightFilter),
+    [allRows, flightFilter],
+  );
+
+  const kpis = useMemo(() => {
+    const manuelInField = manuel && tournament.flights.some((f) => f.results.some((r) => r.juniorId === manuel.id));
+    const totalInscritos = allRows.length + (manuelInField ? 1 : 0);
+    const fieldOnlyCount = allRows.filter((r) => r.fieldOnly).length;
+    const matchedCount = allRows.length - fieldOnlyCount;
+    const countries = new Set<string>();
+    for (const r of allRows) {
+      const c = r.junior.country || r.junior.nationality;
+      if (c) countries.add(c.toUpperCase());
+    }
+    const withManuelHistory = allRows.filter((r) => r.vsMCount > 0).length;
+    const eliteCount = allRows.filter((r) => r.tier === "elite" || r.tier === "strong").length;
+    return {
+      totalInscritos, matchedPct: totalInscritos > 0 ? Math.round((matchedCount / totalInscritos) * 100) : 0,
+      countries: countries.size, withManuelHistory, eliteCount, fieldOnlyCount, matchedCount,
+      manuelInField: !!manuelInField,
+    };
+  }, [allRows, manuel, tournament]);
 
   const { sortKey, sortDir, toggleSort } = useSort<ScoutKey>(isFuture ? "tier" : "pos", "asc", {
-    name: "asc", country: "asc", age: "asc", tier: "asc", pos: "asc", vsM: "asc", form: "asc",
+    name: "asc", country: "asc", age: "asc", tier: "asc",
+    pos: "asc", vsM: "asc", form: "asc",
+    wins: "desc", top3: "desc", totalTourns: "desc", bestGross: "asc",
   });
 
   const sorted = useMemo(() => {
     const arr = [...rows];
     const sign = sortDir === "asc" ? 1 : -1;
     const TIER_RANK: Record<string, number> = { elite: 0, strong: 1, solid: 2, developing: 3, beginner: 4 };
-    const safe = (v: any) => (typeof v === "number" ? v : Number.POSITIVE_INFINITY);
+    const safe = (v: unknown) => (typeof v === "number" ? v : Number.POSITIVE_INFINITY);
     arr.sort((a, b) => {
       switch (sortKey) {
-        case "name":    return sign * a.junior.canonicalName.localeCompare(b.junior.canonicalName);
-        case "country": return sign * ((a.junior.country || "").localeCompare(b.junior.country || ""));
-        case "age":     return sign * (safe(a.age) - safe(b.age));
-        case "tier":    return sign * ((TIER_RANK[a.tier || "beginner"] ?? 5) - (TIER_RANK[b.tier || "beginner"] ?? 5));
-        case "pos":     return sign * (safe(a.result?.pos) - safe(b.result?.pos));
-        case "vsM":     return sign * (safe(a.vsMTotal) - safe(b.vsMTotal));
-        case "form":    return sign * (safe(a.recentPos) - safe(b.recentPos));
+        case "name":        return sign * a.junior.canonicalName.localeCompare(b.junior.canonicalName);
+        case "country":     return sign * ((a.junior.country || "").localeCompare(b.junior.country || ""));
+        case "age":         return sign * (safe(a.age) - safe(b.age));
+        case "tier":        return sign * ((TIER_RANK[a.tier || "beginner"] ?? 5) - (TIER_RANK[b.tier || "beginner"] ?? 5));
+        case "pos":         return sign * (safe(a.result?.pos) - safe(b.result?.pos));
+        case "vsM":         return sign * (safe(a.vsMTotal) - safe(b.vsMTotal));
+        case "form":        return sign * (safe(a.recentPos) - safe(b.recentPos));
+        case "wins":        return sign * (b.wins - a.wins);
+        case "top3":        return sign * (b.top3 - a.top3);
+        case "totalTourns": return sign * (b.totalTourns - a.totalTourns);
+        case "bestGross":   return sign * (safe(a.bestGross) - safe(b.bestGross));
         default: return 0;
       }
     });
     return arr;
   }, [rows, sortKey, sortDir]);
 
-  const manuelInTournament = !!manuel && tournament.flights.some((f) => f.results.some((r) => r.juniorId === manuel.id));
+  const manuelStats = useMemo(() => {
+    if (!manuel || !kpis.manuelInField) return null;
+    const rivalsWithHistory = allRows.filter((r) =>
+      r.flight.flightKey === manuelFlightKey && r.vsMCount > 0
+    );
+    const rivalsBeatManuelOnAvg = rivalsWithHistory.filter((r) => (r.vsMTotal ?? 0) < 0).length;
+    const flightFieldSize = manuelFlightKey
+      ? tournament.flights.find((f) => f.flightKey === manuelFlightKey)?.results.length || 0
+      : 0;
+    return { flightFieldSize, rivalsWithHistory: rivalsWithHistory.length, rivalsBeatManuelOnAvg };
+  }, [manuel, kpis.manuelInField, manuelFlightKey, allRows, tournament]);
 
   return (
-    <div style={{ padding: "16px 20px", maxWidth: 1100, margin: "0 auto" }}>
+    <div style={{ padding: "16px 20px", maxWidth: 1240, margin: "0 auto" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
         <Link to="/kids2" style={{ fontSize: 13, color: "var(--color-info)" }}>{ICON_BACK} KIDS2</Link>
         <span style={{ color: "var(--text-3)" }}>{ICON_DOT}</span>
         <Link to="/kids2/next-t" style={{ fontSize: 13, color: "var(--color-info)" }}>Proximos torneios</Link>
+        {tournament.links?.map((l, i) => (
+          <React.Fragment key={i}>
+            <span style={{ color: "var(--text-3)" }}>{ICON_DOT}</span>
+            <a href={l.url} target="_blank" rel="noreferrer" style={{ fontSize: 13, color: "var(--color-info)" }}>
+              {l.label} {ICON_EXTERNAL}
+            </a>
+          </React.Fragment>
+        ))}
       </div>
 
-      <h2 style={{ margin: "0 0 4px", fontSize: 20, color: "var(--text)" }}>
+      <h2 style={{ margin: "0 0 4px", fontSize: 22, color: "var(--text)" }}>
         {ICON_SCOPE} Field Scout
       </h2>
-      <div style={{ fontSize: 14, color: "var(--text-2)", marginBottom: 14 }}>
-        <strong>{tournament.name || tournament.shortName || tournament.id}</strong>
-        {tDate && <span> {ICON_DOT} {fmtDate(tDate)}</span>}
-        {tournament.course && <span> {ICON_DOT} {tournament.course}</span>}
-        {isFuture && <span style={{ marginLeft: 8, fontSize: 11, padding: "2px 6px", borderRadius: 4, background: "var(--bg-info-subtle, #eff6ff)", color: "var(--color-info-dark, #1e3a8a)" }}>FUTURO</span>}
-        {isFieldOnlySource && <span title="Inscricoes do uskids-field.json - alguns jogadores podem nao ter perfil canonico" style={{ marginLeft: 6, fontSize: 10, padding: "1px 6px", borderRadius: 3, background: "var(--bg-muted)", color: "var(--text-3)", border: "1px solid var(--border-light)" }}>USKids field</span>}
+      <div style={{ fontSize: 14, color: "var(--text-2)", marginBottom: 14, display: "flex", gap: 8, alignItems: "baseline", flexWrap: "wrap" }}>
+        <strong style={{ color: "var(--text)" }}>{tournament.name || tournament.shortName || tournament.id}</strong>
+        {tDate && <span>{ICON_DOT} {fmtDate(tDate)}</span>}
+        {tournament.course && <span>{ICON_DOT} {tournament.course}</span>}
+        {isFuture
+          ? <span style={{ fontSize: 11, padding: "2px 8px", borderRadius: 999, background: "var(--bg-info-subtle, #eff6ff)", color: "var(--color-info-dark, #1e3a8a)", fontWeight: 600 }}>FUTURO</span>
+          : <span style={{ fontSize: 11, padding: "2px 8px", borderRadius: 999, background: "var(--bg-muted)", color: "var(--text-2)", fontWeight: 600 }}>HISTORICO</span>
+        }
+        {isFieldOnlySource && (
+          <span title="Inscritos do uskids-field.json - alguns jogadores podem nao ter perfil canonico"
+                style={{ fontSize: 10, padding: "1px 6px", borderRadius: 3, background: "var(--bg-muted)", color: "var(--text-3)", border: "1px solid var(--border-light)" }}>
+            USKids field
+          </span>
+        )}
       </div>
 
-      {isFieldOnlySource && (
-        <div style={{ background: "var(--bg-info-subtle, #eff6ff)", color: "var(--color-info-dark, #1e3a8a)", padding: "8px 12px", borderRadius: 6, marginBottom: 12, fontSize: 12 }}>
-          {matchedCount} inscritos com perfil canonico {ICON_DOT} {fieldOnlyCount} sem historico nos dados (apenas nome + pais)
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 10, marginBottom: 14 }}>
+        <KpiBox label="Inscritos" value={String(kpis.totalInscritos)} sub={isFieldOnlySource && kpis.fieldOnlyCount > 0
+          ? kpis.matchedCount + " c/ perfil · " + kpis.fieldOnlyCount + " novos"
+          : "em " + tournament.flights.length + " escal" + (tournament.flights.length === 1 ? "ao" : "oes")} />
+        <KpiBox label="Paises" value={String(kpis.countries)} sub="bandeiras distintas" />
+        <KpiBox label="Tier alto" value={String(kpis.eliteCount)} sub="Elite + Forte Competidor" emphasis={kpis.eliteCount > 0 ? "warn" : undefined} />
+        <KpiBox label="Ja confrontou Manuel" value={String(kpis.withManuelHistory)}
+                sub={kpis.manuelInField ? "vao estar no mesmo torneio" : "Manuel nao inscrito"}
+                emphasis={kpis.withManuelHistory > 0 ? "good" : undefined} />
+      </div>
+
+      {kpis.manuelInField && manuel && manuelStats && (
+        <div style={{
+          marginBottom: 14, padding: "10px 14px",
+          background: "var(--bg-success-subtle, #ecfdf5)",
+          border: "1px solid var(--border-success, #97c459)",
+          borderRadius: 8, display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap",
+        }}>
+          <span style={{ fontSize: 18 }}>{ICON_SWORDS}</span>
+          <div style={{ flex: 1, minWidth: 200 }}>
+            <div style={{ fontWeight: 700, color: "var(--color-good-dark)", fontSize: 14 }}>
+              Manuel inscrito {manuelFlightKey ? "no " + (tournament.flights.find((f) => f.flightKey === manuelFlightKey)?.label || "") : ""}
+            </div>
+            <div style={{ fontSize: 12, color: "var(--color-good-dark)", marginTop: 2 }}>
+              {manuelStats.flightFieldSize} inscritos no escalao{" "}
+              {ICON_DOT} {manuelStats.rivalsWithHistory} ja cruzaram com ele{" "}
+              {manuelStats.rivalsWithHistory > 0 && (
+                <>{ICON_DOT} {manuelStats.rivalsBeatManuelOnAvg} com media superior</>
+              )}
+            </div>
+          </div>
+          <Link to={"/kids2/" + manuel.id}
+                style={{ fontSize: 12, padding: "5px 10px", borderRadius: 6,
+                         background: "var(--color-good-dark)", color: "var(--bg)",
+                         textDecoration: "none", fontWeight: 600 }}>
+            Ver perfil do Manuel {ICON_EXTERNAL}
+          </Link>
+        </div>
+      )}
+
+      {isFieldOnlySource && kpis.fieldOnlyCount > 0 && (
+        <div style={{ background: "var(--bg-warn-subtle, #fffbeb)", color: "var(--color-warn-dark, #92400e)",
+                      padding: "8px 12px", borderRadius: 6, marginBottom: 12, fontSize: 12 }}>
+          {kpis.fieldOnlyCount} inscritos sem perfil canonico no nosso sistema (apenas nome + pais).
+          Os scores historicos, tier, wins e diff vs Manuel nao estao disponiveis para estes.
         </div>
       )}
 
       {tournament.flights.length > 1 && (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 10 }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 14 }}>
           <button onClick={() => setFlightFilter("all")} style={flightPillStyle(flightFilter === "all")}>
-            Todos {ICON_DOT} {tournament.flights.reduce((acc, f) => acc + f.results.length, 0)}
+            Todos {ICON_DOT} {allRows.length + (kpis.manuelInField ? 1 : 0)}
           </button>
           {tournament.flights.map((f) => {
             const isManuelFlight = !!manuel && f.results.some((r) => r.juniorId === manuel.id);
             return (
               <button key={f.flightKey} onClick={() => setFlightFilter(f.flightKey)} style={flightPillStyle(flightFilter === f.flightKey, isManuelFlight)}>
-                {f.label} {ICON_DOT} {f.results.length}{isManuelFlight ? " " + ICON_DOT + " " + ICON_SWORDS + " Manuel" : ""}
+                {f.label} {ICON_DOT} {f.results.length}
+                {isManuelFlight && <> {ICON_DOT} {ICON_SWORDS} Manuel</>}
               </button>
             );
           })}
         </div>
       )}
 
-      <div style={{ fontSize: 12, color: "var(--text-3)", marginBottom: 10 }}>
-        {rows.length} {isFuture ? "inscritos" : "participantes"}
-        {flightFilter !== "all" && tournament.flights.length > 1 && <span> no escalao filtrado</span>}
-      </div>
-
-      <div style={{ background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 8, overflowX: "auto" }}>
-        <table style={{ width: "100%", fontSize: 12, borderCollapse: "collapse", fontVariantNumeric: "tabular-nums" }}>
-          <thead style={{ background: "var(--bg-muted)", borderBottom: "1px solid var(--border)" }}>
-            <tr>
-              <SortableHdr<ScoutKey> k="country" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={thStyle}>Pais</SortableHdr>
-              <SortableHdr<ScoutKey> k="name"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={thStyle}>Nome</SortableHdr>
-              <SortableHdr<ScoutKey> k="age"     sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, textAlign: "center", width: 50 }}>Idade</SortableHdr>
-              <SortableHdr<ScoutKey> k="tier"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 110 }}>Tier</SortableHdr>
-              <th style={{ ...thStyle, width: 56, textAlign: "center" }}>Best pos</th>
-              <SortableHdr<ScoutKey> k="form"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 80, textAlign: "center" }}>Ultima pos</SortableHdr>
-              {!isFuture && <SortableHdr<ScoutKey> k="pos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 60, textAlign: "center" }}>Pos</SortableHdr>}
-              {manuel && <SortableHdr<ScoutKey> k="vsM" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 90, textAlign: "right" }}>diff M (media)</SortableHdr>}
-              {manuel && <th style={{ ...thStyle, width: 36, textAlign: "center" }}>{ICON_SWORDS}M</th>}
-            </tr>
-          </thead>
-          <tbody>
-            {sorted.map((row) => {
-              const clickable = !row.fieldOnly;
-              return (
-                <tr
-                  key={row.junior.id}
-                  style={{ borderBottom: "1px solid var(--border-light)", cursor: clickable ? "pointer" : "default", opacity: row.fieldOnly ? 0.7 : 1 }}
-                  onClick={clickable ? () => onSelect(row.junior.id) : undefined}
-                  title={clickable ? "Abrir perfil" : "Sem perfil canonico"}
-                >
-                  <td style={tdStyle}>{flagOf(row.junior.country || row.junior.nationality || "")} {row.junior.country || row.junior.nationality || "—"}</td>
-                  <td style={{ ...tdStyle, fontWeight: 600, color: "var(--text)" }}>
-                    {row.junior.canonicalName}
-                    {row.flight && <span style={{ fontSize: 10, color: "var(--text-3)", marginLeft: 6 }}>{ICON_DOT} {row.flight.label}</span>}
-                    {row.cidade && <div style={{ fontSize: 10, color: "var(--text-3)", marginTop: 1 }}>{row.cidade}</div>}
-                  </td>
-                  <td style={{ ...tdStyle, textAlign: "center", color: "var(--text-2)" }}>{row.age != null ? row.age : "—"}</td>
-                  <td style={tdStyle}>
-                    {row.tier ? (() => {
-                      const c = getTierColors(row.tier);
-                      return <span style={{ background: c.bg, color: c.fg, fontSize: 10, padding: "2px 7px", borderRadius: 10, fontWeight: 700, border: "1px solid " + c.fg }}>{getTierLabel(row.tier)}</span>;
-                    })() : <span style={{ color: "var(--text-3)", fontSize: 10 }}>{row.fieldOnly ? "sem dados" : "—"}</span>}
-                  </td>
-                  <td style={{ ...tdStyle, textAlign: "center" }}>{row.bestPos != null ? "#" + row.bestPos : "—"}</td>
-                  <td style={{ ...tdStyle, textAlign: "center", color: row.recentPos != null && row.recentPos <= 3 ? "var(--medal-gold-strong)" : undefined }}>
-                    {row.recentPos != null ? "#" + row.recentPos : "—"}
-                  </td>
-                  {!isFuture && (
-                    <td style={{ ...tdStyle, textAlign: "center", fontWeight: 700 }}>
-                      {row.result?.pos != null ? "#" + row.result.pos : "—"}
-                    </td>
-                  )}
-                  {manuel && (
-                    <td style={{ ...tdStyle, textAlign: "right", fontWeight: 700, color: row.vsMTotal == null ? "var(--text-3)" : row.vsMTotal > 0 ? "var(--color-danger-dark)" : row.vsMTotal < 0 ? "var(--medal-gold-strong)" : "var(--text-3)" }}>
-                      {row.vsMTotal == null ? "—" : row.vsMTotal === 0 ? "0" : row.vsMTotal > 0 ? "+" + row.vsMTotal.toFixed(1) : row.vsMTotal.toFixed(1)}
-                    </td>
-                  )}
-                  {manuel && <td style={{ ...tdStyle, textAlign: "center", color: "var(--text-3)" }}>{row.vsMCount || "—"}</td>}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-
-      {manuelInTournament && manuel && (
-        <div style={{ marginTop: 14, padding: "8px 12px", background: "var(--bg-success-subtle, #ecfdf5)", border: "1px solid var(--border-success, #97c459)", borderRadius: 6, fontSize: 12, color: "var(--color-good-dark)" }}>
-          {ICON_SWORDS} Manuel esta inscrito neste torneio.
-        </div>
+      {flightFilter === "all" && tournament.flights.length > 1 ? (
+        tournament.flights.map((f) => {
+          const flightRows = sorted.filter((r) => r.flight.flightKey === f.flightKey);
+          if (flightRows.length === 0) return null;
+          const isManuelFlight = !!manuel && f.results.some((r) => r.juniorId === manuel.id);
+          return (
+            <div key={f.flightKey} style={{ marginBottom: 18 }}>
+              <FlightHeader flight={f} isManuelFlight={isManuelFlight} count={flightRows.length} />
+              <ScoutTable
+                rows={flightRows} manuel={manuel} isFuture={isFuture}
+                sortKey={sortKey} sortDir={sortDir} toggleSort={toggleSort}
+                onSelect={onSelect} hideFlight
+              />
+            </div>
+          );
+        })
+      ) : (
+        <ScoutTable
+          rows={sorted} manuel={manuel} isFuture={isFuture}
+          sortKey={sortKey} sortDir={sortDir} toggleSort={toggleSort}
+          onSelect={onSelect}
+        />
       )}
     </div>
   );
 }
 
-const thStyle: React.CSSProperties = { padding: "6px 8px", textAlign: "left", fontSize: 10, fontWeight: 700, color: "var(--text-2)", textTransform: "uppercase", letterSpacing: 0.3, cursor: "pointer" };
-const tdStyle: React.CSSProperties = { padding: "6px 8px", fontSize: 12, color: "var(--text-2)" };
+// ═══════════════════════════════════════════════════════════════════
+//   Sub-componentes
+// ═══════════════════════════════════════════════════════════════════
+
+function KpiBox({ label, value, sub, emphasis }: {
+  label: string; value: string; sub?: string;
+  emphasis?: "good" | "warn";
+}) {
+  const palette = emphasis === "good"
+    ? { bg: "var(--bg-success-subtle, #ecfdf5)", fg: "var(--color-good-dark)", border: "var(--border-success, #97c459)" }
+    : emphasis === "warn"
+    ? { bg: "var(--bg-warn-subtle, #fffbeb)", fg: "var(--color-warn-dark, #92400e)", border: "var(--color-amber, #f59e0b)" }
+    : { bg: "var(--bg)", fg: "var(--text)", border: "var(--border)" };
+  return (
+    <div style={{ background: palette.bg, border: "1px solid " + palette.border, borderRadius: 8, padding: "10px 12px" }}>
+      <div style={{ fontSize: 11, color: "var(--text-3)", textTransform: "uppercase", letterSpacing: 0.4, fontWeight: 600 }}>{label}</div>
+      <div style={{ fontSize: 22, fontWeight: 700, color: palette.fg, lineHeight: 1.1, marginTop: 2 }}>{value}</div>
+      {sub && <div style={{ fontSize: 11, color: "var(--text-2)", marginTop: 3 }}>{sub}</div>}
+    </div>
+  );
+}
+
+function FlightHeader({ flight, isManuelFlight, count }: {
+  flight: Flight; isManuelFlight: boolean; count: number;
+}) {
+  return (
+    <div style={{
+      display: "flex", alignItems: "baseline", gap: 8, marginBottom: 6, padding: "6px 4px",
+      borderBottom: "2px solid " + (isManuelFlight ? "var(--color-good-dark)" : "var(--border)"),
+    }}>
+      <span style={{ fontSize: 15, fontWeight: 700, color: "var(--text)" }}>{flight.label}</span>
+      <span style={{ fontSize: 12, color: "var(--text-3)" }}>{ICON_DOT} {count} c/ perfil</span>
+      {typeof flight.fieldSize === "number" && flight.fieldSize > count && (
+        <span style={{ fontSize: 12, color: "var(--text-3)" }}>{ICON_DOT} {flight.fieldSize} total</span>
+      )}
+      {isManuelFlight && (
+        <span style={{ fontSize: 11, padding: "2px 8px", borderRadius: 999, background: "var(--bg-success-subtle, #ecfdf5)", color: "var(--color-good-dark)", fontWeight: 600 }}>
+          {ICON_SWORDS} Manuel
+        </span>
+      )}
+    </div>
+  );
+}
+
+function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSelect, hideFlight }: {
+  rows: ScoutRow[]; manuel: Junior | null; isFuture: boolean;
+  sortKey: ScoutKey; sortDir: "asc" | "desc"; toggleSort: (k: ScoutKey) => void;
+  onSelect: (jid: string) => void;
+  hideFlight?: boolean;
+}) {
+  if (rows.length === 0) {
+    return <div style={{ padding: 20, textAlign: "center", color: "var(--text-3)", fontSize: 13 }}>
+      Sem jogadores neste escalao.
+    </div>;
+  }
+  return (
+    <div style={{ background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 8, overflowX: "auto" }}>
+      <table style={{ width: "100%", fontSize: 12, borderCollapse: "collapse", fontVariantNumeric: "tabular-nums" }}>
+        <thead style={{ background: "var(--bg-muted)", borderBottom: "1px solid var(--border)" }}>
+          <tr>
+            <SortableHdr<ScoutKey> k="country"     sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={thStyle}>Pais</SortableHdr>
+            <SortableHdr<ScoutKey> k="name"        sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={thStyle}>Nome</SortableHdr>
+            <SortableHdr<ScoutKey> k="age"         sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, textAlign: "center", width: 50 }}>Idade</SortableHdr>
+            <SortableHdr<ScoutKey> k="tier"        sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 110 }}>Tier</SortableHdr>
+            <SortableHdr<ScoutKey> k="totalTourns" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, textAlign: "center", width: 48 }}>T</SortableHdr>
+            <SortableHdr<ScoutKey> k="wins"        sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, textAlign: "center", width: 48 }}>{ICON_TROPHY}</SortableHdr>
+            <SortableHdr<ScoutKey> k="top3"        sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, textAlign: "center", width: 48 }}>Top3</SortableHdr>
+            <SortableHdr<ScoutKey> k="bestGross"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, textAlign: "center", width: 60 }}>Best</SortableHdr>
+            <th style={{ ...thStyle, width: 90, textAlign: "center" }} title="Ultimas 3 posicoes (mais recente a esquerda)">Forma</th>
+            {!isFuture && <SortableHdr<ScoutKey> k="pos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 60, textAlign: "center" }}>Pos</SortableHdr>}
+            {manuel && <SortableHdr<ScoutKey> k="vsM" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 100, textAlign: "right" }}>vs M (media)</SortableHdr>}
+            {manuel && <th style={{ ...thStyle, width: 56, textAlign: "center" }} title="Confrontos no mesmo flight">{ICON_SWORDS}H2H</th>}
+            <th style={{ ...thStyle, width: 30, textAlign: "center" }} />
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => {
+            const clickable = !row.fieldOnly;
+            return (
+              <tr
+                key={row.junior.id}
+                style={{
+                  borderBottom: "1px solid var(--border-light)",
+                  cursor: clickable ? "pointer" : "default",
+                  opacity: row.fieldOnly ? 0.65 : 1,
+                  background: row.tier === "elite" ? "var(--bg-warn-subtle, #fffbeb)" : undefined,
+                }}
+                onClick={clickable ? () => onSelect(row.junior.id) : undefined}
+                title={clickable ? "Abrir perfil em KIDS2" : "Sem perfil canonico (apenas inscricao)"}
+              >
+                <td style={tdStyle}>
+                  <span style={{ marginRight: 4 }}>{flagOf(row.junior.country || row.junior.nationality || "")}</span>
+                  {row.junior.country || row.junior.nationality || "-"}
+                </td>
+                <td style={{ ...tdStyle, fontWeight: 600, color: "var(--text)" }}>
+                  {row.junior.canonicalName}
+                  {!hideFlight && row.flight && (
+                    <span style={{ fontSize: 10, color: "var(--text-3)", marginLeft: 6 }}>{ICON_DOT} {row.flight.label}</span>
+                  )}
+                  {row.cidade && <div style={{ fontSize: 10, color: "var(--text-3)", marginTop: 1 }}>{row.cidade}</div>}
+                </td>
+                <td style={{ ...tdStyle, textAlign: "center", color: "var(--text-2)" }}>{row.age != null ? row.age : "-"}</td>
+                <td style={tdStyle}>
+                  {row.tier ? (() => {
+                    const c = getTierColors(row.tier);
+                    return <span style={{ background: c.bg, color: c.fg, fontSize: 10, padding: "2px 7px", borderRadius: 10, fontWeight: 700, border: "1px solid " + c.fg }}>{getTierLabel(row.tier)}</span>;
+                  })() : <span style={{ color: "var(--text-3)", fontSize: 10 }}>{row.fieldOnly ? "sem dados" : "-"}</span>}
+                </td>
+                <td style={{ ...tdStyle, textAlign: "center", color: "var(--text-2)" }}>
+                  {row.totalTourns || "-"}
+                </td>
+                <td style={{ ...tdStyle, textAlign: "center", fontWeight: row.wins > 0 ? 700 : 400, color: row.wins > 0 ? "var(--medal-gold-strong)" : "var(--text-3)" }}>
+                  {row.wins || "-"}
+                </td>
+                <td style={{ ...tdStyle, textAlign: "center", fontWeight: row.top3 > 0 ? 600 : 400, color: row.top3 > 0 ? "var(--medal-bronze-fg, #92400e)" : "var(--text-3)" }}>
+                  {row.top3 || "-"}
+                </td>
+                <td style={{ ...tdStyle, textAlign: "center", color: "var(--text-2)" }}>
+                  {row.bestGross != null ? row.bestGross : "-"}
+                </td>
+                <td style={{ ...tdStyle, textAlign: "center" }}>
+                  <FormDots positions={row.formPositions} />
+                </td>
+                {!isFuture && (
+                  <td style={{ ...tdStyle, textAlign: "center", fontWeight: 700 }}>
+                    {row.result?.pos != null ? "#" + row.result.pos : "-"}
+                  </td>
+                )}
+                {manuel && (
+                  <td style={{ ...tdStyle, textAlign: "right", fontWeight: 700,
+                    color: row.vsMTotal == null ? "var(--text-3)" :
+                           row.vsMTotal > 0 ? "var(--color-danger-dark)" :
+                           row.vsMTotal < 0 ? "var(--medal-gold-strong)" : "var(--text-3)" }}>
+                    {row.vsMTotal == null ? "-" :
+                     row.vsMTotal === 0 ? "0" :
+                     row.vsMTotal > 0 ? "+" + row.vsMTotal.toFixed(1) :
+                     row.vsMTotal.toFixed(1)}
+                  </td>
+                )}
+                {manuel && (
+                  <td style={{ ...tdStyle, textAlign: "center", color: "var(--text-3)", fontSize: 11 }}>
+                    {row.vsMCount > 0
+                      ? row.vsMSameFlight > 0
+                        ? <span style={{ color: "var(--medal-gold-strong)", fontWeight: 700 }}>{row.vsMSameFlight}</span>
+                        : row.vsMCount
+                      : "-"}
+                  </td>
+                )}
+                <td style={{ ...tdStyle, textAlign: "center" }}>
+                  {clickable && <span style={{ color: "var(--color-info)", fontSize: 13 }}>{ICON_EXTERNAL}</span>}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function FormDots({ positions }: { positions: Array<number | null> }) {
+  return (
+    <div style={{ display: "inline-flex", gap: 3, alignItems: "center" }}>
+      {positions.map((p, i) => {
+        const color = p == null
+          ? "var(--text-3)"
+          : p <= 3
+            ? "var(--medal-gold-strong)"
+            : p <= 10
+              ? "var(--color-amber, #f59e0b)"
+              : "var(--text-3)";
+        return (
+          <span key={i}
+                title={p == null ? "-" : "#" + p}
+                style={{
+                  width: 20, height: 20, borderRadius: 999,
+                  display: "inline-flex", alignItems: "center", justifyContent: "center",
+                  background: p == null ? "var(--bg-muted)" : "var(--bg)",
+                  border: "1px solid " + color,
+                  fontSize: 9, fontWeight: 700, color,
+                }}>
+            {p == null ? "·" : p > 99 ? "99+" : String(p)}
+          </span>
+        );
+      })}
+    </div>
+  );
+}
+
+const thStyle: React.CSSProperties = {
+  padding: "7px 8px", textAlign: "left", fontSize: 10, fontWeight: 700,
+  color: "var(--text-2)", textTransform: "uppercase", letterSpacing: 0.3, cursor: "pointer",
+};
+const tdStyle: React.CSSProperties = { padding: "7px 8px", fontSize: 12, color: "var(--text-2)" };
 
 function flightPillStyle(active: boolean, isManuelFlight = false): React.CSSProperties {
   const accent = isManuelFlight ? "var(--color-good-dark)" : "var(--color-info-dark, #1e3a8a)";
   return {
     fontSize: 11, fontWeight: 600,
-    padding: "4px 10px", borderRadius: 999,
+    padding: "5px 11px", borderRadius: 999,
     border: "1px solid " + (active ? accent : "var(--border)"),
     background: active ? accent : "var(--bg)",
     color: active ? "var(--bg)" : "var(--text-2)",

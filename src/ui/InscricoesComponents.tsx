@@ -20,7 +20,7 @@
 
 import React, { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import type { Tournament } from "../data/fpgTypes";
-import type { InscricaoJogador, TorneioData, BdPlayer, PlayerStats, StatsDb } from "../nacionais/types";
+import type { InscricaoJogador, TorneioData, BdPlayer, PlayerStats, StatsDb } from "../pages/nacionais/types";
 import { useAppContext } from "../context/AppContext";
 import { sdClassByHcp } from "../utils/scoreDisplay";
 import { escCls } from "../utils/playerUtils";

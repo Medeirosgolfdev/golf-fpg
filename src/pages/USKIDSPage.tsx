@@ -870,6 +870,16 @@ export default function USKidsFieldPage() {
               Resultados ↗
             </a>
           )}
+          <Link
+            to={`/kids2/scout/usk${t.t}`}
+            target="_blank"
+            rel="noreferrer"
+            onClick={e => e.stopPropagation()}
+            title="Scout — campo de inscritos com tier vs Manuel (KIDS2, nova aba)"
+            className="p p-sm td-none"
+            style={{ background:"var(--bg-info-subtle)", color:"var(--color-info-dark, #1e3a8a)", borderColor:"var(--border-info, #93c5fd)" }}>
+            🔭 Scout
+          </Link>
         </>
       );
       const tData: SidebarItemTournament = {
