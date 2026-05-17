@@ -24,22 +24,22 @@
   "course": {
     "par": [
       4,
-      4,
+      5,
       5,
       3,
       5,
-      4,
       3,
-      4,
-      4,
-      4,
+      3,
       5,
-      3,
+      4,
+      4,
       4,
       3,
       4,
       4,
-      5,
+      4,
+      4,
+      4,
       4
     ],
     "si": [
@@ -81,7 +81,10 @@
       200,
       375,
       323
-    ]
+    ],
+    "parTotal": 72,
+    "parInferred": true,
+    "parConfidence": "high"
   },
   "leaderboard": [
     {
@@ -435,5 +438,5 @@
   ],
   "scoreTypes": [],
   "horarios": [],
-  "horariosScrapedAt": "2026-05-09T12:12:50.789Z"
+  "horariosScrapedAt": "2026-05-17T12:43:12.357Z"
 }
