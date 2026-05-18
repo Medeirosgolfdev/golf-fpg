@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-05-17T12:43:20.328Z",
+  "generatedAt": "2026-05-18T08:08:49.099Z",
   "source": "scripts/build-rfegolf-index.js",
-  "total": 2525,
-  "totalCompetitions": 2525,
+  "total": 2528,
+  "totalCompetitions": 2528,
   "skipped": 4,
   "byYear": {
     "2017": 1,
@@ -14,7 +14,7 @@
     "2023": 114,
     "2024": 123,
     "2025": 180,
-    "2026": 1829
+    "2026": 1832
   },
   "byCategory": {
     "Benjamín": 77,
@@ -30,7 +30,7 @@
     "Cadete": 22
   },
   "bySource": {
-    "nextcaddy": 1831,
+    "nextcaddy": 1834,
     "rfegolf": 408,
     "livegolfscoring": 267,
     "golfdirecto": 19
@@ -65200,6 +65200,117 @@
       "leaderboardPlayers": 93,
       "nRounds": 7,
       "scrapedAt": "2026-05-08T21:37:34.134Z"
+    },
+    {
+      "source": "nextcaddy",
+      "id": 70924,
+      "tourId": 70924,
+      "file": "70924.json",
+      "filePath": "nextcaddy/70924.json",
+      "name": "VOBS COMPETITION",
+      "year": 2026,
+      "category": null,
+      "sex": "M",
+      "dateStart": null,
+      "dateEnd": null,
+      "dateStartIso": null,
+      "dateEndIso": null,
+      "course": "Villa Nueva Golf Resort",
+      "courseCode": "AMD5",
+      "organizer": null,
+      "format": "Stableford (Handicap)  Caballeros  Señor",
+      "categories": [
+        "Caballeros",
+        "Señoras",
+        "Senior Masculino",
+        "Infantil",
+        "Profesional",
+        "Senior",
+        "Juvenil"
+      ],
+      "counts": {
+        "admitidos": 32,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "scrapedAt": "2026-05-18T08:08:13.495Z"
+    },
+    {
+      "source": "nextcaddy",
+      "id": 70923,
+      "tourId": 70923,
+      "file": "70923.json",
+      "filePath": "nextcaddy/70923.json",
+      "name": "ladies  summer event",
+      "year": 2026,
+      "category": null,
+      "sex": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "dateStartIso": null,
+      "dateEndIso": null,
+      "course": "Santa María Golf & Country Club",
+      "courseCode": "AM86",
+      "organizer": null,
+      "format": "Stableford (Handicap)  Especial Rosa Fem",
+      "categories": [
+        "Señoras",
+        "Infantil",
+        "Profesional",
+        "Senior",
+        "Juvenil"
+      ],
+      "counts": {
+        "admitidos": 40,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "scrapedAt": "2026-05-18T08:08:14.147Z"
+    },
+    {
+      "source": "nextcaddy",
+      "id": 70922,
+      "tourId": 70922,
+      "file": "70922.json",
+      "filePath": "nextcaddy/70922.json",
+      "name": "monday club",
+      "year": 2026,
+      "category": null,
+      "sex": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "dateStartIso": null,
+      "dateEndIso": null,
+      "course": "Santa María Golf & Country Club",
+      "courseCode": "AM86",
+      "organizer": null,
+      "format": "Stableford (Handicap)  Caballeros  Señor",
+      "categories": [
+        "Caballeros",
+        "Señoras",
+        "Infantil",
+        "Profesional",
+        "Senior",
+        "Juvenil"
+      ],
+      "counts": {
+        "admitidos": 13,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "scrapedAt": "2026-05-18T08:08:13.543Z"
     },
     {
       "source": "nextcaddy",
