@@ -48,6 +48,8 @@ export interface MultiRoundRow {
   isIncomplete?: boolean;
   /** Jogador desistiu */
   isWD?: boolean;
+  /** Eliminado no cut (rondas completas mas <maxR) -- distinto de desistente */
+  isCut?: boolean;
   /** Emoji de bandeira pré-renderizado (para páginas sem playersDB) */
   countryFlag?: string;
 }

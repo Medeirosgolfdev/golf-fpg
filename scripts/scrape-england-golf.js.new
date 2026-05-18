@@ -1170,7 +1170,6 @@ async function scrapeOne(browser, t) {
       const arr = [...divSet];
       const main = arr.find(d => !isSubTrophy(d)) || arr[0];
       playerDivision.set(key, main);
-    }
     const nRounds = new Set(strokeEvents.map((e) => e.name.replace(/ — .*$/, ""))).size;
     const consolidatedPlayers = [...playerLatestRecord.values()].map((p) => {
       const scRounds = allScorecards[p.id] || [];

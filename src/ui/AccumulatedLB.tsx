@@ -89,9 +89,11 @@ export function AccumulatedLB({
         esc: esc || undefined,
         teeName: p.teeName,
         gross: numGross(p),
-        parTotal: parPerRound * nRounds,
+        parTotal: parPerRound * (p._roundsPlayed ?? nRounds),
+        toPar: p.toPar ?? null,
         isIncomplete: !!p._incomplete,
         isWD: !!p._wd,
+        isCut: !!p._cut,
         isHighlighted: isManuel(p),
         // Marca conterrâneo (.row-portuguese) — usado em FFG e outras páginas intl.
         isPortuguese: !isManuel(p) && !!(p as any)._isPortuguese,

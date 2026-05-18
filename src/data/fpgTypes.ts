@@ -29,6 +29,7 @@ export interface Player extends BasePlayer {
   roundScores?: RoundScore[];
   // flags internas de multi-ronda (não vêm do JSON — atribuídas por expandMultiRound)
   _wd?: boolean;          // desistiu em ≥1 ronda
+  _cut?: boolean;         // eliminado no cut (rondas completas mas N < maxR)
   _incomplete?: boolean;  // jogou menos rondas que o máximo disponível
   _roundsPlayed?: number; // rondas válidas jogadas
   _dp?: number;           // display position (atribuído pela ScorecardLB para ranking)

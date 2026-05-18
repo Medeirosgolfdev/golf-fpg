@@ -272,20 +272,54 @@ export function expandMultiRound(t: Tournament): Tournament[] {
       _roundsPlayed: nPlayed,
     } as any));
   }
-  // Completos ordenados por gross; incompletos no fim; WD no fim de tudo
-  const complete   = totalPlayers.filter(p => !p._incomplete && !p._wd).sort((a, b) => numGross(a) - numGross(b));
+  /* Detectar cut: contagem de jogadores por nRoundsPlayed. O N < playedRounds
+     com >= 5 jogadores e maior contagem e o "cut" (ex: 80 jogadores em 2R apos
+     R3 -- foram eliminados no cut, nao desistiram). Promover esses de _incomplete
+     para _cut. */
+  const countByN: Record<number, number> = {};
+  for (const p of totalPlayers) {
+    const n = (p as any)._roundsPlayed as number;
+    if (!(p as any)._wd && n > 0 && n < playedRounds) {
+      countByN[n] = (countByN[n] || 0) + 1;
+    }
+  }
+  let cutN = -1;
+  let cutCount = 0;
+  for (const k of Object.keys(countByN)) {
+    const n = Number(k);
+    if (countByN[n] >= 5 && countByN[n] > cutCount) {
+      cutCount = countByN[n];
+      cutN = n;
+    }
+  }
+  // Promover _incomplete -> _cut quando rondas batem com o cut detectado
+  if (cutN > 0) {
+    for (const p of totalPlayers) {
+      const pa = p as any;
+      if (pa._incomplete && !pa._wd && pa._roundsPlayed === cutN) {
+        pa._cut = true;
+        pa._incomplete = false;
+      }
+    }
+  }
+
+  // Completos ordenados por gross; cut no meio; incompletos no fim; WD no fim de tudo
+  const complete   = totalPlayers.filter(p => !(p as any)._incomplete && !p._wd && !(p as any)._cut).sort((a, b) => numGross(a) - numGross(b));
+  const cutPlayers = totalPlayers.filter(p =>  (p as any)._cut && !p._wd).sort((a, b) => numGross(a) - numGross(b));
   const wdPlayers  = totalPlayers.filter(p => p._wd);
-  const incomplete = totalPlayers.filter(p =>  p._incomplete && !p._wd).sort((a, b) => numGross(a) - numGross(b));
+  const incomplete = totalPlayers.filter(p =>  (p as any)._incomplete && !p._wd).sort((a, b) => numGross(a) - numGross(b));
   // Positions only for complete players
   let pos = 1;
   complete.forEach((p, i) => {
     if (i > 0 && numGross(p) !== numGross(complete[i - 1])) pos = i + 1;
     (p as any)._pos = pos;
   });
+  cutPlayers.forEach(p => { (p as any)._pos = null; });
   incomplete.forEach(p => { (p as any)._pos = null; });
   // Label do tab: "Resumo" quando terminou, "Resumo R1–R2" quando ainda faltam rondas
   const accumLabel = playedRounds < nRounds ? `Resumo R1–R${playedRounds}` : "Resumo";
-  out.push({ ...t, players: [...complete, ...incomplete, ...wdPlayers], _roundLabel: accumLabel, _isTotal: true } as any);
+  const accumTourn = { ...t, players: [...complete, ...cutPlayers, ...incomplete, ...wdPlayers], _roundLabel: accumLabel, _isTotal: true, _cutAfterRound: cutN > 0 ? cutN : undefined } as any;
+  out.push(accumTourn);
 
   return out;
 }

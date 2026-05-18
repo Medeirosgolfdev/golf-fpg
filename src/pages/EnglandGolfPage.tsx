@@ -36,7 +36,7 @@ import type { EvoEntry } from "../hooks/useEvoComparison";
 /* ── Types ── */
 interface RoundData { day: number; scores: number[] | null; f9: number | null; b9: number | null; gross: number }
 interface PlayerData { name: string; country: string; pos: number | null; result: number | null; total: number | null; rounds: RoundData[] }
-interface TData { tournament: string; par: number[]; si?: number[]; parF9: number; parB9: number; parTotal: number; players: PlayerData[] }
+interface TData { tournament: string; par: number[]; si?: number[]; meters?: number[]; tee?: string; course?: string; parF9: number; parB9: number; parTotal: number; metersTotal?: number; players: PlayerData[] }
 interface TDef { id: string; label: string; shortLabel: string; data: TData; manuelName: string; year: number; category: string; roundDates?: string[]; series: "england" }
 
 /* ── Data URLs ── */
@@ -145,8 +145,17 @@ function loadT(raw: any, reverseRounds?: boolean): TData {
    ADAPTADOR TData → FPGTournament (padrão DORALPage)
    ═══════════════════════════════════════════════════════════════ */
 function tDataToTournament(data: TData, def: TDef): FPGTournament {
-  const { par, si, parTotal, players } = data;
+  const { par, si, meters, parTotal, players } = data;
+  /* `tee` pode vir vazio do scraper (detectCourseInfo nao encontrou parens "(Black)" etc.).
+     Fallback: usar `course` (nome do campo) ou "Tee" para que ScorecardLB consiga
+     renderizar a linha de metros (requer teeName nao vazio). */
+  const teeName = data.tee || data.course || "Tee";
   const nR = Math.max(...players.map(p => p.rounds.length), 0);
+
+  /* Cut detection: feito centralmente em expandMultiRound (data layer).
+     Aqui apenas convertemos cada PlayerData -> FPGPlayer, mantendo o
+     `_roundsPlayed` por jogador. O _cut/_wd/_incomplete e atribuido depois
+     pelo expandMultiRound baseado na distribuicao de rondas. */
   const fpgPlayers: FPGPlayer[] = players
     .filter(p => p.rounds.length > 0)
     .map(p => {
@@ -156,24 +165,29 @@ function tDataToTournament(data: TData, def: TDef): FPGTournament {
         scores: r.scores ?? [],
         pars: par,
         si: si && si.length >= par.length ? si : [],
-        meters: [],
+        meters: meters && meters.length >= par.length ? meters : [],
+        teeName,
       }));
-      const incomplete = p.rounds.length < nR;
+      const playedR = p.rounds.length;
+      // toPar vs par das rondas EFECTIVAMENTE jogadas.
+      // IGNORAR p.result -- vem mal extraido do leaderboard GolfGenius.
+      const toPar = p.total != null && parTotal > 0 ? p.total - parTotal * playedR : null;
       return {
         scoreId: p.name,
         pos: p.pos,
         name: p.name,
         club: p.country ? `${gf(p.country)} ${p.country}` : "",
         grossTotal: p.total,
-        toPar: p.result ?? (p.total != null ? p.total - parTotal * nR : null),
+        toPar,
         nholes: par.length,
-        parTotal,
+        parTotal,  // PAR POR RONDA
         scores: p.rounds[0]?.scores ?? undefined,
         par,
         si: si && si.length >= par.length ? si : undefined,
+        meters: meters && meters.length >= par.length ? meters : undefined,
+        teeName,
         roundScores,
-        _wd: incomplete,
-        _roundsPlayed: p.rounds.length,
+        _roundsPlayed: playedR,
       } as FPGPlayer;
     });
   return {

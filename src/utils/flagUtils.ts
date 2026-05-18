@@ -23,7 +23,7 @@ export const FLAG: Record<string, string> = {
   CL:"🇨🇱",BB:"🇧🇧",BS:"🇧🇸",BO:"🇧🇴",DO:"🇩🇴",DZ:"🇩🇿",EC:"🇪🇨",
   GT:"🇬🇹",HN:"🇭🇳",KE:"🇰🇪",KH:"🇰🇭",NI:"🇳🇮",PA:"🇵🇦",PE:"🇵🇪",
   SV:"🇸🇻",UG:"🇺🇬",UY:"🇺🇾",VE:"🇻🇪",GR:"🇬🇷",IL:"🇮🇱",HR:"🇭🇷",
-  RS:"🇷🇸",LU:"🇱🇺",IS:"🇮🇸",MY:"🇲🇾",SC:"🏴󠁧󠁢󠁳󠁣󠁴󠁿",
+  RS:"🇷🇸",LU:"🇱🇺",IS:"🇮🇸",MY:"🇲🇾",SC:"🏴󠁧󠁢󠁳󠁣󠁴󠁿","GB-SCT":"🏴󠁧󠁢󠁳󠁣󠁴󠁿","GB-ENG":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","GB-WLS":"🏴󠁧󠁢󠁷󠁬󠁳󠁿","GB-NIR":"🇬🇧","ENG":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","WLS":"🏴󠁧󠁢󠁷󠁬󠁳󠁿","NIR":"🇬🇧",
   // Aliases e variantes (dados USKids)
   UK:"🇬🇧",    // alias de GB
   // Países adicionais encontrados nos torneios completos
@@ -128,7 +128,10 @@ const COUNTRY_TO_CODE: Record<string, string> = {
 /** Aliases de código curto → ISO-2 canónico.
  *  Inclui códigos IOC/FPG de 3 letras (NOR, BRA, USA, …) usados em dados FPG. */
 const CODE_ALIAS: Record<string, string> = {
-  uk:"gb", phl:"ph", "gb-nir":"gb", "gb-wls":"gb", "gb-sct":"gb",
+  uk:"gb", phl:"ph", "gb-nir":"gb", "gb-wls":"gb", "gb-sct":"gb", "gb-eng":"gb",
+  // IG / RI = codigos nao-padrao usados pelo GolfGenius para Republic of Ireland.
+  // Confirmado via clubes (Tralee, Douglas, Ballinrobe).
+  ri:"ie", ig:"ie",
   // IOC / 3-letter codes usados nos ficheiros FPG
   nor:"no", den:"dk", bel:"be", ukr:"ua", rus:"ru", usa:"us",
   can:"ca", mex:"mx", bra:"br", aus:"au", jap:"jp", chn:"cn",
@@ -156,6 +159,14 @@ export function normCountry(raw: string): string {
   const lower = raw.toLowerCase().trim();
   if (CODE_ALIAS[lower]) return CODE_ALIAS[lower];
   if (lower.length === 2) return lower;
+  // Fallback subdivisions tipo "au-qld", "ca-on": tentar so o pais.
+  const dash = lower.indexOf("-");
+  if (dash > 0) {
+    const country = lower.slice(0, dash);
+    if (CODE_ALIAS[country]) return CODE_ALIAS[country];
+    if (country.length === 2) return country;
+    if (COUNTRY_TO_CODE[country]) return COUNTRY_TO_CODE[country];
+  }
   return COUNTRY_TO_CODE[lower] || lower;
 }
 
@@ -178,7 +189,7 @@ const CODE_TO_DISPLAY: Record<string, string> = {
   kh:"Cambodia", ni:"Nicaragua", pa:"Panama", pe:"Peru", sv:"El Salvador",
   ug:"Uganda", uy:"Uruguay", ve:"Venezuela", gr:"Greece", il:"Israel",
   hr:"Croatia", rs:"Serbia", lu:"Luxembourg", is:"Iceland", my:"Malaysia",
-  sc:"Scotland", sa:"Saudi Arabia", ge:"Georgia", mc:"Monaco", jo:"Jordan",
+  sc:"Scotland", "gb-eng":"England", "gb-wls":"Wales", "gb-sct":"Scotland", "gb-nir":"Northern Ireland", sa:"Saudi Arabia", ge:"Georgia", mc:"Monaco", jo:"Jordan",
   az:"Azerbaijan", al:"Albania", me:"Montenegro", ba:"Bosnia & Herzegovina",
   mz:"Mozambique", ao:"Angola", cv:"Cabo Verde", st:"São Tomé & Príncipe",
   gw:"Guinea-Bissau", tl:"Timor-Leste", tt:"Trinidad & Tobago",
@@ -213,6 +224,14 @@ export function flag(p: string): string {
   if (FLAG[upper]) return FLAG[upper];
   const code = normCountry(p).toUpperCase();
   if (FLAG[code]) return FLAG[code];
+  // Fallback subdivisions tipo "AU-QLD", "CA-ON", "US-CA": tentar apenas o pais.
+  const dash = upper.indexOf("-");
+  if (dash > 0) {
+    const country = upper.slice(0, dash);
+    if (FLAG[country]) return FLAG[country];
+    const code2 = normCountry(country).toUpperCase();
+    if (FLAG[code2]) return FLAG[code2];
+  }
   return "🏳️";
 }
 

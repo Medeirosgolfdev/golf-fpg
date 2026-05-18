@@ -88,22 +88,83 @@ export function IntlTournView({
   // expandMultiRound: [R1_tourn, R2_tourn, ..., Resumo_tourn]
   const expanded = useMemo(() => expandMultiRound(tournament), [tournament]);
 
+  // Cut detection (vem do expandMultiRound -- _cutAfterRound no _isTotal entry)
+  const cutAfterRound = useMemo(() => {
+    const tot = expanded.find((t: any) => (t as any)._isTotal);
+    return (tot as any)?._cutAfterRound as number | undefined;
+  }, [expanded]);
+
+  /** Construir tournament Pre-Cut: todos os jogadores que jogaram >= cutAfterRound
+   *  rondas, mas apenas com as rondas 1..cutAfterRound (corta as posteriores).
+   *  Total e toPar recalculados para essas rondas apenas.
+   *  Inclui TODOS os jogadores que ainda nao foram cortados (i.e. os que vao
+   *  passar ao R+1, e tambem os que vao ser cortados). */
+  const preCutTourn = useMemo(() => {
+    if (!cutAfterRound) return null;
+    const trimmedPlayers = tournament.players
+      .filter(p => (p.roundScores?.length ?? 0) >= cutAfterRound)
+      .map(p => {
+        const rs = (p.roundScores || []).filter(r => r.round <= cutAfterRound);
+        const parPerRound = p.parTotal || (rs[0]?.pars?.reduce((a, b) => a + b, 0) || 0);
+        const parT = parPerRound * cutAfterRound;
+        const gross = rs.reduce((s, r) => s + (r.gross || 0), 0);
+        return {
+          ...p,
+          roundScores: rs,
+          grossTotal: gross,
+          toPar: gross - parT,
+          parTotal: parPerRound, // PAR POR RONDA
+          _wd: false,
+          _cut: false,
+          _incomplete: false,
+          _roundsPlayed: cutAfterRound,
+        };
+      });
+    // Ordenar por gross (acumulado das primeiras cutAfterRound rondas)
+    trimmedPlayers.sort((a, b) => (a.grossTotal ?? 99999) - (b.grossTotal ?? 99999));
+    let pos = 1;
+    trimmedPlayers.forEach((p, i) => {
+      if (i > 0 && (p.grossTotal ?? 0) !== (trimmedPlayers[i - 1].grossTotal ?? 0)) pos = i + 1;
+      (p as any)._pos = pos;
+    });
+    return {
+      ...tournament,
+      players: trimmedPlayers,
+      rounds: cutAfterRound,
+      _roundLabel: `Resumo Pré-Cut (R1–R${cutAfterRound})`,
+      _isTotal: true,
+    } as any;
+  }, [tournament, cutAfterRound]);
+
   // Tab labels
   const tabLabels = useMemo(() => {
     if (!isMulti) return ["Scorecard"];
-    return [
-      ...expanded.map((t: any, i: number) => {
-        if ((t as any)._isTotal) return "Resumo";
+    const baseLabels: string[] = [];
+    expanded.forEach((t: any, i: number) => {
+      if ((t as any)._isTotal) baseLabels.push("Resumo");
+      else {
         const rl = roundLabels?.[i];
-        return rl || (t as any)._roundLabel || `R${i + 1}`;
-      }),
-      COMBINED_TAB,
-    ];
-  }, [isMulti, expanded, roundLabels]);
+        baseLabels.push(rl || (t as any)._roundLabel || `R${i + 1}`);
+      }
+    });
+    // Inserir "Pré-Cut" depois da ronda do cut, se aplicavel
+    if (cutAfterRound && cutAfterRound < expanded.length) {
+      baseLabels.splice(cutAfterRound, 0, `Pré-Cut R1–R${cutAfterRound}`);
+    }
+    baseLabels.push(COMBINED_TAB);
+    return baseLabels;
+  }, [isMulti, expanded, roundLabels, cutAfterRound]);
 
   const [tab, setTab] = useState(0);
 
-  const curT       = isMulti ? expanded[Math.min(tab, expanded.length - 1)] : tournament;
+  // Mapear `tab` index para entry de expanded (considerando tab Pre-Cut inserida).
+  // Se tab == cutAfterRound (a tab Pre-Cut), curT = preCutTourn.
+  // Se tab > cutAfterRound, descontar 1 ao indice antes de mapear a expanded.
+  const isPreCutTab = isMulti && cutAfterRound != null && tab === cutAfterRound;
+  const expIdx = (cutAfterRound != null && tab > cutAfterRound) ? tab - 1 : tab;
+  const curT = isMulti
+    ? (isPreCutTab && preCutTourn ? preCutTourn : expanded[Math.min(expIdx, expanded.length - 1)])
+    : tournament;
   const isAcc      = isMulti && !!(curT as any)?._isTotal;
   const isCombined = isMulti && tabLabels[tab] === COMBINED_TAB;
 

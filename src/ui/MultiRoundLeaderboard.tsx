@@ -222,9 +222,10 @@ export function MultiRoundLeaderboard({
 
   if (!rows.length) return <EmptyState size="sm" message="Sem resultados." />;
 
-  // WD = desistiu; incomplete = ainda não jogou todas as rondas disponíveis
-  const complete   = rows.filter(r => !r.isIncomplete && !r.isWD);
-  const incomplete = rows.filter(r =>  r.isIncomplete && !r.isWD);
+  // WD = desistiu; incomplete = ainda nao jogou todas as rondas; cut = eliminado no cut
+  const complete   = rows.filter(r => !r.isIncomplete && !r.isWD && !r.isCut);
+  const cutRows    = rows.filter(r =>  r.isCut && !r.isWD);
+  const incomplete = rows.filter(r =>  r.isIncomplete && !r.isWD && !r.isCut);
   const wdRows     = rows.filter(r =>  r.isWD);
 
   /* Posições — apenas jogadores completos e não-WD */
@@ -238,14 +239,15 @@ export function MultiRoundLeaderboard({
     });
     return rows.map(r => ({
       ...r,
-      _pos: (r.isIncomplete || r.isWD) ? null : (posMap.get(r.key || r.name) ?? null),
+      _pos: (r.isIncomplete || r.isWD || r.isCut) ? null : (posMap.get(r.key || r.name) ?? null),
     }));
   }, [rows]);
 
   /* Filtro — passa playersDB para resolver sexo de jogadores sem fedCode */
   const sexByName = useMemo(() => buildSexByName(playersDB), [playersDB]);
-  const filteredComplete   = useMemo(() => filterRows(withPos.filter(r => !r.isIncomplete && !r.isWD), filter, playersDB, sexByName), [withPos, filter, playersDB, sexByName]);
-  const filteredIncomplete = useMemo(() => filterRows(withPos.filter(r =>  r.isIncomplete && !r.isWD), filter, playersDB, sexByName), [withPos, filter, playersDB, sexByName]);
+  const filteredComplete   = useMemo(() => filterRows(withPos.filter(r => !r.isIncomplete && !r.isWD && !r.isCut), filter, playersDB, sexByName), [withPos, filter, playersDB, sexByName]);
+  const filteredCut        = useMemo(() => filterRows(withPos.filter(r =>  r.isCut && !r.isWD), filter, playersDB, sexByName), [withPos, filter, playersDB, sexByName]);
+  const filteredIncomplete = useMemo(() => filterRows(withPos.filter(r =>  r.isIncomplete && !r.isWD && !r.isCut), filter, playersDB, sexByName), [withPos, filter, playersDB, sexByName]);
   const filteredWD         = useMemo(() => filterRows(withPos.filter(r =>  r.isWD), filter, playersDB, sexByName),                   [withPos, filter, playersDB, sexByName]);
 
   /* Sort */
@@ -265,10 +267,19 @@ export function MultiRoundLeaderboard({
     }
   }
 
+  // Comparador para cut/incomplete/wd: ordenar sempre por gross (asc).
+  // No header sort principal os cut continuam separados (sempre depois dos completos).
+  function cmpGross(a: RowWithPos, b: RowWithPos): number {
+    return (a.gross ?? 9999) - (b.gross ?? 9999);
+  }
   const sorted = useMemo(() => {
-    if (!sortable) return [...filteredComplete, ...filteredIncomplete, ...filteredWD];
-    return [...filteredComplete].sort(cmp).concat([...filteredIncomplete].sort(cmp), [...filteredWD].sort(cmp));
-  }, [filteredComplete, filteredIncomplete, filteredWD, sortKey, sortDir, sortable]);
+    if (!sortable) return [...filteredComplete, ...filteredCut, ...filteredIncomplete, ...filteredWD];
+    return [...filteredComplete].sort(cmp).concat(
+      [...filteredCut].sort(cmpGross),
+      [...filteredIncomplete].sort(cmpGross),
+      [...filteredWD].sort(cmpGross),
+    );
+  }, [filteredComplete, filteredCut, filteredIncomplete, filteredWD, sortKey, sortDir, sortable]);
 
   function SHdr({ k, children, className }: { k: MRSortKey; children: React.ReactNode; className?: string }) {
     const active = sortable && sortKey === k;
@@ -344,13 +355,14 @@ export function MultiRoundLeaderboard({
           </thead>
           <tbody>
             {sorted.map((row, idx) => {
-              const tp = (row.gross ?? 0) - (row.parTotal ?? 0);
-              const isInc = row.isIncomplete && !row.isWD;  // ronda ainda por jogar
+              const tp = row.toPar != null ? row.toPar : (row.gross ?? 0) - (row.parTotal ?? 0);
+              const isInc = row.isIncomplete && !row.isWD && !row.isCut;  // ronda ainda por jogar
               const isWD  = !!row.isWD;                     // desistiu
+              const isCut = !!row.isCut && !row.isWD;       // eliminado no cut
               const dp = row._pos;
-              const tpCol = (!isInc && !isWD) ? tpColor(tp) : undefined;
-              const mdl = !isInc && !isWD && dp != null ? medal(dp) : null;
-              const showPos = !isInc && !isWD && (
+              const tpCol = (!isInc && !isWD && !isCut) ? tpColor(tp) : undefined;
+              const mdl = !isInc && !isWD && !isCut && dp != null ? medal(dp) : null;
+              const showPos = !isInc && !isWD && !isCut && (
                 sortable && sortKey === "pos"
                   ? (idx === 0 || dp !== sorted[idx - 1]._pos)
                   : true
@@ -368,13 +380,15 @@ export function MultiRoundLeaderboard({
               return (
                 <tr key={row.key || row.name + idx}
                   className={rowCls}
-                  style={(isInc || isWD) ? { background: rowBg, opacity: isWD ? 0.55 : 0.7 } : row.isHighlighted ? { background: rowBg } : undefined}>
+                  style={(isInc || isWD || isCut) ? { background: rowBg, opacity: isWD ? 0.55 : isCut ? 0.85 : 0.7 } : row.isHighlighted ? { background: rowBg } : undefined}>
                   <td className="lb-pos sticky-col-0" style={row.isHighlighted ? undefined : { background: stickyBg }}>
                     {isWD
                       ? <WdBadge />
-                      : isInc
+                      : isCut
                         ? ""
-                        : showPos ? (mdl || dp) : ""}
+                        : isInc
+                          ? ""
+                          : showPos ? (mdl || dp) : ""}
                   </td>
                   <td className="lb-name sticky-col-1" style={row.isHighlighted ? undefined : { background: stickyBg }}>
                     {renderName
@@ -383,6 +397,7 @@ export function MultiRoundLeaderboard({
                         ? <TournPName name={row.name} fedCode={row.fed} playersDB={playersDB} />
                         : <>{row.countryFlag && <>{row.countryFlag} </>}<span className="fw-700">{row.name}</span></>
                     }
+                    {isCut && <span className="badge-inc" title="Eliminado no cut">CUT</span>}
                     {isInc && <span className="badge-inc">INC</span>}
                   </td>
                   {showEsc && <td className="lb-esc">{(() => {
@@ -423,8 +438,8 @@ export function MultiRoundLeaderboard({
                   {showTee && <td className="lb-tee"><TeeDot teeName={row.teeName} /></td>}
 
                   {/* ±Par ANTES de Total */}
-                  <td className="lb-topar" style={{ color: tpCol, opacity: (isInc || isWD) ? 0.5 : 1 }}>{fmtTP(tp)}</td>
-                  <td className="lb-gross" style={{ opacity: (isInc || isWD) ? 0.5 : 1 }}>{(row.gross ?? 0) > 0 ? row.gross : "–"}</td>
+                  <td className="lb-topar" style={{ color: tpCol, opacity: (isInc || isWD) ? 0.5 : isCut ? 0.85 : 1 }}>{fmtTP(tp)}</td>
+                  <td className="lb-gross" style={{ opacity: (isInc || isWD) ? 0.5 : isCut ? 0.85 : 1 }}>{(row.gross ?? 0) > 0 ? row.gross : "–"}</td>
 
                   {/* Acumulados multi-ronda */}
                   {isMulti && showRoundStats && (() => {
@@ -496,4 +511,5 @@ export function MultiRoundLeaderboard({
         </table>
       </div>
     </div>
-  );}
+  );
+}
