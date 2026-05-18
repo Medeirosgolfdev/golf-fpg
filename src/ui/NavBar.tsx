@@ -14,7 +14,7 @@ import golfBallSvg from "../assets/golf-ball.svg";
 
 type Tab =
   | "campos" | "jogadores" | "comparar" | "simulador" | "calendario"
-  | "drive" | "bjgt" | "kids" | "uskids" | "diversos" | "doral" | "ffg" | "rfeg" | "nacionais";
+  | "drive" | "bjgt" | "kids" | "uskids" | "diversos" | "doral" | "ffg" | "england" | "rfeg" | "nacionais";
 
 // ── Lista de itens de navegação — editar aqui para adicionar/reordenar ──
 // `external: true` → abre em nova aba sem SPA navigation (ficheiros estáticos
@@ -29,6 +29,7 @@ const NAV_ITEMS: { tab: Tab; label: string; path: string; external?: boolean }[]
   { tab: "uskids",     label: "🇺🇸 USKids",  path: "/uskids"     },
   { tab: "doral",      label: "🇺🇸 Doral",   path: "/doral"      },
   { tab: "ffg",        label: "🇫🇷 FFG",     path: "/ffg"        },
+  { tab: "england",    label: "🏴 England",  path: "/england"    },
   { tab: "rfeg",       label: "🇪🇸 RFEG",    path: "/rfeg"       },
   { tab: "bjgt",       label: "🇪🇸 BJGT",    path: "/bjgt"       },
   { tab: "campos",     label: "Campos",       path: "/campos"     },
@@ -75,6 +76,7 @@ const TAB_TITLES: Record<Tab, string> = {
   diversos:   "Golf Junior – Diversos",
   doral:      "Golf Junior – Doral",
   ffg:        "Golf Junior – FFGolf",
+  england:    "Golf Junior – England Golf",
   rfeg:       "Golf Junior – RFEGolf",
   nacionais:  "Golf Junior – Títulos",
 };

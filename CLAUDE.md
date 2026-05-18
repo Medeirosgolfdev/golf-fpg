@@ -1,6 +1,6 @@
 # CLAUDE.md — Golf Portugal
 
-Aplicação web de golfe júnior português. Acompanha o percurso competitivo de um jovem golfista (Manuel, CGSS Santo da Serra, Madeira) nos circuitos USKids Golf, FPG, BJGT/WJGC, EOWAGR e Doral.
+Aplicação web de golfe júnior português. Acompanha o percurso competitivo de um jovem golfista (Manuel, CGSS Santo da Serra, Madeira) nos circuitos USKids Golf, FPG, BJGT/WJGC, EOWAGR, Doral, FFG (França), RFEG (Espanha) e England Golf.
 
 **URL produção:** `golf-fpg.vercel.app`
 **Directório local:** `C:\golf-fpg\`
@@ -364,6 +364,31 @@ node scrape-eowagr25.js [output.json]
 node scrape-golfgenius.js                    # 2025 (URL default)
 node scrape-golfgenius.js ftm_doral_2024.json https://2024firstteemiamidoraljrclassic.golfgenius.com/pages/4894994
 ```
+
+---
+
+## Scripts — England Golf (GolfGenius)
+
+Cada torneio England Golf vive num microsite GolfGenius (alguns em `www.golfgenius.com`, outros em subdomínios `eg-{slug}{YY}.golfgenius.com`). A página `/england` é uma duplicação minimalista da `/bjgt` (mesmos `TournView`, sub-tabs por ronda, ManuelPill, etc.).
+
+**Catálogo:** `public/data/england-golf-catalog.json` — 28 edições de torneios juvenis 2023-2026 (Carris/McGregor/Reid Trophies, English U18 Amateur, English Girls' Open/U16/U14, Justin Rose Telegraph, Bronte Law Junior Series, England U16 v Spain, Boys' County Finals, Junior Champion Club). Cada entry tem `year`, `section`, `slug`, `title`, `gender`, `ageGroup`, `gg_base`, `gg_page`.
+
+**scrape-england-golf.js** — Adaptação do `scrape-ffgolf.js`. Diferenças: locale `en-GB`/`Europe/London`, suporte para `gg_base` (subdomínios), transforma output GolfGenius para formato **BJGT-like** (`{tournament, par[], si[], parTotal, parF9, parB9, players[{name, country, pos, result, total, rounds[{day, scores[], f9, b9, gross}]}]}`).
+```bash
+node scripts/scrape-england-golf.js                              # tudo
+node scripts/scrape-england-golf.js --since-year 2023            # ≥ 2023
+node scripts/scrape-england-golf.js --slug carris-trophy-2025    # só esse
+node scripts/scrape-england-golf.js --year 2025
+node scripts/scrape-england-golf.js --skip-existing              # idempotente
+node scripts/scrape-england-golf.js --gg-base https://eg-X.golfgenius.com --gg-page 1234567 --slug X --year 2026  # ad-hoc
+node scripts/scrape-england-golf.js --no-headless                # debug com browser visível
+```
+
+**Output:** `public/data/england_{slug}.json` (single division) ou `england_{slug}_div1.json`, `_div2.json`... (multi-divisão — ex: English Girls' U16/U14 gera 2 ficheiros).
+
+**Página `/england`** — `src/pages/EnglandGolfPage.tsx`. Duplicação da BJGTPage com array `URLS` construído **dinamicamente** a partir do catálogo (não hardcoded). Carrega `england-golf-catalog.json` em runtime, tenta `england_{slug}.json` para cada entry, e auto-selecciona o torneio onde o Manuel jogou (ou o primeiro com dados). Sidebar agrupa por ano, tabs de escalão dentro do ano.
+
+**Séries cobertas (Sub-10 a Sub-18, Boys + Girls, desde 2023):** Carris Trophy (U18 boys), McGregor Trophy (U16 boys), Reid Trophy (U14 boys), English U18 Amateur (mixed), English Girls' Open Stroke Play / Championship, English Girls' U16 & U14, Justin Rose Telegraph Junior, Bronte Law Junior Series (várias paragens), England U16 v Spain U16, Boys' County Finals, English Junior Champion Club.
 
 ---
 
