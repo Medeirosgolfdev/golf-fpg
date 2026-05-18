@@ -1,0 +1,380 @@
+{
+  "tourId": 70845,
+  "url": "https://www.nextcaddy.com/tour/70845",
+  "scrapedAt": "2026-05-17T12:42:41.240Z",
+  "meta": {
+    "name": "VOBS COMPETITION",
+    "organizer": null,
+    "course": "Villa Nueva Golf Resort",
+    "courseCode": "AMD5",
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Senior",
+      "Infantil",
+      "Profesional",
+      "Juvenil"
+    ]
+  },
+  "course": null,
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Paul Boyce Howarth",
+          "licencia": "AMD5485623",
+          "hcp": 21.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2320148
+        },
+        {
+          "pos": 2,
+          "name": "Carl Cluck",
+          "licencia": "AME7902244",
+          "hcp": 22.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2320149
+        },
+        {
+          "pos": 3,
+          "name": "Matthew Colin Anderson",
+          "licencia": "AMC3064506",
+          "hcp": 20.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2320152
+        },
+        {
+          "pos": 4,
+          "name": "Bret Myles Duncan",
+          "licencia": "AME7775047",
+          "hcp": 22.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2320155
+        },
+        {
+          "pos": 5,
+          "name": "John Collins",
+          "licencia": "AMD5492691",
+          "hcp": 35.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2320157
+        },
+        {
+          "pos": 6,
+          "name": "Mickey Allen Padron",
+          "licencia": "AMD5030872",
+          "hcp": 14.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2320153
+        },
+        {
+          "pos": 7,
+          "name": "Louis Jorfi",
+          "licencia": "AM25979495",
+          "hcp": 17.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2320150
+        },
+        {
+          "pos": 8,
+          "name": "Robert Edward Jewell",
+          "licencia": "AM25603729",
+          "hcp": 10.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2320151
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 8
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Paul Boyce Howarth",
+      "licencia": "AMD5485623",
+      "hcp": 21.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Carl Cluck",
+      "licencia": "AME7902244",
+      "hcp": 22.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Robert Edward Jewell",
+      "licencia": "AM25603729",
+      "hcp": 10.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Matthew Colin Anderson",
+      "licencia": "AMC3064506",
+      "hcp": 20.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Mickey Allen Padron",
+      "licencia": "AMD5030872",
+      "hcp": 14.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Bret Myles Duncan",
+      "licencia": "AME7775047",
+      "hcp": 22.9,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Louis Jorfi",
+      "licencia": "AM25979495",
+      "hcp": 17.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "John Collins",
+      "licencia": "AMD5492691",
+      "hcp": 35.7,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Paul Boyce Howarth",
+      "licencia": "AMD5485623",
+      "hcp": 21.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Carl Cluck",
+      "licencia": "AME7902244",
+      "hcp": 22.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Louis Jorfi",
+      "licencia": "AM25979495",
+      "hcp": 17.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Robert Edward Jewell",
+      "licencia": "AM25603729",
+      "hcp": 10.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Matthew Colin Anderson",
+      "licencia": "AMC3064506",
+      "hcp": 20.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Mickey Allen Padron",
+      "licencia": "AMD5030872",
+      "hcp": 14.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Bret Myles Duncan",
+      "licencia": "AME7775047",
+      "hcp": 22.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "John Collins",
+      "licencia": "AMD5492691",
+      "hcp": 35.7,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Paul Boyce Howarth",
+          "hcp": 21.9,
+          "ins": "2320148",
+          "jid": "75847",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Carl Cluck",
+          "hcp": 22.1,
+          "ins": "2320149",
+          "jid": "75847",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Louis Jorfi",
+          "hcp": 17.5,
+          "ins": "2320150",
+          "jid": "75847",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Robert Edward Jewell",
+          "hcp": 10.2,
+          "ins": "2320151",
+          "jid": "75847",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Matthew Colin Anderson",
+          "hcp": 20.1,
+          "ins": "2320152",
+          "jid": "75847",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Mickey Allen Padron",
+          "hcp": 14.4,
+          "ins": "2320153",
+          "jid": "75847",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Bret Myles Duncan",
+          "hcp": 22.9,
+          "ins": "2320155",
+          "jid": "75847",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "John Collins",
+          "hcp": 35.7,
+          "ins": "2320157",
+          "jid": "75847",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75847
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Gonzalez Galvez, Agata",
+          "holeNumber": 3,
+          "createdAt": "27/11/25 13:44:20"
+        },
+        {
+          "playerName": "Gonzalez Galvez, Agata",
+          "holeNumber": 8,
+          "createdAt": "27/11/25 13:44:20"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/cartel/2668724093_70845-vobs-competition.pdf"
+  ]
+}

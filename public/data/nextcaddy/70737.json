@@ -1,0 +1,262 @@
+{
+  "tourId": 70737,
+  "url": "https://www.nextcaddy.com/tour/70737",
+  "scrapedAt": "2026-05-17T12:42:38.585Z",
+  "meta": {
+    "name": "monthly medal",
+    "organizer": null,
+    "course": "Santa María Golf & Country Club",
+    "courseCode": "AM86",
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Medal Play (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ]
+  },
+  "course": null,
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Katrin Zacher",
+          "licencia": "AM86973397",
+          "hcp": 17,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 71,
+          "toPar": -1,
+          "inscribedId": 2316992
+        },
+        {
+          "pos": 2,
+          "name": "David A. Robinson",
+          "licencia": "AM86973433",
+          "hcp": 15.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 72,
+          "toPar": null,
+          "inscribedId": 2316943
+        },
+        {
+          "pos": 3,
+          "name": "Peter Madden",
+          "licencia": "AM86371774",
+          "hcp": 19.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 76,
+          "toPar": 4,
+          "inscribedId": 2317000
+        },
+        {
+          "pos": 4,
+          "name": "Richard Mizon",
+          "licencia": "AM86927380",
+          "hcp": 20.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 78,
+          "toPar": 6,
+          "inscribedId": 2316994
+        },
+        {
+          "pos": 5,
+          "name": "Jonas Lind Clement",
+          "licencia": "AM86493180",
+          "hcp": 2.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 79,
+          "toPar": 7,
+          "inscribedId": 2316937
+        },
+        {
+          "pos": 6,
+          "name": "Stephen Boyle",
+          "licencia": "AM24816812",
+          "hcp": 8.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 82,
+          "toPar": 10,
+          "inscribedId": 2316938
+        },
+        {
+          "pos": 7,
+          "name": "Marvin Baker",
+          "licencia": "AM76072086",
+          "hcp": 10.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 86,
+          "toPar": 14,
+          "inscribedId": 2316942
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 7
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Jonas Lind Clement",
+      "licencia": "AM86493180",
+      "hcp": 2.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Stephen Boyle",
+      "licencia": "AM24816812",
+      "hcp": 8.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Marvin Baker",
+      "licencia": "AM76072086",
+      "hcp": 10.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "David A. Robinson",
+      "licencia": "AM86973433",
+      "hcp": 15.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Richard Mizon",
+      "licencia": "AM86927380",
+      "hcp": 20.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Peter Madden",
+      "licencia": "AM86371774",
+      "hcp": 19.8,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Katrin Zacher",
+      "licencia": "AM86973397",
+      "hcp": 17,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Jonas Lind Clement",
+      "licencia": "AM86493180",
+      "hcp": 2.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Stephen Boyle",
+      "licencia": "AM24816812",
+      "hcp": 8.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Marvin Baker",
+      "licencia": "AM76072086",
+      "hcp": 10.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "David A. Robinson",
+      "licencia": "AM86973433",
+      "hcp": 15.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Katrin Zacher",
+      "licencia": "AM86973397",
+      "hcp": 17,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 6,
+      "name": "Richard Mizon",
+      "licencia": "AM86927380",
+      "hcp": 20.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Peter Madden",
+      "licencia": "AM86371774",
+      "hcp": 19.8,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75709
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/cartel/1858818070_70737-monthly-medal.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-18T08:08:45.738Z"
+}

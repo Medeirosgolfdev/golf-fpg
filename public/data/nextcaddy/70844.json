@@ -1,0 +1,853 @@
+{
+  "tourId": 70844,
+  "url": "https://www.nextcaddy.com/tour/70844",
+  "scrapedAt": "2026-05-17T12:42:43.367Z",
+  "meta": {
+    "name": "AMIGOS DE MIRAFLORES 16/05",
+    "organizer": null,
+    "course": "Miraflores Golf",
+    "courseCode": "AM76",
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ]
+  },
+  "course": null,
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Alfonso Rosales Mata",
+          "licencia": "AM76601307",
+          "hcp": 13.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2321050
+        },
+        {
+          "pos": 2,
+          "name": "Gustavo Caspueñas Bello",
+          "licencia": "AM76650304",
+          "hcp": 23.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2321058
+        },
+        {
+          "pos": 3,
+          "name": "Jose Diaz Garcia",
+          "licencia": "AMI4186114",
+          "hcp": 12.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2321056
+        },
+        {
+          "pos": 4,
+          "name": "Rafael Padron Fernandez",
+          "licencia": "AM24986262",
+          "hcp": 19.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2321051
+        },
+        {
+          "pos": 5,
+          "name": "Francisco Quero Zumaquero",
+          "licencia": "AM57138495",
+          "hcp": 19.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2321052
+        },
+        {
+          "pos": 6,
+          "name": "Alfonso Gonzalez Peña",
+          "licencia": "CM52138410",
+          "hcp": 21.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2321057
+        },
+        {
+          "pos": 7,
+          "name": "Muriel Martin",
+          "licencia": "AMB5906267",
+          "hcp": 22.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2321049
+        },
+        {
+          "pos": 8,
+          "name": "Fernando Cerezo Lorente",
+          "licencia": "AM76799351",
+          "hcp": 21,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2321053
+        },
+        {
+          "pos": 9,
+          "name": "Fernando Garcia Pozo",
+          "licencia": "AM71607123",
+          "hcp": 15.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2321048
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 9
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Fernando Garcia Pozo",
+      "licencia": "AM71607123",
+      "hcp": 15.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Alfonso Rosales Mata",
+      "licencia": "AM76601307",
+      "hcp": 13.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Rafael Padron Fernandez",
+      "licencia": "AM24986262",
+      "hcp": 19.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Francisco Quero Zumaquero",
+      "licencia": "AM57138495",
+      "hcp": 19.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Fernando Cerezo Lorente",
+      "licencia": "AM76799351",
+      "hcp": 21,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Jose Diaz Garcia",
+      "licencia": "AMI4186114",
+      "hcp": 12.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Alfonso Gonzalez Peña",
+      "licencia": "CM52138410",
+      "hcp": 21.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Gustavo Caspueñas Bello",
+      "licencia": "AM76650304",
+      "hcp": 23.1,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Muriel Martin",
+      "licencia": "AMB5906267",
+      "hcp": 22.5,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Fecha Inscripción",
+      "hcp": null,
+      "nivel": "Licencia"
+    },
+    {
+      "orden": 1,
+      "name": "Fernando Garcia Pozo",
+      "licencia": "16-05-26 13:02",
+      "hcp": 15.8,
+      "nivel": "AM71607123"
+    },
+    {
+      "orden": 2,
+      "name": "Muriel Martin",
+      "licencia": "16-05-26 13:03",
+      "hcp": 22.5,
+      "nivel": "AMB5906267"
+    },
+    {
+      "orden": 3,
+      "name": "Alfonso Rosales Mata",
+      "licencia": "16-05-26 13:03",
+      "hcp": 13.1,
+      "nivel": "AM76601307"
+    },
+    {
+      "orden": 4,
+      "name": "Rafael Padron Fernandez",
+      "licencia": "16-05-26 13:10",
+      "hcp": 19.3,
+      "nivel": "AM24986262"
+    },
+    {
+      "orden": 5,
+      "name": "Francisco Quero Zumaquero",
+      "licencia": "16-05-26 13:10",
+      "hcp": 19.8,
+      "nivel": "AM57138495"
+    },
+    {
+      "orden": 6,
+      "name": "Fernando Cerezo Lorente",
+      "licencia": "16-05-26 13:10",
+      "hcp": 21,
+      "nivel": "AM76799351"
+    },
+    {
+      "orden": 7,
+      "name": "Jose Diaz Garcia",
+      "licencia": "16-05-26 13:14",
+      "hcp": 12.3,
+      "nivel": "AMI4186114"
+    },
+    {
+      "orden": 8,
+      "name": "Alfonso Gonzalez Peña",
+      "licencia": "16-05-26 13:14",
+      "hcp": 21.9,
+      "nivel": "CM52138410"
+    },
+    {
+      "orden": 9,
+      "name": "Gustavo Caspueñas Bello",
+      "licencia": "16-05-26 13:15",
+      "hcp": 23.1,
+      "nivel": "AM76650304"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 159314,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            38
+          ],
+          [
+            "Birdie",
+            3
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            58
+          ],
+          [
+            "Peor",
+            56
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 159315,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            5
+          ],
+          [
+            "2",
+            9
+          ],
+          [
+            "3",
+            19
+          ],
+          [
+            "4",
+            11
+          ],
+          [
+            "5",
+            11
+          ],
+          [
+            "6",
+            13
+          ],
+          [
+            "7",
+            10
+          ],
+          [
+            "8",
+            12
+          ],
+          [
+            "9",
+            10
+          ],
+          [
+            "10",
+            10
+          ],
+          [
+            "11",
+            13
+          ],
+          [
+            "12",
+            7
+          ],
+          [
+            "13",
+            14
+          ],
+          [
+            "14",
+            8
+          ],
+          [
+            "15",
+            10
+          ],
+          [
+            "16",
+            7
+          ],
+          [
+            "17",
+            12
+          ],
+          [
+            "18",
+            10
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 159316,
+        "datos": [
+          [
+            "Hoyo",
+            "ALFONSO ROSALES MATA ",
+            "GUSTAVO CASPUEÑAS BELLO",
+            "RAFAEL PADRON FERNANDEZ"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 2",
+            1,
+            -3,
+            1
+          ],
+          [
+            "Hoyo 3",
+            2,
+            -3,
+            0
+          ],
+          [
+            "Hoyo 4",
+            2,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 5",
+            2,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 6",
+            1,
+            -1,
+            2
+          ],
+          [
+            "Hoyo 7",
+            2,
+            1,
+            4
+          ],
+          [
+            "Hoyo 8",
+            3,
+            2,
+            4
+          ],
+          [
+            "Hoyo 9",
+            2,
+            3,
+            3
+          ],
+          [
+            "Hoyo 10",
+            4,
+            3,
+            5
+          ],
+          [
+            "Hoyo 11",
+            4,
+            5,
+            4
+          ],
+          [
+            "Hoyo 12",
+            3,
+            6,
+            3
+          ],
+          [
+            "Hoyo 13",
+            2,
+            6,
+            2
+          ],
+          [
+            "Hoyo 14",
+            2,
+            5,
+            2
+          ],
+          [
+            "Hoyo 15",
+            2,
+            5,
+            2
+          ],
+          [
+            "Hoyo 16",
+            3,
+            5,
+            3
+          ],
+          [
+            "Hoyo 17",
+            2,
+            3,
+            4
+          ],
+          [
+            "Hoyo 18",
+            2,
+            2,
+            3
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 159317,
+        "datos": [
+          [
+            "Hoyo",
+            "ALFONSO ROSALES MATA ",
+            "GUSTAVO CASPUEÑAS BELLO",
+            "RAFAEL PADRON FERNANDEZ"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 2",
+            0,
+            -2,
+            1
+          ],
+          [
+            "Hoyo 3",
+            1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 4",
+            0,
+            2,
+            0
+          ],
+          [
+            "Hoyo 5",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 7",
+            1,
+            2,
+            2
+          ],
+          [
+            "Hoyo 8",
+            1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            2,
+            0,
+            2
+          ],
+          [
+            "Hoyo 11",
+            0,
+            2,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 13",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 14",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 15",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 17",
+            -1,
+            -2,
+            1
+          ],
+          [
+            "Hoyo 18",
+            0,
+            -1,
+            -1
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75846
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Martin Sanchez, Domingo",
+          "holeNumber": 13,
+          "createdAt": "06/12/25 14:41:54"
+        },
+        {
+          "playerName": "Zurita Gadea, Ignacio",
+          "holeNumber": 16,
+          "createdAt": "06/12/25 14:41:55"
+        },
+        {
+          "playerName": "Zurita Gadea, Rafael",
+          "holeNumber": 3,
+          "createdAt": "06/12/25 14:41:55"
+        },
+        {
+          "playerName": "Zurita Gadea, Rafael",
+          "holeNumber": 8,
+          "createdAt": "06/12/25 14:41:55"
+        },
+        {
+          "playerName": "Lizasoain Freuller, Jose",
+          "holeNumber": 1,
+          "createdAt": "06/12/25 14:41:56"
+        },
+        {
+          "playerName": "Mira  Hafner, Ernesto",
+          "holeNumber": 14,
+          "createdAt": "06/12/25 14:41:58"
+        },
+        {
+          "playerName": "Mira Hafner, Pablo Alejandro",
+          "holeNumber": 3,
+          "createdAt": "06/12/25 14:41:58"
+        },
+        {
+          "playerName": "Montero Romero, Juan",
+          "holeNumber": 1,
+          "createdAt": "06/12/25 14:42:02"
+        },
+        {
+          "playerName": "Jimenez Pozo, Francisco",
+          "holeNumber": 6,
+          "createdAt": "06/12/25 14:42:03"
+        },
+        {
+          "playerName": "Garcia Lopez, Jose Antonio",
+          "holeNumber": 1,
+          "createdAt": "06/12/25 14:42:04"
+        },
+        {
+          "playerName": "Garcia Lopez, Jose Antonio",
+          "holeNumber": 8,
+          "createdAt": "06/12/25 14:42:04"
+        },
+        {
+          "playerName": "Garcia Lopez, Jose Antonio",
+          "holeNumber": 16,
+          "createdAt": "06/12/25 14:42:04"
+        },
+        {
+          "playerName": "Perez Rodriguez, Sebastian",
+          "holeNumber": 16,
+          "createdAt": "06/12/25 14:42:10"
+        },
+        {
+          "playerName": "Bustamante Perez, Maria Socorro",
+          "holeNumber": 11,
+          "createdAt": "06/12/25 14:42:12"
+        },
+        {
+          "playerName": "Bustamante Perez, Maria Socorro",
+          "holeNumber": 16,
+          "createdAt": "06/12/25 14:42:12"
+        },
+        {
+          "playerName": "Garcia Navas, Ruben",
+          "holeNumber": 14,
+          "createdAt": "06/12/25 14:42:14"
+        },
+        {
+          "playerName": "Garcia Frias, Antonio Javier",
+          "holeNumber": 16,
+          "createdAt": "06/12/25 14:42:17"
+        },
+        {
+          "playerName": "Lanza Ruiz, Javier",
+          "holeNumber": 2,
+          "createdAt": "06/12/25 14:42:19"
+        },
+        {
+          "playerName": "Arjona Henares, Francisco",
+          "holeNumber": 16,
+          "createdAt": "06/12/25 14:42:22"
+        },
+        {
+          "playerName": "Villavieja Urzainqui, Angel Javier",
+          "holeNumber": 1,
+          "createdAt": "06/12/25 14:42:23"
+        },
+        {
+          "playerName": "Ruiz Batana, Juan Antonio",
+          "holeNumber": 1,
+          "createdAt": "06/12/25 14:42:24"
+        },
+        {
+          "playerName": "Ruiz Batana, Juan Antonio",
+          "holeNumber": 7,
+          "createdAt": "06/12/25 14:42:24"
+        },
+        {
+          "playerName": "Ruiz Batana, Juan Antonio",
+          "holeNumber": 14,
+          "createdAt": "06/12/25 14:42:24"
+        },
+        {
+          "playerName": "Vivar Gonzalez, Francisco Luis",
+          "holeNumber": 5,
+          "createdAt": "06/12/25 14:42:27"
+        },
+        {
+          "playerName": "Acedo Zavala, Jose Manuel",
+          "holeNumber": 2,
+          "createdAt": "06/12/25 14:42:27"
+        },
+        {
+          "playerName": "Harju, Jussi",
+          "holeNumber": 3,
+          "createdAt": "06/12/25 14:42:28"
+        },
+        {
+          "playerName": "Harju, Jussi",
+          "holeNumber": 14,
+          "createdAt": "06/12/25 14:42:29"
+        },
+        {
+          "playerName": "Lopez Bru, Ignacio",
+          "holeNumber": 16,
+          "createdAt": "06/12/25 14:42:30"
+        },
+        {
+          "playerName": "Ropero Arrabal, Antonio",
+          "holeNumber": 13,
+          "createdAt": "06/12/25 14:42:32"
+        },
+        {
+          "playerName": "Carrere Lovera, Francisco Javier",
+          "holeNumber": 8,
+          "createdAt": "06/12/25 14:42:39"
+        },
+        {
+          "playerName": "Carrere Lovera, Francisco Javier",
+          "holeNumber": 16,
+          "createdAt": "06/12/25 14:42:40"
+        },
+        {
+          "playerName": "De Los Rios Gaspar, Matias",
+          "holeNumber": 14,
+          "createdAt": "06/12/25 14:42:40"
+        },
+        {
+          "playerName": "Niederleytner Garcia-Lliberos, Alvaro",
+          "holeNumber": 11,
+          "createdAt": "06/12/25 14:42:42"
+        },
+        {
+          "playerName": "Sole Borrell, Francesc",
+          "holeNumber": 16,
+          "createdAt": "06/12/25 14:42:43"
+        },
+        {
+          "playerName": "Lopez Romero, Jose",
+          "holeNumber": 7,
+          "createdAt": "06/12/25 14:42:43"
+        },
+        {
+          "playerName": "Van Dulken Calleja, Juan",
+          "holeNumber": 16,
+          "createdAt": "06/12/25 14:42:47"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-18T08:08:46.281Z"
+}
