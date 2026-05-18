@@ -674,7 +674,14 @@ async function fetchLeaderboard(page, ggPage, eventId) {
         const cls = ancestor.className || "";
         if (typeof cls === "string" && cls.includes("tournament_container")) {
           const titleEl = ancestor.querySelector(".expand-tournament, .tournament_name, h1, h2, h3, h4");
-          if (titleEl) division = titleEl.textContent.replace(/\s+/g, " ").trim().slice(0, 100);
+          if (titleEl) {
+            division = titleEl.textContent.replace(/\s+/g, " ").trim().slice(0, 100);
+            // Normalizar "X - X" (duplicação do título) → "X"
+            const halfMatch = division.match(/^(.+?)\s*-\s*(.+)$/);
+            if (halfMatch && halfMatch[1].trim() === halfMatch[2].trim()) {
+              division = halfMatch[1].trim();
+            }
+          }
           break;
         }
         ancestor = ancestor.parentElement;
@@ -1172,17 +1179,29 @@ async function scrapeOne(browser, t) {
       playerDivision.set(key, main);
     }
     const nRounds = new Set(strokeEvents.map((e) => e.name.replace(/ — .*$/, ""))).size;
-    const consolidatedPlayers = [...playerLatestRecord.values()].map((p) => {
+    const consolidatedPlayers = [...playerLatestRecord.entries()].map(([key, p]) => {
       const scRounds = allScorecards[p.id] || [];
+      // Preservar TODOS os campos da scorecard (teeColour/gender/headerText/course)
       const rounds = [...scRounds].reverse().slice(0, nRounds || 1).map((r, i) => ({
         round: i + 1,
         gross: r.gross,
         scores: r.scores,
         f9: r.f9,
         b9: r.b9,
+        teeColour: r.teeColour || "",
+        gender: r.gender || "",
+        course: r.course || "",
+        headerText: r.headerText || "",
       }));
+      // Lista de TODAS as divisões em que este jogador apareceu (cross-trofeu)
+      // Ex: ["McGregor Trophy", "Jean Case Memorial (Under 15's)"] para U15 elegível
+      const allDivs = playerAllDivisions.get(key);
+      const divisions = allDivs ? [...allDivs] : (p.division ? [p.division] : []);
       return {
         id: p.id,
+        memberIds: p.memberIds || [],
+        eventId: p.eventId || null,
+        rank: p.rank != null ? p.rank : null,
         pos: p.pos,
         name: p.name,
         country: p.country,
@@ -1191,10 +1210,16 @@ async function scrapeOne(browser, t) {
         total: p.total,
         toPar: p.toPar,
         roundScores: p.roundScores,
-        division: playerDivision.get(p.id) || null,
+        division: playerDivision.get(key) || p.division || null,    // divisão principal
+        divisions,                                                    // TODAS as divisões (inclui sub-trofeus)
         rounds,
       };
     }).sort((a, b) => {
+      // Primário: rank (data-rank cru)
+      if (a.rank != null && b.rank != null && a.rank !== b.rank) return a.rank - b.rank;
+      if (a.rank != null && b.rank == null) return -1;
+      if (a.rank == null && b.rank != null) return 1;
+      // Fallback: total ascendente
       if (a.total == null) return 1;
       if (b.total == null) return -1;
       return a.total - b.total;
@@ -1337,7 +1362,10 @@ function parseArgs(argv) {
   console.log("\nOK torneios " + ok + "/" + tournaments.length + " | ficheiros " + totalFiles + " | falhas " + fail + " | skipped " + skipped);
 })();
 
-/* ─── transformToBjgtPerDivision ─── */
+/* ─── transformToBjgtPerDivision (enriquecido 2026-05-18) ───
+   Preserva TODOS os campos do scraped: id, memberIds (cross-ref), eventId, rank,
+   toPar, division, courses[] (multi-tee), meters[18] top-level e metersPlayed[18]
+   por ronda (cruzando teeColour da scorecard com courses[]). */
 function transformToBjgtPerDivision(scraped, catalogEntry) {
   const players = Array.isArray(scraped.players) ? scraped.players : [];
   if (!players.length) return [];
@@ -1354,27 +1382,63 @@ function transformToBjgtPerDivision(scraped, catalogEntry) {
   const parF9 = par.length >= 9 ? par.slice(0, 9).reduce((a, b) => a + b, 0) : 0;
   const parB9 = par.length >= 18 ? par.slice(9, 18).reduce((a, b) => a + b, 0) : 0;
 
+  const allCourses = Array.isArray(scraped.courses) ? scraped.courses : [];
+  const validCourses = allCourses.filter(c => c.parTotal > 0 && Array.isArray(c.meters) && c.meters.length === 18);
+  const findTeeConfig = (teeColour) => {
+    if (!validCourses.length) return null;
+    if (teeColour) {
+      const norm = teeColour.toLowerCase();
+      const exact = validCourses.find((c) => {
+        const tn = String(c.teeName || "").toLowerCase();
+        const cn = String(c.courseName || "").toLowerCase();
+        return tn.includes(norm) || cn.includes(norm);
+      });
+      if (exact) return exact;
+    }
+    if (validCourses.length === 1) return validCourses[0];
+    return validCourses[0];
+  };
+
   const out = [];
   useDivs.forEach((divLabel, divIdx) => {
     const divPlayers = divLabel ? players.filter((p) => p.division === divLabel) : players;
     if (!divPlayers.length) return;
 
     const bjgtPlayers = divPlayers.map((p) => {
-      const rounds = (p.rounds || []).map((r, i) => ({
-        day: i + 1,
-        scores: r.scores || [],
-        f9: r.f9 != null ? r.f9 : null,
-        b9: r.b9 != null ? r.b9 : null,
-        gross: r.gross != null ? r.gross : null,
-      }));
+      const rounds = (p.rounds || []).map((r, i) => {
+        const teeConfig = findTeeConfig(r.teeColour);
+        return {
+          day: i + 1,
+          scores: r.scores || [],
+          f9: r.f9 != null ? r.f9 : null,
+          b9: r.b9 != null ? r.b9 : null,
+          gross: r.gross != null ? r.gross : null,
+          teeColour: r.teeColour || "",
+          gender: r.gender || "",
+          courseName: r.course || "",
+          headerText: r.headerText || "",
+          parPlayed: teeConfig?.par || null,
+          metersPlayed: teeConfig?.meters || null,
+          parTotalPlayed: teeConfig?.parTotal || null,
+          metersTotalPlayed: teeConfig?.metersTotal || null,
+        };
+      });
       return {
+        id: p.id || null,
+        memberIds: p.memberIds || [],
+        eventId: p.eventId || null,
+        rank: p.rank != null ? p.rank : null,
         name: p.name,
         country: p.country || "",
         club: p.club || "",
         pos: p.pos != null ? p.pos : null,
-        result: p.toPar != null ? p.toPar : null,
+        toPar: p.toPar != null ? p.toPar : null,
+        result: p.toPar != null ? p.toPar : null, // retro-compat
         total: p.total != null ? p.total : null,
         hcp: p.hcp != null ? p.hcp : null,
+        roundScores: p.roundScores || [],
+        division: p.division || null,
+        divisions: Array.isArray(p.divisions) ? p.divisions : (p.division ? [p.division] : []),
         rounds,
       };
     });
@@ -1401,6 +1465,12 @@ function transformToBjgtPerDivision(scraped, catalogEntry) {
         rounds: scraped.rounds || (bjgtPlayers[0] ? bjgtPlayers[0].rounds.length : 0),
         par, si, meters, parTotal, parF9, parB9,
         metersTotal: course.metersTotal || 0,
+        courses: allCourses.map((c) => ({
+          teeName: c.teeName || "",
+          courseName: c.courseName || "",
+          par: c.par, si: c.si, meters: c.meters,
+          parTotal: c.parTotal, metersTotal: c.metersTotal,
+        })),
         players: bjgtPlayers,
         scrapedAt: scraped.scrapedAt || new Date().toISOString(),
       },

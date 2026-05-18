@@ -373,18 +373,142 @@ Cada torneio England Golf vive num microsite GolfGenius (alguns em `www.golfgeni
 
 **Catálogo:** `public/data/england-golf-catalog.json` — 28 edições de torneios juvenis 2023-2026 (Carris/McGregor/Reid Trophies, English U18 Amateur, English Girls' Open/U16/U14, Justin Rose Telegraph, Bronte Law Junior Series, England U16 v Spain, Boys' County Finals, Junior Champion Club). Cada entry tem `year`, `section`, `slug`, `title`, `gender`, `ageGroup`, `gg_base`, `gg_page`.
 
-**scrape-england-golf.js** — Adaptação do `scrape-ffgolf.js`. Diferenças: locale `en-GB`/`Europe/London`, suporte para `gg_base` (subdomínios), transforma output GolfGenius para formato **BJGT-like** (`{tournament, par[], si[], parTotal, parF9, parB9, players[{name, country, pos, result, total, rounds[{day, scores[], f9, b9, gross}]}]}`).
+**Cobertura efectiva:** 19/28 com dados completos. 9 falham por motivos estruturais do GolfGenius (ver "Limitações conhecidas" abaixo).
+
+### CLI
+
 ```bash
 node scripts/scrape-england-golf.js                              # tudo
 node scripts/scrape-england-golf.js --since-year 2023            # ≥ 2023
 node scripts/scrape-england-golf.js --slug carris-trophy-2025    # só esse
+node scripts/scrape-england-golf.js --slugs A,B,C                # vários slugs (2026-05-18)
 node scripts/scrape-england-golf.js --year 2025
 node scripts/scrape-england-golf.js --skip-existing              # idempotente
 node scripts/scrape-england-golf.js --gg-base https://eg-X.golfgenius.com --gg-page 1234567 --slug X --year 2026  # ad-hoc
 node scripts/scrape-england-golf.js --no-headless                # debug com browser visível
 ```
 
-**Output:** `public/data/england_{slug}.json` (single division) ou `england_{slug}_div1.json`, `_div2.json`... (multi-divisão — ex: English Girls' U16/U14 gera 2 ficheiros).
+### Output enriquecido (refactor 2026-05-18)
+
+`public/data/england_{slug}.json` (single division) ou `england_{slug}_div1.json`, `_div2.json`... (multi-divisão).
+
+**Top-level:**
+```json
+{
+  "tournament": "...", "slug": "...", "year": 2025, "section": "...",
+  "gender": "M|F|null", "ageGroup": "U18|U16|U14|...", "category": "...",
+  "course": "Luffenham Heath", "tee": "...",
+  "source": "...", "gg_page": "...", "gg_league": "...",
+  "rounds": 4,
+  "par": [4,4,3,...],          // 18 valores do tee principal
+  "si": [8,4,9,...],            // 18 stroke index
+  "meters": [363,437,389,...],  // YARDAGES POR BURACO (yardages convertidas para metros)
+  "parTotal": 70, "parF9": 35, "parB9": 35, "metersTotal": 6592,
+  "courses": [                  // TODAS as configurações de tee (multi-tee)
+    { "teeName": "", "courseName": "", "par": [...], "si": [...], "meters": [...], "parTotal": 70, "metersTotal": 6592 }
+  ],
+  "players": [...],
+  "scrapedAt": "..."
+}
+```
+
+**Cada player:**
+```json
+{
+  "id": "2058156618",                  // player ID GolfGenius (único por linha)
+  "memberIds": ["37343006"],           // member ID GG — único POR TORNEIO (não global!) — só serve para dedup dentro do mesmo torneio
+  "eventId": "3854563",                // ID do evento (R1 stroke)
+  "rank": 1,                            // data-rank cru (limpo, sem "T5")
+  "pos": 1,                             // alias do rank
+  "name": "Callixte Alzas",            // nome LIMPO (sem club concatenado)
+  "country": "FR",                      // código flag-icon (FR, GB-ENG, GB-SCT, IT, DE...)
+  "club": "Saint Cloud",
+  "hcp": null,                          // SEMPRE null — confirmado que GG público não publica
+  "toPar": -9,                          // novo campo
+  "result": -9,                         // retro-compat
+  "total": 271,
+  "roundScores": [70,67,69,65],
+  "division": "Carris Trophy",         // divisão principal
+  "divisions": [                        // TODAS as divisões em que apareceu (cross-trofeu)
+    "Carris Trophy",
+    "Jean Case Memorial (Under 15's)",  // se U15 elegível
+    "The Nations Cup"                    // se elegível
+  ],
+  "rounds": [
+    {
+      "day": 1, "scores": [4,5,4,...], "f9": 35, "b9": 35, "gross": 70,
+      "teeColour": "Blue",              // extraído do header_row do detail page
+      "gender": "Men",                  // "Men", "Boys", "Girls" etc.
+      "courseName": "Luffenham Heath",
+      "headerText": "Tue, July 22 Luffenham Heath - 3 - Archived on 08-07-2025 (Blue - Men)",
+      "parPlayed": [4,4,3,...],         // par[18] do tee jogado
+      "metersPlayed": [363,437,389,...],// METROS POR BURACO do tee jogado
+      "parTotalPlayed": 70, "metersTotalPlayed": 6592
+    }
+  ]
+}
+```
+
+### `data-*` attributes do `<tr>` da leaderboard (descobertos 2026-05-18 via Chrome live)
+
+Cada linha de leaderboard real é `<tr class="aggregate-row">` com:
+- `data-aggregate-id` → player ID GolfGenius (único por linha/divisão)
+- `data-aggregate-name` → nome LIMPO (separado do clube — antes era misturado em string)
+- `data-member-ids` → member ID GG **POR TORNEIO** (não cross-event). Confirmado empiricamente 2026-05-18: Callixte Alzas (FR) tem mid distinto em torneios diferentes (`28134152` vs `37343006`). Serve para dedup DENTRO de UM torneio (separar Carris Trophy / Hazards Salver / Nations Cup do mesmo evento, onde o player aparece em múltiplas divisões) mas NÃO para cross-ref entre torneios. Para cross-event matching usar `name + club` (heurístico).
+- `data-rank` → posição limpa (independente de "T5"/"1" formatting)
+- O `<a.favorite-star>` filho tem `data-event-id`
+
+**⚠ Crítico:** filtrar SÓ `tr.aggregate-row` (ou `tr[data-aggregate-id]`). Iterar todos os `tr` que têm `a[href*=tournaments2/details]` pega ~30% de SUB-ROWS (net-score, etc.) sem data-* que ficariam com null e corromperiam o sort.
+
+### Dedup por `memberId` — cross-trofeu
+
+Uma pessoa pode aparecer múltiplas vezes na MESMA leaderboard porque é elegível para várias sub-tróficas:
+- McGregor Trophy 2024: 144 jogadores principais. Dos U15, ~56 também são elegíveis para Jean Case Memorial (Under 15's). 9 internacionais elegíveis para Nations Cup. Total linhas: 144+56+9 = **209**.
+- Sem dedup: leaderboard tem 209 linhas → 209 jogadores "consolidados" (com Leo Cahi 2×, Samuel Love 2× etc.)
+- Com dedup por `memberId`: **144 jogadores únicos**, cada U15 com `divisions: ["McGregor Trophy", "Jean Case Memorial (Under 15's)", ...]` permitindo filtros tipo "🏆 elegíveis para Jean Case".
+
+Estratégia: `playerLatestRecord` chaveado por `memberId || id`, preferindo o registo da divisão PRINCIPAL (heurística `isSubTrophy = /\b(memorial|salver|cup|series)\b/i`). `playerAllDivisions` acumula todas as divisões num Set.
+
+### Tee colour por jogador (detail page)
+
+O detail page `tournaments2/details/{id}` tem um `<tr class="header_row">` antes da `net-line` (scores hole-by-hole) com texto tipo:
+```
+Tue, July 22 Luffenham Heath - 3 - Archived on 08-07-2025 (Blue - Men)
+```
+O `(Blue - Men)` no fim identifica a tee jogada. Combinado com `courses[]` (que tem par/meters por tee), permite saber a yardage exacta jogada por cada divisão. Regex permissivo `\(([^()]{1,40})\)\s*$` split por ` - ` → `teeColour="Blue"`, `gender="Men"`.
+
+**⚠ CORS subdomain:** quando o torneio vive num subdomínio `eg-*.golfgenius.com`, fazer `fetch` directo para `https://www.golfgenius.com/tournaments2/details/{id}` falha com `TypeError: Failed to fetch` (CORS). Solução: usar URL RELATIVA `/tournaments2/details/{id}` — fica same-origin com o iframe da league.
+
+### O que GolfGenius PÚBLICO NÃO expõe
+
+Confirmadíssimo via Chrome live em Carris 2025 (validado contra detail page do Callixte Alzas):
+- ❌ HCP por jogador (não é coluna nem data-attribute em lado nenhum)
+- ❌ DOB / idade / ano de nascimento (a única classe "handicap-dots" no detail page é CSS, sem valor)
+- ❌ Yards por shot/drive (só yards por buraco do tee — que já temos via course_analytics)
+- ❌ Widgets adicionais úteis — `scoreboard`, `pairings`, `tee_times`, `handicaps`, `divisions`, `members` todos retornam HTTP 404. Só `tournament_results` e `course_analytics` respondem.
+
+Idade está IMPLÍCITA pelo tier do torneio (Carris=U18, McGregor=U16, Reid=U14) ou pela divisão (Jean Case Memorial U15 dentro do McGregor).
+
+### Limitações conhecidas — 9 torneios que não passam
+
+| Slug | Razão |
+|---|---|
+| `carris-trophy-2024`, `mcgregor-trophy-2023`, `english-girls-championship-2025` | "dropdown sem eventos" — England Golf arquivou e removeu os dados do GG |
+| `english-girls-open-stroke-play-2023`, `english-junior-champion-club-2024`, `english-junior-champion-club-2025`, `boys-county-finals-2025`, `england-u16-v-spain-u16-2025` | Iframe redirecciona para `campaigns/2261/run` (template homepage do England Golf), sem leaderboard real montada |
+| `bronte-law-farnham-2026` | Torneio futuro, página ainda não publicada |
+
+Estes não são bugs do scraper. Confirmado via Chrome live: as páginas existem mas o iframe `tournament_results` nunca é carregado.
+
+### Bugs históricos resolvidos (2026-05-18)
+
+Cadeia de 5 bugs que tornaram o output incrivelmente pobre durante várias iterações:
+1. Iterator pegava 214 trs (sub-rows com link mas sem data-*) → fix com filtro `tr.aggregate-row, tr[data-aggregate-id]`
+2. `eventPlayers.map()` em `scrapeOne` jogava fora memberIds/eventId/rank antes de chegar ao consolidate → fix mapeando explicitamente
+3. `playerLatestRecord` no consolidate também não propagava → fix mapeando explicitamente
+4. Refactor do dedup REVERTEU o fix #3 → re-aplicado (lição: editar funções monolíticas é frágil, validar sempre via output)
+5. `transformToBjgtPerDivision` (que é onde o output JSON é montado) também ignorava os campos novos → fix mapeando + adicionando `divisions[]`, `meters[18]` top-level, `courses[]` multi-tee, e por ronda `teeColour`/`gender`/`parPlayed`/`metersPlayed`
+
+Diagnóstico que desempatou: adicionar `[debug-lb-out]` no `scrapeOne` para imprimir `lb.players[0]` recém-saído de `fetchLeaderboard`, comparar com `[debug-consolidate]` impresso a partir do `playerLatestRecord`. Mostrou que os campos sumiam ENTRE os dois pontos (no `eventPlayers.map`).
 
 **Página `/england`** — `src/pages/EnglandGolfPage.tsx`. Duplicação da BJGTPage com array `URLS` construído **dinamicamente** a partir do catálogo (não hardcoded). Carrega `england-golf-catalog.json` em runtime, tenta `england_{slug}.json` para cada entry, e auto-selecciona o torneio onde o Manuel jogou (ou o primeiro com dados). Sidebar agrupa por ano, tabs de escalão dentro do ano.
 
@@ -637,6 +761,8 @@ Popula `uskTournNames` como fallback (hardcoded em `USKIDS_TCODE_META` tem prior
 | bjgt_*.json, wjgc_*.json | BJGT/WJGC | scrape-bluegolf.js | ✓ | BJGTPage, KIDSdataLoader |
 | eowagr25_*.json | EOWAGR | scrape-eowagr25*.js | ✓ | KIDSdataLoader |
 | ftm_doral_2024/2025.json | Doral | scrape-golfgenius.js | r1/r2Gross | KIDSdataLoader |
+| england_{slug}.json | England Golf | scrape-england-golf.js | ✓ (com teeColour/metersPlayed[18] por ronda) | EnglandGolfPage |
+| england-golf-catalog.json | England Golf | manual | ✗ | EnglandGolfPage (sidebar) |
 | torneio-greatgolf.json | Greatgolf | scrape-drive-aquapor-v7.js | ✓ | KIDSdataLoader |
 | rivals-intl.json | — | — | ✗ | (registado em dataRegistry) |
 | tournament-links.json | — | — | ✗ | (registado em dataRegistry) |
