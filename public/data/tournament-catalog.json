@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-17T12:38:16.886Z",
+  "generatedAt": "2026-05-18T17:22:37.198Z",
   "series": [
     {
       "id": "ffgolf-gp-jeunes",
@@ -481,6 +481,10 @@
         "rfeg-nc53925_infantil",
         "rfeg-nc53925_cadete",
         "rfeg-nc53925_juvenil",
+        "rfeg-nc53928_alevín",
+        "rfeg-nc53928_infantil",
+        "rfeg-nc53928_cadete",
+        "rfeg-nc53928_juvenil",
         "rfeg-nc54247_cadete_sc",
         "rfeg-nc54247_alevín_sc",
         "rfeg-nc54247_infantil_sc",
@@ -489,12 +493,15 @@
         "rfeg-nc54282_infantil_hcp",
         "rfeg-nc54282_cadete_hcp",
         "rfeg-nc54282_juvenil_sc",
+        "rfeg-nc54283_sub16_sc",
+        "rfeg-nc54283_sub18_sc",
         "rfeg-nc54291_alevín_sc",
         "rfeg-nc54291_alevín_hcp",
         "rfeg-nc54291_infantil_hcp",
         "rfeg-nc54291_infantil_sc",
         "rfeg-nc54291_sub21_sc",
         "rfeg-nc54291_sub21_hcp",
+        "rfeg-nc54388_sub16_sc",
         "rfeg-nc54704_alevín_hcp",
         "rfeg-nc54704_alevín_sc",
         "rfeg-nc54705_alevín",
@@ -518,6 +525,8 @@
         "rfeg-nc57667_alevín_hcp",
         "rfeg-nc57731_benjamín_sc",
         "rfeg-nc57731_benjamín",
+        "rfeg-nc57732_cadete_sc",
+        "rfeg-nc57732_cadete_hcp",
         "rfeg-nc58229_benjamín_sc",
         "rfeg-nc58229_benjamín_hcp",
         "rfeg-nc59509_juvenil_sc",
@@ -603,14 +612,32 @@
         "rfeg-nc62562_alevín_hcp",
         "rfeg-nc63825_benjamín_hcp",
         "rfeg-nc63825_benjamín_sc",
+        "rfeg-nc63827_juvenil_sc",
+        "rfeg-nc63827_juvenil_hcp",
+        "rfeg-nc63827_infantil_sc",
+        "rfeg-nc63827_infantil_hcp",
+        "rfeg-nc63827_sub21_hcp",
+        "rfeg-nc63827_sub21_sc",
         "rfeg-nc63828_alevín_sc",
         "rfeg-nc63828_alevín_hcp",
         "rfeg-nc63828_infantil_sc",
         "rfeg-nc63828_infantil_hcp",
         "rfeg-nc63828_sub21_hcp",
         "rfeg-nc63828_sub21_sc",
+        "rfeg-nc63831_cadete_sc",
+        "rfeg-nc63831_cadete_hcp",
+        "rfeg-nc63831_infantil_sc",
+        "rfeg-nc63831_infantil_hcp",
+        "rfeg-nc63831_alevín_sc",
+        "rfeg-nc63831_alevín_hcp",
         "rfeg-nc63832_benjamín_sc",
         "rfeg-nc63832_benjamín_hcp",
+        "rfeg-nc63835_alevín_hcp",
+        "rfeg-nc63835_alevín_sc",
+        "rfeg-nc63835_infantil_sc",
+        "rfeg-nc63835_infantil_hcp",
+        "rfeg-nc63835_cadete_sc",
+        "rfeg-nc63835_cadete_hcp",
         "rfeg-nc63836_benjamín_sc",
         "rfeg-nc63836_benjamín_hcp",
         "rfeg-nc64564_benjamín_sc",
@@ -637,6 +664,7 @@
         "rfeg-nc67197_cadete",
         "rfeg-nc67197_juvenil",
         "rfeg-nc67318_juvenil",
+        "rfeg-nc67350_infantil",
         "rfeg-nc67352_infantil",
         "rfeg-nc67595_junior",
         "rfeg-nc67620_infantil",
@@ -718,7 +746,7 @@
       ],
       "firstDate": "2020-10-29",
       "lastDate": "2026-04-26",
-      "editionsCount": 280
+      "editionsCount": 308
     },
     {
       "id": "ffgolf-tour-4-air-moana-polynesian-junior-tour-u12-u18",
@@ -15010,6 +15038,42 @@
       "editionsCount": 8
     },
     {
+      "id": "ffgolf-qualification-cfj-2-u12-ligue-paris-ile-de-france",
+      "label": "Qualification CFJ 2 - U12 Ligue Paris Ile-de-France",
+      "sourceId": "ffgolf",
+      "tournamentIds": [
+        "ffgolf-2601405042",
+        "ffgolf-2601405042",
+        "ffgolf-2501308503",
+        "ffgolf-2501308503",
+        "ffgolf-2401169079",
+        "ffgolf-2401169079",
+        "ffgolf-2300979851",
+        "ffgolf-2300979851"
+      ],
+      "firstDate": "2023-06-10",
+      "lastDate": "2026-05-16",
+      "editionsCount": 8
+    },
+    {
+      "id": "ffgolf-qualification-cfj-2-benjamins-ligue-paris-ile-de-france",
+      "label": "Qualification CFJ 2 - Benjamins Ligue Paris Ile-de-France",
+      "sourceId": "ffgolf",
+      "tournamentIds": [
+        "ffgolf-2601405043",
+        "ffgolf-2601405043",
+        "ffgolf-2501308505",
+        "ffgolf-2501308505",
+        "ffgolf-2401169080",
+        "ffgolf-2401169080",
+        "ffgolf-2300979849",
+        "ffgolf-2300979849"
+      ],
+      "firstDate": "2023-06-10",
+      "lastDate": "2026-05-16",
+      "editionsCount": 8
+    },
+    {
       "id": "doral-jr-classic",
       "label": "First Tee Miami Doral Jr. Classic",
       "sourceId": "doral",
@@ -20513,38 +20577,6 @@
       ],
       "firstDate": "2025-07-05",
       "lastDate": "2025-07-05",
-      "editionsCount": 6
-    },
-    {
-      "id": "ffgolf-qualification-cfj-2-u12-ligue-paris-ile-de-france",
-      "label": "Qualification CFJ 2 - U12 Ligue Paris Ile-de-France",
-      "sourceId": "ffgolf",
-      "tournamentIds": [
-        "ffgolf-2501308503",
-        "ffgolf-2501308503",
-        "ffgolf-2401169079",
-        "ffgolf-2401169079",
-        "ffgolf-2300979851",
-        "ffgolf-2300979851"
-      ],
-      "firstDate": "2023-06-10",
-      "lastDate": "2025-05-17",
-      "editionsCount": 6
-    },
-    {
-      "id": "ffgolf-qualification-cfj-2-benjamins-ligue-paris-ile-de-france",
-      "label": "Qualification CFJ 2 - Benjamins Ligue Paris Ile-de-France",
-      "sourceId": "ffgolf",
-      "tournamentIds": [
-        "ffgolf-2501308505",
-        "ffgolf-2501308505",
-        "ffgolf-2401169080",
-        "ffgolf-2401169080",
-        "ffgolf-2300979849",
-        "ffgolf-2300979849"
-      ],
-      "firstDate": "2023-06-10",
-      "lastDate": "2025-05-17",
       "editionsCount": 6
     },
     {
