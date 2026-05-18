@@ -1,8 +1,168 @@
 {
-  "generatedAt": "2026-05-11T06:03:46.270Z",
+  "generatedAt": "2026-05-18T06:20:36.511Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
-  "total": 1601,
+  "total": 1607,
   "tournaments": [
+    {
+      "file": "01-00-2601405042.json",
+      "trnId": "2601405042",
+      "name": "Qualification CFJ 2 - U12 Ligue Paris Ile-de-France 2026",
+      "formule": "Simple",
+      "date": "16/05/2026",
+      "dateIso": "2026-05-16",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 2,
+      "totalPlayers": 83,
+      "divisions": [
+        {
+          "serieId": "11",
+          "label": "Simple Score maximum",
+          "players": 56
+        },
+        {
+          "serieId": "22",
+          "label": "Simple Score maximum",
+          "players": 27
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
+    },
+    {
+      "file": "01-00-2601405043.json",
+      "trnId": "2601405043",
+      "name": "Qualification CFJ 2 - Benjamins Ligue Paris Ile-de-France 2026",
+      "formule": "Simple",
+      "date": "16/05/2026",
+      "dateIso": "2026-05-16",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 2,
+      "totalPlayers": 93,
+      "divisions": [
+        {
+          "serieId": "19",
+          "label": "Simple Score maximum",
+          "players": 71
+        },
+        {
+          "serieId": "211",
+          "label": "Simple Score maximum",
+          "players": 22
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
+    },
+    {
+      "file": "03-06-2601405351.json",
+      "trnId": "2601405351",
+      "name": "Grand Prix Jeunes Occitanie 3 Golf Club de Toulouse",
+      "formule": "Simple",
+      "date": "16/05/2026",
+      "dateIso": "2026-05-16",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "06",
+      "seriesCount": 6,
+      "totalPlayers": 126,
+      "divisions": [
+        {
+          "serieId": "19",
+          "label": "Simple Score maximum",
+          "players": 43
+        },
+        {
+          "serieId": "113",
+          "label": "Simple Score maximum",
+          "players": 36
+        },
+        {
+          "serieId": "117",
+          "label": "Simple Score maximum",
+          "players": 17
+        },
+        {
+          "serieId": "211",
+          "label": "Simple Score maximum",
+          "players": 15
+        },
+        {
+          "serieId": "215",
+          "label": "Simple Score maximum",
+          "players": 11
+        },
+        {
+          "serieId": "219",
+          "label": "Simple Score maximum",
+          "players": 4
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
+    },
+    {
+      "file": "03-13-2601410661.json",
+      "trnId": "2601410661",
+      "name": "GRAND PRIX JEUNES",
+      "formule": "Simple",
+      "date": "16/05/2026",
+      "dateIso": "2026-05-16",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "13",
+      "seriesCount": 6,
+      "totalPlayers": 53,
+      "divisions": [
+        {
+          "serieId": "17",
+          "label": "Simple Stroke play",
+          "players": 18
+        },
+        {
+          "serieId": "25",
+          "label": "Simple Stroke play",
+          "players": 10
+        },
+        {
+          "serieId": "29",
+          "label": "Simple Stroke play",
+          "players": 1
+        },
+        {
+          "serieId": "111",
+          "label": "Simple Stroke play",
+          "players": 19
+        },
+        {
+          "serieId": "115",
+          "label": "Simple Stroke play",
+          "players": 3
+        },
+        {
+          "serieId": "213",
+          "label": "Simple Stroke play",
+          "players": 2
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-majeur-garcons-u14/page-scores-tournoi",
+      "ggPage": "12483136787876721193",
+      "ffgolfSlug": "grand-prix-jeunes-majeur-garcons-u14",
+      "ffgolfSection": "grands-prix-jeunes"
+    },
     {
       "file": "03-03-2601411598.json",
       "trnId": "2601411598",
@@ -45,6 +205,36 @@
           "serieId": "219",
           "label": "MF",
           "players": 1
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-majeur-garcons-u14/page-scores-tournoi",
+      "ggPage": "12483136787876721193",
+      "ffgolfSlug": "grand-prix-jeunes-majeur-garcons-u14",
+      "ffgolfSection": "grands-prix-jeunes"
+    },
+    {
+      "file": "03-07-2601435042.json",
+      "trnId": "2601435042",
+      "name": "Grand Prix Jeunes Majeur",
+      "formule": "Simple",
+      "date": "09/05/2026",
+      "dateIso": "2026-05-09",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "07",
+      "seriesCount": 2,
+      "totalPlayers": 72,
+      "divisions": [
+        {
+          "serieId": "11",
+          "label": "Simple Stroke play",
+          "players": 48
+        },
+        {
+          "serieId": "22",
+          "label": "Simple Stroke play",
+          "players": 24
         }
       ],
       "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
@@ -101,6 +291,36 @@
       "ffgolfOfficialUrl": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-national-u12-garcons-u12/page-scores-tournoi",
       "ggPage": "12523210857859035722",
       "ffgolfSlug": "grand-prix-national-u12-garcons-u12",
+      "ffgolfSection": "grands-prix-jeunes"
+    },
+    {
+      "file": "03-19-2601435042.json",
+      "trnId": "2601435042",
+      "name": "Grand Prix Jeunes Majeur",
+      "formule": "Simple",
+      "date": "09/05/2026",
+      "dateIso": "2026-05-09",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "19",
+      "seriesCount": 2,
+      "totalPlayers": 72,
+      "divisions": [
+        {
+          "serieId": "11",
+          "label": "Simple Stroke play",
+          "players": 48
+        },
+        {
+          "serieId": "22",
+          "label": "Simple Stroke play",
+          "players": 24
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-majeur-garcons-u14/page-scores-tournoi",
+      "ggPage": "12483136787876721193",
+      "ffgolfSlug": "grand-prix-jeunes-majeur-garcons-u14",
       "ffgolfSection": "grands-prix-jeunes"
     },
     {
