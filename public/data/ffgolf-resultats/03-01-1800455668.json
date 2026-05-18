@@ -5572,7 +5572,7 @@
             "glfLic": "0038",
             "hcp": 6.7,
             "club": "Rcf La Boulie",
-            "region": "PARIS-ILE-DE-FRANCE",
+            "region": "PROVENCE-ALPES-CÔTE-D'AZUR",
             "teeTime": "10:45",
             "statusR1": "00",
             "statusR2": "00",
@@ -6099,7 +6099,7 @@
       },
       {
         "serieId": "19",
-        "label": "U12G",
+        "label": "Simple Stroke play",
         "courseTerrain": "Châtaigniers Jeunes Garçons",
         "parString": "434454534443534354",
         "parPerHole": [
@@ -6732,7 +6732,7 @@
       },
       {
         "serieId": "26",
-        "label": "U12F",
+        "label": "Simple Stroke play",
         "courseTerrain": "Châtaigniers Jeunes Filles",
         "parString": "444454534443534354",
         "parPerHole": [
@@ -8004,5 +8004,7 @@
     "dateString": "15/09/2018",
     "libCpt": "GRAND PRIX JEUNES IDF 2018"
   },
+  "typeCompetition": "03",
+  "ligue": "01",
   "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/"
 }
