@@ -42,17 +42,50 @@ interface TDef { id: string; label: string; shortLabel: string; data: TData; man
  * `reverseRounds: true` REMOVIDO — o novo scrape-bluegolf.js ordena as rondas
  * pelo label correctamente, deixando de ser necessária inversão manual. */
 const URLS = [
-  /* ── BJGT (Daily Mail WJGC - Villa Padierna) ── */
-  { id: "2025_b7u",   url: "/data/wjgc_2025_b7u.json",    label: "2025 // Boys 7&U",    shortLabel: "2025 Boys 7&U",    manuelName: "",                          year: 2025, category: "Boys 7&U",    roundDates: undefined, series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/20/leaderboard.htm" },
-  { id: "2025_b89",   url: "/data/wjgc_2025_b89.json",    label: "2025 // Boys 8-9",    shortLabel: "2025 Boys 8-9",    manuelName: "",                          year: 2025, category: "Boys 8-9",    roundDates: undefined, series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/28/leaderboard.htm" },
-  { id: "2025_b1011", url: "/data/wjgc_2025_b1011.json",  label: "2025 // Boys 10-11",  shortLabel: "2025 Boys 10-11",  manuelName: "Manuel Medeiros",           year: 2025, category: "Boys 10-11",  roundDates: undefined, series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/34/leaderboard.htm" },
-  { id: "2025_g1213", url: "/data/wjgc_2025_g1213.json",  label: "2025 // Girls 12-13", shortLabel: "2025 Girls 12-13", manuelName: "",                          year: 2025, category: "Girls 12-13", roundDates: undefined, series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/43/leaderboard.htm" },
-  { id: "2025_bwagr", url: "/data/wjgc_2025_bwagr.json",  label: "2025 // Boys WAGR",   shortLabel: "2025 Boys WAGR",   manuelName: "",                          year: 2025, category: "Boys WAGR",   roundDates: undefined, series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/101/leaderboard.htm" },
-  { id: "2026_b89",   url: "/data/wjgc_2026_b89.json",    label: "2026 // Boys 8-9",    shortLabel: "2026 Boys 8-9",    manuelName: "",                          year: 2026, category: "Boys 8-9",    roundDates: ["25 Fev", "26 Fev", "27 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/25/leaderboard.htm" },
-  { id: "2026_b1011", url: "/data/wjgc_2026_b1011.json",  label: "2026 // Boys 10-11",  shortLabel: "2026 Boys 10-11",  manuelName: "Manuel Francisco Medeiros", year: 2026, category: "Boys 10-11",  roundDates: ["25 Fev", "26 Fev", "27 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/73/leaderboard.htm" },
-  { id: "2026_b1213", url: "/data/wjgc_2026_b1213.json",  label: "2026 // Boys 12-13",  shortLabel: "2026 Boys 12-13",  manuelName: "",                          year: 2026, category: "Boys 12-13",  roundDates: ["25 Fev", "26 Fev", "27 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/33/leaderboard.htm" },
-  { id: "2026_bwagr", url: "/data/wjgc_2026_bwagr.json",  label: "2026 // Boys WAGR",   shortLabel: "2026 Boys WAGR",   manuelName: "",                          year: 2026, category: "Boys WAGR",   roundDates: ["25 Fev", "26 Fev", "27 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/5/leaderboard.htm" },
-  { id: "2026_gwagr", url: "/data/wjgc_2026_gwagr.json",  label: "2026 // Girls WAGR",  shortLabel: "2026 Girls WAGR",  manuelName: "",                          year: 2026, category: "Girls WAGR",  roundDates: ["25 Fev", "26 Fev", "27 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/69/leaderboard.htm" },
+  /* ── BJGT 2025/2026 (Daily Mail WJGC — Villa Padierna, brjgt251 + brjgt2537) ── */
+  { id: "2025_b7u",   url: "/data/brjgt251_boys_7under.json",    label: "2025 // Boys 7&U",    shortLabel: "2025 Boys 7&U",    manuelName: "",                          year: 2025, category: "Boys 7&U",    roundDates: undefined, series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/20/leaderboard.htm" },
+  { id: "2025_b89",   url: "/data/brjgt251_boys_8-9.json",    label: "2025 // Boys 8-9",    shortLabel: "2025 Boys 8-9",    manuelName: "",                          year: 2025, category: "Boys 8-9",    roundDates: undefined, series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/28/leaderboard.htm" },
+  { id: "2025_b1011", url: "/data/brjgt251_boys_10-11.json",  label: "2025 // Boys 10-11",  shortLabel: "2025 Boys 10-11",  manuelName: "Manuel Medeiros",           year: 2025, category: "Boys 10-11",  roundDates: undefined, series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/34/leaderboard.htm" },
+  { id: "2025_g1213", url: "/data/brjgt251_girls_12-13.json",  label: "2025 // Girls 12-13", shortLabel: "2025 Girls 12-13", manuelName: "",                          year: 2025, category: "Girls 12-13", roundDates: undefined, series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/43/leaderboard.htm" },
+  { id: "2025_bwagr", url: "/data/brjgt251_boys_wagr.json",  label: "2025 // Boys WAGR",   shortLabel: "2025 Boys WAGR",   manuelName: "",                          year: 2025, category: "Boys WAGR",   roundDates: undefined, series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/101/leaderboard.htm" },
+  { id: "2026_b89",   url: "/data/brjgt2537_boys_8-9.json",    label: "2026 // Boys 8-9",    shortLabel: "2026 Boys 8-9",    manuelName: "",                          year: 2026, category: "Boys 8-9",    roundDates: ["25 Fev", "26 Fev", "27 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/25/leaderboard.htm" },
+  { id: "2026_b1011", url: "/data/brjgt2537_boys_10-11.json",  label: "2026 // Boys 10-11",  shortLabel: "2026 Boys 10-11",  manuelName: "Manuel Francisco Medeiros", year: 2026, category: "Boys 10-11",  roundDates: ["25 Fev", "26 Fev", "27 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/73/leaderboard.htm" },
+  { id: "2026_b1213", url: "/data/brjgt2537_boys_12-13.json",  label: "2026 // Boys 12-13",  shortLabel: "2026 Boys 12-13",  manuelName: "",                          year: 2026, category: "Boys 12-13",  roundDates: ["25 Fev", "26 Fev", "27 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/33/leaderboard.htm" },
+  { id: "2026_bwagr", url: "/data/brjgt2537_boys_wagr.json",  label: "2026 // Boys WAGR",   shortLabel: "2026 Boys WAGR",   manuelName: "",                          year: 2026, category: "Boys WAGR",   roundDates: ["25 Fev", "26 Fev", "27 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/5/leaderboard.htm" },
+  { id: "2026_gwagr", url: "/data/brjgt2537_girls_wagr.json",  label: "2026 // Girls WAGR",  shortLabel: "2026 Girls WAGR",  manuelName: "",                          year: 2026, category: "Girls WAGR",  roundDates: ["25 Fev", "26 Fev", "27 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/69/leaderboard.htm" },
+  /* ── BJGT 2025 — escalões adicionais (brjgt251 cobre 14 contests) ── */
+  { id: "2025_g7u",   url: "/data/brjgt251_girls_7under.json", label: "2025 // Girls 7&U",   shortLabel: "2025 Girls 7&U",   manuelName: "",                          year: 2025, category: "Girls 7&U",   roundDates: undefined, series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt251/contest/24/leaderboard.htm" },
+  { id: "2025_g89",   url: "/data/brjgt251_girls_8-9.json",    label: "2025 // Girls 8-9",   shortLabel: "2025 Girls 8-9",   manuelName: "",                          year: 2025, category: "Girls 8-9",   roundDates: undefined, series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt251/contest/31/leaderboard.htm" },
+  { id: "2025_g1011", url: "/data/brjgt251_girls_10-11.json",  label: "2025 // Girls 10-11", shortLabel: "2025 Girls 10-11", manuelName: "",                          year: 2025, category: "Girls 10-11", roundDates: undefined, series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt251/contest/37/leaderboard.htm" },
+  { id: "2025_b1213", url: "/data/brjgt251_boys_12-13.json",   label: "2025 // Boys 12-13",  shortLabel: "2025 Boys 12-13",  manuelName: "",                          year: 2025, category: "Boys 12-13",  roundDates: undefined, series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt251/contest/40/leaderboard.htm" },
+  { id: "2025_b1415", url: "/data/brjgt251_boys_14-15.json",   label: "2025 // Boys 14-15",  shortLabel: "2025 Boys 14-15",  manuelName: "",                          year: 2025, category: "Boys 14-15",  roundDates: undefined, series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt251/contest/46/leaderboard.htm" },
+  { id: "2025_g1415", url: "/data/brjgt251_girls_14-15.json",  label: "2025 // Girls 14-15", shortLabel: "2025 Girls 14-15", manuelName: "",                          year: 2025, category: "Girls 14-15", roundDates: undefined, series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt251/contest/49/leaderboard.htm" },
+  { id: "2025_b1618", url: "/data/brjgt251_boys_16-18.json",   label: "2025 // Boys 16-18",  shortLabel: "2025 Boys 16-18",  manuelName: "",                          year: 2025, category: "Boys 16-18",  roundDates: undefined, series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt251/contest/52/leaderboard.htm" },
+  { id: "2025_g1618", url: "/data/brjgt251_girls_16-18.json",  label: "2025 // Girls 16-18", shortLabel: "2025 Girls 16-18", manuelName: "",                          year: 2025, category: "Girls 16-18", roundDates: undefined, series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt251/contest/55/leaderboard.htm" },
+  { id: "2025_gwagr", url: "/data/brjgt251_girls_wagr.json",   label: "2025 // Girls WAGR",  shortLabel: "2025 Girls WAGR",  manuelName: "",                          year: 2025, category: "Girls WAGR",  roundDates: undefined, series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt251/contest/105/leaderboard.htm" },
+  /* ── BJGT 2026 — escalões adicionais (brjgt2537 cobre 14 contests) ── */
+  { id: "2026_b7u",   url: "/data/brjgt2537_boys_7under.json",  label: "2026 // Boys 7&U",    shortLabel: "2026 Boys 7&U",    manuelName: "",                          year: 2026, category: "Boys 7&U",    roundDates: ["25 Fev", "26 Fev", "27 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2537/contest/29/leaderboard.htm" },
+  { id: "2026_g7u",   url: "/data/brjgt2537_girls_7under.json", label: "2026 // Girls 7&U",   shortLabel: "2026 Girls 7&U",   manuelName: "",                          year: 2026, category: "Girls 7&U",   roundDates: ["25 Fev", "26 Fev", "27 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2537/contest/65/leaderboard.htm" },
+  { id: "2026_g89",   url: "/data/brjgt2537_girls_8-9.json",    label: "2026 // Girls 8-9",   shortLabel: "2026 Girls 8-9",   manuelName: "",                          year: 2026, category: "Girls 8-9",   roundDates: ["25 Fev", "26 Fev", "27 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2537/contest/49/leaderboard.htm" },
+  { id: "2026_g1011", url: "/data/brjgt2537_girls_10-11.json",  label: "2026 // Girls 10-11", shortLabel: "2026 Girls 10-11", manuelName: "",                          year: 2026, category: "Girls 10-11", roundDates: ["25 Fev", "26 Fev", "27 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2537/contest/21/leaderboard.htm" },
+  { id: "2026_g1213", url: "/data/brjgt2537_girls_12-13.json",  label: "2026 // Girls 12-13", shortLabel: "2026 Girls 12-13", manuelName: "",                          year: 2026, category: "Girls 12-13", roundDates: ["25 Fev", "26 Fev", "27 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2537/contest/85/leaderboard.htm" },
+  { id: "2026_b1415", url: "/data/brjgt2537_boys_14-15.json",   label: "2026 // Boys 14-15",  shortLabel: "2026 Boys 14-15",  manuelName: "",                          year: 2026, category: "Boys 14-15",  roundDates: ["25 Fev", "26 Fev", "27 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2537/contest/61/leaderboard.htm" },
+  { id: "2026_g1415", url: "/data/brjgt2537_girls_14-15.json",  label: "2026 // Girls 14-15", shortLabel: "2026 Girls 14-15", manuelName: "",                          year: 2026, category: "Girls 14-15", roundDates: ["25 Fev", "26 Fev", "27 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2537/contest/9/leaderboard.htm" },
+  { id: "2026_b1618", url: "/data/brjgt2537_boys_16-18.json",   label: "2026 // Boys 16-18",  shortLabel: "2026 Boys 16-18",  manuelName: "",                          year: 2026, category: "Boys 16-18",  roundDates: ["25 Fev", "26 Fev", "27 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2537/contest/13/leaderboard.htm" },
+  { id: "2026_g1618", url: "/data/brjgt2537_girls_16-18.json",  label: "2026 // Girls 16-18", shortLabel: "2026 Girls 16-18", manuelName: "",                          year: 2026, category: "Girls 16-18", roundDates: ["25 Fev", "26 Fev", "27 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2537/contest/41/leaderboard.htm" },
+  /* ── BJGT 2024 (Daily Mail WJGC — Villa Padierna, brjgt243 + brjgt2431) ── */
+  { id: "2024_b7u",   url: "/data/brjgt243_boys_7under.json",  label: "2024 // Boys 7&U",    shortLabel: "2024 Boys 7&U",    manuelName: "",                          year: 2024, category: "Boys 7&U",    roundDates: ["20 Fev", "21 Fev", "22 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://www.bluegolf.com/junior/events/brjgt243/index.html" },
+  { id: "2024_g7u",   url: "/data/brjgt243_girls_7under.json", label: "2024 // Girls 7&U",   shortLabel: "2024 Girls 7&U",   manuelName: "",                          year: 2024, category: "Girls 7&U",   roundDates: ["20 Fev", "21 Fev", "22 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://www.bluegolf.com/junior/events/brjgt243/index.html" },
+  { id: "2024_b89",   url: "/data/brjgt243_boys_8-9.json",     label: "2024 // Boys 8-9",    shortLabel: "2024 Boys 8-9",    manuelName: "",                          year: 2024, category: "Boys 8-9",    roundDates: ["20 Fev", "21 Fev", "22 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://www.bluegolf.com/junior/events/brjgt243/index.html" },
+  { id: "2024_g89",   url: "/data/brjgt243_girls_8-9.json",    label: "2024 // Girls 8-9",   shortLabel: "2024 Girls 8-9",   manuelName: "",                          year: 2024, category: "Girls 8-9",   roundDates: ["20 Fev", "21 Fev", "22 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://www.bluegolf.com/junior/events/brjgt243/index.html" },
+  { id: "2024_b1011", url: "/data/brjgt243_boys_10-11.json",   label: "2024 // Boys 10-11",  shortLabel: "2024 Boys 10-11",  manuelName: "",                          year: 2024, category: "Boys 10-11",  roundDates: ["20 Fev", "21 Fev", "22 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://www.bluegolf.com/junior/events/brjgt243/index.html" },
+  { id: "2024_g1011", url: "/data/brjgt243_girls_10-11.json",  label: "2024 // Girls 10-11", shortLabel: "2024 Girls 10-11", manuelName: "",                          year: 2024, category: "Girls 10-11", roundDates: ["20 Fev", "21 Fev", "22 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://www.bluegolf.com/junior/events/brjgt243/index.html" },
+  { id: "2024_g1213", url: "/data/brjgt243_girls_12-13.json",  label: "2024 // Girls 12-13", shortLabel: "2024 Girls 12-13", manuelName: "",                          year: 2024, category: "Girls 12-13", roundDates: ["20 Fev", "21 Fev", "22 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://www.bluegolf.com/junior/events/brjgt243/index.html" },
+  { id: "2024_b1213", url: "/data/brjgt2431_boys_12-13.json",  label: "2024 // Boys 12-13",  shortLabel: "2024 Boys 12-13",  manuelName: "",                          year: 2024, category: "Boys 12-13",  roundDates: ["20 Fev", "21 Fev", "22 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://www.bluegolf.com/junior/events/brjgt2431/index.html" },
+  { id: "2024_b1415", url: "/data/brjgt2431_boys_14-15.json",  label: "2024 // Boys 14-15",  shortLabel: "2024 Boys 14-15",  manuelName: "",                          year: 2024, category: "Boys 14-15",  roundDates: ["20 Fev", "21 Fev", "22 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://www.bluegolf.com/junior/events/brjgt2431/index.html" },
+  { id: "2024_g1415", url: "/data/brjgt2431_girls_14-15.json", label: "2024 // Girls 14-15", shortLabel: "2024 Girls 14-15", manuelName: "",                          year: 2024, category: "Girls 14-15", roundDates: ["20 Fev", "21 Fev", "22 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://www.bluegolf.com/junior/events/brjgt2431/index.html" },
+  { id: "2024_b1618", url: "/data/brjgt2431_boys_16-18.json",  label: "2024 // Boys 16-18",  shortLabel: "2024 Boys 16-18",  manuelName: "",                          year: 2024, category: "Boys 16-18",  roundDates: ["20 Fev", "21 Fev", "22 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://www.bluegolf.com/junior/events/brjgt2431/index.html" },
+  { id: "2024_g1618", url: "/data/brjgt2431_girls_16-18.json", label: "2024 // Girls 16-18", shortLabel: "2024 Girls 16-18", manuelName: "",                          year: 2024, category: "Girls 16-18", roundDates: ["20 Fev", "21 Fev", "22 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://www.bluegolf.com/junior/events/brjgt2431/index.html" },
   /* ── EOWAGR (European Open) ── */
   { id: "eo25_b78",   url: "/data/eowagr25_contest121.json",  label: "2025 // Boys 7-8",    shortLabel: "2025 Boys 7-8",    manuelName: "",                          year: 2025, category: "Boys 7-8",   roundDates: ["11 Ago", "12 Ago", "13 Ago"] as string[], series: "eowagr" as const, sourceUrl: "https://brjgt.bluegolfw/brjgt25/event/brjgt2512/contest/121/leaderboard.htm" },
   { id: "eo25_b910",  url: "/data/eowagr25_contest13.json",   label: "2025 // Boys 9-10",   shortLabel: "2025 Boys 9-10",   manuelName: "",                          year: 2025, category: "Boys 9-10",  roundDates: ["11 Ago", "12 Ago", "13 Ago"] as string[], series: "eowagr" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2515/contest/13/leaderboard.htm" },
@@ -479,55 +512,61 @@ function Content() {
       {/* Master-detail */}
       <div className="master-detail">
 
-        {/* Sidebar */}
+        {/* Sidebar — 1 entrada por ANO (padrão DORALPage).
+            Os escalões aparecem como tabs no detalhe. */}
         <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
           {(["bjgt", "eowagr"] as const).map(series => {
             const seriesUrls = URLS.filter(u => u.series === series);
             if (!seriesUrls.length) return null;
-            const seriesYears = [...new Set(seriesUrls.map(u => u.year))].sort();
+            const seriesYears = [...new Set(seriesUrls.map(u => u.year))].sort().reverse();
             const isEowagr = series === "eowagr";
             return (
               <React.Fragment key={series}>
                 <SidebarSectionTitle dark color={isEowagr ? "var(--color-eowagr-dark)" : undefined} textColor={isEowagr ? "var(--color-eowagr-text)" : undefined} borderColor={isEowagr ? "var(--color-warn-vivid)" : undefined} letterSpacing={isEowagr ? "0.08em" : undefined}>
                   {isEowagr ? "🌍 European Open" : "🏌️ World Junior Golf Championship"}
                 </SidebarSectionTitle>
-                {seriesYears.map(year => (
-                  <React.Fragment key={year}>
-                    <div className="sidebar-year-label" style={{
-                      padding: "2px 10px",
-                      fontSize: 10,
-                      fontWeight: 700,
-                      letterSpacing: "0.05em",
-                      color: isEowagr ? "var(--color-eowagr-text)" : "#ffffff",
-                      textTransform: "uppercase",
-                      borderLeft: "none",
-                      marginTop: 4,
-                      background: isEowagr ? "var(--color-eowagr-mid)" : "var(--color-bjgt-mid)",
-                    }}>{year}</div>
-                    {seriesUrls.filter(u => u.year === year).map((u) => {
-                      const idx = URLS.indexOf(u);
-                      const t = all[idx];
-                      const nR = t ? Math.max(...t.data.players.map(p => p.rounds.length), 0) : 0;
-                      const nP = t ? t.data.players.filter(p => p.rounds.length === nR).length : 0;
-                      return (
-                        <button key={u.id}
-                          className={`course-item ${ti === idx ? "active" : ""}`}
-                          style={isEowagr && ti === idx ? { borderLeft: "4px solid var(--color-warn-vivid)" } : isEowagr ? { borderLeft: "4px solid transparent" } : {}}
-                          onClick={() => { setTi(idx); md.onSelect(); }}>
-                          <div className="course-item-name">{u.category}</div>
-                          {t && <div className="course-item-meta">{nP} jog{nR > 1 && <> · <RoundPill nR={nR} /></>}</div>}
-                          {t && t.data.players.some(p => isM(p.name)) && (
-                            <span style={{ display:"inline-block", marginTop:4 }}><ManuelPill /></span>
-                          )}
-                          <ExtLink href={u.sourceUrl} className="tourn-ext-link mt-4"
-                            onClick={e => e.stopPropagation()}>
-                            🔗 Leaderboard oficial
-                          </ExtLink>
-                        </button>
-                      );
-                    })}
-                  </React.Fragment>
-                ))}
+                {seriesYears.map(year => {
+                  const yearUrls = seriesUrls.filter(u => u.year === year);
+                  const isActiveYear = cur?.year === year && cur?.series === series;
+                  // Agregados do ano: total de jogadores (soma dos escalões com dados)
+                  // e flag para mostrar pill do Manuel.
+                  let totalPlayers = 0;
+                  let escWithData = 0;
+                  let manuelPlayed = false;
+                  for (const u of yearUrls) {
+                    const idx = URLS.indexOf(u);
+                    const d = all[idx];
+                    if (!d) continue;
+                    const nR = Math.max(...d.data.players.map(p => p.rounds.length), 0);
+                    totalPlayers += d.data.players.filter(p => p.rounds.length === nR).length;
+                    escWithData++;
+                    if (d.data.players.some(p => isM(p.name))) manuelPlayed = true;
+                  }
+                  return (
+                    <button key={`${series}_${year}`}
+                      className={`course-item ${isActiveYear ? "active" : ""}`}
+                      style={isEowagr && isActiveYear ? { borderLeft: "4px solid var(--color-warn-vivid)" } : isEowagr ? { borderLeft: "4px solid transparent" } : {}}
+                      onClick={() => {
+                        // Prefere o escalão onde Manuel jogou; senão o primeiro com dados.
+                        const withManuel = yearUrls.find(u => {
+                          const d = all[URLS.indexOf(u)];
+                          return d?.data.players.some(p => isM(p.name));
+                        });
+                        const withData = yearUrls.find(u => all[URLS.indexOf(u)] != null);
+                        const target = withManuel ?? withData ?? yearUrls[0];
+                        setTi(URLS.indexOf(target));
+                        md.onSelect();
+                      }}>
+                      <div className="course-item-name" style={{ fontSize: 14 }}>{year}</div>
+                      <div className="course-item-meta">📍 {isEowagr ? "Le Touquet — La Forêt" : "Villa Padierna"}</div>
+                      <div className="course-item-meta" style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
+                        <span>{escWithData}/{yearUrls.length} escalões</span>
+                        {totalPlayers > 0 && <><span className="muted">·</span><span>{totalPlayers} jog</span></>}
+                        {manuelPlayed && <ManuelPill />}
+                      </div>
+                    </button>
+                  );
+                })}
               </React.Fragment>
             );
           })}
@@ -537,13 +576,44 @@ function Content() {
         <div className="course-detail" ref={md.detailRef}>
           {cur ? (<>
             <DetailHeader
-              title={cur.label}
+              title={`${cur.year} · ${cur.category}`}
               sub={<>
-                <span className="muted">{cur.series === "eowagr" ? "📍 Le Touquet GC — La Forêt" : cur.category === "Boys 12-13" ? "📍 Villa Padierna — Alferini" : "📍 Villa Padierna — Flamingos"}</span>
+                <span className="muted">{cur.series === "eowagr" ? "📍 Le Touquet GC — La Forêt" : cur.category === "Boys 12-13" || cur.category === "Boys 14-15" || cur.category === "Boys 16-18" || cur.category === "Girls 14-15" || cur.category === "Girls 16-18" ? "📍 Villa Padierna — Alferini" : "📍 Villa Padierna — Flamingos"}</span>
                 <span className="chip ml-8">{fmtFieldInfo(cur.data.players.filter(p => p.rounds.length === Math.max(...cur.data.players.map(pp => pp.rounds.length))).length, Math.max(...cur.data.players.map(p => p.rounds.length)), cur.category)}</span>
                 <ExtLink href={URLS[ti].sourceUrl} className="tourn-ext-link ml-8">🔗 Leaderboard oficial</ExtLink>
               </>}
             />
+            {/* Tabs de escalão dentro do ano (padrão DORALPage) — só aparece
+                quando há mais que um escalão no ano actual. */}
+            {(() => {
+              const yearUrls = URLS.filter(u => u.year === cur.year && u.series === cur.series);
+              if (yearUrls.length <= 1) return null;
+              return (
+                <div style={{ display: "flex", gap: 2, flexWrap: "wrap", borderBottom: "1px solid var(--border)", marginBottom: 10, overflowX: "auto" }}>
+                  {yearUrls.map(u => {
+                    const idx = URLS.indexOf(u);
+                    const d = all[idx];
+                    const active = idx === ti;
+                    const eNR = d ? Math.max(...d.data.players.map(p => p.rounds.length), 0) : 0;
+                    const eNP = d ? d.data.players.filter(p => p.rounds.length === eNR).length : 0;
+                    const eHasManuel = d?.data.players.some(p => isM(p.name)) ?? false;
+                    const hasData = !!d;
+                    return (
+                      <button key={u.id}
+                        type="button"
+                        onClick={() => { if (hasData) setTi(idx); }}
+                        className={"tab-under" + (active ? " active" : "")}
+                        title={hasData ? u.category : `${u.category} — sem dados`}
+                        style={!hasData ? { opacity: 0.45, cursor: "not-allowed", color: "var(--text-3)" } : undefined}>
+                        {u.category}
+                        {d && <span className="fs-10 muted" style={{ marginLeft: 4 }}>{eNP}</span>}
+                        {eHasManuel && <span style={{ marginLeft: 4, color: "var(--color-good)" }}>★</span>}
+                      </button>
+                    );
+                  })}
+                </div>
+              );
+            })()}
             <TournView def={cur} evo={evoMap} evoYear={evoYear} />
             {manuelEvo && cur.year === 2026 && (
               <div className="card" style={{ background: "var(--bg-success-subtle)", border: "1px solid var(--good)" }}>
