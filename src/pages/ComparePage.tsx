@@ -243,13 +243,80 @@ function SimilarityTable({ rows }: { rows: SimRow[] }) {
 
 // ═══════════════════ Hero do campo + distribuição de pares ═══════════════════
 
+// ── Cor por buraco: gradiente HSL forte dentro do par (curto=claro → longo=escuro)
+const PAR_HSL: Record<3 | 4 | 5, { h: number; s: number }> = {
+  3: { h: 142, s: 65 },  // verde
+  4: { h: 33,  s: 92 },  // âmbar/laranja
+  5: { h: 355, s: 72 },  // vermelho
+};
+function holeColor(par: 3 | 4 | 5, t: number): { bg: string; fg: string; border: string } {
+  // t: 0 (mais curto do par) → 1 (mais longo)
+  const { h, s } = PAR_HSL[par];
+  const l = 80 - t * 50;             // 80% (claro) → 30% (escuro)
+  const fg = l > 58 ? "#1c2617" : "#fff";
+  const borderL = Math.max(20, l - 12);
+  return { bg: `hsl(${h}deg, ${s}%, ${l}%)`, fg, border: `hsl(${h}deg, ${s}%, ${borderL}%)` };
+}
+
+/** Devolve uma lista plana ordenada por número de buraco, com cor já calculada. */
+function holesByNumber(tee: Tee): Array<{ hole: number; par: 3|4|5|null; distance: number | null; color: ReturnType<typeof holeColor> | null }> {
+  const pars = parBreakdown(tee);
+  // Pré-calcular ranking (t 0→1) por par
+  const tByHole = new Map<number, { par: 3|4|5; t: number }>();
+  for (const p of pars) {
+    if (p.count === 0) continue;
+    const dists = p.holes.map(h => h.distance ?? 0).filter(d => d > 0);
+    const minDist = dists.length > 0 ? Math.min(...dists) : 0;
+    const maxDist = dists.length > 0 ? Math.max(...dists) : 0;
+    const range = maxDist - minDist;
+    for (const h of p.holes) {
+      const t = range > 0 && h.distance ? (h.distance - minDist) / range : 0.5;
+      tByHole.set(h.hole, { par: p.par, t });
+    }
+  }
+  if (!tee.holes) return [];
+  return [...tee.holes]
+    .sort((a, b) => a.hole - b.hole)
+    .map(h => {
+      const info = tByHole.get(h.hole);
+      const isValidPar = h.par === 3 || h.par === 4 || h.par === 5;
+      return {
+        hole: h.hole,
+        par: isValidPar ? (h.par as 3 | 4 | 5) : null,
+        distance: h.distance,
+        color: info ? holeColor(info.par, info.t) : null,
+      };
+    });
+}
+
+function InfoIcon({ title }: { title: string }) {
+  return (
+    <span
+      title={title}
+      style={{
+        display: "inline-flex", alignItems: "center", justifyContent: "center",
+        width: 14, height: 14, borderRadius: "50%",
+        background: "var(--bg-muted)", color: "var(--text-2)",
+        fontSize: 9, fontWeight: 800, marginLeft: 4, cursor: "help",
+        fontFamily: "system-ui, sans-serif",
+      }}
+    >ⓘ</span>
+  );
+}
+
 function HeroCard({ course, tee }: { course: Course; tee: Tee }) {
   const pars = useMemo(() => parBreakdown(tee), [tee]);
+  const orderedHoles = useMemo(() => holesByNumber(tee), [tee]);
   const totalParHoles = pars.reduce((s, p) => s + p.count, 0);
   const slope = tee.ratings?.holes18?.slopeRating ?? null;
   const cr = tee.ratings?.holes18?.courseRating ?? null;
   const distance = tee.distances?.total ?? null;
   const parTotal = getParTotal(tee);
+
+  const [viewMode, setViewMode] = useState<"par" | "buraco">("par");
+
+  const SLOPE_INFO = "Slope Rating — dificuldade relativa do campo para um jogador amador. Escala 55-155 (média = 113). Maior = mais difícil para handicaps altos.";
+  const CR_INFO = "Course Rating — nº de pancadas esperado para um jogador scratch (hcp 0). Compara com o par: CR > par significa campo abaixo do par esperado em dificuldade.";
 
   return (
     <div className="card">
@@ -285,58 +352,86 @@ function HeroCard({ course, tee }: { course: Course; tee: Tee }) {
           <div className="haDiagIcon" style={{ background: "var(--bg-warn)" }}>📐</div>
           <div>
             <div className="haDiagVal">{slope != null ? slope.toFixed(0) : "–"}</div>
-            <div className="haDiagLbl">Slope rating</div>
+            <div className="haDiagLbl" style={{ display: "flex", alignItems: "center" }}>
+              Slope rating
+              <InfoIcon title={SLOPE_INFO} />
+            </div>
           </div>
         </div>
         <div className="haDiagCard">
           <div className="haDiagIcon" style={{ background: "var(--bg-success-strong)" }}>🎯</div>
           <div>
             <div className="haDiagVal">{cr != null ? cr.toFixed(1) : "–"}</div>
-            <div className="haDiagLbl">Course rating</div>
+            <div className="haDiagLbl" style={{ display: "flex", alignItems: "center" }}>
+              Course rating
+              <InfoIcon title={CR_INFO} />
+            </div>
           </div>
         </div>
       </div>
 
-      {pars.some(p => p.count > 0) && (
+      {totalParHoles > 0 && (
         <>
-          <div className="h-xs" style={{ marginTop: 18 }}>Distribuição de pares</div>
-          <div className="haParGrid">
-            {pars.map(p => {
-              const accentColor =
-                p.par === 3 ? "var(--color-good)" :
-                p.par === 4 ? "var(--score-eagle)" :
-                "var(--color-danger)";
-              const pct = totalParHoles > 0 ? Math.round((p.count / totalParHoles) * 100) : 0;
-              const dists = p.holes.map(h => h.distance ?? 0).filter(d => d > 0);
-              const minDist = dists.length > 0 ? Math.min(...dists) : 0;
-              const maxDist = dists.length > 0 ? Math.max(...dists) : 0;
-              const range = maxDist - minDist;
-              const pillOpacity = (dist: number) => {
-                if (range === 0 || !dist) return 1;
-                const t = (dist - minDist) / range;
-                return 0.45 + t * 0.55;
-              };
+          {/* Toggle Por par / Por buraco */}
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 18, marginBottom: 10, flexWrap: "wrap" }}>
+            <div className="h-xs" style={{ marginBottom: 0 }}>Vista do campo</div>
+            <div style={{ display: "inline-flex", gap: 2, padding: 2, background: "var(--bg-muted)", borderRadius: 8 }}>
+              {(["par", "buraco"] as const).map(m => (
+                <button
+                  key={m}
+                  type="button"
+                  onClick={() => setViewMode(m)}
+                  style={{
+                    padding: "4px 12px", fontSize: 11, fontWeight: 700,
+                    border: "none", borderRadius: 6, cursor: "pointer",
+                    background: viewMode === m ? "var(--bg-card)" : "transparent",
+                    color: viewMode === m ? "var(--text)" : "var(--text-3)",
+                    boxShadow: viewMode === m ? "var(--shadow-sm)" : "none",
+                  }}
+                >
+                  {m === "par" ? "Por par" : "Por buraco"}
+                </button>
+              ))}
+            </div>
+            <span className="muted" style={{ fontSize: 11, fontWeight: 500 }}>
+              {viewMode === "par"
+                ? "Distância dentro de cada par (claro → escuro)"
+                : "Sequência B1→B18 (cor = par; lightness = comprimento relativo)"}
+            </span>
+          </div>
 
-              return (
-                <div key={p.par} className="haParCard" style={{ borderLeft: "3px solid " + accentColor, padding: "14px 16px" }}>
-                  <div style={{ color: accentColor, display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap", fontSize: 16, fontWeight: 800, marginBottom: 4 }}>
-                    <span>Par {p.par}</span>
-                    {p.count > 0 && (
+          {viewMode === "par" ? (
+            <div className="haParGrid">
+              {pars.map(p => {
+                if (p.count === 0) return null;
+                const accentColor =
+                  p.par === 3 ? `hsl(${PAR_HSL[3].h}deg, ${PAR_HSL[3].s}%, 38%)` :
+                  p.par === 4 ? `hsl(${PAR_HSL[4].h}deg, ${PAR_HSL[4].s}%, 45%)` :
+                  `hsl(${PAR_HSL[5].h}deg, ${PAR_HSL[5].s}%, 45%)`;
+                const pct = totalParHoles > 0 ? Math.round((p.count / totalParHoles) * 100) : 0;
+                const dists = p.holes.map(h => h.distance ?? 0).filter(d => d > 0);
+                const minDist = dists.length > 0 ? Math.min(...dists) : 0;
+                const maxDist = dists.length > 0 ? Math.max(...dists) : 0;
+                const range = maxDist - minDist;
+                const tFor = (dist: number) => (range === 0 || !dist) ? 0.5 : (dist - minDist) / range;
+
+                return (
+                  <div key={p.par} className="haParCard" style={{ borderLeft: "3px solid " + accentColor, padding: "14px 16px" }}>
+                    <div style={{ color: accentColor, display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap", fontSize: 16, fontWeight: 800, marginBottom: 4 }}>
+                      <span>Par {p.par}</span>
                       <span className="muted" style={{ fontWeight: 500, fontSize: 13 }}>
                         {p.count} buraco{p.count === 1 ? "" : "s"} · {pct}%
                       </span>
-                    )}
-                  </div>
-                  {p.avgDistance != null && (
-                    <div style={{ fontSize: 11, color: "var(--text-3)", marginBottom: 10 }}>
-                      Média <span style={{ fontWeight: 700, color: "var(--text-2)" }}>{Math.round(p.avgDistance)}m</span>
-                      {p.totalDistance > 0 && <> · Total <span style={{ fontWeight: 700, color: "var(--text-2)" }}>{p.totalDistance}m</span></>}
                     </div>
-                  )}
-                  {p.count > 0 && (
+                    {p.avgDistance != null && (
+                      <div style={{ fontSize: 11, color: "var(--text-3)", marginBottom: 10 }}>
+                        Média <span style={{ fontWeight: 700, color: "var(--text-2)" }}>{Math.round(p.avgDistance)}m</span>
+                        {p.totalDistance > 0 && <> · Total <span style={{ fontWeight: 700, color: "var(--text-2)" }}>{p.totalDistance}m</span></>}
+                      </div>
+                    )}
                     <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
                       {p.holes.map(h => {
-                        const op = pillOpacity(h.distance ?? 0);
+                        const col = holeColor(p.par, tFor(h.distance ?? 0));
                         return (
                           <span
                             key={h.hole}
@@ -347,9 +442,9 @@ function HeroCard({ course, tee }: { course: Course; tee: Tee }) {
                             <span
                               className="p"
                               style={{
-                                background: accentColor,
-                                opacity: op,
-                                color: "#fff",
+                                background: col.bg,
+                                color: col.fg,
+                                border: `1px solid ${col.border}`,
                                 fontWeight: 700,
                                 fontSize: 13,
                                 padding: "3px 9px",
@@ -363,11 +458,59 @@ function HeroCard({ course, tee }: { course: Course; tee: Tee }) {
                         );
                       })}
                     </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            /* ═══ Vista Por buraco: sequência B1 → B18 ═══ */
+            <div>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                {orderedHoles.map(h => {
+                  const col = h.color;
+                  return (
+                    <div
+                      key={h.hole}
+                      title={`Buraco ${h.hole} · Par ${h.par ?? "?"} · ${h.distance ?? "—"}m`}
+                      style={{
+                        display: "flex", flexDirection: "column", alignItems: "center",
+                        minWidth: 56, padding: "6px 4px 8px", borderRadius: 8,
+                        background: col?.bg ?? "var(--bg-muted)",
+                        color: col?.fg ?? "var(--text-3)",
+                        border: `1px solid ${col?.border ?? "var(--border)"}`,
+                        fontFamily: "'JetBrains Mono', monospace",
+                      }}
+                    >
+                      <span style={{ fontSize: 10, fontWeight: 700, opacity: 0.85 }}>B{h.hole}</span>
+                      <span style={{ fontSize: 15, fontWeight: 800, lineHeight: 1.1, marginTop: 2 }}>
+                        {h.distance != null && h.distance > 0 ? h.distance : "—"}
+                      </span>
+                      <span style={{ fontSize: 9, fontWeight: 600, opacity: 0.75, marginTop: 1 }}>
+                        m · par {h.par ?? "?"}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+              {/* Legenda */}
+              <div style={{ display: "flex", gap: 16, marginTop: 12, flexWrap: "wrap", fontSize: 11, color: "var(--text-3)" }}>
+                {([3, 4, 5] as const).map(p => {
+                  const sample = holeColor(p, 0.6);
+                  return (
+                    <span key={p} style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                      <span style={{
+                        width: 16, height: 16, borderRadius: 4,
+                        background: sample.bg,
+                        border: `1px solid ${sample.border}`,
+                      }} />
+                      <span>Par {p}</span>
+                    </span>
+                  );
+                })}
+                <span className="muted">claro = curto · escuro = longo</span>
+              </div>
+            </div>
+          )}
         </>
       )}
     </div>
@@ -405,30 +548,22 @@ function CourseComparisonView({ simCourses }: { simCourses: Course[] }) {
 
   const similarities = useMemo<SimRow[]>(() => {
     if (!selectedCourse || !selectedTee) return [];
-
-    // Dedup em DUAS camadas para apanhar todos os casos:
-    //   1) cursos únicos por courseKey (caso o array tenha o mesmo course 2x)
-    //   2) por linha visualmente única (courseKey + teeName + sex + stats).
-    // M e F do mesmo tee são preservados porque sex faz parte do hash.
     const uniqueCourses = new Map<string, Course>();
     for (const c of comparisonCourses) {
       if (c.courseKey === selectedCourseKey) continue;
       if (!uniqueCourses.has(c.courseKey)) uniqueCourses.set(c.courseKey, c);
     }
-
     const result: SimRow[] = [];
     const seenRows = new Set<string>();
-    const seenTees = new WeakSet<Tee>(); // mesma instância Tee = mesma linha
+    const seenTees = new WeakSet<Tee>();
     for (const course of uniqueCourses.values()) {
       for (const tee of course.master.tees) {
         if (seenTees.has(tee)) continue;
         seenTees.add(tee);
-
         const sim = calculateSimilarity(selectedTee, tee);
         if (sim === null) continue;
         const tier = simTier(sim.overall);
         if (tier === null) continue;
-
         const dist = tee.distances?.total ?? 0;
         const slope = tee.ratings?.holes18?.slopeRating ?? 0;
         const cr = tee.ratings?.holes18?.courseRating ?? 0;
@@ -436,7 +571,6 @@ function CourseComparisonView({ simCourses }: { simCourses: Course[] }) {
         const rowKey = `${course.courseKey}|${tee.teeName.trim().toLowerCase()}|${tee.sex}|${dist}|${par}|${slope}|${cr}`;
         if (seenRows.has(rowKey)) continue;
         seenRows.add(rowKey);
-
         result.push({ course, tee, sim, tier });
       }
     }
@@ -480,7 +614,7 @@ function CourseComparisonView({ simCourses }: { simCourses: Course[] }) {
       {!selectedCourse || !selectedTee ? (
         <EmptyState icon="👆" message="Selecciona um campo acima para ver comparações." />
       ) : comparisonCourses.length === 0 ? (
-        <EmptyState icon="🌍" message="Sem campos elegíveis para comparar (só portugueses ou jogados pelo Manuel)." />
+        <EmptyState icon="🌍" message="Sem campos elegíveis para comparar." />
       ) : (
         <>
           <HeroCard course={selectedCourse} tee={selectedTee} />
@@ -550,4 +684,3 @@ export default function ComparePage() {
     </div>
   );
 }
-  
