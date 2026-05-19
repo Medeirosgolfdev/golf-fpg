@@ -1,28 +1,28 @@
 /**
  * pages/kids/HistoricScorecardsTab.tsx
  *
- * Tab "Scorecards" do FieldRivaisDashboard. Mostra, para cada edição passada
- * do MESMO torneio (mesmo baseName e escalão), uma sub-tabela com os
- * top-N finishers e as suas pancadas hole-by-hole em cada ronda (R1, R2, R3).
+ * Tab "Scorecards" do FieldRivaisDashboard.
  *
- * Cabeçalho de cada edição inclui par[18] e yards[18] do tee jogado (quando
- * disponível em mh.torneios[tcode].byEscalao[escalao] do member-history-slim).
- * Cores das células via scClass() (eagle/birdie/par/bogey/double/...) do
- * design system existente.
+ * UMA tabela contínua (não uma por ano) que mostra, para cada edição passada
+ * do MESMO torneio+escalão, os top-N finishers com strokes hole-by-hole por
+ * ronda. Visual idêntico ao de FPGPage/DrivePage (classes `sc-lb`).
  *
- * Filtro top-N: 5 / 10 / 20 / Todos. Default 10.
+ * Controlos globais:
+ *   • Top-N: 5 / 10 / 20 / Todos (default 10)
+ *   • Modo:  Agrupado (1 jogador × N rondas com rowspan no nome) |
+ *            Independente (1 linha por (jogador, ronda), ordenado por ±par)
  *
- * NOTA: este componente está num ficheiro separado de FieldRivaisDashboard.tsx
- * por uma razão prosaica — o ficheiro pai já tem ~1650 linhas e Edit tools
- * em ficheiros grandes têm-se mostrado pouco fiáveis. Separar mantém ambos
- * editáveis sem risco.
+ * Colunas: # | Jogador | País | R | ± | Tot | B1..9 | Out | B10..18 | In | 🐦 | Par | ■
+ * SD não aparece porque o slim não tem slope/CR para os calcular.
+ *
+ * Dados: uskids-member-history-slim.json (apenas USKids; WJGC/Doral/EOWAGR
+ * mostram mensagem porque os tids correspondentes não têm strokes[]).
  */
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { scClass } from "../../utils/scoreDisplay";
+import { fmtToPar } from "../../utils/format";
 
-// Mesma estrutura usada em FieldRivaisDashboard / KIDSdataLoader
-interface FieldPlayer { nome: string; pais: string; cidade?: string }
-interface FieldEscalao { nome: string; jogadores?: FieldPlayer[] }
+interface FieldEscalao { nome: string; jogadores?: unknown[] }
 interface FieldTorneio { t: number; name: string; date_inicio: string; escaloes: FieldEscalao[] }
 
 interface MHRound { gross: number; strokes?: number[] }
@@ -41,26 +41,40 @@ interface MHSlim {
   jogadores: Record<string, MHPlr>;
 }
 
+interface PlayerRound {
+  rn: number;
+  gross: number;
+  strokes: number[];
+  toPar: number;     // gross - parPerRound
+  birds: number;
+  pars: number;
+  bogeys: number;    // bogey strokes-only (NOT including double+)
+  worse: number;     // double bogey ou pior (qualquer +2 ou mais)
+  out: number;       // soma front 9
+  inn: number;       // soma back 9 (0 se torneio 9H)
+}
 interface PlayerCard {
   memberId: string;
   name: string;
   country: string;
   officialPlace: number | null;
   total: number;
-  rounds: Array<{ rn: number; gross: number; strokes: number[] }>;
+  rounds: PlayerRound[];
 }
-
 interface Edition {
   tcode: string;
   name: string;
   year: string;
   course?: string;
   par: number[] | null;
-  yards: number[] | null;
   parPerRound: number;
+  parF9: number;
+  parB9: number;
   holesPerRound: number;
+  is9: boolean;
   nRoundsMax: number;
   fieldSize: number;
+  meters?: number;
   players: PlayerCard[];
 }
 
@@ -68,17 +82,33 @@ const MIN_FIELD_SIZE = 10;
 const MIN_GROSS_18H = 55;
 const MIN_GROSS_9H = 28;
 
+/** Conta birdies/pars/bogeys/worse num scorecard. */
+function tallyHoles(strokes: number[], par: number[] | null): { birds: number; pars: number; bogeys: number; worse: number } {
+  let birds = 0, pars = 0, bogeys = 0, worse = 0;
+  if (!par) return { birds, pars, bogeys, worse };
+  for (let i = 0; i < strokes.length; i++) {
+    const g = strokes[i];
+    const p = par[i];
+    if (!g || g <= 0 || !p || p <= 0) continue;
+    const d = g - p;
+    if (d <= -1) birds++;
+    else if (d === 0) pars++;
+    else if (d === 1) bogeys++;
+    else worse++;
+  }
+  return { birds, pars, bogeys, worse };
+}
+
 export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
   mh: MHSlim | null;
   torneio: FieldTorneio | null;
   escalaoNome: string;
 }) {
   const [topN, setTopN] = useState<5 | 10 | 20 | 0>(10); // 0 = todos
+  const [groupMode, setGroupMode] = useState<boolean>(true); // true = Agrupado
 
   const editions: Edition[] | null = useMemo(() => {
     if (!mh || !torneio) return null;
-    // Só funciona para tcodes USKids (positivos). Para WJGC/Doral etc (negativos)
-    // o slim não tem strokes hole-by-hole; mostramos mensagem mais à frente.
     if (torneio.t < 0) return [];
     const baseName = torneio.name.replace(/\s+\d{4}\s*$/, "").trim();
     if (!baseName) return [];
@@ -93,15 +123,22 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
       if (!yearMatch) continue;
       const year = yearMatch[1];
       const hpr = (meta as any).holesPerRound || 18;
-      const minGross = hpr === 9 ? MIN_GROSS_9H : MIN_GROSS_18H;
+      const is9 = hpr === 9;
+      const minGross = is9 ? MIN_GROSS_9H : MIN_GROSS_18H;
 
-      // Par + yards específicos do escalão (preferido); senão fallback top-level
       const escMeta = (meta as any).byEscalao?.[escalaoNome] as MHEscalaoMeta | undefined;
       const par = escMeta?.par || (meta as any).par || null;
       const yards = escMeta?.yards || (meta as any).yards || null;
       const parPerRound = Array.isArray(par)
         ? par.slice(0, hpr).reduce((a: number, b: number) => a + (b || 0), 0)
         : 0;
+      const parF9 = Array.isArray(par) ? par.slice(0, Math.min(9, hpr)).reduce((a, b) => a + (b || 0), 0) : 0;
+      const parB9 = Array.isArray(par) && !is9 ? par.slice(9, 18).reduce((a, b) => a + (b || 0), 0) : 0;
+
+      const yardsTotal = Array.isArray(yards)
+        ? yards.slice(0, hpr).reduce((a: number, b: number) => a + (b || 0), 0)
+        : 0;
+      const meters = yardsTotal > 0 ? Math.round(yardsTotal * 0.9144) : undefined;
 
       const players: PlayerCard[] = [];
       let nRoundsMax = 0;
@@ -110,13 +147,27 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
         if (!tEntry) continue;
         if (tEntry.ageGroup !== escalaoNome) continue;
         const officialPlace = (typeof tEntry.place === "number" && tEntry.place > 0) ? tEntry.place : null;
-        const rds: PlayerCard["rounds"] = [];
+        const rds: PlayerRound[] = [];
         let total = 0;
         for (const [rn, r] of Object.entries(tEntry.rounds || {})) {
           if (!r || r.gross <= 0) continue;
           if (r.gross < minGross) continue;
           const strokes = Array.isArray(r.strokes) ? r.strokes.slice() : [];
-          rds.push({ rn: parseInt(rn, 10), gross: r.gross, strokes });
+          const t = tallyHoles(strokes, par);
+          const out9 = strokes.slice(0, Math.min(9, hpr)).reduce((a, b) => a + (b || 0), 0);
+          const in9 = !is9 ? strokes.slice(9, 18).reduce((a, b) => a + (b || 0), 0) : 0;
+          rds.push({
+            rn: parseInt(rn, 10),
+            gross: r.gross,
+            strokes,
+            toPar: parPerRound > 0 ? r.gross - parPerRound : 0,
+            birds: t.birds,
+            pars: t.pars,
+            bogeys: t.bogeys,
+            worse: t.worse,
+            out: out9,
+            inn: in9,
+          });
           total += r.gross;
         }
         if (rds.length === 0) continue;
@@ -131,11 +182,9 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
           rounds: rds,
         });
       }
-      // Apenas finishers (completaram todas as rondas)
       const completed = players.filter(pl => pl.rounds.length === nRoundsMax);
       if (completed.length < MIN_FIELD_SIZE) continue;
 
-      // Coverage: descartar edições com field representativo demasiado pequeno
       const placedEntries = completed.filter(e => e.officialPlace != null);
       if (placedEntries.length > 0) {
         const maxOfficialPlace = Math.max(...placedEntries.map(e => e.officialPlace!));
@@ -154,11 +203,12 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
         tcode, name: meta.name, year,
         course: escMeta?.course,
         par: Array.isArray(par) ? par : null,
-        yards: Array.isArray(yards) ? yards : null,
-        parPerRound,
+        parPerRound, parF9, parB9,
         holesPerRound: hpr,
+        is9,
         nRoundsMax,
         fieldSize: completed.length,
+        meters,
         players: completed,
       });
     }
@@ -182,264 +232,372 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
     );
   }
 
+  // Todas as edições têm 18H? (assume 18H se qualquer uma for; misturar 9H+18H
+  // não acontece neste contexto — same torneio = same nº de buracos)
+  const is9 = editions[0]?.is9 ?? false;
+  const hpr = editions[0]?.holesPerRound ?? 18;
+
+  // Total de scorecards/jogadores mostrados (respeitando top-N)
+  const limit = topN === 0 ? Infinity : topN;
+  const totalPlayers = editions.reduce((a, e) => a + Math.min(limit, e.players.length), 0);
+  const totalScorecards = editions.reduce((a, e) => a + Math.min(limit, e.players.length) * e.nRoundsMax, 0);
+
   return (
     <div>
-      {/* Toolbar topo: filtro top-N */}
-      <div style={{
-        display: "flex", alignItems: "baseline", gap: 10,
-        marginBottom: 12, flexWrap: "wrap",
-      }}>
-        <span style={{ fontSize: 12, color: "var(--text-3)", fontWeight: 600 }}>
-          Pancadas hole-by-hole · {editions.length} edi{editions.length === 1 ? "ção" : "ções"}
+      {/* Toolbar topo: top-N + Agrupado/Independente */}
+      <div
+        className="muted fs-11 mb-8 p-0-4px gap-8 flex-wrap"
+        style={{ display: "flex", alignItems: "center" }}
+      >
+        <span>
+          {groupMode ? totalPlayers : totalScorecards} {groupMode ? "jogadores" : "scorecards"} ·
+          {" "}{editions.length} edi{editions.length === 1 ? "ção" : "ções"}
         </span>
-        <span style={{ fontSize: 12, color: "var(--text-3)", marginLeft: 12 }}>Top:</span>
-        <div style={{
-          display: "inline-flex", gap: 2, padding: 2,
-          background: "var(--surface-2, var(--bg-secondary, #f1f1ee))",
-          borderRadius: 6,
-        }}>
-          {([5, 10, 20, 0] as const).map(n => (
+
+        {/* Top-N selector */}
+        <span style={{ display: "flex", alignItems: "center", gap: 4, marginLeft: 8 }}>
+          <span className="c-muted fs-10">Top:</span>
+          <span
+            style={{
+              display: "flex", gap: 2,
+              border: "1px solid var(--border)",
+              borderRadius: 8, overflow: "hidden",
+            }}
+          >
+            {([5, 10, 20, 0] as const).map(n => (
+              <button
+                key={n}
+                onClick={() => setTopN(n)}
+                className="fs-10"
+                style={{
+                  padding: "2px 9px",
+                  border: "none",
+                  cursor: "pointer",
+                  background: topN === n ? "var(--accent)" : "transparent",
+                  color: topN === n ? "#fff" : "var(--text-muted)",
+                  fontWeight: topN === n ? 700 : 400,
+                }}
+              >
+                {n === 0 ? "Todos" : n}
+              </button>
+            ))}
+          </span>
+        </span>
+
+        {/* Toggle Agrupado/Independente — copia visual exacto de AllRoundsScorecardLB */}
+        <span
+          style={{
+            display: "flex", gap: 2, marginLeft: 4,
+            border: "1px solid var(--border)",
+            borderRadius: 8, overflow: "hidden",
+          }}
+        >
+          {([true, false] as const).map(g => (
             <button
-              key={n}
-              type="button"
-              onClick={() => setTopN(n)}
+              key={String(g)}
+              onClick={() => setGroupMode(g)}
+              className="fs-10"
               style={{
-                fontSize: 11, fontWeight: 700, padding: "3px 10px",
-                border: "none", borderRadius: 4, cursor: "pointer",
-                background: topN === n ? "var(--surface-1, var(--bg-primary, #fff))" : "transparent",
-                color: topN === n ? "var(--text)" : "var(--text-3)",
-                boxShadow: topN === n ? "0 1px 2px rgba(0,0,0,0.04)" : "none",
+                padding: "2px 9px",
+                border: "none",
+                cursor: "pointer",
+                background: groupMode === g ? "var(--accent)" : "transparent",
+                color: groupMode === g ? "#fff" : "var(--text-muted)",
+                fontWeight: groupMode === g ? 700 : 400,
               }}
             >
-              {n === 0 ? "Todos" : n}
+              {g ? "Agrupado" : "Independente"}
             </button>
           ))}
-        </div>
-      </div>
-
-      {/* Uma sub-tabela por edição (ano) */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-        {editions.map(ed => (
-          <EditionScorecards
-            key={ed.tcode}
-            edition={ed}
-            limit={topN === 0 ? Infinity : topN}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function EditionScorecards({ edition, limit }: { edition: Edition; limit: number }) {
-  const ed = edition;
-  const hpr = ed.holesPerRound;
-  const players = ed.players.slice(0, limit);
-  // Meta header
-  const yardsTotal = ed.yards
-    ? ed.yards.slice(0, hpr).reduce((a, b) => a + (b || 0), 0)
-    : 0;
-  const metersTotal = yardsTotal > 0 ? Math.round(yardsTotal * 0.9144) : null;
-
-  // Headers: PAR row (sempre); YARDS row (se yards existem)
-  const showYards = ed.yards && ed.yards.length > 0;
-  const showPar = ed.par && ed.par.length > 0;
-
-  const halfA = Math.min(9, hpr); // 1-9
-  const halfB = Math.max(0, hpr - halfA); // 10-18 ou 0 em 9H
-
-  const parFront = ed.par ? ed.par.slice(0, halfA).reduce((a, b) => a + (b || 0), 0) : 0;
-  const parBack = (ed.par && halfB > 0) ? ed.par.slice(halfA, halfA + halfB).reduce((a, b) => a + (b || 0), 0) : 0;
-
-  return (
-    <div style={{ border: "1px solid var(--border)", borderRadius: 8, overflow: "hidden" }}>
-      {/* Header da edição */}
-      <div style={{
-        padding: "10px 14px",
-        background: "var(--bg-muted)",
-        borderBottom: "1px solid var(--border)",
-        display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap",
-      }}>
-        <span style={{ fontSize: 16, fontWeight: 800, color: "var(--text)" }}>{ed.year}</span>
-        {ed.course && (
-          <span style={{ fontSize: 13, color: "var(--text-2)", fontStyle: "italic", fontWeight: 500 }}>
-            {ed.course}
-          </span>
-        )}
-        {metersTotal != null && (
-          <span style={{ fontSize: 12, color: "var(--text-2)", fontWeight: 600 }}>
-            · {metersTotal}m
-          </span>
-        )}
-        {ed.parPerRound > 0 && (
-          <span style={{ fontSize: 12, color: "var(--text-2)", fontWeight: 600 }}>
-            · Par {ed.parPerRound}
-          </span>
-        )}
-        <span style={{ fontSize: 11, color: "var(--text-3)", marginLeft: "auto" }}>
-          {ed.nRoundsMax} rondas · field {ed.fieldSize} · top {Math.min(limit, ed.fieldSize)}
         </span>
-        {/^\d+$/.test(ed.tcode) && (
-          <a href={`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${ed.tcode}`}
-             target="_blank" rel="noreferrer"
-             style={{ fontSize: 11, color: "var(--color-info)", fontWeight: 700, textDecoration: "none" }}>
-            ↗
-          </a>
-        )}
       </div>
 
-      <div style={{ overflowX: "auto" }}>
-        <table className="bc-collapse" style={{ fontSize: 11, fontVariantNumeric: "tabular-nums", width: "100%" }}>
+      <div className="bjgt-chart-scroll">
+        <table className="sc-lb sc-lb-with-sc" data-sc-table="1">
           <thead>
-            <tr style={{ background: "var(--bg-muted)", color: "var(--text-3)", borderBottom: "1px solid var(--border)" }}>
-              <th style={{ padding: "4px 6px", textAlign: "center", minWidth: 28, position: "sticky", left: 0, background: "var(--bg-muted)", zIndex: 2 }}>#</th>
-              <th style={{ padding: "4px 6px", textAlign: "left", minWidth: 130, position: "sticky", left: 28, background: "var(--bg-muted)", zIndex: 2 }}>Jogador</th>
-              <th style={{ padding: "4px 6px", textAlign: "center", minWidth: 26 }}>R</th>
-              {Array.from({ length: hpr }, (_, i) => (
-                <th key={i} style={{ padding: "4px 5px", textAlign: "center", fontSize: 10, minWidth: 22 }}>{i + 1}</th>
+            <tr>
+              <th className="lb-pos sticky-col-0">#</th>
+              <th className="lb-name sticky-col-1" style={{ maxWidth: 140 }}>Jogador</th>
+              <th className="lb-club">País</th>
+              <th className="lb-tee fs-10 c-muted fw-600">Rnd</th>
+              <th className="lb-topar">±</th>
+              <th className="lb-gross">Tot</th>
+              {Array.from({ length: Math.min(9, hpr) }, (_, h) => (
+                <th key={h} className={"lb-hole" + (h === 0 ? " lb-hole-first" : "") + " fs-10"}>
+                  {h + 1}
+                </th>
               ))}
-              <th style={{ padding: "4px 6px", textAlign: "center", fontWeight: 700, background: "var(--bg-card, var(--bg))" }}>
-                {hpr === 18 ? "OUT" : "Tot"}
-              </th>
-              {hpr === 18 && (
+              <th className="lb-halftot">{is9 ? "Tot" : "Out"}</th>
+              {!is9 && (
                 <>
-                  {Array.from({ length: 0 }).map((_, i) => i)}
-                  <th style={{ padding: "4px 6px", textAlign: "center", fontWeight: 700, background: "var(--bg-card, var(--bg))" }}>IN</th>
-                  <th style={{ padding: "4px 6px", textAlign: "center", fontWeight: 700 }}>Tot</th>
+                  {Array.from({ length: 9 }, (_, h) => (
+                    <th key={h + 9} className={"lb-hole" + (h === 0 ? " lb-hole-first" : "") + " fs-10"}>
+                      {h + 10}
+                    </th>
+                  ))}
+                  <th className="lb-halftot">In</th>
                 </>
               )}
+              <th className="lb-bird">🐦</th>
+              <th className="lb-par-stat">Par</th>
+              <th className="lb-bog">■</th>
             </tr>
-            {/* Linha PAR */}
-            {showPar && (
-              <tr style={{ background: "var(--bg-card, var(--bg))", color: "var(--text-3)", borderBottom: "1px solid var(--border-light, var(--border))" }}>
-                <td style={{ padding: "3px 6px", textAlign: "center", fontWeight: 600, fontSize: 10, position: "sticky", left: 0, background: "var(--bg-card, var(--bg))" }}>—</td>
-                <td style={{ padding: "3px 6px", fontWeight: 600, fontSize: 10, position: "sticky", left: 28, background: "var(--bg-card, var(--bg))" }}>Par</td>
-                <td style={{ padding: "3px 6px", textAlign: "center", fontWeight: 600, fontSize: 10 }}>—</td>
-                {ed.par!.slice(0, hpr).map((p, i) => (
-                  <td key={i} style={{ padding: "3px 5px", textAlign: "center", fontWeight: 700, fontSize: 10, color: "var(--text-2)" }}>{p}</td>
-                ))}
-                <td style={{ padding: "3px 6px", textAlign: "center", fontWeight: 700, fontSize: 11, background: "var(--bg-muted)" }}>
-                  {parFront}
-                </td>
-                {hpr === 18 && (
-                  <>
-                    <td style={{ padding: "3px 6px", textAlign: "center", fontWeight: 700, fontSize: 11, background: "var(--bg-muted)" }}>
-                      {parBack}
-                    </td>
-                    <td style={{ padding: "3px 6px", textAlign: "center", fontWeight: 700, fontSize: 11 }}>
-                      {ed.parPerRound}
-                    </td>
-                  </>
-                )}
-              </tr>
-            )}
-            {/* Linha YARDS */}
-            {showYards && (
-              <tr style={{ background: "var(--bg-card, var(--bg))", color: "var(--text-3)", borderBottom: "1px solid var(--border-light, var(--border))" }}>
-                <td style={{ padding: "2px 6px", textAlign: "center", fontSize: 9, position: "sticky", left: 0, background: "var(--bg-card, var(--bg))" }}>—</td>
-                <td style={{ padding: "2px 6px", fontSize: 9, fontWeight: 500, position: "sticky", left: 28, background: "var(--bg-card, var(--bg))" }}>Yards</td>
-                <td style={{ padding: "2px 6px", textAlign: "center", fontSize: 9 }}>—</td>
-                {ed.yards!.slice(0, hpr).map((y, i) => (
-                  <td key={i} style={{ padding: "2px 5px", textAlign: "center", fontSize: 9, color: "var(--text-3)" }}>{y || ""}</td>
-                ))}
-                <td style={{ padding: "2px 6px", textAlign: "center", fontSize: 9, background: "var(--bg-muted)" }} colSpan={hpr === 18 ? 3 : 1}>
-                  {ed.yards!.slice(0, hpr).reduce((a, b) => a + (b || 0), 0)}y
-                </td>
-              </tr>
-            )}
           </thead>
           <tbody>
-            {players.map((pl, pi) => {
-              const displayPos = pl.officialPlace ?? null;
-              const medalPos = displayPos ?? 99;
-              const medalBg = medalPos === 1 ? "var(--medal-gold-bg)"
-                : medalPos === 2 ? "var(--medal-silver-bg)"
-                : medalPos === 3 ? "var(--medal-bronze-bg)" : undefined;
-              const medalFg = medalPos === 1 ? "var(--medal-gold-fg)"
-                : medalPos === 2 ? "var(--medal-silver-fg)"
-                : medalPos === 3 ? "var(--medal-bronze-fg)" : "var(--text-2)";
-              return pl.rounds.map((r, ri) => {
-                const isFirst = ri === 0;
-                const strokes = r.strokes && r.strokes.length > 0 ? r.strokes : [];
-                const front = strokes.slice(0, Math.min(9, hpr));
-                const back = hpr === 18 ? strokes.slice(9, 18) : [];
-                const frontSum = front.reduce((a, b) => a + (b || 0), 0);
-                const backSum = back.reduce((a, b) => a + (b || 0), 0);
-                return (
-                  <tr key={pl.memberId + "_r" + r.rn}
-                      style={{ borderTop: isFirst ? "2px solid var(--border)" : "1px solid var(--border-light, var(--border))" }}>
-                    {/* Pos (rowspan no primeiro round) */}
-                    {isFirst && (
-                      <td rowSpan={pl.rounds.length}
-                          style={{
-                            padding: "4px 6px", textAlign: "center", fontWeight: 700,
-                            background: medalBg || "var(--bg)", color: medalFg,
-                            position: "sticky", left: 0, zIndex: 1, whiteSpace: "nowrap",
-                          }}>
-                        {displayPos != null ? `#${displayPos}` : `${pi + 1}.`}
-                      </td>
-                    )}
-                    {/* Jogador (rowspan) */}
-                    {isFirst && (
-                      <td rowSpan={pl.rounds.length}
-                          style={{
-                            padding: "4px 8px", fontWeight: 600,
-                            position: "sticky", left: 28, background: "var(--bg)", zIndex: 1,
-                            whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
-                            maxWidth: 180,
-                          }}>
-                        <a href={`/kids2#${encodeURIComponent(pl.name)}`}
-                           target="_blank" rel="noreferrer"
-                           style={{ color: "var(--text)", textDecoration: "none" }}
-                           title={`Abrir ${pl.name} em Kids2`}>
-                          {pl.name}
-                        </a>
-                        {pl.country && (
-                          <span style={{ fontSize: 9, color: "var(--text-3)", marginLeft: 4 }}>
-                            {pl.country}
-                          </span>
-                        )}
-                      </td>
-                    )}
-                    {/* Ronda */}
-                    <td style={{ padding: "4px 6px", textAlign: "center", fontSize: 10, fontWeight: 600, color: "var(--text-3)" }}>
-                      R{r.rn}
-                    </td>
-                    {/* Strokes hole-by-hole, com cor scClass */}
-                    {Array.from({ length: hpr }, (_, i) => {
-                      const g = strokes[i];
-                      const p = ed.par ? ed.par[i] : null;
-                      if (!g || g <= 0) {
-                        return <td key={i} style={{ padding: "2px 4px", textAlign: "center", color: "var(--text-3)" }}>—</td>;
-                      }
-                      const cls = scClass(g, p ?? null);
-                      return (
-                        <td key={i} style={{ padding: "2px 3px", textAlign: "center" }}>
-                          <span className={"sc-score sc-score-sm " + cls}>{g}</span>
-                        </td>
-                      );
-                    })}
-                    {/* OUT */}
-                    <td style={{ padding: "4px 6px", textAlign: "center", fontWeight: 700, background: "var(--bg-muted)" }}>
-                      {frontSum || "—"}
-                    </td>
-                    {hpr === 18 && (
-                      <>
-                        <td style={{ padding: "4px 6px", textAlign: "center", fontWeight: 700, background: "var(--bg-muted)" }}>
-                          {backSum || "—"}
-                        </td>
-                        <td style={{ padding: "4px 6px", textAlign: "center", fontWeight: 800 }}>
-                          {r.gross}
-                        </td>
-                      </>
-                    )}
-                  </tr>
-                );
-              });
+            {editions.map((ed, edIdx) => {
+              const players = ed.players.slice(0, limit);
+              return (
+                <EditionRows
+                  key={ed.tcode}
+                  edition={ed}
+                  players={players}
+                  groupMode={groupMode}
+                  hpr={hpr}
+                  is9={is9}
+                  isFirst={edIdx === 0}
+                />
+              );
             })}
           </tbody>
         </table>
       </div>
     </div>
+  );
+}
+
+/** Banner + PAR row + linhas dos jogadores de UMA edição. */
+function EditionRows({ edition: ed, players, groupMode, hpr, is9, isFirst }: {
+  edition: Edition;
+  players: PlayerCard[];
+  groupMode: boolean;
+  hpr: number;
+  is9: boolean;
+  isFirst: boolean;
+}) {
+  // Colspan total: pos(1) + nome(1) + país(1) + R(1) + ±(1) + Tot(1)
+  //              + buracos(9) + Out(1) + (back 9 + In, se 18H)
+  //              + 🐦 + Par + ■ = 6 + 10 + (is9 ? 0 : 10) + 3
+  // Total cols = 19 (se 9H) ou 29 (se 18H).
+  const totalCols = 6 + (is9 ? 10 : 20) + 3;
+
+  // Para o ranking dos players no modo agrupado
+  return (
+    <>
+      {/* Banner da edição */}
+      <tr style={{ background: "var(--bg-muted)", borderTop: isFirst ? undefined : "3px solid var(--border)" }}>
+        <td
+          colSpan={totalCols}
+          style={{
+            padding: "6px 10px",
+            fontSize: 12, fontWeight: 700, color: "var(--text)",
+            position: "sticky", left: 0,
+          }}
+        >
+          <span style={{ fontSize: 14, fontWeight: 800 }}>{ed.year}</span>
+          {ed.course && (
+            <span style={{ fontSize: 12, color: "var(--text-2)", fontStyle: "italic", fontWeight: 500, marginLeft: 8 }}>
+              {ed.course}
+            </span>
+          )}
+          {ed.meters != null && (
+            <span style={{ fontSize: 11, color: "var(--text-2)", fontWeight: 600, marginLeft: 8 }}>
+              · {ed.meters}m
+            </span>
+          )}
+          {ed.parPerRound > 0 && (
+            <span style={{ fontSize: 11, color: "var(--text-2)", fontWeight: 600, marginLeft: 8 }}>
+              · Par {ed.parPerRound}
+            </span>
+          )}
+          <span style={{ fontSize: 10, color: "var(--text-3)", marginLeft: 8 }}>
+            · {ed.nRoundsMax} rondas · field {ed.fieldSize}
+          </span>
+          {/^\d+$/.test(ed.tcode) && (
+            <a href={`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${ed.tcode}`}
+               target="_blank" rel="noreferrer"
+               style={{ fontSize: 11, color: "var(--color-info)", fontWeight: 700, textDecoration: "none", marginLeft: 6 }}>
+              ↗
+            </a>
+          )}
+        </td>
+      </tr>
+
+      {/* Linha PAR específica da edição */}
+      {ed.par && (
+        <tr className="lb-par-row">
+          <td className="sticky-col-0" />
+          <td className="lb-par-lbl sticky-col-1" colSpan={4}>PAR</td>
+          <td className="lb-topar" />
+          <td className="lb-gross">{ed.parPerRound}</td>
+          {ed.par.slice(0, Math.min(9, hpr)).map((v, i) => (
+            <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v}</td>
+          ))}
+          <td className="lb-halftot">{ed.parF9}</td>
+          {!is9 && ed.par.slice(9, 18).map((v, i) => (
+            <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v}</td>
+          ))}
+          {!is9 && <td className="lb-halftot">{ed.parB9}</td>}
+          <td /><td /><td />
+        </tr>
+      )}
+
+      {/* Jogadores */}
+      {groupMode
+        ? players.map((pl, idx) => (
+            <GroupedPlayer key={pl.memberId} player={pl} idx={idx} ed={ed} hpr={hpr} is9={is9} />
+          ))
+        : (() => {
+            // Modo independente: aplanar TODAS as rondas dos jogadores e ordenar
+            // por toPar ASC. Mantém os jogadores cuja ronda é mostrada — não
+            // mais que `limit` linhas por jogador (já filtrado).
+            interface Flat { pl: PlayerCard; r: PlayerRound }
+            const flat: Flat[] = [];
+            for (const pl of players) {
+              for (const r of pl.rounds) flat.push({ pl, r });
+            }
+            flat.sort((a, b) => a.r.toPar - b.r.toPar || a.r.gross - b.r.gross);
+            return flat.map((f, idx) => (
+              <IndependentRow key={f.pl.memberId + "_" + f.r.rn} f={f} pos={idx + 1} ed={ed} hpr={hpr} is9={is9} />
+            ));
+          })()
+      }
+    </>
+  );
+}
+
+function fmtCountry(c: string): string {
+  if (!c) return "—";
+  // Strings curtas (2-3 chars) já estão no formato ISO, mostrar uppercase.
+  if (c.length <= 3) return c.toUpperCase();
+  return c;
+}
+
+function GroupedPlayer({ player, idx, ed, hpr, is9 }: {
+  player: PlayerCard;
+  idx: number;
+  ed: Edition;
+  hpr: number;
+  is9: boolean;
+}) {
+  const rowBg = idx % 2 === 0 ? undefined : "var(--bg-muted)";
+  const subBg = rowBg
+    ? "color-mix(in srgb,var(--bg-muted) 60%,transparent)"
+    : "var(--bg-muted-alt,rgba(0,0,0,.02))";
+  const displayPos = player.officialPlace ?? null;
+  const posStr = displayPos != null ? String(displayPos) : String(idx + 1);
+
+  return (
+    <>
+      {player.rounds.map((r, ri) => {
+        const isFirstRd = ri === 0;
+        const bg = isFirstRd ? rowBg : subBg;
+        const bTop = isFirstRd ? "2px solid var(--border)" : undefined;
+        return (
+          <tr key={r.rn} style={{ background: bg, borderTop: bTop }}>
+            <td className="lb-pos sticky-col-0" style={{ background: bg, borderTop: bTop }}>
+              {isFirstRd ? posStr : ""}
+            </td>
+            <td className="lb-name sticky-col-1"
+                style={{ background: bg, fontWeight: isFirstRd ? 600 : 400, borderTop: bTop, maxWidth: 140, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              {isFirstRd ? (
+                <a href={`/kids2#${encodeURIComponent(player.name)}`}
+                   target="_blank" rel="noreferrer"
+                   style={{ color: "var(--text)", textDecoration: "none" }}
+                   title={`Abrir ${player.name} em Kids2`}>
+                  {player.name}
+                </a>
+              ) : (
+                <span className="muted fs-10" style={{ paddingLeft: 8 }}>↳</span>
+              )}
+            </td>
+            <td className="lb-club"
+                style={{ borderTop: bTop, color: isFirstRd ? undefined : "var(--text-muted)", fontSize: isFirstRd ? undefined : 11 }}>
+              {isFirstRd ? fmtCountry(player.country) : ""}
+            </td>
+            <td className="lb-tee fw-600 fs-10 c-muted" style={{ borderTop: bTop }}>R{r.rn}</td>
+            <td className="lb-topar"
+                style={{ color: r.toPar < 0 ? "var(--color-good)" : r.toPar > 0 ? "var(--color-danger)" : "var(--text)", borderTop: bTop }}>
+              {ed.parPerRound > 0 ? fmtToPar(r.toPar) : "—"}
+            </td>
+            <td className="lb-gross" style={{ borderTop: bTop }}>{r.gross}</td>
+            <ScorecardCells r={r} ed={ed} hpr={hpr} is9={is9} />
+            <td className="lb-bird" style={{ borderTop: bTop }}>{r.birds || ""}</td>
+            <td className="lb-par-stat" style={{ borderTop: bTop }}>{r.pars || ""}</td>
+            <td className="lb-bog" style={{ borderTop: bTop }}>{r.bogeys || ""}</td>
+          </tr>
+        );
+      })}
+    </>
+  );
+}
+
+function IndependentRow({ f, pos, ed, hpr, is9 }: {
+  f: { pl: PlayerCard; r: PlayerRound };
+  pos: number;
+  ed: Edition;
+  hpr: number;
+  is9: boolean;
+}) {
+  const bg = pos % 2 === 1 ? undefined : "var(--bg-muted)";
+  const bTop = "1px solid var(--border-light)";
+  return (
+    <tr style={{ background: bg, borderTop: bTop }}>
+      <td className="lb-pos sticky-col-0" style={{ background: bg }}>{pos}</td>
+      <td className="lb-name sticky-col-1 fw-600"
+          style={{ background: bg, maxWidth: 140, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+        <a href={`/kids2#${encodeURIComponent(f.pl.name)}`}
+           target="_blank" rel="noreferrer"
+           style={{ color: "var(--text)", textDecoration: "none" }}>
+          {f.pl.name}
+        </a>
+      </td>
+      <td className="lb-club">{fmtCountry(f.pl.country)}</td>
+      <td className="lb-tee fw-600 fs-10 c-muted">R{f.r.rn}</td>
+      <td className="lb-topar"
+          style={{ color: f.r.toPar < 0 ? "var(--color-good)" : f.r.toPar > 0 ? "var(--color-danger)" : "var(--text)" }}>
+        {ed.parPerRound > 0 ? fmtToPar(f.r.toPar) : "—"}
+      </td>
+      <td className="lb-gross">{f.r.gross}</td>
+      <ScorecardCells r={f.r} ed={ed} hpr={hpr} is9={is9} />
+      <td className="lb-bird">{f.r.birds || ""}</td>
+      <td className="lb-par-stat">{f.r.pars || ""}</td>
+      <td className="lb-bog">{f.r.bogeys || ""}</td>
+    </tr>
+  );
+}
+
+/** Células de score B1..B18 com Out/In. Usa scClass para coloração. */
+function ScorecardCells({ r, ed, hpr, is9 }: {
+  r: PlayerRound;
+  ed: Edition;
+  hpr: number;
+  is9: boolean;
+}) {
+  const par = ed.par || [];
+  const front = r.strokes.slice(0, Math.min(9, hpr));
+  const back = !is9 ? r.strokes.slice(9, 18) : [];
+  return (
+    <>
+      {front.map((sc, i) => (
+        <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>
+          <span className={"sc-score " + scClass(sc, par[i] ?? null)}>{sc || ""}</span>
+        </td>
+      ))}
+      <td className="lb-halftot">
+        {r.out} <span className="fs-10 c-text-3">({fmtToPar(r.out - ed.parF9)})</span>
+      </td>
+      {!is9 && (
+        <>
+          {back.map((sc, i) => (
+            <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>
+              <span className={"sc-score " + scClass(sc, par[9 + i] ?? null)}>{sc || ""}</span>
+            </td>
+          ))}
+          <td className="lb-halftot">
+            {r.inn} <span className="fs-10 c-text-3">({fmtToPar(r.inn - ed.parB9)})</span>
+          </td>
+        </>
+      )}
+    </>
   );
 }

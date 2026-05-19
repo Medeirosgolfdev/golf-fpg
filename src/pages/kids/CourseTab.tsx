@@ -16,7 +16,7 @@
  * Mantemos o mapping aqui local — quando o leque de torneios mapeados crescer,
  * passa para o `extraCourses.ts` ou para um JSON dedicado.
  */
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import CourseHeroCard from "../../ui/CourseHeroCard";
 import { useAppContext } from "../../context/AppContext";
 import type { Course, Tee } from "../../data/types";

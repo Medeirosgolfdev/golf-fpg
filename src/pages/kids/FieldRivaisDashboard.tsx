@@ -16,10 +16,6 @@ import { normName, type AutoRivalPlayer } from "../../data/KIDSdataLoader";
 import type { RivalPlayer, TournDef, RoundAvg } from "../../ui/bjgtAnalysisTypes";
 import HistoricScorecardsTab from "./HistoricScorecardsTab";
 import CourseTab from "./CourseTab";
-import { scClass } from "../../utils/scoreDisplay";
-import CourseHeroCard from "../../ui/CourseHeroCard";
-import { useAppContext } from "../../context/AppContext";
-import type { Course, Tee } from "../../data/types";
 
 // Mapeamento país-ISO (curto) → nome extenso (RivaisDashboard usa "co" extenso)
 const CO_FULL: Record<string, string> = {
