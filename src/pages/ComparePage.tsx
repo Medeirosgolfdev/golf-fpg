@@ -201,8 +201,12 @@ function SimilarityTable({ rows }: { rows: SimRow[] }) {
         <tbody>
           {sortedRows.map(({ course, tee, sim, tier }) => {
             const teePar = getParTotal(tee);
+            // Key inclui sex+slope+CR para distinguir M/F com mesmo teeId
+            const sl = tee.ratings?.holes18?.slopeRating ?? "";
+            const crr = tee.ratings?.holes18?.courseRating ?? "";
+            const rowKey = `${course.courseKey}|${tee.teeId}|${tee.sex}|${sl}|${crr}`;
             return (
-              <tr key={`${course.courseKey}||${tee.teeId}`}>
+              <tr key={rowKey}>
                 <td style={{ fontWeight: 700 }}>{course.master.name}</td>
                 <td className="muted">{tee.teeName}</td>
                 <td className="r" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{tee.distances?.total ?? "–"}</td>
@@ -400,25 +404,40 @@ function CourseComparisonView({ simCourses }: { simCourses: Course[] }) {
   const comparisonCourses = useMemo(() => filterCoursesForComparison(simCourses), [simCourses]);
 
   const similarities = useMemo<SimRow[]>(() => {
+    if (!selectedCourse || !selectedTee) return [];
+
+    // Dedup em DUAS camadas para apanhar todos os casos:
+    //   1) cursos únicos por courseKey (caso o array tenha o mesmo course 2x)
+    //   2) por linha visualmente única (courseKey + teeName + sex + stats).
+    // M e F do mesmo tee são preservados porque sex faz parte do hash.
+    const uniqueCourses = new Map<string, Course>();
+    for (const c of comparisonCourses) {
+      if (c.courseKey === selectedCourseKey) continue;
+      if (!uniqueCourses.has(c.courseKey)) uniqueCourses.set(c.courseKey, c);
+    }
+
     const result: SimRow[] = [];
-    const seen = new Set<string>();
-    if (selectedCourse && selectedTee) {
-      for (const course of comparisonCourses) {
-        if (course.courseKey === selectedCourseKey) continue;
-        for (const tee of course.master.tees) {
-          const dist = tee.distances?.total ?? 0;
-          const slope = tee.ratings?.holes18?.slopeRating ?? 0;
-          const cr = tee.ratings?.holes18?.courseRating ?? 0;
-          const par = getParTotal(tee);
-          const dedupKey = `${course.courseKey}|${tee.teeName.trim().toLowerCase()}|${dist}|${par}|${slope}|${cr}`;
-          if (seen.has(dedupKey)) continue;
-          seen.add(dedupKey);
-          const sim = calculateSimilarity(selectedTee, tee);
-          if (sim === null) continue;
-          const tier = simTier(sim.overall);
-          if (tier === null) continue;
-          result.push({ course, tee, sim, tier });
-        }
+    const seenRows = new Set<string>();
+    const seenTees = new WeakSet<Tee>(); // mesma instância Tee = mesma linha
+    for (const course of uniqueCourses.values()) {
+      for (const tee of course.master.tees) {
+        if (seenTees.has(tee)) continue;
+        seenTees.add(tee);
+
+        const sim = calculateSimilarity(selectedTee, tee);
+        if (sim === null) continue;
+        const tier = simTier(sim.overall);
+        if (tier === null) continue;
+
+        const dist = tee.distances?.total ?? 0;
+        const slope = tee.ratings?.holes18?.slopeRating ?? 0;
+        const cr = tee.ratings?.holes18?.courseRating ?? 0;
+        const par = getParTotal(tee);
+        const rowKey = `${course.courseKey}|${tee.teeName.trim().toLowerCase()}|${tee.sex}|${dist}|${par}|${slope}|${cr}`;
+        if (seenRows.has(rowKey)) continue;
+        seenRows.add(rowKey);
+
+        result.push({ course, tee, sim, tier });
       }
     }
     return result;
@@ -531,3 +550,4 @@ export default function ComparePage() {
     </div>
   );
 }
+  
