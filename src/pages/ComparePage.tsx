@@ -17,7 +17,6 @@ import { useAppContext } from "../context/AppContext";
 import EmptyState from "../ui/EmptyState";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import SortableHdr from "../ui/SortableHdr";
-import { useSort } from "../hooks/useSort";
 import type { Course, Tee } from "../data/types";
 
 const CompararPlayersView = lazy(() => import("./CompararPage"));
@@ -324,9 +323,21 @@ function HeroCard({ course, tee }: { course: Course; tee: Tee }) {
                 p.par === 4 ? "var(--color-info)" :
                 "var(--text-purple)";
               const pct = totalParHoles > 0 ? Math.round((p.count / totalParHoles) * 100) : 0;
+
+              // Escala de opacidade dentro do par — curto = mais claro, longo = mais escuro
+              const dists = p.holes.map(h => h.distance ?? 0).filter(d => d > 0);
+              const minDist = dists.length > 0 ? Math.min(...dists) : 0;
+              const maxDist = dists.length > 0 ? Math.max(...dists) : 0;
+              const range = maxDist - minDist;
+              const pillOpacity = (dist: number) => {
+                if (range === 0 || !dist) return 1;
+                const t = (dist - minDist) / range; // 0 = curto, 1 = longo
+                return 0.55 + t * 0.45;             // 0.55 (claro) → 1.0 (cheio)
+              };
+
               return (
                 <div key={p.par} className="haParCard" style={{ borderLeft: "3px solid " + accentColor, padding: "14px 16px" }}>
-                  <div className="haParHead" style={{ color: accentColor, display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap", fontSize: 16, marginBottom: 8 }}>
+                  <div style={{ color: accentColor, display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap", fontSize: 16, fontWeight: 800, marginBottom: 4 }}>
                     <span>Par {p.par}</span>
                     {p.count > 0 && (
                       <span className="muted" style={{ fontWeight: 500, fontSize: 13 }}>
@@ -335,49 +346,46 @@ function HeroCard({ course, tee }: { course: Course; tee: Tee }) {
                     )}
                   </div>
 
-                  {/* Lista de buracos individuais — pill B# + distância */}
-                  {p.count > 0 && (
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 10 }}>
-                      {p.holes.map(h => (
-                        <span
-                          key={h.hole}
-                          className="p"
-                          style={{
-                            background: accentColor,
-                            color: "#fff",
-                            fontFamily: "'JetBrains Mono', monospace",
-                            fontWeight: 700,
-                            fontSize: 12,
-                            display: "inline-flex",
-                            alignItems: "baseline",
-                            gap: 4,
-                          }}
-                        >
-                          <span>B{h.hole}</span>
-                          <span style={{ fontWeight: 500, opacity: 0.9 }}>
-                            {h.distance != null && h.distance > 0 ? `${h.distance}m` : "—"}
-                          </span>
-                        </span>
-                      ))}
+                  {/* Resumo discreto: média · total */}
+                  {p.avgDistance != null && (
+                    <div style={{ fontSize: 11, color: "var(--text-3)", marginBottom: 8 }}>
+                      Média <span style={{ fontWeight: 700, color: "var(--text-2)" }}>{Math.round(p.avgDistance)}m</span>
+                      {p.totalDistance > 0 && <> · Total <span style={{ fontWeight: 700, color: "var(--text-2)" }}>{p.totalDistance}m</span></>}
                     </div>
                   )}
 
-                  {/* Resumo: média e total */}
-                  <div style={{ display: "flex", gap: 14, alignItems: "baseline", flexWrap: "wrap" }}>
-                    <div>
-                      <span className="haParAvg" style={{ color: "var(--text)", fontSize: 24 }}>
-                        {p.avgDistance != null ? Math.round(p.avgDistance) + "m" : "—"}
-                      </span>
-                      <span style={{ fontSize: 13, fontWeight: 500, color: "var(--text-3)", marginLeft: 6 }}>
-                        média
-                      </span>
+                  {/* Lista de buracos — pill colorido por distância (escala dentro do par) */}
+                  {p.count > 0 && (
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                      {p.holes.map(h => {
+                        const op = pillOpacity(h.distance ?? 0);
+                        return (
+                          <span
+                            key={h.hole}
+                            className="p"
+                            style={{
+                              background: accentColor,
+                              opacity: op,
+                              color: "#fff",
+                              fontFamily: "'JetBrains Mono', monospace",
+                              fontWeight: 700,
+                              fontSize: 13,
+                              display: "inline-flex",
+                              alignItems: "baseline",
+                              gap: 5,
+                              padding: "4px 10px",
+                            }}
+                            title={`Buraco ${h.hole} · ${h.distance ?? "—"}m`}
+                          >
+                            <span>B{h.hole}</span>
+                            <span style={{ fontWeight: 500, opacity: 0.95 }}>
+                              {h.distance != null && h.distance > 0 ? `${h.distance}m` : "—"}
+                            </span>
+                          </span>
+                        );
+                      })}
                     </div>
-                    {p.totalDistance > 0 && (
-                      <div style={{ fontSize: 13, color: "var(--text-3)", marginTop: 0 }}>
-                        Total <span style={{ fontWeight: 700, color: "var(--text-2)" }}>{p.totalDistance}m</span>
-                      </div>
-                    )}
-                  </div>
+                  )}
                 </div>
               );
             })}
