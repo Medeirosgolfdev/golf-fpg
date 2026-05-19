@@ -7,10 +7,11 @@
  *
  * Estilos via classes existentes em App.css e tokens em tokens.css (sem hex hardcoded).
  *
- * Algoritmo de similitude (pesos): 25% distância, 15% par, 30% slope, 30% CR.
+ * Algoritmo de similitude: 25% distância, 15% par, 60% min(slope, CR).
+ * O min força que AMBOS slope E CR sejam parecidos.
  * Cores semânticas: ≥80% verde · ≥60% azul · ≥40% laranja. <40% não aparece.
  *
- * Tabela ordenável por clique no cabeçalho (useSort + SortableHdr).
+ * Tabela ordenável por clique no cabeçalho (useState local + SortableHdr).
  */
 import { useState, useMemo, lazy, Suspense } from "react";
 import { useAppContext } from "../context/AppContext";
@@ -73,7 +74,7 @@ function parBreakdown(tee: Tee | null | undefined): ParBreakdown[] {
   return out;
 }
 
-// ── Similitude ──
+// ═══════════════════ Similitude ═══════════════════
 
 interface SimilarityScore {
   distance: number;
@@ -83,22 +84,8 @@ interface SimilarityScore {
   overall: number;
 }
 
-/**
- * Calcula similitude entre dois tees. Escala absoluta de diferenças:
- *   • distância: 1000m de diff → 0 pontos
- *   • par: 4 strokes de diff → 0 pontos
- *   • slope: 15 pontos de diff → 0 pontos
- *   • CR: 3 strokes de diff → 0 pontos
- *
- * Pesos: 25% distância, 15% par, 60% min(slope, CR).
- * O min força que AMBOS slope E CR sejam parecidos — não chega ter um.
- * Sem essa restrição, um campo com slope 128 (vs 139 do Santo da Serra) e CR
- * idêntico passava como 89% similar, o que é falso (slope é difference de
- * dificuldade real). Tees sem slope/CR são excluídos.
- */
 function calculateSimilarity(tee1: Tee | null | undefined, tee2: Tee): SimilarityScore | null {
   if (!tee1) return null;
-
   const dist1 = tee1.distances?.total ?? 0;
   const dist2 = tee2.distances?.total ?? 0;
   const par1 = getParTotal(tee1);
@@ -107,8 +94,6 @@ function calculateSimilarity(tee1: Tee | null | undefined, tee2: Tee): Similarit
   const slope2 = tee2.ratings?.holes18?.slopeRating ?? 0;
   const cr1 = tee1.ratings?.holes18?.courseRating ?? 0;
   const cr2 = tee2.ratings?.holes18?.courseRating ?? 0;
-
-  // Excluir tees sem rating oficial e sem distância — sem dados não há comparação
   if (!slope1 || !slope2 || !cr1 || !cr2 || !dist1 || !dist2) return null;
 
   const distDiff = Math.abs(dist1 - dist2);
@@ -116,12 +101,11 @@ function calculateSimilarity(tee1: Tee | null | undefined, tee2: Tee): Similarit
   const slopeDiff = Math.abs(slope1 - slope2);
   const crDiff = Math.abs(cr1 - cr2);
 
-  const distScore = Math.max(0, 100 - distDiff * 0.10);          // 1000m → 0
-  const parScore = Math.max(0, 100 - parDiff * 25);              // 4 strokes → 0
-  const slopeScore = Math.max(0, 100 - slopeDiff * (100 / 15));  // 15 → 0
-  const crScore = Math.max(0, 100 - crDiff * (100 / 3));         // 3 strokes → 0
+  const distScore = Math.max(0, 100 - distDiff * 0.10);
+  const parScore = Math.max(0, 100 - parDiff * 25);
+  const slopeScore = Math.max(0, 100 - slopeDiff * (100 / 15));
+  const crScore = Math.max(0, 100 - crDiff * (100 / 3));
 
-  // min(slope, cr) força ambos altos para haver similitude real
   const difficultyScore = Math.min(slopeScore, crScore);
   const overall = distScore * 0.25 + parScore * 0.15 + difficultyScore * 0.60;
 
@@ -160,7 +144,6 @@ type SimRow = {
 
 type SimSortKey = "name" | "tee" | "dist" | "par" | "slope" | "cr" | "overall";
 
-/** Extrai o valor numérico/string a usar para ordenar uma row por uma key. */
 function getSortValue(row: SimRow, key: SimSortKey): number | string {
   switch (key) {
     case "name":    return row.course.master.name.toLowerCase();
@@ -173,14 +156,12 @@ function getSortValue(row: SimRow, key: SimSortKey): number | string {
   }
 }
 
-/** Direcção default para cada key — números desc, strings asc. */
 const DEFAULT_DIR: Record<SimSortKey, "asc" | "desc"> = {
   name: "asc", tee: "asc",
   dist: "desc", par: "desc", slope: "desc", cr: "desc", overall: "desc",
 };
 
 function SimilarityTable({ rows }: { rows: SimRow[] }) {
-  // useState local — sem indirecção, garante re-render
   const [sortKey, setSortKey] = useState<SimSortKey>("overall");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
 
@@ -261,7 +242,6 @@ function SimilarityTable({ rows }: { rows: SimRow[] }) {
 function HeroCard({ course, tee }: { course: Course; tee: Tee }) {
   const pars = useMemo(() => parBreakdown(tee), [tee]);
   const totalParHoles = pars.reduce((s, p) => s + p.count, 0);
-
   const slope = tee.ratings?.holes18?.slopeRating ?? null;
   const cr = tee.ratings?.holes18?.courseRating ?? null;
   const distance = tee.distances?.total ?? null;
@@ -320,19 +300,17 @@ function HeroCard({ course, tee }: { course: Course; tee: Tee }) {
             {pars.map(p => {
               const accentColor =
                 p.par === 3 ? "var(--color-good)" :
-                p.par === 4 ? "var(--color-info)" :
-                "var(--text-purple)";
+                p.par === 4 ? "var(--score-eagle)" :
+                "var(--color-danger)";
               const pct = totalParHoles > 0 ? Math.round((p.count / totalParHoles) * 100) : 0;
-
-              // Escala de opacidade dentro do par — curto = mais claro, longo = mais escuro
               const dists = p.holes.map(h => h.distance ?? 0).filter(d => d > 0);
               const minDist = dists.length > 0 ? Math.min(...dists) : 0;
               const maxDist = dists.length > 0 ? Math.max(...dists) : 0;
               const range = maxDist - minDist;
               const pillOpacity = (dist: number) => {
                 if (range === 0 || !dist) return 1;
-                const t = (dist - minDist) / range; // 0 = curto, 1 = longo
-                return 0.55 + t * 0.45;             // 0.55 (claro) → 1.0 (cheio)
+                const t = (dist - minDist) / range;
+                return 0.45 + t * 0.55;
               };
 
               return (
@@ -345,40 +323,36 @@ function HeroCard({ course, tee }: { course: Course; tee: Tee }) {
                       </span>
                     )}
                   </div>
-
-                  {/* Resumo discreto: média · total */}
                   {p.avgDistance != null && (
-                    <div style={{ fontSize: 11, color: "var(--text-3)", marginBottom: 8 }}>
+                    <div style={{ fontSize: 11, color: "var(--text-3)", marginBottom: 10 }}>
                       Média <span style={{ fontWeight: 700, color: "var(--text-2)" }}>{Math.round(p.avgDistance)}m</span>
                       {p.totalDistance > 0 && <> · Total <span style={{ fontWeight: 700, color: "var(--text-2)" }}>{p.totalDistance}m</span></>}
                     </div>
                   )}
-
-                  {/* Lista de buracos — pill colorido por distância (escala dentro do par) */}
                   {p.count > 0 && (
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
                       {p.holes.map(h => {
                         const op = pillOpacity(h.distance ?? 0);
                         return (
                           <span
                             key={h.hole}
-                            className="p"
-                            style={{
-                              background: accentColor,
-                              opacity: op,
-                              color: "#fff",
-                              fontFamily: "'JetBrains Mono', monospace",
-                              fontWeight: 700,
-                              fontSize: 13,
-                              display: "inline-flex",
-                              alignItems: "baseline",
-                              gap: 5,
-                              padding: "4px 10px",
-                            }}
+                            style={{ display: "inline-flex", alignItems: "baseline", gap: 4, fontFamily: "'JetBrains Mono', monospace" }}
                             title={`Buraco ${h.hole} · ${h.distance ?? "—"}m`}
                           >
-                            <span>B{h.hole}</span>
-                            <span style={{ fontWeight: 500, opacity: 0.95 }}>
+                            <span style={{ fontSize: 11, fontWeight: 700, color: "var(--text-3)" }}>B{h.hole}</span>
+                            <span
+                              className="p"
+                              style={{
+                                background: accentColor,
+                                opacity: op,
+                                color: "#fff",
+                                fontWeight: 700,
+                                fontSize: 13,
+                                padding: "3px 9px",
+                                minWidth: 50,
+                                justifyContent: "center",
+                              }}
+                            >
                               {h.distance != null && h.distance > 0 ? `${h.distance}m` : "—"}
                             </span>
                           </span>
@@ -399,7 +373,6 @@ function HeroCard({ course, tee }: { course: Course; tee: Tee }) {
 // ═══════════════════ Vista principal: comparação de campos ═══════════════════
 
 function CourseComparisonView({ simCourses }: { simCourses: Course[] }) {
-  // Ordem alfabética para o dropdown
   const sortedCourses = useMemo(
     () => [...simCourses].sort((a, b) =>
       a.master.name.localeCompare(b.master.name, "pt", { sensitivity: "base" })
@@ -407,11 +380,8 @@ function CourseComparisonView({ simCourses }: { simCourses: Course[] }) {
     [simCourses]
   );
 
-  // Default: Santo da Serra (campo de origem do Manuel — CGSS), senão primeiro alfabético
   const defaultCourseKey = useMemo(() => {
-    const sds = sortedCourses.find(c =>
-      /santo\s+d[ao]\s+serra/i.test(c.master.name)
-    );
+    const sds = sortedCourses.find(c => /santo\s+d[ao]\s+serra/i.test(c.master.name));
     return sds?.courseKey ?? sortedCourses[0]?.courseKey ?? "";
   }, [sortedCourses]);
 
@@ -431,14 +401,22 @@ function CourseComparisonView({ simCourses }: { simCourses: Course[] }) {
 
   const similarities = useMemo<SimRow[]>(() => {
     const result: SimRow[] = [];
+    const seen = new Set<string>();
     if (selectedCourse && selectedTee) {
       for (const course of comparisonCourses) {
         if (course.courseKey === selectedCourseKey) continue;
         for (const tee of course.master.tees) {
+          const dist = tee.distances?.total ?? 0;
+          const slope = tee.ratings?.holes18?.slopeRating ?? 0;
+          const cr = tee.ratings?.holes18?.courseRating ?? 0;
+          const par = getParTotal(tee);
+          const dedupKey = `${course.courseKey}|${tee.teeName.trim().toLowerCase()}|${dist}|${par}|${slope}|${cr}`;
+          if (seen.has(dedupKey)) continue;
+          seen.add(dedupKey);
           const sim = calculateSimilarity(selectedTee, tee);
-          if (sim === null) continue;          // tee sem slope/CR — exclui
+          if (sim === null) continue;
           const tier = simTier(sim.overall);
-          if (tier === null) continue;          // similitude < 40%
+          if (tier === null) continue;
           result.push({ course, tee, sim, tier });
         }
       }
@@ -487,7 +465,6 @@ function CourseComparisonView({ simCourses }: { simCourses: Course[] }) {
       ) : (
         <>
           <HeroCard course={selectedCourse} tee={selectedTee} />
-
           <div className="card">
             <div className="h-md" style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
               🎯 Campos Similares
@@ -496,11 +473,10 @@ function CourseComparisonView({ simCourses }: { simCourses: Course[] }) {
               </span>
             </div>
             <div className="muted" style={{ fontSize: 12, marginTop: -6, marginBottom: 12 }}>
-              Pesos: 25% distância · 15% par · 30% slope · 30% CR · Clica nos cabeçalhos para ordenar
+              Pesos: 25% distância · 15% par · 60% min(slope, CR) · Clica nos cabeçalhos para ordenar
             </div>
-
             {similarities.length === 0 ? (
-              <EmptyState icon="🔍" message="Sem campos suficientemente parecidos (todos &lt; 40%)." />
+              <EmptyState icon="🔍" message="Sem campos suficientemente parecidos." />
             ) : (
               <SimilarityTable rows={similarities} />
             )}
@@ -528,15 +504,7 @@ export default function ComparePage() {
         </ToolbarMeta>
       </Toolbar>
 
-      <div
-        style={{
-          display: "flex",
-          gap: 4,
-          borderBottom: "1px solid var(--border)",
-          marginBottom: 16,
-          flexWrap: "wrap",
-        }}
-      >
+      <div style={{ display: "flex", gap: 4, borderBottom: "1px solid var(--border)", marginBottom: 16, flexWrap: "wrap" }}>
         <button
           type="button"
           className={"tab-under" + (activeTab === "campos" ? " active" : "")}
@@ -563,4 +531,3 @@ export default function ComparePage() {
     </div>
   );
 }
-
