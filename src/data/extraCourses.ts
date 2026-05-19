@@ -444,13 +444,14 @@ const leToquet_LaMer: Course = {
                    + "Course Rating and Slope" PDF (EUC 2025).
    Distâncias originais em JARDAS, convertidas para METROS (×0.9144) por buraco.
 
-   Tees do campo:
-     White (M, par 70, 6275y)         — medal masculino
-     Yellow (M, par 70, 6048y)        — diária masculino
-     Red (M, par 73, 5773y)           — avançada masculino (hh.9/12/15/17 par+1)
-     Blue (M, par 67, 4801y)          — junior masculino (hh.3 par 3, hh.6 par 4)
-     Blue (F, par 69, 4801y)          — medal feminino
-     Red (F, par 69, 5773y)           — diária feminino
+   Tees do campo (CR/Slope oficiais atribuídos em 2017 — ver PDF Course Handicap Table):
+     White (M, par 70, 6275y)         — CR 70.6 / Sl 124
+     Yellow (M, par 70, 6048y)        — CR 69.5 / Sl 122
+     Red (M, par 69, 5773y)           — CR 68.3 / Sl 119
+     Blue (M, par 69, 4801y)          — CR 63.9 / Sl 110
+     Yellow (F, par 73, 6048y)        — CR 75.5 / Sl 130
+     Red (F, par 73, 5773y)           — CR 74.0 / Sl 127
+     Blue (F, par 70, 4801y)          — CR 68.2 / Sl 113
 
    Tees USKids (EUC 2025 — Glen Golf Club hospeda 3 escalões):
      Boys 14 (Tee 6, 6048y, par 72, CR 70.6 / Sl 124) — mesmas marcas que Yellow
@@ -502,14 +503,17 @@ function glenDist(dist: number[]): { total: number; front9: number; back9: numbe
   return { total: front9 + back9, front9, back9, holesCount: 18, complete18: true };
 }
 
-// 6 tees do scorecard oficial do campo
+// 7 tees do scorecard oficial do campo (config 2017)
+// CR / Slope: PDF oficial "Course Handicap Table" do clube (atribuídos em 2017).
+// Pars seguem a configuração oficial de 2017 (não a config alternativa do scorecard impresso
+// que tinha Red M par 73 e Blue M par 67 — esse era um setup de competição diferente).
 const glenTees: Tee[] = [
   {
     teeId: "glen-white",
     sex: "M",
     teeName: "White",
     scorecardMeta: { teeColor: "#ffffff" },
-    ratings: { holes18: { par: 70, courseRating: null, slopeRating: null } },
+    ratings: { holes18: { par: 70, courseRating: 70.6, slopeRating: 124 } },
     holes: glenHoles(glenParWhite, glenSImain, glenDistWhite),
     distances: glenDist(glenDistWhite),
   },
@@ -518,7 +522,7 @@ const glenTees: Tee[] = [
     sex: "M",
     teeName: "Yellow",
     scorecardMeta: { teeColor: "#fbbf24" },
-    ratings: { holes18: { par: 70, courseRating: null, slopeRating: null } },
+    ratings: { holes18: { par: 70, courseRating: 69.5, slopeRating: 122 } },
     holes: glenHoles(glenParYellow, glenSImain, glenDistYellow),
     distances: glenDist(glenDistYellow),
   },
@@ -527,8 +531,8 @@ const glenTees: Tee[] = [
     sex: "M",
     teeName: "Red",
     scorecardMeta: { teeColor: "#ef4444" },
-    ratings: { holes18: { par: 73, courseRating: null, slopeRating: null } },
-    holes: glenHoles(glenParRedM, glenSIredM, glenDistRed),
+    ratings: { holes18: { par: 69, courseRating: 68.3, slopeRating: 119 } },
+    holes: glenHoles(glenParBlueF, glenSImain, glenDistRed),
     distances: glenDist(glenDistRed),
   },
   {
@@ -536,17 +540,26 @@ const glenTees: Tee[] = [
     sex: "M",
     teeName: "Blue",
     scorecardMeta: { teeColor: "#3b82f6" },
-    ratings: { holes18: { par: 67, courseRating: null, slopeRating: null } },
-    holes: glenHoles(glenParBlueM, glenSImain, glenDistBlue),
+    ratings: { holes18: { par: 69, courseRating: 63.9, slopeRating: 110 } },
+    holes: glenHoles(glenParBlueF, glenSIblueF, glenDistBlue),
     distances: glenDist(glenDistBlue),
+  },
+  {
+    teeId: "glen-yellow-f",
+    sex: "F",
+    teeName: "Yellow (F)",
+    scorecardMeta: { teeColor: "#fbbf24" },
+    ratings: { holes18: { par: 73, courseRating: 75.5, slopeRating: 130 } },
+    holes: glenHoles(glenParRedM, glenSImain, glenDistYellow),
+    distances: glenDist(glenDistYellow),
   },
   {
     teeId: "glen-blue-f",
     sex: "F",
     teeName: "Blue (F)",
     scorecardMeta: { teeColor: "#3b82f6" },
-    ratings: { holes18: { par: 69, courseRating: null, slopeRating: null } },
-    holes: glenHoles(glenParBlueF, glenSIblueF, glenDistBlue),
+    ratings: { holes18: { par: 70, courseRating: 68.2, slopeRating: 113 } },
+    holes: glenHoles(glenParWhite, glenSImain, glenDistBlue),
     distances: glenDist(glenDistBlue),
   },
   {
@@ -554,8 +567,8 @@ const glenTees: Tee[] = [
     sex: "F",
     teeName: "Red (F)",
     scorecardMeta: { teeColor: "#ef4444" },
-    ratings: { holes18: { par: 69, courseRating: null, slopeRating: null } },
-    holes: glenHoles(glenParRedF, glenSImain, glenDistRed),
+    ratings: { holes18: { par: 73, courseRating: 74.0, slopeRating: 127 } },
+    holes: glenHoles(glenParRedM, glenSIredM, glenDistRed),
     distances: glenDist(glenDistRed),
   },
 ];
@@ -602,6 +615,10 @@ const glenGolfClub: Course = {
       fpg: null,
       scorecards: "http://www.glengolfclub.co.uk/",
       extra: [
+        {
+          label: "Course Handicap Table 2017 (CR/Slope oficiais)",
+          url: "https://www.glengolfclub.co.uk/uploads/glen/File/Course/Course%20Handicap%20Table.pdf",
+        },
         {
           label: "US Kids EUC 2025 - Yardages",
           url: "/data/yardages_-_euc2025.pdf",
