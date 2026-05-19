@@ -190,6 +190,66 @@ function isoDate(year, monAbbr, day) {
 }
 
 /* ─────────────────────────────────────────────────────────────────
+   Entry list — HCP + Grad Year (ano de graduação ≈ idade) por jogador.
+   Fonte: /gjgdb/2021entryList.php?tournamentid={tid}&gender={1=boys|2=girls}
+   Colunas: Name(Last, First) / Nation(gif) / Grad Year / HCP / AG.
+   O GJGL NÃO publica metros/distâncias em lado nenhum (confirmado 2026-05-19);
+   a entry list é a única fonte extra de HCP e idade dos jogadores.
+   Match com o leaderboard é por nome normalizado (não há playerKey aqui).
+   ───────────────────────────────────────────────────────────────── */
+
+function normNameKey(name) {
+  return String(name || "")
+    .toLowerCase()
+    .normalize("NFD").replace(/[̀-ͯ]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/** Normaliza "Last, First" e "First Last" para a mesma chave ordenada por tokens. */
+function nameMatchKey(name) {
+  const cleaned = normNameKey(name).replace(/[(),.]/g, " ").replace(/\s+/g, " ").trim();
+  const tokens = cleaned.split(" ").filter(Boolean).sort();
+  return tokens.join(" ");
+}
+
+async function scrapeEntryList(tid) {
+  const map = new Map(); // nameMatchKey -> { hcp, hcpRaw, gradYear, ag, nationGif }
+  for (const gender of [1, 2]) {
+    const url = `${GJGL_BASE}/gjgdb/2021entryList.php?tournamentid=${tid}&gender=${gender}`;
+    let html;
+    try { html = await fetchText(url); } catch { continue; }
+    parseEntryListHtml(html, map);
+  }
+  return map;
+}
+
+function parseEntryListHtml(html, map) {
+  const rowRe = /<tr[^>]*>([\s\S]*?)<\/tr>/gi;
+  let rm;
+  while ((rm = rowRe.exec(html)) !== null) {
+    const cells = [];
+    const cellRe = /<t[hd][^>]*>([\s\S]*?)<\/t[hd]>/gi;
+    let cm;
+    while ((cm = cellRe.exec(rm[1])) !== null) cells.push(cm[1]);
+    if (cells.length < 5) continue;
+    const name = stripTags(cells[0]).trim();
+    if (!name || /name\s*,?\s*first/i.test(name)) continue; // header row
+    const gifMatch = (cells[1] || "").match(/nationen\/(\d+)\.gif/);
+    const gradYearRaw = stripTags(cells[2]).trim();
+    const gradYear = /^\d{4}$/.test(gradYearRaw) ? parseInt(gradYearRaw, 10) : null;
+    const hcpRaw = stripTags(cells[3]).trim();           // ex: "+1.0", "-0.9", "+5.9"
+    const hcp = hcpRaw && /[-+]?\d/.test(hcpRaw) ? parseFloat(hcpRaw) : null;
+    const ag = stripTags(cells[4]).trim() || null;
+    const key = nameMatchKey(name);
+    if (!key) continue;
+    if (!map.has(key)) {
+      map.set(key, { hcp, hcpRaw, gradYear, ag, nationGif: gifMatch ? gifMatch[1] : null });
+    }
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────
    Phase 2: Scrape — leaderboard + scorecards do livescoring page
    ───────────────────────────────────────────────────────────────── */
 
@@ -521,6 +581,32 @@ async function processTournament(t, args) {
     return { slug: t.slug, status: "empty", tid };
   }
 
+  // Enrich players with HCP + Grad Year from the entry list (matched by name).
+  let entryMatched = 0, entryTotal = 0;
+  try {
+    const entryMap = await scrapeEntryList(tid);
+    entryTotal = entryMap.size;
+    if (entryMap.size) {
+      for (const div of divisions) {
+        for (const p of div.players) {
+          const e = entryMap.get(nameMatchKey(p.name));
+          if (e) {
+            if (e.hcp != null && p.hcp == null) p.hcp = e.hcp;
+            if (e.hcpRaw) p.hcpRaw = e.hcpRaw;
+            if (e.gradYear) {
+              p.gradYear = e.gradYear;
+              // Estimativa de ano de nascimento: grad year - 18 (fim do secundário ~18 anos)
+              p.birthYearEst = e.gradYear - 18;
+            }
+            entryMatched++;
+          }
+        }
+      }
+    }
+  } catch (err) {
+    console.log(`    · entry list failed: ${err.message}`);
+  }
+
   const out = {
     tournament: t.title,
     slug: t.slug,
@@ -529,6 +615,7 @@ async function processTournament(t, args) {
     section: t.section,
     tour_url: `${GJGL_BASE}/tournament/${t.slug}/`,
     livescoring_url: `${GJGL_BASE}/gjgdb/2021liveScoringresponsive.php?tournamentid=${tid}`,
+    entrylist_url: `${GJGL_BASE}/gjgdb/2021entryList.php?tournamentid=${tid}`,
     gjgl_tournamentid: tid,
     start_date: startDate,
     end_date: endDate,
@@ -544,7 +631,7 @@ async function processTournament(t, args) {
   ensureDir(args.outDir || OUT_DIR);
   fs.writeFileSync(outPath, JSON.stringify(out, null, 2));
   const totalPlayers = divisions.reduce((a, d) => a + d.players.length, 0);
-  console.log(`  ✓ ${t.slug} — tid=${tid} divs=${divisions.length} players=${totalPlayers} rounds=${detectedRounds}`);
+  console.log(`  ✓ ${t.slug} — tid=${tid} divs=${divisions.length} players=${totalPlayers} rounds=${detectedRounds} entry=${entryMatched}/${entryTotal}`);
   return { slug: t.slug, status: "ok", tid, players: totalPlayers };
 }
 
@@ -616,4 +703,4 @@ if (require.main === module) {
   main().catch(function(err) { console.error(err); process.exit(1); });
 }
 
-module.exports = { parseDivisionHtml, discoverTournament, scrapeDivision };
+module.exports = { parseDivisionHtml, discoverTournament, scrapeDivision, scrapeEntryList, parseEntryListHtml, nameMatchKey };

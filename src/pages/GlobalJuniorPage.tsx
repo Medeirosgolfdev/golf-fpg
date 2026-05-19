@@ -99,6 +99,9 @@ interface GjglPlayer {
   playerKey?: string;
   club?: string | null;
   hcp?: number | null;
+  hcpRaw?: string | null;
+  gradYear?: number | null;
+  birthYearEst?: number | null;
   hole?: number | null;
   toPar?: number | string | null;
   total: number | null;
@@ -443,6 +446,8 @@ function SimpleLeaderboard({ div }: { div: GjglDivision }) {
           <th style={{ textAlign: "left", padding: 6 }}>Pos</th>
           <th style={{ textAlign: "left", padding: 6 }}>País</th>
           <th style={{ textAlign: "left", padding: 6 }}>Nome</th>
+          <th style={{ textAlign: "right", padding: 6 }}>HCP</th>
+          <th style={{ textAlign: "right", padding: 6 }}>Nasc.~</th>
           <th style={{ textAlign: "right", padding: 6 }}>R1</th>
           <th style={{ textAlign: "right", padding: 6 }}>R2</th>
           <th style={{ textAlign: "right", padding: 6 }}>R3</th>
@@ -459,6 +464,8 @@ function SimpleLeaderboard({ div }: { div: GjglDivision }) {
               <td style={{ padding: 6 }}>{pos}</td>
               <td style={{ padding: 6 }}>{flagForCountry(p.country)} {p.country || "—"}</td>
               <td style={{ padding: 6 }}>{p.name}{isManuel && " 🇵🇹"}</td>
+              <td style={{ textAlign: "right", padding: 6 }}>{p.hcpRaw ?? (p.hcp != null ? p.hcp : "—")}</td>
+              <td style={{ textAlign: "right", padding: 6, color: "var(--text-muted)" }} title={p.gradYear ? `Grad year ${p.gradYear}` : ""}>{p.birthYearEst ?? "—"}</td>
               <td style={{ textAlign: "right", padding: 6 }}>{(p.rounds || [])[0]?.gross ?? "—"}</td>
               <td style={{ textAlign: "right", padding: 6 }}>{(p.rounds || [])[1]?.gross ?? "—"}</td>
               <td style={{ textAlign: "right", padding: 6 }}>{(p.rounds || [])[2]?.gross ?? "—"}</td>
