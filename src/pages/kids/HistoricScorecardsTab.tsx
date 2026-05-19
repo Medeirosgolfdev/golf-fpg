@@ -21,6 +21,7 @@
 import { useMemo, useState } from "react";
 import { scClass } from "../../utils/scoreDisplay";
 import { fmtToPar } from "../../utils/format";
+import SortableHdr from "../../ui/SortableHdr";
 
 interface FieldEscalao { nome: string; jogadores?: unknown[] }
 interface FieldTorneio { t: number; name: string; date_inicio: string; escaloes: FieldEscalao[] }
@@ -67,6 +68,8 @@ interface Edition {
   year: string;
   course?: string;
   par: number[] | null;
+  /** Metros por buraco (yards * 0.9144), arredondado. null se não houver yards. */
+  metersPerHole: number[] | null;
   parPerRound: number;
   parF9: number;
   parB9: number;
@@ -74,6 +77,7 @@ interface Edition {
   is9: boolean;
   nRoundsMax: number;
   fieldSize: number;
+  /** Total em metros (somatório de metersPerHole). */
   meters?: number;
   players: PlayerCard[];
 }
@@ -81,6 +85,8 @@ interface Edition {
 const MIN_FIELD_SIZE = 10;
 const MIN_GROSS_18H = 55;
 const MIN_GROSS_9H = 28;
+
+type SortKey = "pos" | "year" | "name" | "country" | "rnd" | "topar" | "gross" | "birds" | "pars" | "bogeys";
 
 /** Conta birdies/pars/bogeys/worse num scorecard. */
 function tallyHoles(strokes: number[], par: number[] | null): { birds: number; pars: number; bogeys: number; worse: number } {
@@ -106,6 +112,20 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
 }) {
   const [topN, setTopN] = useState<5 | 10 | 20 | 0>(10); // 0 = todos
   const [groupMode, setGroupMode] = useState<boolean>(true); // true = Agrupado
+  // Sort state — default por ±par ASC. Em modo Agrupado, agrega por jogador
+  // (best/min para gross/toPar; total para birds/pars/bogeys). Em modo
+  // Independente actua sobre a ronda individual.
+  const [sortKey, setSortKey] = useState<SortKey>("topar");
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
+  function toggleSort(k: SortKey) {
+    if (sortKey === k) setSortDir(d => d === "asc" ? "desc" : "asc");
+    else {
+      setSortKey(k);
+      // Defaults sensatos: jogador/país/ano DESC para anos primeiro, gross/topar ASC
+      const ascByDefault = new Set(["topar", "gross", "name", "country", "rnd"]);
+      setSortDir(ascByDefault.has(k) ? "asc" : "desc");
+    }
+  }
 
   const editions: Edition[] | null = useMemo(() => {
     if (!mh || !torneio) return null;
@@ -139,6 +159,9 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
         ? yards.slice(0, hpr).reduce((a: number, b: number) => a + (b || 0), 0)
         : 0;
       const meters = yardsTotal > 0 ? Math.round(yardsTotal * 0.9144) : undefined;
+      const metersPerHole: number[] | null = Array.isArray(yards)
+        ? yards.slice(0, hpr).map((y: number) => y > 0 ? Math.round(y * 0.9144) : 0)
+        : null;
 
       const players: PlayerCard[] = [];
       let nRoundsMax = 0;
@@ -203,6 +226,7 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
         tcode, name: meta.name, year,
         course: escMeta?.course,
         par: Array.isArray(par) ? par : null,
+        metersPerHole,
         parPerRound, parF9, parB9,
         holesPerRound: hpr,
         is9,
@@ -317,11 +341,12 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
           <thead>
             <tr>
               <th className="lb-pos sticky-col-0">#</th>
-              <th className="lb-name sticky-col-1" style={{ maxWidth: 140 }}>Jogador</th>
-              <th className="lb-club">País</th>
-              <th className="lb-tee fs-10 c-muted fw-600">Rnd</th>
-              <th className="lb-topar">±</th>
-              <th className="lb-gross">Tot</th>
+              <SortableHdr k="year" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-tee fs-10 fw-600" style={{ minWidth: 38 }}>Ano</SortableHdr>
+              <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-name sticky-col-1" style={{ maxWidth: 140 }}>Jogador</SortableHdr>
+              <SortableHdr k="country" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-club">País</SortableHdr>
+              <SortableHdr k="rnd" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-tee fs-10 fw-600">Rnd</SortableHdr>
+              <SortableHdr k="topar" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-topar">±</SortableHdr>
+              <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-gross">Tot</SortableHdr>
               {Array.from({ length: Math.min(9, hpr) }, (_, h) => (
                 <th key={h} className={"lb-hole" + (h === 0 ? " lb-hole-first" : "") + " fs-10"}>
                   {h + 1}
@@ -338,26 +363,178 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
                   <th className="lb-halftot">In</th>
                 </>
               )}
-              <th className="lb-bird">🐦</th>
-              <th className="lb-par-stat">Par</th>
-              <th className="lb-bog">■</th>
+              <SortableHdr k="birds" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-bird">🐦</SortableHdr>
+              <SortableHdr k="pars" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-par-stat">Par</SortableHdr>
+              <SortableHdr k="bogeys" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-bog">■</SortableHdr>
             </tr>
+            {/* Linha "Metros" — usa as yardages do tee da edição mais recente
+                como referência. Tooltip indica o ano usado. Anos antigos
+                podem ter yardages ligeiramente diferentes. */}
+            {(() => {
+              const ref = editions[0];
+              if (!ref?.metersPerHole) return null;
+              const m = ref.metersPerHole;
+              const f9 = m.slice(0, Math.min(9, hpr)).reduce((a, b) => a + (b || 0), 0);
+              const b9 = !is9 ? m.slice(9, 18).reduce((a, b) => a + (b || 0), 0) : 0;
+              const total = f9 + b9;
+              const tip = `Distâncias do tee da edição ${ref.year}${ref.course ? " (" + ref.course + ")" : ""} — anos anteriores podem ter ligeiras diferenças.`;
+              return (
+                <tr className="lb-par-row" title={tip}>
+                  <td className="sticky-col-0" />
+                  <td className="lb-tee fs-10 c-muted">m</td>
+                  <td className="lb-par-lbl sticky-col-1" colSpan={3}>Metros</td>
+                  <td className="lb-topar" />
+                  <td className="lb-gross">{total || ""}</td>
+                  {m.slice(0, Math.min(9, hpr)).map((v, i) => (
+                    <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v || ""}</td>
+                  ))}
+                  <td className="lb-halftot">{f9 || ""}</td>
+                  {!is9 && m.slice(9, 18).map((v, i) => (
+                    <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v || ""}</td>
+                  ))}
+                  {!is9 && <td className="lb-halftot">{b9 || ""}</td>}
+                  <td /><td /><td />
+                </tr>
+              );
+            })()}
+            {/* Linha PAR — usa o par da edição mais recente. */}
+            {(() => {
+              const ref = editions[0];
+              if (!ref?.par) return null;
+              return (
+                <tr className="lb-par-row" title={`Par do tee da edição ${ref.year}`}>
+                  <td className="sticky-col-0" />
+                  <td className="lb-tee fs-10 c-muted">par</td>
+                  <td className="lb-par-lbl sticky-col-1" colSpan={3}>PAR</td>
+                  <td className="lb-topar" />
+                  <td className="lb-gross">{ref.parPerRound}</td>
+                  {ref.par.slice(0, Math.min(9, hpr)).map((v, i) => (
+                    <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v}</td>
+                  ))}
+                  <td className="lb-halftot">{ref.parF9}</td>
+                  {!is9 && ref.par.slice(9, 18).map((v, i) => (
+                    <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v}</td>
+                  ))}
+                  {!is9 && <td className="lb-halftot">{ref.parB9}</td>}
+                  <td /><td /><td />
+                </tr>
+              );
+            })()}
           </thead>
           <tbody>
-            {editions.map((ed, edIdx) => {
-              const players = ed.players.slice(0, limit);
-              return (
-                <EditionRows
-                  key={ed.tcode}
-                  edition={ed}
-                  players={players}
-                  groupMode={groupMode}
-                  hpr={hpr}
-                  is9={is9}
-                  isFirst={edIdx === 0}
-                />
-              );
-            })}
+            {groupMode ? (
+              (() => {
+                // Modo agrupado: aplicar sort que opera sobre as métricas
+                // agregadas de cada jogador. Edições ordenam pelo seu year.
+                const dir = sortDir === "asc" ? 1 : -1;
+                // Métricas agregadas por jogador (na ronda "best" para gross/toPar)
+                const playerMetric = (pl: PlayerCard, key: SortKey): number | string => {
+                  switch (key) {
+                    case "name":    return pl.name;
+                    case "country": return pl.country || "";
+                    case "topar":   return Math.min(...pl.rounds.map(r => r.toPar));
+                    case "gross":   return Math.min(...pl.rounds.map(r => r.gross));
+                    case "birds":   return pl.rounds.reduce((a, r) => a + r.birds, 0);
+                    case "pars":    return pl.rounds.reduce((a, r) => a + r.pars,  0);
+                    case "bogeys":  return pl.rounds.reduce((a, r) => a + r.bogeys,0);
+                    case "rnd":     return pl.rounds.length;
+                    case "year":    return 0; // year sort ordena edições, não players
+                    case "pos":
+                    default:        return pl.officialPlace ?? Number.POSITIVE_INFINITY;
+                  }
+                };
+
+                // Ordenar lista de edições — só faz sentido para sortKey "year"
+                // ou metric global (média da edição). Para os outros, mantemos
+                // ano desc (mais recente primeiro), mas ordenamos players DENTRO.
+                let orderedEditions = editions;
+                if (sortKey === "year") {
+                  orderedEditions = [...editions].sort((a, b) =>
+                    a.year.localeCompare(b.year) * dir,
+                  );
+                }
+
+                let offset = 0;
+                return orderedEditions.map((ed) => {
+                  let players = ed.players.slice(0, limit);
+                  // Aplicar sort aos players dentro da edição.
+                  if (sortKey !== "year" && sortKey !== "pos") {
+                    players = [...players].sort((a, b) => {
+                      const va = playerMetric(a, sortKey);
+                      const vb = playerMetric(b, sortKey);
+                      if (typeof va === "string" && typeof vb === "string") {
+                        return va.localeCompare(vb) * dir;
+                      }
+                      return ((va as number) - (vb as number)) * dir;
+                    });
+                  }
+                  const node = (
+                    <EditionRows
+                      key={ed.tcode}
+                      edition={ed}
+                      players={players}
+                      groupMode={true}
+                      hpr={hpr}
+                      is9={is9}
+                      globalRowOffset={offset}
+                    />
+                  );
+                  offset += players.length;
+                  return node;
+                });
+              })()
+            ) : (
+              (() => {
+                // Modo independente: aplanar TODAS as rondas de TODAS as
+                // edições e ordenar globalmente por toPar ASC. Permite
+                // misturar anos para comparar melhores scores.
+                const flat: FlatRow[] = [];
+                for (const ed of editions) {
+                  const players = ed.players.slice(0, limit);
+                  for (const pl of players) {
+                    for (const r of pl.rounds) flat.push({ pl, r, ed });
+                  }
+                }
+                const dir = sortDir === "asc" ? 1 : -1;
+                const cmp = (a: FlatRow, b: FlatRow): number => {
+                  switch (sortKey) {
+                    case "year":    return (a.ed.year.localeCompare(b.ed.year)) * dir;
+                    case "name":    return a.pl.name.localeCompare(b.pl.name) * dir;
+                    case "country": return (a.pl.country || "").localeCompare(b.pl.country || "") * dir;
+                    case "rnd":     return (a.r.rn - b.r.rn) * dir;
+                    case "topar":   return (a.r.toPar - b.r.toPar) * dir;
+                    case "gross":   return (a.r.gross - b.r.gross) * dir;
+                    case "birds":   return (a.r.birds - b.r.birds) * dir;
+                    case "pars":    return (a.r.pars  - b.r.pars)  * dir;
+                    case "bogeys":  return (a.r.bogeys - b.r.bogeys) * dir;
+                    case "pos":
+                    default: {
+                      // pos: fallback para ordem oficial (ano desc, place asc)
+                      const yr = b.ed.year.localeCompare(a.ed.year);
+                      if (yr !== 0) return yr;
+                      const ap = a.pl.officialPlace ?? Number.POSITIVE_INFINITY;
+                      const bp = b.pl.officialPlace ?? Number.POSITIVE_INFINITY;
+                      return (ap - bp) * dir;
+                    }
+                  }
+                };
+                flat.sort((a, b) => {
+                  const v = cmp(a, b);
+                  if (v !== 0) return v;
+                  // Tiebreaks: melhor (menor) toPar, depois gross
+                  return (a.r.toPar - b.r.toPar) || (a.r.gross - b.r.gross);
+                });
+                return flat.map((f, idx) => (
+                  <IndependentRow
+                    key={f.ed.tcode + "_" + f.pl.memberId + "_" + f.r.rn}
+                    f={f}
+                    pos={idx + 1}
+                    hpr={hpr}
+                    is9={is9}
+                  />
+                ));
+              })()
+            )}
           </tbody>
         </table>
       </div>
@@ -365,102 +542,31 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
   );
 }
 
-/** Banner + PAR row + linhas dos jogadores de UMA edição. */
-function EditionRows({ edition: ed, players, groupMode, hpr, is9, isFirst }: {
+/** Renderiza UMA edição (sem banner — coluna Ano substitui o banner). */
+function EditionRows({ edition: ed, players, groupMode, hpr, is9, globalRowOffset }: {
   edition: Edition;
   players: PlayerCard[];
   groupMode: boolean;
   hpr: number;
   is9: boolean;
-  isFirst: boolean;
+  globalRowOffset: number;
 }) {
-  // Colspan total: pos(1) + nome(1) + país(1) + R(1) + ±(1) + Tot(1)
-  //              + buracos(9) + Out(1) + (back 9 + In, se 18H)
-  //              + 🐦 + Par + ■ = 6 + 10 + (is9 ? 0 : 10) + 3
-  // Total cols = 19 (se 9H) ou 29 (se 18H).
-  const totalCols = 6 + (is9 ? 10 : 20) + 3;
+  // Em modo independente esta função NÃO é usada (ver fluxo abaixo no
+  // componente pai — usamos uma lista aplanada global).
+  if (!groupMode) return null;
 
-  // Para o ranking dos players no modo agrupado
   return (
     <>
-      {/* Banner da edição */}
-      <tr style={{ background: "var(--bg-muted)", borderTop: isFirst ? undefined : "3px solid var(--border)" }}>
-        <td
-          colSpan={totalCols}
-          style={{
-            padding: "6px 10px",
-            fontSize: 12, fontWeight: 700, color: "var(--text)",
-            position: "sticky", left: 0,
-          }}
-        >
-          <span style={{ fontSize: 14, fontWeight: 800 }}>{ed.year}</span>
-          {ed.course && (
-            <span style={{ fontSize: 12, color: "var(--text-2)", fontStyle: "italic", fontWeight: 500, marginLeft: 8 }}>
-              {ed.course}
-            </span>
-          )}
-          {ed.meters != null && (
-            <span style={{ fontSize: 11, color: "var(--text-2)", fontWeight: 600, marginLeft: 8 }}>
-              · {ed.meters}m
-            </span>
-          )}
-          {ed.parPerRound > 0 && (
-            <span style={{ fontSize: 11, color: "var(--text-2)", fontWeight: 600, marginLeft: 8 }}>
-              · Par {ed.parPerRound}
-            </span>
-          )}
-          <span style={{ fontSize: 10, color: "var(--text-3)", marginLeft: 8 }}>
-            · {ed.nRoundsMax} rondas · field {ed.fieldSize}
-          </span>
-          {/^\d+$/.test(ed.tcode) && (
-            <a href={`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${ed.tcode}`}
-               target="_blank" rel="noreferrer"
-               style={{ fontSize: 11, color: "var(--color-info)", fontWeight: 700, textDecoration: "none", marginLeft: 6 }}>
-              ↗
-            </a>
-          )}
-        </td>
-      </tr>
-
-      {/* Linha PAR específica da edição */}
-      {ed.par && (
-        <tr className="lb-par-row">
-          <td className="sticky-col-0" />
-          <td className="lb-par-lbl sticky-col-1" colSpan={4}>PAR</td>
-          <td className="lb-topar" />
-          <td className="lb-gross">{ed.parPerRound}</td>
-          {ed.par.slice(0, Math.min(9, hpr)).map((v, i) => (
-            <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v}</td>
-          ))}
-          <td className="lb-halftot">{ed.parF9}</td>
-          {!is9 && ed.par.slice(9, 18).map((v, i) => (
-            <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v}</td>
-          ))}
-          {!is9 && <td className="lb-halftot">{ed.parB9}</td>}
-          <td /><td /><td />
-        </tr>
-      )}
-
-      {/* Jogadores */}
-      {groupMode
-        ? players.map((pl, idx) => (
-            <GroupedPlayer key={pl.memberId} player={pl} idx={idx} ed={ed} hpr={hpr} is9={is9} />
-          ))
-        : (() => {
-            // Modo independente: aplanar TODAS as rondas dos jogadores e ordenar
-            // por toPar ASC. Mantém os jogadores cuja ronda é mostrada — não
-            // mais que `limit` linhas por jogador (já filtrado).
-            interface Flat { pl: PlayerCard; r: PlayerRound }
-            const flat: Flat[] = [];
-            for (const pl of players) {
-              for (const r of pl.rounds) flat.push({ pl, r });
-            }
-            flat.sort((a, b) => a.r.toPar - b.r.toPar || a.r.gross - b.r.gross);
-            return flat.map((f, idx) => (
-              <IndependentRow key={f.pl.memberId + "_" + f.r.rn} f={f} pos={idx + 1} ed={ed} hpr={hpr} is9={is9} />
-            ));
-          })()
-      }
+      {players.map((pl, idx) => (
+        <GroupedPlayer
+          key={ed.tcode + "_" + pl.memberId}
+          player={pl}
+          idx={idx + globalRowOffset}
+          ed={ed}
+          hpr={hpr}
+          is9={is9}
+        />
+      ))}
     </>
   );
 }
@@ -497,6 +603,10 @@ function GroupedPlayer({ player, idx, ed, hpr, is9 }: {
             <td className="lb-pos sticky-col-0" style={{ background: bg, borderTop: bTop }}>
               {isFirstRd ? posStr : ""}
             </td>
+            <td className="lb-tee fs-10 fw-600" style={{ borderTop: bTop, color: "var(--text-2)" }}
+                title={`${ed.year}${ed.course ? " · " + ed.course : ""}${ed.meters ? " · " + ed.meters + "m" : ""}${ed.parPerRound ? " · Par " + ed.parPerRound : ""}`}>
+              {isFirstRd ? ed.year : ""}
+            </td>
             <td className="lb-name sticky-col-1"
                 style={{ background: bg, fontWeight: isFirstRd ? 600 : 400, borderTop: bTop, maxWidth: 140, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
               {isFirstRd ? (
@@ -531,18 +641,24 @@ function GroupedPlayer({ player, idx, ed, hpr, is9 }: {
   );
 }
 
-function IndependentRow({ f, pos, ed, hpr, is9 }: {
-  f: { pl: PlayerCard; r: PlayerRound };
+interface FlatRow { pl: PlayerCard; r: PlayerRound; ed: Edition }
+
+function IndependentRow({ f, pos, hpr, is9 }: {
+  f: FlatRow;
   pos: number;
-  ed: Edition;
   hpr: number;
   is9: boolean;
 }) {
   const bg = pos % 2 === 1 ? undefined : "var(--bg-muted)";
   const bTop = "1px solid var(--border-light)";
+  const ed = f.ed;
   return (
     <tr style={{ background: bg, borderTop: bTop }}>
       <td className="lb-pos sticky-col-0" style={{ background: bg }}>{pos}</td>
+      <td className="lb-tee fs-10 fw-600" style={{ color: "var(--text-2)" }}
+          title={`${ed.year}${ed.course ? " · " + ed.course : ""}${ed.meters ? " · " + ed.meters + "m" : ""}${ed.parPerRound ? " · Par " + ed.parPerRound : ""}`}>
+        {ed.year}
+      </td>
       <td className="lb-name sticky-col-1 fw-600"
           style={{ background: bg, maxWidth: 140, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
         <a href={`/kids2#${encodeURIComponent(f.pl.name)}`}
