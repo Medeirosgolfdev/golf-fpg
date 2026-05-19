@@ -107,6 +107,30 @@ function ensureDir(dir) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 }
 
+/** Write `content` to `finalPath` atomically and verify it round-trips as JSON.
+ *  Writes to `tmpPath`, fsyncs, re-reads + JSON.parse to confirm no truncation,
+ *  then renames over the target. Throws if verification fails. */
+function writeFileAtomicVerified(tmpPath, finalPath, content) {
+  const fd = fs.openSync(tmpPath, "w");
+  try {
+    fs.writeSync(fd, content);
+    fs.fsyncSync(fd);
+  } finally {
+    fs.closeSync(fd);
+  }
+  // Verify integrity before committing the rename.
+  const readBack = fs.readFileSync(tmpPath, "utf8");
+  JSON.parse(readBack); // throws on truncation/corruption
+  if (readBack.length !== Buffer.byteLength(content)) {
+    // length mismatch (multi-byte chars) is fine as long as JSON.parse passed;
+    // only guard against obviously short writes.
+    if (readBack.length < content.length / 2) {
+      throw new Error(`short write: ${readBack.length} < ${content.length}`);
+    }
+  }
+  fs.renameSync(tmpPath, finalPath);
+}
+
 async function fetchText(url, { retries = 2, timeoutMs = 30000 } = {}) {
   let lastErr;
   for (let attempt = 0; attempt <= retries; attempt++) {
@@ -629,7 +653,12 @@ async function processTournament(t, args) {
   };
 
   ensureDir(args.outDir || OUT_DIR);
-  fs.writeFileSync(outPath, JSON.stringify(out, null, 2));
+  // Atomic + verified write: write to .tmp, re-parse to confirm integrity,
+  // fsync, then rename over the target. Prevents truncated JSON files if the
+  // process is interrupted (e.g. the libuv shutdown assertion on Windows).
+  const json = JSON.stringify(out, null, 2);
+  const tmpPath = outPath + ".tmp";
+  writeFileAtomicVerified(tmpPath, outPath, json);
   const totalPlayers = divisions.reduce((a, d) => a + d.players.length, 0);
   console.log(`  ✓ ${t.slug} — tid=${tid} divs=${divisions.length} players=${totalPlayers} rounds=${detectedRounds} entry=${entryMatched}/${entryTotal}`);
   return { slug: t.slug, status: "ok", tid, players: totalPlayers };

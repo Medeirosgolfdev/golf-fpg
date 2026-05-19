@@ -19,17 +19,17 @@ type Tab =
 // ── Lista de itens de navegação — editar aqui para adicionar/reordenar ──
 // `external: true` → abre em nova aba sem SPA navigation (ficheiros estáticos
 // em public/, dashboards externos, etc.)
-const NAV_ITEMS: { tab: Tab; label: string; path: string; external?: boolean }[] = [
+const NAV_ITEMS: { tab: Tab; label: string; path: string; external?: boolean; title?: string }[] = [
   { tab: "jogadores",  label: "Jogadores",    path: "/jogadores"  },
   { tab: "simulador",  label: "Simulador",    path: "/simulador"  },
   { tab: "calendario", label: "Calendário",   path: "/calendario" },
   { tab: "drive",      label: "🇵🇹 DRIVE",   path: "/drive"      },
+  { tab: "nacionais",  label: "🏆",           path: "/titulos", title: "Títulos" },
   { tab: "diversos",   label: "🇵🇹 FPG",     path: "/FPG"        },
-  { tab: "nacionais",  label: "🏆 Títulos",   path: "/titulos"          },
   { tab: "uskids",     label: "🇺🇸 USKids",  path: "/uskids"     },
   { tab: "doral",      label: "🇺🇸 Doral",   path: "/doral"      },
-  { tab: "ffg",        label: "🇫🇷 FFG",     path: "/ffg"        },
-  { tab: "england",    label: "🏴 England",  path: "/england"    },
+  { tab: "ffg",        label: "🇫🇷 France",  path: "/ffg"        },
+  { tab: "england",    label: "🏴󠁧󠁢󠁥󠁮󠁧󠁿 England",  path: "/england"    },
   { tab: "global-junior", label: "🌍 GJGL",     path: "/global-junior" },
   { tab: "rfeg",       label: "🇪🇸 RFEG",    path: "/rfeg"       },
   { tab: "bjgt",       label: "🇪🇸 BJGT",    path: "/bjgt"       },
@@ -158,12 +158,13 @@ export default function NavBar() {
           + navigate SPA (sem reload). Itens com `external: true` abrem em nova
           aba sem SPA — ficheiros estáticos servidos a partir de public/. */}
       <nav ref={navRef} className="nav nav-scroll">
-        {calUnlocked && NAV_ITEMS.map(({ tab: t, label, path, external }) => (
+        {calUnlocked && NAV_ITEMS.map(({ tab: t, label, path, external, title }) => (
           <a
             key={t}
             href={path}
             target={external ? "_blank" : undefined}
             rel={external ? "noopener" : undefined}
+            title={title}
             className={`nav-btn${tab === t ? " active" : ""}`}
             onClick={(e) => {
               if (external) return; // deixa o browser abrir o link em nova aba
