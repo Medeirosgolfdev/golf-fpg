@@ -14,6 +14,12 @@ import { cachedFetchJson } from "../../data/fetchCache";
 import { meanArr } from "../../utils/mathUtils";
 import { normName, type AutoRivalPlayer } from "../../data/KIDSdataLoader";
 import type { RivalPlayer, TournDef, RoundAvg } from "../../ui/bjgtAnalysisTypes";
+import HistoricScorecardsTab from "./HistoricScorecardsTab";
+import CourseTab from "./CourseTab";
+import { scClass } from "../../utils/scoreDisplay";
+import CourseHeroCard from "../../ui/CourseHeroCard";
+import { useAppContext } from "../../context/AppContext";
+import type { Course, Tee } from "../../data/types";
 
 // Mapeamento país-ISO (curto) → nome extenso (RivaisDashboard usa "co" extenso)
 const CO_FULL: Record<string, string> = {
@@ -205,8 +211,9 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
   const [ffgData, setFfgData] = useState<Map<number, FFGFile>>(new Map());
   const [torneioT, setTorneioT] = useState<number>(defaultT);
   const [escalaoNome, setEscalaoNome] = useState<string>(defaultEscalao);
-  // Tab activa: PLAYERS (cross-table de rivais) ou SCORES (pancadas top-N históricas)
-  const [activeTab, setActiveTab] = useState<"players" | "scores">("players");
+  // Tab activa: PLAYERS (cross-table de rivais), SCORES (totais por ronda),
+  // SCORECARDS (pancadas hole-by-hole top-N) ou CAMPO (anatomia do campo).
+  const [activeTab, setActiveTab] = useState<"players" | "scores" | "scorecards" | "campo">("players");
 
   // Load field + member history
   useEffect(() => {
@@ -1043,9 +1050,23 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
         >
           Scores
         </button>
+        <button
+          onClick={() => setActiveTab("scorecards")}
+          style={tabBtnStyle(activeTab === "scorecards")}
+          title="Scorecards hole-by-hole dos top-N de cada edição"
+        >
+          Scorecards
+        </button>
+        <button
+          onClick={() => setActiveTab("campo")}
+          style={tabBtnStyle(activeTab === "campo")}
+          title="Anatomia do campo onde se joga o torneio"
+        >
+          O Campo
+        </button>
       </div>
 
-      {activeTab === "players" ? (
+      {activeTab === "players" && (
         dataset
           ? <RivaisDashboard
               onSelectPlayer={onSelectPlayer}
@@ -1069,8 +1090,15 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
               })()}
             />
           : <div className="muted p-16">Sem dados para este torneio/escalão.</div>
-      ) : (
+      )}
+      {activeTab === "scores" && (
         <HistoricTopNTable mh={mh} torneio={futureTorneios.find(x => x.t === torneioT) || null} escalaoNome={escalaoNome} autoRivals={autoRivals} />
+      )}
+      {activeTab === "scorecards" && (
+        <HistoricScorecardsTab mh={mh} torneio={futureTorneios.find(x => x.t === torneioT) || null} escalaoNome={escalaoNome} />
+      )}
+      {activeTab === "campo" && (
+        <CourseTab torneio={futureTorneios.find(x => x.t === torneioT) || null} escalaoNome={escalaoNome} mh={mh} />
       )}
     </div>
   );
