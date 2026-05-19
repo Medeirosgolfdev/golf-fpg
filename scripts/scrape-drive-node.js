@@ -104,6 +104,47 @@ function loadCookies() {
 const COOKIE = loadCookies();
 
 // ═══════════════════════════════════════════════════════════
+// COOKIE JAR — captura Set-Cookie por host ao longo de cadeias de
+// redirect (incluindo cross-domain scoring-pt → scoring). O fetch
+// nativo do Node com redirect:"follow" NÃO propaga cookies entre
+// origens diferentes, por isso seguimos os redirects à mão.
+// Padrão portado de scripts/probe-admissions-sources.js.
+// ═══════════════════════════════════════════════════════════
+const jar = new Map();  // host → Map(name → value)
+
+function jarAbsorb(urlStr, setCookieList) {
+  if (!setCookieList || setCookieList.length === 0) return 0;
+  const host = new URL(urlStr).hostname;
+  if (!jar.has(host)) jar.set(host, new Map());
+  const m = jar.get(host);
+  let added = 0;
+  for (const raw of setCookieList) {
+    const seg = raw.split(";")[0].trim();
+    const eq = seg.indexOf("=");
+    if (eq < 0) continue;
+    const name = seg.slice(0, eq).trim();
+    const value = seg.slice(eq + 1).trim();
+    if (!m.has(name) || m.get(name) !== value) added++;
+    m.set(name, value);
+  }
+  return added;
+}
+
+function jarToHeader(urlStr, baseCookieHeader = COOKIE) {
+  const host = new URL(urlStr).hostname;
+  const combined = new Map();
+  if (baseCookieHeader) baseCookieHeader.split(";").forEach(p => {
+    const seg = p.trim();
+    const eq = seg.indexOf("=");
+    if (eq > 0) combined.set(seg.slice(0, eq).trim(), seg.slice(eq + 1).trim());
+  });
+  const jarForHost = jar.get(host);
+  if (jarForHost) for (const [k, v] of jarForHost) combined.set(k, v);
+  return [...combined.entries()].map(([k, v]) => `${k}=${v}`).join("; ");
+}
+
+
+// ═══════════════════════════════════════════════════════════
 // WARMUP — entry-gate cross-domain (copiado de scrape-fpg-admissions-draws-node.js
 // Fonte 3, linha 350). Reactiva sessão ASP.NET expirada por inactividade antes
 // do primeiro POST. O `ack` é universal — não é o hash dinâmico do browser.
@@ -111,20 +152,41 @@ const COOKIE = loadCookies();
 // detalhada sobre cookies expirados.
 // ═══════════════════════════════════════════════════════════
 async function warmupEntryGate() {
-  const warmupUrl = `https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club=ALL&ack=${ACK_TOURNLIST}`;
+  // Segue redirects À MÃO para podermos recolher Set-Cookie em cada hop
+  // e propagar a sessão renovada cross-domain (scoring-pt → scoring).
+  let url = `https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club=ALL&ack=${ACK_TOURNLIST}`;
+  let hops = 0;
+  let totalCookies = 0;
   try {
-    const r = await fetch(warmupUrl, {
-      headers: {
-        "User-Agent": UA, "Cookie": COOKIE,
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Accept-Language": "pt-PT,pt;q=0.9",
-      },
-      redirect: "follow",
-    });
-    await r.text();
-    log(`warmup entry-gate HTTP ${r.status}`);
+    while (hops < 10) {
+      const r = await fetch(url, {
+        method: "GET",
+        headers: {
+          "User-Agent": UA,
+          "Cookie": jarToHeader(url),
+          "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+          "Accept-Language": "pt-PT,pt;q=0.9",
+        },
+        redirect: "manual",
+      });
+      const setCookies = typeof r.headers.getSetCookie === "function" ? r.headers.getSetCookie() : [];
+      jarAbsorb(url, setCookies);
+      totalCookies += setCookies.length;
+      if (r.status >= 300 && r.status < 400) {
+        const loc = r.headers.get("location");
+        if (!loc) { await r.text(); break; }
+        url = new URL(loc, url).toString();
+        hops++;
+        continue;
+      }
+      await r.text();
+      const jarSummary = [...jar.entries()].map(([h, m]) => `${h.split(".")[0]}:${m.size}`).join(",");
+      log(`warmup entry-gate HTTP ${r.status} (${hops} redirect${hops === 1 ? "" : "s"}, ${totalCookies} Set-Cookie, jar={${jarSummary}})`);
+      return;
+    }
+    warn(`warmup entry-gate atingiu limite de ${hops} redirects — pode haver loop`);
   } catch (e) {
-    warn(`warmup entry-gate falhou: ${e.message} — continuar mesmo assim`);
+    warn(`warmup entry-gate falhou: ${e.message} — continuar com cookies originais`);
   }
 }
 
@@ -142,10 +204,13 @@ async function dgPost(pathname, bodyObj, queryString = "") {
       "Origin": "https://scoring.datagolf.pt",
       "Referer": `${BASE_URL}/tournaments.aspx`,
       "User-Agent": UA,
-      "Cookie": COOKIE,
+      "Cookie": jarToHeader(url),
     },
     body: JSON.stringify(bodyObj),
   });
+  // Apanhar Set-Cookie em todas as respostas (ex: rotação de SessionId)
+  const setCookies = typeof res.headers.getSetCookie === "function" ? res.headers.getSetCookie() : [];
+  if (setCookies.length > 0) jarAbsorb(url, setCookies);
   if (!res.ok) throw new Error(`HTTP ${res.status} em ${pathname}`);
   const json = await res.json();
   const d = json.d || json;

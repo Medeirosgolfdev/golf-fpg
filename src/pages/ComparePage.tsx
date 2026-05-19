@@ -505,10 +505,10 @@ function HeroCard({ course, tee }: { course: Course; tee: Tee }) {
                     >
                       <span style={{ fontSize: 10, fontWeight: 700, opacity: 0.85 }}>B{h.hole}</span>
                       <span style={{ fontSize: 15, fontWeight: 800, lineHeight: 1.1, marginTop: 2 }}>
-                        {h.distance != null && h.distance > 0 ? h.distance : "—"}
+                        {h.distance != null && h.distance > 0 ? <>{h.distance}<span style={{ fontSize: 10, fontWeight: 600, opacity: 0.85, marginLeft: 1 }}>m</span></> : "—"}
                       </span>
                       <span style={{ fontSize: 9, fontWeight: 600, opacity: 0.75, marginTop: 1 }}>
-                        m · par {h.par ?? "?"}
+                        par {h.par ?? "?"}
                       </span>
                     </div>
                   );
