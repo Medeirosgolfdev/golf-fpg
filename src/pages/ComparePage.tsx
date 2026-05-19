@@ -161,7 +161,11 @@ const DEFAULT_DIR: Record<SimSortKey, "asc" | "desc"> = {
   dist: "desc", par: "desc", slope: "desc", cr: "desc", overall: "desc",
 };
 
-function SimilarityTable({ rows }: { rows: SimRow[] }) {
+function SimilarityTable({ rows, onPick, pickedKey }: {
+  rows: SimRow[];
+  onPick?: (row: SimRow) => void;
+  pickedKey?: string | null;
+}) {
   const [sortKey, setSortKey] = useState<SimSortKey>("overall");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
 
@@ -199,14 +203,24 @@ function SimilarityTable({ rows }: { rows: SimRow[] }) {
           </tr>
         </thead>
         <tbody>
-          {sortedRows.map(({ course, tee, sim, tier }) => {
+          {sortedRows.map((row) => {
+            const { course, tee, sim, tier } = row;
             const teePar = getParTotal(tee);
-            // Key inclui sex+slope+CR para distinguir M/F com mesmo teeId
             const sl = tee.ratings?.holes18?.slopeRating ?? "";
             const crr = tee.ratings?.holes18?.courseRating ?? "";
             const rowKey = `${course.courseKey}|${tee.teeId}|${tee.sex}|${sl}|${crr}`;
+            const isPicked = pickedKey === rowKey;
             return (
-              <tr key={rowKey}>
+              <tr
+                key={rowKey}
+                onClick={() => onPick?.(row)}
+                style={{
+                  cursor: onPick ? "pointer" : undefined,
+                  background: isPicked ? "var(--accent-light)" : undefined,
+                  outline: isPicked ? "2px solid var(--accent)" : undefined,
+                }}
+                title={onPick ? "Click para comparar buracos com este campo" : undefined}
+              >
                 <td style={{ fontWeight: 700 }}>{course.master.name}</td>
                 <td className="muted">{tee.teeName}</td>
                 <td className="r" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{tee.distances?.total ?? "–"}</td>
@@ -246,16 +260,22 @@ function SimilarityTable({ rows }: { rows: SimRow[] }) {
 // ── Cor por buraco: gradiente HSL forte dentro do par (curto=claro → longo=escuro)
 const PAR_HSL: Record<3 | 4 | 5, { h: number; s: number }> = {
   3: { h: 142, s: 65 },  // verde
-  4: { h: 33,  s: 92 },  // âmbar/laranja
+  4: { h: 270, s: 55 },  // roxo — distinto de verde, vermelho, azul (birdies) e laranja (eagles)
   5: { h: 355, s: 72 },  // vermelho
 };
 function holeColor(par: 3 | 4 | 5, t: number): { bg: string; fg: string; border: string } {
   // t: 0 (mais curto do par) → 1 (mais longo)
-  const { h, s } = PAR_HSL[par];
-  const l = 80 - t * 50;             // 80% (claro) → 30% (escuro)
-  const fg = l > 58 ? "#1c2617" : "#fff";
-  const borderL = Math.max(20, l - 12);
-  return { bg: `hsl(${h}deg, ${s}%, ${l}%)`, fg, border: `hsl(${h}deg, ${s}%, ${borderL}%)` };
+  // Lightness comprimida (82% → 55%) para que texto escuro seja sempre legível —
+  // gradiente é dado também por saturação (45% → 95%) para manter punch visual.
+  const { h, s: sMax } = PAR_HSL[par];
+  const l = 82 - t * 27;             // 82% (pastel) → 55% (saturado mid)
+  const s = 45 + t * (sMax - 45);    // 45% (washed) → sMax (vivo)
+  const borderL = Math.max(28, l - 22);
+  return {
+    bg: `hsl(${h}deg, ${s}%, ${l}%)`,
+    fg: "#1c2617",                   // sempre texto escuro — consistente
+    border: `hsl(${h}deg, ${sMax}%, ${borderL}%)`,
+  };
 }
 
 /** Devolve uma lista plana ordenada por número de buraco, com cor já calculada. */
@@ -463,10 +483,12 @@ function HeroCard({ course, tee }: { course: Course; tee: Tee }) {
               })}
             </div>
           ) : (
-            /* ═══ Vista Por buraco: sequência B1 → B18 ═══ */
+            /* ═══ Vista Por buraco: F9 e B9 separados em duas linhas ═══ */
             <div>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-                {orderedHoles.map(h => {
+              {(() => {
+                const front9 = orderedHoles.filter(h => h.hole >= 1 && h.hole <= 9);
+                const back9  = orderedHoles.filter(h => h.hole >= 10 && h.hole <= 18);
+                const renderHole = (h: typeof orderedHoles[0]) => {
                   const col = h.color;
                   return (
                     <div
@@ -474,7 +496,7 @@ function HeroCard({ course, tee }: { course: Course; tee: Tee }) {
                       title={`Buraco ${h.hole} · Par ${h.par ?? "?"} · ${h.distance ?? "—"}m`}
                       style={{
                         display: "flex", flexDirection: "column", alignItems: "center",
-                        minWidth: 56, padding: "6px 4px 8px", borderRadius: 8,
+                        flex: "1 1 0", minWidth: 52, padding: "6px 4px 8px", borderRadius: 8,
                         background: col?.bg ?? "var(--bg-muted)",
                         color: col?.fg ?? "var(--text-3)",
                         border: `1px solid ${col?.border ?? "var(--border)"}`,
@@ -490,8 +512,39 @@ function HeroCard({ course, tee }: { course: Course; tee: Tee }) {
                       </span>
                     </div>
                   );
-                })}
-              </div>
+                };
+                const sumDist = (arr: typeof orderedHoles) =>
+                  arr.reduce((s, h) => s + (h.distance ?? 0), 0);
+                const sumPar = (arr: typeof orderedHoles) =>
+                  arr.reduce((s, h) => s + (h.par ?? 0), 0);
+
+                return (
+                  <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                    {front9.length > 0 && (
+                      <div>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6, fontSize: 11, color: "var(--text-3)" }}>
+                          <span className="h-xs" style={{ marginBottom: 0 }}>Front 9</span>
+                          <span>Par {sumPar(front9)} · {sumDist(front9)}m</span>
+                        </div>
+                        <div style={{ display: "flex", gap: 4 }}>
+                          {front9.map(renderHole)}
+                        </div>
+                      </div>
+                    )}
+                    {back9.length > 0 && (
+                      <div>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6, fontSize: 11, color: "var(--text-3)" }}>
+                          <span className="h-xs" style={{ marginBottom: 0 }}>Back 9</span>
+                          <span>Par {sumPar(back9)} · {sumDist(back9)}m</span>
+                        </div>
+                        <div style={{ display: "flex", gap: 4 }}>
+                          {back9.map(renderHole)}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
               {/* Legenda */}
               <div style={{ display: "flex", gap: 16, marginTop: 12, flexWrap: "wrap", fontSize: 11, color: "var(--text-3)" }}>
                 {([3, 4, 5] as const).map(p => {
@@ -534,6 +587,7 @@ function CourseComparisonView({ simCourses }: { simCourses: Course[] }) {
 
   const [selectedCourseKey, setSelectedCourseKey] = useState<string>(defaultCourseKey);
   const [selectedTeeId, setSelectedTeeId] = useState<string>("");
+  const [pickedRow, setPickedRow] = useState<SimRow | null>(null);
 
   const selectedCourse = useMemo(
     () => sortedCourses.find(c => c.courseKey === selectedCourseKey),
@@ -626,14 +680,44 @@ function CourseComparisonView({ simCourses }: { simCourses: Course[] }) {
               </span>
             </div>
             <div className="muted" style={{ fontSize: 12, marginTop: -6, marginBottom: 12 }}>
-              Pesos: 25% distância · 15% par · 60% min(slope, CR) · Clica nos cabeçalhos para ordenar
+              Pesos: 25% distância · 15% par · 60% min(slope, CR) · Clica no cabeçalho para ordenar · Clica numa linha para comparar buracos
             </div>
             {similarities.length === 0 ? (
               <EmptyState icon="🔍" message="Sem campos suficientemente parecidos." />
             ) : (
-              <SimilarityTable rows={similarities} />
+              <SimilarityTable
+                rows={similarities}
+                pickedKey={pickedRow ? `${pickedRow.course.courseKey}|${pickedRow.tee.teeId}|${pickedRow.tee.sex}|${pickedRow.tee.ratings?.holes18?.slopeRating ?? ""}|${pickedRow.tee.ratings?.holes18?.courseRating ?? ""}` : null}
+                onPick={(row) => setPickedRow(prev => prev && prev.tee === row.tee ? null : row)}
+              />
             )}
           </div>
+
+          {pickedRow && (
+            <div className="card" style={{ borderLeft: "4px solid var(--accent)" }}>
+              <div className="h-md" style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 6 }}>
+                <span>🆚 Comparação de buracos</span>
+                <span className="muted" style={{ fontSize: 12, fontWeight: 500 }}>
+                  {selectedCourse.master.name} <span style={{ color: "var(--accent)" }}>·</span> {pickedRow.course.master.name}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setPickedRow(null)}
+                  style={{
+                    marginLeft: "auto", padding: "4px 10px", fontSize: 11, fontWeight: 600,
+                    background: "var(--bg-muted)", border: "1px solid var(--border)",
+                    borderRadius: 6, cursor: "pointer", color: "var(--text-2)",
+                  }}
+                >
+                  ✕ Fechar
+                </button>
+              </div>
+              <div className="muted" style={{ fontSize: 12, marginBottom: 12 }}>
+                Hero completo do campo comparado — usa o toggle "Por par / Por buraco" para alinhar a vista com o campo principal acima.
+              </div>
+              <HeroCard course={pickedRow.course} tee={pickedRow.tee} />
+            </div>
+          )}
         </>
       )}
     </>
