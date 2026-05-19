@@ -349,11 +349,20 @@ function EvoSummary({ evo, evoYear }: { evo: Map<string, EvoEntry>; evoYear: str
 /* ═══════════════════════════════════════════════════════════════
    TOURNAMENT VIEW — day tabs
    ═══════════════════════════════════════════════════════════════ */
-function TournView({ def, evo, evoYear }: { def: TDef; evo?: Map<string, EvoEntry>; evoYear?: string }) {
+function TournView({ def, evo, evoYear, selectedDivision }: { def: TDef; evo?: Map<string, EvoEntry>; evoYear?: string; selectedDivision?: string | null }) {
   const { data, manuelName } = def;
   const hasEvo = evo && evo.size > 0;
 
-  const tournament = useMemo(() => tDataToTournament(data, def), [data, def]);
+  // Filter players by selectedDivision if provided
+  const filteredData = useMemo(() => {
+    if (!selectedDivision) return data;
+    return {
+      ...data,
+      players: data.players.filter(p => (p as any).divisions?.includes(selectedDivision) ?? false)
+    };
+  }, [data, selectedDivision]);
+
+  const tournament = useMemo(() => tDataToTournament(filteredData, def), [filteredData, def]);
   const scOptions = useMemo(() => bjgtScorecardOptions(), []);
 
   // Round labels com datas (e.g. "R1 · 25 Fev")
@@ -445,12 +454,18 @@ function TournView({ def, evo, evoYear }: { def: TDef; evo?: Map<string, EvoEntr
 
 function Content() {
   const [ti, setTi] = useState(0);
+  const [selectedDivision, setSelectedDivision] = useState<string | null>(null);
   const [URLS, setURLS] = useState<UrlEntry[]>([]);
   const [all, setAll] = useState<(TDef | null)[]>([]);
   const [loading, setLoading] = useState(true);
   const [fileMeta, setFileMeta] = useState<DataSource[]>([]);
   const { kidsMap } = useKidsLinkMap();
   const md = useMasterDetail();
+
+  // Reset selectedDivision when tournament changes
+  useEffect(() => {
+    setSelectedDivision(null);
+  }, [ti]);
 
   useEffect(() => {
     let alive = true;
@@ -538,47 +553,55 @@ function Content() {
                 <SidebarSectionTitle dark>
                   England Golf -- Torneios Juvenis
                 </SidebarSectionTitle>
-                {seriesYears.map(year => {
+                {seriesYears.flatMap(year => {
                   const yearUrls = seriesUrls.filter(u => u.year === year);
-                  const isActiveYear = cur?.year === year && cur?.series === series;
-                  // Agregados do ano: total de jogadores (soma dos escalões com dados)
-                  // e flag para mostrar pill do Manuel.
-                  let totalPlayers = 0;
-                  let escWithData = 0;
-                  let manuelPlayed = false;
-                  for (const u of yearUrls) {
+                  const yearUrlsWithData = yearUrls.filter(u => all[URLS.indexOf(u)] != null);
+                  if (!yearUrlsWithData.length) return [];
+
+                  // Year header
+                  const yearHeader = (
+                    <div key={`year-${series}-${year}`} style={{
+                      backgroundColor: "#1e3a5f",
+                      color: "#fff",
+                      padding: "12px 8px",
+                      marginBottom: 8,
+                      fontWeight: 600,
+                      fontSize: 14,
+                      borderRadius: "4px"
+                    }}>
+                      {year}
+                    </div>
+                  );
+
+                  // Tournament buttons
+                  const tourButtons = yearUrlsWithData.map(u => {
                     const idx = URLS.indexOf(u);
                     const d = all[idx];
-                    if (!d) continue;
-                    const nR = Math.max(...d.data.players.map(p => p.rounds.length), 0);
-                    totalPlayers += d.data.players.filter(p => p.rounds.length === nR).length;
-                    escWithData++;
-                    if (d.data.players.some(p => isM(p.name))) manuelPlayed = true;
-                  }
-                  return (
-                    <button key={`${series}_${year}`}
-                      className={`course-item ${isActiveYear ? "active" : ""}`}
-                      style={isEowagr && isActiveYear ? { borderLeft: "4px solid var(--color-warn-vivid)" } : isEowagr ? { borderLeft: "4px solid transparent" } : {}}
-                      onClick={() => {
-                        // Prefere o escalão onde Manuel jogou; senão o primeiro com dados.
-                        const withManuel = yearUrls.find(u => {
-                          const d = all[URLS.indexOf(u)];
-                          return d?.data.players.some(p => isM(p.name));
-                        });
-                        const withData = yearUrls.find(u => all[URLS.indexOf(u)] != null);
-                        const target = withManuel ?? withData ?? yearUrls[0];
-                        setTi(URLS.indexOf(target));
-                        md.onSelect();
-                      }}>
-                      <div className="course-item-name" style={{ fontSize: 14 }}>{year}</div>
-                      <div className="course-item-meta">{yearUrls.length} torneio(s)</div>
-                      <div className="course-item-meta" style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
-                        <span>{escWithData}/{yearUrls.length} escalões</span>
-                        {totalPlayers > 0 && <><span className="muted">·</span><span>{totalPlayers} jog</span></>}
-                        {manuelPlayed && <ManuelPill />}
-                      </div>
-                    </button>
-                  );
+                    const isActive = idx === ti;
+                    const nR = d ? Math.max(...d.data.players.map(p => p.rounds.length), 0) : 0;
+                    const nP = d ? d.data.players.filter(p => p.rounds.length === nR).length : 0;
+                    const hasManuel = d?.data.players.some(p => isM(p.name)) ?? false;
+
+                    return (
+                      <button
+                        key={u.id}
+                        className={`course-item ${isActive ? "active" : ""}`}
+                        onClick={() => { setTi(idx); md.onSelect(); }}
+                        style={{ marginBottom: 6 }}
+                      >
+                        <div className="course-item-name">{u.shortLabel}</div>
+                        <div className="course-item-meta" style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
+                          <span>{u.category}</span>
+                          <span className="muted">·</span>
+                          <span>{nP} jog</span>
+                          {nR > 1 && <RoundPill nR={nR} />}
+                          {hasManuel && <ManuelPill />}
+                        </div>
+                      </button>
+                    );
+                  });
+
+                  return [yearHeader, ...tourButtons];
                 })}
               </React.Fragment>
             );
@@ -592,42 +615,64 @@ function Content() {
               title={`${cur.year} · ${cur.category}`}
               sub={<>
                 <span className="muted">📍 {((cur.data as unknown) as { course?: string }).course || URLS[ti]?.shortLabel || ""}</span>
+                {(() => {
+                  const data = cur.data as any;
+                  const parTotal = data.parTotal;
+                  const metersTotal = data.metersTotal;
+                  return (
+                    <>
+                      {parTotal && <span className="chip ml-8">Par {parTotal}</span>}
+                      {metersTotal && <span className="chip ml-4">{metersTotal}m</span>}
+                    </>
+                  );
+                })()}
                 <span className="chip ml-8">{fmtFieldInfo(cur.data.players.filter(p => p.rounds.length === Math.max(...cur.data.players.map(pp => pp.rounds.length))).length, Math.max(...cur.data.players.map(p => p.rounds.length)), cur.category)}</span>
+                {(() => {
+                  const nR = Math.max(...cur.data.players.map(p => p.rounds.length), 0);
+                  return nR > 1 ? <RoundPill nR={nR} /> : null;
+                })()}
                 <ExtLink href={URLS[ti].sourceUrl} className="tourn-ext-link ml-8">🔗 Leaderboard oficial</ExtLink>
               </>}
             />
-            {/* Tabs de escalão dentro do ano (padrão DORALPage) — só aparece
-                quando há mais que um escalão no ano actual. */}
+            {/* Division tabs — extracted from player.divisions[] */}
             {(() => {
-              const yearUrls = URLS.filter(u => u.year === cur.year && u.series === cur.series);
-              if (yearUrls.length <= 1) return null;
+              const allDivisions = new Set<string>();
+              cur.data.players.forEach(p => {
+                (p as any).divisions?.forEach((d: string) => allDivisions.add(d));
+              });
+
+              if (allDivisions.size <= 1) return null;
+
+              const divisions = Array.from(allDivisions).sort();
               return (
                 <div style={{ display: "flex", gap: 2, flexWrap: "wrap", borderBottom: "1px solid var(--border)", marginBottom: 10, overflowX: "auto" }}>
-                  {yearUrls.map(u => {
-                    const idx = URLS.indexOf(u);
-                    const d = all[idx];
-                    const active = idx === ti;
-                    const eNR = d ? Math.max(...d.data.players.map(p => p.rounds.length), 0) : 0;
-                    const eNP = d ? d.data.players.filter(p => p.rounds.length === eNR).length : 0;
-                    const eHasManuel = d?.data.players.some(p => isM(p.name)) ?? false;
-                    const hasData = !!d;
+                  <button
+                    type="button"
+                    onClick={() => setSelectedDivision(null)}
+                    className={"tab-under" + (!selectedDivision ? " active" : "")}
+                    style={{ fontSize: 13 }}
+                  >
+                    Todos ({cur.data.players.length})
+                  </button>
+                  {divisions.map(div => {
+                    const count = cur.data.players.filter(p => (p as any).divisions?.includes(div)).length;
+                    const active = selectedDivision === div;
                     return (
-                      <button key={u.id}
+                      <button
+                        key={div}
                         type="button"
-                        onClick={() => { if (hasData) setTi(idx); }}
+                        onClick={() => setSelectedDivision(div)}
                         className={"tab-under" + (active ? " active" : "")}
-                        title={hasData ? u.category : `${u.category} — sem dados`}
-                        style={!hasData ? { opacity: 0.45, cursor: "not-allowed", color: "var(--text-3)" } : undefined}>
-                        {u.category}
-                        {d && <span className="fs-10 muted" style={{ marginLeft: 4 }}>{eNP}</span>}
-                        {eHasManuel && <span style={{ marginLeft: 4, color: "var(--color-good)" }}>★</span>}
+                        style={{ fontSize: 13 }}
+                      >
+                        {div} <span className="fs-10 muted" style={{ marginLeft: 4 }}>({count})</span>
                       </button>
                     );
                   })}
                 </div>
               );
             })()}
-            <TournView def={cur} evo={evoMap} evoYear={evoYear} />
+            <TournView def={cur} evo={evoMap} evoYear={evoYear} selectedDivision={selectedDivision} />
             {/* EvoComparison removida para England Golf */}
           </>) : <div className="center-msg muted">Dados não disponíveis</div>}
         </div>
