@@ -52,6 +52,7 @@ const FPGPage = lazy(() => import("./pages/FPGPage"));
 const DORALPage = lazy(() => import("./pages/DORALPage"));
 const FFGPage = lazy(() => import("./pages/FFGPage"));
 const EnglandGolfPage = lazy(() => import("./pages/EnglandGolfPage"));
+const GlobalJuniorPage = lazy(() => import("./pages/GlobalJuniorPage"));
 const RFEGPage = lazy(() => import("./pages/RFEGPage"));
 const NacionaisJovensPage = lazy(() => import("./pages/NacionaisJovensPage"));
 const TitulosPage = lazy(() => import("./pages/TitulosPage"));
@@ -313,6 +314,8 @@ export default function App() {
                 <Route path="/doral" element={<DORALPage />} />
                 <Route path="/ffg" element={<FFGPage />} />
                 <Route path="/england" element={<EnglandGolfPage />} />
+                <Route path="/global-junior" element={<GlobalJuniorPage />} />
+                <Route path="/global-junior/:slug" element={<GlobalJuniorPage />} />
                 <Route path="/rfeg" element={<RFEGPage />} />
                 <Route path="/rfeg/:compId" element={<RFEGPage />} />
                 <Route path="/rfeg/:source/:id" element={<RFEGPage />} />
