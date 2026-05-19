@@ -84,19 +84,18 @@ interface SimilarityScore {
   overall: number;
 }
 
-function pctDiff(a: number, b: number): number {
-  // Diferença percentual entre dois valores. Se algum for inválido devolve Infinity
-  // (penalização máxima — sem dados não há similaridade, contrário ao bug anterior
-  // que devolvia 0 e dava 100% de "match" para campos sem slope/CR).
-  if (!a || !b) return Infinity;
-  return Math.abs(a - b) / ((a + b) / 2) * 100;
-}
-
 /**
- * Calcula similitude com pesos 25/15/30/30 (distância/par/slope/CR).
- * Devolve `null` se o tee de comparação não tem slope OU CR — sem esses
- * 60% do peso, qualquer "similitude" seria espúria. Tees sem rating
- * oficial são excluídos da lista de comparações.
+ * Calcula similitude entre dois tees. Escala absoluta de diferenças:
+ *   • distância: 1000m de diff → 0 pontos
+ *   • par: 4 strokes de diff → 0 pontos
+ *   • slope: 15 pontos de diff → 0 pontos
+ *   • CR: 3 strokes de diff → 0 pontos
+ *
+ * Pesos: 25% distância, 15% par, 60% min(slope, CR).
+ * O min força que AMBOS slope E CR sejam parecidos — não chega ter um.
+ * Sem essa restrição, um campo com slope 128 (vs 139 do Santo da Serra) e CR
+ * idêntico passava como 89% similar, o que é falso (slope é difference de
+ * dificuldade real). Tees sem slope/CR são excluídos.
  */
 function calculateSimilarity(tee1: Tee | null | undefined, tee2: Tee): SimilarityScore | null {
   if (!tee1) return null;
@@ -110,15 +109,22 @@ function calculateSimilarity(tee1: Tee | null | undefined, tee2: Tee): Similarit
   const cr1 = tee1.ratings?.holes18?.courseRating ?? 0;
   const cr2 = tee2.ratings?.holes18?.courseRating ?? 0;
 
-  // Excluir tees sem rating oficial (60% do peso da similitude)
-  if (!slope2 || !cr2) return null;
+  // Excluir tees sem rating oficial e sem distância — sem dados não há comparação
+  if (!slope1 || !slope2 || !cr1 || !cr2 || !dist1 || !dist2) return null;
 
-  const distScore = Math.max(0, 100 - pctDiff(dist1, dist2) * 2);
-  const parScore = Math.max(0, 100 - pctDiff(par1, par2) * 5);
-  const slopeScore = Math.max(0, 100 - pctDiff(slope1, slope2) * 3);
-  const crScore = Math.max(0, 100 - pctDiff(cr1, cr2) * 10);
+  const distDiff = Math.abs(dist1 - dist2);
+  const parDiff = Math.abs(par1 - par2);
+  const slopeDiff = Math.abs(slope1 - slope2);
+  const crDiff = Math.abs(cr1 - cr2);
 
-  const overall = distScore * 0.25 + parScore * 0.15 + slopeScore * 0.30 + crScore * 0.30;
+  const distScore = Math.max(0, 100 - distDiff * 0.10);          // 1000m → 0
+  const parScore = Math.max(0, 100 - parDiff * 25);              // 4 strokes → 0
+  const slopeScore = Math.max(0, 100 - slopeDiff * (100 / 15));  // 15 → 0
+  const crScore = Math.max(0, 100 - crDiff * (100 / 3));         // 3 strokes → 0
+
+  // min(slope, cr) força ambos altos para haver similitude real
+  const difficultyScore = Math.min(slopeScore, crScore);
+  const overall = distScore * 0.25 + parScore * 0.15 + difficultyScore * 0.60;
 
   return {
     distance: distScore,
@@ -155,31 +161,47 @@ type SimRow = {
 
 type SimSortKey = "name" | "tee" | "dist" | "par" | "slope" | "cr" | "overall";
 
+/** Extrai o valor numérico/string a usar para ordenar uma row por uma key. */
+function getSortValue(row: SimRow, key: SimSortKey): number | string {
+  switch (key) {
+    case "name":    return row.course.master.name.toLowerCase();
+    case "tee":     return row.tee.teeName.toLowerCase();
+    case "dist":    return row.tee.distances?.total ?? -1;
+    case "par":     return getParTotal(row.tee);
+    case "slope":   return row.tee.ratings?.holes18?.slopeRating ?? -1;
+    case "cr":      return row.tee.ratings?.holes18?.courseRating ?? -1;
+    case "overall": return row.sim.overall;
+  }
+}
+
+/** Direcção default para cada key — números desc, strings asc. */
+const DEFAULT_DIR: Record<SimSortKey, "asc" | "desc"> = {
+  name: "asc", tee: "asc",
+  dist: "desc", par: "desc", slope: "desc", cr: "desc", overall: "desc",
+};
+
 function SimilarityTable({ rows }: { rows: SimRow[] }) {
-  const { sortKey, sortDir, toggleSort } = useSort<SimSortKey>("overall", "desc", {
-    name: "asc", tee: "asc",
-    dist: "desc", par: "desc", slope: "desc", cr: "desc", overall: "desc",
-  });
+  // useState local — sem indirecção, garante re-render
+  const [sortKey, setSortKey] = useState<SimSortKey>("overall");
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
+
+  const handleSort = (k: SimSortKey) => {
+    if (k === sortKey) {
+      setSortDir(d => d === "asc" ? "desc" : "asc");
+    } else {
+      setSortKey(k);
+      setSortDir(DEFAULT_DIR[k]);
+    }
+  };
 
   const sortedRows = useMemo(() => {
     const dir = sortDir === "asc" ? 1 : -1;
-    const arr = [...rows];
-    arr.sort((a, b) => {
-      let av: number | string;
-      let bv: number | string;
-      switch (sortKey) {
-        case "name":    av = a.course.master.name.toLowerCase(); bv = b.course.master.name.toLowerCase(); break;
-        case "tee":     av = a.tee.teeName.toLowerCase();        bv = b.tee.teeName.toLowerCase();        break;
-        case "dist":    av = a.tee.distances?.total ?? -1;       bv = b.tee.distances?.total ?? -1;       break;
-        case "par":     av = getParTotal(a.tee);                 bv = getParTotal(b.tee);                  break;
-        case "slope":   av = a.tee.ratings?.holes18?.slopeRating ?? -1; bv = b.tee.ratings?.holes18?.slopeRating ?? -1; break;
-        case "cr":      av = a.tee.ratings?.holes18?.courseRating ?? -1; bv = b.tee.ratings?.holes18?.courseRating ?? -1; break;
-        case "overall": av = a.sim.overall; bv = b.sim.overall; break;
-      }
+    return [...rows].sort((a, b) => {
+      const av = getSortValue(a, sortKey);
+      const bv = getSortValue(b, sortKey);
       if (typeof av === "string" && typeof bv === "string") return av.localeCompare(bv, "pt") * dir;
       return ((av as number) - (bv as number)) * dir;
     });
-    return arr;
   }, [rows, sortKey, sortDir]);
 
   return (
@@ -187,13 +209,13 @@ function SimilarityTable({ rows }: { rows: SimRow[] }) {
       <table className="dtable">
         <thead>
           <tr>
-            <SortableHdr k="name"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Campo</SortableHdr>
-            <SortableHdr k="tee"     sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Tee</SortableHdr>
-            <SortableHdr k="dist"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Dist (m)</SortableHdr>
-            <SortableHdr k="par"     sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Par</SortableHdr>
-            <SortableHdr k="slope"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Slope</SortableHdr>
-            <SortableHdr k="cr"      sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">CR</SortableHdr>
-            <SortableHdr k="overall" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Similitude</SortableHdr>
+            <SortableHdr k="name"    sortKey={sortKey} sortDir={sortDir} onSort={handleSort}>Campo</SortableHdr>
+            <SortableHdr k="tee"     sortKey={sortKey} sortDir={sortDir} onSort={handleSort}>Tee</SortableHdr>
+            <SortableHdr k="dist"    sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="r">Dist (m)</SortableHdr>
+            <SortableHdr k="par"     sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="r">Par</SortableHdr>
+            <SortableHdr k="slope"   sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="r">Slope</SortableHdr>
+            <SortableHdr k="cr"      sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="r">CR</SortableHdr>
+            <SortableHdr k="overall" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="r">Similitude</SortableHdr>
           </tr>
         </thead>
         <tbody>
