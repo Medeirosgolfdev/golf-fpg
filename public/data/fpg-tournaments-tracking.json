@@ -1,13 +1,13 @@
 {
-  "lastUpdated": "2026-05-17T20:40:39.316Z",
+  "lastUpdated": "2026-05-20T18:06:55.764Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
-  "today": "2026-05-17",
+  "today": "2026-05-20",
   "summary": {
-    "total": 1141,
-    "complete": 1135,
-    "in_progress": 1,
+    "total": 1142,
+    "complete": 1136,
+    "in_progress": 0,
     "future": 0,
-    "stale": 4,
+    "stale": 5,
     "excluded": 1,
     "missing_admissions": 0,
     "missing_classif": 0,
@@ -30,11 +30,11 @@
       "has_classif": true,
       "player_count": 73,
       "players_with_scorecards": 73,
-      "players_with_full_scorecards": 0,
+      "players_with_full_scorecards": 73,
       "scorecards_source": "aquapor-data-2026-05.json",
       "scorecards_ratio": 1,
-      "full_scorecards_ratio": 0,
-      "status": "in_progress"
+      "full_scorecards_ratio": 1,
+      "status": "complete"
     },
     {
       "ccode": "002",
@@ -17936,6 +17936,26 @@
       "scorecards_ratio": 1,
       "full_scorecards_ratio": 1,
       "status": "complete"
+    },
+    {
+      "ccode": "004",
+      "tcode": "10576",
+      "name": "Grande Final Drive Tour CN Jovens Sub16 H",
+      "date": "2022-11-12",
+      "rounds": 1,
+      "has_admissions": false,
+      "admissions_count": 0,
+      "has_draws": false,
+      "draws_rounds_with_data": 0,
+      "draws_players_total": 0,
+      "has_classif": false,
+      "player_count": 0,
+      "players_with_scorecards": 0,
+      "players_with_full_scorecards": 0,
+      "scorecards_source": null,
+      "scorecards_ratio": 0,
+      "full_scorecards_ratio": 0,
+      "status": "stale"
     },
     {
       "ccode": "007",
