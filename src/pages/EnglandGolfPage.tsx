@@ -32,6 +32,8 @@ import { useKidsLinkMap } from "../hooks/useKidsLinkMap";
 import { KidsLinkCtx } from "../ui/KidsLink";
 import { RoundPill, ManuelPill } from "../ui/PillBadge";
 import type { EvoEntry } from "../hooks/useEvoComparison";
+import CircuitShell from "../ui/circuit/CircuitShell";
+import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitSex } from "../ui/circuit/types";
 
 /* ── Types ── */
 interface RoundData { day: number; scores: number[] | null; f9: number | null; b9: number | null; gross: number }
@@ -188,6 +190,7 @@ function tDataToTournament(data: TData, def: TDef): FPGTournament {
         teeName,
         roundScores,
         _roundsPlayed: playedR,
+        _isPortuguese: /portugal/i.test(p.country || "") || /^(pt|prt)$/i.test(p.country || ""),
       } as FPGPlayer;
     });
   return {
@@ -452,7 +455,7 @@ function TournView({ def, evo, evoYear, selectedDivision }: { def: TDef; evo?: M
    MAIN PAGE
    ═══════════════════════════════════════════════════════════════ */
 
-function Content() {
+function EnglandContentLegacy() {
   const [ti, setTi] = useState(0);
   const [selectedDivision, setSelectedDivision] = useState<string | null>(null);
   const [URLS, setURLS] = useState<UrlEntry[]>([]);
@@ -684,8 +687,177 @@ function Content() {
   );
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   EnglandGolfPage (NOVO) — assente no CircuitShell partilhado.
+   Reusa os adaptadores/módulos acima (tDataToTournament, bjgtScorecardOptions,
+   HoleDiff, ManuelDay, FStats). Divisões EAGER (catálogo + ficheiros carregados
+   à cabeça). Cross-trofeu via player.divisions[]. EnglandContentLegacy fica
+   preservada acima como referência até validação.
+   ═══════════════════════════════════════════════════════════════ */
+
+function englandSex(g?: "M" | "F" | "Mixed"): CircuitSex | undefined {
+  return g === "M" ? "M" : g === "F" ? "F" : g === "Mixed" ? "Mixed" : undefined;
+}
+
+/** Constrói uma CircuitDivision (escalão/trofeu) a partir de um TDef, opcionalmente
+ *  filtrando os jogadores por `filterDiv` (cross-trofeu via player.divisions[]).
+ *  Os módulos ricos (Field Stats + Hole Difficulty + Manuel Day) usam o campo
+ *  completo (`def.data`), o leaderboard usa o conjunto filtrado — igual ao legacy. */
+function makeEnglandDivision(
+  def: TDef, key: string, tabLabel: string, filterDiv: string | null, sex?: CircuitSex,
+): CircuitDivision {
+  const data = def.data;
+  const filtered: TData = filterDiv
+    ? { ...data, players: data.players.filter(p => (p as unknown as { divisions?: string[] }).divisions?.includes(filterDiv) ?? false) }
+    : data;
+  const tournament = tDataToTournament(filtered, def);
+  const manuelPlayer = filtered.players.find(p => isM(p.name));
+  const manuelName = manuelPlayer ? manuelPlayer.name : "";
+  const roundLabels = def.roundDates?.map((d, i) => `R${i + 1} · ${d}`);
+  const rLabel = (i: number) => (def.roundDates?.[i] ? `R${i + 1} · ${def.roundDates[i]}` : `R${i + 1}`);
+
+  return {
+    key,
+    escalao: def.category || tabLabel,
+    tabLabel,
+    sex,
+    hasManuel: !!manuelPlayer,
+    results: tournament,
+    scOptions: bjgtScorecardOptions(),
+    roundLabels,
+    renderAccSection: (accLB) => (
+      <>
+        <div className="card">
+          <div className="h-md fs-14">🏆 Leaderboard — {def.label}</div>
+          {accLB}
+        </div>
+        <div className="card">
+          <div className="h-md fs-14">📊 Dificuldade por Buraco — Todas as rondas</div>
+          <FStats data={data} ri="all" />
+          <HoleDiff data={data} ri="all" mn={manuelName} />
+        </div>
+      </>
+    ),
+    renderRoundSection: (roundLB, tab) => (
+      <>
+        <div className="card">
+          <div className="h-md fs-14">🏆 {rLabel(tab)} — Scorecards</div>
+          <FStats data={data} ri={tab} />
+          {roundLB}
+        </div>
+        <div className="card">
+          <div className="h-md fs-14">📊 Dificuldade por Buraco — {rLabel(tab)}</div>
+          <HoleDiff data={data} ri={tab} mn={manuelName} />
+        </div>
+        {manuelName && <ManuelDay data={data} ri={tab} />}
+      </>
+    ),
+  };
+}
+
+/** Divisões de um torneio: se houver mais que uma trofeu em player.divisions[],
+ *  gera "Todos" + uma por trofeu; senão, uma única divisão. */
+function englandBuildDivisions(def: TDef, sex?: CircuitSex): CircuitDivision[] {
+  const divSet = new Set<string>();
+  def.data.players.forEach(p => (p as unknown as { divisions?: string[] }).divisions?.forEach(d => divSet.add(d)));
+  const divNames = [...divSet].sort();
+  if (divNames.length <= 1) return [makeEnglandDivision(def, "all", "Resultados", null, sex)];
+  return [
+    makeEnglandDivision(def, "all", "Todos", null, sex),
+    ...divNames.map(dn => makeEnglandDivision(def, `div:${dn}`, dn, dn, sex)),
+  ];
+}
+
+/** Catálogo + ficheiros carregados → entries do CircuitShell (divisões EAGER). */
+function buildEnglandEntries(urls: UrlEntry[], all: (TDef | null)[]): CircuitEntry[] {
+  const out: CircuitEntry[] = [];
+  urls.forEach((u, i) => {
+    const def = all[i];
+    if (!def) return;
+    const players = def.data.players;
+    const nR = Math.max(...players.map(p => p.rounds.length), 0);
+    const sex = englandSex(u.catalogEntry.gender);
+    const divisions = englandBuildDivisions(def, sex);
+    out.push({
+      id: u.id,
+      year: u.year,
+      name: u.shortLabel,
+      source: "england",
+      course: ((def.data as unknown) as { course?: string }).course ?? undefined,
+      dateStart: u.roundDates?.[0],
+      sourceUrl: u.sourceUrl,
+      escalao: u.category || undefined,
+      sex,
+      playerCount: players.filter(p => p.rounds.length === nR && nR > 0).length || players.length,
+      roundsCount: nR,
+      divisionCount: divisions.length,
+      hasManuel: players.some(p => isM(p.name)),
+      divisions,
+    });
+  });
+  return out;
+}
+
+const ENGLAND_CONFIG: CircuitConfig = {
+  routeBase: "/england",
+  title: "England Golf",
+  color: "#1e3a5f",
+  textColor: "#fff",
+  grouping: "year",
+  sourceColors: { england: "#1e3a5f" },
+  sourceLabels: { england: "England Golf" },
+  filters: { search: true, year: true, escalao: true, sex: true, toggles: ["manuel", "pt", "top10", "veteranos"] },
+  veteranoThreshold: 3,
+  loadingMessage: "A carregar England Golf...",
+};
+
+function EnglandShellContent() {
+  const [URLS, setURLS] = useState<UrlEntry[]>([]);
+  const [all, setAll] = useState<(TDef | null)[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let alive = true;
+    cachedFetchJson<Catalog>("/data/england-golf-catalog.json")
+      .then(async (cat) => {
+        if (!alive || !cat) return;
+        const urls = buildUrlsFromCatalog(cat);
+        if (!alive) return;
+        setURLS(urls);
+        const defs: (TDef | null)[] = [];
+        await Promise.all(urls.map(async (m, idx) => {
+          try {
+            const raw = await cachedFetchJson<unknown>(m.url);
+            defs[idx] = raw != null
+              ? ({ id: m.id, label: m.label, shortLabel: m.shortLabel, data: loadT(raw), manuelName: m.manuelName, year: m.year, category: m.category, roundDates: m.roundDates, series: m.series } as TDef)
+              : null;
+          } catch {
+            defs[idx] = null;
+          }
+        }));
+        if (!alive) return;
+        setAll(defs);
+        setLoading(false);
+      })
+      .catch(() => { if (alive) setLoading(false); });
+    return () => { alive = false; };
+  }, []);
+
+  const entries = useMemo(() => buildEnglandEntries(URLS, all), [URLS, all]);
+
+  if (loading) return <LoadingState />;
+  return <CircuitShell entries={entries} config={ENGLAND_CONFIG} />;
+}
+
+/** Versão antiga (pré-CircuitShell), preservada até a nova ser validada. */
+export function EnglandGolfPageLegacy() {
+  const { unlocked, unlock } = usePasswordGate();
+  if (!unlocked) return <PasswordGate onUnlock={unlock} />;
+  return <EnglandContentLegacy />;
+}
+
 export default function EnglandGolfPage() {
   const { unlocked, unlock } = usePasswordGate();
   if (!unlocked) return <PasswordGate onUnlock={unlock} />;
-  return <Content />;
+  return <EnglandShellContent />;
 }

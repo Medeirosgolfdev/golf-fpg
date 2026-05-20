@@ -23,6 +23,8 @@ import LoadingState from "../ui/LoadingState";
 import { ManuelPill } from "../ui/PillBadge";
 import { type Tournament as FPGTournament, type Player as FPGPlayer, type RoundScore as FPGRoundScore, type ScorecardOptions } from "./FPGPage";
 import { IntlTournView } from "../ui/IntlTournView";
+import CircuitShell from "../ui/circuit/CircuitShell";
+import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitLink } from "../ui/circuit/types";
 
 /* ── Nome de país (por extenso, vindo do scraper) → ISO-2 ──────────
    O scraper GJGL extrai o país de um comentário HTML embutido na row do
@@ -81,6 +83,28 @@ interface CatalogEntry {
 interface Catalog {
   generated_at?: string;
   tournaments: CatalogEntry[];
+}
+/** Índice slim (gjgl-index.json) — metadados leves p/ sidebar+header sem
+ *  descarregar os ficheiros pesados. Gerado por scripts/build-gjgl-index.js. */
+interface GjglIndexTournament {
+  tournament: string | null;
+  year: number | null;
+  country: string | null;
+  section: string | null;
+  start_date: string | null;
+  end_date: string | null;
+  course: string | null;
+  rounds: number | null;
+  parTotal: number | null;
+  tour_url: string | null;
+  livescoring_url: string | null;
+  entrylist_url: string | null;
+  divisions: { ak: number; ageGroup: string; players: number }[];
+  playerCount: number;
+}
+interface GjglIndex {
+  generated_at?: string;
+  tournaments: Record<string, GjglIndexTournament>;
 }
 interface GjglRound {
   day: number;
@@ -169,6 +193,7 @@ function divisionToTournament(d: GjglData, div: GjglDivision, label: string): FP
         roundScores,
         _roundsPlayed: playedR,
         hcpExact: p.hcp ?? undefined,
+        _isPortuguese: /portugal/i.test(p.country || "") || /^(pt|prt)$/i.test(p.country || ""),
       } as FPGPlayer;
     });
   return {
@@ -205,7 +230,7 @@ function fmtTopar(tp: number | string | null | undefined): string {
 
 /* ─────────────────────────────────────────────────────────────────── */
 
-export default function GlobalJuniorPage() {
+export function GlobalJuniorPageLegacy() {
   const { slug: routeSlug } = useParams<{ slug?: string }>();
   const navigate = useNavigate();
 
@@ -476,5 +501,125 @@ function SimpleLeaderboard({ div }: { div: GjglDivision }) {
         })}
       </tbody>
     </table>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GlobalJuniorPage (NOVO) — assente no CircuitShell partilhado.
+   Carregamento LAZY por torneio (catálogo só tem metadados; o detalhe
+   carrega gjgl_{slug}.json ao seleccionar). Divisões U14/U18/U23.
+   Quando uma divisão não tem hole-by-hole, usa SimpleLeaderboard via
+   `customResults` (fallback de totais). GlobalJuniorPageLegacy preservada.
+   ═══════════════════════════════════════════════════════════════ */
+
+/** Carrega o detalhe de um torneio GJGL e constrói as divisões (U14/U18/U23). */
+function gjglLoadDivisions(slug: string): Promise<CircuitDivision[]> {
+  return cachedFetchJson<GjglData>(dataUrl(slug))
+    .then((d) => {
+      if (!d || !d.divisions?.length) return [];
+      return d.divisions.map((div): CircuitDivision => {
+        const tournament = divisionToTournament(d, div, `${d.tournament} — U${div.ak}`);
+        const hasHoleByHole = (tournament.rounds ?? 0) > 0 && tournament.players.length > 0;
+        const hasManuel = div.players.some((p) => isM(p.name));
+        if (hasHoleByHole) {
+          return {
+            key: `u${div.ak}`,
+            escalao: `U${div.ak}`,
+            tabLabel: `U${div.ak}`,
+            hasManuel,
+            results: tournament,
+            scOptions: gjglScorecardOptions(),
+          };
+        }
+        return {
+          key: `u${div.ak}`,
+          escalao: `U${div.ak}`,
+          tabLabel: `U${div.ak} (${div.players.length})`,
+          hasManuel,
+          customResults: <SimpleLeaderboard div={div} />,
+        };
+      });
+    })
+    .catch(() => []);
+}
+
+/** Catálogo + índice slim → entries do CircuitShell. Metadados (data, campo,
+ *  rondas, nº jog, divisões) e links oficiais vêm do índice; o detalhe completo
+ *  (scorecards) continua a ser carregado de forma lazy ao seleccionar. */
+function buildGjglEntries(catalog: Catalog, index: GjglIndex | null): CircuitEntry[] {
+  return catalog.tournaments
+    .filter((t) => t.gjgl_tournamentid)
+    .map((t): CircuitEntry => {
+      const ix = index?.tournaments?.[t.slug];
+      const links: CircuitLink[] = [];
+      if (ix?.tour_url) links.push({ label: "Página oficial", url: ix.tour_url, icon: "🌐" });
+      if (ix?.livescoring_url) links.push({ label: "Live scoring", url: ix.livescoring_url, icon: "📡" });
+      if (ix?.entrylist_url) links.push({ label: "Inscritos", url: ix.entrylist_url, icon: "👥" });
+      return {
+        id: t.slug,
+        year: t.year,
+        name: `${COUNTRY_FLAG[t.country] || "🏳"} ${t.title}`.trim(),
+        federation: t.country,
+        course: ix?.course ?? undefined,
+        dateStart: ix?.start_date ?? undefined,
+        dateEnd: ix?.end_date ?? undefined,
+        roundsCount: ix?.rounds ?? undefined,
+        divisionCount: ix?.divisions?.length ?? undefined,
+        playerCount: ix?.playerCount ?? undefined,
+        links: links.length ? links : undefined,
+        loadDivisions: () => gjglLoadDivisions(t.slug),
+      };
+    });
+}
+
+const GJGL_CONFIG: CircuitConfig = {
+  routeBase: "/global-junior",
+  title: "⛳ Global Junior",
+  color: "#0a7e3f",
+  textColor: "#fff",
+  grouping: "year",
+  filters: { search: true, year: true, toggles: ["manuel", "pt", "top10"] },
+  loadingMessage: "A carregar GJGL…",
+};
+
+export default function GlobalJuniorPage() {
+  const { slug } = useParams<{ slug?: string }>();
+  const navigate = useNavigate();
+  const [catalog, setCatalog] = useState<Catalog | null>(null);
+  const [index, setIndex] = useState<GjglIndex | null>(null);
+  const [catalogError, setCatalogError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    cachedFetchJson<Catalog>(CATALOG_URL)
+      .then((c) => { if (!cancelled) setCatalog(c); })
+      .catch((err) => { if (!cancelled) setCatalogError(String((err as Error).message || err)); });
+    // Índice slim — enriquece a sidebar/header; falha silenciosa (opcional).
+    cachedFetchJson<GjglIndex>("/data/gjgl-index.json")
+      .then((d) => { if (!cancelled && d) setIndex(d); })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
+
+  const entries = useMemo(() => (catalog ? buildGjglEntries(catalog, index) : []), [catalog, index]);
+  const selectedId = useMemo<string | undefined>(
+    () => (slug && entries.some((e) => e.id === slug) ? slug : undefined),
+    [slug, entries],
+  );
+
+  if (catalogError) {
+    return <div className="center-msg" style={{ padding: 24 }}>Erro a carregar catálogo: {catalogError}</div>;
+  }
+  if (!catalog) {
+    return <LoadingState message="A carregar catálogo GJGL…" />;
+  }
+
+  return (
+    <CircuitShell
+      entries={entries}
+      config={GJGL_CONFIG}
+      selectedId={selectedId}
+      onSelectEntry={(e) => navigate(`/global-junior/${e.id}`)}
+    />
   );
 }

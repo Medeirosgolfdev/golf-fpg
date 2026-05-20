@@ -2228,7 +2228,7 @@ function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: H
 
 const RFEG_CONFIG: CircuitConfig = {
   routeBase: "/rfeg",
-  title: "🇪🇸 RFEG",
+  title: "🇪🇸 España",
   color: "#aa151b",
   grouping: "year",
   sourceColors: { rfegolf: "#aa151b", livegolfscoring: "#00aa55", golfdirecto: "#0066cc", nextcaddy: "#f1bf00" },

@@ -176,6 +176,12 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
  gap: 8px;
  align-items: center;
 }
+/* TODAS as toolbars do site: os controlos NÃO encolhem, por isso quando há
+   muitos filtros (ex: France com 12 anos + Liga + INTL + toggles) a barra faz
+   scroll horizontal (overflow-x: auto, definido em .toolbar) em vez de
+   espremer/desconfigurar os controlos. Comportamento uniforme, igual ao nav
+   superior do site. */
+.toolbar > * { flex-shrink: 0; }
 .campos-page .toolbar-left,
 .jogadores-page .toolbar-left,
 .tourn-layout .toolbar-left {
@@ -1439,12 +1445,13 @@ tr.cross-current { background: var(--bg-success); }
  .nav         { margin-left: 4px; }
  .nav-btn     { font-size: 11px; padding: 4px 8px; }
 
- .toolbar       { flex-wrap: wrap; overflow-x: visible; padding: 5px 8px; gap: 5px; align-items: center; min-height: 0; }
+ .toolbar       { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding: 5px 8px; gap: 5px; align-items: center; min-height: 0; }
  /* JogadoresPage e CamposPage têm muitos filtros — em mobile preferimos
     scroll horizontal (como o nav superior) em vez de wrap multi-linha
     que ocupa demasiado espaço vertical. */
  .jogadores-page .toolbar,
- .campos-page .toolbar {
+ .campos-page .toolbar,
+ .tourn-layout .toolbar {
   flex-wrap: nowrap;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -1455,10 +1462,12 @@ tr.cross-current { background: var(--bg-success); }
   -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent 100%);
  }
  .jogadores-page .toolbar::-webkit-scrollbar,
- .campos-page .toolbar::-webkit-scrollbar { display: none; }
+ .campos-page .toolbar::-webkit-scrollbar,
+ .tourn-layout .toolbar::-webkit-scrollbar { display: none; }
  /* Garantir que filhos não encolhem (forçando o scroll). */
  .jogadores-page .toolbar > *,
- .campos-page .toolbar > * { flex-shrink: 0; }
+ .campos-page .toolbar > *,
+ .tourn-layout .toolbar > * { flex-shrink: 0; }
  .toolbar-sep   { display: none; }
  .toolbar-meta  { display: none; }
  .toolbar-title { font-size: 12px; }

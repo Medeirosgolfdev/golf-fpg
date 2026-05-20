@@ -52,6 +52,8 @@ import LoadingState from "../ui/LoadingState";
 import { RoundPill, ManuelPill, PillBadge } from "../ui/PillBadge";
 import { type Tournament as FPGTournament, type Player as FPGPlayer, type RoundScore as FPGRoundScore, type ScorecardOptions } from "./FPGPage";
 import { IntlTournView } from "../ui/IntlTournView";
+import CircuitShell from "../ui/circuit/CircuitShell";
+import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitLink, CircuitSpecialItem } from "../ui/circuit/types";
 import { useKidsLinkMap } from "../hooks/useKidsLinkMap";
 import { KidsLinkCtx } from "../ui/KidsLink";
 import { ScorecardLeaderboard, type ScorecardRow } from "../ui/ScorecardLeaderboard";
@@ -1717,7 +1719,7 @@ function FStats({ data }: { data: FFGTournament }) {
 type SelectionKind = "gg" | "lgpidf" | "ffgres" | "categories";
 interface Selection { kind: SelectionKind; key: string }
 
-function Content() {
+function FFGContentLegacy() {
   const [catalog, setCatalog] = useState<Catalog | null>(null);
   const [catalogErr, setCatalogErr] = useState<string | null>(null);
   const [data, setData] = useState<Map<string, FFGTournament>>(new Map());
@@ -2391,8 +2393,248 @@ function Content() {
   );
 }
 
+/** Versão antiga (pré-CircuitShell), preservada até a nova ser validada. */
+export function FFGPageLegacy() {
+  const { unlocked, unlock } = usePasswordGate();
+  if (!unlocked) return <PasswordGate onUnlock={unlock} />;
+  return <FFGContentLegacy />;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FFGPage (NOVO) — assente no CircuitShell partilhado.
+   • FFG-Resultats (fonte principal): divisões por série com `results` reais
+     (ffgResToFPGTournament) → leaderboard + toggles Manuel/PT/Top10 funcionam.
+   • LGPIDF (PDFs Paris-Île-de-France): reutiliza a LGPIDFView como customResults.
+   • Catégories d'âge: item no menu Info da toolbar.
+   Shell estendido com filtro `liga` + filtro `INTL`. FFGContentLegacy preservada.
+   ═══════════════════════════════════════════════════════════════ */
+
+const FFG_LIGUE_LABELS: Record<string, string> = {
+  "00": "Nacional (Federales)",
+  "01": "Paris-Île-de-France", "02": "Auvergne-Rhône-Alpes", "03": "Nouvelle-Aquitaine",
+  "04": "PACA", "06": "Occitanie", "07": "Hauts-de-France", "08": "Grand-Est",
+  "09": "Normandie", "10": "Pays de la Loire", "11": "Bretagne", "12": "Centre-Val de Loire",
+  "13": "Bourgogne-F.-Comte", "14": "Réunion", "15": "Corse", "16": "Nouvelle-Calédonie",
+  "17": "Guadeloupe", "18": "Polynésie", "19": "Clubs étrangers", "20": "Martinique",
+  "21": "Guyane", "22": "Outre-Mer",
+};
+const isIntlName = (name?: string | null) => /\binternationa(l|ux?)\b/i.test(name || "");
+
+/** FFG-Resultats: 1 entry por torneio, divisões = séries (com results reais). */
+function ffgResEntry(meta: FFGResIndexEntry, data: FFGResTournament): CircuitEntry {
+  const series = data.details.series;
+  const allPlayers = series.flatMap((s) => s.players);
+  const hasT4 = allPlayers.some((p) => p.t4 != null);
+  const hasT3 = allPlayers.some((p) => p.t3 != null);
+  const hasT2 = allPlayers.some((p) => p.t2 != null);
+  const nR = hasT4 ? 4 : hasT3 ? 3 : hasT2 ? 2 : 1;
+
+  const links: CircuitLink[] = [];
+  if (meta.ggPage) links.push({ label: "GolfGenius", url: `https://www.golfgenius.com/pages/${meta.ggPage}`, icon: "🏌️", title: "Scorecards hole-by-hole no GolfGenius" });
+  if (meta.ffgolfOfficialUrl) links.push({ label: "Página FFG", url: meta.ffgolfOfficialUrl, icon: "🔗" });
+  else links.push({ label: "Portal FFG", url: meta.pagesFfgolfUrl || "https://pages.ffgolf.org/resultats/", icon: "🔗" });
+
+  const divisions: CircuitDivision[] = series.map((s) => ({
+    key: s.serieId,
+    escalao: s.label || divisionLabel(s.serieId),
+    tabLabel: s.label || divisionLabel(s.serieId),
+    hasManuel: s.players.some((p) => isM(p.name)),
+    results: ffgResToFPGTournament(data, s.serieId),
+    scOptions: ffgScorecardOptions(),
+  }));
+
+  return {
+    id: `ffgres:${meta.trnId}`,
+    year: meta.year,
+    name: meta.name,
+    series: "FFG Officiel",
+    source: "ffgres",
+    course: series[0]?.courseTerrain ? `Parcours ${series[0].courseTerrain}` : undefined,
+    dateStart: meta.dateIso ?? undefined,
+    federation: "FFG",
+    liga: meta.ligue,
+    intl: isIntlName(meta.name),
+    links,
+    playerCount: meta.totalPlayers,
+    roundsCount: nR,
+    divisionCount: divisions.length,
+    hasManuel: allPlayers.some((p) => isM(p.name)),
+    divisions,
+  };
+}
+
+/** LGPIDF: 1 entry, uma divisão que reutiliza a LGPIDFView (todas as tabs PDF). */
+function lgpidfEntry(meta: LGPIDFIndexEntry, data: LGPIDFTournament): CircuitEntry {
+  const inscritos = data.inscritosPdfs.reduce((s, pf) => s + pf.players.length, 0);
+  const hasManuel = data.players.some((p) => isM(p.name)) || data.inscritosPdfs.some((pf) => pf.players.some((pl) => isM(pl.name)));
+  return {
+    id: `lgpidf:${meta.year}_${meta.slug}`,
+    year: meta.year,
+    name: meta.tournament,
+    series: "LGPIDF",
+    source: "lgpidf",
+    course: data.course?.name ?? undefined,
+    dateStart: data.dateStart ?? undefined,
+    dateEnd: data.dateEnd ?? undefined,
+    federation: "LGPIDF",
+    playerCount: data.players.length || inscritos,
+    divisionCount: 1,
+    hasManuel,
+    divisions: [{
+      key: "main",
+      escalao: meta.divisions?.length ? meta.divisions.join("/") : "—",
+      hasManuel,
+      customResults: <LGPIDFView data={data} />,
+    }],
+  };
+}
+
+function FFGShellContent() {
+  const [catalog, setCatalog] = useState<Catalog | null>(null);
+  const [ffgResIndex, setFfgResIndex] = useState<FFGResIndex | null>(null);
+  const [ffgResData, setFfgResData] = useState<Map<string, FFGResTournament>>(new Map());
+  const [lgpidfIndex, setLgpidfIndex] = useState<LGPIDFIndex | null>(null);
+  const [lgpidfData, setLgpidfData] = useState<Map<string, LGPIDFTournament>>(new Map());
+  const [ffgCategories, setFfgCategories] = useState<FFGCategoriesData | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      invalidateCache("/data/ffgolf-catalog.json");
+      invalidateCache("/data/ffgolf-resultats-index.json");
+      try {
+        const cat = await cachedFetchJson<Catalog>("/data/ffgolf-catalog.json");
+        if (alive && cat) setCatalog(cat);
+
+        // FFG Resultats (fonte central) + enriquecimento metros/SI via GolfGenius.
+        const ffgIdx = await cachedFetchJson<FFGResIndex>("/data/ffgolf-resultats-index.json");
+        if (ffgIdx && alive) {
+          setFfgResIndex(ffgIdx);
+          const fMap = new Map<string, FFGResTournament>();
+          await Promise.all(ffgIdx.tournaments.map(async (t) => {
+            try {
+              const td = await cachedFetchJson<FFGResTournament>(`/data/ffgolf-resultats/${t.file}`);
+              if (!td) return;
+              if (t.ffgolfSlug && t.year) {
+                try {
+                  const ggData = await cachedFetchJson<{ course?: { par?: number[]; meters?: number[]; si?: number[]; parTotal?: number; metersTotal?: number; name?: string }; courses?: Array<{ teeName?: string; par?: number[]; meters?: number[]; si?: number[]; parTotal?: number; metersTotal?: number }> }>(`/data/ffgolf/${t.year}_${t.ffgolfSlug}.json`);
+                  if (ggData && ggData.course && Array.isArray(ggData.course.meters) && ggData.course.meters.length === 18) {
+                    const allCourses = Array.isArray(ggData.courses) ? ggData.courses
+                      .filter((c) => Array.isArray(c?.meters) && c.meters!.length === 18)
+                      .map((c) => ({ teeName: c.teeName, par: c.par || [], meters: c.meters!, si: c.si || [], parTotal: c.parTotal, metersTotal: c.metersTotal })) : [];
+                    td._ggCourse = {
+                      par: ggData.course.par || [], meters: ggData.course.meters, si: ggData.course.si || [],
+                      parTotal: ggData.course.parTotal, metersTotal: ggData.course.metersTotal, name: ggData.course.name,
+                      courses: allCourses.length > 0 ? allCourses : undefined,
+                    };
+                  }
+                } catch { /* GG opcional */ }
+              }
+              fMap.set(t.trnId, td);
+            } catch { /* skip */ }
+          }));
+          if (alive) setFfgResData(fMap);
+        }
+
+        // LGPIDF (PDFs Paris-Île-de-France).
+        try {
+          const lgIdx = await cachedFetchJson<LGPIDFIndex>("/data/ffgolf-lgpidf-index.json");
+          if (lgIdx && alive) {
+            setLgpidfIndex(lgIdx);
+            const lgMap = new Map<string, LGPIDFTournament>();
+            await Promise.all(lgIdx.tournaments.map(async (t) => {
+              try {
+                const td = await cachedFetchJson<LGPIDFTournament>(`/data/ffgolf/${t.file}`);
+                if (td) lgMap.set(`${t.year}_${t.slug}`, td);
+              } catch { /* skip */ }
+            }));
+            if (alive) setLgpidfData(lgMap);
+          }
+        } catch { /* lgpidf opcional */ }
+
+        // Catégories d'âge (Vademecum).
+        try {
+          const cats = await cachedFetchJson<FFGCategoriesData>("/data/ffg-categories-age.json");
+          if (cats && alive) setFfgCategories(cats);
+        } catch { /* opcional */ }
+      } finally {
+        if (alive) setLoading(false);
+      }
+    })();
+    return () => { alive = false; };
+  }, []);
+
+  // Match LGPIDF → FFG por data+nome (esconde os LGPIDF que duplicam um FFG Officiel).
+  const matchedLgKeys = useMemo(() => {
+    const set = new Set<string>();
+    if (!ffgResIndex || !lgpidfIndex) return set;
+    for (const fe of ffgResIndex.tournaments) {
+      if (!fe.dateIso || !ffgResData.has(fe.trnId)) continue;
+      for (const le of lgpidfIndex.tournaments) {
+        const lg = lgpidfData.get(`${le.year}_${le.slug}`);
+        if (!lg || lg.dateStart !== fe.dateIso) continue;
+        const fw = fe.name.toLowerCase().split(/[\s-]+/);
+        const lw = lg.tournament.toLowerCase().split(/[\s-]+/);
+        if (fw.filter((w) => w.length > 3 && lw.includes(w)).length >= 2) {
+          set.add(`${le.year}_${le.slug}`);
+        }
+      }
+    }
+    return set;
+  }, [ffgResIndex, ffgResData, lgpidfIndex, lgpidfData]);
+
+  const entries = useMemo<CircuitEntry[]>(() => {
+    const out: CircuitEntry[] = [];
+    if (ffgResIndex) {
+      const seen = new Set<string>();
+      for (const meta of ffgResIndex.tournaments) {
+        if (seen.has(meta.trnId)) continue;
+        const data = ffgResData.get(meta.trnId);
+        if (!data) continue;
+        seen.add(meta.trnId);
+        out.push(ffgResEntry(meta, data));
+      }
+    }
+    if (lgpidfIndex) {
+      for (const meta of lgpidfIndex.tournaments) {
+        const key = `${meta.year}_${meta.slug}`;
+        if (matchedLgKeys.has(key)) continue;
+        const data = lgpidfData.get(key);
+        if (!data) continue;
+        out.push(lgpidfEntry(meta, data));
+      }
+    }
+    return out;
+  }, [ffgResIndex, ffgResData, lgpidfIndex, lgpidfData, matchedLgKeys]);
+
+  const config = useMemo<CircuitConfig>(() => {
+    const specialItems: CircuitSpecialItem[] = ffgCategories
+      ? [{ key: "categorias", label: "📚 Catégories d'âge FFG", render: () => <CategoriesView data={ffgCategories} /> }]
+      : [];
+    return {
+      routeBase: "/ffg",
+      title: "🇫🇷 France",
+      color: "#002654",
+      textColor: "#fff",
+      grouping: "series-year",
+      seriesOrder: ["FFG Officiel", "LGPIDF"],
+      sourceColors: { ffgres: "#002654", lgpidf: "#3b5a8c" },
+      sourceLabels: { ffgres: "FFG Officiel", lgpidf: "LGPIDF" },
+      ligaLabels: FFG_LIGUE_LABELS,
+      filters: { search: true, year: true, liga: true, intl: true, toggles: ["manuel", "pt", "top10", "veteranos"] },
+      specialItems,
+      veteranoThreshold: 3,
+      loadingMessage: "A carregar FFGolf…",
+    };
+  }, [ffgCategories]);
+
+  if (loading && !catalog) return <LoadingState message="A carregar FFGolf…" />;
+  return <CircuitShell entries={entries} config={config} />;
+}
+
 export default function FFGPage() {
   const { unlocked, unlock } = usePasswordGate();
   if (!unlocked) return <PasswordGate onUnlock={unlock} />;
-  return <Content />;
+  return <FFGShellContent />;
 }

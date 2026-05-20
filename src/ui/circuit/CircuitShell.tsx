@@ -20,7 +20,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import { useMasterDetail } from "../../hooks/useMasterDetail";
 import SidebarToggle from "../SidebarToggle";
 import SidebarSectionTitle from "../SidebarSectionTitle";
-import { Toolbar, ToolbarTitle, ToolbarMeta } from "../Toolbar";
+import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../Toolbar";
 import DetailHeader from "../DetailHeader";
 import LoadingState from "../LoadingState";
 import Counter from "../Counter";
@@ -71,7 +71,7 @@ const SECTION_DEF: Record<CircuitSectionKind, { label: string; icon: string }> =
 /** Secções disponíveis numa divisão (apenas as que têm dados). */
 function divisionSections(d: CircuitDivision): CircuitSectionKind[] {
   const out: CircuitSectionKind[] = [];
-  if (d.results) out.push("results");
+  if (d.results || d.customResults) out.push("results");
   if (d.inscritos && d.inscritos.lists.some(l => l.players.length > 0)) out.push("inscritos");
   if (d.draw && Object.keys(d.draw.rounds).length > 0) out.push("draw");
   return out;
@@ -282,6 +282,8 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
   const [fEsc, setFEsc] = useState("all");
   const [fSex, setFSex] = useState("all");
   const [fSource, setFSource] = useState("all");
+  const [fLiga, setFLiga] = useState("all");
+  const [fIntl, setFIntl] = useState(false);
   const [toggles, setToggles] = useState<Set<CircuitToggle>>(new Set());
   /** Vista informativa activa (ex: Categorías/Federaciones) — null = detalhe normal. */
   const [infoView, setInfoView] = useState<string | null>(null);
@@ -311,6 +313,10 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
     () => [...new Set(entries.map(e => e.year).filter((y): y is number => y != null))].sort((a, b) => b - a),
     [entries],
   );
+  // Anos recentes como pills + um agrupador "<ANO" para os mais antigos (como a FPG).
+  const YEAR_PILL_LIMIT = 5;
+  const recentYears = useMemo(() => years.slice(0, YEAR_PILL_LIMIT), [years]);
+  const oldCutoff = useMemo(() => (years.length > YEAR_PILL_LIMIT ? years[YEAR_PILL_LIMIT - 1] : null), [years]);
   const escaloes = useMemo(
     () => [...new Set(entries.flatMap(e => e.divisions ? e.divisions.map(d => d.escalao) : (e.escalao ? [e.escalao] : [])))].sort(),
     [entries],
@@ -319,13 +325,25 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
     () => [...new Set(entries.map(e => e.source).filter((s): s is string => !!s))].sort(),
     [entries],
   );
+  const ligas = useMemo(
+    () => [...new Set(entries.map(e => e.liga).filter((l): l is string => !!l))].sort(),
+    [entries],
+  );
 
   // ── Entries visíveis (após filtros de torneio) ──────────────────────
   const visible = useMemo(() => {
     const q = normName(search);
     return entries.filter(e => {
-      if (flt.year && fYear !== "all" && String(e.year) !== fYear) return false;
+      if (flt.year && fYear !== "all") {
+        if (fYear === "__old__") {
+          if (e.year == null || oldCutoff == null || e.year >= oldCutoff) return false;
+        } else if (String(e.year) !== fYear) {
+          return false;
+        }
+      }
       if (flt.source && fSource !== "all" && e.source !== fSource) return false;
+      if (flt.liga && fLiga !== "all" && e.liga !== fLiga) return false;
+      if (flt.intl && fIntl && !e.intl) return false;
       if (flt.escalao && fEsc !== "all" && !(e.escalao === fEsc || (e.divisions ?? []).some(d => d.escalao === fEsc))) return false;
       if (flt.sex && fSex !== "all" && !(e.sex === fSex || e.sex === "Mixed" || (e.divisions ?? []).some(d => d.sex === fSex || d.sex === "Mixed"))) return false;
       if (q) {
@@ -334,7 +352,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
       }
       return true;
     });
-  }, [entries, search, fYear, fEsc, fSex, fSource, flt]);
+  }, [entries, search, fYear, fEsc, fSex, fSource, fLiga, fIntl, oldCutoff, flt]);
 
   // ── Selecção do torneio activo ──────────────────────────────────────
   const [localId, setLocalId] = useState<string | null>(null);
@@ -396,9 +414,11 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
   });
 
   const hasActiveFilters =
-    !!search || fYear !== "all" || fEsc !== "all" || fSex !== "all" || fSource !== "all" || toggles.size > 0;
+    !!search || fYear !== "all" || fEsc !== "all" || fSex !== "all" || fSource !== "all"
+    || fLiga !== "all" || fIntl || toggles.size > 0;
   const clearFilters = () => {
-    setSearch(""); setFYear("all"); setFEsc("all"); setFSex("all"); setFSource("all"); setToggles(new Set());
+    setSearch(""); setFYear("all"); setFEsc("all"); setFSex("all"); setFSource("all");
+    setFLiga("all"); setFIntl(false); setToggles(new Set());
   };
 
   if (loading) {
@@ -409,6 +429,20 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
   const resultsTourn = curDiv?.results
     ? applyToggles(curDiv.results, toggles, vetIndex, vetThreshold)
     : null;
+
+  // ── Stats para o header rico (estilo FPGPage) ───────────────────────
+  const headerStats = (() => {
+    const res = curDiv?.results;
+    const players = res?.players ?? [];
+    const nPlayers = res?.playerCount ?? players.length;
+    const nRounds = res?.rounds ?? curDiv?.roundLabels?.length ?? 0;
+    const parArr = players[0]?.par;
+    const parTotal = players[0]?.parTotal ?? (parArr ? parArr.reduce((a, b) => a + b, 0) : 0);
+    return { nPlayers, nRounds, parTotal };
+  })();
+  const curDateStr = fmtDateRange(cur?.dateStart, cur?.dateEnd);
+  /** Links de ação do header (cur.links + sourceUrl como "Leaderboard oficial"). */
+  const headerHasActions = !!(cur && (cur.sourceUrl || (cur.links && cur.links.length > 0)));
 
   return (
     <KidsLinkCtx.Provider value={kidsMap}>
@@ -429,11 +463,34 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
               onChange={e => setSearch(e.target.value)}
             />
           )}
-          {flt.year && (
-            <select className="input" value={fYear} onChange={e => setFYear(e.target.value)} style={{ fontSize: 12, padding: "3px 6px" }}>
-              <option value="all">📅 Ano</option>
-              {years.map(y => <option key={y} value={String(y)}>{y}</option>)}
-            </select>
+          {flt.year && years.length > 1 && (
+            <>
+              <ToolbarSep />
+              {recentYears.map(y => (
+                <button
+                  key={y}
+                  type="button"
+                  className={"tourn-tab tourn-tab-sm" + (fYear === String(y) ? " active" : " tourn-tab-muted")}
+                  onClick={() => setFYear(fYear === String(y) ? "all" : String(y))}
+                  style={{ flexShrink: 0 }}
+                >
+                  {y}
+                </button>
+              ))}
+              {oldCutoff != null && (
+                <button
+                  key="__old__"
+                  type="button"
+                  title={`Anteriores a ${oldCutoff}`}
+                  className={"tourn-tab tourn-tab-sm" + (fYear === "__old__" ? " active" : " tourn-tab-muted")}
+                  onClick={() => setFYear(fYear === "__old__" ? "all" : "__old__")}
+                  style={{ flexShrink: 0 }}
+                >
+                  {`<${oldCutoff}`}
+                </button>
+              )}
+              <ToolbarSep />
+            </>
           )}
           {flt.escalao && (
             <select className="input" value={fEsc} onChange={e => setFEsc(e.target.value)} style={{ fontSize: 12, padding: "3px 6px" }}>
@@ -453,6 +510,22 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
               <option value="all">Fonte</option>
               {sources.map(s => <option key={s} value={s}>{config.sourceLabels?.[s] ?? s}</option>)}
             </select>
+          )}
+          {flt.liga && ligas.length > 1 && (
+            <select className="input" value={fLiga} onChange={e => setFLiga(e.target.value)} style={{ fontSize: 12, padding: "3px 6px" }}>
+              <option value="all">🇫🇷 Liga</option>
+              {ligas.map(l => <option key={l} value={l}>{config.ligaLabels?.[l] ?? l}</option>)}
+            </select>
+          )}
+          {flt.intl && (
+            <button
+              type="button"
+              title={fIntl ? "A mostrar só Internationaux. Clica para ver todos." : "Filtrar só torneios Internationaux/International"}
+              className={`tourn-tab tourn-tab-sm${fIntl ? " active" : ""}`}
+              onClick={() => setFIntl(v => !v)}
+            >
+              INTL
+            </button>
           )}
 
           {/* Menu INFO — vistas informativas (categorias, federações, ...) */}
@@ -515,26 +588,47 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
               <>
                 <DetailHeader
                   title={cur.name}
-                  sub={
+                  actions={headerHasActions ? (
                     <>
-                      <span className="muted">
-                        {(curDiv.tabLabel || curDiv.escalao) && <>{curDiv.tabLabel || curDiv.escalao}</>}
-                        {cur.course && <> · 📍 {cur.course}</>}
-                        {cur.federation && <> · 🏛️ {cur.federation}</>}
-                      </span>
-                      {curDiv.sex && <> <SexBadge sex={curDiv.sex === "Mixed" ? "M" : curDiv.sex} /></>}
-                      {curDiv.sex === "Mixed" && <SexBadge sex="F" />}
-                      {(cur.hcpLimit?.men != null || cur.hcpLimit?.women != null) && (
-                        <span className="muted" style={{ marginLeft: 8 }}>
-                          {cur.hcpLimit?.men != null && `Hcp M ≤ ${cur.hcpLimit.men} `}
-                          {cur.hcpLimit?.women != null && `Hcp F ≤ ${cur.hcpLimit.women}`}
-                        </span>
-                      )}
+                      {(cur.links ?? []).map(lnk => (
+                        <ExtLink key={lnk.url} href={lnk.url} className="tourn-ext-link" title={lnk.title ?? lnk.label}>
+                          {lnk.icon ? `${lnk.icon} ` : ""}{lnk.label} ↗
+                        </ExtLink>
+                      ))}
                       {cur.sourceUrl && (
-                        <ExtLink href={cur.sourceUrl} className="tourn-ext-link" style={{ marginLeft: 8 }}>
-                          🔗 Leaderboard oficial
+                        <ExtLink href={cur.sourceUrl} className="tourn-ext-link" title="Leaderboard oficial">
+                          🔗 Leaderboard oficial ↗
                         </ExtLink>
                       )}
+                    </>
+                  ) : undefined}
+                  sub={
+                    <>
+                      {cur.course && <span className="muted">📍 {cur.course}</span>}
+                      {curDateStr && <span className="muted ml-8">{curDateStr}</span>}
+                      {cur.federation && <span className="muted ml-8">🏛️ {cur.federation}</span>}
+                      <span className="gap-4 ml-8" style={{ display: "inline-flex", alignItems: "center", flexWrap: "wrap" }}>
+                        {headerStats.nPlayers > 0 && (
+                          <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)", border: "1px solid var(--border)" }}>
+                            {headerStats.nPlayers} jog
+                          </span>
+                        )}
+                        {headerStats.nRounds > 1 && <RoundPill nR={headerStats.nRounds} />}
+                        {headerStats.parTotal > 0 && (
+                          <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)", border: "1px solid var(--border)" }}>
+                            Par {headerStats.parTotal}
+                          </span>
+                        )}
+                        {(curDiv.tabLabel || curDiv.escalao) && <EscPill esc={curDiv.tabLabel || curDiv.escalao} />}
+                        {curDiv.sex && <SexBadge sex={curDiv.sex === "Mixed" ? "M" : curDiv.sex} />}
+                        {curDiv.sex === "Mixed" && <SexBadge sex="F" />}
+                        {(cur.hcpLimit?.men != null || cur.hcpLimit?.women != null) && (
+                          <span className="muted" style={{ marginLeft: 4 }}>
+                            {cur.hcpLimit?.men != null && `Hcp M ≤ ${cur.hcpLimit.men} `}
+                            {cur.hcpLimit?.women != null && `Hcp F ≤ ${cur.hcpLimit.women}`}
+                          </span>
+                        )}
+                      </span>
                     </>
                   }
                 />
@@ -579,7 +673,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
                 )}
 
                 {/* Conteúdo da secção activa */}
-                {curSection === "results" && resultsTourn && (
+                {curSection === "results" && (resultsTourn ? (
                   <IntlTournView
                     tournament={resultsTourn}
                     scOptions={curDiv.scOptions ?? {}}
@@ -589,8 +683,12 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
                     accHeader={curDiv.accHeader}
                     roundExtra={curDiv.roundExtra}
                     accExtra={curDiv.accExtra}
+                    renderAccSection={curDiv.renderAccSection}
+                    renderRoundSection={curDiv.renderRoundSection}
                   />
-                )}
+                ) : curDiv.customResults ? (
+                  curDiv.customResults
+                ) : null)}
                 {curSection === "inscritos" && curDiv.inscritos && (
                   <InscritosView lists={curDiv.inscritos.lists} />
                 )}
@@ -677,6 +775,7 @@ function CircuitSidebar({
                 const srcColor = e.source ? config.sourceColors?.[e.source] : undefined;
                 const srcLabel = e.source ? (config.sourceLabels?.[e.source] ?? e.source) : undefined;
                 const dateStr = fmtDateRange(e.dateStart, e.dateEnd);
+                const accent = srcColor ?? config.color ?? "var(--accent)";
                 return (
                   <div
                     key={e.id}
@@ -684,24 +783,46 @@ function CircuitSidebar({
                     className={`course-item ${active ? "active" : ""}`}
                     onClick={() => onSelect(e)}
                     onKeyDown={ev => { if (ev.key === "Enter" || ev.key === " ") onSelect(e); }}
+                    style={{ borderLeft: `4px solid ${accent}`, borderRadius: "0 6px 6px 0" }}
                   >
-                    <div className="course-item-name">
+                    {/* Linha 1: nome */}
+                    <div className="course-item-name" style={{ fontSize: 12, fontWeight: active ? 700 : 500, lineHeight: 1.3 }}>
                       {e.name}
                       {e.hasManuel && <ManuelPill />}
                     </div>
-                    <div className="course-item-meta" style={{ display: "flex", gap: 4, flexWrap: "wrap", alignItems: "center", marginTop: 4 }}>
-                      {srcLabel && (
-                        <span className="chip" style={{ fontSize: 9, padding: "1px 6px", borderRadius: 8, background: srcColor, color: fgFor(srcColor) }}>{srcLabel}</span>
-                      )}
+
+                    {/* Linha 2: campo */}
+                    {e.course && (
+                      <div style={{ fontSize: 12, color: "var(--text-2)", fontWeight: 500, marginTop: 3 }}>
+                        📍 {e.course.length > 50 ? e.course.slice(0, 50) + "…" : e.course}
+                      </div>
+                    )}
+
+                    <div style={{ height: ".5px", background: "var(--border-light,rgba(0,0,0,.08))", margin: "4px 0" }} />
+
+                    {/* Linha 3: pills */}
+                    <div style={{ display: "flex", gap: 4, flexWrap: "wrap", alignItems: "center", margin: "3px 0" }}>
                       {esc && <EscPill esc={esc} />}
                       {sex && <SexBadge sex={sex === "Mixed" ? "M" : sex} />}
                       {sex === "Mixed" && <SexBadge sex="F" />}
-                      {nDiv > 1 && <span>{nDiv} escalões</span>}
+                      {nDiv > 1 && <span className="p p-sm p-muted">{nDiv} esc.</span>}
                       {nR > 1 && <RoundPill nR={nR} />}
                     </div>
-                    {dateStr && <div className="course-item-meta" style={{ fontSize: 11, marginTop: 4 }}>📅 {dateStr}</div>}
-                    {e.course && <div className="course-item-meta" style={{ fontWeight: 600, color: "var(--text-2)" }}>📍 {e.course.length > 50 ? e.course.slice(0, 50) + "…" : e.course}</div>}
-                    {nP > 0 && <div className="course-item-meta" style={{ fontSize: 11, marginTop: 2 }}>🏌️ {nP} jog</div>}
+
+                    <div style={{ height: ".5px", background: "var(--border-light,rgba(0,0,0,.08))", margin: "4px 0" }} />
+
+                    {/* Linha 4: data · fonte (ficheiro) · nº jog */}
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 6 }}>
+                      <span style={{ fontSize: 11, color: "var(--text-muted)", flexShrink: 0 }}>
+                        {dateStr ? `📅 ${dateStr}` : "—"}
+                      </span>
+                      <div style={{ display: "flex", alignItems: "center", gap: 4, flexShrink: 0 }}>
+                        {srcLabel && (
+                          <span className="chip" title={`Fonte: ${srcLabel}`} style={{ fontSize: 9, padding: "1px 6px", borderRadius: 8, background: srcColor, color: fgFor(srcColor) }}>{srcLabel}</span>
+                        )}
+                        {nP > 0 && <span style={{ fontSize: 11, color: "var(--text-muted)" }}>{nP} jog</span>}
+                      </div>
+                    </div>
                   </div>
                 );
               })}

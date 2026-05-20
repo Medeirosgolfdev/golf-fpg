@@ -52,6 +52,12 @@ export interface CircuitDivision {
   // ── Secções (pelo menos uma) ──────────────────────────────────────
   /** Leaderboard de resultados (hole-by-hole se houver). Alimenta o IntlTournView. */
   results?: FPGTournament;
+  /**
+   * Conteúdo de resultados à medida, renderizado em vez do IntlTournView quando
+   * não há scorecards hole-by-hole (ex: GJGL com leaderboard só de totais).
+   * Se `results` existir, tem precedência sobre `customResults`.
+   */
+  customResults?: React.ReactNode;
   /** Lista(s) de inscritos (admitidos/reservas/...). Estrutura livre por página. */
   inscritos?: CircuitInscritos;
   /** Draw / tee times. Estrutura livre por página (convertida para DrawTab). */
@@ -68,6 +74,18 @@ export interface CircuitDivision {
   accHeader?: React.ReactNode;
   roundExtra?: (roundIndex: number) => React.ReactNode;
   accExtra?: React.ReactNode;
+  /**
+   * Substituição total da secção acumulada (Resumo) do IntlTournView. Recebe o
+   * elemento do leaderboard acumulado e devolve o conteúdo completo da secção
+   * (England/BJGT usam isto para envolver o leaderboard em cards + HoleDiff +
+   * Field Stats). Tem precedência sobre accHeader/accExtra.
+   */
+  renderAccSection?: (leaderboard: React.ReactNode) => React.ReactNode;
+  /**
+   * Substituição total da secção de cada ronda do IntlTournView. Recebe o
+   * leaderboard da ronda e o índice. Tem precedência sobre roundExtra.
+   */
+  renderRoundSection?: (leaderboard: React.ReactNode, roundIndex: number) => React.ReactNode;
 }
 
 /** Lista de inscritos de uma divisão — sub-listas opcionais. */
@@ -116,6 +134,10 @@ export interface CircuitEntry {
   series?: string;
   /** Fonte de dados (RFEGolf/NextCaddy/...) — controla cor do chip na sidebar. */
   source?: string;
+  /** Liga/região (FFG: ligue) — alimenta o filtro `liga` da toolbar. */
+  liga?: string;
+  /** Marca torneio internacional (FFG: Internationaux) — alimenta o filtro INTL. */
+  intl?: boolean;
   /** Campo. */
   course?: string;
   dateStart?: string;
@@ -124,6 +146,12 @@ export interface CircuitEntry {
   federation?: string;
   /** Link para o leaderboard/microsite oficial. */
   sourceUrl?: string;
+  /**
+   * Links de ação no header do detalhe (Inscrições/Draw/Scoring/Regulamento/PDF…).
+   * Renderizados ao estilo da FPGPage, à direita do título. O `sourceUrl`, se
+   * existir, é adicionado automaticamente como "Leaderboard oficial".
+   */
+  links?: CircuitLink[];
   /** Limites de HCP (mostrados no header se preenchidos). */
   hcpLimit?: { men?: number; women?: number };
 
@@ -161,6 +189,20 @@ export interface CircuitSpecialItem {
 }
 
 /**
+ * Link de ação no header do detalhe (à direita do título), ao estilo da
+ * FPGPage: Inscrições / Draw / Scoring / Regulamento / PDF / leaderboard oficial.
+ * Renderizado como `.tourn-ext-link` (abre em nova aba).
+ */
+export interface CircuitLink {
+  label: string;
+  url: string;
+  /** Emoji/ícone opcional antes do label. */
+  icon?: string;
+  /** Tooltip (title). */
+  title?: string;
+}
+
+/**
  * Configuração ("personalidade") de uma página de circuito.
  */
 export interface CircuitConfig {
@@ -181,6 +223,8 @@ export interface CircuitConfig {
   sourceColors?: Record<string, string>;
   /** Labels legíveis por fonte (chip na sidebar). Ex: { rfegolf: "RFEGolf" }. */
   sourceLabels?: Record<string, string>;
+  /** Labels legíveis por liga (FFG: ligue → nome da região) no dropdown. */
+  ligaLabels?: Record<string, string>;
   /** Itens especiais fixos no topo da sidebar. */
   specialItems?: CircuitSpecialItem[];
 
@@ -192,6 +236,8 @@ export interface CircuitConfig {
     sex?: boolean;
     source?: boolean;
     liga?: boolean;
+    /** Botão INTL — mostra só torneios marcados `intl` (FFG: Internationaux). */
+    intl?: boolean;
     toggles?: CircuitToggle[];
   };
 
