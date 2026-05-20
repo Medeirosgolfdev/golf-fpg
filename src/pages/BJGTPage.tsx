@@ -381,29 +381,19 @@ function TournView({ def, evo, evoYear }: { def: TDef; evo?: Map<string, EvoEntr
       scOptions={scOptions}
       roundLabels={roundLabels}
       evoCols={evoCols}
-      renderAccSection={(accLB) => (
-        <>
-          <div className="card">
-            <div className="h-md fs-14">🏆 Leaderboard — {def.label}</div>
-            {hasEvo && <EvoSummary evo={evo!} evoYear={evoYear!} />}
-            {accLB}
-          </div>
-          <div className="card">
-            <div className="h-md fs-14">📊 Dificuldade por Buraco — Todas as rondas</div>
-            <FStats data={data} ri="all" />
-            <HoleDiff data={data} ri="all" mn={manuelName} />
-          </div>
-        </>
+      accHeader={hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined}
+      accExtra={(
+        <div className="card">
+          <div className="h-md fs-14">📊 Dificuldade por Buraco — Todas as rondas</div>
+          <FStats data={data} ri="all" />
+          <HoleDiff data={data} ri="all" mn={manuelName} />
+        </div>
       )}
-      renderRoundSection={(roundLB, tab) => (
+      roundExtra={(tab) => (
         <>
-          <div className="card">
-            <div className="h-md fs-14">🏆 {rLabel(tab)} — Scorecards</div>
-            <FStats data={data} ri={tab} />
-            {roundLB}
-          </div>
           <div className="card">
             <div className="h-md fs-14">📊 Dificuldade por Buraco — {rLabel(tab)}</div>
+            <FStats data={data} ri={tab} />
             <HoleDiff data={data} ri={tab} mn={manuelName} />
           </div>
           {manuelName && <ManuelDay data={data} ri={tab} />}
@@ -733,29 +723,22 @@ export function bjgtMajorDivision(def: TDef, evo: Map<string, EvoEntry> | undefi
     scOptions: bjgtScorecardOptions(),
     roundLabels,
     evoCols,
-    renderAccSection: (accLB) => (
-      <>
-        <div className="card">
-          <div className="h-md fs-14">🏆 Leaderboard — {def.label}</div>
-          {hasEvo && <EvoSummary evo={evo!} evoYear={evoYear!} />}
-          {accLB}
-        </div>
-        <div className="card">
-          <div className="h-md fs-14">📊 Dificuldade por Buraco — Todas as rondas</div>
-          <FStats data={data} ri="all" />
-          <HoleDiff data={data} ri="all" mn={manuelName} />
-        </div>
-      </>
+    // Apresentação PLANA (igual ao JOB/Doral): o leaderboard renderiza sem
+    // "janela"/card. A análise extra (média + dificuldade por buraco + ManuelDay)
+    // flui POR BAIXO, em cards próprios, via accHeader/accExtra/roundExtra.
+    accHeader: hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined,
+    accExtra: (
+      <div className="card">
+        <div className="h-md fs-14">📊 Dificuldade por Buraco — Todas as rondas</div>
+        <FStats data={data} ri="all" />
+        <HoleDiff data={data} ri="all" mn={manuelName} />
+      </div>
     ),
-    renderRoundSection: (roundLB, tab) => (
+    roundExtra: (tab) => (
       <>
-        <div className="card">
-          <div className="h-md fs-14">🏆 {rLabel(tab)} — Scorecards</div>
-          <FStats data={data} ri={tab} />
-          {roundLB}
-        </div>
         <div className="card">
           <div className="h-md fs-14">📊 Dificuldade por Buraco — {rLabel(tab)}</div>
+          <FStats data={data} ri={tab} />
           <HoleDiff data={data} ri={tab} mn={manuelName} />
         </div>
         {manuelName && <ManuelDay data={data} ri={tab} />}

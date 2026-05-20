@@ -419,29 +419,19 @@ function TournView({ def, evo, evoYear, selectedDivision }: { def: TDef; evo?: M
       scOptions={scOptions}
       roundLabels={roundLabels}
       evoCols={evoCols}
-      renderAccSection={(accLB) => (
-        <>
-          <div className="card">
-            <div className="h-md fs-14">🏆 Leaderboard — {def.label}</div>
-            {hasEvo && <EvoSummary evo={evo!} evoYear={evoYear!} />}
-            {accLB}
-          </div>
-          <div className="card">
-            <div className="h-md fs-14">📊 Dificuldade por Buraco — Todas as rondas</div>
-            <FStats data={data} ri="all" />
-            <HoleDiff data={data} ri="all" mn={manuelName} />
-          </div>
-        </>
+      accHeader={hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined}
+      accExtra={(
+        <div className="card">
+          <div className="h-md fs-14">📊 Dificuldade por Buraco — Todas as rondas</div>
+          <FStats data={data} ri="all" />
+          <HoleDiff data={data} ri="all" mn={manuelName} />
+        </div>
       )}
-      renderRoundSection={(roundLB, tab) => (
+      roundExtra={(tab) => (
         <>
-          <div className="card">
-            <div className="h-md fs-14">🏆 {rLabel(tab)} — Scorecards</div>
-            <FStats data={data} ri={tab} />
-            {roundLB}
-          </div>
           <div className="card">
             <div className="h-md fs-14">📊 Dificuldade por Buraco — {rLabel(tab)}</div>
+            <FStats data={data} ri={tab} />
             <HoleDiff data={data} ri={tab} mn={manuelName} />
           </div>
           {manuelName && <ManuelDay data={data} ri={tab} />}
@@ -725,28 +715,19 @@ function makeEnglandDivision(
     results: tournament,
     scOptions: bjgtScorecardOptions(),
     roundLabels,
-    renderAccSection: (accLB) => (
-      <>
-        <div className="card">
-          <div className="h-md fs-14">🏆 Leaderboard — {def.label}</div>
-          {accLB}
-        </div>
-        <div className="card">
-          <div className="h-md fs-14">📊 Dificuldade por Buraco — Todas as rondas</div>
-          <FStats data={data} ri="all" />
-          <HoleDiff data={data} ri="all" mn={manuelName} />
-        </div>
-      </>
+    // Apresentação PLANA (igual ao JOB/Doral): leaderboard sem card; análise por baixo.
+    accExtra: (
+      <div className="card">
+        <div className="h-md fs-14">📊 Dificuldade por Buraco — Todas as rondas</div>
+        <FStats data={data} ri="all" />
+        <HoleDiff data={data} ri="all" mn={manuelName} />
+      </div>
     ),
-    renderRoundSection: (roundLB, tab) => (
+    roundExtra: (tab) => (
       <>
-        <div className="card">
-          <div className="h-md fs-14">🏆 {rLabel(tab)} — Scorecards</div>
-          <FStats data={data} ri={tab} />
-          {roundLB}
-        </div>
         <div className="card">
           <div className="h-md fs-14">📊 Dificuldade por Buraco — {rLabel(tab)}</div>
+          <FStats data={data} ri={tab} />
           <HoleDiff data={data} ri={tab} mn={manuelName} />
         </div>
         {manuelName && <ManuelDay data={data} ri={tab} />}
