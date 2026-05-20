@@ -43,6 +43,18 @@ function main() {
       ? d.divisions.map((v) => ({ ak: v.ak, ageGroup: v.ageGroup, players: Array.isArray(v.players) ? v.players.length : 0 }))
       : [];
     const playerCount = divisions.reduce((s, v) => s + (v.players || 0), 0);
+    // hasManuel / hasPt — varre os jogadores de todas as divisões.
+    const nm = (s) => String(s || "").toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "");
+    let hasManuel = false, hasPt = false;
+    for (const v of (Array.isArray(d.divisions) ? d.divisions : [])) {
+      for (const p of (Array.isArray(v.players) ? v.players : [])) {
+        const x = nm(p.name);
+        if (/manuel/.test(x) && /(medeiros|goulart)/.test(x)) hasManuel = true;
+        if (/portugal/i.test(p.country || "") || /^(pt|prt)$/i.test(p.country || "")) hasPt = true;
+        if (hasManuel && hasPt) break;
+      }
+      if (hasManuel && hasPt) break;
+    }
     tournaments[d.slug] = {
       tournament: d.tournament ?? null,
       year: d.year ?? null,
@@ -58,6 +70,8 @@ function main() {
       entrylist_url: d.entrylist_url ?? null,
       divisions,
       playerCount,
+      hasManuel,
+      hasPt,
     };
     ok++;
   }

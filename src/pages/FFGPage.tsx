@@ -2420,46 +2420,54 @@ const FFG_LIGUE_LABELS: Record<string, string> = {
 };
 const isIntlName = (name?: string | null) => /\binternationa(l|ux?)\b/i.test(name || "");
 
-/** FFG-Resultats: 1 entry por torneio, divisões = séries (com results reais). */
-function ffgResEntry(meta: FFGResIndexEntry, data: FFGResTournament): CircuitEntry {
-  const series = data.details.series;
-  const allPlayers = series.flatMap((s) => s.players);
-  const hasT4 = allPlayers.some((p) => p.t4 != null);
-  const hasT3 = allPlayers.some((p) => p.t3 != null);
-  const hasT2 = allPlayers.some((p) => p.t2 != null);
-  const nR = hasT4 ? 4 : hasT3 ? 3 : hasT2 ? 2 : 1;
-
-  const links: CircuitLink[] = [];
-  if (meta.ggPage) links.push({ label: "GolfGenius", url: `https://www.golfgenius.com/pages/${meta.ggPage}`, icon: "🏌️", title: "Scorecards hole-by-hole no GolfGenius" });
-  if (meta.ffgolfOfficialUrl) links.push({ label: "Página FFG", url: meta.ffgolfOfficialUrl, icon: "🔗" });
-  else links.push({ label: "Portal FFG", url: meta.pagesFfgolfUrl || "https://pages.ffgolf.org/resultats/", icon: "🔗" });
-
-  const divisions: CircuitDivision[] = series.map((s) => ({
+/** Carrega o detalhe de UM torneio FFG-Resultats (lazy) + enriquecimento GG. */
+async function ffgResLoadDivisions(meta: FFGResIndexEntry): Promise<CircuitDivision[]> {
+  const td = await cachedFetchJson<FFGResTournament>(`/data/ffgolf-resultats/${meta.file}`);
+  if (!td) return [];
+  if (meta.ffgolfSlug && meta.year) {
+    try {
+      const ggData = await cachedFetchJson<{ course?: { par?: number[]; meters?: number[]; si?: number[]; parTotal?: number; metersTotal?: number; name?: string }; courses?: Array<{ teeName?: string; par?: number[]; meters?: number[]; si?: number[]; parTotal?: number; metersTotal?: number }> }>(`/data/ffgolf/${meta.year}_${meta.ffgolfSlug}.json`);
+      if (ggData && ggData.course && Array.isArray(ggData.course.meters) && ggData.course.meters.length === 18) {
+        const allCourses = Array.isArray(ggData.courses) ? ggData.courses
+          .filter((c) => Array.isArray(c?.meters) && c.meters!.length === 18)
+          .map((c) => ({ teeName: c.teeName, par: c.par || [], meters: c.meters!, si: c.si || [], parTotal: c.parTotal, metersTotal: c.metersTotal })) : [];
+        td._ggCourse = { par: ggData.course.par || [], meters: ggData.course.meters, si: ggData.course.si || [], parTotal: ggData.course.parTotal, metersTotal: ggData.course.metersTotal, name: ggData.course.name, courses: allCourses.length > 0 ? allCourses : undefined };
+      }
+    } catch { /* GG opcional */ }
+  }
+  return td.details.series.map((s): CircuitDivision => ({
     key: s.serieId,
     escalao: s.label || divisionLabel(s.serieId),
     tabLabel: s.label || divisionLabel(s.serieId),
     hasManuel: s.players.some((p) => isM(p.name)),
-    results: ffgResToFPGTournament(data, s.serieId),
+    results: ffgResToFPGTournament(td, s.serieId),
     scOptions: ffgScorecardOptions(),
   }));
+}
 
+/** FFG-Resultats: entry LAZY a partir do índice (1607 torneios — detalhe só
+ *  carrega ao seleccionar). hasManuel/hasPt vêm de um índice enriquecido opcional. */
+function ffgResEntry(meta: FFGResIndexEntry, hasManuel?: boolean, hasPt?: boolean): CircuitEntry {
+  const links: CircuitLink[] = [];
+  if (meta.ggPage) links.push({ label: "GolfGenius", url: `https://www.golfgenius.com/pages/${meta.ggPage}`, icon: "🏌️", title: "Scorecards hole-by-hole no GolfGenius" });
+  if (meta.ffgolfOfficialUrl) links.push({ label: "Página FFG", url: meta.ffgolfOfficialUrl, icon: "🔗" });
+  else links.push({ label: "Portal FFG", url: meta.pagesFfgolfUrl || "https://pages.ffgolf.org/resultats/", icon: "🔗" });
   return {
     id: `ffgres:${meta.trnId}`,
     year: meta.year,
     name: meta.name,
     series: "FFG Officiel",
     source: "ffgres",
-    course: series[0]?.courseTerrain ? `Parcours ${series[0].courseTerrain}` : undefined,
     dateStart: meta.dateIso ?? undefined,
     federation: "FFG",
     liga: meta.ligue,
     intl: isIntlName(meta.name),
     links,
     playerCount: meta.totalPlayers,
-    roundsCount: nR,
-    divisionCount: divisions.length,
-    hasManuel: allPlayers.some((p) => isM(p.name)),
-    divisions,
+    divisionCount: meta.seriesCount,
+    hasManuel,
+    hasPt,
+    loadDivisions: () => ffgResLoadDivisions(meta),
   };
 }
 
@@ -2490,74 +2498,45 @@ function lgpidfEntry(meta: LGPIDFIndexEntry, data: LGPIDFTournament): CircuitEnt
 }
 
 function FFGShellContent() {
-  const [catalog, setCatalog] = useState<Catalog | null>(null);
   const [ffgResIndex, setFfgResIndex] = useState<FFGResIndex | null>(null);
-  const [ffgResData, setFfgResData] = useState<Map<string, FFGResTournament>>(new Map());
   const [lgpidfIndex, setLgpidfIndex] = useState<LGPIDFIndex | null>(null);
   const [lgpidfData, setLgpidfData] = useState<Map<string, LGPIDFTournament>>(new Map());
   const [ffgCategories, setFfgCategories] = useState<FFGCategoriesData | null>(null);
+  // Índice opcional Manuel/PT por trnId (gerado por scripts/build-ffgolf-manuel-index.js)
+  // — permite o filtro Manuel/PT na LISTA sem carregar os 1607 ficheiros.
+  const [manuelIdx, setManuelIdx] = useState<Record<string, { m?: boolean; pt?: boolean }>>({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let alive = true;
     (async () => {
-      invalidateCache("/data/ffgolf-catalog.json");
       invalidateCache("/data/ffgolf-resultats-index.json");
       try {
-        const cat = await cachedFetchJson<Catalog>("/data/ffgolf-catalog.json");
-        if (alive && cat) setCatalog(cat);
-
-        // FFG Resultats (fonte central) + enriquecimento metros/SI via GolfGenius.
+        // FFG-Resultats: só o ÍNDICE (lazy — o detalhe carrega ao seleccionar).
         const ffgIdx = await cachedFetchJson<FFGResIndex>("/data/ffgolf-resultats-index.json");
-        if (ffgIdx && alive) {
-          setFfgResIndex(ffgIdx);
-          const fMap = new Map<string, FFGResTournament>();
-          await Promise.all(ffgIdx.tournaments.map(async (t) => {
-            try {
-              const td = await cachedFetchJson<FFGResTournament>(`/data/ffgolf-resultats/${t.file}`);
-              if (!td) return;
-              if (t.ffgolfSlug && t.year) {
-                try {
-                  const ggData = await cachedFetchJson<{ course?: { par?: number[]; meters?: number[]; si?: number[]; parTotal?: number; metersTotal?: number; name?: string }; courses?: Array<{ teeName?: string; par?: number[]; meters?: number[]; si?: number[]; parTotal?: number; metersTotal?: number }> }>(`/data/ffgolf/${t.year}_${t.ffgolfSlug}.json`);
-                  if (ggData && ggData.course && Array.isArray(ggData.course.meters) && ggData.course.meters.length === 18) {
-                    const allCourses = Array.isArray(ggData.courses) ? ggData.courses
-                      .filter((c) => Array.isArray(c?.meters) && c.meters!.length === 18)
-                      .map((c) => ({ teeName: c.teeName, par: c.par || [], meters: c.meters!, si: c.si || [], parTotal: c.parTotal, metersTotal: c.metersTotal })) : [];
-                    td._ggCourse = {
-                      par: ggData.course.par || [], meters: ggData.course.meters, si: ggData.course.si || [],
-                      parTotal: ggData.course.parTotal, metersTotal: ggData.course.metersTotal, name: ggData.course.name,
-                      courses: allCourses.length > 0 ? allCourses : undefined,
-                    };
-                  }
-                } catch { /* GG opcional */ }
-              }
-              fMap.set(t.trnId, td);
-            } catch { /* skip */ }
-          }));
-          if (alive) setFfgResData(fMap);
-        }
+        if (ffgIdx && alive) setFfgResIndex(ffgIdx);
 
-        // LGPIDF (PDFs Paris-Île-de-France).
+        // LGPIDF (PDFs Paris-Île-de-France) — eager (pequeno; permite dedup + Manuel).
         try {
           const lgIdx = await cachedFetchJson<LGPIDFIndex>("/data/ffgolf-lgpidf-index.json");
           if (lgIdx && alive) {
             setLgpidfIndex(lgIdx);
             const lgMap = new Map<string, LGPIDFTournament>();
             await Promise.all(lgIdx.tournaments.map(async (t) => {
-              try {
-                const td = await cachedFetchJson<LGPIDFTournament>(`/data/ffgolf/${t.file}`);
-                if (td) lgMap.set(`${t.year}_${t.slug}`, td);
-              } catch { /* skip */ }
+              try { const td = await cachedFetchJson<LGPIDFTournament>(`/data/ffgolf/${t.file}`); if (td) lgMap.set(`${t.year}_${t.slug}`, td); } catch { /* skip */ }
             }));
             if (alive) setLgpidfData(lgMap);
           }
         } catch { /* lgpidf opcional */ }
 
-        // Catégories d'âge (Vademecum).
+        // Índice Manuel/PT (opcional) — alimenta o filtro da lista em modo lazy.
         try {
-          const cats = await cachedFetchJson<FFGCategoriesData>("/data/ffg-categories-age.json");
-          if (cats && alive) setFfgCategories(cats);
+          const mi = await cachedFetchJson<{ tournaments: Record<string, { m?: boolean; pt?: boolean }> }>("/data/ffgolf-manuel-index.json");
+          if (mi?.tournaments && alive) setManuelIdx(mi.tournaments);
         } catch { /* opcional */ }
+
+        // Catégories d'âge (Vademecum).
+        try { const cats = await cachedFetchJson<FFGCategoriesData>("/data/ffg-categories-age.json"); if (cats && alive) setFfgCategories(cats); } catch { /* opcional */ }
       } finally {
         if (alive) setLoading(false);
       }
@@ -2570,19 +2549,17 @@ function FFGShellContent() {
     const set = new Set<string>();
     if (!ffgResIndex || !lgpidfIndex) return set;
     for (const fe of ffgResIndex.tournaments) {
-      if (!fe.dateIso || !ffgResData.has(fe.trnId)) continue;
+      if (!fe.dateIso) continue;
       for (const le of lgpidfIndex.tournaments) {
         const lg = lgpidfData.get(`${le.year}_${le.slug}`);
         if (!lg || lg.dateStart !== fe.dateIso) continue;
         const fw = fe.name.toLowerCase().split(/[\s-]+/);
         const lw = lg.tournament.toLowerCase().split(/[\s-]+/);
-        if (fw.filter((w) => w.length > 3 && lw.includes(w)).length >= 2) {
-          set.add(`${le.year}_${le.slug}`);
-        }
+        if (fw.filter((w) => w.length > 3 && lw.includes(w)).length >= 2) set.add(`${le.year}_${le.slug}`);
       }
     }
     return set;
-  }, [ffgResIndex, ffgResData, lgpidfIndex, lgpidfData]);
+  }, [ffgResIndex, lgpidfIndex, lgpidfData]);
 
   const entries = useMemo<CircuitEntry[]>(() => {
     const out: CircuitEntry[] = [];
@@ -2590,10 +2567,9 @@ function FFGShellContent() {
       const seen = new Set<string>();
       for (const meta of ffgResIndex.tournaments) {
         if (seen.has(meta.trnId)) continue;
-        const data = ffgResData.get(meta.trnId);
-        if (!data) continue;
         seen.add(meta.trnId);
-        out.push(ffgResEntry(meta, data));
+        const mi = manuelIdx[meta.trnId];
+        out.push(ffgResEntry(meta, mi?.m, mi?.pt));
       }
     }
     if (lgpidfIndex) {
@@ -2606,7 +2582,7 @@ function FFGShellContent() {
       }
     }
     return out;
-  }, [ffgResIndex, ffgResData, lgpidfIndex, lgpidfData, matchedLgKeys]);
+  }, [ffgResIndex, lgpidfIndex, lgpidfData, matchedLgKeys, manuelIdx]);
 
   const config = useMemo<CircuitConfig>(() => {
     const specialItems: CircuitSpecialItem[] = ffgCategories
@@ -2622,14 +2598,13 @@ function FFGShellContent() {
       sourceColors: { ffgres: "#002654", lgpidf: "#3b5a8c" },
       sourceLabels: { ffgres: "FFG Officiel", lgpidf: "LGPIDF" },
       ligaLabels: FFG_LIGUE_LABELS,
-      filters: { search: true, year: true, liga: true, intl: true, toggles: ["manuel", "pt", "top10", "veteranos"] },
+      filters: { search: true, year: true, liga: true, intl: true, toggles: ["manuel", "pt", "top10"] },
       specialItems,
-      veteranoThreshold: 3,
       loadingMessage: "A carregar FFGolf…",
     };
   }, [ffgCategories]);
 
-  if (loading && !catalog) return <LoadingState message="A carregar FFGolf…" />;
+  if (loading) return <LoadingState message="A carregar FFGolf…" />;
   return <CircuitShell entries={entries} config={config} />;
 }
 

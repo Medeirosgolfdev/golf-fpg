@@ -37,7 +37,7 @@ const NAME_TO_ISO2: Record<string, string> = {
   Scotland: "GB-SCT", England: "GB-ENG", Wales: "GB-WLS", Ireland: "IE",
   "South Africa": "ZA", UAE: "AE", "United Arab Emirates": "AE",
   Mauritius: "MU", India: "IN", Belgium: "BE", Austria: "AT", Norway: "NO",
-  "United States": "US", USA: "US", "United Kingdom": "GB", "Great Britain": "GB",
+  "United States": "US", "United States of America": "US", USA: "US", "United Kingdom": "GB", "Great Britain": "GB",
   "Hong Kong": "HK", China: "CN", Japan: "JP", "South Korea": "KR", Korea: "KR",
   Australia: "AU", Brazil: "BR", Argentina: "AR", Canada: "CA", Mexico: "MX",
   "Czech Republic": "CZ", Czechia: "CZ", Slovakia: "SK", Slovenia: "SI",
@@ -101,6 +101,8 @@ interface GjglIndexTournament {
   entrylist_url: string | null;
   divisions: { ak: number; ageGroup: string; players: number }[];
   playerCount: number;
+  hasManuel?: boolean;
+  hasPt?: boolean;
 }
 interface GjglIndex {
   generated_at?: string;
@@ -176,11 +178,12 @@ function divisionToTournament(d: GjglData, div: GjglDivision, label: string): FP
       const playedR = pRounds.length;
       const tp = p.total != null && parTotal > 0 ? p.total - parTotal * playedR : null;
       const flag = flagForCountry(p.country);
+      const dispCountry = /united states/i.test(p.country || "") ? "USA" : (p.country || "");
       return {
         scoreId: p.playerKey || p.name,
         pos: p.pos,
         name: p.name,
-        club: p.country ? `${flag} ${p.country}` : "",
+        club: p.country ? `${flag} ${dispCountry}` : "",
         grossTotal: p.total,
         toPar: tp,
         nholes: 18,
@@ -566,6 +569,8 @@ function buildGjglEntries(catalog: Catalog, index: GjglIndex | null): CircuitEnt
         roundsCount: ix?.rounds ?? undefined,
         divisionCount: ix?.divisions?.length ?? undefined,
         playerCount: ix?.playerCount ?? undefined,
+        hasManuel: ix?.hasManuel,
+        hasPt: ix?.hasPt,
         links: links.length ? links : undefined,
         loadDivisions: () => gjglLoadDivisions(t.slug),
       };

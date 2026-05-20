@@ -32,7 +32,7 @@ import type { CircuitDivision } from "../ui/circuit/types";
 /* ── Types ── */
 interface RoundData { day: number; scores: number[] | null; f9: number | null; b9: number | null; gross: number }
 interface PlayerData { name: string; country: string; pos: number | null; result: number | null; total: number | null; rounds: RoundData[] }
-export interface TData { tournament: string; par: number[]; si?: number[]; parF9: number; parB9: number; parTotal: number; players: PlayerData[] }
+export interface TData { tournament: string; par: number[]; si?: number[]; yards?: number[]; course?: string; parF9: number; parB9: number; parTotal: number; players: PlayerData[] }
 export interface TDef { id: string; label: string; shortLabel: string; data: TData; manuelName: string; year: number; category: string; roundDates?: string[]; series: "bjgt" | "eowagr" }
 
 /* ── Data URLs ── */
@@ -127,6 +127,10 @@ export function loadT(raw: any, reverseRounds?: boolean): TData {
 function tDataToTournament(data: TData, def: TDef): FPGTournament {
   const { par, si, parTotal, players } = data;
   const nR = Math.max(...players.map(p => p.rounds.length), 0);
+  // Distâncias: o BlueGolf dá `yards` por buraco → converter para metros.
+  const meters = data.yards && data.yards.length >= par.length ? data.yards.map(y => Math.round(y * 0.9144)) : [];
+  const hasMeters = meters.length >= par.length && par.length > 0;
+  const teeName = hasMeters ? (data.course || "Tee") : undefined;
   const fpgPlayers: FPGPlayer[] = players
     .filter(p => p.rounds.length > 0)
     .map(p => {
@@ -136,7 +140,8 @@ function tDataToTournament(data: TData, def: TDef): FPGTournament {
         scores: r.scores ?? [],
         pars: par,
         si: si && si.length >= par.length ? si : [],
-        meters: [],
+        meters: hasMeters ? meters : [],
+        teeName,
       }));
       const incomplete = p.rounds.length < nR;
       return {
@@ -151,6 +156,8 @@ function tDataToTournament(data: TData, def: TDef): FPGTournament {
         scores: p.rounds[0]?.scores ?? undefined,
         par,
         si: si && si.length >= par.length ? si : undefined,
+        meters: hasMeters ? meters : undefined,
+        teeName,
         roundScores,
         _wd: incomplete,
         _roundsPlayed: p.rounds.length,
@@ -689,7 +696,7 @@ export function bjgtEvoFor(cur: TDef, all: TDef[]): { evo?: Map<string, EvoEntry
 }
 
 /** CircuitDivision de um torneio BJGT/EOWAGR (results + evoCols + módulos ricos). */
-export function bjgtMajorDivision(def: TDef, evo: Map<string, EvoEntry> | undefined, evoYear: string | undefined): CircuitDivision {
+export function bjgtMajorDivision(def: TDef, evo: Map<string, EvoEntry> | undefined, evoYear: string | undefined, sourceUrl?: string): CircuitDivision {
   const data = def.data;
   const manuelName = def.manuelName || (data.players.some((p) => isM(p.name)) ? "Manuel" : "");
   const hasEvo = !!evo && evo.size > 0;
@@ -721,6 +728,7 @@ export function bjgtMajorDivision(def: TDef, evo: Map<string, EvoEntry> | undefi
     escalao: def.category,
     tabLabel: def.category,
     hasManuel: data.players.some((p) => isM(p.name)),
+    links: sourceUrl ? [{ label: "BlueGolf", url: sourceUrl, icon: "🔗" }] : undefined,
     results,
     scOptions: bjgtScorecardOptions(),
     roundLabels,

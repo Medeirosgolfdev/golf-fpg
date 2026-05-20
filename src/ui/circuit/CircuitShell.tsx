@@ -53,6 +53,20 @@ function isPt(p: FPGPlayer): boolean {
   return !!p._isPortuguese || isManuelByName(p.name);
 }
 
+/** O Manuel jogou neste torneio? metadata (`hasManuel`) ou divisões eager.
+ *  `undefined` = desconhecido (lazy sem metadata) → não filtra (mantém visível). */
+function entryManuelState(e: CircuitEntry): boolean | undefined {
+  if (e.hasManuel != null) return e.hasManuel;
+  if (e.divisions) return e.divisions.some(d => !!d.results?.players.some(p => isManuelByName(p.name)));
+  return undefined;
+}
+/** Há portugueses neste torneio? metadata (`hasPt`) ou divisões eager. */
+function entryPtState(e: CircuitEntry): boolean | undefined {
+  if (e.hasPt != null) return e.hasPt;
+  if (e.divisions) return e.divisions.some(d => !!d.results?.players.some(p => isPt(p)));
+  return undefined;
+}
+
 const TOGGLE_DEF: Record<CircuitToggle, { label: string; title: string }> = {
   manuel:      { label: "★ Manuel",      title: "Só o Manuel" },
   pt:          { label: "🇵🇹 PT",        title: "Só jogadores portugueses" },
@@ -113,8 +127,9 @@ function applyToggles(
   if (active.size === 0) return t;
   let players = t.players;
 
-  if (active.has("manuel")) players = players.filter(p => isManuelByName(p.name));
-  if (active.has("pt")) players = players.filter(p => isPt(p));
+  // Nota: os toggles "manuel" e "pt" filtram a LISTA de torneios (sidebar), não
+  // os jogadores do leaderboard — ver entryManuelState/entryPtState. Aqui só os
+  // filtros de jogador (top10/veteranos/regressados/subiram).
   if (active.has("veteranos")) {
     players = players.filter(p => (vetIndex.get(normName(p.name)) ?? 0) >= vetThreshold);
   }
@@ -344,6 +359,8 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
       if (flt.source && fSource !== "all" && e.source !== fSource) return false;
       if (flt.liga && fLiga !== "all" && e.liga !== fLiga) return false;
       if (flt.intl && fIntl && !e.intl) return false;
+      if (toggles.has("manuel") && entryManuelState(e) === false) return false;
+      if (toggles.has("pt") && entryPtState(e) === false) return false;
       if (flt.escalao && fEsc !== "all" && !(e.escalao === fEsc || (e.divisions ?? []).some(d => d.escalao === fEsc))) return false;
       if (flt.sex && fSex !== "all" && !(e.sex === fSex || e.sex === "Mixed" || (e.divisions ?? []).some(d => d.sex === fSex || d.sex === "Mixed"))) return false;
       if (q) {
@@ -352,7 +369,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
       }
       return true;
     });
-  }, [entries, search, fYear, fEsc, fSex, fSource, fLiga, fIntl, oldCutoff, flt]);
+  }, [entries, search, fYear, fEsc, fSex, fSource, fLiga, fIntl, oldCutoff, toggles, flt]);
 
   // ── Selecção do torneio activo ──────────────────────────────────────
   const [localId, setLocalId] = useState<string | null>(null);
@@ -442,7 +459,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
   })();
   const curDateStr = fmtDateRange(cur?.dateStart, cur?.dateEnd);
   /** Links de ação do header (cur.links + sourceUrl como "Leaderboard oficial"). */
-  const headerHasActions = !!(cur && (cur.sourceUrl || (cur.links && cur.links.length > 0)));
+  const headerHasActions = !!(cur && (cur.sourceUrl || (cur.links && cur.links.length > 0) || (curDiv?.links && curDiv.links.length > 0)));
 
   return (
     <KidsLinkCtx.Provider value={kidsMap}>
@@ -591,6 +608,11 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
                   actions={headerHasActions ? (
                     <>
                       {(cur.links ?? []).map(lnk => (
+                        <ExtLink key={lnk.url} href={lnk.url} className="tourn-ext-link" title={lnk.title ?? lnk.label}>
+                          {lnk.icon ? `${lnk.icon} ` : ""}{lnk.label} ↗
+                        </ExtLink>
+                      ))}
+                      {(curDiv.links ?? []).map(lnk => (
                         <ExtLink key={lnk.url} href={lnk.url} className="tourn-ext-link" title={lnk.title ?? lnk.label}>
                           {lnk.icon ? `${lnk.icon} ` : ""}{lnk.label} ↗
                         </ExtLink>
@@ -802,9 +824,11 @@ function CircuitSidebar({
 
                     {/* Linha 3: pills */}
                     <div style={{ display: "flex", gap: 4, flexWrap: "wrap", alignItems: "center", margin: "3px 0" }}>
-                      {esc && <EscPill esc={esc} />}
-                      {sex && <SexBadge sex={sex === "Mixed" ? "M" : sex} />}
-                      {sex === "Mixed" && <SexBadge sex="F" />}
+                      {/* Escalão/sexo só fazem sentido quando há UM escalão; com vários
+                          mostrar apenas "N esc." (senão parece que só tem o 1º). */}
+                      {nDiv <= 1 && esc && <EscPill esc={esc} />}
+                      {nDiv <= 1 && sex && <SexBadge sex={sex === "Mixed" ? "M" : sex} />}
+                      {nDiv <= 1 && sex === "Mixed" && <SexBadge sex="F" />}
                       {nDiv > 1 && <span className="p p-sm p-muted">{nDiv} esc.</span>}
                       {nR > 1 && <RoundPill nR={nR} />}
                     </div>

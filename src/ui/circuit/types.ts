@@ -63,6 +63,10 @@ export interface CircuitDivision {
   /** Draw / tee times. Estrutura livre por página (convertida para DrawTab). */
   draw?: CircuitDraw;
 
+  /** Links de origem desta divisão (ex: BlueGolf/GolfGenius do escalão) —
+   *  mostrados no header do detalhe junto aos links do torneio. */
+  links?: CircuitLink[];
+
   // ── Opções de display do leaderboard ──────────────────────────────
   scOptions?: ScorecardOptions;
   /** Labels de ronda, ex: ["R1 · 25 Fev", "R2 · 26 Fev"]. */
@@ -177,8 +181,11 @@ export interface CircuitEntry {
   /** Carregamento lazy das divisões — chamado pelo shell na selecção (com cache). */
   loadDivisions?: () => Promise<CircuitDivision[]>;
 
-  /** True se o Manuel jogou alguma divisão (marcador ★ na sidebar). */
+  /** True se o Manuel jogou alguma divisão (marcador ★ na sidebar + filtro Manuel). */
   hasManuel?: boolean;
+  /** True se há ≥1 jogador português (filtro PT da toolbar). Para páginas lazy
+   *  deve vir do índice; para páginas eager o shell calcula das divisões. */
+  hasPt?: boolean;
 }
 
 /** Item especial fixo no topo da sidebar (ex: Categorias de idade, Federações). */

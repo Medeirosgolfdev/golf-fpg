@@ -954,6 +954,7 @@ export function doralMajorDivision(entry: Entry, evo: Map<string, EvoEntryD> | u
     escalao: entry.category,
     tabLabel: entry.category,
     hasManuel: entry.players.some((p) => isM(p.name)),
+    links: entry.sourceUrl ? [{ label: "GolfGenius", url: entry.sourceUrl, icon: "🔗" }] : undefined,
     results,
     scOptions: doralScorecardOptions(entry),
     siLabel: "m",

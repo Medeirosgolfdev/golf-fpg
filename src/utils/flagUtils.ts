@@ -63,7 +63,7 @@ const COUNTRY_TO_CODE: Record<string, string> = {
   // English
   portugal:"pt",england:"gb",spain:"es",france:"fr",germany:"de",italy:"it",
   netherlands:"nl",sweden:"se",norway:"no",denmark:"dk",finland:"fi",
-  "united states":"us",canada:"ca",australia:"au","south africa":"za",mexico:"mx",
+  "united states":"us","united states of america":"us",usa:"us",canada:"ca",australia:"au","south africa":"za",mexico:"mx",
   japan:"jp","south korea":"kr",switzerland:"ch",china:"cn",india:"in",
   brazil:"br",argentina:"ar",belgium:"be",poland:"pl",slovakia:"sk",hungary:"hu",
   "russian federation":"ru",russia:"ru",philippines:"ph",singapore:"sg",
@@ -174,7 +174,7 @@ export function normCountry(raw: string): string {
 const CODE_TO_DISPLAY: Record<string, string> = {
   pt:"Portugal", gb:"United Kingdom", ie:"Ireland", fr:"France", es:"Spain",
   de:"Germany", it:"Italy", nl:"Netherlands", se:"Sweden", no:"Norway",
-  dk:"Denmark", fi:"Finland", us:"United States", ca:"Canada", au:"Australia",
+  dk:"Denmark", fi:"Finland", us:"USA", ca:"Canada", au:"Australia",
   za:"South Africa", mx:"Mexico", jp:"Japan", kr:"South Korea", ch:"Switzerland",
   cn:"China", in:"India", br:"Brazil", ar:"Argentina", be:"Belgium", pl:"Poland",
   sk:"Slovakia", hu:"Hungary", ru:"Russia", ph:"Philippines", sg:"Singapore",

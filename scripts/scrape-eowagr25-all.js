@@ -1,19 +1,28 @@
 /**
  * scrape-eowagr25-all.js
  *
- * Descarrega 3 escalões do European Open WAGR 2025 (BlueGolf).
- * Corre sequencialmente — um browser, um escalão de cada vez.
+ * Descarrega TODOS os escalões do European Open WAGR (BlueGolf), descobrindo-os
+ * automaticamente a partir do evento (não é preciso saber os nº de contest).
+ * Corre sequencialmente — um browser, um escalão de cada vez. Resolve CAPTCHA
+ * manualmente quando aparece (browser visível).
+ *
+ * Descobertas incorporadas (sessão 2026-05):
+ *   • Auto-discovery: lê o seletor de flights da página de um contest semente
+ *     (CONTESTS[0]) e apanha Boys + Girls + todas as idades.
+ *   • Captura `yards` por buraco (input[data-distance]) → distâncias no scorecard
+ *     (o site converte depois yards→metros).
+ *   • Grava `category` (nome do escalão) em cada ficheiro.
  *
  * USO:
- *   node scrape-eowagr25-all.js
+ *   node scrape-eowagr25-all.js                  # Firefox (defeito)
+ *   BROWSER=chrome node scrape-eowagr25-all.js   # forçar Chrome real
+ *   (Firefox precisa de: npx playwright install firefox)
  *
- * Ficheiros gerados:
- *   eowagr25_contest13.json
- *   eowagr25_contest77.json
- *   eowagr25_contest121.json
+ * Ficheiros gerados (1 por escalão): eowagr25_contest<id>.json
+ * Depois: copiar para public/data/ e registar no array URLS do BJGTPage.
  */
 
-const { chromium } = require("playwright");
+const { chromium, firefox } = require("playwright");
 const fs = require("fs");
 
 /* ─── Torneios a descarregar ─── */
@@ -36,13 +45,22 @@ const DELAY_MS = 700;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /* ─── CAPTCHA ─── */
+/** Verifica o estado HTTP real da navegação. 403/429 = bloqueio do servidor. */
+function checkBlocked(resp, url) {
+  const status = resp ? resp.status() : 0;
+  if (status === 403 || status === 429) {
+    console.error(`\n🚫 BlueGolf devolveu HTTP ${status} — bloqueio de servidor (Cloudflare/IP).`);
+    console.error(`   URL: ${url}`);
+    console.error("   Não é cache local. Teste decisivo: abre este URL no teu Chrome normal.");
+    console.error("   • Se também der 403 → bloqueio de IP: muda de IP (hotspot 4G / VPN) ou espera.");
+    console.error("   • Se abrir normalmente → deteção de automação: avisa-me que ligo via CDP ao teu Chrome.\n");
+    throw new Error(`BlueGolf HTTP ${status}`);
+  }
+}
+
 async function waitForHuman(page) {
-  const title = await page.title();
-  if (
-    !title.toLowerCase().includes("confirm") &&
-    !title.toLowerCase().includes("human")
-  )
-    return;
+  const title = (await page.title()).toLowerCase();
+  if (!title.includes("confirm") && !title.includes("human")) return;
   console.log("\n⏳ CAPTCHA detectado! Resolve no browser...");
   await page.waitForFunction(
     () =>
@@ -65,6 +83,7 @@ async function extractScorecard(page) {
       total: null,
       par: [],
       si: [],
+      yards: [],
       rounds: [],
     };
 
@@ -114,10 +133,16 @@ async function extractScorecard(page) {
 
     /* Parser de tabela */
     function parseTable(table) {
-      const localPar = [], localSi = [], localRounds = [];
+      const localPar = [], localSi = [], localYards = [], localRounds = [];
 
       for (const inp of table.querySelectorAll('input[type="hidden"][data-par]'))
         localPar.push(parseInt(inp.getAttribute("data-par"), 10));
+
+      // Distâncias (yards) — input hidden com data-distance, por ordem dos buracos.
+      for (const inp of table.querySelectorAll('input[type="hidden"][data-distance]')) {
+        const v = parseInt(inp.getAttribute("data-distance"), 10);
+        if (!isNaN(v) && v > 0) localYards.push(v);
+      }
 
       if (localPar.length === 0) {
         for (const tr of table.querySelectorAll("tr")) {
@@ -170,7 +195,7 @@ async function extractScorecard(page) {
           }
         }
       }
-      return { par: localPar, si: localSi, rounds: localRounds };
+      return { par: localPar, si: localSi, yards: localYards, rounds: localRounds };
     }
 
     /* Desktop block */
@@ -187,6 +212,7 @@ async function extractScorecard(page) {
         const p = parseTable(table);
         if (p.par.length > 0) result.par = p.par.slice(0, 18);
         if (p.si.length > 0) result.si = p.si.slice(0, 18);
+        if (p.yards.length > 0) result.yards = p.yards.slice(0, 18);
         if (p.rounds.length > 0) result.rounds = p.rounds;
       }
     }
@@ -201,6 +227,7 @@ async function extractScorecard(page) {
         const p = parseTable(table);
         if (result.par.length === 0 && p.par.length > 0) result.par = p.par.slice(0, 18);
         if (result.si.length === 0 && p.si.length > 0) result.si = p.si.slice(0, 18);
+        if (result.yards.length === 0 && p.yards.length > 0) result.yards = p.yards.slice(0, 18);
         mobileRounds.push(...p.rounds);
       }
       if (mobileRounds.length >= 2 && mobileRounds[0].length === 9) {
@@ -216,7 +243,7 @@ async function extractScorecard(page) {
 }
 
 /* ─── Scrape um contest ─── */
-async function scrapeContest(page, contestUrl, outFile) {
+async function scrapeContest(page, contestUrl, outFile, category) {
   const contestMatch = contestUrl.match(/^(https?:\/\/.+\/contest\/\d+)/);
   if (!contestMatch) throw new Error("URL inválida: " + contestUrl);
   const contestBase = contestMatch[1];
@@ -226,7 +253,8 @@ async function scrapeContest(page, contestUrl, outFile) {
   console.log(`📋 Contest ${contestId} → ${outFile}`);
   console.log(`   URL: ${contestUrl}`);
 
-  await page.goto(contestUrl, { waitUntil: "domcontentloaded" });
+  const resp = await page.goto(contestUrl, { waitUntil: "domcontentloaded" });
+  checkBlocked(resp, contestUrl);
   await waitForHuman(page);
   await page.waitForLoadState("networkidle");
 
@@ -269,6 +297,7 @@ async function scrapeContest(page, contestUrl, outFile) {
   const players = [];
   let par = null;
   let si = null;
+  let yards = null;
 
   for (let i = 0; i < contestants.length; i++) {
     const c = contestants[i];
@@ -292,6 +321,7 @@ async function scrapeContest(page, contestUrl, outFile) {
 
       if (!par && sc.par.length >= 9) par = sc.par.slice(0, 18);
       if (!si && sc.si.length >= 9) si = sc.si.slice(0, 18);
+      if (!yards && sc.yards && sc.yards.length >= 9) yards = sc.yards.slice(0, 18);
 
       const name = sc.name && sc.name.length > 1 ? sc.name : c.name;
       const rounds = sc.rounds.map((scores, idx) => {
@@ -339,11 +369,12 @@ async function scrapeContest(page, contestUrl, outFile) {
 
   const output = {
     tournament: tournamentTitle,
-    category: "",
+    category: category || "",
     course: "",
     year: 2025,
     par: par || [],
     ...(si && si.length > 0 ? { si } : {}),
+    ...(yards && yards.length > 0 ? { yards } : {}),
     parF9,
     parB9,
     parTotal,
@@ -363,31 +394,96 @@ async function scrapeContest(page, contestUrl, outFile) {
   console.log(`   Ficheiro: ${outFile}`);
 }
 
-/* ─── Main ─── */
-(async () => {
-  console.log(`🏌️  BlueGolf Multi-Contest Scraper — EO WAGR 2025`);
-  console.log(`   ${CONTESTS.length} escalões a descarregar\n`);
+/* ─── Descobrir TODOS os escalões (contests) do evento ───
+ * A partir de um contest semente, lê o seletor de flights/divisões da página
+ * (links para /contest/<id>/) e devolve todos os escalões (Boys + Girls + todas
+ * as idades). Assim não é preciso saber os números à mão. */
+async function discoverContests(page, seedUrl) {
+  const resp = await page.goto(seedUrl, { waitUntil: "domcontentloaded" });
+  checkBlocked(resp, seedUrl);
+  await waitForHuman(page);
+  await page.waitForLoadState("networkidle").catch(() => {});
+  const found = await page.evaluate(() => {
+    const out = new Map();
+    for (const a of document.querySelectorAll('a[href*="/contest/"]')) {
+      const href = a.getAttribute("href") || "";
+      if (/contestant|player|scorecard/i.test(href)) continue; // ignora links de jogador
+      const m = href.match(/contest\/(\d+)/);
+      if (!m) continue;
+      const id = m[1];
+      const name = a.textContent.replace(/\s+/g, " ").trim();
+      if (!out.has(id) || (name && !out.get(id).name)) out.set(id, { id, name });
+    }
+    return Array.from(out.values());
+  });
+  const base = (seedUrl.match(/^(https?:\/\/.+\/event\/[^/]+)/) || [])[1];
+  if (!base) return [];
+  return found.map((c) => ({ ...c, url: `${base}/contest/${c.id}/leaderboard.htm` }));
+}
 
-  const browser = await chromium.launch({ headless: false });
-  const context = await browser.newContext();
+/* ─── Main ─── */
+const EVENT_SEED = CONTESTS[0].url;
+
+(async () => {
+  console.log(`🏌️  BlueGolf Multi-Contest Scraper — EO WAGR (auto-discovery)\n`);
+
+  // Browser: FIREFOX por defeito — fingerprint diferente, pode contornar o
+  // bloqueio do BlueGolf que apanha o Chromium. Para forçar Chrome:
+  //   BROWSER=chrome node scripts/scrape-eowagr25-all.js
+  const useChrome = /^(chrome|chromium)$/i.test(process.env.BROWSER || "");
+  let browser, context;
+  if (useChrome) {
+    const launchArgs = { headless: false, args: ["--disable-blink-features=AutomationControlled"] };
+    browser = await chromium.launch({ ...launchArgs, channel: "chrome" }).catch(() => chromium.launch(launchArgs));
+    context = await browser.newContext({
+      userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+      locale: "pt-PT",
+      viewport: { width: 1366, height: 900 },
+    });
+  } else {
+    browser = await firefox.launch({ headless: false }).catch((e) => {
+      console.error("\n❌ Firefox do Playwright não instalado. Corre primeiro:\n   npx playwright install firefox\n");
+      throw e;
+    });
+    // Firefox: UA nativo (um UA de Chrome num motor Firefox seria suspeito).
+    context = await browser.newContext({ locale: "pt-PT", viewport: { width: 1366, height: 900 } });
+  }
+  // Esconder navigator.webdriver (sinal típico de automação).
+  await context.addInitScript(() => {
+    Object.defineProperty(navigator, "webdriver", { get: () => undefined });
+  });
   const page = await context.newPage();
   page.setDefaultTimeout(30_000);
 
-  for (const contest of CONTESTS) {
+  // 1) Descobrir todos os escalões do evento (a partir do contest semente).
+  let contests = [];
+  try {
+    contests = await discoverContests(page, EVENT_SEED);
+    console.log(`   🔎 ${contests.length} escalões descobertos no evento\n`);
+  } catch (e) {
+    console.warn(`   ⚠️  Discovery falhou (${e.message}) — uso a lista fixa\n`);
+  }
+  // Fallback à lista hardcoded se a descoberta não devolver nada.
+  if (!contests.length) {
+    contests = CONTESTS.map((c) => ({ id: (c.url.match(/contest\/(\d+)/) || [])[1], name: "", url: c.url }));
+  }
+
+  // 2) Scrape de cada escalão → eowagr25_contest<id>.json
+  for (const c of contests) {
+    const outFile = `eowagr25_contest${c.id}.json`;
     try {
-      await scrapeContest(page, contest.url, contest.out);
+      await scrapeContest(page, c.url, outFile, c.name);
     } catch (err) {
-      console.error(`\n❌ Erro no contest ${contest.url}:\n   ${err.message}`);
+      console.error(`\n❌ Erro no contest ${c.url}:\n   ${err.message}`);
     }
   }
 
   await browser.close();
 
   console.log(`\n${"═".repeat(60)}`);
-  console.log(`🏁 Todos os escalões concluídos!`);
-  console.log(`   Ficheiros gerados:`);
-  for (const c of CONTESTS) {
-    const exists = fs.existsSync(c.out);
-    console.log(`   ${exists ? "✅" : "❌"} ${c.out}`);
+  console.log(`🏁 Concluído — ${contests.length} escalões:`);
+  for (const c of contests) {
+    const outFile = `eowagr25_contest${c.id}.json`;
+    console.log(`   ${fs.existsSync(outFile) ? "✅" : "❌"} ${outFile}${c.name ? `  (${c.name})` : ""}`);
   }
 })();
