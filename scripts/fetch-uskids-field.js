@@ -132,57 +132,101 @@ function parsearJogadores(flightPlayers) {
     .sort((a, b) => a.nome.localeCompare(b.nome));
 }
 
-/** Carrega o field anterior para preservar firstSeen e detectar desinscrições.
- *  Retorna { firstSeenMap, prevByEscalao } */
+/** Janela (dias) durante a qual uma desinscrição continua visível. */
+const REMOVED_WINDOW_DAYS = 60;
+
+/** Normaliza nome para matching entre recolhas (lowercase + whitespace colapsado). */
+function normNome(s) {
+  return String(s || '').toLowerCase().trim().replace(/\s+/g, ' ');
+}
+
+/** Carrega o field anterior para preservar firstSeen e o histórico cumulativo
+ *  de desinscrições (removed).
+ *  Retorna { firstSeenMap, prevByEscalao, prevRemoved } */
 function carregarFieldAnterior() {
-  const empty = { firstSeenMap: new Map(), prevByEscalao: new Map() };
+  const empty = { firstSeenMap: new Map(), prevByEscalao: new Map(), prevRemoved: new Map() };
   try {
     if (!fs.existsSync(OUTPUT)) return empty;
     const prev = JSON.parse(fs.readFileSync(OUTPUT, 'utf8'));
     const fsMap = new Map();      // "t:nomeNorm" → firstSeen
-    const byEsc = new Map();      // "t:escalaoNome" → Set<nomeNorm>
+    const byEsc = new Map();      // "t:escalaoNome" → Map(nomeNorm → {nome, pais})
+    const remMap = new Map();     // "t:escalaoNome" → Map(nomeNorm → {nome, removedAt, pais})
     for (const t of (prev.torneios || [])) {
       for (const e of (t.escaloes || [])) {
         const escKey = `${t.t}:${e.nome}`;
-        const set = new Set();
+        const set = new Map();
         for (const j of (e.jogadores || [])) {
-          const norm = j.nome.toLowerCase().trim();
+          const norm = normNome(j.nome);
           fsMap.set(`${t.t}:${norm}`, j.firstSeen || prev.gerado_em || null);
-          set.add(norm);
+          set.set(norm, { nome: j.nome, pais: j.pais ?? null });
         }
         if (set.size) byEsc.set(escKey, set);
+        // Preservar desinscrições já registadas (formato cumulativo {nome,removedAt,pais})
+        if (Array.isArray(e.removed) && e.removed.length) {
+          const inner = new Map();
+          for (const r of e.removed) {
+            if (!r) continue;
+            // Compatibilidade com formato antigo (string[]) — sem removedAt
+            const obj = typeof r === 'string'
+              ? { nome: r, removedAt: prev.gerado_em || null, pais: null }
+              : { nome: r.nome, removedAt: r.removedAt || prev.gerado_em || null, pais: r.pais ?? null };
+            if (obj.nome) inner.set(normNome(obj.nome), obj);
+          }
+          if (inner.size) remMap.set(escKey, inner);
+        }
       }
     }
-    return { firstSeenMap: fsMap, prevByEscalao: byEsc };
+    return { firstSeenMap: fsMap, prevByEscalao: byEsc, prevRemoved: remMap };
   } catch { return empty; }
 }
 
-/** Aplica firstSeen e calcula removed (desinscrições) por escalão */
-function aplicarFirstSeen(resultados, { firstSeenMap, prevByEscalao }) {
+/** Aplica firstSeen e calcula removed cumulativo (desinscrições) por escalão.
+ *  - novas saídas: estava na recolha anterior e já não está → removedAt = agora
+ *  - preserva saídas anteriores ainda dentro da janela de REMOVED_WINDOW_DAYS dias
+ *  - quem voltou a inscrever-se é retirado da lista */
+function aplicarFirstSeen(resultados, { firstSeenMap, prevByEscalao, prevRemoved }) {
   const agora = new Date().toISOString();
+  const agoraMs = Date.now();
   for (const t of resultados) {
     for (const e of (t.escaloes || [])) {
       // firstSeen
       if (e.jogadores) {
         for (const j of e.jogadores) {
-          const key = `${t.t}:${j.nome.toLowerCase().trim()}`;
+          const key = `${t.t}:${normNome(j.nome)}`;
           j.firstSeen = firstSeenMap.get(key) || agora;
         }
       }
-      // removed: quem estava antes e já não está
+      if (!e.jogadores) continue; // sem lista de nomes → não há tracking de saídas
+
       const escKey = `${t.t}:${e.nome}`;
-      const prevSet = prevByEscalao.get(escKey);
-      if (prevSet && e.jogadores) {
-        const curSet = new Set(e.jogadores.map(j => j.nome.toLowerCase().trim()));
-        const rem = [...prevSet].filter(n => !curSet.has(n));
-        if (rem.length) {
-          // Guardar nomes originais (Title Case) — lookup no firstSeenMap
-          e.removed = rem.map(n => {
-            // Tentar recuperar nome original com capitalização
-            const parts = n.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1));
-            return parts.join(' ');
-          });
+      const curSet = new Set(e.jogadores.map(j => normNome(j.nome)));
+
+      // Acumulador de desinscrições: começa com as preservadas (ainda na janela)
+      const acc = new Map(); // nomeNorm → {nome, removedAt, pais}
+      const prevRem = prevRemoved.get(escKey);
+      if (prevRem) {
+        for (const [nk, obj] of prevRem) {
+          if (curSet.has(nk)) continue; // re-inscreveu-se → sai da lista
+          const ageMs = obj.removedAt ? (agoraMs - new Date(obj.removedAt).getTime()) : 0;
+          if (ageMs / 86400_000 > REMOVED_WINDOW_DAYS) continue; // fora da janela
+          acc.set(nk, obj);
         }
+      }
+
+      // Novas saídas nesta recolha (preserva nome e país originais)
+      const prevSet = prevByEscalao.get(escKey);
+      if (prevSet) {
+        for (const [nk, info] of prevSet) {
+          if (curSet.has(nk) || acc.has(nk)) continue;
+          acc.set(nk, { nome: info.nome, removedAt: agora, pais: info.pais ?? null });
+        }
+      }
+
+      if (acc.size) {
+        e.removed = [...acc.values()].sort((a, b) =>
+          String(b.removedAt || '').localeCompare(String(a.removedAt || '')));
+      } else {
+        delete e.removed;
       }
     }
   }
@@ -453,7 +497,7 @@ async function main() {
 
     // Carregar field anterior para preservar firstSeen
     const prevMap = carregarFieldAnterior();
-    console.log(`   📦 ${prevMap.size} jogadores com firstSeen do run anterior`);
+    console.log(`   📦 ${prevMap.firstSeenMap.size} jogadores com firstSeen do run anterior`);
 
     // Fase 2: inscritos (só torneios futuros ou em curso)
     console.log(`\n📋 FASE 2 — Inscritos (${torneios.filter(t=>diasAte(t.date_inicio)>=-1).length} torneios)`);

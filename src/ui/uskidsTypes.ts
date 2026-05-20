@@ -31,6 +31,12 @@ export interface PaisContagem {
   n: number;
 }
 
+export interface Desinscrito {
+  nome: string;
+  removedAt: string;      // ISO — data em que foi detetado como desinscrito
+  pais?: string | null;
+}
+
 export interface Escalao {
   age_group: number;
   nome: string;
@@ -43,7 +49,7 @@ export interface Escalao {
   pct_cheio: number;
   jogadores: Jogador[] | null;
   paises: PaisContagem[] | null;
-  removed?: string[];
+  removed?: Desinscrito[];
 }
 
 export interface Torneio {

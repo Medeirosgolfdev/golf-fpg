@@ -264,20 +264,35 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                       })}
                     </div>
                   )}
-                  {/* Jogadores removidos (desinscritos) */}
+                  {/* Jogadores removidos (desinscritos) — janela de 60 dias, mais recentes primeiro */}
                   {e.removed && e.removed.length > 0 && (
                     <div style={{ borderTop:"1px dashed var(--border-light)", paddingTop:4, marginTop:4 }}>
-                      <div className="fs-10 fw-600 c-text-3" style={{ marginBottom:2 }}>Desinscritos:</div>
-                      {e.removed.map((n, i) => (
-                        <div key={i} className="fs-11" style={{
-                          display:"flex", alignItems:"center", gap:2,
-                          color:"var(--text-3)", opacity:.7, padding:"0 0 1px",
-                        }}>
-                          <span style={{ color:"var(--color-bad)", fontSize:9, marginRight:1 }}>✕</span>
-                          {displayName(n)}
-                          <KidsLink nome={n} />
-                        </div>
-                      ))}
+                      <div className="fs-10 fw-600 c-text-3" style={{ marginBottom:2 }}>
+                        Desinscritos ({e.removed.length}):
+                      </div>
+                      {[...e.removed]
+                        .sort((a, b) => (b.removedAt || "").localeCompare(a.removedAt || ""))
+                        .map((r, i) => {
+                          const d = r.removedAt ? Math.floor((Date.now() - new Date(r.removedAt).getTime()) / 86400_000) : null;
+                          const label = d == null ? null : d <= 0 ? "hoje" : `há ${d}d`;
+                          return (
+                            <div key={i} className="fs-11" style={{
+                              display:"flex", alignItems:"center", gap:2,
+                              color:"var(--text-3)", opacity:.75, padding:"0 0 1px",
+                            }}>
+                              <span style={{ color:"var(--color-bad)", fontSize:9, marginRight:1 }}>✕</span>
+                              <span style={{ textDecoration:"line-through" }}>{displayName(r.nome)}</span>
+                              {r.pais && <span style={{ marginLeft:2 }}>{flag(r.pais)}</span>}
+                              <KidsLink nome={r.nome} />
+                              {label && (
+                                <span className="fs-10 fw-600 c-text-3" style={{ marginLeft:"auto", opacity:.8 }}
+                                  title={r.removedAt ? `Desinscrito em ${r.removedAt.slice(0,10)}` : undefined}>
+                                  {label}
+                                </span>
+                              )}
+                            </div>
+                          );
+                        })}
                     </div>
                   )}
                   {!e.jogadores && e.paises && e.paises.length > 0 && (
