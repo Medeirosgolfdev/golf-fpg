@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-19T18:14:31.241Z",
+  "generatedAt": "2026-05-20T22:48:42.351Z",
   "series": [
     {
       "id": "ffgolf-gp-jeunes",
@@ -7202,6 +7202,30 @@
       ],
       "firstDate": "2021-06-27",
       "lastDate": "2026-02-22",
+      "editionsCount": 14
+    },
+    {
+      "id": "eowagr",
+      "label": "European Open WAGR",
+      "sourceId": "eowagr",
+      "tournamentIds": [
+        "eowagr-eowagr25_contest109",
+        "eowagr-eowagr25_contest121",
+        "eowagr-eowagr25_contest13",
+        "eowagr-eowagr25_contest132",
+        "eowagr-eowagr25_contest151",
+        "eowagr-eowagr25_contest155",
+        "eowagr-eowagr25_contest159",
+        "eowagr-eowagr25_contest162",
+        "eowagr-eowagr25_contest17",
+        "eowagr-eowagr25_contest21",
+        "eowagr-eowagr25_contest5",
+        "eowagr-eowagr25_contest73",
+        "eowagr-eowagr25_contest77",
+        "eowagr-eowagr25_scorecards"
+      ],
+      "firstDate": "2025-07-01",
+      "lastDate": "2025-07-01",
       "editionsCount": 14
     },
     {
@@ -28797,20 +28821,6 @@
       ],
       "firstDate": "2023-06-10",
       "lastDate": "2023-06-10",
-      "editionsCount": 4
-    },
-    {
-      "id": "eowagr",
-      "label": "European Open WAGR",
-      "sourceId": "eowagr",
-      "tournamentIds": [
-        "eowagr-eowagr25_contest121",
-        "eowagr-eowagr25_contest13",
-        "eowagr-eowagr25_contest77",
-        "eowagr-eowagr25_scorecards"
-      ],
-      "firstDate": "2025-07-01",
-      "lastDate": "2025-07-01",
       "editionsCount": 4
     },
     {

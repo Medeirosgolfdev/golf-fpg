@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-19T18:14:31.217Z",
+  "generatedAt": "2026-05-20T22:48:42.330Z",
   "juniors": [
     {
       "id": "u433800",
@@ -109784,6 +109784,7 @@
         "rfeg-nc61090_alevín",
         "rfeg-nc61109_infantil",
         "rfeg-nc61131_juvenil",
+        "eowagr-eowagr25_contest21",
         "eowagr-eowagr25_scorecards",
         "wjgc-wjgc_2025_b1011",
         "wjgc-wjgc_2026_b1011"
@@ -193258,6 +193259,10 @@
         },
         "_secondary": [
           {
+            "sourceId": "eowagr",
+            "key": "mathieu razafitombo|"
+          },
+          {
             "sourceId": "wjgc",
             "key": "mathieu razafitombo|"
           }
@@ -193278,6 +193283,8 @@
         "uskids-11795",
         "uskids-11798",
         "ffgolf-2301067845",
+        "eowagr-eowagr25_contest151",
+        "eowagr-eowagr25_contest162",
         "wjgc-wjgc_2025_bwagr"
       ],
       "_match": {
@@ -193285,11 +193292,13 @@
         "evidence": [
           "uskids:577532",
           "ffgolf:519522340",
+          "eowagr:mathieu razafitombo|",
           "wjgc:mathieu razafitombo|"
         ],
         "mergedFromSources": [
           "uskids",
           "ffgolf",
+          "eowagr",
           "wjgc"
         ]
       }
@@ -210885,6 +210894,7 @@
         "uskids-16214",
         "uskids-16902",
         "fpg-962-10080-20251229-all",
+        "eowagr-eowagr25_contest21",
         "eowagr-eowagr25_scorecards",
         "wjgc-wjgc_2026_b1213"
       ],
@@ -243332,6 +243342,7 @@
         "fpg-017-10189-20251024-all",
         "fpg-962-10080-20251229-all",
         "fpg-935-10296-20260216-all",
+        "eowagr-eowagr25_contest21",
         "eowagr-eowagr25_scorecards",
         "wjgc-wjgc_2025_b1011",
         "wjgc-wjgc_2026_b1011",
@@ -256134,6 +256145,10 @@
         },
         "_secondary": [
           {
+            "sourceId": "eowagr",
+            "key": "shane cooper|"
+          },
+          {
             "sourceId": "wjgc",
             "key": "shane cooper|"
           }
@@ -256154,16 +256169,19 @@
         "uskids-21032",
         "uskids-21033",
         "uskids-21034",
+        "eowagr-eowagr25_contest17",
         "wjgc-wjgc_2025_b7u"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "uskids:616852",
+          "eowagr:shane cooper|",
           "wjgc:shane cooper|"
         ],
         "mergedFromSources": [
           "uskids",
+          "eowagr",
           "wjgc"
         ]
       }
@@ -256182,7 +256200,13 @@
         "uskids": {
           "memberId": "616854",
           "ageGroupCurrent": "Boys 15-18"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "daniel chaney|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-17854",
@@ -256199,15 +256223,19 @@
         "uskids-16896",
         "uskids-16898",
         "uskids-16894",
-        "uskids-16899"
+        "uskids-16899",
+        "eowagr-eowagr25_contest151",
+        "eowagr-eowagr25_contest162"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:616854"
+          "uskids:616854",
+          "eowagr:daniel chaney|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "eowagr"
         ]
       }
     },
@@ -258391,6 +258419,7 @@
         "uskids-17296",
         "uskids-17844",
         "uskids-17845",
+        "eowagr-eowagr25_contest162",
         "eowagr-eowagr25_contest77"
       ],
       "_match": {
@@ -264394,7 +264423,13 @@
         "uskids": {
           "memberId": "630052",
           "ageGroupCurrent": "Boys 7 & Under"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "sebastian wilson|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-19014",
@@ -264403,15 +264438,18 @@
         "uskids-19019",
         "uskids-19020",
         "uskids-19021",
-        "uskids-19017"
+        "uskids-19017",
+        "eowagr-eowagr25_contest17"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:630052"
+          "uskids:630052",
+          "eowagr:sebastian wilson|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "eowagr"
         ]
       }
     },
@@ -266619,7 +266657,13 @@
         "uskids": {
           "memberId": "637224",
           "ageGroupCurrent": "Boys 7 & Under"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "max everard-pennell|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-19724",
@@ -266630,15 +266674,18 @@
         "uskids-19720",
         "uskids-19721",
         "uskids-20681",
-        "uskids-21681"
+        "uskids-21681",
+        "eowagr-eowagr25_contest17"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:637224"
+          "uskids:637224",
+          "eowagr:max everard-pennell|"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "eowagr"
         ]
       }
     },
@@ -274168,6 +274215,7 @@
       },
       "tournamentIds": [
         "fpg-962-10080-20251229-all",
+        "eowagr-eowagr25_contest21",
         "eowagr-eowagr25_scorecards",
         "wjgc-wjgc_2025_b1011",
         "wjgc-wjgc_2026_b1213"
@@ -339612,6 +339660,10 @@
         },
         "_secondary": [
           {
+            "sourceId": "eowagr",
+            "key": "marie malhomme|"
+          },
+          {
             "sourceId": "wjgc",
             "key": "marie malhomme|"
           }
@@ -339630,16 +339682,20 @@
         "ffgolf-2301049194",
         "ffgolf-2301037948",
         "ffgolf-2301024193",
+        "eowagr-eowagr25_contest132",
+        "eowagr-eowagr25_contest159",
         "wjgc-wjgc_2025_g1213"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "ffgolf:523488344",
+          "eowagr:marie malhomme|",
           "wjgc:marie malhomme|"
         ],
         "mergedFromSources": [
           "ffgolf",
+          "eowagr",
           "wjgc"
         ]
       }
@@ -367490,6 +367546,7 @@
       },
       "tournamentIds": [
         "ffgolf-2501327816",
+        "eowagr-eowagr25_contest162",
         "eowagr-eowagr25_contest77"
       ],
       "_match": {
@@ -412606,22 +412663,30 @@
         },
         "_secondary": [
           {
+            "sourceId": "eowagr",
+            "key": "ashling poynton|"
+          },
+          {
             "sourceId": "wjgc",
             "key": "ashling poynton|"
           }
         ]
       },
       "tournamentIds": [
+        "eowagr-eowagr25_contest132",
+        "eowagr-eowagr25_contest159",
         "wjgc-wjgc_2025_g1213"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "ffgolf:042644387",
+          "eowagr:ashling poynton|",
           "wjgc:ashling poynton|"
         ],
         "mergedFromSources": [
           "ffgolf",
+          "eowagr",
           "wjgc"
         ]
       }
@@ -416161,6 +416226,50 @@
       }
     },
     {
+      "id": "gE83217370",
+      "canonicalName": "Solveig Holcke",
+      "aliases": [
+        "Solveig Hölcke"
+      ],
+      "dob": null,
+      "sex": "F",
+      "nationality": "FR",
+      "country": "FR",
+      "region": null,
+      "club": null,
+      "sources": {
+        "ffgolf": {
+          "lic": "E83217370",
+          "club": "",
+          "hcp": 15.2,
+          "region": null,
+          "sex": "F",
+          "glfLic": "0000"
+        },
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "solveig hölcke|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest159",
+        "eowagr-eowagr25_contest5"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:E83217370",
+          "eowagr:solveig hölcke|"
+        ],
+        "mergedFromSources": [
+          "ffgolf",
+          "eowagr"
+        ]
+      }
+    },
+    {
       "id": "g534198360",
       "canonicalName": "Mahé Lemoine Duforestel",
       "aliases": [],
@@ -417587,6 +417696,52 @@
       }
     },
     {
+      "id": "x8ab75fcf29",
+      "canonicalName": "Maria Estrada Padilla",
+      "aliases": [
+        "María Estrada Padilla"
+      ],
+      "dob": null,
+      "sex": null,
+      "nationality": "MX",
+      "country": "MX",
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "maria estrada padilla|"
+          },
+          {
+            "sourceId": "doral",
+            "key": "doral-1874691475"
+          },
+          {
+            "sourceId": "doral",
+            "key": "doral-2173568094"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest109",
+        "doral-ftm_doral_2024",
+        "doral-ftm_doral_2025"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "eowagr:maria estrada padilla|",
+          "doral:doral-1874691475",
+          "doral:doral-2173568094"
+        ],
+        "mergedFromSources": [
+          "eowagr",
+          "doral"
+        ]
+      }
+    },
+    {
       "id": "x3d370fa735",
       "canonicalName": "Cooper Cassius Barnes",
       "aliases": [],
@@ -417795,6 +417950,862 @@
       }
     },
     {
+      "id": "x8fa9f3b277",
+      "canonicalName": "Georgia Denega",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "georgia denega|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest132",
+        "eowagr-eowagr25_contest159"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "eowagr:georgia denega|"
+        ],
+        "mergedFromSources": [
+          "eowagr"
+        ]
+      }
+    },
+    {
+      "id": "x209b7dbef4",
+      "canonicalName": "Leo Burton",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "leo burton|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest151",
+        "eowagr-eowagr25_contest162"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "eowagr:leo burton|"
+        ],
+        "mergedFromSources": [
+          "eowagr"
+        ]
+      }
+    },
+    {
+      "id": "xb342a989bb",
+      "canonicalName": "Charlie Burton",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "charlie burton|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest151",
+        "eowagr-eowagr25_contest162"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "eowagr:charlie burton|"
+        ],
+        "mergedFromSources": [
+          "eowagr"
+        ]
+      }
+    },
+    {
+      "id": "x71f84dc6ad",
+      "canonicalName": "Alexander Mills",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "alexander mills|"
+          },
+          {
+            "sourceId": "wjgc",
+            "key": "alexander mills|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest151",
+        "eowagr-eowagr25_contest162",
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "eowagr:alexander mills|",
+          "wjgc:alexander mills|"
+        ],
+        "mergedFromSources": [
+          "eowagr",
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x9a6ce3c995",
+      "canonicalName": "Fred Collins",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "fred collins|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest151",
+        "eowagr-eowagr25_contest162"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "eowagr:fred collins|"
+        ],
+        "mergedFromSources": [
+          "eowagr"
+        ]
+      }
+    },
+    {
+      "id": "x202ffa5686",
+      "canonicalName": "Shiv Ahluwalia",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "shiv ahluwalia|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest151",
+        "eowagr-eowagr25_contest162"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "eowagr:shiv ahluwalia|"
+        ],
+        "mergedFromSources": [
+          "eowagr"
+        ]
+      }
+    },
+    {
+      "id": "x782aabb16b",
+      "canonicalName": "Leo Walton",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "leo walton|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest151",
+        "eowagr-eowagr25_contest162"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "eowagr:leo walton|"
+        ],
+        "mergedFromSources": [
+          "eowagr"
+        ]
+      }
+    },
+    {
+      "id": "x4506982832",
+      "canonicalName": "Veer Zoravar Singh",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "veer zoravar singh|"
+          },
+          {
+            "sourceId": "wjgc",
+            "key": "veer zoravar singh|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest151",
+        "eowagr-eowagr25_contest162",
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "eowagr:veer zoravar singh|",
+          "wjgc:veer zoravar singh|"
+        ],
+        "mergedFromSources": [
+          "eowagr",
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x391d163806",
+      "canonicalName": "Gethin Lewis",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "gethin lewis|"
+          },
+          {
+            "sourceId": "wjgc",
+            "key": "gethin lewis|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest151",
+        "eowagr-eowagr25_contest162",
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "eowagr:gethin lewis|",
+          "wjgc:gethin lewis|"
+        ],
+        "mergedFromSources": [
+          "eowagr",
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x18e0061d7c",
+      "canonicalName": "Adam Bolley",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "adam bolley|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest151",
+        "eowagr-eowagr25_contest162"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "eowagr:adam bolley|"
+        ],
+        "mergedFromSources": [
+          "eowagr"
+        ]
+      }
+    },
+    {
+      "id": "xc1dd75c4c5",
+      "canonicalName": "Edward Bulstrode",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "edward bulstrode|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest151",
+        "eowagr-eowagr25_contest162"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "eowagr:edward bulstrode|"
+        ],
+        "mergedFromSources": [
+          "eowagr"
+        ]
+      }
+    },
+    {
+      "id": "x68a210587c",
+      "canonicalName": "Alex Stronach",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "alex stronach|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest151",
+        "eowagr-eowagr25_contest162"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "eowagr:alex stronach|"
+        ],
+        "mergedFromSources": [
+          "eowagr"
+        ]
+      }
+    },
+    {
+      "id": "x619f28f672",
+      "canonicalName": "Will Mulholland",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "will mulholland|"
+          },
+          {
+            "sourceId": "wjgc",
+            "key": "will mulholland|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest151",
+        "eowagr-eowagr25_contest162",
+        "wjgc-wjgc_2025_bwagr"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "eowagr:will mulholland|",
+          "wjgc:will mulholland|"
+        ],
+        "mergedFromSources": [
+          "eowagr",
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "xab24ed4629",
+      "canonicalName": "William Finlay",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "william finlay|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest151",
+        "eowagr-eowagr25_contest162"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "eowagr:william finlay|"
+        ],
+        "mergedFromSources": [
+          "eowagr"
+        ]
+      }
+    },
+    {
+      "id": "x1a05ed83ab",
+      "canonicalName": "Quinten Vanneste",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "quinten vanneste|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest151",
+        "eowagr-eowagr25_contest162"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "eowagr:quinten vanneste|"
+        ],
+        "mergedFromSources": [
+          "eowagr"
+        ]
+      }
+    },
+    {
+      "id": "x04b1d4ada8",
+      "canonicalName": "Paul Heluin",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "paul heluin|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest151",
+        "eowagr-eowagr25_contest162"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "eowagr:paul heluin|"
+        ],
+        "mergedFromSources": [
+          "eowagr"
+        ]
+      }
+    },
+    {
+      "id": "x06dcb43007",
+      "canonicalName": "Ollie Bull",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "ollie bull|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest151",
+        "eowagr-eowagr25_contest162"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "eowagr:ollie bull|"
+        ],
+        "mergedFromSources": [
+          "eowagr"
+        ]
+      }
+    },
+    {
+      "id": "x34fe9fa464",
+      "canonicalName": "Oliver Brightman",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "oliver brightman|"
+          },
+          {
+            "sourceId": "wjgc",
+            "key": "oliver brightman|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest151",
+        "eowagr-eowagr25_contest162",
+        "wjgc-wjgc_2025_bwagr",
+        "wjgc-wjgc_2026_bwagr"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "eowagr:oliver brightman|",
+          "wjgc:oliver brightman|"
+        ],
+        "mergedFromSources": [
+          "eowagr",
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x8c60c20959",
+      "canonicalName": "Jason Johnson",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "jason johnson|"
+          },
+          {
+            "sourceId": "doral",
+            "key": "doral-405999018"
+          },
+          {
+            "sourceId": "doral",
+            "key": "doral-579692350"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest151",
+        "eowagr-eowagr25_contest162",
+        "doral-ftm_doral_2018",
+        "doral-ftm_doral_2019"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "eowagr:jason johnson|",
+          "doral:doral-405999018",
+          "doral:doral-579692350"
+        ],
+        "mergedFromSources": [
+          "eowagr",
+          "doral"
+        ]
+      }
+    },
+    {
+      "id": "x7c31f03c3d",
+      "canonicalName": "Lou Ravaz",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "lou ravaz|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest155",
+        "eowagr-eowagr25_contest159"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "eowagr:lou ravaz|"
+        ],
+        "mergedFromSources": [
+          "eowagr"
+        ]
+      }
+    },
+    {
+      "id": "xa4f0204bc5",
+      "canonicalName": "Regina Chiu",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "regina chiu|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest155",
+        "eowagr-eowagr25_contest159"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "eowagr:regina chiu|"
+        ],
+        "mergedFromSources": [
+          "eowagr"
+        ]
+      }
+    },
+    {
+      "id": "xe9c10647ee",
+      "canonicalName": "Amelia McGinty",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "amelia mcginty|"
+          },
+          {
+            "sourceId": "wjgc",
+            "key": "amelia mcginty|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest155",
+        "eowagr-eowagr25_contest159",
+        "wjgc-wjgc_2026_gwagr"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "eowagr:amelia mcginty|",
+          "wjgc:amelia mcginty|"
+        ],
+        "mergedFromSources": [
+          "eowagr",
+          "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "x90b8cea570",
+      "canonicalName": "Clara Simpson",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "clara simpson|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest155",
+        "eowagr-eowagr25_contest159"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "eowagr:clara simpson|"
+        ],
+        "mergedFromSources": [
+          "eowagr"
+        ]
+      }
+    },
+    {
+      "id": "x4888d11471",
+      "canonicalName": "Kat (Katherine) Shrum",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "kat (katherine) shrum|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest155",
+        "eowagr-eowagr25_contest159"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "eowagr:kat (katherine) shrum|"
+        ],
+        "mergedFromSources": [
+          "eowagr"
+        ]
+      }
+    },
+    {
+      "id": "x2ca0d06d73",
+      "canonicalName": "Emily Tuck",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "emily tuck|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest159",
+        "eowagr-eowagr25_contest5"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "eowagr:emily tuck|"
+        ],
+        "mergedFromSources": [
+          "eowagr"
+        ]
+      }
+    },
+    {
       "id": "x1bb2c085ae",
       "canonicalName": "Nate van der Grinten",
       "aliases": [],
@@ -417813,6 +418824,7 @@
         ]
       },
       "tournamentIds": [
+        "eowagr-eowagr25_contest162",
         "eowagr-eowagr25_contest77"
       ],
       "_match": {
@@ -417844,6 +418856,7 @@
         ]
       },
       "tournamentIds": [
+        "eowagr-eowagr25_contest162",
         "eowagr-eowagr25_contest77"
       ],
       "_match": {
@@ -417875,6 +418888,7 @@
         ]
       },
       "tournamentIds": [
+        "eowagr-eowagr25_contest162",
         "eowagr-eowagr25_contest77"
       ],
       "_match": {
@@ -417906,6 +418920,7 @@
         ]
       },
       "tournamentIds": [
+        "eowagr-eowagr25_contest162",
         "eowagr-eowagr25_contest77"
       ],
       "_match": {
@@ -417937,12 +418952,45 @@
         ]
       },
       "tournamentIds": [
+        "eowagr-eowagr25_contest162",
         "eowagr-eowagr25_contest77"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "eowagr:luke gilding|"
+        ],
+        "mergedFromSources": [
+          "eowagr"
+        ]
+      }
+    },
+    {
+      "id": "x9cd9642123",
+      "canonicalName": "Kieran Wade",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "kieran wade|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest162",
+        "eowagr-eowagr25_contest77"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "eowagr:kieran wade|"
         ],
         "mergedFromSources": [
           "eowagr"
@@ -417972,6 +419020,7 @@
         ]
       },
       "tournamentIds": [
+        "eowagr-eowagr25_contest162",
         "eowagr-eowagr25_contest77",
         "wjgc-wjgc_2026_bwagr"
       ],
@@ -417984,37 +419033,6 @@
         "mergedFromSources": [
           "eowagr",
           "wjgc"
-        ]
-      }
-    },
-    {
-      "id": "x9cd9642123",
-      "canonicalName": "Kieran Wade",
-      "aliases": [],
-      "dob": null,
-      "sex": null,
-      "nationality": null,
-      "country": null,
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "eowagr",
-            "key": "kieran wade|"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "eowagr-eowagr25_contest77"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "eowagr:kieran wade|"
-        ],
-        "mergedFromSources": [
-          "eowagr"
         ]
       }
     },
@@ -418037,6 +419055,7 @@
         ]
       },
       "tournamentIds": [
+        "eowagr-eowagr25_contest162",
         "eowagr-eowagr25_contest77"
       ],
       "_match": {
@@ -418072,6 +419091,7 @@
         ]
       },
       "tournamentIds": [
+        "eowagr-eowagr25_contest162",
         "eowagr-eowagr25_contest77",
         "wjgc-wjgc_2026_bwagr"
       ],
@@ -418106,6 +419126,7 @@
         ]
       },
       "tournamentIds": [
+        "eowagr-eowagr25_contest162",
         "eowagr-eowagr25_contest77"
       ],
       "_match": {
@@ -418137,6 +419158,7 @@
         ]
       },
       "tournamentIds": [
+        "eowagr-eowagr25_contest162",
         "eowagr-eowagr25_contest77"
       ],
       "_match": {
@@ -418172,6 +419194,7 @@
         ]
       },
       "tournamentIds": [
+        "eowagr-eowagr25_contest162",
         "eowagr-eowagr25_contest77",
         "doral-ftm_doral_2023"
       ],
@@ -418184,6 +419207,83 @@
         "mergedFromSources": [
           "eowagr",
           "doral"
+        ]
+      }
+    },
+    {
+      "id": "xd135b60c10",
+      "canonicalName": "Andrea Estrada padilla",
+      "aliases": [
+        "Andrea Estrada Padilla"
+      ],
+      "dob": null,
+      "sex": null,
+      "nationality": "MX",
+      "country": "MX",
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "andrea estrada padilla|"
+          },
+          {
+            "sourceId": "doral",
+            "key": "doral-1874691474"
+          },
+          {
+            "sourceId": "doral",
+            "key": "doral-2173570642"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest17",
+        "doral-ftm_doral_2024",
+        "doral-ftm_doral_2025"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "eowagr:andrea estrada padilla|",
+          "doral:doral-1874691474",
+          "doral:doral-2173570642"
+        ],
+        "mergedFromSources": [
+          "eowagr",
+          "doral"
+        ]
+      }
+    },
+    {
+      "id": "x734892533a",
+      "canonicalName": "Baker Blake",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "baker blake|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest17"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "eowagr:baker blake|"
+        ],
+        "mergedFromSources": [
+          "eowagr"
         ]
       }
     },
@@ -418206,6 +419306,7 @@
         ]
       },
       "tournamentIds": [
+        "eowagr-eowagr25_contest21",
         "eowagr-eowagr25_scorecards"
       ],
       "_match": {
@@ -418241,6 +419342,7 @@
         ]
       },
       "tournamentIds": [
+        "eowagr-eowagr25_contest21",
         "eowagr-eowagr25_scorecards",
         "wjgc-wjgc_2025_b1011"
       ],
@@ -418279,6 +419381,7 @@
         ]
       },
       "tournamentIds": [
+        "eowagr-eowagr25_contest21",
         "eowagr-eowagr25_scorecards",
         "wjgc-wjgc_2025_b1011"
       ],
@@ -418313,12 +419416,168 @@
         ]
       },
       "tournamentIds": [
+        "eowagr-eowagr25_contest21",
         "eowagr-eowagr25_scorecards"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "eowagr:muduo wang|CN"
+        ],
+        "mergedFromSources": [
+          "eowagr"
+        ]
+      }
+    },
+    {
+      "id": "xf636e4917b",
+      "canonicalName": "Hajira Marfleet",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "hajira marfleet|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest73"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "eowagr:hajira marfleet|"
+        ],
+        "mergedFromSources": [
+          "eowagr"
+        ]
+      }
+    },
+    {
+      "id": "x917d887169",
+      "canonicalName": "Natalie (Xiaoxuan) Wang",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "natalie (xiaoxuan) wang|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest73"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "eowagr:natalie (xiaoxuan) wang|"
+        ],
+        "mergedFromSources": [
+          "eowagr"
+        ]
+      }
+    },
+    {
+      "id": "x8dd4d03bb8",
+      "canonicalName": "W. Jade Wimalarathna",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "w. jade wimalarathna|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest73"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "eowagr:w. jade wimalarathna|"
+        ],
+        "mergedFromSources": [
+          "eowagr"
+        ]
+      }
+    },
+    {
+      "id": "x1c5622cf89",
+      "canonicalName": "Jullya Muller",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "jullya muller|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest73"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "eowagr:jullya muller|"
+        ],
+        "mergedFromSources": [
+          "eowagr"
+        ]
+      }
+    },
+    {
+      "id": "x64e076b27f",
+      "canonicalName": "Mila Wullaert",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": null,
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "eowagr",
+            "key": "mila wullaert|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "eowagr-eowagr25_contest73"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "eowagr:mila wullaert|"
         ],
         "mergedFromSources": [
           "eowagr"
@@ -418828,37 +420087,6 @@
       }
     },
     {
-      "id": "x391d163806",
-      "canonicalName": "Gethin Lewis",
-      "aliases": [],
-      "dob": null,
-      "sex": null,
-      "nationality": null,
-      "country": null,
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "wjgc",
-            "key": "gethin lewis|"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "wjgc-wjgc_2025_bwagr"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "wjgc:gethin lewis|"
-        ],
-        "mergedFromSources": [
-          "wjgc"
-        ]
-      }
-    },
-    {
       "id": "x4c5b776983",
       "canonicalName": "Jonnie Summerfield",
       "aliases": [],
@@ -418883,38 +420111,6 @@
         "confidence": "strong",
         "evidence": [
           "wjgc:jonnie summerfield|"
-        ],
-        "mergedFromSources": [
-          "wjgc"
-        ]
-      }
-    },
-    {
-      "id": "x34fe9fa464",
-      "canonicalName": "Oliver Brightman",
-      "aliases": [],
-      "dob": null,
-      "sex": null,
-      "nationality": null,
-      "country": null,
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "wjgc",
-            "key": "oliver brightman|"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "wjgc-wjgc_2025_bwagr",
-        "wjgc-wjgc_2026_bwagr"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "wjgc:oliver brightman|"
         ],
         "mergedFromSources": [
           "wjgc"
@@ -419111,37 +420307,6 @@
       }
     },
     {
-      "id": "x71f84dc6ad",
-      "canonicalName": "Alexander Mills",
-      "aliases": [],
-      "dob": null,
-      "sex": null,
-      "nationality": null,
-      "country": null,
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "wjgc",
-            "key": "alexander mills|"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "wjgc-wjgc_2025_bwagr"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "wjgc:alexander mills|"
-        ],
-        "mergedFromSources": [
-          "wjgc"
-        ]
-      }
-    },
-    {
       "id": "x7490fecc23",
       "canonicalName": "Vidar Hrafn Victorsson",
       "aliases": [],
@@ -419228,37 +420393,6 @@
         "confidence": "strong",
         "evidence": [
           "wjgc:ludvig carlsson|"
-        ],
-        "mergedFromSources": [
-          "wjgc"
-        ]
-      }
-    },
-    {
-      "id": "x4506982832",
-      "canonicalName": "Veer Zoravar Singh",
-      "aliases": [],
-      "dob": null,
-      "sex": null,
-      "nationality": null,
-      "country": null,
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "wjgc",
-            "key": "veer zoravar singh|"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "wjgc-wjgc_2025_bwagr"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "wjgc:veer zoravar singh|"
         ],
         "mergedFromSources": [
           "wjgc"
@@ -419663,37 +420797,6 @@
         "confidence": "strong",
         "evidence": [
           "wjgc:joppe haneveer|"
-        ],
-        "mergedFromSources": [
-          "wjgc"
-        ]
-      }
-    },
-    {
-      "id": "x619f28f672",
-      "canonicalName": "Will Mulholland",
-      "aliases": [],
-      "dob": null,
-      "sex": null,
-      "nationality": null,
-      "country": null,
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "wjgc",
-            "key": "will mulholland|"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "wjgc-wjgc_2025_bwagr"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "wjgc:will mulholland|"
         ],
         "mergedFromSources": [
           "wjgc"
@@ -422806,37 +423909,6 @@
         "confidence": "strong",
         "evidence": [
           "wjgc:ava mcdaid|"
-        ],
-        "mergedFromSources": [
-          "wjgc"
-        ]
-      }
-    },
-    {
-      "id": "xe9c10647ee",
-      "canonicalName": "Amelia McGinty",
-      "aliases": [],
-      "dob": null,
-      "sex": null,
-      "nationality": null,
-      "country": null,
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "wjgc",
-            "key": "amelia mcginty|"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "wjgc-wjgc_2026_gwagr"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "wjgc:amelia mcginty|"
         ],
         "mergedFromSources": [
           "wjgc"
@@ -426701,43 +427773,6 @@
         "confidence": "strong",
         "evidence": [
           "doral:doral-405998974"
-        ],
-        "mergedFromSources": [
-          "doral"
-        ]
-      }
-    },
-    {
-      "id": "x8c60c20959",
-      "canonicalName": "Jason Johnson",
-      "aliases": [],
-      "dob": null,
-      "sex": null,
-      "nationality": null,
-      "country": null,
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "doral",
-            "key": "doral-405999018"
-          },
-          {
-            "sourceId": "doral",
-            "key": "doral-579692350"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "doral-ftm_doral_2018",
-        "doral-ftm_doral_2019"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "doral:doral-405999018",
-          "doral:doral-579692350"
         ],
         "mergedFromSources": [
           "doral"
@@ -478027,43 +479062,6 @@
       }
     },
     {
-      "id": "x8ab75fcf29",
-      "canonicalName": "María Estrada Padilla",
-      "aliases": [],
-      "dob": null,
-      "sex": null,
-      "nationality": "MX",
-      "country": "MX",
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "doral",
-            "key": "doral-1874691475"
-          },
-          {
-            "sourceId": "doral",
-            "key": "doral-2173568094"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "doral-ftm_doral_2024",
-        "doral-ftm_doral_2025"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "doral:doral-1874691475",
-          "doral:doral-2173568094"
-        ],
-        "mergedFromSources": [
-          "doral"
-        ]
-      }
-    },
-    {
       "id": "x42b294f5ce",
       "canonicalName": "Lara Williams",
       "aliases": [],
@@ -478088,45 +479086,6 @@
         "confidence": "strong",
         "evidence": [
           "doral:doral-1874691472"
-        ],
-        "mergedFromSources": [
-          "doral"
-        ]
-      }
-    },
-    {
-      "id": "xd135b60c10",
-      "canonicalName": "Andrea Estrada padilla",
-      "aliases": [
-        "Andrea Estrada Padilla"
-      ],
-      "dob": null,
-      "sex": null,
-      "nationality": "MX",
-      "country": "MX",
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "doral",
-            "key": "doral-1874691474"
-          },
-          {
-            "sourceId": "doral",
-            "key": "doral-2173570642"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "doral-ftm_doral_2024",
-        "doral-ftm_doral_2025"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "doral:doral-1874691474",
-          "doral:doral-2173570642"
         ],
         "mergedFromSources": [
           "doral"
@@ -486531,13 +487490,13 @@
     }
   ],
   "stats": {
-    "total": 9495,
-    "droppedNoTourn": 21712,
-    "strong": 9478,
-    "probable": 17,
+    "total": 9520,
+    "droppedNoTourn": 21711,
+    "strong": 9494,
+    "probable": 26,
     "manual": 0,
     "strongMerges": 7,
-    "probableMerges": 2130,
+    "probableMerges": 2147,
     "manualMerges": 3
   }
 }
