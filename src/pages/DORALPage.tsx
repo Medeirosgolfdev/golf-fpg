@@ -9,7 +9,7 @@ import { SC } from "../utils/scoreDisplay";
 import { isManuelByName as isM } from "../constants/manuel";
 import ExtLink from "../ui/ExternalLink";
 import SidebarSectionTitle from "../ui/SidebarSectionTitle";
-import { gf } from "../utils/flagUtils";
+import { gf, normPaisDisplay } from "../utils/flagUtils";
 import { fmtFieldInfo } from "../utils/format";
 import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
@@ -291,7 +291,7 @@ export function entryToTournament(entry: Entry): FPGTournament {
         scoreId: p.id,
         pos: p.pos,
         name: p.name,
-        club: p.country ? `${gf(p.country)} ${p.country}` : "",
+        club: p.country ? `${gf(p.country)} ${normPaisDisplay(p.country)}` : "",
         grossTotal: p.total,
         toPar: p.toPar,
         nholes: entry.par.length || (entry.nineHole ? 9 : 18),

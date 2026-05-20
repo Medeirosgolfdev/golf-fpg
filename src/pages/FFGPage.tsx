@@ -39,7 +39,7 @@ const isPT = (nat: string | null | undefined, flag?: string | null, name?: strin
   /^(PRT|POR|PT|PORTUGAL)$/i.test(String(nat || flag || "").trim()) || isPTByName(name);
 import ExtLink from "../ui/ExternalLink";
 import SidebarSectionTitle from "../ui/SidebarSectionTitle";
-import { gf } from "../utils/flagUtils";
+import { gf, normPaisDisplay } from "../utils/flagUtils";
 import { fmtFieldInfo } from "../utils/format";
 import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
@@ -580,7 +580,7 @@ function toFPGTournament(t: FFGTournament): FPGTournament {
       scoreId: p.id,
       pos,
       name: normalizeName(p.name),
-      club: p.country ? `${gf(p.country)} ${p.club || p.country}` : p.club,
+      club: p.country ? `${gf(p.country)} ${p.club || normPaisDisplay(p.country)}` : p.club,
       grossTotal: p.total,
       toPar: p.toPar,
       hcpExact: p.hcp ?? undefined,

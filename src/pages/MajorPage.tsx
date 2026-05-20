@@ -20,7 +20,7 @@ import type { CircuitEntry, CircuitConfig, CircuitDivision } from "../ui/circuit
 import { URLS as BJGT_URLS, loadT as bjgtLoadT, bjgtEvoFor, bjgtMajorDivision, makeEvoCols, EvoSummary, type TDef } from "./BJGTPage";
 import { DATA_FILES as DORAL_FILES, normalizeFile, doralEvoFor, doralMajorDivision, type Entry } from "./DORALPage";
 import { buildEvoMap, type EvoEntry } from "../hooks/useEvoComparison";
-import { gf } from "../utils/flagUtils";
+import { gf, normPaisDisplay } from "../utils/flagUtils";
 import type { Tournament as FPGTournament, Player as FPGPlayer, ScorecardOptions } from "./FPGPage";
 
 /** id do torneio BJGT/EOWAGR → URL de origem (BlueGolf), para os links do header. */
@@ -147,7 +147,7 @@ function jobDivisionToTournament(div: JobDivision, name: string): FPGTournament 
       scoreId: p.detailId || p.name,
       pos: parseInt(String(p.pos).replace(/^T/i, ""), 10) || null,
       name: p.name,
-      club: p.country ? `${gf(p.country)} ${p.country}` : "",
+      club: p.country ? `${gf(p.country)} ${normPaisDisplay(p.country)}` : "",
       grossTotal: p.total,
       toPar: p.toPar,
       nholes: 18,

@@ -90,7 +90,7 @@ describe("normName", () => {
 describe("co", () => {
   it("converte código ISO para nome completo", () => {
     expect(co("PT")).toBe("Portugal");
-    expect(co("US")).toBe("United States");
+    expect(co("US")).toBe("USA");
     expect(co("GB")).toBe("United Kingdom");
   });
 

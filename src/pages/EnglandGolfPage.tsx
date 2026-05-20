@@ -14,7 +14,7 @@ import { isManuelByName as isM } from "../constants/manuel";
 import EvoBadge from "../ui/EvoBadge";
 import ExtLink from "../ui/ExternalLink";
 import SidebarSectionTitle from "../ui/SidebarSectionTitle";
-import { gf } from "../utils/flagUtils";
+import { gf, normPaisDisplay } from "../utils/flagUtils";
 import { fmtToPar, fmtSign, fmtSignParen as fmtSub, fmtFieldInfo } from "../utils/format";
 import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
@@ -178,7 +178,7 @@ function tDataToTournament(data: TData, def: TDef): FPGTournament {
         scoreId: p.name,
         pos: p.pos,
         name: p.name,
-        club: p.country ? `${gf(p.country)} ${p.country}` : "",
+        club: p.country ? `${gf(p.country)} ${normPaisDisplay(p.country)}` : "",
         grossTotal: p.total,
         toPar,
         nholes: par.length,
