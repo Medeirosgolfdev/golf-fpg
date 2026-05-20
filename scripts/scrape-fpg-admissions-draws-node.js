@@ -32,6 +32,8 @@
  * USAGE:
  *   node scripts/scrape-fpg-admissions-draws-node.js            # full scope
  *   node scripts/scrape-fpg-admissions-draws-node.js --tcodes 10941,10937,10935
+ *   node scripts/scrape-fpg-admissions-draws-node.js --tcodes 10576 --ccode 004  # club != 000
+ *   node scripts/scrape-fpg-admissions-draws-node.js --tcodes 004:10576,000:10941 # ccode por torneio
  *   node scripts/scrape-fpg-admissions-draws-node.js --since 2026-01-01  # só torneios >= esta data
  *   node scripts/scrape-fpg-admissions-draws-node.js --year 2026
  *   node scripts/scrape-fpg-admissions-draws-node.js --concurrency 3     # default
@@ -60,7 +62,26 @@ function argVal(flag, def) {
   const i = args.indexOf(flag);
   return i >= 0 ? args[i + 1] : def;
 }
-const FILTER_TCODES = (argVal("--tcodes", "") || "").split(",").map(s => s.trim()).filter(Boolean);
+// --ccode: club code default aplicado a TODOS os tcodes que não tragam o seu
+// próprio prefixo. Ex: --ccode 004 --tcodes 10576  →  club=004.
+const DEFAULT_CCODE = (() => {
+  const v = argVal("--ccode", null);
+  return v ? String(v).trim().padStart(3, "0") : null;
+})();
+// --tcodes aceita "10576", "004:10576" ou "004/10576" (ccode por torneio).
+// O ccode por-torneio sobrepõe-se ao --ccode global; ambos se sobrepõem ao scope.
+const FILTER_TCODE_SPECS = (argVal("--tcodes", "") || "")
+  .split(",").map(s => s.trim()).filter(Boolean)
+  .map(tok => {
+    const m = tok.match(/^(?:(\d{1,4})[:/])?(\d+)$/);
+    if (!m) { console.warn(`[adm-draws] --tcodes: token ignorado "${tok}"`); return null; }
+    return {
+      ccode: m[1] ? String(m[1]).padStart(3, "0") : DEFAULT_CCODE,  // null = herdar do scope
+      tcode: m[2],
+    };
+  })
+  .filter(Boolean);
+const FILTER_TCODES = FILTER_TCODE_SPECS.map(s => s.tcode);
 let   FILTER_SINCE  = argVal("--since", null);
 // Aceitar sintaxe "Nd" (N dias atrás) além de YYYY-MM-DD. Exemplo: --since 4d
 if (FILTER_SINCE && /^\d+d$/i.test(FILTER_SINCE)) {
@@ -493,18 +514,40 @@ async function buildAutoExtendedScope(manual, sinceDate = null) {
     ? await buildAutoExtendedScope(manualScope, FILTER_SINCE)
     : manualScope.slice();
 
-  // 2) Aplicar filtros CLI sobre o scope (ordem: tcodes → since → year)
-  if (FILTER_TCODES.length > 0) {
-    scope = scope.filter(t => FILTER_TCODES.includes(String(t.tcode)));
-    console.log(`[adm-draws] Filtro --tcodes: ${scope.length} torneios`);
-  }
-  if (FILTER_SINCE) {
-    scope = scope.filter(t => t.date >= FILTER_SINCE);
-    console.log(`[adm-draws] Filtro --since ${FILTER_SINCE}: ${scope.length} torneios`);
-  }
-  if (FILTER_YEAR) {
-    scope = scope.filter(t => String(t.expectedYear) === String(FILTER_YEAR));
-    console.log(`[adm-draws] Filtro --year ${FILTER_YEAR}: ${scope.length} torneios`);
+  // 2) Aplicar filtros CLI sobre o scope.
+  //    --tcodes é terminal: quando indicado, --since/--year são ignorados
+  //    (o utilizador nomeou explicitamente os torneios que quer).
+  if (FILTER_TCODE_SPECS.length > 0) {
+    const byTcode = new Map();
+    for (const t of scope) byTcode.set(String(t.tcode), t);
+    const today = new Date().toISOString().slice(0, 10);
+    scope = FILTER_TCODE_SPECS.map(spec => {
+      const existing = byTcode.get(spec.tcode);
+      // ccode resolvido: explícito (token ou --ccode) > scope > "000" default.
+      const ccode = spec.ccode || existing?.ccode || "000";
+      if (!existing && !spec.ccode) {
+        console.warn(`[adm-draws] tcode ${spec.tcode} não está no scope — a usar ccode=000 (passa --ccode para outro club)`);
+      }
+      return {
+        ccode,
+        tcode: spec.tcode,
+        // Nome/data reais vêm da página FPG no scrape; estes são só placeholders.
+        name: existing?.name || `Torneio ${spec.tcode}`,
+        date: existing?.date || today,
+        expectedYear: existing?.expectedYear || Number(today.slice(0, 4)),
+        _src: spec.ccode ? "cli" : (existing?._src || "scope"),
+      };
+    });
+    console.log(`[adm-draws] Filtro --tcodes: ${scope.length} torneios (${scope.map(t => `${t.ccode}/${t.tcode}`).join(", ")})`);
+  } else {
+    if (FILTER_SINCE) {
+      scope = scope.filter(t => t.date >= FILTER_SINCE);
+      console.log(`[adm-draws] Filtro --since ${FILTER_SINCE}: ${scope.length} torneios`);
+    }
+    if (FILTER_YEAR) {
+      scope = scope.filter(t => String(t.expectedYear) === String(FILTER_YEAR));
+      console.log(`[adm-draws] Filtro --year ${FILTER_YEAR}: ${scope.length} torneios`);
+    }
   }
   if (scope.length === 0) {
     console.error("[adm-draws] Scope vazio após filtros — nada para scrapar");

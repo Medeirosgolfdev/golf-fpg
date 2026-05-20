@@ -23,6 +23,10 @@ on:
         description: 'Tcodes específicos separados por vírgula (ex: 10941,10937). Sobrepõe-se ao default do cron.'
         required: false
         default: ''
+      ccode:
+        description: 'Club code (ex: 004). Default 000 se vazio. Aplica-se a todos os tcodes acima.'
+        required: false
+        default: ''
       since:
         description: 'Só torneios >= esta data (YYYY-MM-DD). Vazio = scope completo (todos os 333).'
         required: false
@@ -78,6 +82,9 @@ jobs:
           # Filtros explícitos (workflow_dispatch) sobrepõem-se ao default
           if [ -n "${{ github.event.inputs.tcodes }}" ]; then
             ARGS="$ARGS --tcodes ${{ github.event.inputs.tcodes }}"
+            if [ -n "${{ github.event.inputs.ccode }}" ]; then
+              ARGS="$ARGS --ccode ${{ github.event.inputs.ccode }}"
+            fi
           elif [ -n "${{ github.event.inputs.since }}" ]; then
             ARGS="$ARGS --since ${{ github.event.inputs.since }}"
           elif [ -n "${{ github.event.inputs.year }}" ]; then

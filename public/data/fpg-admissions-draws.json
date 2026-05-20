@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-05-17T20:40:38.959Z",
-  "total": 384,
+  "scrapedAt": "2026-05-20T18:01:50.762Z",
+  "total": 385,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -3010,7 +3010,7 @@
       "date": "2022-11-12",
       "expectedYear": "2022",
       "admissions": {
-        "error": "param-errors",
+        "error": "http-500",
         "players": []
       },
       "draws": {
@@ -3715,6 +3715,18 @@
           ]
         }
       }
+    },
+    {
+      "ccode": "004",
+      "tcode": "10576",
+      "name": "Grande Final Drive Tour CN Jovens Sub16 H",
+      "date": "2022-11-12",
+      "expectedYear": "2022",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
     },
     {
       "ccode": "051",
