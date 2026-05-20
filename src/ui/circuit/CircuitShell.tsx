@@ -31,6 +31,8 @@ import { IntlTournView } from "../IntlTournView";
 import { KidsLinkCtx } from "../KidsLink";
 import { useKidsLinkMap } from "../../hooks/useKidsLinkMap";
 import { isManuelByName } from "../../constants/manuel";
+import SortableHdr from "../SortableHdr";
+import { useSort } from "../../hooks/useSort";
 import type { Tournament as FPGTournament, Player as FPGPlayer } from "../../data/fpgTypes";
 import type {
   CircuitEntry, CircuitConfig, CircuitDivision, CircuitToggle,
@@ -79,6 +81,25 @@ function divisionSections(d: CircuitDivision): CircuitSectionKind[] {
 function entryPlayerCount(e: CircuitEntry): number {
   if (e.playerCount != null) return e.playerCount;
   return (e.divisions ?? []).reduce((acc, d) => acc + (d.results?.players.length ?? 0), 0);
+}
+
+/** "2026-05-15" → "15/05/2026"; outros formatos passam tal-qual. */
+function fmtDate(d?: string): string {
+  if (!d) return "";
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(d);
+  return m ? `${m[3]}/${m[2]}/${m[1]}` : d;
+}
+/** Intervalo de datas para a sidebar (start → end se diferentes). */
+function fmtDateRange(d1?: string, d2?: string): string {
+  const a = fmtDate(d1), b = fmtDate(d2);
+  if (a && b && a !== b) return `${a} → ${b}`;
+  return a || b || "";
+}
+/** Texto branco/preto consoante a luminosidade da cor de fundo (hex #rrggbb). */
+function fgFor(bg?: string): string {
+  if (!bg || !/^#[0-9a-f]{6}$/i.test(bg)) return "#fff";
+  const r = parseInt(bg.slice(1, 3), 16), g = parseInt(bg.slice(3, 5), 16), b = parseInt(bg.slice(5, 7), 16);
+  return (0.299 * r + 0.587 * g + 0.114 * b) > 150 ? "#000" : "#fff";
 }
 
 // ── Filtros de toggles aplicados ao leaderboard ───────────────────────
@@ -139,23 +160,60 @@ function InscritosView({ lists }: { lists: NonNullable<CircuitDivision["inscrito
   );
 }
 
+type InscritosSortKey = "pos" | "name" | "escalao" | "sex" | "club" | "hcp" | "dob" | "status";
+
 function InscritosTable({ rows }: { rows: CircuitInscritoRow[] }) {
+  const { sortKey, sortDir, toggleSort } = useSort<InscritosSortKey>("pos");
+
+  const sorted = useMemo(() => {
+    const dir = sortDir === "asc" ? 1 : -1;
+    const val = (p: CircuitInscritoRow): string | number => {
+      switch (sortKey) {
+        case "pos": return typeof p.pos === "number" ? p.pos : 99999;
+        case "name": return (p.name || "").toLowerCase();
+        case "escalao": return (p.escalao || "").toLowerCase();
+        case "sex": return p.sex || "";
+        case "club": return (p.club || "").toLowerCase();
+        case "hcp": return p.hcp ?? 999;
+        case "dob": return p.dob || "";
+        case "status": return (p.status || "").toLowerCase();
+      }
+    };
+    return [...rows].sort((a, b) => {
+      const va = val(a), vb = val(b);
+      return va < vb ? -dir : va > vb ? dir : 0;
+    });
+  }, [rows, sortKey, sortDir]);
+
+  const hdr = (k: InscritosSortKey, label: React.ReactNode, cls?: string) => (
+    <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={cls}>{label}</SortableHdr>
+  );
+
   return (
-    <div style={{ overflowX: "auto" }}>
-      <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+    <div className="bjgt-chart-scroll">
+      <table className="sc-lb">
         <thead>
           <tr>
-            <th>#</th><th>Nome</th><th>Escalão</th><th>Sx</th><th>Clube</th><th>HCP</th><th>Nasc.</th><th>Estado</th>
+            {hdr("pos", "#")}
+            {hdr("name", "Nome", "lb-name")}
+            {hdr("escalao", "Escalão")}
+            {hdr("sex", "Sx")}
+            {hdr("club", "Clube", "lb-club")}
+            {hdr("hcp", "HCP")}
+            {hdr("dob", "Nasc.")}
+            {hdr("status", "Estado")}
           </tr>
         </thead>
         <tbody>
-          {rows.map((p, i) => (
+          {sorted.map((p, i) => (
             <tr key={i} className={isManuelByName(p.name) ? "row-manuel" : undefined}>
               <td>{p.pos ?? i + 1}</td>
-              <td className="fw-700">{p.name}{isManuelByName(p.name) && <> <ManuelPill /></>}</td>
+              <td className="lb-name fw-700" style={{ textAlign: "left" }}>
+                {p.name}{isManuelByName(p.name) && <> <ManuelPill /></>}
+              </td>
               <td>{p.escalao || "—"}</td>
               <td>{p.sex ? <SexBadge sex={p.sex} /> : "—"}</td>
-              <td>{p.club || "—"}</td>
+              <td className="lb-club" style={{ textAlign: "left" }}>{p.club || "—"}</td>
               <td>{p.hcp != null ? p.hcp.toFixed(1) : "—"}</td>
               <td>{p.dob || "—"}</td>
               <td>{p.status || "—"}</td>
@@ -225,6 +283,8 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
   const [fSex, setFSex] = useState("all");
   const [fSource, setFSource] = useState("all");
   const [toggles, setToggles] = useState<Set<CircuitToggle>>(new Set());
+  /** Vista informativa activa (ex: Categorías/Federaciones) — null = detalhe normal. */
+  const [infoView, setInfoView] = useState<string | null>(null);
 
   const flt = config.filters ?? {};
   const enabledToggles = flt.toggles ?? [];
@@ -288,9 +348,12 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
 
   const selectEntry = (e: CircuitEntry) => {
     setLocalId(e.id);
+    setInfoView(null); // sair de qualquer vista informativa ao escolher torneio
     md.onSelect();
     onSelectEntry?.(e);
   };
+
+  const curInfoItem = infoView ? config.specialItems?.find(si => si.key === infoView) : undefined;
 
   // ── Carregamento (lazy) das divisões do torneio seleccionado ────────
   const [divCache, setDivCache] = useState<Record<string, CircuitDivision[]>>({});
@@ -359,35 +422,50 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
 
           {flt.search && (
             <input
-              style={{ width: 160, fontSize: 12, padding: "4px 8px", border: "1px solid var(--border)", borderRadius: 6, background: "var(--bg-card)", color: "inherit" }}
+              className="input"
+              style={{ width: 160, fontSize: 12, padding: "3px 8px", marginLeft: 8 }}
               placeholder="🔍 Pesquisar…"
               value={search}
               onChange={e => setSearch(e.target.value)}
             />
           )}
           {flt.year && (
-            <select value={fYear} onChange={e => setFYear(e.target.value)} style={{ fontSize: 12 }}>
+            <select className="input" value={fYear} onChange={e => setFYear(e.target.value)} style={{ fontSize: 12, padding: "3px 6px" }}>
               <option value="all">📅 Ano</option>
               {years.map(y => <option key={y} value={String(y)}>{y}</option>)}
             </select>
           )}
           {flt.escalao && (
-            <select value={fEsc} onChange={e => setFEsc(e.target.value)} style={{ fontSize: 12 }}>
-              <option value="all">Escalão</option>
+            <select className="input" value={fEsc} onChange={e => setFEsc(e.target.value)} style={{ fontSize: 12, padding: "3px 6px" }}>
+              <option value="all">🏆 Escalão</option>
               {escaloes.map(es => <option key={es} value={es}>{es}</option>)}
             </select>
           )}
           {flt.sex && (
-            <select value={fSex} onChange={e => setFSex(e.target.value)} style={{ fontSize: 12 }}>
+            <select className="input" value={fSex} onChange={e => setFSex(e.target.value)} style={{ fontSize: 12, padding: "3px 6px" }}>
               <option value="all">M+F</option>
-              <option value="M">M</option>
-              <option value="F">F</option>
+              <option value="M">Masculino</option>
+              <option value="F">Femenino</option>
             </select>
           )}
           {flt.source && sources.length > 1 && (
-            <select value={fSource} onChange={e => setFSource(e.target.value)} style={{ fontSize: 12 }}>
+            <select className="input" value={fSource} onChange={e => setFSource(e.target.value)} style={{ fontSize: 12, padding: "3px 6px" }}>
               <option value="all">Fonte</option>
-              {sources.map(s => <option key={s} value={s}>{s}</option>)}
+              {sources.map(s => <option key={s} value={s}>{config.sourceLabels?.[s] ?? s}</option>)}
+            </select>
+          )}
+
+          {/* Menu INFO — vistas informativas (categorias, federações, ...) */}
+          {!!config.specialItems?.length && (
+            <select
+              className="input"
+              value={infoView ?? ""}
+              onChange={e => setInfoView(e.target.value || null)}
+              style={{ fontSize: 12, padding: "3px 6px" }}
+              title="Páginas informativas"
+            >
+              <option value="">ⓘ Info</option>
+              {config.specialItems.map(si => <option key={si.key} value={si.key}>{si.label}</option>)}
             </select>
           )}
 
@@ -417,11 +495,6 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
 
           {/* Sidebar */}
           <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
-            {/* Itens especiais (Categorias, Federações, ...) */}
-            {config.specialItems?.map(si => (
-              <div key={si.key}>{si.render()}</div>
-            ))}
-
             <CircuitSidebar
               entries={visible}
               config={config}
@@ -432,19 +505,21 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
 
           {/* Detalhe */}
           <div className="course-detail" ref={md.detailRef}>
-            {!cur ? (
+            {curInfoItem ? (
+              curInfoItem.render()
+            ) : !cur ? (
               <div className="center-msg muted">Sem torneios para mostrar.</div>
             ) : divsLoading ? (
               <LoadingState message={config.loadingMessage ?? "A carregar dados…"} />
             ) : curDiv ? (
               <>
                 <DetailHeader
-                  title={`${cur.year ?? ""} · ${curDiv.tabLabel || curDiv.escalao}`}
+                  title={cur.name}
                   sub={
                     <>
                       <span className="muted">
-                        {cur.name}
-                        {cur.course && <> — 📍 {cur.course}</>}
+                        {(curDiv.tabLabel || curDiv.escalao) && <>{curDiv.tabLabel || curDiv.escalao}</>}
+                        {cur.course && <> · 📍 {cur.course}</>}
                         {cur.federation && <> · 🏛️ {cur.federation}</>}
                       </span>
                       {curDiv.sex && <> <SexBadge sex={curDiv.sex === "Mixed" ? "M" : curDiv.sex} /></>}
@@ -598,7 +673,10 @@ function CircuitSidebar({
                 const nR = e.roundsCount ?? Math.max(0, ...(e.divisions ?? []).map(d => d.results?.rounds ?? 0));
                 const nDiv = e.divisionCount ?? e.divisions?.length ?? 1;
                 const esc = e.escalao ?? e.divisions?.[0]?.escalao;
-                const sourceColor = e.source ? config.sourceColors?.[e.source] : undefined;
+                const sex = e.sex ?? e.divisions?.[0]?.sex;
+                const srcColor = e.source ? config.sourceColors?.[e.source] : undefined;
+                const srcLabel = e.source ? (config.sourceLabels?.[e.source] ?? e.source) : undefined;
+                const dateStr = fmtDateRange(e.dateStart, e.dateEnd);
                 return (
                   <div
                     key={e.id}
@@ -608,18 +686,22 @@ function CircuitSidebar({
                     onKeyDown={ev => { if (ev.key === "Enter" || ev.key === " ") onSelect(e); }}
                   >
                     <div className="course-item-name">
-                      {sourceColor && <span style={{ width: 8, height: 8, borderRadius: "50%", background: sourceColor, display: "inline-block" }} />}
                       {e.name}
                       {e.hasManuel && <ManuelPill />}
                     </div>
-                    <div className="course-item-meta" style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
+                    <div className="course-item-meta" style={{ display: "flex", gap: 4, flexWrap: "wrap", alignItems: "center", marginTop: 4 }}>
+                      {srcLabel && (
+                        <span className="chip" style={{ fontSize: 9, padding: "1px 6px", borderRadius: 8, background: srcColor, color: fgFor(srcColor) }}>{srcLabel}</span>
+                      )}
                       {esc && <EscPill esc={esc} />}
-                      {e.sex && <SexBadge sex={e.sex === "Mixed" ? "M" : e.sex} />}
+                      {sex && <SexBadge sex={sex === "Mixed" ? "M" : sex} />}
+                      {sex === "Mixed" && <SexBadge sex="F" />}
                       {nDiv > 1 && <span>{nDiv} escalões</span>}
-                      {nP > 0 && <><span className="muted">·</span><span>{nP} jog</span></>}
                       {nR > 1 && <RoundPill nR={nR} />}
                     </div>
-                    {e.course && <div className="course-item-meta">⛳ {e.course}</div>}
+                    {dateStr && <div className="course-item-meta" style={{ fontSize: 11, marginTop: 4 }}>📅 {dateStr}</div>}
+                    {e.course && <div className="course-item-meta" style={{ fontWeight: 600, color: "var(--text-2)" }}>📍 {e.course.length > 50 ? e.course.slice(0, 50) + "…" : e.course}</div>}
+                    {nP > 0 && <div className="course-item-meta" style={{ fontSize: 11, marginTop: 2 }}>🏌️ {nP} jog</div>}
                   </div>
                 );
               })}

@@ -2209,8 +2209,10 @@ function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: H
       name: t.name,
       source: t.source,
       course: t.course ?? undefined,
-      dateStart: t.dateStart ?? undefined,
-      dateEnd: t.dateEnd ?? undefined,
+      // Usar sempre os campos ISO (uniformes) — dateStart/dateEnd cru vêm por
+      // extenso nalgumas fontes (LGS: "01 mayo - 03 mayo") e ISO noutras.
+      dateStart: t.dateStartIso ?? t.dateStart ?? undefined,
+      dateEnd: t.dateEndIso ?? t.dateEnd ?? undefined,
       sourceUrl: rfegSourceUrl(t),
       hcpLimit: (t.hcpLimitMen != null || t.hcpLimitWomen != null)
         ? { men: t.hcpLimitMen ?? undefined, women: t.hcpLimitWomen ?? undefined }
@@ -2230,6 +2232,7 @@ const RFEG_CONFIG: CircuitConfig = {
   color: "#aa151b",
   grouping: "year",
   sourceColors: { rfegolf: "#aa151b", livegolfscoring: "#00aa55", golfdirecto: "#0066cc", nextcaddy: "#f1bf00" },
+  sourceLabels: { rfegolf: "RFEGolf", livegolfscoring: "LGS", golfdirecto: "FCG", nextcaddy: "NextCaddy" },
   filters: { search: true, year: true, escalao: true, sex: true, source: true, toggles: ["manuel", "pt", "top10"] },
   loadingMessage: "A carregar dados...",
 };
@@ -2262,13 +2265,22 @@ export default function RFEGPage() {
     return entries.find((e) => e.id.endsWith(`:${idStr}`))?.id;
   }, [params.id, params.compId, params.source, entries]);
 
+  // Config + páginas informativas (menu INFO na toolbar do shell).
+  const config = useMemo<CircuitConfig>(() => ({
+    ...RFEG_CONFIG,
+    specialItems: index ? [
+      { key: "categorias", label: "📚 Categorías de edad", render: () => <RFEGCategoriesView catCounts={index.byCategory} /> },
+      { key: "federaciones", label: "🏛️ Federaciones de España", render: () => <RFEGFederationsView /> },
+    ] : [],
+  }), [index]);
+
   if (error) return <EmptyState message={`Erro: ${error}`} />;
   if (!index) return <LoadingState message="A carregar índice RFEGolf..." />;
 
   return (
     <CircuitShell
       entries={entries}
-      config={RFEG_CONFIG}
+      config={config}
       selectedId={selectedId}
       onSelectEntry={(e) => {
         const [src, id] = e.id.split(":");

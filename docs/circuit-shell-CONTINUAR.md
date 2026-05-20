@@ -89,6 +89,15 @@ npm test
 ```
 Depois abrir `/rfeg` e validar: sidebar por ano, filtros, selecção carrega detalhe (lazy), Resultados + Inscritos, toggles Manuel/PT/Top10.
 
+**Polish aplicado (2026-05-20, após 1ª revisão da utilizadora):**
+- Toolbar do shell passou a usar `.input` (coerente com as outras páginas) + espaçamento.
+- Sidebar: removidos os dots coloridos confusos → **chip com o nome da fonte** (RFEGolf/LGS/NextCaddy/FCG) à cor da fonte (`config.sourceLabels` + `sourceColors`). Adicionada a **data do evento** (📅) e o item ficou mais rico (nome, fonte, escalão, sexo, rondas, data, campo, nº jog) ao estilo FPGPage.
+- Decisão: **não** mexer no leaderboard partilhado (`AllRoundsScorecardLB`). Os filtros de escalão/sexo só aparecem em torneios multi-escalão — RFEG é single-category, por isso ali só há a pesquisa (by design, não é bug).
+- **Datas uniformes**: o adaptador RFEG passa `dateStartIso`/`dateEndIso` (não o `dateStart` cru, que vinha por extenso nalgumas fontes); o shell formata via `fmtDate` → DD/MM/AAAA em todo o lado.
+- **Tabela de inscritos** (`InscritosTable` no CircuitShell): reescrita com `.sc-lb` + `.bjgt-chart-scroll` e **ordenável** (`useSort` + `SortableHdr`) — antes era `<table>` HTML simples. Colunas: #, Nome, Escalão, Sx, Clube, HCP, Nasc., Estado.
+- **Título do detalhe**: passou a ser o NOME do torneio em destaque (DetailHeader `title={cur.name}`); escalão/campo/federação na sub-linha. Antes mostrava "ano · escalão".
+- **Menu INFO na toolbar** (mecanismo de vista especial): `config.specialItems` deixou de renderizar inline na sidebar — agora é um `<select>` "ⓘ Info" na toolbar; ao escolher, o detalhe mostra `specialItem.render()`. A RFEG liga aqui Categorías de edad (`RFEGCategoriesView`) e Federaciones (`RFEGFederationsView`). Padrão reutilizável para France (catégories d'âge) etc.
+
 **Follow-ups da RFEG (ficaram de fora do protótipo):**
 - **Categorías de edad** e **Federaciones** (special views): o shell precisa de um mecanismo de "special detail view" (botão na sidebar que troca o detalhe). Hoje `config.specialItems` só renderiza inline na sidebar. Reusar `RFEGCategoriesView` / `RFEGFederationsView`.
 - **Draw** (NextCaddy horarios → `division.draw.rounds`): não mapeado ainda.

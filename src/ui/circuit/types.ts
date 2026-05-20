@@ -177,8 +177,10 @@ export interface CircuitConfig {
   grouping: CircuitGrouping;
   /** Ordem das séries quando grouping = "series-year". */
   seriesOrder?: string[];
-  /** Cores por fonte quando grouping = "source-year" (chip colorido). */
+  /** Cores por fonte (chip colorido na sidebar). Ex: { rfegolf: "#aa151b" }. */
   sourceColors?: Record<string, string>;
+  /** Labels legíveis por fonte (chip na sidebar). Ex: { rfegolf: "RFEGolf" }. */
+  sourceLabels?: Record<string, string>;
   /** Itens especiais fixos no topo da sidebar. */
   specialItems?: CircuitSpecialItem[];
 
