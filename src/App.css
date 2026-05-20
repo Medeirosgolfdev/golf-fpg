@@ -2048,6 +2048,24 @@ tr.cross-current { background: var(--bg-success); }
 .p-40 { padding: 40px; }
 .p-0-4px { padding: 0 4px; }
 .p-8-12  { padding: 8px 12px; }
+
+/* ─── Linha de info / análise dos leaderboards (Resumo + rondas) ─── */
+.lb-info-line {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-2);
+  margin: 6px 0 12px;
+  padding: 0 4px;
+  line-height: 1.55;
+}
+.lb-evo-summary {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-2);
+  margin: 10px 0 12px;
+  padding: 0 4px;
+  line-height: 1.55;
+}
 .ml-8      { margin-left: 8px; }
 /* ─── Cursor ─── */
 .pointer { cursor: pointer; }

@@ -17,8 +17,9 @@ import PasswordGate from "../ui/PasswordGate";
 import LoadingState from "../ui/LoadingState";
 import CircuitShell from "../ui/circuit/CircuitShell";
 import type { CircuitEntry, CircuitConfig, CircuitDivision } from "../ui/circuit/types";
-import { URLS as BJGT_URLS, loadT as bjgtLoadT, bjgtEvoFor, bjgtMajorDivision, type TDef } from "./BJGTPage";
+import { URLS as BJGT_URLS, loadT as bjgtLoadT, bjgtEvoFor, bjgtMajorDivision, makeEvoCols, EvoSummary, type TDef } from "./BJGTPage";
 import { DATA_FILES as DORAL_FILES, normalizeFile, doralEvoFor, doralMajorDivision, type Entry } from "./DORALPage";
+import { buildEvoMap, type EvoEntry } from "../hooks/useEvoComparison";
 import { gf } from "../utils/flagUtils";
 import type { Tournament as FPGTournament, Player as FPGPlayer, ScorecardOptions } from "./FPGPage";
 
@@ -161,17 +162,46 @@ function jobDivisionToTournament(div: JobDivision, name: string): FPGTournament 
   return { name, tcode: `job-${name}`, date: "", campo: "", rounds: nR, playerCount: fpg.length, players: fpg };
 }
 
+/** Evolução ano-a-ano do JOB: compara cada divisão com a edição do ano anterior
+ *  (mesma divisão), usando o to-par total como valor comparável. */
+function jobEvoFor(file: JobFile, all: JobFile[], divIndex: number, label: string): { evo?: Map<string, EvoEntry>; evoYear?: string } {
+  const prev = all.find((f) => f.year === file.year - 1);
+  if (!prev) return {};
+  const curDiv = file.divisions[divIndex];
+  const prevDiv = prev.divisions[divIndex];
+  if (!curDiv || !prevDiv) return {};
+  const toEvo = (d: JobDivision) => d.players
+    .filter((p) => p.toPar != null && p.total != null)
+    .map((p) => ({ name: p.name, value: p.toPar as number, category: label }));
+  const raw = buildEvoMap({
+    currentPlayers: toEvo(curDiv),
+    referencePlayers: toEvo(prevDiv),
+    referenceYear: String(file.year - 1),
+    isManuel: isM,
+  });
+  return { evo: raw.evoMap, evoYear: raw.evoYear };
+}
+
 function buildJobEntries(files: JobFile[]): CircuitEntry[] {
   return files.map((f): CircuitEntry => {
     const divisions: CircuitDivision[] = f.divisions.map((dv, i) => {
       const label = JOB_DIV_LABELS[i] || dv.division;
+      const { evo, evoYear } = jobEvoFor(f, files, i, label);
+      const hasEvo = !!evo && evo.size > 0;
+      const results = jobDivisionToTournament(dv, label);
+      if (hasEvo) for (const pl of results.players) {
+        const ev = evo!.get(pl.name);
+        if (ev) { (pl as unknown as { _regressado?: boolean })._regressado = true; if (ev.pill === "UP") (pl as unknown as { _subiu?: boolean })._subiu = true; }
+      }
       return {
         key: `d${i}`,
         escalao: label,
         tabLabel: label,
         hasManuel: dv.players.some((p) => isM(p.name)),
-        results: jobDivisionToTournament(dv, label),
+        results,
         scOptions: jobScorecardOptions(),
+        evoCols: hasEvo ? makeEvoCols(evo!, evoYear) : undefined,
+        accHeader: hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined,
       };
     });
     const all = f.divisions.flatMap((d) => d.players);

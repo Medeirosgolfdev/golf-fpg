@@ -87,11 +87,24 @@ export const URLS = [
   { id: "2024_g1415", url: "/data/brjgt2431_girls_14-15.json", label: "2024 // Girls 14-15", shortLabel: "2024 Girls 14-15", manuelName: "",                          year: 2024, category: "Girls 14-15", roundDates: ["20 Fev", "21 Fev", "22 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://www.bluegolf.com/junior/events/brjgt2431/index.html" },
   { id: "2024_b1618", url: "/data/brjgt2431_boys_16-18.json",  label: "2024 // Boys 16-18",  shortLabel: "2024 Boys 16-18",  manuelName: "",                          year: 2024, category: "Boys 16-18",  roundDates: ["20 Fev", "21 Fev", "22 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://www.bluegolf.com/junior/events/brjgt2431/index.html" },
   { id: "2024_g1618", url: "/data/brjgt2431_girls_16-18.json", label: "2024 // Girls 16-18", shortLabel: "2024 Girls 16-18", manuelName: "",                          year: 2024, category: "Girls 16-18", roundDates: ["20 Fev", "21 Fev", "22 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://www.bluegolf.com/junior/events/brjgt2431/index.html" },
-  /* ── EOWAGR (European Open) ── */
-  { id: "eo25_b78",   url: "/data/eowagr25_contest121.json",  label: "2025 // Boys 7-8",    shortLabel: "2025 Boys 7-8",    manuelName: "",                          year: 2025, category: "Boys 7-8",   roundDates: ["11 Ago", "12 Ago", "13 Ago"] as string[], series: "eowagr" as const, sourceUrl: "https://brjgt.bluegolfw/brjgt25/event/brjgt2512/contest/121/leaderboard.htm" },
-  { id: "eo25_b910",  url: "/data/eowagr25_contest13.json",   label: "2025 // Boys 9-10",   shortLabel: "2025 Boys 9-10",   manuelName: "",                          year: 2025, category: "Boys 9-10",  roundDates: ["11 Ago", "12 Ago", "13 Ago"] as string[], series: "eowagr" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2515/contest/13/leaderboard.htm" },
-  { id: "eo25_b1112", url: "/data/eowagr25_scorecards.json",  label: "2025 // Boys 11-12",  shortLabel: "2025 Boys 11-12",  manuelName: "Manuel Medeiros",           year: 2025, category: "Boys 11-12", roundDates: ["11 Ago", "12 Ago", "13 Ago"] as string[], series: "eowagr" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2515/contest/121/leaderboard.htm" },
-  { id: "eo25_b1314", url: "/data/eowagr25_contest77.json",   label: "2025 // Boys 13-14",  shortLabel: "2025 Boys 13-14",  manuelName: "",                          year: 2025, category: "Boys 13-14", roundDates: ["11 Ago", "12 Ago", "13 Ago"] as string[], series: "eowagr" as const, sourceUrl: "https://brjgt.bluegolfw/brjgt25/event/brjgt2512/contest/77/leaderboard.htm" },
+  /* ── EOWAGR (European Open WAGR 2025 — Le Touquet GC, La Forêt) ──
+     13 escalões (Boys/Girls 7-8→15-18 + 6/Under + Boys/Girls WAGR), um
+     ficheiro eowagr25_contest{id}.json por escalão. Os sub-contests "Par 3/4/5"
+     são projeções dos mesmos 18 buracos e NÃO se registam (derivam-se via
+     scripts/eowagr-par-splits.js). */
+  { id: "eo25_b78",    url: "/data/eowagr25_contest121.json", label: "2025 // Boys 7-8",    shortLabel: "2025 Boys 7-8",    manuelName: "",                year: 2025, category: "Boys 7-8",    roundDates: ["11 Ago", "12 Ago", "13 Ago"] as string[], series: "eowagr" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2512/contest/121/leaderboard.htm" },
+  { id: "eo25_g78",    url: "/data/eowagr25_contest109.json", label: "2025 // Girls 7-8",   shortLabel: "2025 Girls 7-8",   manuelName: "",                year: 2025, category: "Girls 7-8",   roundDates: ["11 Ago", "12 Ago", "13 Ago"] as string[], series: "eowagr" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2512/contest/109/leaderboard.htm" },
+  { id: "eo25_b910",   url: "/data/eowagr25_contest13.json",  label: "2025 // Boys 9-10",   shortLabel: "2025 Boys 9-10",   manuelName: "",                year: 2025, category: "Boys 9-10",   roundDates: ["11 Ago", "12 Ago", "13 Ago"] as string[], series: "eowagr" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2512/contest/13/leaderboard.htm" },
+  { id: "eo25_g910",   url: "/data/eowagr25_contest73.json",  label: "2025 // Girls 9-10",  shortLabel: "2025 Girls 9-10",  manuelName: "",                year: 2025, category: "Girls 9-10",  roundDates: ["11 Ago", "12 Ago", "13 Ago"] as string[], series: "eowagr" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2512/contest/73/leaderboard.htm" },
+  { id: "eo25_b1112",  url: "/data/eowagr25_contest21.json",  label: "2025 // Boys 11-12",  shortLabel: "2025 Boys 11-12",  manuelName: "Manuel Medeiros", year: 2025, category: "Boys 11-12",  roundDates: ["11 Ago", "12 Ago", "13 Ago"] as string[], series: "eowagr" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2512/contest/21/leaderboard.htm" },
+  { id: "eo25_g1112",  url: "/data/eowagr25_contest5.json",   label: "2025 // Girls 11-12", shortLabel: "2025 Girls 11-12", manuelName: "",                year: 2025, category: "Girls 11-12", roundDates: ["11 Ago", "12 Ago", "13 Ago"] as string[], series: "eowagr" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2512/contest/5/leaderboard.htm" },
+  { id: "eo25_b1314",  url: "/data/eowagr25_contest77.json",  label: "2025 // Boys 13-14",  shortLabel: "2025 Boys 13-14",  manuelName: "",                year: 2025, category: "Boys 13-14",  roundDates: ["11 Ago", "12 Ago", "13 Ago"] as string[], series: "eowagr" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2512/contest/77/leaderboard.htm" },
+  { id: "eo25_g1314",  url: "/data/eowagr25_contest132.json", label: "2025 // Girls 13-14", shortLabel: "2025 Girls 13-14", manuelName: "",                year: 2025, category: "Girls 13-14", roundDates: ["11 Ago", "12 Ago", "13 Ago"] as string[], series: "eowagr" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2512/contest/132/leaderboard.htm" },
+  { id: "eo25_b1518",  url: "/data/eowagr25_contest151.json", label: "2025 // Boys 15-18",  shortLabel: "2025 Boys 15-18",  manuelName: "",                year: 2025, category: "Boys 15-18",  roundDates: ["11 Ago", "12 Ago", "13 Ago"] as string[], series: "eowagr" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2512/contest/151/leaderboard.htm" },
+  { id: "eo25_g1518",  url: "/data/eowagr25_contest155.json", label: "2025 // Girls 15-18", shortLabel: "2025 Girls 15-18", manuelName: "",                year: 2025, category: "Girls 15-18", roundDates: ["11 Ago", "12 Ago", "13 Ago"] as string[], series: "eowagr" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2512/contest/155/leaderboard.htm" },
+  { id: "eo25_6u",     url: "/data/eowagr25_contest17.json",  label: "2025 // 6/Under",     shortLabel: "2025 6/Under",     manuelName: "",                year: 2025, category: "6/Under",     roundDates: ["11 Ago", "12 Ago", "13 Ago"] as string[], series: "eowagr" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2512/contest/17/leaderboard.htm" },
+  { id: "eo25_bwagr",  url: "/data/eowagr25_contest162.json", label: "2025 // Boys WAGR",   shortLabel: "2025 Boys WAGR",   manuelName: "",                year: 2025, category: "Boys WAGR",   roundDates: ["11 Ago", "12 Ago", "13 Ago"] as string[], series: "eowagr" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2512/contest/162/leaderboard.htm" },
+  { id: "eo25_gwagr",  url: "/data/eowagr25_contest159.json", label: "2025 // Girls WAGR",  shortLabel: "2025 Girls WAGR",  manuelName: "",                year: 2025, category: "Girls WAGR",  roundDates: ["11 Ago", "12 Ago", "13 Ago"] as string[], series: "eowagr" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2512/contest/159/leaderboard.htm" },
 ];
 
 /* ── Flags ── */
@@ -309,12 +322,12 @@ function FStats({ data, ri }: { data: TData; ri: number | "all" }) {
 }
 
 /** Mini-resumo de evolução ano-a-ano */
-function EvoSummary({ evo, evoYear }: { evo: Map<string, EvoEntry>; evoYear: string }) {
+export function EvoSummary({ evo, evoYear }: { evo: Map<string, EvoEntry>; evoYear: string }) {
   if (!evo.size) return null;
   const returning = [...evo.values()].filter(e => e.delta !== 0);
   const improved = returning.filter(e => e.delta < 0).length;
   return (
-    <div className="muted fs-10 mb-8">
+    <div className="lb-evo-summary">
       {evo.size} jogadores regressaram de {evoYear}{returning.length > 0 ? ` · ${improved}/${returning.length} melhoraram (±par)` : ""}
     </div>
   );
@@ -685,6 +698,29 @@ export function bjgtEvoFor(cur: TDef, all: TDef[]): { evo?: Map<string, EvoEntry
   return { evo: raw.evoMap, evoYear: raw.evoYear };
 }
 
+/** Tipo de linha do MultiRoundLeaderboard com posição calculada. */
+export type EvoRowWithPos = MultiRoundRow & { _pos?: number | null };
+
+/** Constrói as 3 colunas de evolução ano-a-ano (Ant. · Δ · Percurso).
+ *  Partilhado por BJGT/EOWAGR e Junior Orange Bowl no CircuitShell. */
+export function makeEvoCols(evo: Map<string, EvoEntry>, evoYear?: string): ExtraColumn<EvoRowWithPos>[] {
+  return [
+    {
+      header: evoYear || "Ant.", className: "ta-c fs-11 fw-600",
+      headerStyle: { width: 44, textAlign: "center" as const, padding: "0 3px", borderLeft: "2px solid var(--border)" },
+      cell: (row: EvoRowWithPos) => { const ev = evo.get(row.name); return ev ? <span className="inline-sep">{fmtSign(ev.otherValue)}</span> : <span className="c-muted inline-sep">–</span>; },
+    },
+    {
+      header: "Δ", className: "ta-c fs-11 fw-700", headerStyle: { width: 34, textAlign: "center" as const, padding: "0 3px" },
+      cell: (row: EvoRowWithPos) => { const ev = evo.get(row.name); if (!ev) return <span className="c-muted">–</span>; return <span style={{ color: ev.delta < 0 ? "var(--good-dark)" : ev.delta > 0 ? SC.danger : "var(--text-3)" }}>{ev.delta > 0 ? "+" : ""}{ev.delta}</span>; },
+    },
+    {
+      header: "Percurso", className: "ta-c", headerStyle: { width: 140, textAlign: "center" as const, padding: "0 4px" },
+      cell: (row: EvoRowWithPos) => { const ev = evo.get(row.name); return ev ? <EvoBadge pill={ev.pill} from={ev.from} to={ev.to} /> : <EvoBadge pill="NEW" label={evoYear === "2026" ? "não voltou" : "novo"} />; },
+    },
+  ];
+}
+
 /** CircuitDivision de um torneio BJGT/EOWAGR (results + evoCols + módulos ricos). */
 export function bjgtMajorDivision(def: TDef, evo: Map<string, EvoEntry> | undefined, evoYear: string | undefined, sourceUrl?: string): CircuitDivision {
   const data = def.data;
@@ -692,22 +728,7 @@ export function bjgtMajorDivision(def: TDef, evo: Map<string, EvoEntry> | undefi
   const hasEvo = !!evo && evo.size > 0;
   const roundLabels = def.roundDates?.map((d, i) => `R${i + 1} · ${d}`);
   const rLabel = (i: number) => (def.roundDates?.[i] ? `R${i + 1} · ${def.roundDates[i]}` : `R${i + 1}`);
-  type RowWithPos = MultiRoundRow & { _pos?: number | null };
-  const evoCols: ExtraColumn<RowWithPos>[] | undefined = hasEvo ? [
-    {
-      header: evoYear || "Ant.", className: "ta-c fs-11 fw-600",
-      headerStyle: { width: 44, textAlign: "center" as const, padding: "0 3px", borderLeft: "2px solid var(--border)" },
-      cell: (row: RowWithPos) => { const ev = evo!.get(row.name); return ev ? <span className="inline-sep">{fmtSign(ev.otherValue)}</span> : <span className="c-muted inline-sep">–</span>; },
-    },
-    {
-      header: "Δ", className: "ta-c fs-11 fw-700", headerStyle: { width: 34, textAlign: "center" as const, padding: "0 3px" },
-      cell: (row: RowWithPos) => { const ev = evo!.get(row.name); if (!ev) return <span className="c-muted">–</span>; return <span style={{ color: ev.delta < 0 ? "var(--good-dark)" : ev.delta > 0 ? SC.danger : "var(--text-3)" }}>{ev.delta > 0 ? "+" : ""}{ev.delta}</span>; },
-    },
-    {
-      header: "Percurso", className: "ta-c", headerStyle: { width: 140, textAlign: "center" as const, padding: "0 4px" },
-      cell: (row: RowWithPos) => { const ev = evo!.get(row.name); return ev ? <EvoBadge pill={ev.pill} from={ev.from} to={ev.to} /> : <EvoBadge pill="NEW" label={evoYear === "2026" ? "não voltou" : "novo"} />; },
-    },
-  ] : undefined;
+  const evoCols = hasEvo ? makeEvoCols(evo!, evoYear) : undefined;
   const results = tDataToTournament(data, def);
   if (hasEvo) for (const pl of results.players) {
     const ev = evo!.get(pl.name);

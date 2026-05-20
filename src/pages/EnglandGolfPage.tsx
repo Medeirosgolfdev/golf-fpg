@@ -343,7 +343,7 @@ function EvoSummary({ evo, evoYear }: { evo: Map<string, EvoEntry>; evoYear: str
   const returning = [...evo.values()].filter(e => e.delta !== 0);
   const improved = returning.filter(e => e.delta < 0).length;
   return (
-    <div className="muted fs-10 mb-8">
+    <div className="lb-evo-summary">
       {evo.size} jogadores regressaram de {evoYear}{returning.length > 0 ? ` · ${improved}/${returning.length} melhoraram (±par)` : ""}
     </div>
   );

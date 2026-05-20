@@ -132,7 +132,7 @@ export function AccumulatedLB({
 
   return (
     <div>
-      <div className="muted fs-11 mb-8 p-0-4px">
+      <div className="lb-info-line">
         {infoFiltered.map((s, i) => (
           <React.Fragment key={i}>
             {i > 0 && " · "}

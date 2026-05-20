@@ -131,29 +131,120 @@ async function extractScorecard(page) {
         result.total = parseInt(val, 10) || null;
     }
 
-    /* Parser de tabela */
+    /* Parser de tabela.
+       Devolve par/si/yards/rounds JÁ compactados aos buracos jogados neste
+       contest. Crucial para os sub-contests "Par 3/4/5", em que só se jogam
+       os buracos desse par (ex.: Par 5 → só os 4-6 buracos par-5). */
     function parseTable(table) {
-      const localPar = [], localSi = [], localYards = [], localRounds = [];
+      const trs = Array.from(table.querySelectorAll("tr"));
 
-      for (const inp of table.querySelectorAll('input[type="hidden"][data-par]'))
-        localPar.push(parseInt(inp.getAttribute("data-par"), 10));
-
-      // Distâncias (yards) — input hidden com data-distance, por ordem dos buracos.
-      for (const inp of table.querySelectorAll('input[type="hidden"][data-distance]')) {
-        const v = parseInt(inp.getAttribute("data-distance"), 10);
-        if (!isNaN(v) && v > 0) localYards.push(v);
+      // Linha-cabeçalho dos buracos = a que contém os inputs hidden data-par
+      // (uma célula por buraco). As células de label e de TOTAL (Fora/Dentro/
+      // Total) NÃO têm esse input — é assim que as excluímos com segurança.
+      let headerRow = null;
+      for (const tr of trs) {
+        if (tr.querySelector('input[type="hidden"][data-par]')) { headerRow = tr; break; }
       }
 
-      if (localPar.length === 0) {
-        for (const tr of table.querySelectorAll("tr")) {
+      /* ── Caminho coluna-a-coluna (layout moderno bluegolfw) ── */
+      if (headerRow) {
+        const headCells = Array.from(headerRow.querySelectorAll("th, td"));
+        const holeCols = [];   // índices de coluna que são buracos
+        const fullPar = [];    // par do campo (todos os buracos do cartão)
+        const fullYards = [];  // jardas por buraco
+        headCells.forEach((c, i) => {
+          const parInp = c.querySelector('input[type="hidden"][data-par]');
+          if (!parInp) return; // label ou coluna de total → ignorar
+          holeCols.push(i);
+          fullPar.push(parseInt(parInp.getAttribute("data-par"), 10) || 0);
+          const distInp = c.querySelector('input[type="hidden"][data-distance]');
+          const d = distInp ? parseInt(distInp.getAttribute("data-distance"), 10) : 0;
+          fullYards.push(!isNaN(d) && d > 0 ? d : 0);
+        });
+
+        // SI: linha "hcp"/"handicap"/"tee handicap", lida nas mesmas colunas.
+        const fullSi = new Array(holeCols.length).fill(0);
+        for (const tr of trs) {
           const first = tr.querySelector("td, th");
-          if (first && first.textContent.trim().toLowerCase() === "par") {
-            for (const td of Array.from(tr.querySelectorAll("td, th")).slice(1)) {
-              const n = parseInt(td.textContent.trim(), 10);
-              if (!isNaN(n) && n >= 3 && n <= 5) localPar.push(n);
-            }
+          if (!first) continue;
+          const label = first.textContent.trim().toLowerCase();
+          if (label.includes("handicap") || label.includes("hcp")) {
+            const cells = Array.from(tr.querySelectorAll("th, td"));
+            holeCols.forEach((ci, k) => {
+              const n = parseInt((cells[ci] ? cells[ci].textContent : "").trim(), 10);
+              if (!isNaN(n) && n >= 1 && n <= 18) fullSi[k] = n;
+            });
             break;
           }
+        }
+
+        // Par do CONCURSO: linha visível "Par" (0 nos buracos não jogados neste
+        // contest). Define quais buracos foram efectivamente jogados.
+        let contestPar = null;
+        for (const tr of trs) {
+          const first = tr.querySelector("td, th");
+          if (!first) continue;
+          if (first.textContent.trim().toLowerCase() === "par") {
+            const cells = Array.from(tr.querySelectorAll("th, td"));
+            contestPar = holeCols.map(
+              (ci) => parseInt((cells[ci] ? cells[ci].textContent : "").trim(), 10) || 0
+            );
+            break;
+          }
+        }
+        const playedIdx = [];
+        for (let k = 0; k < holeCols.length; k++) {
+          if (!contestPar || contestPar[k] > 0) playedIdx.push(k);
+        }
+
+        const par = playedIdx.map((k) => fullPar[k]);
+        const yards = playedIdx.map((k) => fullYards[k]);
+        const si = playedIdx.map((k) => fullSi[k]);
+
+        // Rondas: linhas Volta/Round/scores, lidas SÓ nas colunas de buracos
+        // jogados (exclui Fora/Dentro/Total). Aceita a ronda só se todos os
+        // buracos jogados têm tacada (ronda completa) — evita rondas a meio.
+        // ⚠ A scorecard.htm lista as Voltas por ordem DESCENDENTE (Volta 3, 2, 1).
+        // Captura-se o nº da Volta do rótulo e ordena-se ASCENDENTE, senão a R1
+        // ficava trocada com a R3 (bug confirmado contra o BlueGolf 2026-05).
+        const roundsTmp = [];
+        let seq = 0;
+        for (const tr of trs) {
+          const first = tr.querySelector("td, th");
+          if (!first) continue;
+          const label = first.textContent.trim().toLowerCase();
+          const isScore =
+            tr.classList.contains("scores") ||
+            /^(volta|round|rd)\s*\d/.test(label) ||
+            /^r\s*\d$/.test(label);
+          if (!isScore) continue;
+          seq++;
+          const numM = label.match(/(\d+)/);
+          const num = numM ? parseInt(numM[1], 10) : seq; // nº da Volta (1/2/3)
+          const cells = Array.from(tr.querySelectorAll("th, td"));
+          const scores = playedIdx.map((k) => {
+            const n = parseInt((cells[holeCols[k]] ? cells[holeCols[k]].textContent : "").trim(), 10);
+            return !isNaN(n) && n >= 1 && n <= 30 ? n : NaN;
+          });
+          if (scores.length > 0 && scores.every((s) => !isNaN(s))) roundsTmp.push({ num, scores });
+        }
+        roundsTmp.sort((a, b) => a.num - b.num); // ascendente: R1, R2, R3
+        const rounds = roundsTmp.map((r) => r.scores);
+
+        return { par, si, yards, rounds };
+      }
+
+      /* ── Caminho antigo (layouts sem inputs data-par): baseado em texto ── */
+      const localPar = [], localSi = [], localYards = [], localRounds = [];
+
+      for (const tr of table.querySelectorAll("tr")) {
+        const first = tr.querySelector("td, th");
+        if (first && first.textContent.trim().toLowerCase() === "par") {
+          for (const td of Array.from(tr.querySelectorAll("td, th")).slice(1)) {
+            const n = parseInt(td.textContent.trim(), 10);
+            if (!isNaN(n) && n >= 3 && n <= 5) localPar.push(n);
+          }
+          break;
         }
       }
 
@@ -170,30 +261,24 @@ async function extractScorecard(page) {
         }
       }
 
+      // Preserva o limite antigo (9) para cartões de 18 buracos; mais permissivo
+      // só quando o par conhecido indica um cartão curto (sub-contests par-N).
+      const minHoles = localPar.length > 0 ? Math.max(1, Math.min(9, localPar.length)) : 9;
       const scoreRows = table.querySelectorAll("tr.scores");
-      if (scoreRows.length > 0) {
-        for (const tr of scoreRows) {
-          const scores = [];
-          for (const td of Array.from(tr.querySelectorAll("td")).slice(1)) {
-            const n = parseInt(td.textContent.trim(), 10);
-            if (!isNaN(n) && n >= 1 && n <= 15) scores.push(n);
-          }
-          if (scores.length >= 9) localRounds.push(scores);
-        }
-      } else {
-        for (const tr of table.querySelectorAll("tr")) {
+      const rowSet = scoreRows.length > 0 ? scoreRows : table.querySelectorAll("tr");
+      for (const tr of rowSet) {
+        if (scoreRows.length === 0) {
           const first = tr.querySelector("td");
           if (!first) continue;
           const label = first.textContent.trim().toLowerCase();
-          if (label.match(/^(volta|rd|round)\s*\d/) || label.match(/^r\s*\d$/)) {
-            const scores = [];
-            for (const td of Array.from(tr.querySelectorAll("td")).slice(1)) {
-              const n = parseInt(td.textContent.trim(), 10);
-              if (!isNaN(n) && n >= 1 && n <= 15) scores.push(n);
-            }
-            if (scores.length >= 9) localRounds.push(scores);
-          }
+          if (!label.match(/^(volta|rd|round)\s*\d/) && !label.match(/^r\s*\d$/)) continue;
         }
+        const scores = [];
+        for (const td of Array.from(tr.querySelectorAll("td")).slice(1)) {
+          const n = parseInt(td.textContent.trim(), 10);
+          if (!isNaN(n) && n >= 1 && n <= 15) scores.push(n);
+        }
+        if (scores.length >= minHoles) localRounds.push(scores);
       }
       return { par: localPar, si: localSi, yards: localYards, rounds: localRounds };
     }
@@ -319,9 +404,11 @@ async function scrapeContest(page, contestUrl, outFile, category) {
 
       const sc = await extractScorecard(page);
 
-      if (!par && sc.par.length >= 9) par = sc.par.slice(0, 18);
-      if (!si && sc.si.length >= 9) si = sc.si.slice(0, 18);
-      if (!yards && sc.yards && sc.yards.length >= 9) yards = sc.yards.slice(0, 18);
+      // >= 1 (não >= 9): nos sub-contests "Par 3/4/5" só se jogam 4-6 buracos,
+      // por isso par/yards compactados têm menos de 9 valores.
+      if (!par && sc.par.length >= 1) par = sc.par.slice(0, 18);
+      if (!si && sc.si.length >= 1) si = sc.si.slice(0, 18);
+      if (!yards && sc.yards && sc.yards.length >= 1) yards = sc.yards.slice(0, 18);
 
       const name = sc.name && sc.name.length > 1 ? sc.name : c.name;
       const rounds = sc.rounds.map((scores, idx) => {
@@ -391,34 +478,166 @@ async function scrapeContest(page, contestUrl, outFile, category) {
   const errs = players.filter((p) => p._error).length;
   console.log(`   ✅ ${players.length} jogadores | ${ok} com scorecards | ${errs} erros`);
   if (par) console.log(`   Par: [${par.join(",")}] = ${parTotal}`);
+  if (yards) console.log(`   Yards: [${yards.join(",")}]`);
+  else console.log(`   ⚠️  Sem distâncias (yards) capturadas neste escalão`);
   console.log(`   Ficheiro: ${outFile}`);
 }
 
 /* ─── Descobrir TODOS os escalões (contests) do evento ───
  * A partir de um contest semente, lê o seletor de flights/divisões da página
- * (links para /contest/<id>/) e devolve todos os escalões (Boys + Girls + todas
- * as idades). Assim não é preciso saber os números à mão. */
-async function discoverContests(page, seedUrl) {
+ * e devolve todos os escalões (Boys + Girls + todas as idades + WAGR + …).
+ *
+ * O seletor de escalões do BlueGolf é, na maioria das páginas, um <select>
+ * NATIVO (ver o ✓ ao lado da divisão activa) cujas <option> NÃO são links —
+ * por isso a versão antiga (que só lia <a href*="/contest/">) só apanhava o
+ * próprio contest semente. Esta versão lê de TRÊS fontes:
+ *   A) o <select> de flights — identificado por conter o id semente entre as
+ *      suas options (validação que confirma o mapeamento value→id);
+ *   B) dropdowns Bootstrap / tabs (links <a href*="/contest/N/">);
+ *   C) regex de fallback ao HTML inteiro (apanha /contest/N/ em onclick/JS).
+ * Devolve { contests, debugHtml } — o HTML é gravado pelo chamador se a
+ * descoberta vier fraca (≤1 escalão), para diagnóstico. */
+async function discoverContests(page, seedUrl, includePar) {
   const resp = await page.goto(seedUrl, { waitUntil: "domcontentloaded" });
   checkBlocked(resp, seedUrl);
   await waitForHuman(page);
   await page.waitForLoadState("networkidle").catch(() => {});
-  const found = await page.evaluate(() => {
-    const out = new Map();
+
+  const base = (seedUrl.match(/^(https?:\/\/.+\/event\/[^/]+)/) || [])[1];
+  const seedId = (seedUrl.match(/contest\/(\d+)/) || [])[1] || null;
+  if (!base) return { contests: [], debugHtml: "", hadSelect: false };
+
+  const found = await page.evaluate(({ seedId, includePar }) => {
+    // Nomes genéricos (texto de link de leaderboard) que NÃO são escalões.
+    const GENERIC = /^(placar|leaderboard|scorecard|resultados?|results?|scores?|classifica)/i;
+    const looksLikeDivision = (s) =>
+      /\b(boys?|girls?|wagr|ltq|combined|under|u-?\d|par\s*\d|\d+\s*[-–]\s*\d+)\b/i.test(s || "");
+
+    // Extrair um id de contest de uma string (value/href/onclick).
+    const idFrom = (s) => {
+      if (s == null) return null;
+      const str = String(s).trim();
+      const m = str.match(/contest\/(\d+)/);
+      if (m) return m[1];
+      if (/^\d+$/.test(str)) return str; // <option value="13">
+      return null;
+    };
+
+    const candidates = []; // { id, name }
+    const push = (id, name) => {
+      if (!id || !/^\d+$/.test(String(id))) return;
+      candidates.push({ id: String(id), name: (name || "").replace(/\s+/g, " ").trim() });
+    };
+
+    let hadSelect = false;
+    let hadMenu = false;
+
+    // ── A0) Dropdown SPA do BlueGolf (caso real do EO WAGR) ──
+    // O seletor de escalões NÃO é um <select> nem links <a href="/contest/N/">.
+    // É um dropdown Bootstrap cujos items são
+    //   <a class="dropdown-item" role="menuitem" data-key="{contestId}" href="javascript:void(0)">Nome</a>
+    // O id do contest vive no atributo data-key. Os items estão sempre no DOM
+    // (mesmo com o menu fechado), por isso basta lê-los — não é preciso clicar.
+    const menuItems = document.querySelectorAll(
+      'a[role="menuitem"][data-key], a.dropdown-item[data-key], [role="menu"] [data-key]'
+    );
+    for (const el of menuItems) {
+      const key = el.getAttribute("data-key");
+      if (!key || !/^\d+$/.test(key)) continue;
+      // remover o "✓" do escalão activo e normalizar
+      const name = (el.textContent || "").replace(/[✓✔]/g, "").trim();
+      // só items que parecem escalões (exclui "Comparar"/"Compare" e afins)
+      if (!looksLikeDivision(name)) continue;
+      // saltar os sub-contests "Par 3/4/5" (são projeções dos 18 buracos —
+      // derivam-se dos cartões completos via scripts/eowagr-par-splits.js)
+      if (!includePar && /^par\s*[3-5]\b/i.test(name)) continue;
+      hadMenu = true;
+      push(key, name);
+    }
+
+    // ── A) <select> de flights ──
+    // Procurar primeiro o <select> que CONTÉM o id semente (é o seletor de
+    // escalões, e isso valida que value→id está correcto). Senão, cair para
+    // o primeiro <select> cujas options parecem divisões.
+    const selects = Array.from(document.querySelectorAll("select"));
+    let flightSelect = null;
+    if (seedId) {
+      for (const sel of selects) {
+        const ids = Array.from(sel.querySelectorAll("option")).map(
+          (o) =>
+            idFrom(o.getAttribute("value")) ||
+            idFrom(o.getAttribute("data-href")) ||
+            idFrom(o.getAttribute("data-url")) ||
+            idFrom(o.getAttribute("data-contest"))
+        );
+        if (ids.includes(seedId)) { flightSelect = sel; break; }
+      }
+    }
+    if (!flightSelect) {
+      for (const sel of selects) {
+        if (
+          sel.querySelectorAll("option").length > 1 &&
+          looksLikeDivision(sel.textContent)
+        ) { flightSelect = sel; break; }
+      }
+    }
+    if (flightSelect) {
+      hadSelect = true;
+      for (const o of flightSelect.querySelectorAll("option")) {
+        const id =
+          idFrom(o.getAttribute("value")) ||
+          idFrom(o.getAttribute("data-href")) ||
+          idFrom(o.getAttribute("data-url")) ||
+          idFrom(o.getAttribute("data-contest"));
+        push(id, o.textContent);
+      }
+    }
+
+    // ── B) Links <a href*="/contest/"> (dropdowns Bootstrap, tabs) ──
     for (const a of document.querySelectorAll('a[href*="/contest/"]')) {
       const href = a.getAttribute("href") || "";
       if (/contestant|player|scorecard/i.test(href)) continue; // ignora links de jogador
       const m = href.match(/contest\/(\d+)/);
-      if (!m) continue;
-      const id = m[1];
-      const name = a.textContent.replace(/\s+/g, " ").trim();
-      if (!out.has(id) || (name && !out.get(id).name)) out.set(id, { id, name });
+      if (m) push(m[1], a.textContent);
     }
-    return Array.from(out.values());
-  });
-  const base = (seedUrl.match(/^(https?:\/\/.+\/event\/[^/]+)/) || [])[1];
-  if (!base) return [];
-  return found.map((c) => ({ ...c, url: `${base}/contest/${c.id}/leaderboard.htm` }));
+
+    // ── C) Fallback: regex ao HTML inteiro — SÓ se A0/A/B não deram nada.
+    // (Senão re-adicionaria ids sem nome, incluindo os Par 3/4/5 já filtrados.)
+    if (candidates.length === 0) {
+      const html = document.documentElement.outerHTML;
+      let mm;
+      const re = /contest\/(\d+)/g;
+      while ((mm = re.exec(html))) push(mm[1], "");
+    }
+
+    // ── Dedup, preferindo nomes de divisão sobre genéricos/vazios ──
+    const out = new Map();
+    for (const c of candidates) {
+      const isGood = c.name && !GENERIC.test(c.name);
+      const prev = out.get(c.id);
+      if (!prev) {
+        out.set(c.id, { id: c.id, name: isGood ? c.name : "" });
+      } else if (isGood && (!prev.name || GENERIC.test(prev.name))) {
+        prev.name = c.name;
+      }
+    }
+    let list = Array.from(out.values());
+    // Rede de segurança: remover Par 3/4/5 que tenham entrado por links/regex.
+    if (!includePar) list = list.filter((c) => !/^par\s*[3-5]\b/i.test(c.name || ""));
+    return { contests: list, hadSelect, hadMenu };
+  }, { seedId, includePar });
+
+  const debugHtml = await page.content();
+  const contests = found.contests.map((c) => ({
+    ...c,
+    url: `${base}/contest/${c.id}/leaderboard.htm`,
+  }));
+  return {
+    contests,
+    debugHtml,
+    hadSelect: found.hadSelect,
+    hadMenu: found.hadMenu,
+  };
 }
 
 /* ─── Main ─── */
@@ -456,21 +675,58 @@ const EVENT_SEED = CONTESTS[0].url;
   page.setDefaultTimeout(30_000);
 
   // 1) Descobrir todos os escalões do evento (a partir do contest semente).
+  // --include-par: descarregar também os sub-contests Par 3/4/5 (por defeito
+  // são saltados — são projeções dos cartões de 18 buracos).
+  const includePar = process.argv.includes("--include-par");
   let contests = [];
   try {
-    contests = await discoverContests(page, EVENT_SEED);
-    console.log(`   🔎 ${contests.length} escalões descobertos no evento\n`);
+    const disc = await discoverContests(page, EVENT_SEED, includePar);
+    contests = disc.contests;
+    const via = disc.hadMenu
+      ? "via dropdown SPA (data-key)"
+      : disc.hadSelect
+        ? "via <select> de flights"
+        : "só links/regex";
+    console.log(`   🔎 ${contests.length} escalões descobertos no evento (${via})\n`);
+    // Se a descoberta veio fraca, guardar o HTML para diagnóstico.
+    if (contests.length <= 1 && disc.debugHtml) {
+      fs.writeFileSync("debug_discovery.html", disc.debugHtml);
+      console.warn(
+        "   ⚠️  Descoberta fraca — HTML da página guardado em debug_discovery.html.\n" +
+          "      Envia-me esse ficheiro (ou o markup do dropdown) que ajusto o seletor.\n"
+      );
+    }
   } catch (e) {
     console.warn(`   ⚠️  Discovery falhou (${e.message}) — uso a lista fixa\n`);
   }
-  // Fallback à lista hardcoded se a descoberta não devolver nada.
-  if (!contests.length) {
-    contests = CONTESTS.map((c) => ({ id: (c.url.match(/contest\/(\d+)/) || [])[1], name: "", url: c.url }));
+
+  // Merge com os escalões conhecidos (13/77/121) — rede de segurança: garante
+  // que mesmo que a descoberta falhe parcialmente, os 3 originais entram.
+  {
+    const byId = new Map(contests.map((c) => [c.id, c]));
+    for (const c of CONTESTS) {
+      const id = (c.url.match(/contest\/(\d+)/) || [])[1];
+      if (id && !byId.has(id)) {
+        const entry = { id, name: "", url: c.url };
+        byId.set(id, entry);
+        contests.push(entry);
+      }
+    }
+    contests = Array.from(byId.values());
   }
+  // Ordenar por id numérico (estável e previsível nos logs/ficheiros).
+  contests.sort((a, b) => Number(a.id) - Number(b.id));
+  console.log(`   📦 ${contests.length} escalões para descarregar: ${contests.map((c) => c.id).join(", ")}\n`);
 
   // 2) Scrape de cada escalão → eowagr25_contest<id>.json
+  //    --skip-existing: salta os ficheiros já descarregados (re-run rápido).
+  const SKIP_EXISTING = process.argv.includes("--skip-existing");
   for (const c of contests) {
     const outFile = `eowagr25_contest${c.id}.json`;
+    if (SKIP_EXISTING && fs.existsSync(outFile)) {
+      console.log(`\n⏭️  ${outFile} já existe — saltado (--skip-existing).`);
+      continue;
+    }
     try {
       await scrapeContest(page, c.url, outFile, c.name);
     } catch (err) {

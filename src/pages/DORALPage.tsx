@@ -443,7 +443,7 @@ function EvoSummary({ evo }: { entry: Entry; evo: Map<string, EvoEntryD> }) {
   if (twice)   breakdown.push(`${twice} c/ 2`);
   if (veteran) breakdown.push(`${veteran} c/ 3+`);
   return (
-    <div className="muted fs-10 mb-8">
+    <div className="lb-evo-summary">
       {evo.size} jogadores já passaram pelo Doral{breakdown.length ? ` (${breakdown.join(", ")})` : ""}
       {total > 0 ? ` · ${improved}/${total} melhoraram` : ""}
     </div>
