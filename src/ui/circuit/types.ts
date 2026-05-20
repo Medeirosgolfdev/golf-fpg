@@ -126,8 +126,29 @@ export interface CircuitEntry {
   sourceUrl?: string;
   /** Limites de HCP (mostrados no header se preenchidos). */
   hcpLimit?: { men?: number; women?: number };
-  /** Divisões (escalões) — tabs no detalhe. */
-  divisions: CircuitDivision[];
+
+  // ── Metadados leves para a sidebar (quando as divisões são lazy) ──────
+  /** Escalão para o EscPill da sidebar (quando divisions ainda não carregadas). */
+  escalao?: string;
+  /** Sexo para badge na sidebar. */
+  sex?: CircuitSex;
+  /** Nº de jogadores (sidebar). Fallback: soma das divisões carregadas. */
+  playerCount?: number;
+  /** Nº de rondas (RoundPill na sidebar). */
+  roundsCount?: number;
+  /** Nº de escalões/divisões (sidebar). Fallback: divisions.length ?? 1. */
+  divisionCount?: number;
+
+  /**
+   * Divisões (escalões) — tabs no detalhe.
+   * EAGER (Doral/BJGT/England/GJGL): fornecer já aqui.
+   * LAZY (RFEG/FFG, centenas de torneios): deixar `undefined` e fornecer
+   * `loadDivisions`, que o shell chama ao seleccionar o torneio.
+   */
+  divisions?: CircuitDivision[];
+  /** Carregamento lazy das divisões — chamado pelo shell na selecção (com cache). */
+  loadDivisions?: () => Promise<CircuitDivision[]>;
+
   /** True se o Manuel jogou alguma divisão (marcador ★ na sidebar). */
   hasManuel?: boolean;
 }
@@ -174,6 +195,13 @@ export interface CircuitConfig {
 
   /** Limiar de "muitos torneios" para o toggle Veteranos (default 3). */
   veteranoThreshold?: number;
+  /**
+   * Índice pré-calculado de presenças por jogador (normName → nº torneios),
+   * para o toggle Veteranos em páginas com carregamento lazy (RFEG/FFG), onde
+   * o shell não tem todos os jogadores em memória. Se omitido, o shell calcula
+   * a partir das divisões EAGER carregadas.
+   */
+  veteranIndex?: Map<string, number>;
 
   /** Mensagem de loading. */
   loadingMessage?: string;

@@ -36,6 +36,8 @@ import DrawTab from "../ui/DrawTab";
 import type { FpgDraw, FpgDrawFlight } from "../data/nacional2026Loader";
 import type { Tournament as FPGTournament, Player as FPGPlayer, RoundScore as FPGRoundScore, ScorecardOptions } from "./FPGPage";
 import { RFEGFederationsView } from "./rfeg/FederationsView";
+import CircuitShell from "../ui/circuit/CircuitShell";
+import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitInscritoRow, CircuitSex } from "../ui/circuit/types";
 
 /* ── Types ──────────────────────────────────────────────── */
 
@@ -1815,7 +1817,7 @@ interface HcpLookupFile {
   lookup: HcpLookup;
 }
 
-export default function RFEGPage() {
+export function RFEGPageLegacy() {
   const [index, setIndex] = useState<RFEGIndex | null>(null);
   const [dobLookup, setDobLookup] = useState<DobLookup | undefined>(undefined);
   const [hcpLookup, setHcpLookup] = useState<HcpLookup | undefined>(undefined);
@@ -2116,5 +2118,162 @@ export default function RFEGPage() {
       </div>
     </div>
     </KidsLinkCtx.Provider>
+  );
+}
+
+/* ════════════════════════════════════════════════════════════════════
+ * RFEGPage (NOVO) — assente no CircuitShell partilhado.
+ * Reusa os adaptadores/conversores acima (adaptNextCaddy/adaptLgs/adaptFcg,
+ * ncToFPGTournament/lgsToFPGTournament/rfegolfToFPGTournament/fcgToFPGTournament).
+ * Carregamento LAZY do detalhe por torneio (centenas no índice).
+ * RFEGPageLegacy fica preservada acima como referência até validação.
+ * TODO: Categorías/Federaciones (special views) e Draw (NC horarios) — ver
+ *       docs/circuit-shell-CONTINUAR.md.
+ * ════════════════════════════════════════════════════════════════════ */
+
+function rfegSex(s: string | null | undefined): CircuitSex | undefined {
+  return s === "M" ? "M" : s === "F" ? "F" : (s === "Mixto" || s === "Mixed") ? "Mixed" : undefined;
+}
+
+function rfegInscritoRow(p: RFEGPlayer): CircuitInscritoRow {
+  return {
+    pos: p.pos ?? undefined,
+    name: p.name ?? "—",
+    club: p.club ?? undefined,
+    fed: p.licencia ?? undefined,
+    hcp: p.hcp,
+    escalao: p.catEdad ?? undefined,
+    sex: p.sexo === "M" || p.sexo === "F" ? p.sexo : undefined,
+    country: p.pais ?? undefined,
+    dob: p.dob ?? undefined,
+    status: p.estado ?? undefined,
+  };
+}
+
+function rfegSourceUrl(t: RFEGIndexEntry): string {
+  return t.source === "rfegolf"
+    ? `https://rfegolf.es/CompetenciaPaginas/CompetitionMicrosite.aspx?CompId=${t.compId}`
+    : t.source === "nextcaddy"
+      ? `https://www.nextcaddy.com/tour/${t.tourId}`
+      : t.source === "golfdirecto"
+        ? `https://www.golfdirecto.com/micro/game/${t.id}/summary?lang=es`
+        : `https://rfegolf.livegolfscoring.es/torneos/clasificacion/${t.id}`;
+}
+
+/** Carrega o detalhe de um torneio e constrói a sua (única) divisão. */
+async function rfegLoadDivisions(
+  t: RFEGIndexEntry, dobLookup?: DobLookup, hcpLookup?: HcpLookup,
+): Promise<CircuitDivision[]> {
+  const raw = await cachedFetchJson<RFEGDetail | NCDetail | LgsDetail>(`/data/${t.filePath}`);
+  if (!raw) return [];
+
+  let data: RFEGDetail;
+  if (t.source === "nextcaddy") data = adaptNextCaddy(raw as NCDetail, dobLookup, hcpLookup);
+  else if (t.source === "livegolfscoring") data = adaptLgs(raw as LgsDetail, dobLookup, hcpLookup);
+  else if (t.source === "golfdirecto") data = adaptFcg(raw as unknown as FCGDetail, dobLookup, hcpLookup) as unknown as RFEGDetail;
+  else { const d = raw as RFEGDetail; data = { ...d, coursePar: d.coursePar ?? null }; }
+
+  let results: FPGTournament | null = null;
+  if (t.source === "livegolfscoring" && (data as unknown as { _lgsRounds?: unknown[] })._lgsRounds?.length) {
+    results = lgsToFPGTournament({
+      id: data.compId,
+      meta: { name: data.meta.name, course: data.meta.course, dateRange: data.meta.dateStart, dateIso: data.meta.dateStart },
+      rounds: (data as unknown as { _lgsRounds: unknown[] })._lgsRounds,
+      _hcpLookup: hcpLookup,
+    } as any, dobLookup); // eslint-disable-line @typescript-eslint/no-explicit-any
+  } else if (t.source === "nextcaddy") results = ncToFPGTournament(data, dobLookup);
+  else if (t.source === "rfegolf") results = rfegolfToFPGTournament(data, dobLookup);
+  else if (t.source === "golfdirecto") results = fcgToFPGTournament(data as unknown as MinimalRFEGShape, dobLookup) as unknown as FPGTournament | null;
+
+  const lists = (Object.keys(LIST_LABELS) as ListKind[])
+    .map((k) => ({ key: k, label: LIST_LABELS[k], players: (data.inscritos[k] || []).map(rfegInscritoRow) }))
+    .filter((l) => l.players.length > 0);
+
+  const division: CircuitDivision = {
+    key: "main",
+    escalao: t.category ?? "—",
+    sex: rfegSex(t.sex),
+    results: results ?? undefined,
+    inscritos: lists.length ? { lists } : undefined,
+    scOptions: lgsScorecardOptions(),
+  };
+  return [division];
+}
+
+function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: HcpLookup): CircuitEntry[] {
+  return index.tournaments
+    .filter((t) => t.category && (t.leaderboardPlayers || 0) > 0)
+    .map((t): CircuitEntry => ({
+      id: `${t.source}:${t.id}`,
+      year: t.year,
+      name: t.name,
+      source: t.source,
+      course: t.course ?? undefined,
+      dateStart: t.dateStart ?? undefined,
+      dateEnd: t.dateEnd ?? undefined,
+      sourceUrl: rfegSourceUrl(t),
+      hcpLimit: (t.hcpLimitMen != null || t.hcpLimitWomen != null)
+        ? { men: t.hcpLimitMen ?? undefined, women: t.hcpLimitWomen ?? undefined }
+        : undefined,
+      escalao: t.category ?? undefined,
+      sex: rfegSex(t.sex),
+      playerCount: t.leaderboardPlayers ?? undefined,
+      roundsCount: t.nRounds ?? undefined,
+      divisionCount: 1,
+      loadDivisions: () => rfegLoadDivisions(t, dobLookup, hcpLookup),
+    }));
+}
+
+const RFEG_CONFIG: CircuitConfig = {
+  routeBase: "/rfeg",
+  title: "🇪🇸 RFEG",
+  color: "#aa151b",
+  grouping: "year",
+  sourceColors: { rfegolf: "#aa151b", livegolfscoring: "#00aa55", golfdirecto: "#0066cc", nextcaddy: "#f1bf00" },
+  filters: { search: true, year: true, escalao: true, sex: true, source: true, toggles: ["manuel", "pt", "top10"] },
+  loadingMessage: "A carregar dados...",
+};
+
+export default function RFEGPage() {
+  const [index, setIndex] = useState<RFEGIndex | null>(null);
+  const [dobLookup, setDobLookup] = useState<DobLookup | undefined>(undefined);
+  const [hcpLookup, setHcpLookup] = useState<HcpLookup | undefined>(undefined);
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const params = useParams<{ source?: string; id?: string; compId?: string }>();
+
+  useEffect(() => {
+    cachedFetchJson<RFEGIndex>("/data/rfegolf-resultats-index.json")
+      .then((d) => { if (!d) { setError("Ficheiro rfegolf-resultats-index.json não encontrado. Corre `node scripts/build-rfegolf-index.js`."); return; } setIndex(d); })
+      .catch((e) => setError(String(e?.message ?? e)));
+    cachedFetchJson<DobLookupFile>("/data/licencia-dob-lookup.json").then((d) => { if (d && d.lookup) setDobLookup(d.lookup); }).catch(() => {});
+    cachedFetchJson<HcpLookupFile>("/data/licencia-hcp-lookup.json").then((d) => { if (d && d.lookup) setHcpLookup(d.lookup); }).catch(() => {});
+  }, []);
+
+  const entries = useMemo(
+    () => (index ? buildRfegEntries(index, dobLookup, hcpLookup) : []),
+    [index, dobLookup, hcpLookup],
+  );
+
+  const selectedId = useMemo<string | undefined>(() => {
+    const idStr = params.id ?? params.compId;
+    if (!idStr) return undefined;
+    if (params.source) return `${params.source}:${idStr}`;
+    return entries.find((e) => e.id.endsWith(`:${idStr}`))?.id;
+  }, [params.id, params.compId, params.source, entries]);
+
+  if (error) return <EmptyState message={`Erro: ${error}`} />;
+  if (!index) return <LoadingState message="A carregar índice RFEGolf..." />;
+
+  return (
+    <CircuitShell
+      entries={entries}
+      config={RFEG_CONFIG}
+      selectedId={selectedId}
+      onSelectEntry={(e) => {
+        const [src, id] = e.id.split(":");
+        navigate(`/rfeg/${src}/${id}`);
+      }}
+    />
   );
 }

@@ -75,9 +75,10 @@ function divisionSections(d: CircuitDivision): CircuitSectionKind[] {
   return out;
 }
 
-/** Jogadores totais de um entry (soma das divisões com resultados). */
+/** Jogadores totais de um entry (metadado leve, ou soma das divisões carregadas). */
 function entryPlayerCount(e: CircuitEntry): number {
-  return e.divisions.reduce((acc, d) => acc + (d.results?.players.length ?? 0), 0);
+  if (e.playerCount != null) return e.playerCount;
+  return (e.divisions ?? []).reduce((acc, d) => acc + (d.results?.players.length ?? 0), 0);
 }
 
 // ── Filtros de toggles aplicados ao leaderboard ───────────────────────
@@ -141,7 +142,7 @@ function InscritosView({ lists }: { lists: NonNullable<CircuitDivision["inscrito
 function InscritosTable({ rows }: { rows: CircuitInscritoRow[] }) {
   return (
     <div style={{ overflowX: "auto" }}>
-      <table className="lb-table">
+      <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
         <thead>
           <tr>
             <th>#</th><th>Nome</th><th>Escalão</th><th>Sx</th><th>Clube</th><th>HCP</th><th>Nasc.</th><th>Estado</th>
@@ -231,10 +232,11 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
 
   // ── Índice de veteranos (presenças por jogador em todos os torneios) ─
   const vetIndex = useMemo(() => {
+    if (config.veteranIndex) return config.veteranIndex;
     const m = new Map<string, number>();
     for (const e of entries) {
       const seen = new Set<string>();
-      for (const d of e.divisions) {
+      for (const d of e.divisions ?? []) {
         for (const p of d.results?.players ?? []) {
           const k = normName(p.name);
           if (!seen.has(k)) { seen.add(k); m.set(k, (m.get(k) ?? 0) + 1); }
@@ -242,7 +244,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
       }
     }
     return m;
-  }, [entries]);
+  }, [entries, config.veteranIndex]);
 
   // ── Opções dos dropdowns ────────────────────────────────────────────
   const years = useMemo(
@@ -250,7 +252,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
     [entries],
   );
   const escaloes = useMemo(
-    () => [...new Set(entries.flatMap(e => e.divisions.map(d => d.escalao)))].sort(),
+    () => [...new Set(entries.flatMap(e => e.divisions ? e.divisions.map(d => d.escalao) : (e.escalao ? [e.escalao] : [])))].sort(),
     [entries],
   );
   const sources = useMemo(
@@ -264,8 +266,8 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
     return entries.filter(e => {
       if (flt.year && fYear !== "all" && String(e.year) !== fYear) return false;
       if (flt.source && fSource !== "all" && e.source !== fSource) return false;
-      if (flt.escalao && fEsc !== "all" && !e.divisions.some(d => d.escalao === fEsc)) return false;
-      if (flt.sex && fSex !== "all" && !e.divisions.some(d => d.sex === fSex || d.sex === "Mixed")) return false;
+      if (flt.escalao && fEsc !== "all" && !(e.escalao === fEsc || (e.divisions ?? []).some(d => d.escalao === fEsc))) return false;
+      if (flt.sex && fSex !== "all" && !(e.sex === fSex || e.sex === "Mixed" || (e.divisions ?? []).some(d => d.sex === fSex || d.sex === "Mixed"))) return false;
       if (q) {
         const hay = normName(`${e.name} ${e.course ?? ""}`);
         if (!hay.includes(q)) return false;
@@ -290,16 +292,35 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
     onSelectEntry?.(e);
   };
 
+  // ── Carregamento (lazy) das divisões do torneio seleccionado ────────
+  const [divCache, setDivCache] = useState<Record<string, CircuitDivision[]>>({});
+  const [loadingId, setLoadingId] = useState<string | null>(null);
+  const curId = cur?.id ?? null;
+
+  useEffect(() => {
+    if (!cur || cur.divisions || divCache[cur.id] || !cur.loadDivisions) return;
+    let alive = true;
+    setLoadingId(cur.id);
+    cur.loadDivisions()
+      .then(divs => { if (alive) setDivCache(prev => ({ ...prev, [cur.id]: divs })); })
+      .catch(() => { if (alive) setDivCache(prev => ({ ...prev, [cur.id]: [] })); })
+      .finally(() => { if (alive) setLoadingId(id => (id === cur.id ? null : id)); });
+    return () => { alive = false; };
+  }, [curId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const curDivisions: CircuitDivision[] = cur ? (cur.divisions ?? divCache[cur.id] ?? []) : [];
+  const divsLoading = !!cur && curDivisions.length === 0 && loadingId === cur.id;
+
   // ── Divisão (escalão) activa ────────────────────────────────────────
   const [divKey, setDivKey] = useState<string | null>(null);
   const curDiv = useMemo(() => {
-    if (!cur) return null;
-    const byKey = divKey ? cur.divisions.find(d => d.key === divKey) : null;
+    if (!cur || curDivisions.length === 0) return null;
+    const byKey = divKey ? curDivisions.find(d => d.key === divKey) : null;
     if (byKey) return byKey;
-    return cur.divisions.find(d => d.hasManuel) ?? cur.divisions[0] ?? null;
-  }, [cur, divKey]);
+    return curDivisions.find(d => d.hasManuel) ?? curDivisions[0] ?? null;
+  }, [cur, curDivisions, divKey]);
   // Reset divisão ao mudar de torneio.
-  useEffect(() => { setDivKey(null); }, [cur?.id]);
+  useEffect(() => { setDivKey(null); }, [curId]);
 
   // ── Secção activa ───────────────────────────────────────────────────
   const sections = useMemo(() => (curDiv ? divisionSections(curDiv) : []), [curDiv]);
@@ -338,8 +359,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
 
           {flt.search && (
             <input
-              className="toolbar-input"
-              style={{ width: 160, fontSize: 12 }}
+              style={{ width: 160, fontSize: 12, padding: "4px 8px", border: "1px solid var(--border)", borderRadius: 6, background: "var(--bg-card)", color: "inherit" }}
               placeholder="🔍 Pesquisar…"
               value={search}
               onChange={e => setSearch(e.target.value)}
@@ -412,7 +432,11 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
 
           {/* Detalhe */}
           <div className="course-detail" ref={md.detailRef}>
-            {cur && curDiv ? (
+            {!cur ? (
+              <div className="center-msg muted">Sem torneios para mostrar.</div>
+            ) : divsLoading ? (
+              <LoadingState message={config.loadingMessage ?? "A carregar dados…"} />
+            ) : curDiv ? (
               <>
                 <DetailHeader
                   title={`${cur.year ?? ""} · ${curDiv.tabLabel || curDiv.escalao}`}
@@ -459,9 +483,9 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
                 )}
 
                 {/* Tabs de escalão (.tab-under) */}
-                {cur.divisions.length > 1 && (
+                {curDivisions.length > 1 && (
                   <div style={{ display: "flex", gap: 2, flexWrap: "wrap", borderBottom: "1px solid var(--border)", marginBottom: 10, overflowX: "auto" }}>
-                    {cur.divisions.map(d => {
+                    {curDivisions.map(d => {
                       const active = d.key === curDiv.key;
                       const nP = d.results?.players.length ?? 0;
                       return (
@@ -500,7 +524,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
                 )}
               </>
             ) : (
-              <div className="center-msg muted">Sem torneios para mostrar.</div>
+              <div className="center-msg muted">Sem dados para este torneio.</div>
             )}
           </div>
         </div>
@@ -571,7 +595,9 @@ function CircuitSidebar({
               {items.map(e => {
                 const active = e.id === curId;
                 const nP = entryPlayerCount(e);
-                const nR = Math.max(0, ...e.divisions.map(d => d.results?.rounds ?? 0));
+                const nR = e.roundsCount ?? Math.max(0, ...(e.divisions ?? []).map(d => d.results?.rounds ?? 0));
+                const nDiv = e.divisionCount ?? e.divisions?.length ?? 1;
+                const esc = e.escalao ?? e.divisions?.[0]?.escalao;
                 const sourceColor = e.source ? config.sourceColors?.[e.source] : undefined;
                 return (
                   <div
@@ -587,12 +613,10 @@ function CircuitSidebar({
                       {e.hasManuel && <ManuelPill />}
                     </div>
                     <div className="course-item-meta" style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
-                      {e.divisions.length > 0 && (
-                        <EscPill esc={e.divisions[0].escalao} />
-                      )}
-                      <span>{e.divisions.length} escalões</span>
-                      <span className="muted">·</span>
-                      <span>{nP} jog</span>
+                      {esc && <EscPill esc={esc} />}
+                      {e.sex && <SexBadge sex={e.sex === "Mixed" ? "M" : e.sex} />}
+                      {nDiv > 1 && <span>{nDiv} escalões</span>}
+                      {nP > 0 && <><span className="muted">·</span><span>{nP} jog</span></>}
                       {nR > 1 && <RoundPill nR={nR} />}
                     </div>
                     {e.course && <div className="course-item-meta">⛳ {e.course}</div>}
