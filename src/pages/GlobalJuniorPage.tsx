@@ -574,7 +574,7 @@ function buildGjglEntries(catalog: Catalog, index: GjglIndex | null): CircuitEnt
 
 const GJGL_CONFIG: CircuitConfig = {
   routeBase: "/global-junior",
-  title: "⛳ Global Junior",
+  title: "🏌️ Global Junior",
   color: "#0a7e3f",
   textColor: "#fff",
   grouping: "year",

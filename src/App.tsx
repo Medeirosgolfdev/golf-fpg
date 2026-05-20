@@ -50,6 +50,7 @@ const DrivePage = lazy(() => import("./pages/DrivePage"));
 const USKIDSPage = lazy(() => import("./pages/USKIDSPage"));
 const FPGPage = lazy(() => import("./pages/FPGPage"));
 const DORALPage = lazy(() => import("./pages/DORALPage"));
+const MajorPage = lazy(() => import("./pages/MajorPage"));
 const FFGPage = lazy(() => import("./pages/FFGPage"));
 const EnglandGolfPage = lazy(() => import("./pages/EnglandGolfPage"));
 const GlobalJuniorPage = lazy(() => import("./pages/GlobalJuniorPage"));
@@ -286,7 +287,9 @@ export default function App() {
                 <Route path="/drive" element={<DrivePage />} />
                 {/* Deep-link canónico de torneio Drive: /drive/torneio/{ccode}-{tcode} */}
                 <Route path="/drive/torneio/:tkey" element={<DrivePage />} />
-                <Route path="/bjgt/:fed?" element={<BJGTPage />} />
+                <Route path="/major" element={<MajorPage />} />
+                <Route path="/bjgt/:fed?" element={<Navigate to="/major" replace />} />
+                <Route path="/bjgt-legacy/:fed?" element={<BJGTPage />} />
                 <Route path="/bjgt-analysis/:fed?" element={<BJGTAnalysisPage />} />
                 {/* Migração para KIDS2 (2026-05): /kids → /kids2 com hash preservado.
                     A página legacy KIDSPage continua disponível em /kids-legacy para
@@ -311,7 +314,8 @@ export default function App() {
                 {/* Compat: URLs antigas continuam a funcionar (redirect) */}
                 <Route path="/diversos" element={<Navigate to="/FPG" replace />} />
                 <Route path="/diversos/inscritos" element={<Navigate to="/FPG/jovens/inscritosCN" replace />} />
-                <Route path="/doral" element={<DORALPage />} />
+                <Route path="/doral" element={<Navigate to="/major" replace />} />
+                <Route path="/doral-legacy" element={<DORALPage />} />
                 <Route path="/ffg" element={<FFGPage />} />
                 <Route path="/england" element={<EnglandGolfPage />} />
                 <Route path="/global-junior" element={<GlobalJuniorPage />} />

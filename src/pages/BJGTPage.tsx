@@ -26,13 +26,14 @@ import Counter from "../ui/Counter";
 import { useKidsLinkMap } from "../hooks/useKidsLinkMap";
 import { KidsLinkCtx } from "../ui/KidsLink";
 import { RoundPill, ManuelPill } from "../ui/PillBadge";
-import { useEvoComparison, type EvoEntry, type EvoInput } from "../hooks/useEvoComparison";
+import { useEvoComparison, buildEvoMap, type EvoEntry, type EvoInput } from "../hooks/useEvoComparison";
+import type { CircuitDivision } from "../ui/circuit/types";
 
 /* ── Types ── */
 interface RoundData { day: number; scores: number[] | null; f9: number | null; b9: number | null; gross: number }
 interface PlayerData { name: string; country: string; pos: number | null; result: number | null; total: number | null; rounds: RoundData[] }
-interface TData { tournament: string; par: number[]; si?: number[]; parF9: number; parB9: number; parTotal: number; players: PlayerData[] }
-interface TDef { id: string; label: string; shortLabel: string; data: TData; manuelName: string; year: number; category: string; roundDates?: string[]; series: "bjgt" | "eowagr" }
+export interface TData { tournament: string; par: number[]; si?: number[]; parF9: number; parB9: number; parTotal: number; players: PlayerData[] }
+export interface TDef { id: string; label: string; shortLabel: string; data: TData; manuelName: string; year: number; category: string; roundDates?: string[]; series: "bjgt" | "eowagr" }
 
 /* ── Data URLs ── */
 /* NOTA: nomes dos ficheiros WJGC actualizados após re-scrape (2026-05-14):
@@ -41,7 +42,7 @@ interface TDef { id: string; label: string; shortLabel: string; data: TData; man
  *   wjgc_2026_contest33   → wjgc_2026_b1213
  * `reverseRounds: true` REMOVIDO — o novo scrape-bluegolf.js ordena as rondas
  * pelo label correctamente, deixando de ser necessária inversão manual. */
-const URLS = [
+export const URLS = [
   /* ── BJGT 2025/2026 (Daily Mail WJGC — Villa Padierna, brjgt251 + brjgt2537) ── */
   { id: "2025_b7u",   url: "/data/brjgt251_boys_7under.json",    label: "2025 // Boys 7&U",    shortLabel: "2025 Boys 7&U",    manuelName: "",                          year: 2025, category: "Boys 7&U",    roundDates: undefined, series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/20/leaderboard.htm" },
   { id: "2025_b89",   url: "/data/brjgt251_boys_8-9.json",    label: "2025 // Boys 8-9",    shortLabel: "2025 Boys 8-9",    manuelName: "",                          year: 2025, category: "Boys 8-9",    roundDates: undefined, series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/28/leaderboard.htm" },
@@ -95,7 +96,7 @@ const URLS = [
 
 /* ── Flags ── */
 
-function loadT(raw: any, reverseRounds?: boolean): TData {
+export function loadT(raw: any, reverseRounds?: boolean): TData {
   const d = raw as TData;
   let players = d.players;
   if (reverseRounds) {
@@ -153,6 +154,7 @@ function tDataToTournament(data: TData, def: TDef): FPGTournament {
         roundScores,
         _wd: incomplete,
         _roundsPlayed: p.rounds.length,
+        _isPortuguese: /portugal/i.test(p.country || "") || /^(pt|prt)$/i.test(p.country || ""),
       } as FPGPlayer;
     });
   return {
@@ -650,4 +652,106 @@ export default function BJGTPage() {
   const { unlocked, unlock } = usePasswordGate();
   if (!unlocked) return <PasswordGate onUnlock={unlock} />;
   return <Content />;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Helpers para a página MAJOR (CircuitShell) — reutilizam os módulos
+   ricos locais (HoleDiff/ManuelDay/FStats/EvoSummary) + o adaptador.
+   ═══════════════════════════════════════════════════════════════ */
+
+/** Evolução ano-a-ano para um TDef (bidirecional 2025↔2026). Pura (sem hooks). */
+export function bjgtEvoFor(cur: TDef, all: TDef[]): { evo?: Map<string, EvoEntry>; evoYear?: string } {
+  const refYear = cur.year === 2026 ? 2025 : cur.year === 2025 ? 2026 : 0;
+  if (!refYear) return {};
+  const refDefs = all.filter((t) => t && t.year === refYear && t.series === cur.series);
+  if (!refDefs.length) return {};
+  const curNR = Math.max(...cur.data.players.map((p) => p.rounds.length), 0);
+  const curParTotal = cur.data.parTotal * curNR;
+  const input: EvoInput = {
+    currentPlayers: cur.data.players.filter((p) => p.total != null)
+      .map((p) => ({ name: p.name, value: p.total! - curParTotal, category: cur.category })),
+    referencePlayers: refDefs.flatMap((t) => {
+      const tNR = Math.max(...t.data.players.map((p) => p.rounds.length), 0);
+      const tPar = t.data.parTotal * tNR;
+      return t.data.players.filter((p) => p.total != null)
+        .map((p) => ({ name: p.name, value: p.total! - tPar, category: t.category }));
+    }),
+    referenceYear: String(refYear),
+    isManuel: isM,
+  };
+  const raw = buildEvoMap(input);
+  if (cur.year === 2025 && raw.evoMap) {
+    const flipped = new Map<string, EvoEntry>();
+    for (const [k, v] of raw.evoMap) flipped.set(k, { ...v, delta: -v.delta, from: v.to, to: v.from });
+    return { evo: flipped, evoYear: raw.evoYear };
+  }
+  return { evo: raw.evoMap, evoYear: raw.evoYear };
+}
+
+/** CircuitDivision de um torneio BJGT/EOWAGR (results + evoCols + módulos ricos). */
+export function bjgtMajorDivision(def: TDef, evo: Map<string, EvoEntry> | undefined, evoYear: string | undefined): CircuitDivision {
+  const data = def.data;
+  const manuelName = def.manuelName || (data.players.some((p) => isM(p.name)) ? "Manuel" : "");
+  const hasEvo = !!evo && evo.size > 0;
+  const roundLabels = def.roundDates?.map((d, i) => `R${i + 1} · ${d}`);
+  const rLabel = (i: number) => (def.roundDates?.[i] ? `R${i + 1} · ${def.roundDates[i]}` : `R${i + 1}`);
+  type RowWithPos = MultiRoundRow & { _pos?: number | null };
+  const evoCols: ExtraColumn<RowWithPos>[] | undefined = hasEvo ? [
+    {
+      header: evoYear || "Ant.", className: "ta-c fs-11 fw-600",
+      headerStyle: { width: 44, textAlign: "center" as const, padding: "0 3px", borderLeft: "2px solid var(--border)" },
+      cell: (row: RowWithPos) => { const ev = evo!.get(row.name); return ev ? <span className="inline-sep">{fmtSign(ev.otherValue)}</span> : <span className="c-muted inline-sep">–</span>; },
+    },
+    {
+      header: "Δ", className: "ta-c fs-11 fw-700", headerStyle: { width: 34, textAlign: "center" as const, padding: "0 3px" },
+      cell: (row: RowWithPos) => { const ev = evo!.get(row.name); if (!ev) return <span className="c-muted">–</span>; return <span style={{ color: ev.delta < 0 ? "var(--good-dark)" : ev.delta > 0 ? SC.danger : "var(--text-3)" }}>{ev.delta > 0 ? "+" : ""}{ev.delta}</span>; },
+    },
+    {
+      header: "Percurso", className: "ta-c", headerStyle: { width: 140, textAlign: "center" as const, padding: "0 4px" },
+      cell: (row: RowWithPos) => { const ev = evo!.get(row.name); return ev ? <EvoBadge pill={ev.pill} from={ev.from} to={ev.to} /> : <EvoBadge pill="NEW" label={evoYear === "2026" ? "não voltou" : "novo"} />; },
+    },
+  ] : undefined;
+  const results = tDataToTournament(data, def);
+  if (hasEvo) for (const pl of results.players) {
+    const ev = evo!.get(pl.name);
+    if (ev) { (pl as unknown as { _regressado?: boolean })._regressado = true; if (ev.pill === "UP") (pl as unknown as { _subiu?: boolean })._subiu = true; }
+  }
+  return {
+    key: def.id,
+    escalao: def.category,
+    tabLabel: def.category,
+    hasManuel: data.players.some((p) => isM(p.name)),
+    results,
+    scOptions: bjgtScorecardOptions(),
+    roundLabels,
+    evoCols,
+    renderAccSection: (accLB) => (
+      <>
+        <div className="card">
+          <div className="h-md fs-14">🏆 Leaderboard — {def.label}</div>
+          {hasEvo && <EvoSummary evo={evo!} evoYear={evoYear!} />}
+          {accLB}
+        </div>
+        <div className="card">
+          <div className="h-md fs-14">📊 Dificuldade por Buraco — Todas as rondas</div>
+          <FStats data={data} ri="all" />
+          <HoleDiff data={data} ri="all" mn={manuelName} />
+        </div>
+      </>
+    ),
+    renderRoundSection: (roundLB, tab) => (
+      <>
+        <div className="card">
+          <div className="h-md fs-14">🏆 {rLabel(tab)} — Scorecards</div>
+          <FStats data={data} ri={tab} />
+          {roundLB}
+        </div>
+        <div className="card">
+          <div className="h-md fs-14">📊 Dificuldade por Buraco — {rLabel(tab)}</div>
+          <HoleDiff data={data} ri={tab} mn={manuelName} />
+        </div>
+        {manuelName && <ManuelDay data={data} ri={tab} />}
+      </>
+    ),
+  };
 }

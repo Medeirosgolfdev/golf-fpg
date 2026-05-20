@@ -14,7 +14,7 @@ import golfBallSvg from "../assets/golf-ball.svg";
 
 type Tab =
   | "campos" | "jogadores" | "comparar" | "simulador" | "calendario"
-  | "drive" | "bjgt" | "kids" | "uskids" | "diversos" | "doral" | "ffg" | "england" | "rfeg" | "nacionais" | "global-junior";
+  | "drive" | "bjgt" | "kids" | "uskids" | "diversos" | "doral" | "ffg" | "england" | "rfeg" | "nacionais" | "global-junior" | "major";
 
 // ── Lista de itens de navegação — editar aqui para adicionar/reordenar ──
 // `external: true` → abre em nova aba sem SPA navigation (ficheiros estáticos
@@ -27,12 +27,11 @@ const NAV_ITEMS: { tab: Tab; label: string; path: string; external?: boolean; ti
   { tab: "nacionais",  label: "🏆",           path: "/titulos", title: "Títulos" },
   { tab: "diversos",   label: "🇵🇹 FPG",     path: "/FPG"        },
   { tab: "uskids",     label: "🇺🇸 USKids",  path: "/uskids"     },
-  { tab: "doral",      label: "🇺🇸 Doral",   path: "/doral"      },
+  { tab: "major",      label: "🎖️ MAJOR",   path: "/major", title: "Doral + BJGT" },
+  { tab: "global-junior", label: "🏌️ GJGL",  path: "/global-junior" },
   { tab: "ffg",        label: "🇫🇷 France",  path: "/ffg"        },
   { tab: "england",    label: "🏴󠁧󠁢󠁥󠁮󠁧󠁿 England",  path: "/england"    },
-  { tab: "global-junior", label: "⛳ GJGL",     path: "/global-junior" },
   { tab: "rfeg",       label: "🇪🇸 España",  path: "/rfeg"       },
-  { tab: "bjgt",       label: "🇪🇸 BJGT",    path: "/bjgt"       },
   { tab: "campos",     label: "Campos",       path: "/campos"     },
   { tab: "comparar",   label: "Comparar",     path: "/comparar"   },
   { tab: "kids",       label: "🌍 Kids",      path: "/kids2"      },
@@ -48,13 +47,14 @@ function tabFromPath(pathname: string): Tab {
     comparar: "comparar",
     calendario: "calendario",
     drive: "drive",
-    bjgt: "bjgt",
+    bjgt: "major",
+    major: "major",
     kids: "kids",
     kids2: "kids",
     uskids: "uskids",
     diversos: "diversos",
     FPG: "diversos",
-    doral: "doral",
+    doral: "major",
     ffg: "ffg",
     rfeg: "rfeg",
     "nacionais-jovens": "nacionais",
@@ -78,6 +78,7 @@ const TAB_TITLES: Record<Tab, string> = {
   bjgt:       "Golf Junior – BJGT",
   diversos:   "Golf Junior – Diversos",
   doral:      "Golf Junior – Doral",
+  major:      "Golf Junior – MAJOR (Doral + BJGT)",
   ffg:        "Golf Junior – FFGolf",
   england:    "Golf Junior – England Golf",
   rfeg:       "Golf Junior – RFEGolf",

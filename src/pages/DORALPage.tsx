@@ -27,6 +27,7 @@ import type { ExtraColumn, MultiRoundRow } from "../ui/multiRoundTypes";
 import { IntlTournView } from "../ui/IntlTournView";
 import { useKidsLinkMap } from "../hooks/useKidsLinkMap";
 import { type EvoEntry } from "../hooks/useEvoComparison";
+import type { CircuitDivision } from "../ui/circuit/types";
 
 /** EvoEntry estendido para Doral:
  *  - prevYear: ano de origem da comparação (mais recente onde participou)
@@ -41,7 +42,7 @@ import { type EvoEntry } from "../hooks/useEvoComparison";
  *    par (i.e. mesmo escalão/configuração). Quando true, podemos mostrar
  *    o delta como diferença de gross total (mais intuitivo).
  *  - curAvgVsPar / refAvgVsPar: para o tooltip mostrar os valores brutos */
-type EvoEntryD = Omit<EvoEntry, "delta"> & {
+export type EvoEntryD = Omit<EvoEntry, "delta"> & {
   prevYear: number;
   history: { year: number; category: string; total: number; pos: number | null; parTotal: number; nR: number }[];
   /** Diff de avg-strokes-vs-par-por-ronda (negativo = melhorou). 1 decimal. */
@@ -95,7 +96,7 @@ interface RawGG {
 }
 
 /* Entrada normalizada para uma divisão específica */
-interface Entry {
+export interface Entry {
   id: string;
   label: string;
   year: number;
@@ -121,7 +122,7 @@ interface Entry {
 /* Todos os anos disponíveis em GolfGenius. Ficheiros em falta (404) são
    tolerados graciosamente pelo loader — só aparecem na UI os que existirem.
    Para scrapar um ano novo: `node scripts/scrape-golfgenius-v3.js --year YYYY` */
-const DATA_FILES: { url: string; sourceUrl: string }[] = [
+export const DATA_FILES: { url: string; sourceUrl: string }[] = [
   {
     url: "/data/ftm_doral_2025.json",
     sourceUrl: "https://2025firstteemiamidoraljrclassic.golfgenius.com/pages/5506943",
@@ -205,7 +206,7 @@ function normalizeCategoryLabel(raw: string): string {
 }
 
 
-function normalizeFile(raw: RawGG, sourceUrl: string): Entry[] {
+export function normalizeFile(raw: RawGG, sourceUrl: string): Entry[] {
   return raw.divisions.map((div): Entry => {
     const nineHole = div.players.some(p => p.rounds.some(r => r.startingHole === 10 && r.scores.length === 9));
     // Reordenar rondas por data (mais antiga = R1)
@@ -270,7 +271,7 @@ function normalizeFile(raw: RawGG, sourceUrl: string): Entry[] {
 /* AccLB removido — agora usa AccumulatedLB da FPGPage */
 
 /* ── Adaptador Entry → FPGTournament para reutilizar AllRoundsScorecardLB ── */
-function entryToTournament(entry: Entry): FPGTournament {
+export function entryToTournament(entry: Entry): FPGTournament {
   const nR = Math.max(...entry.players.map(p => p.rounds.length), 0);
   const players: FPGPlayer[] = entry.players
     .filter(p => p.rounds.length > 0)
@@ -305,6 +306,7 @@ function entryToTournament(entry: Entry): FPGTournament {
         roundScores,
         _wd: incomplete,
         _roundsPlayed: p.rounds.length,
+        _isPortuguese: /portugal/i.test(p.country || "") || /^(pt|prt)$/i.test(p.country || ""),
       } as FPGPlayer;
     });
   return {
@@ -320,7 +322,7 @@ function entryToTournament(entry: Entry): FPGTournament {
 
 
 /** Opções para ocultar colunas FPG-específicas e adaptar ao contexto Doral */
-function doralScorecardOptions(entry: Entry): ScorecardOptions {
+export function doralScorecardOptions(entry: Entry): ScorecardOptions {
   // Boys 8-9 (e Girls 7 & Under, etc.) começam no buraco 10 (back-9)
   const startHole = entry.players[0]?.rounds[0]?.startingHole === 10 ? 10 : 1;
   // SD só se esconde quando não há CR/slope
@@ -841,4 +843,121 @@ export default function DORALPage() {
   const { unlocked, unlock } = usePasswordGate();
   if (!unlocked) return <PasswordGate onUnlock={unlock} />;
   return <Content />;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Helpers para a página MAJOR (CircuitShell) — evolução multi-ano
+   própria da Doral + CircuitDivision (results + evoCols + EvoSummary).
+   ═══════════════════════════════════════════════════════════════ */
+
+/** Evolução multi-ano da Doral para uma Entry (histórico de edições). Pura. */
+export function doralEvoFor(cur: Entry, entries: Entry[]): Map<string, EvoEntryD> | undefined {
+  const earlierYears = [...new Set(entries.map((e) => e.year))].filter((y) => y < cur.year).sort((a, b) => b - a);
+  if (!earlierYears.length) return undefined;
+  const nameMatch = (a: string, b: string): boolean => {
+    const na = a.toLowerCase().replace(/\s+/g, " ").trim();
+    const nb = b.toLowerCase().replace(/\s+/g, " ").trim();
+    if (na === nb) return true;
+    const ap = na.split(" "), bp = nb.split(" ");
+    return ap[0] === bp[0] && ap[ap.length - 1] === bp[bp.length - 1];
+  };
+  const fieldSizeMap = new Map<string, number>();
+  for (const e of entries) {
+    if (e.year >= cur.year) continue;
+    const eNR = Math.max(...e.players.map((p) => p.rounds.length), 0);
+    const n = e.players.filter((p) => p.rounds.length === eNR && p.total != null).length;
+    fieldSizeMap.set(`${e.year}|${e.category}`, n);
+  }
+  const curNR = Math.max(...cur.players.map((p) => p.rounds.length), 0);
+  const currentPlayers = cur.players.filter((p) => p.total != null && p.rounds.length === curNR);
+  const curParTotal = cur.parTotal || 71;
+  const curAvgVsPar = (total: number) => (total - curParTotal * curNR) / curNR;
+  const evoMap = new Map<string, EvoEntryD>();
+  for (const curP of currentPlayers) {
+    const history: { year: number; category: string; total: number; pos: number | null; parTotal: number; nR: number }[] = [];
+    for (const y of earlierYears) {
+      const yearEntries = entries.filter((e) => e.year === y);
+      for (const e of yearEntries) {
+        const eNR = Math.max(...e.players.map((p) => p.rounds.length), 0);
+        const refP = e.players.find((p) => p.total != null && p.rounds.length === eNR && nameMatch(curP.name, p.name));
+        if (refP) { history.push({ year: y, category: e.category, total: refP.total!, pos: refP.pos ?? null, parTotal: e.parTotal || 71, nR: eNR }); break; }
+      }
+    }
+    if (history.length === 0) continue;
+    const mostRecent = history[0];
+    const curAvgToPar = curAvgVsPar(curP.total!);
+    const refAvgToPar = (mostRecent.total - mostRecent.parTotal * mostRecent.nR) / mostRecent.nR;
+    const deltaAvg = Math.round((curAvgToPar - refAvgToPar) * 10) / 10;
+    const deltaIsComparable = curNR === mostRecent.nR && curParTotal === mostRecent.parTotal;
+    evoMap.set(curP.name, {
+      otherValue: mostRecent.total, delta: deltaAvg, deltaIsComparable, deltaGross: curP.total! - mostRecent.total,
+      curAvgVsPar: curAvgToPar, refAvgVsPar: refAvgToPar,
+      from: mostRecent.category, to: cur.category,
+      pill: mostRecent.category === cur.category ? "EQ" : "UP",
+      prevPos: mostRecent.pos, fieldSize: fieldSizeMap.get(`${mostRecent.year}|${mostRecent.category}`),
+      prevYear: mostRecent.year, history,
+    });
+  }
+  return evoMap.size ? evoMap : undefined;
+}
+
+/** CircuitDivision de uma Entry Doral (results + evoCols multi-ano + EvoSummary). */
+export function doralMajorDivision(entry: Entry, evo: Map<string, EvoEntryD> | undefined): CircuitDivision {
+  const hasEvo = !!evo && evo.size > 0;
+  type RowWithPos = MultiRoundRow & { _pos?: number | null };
+  const evoCols: ExtraColumn<RowWithPos>[] | undefined = hasEvo ? [
+    {
+      header: "Ant.", className: "ta-l fs-11 fw-600 lb-col-divider",
+      headerStyle: { width: 72, textAlign: "left" as const, padding: "0 6px" },
+      cell: (row: RowWithPos) => {
+        const ev = evo!.get(row.name);
+        if (!ev) return <span className="c-muted">–</span>;
+        const tooltip = ev.history.map((h) => `${h.year}: ${h.total} (${h.category}${h.pos != null ? ` #${h.pos}` : ""})`).join("\n");
+        const nEditions = ev.history.length;
+        return (
+          <span title={tooltip} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+            <span>{ev.otherValue}</span>
+            {nEditions > 1 && <span style={{ fontSize: 9, fontWeight: 700, background: "var(--bg-muted, #eee)", color: "var(--text-2, #666)", borderRadius: 8, padding: "0 5px", lineHeight: "14px" }}>{nEditions}×</span>}
+          </span>
+        );
+      },
+    },
+    {
+      header: "Δ", className: "ta-l fs-11 fw-700", headerStyle: { width: 60, textAlign: "left" as const, padding: "0 6px" },
+      cell: (row: RowWithPos) => {
+        const ev = evo!.get(row.name);
+        if (!ev) return <span className="c-muted">–</span>;
+        const value = ev.deltaIsComparable ? ev.deltaGross : ev.delta;
+        const sign = value > 0 ? "+" : "";
+        const suffix = ev.deltaIsComparable ? "" : <span className="c-muted" style={{ fontSize: 9, marginLeft: 1 }}>/r</span>;
+        const tooltip = ev.deltaIsComparable
+          ? `Δ vs ${ev.prevYear} (gross ${ev.otherValue}, mesmo escalão e nº de rondas)`
+          : `Δ média strokes-vs-par por ronda · ${ev.prevYear}: ${ev.refAvgVsPar.toFixed(1)} vs hoje ${ev.curAvgVsPar.toFixed(1)}`;
+        return <span title={tooltip} style={{ color: value < 0 ? "var(--good-dark)" : value > 0 ? SC.danger : "var(--text-3)" }}>{sign}{value}{suffix}</span>;
+      },
+    },
+    {
+      header: "Percurso", className: "ta-l", headerStyle: { width: 160, textAlign: "left" as const, padding: "0 6px" },
+      cell: (row: RowWithPos) => {
+        const ev = evo!.get(row.name);
+        return ev ? <EvoBadge pill={ev.pill} from={ev.from} to={ev.to} prevPos={ev.prevPos} fieldSize={ev.fieldSize} /> : <span className="c-muted">novo</span>;
+      },
+    },
+  ] : undefined;
+  const results = entryToTournament(entry);
+  if (hasEvo) for (const pl of results.players) {
+    const ev = evo!.get(pl.name);
+    if (ev) { (pl as unknown as { _regressado?: boolean })._regressado = true; if (ev.pill === "UP") (pl as unknown as { _subiu?: boolean })._subiu = true; }
+  }
+  return {
+    key: entry.id,
+    escalao: entry.category,
+    tabLabel: entry.category,
+    hasManuel: entry.players.some((p) => isM(p.name)),
+    results,
+    scOptions: doralScorecardOptions(entry),
+    siLabel: "m",
+    evoCols,
+    accHeader: hasEvo ? <EvoSummary entry={entry} evo={evo!} /> : undefined,
+  };
 }
