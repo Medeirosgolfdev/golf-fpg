@@ -170,6 +170,14 @@ function KIDS2PageContent() {
         >
           📅 Próximos torneios
         </Link>
+        <Link
+          to="/kids2/inscricoes"
+          className="tourn-tab tourn-tab-sm tourn-tab-muted"
+          style={{ flexShrink: 0, textDecoration: "none" }}
+          title="Tabela global: em que próximos torneios cada jogador está inscrito"
+        >
+          📋 Inscrições
+        </Link>
       </Toolbar>
 
       {/* ── Layout master-detail ── */}

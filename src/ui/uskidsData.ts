@@ -106,6 +106,10 @@ export const LINKS_EXTRA: Record<number, { label: string; url: string }[]> = {
     { label: "📄 Distâncias", url: "https://drive.google.com/file/d/1AgicV6PnrYYc8AbA5CFPmttJOICzZVZm/view" },
     { label: "🏌️ Campo", url: "https://tournaments.uskidsgolf.com/node/514018" },
   ],
+  21131: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/517047/european-championship-2026" },
+    { label: "ℹ️ Info jogadores ↗", url: "https://tournaments.uskidsgolf.com/player_info_hub_euc2026" },
+  ],
   21239: [{ label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/state/find-tournament/517160/2026-mississippi-state-invitational" }],
   21471: [{ label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/state/find-tournament/517475/2026-hawaii-state-invitational" }],
   21133: [{ label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/regional/find-tournament/517061/jekyll-island-cup-2026" }],

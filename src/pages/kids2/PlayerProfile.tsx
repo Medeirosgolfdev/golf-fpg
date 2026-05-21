@@ -9,6 +9,7 @@ import HistoryByTournament from "./components/HistoryByTournament";
 import ResultsTimeline from "./components/ResultsTimeline";
 import AnaliseSection from "./components/AnaliseSection";
 import PalmaresSection from "./components/PalmaresSection";
+import NextTournamentsSection from "./components/NextTournamentsSection";
 import ScoringDistribution from "./components/ScoringDistribution";
 import MemberHistTable from "./components/MemberHistTable";
 
@@ -36,6 +37,7 @@ function PlayerProfileInner({ data, junior }: Props) {
       )}
       <MetricsGrid data={data} junior={junior} filterTids={filterTids} />
       <PalmaresSection data={data} junior={junior} filterTids={filterTids} />
+      <NextTournamentsSection data={data} junior={junior} />
       <CircuitFilterPills data={data} junior={junior} active={circuit} onChange={setCircuit} />
       <ScoringDistribution data={data} junior={junior} filterTids={filterTids} />
       <AnaliseSection data={data} junior={junior} filterTids={filterTids} />

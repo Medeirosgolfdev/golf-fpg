@@ -45,6 +45,7 @@ const KIDSPage = lazy(() => import("./pages/KIDSPage"));
 const KIDS2Page = lazy(() => import("./pages/KIDS2Page"));
 const KIDS2ScoutView = lazy(() => import("./pages/kids2/ScoutView"));
 const KIDS2NextTournaments = lazy(() => import("./pages/kids2/NextTournaments"));
+const KIDS2NextTournamentsGlobal = lazy(() => import("./pages/kids2/NextTournamentsGlobal"));
 const CompararPage = lazy(() => import("./pages/ComparePage"));
 const DrivePage = lazy(() => import("./pages/DrivePage"));
 const USKIDSPage = lazy(() => import("./pages/USKIDSPage"));
@@ -302,6 +303,9 @@ export default function App() {
                 <Route path="/kids2" element={<KIDS2Page />} />
                 <Route path="/kids2/next-t" element={<KIDS2NextTournaments />} />
                 <Route path="/kids2/scout/:tid" element={<KIDS2ScoutView />} />
+                {/* Tabela global de inscrições futuras por jogador.
+                    ANTES de /kids2/:juniorId senão "inscricoes" seria lido como juniorId. */}
+                <Route path="/kids2/inscricoes" element={<KIDS2NextTournamentsGlobal />} />
                 <Route path="/kids2/:juniorId" element={<KIDS2Page />} />
                 <Route path="/uskids" element={<USKIDSPage />} />
                 <Route path="/FPG" element={<FPGPage />} />
