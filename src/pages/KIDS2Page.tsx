@@ -8,13 +8,14 @@
  */
 
 import { useEffect, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useJuniorsCanonical, normName } from "./kids2/data";
 import Sidebar from "./kids2/Sidebar";
 import PlayerProfile from "./kids2/PlayerProfile";
+import Kids2SubNav from "./kids2/Kids2SubNav";
 import EmptyState from "../ui/EmptyState";
 import LoadingState from "../ui/LoadingState";
-import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
+import { ToolbarSep } from "../ui/Toolbar";
 import SidebarToggle from "../ui/SidebarToggle";
 import { DataSourcesChip } from "../ui/DataSources";
 import { useMasterDetail } from "../hooks/useMasterDetail";
@@ -105,10 +106,10 @@ function KIDS2PageContent() {
 
   return (
     <div className="tourn-layout">
-      {/* ── Toolbar global (padrão do projecto) ── */}
-      <Toolbar>
-        <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
-        <ToolbarTitle>🌍 Kids 2</ToolbarTitle>
+      {/* ── Barra de navegação única do KIDS2 (mesma em todas as sub-páginas) ──
+          Os filtros/contagem vão como children e só aparecem aqui (página
+          principal); nas sub-páginas a barra mostra só a navegação. */}
+      <Kids2SubNav leading={<SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />}>
         <DataSourcesChip sources={data.sources} />
         <ToolbarSep />
         <span className="toolbar-meta shrink-0" style={{ fontSize: 10, color: "var(--color-good-dark)", fontWeight: 700 }}>
@@ -161,24 +162,7 @@ function KIDS2PageContent() {
             ✕
           </button>
         )}
-        <div className="flex-1" />
-        <Link
-          to="/kids2/next-t"
-          className="tourn-tab tourn-tab-sm tourn-tab-muted"
-          style={{ flexShrink: 0, textDecoration: "none" }}
-          title="Ver próximos torneios do Manuel"
-        >
-          📅 Próximos torneios
-        </Link>
-        <Link
-          to="/kids2/inscricoes"
-          className="tourn-tab tourn-tab-sm tourn-tab-muted"
-          style={{ flexShrink: 0, textDecoration: "none" }}
-          title="Tabela global: em que próximos torneios cada jogador está inscrito"
-        >
-          📋 Inscrições
-        </Link>
-      </Toolbar>
+      </Kids2SubNav>
 
       {/* ── Layout master-detail ── */}
       <div className="master-detail">

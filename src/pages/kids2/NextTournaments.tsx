@@ -16,13 +16,14 @@
  */
 
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import LoadingState from "../../ui/LoadingState";
 import EmptyState from "../../ui/EmptyState";
 import { usePasswordGate } from "../../hooks/usePasswordGate";
 import PasswordGate from "../../ui/PasswordGate";
 import FieldRivaisDashboard from "../kids/FieldRivaisDashboard";
 import { buildAutoRivals, type AutoRivalPlayer } from "../../data/KIDSdataLoader";
+import Kids2SubNav from "./Kids2SubNav";
 
 export default function NextTournaments() {
   const { unlocked, unlock } = usePasswordGate();
@@ -52,9 +53,9 @@ function NextTournamentsContent() {
   if (error) return <EmptyState size="md" message={"Falhou: " + error} />;
   if (!autoRivals) {
     return (
-      <div style={{ padding: 20 }}>
-        <Link to="/kids2" style={{ fontSize: 13, color: "var(--color-info)" }}>{"←"} Kids2</Link>
-        <div style={{ marginTop: 12 }}>
+      <>
+        <Kids2SubNav />
+        <div style={{ padding: "16px 20px" }}>
           <LoadingState />
           {progress && (
             <div style={{ fontSize: 12, color: "var(--text-3)", textAlign: "center", marginTop: 8 }}>
@@ -62,12 +63,14 @@ function NextTournamentsContent() {
             </div>
           )}
         </div>
-      </div>
+      </>
     );
   }
 
   return (
-    <div style={{ padding: "16px 20px" }}>
+    <>
+      <Kids2SubNav />
+      <div style={{ padding: "16px 20px" }}>
       <div style={{
         display: "flex",
         alignItems: "baseline",
@@ -75,12 +78,6 @@ function NextTournamentsContent() {
         marginBottom: 14,
         flexWrap: "wrap",
       }}>
-        <Link
-          to="/kids2"
-          style={{ fontSize: 13, color: "var(--color-info)", textDecoration: "none" }}
-        >
-          {"←"} Kids2
-        </Link>
         <h1 style={{
           margin: 0,
           fontSize: 18,
@@ -102,6 +99,7 @@ function NextTournamentsContent() {
           navigate("/kids2#" + encodeURIComponent(name));
         }}
       />
-    </div>
+      </div>
+    </>
   );
 }

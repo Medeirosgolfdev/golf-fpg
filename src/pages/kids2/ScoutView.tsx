@@ -37,6 +37,7 @@ import { usePasswordGate } from "../../hooks/usePasswordGate";
 import PasswordGate from "../../ui/PasswordGate";
 import { cachedFetchJson } from "../../data/fetchCache";
 import { useUpcomingByJunior, type UpcomingReg } from "./upcomingRegs";
+import Kids2SubNav from "./Kids2SubNav";
 
 const MONTHS_PT_SHORT = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
 function fmtRegDate(iso: string): string {
@@ -446,20 +447,18 @@ function ScoutContent({ data, tournament, onSelect }: {
   }, [manuel, kpis.manuelInField, manuelFlightKey, allRows, tournament]);
 
   return (
-    <div style={{ padding: "16px 20px", maxWidth: 1240, margin: "0 auto" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
-        <Link to="/kids2" style={{ fontSize: 13, color: "var(--color-info)" }}>{ICON_BACK} KIDS2</Link>
-        <span style={{ color: "var(--text-3)" }}>{ICON_DOT}</span>
-        <Link to="/kids2/next-t" style={{ fontSize: 13, color: "var(--color-info)" }}>Proximos torneios</Link>
-        {tournament.links?.map((l, i) => (
-          <React.Fragment key={i}>
-            <span style={{ color: "var(--text-3)" }}>{ICON_DOT}</span>
-            <a href={l.url} target="_blank" rel="noreferrer" style={{ fontSize: 13, color: "var(--color-info)" }}>
+    <>
+      <Kids2SubNav />
+      <div style={{ padding: "16px 20px", maxWidth: 1240, margin: "0 auto" }}>
+      {tournament.links && tournament.links.length > 0 && (
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12, flexWrap: "wrap" }}>
+          {tournament.links.map((l, i) => (
+            <a key={i} href={l.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: "var(--color-info)" }}>
               {l.label} {ICON_EXTERNAL}
             </a>
-          </React.Fragment>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       <h2 style={{ margin: "0 0 4px", fontSize: 22, color: "var(--text)" }}>
         {ICON_SCOPE} Field Scout
@@ -570,7 +569,8 @@ function ScoutContent({ data, tournament, onSelect }: {
           upcoming={upcoming} currentUskTcode={currentUskTcode}
         />
       )}
-    </div>
+      </div>
+    </>
   );
 }
 

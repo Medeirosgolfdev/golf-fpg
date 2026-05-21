@@ -7,7 +7,6 @@
  */
 
 import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
 import LoadingState from "../../ui/LoadingState";
 import EmptyState from "../../ui/EmptyState";
 import { usePasswordGate } from "../../hooks/usePasswordGate";
@@ -16,6 +15,7 @@ import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import { useJuniorsCanonical, type Junior } from "./data";
 import { useUpcomingByJunior, type UpcomingReg } from "./upcomingRegs";
+import Kids2SubNav from "./Kids2SubNav";
 
 export default function NextTournamentsGlobal() {
   const { unlocked, unlock } = usePasswordGate();
@@ -78,9 +78,10 @@ function Content() {
   if (status.kind === "error") return <EmptyState size="md" message={"Falhou: " + status.error} />;
 
   return (
-    <div style={{ padding: "16px 20px" }}>
+    <>
+      <Kids2SubNav />
+      <div style={{ padding: "16px 20px" }}>
       <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 12, flexWrap: "wrap" }}>
-        <Link to="/kids2" style={{ fontSize: 13, color: "var(--color-info)", textDecoration: "none" }}>← Kids2</Link>
         <h1 style={{ margin: 0, fontSize: 18, fontWeight: 600, color: "var(--text)" }}>📋 Inscrições — próximos torneios</h1>
         <span style={{ fontSize: 12, color: "var(--text-3)" }}>{rows.length} inscrições</span>
       </div>
@@ -165,6 +166,7 @@ function Content() {
           )}
         </>
       )}
-    </div>
+      </div>
+    </>
   );
 }
