@@ -210,6 +210,8 @@
   --score-quad:         #1d4ed8;   /* quádruplo — azul-700 */
   --score-quint:        #172554;   /* quíntuplo — azul-950 */
   --score-worse:        #0a0f1f;   /* 6+ acima — quase preto */
+  --score-inferred-bg:  #e5e7eb;   /* buraco não terminado — cinzento (valor estimado) */
+  --score-inferred-fg:  #6b7280;   /* texto do valor estimado — cinzento-500 */
 
 
   /* ── 8. Charts / Data-viz (10 séries) ─────────────────────── */

@@ -9,16 +9,13 @@
 import React, { useState, useMemo } from "react";
 import type { EscLookup } from "../utils/playerUtils";
 import type { Player, Tournament, ScorecardOptions, PlayerFilter } from "../data/fpgTypes";
-import { numGross, resolveEsc, computeSD, filterPlayers } from "../data/fpgUtils";
+import { numGross, resolveEsc, computeSD, filterPlayers, fillBlankHoles } from "../data/fpgUtils";
 import { useSort } from "../hooks/useSort";
 import { scClass } from "../utils/scoreDisplay";
 import { fmtToPar, fmtHcp, abreviarNome, ageAtDate } from "../utils/format";
 import { flag as flagOf, normCountry } from "../utils/flagUtils";
-import {
-  EMPTY_FILTER,
-  type ScorecardRow,
-} from "./multiRoundTypes";
-import { ScorecardLeaderboard } from "./ScorecardLeaderboard";
+import { EMPTY_FILTER } from "./multiRoundTypes";
+import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
 import { EscPill } from "./PillBadge";
 import SexBadge from "./SexBadge";
 import SortableHdr from "./SortableHdr";
@@ -219,12 +216,17 @@ export function ScorecardLB({
     const rowBg = rowManuel ? "var(--bg-success-subtle)" : undefined;
     const stickyBg = rowManuel ? "var(--bg-manuel-sticky)" : undefined;
 
-    // Birdies / pars / bogeys
-    const scores = p.scores?.length ? p.scores : p.roundScores?.[0]?.scores || [];
+    // Scores por buraco com buracos vazios (cartão incompleto) preenchidos pelo
+    // valor inferido (Net Double Bogey, reconciliado com o gross oficial). A
+    // máscara `inferred` marca quais foram estimados — para a UI os pintar a
+    // cinzento. Não altera os ficheiros de dados.
+    const { scores, inferred } = fillBlankHoles(p);
+    // Birdies / pars / bogeys (sobre os scores preenchidos)
     let birds = 0,
       pars = 0,
       bogs = 0;
     for (let i = 0; i < scores.length && i < par.length; i++) {
+      if (!scores[i]) continue; // buraco genuinamente sem dados
       const d = scores[i] - par[i];
       if (d <= -1) birds++;
       else if (d === 0) pars++;
@@ -237,6 +239,7 @@ export function ScorecardLB({
       gross,
       toPar: isWDPlayer ? null : gross - parTotal,
       scores,
+      inferredHoles: inferred,
       rowBg,
       stickyBg,
       isManuel: rowManuel,

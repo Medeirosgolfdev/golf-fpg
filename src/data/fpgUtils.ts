@@ -133,8 +133,113 @@ export function buildTemporalEscLookup(
   return map;
 }
 
+export interface FilledScores {
+  /** Scores por buraco com os buracos vazios preenchidos com o valor inferido. */
+  scores: number[];
+  /** Máscara: true no índice de cada buraco cujo valor foi inferido. */
+  inferred: boolean[];
+  /** True se pelo menos um buraco foi preenchido. */
+  hasInferred: boolean;
+}
+
+/** Cap Net Double Bogey por buraco = par + 2 + pancadas de handicap recebidas.
+ *  Distribui as pancadas pelo SI (handicaps mais baixos primeiro). */
+function ndbCaps(
+  parArr: number[], si: number[], cr: number, slope: number, hcp: number, nh: number,
+): number[] | null {
+  if (parArr.length < nh || si.length < nh) return null;
+  const parT = parArr.slice(0, nh).reduce((a, b) => a + b, 0);
+  const ch = Math.round(hcp * (slope / 113) + (cr - parT));
+  const order = Array.from({ length: nh }, (_, i) => i).sort((a, b) => si[a] - si[b]);
+  const strokes = new Array(nh).fill(0);
+  let rem = Math.max(0, ch);
+  while (rem > 0) { for (const idx of order) { if (rem <= 0) break; strokes[idx]++; rem--; } }
+  return parArr.slice(0, nh).map((pp, i) => pp + 2 + strokes[i]);
+}
+
+/** Preenche buracos vazios (score 0) de um cartão devolvido mas incompleto.
+ *
+ *  Em torneios sociais, um buraco vazio significa que o jogador não terminou
+ *  esse buraco (pegou na bola) — fez pelo menos +1/+2 nesse buraco. O total
+ *  gross OFICIAL (`grossTotal`) é a fonte de verdade: o valor inferido =
+ *  grossTotal − soma dos buracos jogados, distribuído pelos buracos vazios e
+ *  limitado por buraco ao Net Double Bogey (par + 2 + pancadas).
+ *
+ *  NÃO infere nada (devolve o cartão tal como está) quando:
+ *   - não há buracos vazios;
+ *   - o gross oficial é desconhecido / WD / DNS;
+ *   - todos os buracos estão vazios (cartão não entregue);
+ *   - o gross é ≤ soma dos buracos jogados (dados inconsistentes).
+ *
+ *  IMPORTANTE: não escreve nada nos ficheiros de dados — a inferência vive só
+ *  na camada de cálculo/visualização. Os buracos inferidos são marcados em
+ *  `inferred[]` para a UI os poder pintar a cinzento. */
+export function fillBlankHoles(p: Player): FilledScores {
+  const rs0 = p.roundScores?.[0];
+  const raw = (p.scores?.length ? p.scores : rs0?.scores) || [];
+  const parArr = (p.par?.length ? p.par : rs0?.pars) || [];
+  const si = (p.si?.length ? p.si : rs0?.si) || [];
+  const cr = p.courseRating ?? rs0?.courseRating;
+  const slope = p.slope ?? rs0?.slope;
+  const hcp = p.hcpExact;
+  const nh = p.nholes || raw.length || parArr.length || 18;
+  const gross = numGross(p);
+
+  const scores = raw.slice(0, nh).map((v) => (typeof v === "number" ? v : 0));
+  const inferred = new Array(scores.length).fill(false);
+  const blanks: number[] = [];
+  for (let i = 0; i < scores.length; i++) if (!scores[i] || scores[i] <= 0) blanks.push(i);
+
+  if (blanks.length === 0) return { scores, inferred, hasInferred: false };
+  if (gross == null || isNaN(gross) || gross >= 999 || gross <= 0) return { scores, inferred, hasInferred: false };
+  if (blanks.length >= scores.length) return { scores, inferred, hasInferred: false };
+
+  const played = scores.reduce((a, b) => a + (b > 0 ? b : 0), 0);
+  const remaining = gross - played;
+  if (remaining <= 0) return { scores, inferred, hasInferred: false };
+
+  const caps = (cr != null && slope != null && hcp != null)
+    ? ndbCaps(parArr, si, cr, slope, hcp, nh) : null;
+
+  // Caso comum — um único buraco vazio: o valor é exacto (gross − jogados).
+  if (blanks.length === 1) {
+    const i = blanks[0];
+    let v = remaining;
+    if (caps && v > caps[i]) v = caps[i]; // segurança — nunca exceder o NDB
+    scores[i] = v;
+    inferred[i] = true;
+    return { scores, inferred, hasInferred: true };
+  }
+
+  // Vários buracos vazios — distribuir `remaining`, cada um limitado ao NDB.
+  const vals = blanks.map((i) => (caps ? caps[i] : (parArr[i] || 4) + 2));
+  const floors = blanks.map((i) => (caps ? Math.max(1, caps[i] - 2) : Math.max(1, parArr[i] || 4))); // net par
+  let sum = vals.reduce((a, b) => a + b, 0);
+  // gross < soma dos NDB → reduzir, começando pelos buracos com valor mais alto.
+  let guard = 0;
+  while (sum > remaining && guard++ < 5000) {
+    let bi = -1, bv = -1;
+    for (let k = 0; k < vals.length; k++) if (vals[k] > floors[k] && vals[k] > bv) { bv = vals[k]; bi = k; }
+    if (bi < 0) break;
+    vals[bi]--; sum--;
+  }
+  guard = 0;
+  while (sum > remaining && guard++ < 5000) { // floors esgotados — continuar até 1
+    let bi = -1, bv = -1;
+    for (let k = 0; k < vals.length; k++) if (vals[k] > 1 && vals[k] > bv) { bv = vals[k]; bi = k; }
+    if (bi < 0) break;
+    vals[bi]--; sum--;
+  }
+  // gross > soma dos NDB (raro) → distribuir o défice pelos buracos.
+  let gi = 0;
+  while (sum < remaining && vals.length) { vals[gi % vals.length]++; sum++; gi++; }
+
+  blanks.forEach((i, k) => { scores[i] = vals[k]; inferred[i] = true; });
+  return { scores, inferred, hasInferred: true };
+}
+
 export function computeSD(p: Player): SDResult {
-  const scores = p.scores || [];
+  const scores = fillBlankHoles(p).scores;
   const parArr = p.par || [];
   const si = p.si || [];
   const nh = p.nholes || scores.length || (parArr.length > 0 ? parArr.length : 18);

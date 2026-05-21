@@ -39,6 +39,9 @@ export interface ScorecardRow {
   gross: number;
   toPar: number | null;   // null para jogadores WD/DNS
   scores?: number[];
+  /** Máscara de buracos inferidos (preenchimento posterior de cartão incompleto).
+   *  Quando inferredHoles[i] é true, o buraco i é pintado a cinzento. */
+  inferredHoles?: boolean[];
   rowBg?: string;
   stickyBg?: string;
   /** True quando a linha é do Manuel — aplica .row-manuel (highlight verde). */
@@ -289,6 +292,7 @@ export function ScorecardLeaderboard({
               // Manuel toma precedência sobre Portuguese (só uma classe é aplicada).
               const highlightCls = row.isManuel ? " row-manuel" : (row.isPortuguese ? " row-portuguese" : "");
               const scores = row.scores ?? [];
+              const inf = row.inferredHoles ?? [];
               const f9 = scores.slice(0, 9).reduce((a, b) => a + b, 0);
               const b9 = !is9 ? scores.slice(9, 18).reduce((a, b) => a + b, 0) : 0;
               const afterScorecard = row.postScorecardCells ?? row.postTotalCells;
@@ -306,7 +310,8 @@ export function ScorecardLeaderboard({
                   {showScorecard && <>
                     {scores.slice(0, 9).map((sc, i) => (
                       <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")} style={{ borderTop: row.borderTop }}>
-                        <span className={"sc-score " + scClass(sc, par[i])}>{sc || ""}</span>
+                        <span className={"sc-score " + (inf[i] ? "sc-inferred" : scClass(sc, par[i]))}
+                          title={inf[i] ? "Buraco não terminado — valor estimado (Net Double Bogey)" : undefined}>{sc || ""}</span>
                       </td>
                     ))}
                     <td className="lb-halftot" style={{ borderTop: row.borderTop }}>
@@ -314,7 +319,8 @@ export function ScorecardLeaderboard({
                     </td>
                     {!is9 && scores.slice(9, 18).map((sc, i) => (
                       <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")} style={{ borderTop: row.borderTop }}>
-                        <span className={"sc-score " + scClass(sc, par[9 + i])}>{sc || ""}</span>
+                        <span className={"sc-score " + (inf[9 + i] ? "sc-inferred" : scClass(sc, par[9 + i]))}
+                          title={inf[9 + i] ? "Buraco não terminado — valor estimado (Net Double Bogey)" : undefined}>{sc || ""}</span>
                       </td>
                     ))}
                     {!is9 && (

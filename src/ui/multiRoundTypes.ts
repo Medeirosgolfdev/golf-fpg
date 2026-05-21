@@ -78,4 +78,5 @@ export interface PlayerFilter {
   birthYears?: number[];
 }
 
+/** Filtro vazio (estado inicial / botão "limpar"). */
 export const EMPTY_FILTER: PlayerFilter = { name: "", escs: [], tees: [], club: "", sex: "", birthYears: [] };
