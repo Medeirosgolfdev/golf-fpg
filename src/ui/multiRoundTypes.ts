@@ -36,6 +36,8 @@ export interface MultiRoundRow {
   tee?: string;
   teeName?: string;
   sex?: string;
+  /** Data de nascimento (ISO "YYYY-MM-DD" ou "DD/MM/YYYY"). Alimenta as colunas Nasc./Idade. */
+  dob?: string | null;
   club?: string;
   hcp?: number | null;
   /** Soma de todos os pars das rondas (para calcular ±par total) */
@@ -72,6 +74,8 @@ export interface PlayerFilter {
   club: string;
   /** Filtro M/F: "" = todos, "M" = só masculino, "F" = só feminino. */
   sex?: "" | "M" | "F";
+  /** Anos de nascimento seleccionados (vazio = todos os anos). */
+  birthYears?: number[];
 }
 
-export const EMPTY_FILTER: PlayerFilter = { name: "", escs: [], tees: [], club: "", sex: "" };
+export const EMPTY_FILTER: PlayerFilter = { name: "", escs: [], tees: [], club: "", sex: "", birthYears: [] };
