@@ -38,6 +38,11 @@ const { chromium } = require('playwright');
 const DIR    = path.join(__dirname, '..', 'public', 'data-archive');
 const OUTPUT = path.join(DIR, 'uskids-member-history.json');
 const RESULTS_PATH = path.join(__dirname, '..', 'public', 'data', 'uskids-results.json');
+// Cache da Fase 1 (flights + member IDs + fingerprints). Para torneios FECHADOS
+// estes dados nunca mudam, por isso são persistidos aqui e relidos em runs
+// futuros — só torneios recentes/a decorrer voltam a ser obtidos da net.
+const FLIGHT_CACHE = path.join(DIR, 'uskids-flight-cache.json');
+const FLIGHT_CACHE_FRESH_DAYS = 15; // re-obter da net se o torneio terminou há ≤ N dias OU ainda decorre
 
 // Torneios a rastrear.
 // Para torneios com flights conhecidos, especifica-os manualmente.
@@ -271,6 +276,37 @@ function parseDate(s) {
   if (s.includes('-')) return s;
   const p = s.split('/');
   return p.length === 3 ? `${p[2]}-${p[0].padStart(2,'0')}-${p[1].padStart(2,'0')}` : '';
+}
+
+// ── Cache da Fase 1 (flights + fingerprints) ─────────────────────────
+// Descobrir quem está em cada flight + os fingerprints de strokes é caro
+// (GetPlayerTeeTimes paginado para centenas de flights). Persistimos isso e
+// só re-obtemos da net os torneios recentes/a decorrer (ver flightNeedsRefetch).
+function loadFlightCache() {
+  try {
+    if (fs.existsSync(FLIGHT_CACHE)) return JSON.parse(fs.readFileSync(FLIGHT_CACHE, 'utf8'));
+  } catch (e) {
+    console.warn(`  ⚠️ flight-cache ilegível (${e.message}) — vai re-descobrir tudo`);
+  }
+  return { gerado_em: null, torneios: {} };
+}
+function saveFlightCache(fc) {
+  try {
+    fc.gerado_em = new Date().toISOString();
+    fs.writeFileSync(FLIGHT_CACHE, JSON.stringify(fc));
+    console.log(`  💾 flight-cache gravada: ${Object.keys(fc.torneios || {}).length} torneios`);
+  } catch (e) {
+    console.warn(`  ⚠️ falha ao gravar flight-cache: ${e.message}`);
+  }
+}
+// true = TEM de ir à net (torneio terminou há ≤ N dias, está no futuro, ou data desconhecida).
+function flightNeedsRefetch(dateStr) {
+  const iso = parseDate(dateStr);
+  if (!iso) return true;                       // sem data fiável → re-obter por segurança
+  const t = Date.parse(iso + 'T00:00:00Z');
+  if (Number.isNaN(t)) return true;
+  const ageDays = (Date.now() - t) / 86400000;
+  return ageDays <= FLIGHT_CACHE_FRESH_DAYS;   // recente OU futuro (ageDays < 0)
 }
 
 /**
@@ -544,7 +580,50 @@ async function main() {
     // FASE 1: Nomes directos + Fingerprints + member IDs
     // ══════════════════════════════════════════════
 
+    const flightCache = loadFlightCache();
+    let cacheHits = 0, cacheMiss = 0;
+
     for (const tcode of tcodes) {
+      // ── Reaproveitar da flight-cache (sem rede) se o torneio já fechou ──
+      const cachedT = flightCache.torneios[String(tcode)];
+      if (cachedT && !flightNeedsRefetch(cachedT.date)) {
+        if (!cache.torneios[tcode] || !cache.torneios[tcode].name) {
+          cache.torneios[tcode] = { name: cachedT.name || `t=${tcode}` };
+        }
+        const cYear = cachedT.year || anoDoTorneio({ start_date: cachedT.date });
+        const cFlights = cachedT.flights || {};
+        console.log(`\n▶ ${cachedT.name || `t=${tcode}`}${cYear ? ` (${cYear})` : ''} (${Object.keys(cFlights).length} flights) [cache]`);
+        for (const [fidStr, fl] of Object.entries(cFlights)) {
+          const fid = parseInt(fidStr, 10);
+          const ag  = fl.ag || '';
+          // Re-aplicar filtro de idade (CURRENT_YEAR muda entre runs).
+          if (cYear) {
+            const ageNum = parseAgeNum(ag);
+            if (ageNum != null && (CURRENT_YEAR - (cYear - ageNum)) >= MAX_AGE_TODAY) continue;
+          }
+          // Re-aplicar restrição de escalões por torneio.
+          const escRestric = ESCALOES_POR_TORNEIO[tcode];
+          if (escRestric && !escRestric.some(p => ag.toLowerCase().startsWith(p))) continue;
+          // Reconstruir fpMap (entradas ambíguas não foram persistidas).
+          const fpMap = new Map();
+          for (const [k, info] of Object.entries(fl.fp || {})) if (info) fpMap.set(k, info);
+          apiFingerprints.set(`${tcode}:${fid}`, fpMap);
+          // Nomes directos por node_id (poucos, mas preservados).
+          for (const [mid, info] of Object.entries(fl.direct || {})) {
+            if (info && !memberNameMap.has(String(mid))) memberNameMap.set(String(mid), info);
+          }
+          for (const mid of fl.memberIds || []) {
+            allMemberIds.add(mid);
+            if (!memberFlights.has(mid)) memberFlights.set(mid, []);
+            memberFlights.get(mid).push({ tcode, fid, ageGroup: ag });
+          }
+          console.log(`  ⛳ ${ag} (flight ${fid}) — ${(fl.memberIds || []).length} membros | ${fpMap.size} fingerprints [cache]`);
+        }
+        cacheHits++;
+        continue; // próximo torneio — não tocou na rede
+      }
+      cacheMiss++;
+
       await initPage(page, tcode);
 
       // GetMeta uma vez por torneio → nome + ano (para o filtro de idade) +
@@ -564,6 +643,15 @@ async function main() {
       const tournYear = anoDoTorneio(meta);
       let flights = FLIGHTS_MANUAL[tcode];
       if (!flights || flights.length === 0) flights = parseFlights(meta);
+
+      // Entrada nova da flight-cache para este torneio (preenchida por flight abaixo).
+      const fcEntry = {
+        name: cache.torneios[tcode].name,
+        date: meta?.tournament?.start_date || meta?.start_date || '',
+        year: tournYear || null,
+        flights: {},
+      };
+      flightCache.torneios[String(tcode)] = fcEntry;
 
       const tournLabel = cache.torneios[tcode].name;
       console.log(`\n▶ ${tournLabel}${tournYear ? ` (${tournYear})` : ''} (${flights.length} flights)`);
@@ -605,6 +693,7 @@ async function main() {
         // GetPlayerTeeTimes — extrai nomes directos E fingerprints de strokes
         const fpKey = `${tcode}:${fid}`;
         const fpMap = new Map();
+        const directMap = {};
         let directNames = 0;
 
         try {
@@ -636,6 +725,7 @@ async function main() {
                     memberNameMap.set(cid, info);
                     directNames++;
                   }
+                  directMap[cid] = info;
                   break;
                 }
               }
@@ -669,11 +759,18 @@ async function main() {
           memberFlights.get(mid).push({ tcode, fid, ageGroup: ag });
         }
 
+        // Persistir este flight na flight-cache (omitindo fingerprints ambíguos = null).
+        const fpObj = {};
+        for (const [k, v] of fpMap) if (v) fpObj[k] = v;
+        fcEntry.flights[fid] = { ag, memberIds, fp: fpObj, direct: directMap };
+
         console.log(`    → ${memberIds.length} membros | ${fpMap.size} fingerprints | ${directNames} nomes directos`);
       }
     }
 
     if (!refreshAll) {
+      saveFlightCache(flightCache);
+      console.log(`  📦 Flight-cache: ${cacheHits} torneios reaproveitados, ${cacheMiss} obtidos da net`);
       console.log(`\n  🗺️  Nomes directos por node_id: ${memberNameMap.size}/${allMemberIds.size}`);
     }
 
