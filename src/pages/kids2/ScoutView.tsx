@@ -14,8 +14,10 @@
  *   - Manuel banner quando inscrito + comparacao dele vs todo o field
  *   - Tabs de escalao (com badge Manuel no flight dele)
  *   - Tabela por escalao (quando filter=all renderiza seccao por flight)
- *   - Colunas: pais, nome, idade, tier, total torneios, wins, top3, best gross,
- *     forma (3 ultimas pos como dots), vs Manuel (avg diff + n confrontos)
+ *   - Colunas (simplificado 2026-05): pais, nome, idade, tier, wins,
+ *     forma (3 ultimas pos como dots), vs Manuel (avg diff + n confrontos),
+ *     H2H, e "Proximos" (outros torneios futuros onde o jogador esta inscrito).
+ *     T/Top3/Best foram removidos da tabela — continuam na ficha do jogador.
  */
 
 import React, { useEffect, useMemo, useState } from "react";
@@ -34,6 +36,18 @@ import EmptyState from "../../ui/EmptyState";
 import { usePasswordGate } from "../../hooks/usePasswordGate";
 import PasswordGate from "../../ui/PasswordGate";
 import { cachedFetchJson } from "../../data/fetchCache";
+import { useUpcomingByJunior, type UpcomingReg } from "./upcomingRegs";
+
+const MONTHS_PT_SHORT = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+function fmtRegDate(iso: string): string {
+  if (!iso) return "";
+  const [, m, d] = iso.split("-");
+  return `${Number(d)} ${MONTHS_PT_SHORT[Number(m) - 1] || m}`;
+}
+function shortReg(name: string): string {
+  const n = name.replace(/\b20\d{2}\b/g, "").replace(/\s+/g, " ").trim();
+  return n.length > 24 ? n.slice(0, 23) + "…" : n;
+}
 
 const ICON_SCOPE = "\u{1F52D}";
 const ICON_BACK = "←";
@@ -45,7 +59,7 @@ const ICON_EXTERNAL = "↗";
 type ScoutKey =
   | "name" | "country" | "age" | "tier"
   | "pos" | "vsM" | "form"
-  | "wins" | "top3" | "totalTourns" | "bestGross";
+  | "wins";
 
 interface ScoutRow {
   junior: Junior;
@@ -247,6 +261,10 @@ function ScoutContent({ data, tournament, onSelect }: {
   const isFuture = tDate > today;
   const isFieldOnlySource = tournament.id.startsWith("usk");
 
+  // Inscrições futuras por jogador (USKids + FPG) — para a coluna "Próximos".
+  const upcoming = useUpcomingByJunior(data);
+  const currentUskTcode = tournament.id.startsWith("usk") ? tournament.id.slice(3) : null;
+
   const manuelFlightKey = useMemo(() => {
     if (!manuel) return null;
     const f = tournament.flights.find((ff) => ff.results.some((r) => r.juniorId === manuel.id));
@@ -372,7 +390,7 @@ function ScoutContent({ data, tournament, onSelect }: {
   const { sortKey, sortDir, toggleSort } = useSort<ScoutKey>(isFuture ? "tier" : "pos", "asc", {
     name: "asc", country: "asc", age: "asc", tier: "asc",
     pos: "asc", vsM: "asc", form: "asc",
-    wins: "desc", top3: "desc", totalTourns: "desc", bestGross: "asc",
+    wins: "desc",
   });
 
   const sorted = useMemo(() => {
@@ -390,9 +408,6 @@ function ScoutContent({ data, tournament, onSelect }: {
         case "vsM":         return sign * (safe(a.vsMTotal) - safe(b.vsMTotal));
         case "form":        return sign * (safe(a.recentPos) - safe(b.recentPos));
         case "wins":        return sign * (b.wins - a.wins);
-        case "top3":        return sign * (b.top3 - a.top3);
-        case "totalTourns": return sign * (b.totalTourns - a.totalTourns);
-        case "bestGross":   return sign * (safe(a.bestGross) - safe(b.bestGross));
         default: return 0;
       }
     });
@@ -523,6 +538,7 @@ function ScoutContent({ data, tournament, onSelect }: {
                 rows={flightRows} manuel={manuel} isFuture={isFuture}
                 sortKey={sortKey} sortDir={sortDir} toggleSort={toggleSort}
                 onSelect={onSelect} hideFlight
+                upcoming={upcoming} currentUskTcode={currentUskTcode}
               />
             </div>
           );
@@ -532,6 +548,7 @@ function ScoutContent({ data, tournament, onSelect }: {
           rows={sorted} manuel={manuel} isFuture={isFuture}
           sortKey={sortKey} sortDir={sortDir} toggleSort={toggleSort}
           onSelect={onSelect}
+          upcoming={upcoming} currentUskTcode={currentUskTcode}
         />
       )}
     </div>
@@ -582,11 +599,13 @@ function FlightHeader({ flight, isManuelFlight, count }: {
   );
 }
 
-function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSelect, hideFlight }: {
+function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSelect, hideFlight, upcoming, currentUskTcode }: {
   rows: ScoutRow[]; manuel: Junior | null; isFuture: boolean;
   sortKey: ScoutKey; sortDir: "asc" | "desc"; toggleSort: (k: ScoutKey) => void;
   onSelect: (jid: string) => void;
   hideFlight?: boolean;
+  upcoming?: Map<string, UpcomingReg[]> | null;
+  currentUskTcode?: string | null;
 }) {
   if (rows.length === 0) {
     return <div style={{ padding: 20, textAlign: "center", color: "var(--text-3)", fontSize: 13 }}>
@@ -602,14 +621,12 @@ function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSe
             <SortableHdr<ScoutKey> k="name"        sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={thStyle}>Nome</SortableHdr>
             <SortableHdr<ScoutKey> k="age"         sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, textAlign: "center", width: 50 }}>Idade</SortableHdr>
             <SortableHdr<ScoutKey> k="tier"        sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 110 }}>Tier</SortableHdr>
-            <SortableHdr<ScoutKey> k="totalTourns" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, textAlign: "center", width: 48 }}>T</SortableHdr>
             <SortableHdr<ScoutKey> k="wins"        sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, textAlign: "center", width: 48 }}>{ICON_TROPHY}</SortableHdr>
-            <SortableHdr<ScoutKey> k="top3"        sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, textAlign: "center", width: 48 }}>Top3</SortableHdr>
-            <SortableHdr<ScoutKey> k="bestGross"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, textAlign: "center", width: 60 }}>Best</SortableHdr>
             <th style={{ ...thStyle, width: 90, textAlign: "center" }} title="Ultimas 3 posicoes (mais recente a esquerda)">Forma</th>
             {!isFuture && <SortableHdr<ScoutKey> k="pos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 60, textAlign: "center" }}>Pos</SortableHdr>}
             {manuel && <SortableHdr<ScoutKey> k="vsM" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 100, textAlign: "right" }}>vs M (media)</SortableHdr>}
             {manuel && <th style={{ ...thStyle, width: 56, textAlign: "center" }} title="Confrontos no mesmo flight">{ICON_SWORDS}H2H</th>}
+            <th style={{ ...thStyle, minWidth: 160 }} title="Outros torneios futuros onde este jogador está inscrito">📅 Próximos</th>
             <th style={{ ...thStyle, width: 30, textAlign: "center" }} />
           </tr>
         </thead>
@@ -646,17 +663,8 @@ function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSe
                     return <span style={{ background: c.bg, color: c.fg, fontSize: 10, padding: "2px 7px", borderRadius: 10, fontWeight: 700, border: "1px solid " + c.fg }}>{getTierLabel(row.tier)}</span>;
                   })() : <span style={{ color: "var(--text-3)", fontSize: 10 }}>{row.fieldOnly ? "sem dados" : "-"}</span>}
                 </td>
-                <td style={{ ...tdStyle, textAlign: "center", color: "var(--text-2)" }}>
-                  {row.totalTourns || "-"}
-                </td>
                 <td style={{ ...tdStyle, textAlign: "center", fontWeight: row.wins > 0 ? 700 : 400, color: row.wins > 0 ? "var(--medal-gold-strong)" : "var(--text-3)" }}>
                   {row.wins || "-"}
-                </td>
-                <td style={{ ...tdStyle, textAlign: "center", fontWeight: row.top3 > 0 ? 600 : 400, color: row.top3 > 0 ? "var(--medal-bronze-fg, #92400e)" : "var(--text-3)" }}>
-                  {row.top3 || "-"}
-                </td>
-                <td style={{ ...tdStyle, textAlign: "center", color: "var(--text-2)" }}>
-                  {row.bestGross != null ? row.bestGross : "-"}
                 </td>
                 <td style={{ ...tdStyle, textAlign: "center" }}>
                   <FormDots positions={row.formPositions} />
@@ -686,6 +694,27 @@ function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSe
                       : "-"}
                   </td>
                 )}
+                <td style={{ ...tdStyle, maxWidth: 240 }}>
+                  {(() => {
+                    const regs = (upcoming?.get(row.junior.id) ?? [])
+                      .filter(r => !(r.circuit === "uskids" && currentUskTcode && r.tournamentId === currentUskTcode));
+                    if (!regs.length) return <span style={{ color: "var(--text-3)", fontSize: 10 }}>—</span>;
+                    return (
+                      <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }} onClick={(e) => e.stopPropagation()}>
+                        {regs.map((r) => (
+                          <a key={r.circuit + ":" + r.tournamentId} href={r.link} target="_blank" rel="noopener noreferrer"
+                            title={`${r.name}${r.escalao ? " · " + r.escalao : ""} (${fmtRegDate(r.date)})`}
+                            style={{
+                              fontSize: 9, fontWeight: 600, padding: "1px 6px", borderRadius: 10, textDecoration: "none", whiteSpace: "nowrap",
+                              background: "var(--bg-info-subtle, #eff6ff)", color: "var(--color-info-dark, #1e3a8a)", border: "1px solid var(--border-info, #bfdbfe)",
+                            }}>
+                            {r.circuit === "fpg" ? "🇵🇹 " : ""}{shortReg(r.name)} · {fmtRegDate(r.date)}
+                          </a>
+                        ))}
+                      </div>
+                    );
+                  })()}
+                </td>
                 <td style={{ ...tdStyle, textAlign: "center" }}>
                   {clickable && <span style={{ color: "var(--color-info)", fontSize: 13 }}>{ICON_EXTERNAL}</span>}
                 </td>

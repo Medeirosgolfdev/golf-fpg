@@ -157,7 +157,7 @@ export interface CanonicalData {
 
 const MANUEL_USKIDS_ID = "630106";
 
-export function normName(s: string): string {
+function normName(s: string): string {
   return (s || "").trim().toLowerCase()
     .replace(/[-'’.·\/]+/g, " ")
     .replace(/\s+/g, " ")

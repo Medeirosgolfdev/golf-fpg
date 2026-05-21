@@ -6,7 +6,6 @@
  * Não aparece se o jogador não tiver inscrições futuras.
  */
 
-import { Link } from "react-router-dom";
 import type { CanonicalData, Junior } from "../data";
 import { useUpcomingByJunior, type UpcomingReg } from "../upcomingRegs";
 
@@ -48,9 +47,11 @@ export default function NextTournamentsSection({ data, junior }: Props) {
 
       <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
         {regs.map((r) => (
-          <Link
+          <a
             key={r.circuit + ":" + r.tournamentId}
-            to={r.link}
+            href={r.link}
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
               display: "flex", alignItems: "center", gap: 10,
               background: "var(--bg-card)", border: "1px solid var(--border-light)",
@@ -80,7 +81,7 @@ export default function NextTournamentsSection({ data, junior }: Props) {
               }}>RESERVA</span>
             )}
             <span style={{ color: "var(--text-3)", fontSize: 13, fontWeight: 600, flexShrink: 0 }}>↗</span>
-          </Link>
+          </a>
         ))}
       </div>
     </section>

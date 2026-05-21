@@ -7,7 +7,7 @@
  */
 
 import { useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import LoadingState from "../../ui/LoadingState";
 import EmptyState from "../../ui/EmptyState";
 import { usePasswordGate } from "../../hooks/usePasswordGate";
@@ -38,7 +38,6 @@ function Content() {
   const status = useJuniorsCanonical();
   const data = status.kind === "ready" ? status.data : null;
   const map = useUpcomingByJunior(data);
-  const navigate = useNavigate();
 
   const [circuit, setCircuit] = useState<"all" | "uskids" | "fpg">("all");
   const [q, setQ] = useState("");
@@ -133,18 +132,19 @@ function Content() {
                   <tr key={row.junior.id + ":" + row.reg.circuit + ":" + row.reg.tournamentId + ":" + i}
                     style={{ borderBottom: "1px solid var(--border-light)" }}>
                     <td style={{ padding: "6px 8px" }}>
-                      <span
-                        onClick={() => navigate("/kids2/" + encodeURIComponent(row.junior.id))}
-                        style={{ cursor: "pointer", fontWeight: 600, color: "var(--color-info)" }}
-                        title="Abrir ficha do jogador">
+                      <a
+                        href={"/kids2/" + encodeURIComponent(row.junior.id)}
+                        target="_blank" rel="noopener noreferrer"
+                        style={{ fontWeight: 600, color: "var(--color-info)", textDecoration: "none" }}
+                        title="Abrir ficha do jogador (nova aba)">
                         {row.junior.canonicalName}
-                      </span>
+                      </a>
                     </td>
                     <td style={{ padding: "6px 8px", whiteSpace: "nowrap" }}>{CIRCUIT_LABEL[row.reg.circuit]}</td>
                     <td style={{ padding: "6px 8px" }}>
-                      <Link to={row.reg.link} style={{ color: "var(--text)", textDecoration: "none" }} title={row.reg.campo || row.reg.name}>
+                      <a href={row.reg.link} target="_blank" rel="noopener noreferrer" style={{ color: "var(--text)", textDecoration: "none" }} title={row.reg.campo || row.reg.name}>
                         {row.reg.name}
-                      </Link>
+                      </a>
                       {row.reg.status === "reserva" && (
                         <span style={{
                           marginLeft: 6, fontSize: 9, fontWeight: 700, padding: "1px 5px", borderRadius: 3,
@@ -156,7 +156,7 @@ function Content() {
                     <td style={{ padding: "6px 8px", whiteSpace: "nowrap", color: "var(--text-2)" }}>{fmtDate(row.reg.date)}</td>
                     <td style={{ padding: "6px 8px", whiteSpace: "nowrap", color: "var(--text-3)" }}>{row.reg.escalao || "—"}</td>
                     <td style={{ padding: "6px 8px" }}>
-                      <Link to={row.reg.link} style={{ color: "var(--text-3)", textDecoration: "none", fontWeight: 600 }} title="Abrir torneio">↗</Link>
+                      <a href={row.reg.link} target="_blank" rel="noopener noreferrer" style={{ color: "var(--text-3)", textDecoration: "none", fontWeight: 600 }} title="Abrir torneio (nova aba)">↗</a>
                     </td>
                   </tr>
                 ))}
