@@ -21,13 +21,13 @@ jobs:
       - run: npm ci
       - run: npx playwright install chromium --with-deps
       - run: node scripts/fetch-uskids-member-history.js
-      # O fetch produz um monolítico uskids-member-history.json que já passa
-      # dos 300 MB — acima do limite de 100 MB do GitHub. O split parte-o em
-      # chunks ≤ 70 MB e apaga o monolítico. Os chunks alimentam o build-slim
-      # e ficam em git como cache para o próximo run do fetch.
-      # Target 70 MB (não 85) para ficar ~30 % abaixo do hard-limit de 100 MB
-      # e dentro do recommended-soft-limit do GitHub (warning a partir de 50 MB).
-      - run: node scripts/split-member-history.js --target-mb=70
+      # O fetch já escreve directamente chunks uskids-member-history-NNN.json
+      # (≤ 85 MB) — não há monolítico (o JSON.stringify do objecto inteiro
+      # passava o limite de string do V8 e rebentava). O split corre em modo
+      # --from-chunks: consolida os chunks do fetch e re-equilibra para ≤ 70 MB,
+      # ~30 % abaixo do hard-limit de 100 MB do GitHub. Os chunks alimentam o
+      # build-slim e ficam em git como cache para o próximo run do fetch.
+      - run: node scripts/split-member-history.js --from-chunks --target-mb=70
       - run: node scripts/build-member-history-slim.js
       - name: Commit se houve alterações
         run: |

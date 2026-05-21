@@ -11,7 +11,15 @@
  *   2. Fingerprint de strokes via GetPlayerTeeTimes
  *   3. Fingerprint de strokes via uskids-results.json
  *
- * Output: public/data-archive/uskids-member-history.json
+ * Output: chunks numerados public/data-archive/uskids-member-history-NNN.json
+ *   (escritos directamente, sem monolítico — ver writeSharded(); o monolítico
+ *    passava o limite de string do V8 com 11k+ jogadores).
+ *
+ * Filtros de volume (ver constantes MAX_AGE_TODAY e TOP_N_PER_FLIGHT):
+ *   - Ignora flights de torneios antigos cujas crianças hoje teriam ≥ 18 anos.
+ *   - Só guarda o histórico de quem ficou no top-N de cada escalão.
+ *   Afecta apenas o seguimento da carreira dos rivais — os resultados dos
+ *   torneios vêm de pipelines separados e ficam intactos.
  *
  * Uso:
  *   node fetch-uskids-member-history.js               # processa novos + actualiza histórico
@@ -117,6 +125,29 @@ const ESCALOES_BOYS = ['boys 9', 'boys 10', 'boys 11', 'boys 12', 'boys 13'];
 const escalaoValido = (nome) =>
   ESCALOES_BOYS.some(p => (nome || '').toLowerCase().startsWith(p));
 
+// ── Filtros de redução de volume ─────────────
+// O tracker segue rivais do Manuel (nascido 2014). Torneios antigos (ex:
+// European Championship 2015/2016) devolvem crianças "Boys 9" nascidas em
+// ~2006 — hoje com ~20 anos, fora do âmbito. Filtramos a dois níveis:
+//
+//  1. MAX_AGE_TODAY — ignora flights cujas crianças hoje teriam ≥ N anos,
+//     estimando o ano de nascimento a partir do ano do torneio e do escalão.
+//     Corta flights inteiros ANTES de puxar a carreira (poupa fetches).
+//  2. TOP_N_PER_FLIGHT — só guarda o histórico de quem ficou no top-N de
+//     pelo menos um dos torneios onde foi descoberto. 0 = sem limite.
+//
+// NOTA: estes filtros só afectam o seguimento da CARREIRA individual dos
+// rivais (tab Rivais / H2H / DOB na KIDSPage). Os resultados/leaderboards
+// dos torneios vêm de pipelines separados (uskids-results.json e
+// uskids_torneios_completos*) e NÃO são afectados.
+const CURRENT_YEAR       = new Date().getFullYear();
+const MAX_AGE_TODAY      = 18; // ignorar flights com crianças hoje ≥ 18 anos
+const TOP_N_PER_FLIGHT   = 5; // guardar só top-5 de cada escalão (0 = sem limite)
+
+// Manuel nunca é filtrado (2 contas USKids — ver MANUEL_PLAYER_IDS em
+// src/constants/manuel.ts). Mantido como allowlist independente dos filtros.
+const MANUEL_MIDS = new Set(['630106', '605933']);
+
 const DELAY_MS   = 200;
 const DELAY_HIST = 150;
 
@@ -133,27 +164,43 @@ async function initPage(page, tcode) {
   await sleep(500);
 }
 
-// Auto-descobre os flights Boys 9-13 de um torneio via GetMeta
-async function descobrirFlights(page, tcode) {
-  try {
-    const meta = await pageJSON(page, `${API}?op=GetMeta&t=${tcode}`);
-    if (!meta) return [];
-    const flights   = meta.flights    || {};
-    const ageGroups = meta.age_groups || {};
-    const resultado = [];
-    for (const [fid, fl] of Object.entries(flights)) {
-      const agId   = fl.age_group;
-      const agName = ageGroups[agId]?.name || fl.name || '';
-      if (escalaoValido(agName)) {
-        resultado.push({ fid: parseInt(fid), ag: agName });
-      }
+// Extrai os flights Boys 9-13 de uma meta (GetMeta) já obtida.
+function parseFlights(meta) {
+  if (!meta) return [];
+  const flights   = meta.flights    || {};
+  const ageGroups = meta.age_groups || {};
+  const resultado = [];
+  for (const [fid, fl] of Object.entries(flights)) {
+    const agId   = fl.age_group;
+    const agName = ageGroups[agId]?.name || fl.name || '';
+    if (escalaoValido(agName)) {
+      resultado.push({ fid: parseInt(fid), ag: agName });
     }
-    resultado.sort((a, b) => a.ag.localeCompare(b.ag));
-    return resultado;
-  } catch (err) {
-    console.warn(`    ⚠️ GetMeta falhou para t=${tcode}: ${err.message}`);
-    return [];
   }
+  resultado.sort((a, b) => a.ag.localeCompare(b.ag));
+  return resultado;
+}
+
+// Ano do torneio a partir da meta (start_date em "M/D/YYYY" ou "YYYY-MM-DD").
+function anoDoTorneio(meta) {
+  const sd = meta?.tournament?.start_date || meta?.start_date || '';
+  const m  = String(sd).match(/(\d{4})/); // o ano é o único bloco de 4 dígitos
+  return m ? parseInt(m[1], 10) : null;
+}
+
+// Menor idade implícita no nome do escalão ("Boys 13-14" → 13, "Boys 9" → 9).
+// Usamos a menor para a decisão de corte ser conservadora (não dropar flights
+// que ainda contêm crianças suficientemente novas).
+function parseAgeNum(ag) {
+  const nums = String(ag).match(/\d+/g);
+  return nums ? Math.min(...nums.map(Number)) : null;
+}
+
+// Posição numérica a partir de p_place ("T5" → 5, "1" → 1, 3 → 3).
+function parsePlace(p) {
+  if (p == null) return null;
+  const m = String(p).match(/\d+/);
+  return m ? parseInt(m[0], 10) : null;
 }
 
 async function pageJSON(page, url, method = 'GET') {
@@ -293,6 +340,75 @@ function loadCache() {
   return merged;
 }
 
+// ── Escrita em chunks numerados ──────────────
+// O monolítico (`uskids-member-history.json`) deixou de ser escrito: com
+// 11k+ jogadores o `JSON.stringify` do objecto inteiro passa o limite duro
+// do V8 para strings (536.870.888 chars ≈ 512 MB) e rebenta com
+// `RangeError: Invalid string length`. Em vez disso escrevemos directamente
+// chunks `uskids-member-history-NNN.json` ≤ ~85 MB cada — o mesmo formato
+// que `split-member-history.js` produzia e que `loadCache()` e
+// `build-member-history-slim.js` já sabem reler.
+const SHARD_TARGET_MB   = 85;
+const SHARD_TARGET_SIZE  = SHARD_TARGET_MB * 1024 * 1024;
+const SHARD_RE = /^uskids-member-history-\d{3,}\.json$/;
+
+function writeSharded(cacheObj) {
+  fs.mkdirSync(DIR, { recursive: true });
+  const geradoEm  = cacheObj.gerado_em || new Date().toISOString();
+  const torneios  = cacheObj.torneios || {};
+  const jogadores = cacheObj.jogadores || {};
+  const mids = Object.keys(jogadores);
+
+  // Apagar chunks antigos (o número de chunks varia de corrida para corrida).
+  // Apaga-se antes de escrever para não deixar chunks órfãos de uma corrida
+  // anterior maior.
+  for (const f of fs.readdirSync(DIR)) {
+    if (SHARD_RE.test(f)) fs.unlinkSync(path.join(DIR, f));
+  }
+
+  // Overhead fixo = envelope + `torneios` partilhado (duplicado em cada chunk;
+  // build-member-history-slim.js faz merge). Aqui é pequeno (só {name}).
+  const envelope = { gerado_em: geradoEm, torneios, jogadores: {} };
+  const fixedOverhead = Buffer.byteLength(JSON.stringify(envelope), 'utf8');
+  const playersBudget = Math.max(SHARD_TARGET_SIZE - fixedOverhead, 1024 * 1024);
+
+  let chunkIdx = 1;
+  let slice = {};
+  let sliceSize = 0;
+  const written = [];
+
+  const flush = () => {
+    if (!Object.keys(slice).length) return;
+    const nnn = String(chunkIdx++).padStart(3, '0');
+    const outPath = path.join(DIR, `uskids-member-history-${nnn}.json`);
+    // Sem indentação — ficheiros de cache, não precisam de ser human-readable.
+    const str = JSON.stringify({ gerado_em: geradoEm, torneios, jogadores: slice });
+    fs.writeFileSync(outPath, str, 'utf8');
+    written.push({ path: outPath, size: Buffer.byteLength(str, 'utf8') });
+    slice = {};
+    sliceSize = 0;
+  };
+
+  for (const mid of mids) {
+    const entryStr  = JSON.stringify({ [mid]: jogadores[mid] });
+    const entrySize = Buffer.byteLength(entryStr, 'utf8') - 2 + 1; // descontar {} + vírgula
+    if (sliceSize + entrySize > playersBudget && Object.keys(slice).length > 0) flush();
+    slice[mid] = jogadores[mid];
+    sliceSize += entrySize;
+  }
+  flush();
+
+  // Garantir que nenhum chunk excede 100 MB (GitHub rejeita ≥100 MB).
+  const maxSize = written.reduce((m, w) => Math.max(m, w.size), 0);
+  if (maxSize >= 100 * 1024 * 1024) {
+    throw new Error(
+      `Chunk excede 100 MB (${(maxSize / 1048576).toFixed(1)} MB). ` +
+      `Baixar SHARD_TARGET_MB (actual: ${SHARD_TARGET_MB}).`
+    );
+  }
+  return written;
+}
+
 // ── Re-match offline (--clean) ───────────────
 
 function cleanAndRematch() {
@@ -324,7 +440,8 @@ function cleanAndRematch() {
   }
 
   cache.gerado_em = new Date().toISOString();
-  fs.writeFileSync(OUTPUT, JSON.stringify(cache, null, 2), 'utf8');
+  const chunks = writeSharded(cache);
+  console.log(`  💾 ${chunks.length} chunks escritos`);
 
   const total = Object.keys(cache.jogadores).length;
   const named = Object.values(cache.jogadores).filter(j => j.name && j.name !== '?' && j.name !== null).length;
@@ -386,7 +503,7 @@ async function main() {
     cachedTorneios.set(mid, new Set(Object.keys(j.torneios || {})));
   }
 
-  let matched = 0, unmatched = 0, skipped = 0;
+  let matched = 0, unmatched = 0, skipped = 0, skippedTopN = 0;
 
   try {
     // ══════════════════════════════════════════════
@@ -396,17 +513,40 @@ async function main() {
     for (const tcode of tcodes) {
       await initPage(page, tcode);
 
-      // Usar flights manuais se existirem, senão auto-descobrir via GetMeta
-      let flights = FLIGHTS_MANUAL[tcode];
-      if (!flights || flights.length === 0) {
-        flights = await descobrirFlights(page, tcode);
+      // GetMeta uma vez por torneio → nome + ano (para o filtro de idade) +
+      // flights (auto-descoberta quando não há flights manuais).
+      let meta = null;
+      try {
+        meta = await pageJSON(page, `${API}?op=GetMeta&t=${tcode}`);
         await sleep(DELAY_MS);
+      } catch (err) {
+        console.warn(`    ⚠️ GetMeta falhou para t=${tcode}: ${err.message}`);
       }
 
-      const tournLabel = cache.torneios[tcode]?.name || `t=${tcode}`;
-      console.log(`\n▶ ${tournLabel} (${flights.length} flights)`);
+      if (!cache.torneios[tcode] || !cache.torneios[tcode].name) {
+        cache.torneios[tcode] = { name: meta?.tournament?.name || `t=${tcode}` };
+      }
+
+      const tournYear = anoDoTorneio(meta);
+      let flights = FLIGHTS_MANUAL[tcode];
+      if (!flights || flights.length === 0) flights = parseFlights(meta);
+
+      const tournLabel = cache.torneios[tcode].name;
+      console.log(`\n▶ ${tournLabel}${tournYear ? ` (${tournYear})` : ''} (${flights.length} flights)`);
 
       for (const { fid, ag } of flights) {
+        // ── Filtro de idade: ignorar flights de crianças hoje ≥ MAX_AGE_TODAY ──
+        if (tournYear) {
+          const ageNum = parseAgeNum(ag);
+          if (ageNum != null) {
+            const birthYear = tournYear - ageNum;
+            const ageToday  = CURRENT_YEAR - birthYear;
+            if (ageToday >= MAX_AGE_TODAY) {
+              console.log(`  ⏭️  ${ag} (flight ${fid}) — nasc.~${birthYear}, hoje ~${ageToday} anos ≥ ${MAX_AGE_TODAY} → ignorado`);
+              continue;
+            }
+          }
+        }
         console.log(`  ⛳ ${ag} (flight ${fid})`);
 
         // Member IDs via GetTournamentPlayers
@@ -479,17 +619,6 @@ async function main() {
         }
 
         console.log(`    → ${memberIds.length} membros | ${fpMap.size} fingerprints | ${directNames} nomes directos`);
-      }
-
-      if (!cache.torneios[tcode] || !cache.torneios[tcode].name) {
-        // Tentar obter nome do torneio do GetMeta
-        try {
-          const meta = await pageJSON(page, `${API}?op=GetMeta&t=${tcode}`);
-          cache.torneios[tcode] = { name: meta?.tournament?.name || `t=${tcode}` };
-        } catch {
-          cache.torneios[tcode] = { name: `t=${tcode}` };
-        }
-        await sleep(DELAY_MS);
       }
     }
 
@@ -574,6 +703,21 @@ async function main() {
           parseDate(b.t_start_date).localeCompare(parseDate(a.t_start_date)))[0];
         const ag = latestT?.p_age_group || '';
         if (ag.startsWith('Girls') || ag.includes('Girl')) { skipped++; continue; }
+
+        // ── Filtro TOP-N: só guardar quem ficou no top-N de pelo menos um
+        // dos torneios onde foi descoberto. Aplica-se apenas a membros NOVOS
+        // em modo default (cache existente e --refresh-all já são curados).
+        // Manuel nunca é filtrado.
+        if (!refreshAll && isNew && TOP_N_PER_FLIGHT > 0 && !MANUEL_MIDS.has(midStr)) {
+          const discoverTcodes = new Set((memberFlights.get(mid) || []).map(f => String(f.tcode)));
+          let bestPlace = Infinity;
+          for (const tid of tids) {
+            if (!discoverTcodes.has(String(tid))) continue;
+            const pl = parsePlace(data[tid]?.p_place);
+            if (pl != null && pl < bestPlace) bestPlace = pl;
+          }
+          if (bestPlace > TOP_N_PER_FLIGHT) { skippedTopN++; continue; }
+        }
 
         // ── Matching de nome (3 estratégias) ──────────────────────
 
@@ -662,15 +806,15 @@ async function main() {
 
       await sleep(DELAY_HIST);
 
-      if (processed % 50 === 0) {
+      if (processed % 250 === 0) {
         cache.gerado_em = new Date().toISOString();
-        fs.mkdirSync(DIR, { recursive: true });
-        fs.writeFileSync(OUTPUT, JSON.stringify(cache, null, 2), 'utf8');
-        console.log(`  💾 Checkpoint: ${Object.keys(cache.jogadores).length} jogadores`);
+        const chunks = writeSharded(cache);
+        console.log(`  💾 Checkpoint: ${Object.keys(cache.jogadores).length} jogadores em ${chunks.length} chunks`);
       }
     }
 
     if (skipped) console.log(`\n  🚫 ${skipped} Girls/outros ignorados`);
+    if (skippedTopN) console.log(`  🚫 ${skippedTopN} fora do top-${TOP_N_PER_FLIGHT} ignorados`);
 
   } finally {
     await browser.close();
@@ -689,19 +833,20 @@ async function main() {
 
   // ── Salvar ──
   cache.gerado_em = new Date().toISOString();
-  fs.mkdirSync(DIR, { recursive: true });
-  fs.writeFileSync(OUTPUT, JSON.stringify(cache, null, 2), 'utf8');
+  const chunksFinais = writeSharded(cache);
 
   const total      = Object.keys(cache.jogadores).length;
   const named      = Object.values(cache.jogadores).filter(j => j.name && j.name !== '?').length;
   const totalEntries = Object.values(cache.jogadores)
     .reduce((s, j) => s + Object.keys(j.torneios).length, 0);
 
+  const maxChunk = chunksFinais.reduce((m, w) => Math.max(m, w.size), 0);
   console.log('\n══════════════════════════════════════');
-  console.log('✅  uskids-member-history.json');
+  console.log(`✅  uskids-member-history-NNN.json (${chunksFinais.length} chunks, maior ${(maxChunk / 1048576).toFixed(1)} MB)`);
   console.log(`    ${total} jogadores (${named} com nome, ${total - named} sem nome)`);
   console.log(`    ${totalEntries} entradas de torneio`);
   console.log(`    Matched: ${matched} | Unmatched: ${unmatched} | AgeGroups fixed: ${agFixed}`);
+  console.log(`    Filtros: idade <${MAX_AGE_TODAY} anos hoje | top-${TOP_N_PER_FLIGHT} por escalão (${skippedTopN} cortados)`);
   console.log('══════════════════════════════════════');
 }
 
