@@ -243,9 +243,27 @@ async function getPlayerTeeTimes(page, fid, round, pageNum) {
   return d;
 }
 
+// Constrói uma chave de "impressão digital" a partir dos strokes de uma ronda.
+//
+// ⚠ CRUZAMENTO DE SEGURANÇA (crítico — não remover):
+// Arrays de strokes degenerados NÃO servem como fingerprint porque colidem
+// entre centenas de jogadores e fazem o matchPlayer colar o mesmo nome a
+// dezenas de member IDs distintos. Casos degenerados observados nos dados:
+//   • [0,0,0,...]   → inscrito mas sem cartão submetido (137+ membros colidem)
+//   • [-1,-1,-1,..] → placeholder DNS/DNF da USKids (209+ membros colidem)
+//   • rondas com poucos buracos reais ou sem variância (ex: tudo 4)
+// Em qualquer destes casos devolvemos '' → a ronda é ignorada como fingerprint
+// (matchPlayer faz `if (!sk) continue;`). Só rondas REAIS e discriminativas
+// produzem chave.
+const MIN_FINGERPRINT_HOLES = 6;   // mínimo de buracos jogados (>0) para confiar
+const MIN_FINGERPRINT_DISTINCT = 3; // mínimo de valores distintos (rejeita "tudo igual")
 function strokesKey(arr) {
   if (!arr || !arr.length) return '';
-  return arr.join(',');
+  // Só buracos efectivamente jogados (strokes > 0). Filtra 0 e -1.
+  const pos = arr.filter(v => Number(v) > 0);
+  if (pos.length < MIN_FINGERPRINT_HOLES) return '';
+  if (new Set(pos).size < MIN_FINGERPRINT_DISTINCT) return '';
+  return pos.join(',');
 }
 
 function parseDate(s) {
@@ -270,9 +288,17 @@ function buildResultsFingerprints() {
           const rn = ronda.ronda;
           for (const j of ronda.leaderboard || []) {
             const sk = strokesKey(j.strokes);
-            if (sk) fp.set(`${tcode}:R${rn}:${sk}`, {
-              name: j.nome, country: j.pais, place: j.cidade || '',
-            });
+            if (!sk) continue;
+            const key = `${tcode}:R${rn}:${sk}`;
+            const info = { name: j.nome, country: j.pais, place: j.cidade || '' };
+            // Cruzamento de segurança: se esta chave já existe com outro nome,
+            // é ambígua → marcar null para matchPlayer nunca a usar.
+            if (fp.has(key)) {
+              const prev = fp.get(key);
+              if (prev && prev.name !== info.name) fp.set(key, null);
+            } else {
+              fp.set(key, info);
+            }
           }
         }
       }
@@ -617,7 +643,16 @@ async function main() {
               // ── Estratégia 2: fingerprint de strokes (fallback) ──
               for (const [rn, rd] of Object.entries(pl.rounds || {})) {
                 const sk = strokesKey(rd.strokes);
-                if (sk) fpMap.set(`R${rn}:${sk}`, info);
+                if (!sk) continue;
+                const fkey = `R${rn}:${sk}`;
+                // Cruzamento de segurança: chave partilhada por nomes diferentes
+                // dentro do mesmo flight → ambígua → null (matchPlayer ignora).
+                if (fpMap.has(fkey)) {
+                  const prev = fpMap.get(fkey);
+                  if (prev && prev.name !== info.name) fpMap.set(fkey, null);
+                } else {
+                  fpMap.set(fkey, info);
+                }
               }
             }
             await sleep(DELAY_MS);

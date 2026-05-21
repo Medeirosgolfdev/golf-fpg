@@ -21,7 +21,7 @@
  */
 
 import React, { useEffect, useMemo, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import {
   useJuniorsCanonical, computeTier, getTierLabel, getTierColors,
   getSharedTournamentIds, getSharedFlightTids, countWins, countTop3,
@@ -48,6 +48,12 @@ function shortReg(name: string): string {
   const n = name.replace(/\b20\d{2}\b/g, "").replace(/\s+/g, " ").trim();
   return n.length > 24 ? n.slice(0, 23) + "…" : n;
 }
+const CIRCUIT_CHIP: Record<string, { bg: string; fg: string; label: string }> = {
+  US: { bg: "var(--bg-info-subtle, #eff6ff)", fg: "var(--color-info-dark, #1e3a8a)", label: "USKids" },
+  PT: { bg: "var(--bg-success-subtle, #ecfdf5)", fg: "var(--color-good-dark)", label: "FPG (Portugal)" },
+  ES: { bg: "var(--bg-warn-subtle, #fffbeb)", fg: "var(--color-warn-dark, #92400e)", label: "RFEG (Espanha)" },
+  FR: { bg: "var(--bg-pink, #fdf2f8)", fg: "var(--color-purple, #6b21a8)", label: "FFG (França)" },
+};
 
 const ICON_SCOPE = "\u{1F52D}";
 const ICON_BACK = "←";
@@ -59,7 +65,7 @@ const ICON_EXTERNAL = "↗";
 type ScoutKey =
   | "name" | "country" | "age" | "tier"
   | "pos" | "vsM" | "form"
-  | "wins";
+  | "wins" | "hcp";
 
 interface ScoutRow {
   junior: Junior;
@@ -79,6 +85,9 @@ interface ScoutRow {
   vsMSameFlight: number;
   fieldOnly?: boolean;
   cidade?: string;
+  hcp: number | null;
+  club: string | null;
+  circuits: string[];
 }
 
 interface FieldPlayer { nome: string; pais?: string; cidade?: string; firstSeen?: string }
@@ -139,7 +148,6 @@ function ScoutViewContent() {
   const status = useJuniorsCanonical();
   const field = useUskidsField();
   const params = useParams<{ tid: string }>();
-  const navigate = useNavigate();
 
   if (status.kind === "loading") return <LoadingState />;
   if (status.kind === "error") return <EmptyState size="md" message={"Falhou: " + status.error} />;
@@ -149,7 +157,7 @@ function ScoutViewContent() {
 
   const canonical = data.tournamentById.get(tid);
   if (canonical) {
-    return <ScoutContent data={data} tournament={canonical} onSelect={(jid) => navigate("/kids2/" + jid)} />;
+    return <ScoutContent data={data} tournament={canonical} onSelect={(jid) => window.open("/kids2/" + jid, "_blank", "noopener")} />;
   }
 
   const uskMatch = tid.match(/^usk(\d+)$/);
@@ -161,7 +169,7 @@ function ScoutViewContent() {
       return <ScoutContent
         data={built.data}
         tournament={built.tournament}
-        onSelect={(jid) => navigate("/kids2/" + jid)}
+        onSelect={(jid) => window.open("/kids2/" + jid, "_blank", "noopener")}
       />;
     }
   }
@@ -342,6 +350,15 @@ function ScoutContent({ data, tournament, onSelect }: {
           vsMSameFlight = getSharedFlightTids(junior, manuel, data.tournamentById).length;
         }
 
+        const src = junior.sources || {};
+        const hcp = src.fpg?.hcpExact ?? src.rfeg?.hcp ?? src.ffgolf?.hcp ?? null;
+        const club = junior.club || src.fpg?.club || src.rfeg?.club || src.ffgolf?.club || null;
+        const circuits: string[] = [];
+        if (src.uskids) circuits.push("US");
+        if (src.fpg) circuits.push("PT");
+        if (src.rfeg) circuits.push("ES");
+        if (src.ffgolf) circuits.push("FR");
+
         out.push({
           junior, flight: f,
           result: isFuture ? null : r,
@@ -352,6 +369,7 @@ function ScoutContent({ data, tournament, onSelect }: {
           vsMTotal, vsMCount, vsMSameFlight,
           fieldOnly: isFieldOnly,
           cidade,
+          hcp, club, circuits,
         });
       }
     }
@@ -390,7 +408,7 @@ function ScoutContent({ data, tournament, onSelect }: {
   const { sortKey, sortDir, toggleSort } = useSort<ScoutKey>(isFuture ? "tier" : "pos", "asc", {
     name: "asc", country: "asc", age: "asc", tier: "asc",
     pos: "asc", vsM: "asc", form: "asc",
-    wins: "desc",
+    wins: "desc", hcp: "asc",
   });
 
   const sorted = useMemo(() => {
@@ -408,6 +426,7 @@ function ScoutContent({ data, tournament, onSelect }: {
         case "vsM":         return sign * (safe(a.vsMTotal) - safe(b.vsMTotal));
         case "form":        return sign * (safe(a.recentPos) - safe(b.recentPos));
         case "wins":        return sign * (b.wins - a.wins);
+        case "hcp":         return sign * (safe(a.hcp) - safe(b.hcp));
         default: return 0;
       }
     });
@@ -621,11 +640,13 @@ function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSe
             <SortableHdr<ScoutKey> k="name"        sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={thStyle}>Nome</SortableHdr>
             <SortableHdr<ScoutKey> k="age"         sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, textAlign: "center", width: 50 }}>Idade</SortableHdr>
             <SortableHdr<ScoutKey> k="tier"        sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 110 }}>Tier</SortableHdr>
+            <SortableHdr<ScoutKey> k="hcp"         sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, textAlign: "center", width: 56 }} title="Handicap (PT / Espanha / França)">HCP</SortableHdr>
             <SortableHdr<ScoutKey> k="wins"        sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, textAlign: "center", width: 48 }}>{ICON_TROPHY}</SortableHdr>
             <th style={{ ...thStyle, width: 90, textAlign: "center" }} title="Ultimas 3 posicoes (mais recente a esquerda)">Forma</th>
             {!isFuture && <SortableHdr<ScoutKey> k="pos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 60, textAlign: "center" }}>Pos</SortableHdr>}
             {manuel && <SortableHdr<ScoutKey> k="vsM" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 100, textAlign: "right" }}>vs M (media)</SortableHdr>}
             {manuel && <th style={{ ...thStyle, width: 56, textAlign: "center" }} title="Confrontos no mesmo flight">{ICON_SWORDS}H2H</th>}
+            <th style={{ ...thStyle, width: 96 }} title="Circuitos onde compete">Circuitos</th>
             <th style={{ ...thStyle, minWidth: 160 }} title="Outros torneios futuros onde este jogador está inscrito">📅 Próximos</th>
             <th style={{ ...thStyle, width: 30, textAlign: "center" }} />
           </tr>
@@ -639,11 +660,10 @@ function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSe
                 style={{
                   borderBottom: "1px solid var(--border-light)",
                   cursor: clickable ? "pointer" : "default",
-                  opacity: row.fieldOnly ? 0.65 : 1,
-                  background: row.tier === "elite" ? "var(--bg-warn-subtle, #fffbeb)" : undefined,
+                  opacity: row.fieldOnly ? 0.6 : 1,
                 }}
                 onClick={clickable ? () => onSelect(row.junior.id) : undefined}
-                title={clickable ? "Abrir perfil em KIDS2" : "Sem perfil canonico (apenas inscricao)"}
+                title={clickable ? "Abrir perfil em KIDS2 (nova aba)" : "Sem perfil canonico (apenas inscricao)"}
               >
                 <td style={tdStyle}>
                   <span style={{ marginRight: 4 }}>{flagOf(row.junior.country || row.junior.nationality || "")}</span>
@@ -654,7 +674,7 @@ function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSe
                   {!hideFlight && row.flight && (
                     <span style={{ fontSize: 10, color: "var(--text-3)", marginLeft: 6 }}>{ICON_DOT} {row.flight.label}</span>
                   )}
-                  {row.cidade && <div style={{ fontSize: 10, color: "var(--text-3)", marginTop: 1 }}>{row.cidade}</div>}
+                  {(row.club || row.cidade) && <div style={{ fontSize: 10, color: "var(--text-3)", marginTop: 1 }}>{row.club || row.cidade}</div>}
                 </td>
                 <td style={{ ...tdStyle, textAlign: "center", color: "var(--text-2)" }}>{row.age != null ? row.age : "-"}</td>
                 <td style={tdStyle}>
@@ -662,6 +682,9 @@ function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSe
                     const c = getTierColors(row.tier);
                     return <span style={{ background: c.bg, color: c.fg, fontSize: 10, padding: "2px 7px", borderRadius: 10, fontWeight: 700, border: "1px solid " + c.fg }}>{getTierLabel(row.tier)}</span>;
                   })() : <span style={{ color: "var(--text-3)", fontSize: 10 }}>{row.fieldOnly ? "sem dados" : "-"}</span>}
+                </td>
+                <td style={{ ...tdStyle, textAlign: "center", color: row.hcp != null ? "var(--text)" : "var(--text-3)", fontWeight: row.hcp != null ? 600 : 400 }}>
+                  {row.hcp != null ? row.hcp.toFixed(1) : "-"}
                 </td>
                 <td style={{ ...tdStyle, textAlign: "center", fontWeight: row.wins > 0 ? 700 : 400, color: row.wins > 0 ? "var(--medal-gold-strong)" : "var(--text-3)" }}>
                   {row.wins || "-"}
@@ -694,6 +717,21 @@ function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSe
                       : "-"}
                   </td>
                 )}
+                <td style={tdStyle}>
+                  {row.circuits.length ? (
+                    <span style={{ display: "inline-flex", gap: 3, flexWrap: "wrap" }}>
+                      {row.circuits.map((c) => {
+                        const m = CIRCUIT_CHIP[c];
+                        return (
+                          <span key={c} title={m?.label || c}
+                            style={{ fontSize: 9, fontWeight: 700, padding: "1px 5px", borderRadius: 4, background: m?.bg || "var(--bg-muted)", color: m?.fg || "var(--text-2)" }}>
+                            {c}
+                          </span>
+                        );
+                      })}
+                    </span>
+                  ) : <span style={{ color: "var(--text-3)", fontSize: 10 }}>—</span>}
+                </td>
                 <td style={{ ...tdStyle, maxWidth: 240 }}>
                   {(() => {
                     const regs = (upcoming?.get(row.junior.id) ?? [])
