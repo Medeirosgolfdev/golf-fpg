@@ -1,14 +1,14 @@
 {
   "tourId": 67147,
   "url": "https://www.nextcaddy.com/tour/67147",
-  "scrapedAt": "2026-05-09T10:07:45.170Z",
+  "scrapedAt": "2026-05-21T16:38:20.247Z",
   "meta": {
     "name": "I Prueba del Circuito Senior de CyL",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "28 mar 2026",
-    "dateEnd": "28 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Senior",
@@ -19,13 +19,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-28"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 56,
       "header": [
         "Pos",
         "Jugador",
@@ -658,6 +659,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Scratch Individual Damas",
+      "expectedJugadores": 11,
       "header": [
         "Pos",
         "Jugador",
@@ -795,6 +798,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Tercera_Categoria",
+      "expectedJugadores": 13,
       "header": [
         "Pos",
         "Jugador",
@@ -954,6 +959,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Segunda_Categoria",
+      "expectedJugadores": 20,
       "header": [
         "Pos",
         "Jugador",
@@ -1190,6 +1197,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Primera_Categoria",
+      "expectedJugadores": 23,
       "header": [
         "Pos",
         "Jugador",
@@ -1459,6 +1468,8 @@
     },
     {
       "category": 6,
+      "categoryName": "Scratch Individual Caballeros",
+      "expectedJugadores": 44,
       "header": [
         "Pos",
         "Jugador",
@@ -1958,6 +1969,33 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 56
+    },
+    "2": {
+      "name": "Scratch Individual Damas",
+      "jugadores": 11
+    },
+    "3": {
+      "name": "Tercera_Categoria",
+      "jugadores": 13
+    },
+    "4": {
+      "name": "Segunda_Categoria",
+      "jugadores": 20
+    },
+    "5": {
+      "name": "Primera_Categoria",
+      "jugadores": 23
+    },
+    "6": {
+      "name": "Scratch Individual Caballeros",
+      "jugadores": 44
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2765,22 +2803,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71545
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -3292,5 +3314,25 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:04.573Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71545
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/3109285997_convocatoria_valderrey.pdf",
+    "/uploads/circulares/cirfgcyl1426.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:59.462Z"
 }

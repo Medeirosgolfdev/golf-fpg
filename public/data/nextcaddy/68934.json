@@ -1,14 +1,14 @@
 {
   "tourId": 68934,
   "url": "https://www.nextcaddy.com/tour/68934",
-  "scrapedAt": "2026-05-09T10:07:47.518Z",
+  "scrapedAt": "2026-05-21T16:38:25.709Z",
   "meta": {
     "name": "XXIV TORNEO OLLERO",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "31 mar 2026",
-    "dateEnd": "31 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-31"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -542,73 +543,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73636
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Aparicio Vallarino, Juan",
-          "holeNumber": 3,
-          "createdAt": "08/11/25 11:47:46"
-        },
-        {
-          "playerName": "Ruiz Martos, Ines",
-          "holeNumber": 6,
-          "createdAt": "08/11/25 11:51:43"
-        },
-        {
-          "playerName": "Sanchez Fernandez, Elena",
-          "holeNumber": 7,
-          "createdAt": "08/11/25 11:59:00"
-        },
-        {
-          "playerName": "Martin Martin, Juan",
-          "holeNumber": 3,
-          "createdAt": "08/11/25 13:04:31"
-        },
-        {
-          "playerName": "Martin Martin, Juan",
-          "holeNumber": 6,
-          "createdAt": "08/11/25 13:04:31"
-        },
-        {
-          "playerName": "Martin Martin, Juan",
-          "holeNumber": 7,
-          "createdAt": "08/11/25 13:04:31"
-        },
-        {
-          "playerName": "Perez Simon, Diego",
-          "holeNumber": 8,
-          "createdAt": "08/11/25 13:05:17"
-        },
-        {
-          "playerName": "Fernandez Montoto, Nicolas",
-          "holeNumber": 7,
-          "createdAt": "08/11/25 13:12:33"
-        },
-        {
-          "playerName": "Oriol De Rivera, Antonio Maria",
-          "holeNumber": 5,
-          "createdAt": "08/11/25 13:13:24"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -940,5 +874,73 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:30.959Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73636
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Aparicio Vallarino, Juan",
+          "holeNumber": 3,
+          "createdAt": "08/11/25 11:47:46"
+        },
+        {
+          "playerName": "Ruiz Martos, Ines",
+          "holeNumber": 6,
+          "createdAt": "08/11/25 11:51:43"
+        },
+        {
+          "playerName": "Sanchez Fernandez, Elena",
+          "holeNumber": 7,
+          "createdAt": "08/11/25 11:59:00"
+        },
+        {
+          "playerName": "Martin Martin, Juan",
+          "holeNumber": 3,
+          "createdAt": "08/11/25 13:04:31"
+        },
+        {
+          "playerName": "Martin Martin, Juan",
+          "holeNumber": 6,
+          "createdAt": "08/11/25 13:04:31"
+        },
+        {
+          "playerName": "Martin Martin, Juan",
+          "holeNumber": 7,
+          "createdAt": "08/11/25 13:04:31"
+        },
+        {
+          "playerName": "Perez Simon, Diego",
+          "holeNumber": 8,
+          "createdAt": "08/11/25 13:05:17"
+        },
+        {
+          "playerName": "Fernandez Montoto, Nicolas",
+          "holeNumber": 7,
+          "createdAt": "08/11/25 13:12:33"
+        },
+        {
+          "playerName": "Oriol De Rivera, Antonio Maria",
+          "holeNumber": 5,
+          "createdAt": "08/11/25 13:13:24"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:29.153Z"
 }

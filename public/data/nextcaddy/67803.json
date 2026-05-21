@@ -1,14 +1,14 @@
 {
   "tourId": 67803,
   "url": "https://www.nextcaddy.com/tour/67803",
-  "scrapedAt": "2026-05-09T09:58:08.631Z",
+  "scrapedAt": "2026-05-21T16:37:46.829Z",
   "meta": {
     "name": "Torneo Senior Pitch & Putt \"Olivar de la Hinojosa\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Club de Golf Olivar de la Hinojosa",
     "courseCode": "CM81",
-    "dateStart": "12 mar 2026",
-    "dateEnd": "12 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap) Circuito Senior De",
     "categories": [
       "Senior",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-12"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Hándicap Senior Masculino",
+      "expectedJugadores": 23,
       "header": [
         "Pos",
         "Jugador",
@@ -293,6 +294,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Clasificación Hándicap Supersenior Masculino",
+      "expectedJugadores": 66,
       "header": [
         "Pos",
         "Jugador",
@@ -1035,6 +1038,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Clasificación Hándicap Damas",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -1259,6 +1264,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Hándicap Senior Masculino",
+      "jugadores": 23
+    },
+    "2": {
+      "name": "Clasificación Hándicap Supersenior Masculino",
+      "jugadores": 66
+    },
+    "3": {
+      "name": "Clasificación Hándicap Damas",
+      "jugadores": 19
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2787,22 +2807,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72298
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -3782,5 +3786,25 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:13.233Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72298
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/67803_cartel_87.pdf",
+    "/uploads/competiciones/pdf/776872538_rrll_olivar_corto.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:09.236Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 67864,
   "url": "https://www.nextcaddy.com/tour/67864",
-  "scrapedAt": "2026-05-09T10:15:51.352Z",
+  "scrapedAt": "2026-05-21T16:39:23.144Z",
   "meta": {
     "name": "Circuito de Madrid de Profesionales Dobles \"El Robledal\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "el Robledal Golf",
     "courseCode": "CM08",
-    "dateStart": "04 may 2026",
-    "dateEnd": "04 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) 25º Circuito De Mad",
     "categories": [
       "Profesional",
@@ -17,11 +17,17 @@
       "Senior",
       "Infantil",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-04"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Pareja",
+      "jugadores": 40
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -584,22 +590,6 @@
       "nivel": "P+"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72379
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -751,15 +741,6 @@
         {
           "time": "09:30",
           "tee": 5,
-          "name": "Ruben Pardo Rodriguez",
-          "hcp": 0,
-          "ins": "2307798",
-          "jid": "72379",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 5,
           "name": "Jose Manuel Pardo Benitez",
           "hcp": 0,
           "ins": "2307797",
@@ -769,9 +750,9 @@
         {
           "time": "09:30",
           "tee": 5,
-          "name": "Pablo Hernandez Agudo",
+          "name": "Ruben Pardo Rodriguez",
           "hcp": 0,
-          "ins": "2308943",
+          "ins": "2307798",
           "jid": "72379",
           "nivel": "P"
         },
@@ -786,10 +767,10 @@
         },
         {
           "time": "09:30",
-          "tee": 6,
-          "name": "Teresa Diez Moliner",
+          "tee": 5,
+          "name": "Pablo Hernandez Agudo",
           "hcp": 0,
-          "ins": "2304639",
+          "ins": "2308943",
           "jid": "72379",
           "nivel": "P"
         },
@@ -799,6 +780,15 @@
           "name": "Julio Moreno Mendoza",
           "hcp": 0,
           "ins": "2304638",
+          "jid": "72379",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 6,
+          "name": "Teresa Diez Moliner",
+          "hcp": 0,
+          "ins": "2304639",
           "jid": "72379",
           "nivel": "P"
         },
@@ -823,18 +813,18 @@
         {
           "time": "09:30",
           "tee": 8,
-          "name": "Javier Garrido-Lestache Lopez",
+          "name": "Hugo Esposito Menard",
           "hcp": 0,
-          "ins": "2308270",
+          "ins": "2308271",
           "jid": "72379",
           "nivel": "P"
         },
         {
           "time": "09:30",
           "tee": 8,
-          "name": "Hugo Esposito Menard",
+          "name": "Javier Garrido-Lestache Lopez",
           "hcp": 0,
-          "ins": "2308271",
+          "ins": "2308270",
           "jid": "72379",
           "nivel": "P"
         },
@@ -859,18 +849,18 @@
         {
           "time": "09:30",
           "tee": 9,
-          "name": "Andrea Mulinacci",
+          "name": "Javier Herrero Gonzalez",
           "hcp": 0,
-          "ins": "2308944",
+          "ins": "2308945",
           "jid": "72379",
           "nivel": "P"
         },
         {
           "time": "09:30",
           "tee": 9,
-          "name": "Javier Herrero Gonzalez",
+          "name": "Andrea Mulinacci",
           "hcp": 0,
-          "ins": "2308945",
+          "ins": "2308944",
           "jid": "72379",
           "nivel": "P"
         },
@@ -913,15 +903,6 @@
         {
           "time": "09:30",
           "tee": 10,
-          "name": "Angel Muñoz Lara",
-          "hcp": 0,
-          "ins": "2306826",
-          "jid": "72379",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 10,
           "name": "Julian Nicolosi Martinez",
           "hcp": 0,
           "ins": "2306827",
@@ -930,10 +911,10 @@
         },
         {
           "time": "09:30",
-          "tee": 11,
-          "name": "Fernando Del Amo Morata",
+          "tee": 10,
+          "name": "Angel Muñoz Lara",
           "hcp": 0,
-          "ins": "2306864",
+          "ins": "2306826",
           "jid": "72379",
           "nivel": "P"
         },
@@ -943,6 +924,15 @@
           "name": "Ignacio Garrido Villacieros",
           "hcp": 0,
           "ins": "2306863",
+          "jid": "72379",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 11,
+          "name": "Fernando Del Amo Morata",
+          "hcp": 0,
+          "ins": "2306864",
           "jid": "72379",
           "nivel": "P"
         },
@@ -967,18 +957,18 @@
         {
           "time": "09:30",
           "tee": 12,
-          "name": "Francisco Zafra Molina",
+          "name": "Jose Carlos Zafra Camarmo",
           "hcp": 0,
-          "ins": "2308086",
+          "ins": "2308087",
           "jid": "72379",
           "nivel": "P"
         },
         {
           "time": "09:30",
           "tee": 12,
-          "name": "Jose Carlos Zafra Camarmo",
+          "name": "Francisco Zafra Molina",
           "hcp": 0,
-          "ins": "2308087",
+          "ins": "2308086",
           "jid": "72379",
           "nivel": "P"
         },
@@ -1183,18 +1173,18 @@
         {
           "time": "09:30",
           "tee": 18,
-          "name": "Gonzalo Garcia-Lomas Lopez-Cortijo",
+          "name": "Emilio Jose Aparicio Lopez",
           "hcp": 0,
-          "ins": "2308966",
+          "ins": "2308965",
           "jid": "72379",
           "nivel": "P"
         },
         {
           "time": "09:30",
           "tee": 18,
-          "name": "Emilio Jose Aparicio Lopez",
+          "name": "Gonzalo Garcia-Lomas Lopez-Cortijo",
           "hcp": 0,
-          "ins": "2308965",
+          "ins": "2308966",
           "jid": "72379",
           "nivel": "P"
         },
@@ -1273,18 +1263,18 @@
         {
           "time": "09:39",
           "tee": 9,
-          "name": "Sandro Barrio Guerrero",
+          "name": "Jorge Junquera Sevillano",
           "hcp": 0,
-          "ins": "2306811",
+          "ins": "2306810",
           "jid": "72379",
           "nivel": "P"
         },
         {
           "time": "09:39",
           "tee": 9,
-          "name": "Jorge Junquera Sevillano",
+          "name": "Sandro Barrio Guerrero",
           "hcp": 0,
-          "ins": "2306810",
+          "ins": "2306811",
           "jid": "72379",
           "nivel": "P"
         },
@@ -1327,5 +1317,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:15.346Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72379
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [
+    "/uploads/competiciones/pdf/4198630318_rrll_el_robledal_11_05_2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:11.752Z"
 }

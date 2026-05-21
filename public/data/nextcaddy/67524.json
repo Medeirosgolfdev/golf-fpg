@@ -1,14 +1,14 @@
 {
   "tourId": 67524,
   "url": "https://www.nextcaddy.com/tour/67524",
-  "scrapedAt": "2026-05-09T09:57:31.385Z",
+  "scrapedAt": "2026-05-21T16:36:48.820Z",
   "meta": {
     "name": "1 J. CIRCUITO VNG 2026. CATEGORIA ORO (0 - 12)",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "31 ene 2026",
-    "dateEnd": "31 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-31"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 23,
       "header": [
         "Pos",
         "Jugador",
@@ -294,6 +295,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 23,
       "header": [
         "Pos",
         "Jugador",
@@ -562,6 +565,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 23
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 23
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -893,73 +907,6 @@
       "nivel": "AMD5926544"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71988
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Gallego Martin, Jose",
-          "holeNumber": 10,
-          "createdAt": "08/07/25 16:09:25"
-        },
-        {
-          "playerName": "Fernandez Tapia-Ruano, Fernando",
-          "holeNumber": 10,
-          "createdAt": "08/07/25 16:09:25"
-        },
-        {
-          "playerName": "Zea Martin, Maria Elena",
-          "holeNumber": 7,
-          "createdAt": "08/07/25 16:09:25"
-        },
-        {
-          "playerName": "Perez Martin, Juan Jesus",
-          "holeNumber": 4,
-          "createdAt": "08/07/25 16:09:25"
-        },
-        {
-          "playerName": "Ducker, James",
-          "holeNumber": 7,
-          "createdAt": "08/07/25 16:09:26"
-        },
-        {
-          "playerName": "Ducker, James",
-          "holeNumber": 10,
-          "createdAt": "08/07/25 16:09:26"
-        },
-        {
-          "playerName": "Ducker, James",
-          "holeNumber": 11,
-          "createdAt": "08/07/25 16:09:26"
-        },
-        {
-          "playerName": "Ducker, James",
-          "holeNumber": 13,
-          "createdAt": "08/07/25 16:09:26"
-        },
-        {
-          "playerName": "Ducker, James",
-          "holeNumber": 15,
-          "createdAt": "08/07/25 16:09:26"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1174,5 +1121,75 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:08.955Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71988
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Gallego Martin, Jose",
+          "holeNumber": 10,
+          "createdAt": "08/07/25 16:09:25"
+        },
+        {
+          "playerName": "Fernandez Tapia-Ruano, Fernando",
+          "holeNumber": 10,
+          "createdAt": "08/07/25 16:09:25"
+        },
+        {
+          "playerName": "Zea Martin, Maria Elena",
+          "holeNumber": 7,
+          "createdAt": "08/07/25 16:09:25"
+        },
+        {
+          "playerName": "Perez Martin, Juan Jesus",
+          "holeNumber": 4,
+          "createdAt": "08/07/25 16:09:25"
+        },
+        {
+          "playerName": "Ducker, James",
+          "holeNumber": 7,
+          "createdAt": "08/07/25 16:09:26"
+        },
+        {
+          "playerName": "Ducker, James",
+          "holeNumber": 10,
+          "createdAt": "08/07/25 16:09:26"
+        },
+        {
+          "playerName": "Ducker, James",
+          "holeNumber": 11,
+          "createdAt": "08/07/25 16:09:26"
+        },
+        {
+          "playerName": "Ducker, James",
+          "holeNumber": 13,
+          "createdAt": "08/07/25 16:09:26"
+        },
+        {
+          "playerName": "Ducker, James",
+          "holeNumber": 15,
+          "createdAt": "08/07/25 16:09:26"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/2917379022_reglamento_circuito_villanueva_golf_2006.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:04.581Z"
 }

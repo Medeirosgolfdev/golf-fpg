@@ -1,14 +1,14 @@
 {
   "tourId": 67215,
   "url": "https://www.nextcaddy.com/tour/67215",
-  "scrapedAt": "2026-05-09T09:57:25.412Z",
+  "scrapedAt": "2026-05-21T16:36:39.728Z",
   "meta": {
     "name": "I Torneo RKN Senior · Turno de Mañana 10:00 · Turno de Tarde 13:00",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "21 ene 2026",
-    "dateEnd": "21 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Senior",
@@ -18,13 +18,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-21"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Individual Señoras Femenino Scratch General",
+      "expectedJugadores": 14,
       "header": [
         "Pos",
         "Jugador",
@@ -195,6 +196,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Individual Señoras Femenino Handicap General",
+      "expectedJugadores": 14,
       "header": [
         "Pos",
         "Jugador",
@@ -365,6 +368,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Senior Masculino Scratch General",
+      "expectedJugadores": 11,
       "header": [
         "Pos",
         "Jugador",
@@ -502,6 +507,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Senior Masculino Handicap General",
+      "expectedJugadores": 11,
       "header": [
         "Pos",
         "Jugador",
@@ -639,6 +646,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Super Senior Masculino Scratch General",
+      "expectedJugadores": 45,
       "header": [
         "Pos",
         "Jugador",
@@ -1150,6 +1159,8 @@
     },
     {
       "category": 6,
+      "categoryName": "Super Senior Masculino Handicap General",
+      "expectedJugadores": 45,
       "header": [
         "Pos",
         "Jugador",
@@ -1660,6 +1671,33 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Señoras Femenino Scratch General",
+      "jugadores": 14
+    },
+    "2": {
+      "name": "Individual Señoras Femenino Handicap General",
+      "jugadores": 14
+    },
+    "3": {
+      "name": "Senior Masculino Scratch General",
+      "jugadores": 11
+    },
+    "4": {
+      "name": "Senior Masculino Handicap General",
+      "jugadores": 11
+    },
+    "5": {
+      "name": "Super Senior Masculino Scratch General",
+      "jugadores": 45
+    },
+    "6": {
+      "name": "Super Senior Masculino Handicap General",
+      "jugadores": 45
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2656,253 +2694,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71620
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Eklund Norrby, Tomas",
-          "holeNumber": 7,
-          "createdAt": "19/06/25 21:08:48"
-        },
-        {
-          "playerName": "Dimarco, Nicholas",
-          "holeNumber": 16,
-          "createdAt": "19/06/25 21:08:48"
-        },
-        {
-          "playerName": "Galvez Del Postigo Guerrero, Jose Manuel",
-          "holeNumber": 2,
-          "createdAt": "19/06/25 21:08:48"
-        },
-        {
-          "playerName": "Galvez Del Postigo Guerrero, Jose Manuel",
-          "holeNumber": 13,
-          "createdAt": "19/06/25 21:08:48"
-        },
-        {
-          "playerName": "Lanzas Heredia, Maria Inmaculada",
-          "holeNumber": 15,
-          "createdAt": "19/06/25 21:08:48"
-        },
-        {
-          "playerName": "Sacerdote, Gonzalo Guillermo",
-          "holeNumber": 9,
-          "createdAt": "19/06/25 21:08:48"
-        },
-        {
-          "playerName": "Sacerdote, Gonzalo Guillermo",
-          "holeNumber": 15,
-          "createdAt": "19/06/25 21:08:48"
-        },
-        {
-          "playerName": "Muñoz Ramirez, Miguel",
-          "holeNumber": 13,
-          "createdAt": "19/06/25 21:08:48"
-        },
-        {
-          "playerName": "Castillo Cachinero, Hilario",
-          "holeNumber": 1,
-          "createdAt": "19/06/25 21:08:49"
-        },
-        {
-          "playerName": "Castillo Cachinero, Hilario",
-          "holeNumber": 12,
-          "createdAt": "19/06/25 21:08:49"
-        },
-        {
-          "playerName": "Romero Repiso, Jose",
-          "holeNumber": 1,
-          "createdAt": "19/06/25 21:08:49"
-        },
-        {
-          "playerName": "Romero Repiso, Jose",
-          "holeNumber": 5,
-          "createdAt": "19/06/25 21:08:49"
-        },
-        {
-          "playerName": "Romero Repiso, Jose",
-          "holeNumber": 11,
-          "createdAt": "19/06/25 21:08:49"
-        },
-        {
-          "playerName": "Palacios Bauer, Rodrigo",
-          "holeNumber": 9,
-          "createdAt": "19/06/25 21:08:49"
-        },
-        {
-          "playerName": "Palacios Bauer, Rodrigo",
-          "holeNumber": 13,
-          "createdAt": "19/06/25 21:08:49"
-        },
-        {
-          "playerName": "Sanchez  Pacheco, Francisco Jose",
-          "holeNumber": 16,
-          "createdAt": "19/06/25 21:08:50"
-        },
-        {
-          "playerName": "Muñoz Sicilia, Victor",
-          "holeNumber": 1,
-          "createdAt": "19/06/25 21:08:50"
-        },
-        {
-          "playerName": "Muñoz Sicilia, Victor",
-          "holeNumber": 10,
-          "createdAt": "19/06/25 21:08:50"
-        },
-        {
-          "playerName": "Pampin Mella, Mari Carmen",
-          "holeNumber": 11,
-          "createdAt": "19/06/25 21:08:50"
-        },
-        {
-          "playerName": "Terrazas Abad, Jesus",
-          "holeNumber": 9,
-          "createdAt": "19/06/25 21:08:51"
-        },
-        {
-          "playerName": "Terrazas Abad, Jesus",
-          "holeNumber": 16,
-          "createdAt": "19/06/25 21:08:51"
-        },
-        {
-          "playerName": "Pomozova, Elena",
-          "holeNumber": 1,
-          "createdAt": "19/06/25 21:08:51"
-        },
-        {
-          "playerName": "Pedrosa Jodar, Antonio",
-          "holeNumber": 4,
-          "createdAt": "19/06/25 21:08:51"
-        },
-        {
-          "playerName": "Pedrosa Jodar, Antonio",
-          "holeNumber": 11,
-          "createdAt": "19/06/25 21:08:51"
-        },
-        {
-          "playerName": "Pedrosa Jodar, Antonio",
-          "holeNumber": 13,
-          "createdAt": "19/06/25 21:08:51"
-        },
-        {
-          "playerName": "Valle Serrano, Jose Luis",
-          "holeNumber": 2,
-          "createdAt": "19/06/25 21:08:51"
-        },
-        {
-          "playerName": "Valle Serrano, Jose Luis",
-          "holeNumber": 5,
-          "createdAt": "19/06/25 21:08:51"
-        },
-        {
-          "playerName": "Valle Serrano, Jose Luis",
-          "holeNumber": 16,
-          "createdAt": "19/06/25 21:08:52"
-        },
-        {
-          "playerName": "Gutierrez Moreno, Juan Antonio",
-          "holeNumber": 3,
-          "createdAt": "19/06/25 21:08:52"
-        },
-        {
-          "playerName": "Gutierrez Moreno, Juan Antonio",
-          "holeNumber": 4,
-          "createdAt": "19/06/25 21:08:52"
-        },
-        {
-          "playerName": "Rodriguez Rodriguez, Jose Luis",
-          "holeNumber": 11,
-          "createdAt": "19/06/25 21:08:52"
-        },
-        {
-          "playerName": "Verdechia, Horacio Alberto",
-          "holeNumber": 7,
-          "createdAt": "19/06/25 21:08:52"
-        },
-        {
-          "playerName": "Muinelo Aguilera, Jose",
-          "holeNumber": 2,
-          "createdAt": "19/06/25 21:08:53"
-        },
-        {
-          "playerName": "Muinelo Aguilera, Jose",
-          "holeNumber": 3,
-          "createdAt": "19/06/25 21:08:53"
-        },
-        {
-          "playerName": "Muinelo Aguilera, Jose",
-          "holeNumber": 5,
-          "createdAt": "19/06/25 21:08:53"
-        },
-        {
-          "playerName": "Muinelo Aguilera, Jose",
-          "holeNumber": 7,
-          "createdAt": "19/06/25 21:08:53"
-        },
-        {
-          "playerName": "Muinelo Aguilera, Jose",
-          "holeNumber": 8,
-          "createdAt": "19/06/25 21:08:53"
-        },
-        {
-          "playerName": "Muinelo Aguilera, Jose",
-          "holeNumber": 13,
-          "createdAt": "19/06/25 21:08:53"
-        },
-        {
-          "playerName": "Muinelo Aguilera, Jose",
-          "holeNumber": 18,
-          "createdAt": "19/06/25 21:08:53"
-        },
-        {
-          "playerName": "Oteros Fernandez, Manuel",
-          "holeNumber": 9,
-          "createdAt": "19/06/25 21:08:53"
-        },
-        {
-          "playerName": "Sanchez Gallar, Jose",
-          "holeNumber": 4,
-          "createdAt": "19/06/25 21:08:54"
-        },
-        {
-          "playerName": "Sanchez Gallar, Jose",
-          "holeNumber": 7,
-          "createdAt": "19/06/25 21:08:54"
-        },
-        {
-          "playerName": "Cuesta Toro, Salvador",
-          "holeNumber": 1,
-          "createdAt": "19/06/25 21:08:54"
-        },
-        {
-          "playerName": "Rodriguez Doblas, Maria",
-          "holeNumber": 13,
-          "createdAt": "19/06/25 21:08:54"
-        },
-        {
-          "playerName": "Rodriguez Doblas, Maria",
-          "holeNumber": 15,
-          "createdAt": "19/06/25 21:08:54"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -3540,5 +3331,255 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:06.236Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71620
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Eklund Norrby, Tomas",
+          "holeNumber": 7,
+          "createdAt": "19/06/25 21:08:48"
+        },
+        {
+          "playerName": "Dimarco, Nicholas",
+          "holeNumber": 16,
+          "createdAt": "19/06/25 21:08:48"
+        },
+        {
+          "playerName": "Galvez Del Postigo Guerrero, Jose Manuel",
+          "holeNumber": 2,
+          "createdAt": "19/06/25 21:08:48"
+        },
+        {
+          "playerName": "Galvez Del Postigo Guerrero, Jose Manuel",
+          "holeNumber": 13,
+          "createdAt": "19/06/25 21:08:48"
+        },
+        {
+          "playerName": "Lanzas Heredia, Maria Inmaculada",
+          "holeNumber": 15,
+          "createdAt": "19/06/25 21:08:48"
+        },
+        {
+          "playerName": "Sacerdote, Gonzalo Guillermo",
+          "holeNumber": 9,
+          "createdAt": "19/06/25 21:08:48"
+        },
+        {
+          "playerName": "Sacerdote, Gonzalo Guillermo",
+          "holeNumber": 15,
+          "createdAt": "19/06/25 21:08:48"
+        },
+        {
+          "playerName": "Muñoz Ramirez, Miguel",
+          "holeNumber": 13,
+          "createdAt": "19/06/25 21:08:48"
+        },
+        {
+          "playerName": "Castillo Cachinero, Hilario",
+          "holeNumber": 1,
+          "createdAt": "19/06/25 21:08:49"
+        },
+        {
+          "playerName": "Castillo Cachinero, Hilario",
+          "holeNumber": 12,
+          "createdAt": "19/06/25 21:08:49"
+        },
+        {
+          "playerName": "Romero Repiso, Jose",
+          "holeNumber": 1,
+          "createdAt": "19/06/25 21:08:49"
+        },
+        {
+          "playerName": "Romero Repiso, Jose",
+          "holeNumber": 5,
+          "createdAt": "19/06/25 21:08:49"
+        },
+        {
+          "playerName": "Romero Repiso, Jose",
+          "holeNumber": 11,
+          "createdAt": "19/06/25 21:08:49"
+        },
+        {
+          "playerName": "Palacios Bauer, Rodrigo",
+          "holeNumber": 9,
+          "createdAt": "19/06/25 21:08:49"
+        },
+        {
+          "playerName": "Palacios Bauer, Rodrigo",
+          "holeNumber": 13,
+          "createdAt": "19/06/25 21:08:49"
+        },
+        {
+          "playerName": "Sanchez  Pacheco, Francisco Jose",
+          "holeNumber": 16,
+          "createdAt": "19/06/25 21:08:50"
+        },
+        {
+          "playerName": "Muñoz Sicilia, Victor",
+          "holeNumber": 1,
+          "createdAt": "19/06/25 21:08:50"
+        },
+        {
+          "playerName": "Muñoz Sicilia, Victor",
+          "holeNumber": 10,
+          "createdAt": "19/06/25 21:08:50"
+        },
+        {
+          "playerName": "Pampin Mella, Mari Carmen",
+          "holeNumber": 11,
+          "createdAt": "19/06/25 21:08:50"
+        },
+        {
+          "playerName": "Terrazas Abad, Jesus",
+          "holeNumber": 9,
+          "createdAt": "19/06/25 21:08:51"
+        },
+        {
+          "playerName": "Terrazas Abad, Jesus",
+          "holeNumber": 16,
+          "createdAt": "19/06/25 21:08:51"
+        },
+        {
+          "playerName": "Pomozova, Elena",
+          "holeNumber": 1,
+          "createdAt": "19/06/25 21:08:51"
+        },
+        {
+          "playerName": "Pedrosa Jodar, Antonio",
+          "holeNumber": 4,
+          "createdAt": "19/06/25 21:08:51"
+        },
+        {
+          "playerName": "Pedrosa Jodar, Antonio",
+          "holeNumber": 11,
+          "createdAt": "19/06/25 21:08:51"
+        },
+        {
+          "playerName": "Pedrosa Jodar, Antonio",
+          "holeNumber": 13,
+          "createdAt": "19/06/25 21:08:51"
+        },
+        {
+          "playerName": "Valle Serrano, Jose Luis",
+          "holeNumber": 2,
+          "createdAt": "19/06/25 21:08:51"
+        },
+        {
+          "playerName": "Valle Serrano, Jose Luis",
+          "holeNumber": 5,
+          "createdAt": "19/06/25 21:08:51"
+        },
+        {
+          "playerName": "Valle Serrano, Jose Luis",
+          "holeNumber": 16,
+          "createdAt": "19/06/25 21:08:52"
+        },
+        {
+          "playerName": "Gutierrez Moreno, Juan Antonio",
+          "holeNumber": 3,
+          "createdAt": "19/06/25 21:08:52"
+        },
+        {
+          "playerName": "Gutierrez Moreno, Juan Antonio",
+          "holeNumber": 4,
+          "createdAt": "19/06/25 21:08:52"
+        },
+        {
+          "playerName": "Rodriguez Rodriguez, Jose Luis",
+          "holeNumber": 11,
+          "createdAt": "19/06/25 21:08:52"
+        },
+        {
+          "playerName": "Verdechia, Horacio Alberto",
+          "holeNumber": 7,
+          "createdAt": "19/06/25 21:08:52"
+        },
+        {
+          "playerName": "Muinelo Aguilera, Jose",
+          "holeNumber": 2,
+          "createdAt": "19/06/25 21:08:53"
+        },
+        {
+          "playerName": "Muinelo Aguilera, Jose",
+          "holeNumber": 3,
+          "createdAt": "19/06/25 21:08:53"
+        },
+        {
+          "playerName": "Muinelo Aguilera, Jose",
+          "holeNumber": 5,
+          "createdAt": "19/06/25 21:08:53"
+        },
+        {
+          "playerName": "Muinelo Aguilera, Jose",
+          "holeNumber": 7,
+          "createdAt": "19/06/25 21:08:53"
+        },
+        {
+          "playerName": "Muinelo Aguilera, Jose",
+          "holeNumber": 8,
+          "createdAt": "19/06/25 21:08:53"
+        },
+        {
+          "playerName": "Muinelo Aguilera, Jose",
+          "holeNumber": 13,
+          "createdAt": "19/06/25 21:08:53"
+        },
+        {
+          "playerName": "Muinelo Aguilera, Jose",
+          "holeNumber": 18,
+          "createdAt": "19/06/25 21:08:53"
+        },
+        {
+          "playerName": "Oteros Fernandez, Manuel",
+          "holeNumber": 9,
+          "createdAt": "19/06/25 21:08:53"
+        },
+        {
+          "playerName": "Sanchez Gallar, Jose",
+          "holeNumber": 4,
+          "createdAt": "19/06/25 21:08:54"
+        },
+        {
+          "playerName": "Sanchez Gallar, Jose",
+          "holeNumber": 7,
+          "createdAt": "19/06/25 21:08:54"
+        },
+        {
+          "playerName": "Cuesta Toro, Salvador",
+          "holeNumber": 1,
+          "createdAt": "19/06/25 21:08:54"
+        },
+        {
+          "playerName": "Rodriguez Doblas, Maria",
+          "holeNumber": 13,
+          "createdAt": "19/06/25 21:08:54"
+        },
+        {
+          "playerName": "Rodriguez Doblas, Maria",
+          "holeNumber": 15,
+          "createdAt": "19/06/25 21:08:54"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/67215_cartel_225.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:01.351Z"
 }

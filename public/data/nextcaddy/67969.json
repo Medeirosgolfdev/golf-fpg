@@ -1,14 +1,14 @@
 {
   "tourId": 67969,
   "url": "https://www.nextcaddy.com/tour/67969",
-  "scrapedAt": "2026-05-09T10:17:18.836Z",
+  "scrapedAt": "2026-05-21T16:41:18.710Z",
   "meta": {
     "name": "Campeonato de Madrid Dobles Femenino",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Campo de Golf B A de Torrejon",
     "courseCode": "CM12",
-    "dateStart": "16 nov 2026",
-    "dateEnd": "16 nov 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-11-16"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -39,6 +41,6 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:31.439Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:14.265Z"
 }

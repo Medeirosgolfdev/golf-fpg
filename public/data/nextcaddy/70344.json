@@ -1,14 +1,14 @@
 {
   "tourId": 70344,
   "url": "https://www.nextcaddy.com/tour/70344",
-  "scrapedAt": "2026-05-09T10:15:46.753Z",
+  "scrapedAt": "2026-05-21T16:39:15.829Z",
   "meta": {
     "name": "POOL DE SENIORS  DE PRIMAVERA (29/04/2026).",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "29 abr 2026",
-    "dateEnd": "29 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "SENIOR",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-29"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "General Pool Seniors Primavera 29 04 2026",
+      "expectedJugadores": 21,
       "header": [
         "Pos",
         "Jugador",
@@ -271,6 +272,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "General Pool Seniors Primavera 29 04 2026",
+      "jugadores": 21
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -581,6 +589,202 @@
       "nivel": "4401245559"
     }
   ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Javier Ochoa De Retana Basterra",
+          "hcp": 9.7,
+          "ins": "2306496",
+          "jid": "75283",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Julio De Pablos Fernandez",
+          "hcp": 16.6,
+          "ins": "2307519",
+          "jid": "75283",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Jose Manuel Echevarria Salaverria",
+          "hcp": 15.6,
+          "ins": "2307518",
+          "jid": "75283",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Alberto Guinaldo Iglesias",
+          "hcp": 18.2,
+          "ins": "2307521",
+          "jid": "75283",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Jesús Antonio Munilla Martinez",
+          "hcp": 18,
+          "ins": "2306305",
+          "jid": "75283",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Jose Maria Mateo Fuertes",
+          "hcp": 24.5,
+          "ins": "2307726",
+          "jid": "75283",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Fco. Javier Molina Garicano",
+          "hcp": 25.1,
+          "ins": "2306186",
+          "jid": "75283",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Cesar Ayesta Otano",
+          "hcp": 21.3,
+          "ins": "2306990",
+          "jid": "75283",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Domingo Agudo Huici",
+          "hcp": 20.6,
+          "ins": "2307766",
+          "jid": "75283",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Miguel Torrea Larralde",
+          "hcp": 23.8,
+          "ins": "2306591",
+          "jid": "75283",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Schuyler Glidden",
+          "hcp": 17.8,
+          "ins": "2306435",
+          "jid": "75283",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Tomas Oficialdegui Recarte",
+          "hcp": 26.4,
+          "ins": "2307811",
+          "jid": "75283",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Argimiro Sola Martinez",
+          "hcp": 21.4,
+          "ins": "2307916",
+          "jid": "75283",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Javier Inchausti Estomba",
+          "hcp": 22.7,
+          "ins": "2306600",
+          "jid": "75283",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Fernando Llarena Gonzalez",
+          "hcp": 24,
+          "ins": "2306716",
+          "jid": "75283",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Vicente Villanueva Aleman",
+          "hcp": 25.3,
+          "ins": "2307762",
+          "jid": "75283",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Javier Roncal Azanza",
+          "hcp": 26,
+          "ins": "2307789",
+          "jid": "75283",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Josetxo Iturralde Adrian",
+          "hcp": 26.4,
+          "ins": "2307522",
+          "jid": "75283",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Miguel Angel Saenz Garcia",
+          "hcp": 26.4,
+          "ins": "2306191",
+          "jid": "75283",
+          "nivel": "S"
+        },
+        {
+          "time": "14:30",
+          "tee": 1,
+          "name": "Octavio Roque Herrera",
+          "hcp": 11,
+          "ins": "2306895",
+          "jid": "75283",
+          "nivel": "S"
+        },
+        {
+          "time": "14:30",
+          "tee": 1,
+          "name": "Jesus Moreno Orquin",
+          "hcp": 16.3,
+          "ins": "2306893",
+          "jid": "75283",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -843,201 +1047,6 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Javier Ochoa De Retana Basterra",
-          "hcp": 9.7,
-          "ins": "2306496",
-          "jid": "75283",
-          "nivel": "S"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Julio De Pablos Fernandez",
-          "hcp": 16.6,
-          "ins": "2307519",
-          "jid": "75283",
-          "nivel": "S"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Jose Manuel Echevarria Salaverria",
-          "hcp": 15.6,
-          "ins": "2307518",
-          "jid": "75283",
-          "nivel": "S"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Alberto Guinaldo Iglesias",
-          "hcp": 18.2,
-          "ins": "2307521",
-          "jid": "75283",
-          "nivel": "S"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Jesús Antonio Munilla Martinez",
-          "hcp": 18,
-          "ins": "2306305",
-          "jid": "75283",
-          "nivel": "S"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Jose Maria Mateo Fuertes",
-          "hcp": 24.5,
-          "ins": "2307726",
-          "jid": "75283",
-          "nivel": "S"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Fco. Javier Molina Garicano",
-          "hcp": 25.1,
-          "ins": "2306186",
-          "jid": "75283",
-          "nivel": "S"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Cesar Ayesta Otano",
-          "hcp": 21.3,
-          "ins": "2306990",
-          "jid": "75283",
-          "nivel": "S"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Domingo Agudo Huici",
-          "hcp": 20.6,
-          "ins": "2307766",
-          "jid": "75283",
-          "nivel": "S"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Miguel Torrea Larralde",
-          "hcp": 23.8,
-          "ins": "2306591",
-          "jid": "75283",
-          "nivel": "S"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Schuyler Glidden",
-          "hcp": 17.8,
-          "ins": "2306435",
-          "jid": "75283",
-          "nivel": "S"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Tomas Oficialdegui Recarte",
-          "hcp": 26.4,
-          "ins": "2307811",
-          "jid": "75283",
-          "nivel": "S"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Argimiro Sola Martinez",
-          "hcp": 21.4,
-          "ins": "2307916",
-          "jid": "75283",
-          "nivel": "S"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Javier Inchausti Estomba",
-          "hcp": 22.7,
-          "ins": "2306600",
-          "jid": "75283",
-          "nivel": "S"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Fernando Llarena Gonzalez",
-          "hcp": 24,
-          "ins": "2306716",
-          "jid": "75283",
-          "nivel": "S"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Vicente Villanueva Aleman",
-          "hcp": 25.3,
-          "ins": "2307762",
-          "jid": "75283",
-          "nivel": "S"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Javier Roncal Azanza",
-          "hcp": 26,
-          "ins": "2307789",
-          "jid": "75283",
-          "nivel": "S"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Josetxo Iturralde Adrian",
-          "hcp": 26.4,
-          "ins": "2307522",
-          "jid": "75283",
-          "nivel": "S"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Miguel Angel Saenz Garcia",
-          "hcp": 26.4,
-          "ins": "2306191",
-          "jid": "75283",
-          "nivel": "S"
-        },
-        {
-          "time": "14:30",
-          "tee": 1,
-          "name": "Octavio Roque Herrera",
-          "hcp": 11,
-          "ins": "2306895",
-          "jid": "75283",
-          "nivel": "S"
-        },
-        {
-          "time": "14:30",
-          "tee": 1,
-          "name": "Jesus Moreno Orquin",
-          "hcp": 16.3,
-          "ins": "2306893",
-          "jid": "75283",
-          "nivel": "S"
-        }
-      ]
-    }
-  ],
-  "horariosScrapedAt": "2026-05-09T12:12:59.557Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:40.101Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 70177,
   "url": "https://www.nextcaddy.com/tour/70177",
-  "scrapedAt": "2026-05-09T10:15:38.613Z",
+  "scrapedAt": "2026-05-21T16:39:02.737Z",
   "meta": {
     "name": "POOL DE SENIORS  DE PRIMAVERA (22/04/2026).",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "22 abr 2026",
-    "dateEnd": "22 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "SENIOR",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-22"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Pool 22 Abril 2026",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -238,6 +239,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Pool 22 Abril 2026",
+      "jugadores": 18
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -506,58 +514,6 @@
       "nivel": "4401245559"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75081
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Lutton, William",
-          "holeNumber": 1,
-          "createdAt": "03/11/25 11:46:27"
-        },
-        {
-          "playerName": "Lutton, William",
-          "holeNumber": 3,
-          "createdAt": "03/11/25 11:46:27"
-        },
-        {
-          "playerName": "Lutton, William",
-          "holeNumber": 16,
-          "createdAt": "03/11/25 11:46:27"
-        },
-        {
-          "playerName": "Tweed, Richard",
-          "holeNumber": 17,
-          "createdAt": "03/11/25 12:06:49"
-        },
-        {
-          "playerName": "Conway, Owen",
-          "holeNumber": 15,
-          "createdAt": "03/11/25 12:40:06"
-        },
-        {
-          "playerName": "Scherrer, Franz",
-          "holeNumber": 11,
-          "createdAt": "03/11/25 12:55:20"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -727,5 +683,58 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:58.120Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75081
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Lutton, William",
+          "holeNumber": 1,
+          "createdAt": "03/11/25 11:46:27"
+        },
+        {
+          "playerName": "Lutton, William",
+          "holeNumber": 3,
+          "createdAt": "03/11/25 11:46:27"
+        },
+        {
+          "playerName": "Lutton, William",
+          "holeNumber": 16,
+          "createdAt": "03/11/25 11:46:27"
+        },
+        {
+          "playerName": "Tweed, Richard",
+          "holeNumber": 17,
+          "createdAt": "03/11/25 12:06:49"
+        },
+        {
+          "playerName": "Conway, Owen",
+          "holeNumber": 15,
+          "createdAt": "03/11/25 12:40:06"
+        },
+        {
+          "playerName": "Scherrer, Franz",
+          "holeNumber": 11,
+          "createdAt": "03/11/25 12:55:20"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:38.603Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 68497,
   "url": "https://www.nextcaddy.com/tour/68497",
-  "scrapedAt": "2026-05-09T09:57:44.337Z",
+  "scrapedAt": "2026-05-21T16:37:05.855Z",
   "meta": {
     "name": "LADIES17.2",
     "organizer": null,
     "course": "Santa María Golf & Country Club",
     "courseCode": "AM86",
-    "dateStart": "17 feb 2026",
-    "dateEnd": "17 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras Facebook",
     "categories": [
       "Señoras",
@@ -16,13 +16,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-17"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 9,
       "header": [
         "Pos",
         "Jugador",
@@ -137,6 +138,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 9
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -272,6 +280,7 @@
       "nivel": "S"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -344,6 +353,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:37.413Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:22.923Z"
 }

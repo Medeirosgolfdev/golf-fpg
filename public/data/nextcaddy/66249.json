@@ -1,14 +1,14 @@
 {
   "tourId": 66249,
   "url": "https://www.nextcaddy.com/tour/66249",
-  "scrapedAt": "2026-05-09T09:57:31.238Z",
+  "scrapedAt": "2026-05-21T16:36:48.264Z",
   "meta": {
     "name": "I Prueba Circuito 4ª, 5ª y 6ª categoría campo corto",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Benalmadena Golf",
     "courseCode": "AMC8",
-    "dateStart": "31 ene 2026",
-    "dateEnd": "31 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-31"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Clasificacion 4A Categoria",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -249,6 +250,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Clasificacion 5A Categoria",
+      "expectedJugadores": 25,
       "header": [
         "Pos",
         "Jugador",
@@ -540,6 +543,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Handicap Clasificacion 6A Categoria",
+      "expectedJugadores": 45,
       "header": [
         "Pos",
         "Jugador",
@@ -1050,6 +1055,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Clasificacion 4A Categoria",
+      "jugadores": 19
+    },
+    "2": {
+      "name": "Handicap Clasificacion 5A Categoria",
+      "jugadores": 25
+    },
+    "3": {
+      "name": "Handicap Clasificacion 6A Categoria",
+      "jugadores": 45
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2312,379 +2332,6 @@
       "nivel": "AM92966871"
     }
   ],
-  "estadisticas": {
-    "0": {
-      "p": {
-        "id": 157582,
-        "datos": [
-          [
-            "Tipo",
-            "Total"
-          ],
-          [
-            "Par",
-            438
-          ],
-          [
-            "Birdie",
-            72
-          ],
-          [
-            "Eagle",
-            0
-          ],
-          [
-            "Bogey",
-            566
-          ],
-          [
-            "Peor",
-            431
-          ]
-        ]
-      },
-      "bvg": {
-        "id": 157583,
-        "datos": [
-          [
-            "Hoyo",
-            "Sobrepar"
-          ],
-          [
-            "1",
-            94
-          ],
-          [
-            "2",
-            53
-          ],
-          [
-            "3",
-            69
-          ],
-          [
-            "4",
-            45
-          ],
-          [
-            "5",
-            142
-          ],
-          [
-            "6",
-            110
-          ],
-          [
-            "7",
-            70
-          ],
-          [
-            "8",
-            103
-          ],
-          [
-            "9",
-            113
-          ],
-          [
-            "10",
-            51
-          ],
-          [
-            "11",
-            55
-          ],
-          [
-            "12",
-            143
-          ],
-          [
-            "13",
-            84
-          ],
-          [
-            "14",
-            73
-          ],
-          [
-            "15",
-            88
-          ],
-          [
-            "16",
-            92
-          ],
-          [
-            "17",
-            117
-          ],
-          [
-            "18",
-            91
-          ]
-        ]
-      }
-    },
-    "1": {
-      "lxy": {
-        "id": 157584,
-        "datos": [
-          [
-            "Hoyo",
-            "Javier Perez-Bryan Del Castillo",
-            "Adriana Arias Carasecova",
-            "FERNANDO RUIZ BLANCO"
-          ],
-          [
-            "Hoyo 0",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 1",
-            -1,
-            1,
-            -1
-          ],
-          [
-            "Hoyo 2",
-            -2,
-            0,
-            -1
-          ],
-          [
-            "Hoyo 3",
-            -2,
-            -1,
-            -1
-          ],
-          [
-            "Hoyo 4",
-            -3,
-            -1,
-            -1
-          ],
-          [
-            "Hoyo 5",
-            -4,
-            -1,
-            0
-          ],
-          [
-            "Hoyo 6",
-            -5,
-            -2,
-            -1
-          ],
-          [
-            "Hoyo 7",
-            -6,
-            -2,
-            -2
-          ],
-          [
-            "Hoyo 8",
-            -7,
-            -4,
-            0
-          ],
-          [
-            "Hoyo 9",
-            -8,
-            -4,
-            -1
-          ],
-          [
-            "Hoyo 10",
-            -8,
-            -5,
-            -2
-          ],
-          [
-            "Hoyo 11",
-            -8,
-            -6,
-            -2
-          ],
-          [
-            "Hoyo 12",
-            -10,
-            -8,
-            -3
-          ],
-          [
-            "Hoyo 13",
-            -10,
-            -8,
-            -3
-          ],
-          [
-            "Hoyo 14",
-            -12,
-            -7,
-            -4
-          ],
-          [
-            "Hoyo 15",
-            -15,
-            -8,
-            -5
-          ],
-          [
-            "Hoyo 16",
-            -15,
-            -8,
-            -7
-          ],
-          [
-            "Hoyo 17",
-            -17,
-            -8,
-            -8
-          ],
-          [
-            "Hoyo 18",
-            -17,
-            -10,
-            -9
-          ]
-        ]
-      },
-      "hvg": {
-        "id": 157585,
-        "datos": [
-          [
-            "Hoyo",
-            "Javier Perez-Bryan Del Castillo",
-            "Adriana Arias Carasecova",
-            "FERNANDO RUIZ BLANCO"
-          ],
-          [
-            "Hoyo 0",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 1",
-            -1,
-            1,
-            -1
-          ],
-          [
-            "Hoyo 2",
-            -1,
-            -1,
-            0
-          ],
-          [
-            "Hoyo 3",
-            0,
-            -1,
-            0
-          ],
-          [
-            "Hoyo 4",
-            -1,
-            0,
-            0
-          ],
-          [
-            "Hoyo 5",
-            -1,
-            0,
-            1
-          ],
-          [
-            "Hoyo 6",
-            -1,
-            -1,
-            -1
-          ],
-          [
-            "Hoyo 7",
-            -1,
-            0,
-            -1
-          ],
-          [
-            "Hoyo 8",
-            -1,
-            -2,
-            2
-          ],
-          [
-            "Hoyo 9",
-            -1,
-            0,
-            -1
-          ],
-          [
-            "Hoyo 10",
-            0,
-            -1,
-            -1
-          ],
-          [
-            "Hoyo 11",
-            0,
-            -1,
-            0
-          ],
-          [
-            "Hoyo 12",
-            -2,
-            -2,
-            -1
-          ],
-          [
-            "Hoyo 13",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 14",
-            -2,
-            1,
-            -1
-          ],
-          [
-            "Hoyo 15",
-            -3,
-            -1,
-            -1
-          ],
-          [
-            "Hoyo 16",
-            0,
-            0,
-            -2
-          ],
-          [
-            "Hoyo 17",
-            -2,
-            0,
-            -1
-          ],
-          [
-            "Hoyo 18",
-            0,
-            -2,
-            -1
-          ]
-        ]
-      }
-    }
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 70536
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -3484,5 +3131,384 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:03.513Z"
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 157582,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            438
+          ],
+          [
+            "Birdie",
+            72
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            566
+          ],
+          [
+            "Peor",
+            431
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 157583,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            94
+          ],
+          [
+            "2",
+            53
+          ],
+          [
+            "3",
+            69
+          ],
+          [
+            "4",
+            45
+          ],
+          [
+            "5",
+            142
+          ],
+          [
+            "6",
+            110
+          ],
+          [
+            "7",
+            70
+          ],
+          [
+            "8",
+            103
+          ],
+          [
+            "9",
+            113
+          ],
+          [
+            "10",
+            51
+          ],
+          [
+            "11",
+            55
+          ],
+          [
+            "12",
+            143
+          ],
+          [
+            "13",
+            84
+          ],
+          [
+            "14",
+            73
+          ],
+          [
+            "15",
+            88
+          ],
+          [
+            "16",
+            92
+          ],
+          [
+            "17",
+            117
+          ],
+          [
+            "18",
+            91
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 157584,
+        "datos": [
+          [
+            "Hoyo",
+            "Javier Perez-Bryan Del Castillo",
+            "Adriana Arias Carasecova",
+            "FERNANDO RUIZ BLANCO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            -2,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            -2,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 4",
+            -3,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 5",
+            -4,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 6",
+            -5,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 7",
+            -6,
+            -2,
+            -2
+          ],
+          [
+            "Hoyo 8",
+            -7,
+            -4,
+            0
+          ],
+          [
+            "Hoyo 9",
+            -8,
+            -4,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            -8,
+            -5,
+            -2
+          ],
+          [
+            "Hoyo 11",
+            -8,
+            -6,
+            -2
+          ],
+          [
+            "Hoyo 12",
+            -10,
+            -8,
+            -3
+          ],
+          [
+            "Hoyo 13",
+            -10,
+            -8,
+            -3
+          ],
+          [
+            "Hoyo 14",
+            -12,
+            -7,
+            -4
+          ],
+          [
+            "Hoyo 15",
+            -15,
+            -8,
+            -5
+          ],
+          [
+            "Hoyo 16",
+            -15,
+            -8,
+            -7
+          ],
+          [
+            "Hoyo 17",
+            -17,
+            -8,
+            -8
+          ],
+          [
+            "Hoyo 18",
+            -17,
+            -10,
+            -9
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 157585,
+        "datos": [
+          [
+            "Hoyo",
+            "Javier Perez-Bryan Del Castillo",
+            "Adriana Arias Carasecova",
+            "FERNANDO RUIZ BLANCO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 3",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 5",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            -1,
+            -2,
+            2
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 11",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 12",
+            -2,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 14",
+            -2,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 15",
+            -3,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 16",
+            0,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 17",
+            -2,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 18",
+            0,
+            -2,
+            -1
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 70536
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/66249_cartel_296.pdf",
+    "/uploads/competiciones/pdf/1434824535_informacion_web_benalmadena_31_1_2026.pdf",
+    "/uploads/circular/2026/42824416ec7bcd5d806eea121047c678.pdf",
+    "/uploads/competiciones/pdf/3916257544_reglas_web_benalmadena_31_1_2025.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:58.167Z"
 }

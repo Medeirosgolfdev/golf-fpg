@@ -1,14 +1,14 @@
 {
   "tourId": 61068,
   "url": "https://www.nextcaddy.com/tour/61068",
-  "scrapedAt": "2026-05-08T17:52:52.523Z",
+  "scrapedAt": "2026-05-21T16:36:57.412Z",
   "meta": {
     "name": "Circuito Benjamín Zona C",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Club Deportivo Añoreta Golf",
     "courseCode": "AM75",
-    "dateStart": "14 feb 2026",
-    "dateEnd": "14 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Benjamín",
@@ -19,74 +19,14 @@
       "benjamin",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-02-14"
-  },
-  "course": {
-    "par": [
-      4,
-      3,
-      5,
-      4,
-      3,
-      4,
-      4,
-      4,
-      3,
-      5,
-      5,
-      4,
-      4,
-      4,
-      4,
-      5,
-      3,
-      4
-    ],
-    "si": [
-      16,
-      17,
-      3,
-      11,
-      15,
-      7,
-      13,
-      1,
-      9,
-      5,
-      8,
-      10,
-      4,
-      12,
-      18,
-      2,
-      6,
-      14
-    ],
-    "meters": [
-      232,
-      96,
-      444,
-      292,
-      103,
-      293,
-      255,
-      364,
-      128,
-      453,
-      400,
-      287,
-      314,
-      252,
-      232,
-      453,
-      136,
-      257
     ]
   },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Benjamin Femenino Scratch",
+      "expectedJugadores": 2,
       "header": [
         "Pos",
         "Jugador",
@@ -108,8 +48,7 @@
           "rounds": [],
           "total": 51,
           "toPar": 17,
-          "inscribedId": 2246356,
-          "roundScores": []
+          "inscribedId": 2246356
         },
         {
           "pos": 2,
@@ -120,13 +59,14 @@
           "rounds": [],
           "total": 66,
           "toPar": 32,
-          "inscribedId": 2248620,
-          "roundScores": []
+          "inscribedId": 2248620
         }
       ]
     },
     {
       "category": 2,
+      "categoryName": "Scratch Benjamin Masculino Scratch",
+      "expectedJugadores": 13,
       "header": [
         "Pos",
         "Jugador",
@@ -148,8 +88,7 @@
           "rounds": [],
           "total": 43,
           "toPar": 9,
-          "inscribedId": 2253074,
-          "roundScores": []
+          "inscribedId": 2253074
         },
         {
           "pos": 2,
@@ -160,8 +99,7 @@
           "rounds": [],
           "total": 47,
           "toPar": 13,
-          "inscribedId": 2246313,
-          "roundScores": []
+          "inscribedId": 2246313
         },
         {
           "pos": 3,
@@ -172,8 +110,7 @@
           "rounds": [],
           "total": 48,
           "toPar": 14,
-          "inscribedId": 2246358,
-          "roundScores": []
+          "inscribedId": 2246358
         },
         {
           "pos": 4,
@@ -184,8 +121,7 @@
           "rounds": [],
           "total": 48,
           "toPar": 14,
-          "inscribedId": 2248376,
-          "roundScores": []
+          "inscribedId": 2248376
         },
         {
           "pos": 5,
@@ -196,8 +132,7 @@
           "rounds": [],
           "total": 49,
           "toPar": 15,
-          "inscribedId": 2246373,
-          "roundScores": []
+          "inscribedId": 2246373
         },
         {
           "pos": 6,
@@ -208,8 +143,7 @@
           "rounds": [],
           "total": 49,
           "toPar": 15,
-          "inscribedId": 2246800,
-          "roundScores": []
+          "inscribedId": 2246800
         },
         {
           "pos": 7,
@@ -220,8 +154,7 @@
           "rounds": [],
           "total": 50,
           "toPar": 16,
-          "inscribedId": 2246393,
-          "roundScores": []
+          "inscribedId": 2246393
         },
         {
           "pos": 8,
@@ -232,8 +165,7 @@
           "rounds": [],
           "total": 50,
           "toPar": 16,
-          "inscribedId": 2246311,
-          "roundScores": []
+          "inscribedId": 2246311
         },
         {
           "pos": 9,
@@ -244,8 +176,7 @@
           "rounds": [],
           "total": 51,
           "toPar": 17,
-          "inscribedId": 2246312,
-          "roundScores": []
+          "inscribedId": 2246312
         },
         {
           "pos": 10,
@@ -256,8 +187,7 @@
           "rounds": [],
           "total": 56,
           "toPar": 22,
-          "inscribedId": 2246915,
-          "roundScores": []
+          "inscribedId": 2246915
         },
         {
           "pos": 11,
@@ -268,8 +198,7 @@
           "rounds": [],
           "total": 57,
           "toPar": 23,
-          "inscribedId": 2256965,
-          "roundScores": []
+          "inscribedId": 2256965
         },
         {
           "pos": 12,
@@ -280,8 +209,7 @@
           "rounds": [],
           "total": 70,
           "toPar": 36,
-          "inscribedId": 2255095,
-          "roundScores": []
+          "inscribedId": 2255095
         },
         {
           "pos": null,
@@ -292,38 +220,14 @@
           "rounds": [],
           "total": null,
           "toPar": null,
-          "inscribedId": 2246394,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-              ],
-              "total": null
-            }
-          ]
+          "inscribedId": 2246394
         }
       ]
     },
     {
       "category": 3,
+      "categoryName": "Handicap Benjamin Femenino Hcp",
+      "expectedJugadores": 2,
       "header": [
         "Pos",
         "Jugador",
@@ -345,8 +249,7 @@
           "rounds": [],
           "total": 41,
           "toPar": 7,
-          "inscribedId": 2246356,
-          "roundScores": []
+          "inscribedId": 2246356
         },
         {
           "pos": 2,
@@ -357,13 +260,14 @@
           "rounds": [],
           "total": 46,
           "toPar": 12,
-          "inscribedId": 2248620,
-          "roundScores": []
+          "inscribedId": 2248620
         }
       ]
     },
     {
       "category": 4,
+      "categoryName": "Handicap Benjamin Masculino Hcp",
+      "expectedJugadores": 13,
       "header": [
         "Pos",
         "Jugador",
@@ -385,8 +289,7 @@
           "rounds": [],
           "total": 37,
           "toPar": 3,
-          "inscribedId": 2246393,
-          "roundScores": []
+          "inscribedId": 2246393
         },
         {
           "pos": 2,
@@ -397,8 +300,7 @@
           "rounds": [],
           "total": 38,
           "toPar": 4,
-          "inscribedId": 2246313,
-          "roundScores": []
+          "inscribedId": 2246313
         },
         {
           "pos": 3,
@@ -409,8 +311,7 @@
           "rounds": [],
           "total": 38,
           "toPar": 4,
-          "inscribedId": 2246373,
-          "roundScores": []
+          "inscribedId": 2246373
         },
         {
           "pos": 4,
@@ -421,8 +322,7 @@
           "rounds": [],
           "total": 39,
           "toPar": 5,
-          "inscribedId": 2246358,
-          "roundScores": []
+          "inscribedId": 2246358
         },
         {
           "pos": 5,
@@ -433,8 +333,7 @@
           "rounds": [],
           "total": 39,
           "toPar": 5,
-          "inscribedId": 2246800,
-          "roundScores": []
+          "inscribedId": 2246800
         },
         {
           "pos": 6,
@@ -445,8 +344,7 @@
           "rounds": [],
           "total": 40,
           "toPar": 6,
-          "inscribedId": 2253074,
-          "roundScores": []
+          "inscribedId": 2253074
         },
         {
           "pos": 7,
@@ -457,8 +355,7 @@
           "rounds": [],
           "total": 40,
           "toPar": 6,
-          "inscribedId": 2248376,
-          "roundScores": []
+          "inscribedId": 2248376
         },
         {
           "pos": 8,
@@ -469,8 +366,7 @@
           "rounds": [],
           "total": 40,
           "toPar": 6,
-          "inscribedId": 2246311,
-          "roundScores": []
+          "inscribedId": 2246311
         },
         {
           "pos": 9,
@@ -481,8 +377,7 @@
           "rounds": [],
           "total": 40,
           "toPar": 6,
-          "inscribedId": 2246915,
-          "roundScores": []
+          "inscribedId": 2246915
         },
         {
           "pos": 10,
@@ -493,8 +388,7 @@
           "rounds": [],
           "total": 41,
           "toPar": 7,
-          "inscribedId": 2246312,
-          "roundScores": []
+          "inscribedId": 2246312
         },
         {
           "pos": 11,
@@ -505,8 +399,7 @@
           "rounds": [],
           "total": 42,
           "toPar": 8,
-          "inscribedId": 2256965,
-          "roundScores": []
+          "inscribedId": 2256965
         },
         {
           "pos": 12,
@@ -517,8 +410,7 @@
           "rounds": [],
           "total": 54,
           "toPar": 20,
-          "inscribedId": 2255095,
-          "roundScores": []
+          "inscribedId": 2255095
         },
         {
           "pos": null,
@@ -529,37 +421,30 @@
           "rounds": [],
           "total": null,
           "toPar": null,
-          "inscribedId": 2246394,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-              ],
-              "total": null
-            }
-          ]
+          "inscribedId": 2246394
         }
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Benjamin Femenino Scratch",
+      "jugadores": 2
+    },
+    "2": {
+      "name": "Scratch Benjamin Masculino Scratch",
+      "jugadores": 13
+    },
+    "3": {
+      "name": "Handicap Benjamin Femenino Hcp",
+      "jugadores": 2
+    },
+    "4": {
+      "name": "Handicap Benjamin Masculino Hcp",
+      "jugadores": 13
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -784,6 +669,148 @@
       "licencia": "AM15416368",
       "hcp": 34.8,
       "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Gonzalo Bernal Suarez",
+          "hcp": 10.9,
+          "ins": "2253074",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Ana Gross Paneque",
+          "hcp": 18.4,
+          "ins": "2246356",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Pau Caceres Gago",
+          "hcp": 21.2,
+          "ins": "2248376",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Santiago Viera Villalba",
+          "hcp": 21.6,
+          "ins": "2246313",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Marcos Sanchez Navas",
+          "hcp": 22.5,
+          "ins": "2246358",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Nikita Elchaninov",
+          "hcp": 24.8,
+          "ins": "2246394",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Alvaro Quiros Lopez",
+          "hcp": 25.3,
+          "ins": "2246311",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Daniel Hernandez Ruiz",
+          "hcp": 25.6,
+          "ins": "2246800",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Martin Quiros Lopez",
+          "hcp": 25.4,
+          "ins": "2246312",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Antonio Merchan Casado",
+          "hcp": 25.9,
+          "ins": "2246373",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Javier Del Cid Gomez",
+          "hcp": 30.5,
+          "ins": "2246393",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Hugo Carrere Aguiar",
+          "hcp": 34.8,
+          "ins": "2256965",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Enrique Alvarez-Net Gonzalez",
+          "hcp": 36.1,
+          "ins": "2255095",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Liane Gavira Rodriguez",
+          "hcp": 37.7,
+          "ins": "2248620",
+          "jid": "64671",
+          "nivel": "B"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Ramiro Amaya Cozzi",
+          "hcp": 37.8,
+          "ins": "2246915",
+          "jid": "64671",
+          "nivel": "B"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -1159,147 +1186,9 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "12:20",
-          "tee": 1,
-          "name": "Gonzalo Bernal Suarez",
-          "hcp": 10.9,
-          "ins": "2253074",
-          "jid": "64671",
-          "nivel": "B"
-        },
-        {
-          "time": "12:20",
-          "tee": 1,
-          "name": "Ana Gross Paneque",
-          "hcp": 18.4,
-          "ins": "2246356",
-          "jid": "64671",
-          "nivel": "B"
-        },
-        {
-          "time": "12:20",
-          "tee": 1,
-          "name": "Pau Caceres Gago",
-          "hcp": 21.2,
-          "ins": "2248376",
-          "jid": "64671",
-          "nivel": "B"
-        },
-        {
-          "time": "12:20",
-          "tee": 1,
-          "name": "Santiago Viera Villalba",
-          "hcp": 21.6,
-          "ins": "2246313",
-          "jid": "64671",
-          "nivel": "B"
-        },
-        {
-          "time": "12:30",
-          "tee": 1,
-          "name": "Marcos Sanchez Navas",
-          "hcp": 22.5,
-          "ins": "2246358",
-          "jid": "64671",
-          "nivel": "B"
-        },
-        {
-          "time": "12:30",
-          "tee": 1,
-          "name": "Nikita Elchaninov",
-          "hcp": 24.8,
-          "ins": "2246394",
-          "jid": "64671",
-          "nivel": "B"
-        },
-        {
-          "time": "12:30",
-          "tee": 1,
-          "name": "Alvaro Quiros Lopez",
-          "hcp": 25.3,
-          "ins": "2246311",
-          "jid": "64671",
-          "nivel": "B"
-        },
-        {
-          "time": "12:30",
-          "tee": 1,
-          "name": "Daniel Hernandez Ruiz",
-          "hcp": 25.6,
-          "ins": "2246800",
-          "jid": "64671",
-          "nivel": "B"
-        },
-        {
-          "time": "12:40",
-          "tee": 1,
-          "name": "Martin Quiros Lopez",
-          "hcp": 25.4,
-          "ins": "2246312",
-          "jid": "64671",
-          "nivel": "B"
-        },
-        {
-          "time": "12:40",
-          "tee": 1,
-          "name": "Antonio Merchan Casado",
-          "hcp": 25.9,
-          "ins": "2246373",
-          "jid": "64671",
-          "nivel": "B"
-        },
-        {
-          "time": "12:40",
-          "tee": 1,
-          "name": "Javier Del Cid Gomez",
-          "hcp": 30.5,
-          "ins": "2246393",
-          "jid": "64671",
-          "nivel": "B"
-        },
-        {
-          "time": "12:40",
-          "tee": 1,
-          "name": "Hugo Carrere Aguiar",
-          "hcp": 34.8,
-          "ins": "2256965",
-          "jid": "64671",
-          "nivel": "B"
-        },
-        {
-          "time": "12:50",
-          "tee": 1,
-          "name": "Enrique Alvarez-Net Gonzalez",
-          "hcp": 36.1,
-          "ins": "2255095",
-          "jid": "64671",
-          "nivel": "B"
-        },
-        {
-          "time": "12:50",
-          "tee": 1,
-          "name": "Liane Gavira Rodriguez",
-          "hcp": 37.7,
-          "ins": "2248620",
-          "jid": "64671",
-          "nivel": "B"
-        },
-        {
-          "time": "12:50",
-          "tee": 1,
-          "name": "Ramiro Amaya Cozzi",
-          "hcp": 37.8,
-          "ins": "2246915",
-          "jid": "64671",
-          "nivel": "B"
-        }
-      ]
-    }
+  "pdfs": [
+    "/uploads/circular/2026/2aa56b471e796fb607d471d2b9ad0c4c.pdf",
+    "/uploads/competiciones/pdf/519904041_reglas_locales_competiciorn_2026_rfga.pdf"
   ],
-  "horariosScrapedAt": "2026-05-09T12:11:58.029Z"
+  "horariosScrapedAt": "2026-05-21T16:41:49.116Z"
 }

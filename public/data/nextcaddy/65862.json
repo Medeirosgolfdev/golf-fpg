@@ -1,14 +1,14 @@
 {
   "tourId": 65862,
   "url": "https://www.nextcaddy.com/tour/65862",
-  "scrapedAt": "2026-05-08T17:52:40.624Z",
+  "scrapedAt": "2026-05-21T16:36:28.092Z",
   "meta": {
     "name": "Circuito Benjamín de P&P \"Golf Negralejo\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Palacio del Negralejo S A",
     "courseCode": "CM33",
-    "dateStart": "11 ene 2026",
-    "dateEnd": "11 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Scratch) Circuito Alevín Y B",
     "categories": [
       "Benjamín",
@@ -21,74 +21,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-01-11"
-  },
-  "course": {
-    "par": [
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3
-    ],
-    "si": [
-      5,
-      8,
-      13,
-      15,
-      11,
-      17,
-      4,
-      7,
-      1,
-      10,
-      9,
-      14,
-      16,
-      12,
-      18,
-      3,
-      6,
-      2
-    ],
-    "meters": [
-      68,
-      80,
-      74,
-      53,
-      63,
-      41,
-      76,
-      81,
-      87,
-      68,
-      80,
-      74,
-      53,
-      63,
-      41,
-      76,
-      81,
-      87
     ]
   },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Scratch Femenina",
+      "expectedJugadores": 6,
       "header": [
         "Pos",
         "Jugador",
@@ -110,8 +50,7 @@
           "rounds": [],
           "total": 12,
           "toPar": 6,
-          "inscribedId": 2240025,
-          "roundScores": []
+          "inscribedId": 2240025
         },
         {
           "pos": 2,
@@ -122,8 +61,7 @@
           "rounds": [],
           "total": 12,
           "toPar": 6,
-          "inscribedId": 2239603,
-          "roundScores": []
+          "inscribedId": 2239603
         },
         {
           "pos": 3,
@@ -134,8 +72,7 @@
           "rounds": [],
           "total": 8,
           "toPar": 10,
-          "inscribedId": 2239248,
-          "roundScores": []
+          "inscribedId": 2239248
         },
         {
           "pos": 4,
@@ -146,8 +83,7 @@
           "rounds": [],
           "total": 7,
           "toPar": 11,
-          "inscribedId": 2239045,
-          "roundScores": []
+          "inscribedId": 2239045
         },
         {
           "pos": 5,
@@ -158,8 +94,7 @@
           "rounds": [],
           "total": 7,
           "toPar": 11,
-          "inscribedId": 2239058,
-          "roundScores": []
+          "inscribedId": 2239058
         },
         {
           "pos": null,
@@ -170,38 +105,14 @@
           "rounds": [],
           "total": null,
           "toPar": null,
-          "inscribedId": 2239170,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-              ],
-              "total": null
-            }
-          ]
+          "inscribedId": 2239170
         }
       ]
     },
     {
       "category": 2,
+      "categoryName": "Clasificación Hándicap Femenina",
+      "expectedJugadores": 6,
       "header": [
         "Pos",
         "Jugador",
@@ -223,8 +134,7 @@
           "rounds": [],
           "total": 19,
           "toPar": -1,
-          "inscribedId": 2239603,
-          "roundScores": []
+          "inscribedId": 2239603
         },
         {
           "pos": 2,
@@ -235,8 +145,7 @@
           "rounds": [],
           "total": 19,
           "toPar": -1,
-          "inscribedId": 2240025,
-          "roundScores": []
+          "inscribedId": 2240025
         },
         {
           "pos": 3,
@@ -247,8 +156,7 @@
           "rounds": [],
           "total": 16,
           "toPar": 2,
-          "inscribedId": 2239248,
-          "roundScores": []
+          "inscribedId": 2239248
         },
         {
           "pos": 4,
@@ -259,8 +167,7 @@
           "rounds": [],
           "total": 15,
           "toPar": 3,
-          "inscribedId": 2239045,
-          "roundScores": []
+          "inscribedId": 2239045
         },
         {
           "pos": 5,
@@ -271,8 +178,7 @@
           "rounds": [],
           "total": 13,
           "toPar": 5,
-          "inscribedId": 2239058,
-          "roundScores": []
+          "inscribedId": 2239058
         },
         {
           "pos": null,
@@ -283,38 +189,14 @@
           "rounds": [],
           "total": null,
           "toPar": null,
-          "inscribedId": 2239170,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-              ],
-              "total": null
-            }
-          ]
+          "inscribedId": 2239170
         }
       ]
     },
     {
       "category": 3,
+      "categoryName": "Clasificación Scratch Masculina",
+      "expectedJugadores": 13,
       "header": [
         "Pos",
         "Jugador",
@@ -336,8 +218,7 @@
           "rounds": [],
           "total": 16,
           "toPar": 2,
-          "inscribedId": 2239575,
-          "roundScores": []
+          "inscribedId": 2239575
         },
         {
           "pos": 2,
@@ -348,8 +229,7 @@
           "rounds": [],
           "total": 15,
           "toPar": 3,
-          "inscribedId": 2239779,
-          "roundScores": []
+          "inscribedId": 2239779
         },
         {
           "pos": 3,
@@ -360,8 +240,7 @@
           "rounds": [],
           "total": 14,
           "toPar": 4,
-          "inscribedId": 2239380,
-          "roundScores": []
+          "inscribedId": 2239380
         },
         {
           "pos": 4,
@@ -372,8 +251,7 @@
           "rounds": [],
           "total": 13,
           "toPar": 5,
-          "inscribedId": 2239010,
-          "roundScores": []
+          "inscribedId": 2239010
         },
         {
           "pos": 5,
@@ -384,8 +262,7 @@
           "rounds": [],
           "total": 12,
           "toPar": 6,
-          "inscribedId": 2240734,
-          "roundScores": []
+          "inscribedId": 2240734
         },
         {
           "pos": 6,
@@ -396,8 +273,7 @@
           "rounds": [],
           "total": 12,
           "toPar": 6,
-          "inscribedId": 2239355,
-          "roundScores": []
+          "inscribedId": 2239355
         },
         {
           "pos": 7,
@@ -408,8 +284,7 @@
           "rounds": [],
           "total": 11,
           "toPar": 7,
-          "inscribedId": 2239163,
-          "roundScores": []
+          "inscribedId": 2239163
         },
         {
           "pos": 8,
@@ -420,8 +295,7 @@
           "rounds": [],
           "total": 11,
           "toPar": 7,
-          "inscribedId": 2239701,
-          "roundScores": []
+          "inscribedId": 2239701
         },
         {
           "pos": 9,
@@ -432,8 +306,7 @@
           "rounds": [],
           "total": 11,
           "toPar": 7,
-          "inscribedId": 2239047,
-          "roundScores": []
+          "inscribedId": 2239047
         },
         {
           "pos": 10,
@@ -444,8 +317,7 @@
           "rounds": [],
           "total": 11,
           "toPar": 7,
-          "inscribedId": 2240267,
-          "roundScores": []
+          "inscribedId": 2240267
         },
         {
           "pos": 11,
@@ -456,8 +328,7 @@
           "rounds": [],
           "total": 9,
           "toPar": 9,
-          "inscribedId": 2240737,
-          "roundScores": []
+          "inscribedId": 2240737
         },
         {
           "pos": 12,
@@ -468,8 +339,7 @@
           "rounds": [],
           "total": 9,
           "toPar": 9,
-          "inscribedId": 2239796,
-          "roundScores": []
+          "inscribedId": 2239796
         },
         {
           "pos": 13,
@@ -480,13 +350,14 @@
           "rounds": [],
           "total": 7,
           "toPar": 11,
-          "inscribedId": 2239336,
-          "roundScores": []
+          "inscribedId": 2239336
         }
       ]
     },
     {
       "category": 4,
+      "categoryName": "Clasificación Hándicap Masculina",
+      "expectedJugadores": 13,
       "header": [
         "Pos",
         "Jugador",
@@ -508,8 +379,7 @@
           "rounds": [],
           "total": 21,
           "toPar": -3,
-          "inscribedId": 2239575,
-          "roundScores": []
+          "inscribedId": 2239575
         },
         {
           "pos": 2,
@@ -520,8 +390,7 @@
           "rounds": [],
           "total": 18,
           "toPar": null,
-          "inscribedId": 2239380,
-          "roundScores": []
+          "inscribedId": 2239380
         },
         {
           "pos": 3,
@@ -532,8 +401,7 @@
           "rounds": [],
           "total": 18,
           "toPar": null,
-          "inscribedId": 2239010,
-          "roundScores": []
+          "inscribedId": 2239010
         },
         {
           "pos": 4,
@@ -544,8 +412,7 @@
           "rounds": [],
           "total": 17,
           "toPar": 1,
-          "inscribedId": 2239779,
-          "roundScores": []
+          "inscribedId": 2239779
         },
         {
           "pos": 5,
@@ -556,8 +423,7 @@
           "rounds": [],
           "total": 17,
           "toPar": 1,
-          "inscribedId": 2239163,
-          "roundScores": []
+          "inscribedId": 2239163
         },
         {
           "pos": 6,
@@ -568,8 +434,7 @@
           "rounds": [],
           "total": 17,
           "toPar": 1,
-          "inscribedId": 2239701,
-          "roundScores": []
+          "inscribedId": 2239701
         },
         {
           "pos": 7,
@@ -580,8 +445,7 @@
           "rounds": [],
           "total": 16,
           "toPar": 2,
-          "inscribedId": 2240734,
-          "roundScores": []
+          "inscribedId": 2240734
         },
         {
           "pos": 8,
@@ -592,8 +456,7 @@
           "rounds": [],
           "total": 16,
           "toPar": 2,
-          "inscribedId": 2239355,
-          "roundScores": []
+          "inscribedId": 2239355
         },
         {
           "pos": 9,
@@ -604,8 +467,7 @@
           "rounds": [],
           "total": 16,
           "toPar": 2,
-          "inscribedId": 2239047,
-          "roundScores": []
+          "inscribedId": 2239047
         },
         {
           "pos": 10,
@@ -616,8 +478,7 @@
           "rounds": [],
           "total": 14,
           "toPar": 4,
-          "inscribedId": 2239796,
-          "roundScores": []
+          "inscribedId": 2239796
         },
         {
           "pos": 11,
@@ -628,8 +489,7 @@
           "rounds": [],
           "total": 14,
           "toPar": 4,
-          "inscribedId": 2240737,
-          "roundScores": []
+          "inscribedId": 2240737
         },
         {
           "pos": 12,
@@ -640,8 +500,7 @@
           "rounds": [],
           "total": 13,
           "toPar": 5,
-          "inscribedId": 2240267,
-          "roundScores": []
+          "inscribedId": 2240267
         },
         {
           "pos": 13,
@@ -652,12 +511,30 @@
           "rounds": [],
           "total": 9,
           "toPar": 9,
-          "inscribedId": 2239336,
-          "roundScores": []
+          "inscribedId": 2239336
         }
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Scratch Femenina",
+      "jugadores": 6
+    },
+    "2": {
+      "name": "Clasificación Hándicap Femenina",
+      "jugadores": 6
+    },
+    "3": {
+      "name": "Clasificación Scratch Masculina",
+      "jugadores": 13
+    },
+    "4": {
+      "name": "Clasificación Hándicap Masculina",
+      "jugadores": 13
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -940,43 +817,6 @@
       "nivel": "B"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 70055
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Regalado Corisco, Jesus C.",
-          "holeNumber": 14,
-          "createdAt": "23/04/25 11:06:25"
-        },
-        {
-          "playerName": "Gandullo Nieto, Antonio Luis",
-          "holeNumber": 18,
-          "createdAt": "23/04/25 11:41:44"
-        },
-        {
-          "playerName": "Postigo Secano, Jose",
-          "holeNumber": 9,
-          "createdAt": "23/04/25 13:53:24"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1155,5 +995,46 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:02.845Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 70055
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Regalado Corisco, Jesus C.",
+          "holeNumber": 14,
+          "createdAt": "23/04/25 11:06:25"
+        },
+        {
+          "playerName": "Gandullo Nieto, Antonio Luis",
+          "holeNumber": 18,
+          "createdAt": "23/04/25 11:41:44"
+        },
+        {
+          "playerName": "Postigo Secano, Jose",
+          "holeNumber": 9,
+          "createdAt": "23/04/25 13:53:24"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/65862_cartel_379.pdf",
+    "/uploads/competiciones/pdf/2771750985_rrll_negralejo_p&amp;p.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:57.300Z"
 }

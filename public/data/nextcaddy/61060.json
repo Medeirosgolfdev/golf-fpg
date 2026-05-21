@@ -1,14 +1,14 @@
 {
   "tourId": 61060,
   "url": "https://www.nextcaddy.com/tour/61060",
-  "scrapedAt": "2026-05-09T10:07:35.818Z",
+  "scrapedAt": "2026-05-21T16:38:01.265Z",
   "meta": {
     "name": "Campeonato de Sevilla",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Real Club Pineda de Sevilla",
     "courseCode": "AM02",
-    "dateStart": "21 mar 2026",
-    "dateEnd": "21 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-21"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual Masculino",
+      "expectedJugadores": 69,
       "header": [
         "Pos",
         "Jugador",
@@ -1423,6 +1424,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Scratch Individual Femenino",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -1802,6 +1805,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Handicap Individual Femenino",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -2181,6 +2186,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Handicap Individual Masculino Desde 1.6 Hcp",
+      "expectedJugadores": 33,
       "header": [
         "Pos",
         "Jugador",
@@ -2860,6 +2867,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Handicap Individual Masculino Hasta 1.5 Hcp",
+      "expectedJugadores": 36,
       "header": [
         "Pos",
         "Jugador",
@@ -3599,6 +3608,8 @@
     },
     {
       "category": 6,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 87,
       "header": [
         "Pos",
         "Jugador",
@@ -4572,6 +4583,8 @@
     },
     {
       "category": 7,
+      "categoryName": "Handicap Individual Femenino",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -4786,6 +4799,8 @@
     },
     {
       "category": 8,
+      "categoryName": "Handicap Individual Masculino Hasta 1.5 Hcp",
+      "expectedJugadores": 36,
       "header": [
         "Pos",
         "Jugador",
@@ -5198,6 +5213,8 @@
     },
     {
       "category": 9,
+      "categoryName": "Handicap Individual Masculino Desde 1.6 Hcp",
+      "expectedJugadores": 33,
       "header": [
         "Pos",
         "Jugador",
@@ -5577,6 +5594,8 @@
     },
     {
       "category": 10,
+      "categoryName": "Scratch Individual Masculino",
+      "expectedJugadores": 69,
       "header": [
         "Pos",
         "Jugador",
@@ -6352,6 +6371,8 @@
     },
     {
       "category": 11,
+      "categoryName": "Scratch Individual Femenino",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -6565,6 +6586,53 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual Masculino",
+      "jugadores": 69
+    },
+    "2": {
+      "name": "Scratch Individual Femenino",
+      "jugadores": 18
+    },
+    "3": {
+      "name": "Handicap Individual Femenino",
+      "jugadores": 18
+    },
+    "4": {
+      "name": "Handicap Individual Masculino Desde 1.6 Hcp",
+      "jugadores": 33
+    },
+    "5": {
+      "name": "Handicap Individual Masculino Hasta 1.5 Hcp",
+      "jugadores": 36
+    },
+    "6": {
+      "name": "Scratch Individual",
+      "jugadores": 87
+    },
+    "7": {
+      "name": "Handicap Individual Femenino",
+      "jugadores": 18
+    },
+    "8": {
+      "name": "Handicap Individual Masculino Hasta 1.5 Hcp",
+      "jugadores": 36
+    },
+    "9": {
+      "name": "Handicap Individual Masculino Desde 1.6 Hcp",
+      "jugadores": 33
+    },
+    "10": {
+      "name": "Scratch Individual Masculino",
+      "jugadores": 69
+    },
+    "11": {
+      "name": "Scratch Individual Femenino",
+      "jugadores": 18
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -7431,92 +7499,6 @@
       "nivel": "A"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 64661
-    },
-    {
-      "roundNumber": 2,
-      "roundId": 64662
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Hurley, Bruce",
-          "holeNumber": 16,
-          "createdAt": "17/09/24 14:22:27"
-        },
-        {
-          "playerName": "Hurley, Bruce",
-          "holeNumber": 17,
-          "createdAt": "17/09/24 14:22:27"
-        },
-        {
-          "playerName": "Dakers, Anthony",
-          "holeNumber": 9,
-          "createdAt": "17/09/24 14:23:04"
-        },
-        {
-          "playerName": "Fergusson-Batte, Andrew",
-          "holeNumber": 3,
-          "createdAt": "17/09/24 14:23:44"
-        },
-        {
-          "playerName": "Fergusson-Batte, Andrew",
-          "holeNumber": 5,
-          "createdAt": "17/09/24 14:23:44"
-        },
-        {
-          "playerName": "Waters, Paul",
-          "holeNumber": 13,
-          "createdAt": "17/09/24 14:26:51"
-        },
-        {
-          "playerName": "Ingham, John Richard",
-          "holeNumber": 9,
-          "createdAt": "17/09/24 14:27:33"
-        },
-        {
-          "playerName": "Ingham, John Richard",
-          "holeNumber": 11,
-          "createdAt": "17/09/24 14:27:33"
-        },
-        {
-          "playerName": "Ingham, John Richard",
-          "holeNumber": 15,
-          "createdAt": "17/09/24 14:27:33"
-        },
-        {
-          "playerName": "Breakspear, Peter John",
-          "holeNumber": 11,
-          "createdAt": "17/09/24 14:28:39"
-        },
-        {
-          "playerName": "Allan, Stewart",
-          "holeNumber": 8,
-          "createdAt": "17/09/24 14:29:39"
-        },
-        {
-          "playerName": "Thornton, Robert",
-          "holeNumber": 11,
-          "createdAt": "17/09/24 14:30:15"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -9086,5 +9068,95 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:11:58.209Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 64661
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 64662
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Hurley, Bruce",
+          "holeNumber": 16,
+          "createdAt": "17/09/24 14:22:27"
+        },
+        {
+          "playerName": "Hurley, Bruce",
+          "holeNumber": 17,
+          "createdAt": "17/09/24 14:22:27"
+        },
+        {
+          "playerName": "Dakers, Anthony",
+          "holeNumber": 9,
+          "createdAt": "17/09/24 14:23:04"
+        },
+        {
+          "playerName": "Fergusson-Batte, Andrew",
+          "holeNumber": 3,
+          "createdAt": "17/09/24 14:23:44"
+        },
+        {
+          "playerName": "Fergusson-Batte, Andrew",
+          "holeNumber": 5,
+          "createdAt": "17/09/24 14:23:44"
+        },
+        {
+          "playerName": "Waters, Paul",
+          "holeNumber": 13,
+          "createdAt": "17/09/24 14:26:51"
+        },
+        {
+          "playerName": "Ingham, John Richard",
+          "holeNumber": 9,
+          "createdAt": "17/09/24 14:27:33"
+        },
+        {
+          "playerName": "Ingham, John Richard",
+          "holeNumber": 11,
+          "createdAt": "17/09/24 14:27:33"
+        },
+        {
+          "playerName": "Ingham, John Richard",
+          "holeNumber": 15,
+          "createdAt": "17/09/24 14:27:33"
+        },
+        {
+          "playerName": "Breakspear, Peter John",
+          "holeNumber": 11,
+          "createdAt": "17/09/24 14:28:39"
+        },
+        {
+          "playerName": "Allan, Stewart",
+          "holeNumber": 8,
+          "createdAt": "17/09/24 14:29:39"
+        },
+        {
+          "playerName": "Thornton, Robert",
+          "holeNumber": 11,
+          "createdAt": "17/09/24 14:30:15"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/1624492579_informacion_interes_cto_sevilla_2026_.pdf",
+    "/uploads/competiciones/pdf/1165386444_reglas_locales_cto._de_sevilla_2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:49.335Z"
 }

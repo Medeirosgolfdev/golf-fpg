@@ -1,14 +1,14 @@
 {
   "tourId": 68914,
   "url": "https://www.nextcaddy.com/tour/68914",
-  "scrapedAt": "2026-05-09T09:58:00.383Z",
+  "scrapedAt": "2026-05-21T16:37:33.237Z",
   "meta": {
     "name": "LADIES 3.3.",
     "organizer": null,
     "course": "Santa María Golf & Country Club",
     "courseCode": "AM86",
-    "dateStart": "03 mar 2026",
-    "dateEnd": "03 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Especial",
     "categories": [
       "Señoras",
@@ -16,11 +16,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-03"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -205,6 +206,7 @@
       "nivel": "Mid"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -347,6 +349,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:40.550Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:28.614Z"
 }

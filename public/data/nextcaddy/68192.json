@@ -1,14 +1,14 @@
 {
   "tourId": 68192,
   "url": "https://www.nextcaddy.com/tour/68192",
-  "scrapedAt": "2026-05-09T10:07:56.908Z",
+  "scrapedAt": "2026-05-21T16:38:44.030Z",
   "meta": {
     "name": "Liga Femenina (hcp igual o menor de 42.0)",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Golf Park Entertainment",
     "courseCode": "CM18",
-    "dateStart": "12 abr 2026",
-    "dateEnd": "12 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Liga Femenina 2026",
     "categories": [
       "Señoras",
@@ -16,13 +16,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-04-12"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual Señoras Femenino",
+      "expectedJugadores": 23,
       "header": [
         "Pos",
         "Jugador",
@@ -291,6 +292,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Señoras Femenino",
+      "jugadores": 23
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -622,22 +630,6 @@
       "nivel": "B"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72739
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -852,5 +844,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:21.410Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72739
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [
+    "/uploads/competiciones/pdf/2974990987_arb_reg_loc_cm18_2019_-_golf_park_-_documentos_de_google.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:18.573Z"
 }

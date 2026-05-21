@@ -1,14 +1,14 @@
 {
   "tourId": 70235,
   "url": "https://www.nextcaddy.com/tour/70235",
-  "scrapedAt": "2026-05-09T10:16:59.966Z",
+  "scrapedAt": "2026-05-21T16:40:40.940Z",
   "meta": {
     "name": "Circuito Corporate 2026 (Inscripción turno mañana y tarde)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "01 ago 2026",
-    "dateEnd": "01 ago 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,12 +17,36 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-08-01"
+    ]
   },
   "course": null,
   "leaderboard": [],
-  "inscritos": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Pablo Cancio Sanchez",
+      "licencia": "CB05896451",
+      "hcp": 16.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Fecha Inscripción",
+      "hcp": null,
+      "nivel": "Licencia"
+    },
+    {
+      "orden": 1,
+      "name": "Pablo Cancio Sanchez",
+      "licencia": "15-05-26 12:11",
+      "hcp": 16.3,
+      "nivel": "CB05896451"
+    }
+  ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -39,6 +63,6 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:43.833Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:38.903Z"
 }

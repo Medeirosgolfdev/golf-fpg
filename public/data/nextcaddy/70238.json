@@ -1,14 +1,14 @@
 {
   "tourId": 70238,
   "url": "https://www.nextcaddy.com/tour/70238",
-  "scrapedAt": "2026-05-09T10:15:39.524Z",
+  "scrapedAt": "2026-05-21T16:39:04.018Z",
   "meta": {
     "name": "VOBS COMPETITION",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "23 abr 2026",
-    "dateEnd": "23 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-23"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -171,6 +172,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 12
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -355,113 +363,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75158
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Silva Aguilar, Lorenzo De",
-          "holeNumber": 10,
-          "createdAt": "11/11/25 10:01:44"
-        },
-        {
-          "playerName": "Fernandez Flores, Manuel",
-          "holeNumber": 11,
-          "createdAt": "11/11/25 10:04:13"
-        },
-        {
-          "playerName": "Bermudez Salas, Antonio",
-          "holeNumber": 2,
-          "createdAt": "11/11/25 10:07:00"
-        },
-        {
-          "playerName": "Vilallonga Solaun, Francisco J Avier",
-          "holeNumber": 13,
-          "createdAt": "11/11/25 10:52:43"
-        },
-        {
-          "playerName": "Vicente Ramos, Francisco",
-          "holeNumber": 13,
-          "createdAt": "11/11/25 10:57:52"
-        },
-        {
-          "playerName": "Ramos Cardona, Jose Manuel",
-          "holeNumber": 16,
-          "createdAt": "11/11/25 11:04:17"
-        },
-        {
-          "playerName": "Silva Aguilar, Lorenzo De",
-          "holeNumber": 16,
-          "createdAt": "11/11/25 11:48:08"
-        },
-        {
-          "playerName": "Martinez Navarro, Agustin",
-          "holeNumber": 1,
-          "createdAt": "11/11/25 12:05:35"
-        },
-        {
-          "playerName": "Vicente Ramos, Francisco",
-          "holeNumber": 2,
-          "createdAt": "11/11/25 12:24:00"
-        },
-        {
-          "playerName": "Casquete De Prado Montero De Espinosa, Antonio",
-          "holeNumber": 7,
-          "createdAt": "11/11/25 12:27:11"
-        },
-        {
-          "playerName": "Ramos Cardona, Jose Manuel",
-          "holeNumber": 4,
-          "createdAt": "11/11/25 12:34:32"
-        },
-        {
-          "playerName": "Cascajo Lopez, Pablo",
-          "holeNumber": 5,
-          "createdAt": "11/11/25 12:37:02"
-        },
-        {
-          "playerName": "Silva Aguilar, Lorenzo De",
-          "holeNumber": 2,
-          "createdAt": "11/11/25 12:38:47"
-        },
-        {
-          "playerName": "Olle Bertrand, Carlos",
-          "holeNumber": 7,
-          "createdAt": "11/11/25 13:13:09"
-        },
-        {
-          "playerName": "Mateos Ramirez, Leopoldo",
-          "holeNumber": 5,
-          "createdAt": "11/11/25 14:10:19"
-        },
-        {
-          "playerName": "Ugarte Monasterio, Jorge",
-          "holeNumber": 11,
-          "createdAt": "11/11/25 14:50:40"
-        },
-        {
-          "playerName": "Ugarte Monasterio, Jorge",
-          "holeNumber": 13,
-          "createdAt": "11/11/25 14:50:40"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -577,5 +478,115 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:58.529Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75158
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Silva Aguilar, Lorenzo De",
+          "holeNumber": 10,
+          "createdAt": "11/11/25 10:01:44"
+        },
+        {
+          "playerName": "Fernandez Flores, Manuel",
+          "holeNumber": 11,
+          "createdAt": "11/11/25 10:04:13"
+        },
+        {
+          "playerName": "Bermudez Salas, Antonio",
+          "holeNumber": 2,
+          "createdAt": "11/11/25 10:07:00"
+        },
+        {
+          "playerName": "Vilallonga Solaun, Francisco J Avier",
+          "holeNumber": 13,
+          "createdAt": "11/11/25 10:52:43"
+        },
+        {
+          "playerName": "Vicente Ramos, Francisco",
+          "holeNumber": 13,
+          "createdAt": "11/11/25 10:57:52"
+        },
+        {
+          "playerName": "Ramos Cardona, Jose Manuel",
+          "holeNumber": 16,
+          "createdAt": "11/11/25 11:04:17"
+        },
+        {
+          "playerName": "Silva Aguilar, Lorenzo De",
+          "holeNumber": 16,
+          "createdAt": "11/11/25 11:48:08"
+        },
+        {
+          "playerName": "Martinez Navarro, Agustin",
+          "holeNumber": 1,
+          "createdAt": "11/11/25 12:05:35"
+        },
+        {
+          "playerName": "Vicente Ramos, Francisco",
+          "holeNumber": 2,
+          "createdAt": "11/11/25 12:24:00"
+        },
+        {
+          "playerName": "Casquete De Prado Montero De Espinosa, Antonio",
+          "holeNumber": 7,
+          "createdAt": "11/11/25 12:27:11"
+        },
+        {
+          "playerName": "Ramos Cardona, Jose Manuel",
+          "holeNumber": 4,
+          "createdAt": "11/11/25 12:34:32"
+        },
+        {
+          "playerName": "Cascajo Lopez, Pablo",
+          "holeNumber": 5,
+          "createdAt": "11/11/25 12:37:02"
+        },
+        {
+          "playerName": "Silva Aguilar, Lorenzo De",
+          "holeNumber": 2,
+          "createdAt": "11/11/25 12:38:47"
+        },
+        {
+          "playerName": "Olle Bertrand, Carlos",
+          "holeNumber": 7,
+          "createdAt": "11/11/25 13:13:09"
+        },
+        {
+          "playerName": "Mateos Ramirez, Leopoldo",
+          "holeNumber": 5,
+          "createdAt": "11/11/25 14:10:19"
+        },
+        {
+          "playerName": "Ugarte Monasterio, Jorge",
+          "holeNumber": 11,
+          "createdAt": "11/11/25 14:50:40"
+        },
+        {
+          "playerName": "Ugarte Monasterio, Jorge",
+          "holeNumber": 13,
+          "createdAt": "11/11/25 14:50:40"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/cartel/2841426075_70238-vobs-competition.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:39.072Z"
 }

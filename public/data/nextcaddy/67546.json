@@ -1,14 +1,14 @@
 {
   "tourId": 67546,
   "url": "https://www.nextcaddy.com/tour/67546",
-  "scrapedAt": "2026-05-09T09:57:50.561Z",
+  "scrapedAt": "2026-05-21T16:37:16.953Z",
   "meta": {
     "name": "Prueba Clasificatoria Gran Premio (SotoVerde)",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "22 feb 2026",
-    "dateEnd": "22 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-22"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -90,6 +92,9 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:28.182Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/3889479393_tcgp_sotoverde2026.pdf",
+    "/uploads/2026/02/gran-premio-junta-cyl-sotoverde-01-2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:05.278Z"
 }

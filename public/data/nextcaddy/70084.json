@@ -1,14 +1,14 @@
 {
   "tourId": 70084,
   "url": "https://www.nextcaddy.com/tour/70084",
-  "scrapedAt": "2026-05-09T10:15:32.793Z",
+  "scrapedAt": "2026-05-21T16:38:54.143Z",
   "meta": {
     "name": "II LIGA PARES 3 A 2 BANDERAS",
     "organizer": null,
     "course": "Alhaurín Golf Hotel & Resort",
     "courseCode": "AM22",
-    "dateStart": "18 abr 2026",
-    "dateEnd": "18 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-18"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 26,
       "header": [
         "Pos",
         "Jugador",
@@ -326,6 +327,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 2,
       "header": [
         "Pos",
         "Jugador",
@@ -363,6 +366,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 26
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 2
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -769,6 +783,148 @@
       "licencia": "18-04-26 16:18",
       "hcp": 25,
       "nivel": "TAM2231047"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Ivan Criado Palomo",
+          "hcp": 46.4,
+          "ins": "2301206",
+          "jid": "74983",
+          "nivel": "J"
+        },
+        {
+          "time": "10:00",
+          "tee": 2,
+          "name": "Salvador Villalobos Clavijo",
+          "hcp": 27.5,
+          "ins": "2301204",
+          "jid": "74983",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 2,
+          "name": "Fernando Amaro Duro",
+          "hcp": 23.9,
+          "ins": "2301207",
+          "jid": "74983",
+          "nivel": "M"
+        },
+        {
+          "time": "10:00",
+          "tee": 2,
+          "name": "Antonio Fontalba Gil",
+          "hcp": 26.5,
+          "ins": "2301214",
+          "jid": "74983",
+          "nivel": "M"
+        },
+        {
+          "time": "10:00",
+          "tee": 2,
+          "name": "Sergio Garcia Fernandez",
+          "hcp": 31,
+          "ins": "2301215",
+          "jid": "74983",
+          "nivel": "M"
+        },
+        {
+          "time": "10:00",
+          "tee": 3,
+          "name": "Alvaro Fernandez Gonzalez",
+          "hcp": 17.7,
+          "ins": "2301201",
+          "jid": "74983",
+          "nivel": "M"
+        },
+        {
+          "time": "10:00",
+          "tee": 3,
+          "name": "Carlos Alberto Alvarez",
+          "hcp": 11.8,
+          "ins": "2301218",
+          "jid": "74983",
+          "nivel": "M"
+        },
+        {
+          "time": "10:00",
+          "tee": 3,
+          "name": "Alberto Daniel Diaz",
+          "hcp": 24,
+          "ins": "2301222",
+          "jid": "74983",
+          "nivel": "M"
+        },
+        {
+          "time": "10:00",
+          "tee": 4,
+          "name": "Guillermo Sebastian Ponsetti",
+          "hcp": 33.2,
+          "ins": "2301203",
+          "jid": "74983",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 4,
+          "name": "Alfonso Morillas Benitez",
+          "hcp": 31.7,
+          "ins": "2301205",
+          "jid": "74983",
+          "nivel": "M"
+        },
+        {
+          "time": "10:00",
+          "tee": 7,
+          "name": "Sofia Morillas Benitez",
+          "hcp": 39.8,
+          "ins": "2301200",
+          "jid": "74983",
+          "nivel": "M"
+        },
+        {
+          "time": "10:00",
+          "tee": 9,
+          "name": "Guillermo Alvarez Martin",
+          "hcp": 40.9,
+          "ins": "2301209",
+          "jid": "74983",
+          "nivel": "M"
+        },
+        {
+          "time": "10:00",
+          "tee": 9,
+          "name": "Jesus Carrasco Ortiz",
+          "hcp": 24.3,
+          "ins": "2301213",
+          "jid": "74983",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 9,
+          "name": "Eloisa Carmen Benitez Martinez",
+          "hcp": 34.2,
+          "ins": "2301220",
+          "jid": "74983",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 9,
+          "name": "Juan Jose Machuca Infantes",
+          "hcp": 14.1,
+          "ins": "2301221",
+          "jid": "74983",
+          "nivel": "M"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -1265,147 +1421,6 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Ivan Criado Palomo",
-          "hcp": 46.4,
-          "ins": "2301206",
-          "jid": "74983",
-          "nivel": "J"
-        },
-        {
-          "time": "10:00",
-          "tee": 2,
-          "name": "Salvador Villalobos Clavijo",
-          "hcp": 27.5,
-          "ins": "2301204",
-          "jid": "74983",
-          "nivel": "S"
-        },
-        {
-          "time": "10:00",
-          "tee": 2,
-          "name": "Fernando Amaro Duro",
-          "hcp": 23.9,
-          "ins": "2301207",
-          "jid": "74983",
-          "nivel": "M"
-        },
-        {
-          "time": "10:00",
-          "tee": 2,
-          "name": "Antonio Fontalba Gil",
-          "hcp": 26.5,
-          "ins": "2301214",
-          "jid": "74983",
-          "nivel": "M"
-        },
-        {
-          "time": "10:00",
-          "tee": 2,
-          "name": "Sergio Garcia Fernandez",
-          "hcp": 31,
-          "ins": "2301215",
-          "jid": "74983",
-          "nivel": "M"
-        },
-        {
-          "time": "10:00",
-          "tee": 3,
-          "name": "Alvaro Fernandez Gonzalez",
-          "hcp": 17.7,
-          "ins": "2301201",
-          "jid": "74983",
-          "nivel": "M"
-        },
-        {
-          "time": "10:00",
-          "tee": 3,
-          "name": "Carlos Alberto Alvarez",
-          "hcp": 11.8,
-          "ins": "2301218",
-          "jid": "74983",
-          "nivel": "M"
-        },
-        {
-          "time": "10:00",
-          "tee": 3,
-          "name": "Alberto Daniel Diaz",
-          "hcp": 24,
-          "ins": "2301222",
-          "jid": "74983",
-          "nivel": "M"
-        },
-        {
-          "time": "10:00",
-          "tee": 4,
-          "name": "Guillermo Sebastian Ponsetti",
-          "hcp": 33.2,
-          "ins": "2301203",
-          "jid": "74983",
-          "nivel": "S"
-        },
-        {
-          "time": "10:00",
-          "tee": 4,
-          "name": "Alfonso Morillas Benitez",
-          "hcp": 31.7,
-          "ins": "2301205",
-          "jid": "74983",
-          "nivel": "M"
-        },
-        {
-          "time": "10:00",
-          "tee": 7,
-          "name": "Sofia Morillas Benitez",
-          "hcp": 39.8,
-          "ins": "2301200",
-          "jid": "74983",
-          "nivel": "M"
-        },
-        {
-          "time": "10:00",
-          "tee": 9,
-          "name": "Guillermo Alvarez Martin",
-          "hcp": 40.9,
-          "ins": "2301209",
-          "jid": "74983",
-          "nivel": "M"
-        },
-        {
-          "time": "10:00",
-          "tee": 9,
-          "name": "Jesus Carrasco Ortiz",
-          "hcp": 24.3,
-          "ins": "2301213",
-          "jid": "74983",
-          "nivel": "S"
-        },
-        {
-          "time": "10:00",
-          "tee": 9,
-          "name": "Eloisa Carmen Benitez Martinez",
-          "hcp": 34.2,
-          "ins": "2301220",
-          "jid": "74983",
-          "nivel": "S"
-        },
-        {
-          "time": "10:00",
-          "tee": 9,
-          "name": "Juan Jose Machuca Infantes",
-          "hcp": 14.1,
-          "ins": "2301221",
-          "jid": "74983",
-          "nivel": "M"
-        }
-      ]
-    }
-  ],
-  "horariosScrapedAt": "2026-05-09T12:12:57.593Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:38.061Z"
 }

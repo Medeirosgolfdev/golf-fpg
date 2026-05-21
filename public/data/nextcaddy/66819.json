@@ -1,14 +1,14 @@
 {
   "tourId": 66819,
   "url": "https://www.nextcaddy.com/tour/66819",
-  "scrapedAt": "2026-05-09T09:57:17.068Z",
+  "scrapedAt": "2026-05-21T16:36:25.366Z",
   "meta": {
     "name": "IV  Liga Promesas 2025-2026",
     "organizer": null,
     "course": "Escuela de Golf Miguel ángel Jiménez",
     "courseCode": "AMI5",
-    "dateStart": "10 ene 2026",
-    "dateEnd": "10 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,17 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-10"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Promesas",
+      "jugadores": 5
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -92,6 +98,103 @@
       "licencia": "AMI5420730",
       "hcp": 34,
       "nivel": "Mid"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "13:30",
+          "tee": 1,
+          "name": "Santiago Viera Villalba",
+          "hcp": 22.8,
+          "ins": "2236511",
+          "jid": "71213",
+          "nivel": "B"
+        },
+        {
+          "time": "13:30",
+          "tee": 1,
+          "name": "Pau Caceres Gago",
+          "hcp": 22.9,
+          "ins": "2236510",
+          "jid": "71213",
+          "nivel": "B"
+        },
+        {
+          "time": "13:30",
+          "tee": 1,
+          "name": "Manuel Lepe Florido",
+          "hcp": 21.8,
+          "ins": "2241220",
+          "jid": "71213",
+          "nivel": "S"
+        },
+        {
+          "time": "13:30",
+          "tee": 1,
+          "name": "Lourdes Salcedo Alvarez De Perea",
+          "hcp": 30.1,
+          "ins": "2241221",
+          "jid": "71213",
+          "nivel": "S"
+        },
+        {
+          "time": "13:30",
+          "tee": 2,
+          "name": "David Barbeyto Mayoral",
+          "hcp": 24.8,
+          "ins": "2241535",
+          "jid": "71213",
+          "nivel": "S"
+        },
+        {
+          "time": "13:30",
+          "tee": 2,
+          "name": "Maria Teresa Ayuso Aragones",
+          "hcp": 36,
+          "ins": "2241536",
+          "jid": "71213",
+          "nivel": "S"
+        },
+        {
+          "time": "13:30",
+          "tee": 2,
+          "name": "Javier Martin Pastor",
+          "hcp": 28.7,
+          "ins": "2241544",
+          "jid": "71213",
+          "nivel": "S"
+        },
+        {
+          "time": "13:30",
+          "tee": 2,
+          "name": "Ruben Artero Martinez",
+          "hcp": 34,
+          "ins": "2241545",
+          "jid": "71213",
+          "nivel": "M"
+        },
+        {
+          "time": "13:30",
+          "tee": 3,
+          "name": "Pedro Gutierrez Macias",
+          "hcp": 31.3,
+          "ins": "2240837",
+          "jid": "71213",
+          "nivel": "M"
+        },
+        {
+          "time": "13:30",
+          "tee": 3,
+          "name": "Agustin Gutierrez Cepeda",
+          "hcp": 35.9,
+          "ins": "2240836",
+          "jid": "71213",
+          "nivel": "S"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -196,102 +299,6 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "13:30",
-          "tee": 1,
-          "name": "Santiago Viera Villalba",
-          "hcp": 22.8,
-          "ins": "2236511",
-          "jid": "71213",
-          "nivel": "B"
-        },
-        {
-          "time": "13:30",
-          "tee": 1,
-          "name": "Pau Caceres Gago",
-          "hcp": 22.9,
-          "ins": "2236510",
-          "jid": "71213",
-          "nivel": "B"
-        },
-        {
-          "time": "13:30",
-          "tee": 1,
-          "name": "Manuel Lepe Florido",
-          "hcp": 21.8,
-          "ins": "2241220",
-          "jid": "71213",
-          "nivel": "S"
-        },
-        {
-          "time": "13:30",
-          "tee": 1,
-          "name": "Lourdes Salcedo Alvarez De Perea",
-          "hcp": 30.1,
-          "ins": "2241221",
-          "jid": "71213",
-          "nivel": "S"
-        },
-        {
-          "time": "13:30",
-          "tee": 2,
-          "name": "David Barbeyto Mayoral",
-          "hcp": 24.8,
-          "ins": "2241535",
-          "jid": "71213",
-          "nivel": "S"
-        },
-        {
-          "time": "13:30",
-          "tee": 2,
-          "name": "Maria Teresa Ayuso Aragones",
-          "hcp": 36,
-          "ins": "2241536",
-          "jid": "71213",
-          "nivel": "S"
-        },
-        {
-          "time": "13:30",
-          "tee": 2,
-          "name": "Javier Martin Pastor",
-          "hcp": 28.7,
-          "ins": "2241544",
-          "jid": "71213",
-          "nivel": "S"
-        },
-        {
-          "time": "13:30",
-          "tee": 2,
-          "name": "Ruben Artero Martinez",
-          "hcp": 34,
-          "ins": "2241545",
-          "jid": "71213",
-          "nivel": "M"
-        },
-        {
-          "time": "13:30",
-          "tee": 3,
-          "name": "Pedro Gutierrez Macias",
-          "hcp": 31.3,
-          "ins": "2240837",
-          "jid": "71213",
-          "nivel": "M"
-        },
-        {
-          "time": "13:30",
-          "tee": 3,
-          "name": "Agustin Gutierrez Cepeda",
-          "hcp": 35.9,
-          "ins": "2240836",
-          "jid": "71213",
-          "nivel": "S"
-        }
-      ]
-    }
-  ],
-  "horariosScrapedAt": "2026-05-09T12:12:03.579Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:41:58.413Z"
 }

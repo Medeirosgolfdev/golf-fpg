@@ -1,14 +1,14 @@
 {
   "tourId": 70353,
   "url": "https://www.nextcaddy.com/tour/70353",
-  "scrapedAt": "2026-05-09T10:16:31.962Z",
+  "scrapedAt": "2026-05-21T16:39:47.247Z",
   "meta": {
     "name": "Torneo Fun&Golf \"Encinas de Boadilla\" (Tiro 14:00 horas)",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Club de Golf Encinas de Boadilla",
     "courseCode": "CM09",
-    "dateStart": "16 may 2026",
-    "dateEnd": "16 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,94 +17,529 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-05-16"
+    ]
   },
   "course": null,
-  "leaderboard": [],
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 17,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Gonzalo Dominguez Granados",
+          "licencia": "CM22496459",
+          "hcp": 53,
+          "nivel": "B",
+          "rounds": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2316390
+        },
+        {
+          "pos": 2,
+          "name": "Max Bernos Higgins",
+          "licencia": "CM18185285",
+          "hcp": 48,
+          "nivel": "A",
+          "rounds": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2316035
+        },
+        {
+          "pos": 3,
+          "name": "Ignacio Muñoz Gonzalez",
+          "licencia": "CM02193135",
+          "hcp": 51.9,
+          "nivel": "B",
+          "rounds": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2311670
+        },
+        {
+          "pos": 4,
+          "name": "Hugo Arevalo Caballero",
+          "licencia": "CMA8517848",
+          "hcp": 50,
+          "nivel": "B",
+          "rounds": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2311457
+        },
+        {
+          "pos": 5,
+          "name": "Alvaro Salinas Valentin",
+          "licencia": "CM11380169",
+          "hcp": 52.7,
+          "nivel": "B",
+          "rounds": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2311402
+        },
+        {
+          "pos": 6,
+          "name": "Enzo Ledo Chou",
+          "licencia": "CM00267825",
+          "hcp": 52.6,
+          "nivel": "B",
+          "rounds": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2315468
+        },
+        {
+          "pos": 7,
+          "name": "Jaime Piedras Aguirre",
+          "licencia": "CM22258095",
+          "hcp": 37.4,
+          "nivel": "A",
+          "rounds": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2314853
+        },
+        {
+          "pos": 8,
+          "name": "Maria Del Mar Garcia Trevijano Requena",
+          "licencia": "CM02994482",
+          "hcp": 46.2,
+          "nivel": "A",
+          "rounds": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2314642
+        },
+        {
+          "pos": 9,
+          "name": "Luis Lopez Pulgar",
+          "licencia": "CM61491847",
+          "hcp": 38.8,
+          "nivel": "B",
+          "rounds": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2312397
+        },
+        {
+          "pos": 10,
+          "name": "Iñigo Seisdedos Barbi",
+          "licencia": "CM04471988",
+          "hcp": 40,
+          "nivel": "B",
+          "rounds": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2311456
+        },
+        {
+          "pos": 11,
+          "name": "Ana Garcia-Trevijano Requena",
+          "licencia": "CM02474572",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2314644
+        },
+        {
+          "pos": 12,
+          "name": "Dario Alonso Peña",
+          "licencia": "CM81322174",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2315467
+        },
+        {
+          "pos": 13,
+          "name": "David Lopez Pulgar",
+          "licencia": "CM61497408",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2312396
+        },
+        {
+          "pos": 14,
+          "name": "Martin Larmande Diaz",
+          "licencia": "CM18038835",
+          "hcp": 45,
+          "nivel": "B",
+          "rounds": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2312027
+        },
+        {
+          "pos": 15,
+          "name": "Labib Khadra",
+          "licencia": "CM06373994",
+          "hcp": 45.8,
+          "nivel": "B",
+          "rounds": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2316209
+        },
+        {
+          "pos": 16,
+          "name": "Ernesto Garcia-Trevijano Requena",
+          "licencia": "CM02474571",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2314643
+        },
+        {
+          "pos": null,
+          "name": "Julia Martin Barcelo",
+          "licencia": "CM41347608",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2312012
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 17,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Gonzalo Dominguez Granados",
+          "licencia": "CM22496459",
+          "hcp": 53,
+          "nivel": "B",
+          "rounds": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2316390
+        },
+        {
+          "pos": 2,
+          "name": "Max Bernos Higgins",
+          "licencia": "CM18185285",
+          "hcp": 48,
+          "nivel": "A",
+          "rounds": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2316035
+        },
+        {
+          "pos": 3,
+          "name": "Ignacio Muñoz Gonzalez",
+          "licencia": "CM02193135",
+          "hcp": 51.9,
+          "nivel": "B",
+          "rounds": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2311670
+        },
+        {
+          "pos": 4,
+          "name": "Alvaro Salinas Valentin",
+          "licencia": "CM11380169",
+          "hcp": 52.7,
+          "nivel": "B",
+          "rounds": [],
+          "total": 6,
+          "toPar": 12,
+          "inscribedId": 2311402
+        },
+        {
+          "pos": 5,
+          "name": "Maria Del Mar Garcia Trevijano Requena",
+          "licencia": "CM02994482",
+          "hcp": 46.2,
+          "nivel": "A",
+          "rounds": [],
+          "total": 6,
+          "toPar": 12,
+          "inscribedId": 2314642
+        },
+        {
+          "pos": 6,
+          "name": "Dario Alonso Peña",
+          "licencia": "CM81322174",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2315467
+        },
+        {
+          "pos": 7,
+          "name": "Hugo Arevalo Caballero",
+          "licencia": "CMA8517848",
+          "hcp": 50,
+          "nivel": "B",
+          "rounds": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2311457
+        },
+        {
+          "pos": 8,
+          "name": "Luis Lopez Pulgar",
+          "licencia": "CM61491847",
+          "hcp": 38.8,
+          "nivel": "B",
+          "rounds": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2312397
+        },
+        {
+          "pos": 9,
+          "name": "Jaime Piedras Aguirre",
+          "licencia": "CM22258095",
+          "hcp": 37.4,
+          "nivel": "A",
+          "rounds": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2314853
+        },
+        {
+          "pos": 10,
+          "name": "Iñigo Seisdedos Barbi",
+          "licencia": "CM04471988",
+          "hcp": 40,
+          "nivel": "B",
+          "rounds": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2311456
+        },
+        {
+          "pos": 11,
+          "name": "Enzo Ledo Chou",
+          "licencia": "CM00267825",
+          "hcp": 52.6,
+          "nivel": "B",
+          "rounds": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2315468
+        },
+        {
+          "pos": 12,
+          "name": "Martin Larmande Diaz",
+          "licencia": "CM18038835",
+          "hcp": 45,
+          "nivel": "B",
+          "rounds": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2312027
+        },
+        {
+          "pos": 13,
+          "name": "David Lopez Pulgar",
+          "licencia": "CM61497408",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 3,
+          "toPar": 15,
+          "inscribedId": 2312396
+        },
+        {
+          "pos": 14,
+          "name": "Ana Garcia-Trevijano Requena",
+          "licencia": "CM02474572",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 2,
+          "toPar": 16,
+          "inscribedId": 2314644
+        },
+        {
+          "pos": 15,
+          "name": "Labib Khadra",
+          "licencia": "CM06373994",
+          "hcp": 45.8,
+          "nivel": "B",
+          "rounds": [],
+          "total": 2,
+          "toPar": 16,
+          "inscribedId": 2316209
+        },
+        {
+          "pos": 16,
+          "name": "Ernesto Garcia-Trevijano Requena",
+          "licencia": "CM02474571",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 0,
+          "toPar": 18,
+          "inscribedId": 2314643
+        },
+        {
+          "pos": null,
+          "name": "Julia Martin Barcelo",
+          "licencia": "CM41347608",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2312012
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 17
+    },
+    "2": {
+      "name": "Scratch Individual",
+      "jugadores": 17
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
-      "name": "Iñigo Gonzalez-Haba Carvallo",
-      "licencia": "CM02305614",
-      "hcp": 54,
-      "nivel": "B"
-    },
-    {
-      "orden": 2,
       "name": "Alvaro Salinas Valentin",
       "licencia": "CM11380169",
       "hcp": 52.7,
       "nivel": "B"
     },
     {
-      "orden": 3,
+      "orden": 2,
       "name": "Iñigo Seisdedos Barbi",
       "licencia": "CM04471988",
       "hcp": 40,
       "nivel": "B"
     },
     {
-      "orden": 4,
+      "orden": 3,
       "name": "Hugo Arevalo Caballero",
       "licencia": "CMA8517848",
       "hcp": 50,
       "nivel": "B"
     },
     {
-      "orden": 5,
+      "orden": 4,
       "name": "Ignacio Muñoz Gonzalez",
       "licencia": "CM02193135",
       "hcp": 51.9,
       "nivel": "B"
     },
     {
-      "orden": 6,
+      "orden": 5,
       "name": "Martin Larmande Diaz",
       "licencia": "CM18038835",
       "hcp": 45,
       "nivel": "B"
     },
     {
-      "orden": 7,
+      "orden": 6,
       "name": "David Lopez Pulgar",
       "licencia": "CM61497408",
       "hcp": 54,
       "nivel": "B"
     },
     {
-      "orden": 8,
+      "orden": 7,
       "name": "Luis Lopez Pulgar",
       "licencia": "CM61491847",
       "hcp": 38.8,
       "nivel": "B"
     },
     {
-      "orden": 9,
+      "orden": 8,
       "name": "Ernesto Garcia-Trevijano Requena",
       "licencia": "CM02474571",
       "hcp": 54,
       "nivel": "B"
     },
     {
-      "orden": 10,
+      "orden": 9,
       "name": "Jaime Piedras Aguirre",
       "licencia": "CM22258095",
-      "hcp": 37.2,
+      "hcp": 37.4,
       "nivel": "A"
     },
     {
-      "orden": 11,
+      "orden": 10,
       "name": "Dario Alonso Peña",
       "licencia": "CM81322174",
       "hcp": 54,
       "nivel": "B"
     },
     {
-      "orden": 12,
+      "orden": 11,
       "name": "Enzo Ledo Chou",
       "licencia": "CM00267825",
-      "hcp": 52.8,
+      "hcp": 52.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 12,
+      "name": "Max Bernos Higgins",
+      "licencia": "CM18185285",
+      "hcp": 48,
+      "nivel": "A"
+    },
+    {
+      "orden": 13,
+      "name": "Labib Khadra",
+      "licencia": "CM06373994",
+      "hcp": 45.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 14,
+      "name": "Gonzalo Dominguez Granados",
+      "licencia": "CM22496459",
+      "hcp": 53,
       "nivel": "B"
     },
     {
@@ -116,27 +551,20 @@
     },
     {
       "orden": 1,
-      "name": "Beatriz Gonzalez-Haba Carvallo",
-      "licencia": "CM02929496",
-      "hcp": 42.6,
-      "nivel": "I"
-    },
-    {
-      "orden": 2,
       "name": "Julia Martin Barcelo",
       "licencia": "CM41347608",
       "hcp": 54,
       "nivel": "A"
     },
     {
-      "orden": 3,
+      "orden": 2,
       "name": "Maria Del Mar Garcia Trevijano Requena",
       "licencia": "CM02994482",
       "hcp": 46.2,
       "nivel": "A"
     },
     {
-      "orden": 4,
+      "orden": 3,
       "name": "Ana Garcia-Trevijano Requena",
       "licencia": "CM02474572",
       "hcp": 54,
@@ -151,133 +579,124 @@
     },
     {
       "orden": 1,
-      "name": "Iñigo Gonzalez-Haba Carvallo",
-      "licencia": "04-05-26 10:03",
-      "hcp": 54,
-      "nivel": "CM02305614"
-    },
-    {
-      "orden": 2,
       "name": "Alvaro Salinas Valentin",
       "licencia": "04-05-26 10:03",
       "hcp": 52.7,
       "nivel": "CM11380169"
     },
     {
-      "orden": 3,
-      "name": "Beatriz Gonzalez-Haba Carvallo",
-      "licencia": "04-05-26 10:05",
-      "hcp": 42.6,
-      "nivel": "CM02929496"
-    },
-    {
-      "orden": 4,
+      "orden": 2,
       "name": "Iñigo Seisdedos Barbi",
       "licencia": "04-05-26 10:08",
       "hcp": 40,
       "nivel": "CM04471988"
     },
     {
-      "orden": 5,
+      "orden": 3,
       "name": "Hugo Arevalo Caballero",
       "licencia": "04-05-26 10:09",
       "hcp": 50,
       "nivel": "CMA8517848"
     },
     {
-      "orden": 6,
+      "orden": 4,
       "name": "Ignacio Muñoz Gonzalez",
       "licencia": "04-05-26 12:19",
       "hcp": 51.9,
       "nivel": "CM02193135"
     },
     {
-      "orden": 7,
+      "orden": 5,
       "name": "Julia Martin Barcelo",
       "licencia": "04-05-26 14:59",
       "hcp": 54,
       "nivel": "CM41347608"
     },
     {
-      "orden": 8,
+      "orden": 6,
       "name": "Martin Larmande Diaz",
       "licencia": "04-05-26 15:32",
       "hcp": 45,
       "nivel": "CM18038835"
     },
     {
-      "orden": 9,
+      "orden": 7,
       "name": "David Lopez Pulgar",
       "licencia": "05-05-26 12:08",
       "hcp": 54,
       "nivel": "CM61497408"
     },
     {
-      "orden": 10,
+      "orden": 8,
       "name": "Luis Lopez Pulgar",
       "licencia": "05-05-26 12:10",
       "hcp": 38.8,
       "nivel": "CM61491847"
     },
     {
-      "orden": 11,
+      "orden": 9,
       "name": "Maria Del Mar Garcia Trevijano Requena",
       "licencia": "07-05-26 12:48",
       "hcp": 46.2,
       "nivel": "CM02994482"
     },
     {
-      "orden": 12,
+      "orden": 10,
       "name": "Ernesto Garcia-Trevijano Requena",
       "licencia": "07-05-26 12:49",
       "hcp": 54,
       "nivel": "CM02474571"
     },
     {
-      "orden": 13,
+      "orden": 11,
       "name": "Ana Garcia-Trevijano Requena",
       "licencia": "07-05-26 12:50",
       "hcp": 54,
       "nivel": "CM02474572"
     },
     {
-      "orden": 14,
+      "orden": 12,
       "name": "Jaime Piedras Aguirre",
       "licencia": "07-05-26 19:09",
-      "hcp": 37.2,
+      "hcp": 37.4,
       "nivel": "CM22258095"
     },
     {
-      "orden": 15,
+      "orden": 13,
       "name": "Dario Alonso Peña",
       "licencia": "08-05-26 23:34",
       "hcp": 54,
       "nivel": "CM81322174"
     },
     {
-      "orden": 16,
+      "orden": 14,
       "name": "Enzo Ledo Chou",
       "licencia": "08-05-26 23:42",
-      "hcp": 52.8,
+      "hcp": 52.6,
       "nivel": "CM00267825"
-    }
-  ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
+    },
     {
-      "roundNumber": 1,
-      "roundId": 75292
+      "orden": 15,
+      "name": "Max Bernos Higgins",
+      "licencia": "10-05-26 11:02",
+      "hcp": 48,
+      "nivel": "CM18185285"
+    },
+    {
+      "orden": 16,
+      "name": "Labib Khadra",
+      "licencia": "10-05-26 14:55",
+      "hcp": 45.8,
+      "nivel": "CM06373994"
+    },
+    {
+      "orden": 17,
+      "name": "Gonzalo Dominguez Granados",
+      "licencia": "11-05-26 02:06",
+      "hcp": 53,
+      "nivel": "CM22496459"
     }
   ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -438,5 +857,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-17T12:43:15.819Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75292
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/70739363_rrll_las_encinas_p&amp;p_260505.docx.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:40.139Z"
 }

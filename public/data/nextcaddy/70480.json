@@ -1,14 +1,14 @@
 {
   "tourId": 70480,
   "url": "https://www.nextcaddy.com/tour/70480",
-  "scrapedAt": "2026-05-09T10:15:50.355Z",
+  "scrapedAt": "2026-05-21T16:39:21.947Z",
   "meta": {
     "name": "LA BANDERA 03-05-26",
     "organizer": null,
     "course": "Alhaurín Golf Hotel & Resort",
     "courseCode": "AM22",
-    "dateStart": "03 may 2026",
-    "dateEnd": "03 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-03"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 22,
       "header": [
         "Pos",
         "Jugador",
@@ -281,6 +282,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 22
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -596,6 +604,211 @@
       "licencia": "02-05-26 11:41",
       "hcp": null,
       "nivel": "AMI5495902"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "08:00",
+          "tee": 1,
+          "name": "Clemente Angel Castillo Segura",
+          "hcp": 14.4,
+          "ins": "2310304",
+          "jid": "75424",
+          "nivel": "M"
+        },
+        {
+          "time": "08:00",
+          "tee": 1,
+          "name": "Agustin Moreno Muñoz",
+          "hcp": 20.2,
+          "ins": "2310305",
+          "jid": "75424",
+          "nivel": "M"
+        },
+        {
+          "time": "08:10",
+          "tee": 1,
+          "name": "Joaquin Jose Gutierrez Antunez",
+          "hcp": 17.8,
+          "ins": "2310306",
+          "jid": "75424",
+          "nivel": "M"
+        },
+        {
+          "time": "08:10",
+          "tee": 1,
+          "name": "Francisco Robles Montañez",
+          "hcp": 22,
+          "ins": "2310307",
+          "jid": "75424",
+          "nivel": "M"
+        },
+        {
+          "time": "08:10",
+          "tee": 1,
+          "name": "Luis Miguel Villarrubia Martos",
+          "hcp": 26.4,
+          "ins": "2310308",
+          "jid": "75424",
+          "nivel": "M"
+        },
+        {
+          "time": "08:10",
+          "tee": 1,
+          "name": "Antonio Lopez Fernandez",
+          "hcp": 11.1,
+          "ins": "2310309",
+          "jid": "75424",
+          "nivel": "M"
+        },
+        {
+          "time": "08:20",
+          "tee": 1,
+          "name": "Ignacio Solano Valverde",
+          "hcp": 16.1,
+          "ins": "2310302",
+          "jid": "75424",
+          "nivel": "M"
+        },
+        {
+          "time": "08:20",
+          "tee": 1,
+          "name": "Rafael Barranco Cepas",
+          "hcp": 19.1,
+          "ins": "2310310",
+          "jid": "75424",
+          "nivel": "M"
+        },
+        {
+          "time": "08:20",
+          "tee": 1,
+          "name": "Francisco Javier Fernandez Carrasco",
+          "hcp": 26.4,
+          "ins": "2310311",
+          "jid": "75424",
+          "nivel": "M"
+        },
+        {
+          "time": "08:20",
+          "tee": 1,
+          "name": "Noe Carmona Fernandez",
+          "hcp": 25.3,
+          "ins": "2310312",
+          "jid": "75424",
+          "nivel": "M"
+        },
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Antonio Leopoldo Ruiz Moreno",
+          "hcp": 26.4,
+          "ins": "2310313",
+          "jid": "75424",
+          "nivel": "M"
+        },
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Gonzalo Guillermo Sacerdote",
+          "hcp": 15.5,
+          "ins": "2310314",
+          "jid": "75424",
+          "nivel": "M"
+        },
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "John Francis Kavanagh",
+          "hcp": 18.3,
+          "ins": "2310315",
+          "jid": "75424",
+          "nivel": "M"
+        },
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Jose Antonio Gomez Lopez",
+          "hcp": 26,
+          "ins": "2310316",
+          "jid": "75424",
+          "nivel": "M"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Ignacio Garrido Salinas",
+          "hcp": 20.9,
+          "ins": "2310317",
+          "jid": "75424",
+          "nivel": "M"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Martin Miguel Cantero Pineda",
+          "hcp": 16.7,
+          "ins": "2310318",
+          "jid": "75424",
+          "nivel": "M"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Jose Rafael Garcia Lopez",
+          "hcp": 24,
+          "ins": "2310319",
+          "jid": "75424",
+          "nivel": "M"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Javier Garcia Lopez",
+          "hcp": 23.4,
+          "ins": "2310320",
+          "jid": "75424",
+          "nivel": "M"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Miguel Angel Bayo Nevado",
+          "hcp": 21.6,
+          "ins": "2310321",
+          "jid": "75424",
+          "nivel": "M"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Antonio Ramos Ruiz",
+          "hcp": 20.9,
+          "ins": "2310322",
+          "jid": "75424",
+          "nivel": "M"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Adrian Blasco Pietras",
+          "hcp": 26.4,
+          "ins": "2310323",
+          "jid": "75424",
+          "nivel": "A"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Eduardo Blasco Vivas",
+          "hcp": 26.4,
+          "ins": "2310324",
+          "jid": "75424",
+          "nivel": "M"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -971,210 +1184,6 @@
     }
   ],
   "scoreTypes": null,
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "08:00",
-          "tee": 1,
-          "name": "Clemente Angel Castillo Segura",
-          "hcp": 14.4,
-          "ins": "2310304",
-          "jid": "75424",
-          "nivel": "M"
-        },
-        {
-          "time": "08:00",
-          "tee": 1,
-          "name": "Agustin Moreno Muñoz",
-          "hcp": 20.2,
-          "ins": "2310305",
-          "jid": "75424",
-          "nivel": "M"
-        },
-        {
-          "time": "08:10",
-          "tee": 1,
-          "name": "Joaquin Jose Gutierrez Antunez",
-          "hcp": 17.8,
-          "ins": "2310306",
-          "jid": "75424",
-          "nivel": "M"
-        },
-        {
-          "time": "08:10",
-          "tee": 1,
-          "name": "Francisco Robles Montañez",
-          "hcp": 22,
-          "ins": "2310307",
-          "jid": "75424",
-          "nivel": "M"
-        },
-        {
-          "time": "08:10",
-          "tee": 1,
-          "name": "Luis Miguel Villarrubia Martos",
-          "hcp": 26.4,
-          "ins": "2310308",
-          "jid": "75424",
-          "nivel": "M"
-        },
-        {
-          "time": "08:10",
-          "tee": 1,
-          "name": "Antonio Lopez Fernandez",
-          "hcp": 11.1,
-          "ins": "2310309",
-          "jid": "75424",
-          "nivel": "M"
-        },
-        {
-          "time": "08:20",
-          "tee": 1,
-          "name": "Ignacio Solano Valverde",
-          "hcp": 16.1,
-          "ins": "2310302",
-          "jid": "75424",
-          "nivel": "M"
-        },
-        {
-          "time": "08:20",
-          "tee": 1,
-          "name": "Rafael Barranco Cepas",
-          "hcp": 19.1,
-          "ins": "2310310",
-          "jid": "75424",
-          "nivel": "M"
-        },
-        {
-          "time": "08:20",
-          "tee": 1,
-          "name": "Francisco Javier Fernandez Carrasco",
-          "hcp": 26.4,
-          "ins": "2310311",
-          "jid": "75424",
-          "nivel": "M"
-        },
-        {
-          "time": "08:20",
-          "tee": 1,
-          "name": "Noe Carmona Fernandez",
-          "hcp": 25.3,
-          "ins": "2310312",
-          "jid": "75424",
-          "nivel": "M"
-        },
-        {
-          "time": "08:30",
-          "tee": 1,
-          "name": "Antonio Leopoldo Ruiz Moreno",
-          "hcp": 26.4,
-          "ins": "2310313",
-          "jid": "75424",
-          "nivel": "M"
-        },
-        {
-          "time": "08:30",
-          "tee": 1,
-          "name": "Gonzalo Guillermo Sacerdote",
-          "hcp": 15.5,
-          "ins": "2310314",
-          "jid": "75424",
-          "nivel": "M"
-        },
-        {
-          "time": "08:30",
-          "tee": 1,
-          "name": "John Francis Kavanagh",
-          "hcp": 18.3,
-          "ins": "2310315",
-          "jid": "75424",
-          "nivel": "M"
-        },
-        {
-          "time": "08:30",
-          "tee": 1,
-          "name": "Jose Antonio Gomez Lopez",
-          "hcp": 26,
-          "ins": "2310316",
-          "jid": "75424",
-          "nivel": "M"
-        },
-        {
-          "time": "08:40",
-          "tee": 1,
-          "name": "Ignacio Garrido Salinas",
-          "hcp": 20.9,
-          "ins": "2310317",
-          "jid": "75424",
-          "nivel": "M"
-        },
-        {
-          "time": "08:40",
-          "tee": 1,
-          "name": "Martin Miguel Cantero Pineda",
-          "hcp": 16.7,
-          "ins": "2310318",
-          "jid": "75424",
-          "nivel": "M"
-        },
-        {
-          "time": "08:40",
-          "tee": 1,
-          "name": "Jose Rafael Garcia Lopez",
-          "hcp": 24,
-          "ins": "2310319",
-          "jid": "75424",
-          "nivel": "M"
-        },
-        {
-          "time": "08:40",
-          "tee": 1,
-          "name": "Javier Garcia Lopez",
-          "hcp": 23.4,
-          "ins": "2310320",
-          "jid": "75424",
-          "nivel": "M"
-        },
-        {
-          "time": "08:50",
-          "tee": 1,
-          "name": "Miguel Angel Bayo Nevado",
-          "hcp": 21.6,
-          "ins": "2310321",
-          "jid": "75424",
-          "nivel": "M"
-        },
-        {
-          "time": "08:50",
-          "tee": 1,
-          "name": "Antonio Ramos Ruiz",
-          "hcp": 20.9,
-          "ins": "2310322",
-          "jid": "75424",
-          "nivel": "M"
-        },
-        {
-          "time": "08:50",
-          "tee": 1,
-          "name": "Adrian Blasco Pietras",
-          "hcp": 26.4,
-          "ins": "2310323",
-          "jid": "75424",
-          "nivel": "A"
-        },
-        {
-          "time": "08:50",
-          "tee": 1,
-          "name": "Eduardo Blasco Vivas",
-          "hcp": 26.4,
-          "ins": "2310324",
-          "jid": "75424",
-          "nivel": "M"
-        }
-      ]
-    }
-  ],
-  "horariosScrapedAt": "2026-05-09T12:13:00.740Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:41.486Z"
 }

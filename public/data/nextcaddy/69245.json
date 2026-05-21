@@ -1,32 +1,31 @@
 {
   "tourId": 69245,
   "url": "https://www.nextcaddy.com/tour/69245",
-  "scrapedAt": "2026-05-08T17:36:05.911Z",
+  "scrapedAt": "2026-05-21T16:39:46.830Z",
   "meta": {
     "name": "II Puntuable Zonal Juvenil Madrid - Castilla-La Mancha",
     "organizer": "Federacion de Golf de Madrid",
     "course": null,
     "courseCode": null,
-    "dateStart": "16 may 2026",
-    "dateEnd": "16 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) Circuito Juvenil 20",
     "categories": [
       "Juvenil",
       "Infantil Masculino",
       "Alevin Masculino",
       "Señoras",
-      "Alevín Femenino",
-      "Alevín Masculino",
-      "Infantil Femenino",
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-05-16"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -48,9 +47,12 @@
   ],
   "scoreTypes": {
     "birdie": {
-      "scoreTypeKey": "birdie"
+      "scoreTypeKey": "birdie",
+      "players": []
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:41.524Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/3764472000_circular_20__ii_puntuable_zonal_2026_madrid-clm.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:31.846Z"
 }

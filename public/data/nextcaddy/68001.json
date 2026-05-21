@@ -1,14 +1,14 @@
 {
   "tourId": 68001,
   "url": "https://www.nextcaddy.com/tour/68001",
-  "scrapedAt": "2026-05-09T10:15:30.419Z",
+  "scrapedAt": "2026-05-21T16:38:49.337Z",
   "meta": {
     "name": "Torneo Supersenior Masculino \"La Faisanera\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": null,
     "courseCode": null,
-    "dateStart": "15 abr 2026",
-    "dateEnd": "15 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Circuito Superseni",
     "categories": [
       "senior Masculino",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-15"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "2 Categoria Handicap Individual Masculino",
+      "expectedJugadores": 51,
       "header": [
         "Pos",
         "Jugador",
@@ -602,6 +603,8 @@
     },
     {
       "category": 2,
+      "categoryName": "1 Categoria Handicap Individual Masculino",
+      "expectedJugadores": 28,
       "header": [
         "Pos",
         "Jugador",
@@ -926,6 +929,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Scratch Individual Masculino",
+      "expectedJugadores": 52,
       "header": [
         "Pos",
         "Jugador",
@@ -1513,6 +1518,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "2 Categoria Handicap Individual Masculino",
+      "jugadores": 51
+    },
+    "2": {
+      "name": "1 Categoria Handicap Individual Masculino",
+      "jugadores": 28
+    },
+    "3": {
+      "name": "Scratch Individual Masculino",
+      "jugadores": 52
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2642,22 +2662,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72538
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -3376,5 +3380,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:18.551Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72538
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [
+    "/uploads/competiciones/pdf/726348856_rrll_la_faisanera_ss_masculino.docx.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:15.243Z"
 }

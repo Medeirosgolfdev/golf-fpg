@@ -1,14 +1,14 @@
 {
   "tourId": 69651,
   "url": "https://www.nextcaddy.com/tour/69651",
-  "scrapedAt": "2026-05-09T10:07:56.025Z",
+  "scrapedAt": "2026-05-21T16:38:39.862Z",
   "meta": {
     "name": "II CIRCUITO GRUPO MOSQUITO",
     "organizer": null,
     "course": "Club de Golf Bellavista",
     "courseCode": "AM07",
-    "dateStart": "11 abr 2026",
-    "dateEnd": "11 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-11"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "2A Categoria",
+      "expectedJugadores": 21,
       "header": [
         "Pos",
         "Jugador",
@@ -271,6 +272,8 @@
     },
     {
       "category": 2,
+      "categoryName": "1A Categoria",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -484,6 +487,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "2A Categoria",
+      "jugadores": 21
+    },
+    "2": {
+      "name": "1A Categoria",
+      "jugadores": 18
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1046,68 +1060,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74424
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Svensson, Ulf",
-          "holeNumber": 3,
-          "createdAt": "15/10/25 13:09:18"
-        },
-        {
-          "playerName": "Olsson, Sten",
-          "holeNumber": 7,
-          "createdAt": "15/10/25 14:43:37"
-        },
-        {
-          "playerName": "Olsson, Dan",
-          "holeNumber": 11,
-          "createdAt": "15/10/25 15:02:35"
-        },
-        {
-          "playerName": "Olsson, Dan",
-          "holeNumber": 17,
-          "createdAt": "15/10/25 16:15:55"
-        },
-        {
-          "playerName": "Svensson, Ulf",
-          "holeNumber": 17,
-          "createdAt": "15/10/25 16:57:03"
-        },
-        {
-          "playerName": "Gustan Svensson, Leif",
-          "holeNumber": 11,
-          "createdAt": "15/10/25 17:25:54"
-        },
-        {
-          "playerName": "Gustan Svensson, Leif",
-          "holeNumber": 13,
-          "createdAt": "15/10/25 17:25:54"
-        },
-        {
-          "playerName": "Gustan Svensson, Leif",
-          "holeNumber": 17,
-          "createdAt": "15/10/25 17:25:54"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1439,5 +1391,70 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:55.919Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74424
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Svensson, Ulf",
+          "holeNumber": 3,
+          "createdAt": "15/10/25 13:09:18"
+        },
+        {
+          "playerName": "Olsson, Sten",
+          "holeNumber": 7,
+          "createdAt": "15/10/25 14:43:37"
+        },
+        {
+          "playerName": "Olsson, Dan",
+          "holeNumber": 11,
+          "createdAt": "15/10/25 15:02:35"
+        },
+        {
+          "playerName": "Olsson, Dan",
+          "holeNumber": 17,
+          "createdAt": "15/10/25 16:15:55"
+        },
+        {
+          "playerName": "Svensson, Ulf",
+          "holeNumber": 17,
+          "createdAt": "15/10/25 16:57:03"
+        },
+        {
+          "playerName": "Gustan Svensson, Leif",
+          "holeNumber": 11,
+          "createdAt": "15/10/25 17:25:54"
+        },
+        {
+          "playerName": "Gustan Svensson, Leif",
+          "holeNumber": 13,
+          "createdAt": "15/10/25 17:25:54"
+        },
+        {
+          "playerName": "Gustan Svensson, Leif",
+          "holeNumber": 17,
+          "createdAt": "15/10/25 17:25:54"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/cartel/3318068854_69651-ii-circuito-grupo-mosquito.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:36.381Z"
 }

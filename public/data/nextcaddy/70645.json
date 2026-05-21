@@ -1,14 +1,14 @@
 {
   "tourId": 70645,
   "url": "https://www.nextcaddy.com/tour/70645",
-  "scrapedAt": "2026-05-09T10:16:28.351Z",
+  "scrapedAt": "2026-05-21T16:39:38.134Z",
   "meta": {
     "name": "POOL DE SENIORS  DE PRIMAVERA (11/05/2026).",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "11 may 2026",
-    "dateEnd": "11 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Espec",
     "categories": [
       "SENIOR",
@@ -17,115 +17,348 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-11"
+    ]
   },
   "course": null,
-  "leaderboard": [],
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "General Hándicap Pool 11 05 2026",
+      "expectedJugadores": 17,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Josetxo Iturralde Adrian",
+          "licencia": "4401329054",
+          "hcp": 27.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 41,
+          "toPar": -5,
+          "inscribedId": 2315124
+        },
+        {
+          "pos": 2,
+          "name": "Jose Manuel Echevarria Salaverria",
+          "licencia": "4401262357",
+          "hcp": 15.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2315123
+        },
+        {
+          "pos": 3,
+          "name": "Jose Antonio Beloqui Arrondo",
+          "licencia": "4402240696",
+          "hcp": 9.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2315126
+        },
+        {
+          "pos": 4,
+          "name": "Javier Inchausti Estomba",
+          "licencia": "4401722753",
+          "hcp": 23.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2314999
+        },
+        {
+          "pos": 5,
+          "name": "Fernando Llarena Gonzalez",
+          "licencia": "4401924165",
+          "hcp": 24,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2315054
+        },
+        {
+          "pos": 6,
+          "name": "Javier Ochoa De Retana Basterra",
+          "licencia": "4401045351",
+          "hcp": 9.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2315879
+        },
+        {
+          "pos": 7,
+          "name": "Jose Maria Mateo Fuertes",
+          "licencia": "4401013872",
+          "hcp": 25.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2316031
+        },
+        {
+          "pos": 8,
+          "name": "Julio De Pablos Fernandez",
+          "licencia": "4401059883",
+          "hcp": 16.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2315121
+        },
+        {
+          "pos": 9,
+          "name": "Alberto Guinaldo Iglesias",
+          "licencia": "4401726220",
+          "hcp": 18.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2315122
+        },
+        {
+          "pos": 10,
+          "name": "Fco. Javier Molina Garicano",
+          "licencia": "4401052517",
+          "hcp": 25.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2315027
+        },
+        {
+          "pos": 11,
+          "name": "Miguel Torrea Larralde",
+          "licencia": "4401696255",
+          "hcp": 24.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2315011
+        },
+        {
+          "pos": 12,
+          "name": "Javier Roncal Azanza",
+          "licencia": "4401397618",
+          "hcp": 26,
+          "nivel": "S",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2315981
+        },
+        {
+          "pos": 13,
+          "name": "Miguel Angel Saenz Garcia",
+          "licencia": "VB14734386",
+          "hcp": 28.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2315102
+        },
+        {
+          "pos": 14,
+          "name": "Schuyler Glidden",
+          "licencia": "4401907785",
+          "hcp": 17.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2315009
+        },
+        {
+          "pos": 15,
+          "name": "Santiago Iglesias Gines",
+          "licencia": "4401244035",
+          "hcp": 23.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2315850
+        },
+        {
+          "pos": null,
+          "name": "Cesar Ayesta Otano",
+          "licencia": "4401926793",
+          "hcp": 22.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2315087
+        },
+        {
+          "pos": null,
+          "name": "Pedro Maria Bergasa Mendive",
+          "licencia": "4401183529",
+          "hcp": 23.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2315114
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "General Hándicap Pool 11 05 2026",
+      "jugadores": 17
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
-      "name": "Jesús Antonio Munilla Martinez",
-      "licencia": "4401789557",
-      "hcp": 18,
-      "nivel": "S"
-    },
-    {
-      "orden": 2,
       "name": "Javier Inchausti Estomba",
       "licencia": "4401722753",
       "hcp": 23.1,
       "nivel": "S"
     },
     {
-      "orden": 3,
+      "orden": 2,
       "name": "Schuyler Glidden",
       "licencia": "4401907785",
-      "hcp": 17.8,
+      "hcp": 17.5,
       "nivel": "S"
     },
     {
-      "orden": 4,
+      "orden": 3,
       "name": "Miguel Torrea Larralde",
       "licencia": "4401696255",
       "hcp": 24.4,
       "nivel": "S"
     },
     {
-      "orden": 5,
-      "name": "Fco. Javier Molina Garicano",
-      "licencia": "4401052517",
-      "hcp": 25.1,
-      "nivel": "S"
-    },
-    {
-      "orden": 6,
+      "orden": 4,
       "name": "Fernando Llarena Gonzalez",
       "licencia": "4401924165",
       "hcp": 24,
       "nivel": "S"
     },
     {
-      "orden": 7,
+      "orden": 5,
       "name": "Cesar Ayesta Otano",
       "licencia": "4401926793",
       "hcp": 22.1,
       "nivel": "S"
     },
     {
-      "orden": 8,
+      "orden": 6,
       "name": "Miguel Angel Saenz Garcia",
       "licencia": "VB14734386",
       "hcp": null,
       "nivel": "S"
     },
     {
-      "orden": 9,
+      "orden": 7,
       "name": "Pedro Maria Bergasa Mendive",
       "licencia": "4401183529",
       "hcp": 23.6,
       "nivel": "S"
     },
     {
-      "orden": 10,
+      "orden": 8,
       "name": "Julio De Pablos Fernandez",
       "licencia": "4401059883",
       "hcp": 16.7,
       "nivel": "S"
     },
     {
-      "orden": 11,
+      "orden": 9,
       "name": "Alberto Guinaldo Iglesias",
       "licencia": "4401726220",
       "hcp": 18.6,
       "nivel": "S"
     },
     {
-      "orden": 12,
+      "orden": 10,
       "name": "Jose Manuel Echevarria Salaverria",
       "licencia": "4401262357",
       "hcp": 15.5,
       "nivel": "S"
     },
     {
-      "orden": 13,
+      "orden": 11,
       "name": "Josetxo Iturralde Adrian",
       "licencia": "4401329054",
       "hcp": null,
       "nivel": "S"
     },
     {
-      "orden": 14,
+      "orden": 12,
       "name": "Jose Antonio Beloqui Arrondo",
       "licencia": "4402240696",
-      "hcp": 9.6,
+      "hcp": 9.5,
       "nivel": "S"
     },
     {
-      "orden": 15,
-      "name": "Jose Maria Bariain Satrustegui",
-      "licencia": "4401188006",
-      "hcp": 19.2,
+      "orden": 13,
+      "name": "Javier Ochoa De Retana Basterra",
+      "licencia": "4401045351",
+      "hcp": 9.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Javier Roncal Azanza",
+      "licencia": "4401397618",
+      "hcp": 26,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Fco. Javier Molina Garicano",
+      "licencia": "4401052517",
+      "hcp": 25.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Santiago Iglesias Gines",
+      "licencia": "4401244035",
+      "hcp": 23.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Jose Maria Mateo Fuertes",
+      "licencia": "4401013872",
+      "hcp": 25.1,
       "nivel": "S"
     },
     {
@@ -137,137 +370,124 @@
     },
     {
       "orden": 1,
-      "name": "Jesús Antonio Munilla Martinez",
-      "licencia": "08-05-26 10:20",
-      "hcp": 18,
-      "nivel": "4401789557"
-    },
-    {
-      "orden": 2,
       "name": "Javier Inchausti Estomba",
       "licencia": "08-05-26 10:20",
       "hcp": 23.1,
       "nivel": "4401722753"
     },
     {
-      "orden": 3,
+      "orden": 2,
       "name": "Schuyler Glidden",
       "licencia": "08-05-26 10:31",
-      "hcp": 17.8,
+      "hcp": 17.5,
       "nivel": "4401907785"
     },
     {
-      "orden": 4,
+      "orden": 3,
       "name": "Miguel Torrea Larralde",
       "licencia": "08-05-26 10:44",
       "hcp": 24.4,
       "nivel": "4401696255"
     },
     {
-      "orden": 5,
+      "orden": 4,
       "name": "Fco. Javier Molina Garicano",
       "licencia": "08-05-26 11:32",
       "hcp": 25.1,
       "nivel": "4401052517"
     },
     {
-      "orden": 6,
+      "orden": 5,
       "name": "Fernando Llarena Gonzalez",
       "licencia": "08-05-26 12:20",
       "hcp": 24,
       "nivel": "4401924165"
     },
     {
-      "orden": 7,
+      "orden": 6,
       "name": "Cesar Ayesta Otano",
       "licencia": "08-05-26 12:58",
       "hcp": 22.1,
       "nivel": "4401926793"
     },
     {
-      "orden": 8,
+      "orden": 7,
       "name": "Miguel Angel Saenz Garcia",
       "licencia": "08-05-26 13:32",
       "hcp": null,
       "nivel": "VB14734386"
     },
     {
-      "orden": 9,
+      "orden": 8,
       "name": "Pedro Maria Bergasa Mendive",
       "licencia": "08-05-26 13:58",
       "hcp": 23.6,
       "nivel": "4401183529"
     },
     {
-      "orden": 10,
+      "orden": 9,
       "name": "Julio De Pablos Fernandez",
       "licencia": "08-05-26 14:21",
       "hcp": 16.7,
       "nivel": "4401059883"
     },
     {
-      "orden": 11,
+      "orden": 10,
       "name": "Alberto Guinaldo Iglesias",
       "licencia": "08-05-26 14:21",
       "hcp": 18.6,
       "nivel": "4401726220"
     },
     {
-      "orden": 12,
+      "orden": 11,
       "name": "Jose Manuel Echevarria Salaverria",
       "licencia": "08-05-26 14:21",
       "hcp": 15.5,
       "nivel": "4401262357"
     },
     {
-      "orden": 13,
+      "orden": 12,
       "name": "Josetxo Iturralde Adrian",
       "licencia": "08-05-26 14:22",
       "hcp": null,
       "nivel": "4401329054"
     },
     {
-      "orden": 14,
+      "orden": 13,
       "name": "Jose Antonio Beloqui Arrondo",
       "licencia": "08-05-26 14:29",
-      "hcp": 9.6,
+      "hcp": 9.5,
       "nivel": "4402240696"
     },
     {
-      "orden": 15,
-      "name": "Jose Maria Bariain Satrustegui",
-      "licencia": "08-05-26 15:33",
-      "hcp": 19.2,
-      "nivel": "4401188006"
-    }
-  ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
+      "orden": 14,
+      "name": "Santiago Iglesias Gines",
+      "licencia": "09-05-26 22:59",
+      "hcp": 23.3,
+      "nivel": "4401244035"
+    },
     {
-      "roundNumber": 1,
-      "roundId": 75615
+      "orden": 15,
+      "name": "Javier Ochoa De Retana Basterra",
+      "licencia": "10-05-26 08:12",
+      "hcp": 9.7,
+      "nivel": "4401045351"
+    },
+    {
+      "orden": 16,
+      "name": "Javier Roncal Azanza",
+      "licencia": "10-05-26 09:11",
+      "hcp": 26,
+      "nivel": "4401397618"
+    },
+    {
+      "orden": 17,
+      "name": "Jose Maria Mateo Fuertes",
+      "licencia": "10-05-26 10:32",
+      "hcp": 25.1,
+      "nivel": "4401013872"
     }
   ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Moloney, Sean",
-          "holeNumber": 13,
-          "createdAt": "21/11/25 14:30:28"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -428,5 +648,33 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-17T12:43:17.108Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75615
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Moloney, Sean",
+          "holeNumber": 13,
+          "createdAt": "21/11/25 14:30:28"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:43.316Z"
 }

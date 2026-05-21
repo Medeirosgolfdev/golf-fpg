@@ -1,14 +1,14 @@
 {
   "tourId": 68186,
   "url": "https://www.nextcaddy.com/tour/68186",
-  "scrapedAt": "2026-05-09T09:57:56.216Z",
+  "scrapedAt": "2026-05-21T16:37:25.212Z",
   "meta": {
     "name": "Prueba Clasificatoria del Gran Premio (Escuela de golf de Castillla y León)",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "28 feb 2026",
-    "dateEnd": "28 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-28"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -124,6 +126,6 @@
       "players": []
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:34.202Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:18.285Z"
 }

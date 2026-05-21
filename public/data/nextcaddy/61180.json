@@ -1,14 +1,14 @@
 {
   "tourId": 61180,
   "url": "https://www.nextcaddy.com/tour/61180",
-  "scrapedAt": "2026-05-09T09:49:47.656Z",
+  "scrapedAt": "2026-05-21T16:40:31.137Z",
   "meta": {
     "name": "Campeonato Andalucia Alevin",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Golf Almerimar",
     "courseCode": "AM59",
-    "dateStart": "04 jul 2026",
-    "dateEnd": "04 jul 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Alevin",
@@ -18,12 +18,14 @@
       "Juvenil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-07-04"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -44,6 +46,6 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:22.981Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:41:52.830Z"
 }

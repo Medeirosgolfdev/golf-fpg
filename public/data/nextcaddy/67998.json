@@ -1,14 +1,14 @@
 {
   "tourId": 67998,
   "url": "https://www.nextcaddy.com/tour/67998",
-  "scrapedAt": "2026-05-09T09:58:01.183Z",
+  "scrapedAt": "2026-05-21T16:37:34.228Z",
   "meta": {
     "name": "Torneo Senior Masculino \"Olivar de la Hinojosa\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Club de Golf Olivar de la Hinojosa",
     "courseCode": "CM81",
-    "dateStart": "04 mar 2026",
-    "dateEnd": "04 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Circuito Senior Ma",
     "categories": [
       "Senior Masculino",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-04"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "1 Categoria Hcp",
+      "expectedJugadores": 25,
       "header": [
         "Pos",
         "Jugador",
@@ -315,6 +316,8 @@
     },
     {
       "category": 2,
+      "categoryName": "2 Categria Hcp.",
+      "expectedJugadores": 30,
       "header": [
         "Pos",
         "Jugador",
@@ -661,6 +664,8 @@
     },
     {
       "category": 3,
+      "categoryName": "3 Categoria Hcp",
+      "expectedJugadores": 37,
       "header": [
         "Pos",
         "Jugador",
@@ -1084,6 +1089,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Scratch Individual Caballeros Masculino",
+      "expectedJugadores": 84,
       "header": [
         "Pos",
         "Jugador",
@@ -2023,6 +2030,25 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "1 Categoria Hcp",
+      "jugadores": 25
+    },
+    "2": {
+      "name": "2 Categria Hcp.",
+      "jugadores": 30
+    },
+    "3": {
+      "name": "3 Categoria Hcp",
+      "jugadores": 37
+    },
+    "4": {
+      "name": "Scratch Individual Caballeros Masculino",
+      "jugadores": 84
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -3334,193 +3360,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72535
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Fernandez Montoto, Eduardo",
-          "holeNumber": 16,
-          "createdAt": "31/08/25 20:46:51"
-        },
-        {
-          "playerName": "Ceballos Redondo, Carlos",
-          "holeNumber": 12,
-          "createdAt": "31/08/25 20:47:36"
-        },
-        {
-          "playerName": "Ceballos Redondo, Carlos",
-          "holeNumber": 18,
-          "createdAt": "31/08/25 20:47:36"
-        },
-        {
-          "playerName": "Ponton Sanchez, Daniel",
-          "holeNumber": 11,
-          "createdAt": "31/08/25 20:49:24"
-        },
-        {
-          "playerName": "Ponton Sanchez, Daniel",
-          "holeNumber": 12,
-          "createdAt": "31/08/25 20:49:24"
-        },
-        {
-          "playerName": "De Corral Diaz-Guardamino, Ignacio",
-          "holeNumber": 12,
-          "createdAt": "31/08/25 20:51:01"
-        },
-        {
-          "playerName": "Tsuchiya Mora, Takeshi",
-          "holeNumber": 1,
-          "createdAt": "31/08/25 20:51:59"
-        },
-        {
-          "playerName": "Tsuchiya Mora, Takeshi",
-          "holeNumber": 18,
-          "createdAt": "31/08/25 20:51:59"
-        },
-        {
-          "playerName": "Rabadan Baldasano, Francisco De Borja",
-          "holeNumber": 14,
-          "createdAt": "31/08/25 20:52:23"
-        },
-        {
-          "playerName": "Lopez Gutierrez, Rodrigo",
-          "holeNumber": 4,
-          "createdAt": "31/08/25 20:52:44"
-        },
-        {
-          "playerName": "Martin Villena, Hugo",
-          "holeNumber": 14,
-          "createdAt": "31/08/25 20:53:40"
-        },
-        {
-          "playerName": "Casas Osorio, Benjamin",
-          "holeNumber": 3,
-          "createdAt": "31/08/25 20:54:52"
-        },
-        {
-          "playerName": "Casas Osorio, Benjamin",
-          "holeNumber": 10,
-          "createdAt": "31/08/25 20:54:52"
-        },
-        {
-          "playerName": "Garcia Ceballos, Julio",
-          "holeNumber": 5,
-          "createdAt": "31/08/25 20:55:35"
-        },
-        {
-          "playerName": "Rabadan Baldasano, Iñigo",
-          "holeNumber": 9,
-          "createdAt": "31/08/25 20:57:16"
-        },
-        {
-          "playerName": "Casado Molina, Jaime",
-          "holeNumber": 9,
-          "createdAt": "31/08/25 21:01:51"
-        },
-        {
-          "playerName": "Hao Zhang, Liria Siyi",
-          "holeNumber": 3,
-          "createdAt": "31/08/25 21:02:55"
-        },
-        {
-          "playerName": "Prieto Cabrero, Ana",
-          "holeNumber": 10,
-          "createdAt": "31/08/25 21:03:29"
-        },
-        {
-          "playerName": "Prieto Cabrero, Ana",
-          "holeNumber": 16,
-          "createdAt": "31/08/25 21:03:29"
-        },
-        {
-          "playerName": "Prieto Cabrero, Ana",
-          "holeNumber": 17,
-          "createdAt": "31/08/25 21:03:29"
-        },
-        {
-          "playerName": "Gomez-Balboa Garcia, Ines",
-          "holeNumber": 9,
-          "createdAt": "31/08/25 21:05:37"
-        },
-        {
-          "playerName": "Mittelbrum Infante, Eugenia",
-          "holeNumber": 10,
-          "createdAt": "31/08/25 21:06:21"
-        },
-        {
-          "playerName": "Madrigal Isidro, Mencia",
-          "holeNumber": 12,
-          "createdAt": "31/08/25 21:06:52"
-        },
-        {
-          "playerName": "Aldana Marraco, Fernando",
-          "holeNumber": 8,
-          "createdAt": "31/08/25 21:08:29"
-        },
-        {
-          "playerName": "Garcia De Vinuesa Serrano, Barbara",
-          "holeNumber": 3,
-          "createdAt": "31/08/25 21:10:42"
-        },
-        {
-          "playerName": "Roncal De Lujan, Bosco",
-          "holeNumber": 12,
-          "createdAt": "31/08/25 21:14:48"
-        },
-        {
-          "playerName": "Nogales Garcia, Sol",
-          "holeNumber": 6,
-          "createdAt": "31/08/25 21:15:21"
-        },
-        {
-          "playerName": "Nogales Garcia, Sol",
-          "holeNumber": 14,
-          "createdAt": "31/08/25 21:15:21"
-        },
-        {
-          "playerName": "Nogales Garcia, Sol",
-          "holeNumber": 15,
-          "createdAt": "31/08/25 21:15:21"
-        },
-        {
-          "playerName": "Solana Rodriguez-Inciarte, Claudia",
-          "holeNumber": 1,
-          "createdAt": "31/08/25 21:17:00"
-        },
-        {
-          "playerName": "Solana Rodriguez-Inciarte, Claudia",
-          "holeNumber": 18,
-          "createdAt": "31/08/25 21:17:00"
-        }
-      ]
-    },
-    "eagle": {
-      "scoreTypeKey": "eagle",
-      "players": [
-        {
-          "playerName": "Puche Cascant, Maximilia",
-          "holeNumber": 12,
-          "createdAt": "31/08/25 20:49:00"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -4356,5 +4195,195 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:18.481Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72535
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Fernandez Montoto, Eduardo",
+          "holeNumber": 16,
+          "createdAt": "31/08/25 20:46:51"
+        },
+        {
+          "playerName": "Ceballos Redondo, Carlos",
+          "holeNumber": 12,
+          "createdAt": "31/08/25 20:47:36"
+        },
+        {
+          "playerName": "Ceballos Redondo, Carlos",
+          "holeNumber": 18,
+          "createdAt": "31/08/25 20:47:36"
+        },
+        {
+          "playerName": "Ponton Sanchez, Daniel",
+          "holeNumber": 11,
+          "createdAt": "31/08/25 20:49:24"
+        },
+        {
+          "playerName": "Ponton Sanchez, Daniel",
+          "holeNumber": 12,
+          "createdAt": "31/08/25 20:49:24"
+        },
+        {
+          "playerName": "De Corral Diaz-Guardamino, Ignacio",
+          "holeNumber": 12,
+          "createdAt": "31/08/25 20:51:01"
+        },
+        {
+          "playerName": "Tsuchiya Mora, Takeshi",
+          "holeNumber": 1,
+          "createdAt": "31/08/25 20:51:59"
+        },
+        {
+          "playerName": "Tsuchiya Mora, Takeshi",
+          "holeNumber": 18,
+          "createdAt": "31/08/25 20:51:59"
+        },
+        {
+          "playerName": "Rabadan Baldasano, Francisco De Borja",
+          "holeNumber": 14,
+          "createdAt": "31/08/25 20:52:23"
+        },
+        {
+          "playerName": "Lopez Gutierrez, Rodrigo",
+          "holeNumber": 4,
+          "createdAt": "31/08/25 20:52:44"
+        },
+        {
+          "playerName": "Martin Villena, Hugo",
+          "holeNumber": 14,
+          "createdAt": "31/08/25 20:53:40"
+        },
+        {
+          "playerName": "Casas Osorio, Benjamin",
+          "holeNumber": 3,
+          "createdAt": "31/08/25 20:54:52"
+        },
+        {
+          "playerName": "Casas Osorio, Benjamin",
+          "holeNumber": 10,
+          "createdAt": "31/08/25 20:54:52"
+        },
+        {
+          "playerName": "Garcia Ceballos, Julio",
+          "holeNumber": 5,
+          "createdAt": "31/08/25 20:55:35"
+        },
+        {
+          "playerName": "Rabadan Baldasano, Iñigo",
+          "holeNumber": 9,
+          "createdAt": "31/08/25 20:57:16"
+        },
+        {
+          "playerName": "Casado Molina, Jaime",
+          "holeNumber": 9,
+          "createdAt": "31/08/25 21:01:51"
+        },
+        {
+          "playerName": "Hao Zhang, Liria Siyi",
+          "holeNumber": 3,
+          "createdAt": "31/08/25 21:02:55"
+        },
+        {
+          "playerName": "Prieto Cabrero, Ana",
+          "holeNumber": 10,
+          "createdAt": "31/08/25 21:03:29"
+        },
+        {
+          "playerName": "Prieto Cabrero, Ana",
+          "holeNumber": 16,
+          "createdAt": "31/08/25 21:03:29"
+        },
+        {
+          "playerName": "Prieto Cabrero, Ana",
+          "holeNumber": 17,
+          "createdAt": "31/08/25 21:03:29"
+        },
+        {
+          "playerName": "Gomez-Balboa Garcia, Ines",
+          "holeNumber": 9,
+          "createdAt": "31/08/25 21:05:37"
+        },
+        {
+          "playerName": "Mittelbrum Infante, Eugenia",
+          "holeNumber": 10,
+          "createdAt": "31/08/25 21:06:21"
+        },
+        {
+          "playerName": "Madrigal Isidro, Mencia",
+          "holeNumber": 12,
+          "createdAt": "31/08/25 21:06:52"
+        },
+        {
+          "playerName": "Aldana Marraco, Fernando",
+          "holeNumber": 8,
+          "createdAt": "31/08/25 21:08:29"
+        },
+        {
+          "playerName": "Garcia De Vinuesa Serrano, Barbara",
+          "holeNumber": 3,
+          "createdAt": "31/08/25 21:10:42"
+        },
+        {
+          "playerName": "Roncal De Lujan, Bosco",
+          "holeNumber": 12,
+          "createdAt": "31/08/25 21:14:48"
+        },
+        {
+          "playerName": "Nogales Garcia, Sol",
+          "holeNumber": 6,
+          "createdAt": "31/08/25 21:15:21"
+        },
+        {
+          "playerName": "Nogales Garcia, Sol",
+          "holeNumber": 14,
+          "createdAt": "31/08/25 21:15:21"
+        },
+        {
+          "playerName": "Nogales Garcia, Sol",
+          "holeNumber": 15,
+          "createdAt": "31/08/25 21:15:21"
+        },
+        {
+          "playerName": "Solana Rodriguez-Inciarte, Claudia",
+          "holeNumber": 1,
+          "createdAt": "31/08/25 21:17:00"
+        },
+        {
+          "playerName": "Solana Rodriguez-Inciarte, Claudia",
+          "holeNumber": 18,
+          "createdAt": "31/08/25 21:17:00"
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Puche Cascant, Maximilia",
+          "holeNumber": 12,
+          "createdAt": "31/08/25 20:49:00"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/4139252558_rrll_olivar_4_marzo.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:15.126Z"
 }

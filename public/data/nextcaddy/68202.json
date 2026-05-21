@@ -1,14 +1,14 @@
 {
   "tourId": 68202,
   "url": "https://www.nextcaddy.com/tour/68202",
-  "scrapedAt": "2026-05-09T10:17:06.618Z",
+  "scrapedAt": "2026-05-21T16:40:54.353Z",
   "meta": {
     "name": "Liga Femenina (hcp mayor o igual a 42.1)",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Golf Park Entertainment",
     "courseCode": "CM18",
-    "dateStart": "13 sep 2026",
-    "dateEnd": "13 sep 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Liga Femenina 2026",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-09-13"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -39,6 +41,6 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:34.455Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:18.886Z"
 }

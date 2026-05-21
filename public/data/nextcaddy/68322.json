@@ -1,14 +1,14 @@
 {
   "tourId": 68322,
   "url": "https://www.nextcaddy.com/tour/68322",
-  "scrapedAt": "2026-05-09T10:17:12.096Z",
+  "scrapedAt": "2026-05-21T16:41:05.139Z",
   "meta": {
     "name": "Torneo Juvenil Femenino \"El Encín\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "el Encin Golf",
     "courseCode": "CMC8",
-    "dateStart": "04 oct 2026",
-    "dateEnd": "04 oct 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) Circuito Juvenil 20",
     "categories": [
       "Juvenil Femenino",
@@ -17,12 +17,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-10-04"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -50,6 +52,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:35.809Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:20.985Z"
 }

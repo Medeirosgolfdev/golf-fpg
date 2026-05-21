@@ -1,14 +1,14 @@
 {
   "tourId": 70671,
   "url": "https://www.nextcaddy.com/tour/70671",
-  "scrapedAt": "2026-05-09T10:16:30.212Z",
+  "scrapedAt": "2026-05-21T16:39:41.391Z",
   "meta": {
     "name": "INTERCLUB VASCO NAVARRO - PARALELO",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "13 may 2026",
-    "dateEnd": "13 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras Facebook",
     "categories": [
       "Señoras",
@@ -16,11 +16,17 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-13"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Pareja",
+      "jugadores": 7
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -52,33 +58,76 @@
     },
     {
       "orden": 3,
-      "name": "Covadonga Damborenea Cabal",
-      "licencia": "VB04404047",
-      "hcp": 25.9,
-      "nivel": "S"
-    },
-    {
-      "orden": 3,
-      "name": "Maria Jose Pina Valera",
-      "licencia": "VB04171176",
-      "hcp": 31.4,
-      "nivel": "S"
-    },
-    {
-      "orden": 4,
       "name": "Esperanza Cigaran Fuster",
       "licencia": "VB04284948",
       "hcp": 14.7,
       "nivel": "S"
     },
     {
-      "orden": 4,
+      "orden": 3,
       "name": "Isabel Serna Otaño",
       "licencia": "VB04727596",
       "hcp": 28.2,
       "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Olga Irujo Beruete",
+      "licencia": "VB04142874",
+      "hcp": 26,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Maria Del Carmen Perez Rey",
+      "licencia": "VB01036279",
+      "hcp": 26,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Lourdes Eizaguirre Arocena",
+      "licencia": "VB03149568",
+      "hcp": 28.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Maria Teresa Arana Otamendi",
+      "licencia": "VB03972316",
+      "hcp": 30.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Arantza Zubizarreta Salcedo",
+      "licencia": "VB03370688",
+      "hcp": 33.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Elixabete Larrañaga Frias",
+      "licencia": "VB03727198",
+      "hcp": 34.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Patricia Amias Alvarez",
+      "licencia": "VB04362967",
+      "hcp": 18.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Eunate Amias Alvarez",
+      "licencia": "VB04246126",
+      "hcp": 23.2,
+      "nivel": "S"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -121,6 +170,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:45.655Z"
+  "pdfs": [
+    "/uploads/competiciones/cartel/3438725954_70671-interclub-vasco-navarro-paralelo.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:43.486Z"
 }

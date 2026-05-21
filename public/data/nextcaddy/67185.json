@@ -1,14 +1,14 @@
 {
   "tourId": 67185,
   "url": "https://www.nextcaddy.com/tour/67185",
-  "scrapedAt": "2026-05-09T09:57:16.064Z",
+  "scrapedAt": "2026-05-21T16:36:23.012Z",
   "meta": {
     "name": "Sherry International Golf Group (SIGG) - 7 Enero 2026 (Grupo privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "07 ene 2026",
-    "dateEnd": "07 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,11 +17,12 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-07"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -172,7 +173,7 @@
     },
     {
       "orden": 18,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "AM32612444",
       "hcp": 8,
       "nivel": "S"
@@ -340,7 +341,7 @@
     },
     {
       "orden": 21,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "03-01-26 21:33",
       "hcp": 8,
       "nivel": "AM32612444"
@@ -360,168 +361,6 @@
       "nivel": "AMC3899113"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71585
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Trancoso Navarro, Pablo",
-          "holeNumber": 6,
-          "createdAt": "21/06/25 08:45:24"
-        },
-        {
-          "playerName": "Camacho Medel, Sergio",
-          "holeNumber": 1,
-          "createdAt": "21/06/25 08:48:40"
-        },
-        {
-          "playerName": "Gomez Antunez, Juan Carlos",
-          "holeNumber": 4,
-          "createdAt": "21/06/25 08:54:54"
-        },
-        {
-          "playerName": "Molina Bermejo, Jose Luis",
-          "holeNumber": 3,
-          "createdAt": "21/06/25 09:05:48"
-        },
-        {
-          "playerName": "Molina Bermejo, Jose Luis",
-          "holeNumber": 4,
-          "createdAt": "21/06/25 09:14:00"
-        },
-        {
-          "playerName": "Gomez Jara, Jose Antonio",
-          "holeNumber": 6,
-          "createdAt": "21/06/25 09:24:39"
-        },
-        {
-          "playerName": "Trancoso Navarro, Pablo",
-          "holeNumber": 10,
-          "createdAt": "21/06/25 09:38:47"
-        },
-        {
-          "playerName": "Diaz Garcia, Manuel",
-          "holeNumber": 8,
-          "createdAt": "21/06/25 09:41:17"
-        },
-        {
-          "playerName": "Gomez Jara, Jose Antonio",
-          "holeNumber": 8,
-          "createdAt": "21/06/25 09:48:45"
-        },
-        {
-          "playerName": "Molina Bermejo, Jose Luis",
-          "holeNumber": 8,
-          "createdAt": "21/06/25 09:55:09"
-        },
-        {
-          "playerName": "Camacho Medel, Sergio",
-          "holeNumber": 8,
-          "createdAt": "21/06/25 09:57:26"
-        },
-        {
-          "playerName": "Fowler, Joanne",
-          "holeNumber": 16,
-          "createdAt": "21/06/25 10:04:14"
-        },
-        {
-          "playerName": "Luque Pecci, Francisco Javier",
-          "holeNumber": 10,
-          "createdAt": "21/06/25 10:15:28"
-        },
-        {
-          "playerName": "Camacho Medel, Sergio",
-          "holeNumber": 10,
-          "createdAt": "21/06/25 10:25:46"
-        },
-        {
-          "playerName": "Diaz Garcia, Manuel",
-          "holeNumber": 13,
-          "createdAt": "21/06/25 10:38:42"
-        },
-        {
-          "playerName": "Barrenas Padura, Francisco De Paula",
-          "holeNumber": 17,
-          "createdAt": "21/06/25 10:51:55"
-        },
-        {
-          "playerName": "Fowler, Joanne",
-          "holeNumber": 2,
-          "createdAt": "21/06/25 10:54:02"
-        },
-        {
-          "playerName": "Diaz Garcia, Manuel",
-          "holeNumber": 15,
-          "createdAt": "21/06/25 10:56:11"
-        },
-        {
-          "playerName": "Molina Chaves, Ricardo",
-          "holeNumber": 14,
-          "createdAt": "21/06/25 11:01:54"
-        },
-        {
-          "playerName": "Gil  Delgado, Jorge Luis",
-          "holeNumber": 15,
-          "createdAt": "21/06/25 11:03:10"
-        },
-        {
-          "playerName": "Haya Palou De Comasema, Antonio",
-          "holeNumber": 16,
-          "createdAt": "21/06/25 11:04:04"
-        },
-        {
-          "playerName": "Luque Pecci, Francisco Javier",
-          "holeNumber": 14,
-          "createdAt": "21/06/25 11:21:21"
-        },
-        {
-          "playerName": "Luque Pecci, Francisco Javier",
-          "holeNumber": 16,
-          "createdAt": "21/06/25 11:21:21"
-        },
-        {
-          "playerName": "Lopez Dieguez, Luis",
-          "holeNumber": 1,
-          "createdAt": "21/06/25 11:36:39"
-        },
-        {
-          "playerName": "Barroso Camacho, Francisco",
-          "holeNumber": 1,
-          "createdAt": "21/06/25 11:36:55"
-        },
-        {
-          "playerName": "Ramirez Alvarez, Luis Miguel",
-          "holeNumber": 2,
-          "createdAt": "21/06/25 11:48:56"
-        },
-        {
-          "playerName": "Lopez Dieguez, Luis",
-          "holeNumber": 3,
-          "createdAt": "21/06/25 11:58:35"
-        },
-        {
-          "playerName": "Barrenas Padura, Francisco De Paula",
-          "holeNumber": 6,
-          "createdAt": "21/06/25 12:10:20"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -538,7 +377,7 @@
         {
           "time": "09:30",
           "tee": 1,
-          "name": "Antonio Manuel Ure?A Serrano",
+          "name": "Antonio Manuel Ureña Serrano",
           "hcp": 8,
           "ins": "2240561",
           "jid": "71585",
@@ -736,5 +575,168 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:04.880Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71585
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Trancoso Navarro, Pablo",
+          "holeNumber": 6,
+          "createdAt": "21/06/25 08:45:24"
+        },
+        {
+          "playerName": "Camacho Medel, Sergio",
+          "holeNumber": 1,
+          "createdAt": "21/06/25 08:48:40"
+        },
+        {
+          "playerName": "Gomez Antunez, Juan Carlos",
+          "holeNumber": 4,
+          "createdAt": "21/06/25 08:54:54"
+        },
+        {
+          "playerName": "Molina Bermejo, Jose Luis",
+          "holeNumber": 3,
+          "createdAt": "21/06/25 09:05:48"
+        },
+        {
+          "playerName": "Molina Bermejo, Jose Luis",
+          "holeNumber": 4,
+          "createdAt": "21/06/25 09:14:00"
+        },
+        {
+          "playerName": "Gomez Jara, Jose Antonio",
+          "holeNumber": 6,
+          "createdAt": "21/06/25 09:24:39"
+        },
+        {
+          "playerName": "Trancoso Navarro, Pablo",
+          "holeNumber": 10,
+          "createdAt": "21/06/25 09:38:47"
+        },
+        {
+          "playerName": "Diaz Garcia, Manuel",
+          "holeNumber": 8,
+          "createdAt": "21/06/25 09:41:17"
+        },
+        {
+          "playerName": "Gomez Jara, Jose Antonio",
+          "holeNumber": 8,
+          "createdAt": "21/06/25 09:48:45"
+        },
+        {
+          "playerName": "Molina Bermejo, Jose Luis",
+          "holeNumber": 8,
+          "createdAt": "21/06/25 09:55:09"
+        },
+        {
+          "playerName": "Camacho Medel, Sergio",
+          "holeNumber": 8,
+          "createdAt": "21/06/25 09:57:26"
+        },
+        {
+          "playerName": "Fowler, Joanne",
+          "holeNumber": 16,
+          "createdAt": "21/06/25 10:04:14"
+        },
+        {
+          "playerName": "Luque Pecci, Francisco Javier",
+          "holeNumber": 10,
+          "createdAt": "21/06/25 10:15:28"
+        },
+        {
+          "playerName": "Camacho Medel, Sergio",
+          "holeNumber": 10,
+          "createdAt": "21/06/25 10:25:46"
+        },
+        {
+          "playerName": "Diaz Garcia, Manuel",
+          "holeNumber": 13,
+          "createdAt": "21/06/25 10:38:42"
+        },
+        {
+          "playerName": "Barrenas Padura, Francisco De Paula",
+          "holeNumber": 17,
+          "createdAt": "21/06/25 10:51:55"
+        },
+        {
+          "playerName": "Fowler, Joanne",
+          "holeNumber": 2,
+          "createdAt": "21/06/25 10:54:02"
+        },
+        {
+          "playerName": "Diaz Garcia, Manuel",
+          "holeNumber": 15,
+          "createdAt": "21/06/25 10:56:11"
+        },
+        {
+          "playerName": "Molina Chaves, Ricardo",
+          "holeNumber": 14,
+          "createdAt": "21/06/25 11:01:54"
+        },
+        {
+          "playerName": "Gil  Delgado, Jorge Luis",
+          "holeNumber": 15,
+          "createdAt": "21/06/25 11:03:10"
+        },
+        {
+          "playerName": "Haya Palou De Comasema, Antonio",
+          "holeNumber": 16,
+          "createdAt": "21/06/25 11:04:04"
+        },
+        {
+          "playerName": "Luque Pecci, Francisco Javier",
+          "holeNumber": 14,
+          "createdAt": "21/06/25 11:21:21"
+        },
+        {
+          "playerName": "Luque Pecci, Francisco Javier",
+          "holeNumber": 16,
+          "createdAt": "21/06/25 11:21:21"
+        },
+        {
+          "playerName": "Lopez Dieguez, Luis",
+          "holeNumber": 1,
+          "createdAt": "21/06/25 11:36:39"
+        },
+        {
+          "playerName": "Barroso Camacho, Francisco",
+          "holeNumber": 1,
+          "createdAt": "21/06/25 11:36:55"
+        },
+        {
+          "playerName": "Ramirez Alvarez, Luis Miguel",
+          "holeNumber": 2,
+          "createdAt": "21/06/25 11:48:56"
+        },
+        {
+          "playerName": "Lopez Dieguez, Luis",
+          "holeNumber": 3,
+          "createdAt": "21/06/25 11:58:35"
+        },
+        {
+          "playerName": "Barrenas Padura, Francisco De Paula",
+          "holeNumber": 6,
+          "createdAt": "21/06/25 12:10:20"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:41:59.774Z"
 }

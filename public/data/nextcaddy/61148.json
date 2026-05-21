@@ -1,14 +1,14 @@
 {
   "tourId": 61148,
   "url": "https://www.nextcaddy.com/tour/61148",
-  "scrapedAt": "2026-05-08T17:34:50.795Z",
+  "scrapedAt": "2026-05-21T16:40:04.310Z",
   "meta": {
     "name": "Pequecircuito Zona E",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Club de Golf Playa Serena",
     "courseCode": "AM62",
-    "dateStart": "24 may 2026",
-    "dateEnd": "24 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Juvenil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-05-24"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -34,13 +35,146 @@
       "orden": 2,
       "name": "Mateo Rodriguez Torrente",
       "licencia": "AMD5084298",
-      "hcp": 42.4,
+      "hcp": 41.8,
       "nivel": "B"
     },
     {
       "orden": 3,
       "name": "Francisco Rodriguez Torrente",
       "licencia": "AMD5031155",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Ignacio García Zazo",
+      "licencia": "AMC7519025",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 5,
+      "name": "Juan Alberto Muñoz Del Pozo Salinas",
+      "licencia": "AMC7099154",
+      "hcp": 40.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Tiago Dos Santos Vicente",
+      "licencia": "AM62352030",
+      "hcp": 36,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Mario Dos Santos Vicente",
+      "licencia": "AM62474265",
+      "hcp": 41.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "Carlos Checa Bravo",
+      "licencia": "AM15488144",
+      "hcp": 45.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 9,
+      "name": "Lucas Checa Bravo",
+      "licencia": "AM15488143",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 10,
+      "name": "Martin Soriano Perez",
+      "licencia": "AM67410649",
+      "hcp": 38,
+      "nivel": "A"
+    },
+    {
+      "orden": 11,
+      "name": "Lucas Lope De Lima",
+      "licencia": "AMA2345518",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 12,
+      "name": "Jesus Villegas Martinez",
+      "licencia": "AM23075843",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 13,
+      "name": "Carlos Villegas Martinez",
+      "licencia": "AM23472184",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 14,
+      "name": "Beltran Leria Sanchez-Osorio",
+      "licencia": "AM85962702",
+      "hcp": 45.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 15,
+      "name": "Ignacio Rubio Cerezo",
+      "licencia": "AM15067145",
+      "hcp": 46,
+      "nivel": "A"
+    },
+    {
+      "orden": 16,
+      "name": "Rodrigo Rubio Cerezo",
+      "licencia": "AM15067148",
+      "hcp": 30,
+      "nivel": "A"
+    },
+    {
+      "orden": 17,
+      "name": "Juan Jimenez Garcia",
+      "licencia": "AM59192746",
+      "hcp": 52.3,
+      "nivel": "B"
+    },
+    {
+      "orden": 18,
+      "name": "Cristobal Vizcaino Pinart",
+      "licencia": "AM62088495",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Maria Martin Sabiote",
+      "licencia": "AMA2518374",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Cloe Arambuena Vela",
+      "licencia": "AM58498744",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Maria Jimenez Garcia",
+      "licencia": "AM59192805",
       "hcp": 54,
       "nivel": "B"
     },
@@ -62,7 +196,7 @@
       "orden": 2,
       "name": "Mateo Rodriguez Torrente",
       "licencia": "AMD5084298",
-      "hcp": 42.4,
+      "hcp": 41.8,
       "nivel": "B"
     },
     {
@@ -71,6 +205,328 @@
       "licencia": "AMD5031155",
       "hcp": 54,
       "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Ignacio García Zazo",
+      "licencia": "AMC7519025",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 5,
+      "name": "Juan Alberto Muñoz Del Pozo Salinas",
+      "licencia": "AMC7099154",
+      "hcp": 40.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Tiago Dos Santos Vicente",
+      "licencia": "AM62352030",
+      "hcp": 36,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Mario Dos Santos Vicente",
+      "licencia": "AM62474265",
+      "hcp": 41.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "Carlos Checa Bravo",
+      "licencia": "AM15488144",
+      "hcp": 45.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 9,
+      "name": "Lucas Checa Bravo",
+      "licencia": "AM15488143",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 10,
+      "name": "Maria Martin Sabiote",
+      "licencia": "AMA2518374",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 11,
+      "name": "Cloe Arambuena Vela",
+      "licencia": "AM58498744",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 12,
+      "name": "Martin Soriano Perez",
+      "licencia": "AM67410649",
+      "hcp": 38,
+      "nivel": "A"
+    },
+    {
+      "orden": 13,
+      "name": "Lucas Lope De Lima",
+      "licencia": "AMA2345518",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 14,
+      "name": "Jesus Villegas Martinez",
+      "licencia": "AM23075843",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 15,
+      "name": "Carlos Villegas Martinez",
+      "licencia": "AM23472184",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 16,
+      "name": "Beltran Leria Sanchez-Osorio",
+      "licencia": "AM85962702",
+      "hcp": 45.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 17,
+      "name": "Ignacio Rubio Cerezo",
+      "licencia": "AM15067145",
+      "hcp": 46,
+      "nivel": "A"
+    },
+    {
+      "orden": 18,
+      "name": "Rodrigo Rubio Cerezo",
+      "licencia": "AM15067148",
+      "hcp": 30,
+      "nivel": "A"
+    },
+    {
+      "orden": 19,
+      "name": "Juan Jimenez Garcia",
+      "licencia": "AM59192746",
+      "hcp": 52.3,
+      "nivel": "B"
+    },
+    {
+      "orden": 20,
+      "name": "Maria Jimenez Garcia",
+      "licencia": "AM59192805",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 21,
+      "name": "Cristobal Vizcaino Pinart",
+      "licencia": "AM62088495",
+      "hcp": 54,
+      "nivel": "A"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "16:30",
+          "tee": 1,
+          "name": "Rodrigo Rubio Cerezo",
+          "hcp": 30,
+          "ins": "2321657",
+          "jid": "64786",
+          "nivel": "A"
+        },
+        {
+          "time": "16:30",
+          "tee": 1,
+          "name": "Tiago Dos Santos Vicente",
+          "hcp": 36,
+          "ins": "2317806",
+          "jid": "64786",
+          "nivel": "B"
+        },
+        {
+          "time": "16:30",
+          "tee": 1,
+          "name": "Martin Soriano Perez",
+          "hcp": 38,
+          "ins": "2321277",
+          "jid": "64786",
+          "nivel": "A"
+        },
+        {
+          "time": "16:30",
+          "tee": 1,
+          "name": "Juan Alberto Muñoz Del Pozo Salinas",
+          "hcp": 40.1,
+          "ins": "2317543",
+          "jid": "64786",
+          "nivel": "B"
+        },
+        {
+          "time": "16:40",
+          "tee": 1,
+          "name": "Mario Dos Santos Vicente",
+          "hcp": 41.8,
+          "ins": "2317807",
+          "jid": "64786",
+          "nivel": "B"
+        },
+        {
+          "time": "16:40",
+          "tee": 1,
+          "name": "Mateo Rodriguez Torrente",
+          "hcp": 41.8,
+          "ins": "2314890",
+          "jid": "64786",
+          "nivel": "B"
+        },
+        {
+          "time": "16:40",
+          "tee": 1,
+          "name": "Beltran Leria Sanchez-Osorio",
+          "hcp": 45.3,
+          "ins": "2321483",
+          "jid": "64786",
+          "nivel": "A"
+        },
+        {
+          "time": "16:40",
+          "tee": 1,
+          "name": "Carlos Checa Bravo",
+          "hcp": 45.8,
+          "ins": "2317825",
+          "jid": "64786",
+          "nivel": "B"
+        },
+        {
+          "time": "16:50",
+          "tee": 1,
+          "name": "Ignacio Rubio Cerezo",
+          "hcp": 46,
+          "ins": "2321656",
+          "jid": "64786",
+          "nivel": "A"
+        },
+        {
+          "time": "16:50",
+          "tee": 1,
+          "name": "Juan Jimenez Garcia",
+          "hcp": 52.3,
+          "ins": "2321703",
+          "jid": "64786",
+          "nivel": "B"
+        },
+        {
+          "time": "16:50",
+          "tee": 1,
+          "name": "Ignacio García Zazo",
+          "hcp": 54,
+          "ins": "2316322",
+          "jid": "64786",
+          "nivel": "A"
+        },
+        {
+          "time": "16:50",
+          "tee": 1,
+          "name": "Lucas Checa Bravo",
+          "hcp": 54,
+          "ins": "2317828",
+          "jid": "64786",
+          "nivel": "B"
+        },
+        {
+          "time": "17:00",
+          "tee": 1,
+          "name": "Lucas Lope De Lima",
+          "hcp": 54,
+          "ins": "2321293",
+          "jid": "64786",
+          "nivel": "B"
+        },
+        {
+          "time": "17:00",
+          "tee": 1,
+          "name": "Carlos Villegas Martinez",
+          "hcp": 54,
+          "ins": "2321473",
+          "jid": "64786",
+          "nivel": "B"
+        },
+        {
+          "time": "17:00",
+          "tee": 1,
+          "name": "Francisco Rodriguez Torrente",
+          "hcp": 54,
+          "ins": "2314891",
+          "jid": "64786",
+          "nivel": "B"
+        },
+        {
+          "time": "17:10",
+          "tee": 1,
+          "name": "Fabio Utrera Carracao",
+          "hcp": 54,
+          "ins": "2306126",
+          "jid": "64786",
+          "nivel": "B"
+        },
+        {
+          "time": "17:10",
+          "tee": 1,
+          "name": "Jesus Villegas Martinez",
+          "hcp": 54,
+          "ins": "2321469",
+          "jid": "64786",
+          "nivel": "A"
+        },
+        {
+          "time": "17:10",
+          "tee": 1,
+          "name": "Cristobal Vizcaino Pinart",
+          "hcp": 54,
+          "ins": "2321842",
+          "jid": "64786",
+          "nivel": "A"
+        },
+        {
+          "time": "17:20",
+          "tee": 1,
+          "name": "Maria Martin Sabiote",
+          "hcp": 54,
+          "ins": "2320067",
+          "jid": "64786",
+          "nivel": "A"
+        },
+        {
+          "time": "17:20",
+          "tee": 1,
+          "name": "Maria Jimenez Garcia",
+          "hcp": 54,
+          "ins": "2321704",
+          "jid": "64786",
+          "nivel": "B"
+        },
+        {
+          "time": "17:20",
+          "tee": 1,
+          "name": "Cloe Arambuena Vela",
+          "hcp": 54,
+          "ins": "2320110",
+          "jid": "64786",
+          "nivel": "B"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -88,6 +544,9 @@
       "roundId": 64786
     }
   ],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:22.346Z"
+  "scoreTypes": null,
+  "pdfs": [
+    "/uploads/circular/2026/60646390603b16b04fdebb02436999ef.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:52.022Z"
 }

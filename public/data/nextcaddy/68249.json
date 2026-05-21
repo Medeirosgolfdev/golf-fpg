@@ -1,14 +1,14 @@
 {
   "tourId": 68249,
   "url": "https://www.nextcaddy.com/tour/68249",
-  "scrapedAt": "2026-05-09T10:16:46.212Z",
+  "scrapedAt": "2026-05-21T16:40:26.833Z",
   "meta": {
     "name": "Torneo por Equipos Amateur",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Centro Nacional de Golf",
     "courseCode": "CMA8",
-    "dateStart": "21 jun 2026",
-    "dateEnd": "21 jun 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-06-21"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -355,6 +357,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:35.187Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:20.286Z"
 }

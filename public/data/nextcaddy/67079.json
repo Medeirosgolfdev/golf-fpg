@@ -1,14 +1,14 @@
 {
   "tourId": 67079,
   "url": "https://www.nextcaddy.com/tour/67079",
-  "scrapedAt": "2026-05-09T09:49:31.353Z",
+  "scrapedAt": "2026-05-21T16:36:19.502Z",
   "meta": {
     "name": "TORNEO DE REYES \"PADRES E HIJOS\" 18 HOYOS",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "03 ene 2026",
-    "dateEnd": "03 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-03"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -94,6 +95,7 @@
       "nivel": "Mid"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -131,6 +133,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:26.472Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:41:58.782Z"
 }

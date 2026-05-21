@@ -1,14 +1,14 @@
 {
   "tourId": 55628,
   "url": "https://www.nextcaddy.com/tour/55628",
-  "scrapedAt": "2026-05-08T17:22:40.992Z",
+  "scrapedAt": "2026-05-21T16:36:47.782Z",
   "meta": {
     "name": "Final Circuito Juvenil",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "31 ene 2026",
-    "dateEnd": "31 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Alevín Edad Entre",
     "categories": [
       "Juvenil",
@@ -18,11 +18,12 @@
       "Señoras",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-01-31"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -1243,6 +1244,7 @@
       "nivel": "C"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -1259,6 +1261,10 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:20.091Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/55628_cartel_43.pdf",
+    "/uploads/circular/2025/1cc91de22b7bcbd09a7007c0ec1c146e.pdf",
+    "/uploads/competiciones/pdf/3273239972_reglas_locales_campano_13112025_v2.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:38.849Z"
 }

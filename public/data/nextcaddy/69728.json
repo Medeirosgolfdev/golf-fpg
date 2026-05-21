@@ -1,14 +1,14 @@
 {
   "tourId": 69728,
   "url": "https://www.nextcaddy.com/tour/69728",
-  "scrapedAt": "2026-05-09T10:07:55.108Z",
+  "scrapedAt": "2026-05-21T16:38:38.211Z",
   "meta": {
     "name": "LOS GALLOS 11-04",
     "organizer": null,
     "course": "Alhaurín Golf Hotel & Resort",
     "courseCode": "AM22",
-    "dateStart": "11 abr 2026",
-    "dateEnd": "11 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-11"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 11,
       "header": [
         "Pos",
         "Jugador",
@@ -160,6 +161,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 11
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -328,6 +336,112 @@
       "licencia": "10-04-26 12:12",
       "hcp": 27.3,
       "nivel": "AM22619245"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Jose Angel Yañez Poyatos",
+          "hcp": 23,
+          "ins": "2296052",
+          "jid": "74528",
+          "nivel": "S"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Francisco Miguel Garcia Bravo",
+          "hcp": 18.7,
+          "ins": "2296053",
+          "jid": "74528",
+          "nivel": "M"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Dirk De Bisschop",
+          "hcp": 28,
+          "ins": "2296054",
+          "jid": "74528",
+          "nivel": "M"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Juan Garcia Gallego",
+          "hcp": 20.6,
+          "ins": "2296055",
+          "jid": "74528",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Maria Elena Zea Martin",
+          "hcp": 17.5,
+          "ins": "2296056",
+          "jid": "74528",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Kairi Kahn Kahn",
+          "hcp": 21.2,
+          "ins": "2296057",
+          "jid": "74528",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Antonio Manuel Moreno Ruiz",
+          "hcp": 17.3,
+          "ins": "2296058",
+          "jid": "74528",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Juan Jesus Perez Martin",
+          "hcp": 15.5,
+          "ins": "2296059",
+          "jid": "74528",
+          "nivel": "S"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Cristobal Herrera Garcia",
+          "hcp": 12,
+          "ins": "2296060",
+          "jid": "74528",
+          "nivel": "S"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Xavier Sierra Lacam",
+          "hcp": 16.2,
+          "ins": "2296061",
+          "jid": "74528",
+          "nivel": "M"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Fco Javier Gallego Vazquez",
+          "hcp": 27.3,
+          "ins": "2296062",
+          "jid": "74528",
+          "nivel": "M"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -714,111 +828,6 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "08:50",
-          "tee": 1,
-          "name": "Jose Angel Yañez Poyatos",
-          "hcp": 23,
-          "ins": "2296052",
-          "jid": "74528",
-          "nivel": "S"
-        },
-        {
-          "time": "08:50",
-          "tee": 1,
-          "name": "Francisco Miguel Garcia Bravo",
-          "hcp": 18.7,
-          "ins": "2296053",
-          "jid": "74528",
-          "nivel": "M"
-        },
-        {
-          "time": "08:50",
-          "tee": 1,
-          "name": "Dirk De Bisschop",
-          "hcp": 28,
-          "ins": "2296054",
-          "jid": "74528",
-          "nivel": "M"
-        },
-        {
-          "time": "08:50",
-          "tee": 1,
-          "name": "Juan Garcia Gallego",
-          "hcp": 20.6,
-          "ins": "2296055",
-          "jid": "74528",
-          "nivel": "M"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Maria Elena Zea Martin",
-          "hcp": 17.5,
-          "ins": "2296056",
-          "jid": "74528",
-          "nivel": "M"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Kairi Kahn Kahn",
-          "hcp": 21.2,
-          "ins": "2296057",
-          "jid": "74528",
-          "nivel": "M"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Antonio Manuel Moreno Ruiz",
-          "hcp": 17.3,
-          "ins": "2296058",
-          "jid": "74528",
-          "nivel": "M"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Juan Jesus Perez Martin",
-          "hcp": 15.5,
-          "ins": "2296059",
-          "jid": "74528",
-          "nivel": "S"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Cristobal Herrera Garcia",
-          "hcp": 12,
-          "ins": "2296060",
-          "jid": "74528",
-          "nivel": "S"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Xavier Sierra Lacam",
-          "hcp": 16.2,
-          "ins": "2296061",
-          "jid": "74528",
-          "nivel": "M"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Fco Javier Gallego Vazquez",
-          "hcp": 27.3,
-          "ins": "2296062",
-          "jid": "74528",
-          "nivel": "M"
-        }
-      ]
-    }
-  ],
-  "horariosScrapedAt": "2026-05-09T12:12:56.705Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:37.108Z"
 }

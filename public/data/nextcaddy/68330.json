@@ -1,14 +1,14 @@
 {
   "tourId": 68330,
   "url": "https://www.nextcaddy.com/tour/68330",
-  "scrapedAt": "2026-05-09T10:17:15.470Z",
+  "scrapedAt": "2026-05-21T16:41:10.986Z",
   "meta": {
     "name": "Torneo Access Series \"Las Rejas\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Forus Golf Las Rejas",
     "courseCode": "CM22",
-    "dateStart": "18 oct 2026",
-    "dateEnd": "18 oct 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Scratch) Circuito Access Ser",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-10-18"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -55,6 +57,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:36.043Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:21.190Z"
 }

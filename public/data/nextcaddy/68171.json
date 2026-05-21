@@ -1,14 +1,14 @@
 {
   "tourId": 68171,
   "url": "https://www.nextcaddy.com/tour/68171",
-  "scrapedAt": "2026-05-09T10:15:35.447Z",
+  "scrapedAt": "2026-05-21T16:38:57.981Z",
   "meta": {
     "name": "Torneo Circuito Amateur \"El Robledal\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "el Robledal Golf",
     "courseCode": "CM08",
-    "dateStart": "19 abr 2026",
-    "dateEnd": "19 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Circuito Amateur 2",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-19"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch General",
+      "expectedJugadores": 93,
       "header": [
         "Pos",
         "Jugador",
@@ -1063,6 +1064,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Clasificación - 1ª Categoría Caballeros",
+      "expectedJugadores": 37,
       "header": [
         "Pos",
         "Jugador",
@@ -1486,6 +1489,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Clasificación - 2ª Categoría Caballeros",
+      "expectedJugadores": 46,
       "header": [
         "Pos",
         "Jugador",
@@ -2008,6 +2013,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Clasificación Damas",
+      "expectedJugadores": 10,
       "header": [
         "Pos",
         "Jugador",
@@ -2133,6 +2140,25 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch General",
+      "jugadores": 93
+    },
+    "2": {
+      "name": "Clasificación - 1ª Categoría Caballeros",
+      "jugadores": 37
+    },
+    "3": {
+      "name": "Clasificación - 2ª Categoría Caballeros",
+      "jugadores": 46
+    },
+    "4": {
+      "name": "Clasificación Damas",
+      "jugadores": 10
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -3451,22 +3477,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72717
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -4311,5 +4321,25 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:21.357Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72717
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/68171_cartel_363.pdf",
+    "/uploads/competiciones/pdf/3612639551_rrll_robledal.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:18.486Z"
 }

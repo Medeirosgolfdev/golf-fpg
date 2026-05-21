@@ -1,14 +1,14 @@
 {
   "tourId": 61058,
   "url": "https://www.nextcaddy.com/tour/61058",
-  "scrapedAt": "2026-05-08T17:52:49.871Z",
+  "scrapedAt": "2026-05-21T16:36:54.059Z",
   "meta": {
     "name": "Pequecircuito Zona C",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Benalmadena Golf",
     "courseCode": "AMC8",
-    "dateStart": "08 feb 2026",
-    "dateEnd": "08 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,74 +17,14 @@
       "Juvenil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-02-08"
-  },
-  "course": {
-    "par": [
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3
-    ],
-    "si": [
-      13,
-      17,
-      11,
-      15,
-      3,
-      5,
-      9,
-      1,
-      7,
-      14,
-      18,
-      12,
-      16,
-      4,
-      6,
-      10,
-      2,
-      8
-    ],
-    "meters": [
-      78,
-      46,
-      68,
-      56,
-      90,
-      81,
-      59,
-      100,
-      77,
-      78,
-      46,
-      68,
-      56,
-      90,
-      81,
-      59,
-      100,
-      77
     ]
   },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Pequecircuito Categoria 1 Femenina",
+      "expectedJugadores": 1,
       "header": [
         "Pos",
         "Jugador",
@@ -106,13 +46,14 @@
           "rounds": [],
           "total": 70,
           "toPar": 43,
-          "inscribedId": 2254890,
-          "roundScores": []
+          "inscribedId": 2254890
         }
       ]
     },
     {
       "category": 2,
+      "categoryName": "Scratch Pequecircuito Categoria 2 Femenina",
+      "expectedJugadores": 7,
       "header": [
         "Pos",
         "Jugador",
@@ -134,8 +75,7 @@
           "rounds": [],
           "total": 36,
           "toPar": 9,
-          "inscribedId": 2247720,
-          "roundScores": []
+          "inscribedId": 2247720
         },
         {
           "pos": 2,
@@ -146,8 +86,7 @@
           "rounds": [],
           "total": 36,
           "toPar": 9,
-          "inscribedId": 2248618,
-          "roundScores": []
+          "inscribedId": 2248618
         },
         {
           "pos": 3,
@@ -158,8 +97,7 @@
           "rounds": [],
           "total": 40,
           "toPar": 13,
-          "inscribedId": 2246453,
-          "roundScores": []
+          "inscribedId": 2246453
         },
         {
           "pos": 4,
@@ -170,8 +108,7 @@
           "rounds": [],
           "total": 43,
           "toPar": 16,
-          "inscribedId": 2248611,
-          "roundScores": []
+          "inscribedId": 2248611
         },
         {
           "pos": 5,
@@ -182,8 +119,7 @@
           "rounds": [],
           "total": 47,
           "toPar": 20,
-          "inscribedId": 2246883,
-          "roundScores": []
+          "inscribedId": 2246883
         },
         {
           "pos": 6,
@@ -194,8 +130,7 @@
           "rounds": [],
           "total": 54,
           "toPar": 27,
-          "inscribedId": 2248280,
-          "roundScores": []
+          "inscribedId": 2248280
         },
         {
           "pos": 7,
@@ -206,13 +141,14 @@
           "rounds": [],
           "total": 62,
           "toPar": 35,
-          "inscribedId": 2250187,
-          "roundScores": []
+          "inscribedId": 2250187
         }
       ]
     },
     {
       "category": 3,
+      "categoryName": "Scratch Pequecircuito Categoria 3 Femenina",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -234,8 +170,7 @@
           "rounds": [],
           "total": 39,
           "toPar": 12,
-          "inscribedId": 2246501,
-          "roundScores": []
+          "inscribedId": 2246501
         },
         {
           "pos": 2,
@@ -246,8 +181,7 @@
           "rounds": [],
           "total": 40,
           "toPar": 13,
-          "inscribedId": 2250143,
-          "roundScores": []
+          "inscribedId": 2250143
         },
         {
           "pos": 3,
@@ -258,8 +192,7 @@
           "rounds": [],
           "total": 44,
           "toPar": 17,
-          "inscribedId": 2246469,
-          "roundScores": []
+          "inscribedId": 2246469
         },
         {
           "pos": 4,
@@ -270,8 +203,7 @@
           "rounds": [],
           "total": 47,
           "toPar": 20,
-          "inscribedId": 2246905,
-          "roundScores": []
+          "inscribedId": 2246905
         },
         {
           "pos": 5,
@@ -282,8 +214,7 @@
           "rounds": [],
           "total": 47,
           "toPar": 20,
-          "inscribedId": 2254384,
-          "roundScores": []
+          "inscribedId": 2254384
         },
         {
           "pos": 6,
@@ -294,8 +225,7 @@
           "rounds": [],
           "total": 50,
           "toPar": 23,
-          "inscribedId": 2254720,
-          "roundScores": []
+          "inscribedId": 2254720
         },
         {
           "pos": 7,
@@ -306,8 +236,7 @@
           "rounds": [],
           "total": 53,
           "toPar": 26,
-          "inscribedId": 2254468,
-          "roundScores": []
+          "inscribedId": 2254468
         },
         {
           "pos": 8,
@@ -318,13 +247,14 @@
           "rounds": [],
           "total": 64,
           "toPar": 37,
-          "inscribedId": 2254381,
-          "roundScores": []
+          "inscribedId": 2254381
         }
       ]
     },
     {
       "category": 4,
+      "categoryName": "Scratch Pequecircuito Categoria 1 Masculina",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -346,8 +276,7 @@
           "rounds": [],
           "total": 30,
           "toPar": 3,
-          "inscribedId": 2246388,
-          "roundScores": []
+          "inscribedId": 2246388
         },
         {
           "pos": 2,
@@ -358,8 +287,7 @@
           "rounds": [],
           "total": 36,
           "toPar": 9,
-          "inscribedId": 2249564,
-          "roundScores": []
+          "inscribedId": 2249564
         },
         {
           "pos": 3,
@@ -370,8 +298,7 @@
           "rounds": [],
           "total": 39,
           "toPar": 12,
-          "inscribedId": 2253437,
-          "roundScores": []
+          "inscribedId": 2253437
         },
         {
           "pos": 4,
@@ -382,8 +309,7 @@
           "rounds": [],
           "total": 40,
           "toPar": 13,
-          "inscribedId": 2246319,
-          "roundScores": []
+          "inscribedId": 2246319
         },
         {
           "pos": 5,
@@ -394,8 +320,7 @@
           "rounds": [],
           "total": 43,
           "toPar": 16,
-          "inscribedId": 2247174,
-          "roundScores": []
+          "inscribedId": 2247174
         },
         {
           "pos": 6,
@@ -406,8 +331,7 @@
           "rounds": [],
           "total": 45,
           "toPar": 18,
-          "inscribedId": 2248615,
-          "roundScores": []
+          "inscribedId": 2248615
         },
         {
           "pos": 7,
@@ -418,8 +342,7 @@
           "rounds": [],
           "total": 54,
           "toPar": 27,
-          "inscribedId": 2246473,
-          "roundScores": []
+          "inscribedId": 2246473
         },
         {
           "pos": 8,
@@ -430,13 +353,14 @@
           "rounds": [],
           "total": 59,
           "toPar": 32,
-          "inscribedId": 2250206,
-          "roundScores": []
+          "inscribedId": 2250206
         }
       ]
     },
     {
       "category": 5,
+      "categoryName": "Scratch Pequecircuito Categoria 2 Masculina",
+      "expectedJugadores": 17,
       "header": [
         "Pos",
         "Jugador",
@@ -458,8 +382,7 @@
           "rounds": [],
           "total": 28,
           "toPar": 1,
-          "inscribedId": 2246318,
-          "roundScores": []
+          "inscribedId": 2246318
         },
         {
           "pos": 2,
@@ -470,8 +393,7 @@
           "rounds": [],
           "total": 31,
           "toPar": 4,
-          "inscribedId": 2248133,
-          "roundScores": []
+          "inscribedId": 2248133
         },
         {
           "pos": 3,
@@ -482,8 +404,7 @@
           "rounds": [],
           "total": 33,
           "toPar": 6,
-          "inscribedId": 2246916,
-          "roundScores": []
+          "inscribedId": 2246916
         },
         {
           "pos": 4,
@@ -494,8 +415,7 @@
           "rounds": [],
           "total": 33,
           "toPar": 6,
-          "inscribedId": 2252184,
-          "roundScores": []
+          "inscribedId": 2252184
         },
         {
           "pos": 5,
@@ -506,8 +426,7 @@
           "rounds": [],
           "total": 35,
           "toPar": 8,
-          "inscribedId": 2246363,
-          "roundScores": []
+          "inscribedId": 2246363
         },
         {
           "pos": 6,
@@ -518,8 +437,7 @@
           "rounds": [],
           "total": 35,
           "toPar": 8,
-          "inscribedId": 2254596,
-          "roundScores": []
+          "inscribedId": 2254596
         },
         {
           "pos": 7,
@@ -530,8 +448,7 @@
           "rounds": [],
           "total": 37,
           "toPar": 10,
-          "inscribedId": 2246410,
-          "roundScores": []
+          "inscribedId": 2246410
         },
         {
           "pos": 8,
@@ -542,8 +459,7 @@
           "rounds": [],
           "total": 38,
           "toPar": 11,
-          "inscribedId": 2254631,
-          "roundScores": []
+          "inscribedId": 2254631
         },
         {
           "pos": 9,
@@ -554,8 +470,7 @@
           "rounds": [],
           "total": 39,
           "toPar": 12,
-          "inscribedId": 2246413,
-          "roundScores": []
+          "inscribedId": 2246413
         },
         {
           "pos": 10,
@@ -566,8 +481,7 @@
           "rounds": [],
           "total": 40,
           "toPar": 13,
-          "inscribedId": 2246436,
-          "roundScores": []
+          "inscribedId": 2246436
         },
         {
           "pos": 11,
@@ -578,8 +492,7 @@
           "rounds": [],
           "total": 41,
           "toPar": 14,
-          "inscribedId": 2246408,
-          "roundScores": []
+          "inscribedId": 2246408
         },
         {
           "pos": 12,
@@ -590,8 +503,7 @@
           "rounds": [],
           "total": 43,
           "toPar": 16,
-          "inscribedId": 2249209,
-          "roundScores": []
+          "inscribedId": 2249209
         },
         {
           "pos": 13,
@@ -602,8 +514,7 @@
           "rounds": [],
           "total": 46,
           "toPar": 19,
-          "inscribedId": 2248628,
-          "roundScores": []
+          "inscribedId": 2248628
         },
         {
           "pos": 14,
@@ -614,8 +525,7 @@
           "rounds": [],
           "total": 47,
           "toPar": 20,
-          "inscribedId": 2247959,
-          "roundScores": []
+          "inscribedId": 2247959
         },
         {
           "pos": 15,
@@ -626,8 +536,7 @@
           "rounds": [],
           "total": 48,
           "toPar": 21,
-          "inscribedId": 2249956,
-          "roundScores": []
+          "inscribedId": 2249956
         },
         {
           "pos": 16,
@@ -638,8 +547,7 @@
           "rounds": [],
           "total": 49,
           "toPar": 22,
-          "inscribedId": 2248570,
-          "roundScores": []
+          "inscribedId": 2248570
         },
         {
           "pos": 17,
@@ -650,13 +558,14 @@
           "rounds": [],
           "total": 54,
           "toPar": 27,
-          "inscribedId": 2254875,
-          "roundScores": []
+          "inscribedId": 2254875
         }
       ]
     },
     {
       "category": 6,
+      "categoryName": "Scratch Pequecircuito Categoria 3 Masculina",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -678,8 +587,7 @@
           "rounds": [],
           "total": 30,
           "toPar": 3,
-          "inscribedId": 2253439,
-          "roundScores": []
+          "inscribedId": 2253439
         },
         {
           "pos": 2,
@@ -690,8 +598,7 @@
           "rounds": [],
           "total": 33,
           "toPar": 6,
-          "inscribedId": 2246868,
-          "roundScores": []
+          "inscribedId": 2246868
         },
         {
           "pos": 3,
@@ -702,8 +609,7 @@
           "rounds": [],
           "total": 34,
           "toPar": 7,
-          "inscribedId": 2251553,
-          "roundScores": []
+          "inscribedId": 2251553
         },
         {
           "pos": 4,
@@ -714,8 +620,7 @@
           "rounds": [],
           "total": 34,
           "toPar": 7,
-          "inscribedId": 2246385,
-          "roundScores": []
+          "inscribedId": 2246385
         },
         {
           "pos": 5,
@@ -726,8 +631,7 @@
           "rounds": [],
           "total": 35,
           "toPar": 8,
-          "inscribedId": 2246869,
-          "roundScores": []
+          "inscribedId": 2246869
         },
         {
           "pos": 6,
@@ -738,8 +642,7 @@
           "rounds": [],
           "total": 37,
           "toPar": 10,
-          "inscribedId": 2254522,
-          "roundScores": []
+          "inscribedId": 2254522
         },
         {
           "pos": 7,
@@ -750,8 +653,7 @@
           "rounds": [],
           "total": 37,
           "toPar": 10,
-          "inscribedId": 2248267,
-          "roundScores": []
+          "inscribedId": 2248267
         },
         {
           "pos": 8,
@@ -762,8 +664,7 @@
           "rounds": [],
           "total": 38,
           "toPar": 11,
-          "inscribedId": 2249159,
-          "roundScores": []
+          "inscribedId": 2249159
         },
         {
           "pos": 9,
@@ -774,8 +675,7 @@
           "rounds": [],
           "total": 38,
           "toPar": 11,
-          "inscribedId": 2246380,
-          "roundScores": []
+          "inscribedId": 2246380
         },
         {
           "pos": 10,
@@ -786,8 +686,7 @@
           "rounds": [],
           "total": 38,
           "toPar": 11,
-          "inscribedId": 2246387,
-          "roundScores": []
+          "inscribedId": 2246387
         },
         {
           "pos": 11,
@@ -798,8 +697,7 @@
           "rounds": [],
           "total": 46,
           "toPar": 19,
-          "inscribedId": 2254523,
-          "roundScores": []
+          "inscribedId": 2254523
         },
         {
           "pos": 12,
@@ -810,8 +708,7 @@
           "rounds": [],
           "total": 47,
           "toPar": 20,
-          "inscribedId": 2246370,
-          "roundScores": []
+          "inscribedId": 2246370
         },
         {
           "pos": 13,
@@ -822,8 +719,7 @@
           "rounds": [],
           "total": 49,
           "toPar": 22,
-          "inscribedId": 2248855,
-          "roundScores": []
+          "inscribedId": 2248855
         },
         {
           "pos": 14,
@@ -834,8 +730,7 @@
           "rounds": [],
           "total": 50,
           "toPar": 23,
-          "inscribedId": 2248665,
-          "roundScores": []
+          "inscribedId": 2248665
         },
         {
           "pos": 15,
@@ -846,8 +741,7 @@
           "rounds": [],
           "total": 51,
           "toPar": 24,
-          "inscribedId": 2254883,
-          "roundScores": []
+          "inscribedId": 2254883
         },
         {
           "pos": 16,
@@ -858,8 +752,7 @@
           "rounds": [],
           "total": 51,
           "toPar": 24,
-          "inscribedId": 2251626,
-          "roundScores": []
+          "inscribedId": 2251626
         },
         {
           "pos": 17,
@@ -870,8 +763,7 @@
           "rounds": [],
           "total": 55,
           "toPar": 28,
-          "inscribedId": 2248279,
-          "roundScores": []
+          "inscribedId": 2248279
         },
         {
           "pos": 18,
@@ -882,12 +774,38 @@
           "rounds": [],
           "total": 61,
           "toPar": 34,
-          "inscribedId": 2254646,
-          "roundScores": []
+          "inscribedId": 2254646
         }
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Pequecircuito Categoria 1 Femenina",
+      "jugadores": 1
+    },
+    "2": {
+      "name": "Scratch Pequecircuito Categoria 2 Femenina",
+      "jugadores": 7
+    },
+    "3": {
+      "name": "Scratch Pequecircuito Categoria 3 Femenina",
+      "jugadores": 8
+    },
+    "4": {
+      "name": "Scratch Pequecircuito Categoria 1 Masculina",
+      "jugadores": 8
+    },
+    "5": {
+      "name": "Scratch Pequecircuito Categoria 2 Masculina",
+      "jugadores": 17
+    },
+    "6": {
+      "name": "Scratch Pequecircuito Categoria 3 Masculina",
+      "jugadores": 18
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1730,6 +1648,544 @@
       "nivel": "B"
     }
   ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Enrique Alvarez-Net Gonzalez",
+          "hcp": 36.5,
+          "ins": "2252184",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Nikita Dellwig Ilchenko",
+          "hcp": 36.7,
+          "ins": "2246385",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Manuel Perez Cabanillas",
+          "hcp": 37,
+          "ins": "2254631",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Daniel Ferreiro Luciano",
+          "hcp": 37.6,
+          "ins": "2246388",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Ramiro Amaya Cozzi",
+          "hcp": 38.5,
+          "ins": "2246916",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Felix Alvarez Jimenez",
+          "hcp": 39,
+          "ins": "2246387",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Rodrigo Rubio Cerezo",
+          "hcp": 40.2,
+          "ins": "2246869",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Gonzalo Ruiz Valverde",
+          "hcp": 40.4,
+          "ins": "2246380",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Liane Gavira Rodriguez",
+          "hcp": 38.1,
+          "ins": "2248618",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Milana Bogdanova",
+          "hcp": 40.6,
+          "ins": "2246501",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Laura Mena Zamora",
+          "hcp": 41.3,
+          "ins": "2250143",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Adriana Arias Carasecova",
+          "hcp": 45.1,
+          "ins": "2254384",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Eneko Segarra Valadez",
+          "hcp": 45,
+          "ins": "2254646",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Javier Marin Fernandez",
+          "hcp": 45.6,
+          "ins": "2246413",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Leo Rodriguez Lopez",
+          "hcp": 46.4,
+          "ins": "2249564",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Hugo Zambrano Gonzalez",
+          "hcp": 46.6,
+          "ins": "2248133",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Julen Gregorio Paton Hany",
+          "hcp": 48,
+          "ins": "2249159",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Javier Naranjo Luna",
+          "hcp": 48,
+          "ins": "2254875",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Gema Alonso De La Cruz",
+          "hcp": 47.4,
+          "ins": "2246469",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Elsa Reyes Amatriain",
+          "hcp": 48,
+          "ins": "2254381",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Ainara Vanesa Azpitarte Perea",
+          "hcp": 48.2,
+          "ins": "2248611",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Martina Marquez Corrales",
+          "hcp": 49,
+          "ins": "2254720",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Gonzalo Viñas Carmona",
+          "hcp": 48,
+          "ins": "2247959",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Lucas Arias Carasec",
+          "hcp": 48.3,
+          "ins": "2254596",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Alfonso Queipo De Llano Burgos",
+          "hcp": 49.1,
+          "ins": "2251553",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Javier Ruiz Delaire",
+          "hcp": 49.5,
+          "ins": "2247174",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Nicolas Martinez Ruiz",
+          "hcp": 50,
+          "ins": "2250206",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Martin Soriano Perez",
+          "hcp": 50.1,
+          "ins": "2253439",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Aleksander Orlowski",
+          "hcp": 51.2,
+          "ins": "2248615",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Logan Heredia Martin-Price",
+          "hcp": 51.5,
+          "ins": "2254522",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Gonzalo Navarro Duran",
+          "hcp": 51.7,
+          "ins": "2248855",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Jose Manuel Farfan Ubeda",
+          "hcp": 52,
+          "ins": "2246436",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Javier Perez-Bryan Del Castillo",
+          "hcp": 52.3,
+          "ins": "2246408",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Rodrigo Parra Gonzalez",
+          "hcp": 53,
+          "ins": "2246363",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Juan Aguilar Marin",
+          "hcp": 54,
+          "ins": "2248665",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Daniela Mena Chaparro",
+          "hcp": 50.8,
+          "ins": "2247720",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Cloe Arambuena Vela",
+          "hcp": 54,
+          "ins": "2250187",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Daniela Garcia Cruces",
+          "hcp": 54,
+          "ins": "2246453",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Mauro Cid Galvez",
+          "hcp": 54,
+          "ins": "2254883",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Carlos Checa Bravo",
+          "hcp": 54,
+          "ins": "2246318",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Nico Cadenas Vallejo",
+          "hcp": 54,
+          "ins": "2249209",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Lucia Holgado Requena",
+          "hcp": 54,
+          "ins": "2246883",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Paula Márquez Corrales",
+          "hcp": 54,
+          "ins": "2254890",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Julieta Perez Pozo",
+          "hcp": 54,
+          "ins": "2254468",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "Francisco Garcia Bonilla",
+          "hcp": 54,
+          "ins": "2246370",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "Liam Heredia Martin-Price",
+          "hcp": 54,
+          "ins": "2254523",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "Alberto Gomez-Salas Cortes",
+          "hcp": 54,
+          "ins": "2246319",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "Dario Gil Cabeza",
+          "hcp": 54,
+          "ins": "2251626",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Ricardo Leon Avalos",
+          "hcp": 54,
+          "ins": "2248267",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Daniel Jimenez Pachon",
+          "hcp": 54,
+          "ins": "2248570",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Alvaro Holgado Horcajo",
+          "hcp": 54,
+          "ins": "2246473",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Luis Ramirez Barba",
+          "hcp": 54,
+          "ins": "2246410",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Mario Morillo Gonzalez",
+          "hcp": 54,
+          "ins": "2249956",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Ignacio Rubio Cerezo",
+          "hcp": 54,
+          "ins": "2246868",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Carlos Seco Barrionuevo",
+          "hcp": 54,
+          "ins": "2248628",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Thomas Wezowski",
+          "hcp": 54,
+          "ins": "2248279",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Fabio Utrera Carracao",
+          "hcp": 54,
+          "ins": "2253437",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Malena Viera Villalba",
+          "hcp": 54,
+          "ins": "2246905",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Victoria Wezowski",
+          "hcp": 54,
+          "ins": "2248280",
+          "jid": "64659",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {
       "p": {
@@ -2067,543 +2523,8 @@
     }
   ],
   "scoreTypes": null,
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Enrique Alvarez-Net Gonzalez",
-          "hcp": 36.5,
-          "ins": "2252184",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Nikita Dellwig Ilchenko",
-          "hcp": 36.7,
-          "ins": "2246385",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Manuel Perez Cabanillas",
-          "hcp": 37,
-          "ins": "2254631",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Daniel Ferreiro Luciano",
-          "hcp": 37.6,
-          "ins": "2246388",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Ramiro Amaya Cozzi",
-          "hcp": 38.5,
-          "ins": "2246916",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Felix Alvarez Jimenez",
-          "hcp": 39,
-          "ins": "2246387",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Rodrigo Rubio Cerezo",
-          "hcp": 40.2,
-          "ins": "2246869",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Gonzalo Ruiz Valverde",
-          "hcp": 40.4,
-          "ins": "2246380",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "Liane Gavira Rodriguez",
-          "hcp": 38.1,
-          "ins": "2248618",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "Milana Bogdanova",
-          "hcp": 40.6,
-          "ins": "2246501",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "Laura Mena Zamora",
-          "hcp": 41.3,
-          "ins": "2250143",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "Adriana Arias Carasecova",
-          "hcp": 45.1,
-          "ins": "2254384",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Eneko Segarra Valadez",
-          "hcp": 45,
-          "ins": "2254646",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Javier Marin Fernandez",
-          "hcp": 45.6,
-          "ins": "2246413",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Leo Rodriguez Lopez",
-          "hcp": 46.4,
-          "ins": "2249564",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
-          "name": "Hugo Zambrano Gonzalez",
-          "hcp": 46.6,
-          "ins": "2248133",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
-          "name": "Javier Naranjo Luna",
-          "hcp": 48,
-          "ins": "2254875",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
-          "name": "Julen Gregorio Paton Hany",
-          "hcp": 48,
-          "ins": "2249159",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Gema Alonso De La Cruz",
-          "hcp": 47.4,
-          "ins": "2246469",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Elsa Reyes Amatriain",
-          "hcp": 48,
-          "ins": "2254381",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Ainara Vanesa Azpitarte Perea",
-          "hcp": 48.2,
-          "ins": "2248611",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Martina Marquez Corrales",
-          "hcp": 49,
-          "ins": "2254720",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Gonzalo Viñas Carmona",
-          "hcp": 48,
-          "ins": "2247959",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Lucas Arias Carasec",
-          "hcp": 48.3,
-          "ins": "2254596",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Alfonso Queipo De Llano Burgos",
-          "hcp": 49.1,
-          "ins": "2251553",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Javier Ruiz Delaire",
-          "hcp": 49.5,
-          "ins": "2247174",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "10:20",
-          "tee": 1,
-          "name": "Nicolas Martinez Ruiz",
-          "hcp": 50,
-          "ins": "2250206",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "10:20",
-          "tee": 1,
-          "name": "Martin Soriano Perez",
-          "hcp": 50.1,
-          "ins": "2253439",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "10:20",
-          "tee": 1,
-          "name": "Aleksander Orlowski",
-          "hcp": 51.2,
-          "ins": "2248615",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "10:20",
-          "tee": 1,
-          "name": "Logan Heredia Martin-Price",
-          "hcp": 51.5,
-          "ins": "2254522",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "10:30",
-          "tee": 1,
-          "name": "Gonzalo Navarro Duran",
-          "hcp": 51.7,
-          "ins": "2248855",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "10:30",
-          "tee": 1,
-          "name": "Jose Manuel Farfan Ubeda",
-          "hcp": 52,
-          "ins": "2246436",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "10:30",
-          "tee": 1,
-          "name": "Javier Perez-Bryan Del Castillo",
-          "hcp": 52.3,
-          "ins": "2246408",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "10:40",
-          "tee": 1,
-          "name": "Rodrigo Parra Gonzalez",
-          "hcp": 53,
-          "ins": "2246363",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "10:40",
-          "tee": 1,
-          "name": "Juan Aguilar Marin",
-          "hcp": 54,
-          "ins": "2248665",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "10:50",
-          "tee": 1,
-          "name": "Daniela Mena Chaparro",
-          "hcp": 50.8,
-          "ins": "2247720",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "10:50",
-          "tee": 1,
-          "name": "Daniela Garcia Cruces",
-          "hcp": 54,
-          "ins": "2246453",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "10:50",
-          "tee": 1,
-          "name": "Cloe Arambuena Vela",
-          "hcp": 54,
-          "ins": "2250187",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "11:00",
-          "tee": 1,
-          "name": "Mauro Cid Galvez",
-          "hcp": 54,
-          "ins": "2254883",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "11:00",
-          "tee": 1,
-          "name": "Nico Cadenas Vallejo",
-          "hcp": 54,
-          "ins": "2249209",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "11:00",
-          "tee": 1,
-          "name": "Carlos Checa Bravo",
-          "hcp": 54,
-          "ins": "2246318",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "11:10",
-          "tee": 1,
-          "name": "Lucia Holgado Requena",
-          "hcp": 54,
-          "ins": "2246883",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "11:10",
-          "tee": 1,
-          "name": "Paula Márquez Corrales",
-          "hcp": 54,
-          "ins": "2254890",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "11:10",
-          "tee": 1,
-          "name": "Julieta Perez Pozo",
-          "hcp": 54,
-          "ins": "2254468",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "11:20",
-          "tee": 1,
-          "name": "Alberto Gomez-Salas Cortes",
-          "hcp": 54,
-          "ins": "2246319",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "11:20",
-          "tee": 1,
-          "name": "Liam Heredia Martin-Price",
-          "hcp": 54,
-          "ins": "2254523",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "11:20",
-          "tee": 1,
-          "name": "Francisco Garcia Bonilla",
-          "hcp": 54,
-          "ins": "2246370",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "11:20",
-          "tee": 1,
-          "name": "Dario Gil Cabeza",
-          "hcp": 54,
-          "ins": "2251626",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "11:30",
-          "tee": 1,
-          "name": "Daniel Jimenez Pachon",
-          "hcp": 54,
-          "ins": "2248570",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "11:30",
-          "tee": 1,
-          "name": "Alvaro Holgado Horcajo",
-          "hcp": 54,
-          "ins": "2246473",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "11:30",
-          "tee": 1,
-          "name": "Ricardo Leon Avalos",
-          "hcp": 54,
-          "ins": "2248267",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "11:40",
-          "tee": 1,
-          "name": "Mario Morillo Gonzalez",
-          "hcp": 54,
-          "ins": "2249956",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "11:40",
-          "tee": 1,
-          "name": "Luis Ramirez Barba",
-          "hcp": 54,
-          "ins": "2246410",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "11:50",
-          "tee": 1,
-          "name": "Carlos Seco Barrionuevo",
-          "hcp": 54,
-          "ins": "2248628",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "11:50",
-          "tee": 1,
-          "name": "Fabio Utrera Carracao",
-          "hcp": 54,
-          "ins": "2253437",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "11:50",
-          "tee": 1,
-          "name": "Ignacio Rubio Cerezo",
-          "hcp": 54,
-          "ins": "2246868",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "11:50",
-          "tee": 1,
-          "name": "Thomas Wezowski",
-          "hcp": 54,
-          "ins": "2248279",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "12:00",
-          "tee": 1,
-          "name": "Victoria Wezowski",
-          "hcp": 54,
-          "ins": "2248280",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "12:00",
-          "tee": 1,
-          "name": "Malena Viera Villalba",
-          "hcp": 54,
-          "ins": "2246905",
-          "jid": "64659",
-          "nivel": "A"
-        }
-      ]
-    }
+  "pdfs": [
+    "/uploads/circular/2026/60646390603b16b04fdebb02436999ef.pdf"
   ],
-  "horariosScrapedAt": "2026-05-09T12:11:57.169Z"
+  "horariosScrapedAt": "2026-05-21T16:41:48.556Z"
 }

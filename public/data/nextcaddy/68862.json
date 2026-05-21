@@ -1,14 +1,14 @@
 {
   "tourId": 68862,
   "url": "https://www.nextcaddy.com/tour/68862",
-  "scrapedAt": "2026-05-09T09:58:11.821Z",
+  "scrapedAt": "2026-05-21T16:37:52.779Z",
   "meta": {
     "name": "RYDER Sevilla Vs Huelva",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": "14 mar 2026",
-    "dateEnd": "14 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-14"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Ryder Huelva",
+      "expectedJugadores": 32,
       "header": [
         "Pos",
         "Jugador",
@@ -392,6 +393,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Ryder Sevilla",
+      "expectedJugadores": 32,
       "header": [
         "Pos",
         "Jugador",
@@ -759,6 +762,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Ryder Huelva",
+      "jugadores": 32
+    },
+    "2": {
+      "name": "Ryder Sevilla",
+      "jugadores": 32
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1671,22 +1685,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73560
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -2270,5 +2268,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:30.200Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73560
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:28.378Z"
 }

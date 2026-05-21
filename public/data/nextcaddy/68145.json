@@ -1,14 +1,14 @@
 {
   "tourId": 68145,
   "url": "https://www.nextcaddy.com/tour/68145",
-  "scrapedAt": "2026-05-09T10:07:34.145Z",
+  "scrapedAt": "2026-05-21T16:37:58.222Z",
   "meta": {
     "name": "Campeonato de Madrid Senior Masculino de 4ª y 5ª categoría",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Golf Los Retamares",
     "courseCode": "CM60",
-    "dateStart": "18 mar 2026",
-    "dateEnd": "18 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Scratch)  Caballeros C. Amat",
     "categories": [
       "Senior Masculino",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-18"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "5ª Categoria Handicap Individual",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -249,6 +250,8 @@
     },
     {
       "category": 2,
+      "categoryName": "5ª Categoria Scratch Individual",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -474,6 +477,8 @@
     },
     {
       "category": 3,
+      "categoryName": "4ª Categoria Handicap Individual",
+      "expectedJugadores": 56,
       "header": [
         "Pos",
         "Jugador",
@@ -1106,6 +1111,8 @@
     },
     {
       "category": 4,
+      "categoryName": "4ª Categoria Scratch Individual Masculino",
+      "expectedJugadores": 56,
       "header": [
         "Pos",
         "Jugador",
@@ -1737,6 +1744,25 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "5ª Categoria Handicap Individual",
+      "jugadores": 19
+    },
+    "2": {
+      "name": "5ª Categoria Scratch Individual",
+      "jugadores": 19
+    },
+    "3": {
+      "name": "4ª Categoria Handicap Individual",
+      "jugadores": 56
+    },
+    "4": {
+      "name": "4ª Categoria Scratch Individual Masculino",
+      "jugadores": 56
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2796,138 +2822,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72691
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Burgos Cantos, Juan Ramon",
-          "holeNumber": 12,
-          "createdAt": "08/08/25 16:15:48"
-        },
-        {
-          "playerName": "Zunzunegui Beneyto, Borja",
-          "holeNumber": 16,
-          "createdAt": "08/08/25 16:15:49"
-        },
-        {
-          "playerName": "Dumois Leon, Elizabeth",
-          "holeNumber": 17,
-          "createdAt": "08/08/25 16:15:50"
-        },
-        {
-          "playerName": "Egusquiza Gonzalez-Gil, Julio",
-          "holeNumber": 6,
-          "createdAt": "08/08/25 16:15:50"
-        },
-        {
-          "playerName": "Gonzalez Rodriguez, Roman",
-          "holeNumber": 7,
-          "createdAt": "08/08/25 16:15:54"
-        },
-        {
-          "playerName": "Granero Gonzalez, Raul",
-          "holeNumber": 12,
-          "createdAt": "08/08/25 16:15:54"
-        },
-        {
-          "playerName": "Iglesias Lago, Juan",
-          "holeNumber": 11,
-          "createdAt": "08/08/25 16:15:55"
-        },
-        {
-          "playerName": "Lucena Vargas, Jose Antonio",
-          "holeNumber": 2,
-          "createdAt": "08/08/25 16:15:56"
-        },
-        {
-          "playerName": "Molinari De Quinto, Eduardo",
-          "holeNumber": 3,
-          "createdAt": "08/08/25 16:16:00"
-        },
-        {
-          "playerName": "De Mosteyrin Gordillo, Miguel Angel",
-          "holeNumber": 8,
-          "createdAt": "08/08/25 16:16:00"
-        },
-        {
-          "playerName": "Ortiz Albarran, Santiago",
-          "holeNumber": 6,
-          "createdAt": "08/08/25 16:16:02"
-        },
-        {
-          "playerName": "Ramos Ortega, Juan José",
-          "holeNumber": 3,
-          "createdAt": "08/08/25 16:16:03"
-        },
-        {
-          "playerName": "Serrano Nuñez, Ingo",
-          "holeNumber": 17,
-          "createdAt": "08/08/25 16:16:05"
-        },
-        {
-          "playerName": "Vazquez Gonzalez, Joaquin",
-          "holeNumber": 13,
-          "createdAt": "08/08/25 16:16:05"
-        },
-        {
-          "playerName": "RAPOSO, CESAR AUGUSTO",
-          "holeNumber": 13,
-          "createdAt": "08/08/25 16:16:08"
-        },
-        {
-          "playerName": "Antonissen Arrechea, Nicolas",
-          "holeNumber": 13,
-          "createdAt": "08/08/25 16:16:13"
-        },
-        {
-          "playerName": "Garcia Fernandez, Ignacio",
-          "holeNumber": 16,
-          "createdAt": "08/08/25 16:16:17"
-        },
-        {
-          "playerName": "Melo, Luis Felipe",
-          "holeNumber": 4,
-          "createdAt": "08/08/25 16:16:17"
-        },
-        {
-          "playerName": "Carretero Enrique, Juan",
-          "holeNumber": 3,
-          "createdAt": "08/08/25 16:16:18"
-        },
-        {
-          "playerName": "Carretero Enrique, Juan",
-          "holeNumber": 17,
-          "createdAt": "08/08/25 16:16:19"
-        }
-      ]
-    },
-    "hole_in_one": {
-      "scoreTypeKey": "hole_in_one",
-      "players": [
-        {
-          "playerName": "Jordan De La Campa, David",
-          "holeNumber": 13,
-          "createdAt": "08/08/25 16:16:14"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -3610,5 +3504,140 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:20.458Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72691
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Burgos Cantos, Juan Ramon",
+          "holeNumber": 12,
+          "createdAt": "08/08/25 16:15:48"
+        },
+        {
+          "playerName": "Zunzunegui Beneyto, Borja",
+          "holeNumber": 16,
+          "createdAt": "08/08/25 16:15:49"
+        },
+        {
+          "playerName": "Dumois Leon, Elizabeth",
+          "holeNumber": 17,
+          "createdAt": "08/08/25 16:15:50"
+        },
+        {
+          "playerName": "Egusquiza Gonzalez-Gil, Julio",
+          "holeNumber": 6,
+          "createdAt": "08/08/25 16:15:50"
+        },
+        {
+          "playerName": "Gonzalez Rodriguez, Roman",
+          "holeNumber": 7,
+          "createdAt": "08/08/25 16:15:54"
+        },
+        {
+          "playerName": "Granero Gonzalez, Raul",
+          "holeNumber": 12,
+          "createdAt": "08/08/25 16:15:54"
+        },
+        {
+          "playerName": "Iglesias Lago, Juan",
+          "holeNumber": 11,
+          "createdAt": "08/08/25 16:15:55"
+        },
+        {
+          "playerName": "Lucena Vargas, Jose Antonio",
+          "holeNumber": 2,
+          "createdAt": "08/08/25 16:15:56"
+        },
+        {
+          "playerName": "Molinari De Quinto, Eduardo",
+          "holeNumber": 3,
+          "createdAt": "08/08/25 16:16:00"
+        },
+        {
+          "playerName": "De Mosteyrin Gordillo, Miguel Angel",
+          "holeNumber": 8,
+          "createdAt": "08/08/25 16:16:00"
+        },
+        {
+          "playerName": "Ortiz Albarran, Santiago",
+          "holeNumber": 6,
+          "createdAt": "08/08/25 16:16:02"
+        },
+        {
+          "playerName": "Ramos Ortega, Juan José",
+          "holeNumber": 3,
+          "createdAt": "08/08/25 16:16:03"
+        },
+        {
+          "playerName": "Serrano Nuñez, Ingo",
+          "holeNumber": 17,
+          "createdAt": "08/08/25 16:16:05"
+        },
+        {
+          "playerName": "Vazquez Gonzalez, Joaquin",
+          "holeNumber": 13,
+          "createdAt": "08/08/25 16:16:05"
+        },
+        {
+          "playerName": "RAPOSO, CESAR AUGUSTO",
+          "holeNumber": 13,
+          "createdAt": "08/08/25 16:16:08"
+        },
+        {
+          "playerName": "Antonissen Arrechea, Nicolas",
+          "holeNumber": 13,
+          "createdAt": "08/08/25 16:16:13"
+        },
+        {
+          "playerName": "Garcia Fernandez, Ignacio",
+          "holeNumber": 16,
+          "createdAt": "08/08/25 16:16:17"
+        },
+        {
+          "playerName": "Melo, Luis Felipe",
+          "holeNumber": 4,
+          "createdAt": "08/08/25 16:16:17"
+        },
+        {
+          "playerName": "Carretero Enrique, Juan",
+          "holeNumber": 3,
+          "createdAt": "08/08/25 16:16:18"
+        },
+        {
+          "playerName": "Carretero Enrique, Juan",
+          "holeNumber": 17,
+          "createdAt": "08/08/25 16:16:19"
+        }
+      ]
+    },
+    "hole_in_one": {
+      "scoreTypeKey": "hole_in_one",
+      "players": [
+        {
+          "playerName": "Jordan De La Campa, David",
+          "holeNumber": 13,
+          "createdAt": "08/08/25 16:16:14"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/1357821374_reglas_locales_retamares.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:17.442Z"
 }

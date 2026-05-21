@@ -1,14 +1,14 @@
 {
   "tourId": 69441,
   "url": "https://www.nextcaddy.com/tour/69441",
-  "scrapedAt": "2026-05-09T10:07:56.628Z",
+  "scrapedAt": "2026-05-21T16:38:41.634Z",
   "meta": {
     "name": "TORNEO PIES BLANCOS ( SÁBADO 11 ABRIL)",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": "11 abr 2026",
-    "dateEnd": "11 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-11"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -794,68 +795,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74212
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Lepe Florido, Manuel",
-          "holeNumber": 1,
-          "createdAt": "11/10/25 13:22:25"
-        },
-        {
-          "playerName": "Méndez Modelo, Francisco Manuel",
-          "holeNumber": 4,
-          "createdAt": "11/10/25 13:25:08"
-        },
-        {
-          "playerName": "Méndez Modelo, Francisco Manuel",
-          "holeNumber": 5,
-          "createdAt": "11/10/25 13:33:41"
-        },
-        {
-          "playerName": "Domene Navas, Mario",
-          "holeNumber": 6,
-          "createdAt": "11/10/25 13:53:34"
-        },
-        {
-          "playerName": "Román García, Antonio",
-          "holeNumber": 6,
-          "createdAt": "11/10/25 13:53:41"
-        },
-        {
-          "playerName": "Méndez Modelo, Francisco Manuel",
-          "holeNumber": 15,
-          "createdAt": "11/10/25 15:13:46"
-        },
-        {
-          "playerName": "Lepe Florido, Manuel",
-          "holeNumber": 13,
-          "createdAt": "11/10/25 15:23:28"
-        },
-        {
-          "playerName": "Lepe Florido, Manuel",
-          "holeNumber": 16,
-          "createdAt": "11/10/25 15:54:23"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1349,5 +1288,70 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:54.285Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74212
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Lepe Florido, Manuel",
+          "holeNumber": 1,
+          "createdAt": "11/10/25 13:22:25"
+        },
+        {
+          "playerName": "Méndez Modelo, Francisco Manuel",
+          "holeNumber": 4,
+          "createdAt": "11/10/25 13:25:08"
+        },
+        {
+          "playerName": "Méndez Modelo, Francisco Manuel",
+          "holeNumber": 5,
+          "createdAt": "11/10/25 13:33:41"
+        },
+        {
+          "playerName": "Domene Navas, Mario",
+          "holeNumber": 6,
+          "createdAt": "11/10/25 13:53:34"
+        },
+        {
+          "playerName": "Román García, Antonio",
+          "holeNumber": 6,
+          "createdAt": "11/10/25 13:53:41"
+        },
+        {
+          "playerName": "Méndez Modelo, Francisco Manuel",
+          "holeNumber": 15,
+          "createdAt": "11/10/25 15:13:46"
+        },
+        {
+          "playerName": "Lepe Florido, Manuel",
+          "holeNumber": 13,
+          "createdAt": "11/10/25 15:23:28"
+        },
+        {
+          "playerName": "Lepe Florido, Manuel",
+          "holeNumber": 16,
+          "createdAt": "11/10/25 15:54:23"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/69441_cartel_187.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:34.732Z"
 }

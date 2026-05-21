@@ -1,14 +1,14 @@
 {
   "tourId": 67955,
   "url": "https://www.nextcaddy.com/tour/67955",
-  "scrapedAt": "2026-05-09T10:07:40.713Z",
+  "scrapedAt": "2026-05-21T16:38:12.349Z",
   "meta": {
     "name": "Torneo Senior Damas \"Torrejón\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Campo de Golf B A de Torrejon",
     "courseCode": "CM12",
-    "dateStart": "23 mar 2026",
-    "dateEnd": "23 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Circuito Senior Da",
     "categories": [
       "Senior",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-23"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Senior 1ª Categoría",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -238,6 +239,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Clasificación Senior 2ª Categoría",
+      "expectedJugadores": 23,
       "header": [
         "Pos",
         "Jugador",
@@ -507,6 +510,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Clasificación Supersenior 1ª Categoría",
+      "expectedJugadores": 16,
       "header": [
         "Pos",
         "Jugador",
@@ -699,6 +704,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Clasificación Supersenior 2ª Categoría",
+      "expectedJugadores": 24,
       "header": [
         "Pos",
         "Jugador",
@@ -979,6 +986,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Clasificación Supersenior 3ª Categoría",
+      "expectedJugadores": 14,
       "header": [
         "Pos",
         "Jugador",
@@ -1149,6 +1158,8 @@
     },
     {
       "category": 6,
+      "categoryName": "Clasificación Scratch General",
+      "expectedJugadores": 95,
       "header": [
         "Pos",
         "Jugador",
@@ -2209,6 +2220,33 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Senior 1ª Categoría",
+      "jugadores": 18
+    },
+    "2": {
+      "name": "Clasificación Senior 2ª Categoría",
+      "jugadores": 23
+    },
+    "3": {
+      "name": "Clasificación Supersenior 1ª Categoría",
+      "jugadores": 16
+    },
+    "4": {
+      "name": "Clasificación Supersenior 2ª Categoría",
+      "jugadores": 24
+    },
+    "5": {
+      "name": "Clasificación Supersenior 3ª Categoría",
+      "jugadores": 14
+    },
+    "6": {
+      "name": "Clasificación Scratch General",
+      "jugadores": 95
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -3548,22 +3586,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72473
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -4426,5 +4448,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:17.427Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72473
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [
+    "/uploads/competiciones/pdf/2412911663_rrll_torrejon_damas.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:14.054Z"
 }

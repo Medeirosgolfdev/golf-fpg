@@ -1,14 +1,14 @@
 {
   "tourId": 70129,
   "url": "https://www.nextcaddy.com/tour/70129",
-  "scrapedAt": "2026-05-09T10:15:37.922Z",
+  "scrapedAt": "2026-05-21T16:39:01.896Z",
   "meta": {
     "name": "Sherry International Golf Group (SIGG) - Tuesday 21 April 2026 (Grupo privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "21 abr 2026",
-    "dateEnd": "21 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-21"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 28,
       "header": [
         "Pos",
         "Jugador",
@@ -148,7 +149,7 @@
         },
         {
           "pos": 11,
-          "name": "Antonio Manuel Ure?A Serrano",
+          "name": "Antonio Manuel Ureña Serrano",
           "licencia": "AM32612444",
           "hcp": 9.7,
           "nivel": "S",
@@ -347,6 +348,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 28
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -448,7 +456,7 @@
     },
     {
       "orden": 9,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "AM32612444",
       "hcp": 9.7,
       "nivel": "S"
@@ -658,7 +666,7 @@
     },
     {
       "orden": 14,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "19-04-26 17:17",
       "hcp": 9.7,
       "nivel": "AM32612444"
@@ -762,63 +770,6 @@
       "nivel": "AMC3913650"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75033
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Boyle, Liz",
-          "holeNumber": 6,
-          "createdAt": "31/10/25 15:57:38"
-        },
-        {
-          "playerName": "Boyle, Liz",
-          "holeNumber": 11,
-          "createdAt": "31/10/25 15:57:38"
-        },
-        {
-          "playerName": "Bassi, Graham",
-          "holeNumber": 3,
-          "createdAt": "31/10/25 15:59:10"
-        },
-        {
-          "playerName": "Bassi, Graham",
-          "holeNumber": 4,
-          "createdAt": "31/10/25 15:59:10"
-        },
-        {
-          "playerName": "Bassi, Graham",
-          "holeNumber": 8,
-          "createdAt": "31/10/25 15:59:10"
-        },
-        {
-          "playerName": "Bassi, Graham",
-          "holeNumber": 11,
-          "createdAt": "31/10/25 15:59:10"
-        },
-        {
-          "playerName": "Dewhurst, Chris",
-          "holeNumber": 11,
-          "createdAt": "31/10/25 16:00:28"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -826,7 +777,7 @@
         {
           "time": "09:00",
           "tee": 1,
-          "name": "Antonio Manuel Ure?A Serrano",
+          "name": "Antonio Manuel Ureña Serrano",
           "hcp": 9.7,
           "ins": "2302040",
           "jid": "75033",
@@ -1078,5 +1029,63 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:57.831Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75033
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Boyle, Liz",
+          "holeNumber": 6,
+          "createdAt": "31/10/25 15:57:38"
+        },
+        {
+          "playerName": "Boyle, Liz",
+          "holeNumber": 11,
+          "createdAt": "31/10/25 15:57:38"
+        },
+        {
+          "playerName": "Bassi, Graham",
+          "holeNumber": 3,
+          "createdAt": "31/10/25 15:59:10"
+        },
+        {
+          "playerName": "Bassi, Graham",
+          "holeNumber": 4,
+          "createdAt": "31/10/25 15:59:10"
+        },
+        {
+          "playerName": "Bassi, Graham",
+          "holeNumber": 8,
+          "createdAt": "31/10/25 15:59:10"
+        },
+        {
+          "playerName": "Bassi, Graham",
+          "holeNumber": 11,
+          "createdAt": "31/10/25 15:59:10"
+        },
+        {
+          "playerName": "Dewhurst, Chris",
+          "holeNumber": 11,
+          "createdAt": "31/10/25 16:00:28"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:38.273Z"
 }

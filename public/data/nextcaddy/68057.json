@@ -1,14 +1,14 @@
 {
   "tourId": 68057,
   "url": "https://www.nextcaddy.com/tour/68057",
-  "scrapedAt": "2026-05-09T10:17:02.516Z",
+  "scrapedAt": "2026-05-21T16:40:45.671Z",
   "meta": {
     "name": "X Prueba del Circuito Senior de CyL",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "19 ago 2026",
-    "dateEnd": "19 ago 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Senior",
@@ -17,12 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-08-19"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -39,6 +41,8 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:32.888Z"
+  "pdfs": [
+    "/uploads/circulares/cirfgcyl1426.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:16.350Z"
 }

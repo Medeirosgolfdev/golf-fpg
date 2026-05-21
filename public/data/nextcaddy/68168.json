@@ -1,14 +1,14 @@
 {
   "tourId": 68168,
   "url": "https://www.nextcaddy.com/tour/68168",
-  "scrapedAt": "2026-05-09T09:57:46.058Z",
+  "scrapedAt": "2026-05-21T16:37:08.324Z",
   "meta": {
     "name": "CIRCUITO AESCOLF ANDALUCÍA OCCIDENTAL 2026",
     "organizer": null,
     "course": "Montecastillo Barceló Golf Club",
     "courseCode": "AM29",
-    "dateStart": "19 feb 2026",
-    "dateEnd": "19 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-19"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "2ª Categoria",
+      "expectedJugadores": 20,
       "header": [
         "Pos",
         "Jugador",
@@ -260,6 +261,8 @@
     },
     {
       "category": 2,
+      "categoryName": "1ª Categoria",
+      "expectedJugadores": 20,
       "header": [
         "Pos",
         "Jugador",
@@ -297,7 +300,7 @@
         {
           "pos": 3,
           "name": "Gerardo Garcia Gonzalez",
-          "licencia": "0236895305",
+          "licencia": "0201895305",
           "hcp": 10.9,
           "nivel": "S",
           "rounds": [],
@@ -495,6 +498,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "2ª Categoria",
+      "jugadores": 20
+    },
+    "2": {
+      "name": "1ª Categoria",
+      "jugadores": 20
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -667,7 +681,7 @@
     {
       "orden": 25,
       "name": "Gerardo Garcia Gonzalez",
-      "licencia": "0236895305",
+      "licencia": "0201895305",
       "hcp": 10.9,
       "nivel": "S"
     },
@@ -1031,7 +1045,7 @@
     {
       "orden": 35,
       "name": "Gerardo Garcia Gonzalez",
-      "licencia": "0236895305",
+      "licencia": "0201895305",
       "hcp": 10.9,
       "nivel": "S"
     },
@@ -1071,48 +1085,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72714
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Harper, Clifford",
-          "holeNumber": 14,
-          "createdAt": "06/08/25 14:38:32"
-        },
-        {
-          "playerName": "Fordyce, Brian",
-          "holeNumber": 2,
-          "createdAt": "06/08/25 14:38:32"
-        },
-        {
-          "playerName": "Hyde, Michael John",
-          "holeNumber": 2,
-          "createdAt": "06/08/25 14:38:32"
-        },
-        {
-          "playerName": "Bailiff, Michael",
-          "holeNumber": 4,
-          "createdAt": "06/08/25 14:38:32"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1480,5 +1452,48 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:20.946Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72714
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Harper, Clifford",
+          "holeNumber": 14,
+          "createdAt": "06/08/25 14:38:32"
+        },
+        {
+          "playerName": "Fordyce, Brian",
+          "holeNumber": 2,
+          "createdAt": "06/08/25 14:38:32"
+        },
+        {
+          "playerName": "Hyde, Michael John",
+          "holeNumber": 2,
+          "createdAt": "06/08/25 14:38:32"
+        },
+        {
+          "playerName": "Bailiff, Michael",
+          "holeNumber": 4,
+          "createdAt": "06/08/25 14:38:32"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:18.042Z"
 }

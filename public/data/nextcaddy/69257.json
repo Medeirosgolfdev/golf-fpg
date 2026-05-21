@@ -1,14 +1,14 @@
 {
   "tourId": 69257,
   "url": "https://www.nextcaddy.com/tour/69257",
-  "scrapedAt": "2026-05-09T10:15:36.561Z",
+  "scrapedAt": "2026-05-21T16:38:59.842Z",
   "meta": {
     "name": "Las Pinaillas Categoría Especial",
     "organizer": null,
     "course": "",
     "courseCode": "MAJC",
-    "dateStart": "19 abr 2026",
-    "dateEnd": "19 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Alevin Masculino",
     "categories": [
       "Alevin Masculino",
@@ -24,11 +24,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-19"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -290,6 +291,157 @@
       "nivel": "8819979291"
     }
   ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Alvaro Nicolas Lopez",
+          "hcp": 42,
+          "ins": "2301677",
+          "jid": "74002",
+          "nivel": "C"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Carmen Moya Serrano",
+          "hcp": 42.3,
+          "ins": "2297378",
+          "jid": "74002",
+          "nivel": "A"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Ivo Scasso Leal",
+          "hcp": 43.7,
+          "ins": "2297379",
+          "jid": "74002",
+          "nivel": "I"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Antonio Ayelo Argandoña",
+          "hcp": 44.1,
+          "ins": "2293680",
+          "jid": "74002",
+          "nivel": "A"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Ian Armando Quiroz Olivares",
+          "hcp": 44.4,
+          "ins": "2296811",
+          "jid": "74002",
+          "nivel": "A"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Vicente Padilla Zamora",
+          "hcp": 44.9,
+          "ins": "2296180",
+          "jid": "74002",
+          "nivel": "I"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Pedro Marin Gonzalez",
+          "hcp": 47.2,
+          "ins": "2296401",
+          "jid": "74002",
+          "nivel": "B"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Gonzalo Nicolas Lopez",
+          "hcp": 48.2,
+          "ins": "2301678",
+          "jid": "74002",
+          "nivel": "I"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Rodrigo González Sirvent",
+          "hcp": 54,
+          "ins": "2299512",
+          "jid": "74002",
+          "nivel": "B"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Diego Nicolas Hernandez Gomez",
+          "hcp": 54,
+          "ins": "2291964",
+          "jid": "74002",
+          "nivel": "B"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Beltran Garcia Sanchez",
+          "hcp": 54,
+          "ins": "2296339",
+          "jid": "74002",
+          "nivel": "A"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Daven Ruiz Fernandez",
+          "hcp": 54,
+          "ins": "2294317",
+          "jid": "74002",
+          "nivel": "B"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Isabel Gamero Cuesta",
+          "hcp": 54,
+          "ins": "2295680",
+          "jid": "74002",
+          "nivel": "B"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Jaime González Sirvent",
+          "hcp": 54,
+          "ins": "2296740",
+          "jid": "74002",
+          "nivel": "B"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Carlos Pacheco Soria",
+          "hcp": 54,
+          "ins": "2294620",
+          "jid": "74002",
+          "nivel": "B"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Isabel Gomez Jimenez",
+          "hcp": 54,
+          "ins": "2294389",
+          "jid": "74002",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -497,156 +649,8 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "10:40",
-          "tee": 1,
-          "name": "Alvaro Nicolas Lopez",
-          "hcp": 42,
-          "ins": "2301677",
-          "jid": "74002",
-          "nivel": "C"
-        },
-        {
-          "time": "10:40",
-          "tee": 1,
-          "name": "Carmen Moya Serrano",
-          "hcp": 42.3,
-          "ins": "2297378",
-          "jid": "74002",
-          "nivel": "A"
-        },
-        {
-          "time": "10:40",
-          "tee": 1,
-          "name": "Ivo Scasso Leal",
-          "hcp": 43.7,
-          "ins": "2297379",
-          "jid": "74002",
-          "nivel": "I"
-        },
-        {
-          "time": "10:40",
-          "tee": 1,
-          "name": "Antonio Ayelo Argandoña",
-          "hcp": 44.1,
-          "ins": "2293680",
-          "jid": "74002",
-          "nivel": "A"
-        },
-        {
-          "time": "10:50",
-          "tee": 1,
-          "name": "Ian Armando Quiroz Olivares",
-          "hcp": 44.4,
-          "ins": "2296811",
-          "jid": "74002",
-          "nivel": "A"
-        },
-        {
-          "time": "10:50",
-          "tee": 1,
-          "name": "Vicente Padilla Zamora",
-          "hcp": 44.9,
-          "ins": "2296180",
-          "jid": "74002",
-          "nivel": "I"
-        },
-        {
-          "time": "10:50",
-          "tee": 1,
-          "name": "Pedro Marin Gonzalez",
-          "hcp": 47.2,
-          "ins": "2296401",
-          "jid": "74002",
-          "nivel": "B"
-        },
-        {
-          "time": "10:50",
-          "tee": 1,
-          "name": "Gonzalo Nicolas Lopez",
-          "hcp": 48.2,
-          "ins": "2301678",
-          "jid": "74002",
-          "nivel": "I"
-        },
-        {
-          "time": "11:00",
-          "tee": 1,
-          "name": "Rodrigo González Sirvent",
-          "hcp": 54,
-          "ins": "2299512",
-          "jid": "74002",
-          "nivel": "B"
-        },
-        {
-          "time": "11:00",
-          "tee": 1,
-          "name": "Diego Nicolas Hernandez Gomez",
-          "hcp": 54,
-          "ins": "2291964",
-          "jid": "74002",
-          "nivel": "B"
-        },
-        {
-          "time": "11:00",
-          "tee": 1,
-          "name": "Beltran Garcia Sanchez",
-          "hcp": 54,
-          "ins": "2296339",
-          "jid": "74002",
-          "nivel": "A"
-        },
-        {
-          "time": "11:00",
-          "tee": 1,
-          "name": "Daven Ruiz Fernandez",
-          "hcp": 54,
-          "ins": "2294317",
-          "jid": "74002",
-          "nivel": "B"
-        },
-        {
-          "time": "11:10",
-          "tee": 1,
-          "name": "Isabel Gamero Cuesta",
-          "hcp": 54,
-          "ins": "2295680",
-          "jid": "74002",
-          "nivel": "B"
-        },
-        {
-          "time": "11:10",
-          "tee": 1,
-          "name": "Jaime González Sirvent",
-          "hcp": 54,
-          "ins": "2296740",
-          "jid": "74002",
-          "nivel": "B"
-        },
-        {
-          "time": "11:10",
-          "tee": 1,
-          "name": "Carlos Pacheco Soria",
-          "hcp": 54,
-          "ins": "2294620",
-          "jid": "74002",
-          "nivel": "B"
-        },
-        {
-          "time": "11:10",
-          "tee": 1,
-          "name": "Isabel Gomez Jimenez",
-          "hcp": 54,
-          "ins": "2294389",
-          "jid": "74002",
-          "nivel": "B"
-        }
-      ]
-    }
+  "pdfs": [
+    "/uploads/competiciones/pdf/1155007906_rrll_pinaillas.pdf"
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:51.988Z"
+  "horariosScrapedAt": "2026-05-21T16:42:32.221Z"
 }

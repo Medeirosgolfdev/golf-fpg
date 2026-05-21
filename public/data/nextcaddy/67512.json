@@ -1,14 +1,14 @@
 {
   "tourId": 67512,
   "url": "https://www.nextcaddy.com/tour/67512",
-  "scrapedAt": "2026-05-09T09:57:28.770Z",
+  "scrapedAt": "2026-05-21T16:36:44.510Z",
   "meta": {
     "name": "Torneo AEJGOLF Sherry Golf 2026",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "26 ene 2026",
-    "dateEnd": "26 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -18,11 +18,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-26"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -221,73 +222,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71976
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Ure?A Serrano, Antonio Manuel",
-          "holeNumber": 4,
-          "createdAt": "07/07/25 09:47:06"
-        },
-        {
-          "playerName": "Monge Martinez, Juan Carlos",
-          "holeNumber": 6,
-          "createdAt": "07/07/25 10:11:05"
-        },
-        {
-          "playerName": "Davies, Christopher",
-          "holeNumber": 7,
-          "createdAt": "07/07/25 10:23:47"
-        },
-        {
-          "playerName": "Barroso Benitez, Raul",
-          "holeNumber": 18,
-          "createdAt": "07/07/25 10:56:50"
-        },
-        {
-          "playerName": "Davies, Christopher",
-          "holeNumber": 10,
-          "createdAt": "07/07/25 11:10:52"
-        },
-        {
-          "playerName": "James, Edward",
-          "holeNumber": 17,
-          "createdAt": "07/07/25 11:14:33"
-        },
-        {
-          "playerName": "Becerra Martin, Miguel Angel",
-          "holeNumber": 16,
-          "createdAt": "07/07/25 12:25:30"
-        },
-        {
-          "playerName": "Davies, Christopher",
-          "holeNumber": 16,
-          "createdAt": "07/07/25 12:32:14"
-        },
-        {
-          "playerName": "Sanchez Ortega, Juan",
-          "holeNumber": 7,
-          "createdAt": "07/07/25 13:17:06"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -403,5 +337,73 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:08.612Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71976
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Ure?A Serrano, Antonio Manuel",
+          "holeNumber": 4,
+          "createdAt": "07/07/25 09:47:06"
+        },
+        {
+          "playerName": "Monge Martinez, Juan Carlos",
+          "holeNumber": 6,
+          "createdAt": "07/07/25 10:11:05"
+        },
+        {
+          "playerName": "Davies, Christopher",
+          "holeNumber": 7,
+          "createdAt": "07/07/25 10:23:47"
+        },
+        {
+          "playerName": "Barroso Benitez, Raul",
+          "holeNumber": 18,
+          "createdAt": "07/07/25 10:56:50"
+        },
+        {
+          "playerName": "Davies, Christopher",
+          "holeNumber": 10,
+          "createdAt": "07/07/25 11:10:52"
+        },
+        {
+          "playerName": "James, Edward",
+          "holeNumber": 17,
+          "createdAt": "07/07/25 11:14:33"
+        },
+        {
+          "playerName": "Becerra Martin, Miguel Angel",
+          "holeNumber": 16,
+          "createdAt": "07/07/25 12:25:30"
+        },
+        {
+          "playerName": "Davies, Christopher",
+          "holeNumber": 16,
+          "createdAt": "07/07/25 12:32:14"
+        },
+        {
+          "playerName": "Sanchez Ortega, Juan",
+          "holeNumber": 7,
+          "createdAt": "07/07/25 13:17:06"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:04.247Z"
 }

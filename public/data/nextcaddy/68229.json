@@ -1,14 +1,14 @@
 {
   "tourId": 68229,
   "url": "https://www.nextcaddy.com/tour/68229",
-  "scrapedAt": "2026-05-09T10:15:41.026Z",
+  "scrapedAt": "2026-05-21T16:39:07.343Z",
   "meta": {
     "name": "I Puntuable Universitario",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Golf Santander S A",
     "courseCode": "CMA5",
-    "dateStart": "25 abr 2026",
-    "dateEnd": "25 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Liga Universitaria",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-04-25"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 41,
       "header": [
         "Pos",
         "Jugador",
@@ -491,6 +492,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 41,
       "header": [
         "Pos",
         "Jugador",
@@ -957,6 +960,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 41
+    },
+    "2": {
+      "name": "Scratch Individual",
+      "jugadores": 41
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1547,43 +1561,6 @@
       "nivel": "M"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72791
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "David Rendo, Jose",
-          "holeNumber": 13,
-          "createdAt": "31/08/25 09:11:49"
-        },
-        {
-          "playerName": "Crespo Corrales, Luisclemente",
-          "holeNumber": 1,
-          "createdAt": "31/08/25 10:31:10"
-        },
-        {
-          "playerName": "Sanchez Jimenez, Luis",
-          "holeNumber": 13,
-          "createdAt": "31/08/25 14:06:49"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1960,5 +1937,46 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:22.496Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72791
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "David Rendo, Jose",
+          "holeNumber": 13,
+          "createdAt": "31/08/25 09:11:49"
+        },
+        {
+          "playerName": "Crespo Corrales, Luisclemente",
+          "holeNumber": 1,
+          "createdAt": "31/08/25 10:31:10"
+        },
+        {
+          "playerName": "Sanchez Jimenez, Luis",
+          "holeNumber": 13,
+          "createdAt": "31/08/25 14:06:49"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/624025805_golf_santander_suspension.pdf",
+    "/uploads/competiciones/pdf/3500149183_arb_reg_loc_cma5_2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:19.671Z"
 }

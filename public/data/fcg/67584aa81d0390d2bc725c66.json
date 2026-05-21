@@ -1,6 +1,6 @@
 {
   "gameId": "67584aa81d0390d2bc725c66",
-  "fetchedAt": "2026-05-09T19:51:03.511Z",
+  "fetchedAt": "2026-05-21T16:42:47.748Z",
   "game": {
     "_id": "67584aa81d0390d2bc725c66",
     "name": "Jornada 1 - Fourballs",
@@ -34,24 +34,6 @@
     "teesMale": [
       {
         "gender": "M",
-        "color": "orange",
-        "lap": "lap18",
-        "rating": 61.9,
-        "slope": 105,
-        "par": 72,
-        "_id": "67584aa81d0390d2bc725d60"
-      },
-      {
-        "gender": "M",
-        "color": "yellow",
-        "lap": "lap18",
-        "rating": 70.7,
-        "slope": 133,
-        "par": 72,
-        "_id": "67584aa81d0390d2bc725d72"
-      },
-      {
-        "gender": "M",
         "color": "white",
         "lap": "lap18",
         "rating": 72.6,
@@ -70,6 +52,24 @@
       },
       {
         "gender": "M",
+        "color": "orange",
+        "lap": "lap18",
+        "rating": 61.9,
+        "slope": 105,
+        "par": 72,
+        "_id": "67584aa81d0390d2bc725d60"
+      },
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 70.7,
+        "slope": 133,
+        "par": 72,
+        "_id": "67584aa81d0390d2bc725d72"
+      },
+      {
+        "gender": "M",
         "color": "red",
         "lap": "lap18",
         "rating": 66.4,
@@ -79,6 +79,15 @@
       }
     ],
     "teesFemale": [
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 73.9,
+        "slope": 128,
+        "par": 72,
+        "_id": "67584aa81d0390d2bc725d18"
+      },
       {
         "gender": "F",
         "color": "yellow",
@@ -114,15 +123,6 @@
         "slope": 111,
         "par": 72,
         "_id": "67584aa81d0390d2bc725d4e"
-      },
-      {
-        "gender": "F",
-        "color": "blue",
-        "lap": "lap18",
-        "rating": 73.9,
-        "slope": 128,
-        "par": 72,
-        "_id": "67584aa81d0390d2bc725d18"
       }
     ]
   },

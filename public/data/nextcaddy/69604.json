@@ -1,14 +1,14 @@
 {
   "tourId": 69604,
   "url": "https://www.nextcaddy.com/tour/69604",
-  "scrapedAt": "2026-05-09T10:07:56.220Z",
+  "scrapedAt": "2026-05-21T16:38:40.297Z",
   "meta": {
     "name": "LIGA FEMENINA ULZAMA  2026 11 abril.",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "11 abr 2026",
-    "dateEnd": "11 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Especial",
     "categories": [
       "Señoras",
@@ -16,13 +16,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-11"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Liga Femenina Golf Ulzama 2026. Prueba 1 10-11/04/2026",
+      "expectedJugadores": 29,
       "header": [
         "Pos",
         "Jugador",
@@ -357,6 +358,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Liga Femenina Golf Ulzama 2026. Prueba 1 10-11/04/2026",
+      "jugadores": 29
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -534,22 +542,6 @@
       "nivel": "4401783764"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74375
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -665,5 +657,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:55.346Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74375
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:35.731Z"
 }

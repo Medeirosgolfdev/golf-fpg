@@ -1,14 +1,14 @@
 {
   "tourId": 68543,
   "url": "https://www.nextcaddy.com/tour/68543",
-  "scrapedAt": "2026-05-09T10:07:38.894Z",
+  "scrapedAt": "2026-05-21T16:38:09.182Z",
   "meta": {
     "name": "Torneo Mid-Amateur Femenino \"Centro Nacional\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Centro Nacional de Golf",
     "courseCode": "CMA8",
-    "dateStart": "22 mar 2026",
-    "dateEnd": "22 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras C. Amateu",
     "categories": [
       "Señoras",
@@ -16,13 +16,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-22"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Hándicap 1ª Categoría",
+      "expectedJugadores": 20,
       "header": [
         "Pos",
         "Jugador",
@@ -259,6 +260,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Clasificación Scratch 1ª Categoría",
+      "expectedJugadores": 20,
       "header": [
         "Pos",
         "Jugador",
@@ -495,6 +498,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Clasificación Scratch 2ª Categoría",
+      "expectedJugadores": 21,
       "header": [
         "Pos",
         "Jugador",
@@ -742,6 +747,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Clasificación Hándicap 2ª Categoría",
+      "expectedJugadores": 21,
       "header": [
         "Pos",
         "Jugador",
@@ -988,6 +995,25 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Hándicap 1ª Categoría",
+      "jugadores": 20
+    },
+    "2": {
+      "name": "Clasificación Scratch 1ª Categoría",
+      "jugadores": 20
+    },
+    "3": {
+      "name": "Clasificación Scratch 2ª Categoría",
+      "jugadores": 21
+    },
+    "4": {
+      "name": "Clasificación Hándicap 2ª Categoría",
+      "jugadores": 21
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1571,22 +1597,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73170
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -1963,5 +1973,26 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:26.381Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73170
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/490968184_colab.pdf",
+    "/uploads/competiciones/pdf/3091091998_condiciones_i_torneo_mid-amateur_femenino.pdf",
+    "/uploads/competiciones/pdf/1525390919_arb_reg_loc_cma08_2025.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:23.998Z"
 }

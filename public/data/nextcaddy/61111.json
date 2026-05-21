@@ -1,14 +1,14 @@
 {
   "tourId": 61111,
   "url": "https://www.nextcaddy.com/tour/61111",
-  "scrapedAt": "2026-05-08T17:53:35.908Z",
+  "scrapedAt": "2026-05-21T16:38:36.407Z",
   "meta": {
     "name": "Circuito Benjamín Zona C",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Real Guadalhorce Club de Golf",
     "courseCode": "AM15",
-    "dateStart": "11 abr 2026",
-    "dateEnd": "11 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Benjamín",
@@ -18,17 +18,14 @@
       "Juvenil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-04-11"
+    ]
   },
-  "course": {
-    "par": null,
-    "si": null,
-    "meters": null
-  },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Benjamin Masculino",
+      "expectedJugadores": 16,
       "header": [
         "Pos",
         "Jugador",
@@ -50,8 +47,7 @@
           "rounds": [],
           "total": 41,
           "toPar": 5,
-          "inscribedId": 2288734,
-          "roundScores": []
+          "inscribedId": 2288734
         },
         {
           "pos": 2,
@@ -62,8 +58,7 @@
           "rounds": [],
           "total": 43,
           "toPar": 7,
-          "inscribedId": 2277412,
-          "roundScores": []
+          "inscribedId": 2277412
         },
         {
           "pos": 3,
@@ -74,8 +69,7 @@
           "rounds": [],
           "total": 43,
           "toPar": 7,
-          "inscribedId": 2277744,
-          "roundScores": []
+          "inscribedId": 2277744
         },
         {
           "pos": 4,
@@ -86,8 +80,7 @@
           "rounds": [],
           "total": 46,
           "toPar": 10,
-          "inscribedId": 2291344,
-          "roundScores": []
+          "inscribedId": 2291344
         },
         {
           "pos": 5,
@@ -98,8 +91,7 @@
           "rounds": [],
           "total": 46,
           "toPar": 10,
-          "inscribedId": 2281023,
-          "roundScores": []
+          "inscribedId": 2281023
         },
         {
           "pos": 6,
@@ -110,8 +102,7 @@
           "rounds": [],
           "total": 46,
           "toPar": 10,
-          "inscribedId": 2279388,
-          "roundScores": []
+          "inscribedId": 2279388
         },
         {
           "pos": 7,
@@ -122,8 +113,7 @@
           "rounds": [],
           "total": 47,
           "toPar": 11,
-          "inscribedId": 2289520,
-          "roundScores": []
+          "inscribedId": 2289520
         },
         {
           "pos": 8,
@@ -134,8 +124,7 @@
           "rounds": [],
           "total": 47,
           "toPar": 11,
-          "inscribedId": 2278159,
-          "roundScores": []
+          "inscribedId": 2278159
         },
         {
           "pos": 9,
@@ -146,8 +135,7 @@
           "rounds": [],
           "total": 47,
           "toPar": 11,
-          "inscribedId": 2277719,
-          "roundScores": []
+          "inscribedId": 2277719
         },
         {
           "pos": 10,
@@ -158,8 +146,7 @@
           "rounds": [],
           "total": 48,
           "toPar": 12,
-          "inscribedId": 2278088,
-          "roundScores": []
+          "inscribedId": 2278088
         },
         {
           "pos": 11,
@@ -170,8 +157,7 @@
           "rounds": [],
           "total": 48,
           "toPar": 12,
-          "inscribedId": 2279399,
-          "roundScores": []
+          "inscribedId": 2279399
         },
         {
           "pos": 12,
@@ -182,8 +168,7 @@
           "rounds": [],
           "total": 48,
           "toPar": 12,
-          "inscribedId": 2277727,
-          "roundScores": []
+          "inscribedId": 2277727
         },
         {
           "pos": 13,
@@ -194,8 +179,7 @@
           "rounds": [],
           "total": 49,
           "toPar": 13,
-          "inscribedId": 2279402,
-          "roundScores": []
+          "inscribedId": 2279402
         },
         {
           "pos": 14,
@@ -206,8 +190,7 @@
           "rounds": [],
           "total": 49,
           "toPar": 13,
-          "inscribedId": 2277724,
-          "roundScores": []
+          "inscribedId": 2277724
         },
         {
           "pos": 15,
@@ -218,8 +201,7 @@
           "rounds": [],
           "total": 51,
           "toPar": 15,
-          "inscribedId": 2276471,
-          "roundScores": []
+          "inscribedId": 2276471
         },
         {
           "pos": 16,
@@ -230,13 +212,14 @@
           "rounds": [],
           "total": 54,
           "toPar": 18,
-          "inscribedId": 2289516,
-          "roundScores": []
+          "inscribedId": 2289516
         }
       ]
     },
     {
       "category": 2,
+      "categoryName": "Scratch Benjamin Femenino",
+      "expectedJugadores": 2,
       "header": [
         "Pos",
         "Jugador",
@@ -258,8 +241,7 @@
           "rounds": [],
           "total": 43,
           "toPar": 7,
-          "inscribedId": 2279818,
-          "roundScores": []
+          "inscribedId": 2279818
         },
         {
           "pos": 2,
@@ -270,13 +252,14 @@
           "rounds": [],
           "total": 52,
           "toPar": 16,
-          "inscribedId": 2281026,
-          "roundScores": []
+          "inscribedId": 2281026
         }
       ]
     },
     {
       "category": 3,
+      "categoryName": "Handicap Benjamin Masculino",
+      "expectedJugadores": 16,
       "header": [
         "Pos",
         "Jugador",
@@ -298,8 +281,7 @@
           "rounds": [],
           "total": 29,
           "toPar": -7,
-          "inscribedId": 2289520,
-          "roundScores": []
+          "inscribedId": 2289520
         },
         {
           "pos": 2,
@@ -310,8 +292,7 @@
           "rounds": [],
           "total": 31,
           "toPar": -5,
-          "inscribedId": 2291344,
-          "roundScores": []
+          "inscribedId": 2291344
         },
         {
           "pos": 3,
@@ -322,8 +303,7 @@
           "rounds": [],
           "total": 33,
           "toPar": -3,
-          "inscribedId": 2277412,
-          "roundScores": []
+          "inscribedId": 2277412
         },
         {
           "pos": 4,
@@ -334,8 +314,7 @@
           "rounds": [],
           "total": 33,
           "toPar": -3,
-          "inscribedId": 2277744,
-          "roundScores": []
+          "inscribedId": 2277744
         },
         {
           "pos": 5,
@@ -346,8 +325,7 @@
           "rounds": [],
           "total": 33,
           "toPar": -3,
-          "inscribedId": 2278159,
-          "roundScores": []
+          "inscribedId": 2278159
         },
         {
           "pos": 6,
@@ -358,8 +336,7 @@
           "rounds": [],
           "total": 33,
           "toPar": -3,
-          "inscribedId": 2278088,
-          "roundScores": []
+          "inscribedId": 2278088
         },
         {
           "pos": 7,
@@ -370,8 +347,7 @@
           "rounds": [],
           "total": 33,
           "toPar": -3,
-          "inscribedId": 2279402,
-          "roundScores": []
+          "inscribedId": 2279402
         },
         {
           "pos": 8,
@@ -382,8 +358,7 @@
           "rounds": [],
           "total": 34,
           "toPar": -2,
-          "inscribedId": 2279399,
-          "roundScores": []
+          "inscribedId": 2279399
         },
         {
           "pos": 9,
@@ -394,8 +369,7 @@
           "rounds": [],
           "total": 34,
           "toPar": -2,
-          "inscribedId": 2276471,
-          "roundScores": []
+          "inscribedId": 2276471
         },
         {
           "pos": 10,
@@ -406,8 +380,7 @@
           "rounds": [],
           "total": 34,
           "toPar": -2,
-          "inscribedId": 2289516,
-          "roundScores": []
+          "inscribedId": 2289516
         },
         {
           "pos": 11,
@@ -418,8 +391,7 @@
           "rounds": [],
           "total": 36,
           "toPar": null,
-          "inscribedId": 2277719,
-          "roundScores": []
+          "inscribedId": 2277719
         },
         {
           "pos": 12,
@@ -430,8 +402,7 @@
           "rounds": [],
           "total": 37,
           "toPar": 1,
-          "inscribedId": 2281023,
-          "roundScores": []
+          "inscribedId": 2281023
         },
         {
           "pos": 13,
@@ -442,8 +413,7 @@
           "rounds": [],
           "total": 38,
           "toPar": 2,
-          "inscribedId": 2279388,
-          "roundScores": []
+          "inscribedId": 2279388
         },
         {
           "pos": 14,
@@ -454,8 +424,7 @@
           "rounds": [],
           "total": 39,
           "toPar": 3,
-          "inscribedId": 2288734,
-          "roundScores": []
+          "inscribedId": 2288734
         },
         {
           "pos": 15,
@@ -466,8 +435,7 @@
           "rounds": [],
           "total": 39,
           "toPar": 3,
-          "inscribedId": 2277727,
-          "roundScores": []
+          "inscribedId": 2277727
         },
         {
           "pos": 16,
@@ -478,13 +446,14 @@
           "rounds": [],
           "total": 40,
           "toPar": 4,
-          "inscribedId": 2277724,
-          "roundScores": []
+          "inscribedId": 2277724
         }
       ]
     },
     {
       "category": 4,
+      "categoryName": "Handicap Benjamin Femenino",
+      "expectedJugadores": 2,
       "header": [
         "Pos",
         "Jugador",
@@ -506,8 +475,7 @@
           "rounds": [],
           "total": 33,
           "toPar": -3,
-          "inscribedId": 2281026,
-          "roundScores": []
+          "inscribedId": 2281026
         },
         {
           "pos": 2,
@@ -518,12 +486,30 @@
           "rounds": [],
           "total": 34,
           "toPar": -2,
-          "inscribedId": 2279818,
-          "roundScores": []
+          "inscribedId": 2279818
         }
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Benjamin Masculino",
+      "jugadores": 16
+    },
+    "2": {
+      "name": "Scratch Benjamin Femenino",
+      "jugadores": 2
+    },
+    "3": {
+      "name": "Handicap Benjamin Masculino",
+      "jugadores": 16
+    },
+    "4": {
+      "name": "Handicap Benjamin Femenino",
+      "jugadores": 2
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -792,6 +778,175 @@
       "nivel": "B"
     }
   ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Gonzalo Bernal Suarez",
+          "hcp": 9,
+          "ins": "2288734",
+          "jid": "64726",
+          "nivel": "B"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Ana Gross Paneque",
+          "hcp": 17.6,
+          "ins": "2279818",
+          "jid": "64726",
+          "nivel": "B"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Santiago Viera Villalba",
+          "hcp": 20.4,
+          "ins": "2279388",
+          "jid": "64726",
+          "nivel": "B"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Pau Caceres Gago",
+          "hcp": 22.3,
+          "ins": "2281023",
+          "jid": "64726",
+          "nivel": "B"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Marcos Sanchez Navas",
+          "hcp": 22.4,
+          "ins": "2277727",
+          "jid": "64726",
+          "nivel": "B"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Daniel Hernandez Ruiz",
+          "hcp": 23.1,
+          "ins": "2277724",
+          "jid": "64726",
+          "nivel": "B"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Nikita Elchaninov",
+          "hcp": 24.8,
+          "ins": "2277412",
+          "jid": "64726",
+          "nivel": "B"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Antonio Merchan Casado",
+          "hcp": 25.4,
+          "ins": "2277744",
+          "jid": "64726",
+          "nivel": "B"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Javier Del Cid Gomez",
+          "hcp": 26.6,
+          "ins": "2277719",
+          "jid": "64726",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Hugo Carrere Aguiar",
+          "hcp": 33,
+          "ins": "2278159",
+          "jid": "64726",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Enrique Alvarez-Net Gonzalez",
+          "hcp": 33.3,
+          "ins": "2279399",
+          "jid": "64726",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Iker Barragan Jimenez",
+          "hcp": 34.2,
+          "ins": "2291344",
+          "jid": "64726",
+          "nivel": "B"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Daniel Ferreiro Luciano",
+          "hcp": 35.4,
+          "ins": "2278088",
+          "jid": "64726",
+          "nivel": "B"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Ramiro Amaya Cozzi",
+          "hcp": 37.3,
+          "ins": "2279402",
+          "jid": "64726",
+          "nivel": "B"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Tiago Dos Santos Vicente",
+          "hcp": 40,
+          "ins": "2289520",
+          "jid": "64726",
+          "nivel": "B"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Liane Gavira Rodriguez",
+          "hcp": 38.3,
+          "ins": "2281026",
+          "jid": "64726",
+          "nivel": "B"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Ivan Duran Campos",
+          "hcp": 39,
+          "ins": "2276471",
+          "jid": "64726",
+          "nivel": "B"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Mario Dos Santos Vicente",
+          "hcp": 44.3,
+          "ins": "2289516",
+          "jid": "64726",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {
       "p": {
@@ -974,179 +1129,164 @@
             0,
             0,
             0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 158607,
+        "datos": [
+          [
+            "Hoyo",
+            "Gonzalo Bernal Suarez",
+            "Nikita Elchaninov",
+            "Antonio Merchan Casado"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 2",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 3",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 4",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 5",
+            1,
+            2,
+            1
+          ],
+          [
+            "Hoyo 6",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 7",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 8",
+            1,
+            2,
+            3
+          ],
+          [
+            "Hoyo 9",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 10",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 14",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 15",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            0
           ]
         ]
       }
     }
   },
-  "horarios": [
+  "roundIds": [
     {
-      "round": 1,
-      "players": [
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "Gonzalo Bernal Suarez",
-          "hcp": 9,
-          "ins": "2288734",
-          "jid": "64726",
-          "nivel": "B"
-        },
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "Ana Gross Paneque",
-          "hcp": 17.6,
-          "ins": "2279818",
-          "jid": "64726",
-          "nivel": "B"
-        },
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "Santiago Viera Villalba",
-          "hcp": 20.4,
-          "ins": "2279388",
-          "jid": "64726",
-          "nivel": "B"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Pau Caceres Gago",
-          "hcp": 22.3,
-          "ins": "2281023",
-          "jid": "64726",
-          "nivel": "B"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Marcos Sanchez Navas",
-          "hcp": 22.4,
-          "ins": "2277727",
-          "jid": "64726",
-          "nivel": "B"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Daniel Hernandez Ruiz",
-          "hcp": 23.1,
-          "ins": "2277724",
-          "jid": "64726",
-          "nivel": "B"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
-          "name": "Nikita Elchaninov",
-          "hcp": 24.8,
-          "ins": "2277412",
-          "jid": "64726",
-          "nivel": "B"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
-          "name": "Antonio Merchan Casado",
-          "hcp": 25.4,
-          "ins": "2277744",
-          "jid": "64726",
-          "nivel": "B"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
-          "name": "Javier Del Cid Gomez",
-          "hcp": 26.6,
-          "ins": "2277719",
-          "jid": "64726",
-          "nivel": "B"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Hugo Carrere Aguiar",
-          "hcp": 33,
-          "ins": "2278159",
-          "jid": "64726",
-          "nivel": "B"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Enrique Alvarez-Net Gonzalez",
-          "hcp": 33.3,
-          "ins": "2279399",
-          "jid": "64726",
-          "nivel": "B"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Iker Barragan Jimenez",
-          "hcp": 34.2,
-          "ins": "2291344",
-          "jid": "64726",
-          "nivel": "B"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Daniel Ferreiro Luciano",
-          "hcp": 35.4,
-          "ins": "2278088",
-          "jid": "64726",
-          "nivel": "B"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Ramiro Amaya Cozzi",
-          "hcp": 37.3,
-          "ins": "2279402",
-          "jid": "64726",
-          "nivel": "B"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Tiago Dos Santos Vicente",
-          "hcp": 40,
-          "ins": "2289520",
-          "jid": "64726",
-          "nivel": "B"
-        },
-        {
-          "time": "10:20",
-          "tee": 1,
-          "name": "Liane Gavira Rodriguez",
-          "hcp": 38.3,
-          "ins": "2281026",
-          "jid": "64726",
-          "nivel": "B"
-        },
-        {
-          "time": "10:20",
-          "tee": 1,
-          "name": "Ivan Duran Campos",
-          "hcp": 39,
-          "ins": "2276471",
-          "jid": "64726",
-          "nivel": "B"
-        },
-        {
-          "time": "10:20",
-          "tee": 1,
-          "name": "Mario Dos Santos Vicente",
-          "hcp": 44.3,
-          "ins": "2289516",
-          "jid": "64726",
-          "nivel": "B"
-        }
-      ]
+      "roundNumber": 1,
+      "roundId": 64726
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:11:59.374Z"
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/circular/2026/2aa56b471e796fb607d471d2b9ad0c4c.pdf",
+    "/uploads/competiciones/pdf/337224226_reglas_locales_guadalhorce.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:50.637Z"
 }

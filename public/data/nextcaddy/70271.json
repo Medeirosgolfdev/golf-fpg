@@ -1,14 +1,14 @@
 {
   "tourId": 70271,
   "url": "https://www.nextcaddy.com/tour/70271",
-  "scrapedAt": "2026-05-09T10:15:44.039Z",
+  "scrapedAt": "2026-05-21T16:39:11.899Z",
   "meta": {
     "name": "Cumpleaños Del Rosal (Grupo privado) - Lunes 27 Abril 2026 ",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "27 abr 2026",
-    "dateEnd": "27 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-27"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -122,22 +123,6 @@
       "nivel": "AMB6931642"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75195
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -199,5 +184,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:58.861Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75195
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:39.339Z"
 }

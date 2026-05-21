@@ -1,14 +1,14 @@
 {
   "tourId": 67565,
   "url": "https://www.nextcaddy.com/tour/67565",
-  "scrapedAt": "2026-05-09T09:57:27.651Z",
+  "scrapedAt": "2026-05-21T16:36:43.010Z",
   "meta": {
     "name": "V Interclub Villanueva- RCG",
     "organizer": null,
     "course": "Rota Club de Golf",
     "courseCode": "AME7",
-    "dateStart": "24 ene 2026",
-    "dateEnd": "24 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-24"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -617,6 +618,7 @@
       "nivel": "AME7911852"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -674,6 +676,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:28.284Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/3615421372_interclub_villanueva_2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:05.714Z"
 }

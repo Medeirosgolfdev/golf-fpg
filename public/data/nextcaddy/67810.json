@@ -1,14 +1,14 @@
 {
   "tourId": 67810,
   "url": "https://www.nextcaddy.com/tour/67810",
-  "scrapedAt": "2026-05-08T17:34:57.169Z",
+  "scrapedAt": "2026-05-21T16:41:19.060Z",
   "meta": {
     "name": "Final Circuito Senior Pitch & Putt",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "19 nov 2026",
-    "dateEnd": "19 nov 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap) Circuito Senior De",
     "categories": [
       "Senior",
@@ -17,12 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-11-19"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -50,6 +52,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:29.624Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/67810_cartel_323.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:09.329Z"
 }

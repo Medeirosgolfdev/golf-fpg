@@ -1,14 +1,14 @@
 {
   "tourId": 70525,
   "url": "https://www.nextcaddy.com/tour/70525",
-  "scrapedAt": "2026-05-09T10:15:57.651Z",
+  "scrapedAt": "2026-05-21T16:39:33.274Z",
   "meta": {
     "name": "TORNEO INGENIEROS  (CANCELADO)",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": "09 may 2026",
-    "dateEnd": "09 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-09"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -55,6 +57,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:44.678Z"
+  "pdfs": [
+    "/uploads/competiciones/cartel/1105409510_70525-torneo-ingenieros.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:41.566Z"
 }

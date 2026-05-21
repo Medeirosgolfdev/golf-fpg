@@ -1,14 +1,14 @@
 {
   "tourId": 61125,
   "url": "https://www.nextcaddy.com/tour/61125",
-  "scrapedAt": "2026-05-09T10:07:35.536Z",
+  "scrapedAt": "2026-05-21T16:38:00.684Z",
   "meta": {
     "name": "Campeonato de Andalucía Femenino P&P",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Banus Executive Golf",
     "courseCode": "AM88",
-    "dateStart": "21 mar 2026",
-    "dateEnd": "21 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Señoras C. de Pitc",
     "categories": [
       "Señoras",
@@ -16,13 +16,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-21"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 25,
       "header": [
         "Pos",
         "Jugador",
@@ -542,6 +543,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap 1ª Categoria",
+      "expectedJugadores": 10,
       "header": [
         "Pos",
         "Jugador",
@@ -761,6 +764,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Handicap 2ª Categoría",
+      "expectedJugadores": 15,
       "header": [
         "Pos",
         "Jugador",
@@ -1080,6 +1085,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Scratch Individual Primera Jornada",
+      "expectedJugadores": 25,
       "header": [
         "Pos",
         "Jugador",
@@ -1371,6 +1378,8 @@
     },
     {
       "category": 5,
+      "categoryName": "1ª Categoría Handicap Primera Jornada",
+      "expectedJugadores": 10,
       "header": [
         "Pos",
         "Jugador",
@@ -1497,6 +1506,8 @@
     },
     {
       "category": 6,
+      "categoryName": "2ª Categoría Handicap Primera Jornada",
+      "expectedJugadores": 15,
       "header": [
         "Pos",
         "Jugador",
@@ -1677,6 +1688,33 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 25
+    },
+    "2": {
+      "name": "Handicap 1ª Categoria",
+      "jugadores": 10
+    },
+    "3": {
+      "name": "Handicap 2ª Categoría",
+      "jugadores": 15
+    },
+    "4": {
+      "name": "Scratch Individual Primera Jornada",
+      "jugadores": 25
+    },
+    "5": {
+      "name": "1ª Categoría Handicap Primera Jornada",
+      "jugadores": 10
+    },
+    "6": {
+      "name": "2ª Categoría Handicap Primera Jornada",
+      "jugadores": 15
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2036,142 +2074,6 @@
       "nivel": "I"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 64747
-    },
-    {
-      "roundNumber": 2,
-      "roundId": 64748
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Lebron Hernandez, Juan Carlos",
-          "holeNumber": 15,
-          "createdAt": "22/09/24 13:54:13"
-        },
-        {
-          "playerName": "Lozano Ruiz, Francisco",
-          "holeNumber": 5,
-          "createdAt": "22/09/24 13:54:13"
-        },
-        {
-          "playerName": "Maldonado Molero, Francisco",
-          "holeNumber": 5,
-          "createdAt": "22/09/24 13:54:14"
-        },
-        {
-          "playerName": "Maldonado Molero, Miguel Angel",
-          "holeNumber": 15,
-          "createdAt": "22/09/24 13:54:14"
-        },
-        {
-          "playerName": "Arroyo Benitez, Alonso",
-          "holeNumber": 18,
-          "createdAt": "22/09/24 13:54:16"
-        },
-        {
-          "playerName": "Blanco Jimenez, Joaquin Luis",
-          "holeNumber": 15,
-          "createdAt": "22/09/24 13:54:17"
-        },
-        {
-          "playerName": "Gil Garcia, Francisco",
-          "holeNumber": 2,
-          "createdAt": "22/09/24 13:54:18"
-        },
-        {
-          "playerName": "Gil Garcia, Francisco",
-          "holeNumber": 18,
-          "createdAt": "22/09/24 13:54:18"
-        },
-        {
-          "playerName": "Perez Cortes, Juan Manuel",
-          "holeNumber": 9,
-          "createdAt": "22/09/24 13:54:18"
-        },
-        {
-          "playerName": "Perez Perez, Nestor",
-          "holeNumber": 13,
-          "createdAt": "22/09/24 13:54:18"
-        },
-        {
-          "playerName": "Dominguez Moreno, Pedro",
-          "holeNumber": 8,
-          "createdAt": "22/09/24 13:54:20"
-        },
-        {
-          "playerName": "Bornao Rivera, Javier Andres",
-          "holeNumber": 1,
-          "createdAt": "22/09/24 13:54:20"
-        },
-        {
-          "playerName": "Bornao Rivera, Javier Andres",
-          "holeNumber": 8,
-          "createdAt": "22/09/24 13:54:20"
-        },
-        {
-          "playerName": "Molina Venegas, Sergio",
-          "holeNumber": 3,
-          "createdAt": "22/09/24 13:54:21"
-        },
-        {
-          "playerName": "Martin Guirado, Alberto",
-          "holeNumber": 2,
-          "createdAt": "22/09/24 13:54:22"
-        },
-        {
-          "playerName": "Gutierrez Moreno, Juan Antonio",
-          "holeNumber": 11,
-          "createdAt": "22/09/24 13:54:23"
-        },
-        {
-          "playerName": "Corpas Perez, Gabriel",
-          "holeNumber": 1,
-          "createdAt": "22/09/24 13:54:23"
-        },
-        {
-          "playerName": "Corpas Perez, Gabriel",
-          "holeNumber": 2,
-          "createdAt": "22/09/24 13:54:23"
-        },
-        {
-          "playerName": "Costa Ribas, Juan",
-          "holeNumber": 1,
-          "createdAt": "22/09/24 13:54:25"
-        },
-        {
-          "playerName": "Costa Ribas, Juan",
-          "holeNumber": 11,
-          "createdAt": "22/09/24 13:54:25"
-        },
-        {
-          "playerName": "Lopez Fernandez, Jesus",
-          "holeNumber": 1,
-          "createdAt": "22/09/24 13:54:25"
-        },
-        {
-          "playerName": "Perez Santiago, Jose Francisco",
-          "holeNumber": 12,
-          "createdAt": "22/09/24 13:54:26"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -2625,5 +2527,146 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:00.075Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 64747
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 64748
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Lebron Hernandez, Juan Carlos",
+          "holeNumber": 15,
+          "createdAt": "22/09/24 13:54:13"
+        },
+        {
+          "playerName": "Lozano Ruiz, Francisco",
+          "holeNumber": 5,
+          "createdAt": "22/09/24 13:54:13"
+        },
+        {
+          "playerName": "Maldonado Molero, Francisco",
+          "holeNumber": 5,
+          "createdAt": "22/09/24 13:54:14"
+        },
+        {
+          "playerName": "Maldonado Molero, Miguel Angel",
+          "holeNumber": 15,
+          "createdAt": "22/09/24 13:54:14"
+        },
+        {
+          "playerName": "Arroyo Benitez, Alonso",
+          "holeNumber": 18,
+          "createdAt": "22/09/24 13:54:16"
+        },
+        {
+          "playerName": "Blanco Jimenez, Joaquin Luis",
+          "holeNumber": 15,
+          "createdAt": "22/09/24 13:54:17"
+        },
+        {
+          "playerName": "Gil Garcia, Francisco",
+          "holeNumber": 2,
+          "createdAt": "22/09/24 13:54:18"
+        },
+        {
+          "playerName": "Gil Garcia, Francisco",
+          "holeNumber": 18,
+          "createdAt": "22/09/24 13:54:18"
+        },
+        {
+          "playerName": "Perez Cortes, Juan Manuel",
+          "holeNumber": 9,
+          "createdAt": "22/09/24 13:54:18"
+        },
+        {
+          "playerName": "Perez Perez, Nestor",
+          "holeNumber": 13,
+          "createdAt": "22/09/24 13:54:18"
+        },
+        {
+          "playerName": "Dominguez Moreno, Pedro",
+          "holeNumber": 8,
+          "createdAt": "22/09/24 13:54:20"
+        },
+        {
+          "playerName": "Bornao Rivera, Javier Andres",
+          "holeNumber": 1,
+          "createdAt": "22/09/24 13:54:20"
+        },
+        {
+          "playerName": "Bornao Rivera, Javier Andres",
+          "holeNumber": 8,
+          "createdAt": "22/09/24 13:54:20"
+        },
+        {
+          "playerName": "Molina Venegas, Sergio",
+          "holeNumber": 3,
+          "createdAt": "22/09/24 13:54:21"
+        },
+        {
+          "playerName": "Martin Guirado, Alberto",
+          "holeNumber": 2,
+          "createdAt": "22/09/24 13:54:22"
+        },
+        {
+          "playerName": "Gutierrez Moreno, Juan Antonio",
+          "holeNumber": 11,
+          "createdAt": "22/09/24 13:54:23"
+        },
+        {
+          "playerName": "Corpas Perez, Gabriel",
+          "holeNumber": 1,
+          "createdAt": "22/09/24 13:54:23"
+        },
+        {
+          "playerName": "Corpas Perez, Gabriel",
+          "holeNumber": 2,
+          "createdAt": "22/09/24 13:54:23"
+        },
+        {
+          "playerName": "Costa Ribas, Juan",
+          "holeNumber": 1,
+          "createdAt": "22/09/24 13:54:25"
+        },
+        {
+          "playerName": "Costa Ribas, Juan",
+          "holeNumber": 11,
+          "createdAt": "22/09/24 13:54:25"
+        },
+        {
+          "playerName": "Lopez Fernandez, Jesus",
+          "holeNumber": 1,
+          "createdAt": "22/09/24 13:54:25"
+        },
+        {
+          "playerName": "Perez Santiago, Jose Francisco",
+          "holeNumber": 12,
+          "createdAt": "22/09/24 13:54:26"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/3954427118_informacion_del_campeonato.pdf",
+    "/uploads/circular/2026/1ee01179ecc50d08f0231bd3a420278d.pdf",
+    "/uploads/competiciones/pdf/1379542225_reglas_web_tablon.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:51.337Z"
 }

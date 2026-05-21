@@ -1,14 +1,14 @@
 {
   "tourId": 69060,
   "url": "https://www.nextcaddy.com/tour/69060",
-  "scrapedAt": "2026-05-08T17:53:14.353Z",
+  "scrapedAt": "2026-05-21T16:38:10.412Z",
   "meta": {
     "name": "II LIGUILLA SUB21 DE CASTILLA Y LEÓN - LERMA - 9 hoyos",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "22 mar 2026",
-    "dateEnd": "22 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,74 +17,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-03-22"
-  },
-  "course": {
-    "par": [
-      5,
-      4,
-      4,
-      4,
-      3,
-      4,
-      4,
-      5,
-      3,
-      5,
-      4,
-      3,
-      4,
-      4,
-      3,
-      4,
-      5,
-      4
-    ],
-    "si": [
-      4,
-      2,
-      12,
-      6,
-      14,
-      18,
-      10,
-      16,
-      8,
-      5,
-      11,
-      9,
-      17,
-      7,
-      15,
-      1,
-      13,
-      3
-    ],
-    "meters": [
-      454,
-      336,
-      280,
-      245,
-      111,
-      279,
-      231,
-      379,
-      122,
-      419,
-      320,
-      161,
-      298,
-      285,
-      121,
-      330,
-      448,
-      237
     ]
   },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -106,8 +46,7 @@
           "rounds": [],
           "total": 31,
           "toPar": -5,
-          "inscribedId": 2278505,
-          "roundScores": []
+          "inscribedId": 2278505
         },
         {
           "pos": 2,
@@ -118,8 +57,7 @@
           "rounds": [],
           "total": 33,
           "toPar": -3,
-          "inscribedId": 2282997,
-          "roundScores": []
+          "inscribedId": 2282997
         },
         {
           "pos": 3,
@@ -130,8 +68,7 @@
           "rounds": [],
           "total": 34,
           "toPar": -2,
-          "inscribedId": 2282998,
-          "roundScores": []
+          "inscribedId": 2282998
         },
         {
           "pos": 4,
@@ -142,8 +79,7 @@
           "rounds": [],
           "total": 35,
           "toPar": -1,
-          "inscribedId": 2279844,
-          "roundScores": []
+          "inscribedId": 2279844
         },
         {
           "pos": 5,
@@ -154,8 +90,7 @@
           "rounds": [],
           "total": 40,
           "toPar": 4,
-          "inscribedId": 2279877,
-          "roundScores": []
+          "inscribedId": 2279877
         },
         {
           "pos": 6,
@@ -166,8 +101,7 @@
           "rounds": [],
           "total": 41,
           "toPar": 5,
-          "inscribedId": 2283549,
-          "roundScores": []
+          "inscribedId": 2283549
         },
         {
           "pos": 7,
@@ -178,8 +112,7 @@
           "rounds": [],
           "total": 49,
           "toPar": 13,
-          "inscribedId": 2284271,
-          "roundScores": []
+          "inscribedId": 2284271
         },
         {
           "pos": 8,
@@ -190,12 +123,18 @@
           "rounds": [],
           "total": 66,
           "toPar": 30,
-          "inscribedId": 2283158,
-          "roundScores": []
+          "inscribedId": 2283158
         }
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 8
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -291,7 +230,37 @@
     {
       "orden": 4,
       "name": "Manuel Basconcillos Rodriguez",
-      "licencia": "16-03-26 20:35"
+      "licencia": "16-03-26 20:35",
+      "hcp": 47.2,
+      "nivel": "7712092248"
+    },
+    {
+      "orden": 5,
+      "name": "Angela Basconcillos Rodriguez",
+      "licencia": "16-03-26 20:37",
+      "hcp": 44.2,
+      "nivel": "7712416189"
+    },
+    {
+      "orden": 6,
+      "name": "Diego Del Valle Carrion",
+      "licencia": "17-03-26 09:59",
+      "hcp": 50,
+      "nivel": "7747487359"
+    },
+    {
+      "orden": 7,
+      "name": "Juan Aparicio Gonzalez",
+      "licencia": "17-03-26 17:33",
+      "hcp": 25.9,
+      "nivel": "7707094609"
+    },
+    {
+      "orden": 8,
+      "name": "Sergio Sebastian Izquierdo",
+      "licencia": "18-03-26 22:57",
+      "hcp": 54,
+      "nivel": "7700349897"
     }
   ],
   "horarios": [
@@ -373,5 +342,36 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:31.967Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73788
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Galliano, Carolina Laura",
+          "holeNumber": 2,
+          "createdAt": "18/10/25 09:50:14"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/560078091_4_plan_de_evacuaciorn_lerma_2025.pdf",
+    "/uploads/competiciones/pdf/2519970137_reglas_locales_-_lerma.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:30.080Z"
 }

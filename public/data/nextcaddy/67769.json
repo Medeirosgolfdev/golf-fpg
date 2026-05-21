@@ -1,14 +1,14 @@
 {
   "tourId": 67769,
   "url": "https://www.nextcaddy.com/tour/67769",
-  "scrapedAt": "2026-05-09T10:16:59.217Z",
+  "scrapedAt": "2026-05-21T16:40:39.652Z",
   "meta": {
     "name": "Torneo por equipos de Golf Adaptado \"ASR\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": null,
     "courseCode": null,
-    "dateStart": "26 jul 2026",
-    "dateEnd": "26 jul 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-07-26"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -585,6 +587,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:29.083Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:07.679Z"
 }

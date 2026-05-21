@@ -1,14 +1,14 @@
 {
   "tourId": 69020,
   "url": "https://www.nextcaddy.com/tour/69020",
-  "scrapedAt": "2026-05-09T09:58:06.099Z",
+  "scrapedAt": "2026-05-21T16:37:43.320Z",
   "meta": {
     "name": "Malaca 9 Marzo",
     "organizer": null,
     "course": "Escuela de Golf Miguel ángel Jiménez",
     "courseCode": "AMI5",
-    "dateStart": "09 mar 2026",
-    "dateEnd": "09 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-09"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 42,
       "header": [
         "Pos",
         "Jugador",
@@ -501,6 +502,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 42
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1133,68 +1141,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73748
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Ure?A Serrano, Antonio Manuel",
-          "holeNumber": 12,
-          "createdAt": "16/09/25 09:52:24"
-        },
-        {
-          "playerName": "De La Calle Moya, Amaro",
-          "holeNumber": 12,
-          "createdAt": "16/09/25 09:56:50"
-        },
-        {
-          "playerName": "Green, Peter",
-          "holeNumber": 10,
-          "createdAt": "16/09/25 11:38:48"
-        },
-        {
-          "playerName": "Ure?A Serrano, Antonio Manuel",
-          "holeNumber": 1,
-          "createdAt": "16/09/25 11:51:22"
-        },
-        {
-          "playerName": "Mier-Teran Franco, Juan Jose",
-          "holeNumber": 3,
-          "createdAt": "16/09/25 12:09:25"
-        },
-        {
-          "playerName": "Morris, Ian",
-          "holeNumber": 11,
-          "createdAt": "16/09/25 12:24:56"
-        },
-        {
-          "playerName": "Romero Abad, Tomas",
-          "holeNumber": 16,
-          "createdAt": "16/09/25 12:58:12"
-        },
-        {
-          "playerName": "Morris, Ian",
-          "holeNumber": 14,
-          "createdAt": "16/09/25 13:15:29"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1598,5 +1544,68 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:31.938Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73748
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Ure?A Serrano, Antonio Manuel",
+          "holeNumber": 12,
+          "createdAt": "16/09/25 09:52:24"
+        },
+        {
+          "playerName": "De La Calle Moya, Amaro",
+          "holeNumber": 12,
+          "createdAt": "16/09/25 09:56:50"
+        },
+        {
+          "playerName": "Green, Peter",
+          "holeNumber": 10,
+          "createdAt": "16/09/25 11:38:48"
+        },
+        {
+          "playerName": "Ure?A Serrano, Antonio Manuel",
+          "holeNumber": 1,
+          "createdAt": "16/09/25 11:51:22"
+        },
+        {
+          "playerName": "Mier-Teran Franco, Juan Jose",
+          "holeNumber": 3,
+          "createdAt": "16/09/25 12:09:25"
+        },
+        {
+          "playerName": "Morris, Ian",
+          "holeNumber": 11,
+          "createdAt": "16/09/25 12:24:56"
+        },
+        {
+          "playerName": "Romero Abad, Tomas",
+          "holeNumber": 16,
+          "createdAt": "16/09/25 12:58:12"
+        },
+        {
+          "playerName": "Morris, Ian",
+          "holeNumber": 14,
+          "createdAt": "16/09/25 13:15:29"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:29.950Z"
 }

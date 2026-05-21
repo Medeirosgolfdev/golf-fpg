@@ -1,14 +1,14 @@
 {
   "tourId": 67528,
   "url": "https://www.nextcaddy.com/tour/67528",
-  "scrapedAt": "2026-05-09T09:58:03.091Z",
+  "scrapedAt": "2026-05-21T16:37:38.393Z",
   "meta": {
     "name": "I Torneo RKN 2026 · 6ª Categoría · 7 de Marzo · Turno Mañana 10:00 · Turno Tarde 12:00 Torneo Suspendido 14 de Febrero",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "07 mar 2026",
-    "dateEnd": "07 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -21,13 +21,14 @@
       "junior",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-03-07"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Infantil Y Cadete Masculino Scratch General",
+      "expectedJugadores": 7,
       "header": [
         "Pos",
         "Jugador",
@@ -121,6 +122,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Infantil Y Cadete Masculino Handicap General",
+      "expectedJugadores": 7,
       "header": [
         "Pos",
         "Jugador",
@@ -214,6 +217,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Alevin Masculino Scratch General",
+      "expectedJugadores": 10,
       "header": [
         "Pos",
         "Jugador",
@@ -340,6 +345,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Alevin Masculino Handicap General",
+      "expectedJugadores": 10,
       "header": [
         "Pos",
         "Jugador",
@@ -466,6 +473,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Benjamin Masculino Scratch General",
+      "expectedJugadores": 20,
       "header": [
         "Pos",
         "Jugador",
@@ -702,6 +711,8 @@
     },
     {
       "category": 6,
+      "categoryName": "Benjamin Masculino Handicap General",
+      "expectedJugadores": 20,
       "header": [
         "Pos",
         "Jugador",
@@ -938,6 +949,8 @@
     },
     {
       "category": 7,
+      "categoryName": "Alevin E Infantil Femenino Scratch General",
+      "expectedJugadores": 13,
       "header": [
         "Pos",
         "Jugador",
@@ -1097,6 +1110,8 @@
     },
     {
       "category": 8,
+      "categoryName": "Alevin E Infantil Femenino Handicap General",
+      "expectedJugadores": 13,
       "header": [
         "Pos",
         "Jugador",
@@ -1256,6 +1271,8 @@
     },
     {
       "category": 9,
+      "categoryName": "Benjamin Femenino Scratch General",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -1404,6 +1421,8 @@
     },
     {
       "category": 10,
+      "categoryName": "Benjamin Femenino Handicap General",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -1551,6 +1570,49 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Infantil Y Cadete Masculino Scratch General",
+      "jugadores": 7
+    },
+    "2": {
+      "name": "Infantil Y Cadete Masculino Handicap General",
+      "jugadores": 7
+    },
+    "3": {
+      "name": "Alevin Masculino Scratch General",
+      "jugadores": 10
+    },
+    "4": {
+      "name": "Alevin Masculino Handicap General",
+      "jugadores": 10
+    },
+    "5": {
+      "name": "Benjamin Masculino Scratch General",
+      "jugadores": 20
+    },
+    "6": {
+      "name": "Benjamin Masculino Handicap General",
+      "jugadores": 20
+    },
+    "7": {
+      "name": "Alevin E Infantil Femenino Scratch General",
+      "jugadores": 13
+    },
+    "8": {
+      "name": "Alevin E Infantil Femenino Handicap General",
+      "jugadores": 13
+    },
+    "9": {
+      "name": "Benjamin Femenino Scratch General",
+      "jugadores": 12
+    },
+    "10": {
+      "name": "Benjamin Femenino Handicap General",
+      "jugadores": 12
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2435,233 +2497,6 @@
       "nivel": "B"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71992
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Oliva Perea, Juan Jesus",
-          "holeNumber": 3,
-          "createdAt": "05/07/25 09:56:10"
-        },
-        {
-          "playerName": "Hurtado Leon, Jose Maria",
-          "holeNumber": 12,
-          "createdAt": "05/07/25 10:02:04"
-        },
-        {
-          "playerName": "Gomez Perez, Maria Isabel Mercedes",
-          "holeNumber": 3,
-          "createdAt": "05/07/25 10:03:03"
-        },
-        {
-          "playerName": "Albarracin Gonzalez, Javier",
-          "holeNumber": 12,
-          "createdAt": "05/07/25 10:10:32"
-        },
-        {
-          "playerName": "Rodriguez Payno, Alberto",
-          "holeNumber": 12,
-          "createdAt": "05/07/25 10:10:46"
-        },
-        {
-          "playerName": "Redondo Fidalgo, Francisco De Borja",
-          "holeNumber": 12,
-          "createdAt": "05/07/25 10:10:47"
-        },
-        {
-          "playerName": "Artes Sanchis, Maria Luisa",
-          "holeNumber": 10,
-          "createdAt": "05/07/25 10:14:35"
-        },
-        {
-          "playerName": "Arne, Daniel",
-          "holeNumber": 4,
-          "createdAt": "05/07/25 10:46:08"
-        },
-        {
-          "playerName": "Artes Sanchis, Maria Luisa",
-          "holeNumber": 12,
-          "createdAt": "05/07/25 10:53:09"
-        },
-        {
-          "playerName": "Albarracin Gonzalez, Javier",
-          "holeNumber": 15,
-          "createdAt": "05/07/25 10:57:53"
-        },
-        {
-          "playerName": "Fernandez Nuñez, Juan",
-          "holeNumber": 3,
-          "createdAt": "05/07/25 11:01:11"
-        },
-        {
-          "playerName": "Camino Baron, Buenaventura",
-          "holeNumber": 8,
-          "createdAt": "05/07/25 11:09:10"
-        },
-        {
-          "playerName": "Borrachero Garro, Antonio",
-          "holeNumber": 4,
-          "createdAt": "05/07/25 11:18:27"
-        },
-        {
-          "playerName": "Nardiz Martinez, Carlos",
-          "holeNumber": 4,
-          "createdAt": "05/07/25 11:27:45"
-        },
-        {
-          "playerName": "Artes Sanchis, Maria Luisa",
-          "holeNumber": 15,
-          "createdAt": "05/07/25 11:32:31"
-        },
-        {
-          "playerName": "Nardiz Martinez, Carlos",
-          "holeNumber": 7,
-          "createdAt": "05/07/25 11:57:55"
-        },
-        {
-          "playerName": "Diaz  Lozano, Mario",
-          "holeNumber": 12,
-          "createdAt": "05/07/25 12:04:42"
-        },
-        {
-          "playerName": "Fernandez Nuñez, Juan",
-          "holeNumber": 7,
-          "createdAt": "05/07/25 12:07:49"
-        },
-        {
-          "playerName": "Garcia Del Castillo, Alberto",
-          "holeNumber": 12,
-          "createdAt": "05/07/25 12:24:22"
-        },
-        {
-          "playerName": "Ortiz Albarran, Santiago",
-          "holeNumber": 12,
-          "createdAt": "05/07/25 12:25:35"
-        },
-        {
-          "playerName": "Camacho Nuñez, Antonio",
-          "holeNumber": 11,
-          "createdAt": "05/07/25 12:52:45"
-        },
-        {
-          "playerName": "Rodriguez Payno, Alberto",
-          "holeNumber": 4,
-          "createdAt": "05/07/25 12:53:04"
-        },
-        {
-          "playerName": "Arne, Daniel",
-          "holeNumber": 13,
-          "createdAt": "05/07/25 12:57:44"
-        },
-        {
-          "playerName": "Camacho Nuñez, Antonio",
-          "holeNumber": 12,
-          "createdAt": "05/07/25 13:10:55"
-        },
-        {
-          "playerName": "Hernando De Moya, Jose Andres",
-          "holeNumber": 17,
-          "createdAt": "05/07/25 13:20:31"
-        },
-        {
-          "playerName": "Fernandez Nuñez, Juan",
-          "holeNumber": 12,
-          "createdAt": "05/07/25 13:20:33"
-        },
-        {
-          "playerName": "Camino Baron, Buenaventura",
-          "holeNumber": 17,
-          "createdAt": "05/07/25 13:20:38"
-        },
-        {
-          "playerName": "Artes Sanchis, Maria Luisa",
-          "holeNumber": 4,
-          "createdAt": "05/07/25 13:28:39"
-        },
-        {
-          "playerName": "Medina Morian, Manuel",
-          "holeNumber": 9,
-          "createdAt": "05/07/25 13:32:00"
-        },
-        {
-          "playerName": "Garcia Gomez, Agustin",
-          "holeNumber": 5,
-          "createdAt": "05/07/25 13:34:55"
-        },
-        {
-          "playerName": "Artes Sanchis, Maria Luisa",
-          "holeNumber": 5,
-          "createdAt": "05/07/25 13:36:11"
-        },
-        {
-          "playerName": "Rodriguez Payno, Alberto",
-          "holeNumber": 7,
-          "createdAt": "05/07/25 13:39:18"
-        },
-        {
-          "playerName": "Fernandez Nuñez, Juan",
-          "holeNumber": 14,
-          "createdAt": "05/07/25 13:46:57"
-        },
-        {
-          "playerName": "Aguado Lucena, Julio",
-          "holeNumber": 14,
-          "createdAt": "05/07/25 13:47:15"
-        },
-        {
-          "playerName": "Camino Baron, Buenaventura",
-          "holeNumber": 2,
-          "createdAt": "05/07/25 14:05:19"
-        },
-        {
-          "playerName": "Guzman Palacios, David",
-          "holeNumber": 11,
-          "createdAt": "05/07/25 14:12:49"
-        },
-        {
-          "playerName": "Guzman Palacios, David",
-          "holeNumber": 14,
-          "createdAt": "05/07/25 14:12:49"
-        },
-        {
-          "playerName": "Barrios Carrasco, Patricio",
-          "holeNumber": 11,
-          "createdAt": "05/07/25 14:13:43"
-        }
-      ]
-    },
-    "eagle": {
-      "scoreTypeKey": "eagle",
-      "players": [
-        {
-          "playerName": "Hernando De Moya, Jose Andres",
-          "holeNumber": 12,
-          "createdAt": "05/07/25 12:05:09"
-        },
-        {
-          "playerName": "Lillo Marquez, Carlos Javier",
-          "holeNumber": 12,
-          "createdAt": "05/07/25 12:47:23"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -3227,5 +3062,233 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:09.285Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71992
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Oliva Perea, Juan Jesus",
+          "holeNumber": 3,
+          "createdAt": "05/07/25 09:56:10"
+        },
+        {
+          "playerName": "Hurtado Leon, Jose Maria",
+          "holeNumber": 12,
+          "createdAt": "05/07/25 10:02:04"
+        },
+        {
+          "playerName": "Gomez Perez, Maria Isabel Mercedes",
+          "holeNumber": 3,
+          "createdAt": "05/07/25 10:03:03"
+        },
+        {
+          "playerName": "Albarracin Gonzalez, Javier",
+          "holeNumber": 12,
+          "createdAt": "05/07/25 10:10:32"
+        },
+        {
+          "playerName": "Rodriguez Payno, Alberto",
+          "holeNumber": 12,
+          "createdAt": "05/07/25 10:10:46"
+        },
+        {
+          "playerName": "Redondo Fidalgo, Francisco De Borja",
+          "holeNumber": 12,
+          "createdAt": "05/07/25 10:10:47"
+        },
+        {
+          "playerName": "Artes Sanchis, Maria Luisa",
+          "holeNumber": 10,
+          "createdAt": "05/07/25 10:14:35"
+        },
+        {
+          "playerName": "Arne, Daniel",
+          "holeNumber": 4,
+          "createdAt": "05/07/25 10:46:08"
+        },
+        {
+          "playerName": "Artes Sanchis, Maria Luisa",
+          "holeNumber": 12,
+          "createdAt": "05/07/25 10:53:09"
+        },
+        {
+          "playerName": "Albarracin Gonzalez, Javier",
+          "holeNumber": 15,
+          "createdAt": "05/07/25 10:57:53"
+        },
+        {
+          "playerName": "Fernandez Nuñez, Juan",
+          "holeNumber": 3,
+          "createdAt": "05/07/25 11:01:11"
+        },
+        {
+          "playerName": "Camino Baron, Buenaventura",
+          "holeNumber": 8,
+          "createdAt": "05/07/25 11:09:10"
+        },
+        {
+          "playerName": "Borrachero Garro, Antonio",
+          "holeNumber": 4,
+          "createdAt": "05/07/25 11:18:27"
+        },
+        {
+          "playerName": "Nardiz Martinez, Carlos",
+          "holeNumber": 4,
+          "createdAt": "05/07/25 11:27:45"
+        },
+        {
+          "playerName": "Artes Sanchis, Maria Luisa",
+          "holeNumber": 15,
+          "createdAt": "05/07/25 11:32:31"
+        },
+        {
+          "playerName": "Nardiz Martinez, Carlos",
+          "holeNumber": 7,
+          "createdAt": "05/07/25 11:57:55"
+        },
+        {
+          "playerName": "Diaz  Lozano, Mario",
+          "holeNumber": 12,
+          "createdAt": "05/07/25 12:04:42"
+        },
+        {
+          "playerName": "Fernandez Nuñez, Juan",
+          "holeNumber": 7,
+          "createdAt": "05/07/25 12:07:49"
+        },
+        {
+          "playerName": "Garcia Del Castillo, Alberto",
+          "holeNumber": 12,
+          "createdAt": "05/07/25 12:24:22"
+        },
+        {
+          "playerName": "Ortiz Albarran, Santiago",
+          "holeNumber": 12,
+          "createdAt": "05/07/25 12:25:35"
+        },
+        {
+          "playerName": "Camacho Nuñez, Antonio",
+          "holeNumber": 11,
+          "createdAt": "05/07/25 12:52:45"
+        },
+        {
+          "playerName": "Rodriguez Payno, Alberto",
+          "holeNumber": 4,
+          "createdAt": "05/07/25 12:53:04"
+        },
+        {
+          "playerName": "Arne, Daniel",
+          "holeNumber": 13,
+          "createdAt": "05/07/25 12:57:44"
+        },
+        {
+          "playerName": "Camacho Nuñez, Antonio",
+          "holeNumber": 12,
+          "createdAt": "05/07/25 13:10:55"
+        },
+        {
+          "playerName": "Hernando De Moya, Jose Andres",
+          "holeNumber": 17,
+          "createdAt": "05/07/25 13:20:31"
+        },
+        {
+          "playerName": "Fernandez Nuñez, Juan",
+          "holeNumber": 12,
+          "createdAt": "05/07/25 13:20:33"
+        },
+        {
+          "playerName": "Camino Baron, Buenaventura",
+          "holeNumber": 17,
+          "createdAt": "05/07/25 13:20:38"
+        },
+        {
+          "playerName": "Artes Sanchis, Maria Luisa",
+          "holeNumber": 4,
+          "createdAt": "05/07/25 13:28:39"
+        },
+        {
+          "playerName": "Medina Morian, Manuel",
+          "holeNumber": 9,
+          "createdAt": "05/07/25 13:32:00"
+        },
+        {
+          "playerName": "Garcia Gomez, Agustin",
+          "holeNumber": 5,
+          "createdAt": "05/07/25 13:34:55"
+        },
+        {
+          "playerName": "Artes Sanchis, Maria Luisa",
+          "holeNumber": 5,
+          "createdAt": "05/07/25 13:36:11"
+        },
+        {
+          "playerName": "Rodriguez Payno, Alberto",
+          "holeNumber": 7,
+          "createdAt": "05/07/25 13:39:18"
+        },
+        {
+          "playerName": "Fernandez Nuñez, Juan",
+          "holeNumber": 14,
+          "createdAt": "05/07/25 13:46:57"
+        },
+        {
+          "playerName": "Aguado Lucena, Julio",
+          "holeNumber": 14,
+          "createdAt": "05/07/25 13:47:15"
+        },
+        {
+          "playerName": "Camino Baron, Buenaventura",
+          "holeNumber": 2,
+          "createdAt": "05/07/25 14:05:19"
+        },
+        {
+          "playerName": "Guzman Palacios, David",
+          "holeNumber": 11,
+          "createdAt": "05/07/25 14:12:49"
+        },
+        {
+          "playerName": "Guzman Palacios, David",
+          "holeNumber": 14,
+          "createdAt": "05/07/25 14:12:49"
+        },
+        {
+          "playerName": "Barrios Carrasco, Patricio",
+          "holeNumber": 11,
+          "createdAt": "05/07/25 14:13:43"
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Hernando De Moya, Jose Andres",
+          "holeNumber": 12,
+          "createdAt": "05/07/25 12:05:09"
+        },
+        {
+          "playerName": "Lillo Marquez, Carlos Javier",
+          "holeNumber": 12,
+          "createdAt": "05/07/25 12:47:23"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:05.049Z"
 }

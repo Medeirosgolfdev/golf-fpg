@@ -1,14 +1,14 @@
 {
   "tourId": 70629,
   "url": "https://www.nextcaddy.com/tour/70629",
-  "scrapedAt": "2026-05-09T10:16:59.023Z",
+  "scrapedAt": "2026-05-21T16:40:39.449Z",
   "meta": {
     "name": "Somabay World Cup (by LeClub)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "25 jul 2026",
-    "dateEnd": "25 jul 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-07-25"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -140,6 +142,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:45.188Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/3535598109_le-club-sherry-golf-jerez-circuito.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:42.858Z"
 }

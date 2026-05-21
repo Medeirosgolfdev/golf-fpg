@@ -1,14 +1,14 @@
 {
   "tourId": 67863,
   "url": "https://www.nextcaddy.com/tour/67863",
-  "scrapedAt": "2026-05-09T10:15:37.232Z",
+  "scrapedAt": "2026-05-21T16:39:00.923Z",
   "meta": {
     "name": "Campeonato de Profesionales Match Play",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Centro Nacional de Golf",
     "courseCode": "CMA8",
-    "dateStart": "20 abr 2026",
-    "dateEnd": "20 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Match Play",
     "categories": [
       "Profesional",
@@ -16,11 +16,12 @@
       "Infantil",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-20"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -261,6 +262,7 @@
       "nivel": "P+"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -353,6 +355,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:30.335Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/1975280958_arb_reg_loc_cma08_2025.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:11.347Z"
 }

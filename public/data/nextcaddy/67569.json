@@ -1,14 +1,14 @@
 {
   "tourId": 67569,
   "url": "https://www.nextcaddy.com/tour/67569",
-  "scrapedAt": "2026-05-09T09:57:27.205Z",
+  "scrapedAt": "2026-05-21T16:36:42.113Z",
   "meta": {
     "name": "Torneo de Ganadores 24 de Enero · Turno de Mañana 10:30 · Turno de Tarde 14:30",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "24 ene 2026",
-    "dateEnd": "24 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-24"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Femenino Handicap General",
+      "expectedJugadores": 25,
       "header": [
         "Pos",
         "Jugador",
@@ -315,6 +316,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Femenino Scratch General",
+      "expectedJugadores": 25,
       "header": [
         "Pos",
         "Jugador",
@@ -606,6 +609,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Masculino Scratch General",
+      "expectedJugadores": 45,
       "header": [
         "Pos",
         "Jugador",
@@ -1117,6 +1122,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Masculino Handicap General",
+      "expectedJugadores": 45,
       "header": [
         "Pos",
         "Jugador",
@@ -1627,6 +1634,25 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Femenino Handicap General",
+      "jugadores": 25
+    },
+    "2": {
+      "name": "Femenino Scratch General",
+      "jugadores": 25
+    },
+    "3": {
+      "name": "Masculino Scratch General",
+      "jugadores": 45
+    },
+    "4": {
+      "name": "Masculino Handicap General",
+      "jugadores": 45
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2637,22 +2663,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72036
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -3290,5 +3300,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:10.598Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72036
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/67569_cartel_294.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:06.311Z"
 }

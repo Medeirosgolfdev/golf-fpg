@@ -1,14 +1,14 @@
 {
   "tourId": 70529,
   "url": "https://www.nextcaddy.com/tour/70529",
-  "scrapedAt": "2026-05-09T10:15:52.774Z",
+  "scrapedAt": "2026-05-21T16:39:25.718Z",
   "meta": {
     "name": "POOL DE SENIORS  DE PRIMAVERA (06/05/2026).",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "06 may 2026",
-    "dateEnd": "06 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "SENIOR",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-06"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "General Pool 06 05 2026",
+      "expectedJugadores": 15,
       "header": [
         "Pos",
         "Jugador",
@@ -205,6 +206,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "General Pool 06 05 2026",
+      "jugadores": 15
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -431,33 +439,6 @@
       "nivel": "4401907785"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75473
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Huarte Uhagon, Pablo",
-          "holeNumber": 11,
-          "createdAt": "16/11/25 14:10:42"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -600,5 +581,33 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:13:01.053Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75473
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Huarte Uhagon, Pablo",
+          "holeNumber": 11,
+          "createdAt": "16/11/25 14:10:42"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:41.775Z"
 }

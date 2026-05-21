@@ -1,14 +1,14 @@
 {
   "tourId": 67967,
   "url": "https://www.nextcaddy.com/tour/67967",
-  "scrapedAt": "2026-05-09T10:17:12.980Z",
+  "scrapedAt": "2026-05-21T16:41:06.280Z",
   "meta": {
     "name": "Torneo Senior Damas \"Lomas-Bosque\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Club de Golf Lomas Bosque",
     "courseCode": "CM07",
-    "dateStart": "08 oct 2026",
-    "dateEnd": "08 oct 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Circuito Senior Da",
     "categories": [
       "Senior",
@@ -18,12 +18,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-10-08"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -40,6 +42,6 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:31.306Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:14.231Z"
 }

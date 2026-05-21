@@ -1,14 +1,14 @@
 {
   "tourId": 69117,
   "url": "https://www.nextcaddy.com/tour/69117",
-  "scrapedAt": "2026-05-09T09:58:09.330Z",
+  "scrapedAt": "2026-05-21T16:37:48.075Z",
   "meta": {
     "name": "TORNEO ALFA LOISIRS",
     "organizer": null,
     "course": "Santa María Golf & Country Club",
     "courseCode": "AM86",
-    "dateStart": "13 mar 2026",
-    "dateEnd": "13 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-13"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -220,6 +221,7 @@
       "nivel": "M"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -236,6 +238,6 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:41.076Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:30.945Z"
 }

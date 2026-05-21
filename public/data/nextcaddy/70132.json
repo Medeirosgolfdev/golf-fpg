@@ -1,14 +1,14 @@
 {
   "tourId": 70132,
   "url": "https://www.nextcaddy.com/tour/70132",
-  "scrapedAt": "2026-05-09T10:15:36.033Z",
+  "scrapedAt": "2026-05-21T16:38:59.073Z",
   "meta": {
     "name": "MEMORIAL CUP-19.4.",
     "organizer": null,
     "course": "Santa María Golf & Country Club",
     "courseCode": "AM86",
-    "dateStart": "19 abr 2026",
-    "dateEnd": "19 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-19"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 36,
       "header": [
         "Pos",
         "Jugador",
@@ -435,6 +436,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 36
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -962,6 +970,7 @@
       "nivel": "S"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -978,6 +987,8 @@
     }
   ],
   "scoreTypes": null,
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:43.574Z"
+  "pdfs": [
+    "/uploads/competiciones/cartel/612627258_70132-memorial-cup-19-4.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:38.260Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 68030,
   "url": "https://www.nextcaddy.com/tour/68030",
-  "scrapedAt": "2026-05-09T09:57:38.222Z",
+  "scrapedAt": "2026-05-21T16:36:59.856Z",
   "meta": {
     "name": "Torneo San Valentín",
     "organizer": null,
     "course": "Alborán Golf",
     "courseCode": "AMC7",
-    "dateStart": "14 feb 2026",
-    "dateEnd": "14 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-14"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -752,93 +753,6 @@
       "nivel": "M"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72568
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Murphy, Jason",
-          "holeNumber": 5,
-          "createdAt": "29/07/25 14:26:54"
-        },
-        {
-          "playerName": "Murphy, Jason",
-          "holeNumber": 14,
-          "createdAt": "29/07/25 14:26:54"
-        },
-        {
-          "playerName": "Thornton, Robert",
-          "holeNumber": 6,
-          "createdAt": "29/07/25 14:28:25"
-        },
-        {
-          "playerName": "Thornton, Robert",
-          "holeNumber": 7,
-          "createdAt": "29/07/25 14:28:25"
-        },
-        {
-          "playerName": "Thornton, Robert",
-          "holeNumber": 8,
-          "createdAt": "29/07/25 14:28:25"
-        },
-        {
-          "playerName": "Thornton, Robert",
-          "holeNumber": 14,
-          "createdAt": "29/07/25 14:28:25"
-        },
-        {
-          "playerName": "Andrew Fogg, Graham",
-          "holeNumber": 18,
-          "createdAt": "29/07/25 14:29:55"
-        },
-        {
-          "playerName": "Thornet, Ian",
-          "holeNumber": 14,
-          "createdAt": "29/07/25 14:38:55"
-        },
-        {
-          "playerName": "Breakspear, Peter John",
-          "holeNumber": 7,
-          "createdAt": "29/07/25 14:39:33"
-        },
-        {
-          "playerName": "Breakspear, Peter John",
-          "holeNumber": 13,
-          "createdAt": "29/07/25 14:39:33"
-        },
-        {
-          "playerName": "Breakspear, Peter John",
-          "holeNumber": 14,
-          "createdAt": "29/07/25 14:39:33"
-        },
-        {
-          "playerName": "Ivey, Catherine",
-          "holeNumber": 16,
-          "createdAt": "29/07/25 14:43:15"
-        },
-        {
-          "playerName": "Dakers, Anthony",
-          "holeNumber": 8,
-          "createdAt": "29/07/25 14:43:47"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1512,18 +1426,18 @@
         {
           "time": "09:10",
           "tee": 1,
-          "name": "Manuel Borrás Montaner",
+          "name": "María Jesús Vaquero Pérez",
           "hcp": 36,
-          "ins": "2256870",
+          "ins": "2256871",
           "jid": "72568",
           "nivel": "S"
         },
         {
           "time": "09:10",
           "tee": 1,
-          "name": "María Jesús Vaquero Pérez",
+          "name": "Manuel Borrás Montaner",
           "hcp": 36,
-          "ins": "2256871",
+          "ins": "2256870",
           "jid": "72568",
           "nivel": "S"
         },
@@ -1782,5 +1696,93 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:19.405Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72568
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Murphy, Jason",
+          "holeNumber": 5,
+          "createdAt": "29/07/25 14:26:54"
+        },
+        {
+          "playerName": "Murphy, Jason",
+          "holeNumber": 14,
+          "createdAt": "29/07/25 14:26:54"
+        },
+        {
+          "playerName": "Thornton, Robert",
+          "holeNumber": 6,
+          "createdAt": "29/07/25 14:28:25"
+        },
+        {
+          "playerName": "Thornton, Robert",
+          "holeNumber": 7,
+          "createdAt": "29/07/25 14:28:25"
+        },
+        {
+          "playerName": "Thornton, Robert",
+          "holeNumber": 8,
+          "createdAt": "29/07/25 14:28:25"
+        },
+        {
+          "playerName": "Thornton, Robert",
+          "holeNumber": 14,
+          "createdAt": "29/07/25 14:28:25"
+        },
+        {
+          "playerName": "Andrew Fogg, Graham",
+          "holeNumber": 18,
+          "createdAt": "29/07/25 14:29:55"
+        },
+        {
+          "playerName": "Thornet, Ian",
+          "holeNumber": 14,
+          "createdAt": "29/07/25 14:38:55"
+        },
+        {
+          "playerName": "Breakspear, Peter John",
+          "holeNumber": 7,
+          "createdAt": "29/07/25 14:39:33"
+        },
+        {
+          "playerName": "Breakspear, Peter John",
+          "holeNumber": 13,
+          "createdAt": "29/07/25 14:39:33"
+        },
+        {
+          "playerName": "Breakspear, Peter John",
+          "holeNumber": 14,
+          "createdAt": "29/07/25 14:39:33"
+        },
+        {
+          "playerName": "Ivey, Catherine",
+          "holeNumber": 16,
+          "createdAt": "29/07/25 14:43:15"
+        },
+        {
+          "playerName": "Dakers, Anthony",
+          "holeNumber": 8,
+          "createdAt": "29/07/25 14:43:47"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:16.154Z"
 }

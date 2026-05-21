@@ -1,14 +1,14 @@
 {
   "tourId": 69266,
   "url": "https://www.nextcaddy.com/tour/69266",
-  "scrapedAt": "2026-05-09T10:16:41.704Z",
+  "scrapedAt": "2026-05-21T16:40:17.109Z",
   "meta": {
     "name": "Torneo de Parejas Golf Nuevo Jeep Experience",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "06 jun 2026",
-    "dateEnd": "06 jun 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -18,11 +18,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-06-06"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -37,8 +38,37 @@
       "licencia": "AMC3091943",
       "hcp": 25.5,
       "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "John Eriksson",
+      "licencia": "AM25996295",
+      "hcp": 4.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Michiyo Montague",
+      "licencia": "AMB6088335",
+      "hcp": 8.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Carlos Caucelo Gonzalez",
+      "licencia": "AMD5611944",
+      "hcp": 19.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Jose David Rendo",
+      "licencia": "AMD5986829",
+      "hcp": 24.9,
+      "nivel": "S"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -411,6 +441,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:41.586Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/2984568870_cartel_jeep_nueva_fecha.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:32.143Z"
 }

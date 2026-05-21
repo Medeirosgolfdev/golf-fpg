@@ -1,14 +1,14 @@
 {
   "tourId": 67922,
   "url": "https://www.nextcaddy.com/tour/67922",
-  "scrapedAt": "2026-05-09T09:58:10.472Z",
+  "scrapedAt": "2026-05-21T16:37:50.655Z",
   "meta": {
     "name": "III Torneo RKN Damas y Caballeros · Turno de Mañana 10:00 · Turno de Tarde 13:00",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "14 mar 2026",
-    "dateEnd": "14 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-14"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Individual Señoras Femenino Scratch General",
+      "expectedJugadores": 20,
       "header": [
         "Pos",
         "Jugador",
@@ -260,6 +261,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Individual Señoras Femenino Handicap General",
+      "expectedJugadores": 20,
       "header": [
         "Pos",
         "Jugador",
@@ -496,6 +499,8 @@
     },
     {
       "category": 3,
+      "categoryName": "2 Categoria Masculino Scratch General",
+      "expectedJugadores": 33,
       "header": [
         "Pos",
         "Jugador",
@@ -875,6 +880,8 @@
     },
     {
       "category": 4,
+      "categoryName": "2 Categoria Masculino Handicap General",
+      "expectedJugadores": 33,
       "header": [
         "Pos",
         "Jugador",
@@ -1254,6 +1261,8 @@
     },
     {
       "category": 5,
+      "categoryName": "1 Categoria Masculino Scratch General",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -1468,6 +1477,8 @@
     },
     {
       "category": 6,
+      "categoryName": "1 Categoria Masculino Handicap General",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -1681,6 +1692,33 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Señoras Femenino Scratch General",
+      "jugadores": 20
+    },
+    "2": {
+      "name": "Individual Señoras Femenino Handicap General",
+      "jugadores": 20
+    },
+    "3": {
+      "name": "2 Categoria Masculino Scratch General",
+      "jugadores": 33
+    },
+    "4": {
+      "name": "2 Categoria Masculino Handicap General",
+      "jugadores": 33
+    },
+    "5": {
+      "name": "1 Categoria Masculino Scratch General",
+      "jugadores": 18
+    },
+    "6": {
+      "name": "1 Categoria Masculino Handicap General",
+      "jugadores": 18
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2691,153 +2729,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72439
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Fernandez Gonzalez, Antonio",
-          "holeNumber": 7,
-          "createdAt": "02/08/25 14:28:38"
-        },
-        {
-          "playerName": "Garcia Frias, Antonio Javier",
-          "holeNumber": 3,
-          "createdAt": "02/08/25 14:28:39"
-        },
-        {
-          "playerName": "Fernandez Lopez, Daniel",
-          "holeNumber": 13,
-          "createdAt": "02/08/25 14:28:40"
-        },
-        {
-          "playerName": "Gonzalez De Molina  Losada, Federico",
-          "holeNumber": 16,
-          "createdAt": "02/08/25 14:28:42"
-        },
-        {
-          "playerName": "Duran Del Castillo, Francisco Javier",
-          "holeNumber": 13,
-          "createdAt": "02/08/25 14:28:43"
-        },
-        {
-          "playerName": "Garrido Merida, Francisco Manuel",
-          "holeNumber": 16,
-          "createdAt": "02/08/25 14:28:43"
-        },
-        {
-          "playerName": "Garcia Frias, Gonzalo",
-          "holeNumber": 2,
-          "createdAt": "02/08/25 14:28:43"
-        },
-        {
-          "playerName": "Garcia Frias, Gonzalo",
-          "holeNumber": 14,
-          "createdAt": "02/08/25 14:28:44"
-        },
-        {
-          "playerName": "Bravo Grau, Jº Francisco",
-          "holeNumber": 7,
-          "createdAt": "02/08/25 14:28:46"
-        },
-        {
-          "playerName": "Merlo Herrero, Jose Luis",
-          "holeNumber": 7,
-          "createdAt": "02/08/25 14:28:46"
-        },
-        {
-          "playerName": "Velasco Santiago, Jose Manuel",
-          "holeNumber": 6,
-          "createdAt": "02/08/25 14:28:47"
-        },
-        {
-          "playerName": "Parada Navarrete, Juan Carlos",
-          "holeNumber": 1,
-          "createdAt": "02/08/25 14:28:48"
-        },
-        {
-          "playerName": "Parada Navarrete, Juan Carlos",
-          "holeNumber": 16,
-          "createdAt": "02/08/25 14:28:48"
-        },
-        {
-          "playerName": "Torreblanca Cespedes, Juan",
-          "holeNumber": 17,
-          "createdAt": "02/08/25 14:28:49"
-        },
-        {
-          "playerName": "Muñoz Escalante, Pedro",
-          "holeNumber": 5,
-          "createdAt": "02/08/25 14:28:53"
-        },
-        {
-          "playerName": "Garcia Navas, Ruben",
-          "holeNumber": 4,
-          "createdAt": "02/08/25 14:28:55"
-        },
-        {
-          "playerName": "Garcia Navas, Ruben",
-          "holeNumber": 8,
-          "createdAt": "02/08/25 14:28:55"
-        },
-        {
-          "playerName": "Garcia Navas, Ruben",
-          "holeNumber": 14,
-          "createdAt": "02/08/25 14:28:55"
-        },
-        {
-          "playerName": "Cuenca Fenton, Santiago",
-          "holeNumber": 2,
-          "createdAt": "02/08/25 14:28:56"
-        },
-        {
-          "playerName": "Cuenca Fenton, Santiago",
-          "holeNumber": 14,
-          "createdAt": "02/08/25 14:28:56"
-        },
-        {
-          "playerName": "Cuenca Fenton, Santiago",
-          "holeNumber": 16,
-          "createdAt": "02/08/25 14:28:56"
-        },
-        {
-          "playerName": "Lopez Romero, Jose",
-          "holeNumber": 1,
-          "createdAt": "02/08/25 14:28:57"
-        },
-        {
-          "playerName": "Ortego Perez, Eduardo",
-          "holeNumber": 4,
-          "createdAt": "02/08/25 14:28:58"
-        },
-        {
-          "playerName": "Ortego Perez, Eduardo",
-          "holeNumber": 14,
-          "createdAt": "02/08/25 14:28:58"
-        },
-        {
-          "playerName": "Ortego Perez, Eduardo",
-          "holeNumber": 16,
-          "createdAt": "02/08/25 14:28:58"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -3484,5 +3375,153 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:16.025Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72439
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Fernandez Gonzalez, Antonio",
+          "holeNumber": 7,
+          "createdAt": "02/08/25 14:28:38"
+        },
+        {
+          "playerName": "Garcia Frias, Antonio Javier",
+          "holeNumber": 3,
+          "createdAt": "02/08/25 14:28:39"
+        },
+        {
+          "playerName": "Fernandez Lopez, Daniel",
+          "holeNumber": 13,
+          "createdAt": "02/08/25 14:28:40"
+        },
+        {
+          "playerName": "Gonzalez De Molina  Losada, Federico",
+          "holeNumber": 16,
+          "createdAt": "02/08/25 14:28:42"
+        },
+        {
+          "playerName": "Duran Del Castillo, Francisco Javier",
+          "holeNumber": 13,
+          "createdAt": "02/08/25 14:28:43"
+        },
+        {
+          "playerName": "Garrido Merida, Francisco Manuel",
+          "holeNumber": 16,
+          "createdAt": "02/08/25 14:28:43"
+        },
+        {
+          "playerName": "Garcia Frias, Gonzalo",
+          "holeNumber": 2,
+          "createdAt": "02/08/25 14:28:43"
+        },
+        {
+          "playerName": "Garcia Frias, Gonzalo",
+          "holeNumber": 14,
+          "createdAt": "02/08/25 14:28:44"
+        },
+        {
+          "playerName": "Bravo Grau, Jº Francisco",
+          "holeNumber": 7,
+          "createdAt": "02/08/25 14:28:46"
+        },
+        {
+          "playerName": "Merlo Herrero, Jose Luis",
+          "holeNumber": 7,
+          "createdAt": "02/08/25 14:28:46"
+        },
+        {
+          "playerName": "Velasco Santiago, Jose Manuel",
+          "holeNumber": 6,
+          "createdAt": "02/08/25 14:28:47"
+        },
+        {
+          "playerName": "Parada Navarrete, Juan Carlos",
+          "holeNumber": 1,
+          "createdAt": "02/08/25 14:28:48"
+        },
+        {
+          "playerName": "Parada Navarrete, Juan Carlos",
+          "holeNumber": 16,
+          "createdAt": "02/08/25 14:28:48"
+        },
+        {
+          "playerName": "Torreblanca Cespedes, Juan",
+          "holeNumber": 17,
+          "createdAt": "02/08/25 14:28:49"
+        },
+        {
+          "playerName": "Muñoz Escalante, Pedro",
+          "holeNumber": 5,
+          "createdAt": "02/08/25 14:28:53"
+        },
+        {
+          "playerName": "Garcia Navas, Ruben",
+          "holeNumber": 4,
+          "createdAt": "02/08/25 14:28:55"
+        },
+        {
+          "playerName": "Garcia Navas, Ruben",
+          "holeNumber": 8,
+          "createdAt": "02/08/25 14:28:55"
+        },
+        {
+          "playerName": "Garcia Navas, Ruben",
+          "holeNumber": 14,
+          "createdAt": "02/08/25 14:28:55"
+        },
+        {
+          "playerName": "Cuenca Fenton, Santiago",
+          "holeNumber": 2,
+          "createdAt": "02/08/25 14:28:56"
+        },
+        {
+          "playerName": "Cuenca Fenton, Santiago",
+          "holeNumber": 14,
+          "createdAt": "02/08/25 14:28:56"
+        },
+        {
+          "playerName": "Cuenca Fenton, Santiago",
+          "holeNumber": 16,
+          "createdAt": "02/08/25 14:28:56"
+        },
+        {
+          "playerName": "Lopez Romero, Jose",
+          "holeNumber": 1,
+          "createdAt": "02/08/25 14:28:57"
+        },
+        {
+          "playerName": "Ortego Perez, Eduardo",
+          "holeNumber": 4,
+          "createdAt": "02/08/25 14:28:58"
+        },
+        {
+          "playerName": "Ortego Perez, Eduardo",
+          "holeNumber": 14,
+          "createdAt": "02/08/25 14:28:58"
+        },
+        {
+          "playerName": "Ortego Perez, Eduardo",
+          "holeNumber": 16,
+          "createdAt": "02/08/25 14:28:58"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:12.342Z"
 }

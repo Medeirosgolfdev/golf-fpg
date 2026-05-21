@@ -1,14 +1,14 @@
 {
   "tourId": 70135,
   "url": "https://www.nextcaddy.com/tour/70135",
-  "scrapedAt": "2026-05-09T10:15:37.261Z",
+  "scrapedAt": "2026-05-21T16:39:00.860Z",
   "meta": {
     "name": "LACALA1904",
     "organizer": null,
     "course": "Miraflores Golf",
     "courseCode": "AM76",
-    "dateStart": "19 abr 2026",
-    "dateEnd": "19 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-19"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 51,
       "header": [
         "Pos",
         "Jugador",
@@ -600,6 +601,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 51
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1330,6 +1338,7 @@
       "nivel": "AMB5093309"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {
       "p": {
@@ -1703,6 +1712,6 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:43.648Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:38.277Z"
 }

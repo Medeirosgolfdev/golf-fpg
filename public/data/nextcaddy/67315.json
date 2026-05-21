@@ -1,14 +1,14 @@
 {
   "tourId": 67315,
   "url": "https://www.nextcaddy.com/tour/67315",
-  "scrapedAt": "2026-05-09T09:57:16.285Z",
+  "scrapedAt": "2026-05-21T16:36:23.460Z",
   "meta": {
     "name": "VOBS COMPETITION",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "08 ene 2026",
-    "dateEnd": "08 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-08"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 14,
       "header": [
         "Pos",
         "Jugador",
@@ -193,6 +194,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 14
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -396,6 +404,139 @@
       "licencia": "AMC3904584",
       "hcp": 16.8,
       "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Bret Myles Duncan",
+          "hcp": 22,
+          "ins": "2241739",
+          "jid": "71726",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Glynn Rodgers",
+          "hcp": 4.4,
+          "ins": "2241740",
+          "jid": "71726",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Jeffrey Geesing",
+          "hcp": 21.5,
+          "ins": "2241741",
+          "jid": "71726",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Peter Green",
+          "hcp": 16.8,
+          "ins": "2241807",
+          "jid": "71726",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 10,
+          "name": "Kieran Byrne",
+          "hcp": 12.9,
+          "ins": "2241745",
+          "jid": "71726",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 10,
+          "name": "Louis Jorfi",
+          "hcp": 17.8,
+          "ins": "2241746",
+          "jid": "71726",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 10,
+          "name": "Jeff Shellton",
+          "hcp": 14.2,
+          "ins": "2241747",
+          "jid": "71726",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 10,
+          "name": "Tony Pearse",
+          "hcp": 12.1,
+          "ins": "2241751",
+          "jid": "71726",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Barry Fennelly",
+          "hcp": 12.2,
+          "ins": "2241742",
+          "jid": "71726",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Paul Monks",
+          "hcp": 18.2,
+          "ins": "2241743",
+          "jid": "71726",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Carl Cluck",
+          "hcp": 19.5,
+          "ins": "2241744",
+          "jid": "71726",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 10,
+          "name": "Jeffrey Wadsworth",
+          "hcp": 16.1,
+          "ins": "2241748",
+          "jid": "71726",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 10,
+          "name": "Matthew Colin Anderson",
+          "hcp": 20.7,
+          "ins": "2241749",
+          "jid": "71726",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 10,
+          "name": "Michael Marney",
+          "hcp": 20.4,
+          "ins": "2241750",
+          "jid": "71726",
+          "nivel": "S"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -605,138 +746,6 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Bret Myles Duncan",
-          "hcp": 22,
-          "ins": "2241739",
-          "jid": "71726",
-          "nivel": "S"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Glynn Rodgers",
-          "hcp": 4.4,
-          "ins": "2241740",
-          "jid": "71726",
-          "nivel": "S"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Jeffrey Geesing",
-          "hcp": 21.5,
-          "ins": "2241741",
-          "jid": "71726",
-          "nivel": "S"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Peter Green",
-          "hcp": 16.8,
-          "ins": "2241807",
-          "jid": "71726",
-          "nivel": "S"
-        },
-        {
-          "time": "10:00",
-          "tee": 10,
-          "name": "Kieran Byrne",
-          "hcp": 12.9,
-          "ins": "2241745",
-          "jid": "71726",
-          "nivel": "S"
-        },
-        {
-          "time": "10:00",
-          "tee": 10,
-          "name": "Louis Jorfi",
-          "hcp": 17.8,
-          "ins": "2241746",
-          "jid": "71726",
-          "nivel": "S"
-        },
-        {
-          "time": "10:00",
-          "tee": 10,
-          "name": "Jeff Shellton",
-          "hcp": 14.2,
-          "ins": "2241747",
-          "jid": "71726",
-          "nivel": "S"
-        },
-        {
-          "time": "10:00",
-          "tee": 10,
-          "name": "Tony Pearse",
-          "hcp": 12.1,
-          "ins": "2241751",
-          "jid": "71726",
-          "nivel": "S"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Barry Fennelly",
-          "hcp": 12.2,
-          "ins": "2241742",
-          "jid": "71726",
-          "nivel": "S"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Paul Monks",
-          "hcp": 18.2,
-          "ins": "2241743",
-          "jid": "71726",
-          "nivel": "S"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Carl Cluck",
-          "hcp": 19.5,
-          "ins": "2241744",
-          "jid": "71726",
-          "nivel": "S"
-        },
-        {
-          "time": "10:10",
-          "tee": 10,
-          "name": "Jeffrey Wadsworth",
-          "hcp": 16.1,
-          "ins": "2241748",
-          "jid": "71726",
-          "nivel": "S"
-        },
-        {
-          "time": "10:10",
-          "tee": 10,
-          "name": "Matthew Colin Anderson",
-          "hcp": 20.7,
-          "ins": "2241749",
-          "jid": "71726",
-          "nivel": "S"
-        },
-        {
-          "time": "10:10",
-          "tee": 10,
-          "name": "Michael Marney",
-          "hcp": 20.4,
-          "ins": "2241750",
-          "jid": "71726",
-          "nivel": "S"
-        }
-      ]
-    }
-  ],
-  "horariosScrapedAt": "2026-05-09T12:12:06.726Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:01.870Z"
 }

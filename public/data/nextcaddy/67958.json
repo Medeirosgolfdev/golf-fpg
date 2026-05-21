@@ -1,14 +1,14 @@
 {
   "tourId": 67958,
   "url": "https://www.nextcaddy.com/tour/67958",
-  "scrapedAt": "2026-05-09T10:07:51.384Z",
+  "scrapedAt": "2026-05-21T16:38:31.500Z",
   "meta": {
     "name": "Torneo Senior Damas \"El Encín\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "el Encin Golf",
     "courseCode": "CMC8",
-    "dateStart": "07 abr 2026",
-    "dateEnd": "07 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Circuito Senior Da",
     "categories": [
       "Senior",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-07"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Senior 1ª Categoría",
+      "expectedJugadores": 16,
       "header": [
         "Pos",
         "Jugador",
@@ -216,6 +217,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Clasificación Senior 2ª Categoría",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -441,6 +444,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Clasificación Supersenior 1ª Categoría",
+      "expectedJugadores": 17,
       "header": [
         "Pos",
         "Jugador",
@@ -644,6 +649,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Clasificación Supersenior 2ª Categoría",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -858,6 +865,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Clasificación Supersenior 3ª Categoría",
+      "expectedJugadores": 14,
       "header": [
         "Pos",
         "Jugador",
@@ -1028,6 +1037,8 @@
     },
     {
       "category": 6,
+      "categoryName": "Clasificación Scratch General",
+      "expectedJugadores": 84,
       "header": [
         "Pos",
         "Jugador",
@@ -1967,6 +1978,33 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Senior 1ª Categoría",
+      "jugadores": 16
+    },
+    "2": {
+      "name": "Clasificación Senior 2ª Categoría",
+      "jugadores": 19
+    },
+    "3": {
+      "name": "Clasificación Supersenior 1ª Categoría",
+      "jugadores": 17
+    },
+    "4": {
+      "name": "Clasificación Supersenior 2ª Categoría",
+      "jugadores": 18
+    },
+    "5": {
+      "name": "Clasificación Supersenior 3ª Categoría",
+      "jugadores": 14
+    },
+    "6": {
+      "name": "Clasificación Scratch General",
+      "jugadores": 84
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -3152,53 +3190,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72476
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Cantos Ruiz, Jesus",
-          "holeNumber": 1,
-          "createdAt": "28/07/25 09:00:56"
-        },
-        {
-          "playerName": "Salido Hedrera, Jose Manuel",
-          "holeNumber": 16,
-          "createdAt": "28/07/25 10:33:40"
-        },
-        {
-          "playerName": "Green, Peter",
-          "holeNumber": 2,
-          "createdAt": "28/07/25 11:19:18"
-        },
-        {
-          "playerName": "Davies, Christopher",
-          "holeNumber": 2,
-          "createdAt": "28/07/25 11:20:30"
-        },
-        {
-          "playerName": "Careaga Berge, Miguel",
-          "holeNumber": 16,
-          "createdAt": "28/07/25 12:12:31"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -3962,5 +3953,55 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:17.457Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72476
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Cantos Ruiz, Jesus",
+          "holeNumber": 1,
+          "createdAt": "28/07/25 09:00:56"
+        },
+        {
+          "playerName": "Salido Hedrera, Jose Manuel",
+          "holeNumber": 16,
+          "createdAt": "28/07/25 10:33:40"
+        },
+        {
+          "playerName": "Green, Peter",
+          "holeNumber": 2,
+          "createdAt": "28/07/25 11:19:18"
+        },
+        {
+          "playerName": "Davies, Christopher",
+          "holeNumber": 2,
+          "createdAt": "28/07/25 11:20:30"
+        },
+        {
+          "playerName": "Careaga Berge, Miguel",
+          "holeNumber": 16,
+          "createdAt": "28/07/25 12:12:31"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/3683127635_rrll_senior_damas_encin.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:14.065Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 68191,
   "url": "https://www.nextcaddy.com/tour/68191",
-  "scrapedAt": "2026-05-09T10:07:45.894Z",
+  "scrapedAt": "2026-05-21T16:38:22.727Z",
   "meta": {
     "name": "Liga Femenina (hcp igual o menor de 42.0)",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Golf Park Entertainment",
     "courseCode": "CM18",
-    "dateStart": "29 mar 2026",
-    "dateEnd": "29 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Liga Femenina 2026",
     "categories": [
       "Señoras",
@@ -16,13 +16,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-03-29"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual Señoras Femenino",
+      "expectedJugadores": 11,
       "header": [
         "Pos",
         "Jugador",
@@ -159,6 +160,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Señoras Femenino",
+      "jugadores": 11
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -322,58 +330,6 @@
       "nivel": "I"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72738
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Galindo Morales, Gabriel - Galindo Morales, Miguel Angel",
-          "holeNumber": 3,
-          "createdAt": "07/08/25 21:52:17"
-        },
-        {
-          "playerName": "Galindo Morales, Gabriel - Galindo Morales, Miguel Angel",
-          "holeNumber": 8,
-          "createdAt": "07/08/25 21:52:17"
-        },
-        {
-          "playerName": "Quiros Morales, Juan Jesus - Gomez Postigo, Antonio Carlos",
-          "holeNumber": 1,
-          "createdAt": "07/08/25 21:52:17"
-        },
-        {
-          "playerName": "Quiros Morales, Juan Jesus - Gomez Postigo, Antonio Carlos",
-          "holeNumber": 4,
-          "createdAt": "07/08/25 21:52:17"
-        },
-        {
-          "playerName": "Quiros Morales, Juan Jesus - Gomez Postigo, Antonio Carlos",
-          "holeNumber": 8,
-          "createdAt": "07/08/25 21:52:17"
-        },
-        {
-          "playerName": "Larrea Navarro, Rafael - Larrea Fernandez, Rafael",
-          "holeNumber": 3,
-          "createdAt": "07/08/25 21:52:17"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -480,5 +436,58 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:21.376Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72738
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Galindo Morales, Gabriel - Galindo Morales, Miguel Angel",
+          "holeNumber": 3,
+          "createdAt": "07/08/25 21:52:17"
+        },
+        {
+          "playerName": "Galindo Morales, Gabriel - Galindo Morales, Miguel Angel",
+          "holeNumber": 8,
+          "createdAt": "07/08/25 21:52:17"
+        },
+        {
+          "playerName": "Quiros Morales, Juan Jesus - Gomez Postigo, Antonio Carlos",
+          "holeNumber": 1,
+          "createdAt": "07/08/25 21:52:17"
+        },
+        {
+          "playerName": "Quiros Morales, Juan Jesus - Gomez Postigo, Antonio Carlos",
+          "holeNumber": 4,
+          "createdAt": "07/08/25 21:52:17"
+        },
+        {
+          "playerName": "Quiros Morales, Juan Jesus - Gomez Postigo, Antonio Carlos",
+          "holeNumber": 8,
+          "createdAt": "07/08/25 21:52:17"
+        },
+        {
+          "playerName": "Larrea Navarro, Rafael - Larrea Fernandez, Rafael",
+          "holeNumber": 3,
+          "createdAt": "07/08/25 21:52:17"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:18.520Z"
 }

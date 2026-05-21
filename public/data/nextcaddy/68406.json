@@ -1,14 +1,14 @@
 {
   "tourId": 68406,
   "url": "https://www.nextcaddy.com/tour/68406",
-  "scrapedAt": "2026-05-09T09:49:34.216Z",
+  "scrapedAt": "2026-05-21T16:37:00.284Z",
   "meta": {
     "name": "4ª P. C. INFANTIL B.K. 5P3 HOYOS 14-02-26",
     "organizer": null,
     "course": "Real Club de Golf Vista Hermosa",
     "courseCode": "AM05",
-    "dateStart": "14 feb 2026",
-    "dateEnd": "14 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
       "INFANTIL",
@@ -18,11 +18,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-14"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -137,22 +138,6 @@
       "nivel": "AM05516100"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73012
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -214,5 +199,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:24.562Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73012
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:22.128Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 67587,
   "url": "https://www.nextcaddy.com/tour/67587",
-  "scrapedAt": "2026-05-09T09:49:37.628Z",
+  "scrapedAt": "2026-05-21T16:37:59.242Z",
   "meta": {
     "name": "Campeonato de Madrid Universitario de Pitch & Putt 2026",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "19 mar 2026",
-    "dateEnd": "19 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-03-19"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual Masculino",
+      "expectedJugadores": 51,
       "header": [
         "Pos",
         "Jugador",
@@ -601,6 +602,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Scratch Individual Femenino",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -705,6 +708,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Handicap Individual Masculino",
+      "expectedJugadores": 51,
       "header": [
         "Pos",
         "Jugador",
@@ -1282,6 +1287,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Handicap Individual Femenino",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -1385,6 +1392,25 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual Masculino",
+      "jugadores": 51
+    },
+    "2": {
+      "name": "Scratch Individual Femenino",
+      "jugadores": 8
+    },
+    "3": {
+      "name": "Handicap Individual Masculino",
+      "jugadores": 51
+    },
+    "4": {
+      "name": "Handicap Individual Femenino",
+      "jugadores": 8
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2227,22 +2253,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72068
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -2781,5 +2791,25 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:10.734Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72068
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [
+    "/uploads/competiciones/pdf/67587_cartel_370.pdf",
+    "/uploads/competiciones/pdf/205193946_rrll_universitario_p&amp;p.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:06.453Z"
 }

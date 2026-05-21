@@ -1,14 +1,14 @@
 {
   "tourId": 69618,
   "url": "https://www.nextcaddy.com/tour/69618",
-  "scrapedAt": "2026-05-09T10:07:51.478Z",
+  "scrapedAt": "2026-05-21T16:38:31.523Z",
   "meta": {
     "name": "MENS DAY 07/04",
     "organizer": null,
     "course": "Miraflores Golf",
     "courseCode": "AM76",
-    "dateStart": "07 abr 2026",
-    "dateEnd": "07 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros Facebo",
     "categories": [
       "Caballeros",
@@ -16,13 +16,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-07"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 66,
       "header": [
         "Pos",
         "Jugador",
@@ -764,6 +765,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 66
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1697,6 +1705,7 @@
       "nivel": "AM76700327"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {
       "p": {
@@ -2136,6 +2145,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:42.663Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:35.714Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 69078,
   "url": "https://www.nextcaddy.com/tour/69078",
-  "scrapedAt": "2026-05-09T09:58:11.342Z",
+  "scrapedAt": "2026-05-21T16:37:52.213Z",
   "meta": {
     "name": "TORNEO AL CIELO CON ELLA",
     "organizer": null,
     "course": "Club de Golf Bellavista",
     "courseCode": "AM07",
-    "dateStart": "14 mar 2026",
-    "dateEnd": "14 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-14"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "2º Categoria",
+      "expectedJugadores": 21,
       "header": [
         "Pos",
         "Jugador",
@@ -271,6 +272,8 @@
     },
     {
       "category": 2,
+      "categoryName": "1º Categoria",
+      "expectedJugadores": 21,
       "header": [
         "Pos",
         "Jugador",
@@ -517,6 +520,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "2º Categoria",
+      "jugadores": 21
+    },
+    "2": {
+      "name": "1º Categoria",
+      "jugadores": 21
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1121,38 +1135,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73806
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Durran, Eamon Michael",
-          "holeNumber": 7,
-          "createdAt": "15/09/25 14:03:48"
-        },
-        {
-          "playerName": "Durran, Eamon Michael",
-          "holeNumber": 12,
-          "createdAt": "15/09/25 15:25:37"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1538,5 +1520,40 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:32.633Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73806
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Durran, Eamon Michael",
+          "holeNumber": 7,
+          "createdAt": "15/09/25 14:03:48"
+        },
+        {
+          "playerName": "Durran, Eamon Michael",
+          "holeNumber": 12,
+          "createdAt": "15/09/25 15:25:37"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/69078_cartel_313.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:30.735Z"
 }

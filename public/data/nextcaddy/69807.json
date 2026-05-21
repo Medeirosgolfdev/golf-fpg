@@ -1,14 +1,14 @@
 {
   "tourId": 69807,
   "url": "https://www.nextcaddy.com/tour/69807",
-  "scrapedAt": "2026-05-09T10:15:54.361Z",
+  "scrapedAt": "2026-05-21T16:39:27.543Z",
   "meta": {
     "name": "II PRUEBA CIRCUITO INTERESCOLAR 2025-2026 GEC",
     "organizer": "Federacion de Golf de Madrid",
     "course": "el Encin Golf",
     "courseCode": "CMC8",
-    "dateStart": "07 may 2026",
-    "dateEnd": "07 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-07"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": null,
@@ -2222,6 +2223,7 @@
       "nivel": "I"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -2238,6 +2240,11 @@
     }
   ],
   "scoreTypes": null,
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:43.248Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/2620311328_interescolar_docs_1.pdf",
+    "/uploads/competiciones/cartel/747501512_69807-2-prueba-circuito-interescolar-2025-2026.pdf",
+    "/uploads/competiciones/pdf/1649230076_normativa_2ª_prueba_interescolar_7_mayo.pdf",
+    "/uploads/competiciones/pdf/692516221_reglas_locales_el_encin_.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:37.517Z"
 }

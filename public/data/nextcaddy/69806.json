@@ -1,14 +1,14 @@
 {
   "tourId": 69806,
   "url": "https://www.nextcaddy.com/tour/69806",
-  "scrapedAt": "2026-05-09T10:15:34.252Z",
+  "scrapedAt": "2026-05-21T16:38:56.121Z",
   "meta": {
     "name": "LIGA DE PRINCIPIANTES 25/26, JORNADA 4",
     "organizer": null,
     "course": "Club de Golf Pozoblanco",
     "courseCode": "AM10",
-    "dateStart": "18 abr 2026",
-    "dateEnd": "18 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-18"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Jornada Iv Liga Principiantes 25-26",
+      "expectedJugadores": 16,
       "header": [
         "Pos",
         "Jugador",
@@ -215,6 +216,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Jornada Iv Liga Principiantes 25-26",
+      "jugadores": 16
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -455,118 +463,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74606
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Joergensen, Orla Martin",
-          "holeNumber": 2,
-          "createdAt": "21/10/25 18:04:27"
-        },
-        {
-          "playerName": "Burke Burke, Paddy",
-          "holeNumber": 8,
-          "createdAt": "21/10/25 18:04:28"
-        },
-        {
-          "playerName": "Burke Burke, Paddy",
-          "holeNumber": 11,
-          "createdAt": "21/10/25 18:04:28"
-        },
-        {
-          "playerName": "Burke Burke, Paddy",
-          "holeNumber": 18,
-          "createdAt": "21/10/25 18:04:28"
-        },
-        {
-          "playerName": "Singh Sohal, Aneel",
-          "holeNumber": 15,
-          "createdAt": "21/10/25 18:04:28"
-        },
-        {
-          "playerName": "Watson, Michael Alan",
-          "holeNumber": 1,
-          "createdAt": "21/10/25 18:04:28"
-        },
-        {
-          "playerName": "Gonzalez  Lasuen, Pedro",
-          "holeNumber": 9,
-          "createdAt": "21/10/25 18:04:29"
-        },
-        {
-          "playerName": "Cooper, Derek",
-          "holeNumber": 15,
-          "createdAt": "21/10/25 18:04:34"
-        },
-        {
-          "playerName": "Henderson, Ian",
-          "holeNumber": 13,
-          "createdAt": "21/10/25 18:04:35"
-        },
-        {
-          "playerName": "Vilianen, Olli-Pekka",
-          "holeNumber": 9,
-          "createdAt": "21/10/25 18:04:35"
-        },
-        {
-          "playerName": "Lykke Hansen, Flemming",
-          "holeNumber": 15,
-          "createdAt": "21/10/25 18:04:38"
-        },
-        {
-          "playerName": "Howarth, Andrew",
-          "holeNumber": 1,
-          "createdAt": "21/10/25 18:04:41"
-        },
-        {
-          "playerName": "Howarth, Andrew",
-          "holeNumber": 7,
-          "createdAt": "21/10/25 18:04:41"
-        },
-        {
-          "playerName": "Abbasciano, Jordan Antony",
-          "holeNumber": 1,
-          "createdAt": "21/10/25 18:04:41"
-        },
-        {
-          "playerName": "Abbasciano, Jordan Antony",
-          "holeNumber": 10,
-          "createdAt": "21/10/25 18:04:41"
-        },
-        {
-          "playerName": "Orr, Philip",
-          "holeNumber": 5,
-          "createdAt": "21/10/25 18:04:43"
-        }
-      ]
-    },
-    "eagle": {
-      "scoreTypeKey": "eagle",
-      "players": [
-        {
-          "playerName": "Jonathan Holden, Charles",
-          "holeNumber": 14,
-          "createdAt": "21/10/25 18:04:29"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -718,5 +614,120 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:57.141Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74606
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Joergensen, Orla Martin",
+          "holeNumber": 2,
+          "createdAt": "21/10/25 18:04:27"
+        },
+        {
+          "playerName": "Burke Burke, Paddy",
+          "holeNumber": 8,
+          "createdAt": "21/10/25 18:04:28"
+        },
+        {
+          "playerName": "Burke Burke, Paddy",
+          "holeNumber": 11,
+          "createdAt": "21/10/25 18:04:28"
+        },
+        {
+          "playerName": "Burke Burke, Paddy",
+          "holeNumber": 18,
+          "createdAt": "21/10/25 18:04:28"
+        },
+        {
+          "playerName": "Singh Sohal, Aneel",
+          "holeNumber": 15,
+          "createdAt": "21/10/25 18:04:28"
+        },
+        {
+          "playerName": "Watson, Michael Alan",
+          "holeNumber": 1,
+          "createdAt": "21/10/25 18:04:28"
+        },
+        {
+          "playerName": "Gonzalez  Lasuen, Pedro",
+          "holeNumber": 9,
+          "createdAt": "21/10/25 18:04:29"
+        },
+        {
+          "playerName": "Cooper, Derek",
+          "holeNumber": 15,
+          "createdAt": "21/10/25 18:04:34"
+        },
+        {
+          "playerName": "Henderson, Ian",
+          "holeNumber": 13,
+          "createdAt": "21/10/25 18:04:35"
+        },
+        {
+          "playerName": "Vilianen, Olli-Pekka",
+          "holeNumber": 9,
+          "createdAt": "21/10/25 18:04:35"
+        },
+        {
+          "playerName": "Lykke Hansen, Flemming",
+          "holeNumber": 15,
+          "createdAt": "21/10/25 18:04:38"
+        },
+        {
+          "playerName": "Howarth, Andrew",
+          "holeNumber": 1,
+          "createdAt": "21/10/25 18:04:41"
+        },
+        {
+          "playerName": "Howarth, Andrew",
+          "holeNumber": 7,
+          "createdAt": "21/10/25 18:04:41"
+        },
+        {
+          "playerName": "Abbasciano, Jordan Antony",
+          "holeNumber": 1,
+          "createdAt": "21/10/25 18:04:41"
+        },
+        {
+          "playerName": "Abbasciano, Jordan Antony",
+          "holeNumber": 10,
+          "createdAt": "21/10/25 18:04:41"
+        },
+        {
+          "playerName": "Orr, Philip",
+          "holeNumber": 5,
+          "createdAt": "21/10/25 18:04:43"
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Jonathan Holden, Charles",
+          "holeNumber": 14,
+          "createdAt": "21/10/25 18:04:29"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/cartel/186274379_69806-liga-de-principiantes-25-26-jornada-4.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:37.560Z"
 }

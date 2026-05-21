@@ -1,14 +1,14 @@
 {
   "tourId": 70231,
   "url": "https://www.nextcaddy.com/tour/70231",
-  "scrapedAt": "2026-05-09T10:15:38.243Z",
+  "scrapedAt": "2026-05-21T16:39:02.317Z",
   "meta": {
     "name": "LADIESSTBF2204",
     "organizer": null,
     "course": "Miraflores Golf",
     "courseCode": "AM76",
-    "dateStart": "21 abr 2026",
-    "dateEnd": "21 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras Facebook",
     "categories": [
       "Señoras",
@@ -16,11 +16,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-21"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -240,6 +241,7 @@
       "nivel": "AM76893887"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -287,6 +289,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:43.794Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:38.816Z"
 }

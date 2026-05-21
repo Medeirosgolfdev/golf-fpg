@@ -1,14 +1,14 @@
 {
   "tourId": 61236,
   "url": "https://www.nextcaddy.com/tour/61236",
-  "scrapedAt": "2026-05-08T17:34:06.540Z",
+  "scrapedAt": "2026-05-21T16:41:15.477Z",
   "meta": {
     "name": "Pequecircuito Zona C",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Escuela de Golf Miguel ángel Jiménez",
     "courseCode": "AMI5",
-    "dateStart": "07 nov 2026",
-    "dateEnd": "07 nov 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Juvenil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-11-07"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -294,11 +296,12 @@
       "players": [
         {
           "playerName": "Calle Villalba, Jose Luis",
-          "holeNumber": 15
+          "holeNumber": 15,
+          "createdAt": "29/09/24 12:44:45"
         }
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:24.443Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:41:54.005Z"
 }

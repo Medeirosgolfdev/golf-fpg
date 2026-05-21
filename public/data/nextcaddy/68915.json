@@ -1,14 +1,14 @@
 {
   "tourId": 68915,
   "url": "https://www.nextcaddy.com/tour/68915",
-  "scrapedAt": "2026-05-09T09:58:11.103Z",
+  "scrapedAt": "2026-05-21T16:37:51.729Z",
   "meta": {
     "name": "II TORNEO CADIZ CF - CAJASOL",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "14 mar 2026",
-    "dateEnd": "14 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-14"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Senior",
+      "expectedJugadores": 52,
       "header": [
         "Pos",
         "Jugador",
@@ -612,6 +613,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 80,
       "header": [
         "Pos",
         "Jugador",
@@ -1508,6 +1511,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Segunda Categoria Handicap Individual Desde 14.1 Hcp",
+      "expectedJugadores": 61,
       "header": [
         "Pos",
         "Jugador",
@@ -2195,6 +2200,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Primera Categoría Handicap Individual Hasta 14 Hcp",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -2420,6 +2427,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Mejor Dama",
+      "expectedJugadores": 5,
       "header": [
         "Pos",
         "Jugador",
@@ -2490,6 +2499,29 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Senior",
+      "jugadores": 52
+    },
+    "2": {
+      "name": "Scratch Individual",
+      "jugadores": 80
+    },
+    "3": {
+      "name": "Segunda Categoria Handicap Individual Desde 14.1 Hcp",
+      "jugadores": 61
+    },
+    "4": {
+      "name": "Primera Categoría Handicap Individual Hasta 14 Hcp",
+      "jugadores": 19
+    },
+    "5": {
+      "name": "Mejor Dama",
+      "jugadores": 5
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -3633,83 +3665,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73615
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Alvarez Galindo, Juan Miguel",
-          "holeNumber": 12,
-          "createdAt": "13/09/25 18:55:34"
-        },
-        {
-          "playerName": "Cuesta Hurtado, Javier",
-          "holeNumber": 8,
-          "createdAt": "13/09/25 18:55:36"
-        },
-        {
-          "playerName": "Fernandez Torres, Rosario",
-          "holeNumber": 6,
-          "createdAt": "13/09/25 18:55:38"
-        },
-        {
-          "playerName": "Gonzalez-Carrascosa Perez De La Borda, Javier",
-          "holeNumber": 7,
-          "createdAt": "13/09/25 18:55:40"
-        },
-        {
-          "playerName": "Hidalgo Navarro, Aurora",
-          "holeNumber": 3,
-          "createdAt": "13/09/25 18:55:41"
-        },
-        {
-          "playerName": "Infanzon Suarez, Carlos",
-          "holeNumber": 5,
-          "createdAt": "13/09/25 18:55:41"
-        },
-        {
-          "playerName": "Porres Ureña, Jesus",
-          "holeNumber": 14,
-          "createdAt": "13/09/25 18:55:50"
-        },
-        {
-          "playerName": "Rosales Segura, Jose Antonio",
-          "holeNumber": 10,
-          "createdAt": "13/09/25 18:55:51"
-        },
-        {
-          "playerName": "Santaella Cruz, Enrique",
-          "holeNumber": 17,
-          "createdAt": "13/09/25 18:55:54"
-        },
-        {
-          "playerName": "Vidal Lopez-Burgos, Sebastian",
-          "holeNumber": 10,
-          "createdAt": "13/09/25 18:55:56"
-        },
-        {
-          "playerName": "Enrique Sanchez, Manuel",
-          "holeNumber": 10,
-          "createdAt": "13/09/25 18:55:58"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -4437,5 +4392,83 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:31.002Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73615
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Alvarez Galindo, Juan Miguel",
+          "holeNumber": 12,
+          "createdAt": "13/09/25 18:55:34"
+        },
+        {
+          "playerName": "Cuesta Hurtado, Javier",
+          "holeNumber": 8,
+          "createdAt": "13/09/25 18:55:36"
+        },
+        {
+          "playerName": "Fernandez Torres, Rosario",
+          "holeNumber": 6,
+          "createdAt": "13/09/25 18:55:38"
+        },
+        {
+          "playerName": "Gonzalez-Carrascosa Perez De La Borda, Javier",
+          "holeNumber": 7,
+          "createdAt": "13/09/25 18:55:40"
+        },
+        {
+          "playerName": "Hidalgo Navarro, Aurora",
+          "holeNumber": 3,
+          "createdAt": "13/09/25 18:55:41"
+        },
+        {
+          "playerName": "Infanzon Suarez, Carlos",
+          "holeNumber": 5,
+          "createdAt": "13/09/25 18:55:41"
+        },
+        {
+          "playerName": "Porres Ureña, Jesus",
+          "holeNumber": 14,
+          "createdAt": "13/09/25 18:55:50"
+        },
+        {
+          "playerName": "Rosales Segura, Jose Antonio",
+          "holeNumber": 10,
+          "createdAt": "13/09/25 18:55:51"
+        },
+        {
+          "playerName": "Santaella Cruz, Enrique",
+          "holeNumber": 17,
+          "createdAt": "13/09/25 18:55:54"
+        },
+        {
+          "playerName": "Vidal Lopez-Burgos, Sebastian",
+          "holeNumber": 10,
+          "createdAt": "13/09/25 18:55:56"
+        },
+        {
+          "playerName": "Enrique Sanchez, Manuel",
+          "holeNumber": 10,
+          "createdAt": "13/09/25 18:55:58"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:29.168Z"
 }

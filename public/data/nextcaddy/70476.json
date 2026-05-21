@@ -1,14 +1,14 @@
 {
   "tourId": 70476,
   "url": "https://www.nextcaddy.com/tour/70476",
-  "scrapedAt": "2026-05-09T10:15:54.343Z",
+  "scrapedAt": "2026-05-21T16:39:27.906Z",
   "meta": {
     "name": "GOLFISTAS DE SEVILLA (MAÑANA 9:30)",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": "07 may 2026",
-    "dateEnd": "07 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-07"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -528,22 +529,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75420
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -866,5 +851,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:13:00.784Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75420
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [
+    "/uploads/competiciones/cartel/314341037_70476-golfistas-de-sevilla-manana-9-30.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:41.367Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 67549,
   "url": "https://www.nextcaddy.com/tour/67549",
-  "scrapedAt": "2026-05-09T09:57:50.721Z",
+  "scrapedAt": "2026-05-21T16:37:17.154Z",
   "meta": {
     "name": "Prueba Clasificatoria Gran Premio (Naturavila)",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "22 feb 2026",
-    "dateEnd": "22 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-22"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -39,6 +41,8 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:28.207Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/2659276631_clasificaciones_gran_premio_jcylnaturavila.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:05.411Z"
 }

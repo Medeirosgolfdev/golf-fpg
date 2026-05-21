@@ -1,14 +1,14 @@
 {
   "tourId": 69254,
   "url": "https://www.nextcaddy.com/tour/69254",
-  "scrapedAt": "2026-05-09T10:15:36.083Z",
+  "scrapedAt": "2026-05-21T16:38:59.242Z",
   "meta": {
     "name": "Las Pinaillas 2ª Categoría",
     "organizer": null,
     "course": "",
     "courseCode": "MAJC",
-    "dateStart": "19 abr 2026",
-    "dateEnd": "19 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -21,11 +21,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-19"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -250,6 +251,148 @@
       "licencia": "11-04-26 10:24",
       "hcp": 21.2,
       "nivel": "8808973934"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Samuel Herranz Garcia",
+          "hcp": 12.1,
+          "ins": "2292497",
+          "jid": "73999",
+          "nivel": "I"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Pablo Lazaro Marin",
+          "hcp": 13.3,
+          "ins": "2295882",
+          "jid": "73999",
+          "nivel": "I"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Francisco Amoros Garcia-Pagan",
+          "hcp": 15.1,
+          "ins": "2289181",
+          "jid": "73999",
+          "nivel": "I"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Sofia Diaz Jimenez",
+          "hcp": 15.8,
+          "ins": "2295657",
+          "jid": "73999",
+          "nivel": "I"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Javier Bravo Gil",
+          "hcp": 16.7,
+          "ins": "2289762",
+          "jid": "73999",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Angel Del Moral Rodriguez",
+          "hcp": 17.2,
+          "ins": "2296385",
+          "jid": "73999",
+          "nivel": "I"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Sergio Sanchez Laguna",
+          "hcp": 17.5,
+          "ins": "2293155",
+          "jid": "73999",
+          "nivel": "A"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Marian Lazaro Marin",
+          "hcp": 18.3,
+          "ins": "2295889",
+          "jid": "73999",
+          "nivel": "A"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Sebastian Klimt",
+          "hcp": 19.7,
+          "ins": "2289754",
+          "jid": "73999",
+          "nivel": "A"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "William Minguez Rutherford",
+          "hcp": 21.2,
+          "ins": "2293153",
+          "jid": "73999",
+          "nivel": "A"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Amelia Sanz Pasadas",
+          "hcp": 21.2,
+          "ins": "2296391",
+          "jid": "73999",
+          "nivel": "I"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Antonio Arribas Borreguero",
+          "hcp": 21.8,
+          "ins": "2294676",
+          "jid": "73999",
+          "nivel": "I"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Mateo Diaz Jimenez",
+          "hcp": 21.8,
+          "ins": "2295656",
+          "jid": "73999",
+          "nivel": "A"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Oliver Perela Fernandez",
+          "hcp": 22,
+          "ins": "2295671",
+          "jid": "73999",
+          "nivel": "A"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Carmen Rodriguez Segura",
+          "hcp": 23.5,
+          "ins": "2295651",
+          "jid": "73999",
+          "nivel": "A"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -569,147 +712,8 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "09:50",
-          "tee": 1,
-          "name": "Samuel Herranz Garcia",
-          "hcp": 12.1,
-          "ins": "2292497",
-          "jid": "73999",
-          "nivel": "I"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
-          "name": "Pablo Lazaro Marin",
-          "hcp": 13.3,
-          "ins": "2295882",
-          "jid": "73999",
-          "nivel": "I"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
-          "name": "Francisco Amoros Garcia-Pagan",
-          "hcp": 15.1,
-          "ins": "2289181",
-          "jid": "73999",
-          "nivel": "I"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Sofia Diaz Jimenez",
-          "hcp": 15.8,
-          "ins": "2295657",
-          "jid": "73999",
-          "nivel": "I"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Javier Bravo Gil",
-          "hcp": 16.7,
-          "ins": "2289762",
-          "jid": "73999",
-          "nivel": "A"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Angel Del Moral Rodriguez",
-          "hcp": 17.2,
-          "ins": "2296385",
-          "jid": "73999",
-          "nivel": "I"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Sergio Sanchez Laguna",
-          "hcp": 17.5,
-          "ins": "2293155",
-          "jid": "73999",
-          "nivel": "A"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Marian Lazaro Marin",
-          "hcp": 18.3,
-          "ins": "2295889",
-          "jid": "73999",
-          "nivel": "A"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Sebastian Klimt",
-          "hcp": 19.7,
-          "ins": "2289754",
-          "jid": "73999",
-          "nivel": "A"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "William Minguez Rutherford",
-          "hcp": 21.2,
-          "ins": "2293153",
-          "jid": "73999",
-          "nivel": "A"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Amelia Sanz Pasadas",
-          "hcp": 21.2,
-          "ins": "2296391",
-          "jid": "73999",
-          "nivel": "I"
-        },
-        {
-          "time": "10:20",
-          "tee": 1,
-          "name": "Antonio Arribas Borreguero",
-          "hcp": 21.8,
-          "ins": "2294676",
-          "jid": "73999",
-          "nivel": "I"
-        },
-        {
-          "time": "10:20",
-          "tee": 1,
-          "name": "Mateo Diaz Jimenez",
-          "hcp": 21.8,
-          "ins": "2295656",
-          "jid": "73999",
-          "nivel": "A"
-        },
-        {
-          "time": "10:20",
-          "tee": 1,
-          "name": "Oliver Perela Fernandez",
-          "hcp": 22,
-          "ins": "2295671",
-          "jid": "73999",
-          "nivel": "A"
-        },
-        {
-          "time": "10:20",
-          "tee": 1,
-          "name": "Carmen Rodriguez Segura",
-          "hcp": 23.5,
-          "ins": "2295651",
-          "jid": "73999",
-          "nivel": "A"
-        }
-      ]
-    }
+  "pdfs": [
+    "/uploads/competiciones/pdf/749415127_rrll_pinaillas.pdf"
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:33.910Z"
+  "horariosScrapedAt": "2026-05-21T16:42:32.130Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 67041,
   "url": "https://www.nextcaddy.com/tour/67041",
-  "scrapedAt": "2026-05-09T09:57:23.388Z",
+  "scrapedAt": "2026-05-21T16:36:37.034Z",
   "meta": {
     "name": "Categoría Especial Real Club de Golf de Sevilla",
     "organizer": null,
     "course": "",
     "courseCode": "MAJC",
-    "dateStart": "18 ene 2026",
-    "dateEnd": "18 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -19,13 +19,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-18"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Categoría Especial",
+      "expectedJugadores": 27,
       "header": [
         "Pos",
         "Jugador",
@@ -338,6 +339,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Categoría Especial",
+      "jugadores": 27
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -732,22 +740,6 @@
       "nivel": "AM02507382"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71436
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -998,5 +990,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:04.068Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71436
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [
+    "/uploads/competiciones/pdf/2632093744_reglas_locales_2025.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:58.912Z"
 }

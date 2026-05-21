@@ -1,14 +1,14 @@
 {
   "tourId": 69643,
   "url": "https://www.nextcaddy.com/tour/69643",
-  "scrapedAt": "2026-05-09T10:07:52.585Z",
+  "scrapedAt": "2026-05-21T16:38:33.408Z",
   "meta": {
     "name": "7ª P. TORNEO DAMAS 08-04-26",
     "organizer": null,
     "course": "Real Club de Golf Vista Hermosa",
     "courseCode": "AM05",
-    "dateStart": "08 abr 2026",
-    "dateEnd": "08 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras Facebook",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-08"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "2ª Categoría",
+      "expectedJugadores": 11,
       "header": [
         "Pos",
         "Jugador",
@@ -161,6 +162,8 @@
     },
     {
       "category": 2,
+      "categoryName": "1ª Categoría",
+      "expectedJugadores": 7,
       "header": [
         "Pos",
         "Jugador",
@@ -253,6 +256,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "2ª Categoría",
+      "jugadores": 11
+    },
+    "2": {
+      "name": "1ª Categoría",
+      "jugadores": 7
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -514,22 +528,6 @@
       "nivel": "AM05079949"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74416
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -699,5 +697,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:55.648Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74416
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:36.021Z"
 }

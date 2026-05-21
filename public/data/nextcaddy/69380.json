@@ -1,14 +1,14 @@
 {
   "tourId": 69380,
   "url": "https://www.nextcaddy.com/tour/69380",
-  "scrapedAt": "2026-05-09T10:07:50.283Z",
+  "scrapedAt": "2026-05-21T16:38:29.476Z",
   "meta": {
     "name": "XIV TORNEO SEMANA SANTA 2026 II Memorial Eduardo Liberal",
     "organizer": null,
     "course": "Rota Club de Golf",
     "courseCode": "AME7",
-    "dateStart": "04 abr 2026",
-    "dateEnd": "04 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,17 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-04"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Xiv Torneo Semana Santa 2026 - Ii Memorial Eduardo Liberal",
+      "jugadores": 50
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -724,48 +730,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74141
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Salido Castañer, Elena Mª",
-          "holeNumber": 5,
-          "createdAt": "02/10/25 10:57:19"
-        },
-        {
-          "playerName": "Herod, Natalia Luiza",
-          "holeNumber": 6,
-          "createdAt": "02/10/25 18:38:16"
-        },
-        {
-          "playerName": "Aguaded Gomez, Cecilia Susana",
-          "holeNumber": 9,
-          "createdAt": "02/10/25 19:18:55"
-        },
-        {
-          "playerName": "Herod, Natalia Luiza",
-          "holeNumber": 9,
-          "createdAt": "02/10/25 19:20:53"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1673,5 +1637,48 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:53.616Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74141
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Salido Castañer, Elena Mª",
+          "holeNumber": 5,
+          "createdAt": "02/10/25 10:57:19"
+        },
+        {
+          "playerName": "Herod, Natalia Luiza",
+          "holeNumber": 6,
+          "createdAt": "02/10/25 18:38:16"
+        },
+        {
+          "playerName": "Aguaded Gomez, Cecilia Susana",
+          "holeNumber": 9,
+          "createdAt": "02/10/25 19:18:55"
+        },
+        {
+          "playerName": "Herod, Natalia Luiza",
+          "holeNumber": 9,
+          "createdAt": "02/10/25 19:20:53"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:34.058Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 67245,
   "url": "https://www.nextcaddy.com/tour/67245",
-  "scrapedAt": "2026-05-09T09:57:23.836Z",
+  "scrapedAt": "2026-05-21T16:36:37.528Z",
   "meta": {
     "name": "WINTER SWING - LIGA DE INVIERNO \"CUESTA DE ENERO\"",
     "organizer": null,
     "course": "Montecastillo Barceló Golf Club",
     "courseCode": "AM29",
-    "dateStart": "18 ene 2026",
-    "dateEnd": "18 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -19,13 +19,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-18"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Segunda Categoria",
+      "expectedJugadores": 36,
       "header": [
         "Pos",
         "Jugador",
@@ -438,6 +439,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Primera Categoria",
+      "expectedJugadores": 36,
       "header": [
         "Pos",
         "Jugador",
@@ -749,7 +752,7 @@
         },
         {
           "pos": 28,
-          "name": "Antonio Manuel Ure?A Serrano",
+          "name": "Antonio Manuel Ureña Serrano",
           "licencia": "AM32612444",
           "hcp": 8.7,
           "nivel": "S",
@@ -850,6 +853,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 72,
       "header": [
         "Pos",
         "Jugador",
@@ -1216,7 +1221,7 @@
         },
         {
           "pos": 33,
-          "name": "Antonio Manuel Ure?A Serrano",
+          "name": "Antonio Manuel Ureña Serrano",
           "licencia": "AM32612444",
           "hcp": 8.7,
           "nivel": "S",
@@ -1657,6 +1662,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Segunda Categoria",
+      "jugadores": 36
+    },
+    "2": {
+      "name": "Primera Categoria",
+      "jugadores": 36
+    },
+    "3": {
+      "name": "Scratch Individual",
+      "jugadores": 72
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1884,7 +1904,7 @@
     },
     {
       "orden": 33,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "AM32612444",
       "hcp": 8.7,
       "nivel": "S"
@@ -2409,7 +2429,7 @@
     },
     {
       "orden": 34,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "AM32612444",
       "hcp": 8.7,
       "nivel": "S"
@@ -2681,33 +2701,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71654
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Leiner, Sven",
-          "holeNumber": 1,
-          "createdAt": "21/06/25 14:29:21"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -2859,7 +2852,7 @@
         {
           "time": "09:00",
           "tee": 5,
-          "name": "Antonio Manuel Ure?A Serrano",
+          "name": "Antonio Manuel Ureña Serrano",
           "hcp": 8.7,
           "ins": "2245487",
           "jid": "71654",
@@ -3363,5 +3356,36 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:06.687Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71654
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Leiner, Sven",
+          "holeNumber": 1,
+          "createdAt": "21/06/25 14:29:21"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/67245_cartel_204.pdf",
+    "/uploads/competiciones/pdf/2315059242_nuevo_reglamento_winter_swing_-_liga_invierno_2025-2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:01.955Z"
 }

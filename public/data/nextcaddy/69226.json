@@ -1,14 +1,14 @@
 {
   "tourId": 69226,
   "url": "https://www.nextcaddy.com/tour/69226",
-  "scrapedAt": "2026-05-09T10:07:37.267Z",
+  "scrapedAt": "2026-05-21T16:38:04.370Z",
   "meta": {
     "name": "PRUEBA ZONAL  - LERMA  (Valedera SACE)",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "21 mar 2026",
-    "dateEnd": "21 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Junior Masculino",
     "categories": [
       "Junior Masculino",
@@ -25,13 +25,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-21"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual General",
+      "expectedJugadores": 45,
       "header": [
         "Pos",
         "Jugador",
@@ -543,6 +544,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual General",
+      "expectedJugadores": 45,
       "header": [
         "Pos",
         "Jugador",
@@ -1054,6 +1057,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Handicap Individual Infantil",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -1279,6 +1284,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Handicap Individual Alevín",
+      "expectedJugadores": 5,
       "header": [
         "Pos",
         "Jugador",
@@ -1349,6 +1356,25 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual General",
+      "jugadores": 45
+    },
+    "2": {
+      "name": "Handicap Individual General",
+      "jugadores": 45
+    },
+    "3": {
+      "name": "Handicap Individual Infantil",
+      "jugadores": 19
+    },
+    "4": {
+      "name": "Handicap Individual Alevín",
+      "jugadores": 5
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2016,98 +2042,6 @@
       "nivel": "CMA8955021"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73970
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Halford, Jerry",
-          "holeNumber": 7,
-          "createdAt": "23/09/25 13:37:09"
-        },
-        {
-          "playerName": "Murphy, Jason",
-          "holeNumber": 10,
-          "createdAt": "23/09/25 13:54:10"
-        },
-        {
-          "playerName": "Van Laere, Gert",
-          "holeNumber": 6,
-          "createdAt": "23/09/25 14:08:23"
-        },
-        {
-          "playerName": "Andrew Lawley, Neil",
-          "holeNumber": 7,
-          "createdAt": "23/09/25 14:10:27"
-        },
-        {
-          "playerName": "Dalton, Michael",
-          "holeNumber": 5,
-          "createdAt": "23/09/25 14:17:18"
-        },
-        {
-          "playerName": "Bulley, Stephen",
-          "holeNumber": 10,
-          "createdAt": "23/09/25 14:57:06"
-        },
-        {
-          "playerName": "Bulley, Stephen",
-          "holeNumber": 15,
-          "createdAt": "23/09/25 14:57:06"
-        },
-        {
-          "playerName": "Fergusson-Batte, Andrew",
-          "holeNumber": 15,
-          "createdAt": "23/09/25 14:57:44"
-        },
-        {
-          "playerName": "Fergusson-Batte, Andrew",
-          "holeNumber": 16,
-          "createdAt": "23/09/25 14:57:44"
-        },
-        {
-          "playerName": "Fergusson-Batte, Andrew",
-          "holeNumber": 17,
-          "createdAt": "23/09/25 14:57:44"
-        },
-        {
-          "playerName": "Battegay, Sholeh",
-          "holeNumber": 3,
-          "createdAt": "23/09/25 14:58:12"
-        },
-        {
-          "playerName": "Dent, Joey Vanney",
-          "holeNumber": 11,
-          "createdAt": "23/09/25 14:58:48"
-        },
-        {
-          "playerName": "Dent, Joey Vanney",
-          "holeNumber": 18,
-          "createdAt": "23/09/25 14:58:48"
-        },
-        {
-          "playerName": "Bassi, Graham",
-          "holeNumber": 17,
-          "createdAt": "23/09/25 14:59:26"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -2520,5 +2454,101 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:33.743Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73970
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Halford, Jerry",
+          "holeNumber": 7,
+          "createdAt": "23/09/25 13:37:09"
+        },
+        {
+          "playerName": "Murphy, Jason",
+          "holeNumber": 10,
+          "createdAt": "23/09/25 13:54:10"
+        },
+        {
+          "playerName": "Van Laere, Gert",
+          "holeNumber": 6,
+          "createdAt": "23/09/25 14:08:23"
+        },
+        {
+          "playerName": "Andrew Lawley, Neil",
+          "holeNumber": 7,
+          "createdAt": "23/09/25 14:10:27"
+        },
+        {
+          "playerName": "Dalton, Michael",
+          "holeNumber": 5,
+          "createdAt": "23/09/25 14:17:18"
+        },
+        {
+          "playerName": "Bulley, Stephen",
+          "holeNumber": 10,
+          "createdAt": "23/09/25 14:57:06"
+        },
+        {
+          "playerName": "Bulley, Stephen",
+          "holeNumber": 15,
+          "createdAt": "23/09/25 14:57:06"
+        },
+        {
+          "playerName": "Fergusson-Batte, Andrew",
+          "holeNumber": 15,
+          "createdAt": "23/09/25 14:57:44"
+        },
+        {
+          "playerName": "Fergusson-Batte, Andrew",
+          "holeNumber": 16,
+          "createdAt": "23/09/25 14:57:44"
+        },
+        {
+          "playerName": "Fergusson-Batte, Andrew",
+          "holeNumber": 17,
+          "createdAt": "23/09/25 14:57:44"
+        },
+        {
+          "playerName": "Battegay, Sholeh",
+          "holeNumber": 3,
+          "createdAt": "23/09/25 14:58:12"
+        },
+        {
+          "playerName": "Dent, Joey Vanney",
+          "holeNumber": 11,
+          "createdAt": "23/09/25 14:58:48"
+        },
+        {
+          "playerName": "Dent, Joey Vanney",
+          "holeNumber": 18,
+          "createdAt": "23/09/25 14:58:48"
+        },
+        {
+          "playerName": "Bassi, Graham",
+          "holeNumber": 17,
+          "createdAt": "23/09/25 14:59:26"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/3775882876_cuadro_de_honor_zonal_lerma.pdf",
+    "/uploads/competiciones/pdf/3785529737_reglas_locales_-_lerma.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:31.952Z"
 }

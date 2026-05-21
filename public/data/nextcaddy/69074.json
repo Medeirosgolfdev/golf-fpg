@@ -1,14 +1,14 @@
 {
   "tourId": 69074,
   "url": "https://www.nextcaddy.com/tour/69074",
-  "scrapedAt": "2026-05-09T10:07:37.660Z",
+  "scrapedAt": "2026-05-21T16:38:05.600Z",
   "meta": {
     "name": "VII Torneo COPE",
     "organizer": null,
     "course": "Alborán Golf",
     "courseCode": "AMC7",
-    "dateStart": "21 mar 2026",
-    "dateEnd": "21 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-21"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Tercera Categoría -26,5 A 36-",
+      "expectedJugadores": 39,
       "header": [
         "Pos",
         "Jugador",
@@ -469,6 +470,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Segunda Categoría -15,1 A 26,4-",
+      "expectedJugadores": 43,
       "header": [
         "Pos",
         "Jugador",
@@ -958,6 +961,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Primera Categoría -0 A 15-",
+      "expectedJugadores": 27,
       "header": [
         "Pos",
         "Jugador",
@@ -1270,6 +1275,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Tercera Categoría -26,5 A 36-",
+      "jugadores": 39
+    },
+    "2": {
+      "name": "Segunda Categoría -15,1 A 26,4-",
+      "jugadores": 43
+    },
+    "3": {
+      "name": "Primera Categoría -0 A 15-",
+      "jugadores": 27
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2819,22 +2839,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73802
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -3823,5 +3827,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:32.983Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73802
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:31.055Z"
 }

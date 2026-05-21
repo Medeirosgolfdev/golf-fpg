@@ -1,14 +1,14 @@
 {
   "tourId": 61047,
   "url": "https://www.nextcaddy.com/tour/61047",
-  "scrapedAt": "2026-05-09T09:57:14.074Z",
+  "scrapedAt": "2026-05-21T16:36:19.185Z",
   "meta": {
     "name": "Lauro Finnish Open",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Lauro Golf",
     "courseCode": "AM83",
-    "dateStart": "03 ene 2026",
-    "dateEnd": "03 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-03"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Masculino",
+      "expectedJugadores": 56,
       "header": [
         "Pos",
         "Jugador",
@@ -656,6 +657,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Scratch Femenino",
+      "expectedJugadores": 30,
       "header": [
         "Pos",
         "Jugador",
@@ -1001,6 +1004,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Masculino",
+      "jugadores": 56
+    },
+    "2": {
+      "name": "Scratch Femenino",
+      "jugadores": 30
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1612,6 +1626,7 @@
       "nivel": "C"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -1636,6 +1651,8 @@
     }
   ],
   "scoreTypes": null,
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:21.821Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/212067887_lauro_finnish_open_general_information_2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:47.525Z"
 }

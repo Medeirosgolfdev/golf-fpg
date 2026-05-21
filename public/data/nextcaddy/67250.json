@@ -1,14 +1,14 @@
 {
   "tourId": 67250,
   "url": "https://www.nextcaddy.com/tour/67250",
-  "scrapedAt": "2026-05-09T09:57:15.190Z",
+  "scrapedAt": "2026-05-21T16:36:21.950Z",
   "meta": {
     "name": "Torneo Proa-Am Escuela Juvenil de Competición 10:00",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "05 ene 2026",
-    "dateEnd": "05 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Juvenil",
@@ -17,11 +17,12 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-01-05"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": null,
@@ -129,6 +130,7 @@
       "nivel": "J"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -226,6 +228,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:27.203Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/67250_cartel_72.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:01.581Z"
 }

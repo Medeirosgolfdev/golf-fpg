@@ -1,14 +1,14 @@
 {
   "tourId": 69425,
   "url": "https://www.nextcaddy.com/tour/69425",
-  "scrapedAt": "2026-05-09T10:07:47.338Z",
+  "scrapedAt": "2026-05-21T16:38:25.530Z",
   "meta": {
     "name": "Sherry International Golf Group (SIGG) - Martes 31 marzo 2026 (Grupo privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "31 mar 2026",
-    "dateEnd": "31 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-31"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 28,
       "header": [
         "Pos",
         "Jugador",
@@ -192,7 +193,7 @@
         },
         {
           "pos": 15,
-          "name": "Antonio Manuel Ure?A Serrano",
+          "name": "Antonio Manuel Ureña Serrano",
           "licencia": "AM32612444",
           "hcp": 9.7,
           "nivel": "S",
@@ -347,6 +348,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 28
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -504,7 +512,7 @@
     },
     {
       "orden": 19,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "AM32612444",
       "hcp": 9.7,
       "nivel": "S"
@@ -742,7 +750,7 @@
     },
     {
       "orden": 26,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "29-03-26 17:12",
       "hcp": 9.7,
       "nivel": "AM32612444"
@@ -762,98 +770,6 @@
       "nivel": "AMC3029818"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74196
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "De Corral Aldecoa, Carlos",
-          "holeNumber": 11,
-          "createdAt": "03/10/25 10:31:36"
-        },
-        {
-          "playerName": "Ruiz Rodríguez, Genaro",
-          "holeNumber": 11,
-          "createdAt": "03/10/25 11:07:54"
-        },
-        {
-          "playerName": "Ruiz Rodríguez, Genaro",
-          "holeNumber": 12,
-          "createdAt": "03/10/25 11:10:20"
-        },
-        {
-          "playerName": "Palomo Fernandez, Carlos",
-          "holeNumber": 11,
-          "createdAt": "03/10/25 11:20:13"
-        },
-        {
-          "playerName": "De Corral Aldecoa, Carlos",
-          "holeNumber": 13,
-          "createdAt": "03/10/25 11:22:47"
-        },
-        {
-          "playerName": "De Corral Aldecoa, Carlos",
-          "holeNumber": 16,
-          "createdAt": "03/10/25 11:34:24"
-        },
-        {
-          "playerName": "Alvarez Jimenez, Manuel",
-          "holeNumber": 10,
-          "createdAt": "03/10/25 11:59:16"
-        },
-        {
-          "playerName": "Alvarez Jimenez, Manuel",
-          "holeNumber": 11,
-          "createdAt": "03/10/25 11:59:16"
-        },
-        {
-          "playerName": "Serra Lopez De Chicheri, M Dolores",
-          "holeNumber": 13,
-          "createdAt": "03/10/25 12:24:32"
-        },
-        {
-          "playerName": "Perez Casado, Fernando",
-          "holeNumber": 11,
-          "createdAt": "03/10/25 12:44:02"
-        },
-        {
-          "playerName": "Adem, Wahbi",
-          "holeNumber": 12,
-          "createdAt": "03/10/25 12:46:09"
-        },
-        {
-          "playerName": "Martin-Calderin Corrales, Antonio",
-          "holeNumber": 11,
-          "createdAt": "03/10/25 12:47:32"
-        },
-        {
-          "playerName": "Malo, Marcus",
-          "holeNumber": 10,
-          "createdAt": "03/10/25 13:01:58"
-        },
-        {
-          "playerName": "García, Hernán",
-          "holeNumber": 17,
-          "createdAt": "03/10/25 13:19:00"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -915,7 +831,7 @@
         {
           "time": "08:50",
           "tee": 1,
-          "name": "Antonio Manuel Ure?A Serrano",
+          "name": "Antonio Manuel Ureña Serrano",
           "hcp": 9.7,
           "ins": "2289135",
           "jid": "74196",
@@ -1104,5 +1020,98 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:53.799Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74196
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "De Corral Aldecoa, Carlos",
+          "holeNumber": 11,
+          "createdAt": "03/10/25 10:31:36"
+        },
+        {
+          "playerName": "Ruiz Rodríguez, Genaro",
+          "holeNumber": 11,
+          "createdAt": "03/10/25 11:07:54"
+        },
+        {
+          "playerName": "Ruiz Rodríguez, Genaro",
+          "holeNumber": 12,
+          "createdAt": "03/10/25 11:10:20"
+        },
+        {
+          "playerName": "Palomo Fernandez, Carlos",
+          "holeNumber": 11,
+          "createdAt": "03/10/25 11:20:13"
+        },
+        {
+          "playerName": "De Corral Aldecoa, Carlos",
+          "holeNumber": 13,
+          "createdAt": "03/10/25 11:22:47"
+        },
+        {
+          "playerName": "De Corral Aldecoa, Carlos",
+          "holeNumber": 16,
+          "createdAt": "03/10/25 11:34:24"
+        },
+        {
+          "playerName": "Alvarez Jimenez, Manuel",
+          "holeNumber": 10,
+          "createdAt": "03/10/25 11:59:16"
+        },
+        {
+          "playerName": "Alvarez Jimenez, Manuel",
+          "holeNumber": 11,
+          "createdAt": "03/10/25 11:59:16"
+        },
+        {
+          "playerName": "Serra Lopez De Chicheri, M Dolores",
+          "holeNumber": 13,
+          "createdAt": "03/10/25 12:24:32"
+        },
+        {
+          "playerName": "Perez Casado, Fernando",
+          "holeNumber": 11,
+          "createdAt": "03/10/25 12:44:02"
+        },
+        {
+          "playerName": "Adem, Wahbi",
+          "holeNumber": 12,
+          "createdAt": "03/10/25 12:46:09"
+        },
+        {
+          "playerName": "Martin-Calderin Corrales, Antonio",
+          "holeNumber": 11,
+          "createdAt": "03/10/25 12:47:32"
+        },
+        {
+          "playerName": "Malo, Marcus",
+          "holeNumber": 10,
+          "createdAt": "03/10/25 13:01:58"
+        },
+        {
+          "playerName": "García, Hernán",
+          "holeNumber": 17,
+          "createdAt": "03/10/25 13:19:00"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:34.247Z"
 }

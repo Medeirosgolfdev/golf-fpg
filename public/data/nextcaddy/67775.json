@@ -1,14 +1,14 @@
 {
   "tourId": 67775,
   "url": "https://www.nextcaddy.com/tour/67775",
-  "scrapedAt": "2026-05-09T10:36:07.087Z",
+  "scrapedAt": "2026-05-21T16:38:01.948Z",
   "meta": {
     "name": "Torneo Benjamín Masculino \"Las Rejas\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Forus Golf Las Rejas",
     "courseCode": "CM22",
-    "dateStart": "21 mar 2026",
-    "dateEnd": "21 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) Circuito Juvenil 20",
     "categories": [
       "Benjamín Masculino",
@@ -17,74 +17,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-03-21"
-  },
-  "course": {
-    "par": [
-      4,
-      4,
-      3,
-      5,
-      4,
-      4,
-      3,
-      5,
-      3,
-      4,
-      4,
-      3,
-      5,
-      4,
-      4,
-      3,
-      5,
-      3
-    ],
-    "si": [
-      7,
-      3,
-      13,
-      5,
-      11,
-      9,
-      15,
-      1,
-      17,
-      8,
-      4,
-      14,
-      6,
-      12,
-      10,
-      16,
-      2,
-      18
-    ],
-    "meters": [
-      290,
-      312,
-      113,
-      403,
-      257,
-      290,
-      87,
-      390,
-      87,
-      290,
-      312,
-      113,
-      403,
-      257,
-      290,
-      87,
-      390,
-      87
     ]
   },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Scratch",
+      "expectedJugadores": 16,
       "header": [
         "Pos",
         "Jugador",
@@ -106,8 +46,7 @@
           "rounds": [],
           "total": 43,
           "toPar": 8,
-          "inscribedId": 2276935,
-          "roundScores": []
+          "inscribedId": 2276935
         },
         {
           "pos": 2,
@@ -118,8 +57,7 @@
           "rounds": [],
           "total": 43,
           "toPar": 8,
-          "inscribedId": 2281142,
-          "roundScores": []
+          "inscribedId": 2281142
         },
         {
           "pos": 3,
@@ -130,8 +68,7 @@
           "rounds": [],
           "total": 46,
           "toPar": 11,
-          "inscribedId": 2277263,
-          "roundScores": []
+          "inscribedId": 2277263
         },
         {
           "pos": 4,
@@ -142,8 +79,7 @@
           "rounds": [],
           "total": 46,
           "toPar": 11,
-          "inscribedId": 2276891,
-          "roundScores": []
+          "inscribedId": 2276891
         },
         {
           "pos": 5,
@@ -154,8 +90,7 @@
           "rounds": [],
           "total": 47,
           "toPar": 12,
-          "inscribedId": 2277485,
-          "roundScores": []
+          "inscribedId": 2277485
         },
         {
           "pos": 6,
@@ -166,8 +101,7 @@
           "rounds": [],
           "total": 47,
           "toPar": 12,
-          "inscribedId": 2277064,
-          "roundScores": []
+          "inscribedId": 2277064
         },
         {
           "pos": 7,
@@ -178,8 +112,7 @@
           "rounds": [],
           "total": 48,
           "toPar": 13,
-          "inscribedId": 2276882,
-          "roundScores": []
+          "inscribedId": 2276882
         },
         {
           "pos": 8,
@@ -190,8 +123,7 @@
           "rounds": [],
           "total": 49,
           "toPar": 14,
-          "inscribedId": 2277103,
-          "roundScores": []
+          "inscribedId": 2277103
         },
         {
           "pos": 9,
@@ -202,8 +134,7 @@
           "rounds": [],
           "total": 49,
           "toPar": 14,
-          "inscribedId": 2277586,
-          "roundScores": []
+          "inscribedId": 2277586
         },
         {
           "pos": 10,
@@ -214,8 +145,7 @@
           "rounds": [],
           "total": 50,
           "toPar": 15,
-          "inscribedId": 2276956,
-          "roundScores": []
+          "inscribedId": 2276956
         },
         {
           "pos": 11,
@@ -226,8 +156,7 @@
           "rounds": [],
           "total": 51,
           "toPar": 16,
-          "inscribedId": 2276967,
-          "roundScores": []
+          "inscribedId": 2276967
         },
         {
           "pos": 12,
@@ -238,8 +167,7 @@
           "rounds": [],
           "total": 51,
           "toPar": 16,
-          "inscribedId": 2276990,
-          "roundScores": []
+          "inscribedId": 2276990
         },
         {
           "pos": 13,
@@ -250,8 +178,7 @@
           "rounds": [],
           "total": 53,
           "toPar": 18,
-          "inscribedId": 2277588,
-          "roundScores": []
+          "inscribedId": 2277588
         },
         {
           "pos": 14,
@@ -262,8 +189,7 @@
           "rounds": [],
           "total": 54,
           "toPar": 19,
-          "inscribedId": 2276993,
-          "roundScores": []
+          "inscribedId": 2276993
         },
         {
           "pos": 15,
@@ -274,8 +200,7 @@
           "rounds": [],
           "total": 56,
           "toPar": 21,
-          "inscribedId": 2277096,
-          "roundScores": []
+          "inscribedId": 2277096
         },
         {
           "pos": 16,
@@ -286,13 +211,14 @@
           "rounds": [],
           "total": 57,
           "toPar": 22,
-          "inscribedId": 2277340,
-          "roundScores": []
+          "inscribedId": 2277340
         }
       ]
     },
     {
       "category": 2,
+      "categoryName": "Clasificación Hándicap",
+      "expectedJugadores": 16,
       "header": [
         "Pos",
         "Jugador",
@@ -314,8 +240,7 @@
           "rounds": [],
           "total": 28,
           "toPar": -7,
-          "inscribedId": 2276935,
-          "roundScores": []
+          "inscribedId": 2276935
         },
         {
           "pos": 2,
@@ -326,8 +251,7 @@
           "rounds": [],
           "total": 35,
           "toPar": null,
-          "inscribedId": 2277485,
-          "roundScores": []
+          "inscribedId": 2277485
         },
         {
           "pos": 3,
@@ -338,8 +262,7 @@
           "rounds": [],
           "total": 36,
           "toPar": 1,
-          "inscribedId": 2277263,
-          "roundScores": []
+          "inscribedId": 2277263
         },
         {
           "pos": 4,
@@ -350,8 +273,7 @@
           "rounds": [],
           "total": 36,
           "toPar": 1,
-          "inscribedId": 2276891,
-          "roundScores": []
+          "inscribedId": 2276891
         },
         {
           "pos": 5,
@@ -362,8 +284,7 @@
           "rounds": [],
           "total": 36,
           "toPar": 1,
-          "inscribedId": 2276967,
-          "roundScores": []
+          "inscribedId": 2276967
         },
         {
           "pos": 6,
@@ -374,8 +295,7 @@
           "rounds": [],
           "total": 37,
           "toPar": 2,
-          "inscribedId": 2277064,
-          "roundScores": []
+          "inscribedId": 2277064
         },
         {
           "pos": 7,
@@ -386,8 +306,7 @@
           "rounds": [],
           "total": 37,
           "toPar": 2,
-          "inscribedId": 2276956,
-          "roundScores": []
+          "inscribedId": 2276956
         },
         {
           "pos": 8,
@@ -398,8 +317,7 @@
           "rounds": [],
           "total": 38,
           "toPar": 3,
-          "inscribedId": 2281142,
-          "roundScores": []
+          "inscribedId": 2281142
         },
         {
           "pos": 9,
@@ -410,8 +328,7 @@
           "rounds": [],
           "total": 38,
           "toPar": 3,
-          "inscribedId": 2277588,
-          "roundScores": []
+          "inscribedId": 2277588
         },
         {
           "pos": 10,
@@ -422,8 +339,7 @@
           "rounds": [],
           "total": 39,
           "toPar": 4,
-          "inscribedId": 2276882,
-          "roundScores": []
+          "inscribedId": 2276882
         },
         {
           "pos": 11,
@@ -434,8 +350,7 @@
           "rounds": [],
           "total": 40,
           "toPar": 5,
-          "inscribedId": 2277103,
-          "roundScores": []
+          "inscribedId": 2277103
         },
         {
           "pos": 12,
@@ -446,8 +361,7 @@
           "rounds": [],
           "total": 40,
           "toPar": 5,
-          "inscribedId": 2277586,
-          "roundScores": []
+          "inscribedId": 2277586
         },
         {
           "pos": 13,
@@ -458,8 +372,7 @@
           "rounds": [],
           "total": 41,
           "toPar": 6,
-          "inscribedId": 2276990,
-          "roundScores": []
+          "inscribedId": 2276990
         },
         {
           "pos": 14,
@@ -470,8 +383,7 @@
           "rounds": [],
           "total": 41,
           "toPar": 6,
-          "inscribedId": 2276993,
-          "roundScores": []
+          "inscribedId": 2276993
         },
         {
           "pos": 15,
@@ -482,8 +394,7 @@
           "rounds": [],
           "total": 41,
           "toPar": 6,
-          "inscribedId": 2277096,
-          "roundScores": []
+          "inscribedId": 2277096
         },
         {
           "pos": 16,
@@ -494,12 +405,22 @@
           "rounds": [],
           "total": 42,
           "toPar": 7,
-          "inscribedId": 2277340,
-          "roundScores": []
+          "inscribedId": 2277340
         }
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Scratch",
+      "jugadores": 16
+    },
+    "2": {
+      "name": "Clasificación Hándicap",
+      "jugadores": 16
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -731,6 +652,157 @@
       "licencia": "CM41322611",
       "hcp": 15.8,
       "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "14:15",
+          "tee": 1,
+          "name": "Antonio Javier Payo Gil",
+          "hcp": 15.8,
+          "ins": "2281142",
+          "jid": "72259",
+          "nivel": "B"
+        },
+        {
+          "time": "14:15",
+          "tee": 1,
+          "name": "Marcos Lozano Davila",
+          "hcp": 24.5,
+          "ins": "2276882",
+          "jid": "72259",
+          "nivel": "B"
+        },
+        {
+          "time": "14:15",
+          "tee": 1,
+          "name": "Juan Agudo Goenechea",
+          "hcp": 24.5,
+          "ins": "2277103",
+          "jid": "72259",
+          "nivel": "B"
+        },
+        {
+          "time": "14:15",
+          "tee": 1,
+          "name": "Roberto Martinez De Murguia Garcia",
+          "hcp": 25.1,
+          "ins": "2277586",
+          "jid": "72259",
+          "nivel": "B"
+        },
+        {
+          "time": "14:15",
+          "tee": 2,
+          "name": "Orion Iniesta Rangel",
+          "hcp": 27.7,
+          "ins": "2277064",
+          "jid": "72259",
+          "nivel": "B"
+        },
+        {
+          "time": "14:15",
+          "tee": 2,
+          "name": "Eduardo Lopez Gutierrez",
+          "hcp": 27.8,
+          "ins": "2276990",
+          "jid": "72259",
+          "nivel": "B"
+        },
+        {
+          "time": "14:15",
+          "tee": 2,
+          "name": "Jacobo Tarrero Carril",
+          "hcp": 27.9,
+          "ins": "2277263",
+          "jid": "72259",
+          "nivel": "B"
+        },
+        {
+          "time": "14:15",
+          "tee": 2,
+          "name": "Fabian Rodriguez Martos",
+          "hcp": 28.1,
+          "ins": "2276891",
+          "jid": "72259",
+          "nivel": "B"
+        },
+        {
+          "time": "14:15",
+          "tee": 3,
+          "name": "Diego Guijarro Pulido",
+          "hcp": 31,
+          "ins": "2277485",
+          "jid": "72259",
+          "nivel": "B"
+        },
+        {
+          "time": "14:15",
+          "tee": 3,
+          "name": "Beltran Idiazabal Velasco",
+          "hcp": 33.5,
+          "ins": "2276956",
+          "jid": "72259",
+          "nivel": "B"
+        },
+        {
+          "time": "14:15",
+          "tee": 3,
+          "name": "Borja Zurita Travesedo",
+          "hcp": 34.1,
+          "ins": "2276993",
+          "jid": "72259",
+          "nivel": "B"
+        },
+        {
+          "time": "14:15",
+          "tee": 3,
+          "name": "Nicolas Fernandez Montoto",
+          "hcp": 37,
+          "ins": "2277340",
+          "jid": "72259",
+          "nivel": "B"
+        },
+        {
+          "time": "14:15",
+          "tee": 9,
+          "name": "Rodrigo Figueroa Ruiz De Larramendi",
+          "hcp": 37.1,
+          "ins": "2277096",
+          "jid": "72259",
+          "nivel": "B"
+        },
+        {
+          "time": "14:15",
+          "tee": 9,
+          "name": "Juan Alvarez-Rendueles Mendez",
+          "hcp": 37.4,
+          "ins": "2276935",
+          "jid": "72259",
+          "nivel": "B"
+        },
+        {
+          "time": "14:15",
+          "tee": 9,
+          "name": "Martin Andres Troccoli Vivas",
+          "hcp": 37.4,
+          "ins": "2276967",
+          "jid": "72259",
+          "nivel": "B"
+        },
+        {
+          "time": "14:15",
+          "tee": 9,
+          "name": "Manuel Martinez De Murguia Garcia",
+          "hcp": 37.4,
+          "ins": "2277588",
+          "jid": "72259",
+          "nivel": "B"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -995,156 +1067,6 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "14:15",
-          "tee": 1,
-          "name": "Antonio Javier Payo Gil",
-          "hcp": 15.8,
-          "ins": "2281142",
-          "jid": "72259",
-          "nivel": "B"
-        },
-        {
-          "time": "14:15",
-          "tee": 1,
-          "name": "Marcos Lozano Davila",
-          "hcp": 24.5,
-          "ins": "2276882",
-          "jid": "72259",
-          "nivel": "B"
-        },
-        {
-          "time": "14:15",
-          "tee": 1,
-          "name": "Juan Agudo Goenechea",
-          "hcp": 24.5,
-          "ins": "2277103",
-          "jid": "72259",
-          "nivel": "B"
-        },
-        {
-          "time": "14:15",
-          "tee": 1,
-          "name": "Roberto Martinez De Murguia Garcia",
-          "hcp": 25.1,
-          "ins": "2277586",
-          "jid": "72259",
-          "nivel": "B"
-        },
-        {
-          "time": "14:15",
-          "tee": 2,
-          "name": "Orion Iniesta Rangel",
-          "hcp": 27.7,
-          "ins": "2277064",
-          "jid": "72259",
-          "nivel": "B"
-        },
-        {
-          "time": "14:15",
-          "tee": 2,
-          "name": "Eduardo Lopez Gutierrez",
-          "hcp": 27.8,
-          "ins": "2276990",
-          "jid": "72259",
-          "nivel": "B"
-        },
-        {
-          "time": "14:15",
-          "tee": 2,
-          "name": "Jacobo Tarrero Carril",
-          "hcp": 27.9,
-          "ins": "2277263",
-          "jid": "72259",
-          "nivel": "B"
-        },
-        {
-          "time": "14:15",
-          "tee": 2,
-          "name": "Fabian Rodriguez Martos",
-          "hcp": 28.1,
-          "ins": "2276891",
-          "jid": "72259",
-          "nivel": "B"
-        },
-        {
-          "time": "14:15",
-          "tee": 3,
-          "name": "Diego Guijarro Pulido",
-          "hcp": 31,
-          "ins": "2277485",
-          "jid": "72259",
-          "nivel": "B"
-        },
-        {
-          "time": "14:15",
-          "tee": 3,
-          "name": "Beltran Idiazabal Velasco",
-          "hcp": 33.5,
-          "ins": "2276956",
-          "jid": "72259",
-          "nivel": "B"
-        },
-        {
-          "time": "14:15",
-          "tee": 3,
-          "name": "Borja Zurita Travesedo",
-          "hcp": 34.1,
-          "ins": "2276993",
-          "jid": "72259",
-          "nivel": "B"
-        },
-        {
-          "time": "14:15",
-          "tee": 3,
-          "name": "Nicolas Fernandez Montoto",
-          "hcp": 37,
-          "ins": "2277340",
-          "jid": "72259",
-          "nivel": "B"
-        },
-        {
-          "time": "14:15",
-          "tee": 9,
-          "name": "Rodrigo Figueroa Ruiz De Larramendi",
-          "hcp": 37.1,
-          "ins": "2277096",
-          "jid": "72259",
-          "nivel": "B"
-        },
-        {
-          "time": "14:15",
-          "tee": 9,
-          "name": "Juan Alvarez-Rendueles Mendez",
-          "hcp": 37.4,
-          "ins": "2276935",
-          "jid": "72259",
-          "nivel": "B"
-        },
-        {
-          "time": "14:15",
-          "tee": 9,
-          "name": "Martin Andres Troccoli Vivas",
-          "hcp": 37.4,
-          "ins": "2276967",
-          "jid": "72259",
-          "nivel": "B"
-        },
-        {
-          "time": "14:15",
-          "tee": 9,
-          "name": "Manuel Martinez De Murguia Garcia",
-          "hcp": 37.4,
-          "ins": "2277588",
-          "jid": "72259",
-          "nivel": "B"
-        }
-      ]
-    }
-  ],
-  "horariosScrapedAt": "2026-05-09T12:12:11.946Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:07.824Z"
 }

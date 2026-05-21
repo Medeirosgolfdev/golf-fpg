@@ -1,14 +1,14 @@
 {
   "tourId": 67954,
   "url": "https://www.nextcaddy.com/tour/67954",
-  "scrapedAt": "2026-05-09T09:57:36.901Z",
+  "scrapedAt": "2026-05-21T16:36:56.759Z",
   "meta": {
     "name": "Torneo Senior Damas \"Negralejo\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Palacio del Negralejo S A",
     "courseCode": "CM33",
-    "dateStart": "12 feb 2026",
-    "dateEnd": "12 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Circuito Senior Da",
     "categories": [
       "Senior",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-12"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Senior 2ª Categoría",
+      "expectedJugadores": 16,
       "header": [
         "Pos",
         "Jugador",
@@ -216,6 +217,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Clasificación Supersenior 1ªcategoría",
+      "expectedJugadores": 16,
       "header": [
         "Pos",
         "Jugador",
@@ -408,6 +411,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Clasificación Supersenior 2ª Categoría",
+      "expectedJugadores": 15,
       "header": [
         "Pos",
         "Jugador",
@@ -589,6 +594,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Clasificación Supersenior 3ª Categoría",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -803,6 +810,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Clasificación Senior 1ª Categoría",
+      "expectedJugadores": 13,
       "header": [
         "Pos",
         "Jugador",
@@ -961,6 +970,29 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Senior 2ª Categoría",
+      "jugadores": 16
+    },
+    "2": {
+      "name": "Clasificación Supersenior 1ªcategoría",
+      "jugadores": 16
+    },
+    "3": {
+      "name": "Clasificación Supersenior 2ª Categoría",
+      "jugadores": 15
+    },
+    "4": {
+      "name": "Clasificación Supersenior 3ª Categoría",
+      "jugadores": 18
+    },
+    "5": {
+      "name": "Clasificación Senior 1ª Categoría",
+      "jugadores": 13
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2062,283 +2094,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72472
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Lavelle, Michael - Walsh, Mick",
-          "holeNumber": 5,
-          "createdAt": "16/08/25 14:09:59"
-        },
-        {
-          "playerName": "Lavelle, Michael - Walsh, Mick",
-          "holeNumber": 13,
-          "createdAt": "16/08/25 14:09:59"
-        },
-        {
-          "playerName": "Lavelle, Michael - Walsh, Mick",
-          "holeNumber": 15,
-          "createdAt": "16/08/25 14:09:59"
-        },
-        {
-          "playerName": "Lumsden, Robert - Hazzard, John",
-          "holeNumber": 4,
-          "createdAt": "16/08/25 14:19:37"
-        },
-        {
-          "playerName": "Lumsden, Robert - Hazzard, John",
-          "holeNumber": 8,
-          "createdAt": "16/08/25 14:19:37"
-        },
-        {
-          "playerName": "Lumsden, Robert - Hazzard, John",
-          "holeNumber": 14,
-          "createdAt": "16/08/25 14:19:37"
-        },
-        {
-          "playerName": "Morales Servia, Alfonso - Ruiz Vera, Francisco",
-          "holeNumber": 7,
-          "createdAt": "16/08/25 14:22:38"
-        },
-        {
-          "playerName": "Morales Servia, Alfonso - Ruiz Vera, Francisco",
-          "holeNumber": 10,
-          "createdAt": "16/08/25 14:22:38"
-        },
-        {
-          "playerName": "Morales Servia, Alfonso - Ruiz Vera, Francisco",
-          "holeNumber": 14,
-          "createdAt": "16/08/25 14:22:38"
-        },
-        {
-          "playerName": "Fergusson-Batte, Andrew - Murphy, Jason",
-          "holeNumber": 3,
-          "createdAt": "16/08/25 14:23:02"
-        },
-        {
-          "playerName": "Fergusson-Batte, Andrew - Murphy, Jason",
-          "holeNumber": 12,
-          "createdAt": "16/08/25 14:23:02"
-        },
-        {
-          "playerName": "Bassi, Graham - Bassi, Sue",
-          "holeNumber": 8,
-          "createdAt": "16/08/25 14:24:01"
-        },
-        {
-          "playerName": "Jones, Geoffrey - Jones, Brandon",
-          "holeNumber": 6,
-          "createdAt": "16/08/25 14:26:13"
-        },
-        {
-          "playerName": "Jones, Geoffrey - Jones, Brandon",
-          "holeNumber": 13,
-          "createdAt": "16/08/25 14:26:13"
-        },
-        {
-          "playerName": "Jones, Geoffrey - Jones, Brandon",
-          "holeNumber": 14,
-          "createdAt": "16/08/25 14:26:13"
-        },
-        {
-          "playerName": "Umbria  Leon, Jose Antonio - Muñoz Valadez, Andres Luis",
-          "holeNumber": 7,
-          "createdAt": "16/08/25 14:26:43"
-        },
-        {
-          "playerName": "Umbria  Leon, Jose Antonio - Muñoz Valadez, Andres Luis",
-          "holeNumber": 15,
-          "createdAt": "16/08/25 14:26:43"
-        },
-        {
-          "playerName": "Umbria  Leon, Jose Antonio - Muñoz Valadez, Andres Luis",
-          "holeNumber": 18,
-          "createdAt": "16/08/25 14:26:43"
-        },
-        {
-          "playerName": "Bulley, Stephen - Bradbury, Diane",
-          "holeNumber": 3,
-          "createdAt": "16/08/25 14:27:19"
-        },
-        {
-          "playerName": "Martialay Camiña, Diego - Sanz De Arce, Jorge",
-          "holeNumber": 6,
-          "createdAt": "16/08/25 14:28:32"
-        },
-        {
-          "playerName": "Martialay Camiña, Diego - Sanz De Arce, Jorge",
-          "holeNumber": 10,
-          "createdAt": "16/08/25 14:28:32"
-        },
-        {
-          "playerName": "Martialay Camiña, Diego - Sanz De Arce, Jorge",
-          "holeNumber": 11,
-          "createdAt": "16/08/25 14:28:32"
-        },
-        {
-          "playerName": "Martialay Camiña, Diego - Sanz De Arce, Jorge",
-          "holeNumber": 14,
-          "createdAt": "16/08/25 14:28:32"
-        },
-        {
-          "playerName": "Martialay Camiña, Diego - Sanz De Arce, Jorge",
-          "holeNumber": 16,
-          "createdAt": "16/08/25 14:28:32"
-        },
-        {
-          "playerName": "Mena Prieto, Salvador - Martin Medel, Francisco Jesus",
-          "holeNumber": 4,
-          "createdAt": "16/08/25 14:29:01"
-        },
-        {
-          "playerName": "Luna Torres, Francisco Jose - Luna Andres, David",
-          "holeNumber": 1,
-          "createdAt": "16/08/25 14:29:32"
-        },
-        {
-          "playerName": "Luna Torres, Francisco Jose - Luna Andres, David",
-          "holeNumber": 5,
-          "createdAt": "16/08/25 14:29:32"
-        },
-        {
-          "playerName": "Luna Torres, Francisco Jose - Luna Andres, David",
-          "holeNumber": 7,
-          "createdAt": "16/08/25 14:29:32"
-        },
-        {
-          "playerName": "Luna Torres, Francisco Jose - Luna Andres, David",
-          "holeNumber": 14,
-          "createdAt": "16/08/25 14:29:32"
-        },
-        {
-          "playerName": "Luna Torres, Francisco Jose - Luna Andres, David",
-          "holeNumber": 16,
-          "createdAt": "16/08/25 14:29:32"
-        },
-        {
-          "playerName": "James Evans, Elliott - Azopardi, Roy Charles",
-          "holeNumber": 7,
-          "createdAt": "16/08/25 14:34:07"
-        },
-        {
-          "playerName": "James Evans, Elliott - Azopardi, Roy Charles",
-          "holeNumber": 11,
-          "createdAt": "16/08/25 14:34:07"
-        },
-        {
-          "playerName": "Holmes, Craig - Mercer, Paul",
-          "holeNumber": 5,
-          "createdAt": "16/08/25 14:36:10"
-        },
-        {
-          "playerName": "Holmes, Craig - Mercer, Paul",
-          "holeNumber": 10,
-          "createdAt": "16/08/25 14:36:10"
-        },
-        {
-          "playerName": "Spencer Terry, Geoffrey - Cargill, Young Gin",
-          "holeNumber": 13,
-          "createdAt": "16/08/25 14:37:49"
-        },
-        {
-          "playerName": "Martin Lopez, David - Espinosa Carrion, Francisco Jose",
-          "holeNumber": 4,
-          "createdAt": "16/08/25 14:38:04"
-        },
-        {
-          "playerName": "Martin Lopez, David - Espinosa Carrion, Francisco Jose",
-          "holeNumber": 16,
-          "createdAt": "16/08/25 14:38:04"
-        },
-        {
-          "playerName": "Martin Lopez, David - Espinosa Carrion, Francisco Jose",
-          "holeNumber": 17,
-          "createdAt": "16/08/25 14:38:04"
-        },
-        {
-          "playerName": "Battegay, Sholeh - Thornet, Ian",
-          "holeNumber": 16,
-          "createdAt": "16/08/25 14:38:31"
-        },
-        {
-          "playerName": "Halford, Jerry - Dalton, Michael",
-          "holeNumber": 6,
-          "createdAt": "16/08/25 14:39:02"
-        },
-        {
-          "playerName": "Holliday, Paul - Dyson David, Adrew",
-          "holeNumber": 5,
-          "createdAt": "16/08/25 14:41:29"
-        },
-        {
-          "playerName": "Holliday, Paul - Dyson David, Adrew",
-          "holeNumber": 6,
-          "createdAt": "16/08/25 14:41:29"
-        },
-        {
-          "playerName": "Holliday, Paul - Dyson David, Adrew",
-          "holeNumber": 9,
-          "createdAt": "16/08/25 14:41:29"
-        },
-        {
-          "playerName": "Holliday, Paul - Dyson David, Adrew",
-          "holeNumber": 10,
-          "createdAt": "16/08/25 14:41:29"
-        },
-        {
-          "playerName": "Holliday, Paul - Dyson David, Adrew",
-          "holeNumber": 18,
-          "createdAt": "16/08/25 14:41:29"
-        },
-        {
-          "playerName": "Boyle, Liz - Boyle, Stephen",
-          "holeNumber": 17,
-          "createdAt": "16/08/25 14:41:48"
-        },
-        {
-          "playerName": "Winckley, David - Jones, Kevin",
-          "holeNumber": 5,
-          "createdAt": "16/08/25 14:43:19"
-        },
-        {
-          "playerName": "Winckley, David - Jones, Kevin",
-          "holeNumber": 14,
-          "createdAt": "16/08/25 14:43:19"
-        },
-        {
-          "playerName": "Winckley, David - Jones, Kevin",
-          "holeNumber": 16,
-          "createdAt": "16/08/25 14:43:19"
-        },
-        {
-          "playerName": "Fischer Hansen, Henriette - Middleton, Colin",
-          "holeNumber": 10,
-          "createdAt": "16/08/25 14:45:13"
-        },
-        {
-          "playerName": "Van Laere, Gert - Richardson, Robby",
-          "holeNumber": 17,
-          "createdAt": "16/08/25 15:11:14"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -3012,5 +2767,285 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:17.204Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72472
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Lavelle, Michael - Walsh, Mick",
+          "holeNumber": 5,
+          "createdAt": "16/08/25 14:09:59"
+        },
+        {
+          "playerName": "Lavelle, Michael - Walsh, Mick",
+          "holeNumber": 13,
+          "createdAt": "16/08/25 14:09:59"
+        },
+        {
+          "playerName": "Lavelle, Michael - Walsh, Mick",
+          "holeNumber": 15,
+          "createdAt": "16/08/25 14:09:59"
+        },
+        {
+          "playerName": "Lumsden, Robert - Hazzard, John",
+          "holeNumber": 4,
+          "createdAt": "16/08/25 14:19:37"
+        },
+        {
+          "playerName": "Lumsden, Robert - Hazzard, John",
+          "holeNumber": 8,
+          "createdAt": "16/08/25 14:19:37"
+        },
+        {
+          "playerName": "Lumsden, Robert - Hazzard, John",
+          "holeNumber": 14,
+          "createdAt": "16/08/25 14:19:37"
+        },
+        {
+          "playerName": "Morales Servia, Alfonso - Ruiz Vera, Francisco",
+          "holeNumber": 7,
+          "createdAt": "16/08/25 14:22:38"
+        },
+        {
+          "playerName": "Morales Servia, Alfonso - Ruiz Vera, Francisco",
+          "holeNumber": 10,
+          "createdAt": "16/08/25 14:22:38"
+        },
+        {
+          "playerName": "Morales Servia, Alfonso - Ruiz Vera, Francisco",
+          "holeNumber": 14,
+          "createdAt": "16/08/25 14:22:38"
+        },
+        {
+          "playerName": "Fergusson-Batte, Andrew - Murphy, Jason",
+          "holeNumber": 3,
+          "createdAt": "16/08/25 14:23:02"
+        },
+        {
+          "playerName": "Fergusson-Batte, Andrew - Murphy, Jason",
+          "holeNumber": 12,
+          "createdAt": "16/08/25 14:23:02"
+        },
+        {
+          "playerName": "Bassi, Graham - Bassi, Sue",
+          "holeNumber": 8,
+          "createdAt": "16/08/25 14:24:01"
+        },
+        {
+          "playerName": "Jones, Geoffrey - Jones, Brandon",
+          "holeNumber": 6,
+          "createdAt": "16/08/25 14:26:13"
+        },
+        {
+          "playerName": "Jones, Geoffrey - Jones, Brandon",
+          "holeNumber": 13,
+          "createdAt": "16/08/25 14:26:13"
+        },
+        {
+          "playerName": "Jones, Geoffrey - Jones, Brandon",
+          "holeNumber": 14,
+          "createdAt": "16/08/25 14:26:13"
+        },
+        {
+          "playerName": "Umbria  Leon, Jose Antonio - Muñoz Valadez, Andres Luis",
+          "holeNumber": 7,
+          "createdAt": "16/08/25 14:26:43"
+        },
+        {
+          "playerName": "Umbria  Leon, Jose Antonio - Muñoz Valadez, Andres Luis",
+          "holeNumber": 15,
+          "createdAt": "16/08/25 14:26:43"
+        },
+        {
+          "playerName": "Umbria  Leon, Jose Antonio - Muñoz Valadez, Andres Luis",
+          "holeNumber": 18,
+          "createdAt": "16/08/25 14:26:43"
+        },
+        {
+          "playerName": "Bulley, Stephen - Bradbury, Diane",
+          "holeNumber": 3,
+          "createdAt": "16/08/25 14:27:19"
+        },
+        {
+          "playerName": "Martialay Camiña, Diego - Sanz De Arce, Jorge",
+          "holeNumber": 6,
+          "createdAt": "16/08/25 14:28:32"
+        },
+        {
+          "playerName": "Martialay Camiña, Diego - Sanz De Arce, Jorge",
+          "holeNumber": 10,
+          "createdAt": "16/08/25 14:28:32"
+        },
+        {
+          "playerName": "Martialay Camiña, Diego - Sanz De Arce, Jorge",
+          "holeNumber": 11,
+          "createdAt": "16/08/25 14:28:32"
+        },
+        {
+          "playerName": "Martialay Camiña, Diego - Sanz De Arce, Jorge",
+          "holeNumber": 14,
+          "createdAt": "16/08/25 14:28:32"
+        },
+        {
+          "playerName": "Martialay Camiña, Diego - Sanz De Arce, Jorge",
+          "holeNumber": 16,
+          "createdAt": "16/08/25 14:28:32"
+        },
+        {
+          "playerName": "Mena Prieto, Salvador - Martin Medel, Francisco Jesus",
+          "holeNumber": 4,
+          "createdAt": "16/08/25 14:29:01"
+        },
+        {
+          "playerName": "Luna Torres, Francisco Jose - Luna Andres, David",
+          "holeNumber": 1,
+          "createdAt": "16/08/25 14:29:32"
+        },
+        {
+          "playerName": "Luna Torres, Francisco Jose - Luna Andres, David",
+          "holeNumber": 5,
+          "createdAt": "16/08/25 14:29:32"
+        },
+        {
+          "playerName": "Luna Torres, Francisco Jose - Luna Andres, David",
+          "holeNumber": 7,
+          "createdAt": "16/08/25 14:29:32"
+        },
+        {
+          "playerName": "Luna Torres, Francisco Jose - Luna Andres, David",
+          "holeNumber": 14,
+          "createdAt": "16/08/25 14:29:32"
+        },
+        {
+          "playerName": "Luna Torres, Francisco Jose - Luna Andres, David",
+          "holeNumber": 16,
+          "createdAt": "16/08/25 14:29:32"
+        },
+        {
+          "playerName": "James Evans, Elliott - Azopardi, Roy Charles",
+          "holeNumber": 7,
+          "createdAt": "16/08/25 14:34:07"
+        },
+        {
+          "playerName": "James Evans, Elliott - Azopardi, Roy Charles",
+          "holeNumber": 11,
+          "createdAt": "16/08/25 14:34:07"
+        },
+        {
+          "playerName": "Holmes, Craig - Mercer, Paul",
+          "holeNumber": 5,
+          "createdAt": "16/08/25 14:36:10"
+        },
+        {
+          "playerName": "Holmes, Craig - Mercer, Paul",
+          "holeNumber": 10,
+          "createdAt": "16/08/25 14:36:10"
+        },
+        {
+          "playerName": "Spencer Terry, Geoffrey - Cargill, Young Gin",
+          "holeNumber": 13,
+          "createdAt": "16/08/25 14:37:49"
+        },
+        {
+          "playerName": "Martin Lopez, David - Espinosa Carrion, Francisco Jose",
+          "holeNumber": 4,
+          "createdAt": "16/08/25 14:38:04"
+        },
+        {
+          "playerName": "Martin Lopez, David - Espinosa Carrion, Francisco Jose",
+          "holeNumber": 16,
+          "createdAt": "16/08/25 14:38:04"
+        },
+        {
+          "playerName": "Martin Lopez, David - Espinosa Carrion, Francisco Jose",
+          "holeNumber": 17,
+          "createdAt": "16/08/25 14:38:04"
+        },
+        {
+          "playerName": "Battegay, Sholeh - Thornet, Ian",
+          "holeNumber": 16,
+          "createdAt": "16/08/25 14:38:31"
+        },
+        {
+          "playerName": "Halford, Jerry - Dalton, Michael",
+          "holeNumber": 6,
+          "createdAt": "16/08/25 14:39:02"
+        },
+        {
+          "playerName": "Holliday, Paul - Dyson David, Adrew",
+          "holeNumber": 5,
+          "createdAt": "16/08/25 14:41:29"
+        },
+        {
+          "playerName": "Holliday, Paul - Dyson David, Adrew",
+          "holeNumber": 6,
+          "createdAt": "16/08/25 14:41:29"
+        },
+        {
+          "playerName": "Holliday, Paul - Dyson David, Adrew",
+          "holeNumber": 9,
+          "createdAt": "16/08/25 14:41:29"
+        },
+        {
+          "playerName": "Holliday, Paul - Dyson David, Adrew",
+          "holeNumber": 10,
+          "createdAt": "16/08/25 14:41:29"
+        },
+        {
+          "playerName": "Holliday, Paul - Dyson David, Adrew",
+          "holeNumber": 18,
+          "createdAt": "16/08/25 14:41:29"
+        },
+        {
+          "playerName": "Boyle, Liz - Boyle, Stephen",
+          "holeNumber": 17,
+          "createdAt": "16/08/25 14:41:48"
+        },
+        {
+          "playerName": "Winckley, David - Jones, Kevin",
+          "holeNumber": 5,
+          "createdAt": "16/08/25 14:43:19"
+        },
+        {
+          "playerName": "Winckley, David - Jones, Kevin",
+          "holeNumber": 14,
+          "createdAt": "16/08/25 14:43:19"
+        },
+        {
+          "playerName": "Winckley, David - Jones, Kevin",
+          "holeNumber": 16,
+          "createdAt": "16/08/25 14:43:19"
+        },
+        {
+          "playerName": "Fischer Hansen, Henriette - Middleton, Colin",
+          "holeNumber": 10,
+          "createdAt": "16/08/25 14:45:13"
+        },
+        {
+          "playerName": "Van Laere, Gert - Richardson, Robby",
+          "holeNumber": 17,
+          "createdAt": "16/08/25 15:11:14"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/2178634358_rrll_negralejo_campo_mixto.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:13.878Z"
 }

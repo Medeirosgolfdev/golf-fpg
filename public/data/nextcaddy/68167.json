@@ -1,14 +1,14 @@
 {
   "tourId": 68167,
   "url": "https://www.nextcaddy.com/tour/68167",
-  "scrapedAt": "2026-05-09T09:57:39.242Z",
+  "scrapedAt": "2026-05-21T16:37:04.240Z",
   "meta": {
     "name": "WINTER SWING - LIGA DEINVIERNO \"GRAN FINAL\"",
     "organizer": null,
     "course": "Montecastillo Barceló Golf Club",
     "courseCode": "AM29",
-    "dateStart": "15 feb 2026",
-    "dateEnd": "15 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -19,13 +19,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-15"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 16,
       "header": [
         "Pos",
         "Jugador",
@@ -218,6 +219,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 40,
       "header": [
         "Pos",
         "Jugador",
@@ -430,7 +433,7 @@
         },
         {
           "pos": 19,
-          "name": "Antonio Manuel Ure?A Serrano",
+          "name": "Antonio Manuel Ureña Serrano",
           "licencia": "AM32612444",
           "hcp": 9.6,
           "nivel": "S",
@@ -673,6 +676,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 16
+    },
+    "2": {
+      "name": "Scratch Individual",
+      "jugadores": 40
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -928,7 +942,7 @@
     },
     {
       "orden": 37,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "AM32612444",
       "hcp": 9.6,
       "nivel": "S"
@@ -1229,7 +1243,7 @@
     },
     {
       "orden": 38,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "AM32612444",
       "hcp": 9.6,
       "nivel": "S"
@@ -1249,22 +1263,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72713
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -1515,7 +1513,7 @@
         {
           "time": "09:30",
           "tee": 18,
-          "name": "Antonio Manuel Ure?A Serrano",
+          "name": "Antonio Manuel Ureña Serrano",
           "hcp": 9.6,
           "ins": "2260168",
           "jid": "72713",
@@ -1632,5 +1630,25 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:20.926Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72713
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [
+    "/uploads/competiciones/pdf/392711466_aviso_de_seguridad.pdf",
+    "/uploads/competiciones/pdf/1436534962_reglas_locales_final_liga_invierno.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:18.088Z"
 }

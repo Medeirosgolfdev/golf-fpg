@@ -1,14 +1,14 @@
 {
   "tourId": 69428,
   "url": "https://www.nextcaddy.com/tour/69428",
-  "scrapedAt": "2026-05-08T17:53:36.308Z",
+  "scrapedAt": "2026-05-21T16:38:38.619Z",
   "meta": {
     "name": "Cto. Lerma Puntuable Acceso Cto. España Sub16",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "11 abr 2026",
-    "dateEnd": "11 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Junior Femenino  C",
     "categories": [
       "Junior Femenino",
@@ -20,39 +20,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-04-11"
+    ]
   },
-  "course": {
-    "par": [
-      4,
-      4,
-      4,
-      4,
-      4,
-      4,
-      4,
-      4,
-      4,
-      5,
-      4,
-      4,
-      4,
-      4,
-      4,
-      4,
-      4,
-      5
-    ],
-    "si": null,
-    "meters": null,
-    "parTotal": 72,
-    "parInferred": true,
-    "parConfidence": "low"
-  },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 6,
       "header": [
         "Pos",
         "Jugador",
@@ -74,33 +49,7 @@
           "rounds": [],
           "total": 79,
           "toPar": 7,
-          "inscribedId": 2292029,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                5,
-                4,
-                4,
-                4,
-                4,
-                4,
-                5,
-                4,
-                4,
-                4,
-                3,
-                5,
-                4,
-                3,
-                4,
-                7,
-                6
-              ],
-              "total": 79
-            }
-          ]
+          "inscribedId": 2292029
         },
         {
           "pos": 2,
@@ -111,33 +60,7 @@
           "rounds": [],
           "total": 80,
           "toPar": 8,
-          "inscribedId": 2291058,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                5,
-                4,
-                6,
-                3,
-                4,
-                5,
-                4,
-                3,
-                6,
-                4,
-                4,
-                4,
-                4,
-                4,
-                4,
-                5,
-                6
-              ],
-              "total": 80
-            }
-          ]
+          "inscribedId": 2291058
         },
         {
           "pos": 3,
@@ -148,33 +71,7 @@
           "rounds": [],
           "total": 86,
           "toPar": 14,
-          "inscribedId": 2292383,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                5,
-                4,
-                5,
-                4,
-                5,
-                4,
-                5,
-                4,
-                8,
-                4,
-                4,
-                5,
-                4,
-                4,
-                5,
-                5,
-                6
-              ],
-              "total": 86
-            }
-          ]
+          "inscribedId": 2292383
         },
         {
           "pos": 4,
@@ -185,33 +82,7 @@
           "rounds": [],
           "total": 90,
           "toPar": 18,
-          "inscribedId": 2292810,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                6,
-                7,
-                5,
-                4,
-                5,
-                5,
-                5,
-                3,
-                7,
-                5,
-                5,
-                5,
-                4,
-                3,
-                5,
-                5,
-                6
-              ],
-              "total": 90
-            }
-          ]
+          "inscribedId": 2292810
         },
         {
           "pos": 5,
@@ -222,8 +93,7 @@
           "rounds": [],
           "total": 91,
           "toPar": 19,
-          "inscribedId": 2293325,
-          "roundScores": []
+          "inscribedId": 2293325
         },
         {
           "pos": null,
@@ -237,6 +107,120 @@
           "inscribedId": 2291254
         }
       ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 6
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Teresa Basconcillos Rodriguez",
+      "licencia": "7712095904",
+      "hcp": 7.8,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Irene Elias Gonzalez",
+      "licencia": "7772981136",
+      "hcp": 5.9,
+      "nivel": "I"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Angela Basconcillos Rodriguez",
+      "licencia": "7712416189",
+      "hcp": 40.8,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Daniela Pascual Calleja",
+      "licencia": "7752983055",
+      "hcp": 12.5,
+      "nivel": "C"
+    },
+    {
+      "orden": 2,
+      "name": "Paloma De Nicolas Peral",
+      "licencia": "7709944170",
+      "hcp": 16.3,
+      "nivel": "C"
+    },
+    {
+      "orden": 3,
+      "name": "Martina Ocejo Gomez",
+      "licencia": "1101906037",
+      "hcp": 15.3,
+      "nivel": "C"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Teresa Basconcillos Rodriguez",
+      "licencia": "7712095904",
+      "hcp": 7.8,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Angela Basconcillos Rodriguez",
+      "licencia": "7712416189",
+      "hcp": 40.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Irene Elias Gonzalez",
+      "licencia": "7772981136",
+      "hcp": 5.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Daniela Pascual Calleja",
+      "licencia": "7752983055",
+      "hcp": 12.5,
+      "nivel": "C"
+    },
+    {
+      "orden": 5,
+      "name": "Paloma De Nicolas Peral",
+      "licencia": "7709944170",
+      "hcp": 16.3,
+      "nivel": "C"
+    },
+    {
+      "orden": 6,
+      "name": "Martina Ocejo Gomez",
+      "licencia": "1101906037",
+      "hcp": 15.3,
+      "nivel": "C"
     }
   ],
   "horarios": [
@@ -300,5 +284,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:53.747Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74199
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/2651888826_campeonato_lerma_femenino_dia_11_del_4.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:34.141Z"
 }

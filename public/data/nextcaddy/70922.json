@@ -1,7 +1,7 @@
 {
   "tourId": 70922,
   "url": "https://www.nextcaddy.com/tour/70922",
-  "scrapedAt": "2026-05-18T08:08:13.543Z",
+  "scrapedAt": "2026-05-21T16:39:54.595Z",
   "meta": {
     "name": "monday club",
     "organizer": null,
@@ -20,9 +20,99 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Eugene Christopher Suffredini",
+          "licencia": "AM86353823",
+          "hcp": 18.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 43,
+          "toPar": -7,
+          "inscribedId": 2321506
+        },
+        {
+          "pos": 2,
+          "name": "Peter Madden",
+          "licencia": "AM86371774",
+          "hcp": 19.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2321508
+        },
+        {
+          "pos": 3,
+          "name": "Mark Charles Rose",
+          "licencia": "AM86520379",
+          "hcp": 12.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2321507
+        },
+        {
+          "pos": 4,
+          "name": "Stephen Boyle",
+          "licencia": "AM24816812",
+          "hcp": 8.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2321509
+        },
+        {
+          "pos": 5,
+          "name": "David Sharpe",
+          "licencia": "AM86611666",
+          "hcp": 11.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2321505
+        },
+        {
+          "pos": 6,
+          "name": "Robert Fulcher",
+          "licencia": "AM86915230",
+          "hcp": 17.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2321504
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 6
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -147,5 +237,5 @@
   "pdfs": [
     "/uploads/competiciones/cartel/2229570221_70922-monday-club.pdf"
   ],
-  "horariosScrapedAt": "2026-05-18T08:08:46.770Z"
+  "horariosScrapedAt": "2026-05-21T16:42:45.133Z"
 }

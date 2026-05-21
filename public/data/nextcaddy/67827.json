@@ -1,14 +1,14 @@
 {
   "tourId": 67827,
   "url": "https://www.nextcaddy.com/tour/67827",
-  "scrapedAt": "2026-05-09T09:57:26.986Z",
+  "scrapedAt": "2026-05-21T16:36:42.188Z",
   "meta": {
     "name": "LOS GALLOS",
     "organizer": null,
     "course": "Alhaurín Golf Hotel & Resort",
     "courseCode": "AM22",
-    "dateStart": "24 ene 2026",
-    "dateEnd": "24 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-24"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 13,
       "header": [
         "Pos",
         "Jugador",
@@ -182,6 +183,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 13
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -380,6 +388,7 @@
       "nivel": "AM22900039"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {
       "p": {
@@ -753,6 +762,6 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:29.925Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:10.155Z"
 }

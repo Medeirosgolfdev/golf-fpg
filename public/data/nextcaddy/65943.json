@@ -1,14 +1,14 @@
 {
   "tourId": 65943,
   "url": "https://www.nextcaddy.com/tour/65943",
-  "scrapedAt": "2026-05-08T17:27:12.783Z",
+  "scrapedAt": "2026-05-21T16:37:11.097Z",
   "meta": {
     "name": "II LIGUILLA SUB21 DE CASTILLA Y LEÓN - LA VALMUZA  (Valedera SACE)",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "21 feb 2026",
-    "dateEnd": "21 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-02-21"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -1032,21 +1033,6 @@
       "nivel": "9908162114"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 70168
-    }
-  ],
   "horarios": [
     {
       "round": 1,
@@ -1693,5 +1679,25 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:03.135Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 70168
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/944150015_resultados_18_hoyos.pdf",
+    "/uploads/2025/11/cirfgcyl4525-3.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:57.683Z"
 }

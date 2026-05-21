@@ -1,14 +1,14 @@
 {
   "tourId": 68565,
   "url": "https://www.nextcaddy.com/tour/68565",
-  "scrapedAt": "2026-05-09T09:57:49.192Z",
+  "scrapedAt": "2026-05-21T16:37:14.257Z",
   "meta": {
     "name": "Torneo de Carnaval 21-02-26",
     "organizer": null,
     "course": "Real Club de Golf Vista Hermosa",
     "courseCode": "AM05",
-    "dateStart": "21 feb 2026",
-    "dateEnd": "21 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-21"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual Desde 17.5 Hcp",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -128,6 +129,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual Hasta 17.4 Hcp",
+      "expectedJugadores": 29,
       "header": [
         "Pos",
         "Jugador",
@@ -462,6 +465,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Desde 17.5 Hcp",
+      "jugadores": 8
+    },
+    "2": {
+      "name": "Handicap Individual Hasta 17.4 Hcp",
+      "jugadores": 29
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -996,98 +1010,6 @@
       "nivel": "AM02255989"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73206
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Gonzalez  Lasuen, Pedro",
-          "holeNumber": 8,
-          "createdAt": "23/08/25 16:50:50"
-        },
-        {
-          "playerName": "Burke, Kevin",
-          "holeNumber": 18,
-          "createdAt": "23/08/25 16:50:50"
-        },
-        {
-          "playerName": "Li, Ni",
-          "holeNumber": 18,
-          "createdAt": "23/08/25 16:50:51"
-        },
-        {
-          "playerName": "Mudie, Shawn",
-          "holeNumber": 5,
-          "createdAt": "23/08/25 16:50:52"
-        },
-        {
-          "playerName": "Mudie, Shawn",
-          "holeNumber": 9,
-          "createdAt": "23/08/25 16:50:52"
-        },
-        {
-          "playerName": "Brown, Patrick",
-          "holeNumber": 2,
-          "createdAt": "23/08/25 16:50:53"
-        },
-        {
-          "playerName": "Wright, Douglas",
-          "holeNumber": 18,
-          "createdAt": "23/08/25 16:50:53"
-        },
-        {
-          "playerName": "Hill, John",
-          "holeNumber": 8,
-          "createdAt": "23/08/25 16:50:58"
-        },
-        {
-          "playerName": "Hill, John",
-          "holeNumber": 12,
-          "createdAt": "23/08/25 16:50:58"
-        },
-        {
-          "playerName": "Monaghan, Brendan",
-          "holeNumber": 16,
-          "createdAt": "23/08/25 16:50:59"
-        },
-        {
-          "playerName": "Rehlinger, Jeannine",
-          "holeNumber": 1,
-          "createdAt": "23/08/25 16:50:59"
-        },
-        {
-          "playerName": "Solbrig, Christian Andreas",
-          "holeNumber": 10,
-          "createdAt": "23/08/25 16:51:01"
-        },
-        {
-          "playerName": "O`sullivan, Ross",
-          "holeNumber": 16,
-          "createdAt": "23/08/25 16:51:01"
-        },
-        {
-          "playerName": "Shiers, John",
-          "holeNumber": 2,
-          "createdAt": "23/08/25 16:51:01"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1428,5 +1350,98 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:26.443Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73206
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Gonzalez  Lasuen, Pedro",
+          "holeNumber": 8,
+          "createdAt": "23/08/25 16:50:50"
+        },
+        {
+          "playerName": "Burke, Kevin",
+          "holeNumber": 18,
+          "createdAt": "23/08/25 16:50:50"
+        },
+        {
+          "playerName": "Li, Ni",
+          "holeNumber": 18,
+          "createdAt": "23/08/25 16:50:51"
+        },
+        {
+          "playerName": "Mudie, Shawn",
+          "holeNumber": 5,
+          "createdAt": "23/08/25 16:50:52"
+        },
+        {
+          "playerName": "Mudie, Shawn",
+          "holeNumber": 9,
+          "createdAt": "23/08/25 16:50:52"
+        },
+        {
+          "playerName": "Brown, Patrick",
+          "holeNumber": 2,
+          "createdAt": "23/08/25 16:50:53"
+        },
+        {
+          "playerName": "Wright, Douglas",
+          "holeNumber": 18,
+          "createdAt": "23/08/25 16:50:53"
+        },
+        {
+          "playerName": "Hill, John",
+          "holeNumber": 8,
+          "createdAt": "23/08/25 16:50:58"
+        },
+        {
+          "playerName": "Hill, John",
+          "holeNumber": 12,
+          "createdAt": "23/08/25 16:50:58"
+        },
+        {
+          "playerName": "Monaghan, Brendan",
+          "holeNumber": 16,
+          "createdAt": "23/08/25 16:50:59"
+        },
+        {
+          "playerName": "Rehlinger, Jeannine",
+          "holeNumber": 1,
+          "createdAt": "23/08/25 16:50:59"
+        },
+        {
+          "playerName": "Solbrig, Christian Andreas",
+          "holeNumber": 10,
+          "createdAt": "23/08/25 16:51:01"
+        },
+        {
+          "playerName": "O`sullivan, Ross",
+          "holeNumber": 16,
+          "createdAt": "23/08/25 16:51:01"
+        },
+        {
+          "playerName": "Shiers, John",
+          "holeNumber": 2,
+          "createdAt": "23/08/25 16:51:01"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:24.148Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 67926,
   "url": "https://www.nextcaddy.com/tour/67926",
-  "scrapedAt": "2026-05-09T09:57:58.271Z",
+  "scrapedAt": "2026-05-21T16:37:29.639Z",
   "meta": {
     "name": "II Torneo RKN Alumnos · Turno de Mañana 10:00 · Turno de Tarde 13:00",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "01 mar 2026",
-    "dateEnd": "01 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-01"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Individual Señoras Femenino Scratch General",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -238,6 +239,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Individual Señoras Femenino Handicap General",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -452,6 +455,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Individual Caballeros Masculino Scratch General",
+      "expectedJugadores": 47,
       "header": [
         "Pos",
         "Jugador",
@@ -985,6 +990,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Individual Caballeros Masculino Handicap General",
+      "expectedJugadores": 47,
       "header": [
         "Pos",
         "Jugador",
@@ -1517,6 +1524,25 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Señoras Femenino Scratch General",
+      "jugadores": 18
+    },
+    "2": {
+      "name": "Individual Señoras Femenino Handicap General",
+      "jugadores": 18
+    },
+    "3": {
+      "name": "Individual Caballeros Masculino Scratch General",
+      "jugadores": 47
+    },
+    "4": {
+      "name": "Individual Caballeros Masculino Handicap General",
+      "jugadores": 47
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2443,48 +2469,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72444
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Fernandez Soriano, Blas",
-          "holeNumber": 8,
-          "createdAt": "25/07/25 19:23:34"
-        },
-        {
-          "playerName": "Rigaud Galvez, Mario",
-          "holeNumber": 7,
-          "createdAt": "25/07/25 20:03:12"
-        },
-        {
-          "playerName": "Rigaud Galvez, Alvaro",
-          "holeNumber": 8,
-          "createdAt": "25/07/25 20:07:57"
-        },
-        {
-          "playerName": "Maldonado Felices, Gonzalo",
-          "holeNumber": 1,
-          "createdAt": "25/07/25 20:08:49"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -3077,5 +3061,48 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:16.060Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72444
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Fernandez Soriano, Blas",
+          "holeNumber": 8,
+          "createdAt": "25/07/25 19:23:34"
+        },
+        {
+          "playerName": "Rigaud Galvez, Mario",
+          "holeNumber": 7,
+          "createdAt": "25/07/25 20:03:12"
+        },
+        {
+          "playerName": "Rigaud Galvez, Alvaro",
+          "holeNumber": 8,
+          "createdAt": "25/07/25 20:07:57"
+        },
+        {
+          "playerName": "Maldonado Felices, Gonzalo",
+          "holeNumber": 1,
+          "createdAt": "25/07/25 20:08:49"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:12.668Z"
 }

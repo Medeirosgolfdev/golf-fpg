@@ -1,6 +1,6 @@
 {
   "gameId": "697dc8e26609fc834e3cf4cf",
-  "fetchedAt": "2026-05-09T19:40:03.637Z",
+  "fetchedAt": "2026-05-21T16:47:31.516Z",
   "game": {
     "_id": "697dc8e26609fc834e3cf4cf",
     "name": "I PUNTUABLE ZONAL JUVENIL RFEG FEMENÍ 2026",
@@ -34,6 +34,15 @@
     "teesMale": [
       {
         "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 73.3,
+        "slope": 135,
+        "par": 71,
+        "_id": "697dc8e26609fc834e3cf59d"
+      },
+      {
+        "gender": "M",
         "color": "yellow",
         "lap": "lap18",
         "rating": 71.2,
@@ -49,15 +58,6 @@
         "slope": 121,
         "par": 71,
         "_id": "697dc8e26609fc834e3cf5d6"
-      },
-      {
-        "gender": "M",
-        "color": "white",
-        "lap": "lap18",
-        "rating": 73.3,
-        "slope": 135,
-        "par": 71,
-        "_id": "697dc8e26609fc834e3cf59d"
       },
       {
         "gender": "M",
@@ -81,21 +81,21 @@
       },
       {
         "gender": "F",
-        "color": "red",
-        "lap": "lap18",
-        "rating": 71.8,
-        "slope": 128,
-        "par": 71,
-        "_id": "697dc8e26609fc834e3cf5e9"
-      },
-      {
-        "gender": "F",
         "color": "white",
         "lap": "lap18",
         "rating": 79.9,
         "slope": 146,
         "par": 71,
         "_id": "697dc8e26609fc834e3cf60f"
+      },
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 71.8,
+        "slope": 128,
+        "par": 71,
+        "_id": "697dc8e26609fc834e3cf5e9"
       },
       {
         "gender": "F",

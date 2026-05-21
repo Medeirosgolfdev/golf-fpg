@@ -1,14 +1,14 @@
 {
   "tourId": 61112,
   "url": "https://www.nextcaddy.com/tour/61112",
-  "scrapedAt": "2026-05-08T17:48:36.703Z",
+  "scrapedAt": "2026-05-21T16:38:42.611Z",
   "meta": {
     "name": "Circuito Juvenil Zona E",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Aguilon Golf",
     "courseCode": "AMF8",
-    "dateStart": "12 abr 2026",
-    "dateEnd": "12 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Señoras  Alevín Ma",
     "categories": [
       "Juvenil",
@@ -18,77 +18,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-04-12"
+    ]
   },
-  "course": {
-    "par": [
-      5,
-      4,
-      4,
-      4,
-      5,
-      4,
-      4,
-      3,
-      5,
-      4,
-      4,
-      3,
-      4,
-      3,
-      4,
-      4,
-      3,
-      4
-    ],
-    "si": [
-      4,
-      12,
-      6,
-      9,
-      7,
-      8,
-      11,
-      18,
-      1,
-      10,
-      13,
-      5,
-      3,
-      15,
-      17,
-      16,
-      14,
-      2
-    ],
-    "meters": [
-      401,
-      322,
-      174,
-      377,
-      481,
-      389,
-      345,
-      165,
-      474,
-      435,
-      328,
-      188,
-      377,
-      150,
-      271,
-      284,
-      130,
-      465
-    ],
-    "parTotal": 71,
-    "parInferred": true,
-    "parConfidence": "high"
-  },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Cadete Masculino Scratch",
+      "expectedJugadores": 4,
       "header": [
         "Pos",
         "Jugador",
@@ -110,33 +47,7 @@
           "rounds": [],
           "total": 75,
           "toPar": 4,
-          "inscribedId": 2288600,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                4,
-                4,
-                4,
-                4,
-                7,
-                4,
-                4,
-                3,
-                6,
-                4,
-                4,
-                3,
-                5,
-                3,
-                5,
-                4,
-                3,
-                4
-              ],
-              "total": 75
-            }
-          ]
+          "inscribedId": 2288600
         },
         {
           "pos": 2,
@@ -147,33 +58,7 @@
           "rounds": [],
           "total": 75,
           "toPar": 4,
-          "inscribedId": 2286738,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                4,
-                4,
-                3,
-                5,
-                5,
-                4,
-                4,
-                3,
-                6,
-                4,
-                5,
-                4,
-                5,
-                3,
-                4,
-                4,
-                3,
-                5
-              ],
-              "total": 75
-            }
-          ]
+          "inscribedId": 2286738
         },
         {
           "pos": 3,
@@ -184,33 +69,7 @@
           "rounds": [],
           "total": 79,
           "toPar": 8,
-          "inscribedId": 2280129,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                4,
-                5,
-                4,
-                6,
-                5,
-                5,
-                3,
-                5,
-                4,
-                4,
-                3,
-                5,
-                3,
-                5,
-                4,
-                3,
-                6
-              ],
-              "total": 79
-            }
-          ]
+          "inscribedId": 2280129
         },
         {
           "pos": 4,
@@ -221,38 +80,14 @@
           "rounds": [],
           "total": 89,
           "toPar": 18,
-          "inscribedId": 2291104,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                5,
-                4,
-                5,
-                7,
-                4,
-                5,
-                4,
-                6,
-                6,
-                4,
-                5,
-                5,
-                5,
-                4,
-                5,
-                5,
-                5
-              ],
-              "total": 89
-            }
-          ]
+          "inscribedId": 2291104
         }
       ]
     },
     {
       "category": 2,
+      "categoryName": "Cadete Femenino Scratch",
+      "expectedJugadores": 2,
       "header": [
         "Pos",
         "Jugador",
@@ -274,33 +109,7 @@
           "rounds": [],
           "total": 75,
           "toPar": 4,
-          "inscribedId": 2282146,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                5,
-                4,
-                5,
-                5,
-                3,
-                5,
-                3,
-                5,
-                4,
-                5,
-                3,
-                5,
-                2,
-                2,
-                6,
-                3,
-                5
-              ],
-              "total": 75
-            }
-          ]
+          "inscribedId": 2282146
         },
         {
           "pos": 2,
@@ -311,38 +120,14 @@
           "rounds": [],
           "total": 84,
           "toPar": 13,
-          "inscribedId": 2289235,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                6,
-                5,
-                4,
-                4,
-                6,
-                4,
-                6,
-                3,
-                5,
-                5,
-                5,
-                3,
-                6,
-                4,
-                5,
-                5,
-                3,
-                5
-              ],
-              "total": 84
-            }
-          ]
+          "inscribedId": 2289235
         }
       ]
     },
     {
       "category": 3,
+      "categoryName": "Infantil Masculino Scratch",
+      "expectedJugadores": 7,
       "header": [
         "Pos",
         "Jugador",
@@ -364,33 +149,7 @@
           "rounds": [],
           "total": 78,
           "toPar": 7,
-          "inscribedId": 2289639,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                4,
-                4,
-                3,
-                5,
-                6,
-                5,
-                5,
-                3,
-                7,
-                4,
-                4,
-                3,
-                5,
-                4,
-                4,
-                3,
-                4,
-                5
-              ],
-              "total": 78
-            }
-          ]
+          "inscribedId": 2289639
         },
         {
           "pos": 2,
@@ -401,33 +160,7 @@
           "rounds": [],
           "total": 87,
           "toPar": 16,
-          "inscribedId": 2279360,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                4,
-                2,
-                5,
-                5,
-                6,
-                6,
-                3,
-                8,
-                6,
-                6,
-                3,
-                6,
-                3,
-                4,
-                5,
-                3,
-                7
-              ],
-              "total": 87
-            }
-          ]
+          "inscribedId": 2279360
         },
         {
           "pos": 3,
@@ -438,33 +171,7 @@
           "rounds": [],
           "total": 88,
           "toPar": 17,
-          "inscribedId": 2286594,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                4,
-                5,
-                6,
-                5,
-                5,
-                6,
-                5,
-                4,
-                5,
-                5,
-                5,
-                4,
-                6,
-                3,
-                5,
-                5,
-                5,
-                5
-              ],
-              "total": 88
-            }
-          ]
+          "inscribedId": 2286594
         },
         {
           "pos": 4,
@@ -475,33 +182,7 @@
           "rounds": [],
           "total": 92,
           "toPar": 21,
-          "inscribedId": 2280168,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                5,
-                4,
-                6,
-                8,
-                4,
-                5,
-                4,
-                5,
-                5,
-                5,
-                5,
-                5,
-                4,
-                6,
-                4,
-                5,
-                7
-              ],
-              "total": 92
-            }
-          ]
+          "inscribedId": 2280168
         },
         {
           "pos": 5,
@@ -512,33 +193,7 @@
           "rounds": [],
           "total": 95,
           "toPar": 24,
-          "inscribedId": 2290171,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                6,
-                5,
-                7,
-                5,
-                8,
-                4,
-                5,
-                4,
-                7,
-                4,
-                6,
-                4,
-                5,
-                4,
-                7,
-                5,
-                5,
-                4
-              ],
-              "total": 95
-            }
-          ]
+          "inscribedId": 2290171
         },
         {
           "pos": 6,
@@ -549,33 +204,7 @@
           "rounds": [],
           "total": 118,
           "toPar": 47,
-          "inscribedId": 2288952,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                8,
-                4,
-                6,
-                8,
-                7,
-                8,
-                9,
-                4,
-                11,
-                7,
-                8,
-                5,
-                4,
-                6,
-                5,
-                6,
-                5,
-                7
-              ],
-              "total": 118
-            }
-          ]
+          "inscribedId": 2288952
         },
         {
           "pos": 7,
@@ -586,38 +215,14 @@
           "rounds": [],
           "total": 128,
           "toPar": 57,
-          "inscribedId": 2291013,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                6,
-                6,
-                6,
-                6,
-                9,
-                6,
-                6,
-                3,
-                11,
-                5,
-                5,
-                7,
-                9,
-                11,
-                12,
-                8,
-                4,
-                8
-              ],
-              "total": 128
-            }
-          ]
+          "inscribedId": 2291013
         }
       ]
     },
     {
       "category": 4,
+      "categoryName": "Infantil Femenino Scratch",
+      "expectedJugadores": 2,
       "header": [
         "Pos",
         "Jugador",
@@ -639,33 +244,7 @@
           "rounds": [],
           "total": 75,
           "toPar": 4,
-          "inscribedId": 2282147,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                4,
-                4,
-                3,
-                5,
-                6,
-                4,
-                3,
-                4,
-                4,
-                5,
-                3,
-                4,
-                4,
-                4,
-                4,
-                3,
-                6
-              ],
-              "total": 75
-            }
-          ]
+          "inscribedId": 2282147
         },
         {
           "pos": 2,
@@ -676,38 +255,14 @@
           "rounds": [],
           "total": 104,
           "toPar": 33,
-          "inscribedId": 2289095,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                6,
-                7,
-                4,
-                5,
-                9,
-                7,
-                5,
-                5,
-                9,
-                6,
-                4,
-                3,
-                6,
-                4,
-                5,
-                6,
-                4,
-                9
-              ],
-              "total": 104
-            }
-          ]
+          "inscribedId": 2289095
         }
       ]
     },
     {
       "category": 5,
+      "categoryName": "Alevin Masculino Scratch",
+      "expectedJugadores": 2,
       "header": [
         "Pos",
         "Jugador",
@@ -729,33 +284,7 @@
           "rounds": [],
           "total": 88,
           "toPar": 17,
-          "inscribedId": 2289236,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                4,
-                4,
-                7,
-                6,
-                4,
-                5,
-                4,
-                9,
-                6,
-                5,
-                3,
-                4,
-                3,
-                5,
-                6,
-                3,
-                5
-              ],
-              "total": 88
-            }
-          ]
+          "inscribedId": 2289236
         },
         {
           "pos": 2,
@@ -766,38 +295,14 @@
           "rounds": [],
           "total": 94,
           "toPar": 23,
-          "inscribedId": 2288866,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                8,
-                7,
-                6,
-                6,
-                6,
-                5,
-                5,
-                3,
-                5,
-                5,
-                4,
-                4,
-                6,
-                3,
-                5,
-                5,
-                3,
-                8
-              ],
-              "total": 94
-            }
-          ]
+          "inscribedId": 2288866
         }
       ]
     },
     {
       "category": 6,
+      "categoryName": "Cadete Masculino Handicap",
+      "expectedJugadores": 4,
       "header": [
         "Pos",
         "Jugador",
@@ -819,33 +324,7 @@
           "rounds": [],
           "total": 71,
           "toPar": null,
-          "inscribedId": 2288600,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                4,
-                4,
-                4,
-                4,
-                7,
-                4,
-                4,
-                3,
-                6,
-                4,
-                4,
-                3,
-                5,
-                3,
-                5,
-                4,
-                3,
-                4
-              ],
-              "total": 75
-            }
-          ]
+          "inscribedId": 2288600
         },
         {
           "pos": 2,
@@ -856,33 +335,7 @@
           "rounds": [],
           "total": 71,
           "toPar": null,
-          "inscribedId": 2286738,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                4,
-                4,
-                3,
-                5,
-                5,
-                4,
-                4,
-                3,
-                6,
-                4,
-                5,
-                4,
-                5,
-                3,
-                4,
-                4,
-                3,
-                5
-              ],
-              "total": 75
-            }
-          ]
+          "inscribedId": 2286738
         },
         {
           "pos": 3,
@@ -893,33 +346,7 @@
           "rounds": [],
           "total": 72,
           "toPar": 1,
-          "inscribedId": 2280129,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                4,
-                5,
-                4,
-                6,
-                5,
-                5,
-                3,
-                5,
-                4,
-                4,
-                3,
-                5,
-                3,
-                5,
-                4,
-                3,
-                6
-              ],
-              "total": 79
-            }
-          ]
+          "inscribedId": 2280129
         },
         {
           "pos": 4,
@@ -930,38 +357,14 @@
           "rounds": [],
           "total": 72,
           "toPar": 1,
-          "inscribedId": 2291104,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                5,
-                4,
-                5,
-                7,
-                4,
-                5,
-                4,
-                6,
-                6,
-                4,
-                5,
-                5,
-                5,
-                4,
-                5,
-                5,
-                5
-              ],
-              "total": 89
-            }
-          ]
+          "inscribedId": 2291104
         }
       ]
     },
     {
       "category": 7,
+      "categoryName": "Cadete Femenino Handicap",
+      "expectedJugadores": 2,
       "header": [
         "Pos",
         "Jugador",
@@ -983,33 +386,7 @@
           "rounds": [],
           "total": 76,
           "toPar": 5,
-          "inscribedId": 2282146,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                5,
-                4,
-                5,
-                5,
-                3,
-                5,
-                3,
-                5,
-                4,
-                5,
-                3,
-                5,
-                2,
-                2,
-                6,
-                3,
-                5
-              ],
-              "total": 75
-            }
-          ]
+          "inscribedId": 2282146
         },
         {
           "pos": 2,
@@ -1020,38 +397,14 @@
           "rounds": [],
           "total": 77,
           "toPar": 6,
-          "inscribedId": 2289235,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                6,
-                5,
-                4,
-                4,
-                6,
-                4,
-                6,
-                3,
-                5,
-                5,
-                5,
-                3,
-                6,
-                4,
-                5,
-                5,
-                3,
-                5
-              ],
-              "total": 84
-            }
-          ]
+          "inscribedId": 2289235
         }
       ]
     },
     {
       "category": 8,
+      "categoryName": "Infantil Masculino Handicap",
+      "expectedJugadores": 7,
       "header": [
         "Pos",
         "Jugador",
@@ -1073,31 +426,466 @@
           "rounds": [],
           "total": 72,
           "toPar": 1,
-          "inscribedId": 2289639,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                4,
-                4,
-                3,
-                5,
-                6,
-                5,
-                5,
-                3,
-                7,
-                4,
-                4,
-                3,
-                5,
-                4,
-                4
-              ]
-            }
-          ]
+          "inscribedId": 2289639
+        },
+        {
+          "pos": 2,
+          "name": "Diego Torres Gallardo",
+          "licencia": "AMC7933775",
+          "hcp": 18,
+          "nivel": "I",
+          "rounds": [],
+          "total": 75,
+          "toPar": 4,
+          "inscribedId": 2290171
+        },
+        {
+          "pos": 3,
+          "name": "Ignacio Cenarro Puga",
+          "licencia": "AM65075812",
+          "hcp": 8.6,
+          "nivel": "I",
+          "rounds": [],
+          "total": 78,
+          "toPar": 7,
+          "inscribedId": 2286594
+        },
+        {
+          "pos": 4,
+          "name": "Sebastian Perez Ruiz",
+          "licencia": "AM59949141",
+          "hcp": 6.8,
+          "nivel": "I",
+          "rounds": [],
+          "total": 79,
+          "toPar": 8,
+          "inscribedId": 2279360
+        },
+        {
+          "pos": 5,
+          "name": "Marcos Fernandez Alferez",
+          "licencia": "AM59949270",
+          "hcp": 4.7,
+          "nivel": "I",
+          "rounds": [],
+          "total": 86,
+          "toPar": 15,
+          "inscribedId": 2280168
+        },
+        {
+          "pos": 6,
+          "name": "Nicolas Muñoz Aragon",
+          "licencia": "AMA2344657",
+          "hcp": 23.5,
+          "nivel": "I",
+          "rounds": [],
+          "total": 92,
+          "toPar": 21,
+          "inscribedId": 2288952
+        },
+        {
+          "pos": 7,
+          "name": "Hugo Rubio Rodriguez",
+          "licencia": "AM59992596",
+          "hcp": 13.2,
+          "nivel": "I",
+          "rounds": [],
+          "total": 113,
+          "toPar": 42,
+          "inscribedId": 2291013
         }
       ]
+    },
+    {
+      "category": 9,
+      "categoryName": "Infantil Femenino Handicap",
+      "expectedJugadores": 2,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Natalia Lavilla Marti",
+          "licencia": "AM62955024",
+          "hcp": 5.2,
+          "nivel": "I",
+          "rounds": [],
+          "total": 74,
+          "toPar": 3,
+          "inscribedId": 2282147
+        },
+        {
+          "pos": 2,
+          "name": "Jessica Roskosch",
+          "licencia": "AM63910777",
+          "hcp": 28.7,
+          "nivel": "I",
+          "rounds": [],
+          "total": 79,
+          "toPar": 8,
+          "inscribedId": 2289095
+        }
+      ]
+    },
+    {
+      "category": 10,
+      "categoryName": "Alevin Masculino Handicap",
+      "expectedJugadores": 2,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Gonzalo Peinado Padilla",
+          "licencia": "AMC7966801",
+          "hcp": 12.4,
+          "nivel": "A",
+          "rounds": [],
+          "total": 78,
+          "toPar": 7,
+          "inscribedId": 2289236
+        },
+        {
+          "pos": 2,
+          "name": "Adria Amaya Esteras",
+          "licencia": "AM63983145",
+          "hcp": 13.2,
+          "nivel": "A",
+          "rounds": [],
+          "total": 83,
+          "toPar": 12,
+          "inscribedId": 2288866
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Cadete Masculino Scratch",
+      "jugadores": 4
+    },
+    "2": {
+      "name": "Cadete Femenino Scratch",
+      "jugadores": 2
+    },
+    "3": {
+      "name": "Infantil Masculino Scratch",
+      "jugadores": 7
+    },
+    "4": {
+      "name": "Infantil Femenino Scratch",
+      "jugadores": 2
+    },
+    "5": {
+      "name": "Alevin Masculino Scratch",
+      "jugadores": 2
+    },
+    "6": {
+      "name": "Cadete Masculino Handicap",
+      "jugadores": 4
+    },
+    "7": {
+      "name": "Cadete Femenino Handicap",
+      "jugadores": 2
+    },
+    "8": {
+      "name": "Infantil Masculino Handicap",
+      "jugadores": 7
+    },
+    "9": {
+      "name": "Infantil Femenino Handicap",
+      "jugadores": 2
+    },
+    "10": {
+      "name": "Alevin Masculino Handicap",
+      "jugadores": 2
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Sebastian Perez Ruiz",
+      "licencia": "AM59949141",
+      "hcp": 6.8,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Marcos Fernandez Alferez",
+      "licencia": "AM59949270",
+      "hcp": 4.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Ignacio Cenarro Puga",
+      "licencia": "AM65075812",
+      "hcp": 8.6,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Nicolas Muñoz Aragon",
+      "licencia": "AMA2344657",
+      "hcp": 23.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 5,
+      "name": "Lucas Martin Alvarez",
+      "licencia": "AM23918308",
+      "hcp": 4.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 6,
+      "name": "Diego Torres Gallardo",
+      "licencia": "AMC7933775",
+      "hcp": 18,
+      "nivel": "I"
+    },
+    {
+      "orden": 7,
+      "name": "Hugo Rubio Rodriguez",
+      "licencia": "AM59992596",
+      "hcp": 13.2,
+      "nivel": "I"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Ignacio Garcia Chaves",
+      "licencia": "AMC7922647",
+      "hcp": 5.9,
+      "nivel": "C"
+    },
+    {
+      "orden": 2,
+      "name": "Alberto Perez Gonzalez",
+      "licencia": "AM62922100",
+      "hcp": 3.5,
+      "nivel": "C"
+    },
+    {
+      "orden": 3,
+      "name": "Luis Fernando Hidalgo Rejon",
+      "licencia": "AM65979236",
+      "hcp": 3.5,
+      "nivel": "C"
+    },
+    {
+      "orden": 4,
+      "name": "Pablo Enrique Sierra Sainz-Pardo",
+      "licencia": "AM23092039",
+      "hcp": 14.7,
+      "nivel": "C"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Irene Lavilla Marti",
+      "licencia": "AM62931932",
+      "hcp": 2.7,
+      "nivel": "C"
+    },
+    {
+      "orden": 2,
+      "name": "Natalia Lavilla Marti",
+      "licencia": "AM62955024",
+      "hcp": 5.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Jessica Roskosch",
+      "licencia": "AM63910777",
+      "hcp": 28.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Carolina Muñoz Zamorano",
+      "licencia": "AM23899762",
+      "hcp": 10.9,
+      "nivel": "C"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Adria Amaya Esteras",
+      "licencia": "AM63983145",
+      "hcp": 13.2,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Gonzalo Peinado Padilla",
+      "licencia": "AMC7966801",
+      "hcp": 12.4,
+      "nivel": "A"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Sebastian Perez Ruiz",
+      "licencia": "AM59949141",
+      "hcp": 6.8,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Ignacio Garcia Chaves",
+      "licencia": "AMC7922647",
+      "hcp": 5.9,
+      "nivel": "C"
+    },
+    {
+      "orden": 3,
+      "name": "Marcos Fernandez Alferez",
+      "licencia": "AM59949270",
+      "hcp": 4.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Irene Lavilla Marti",
+      "licencia": "AM62931932",
+      "hcp": 2.7,
+      "nivel": "C"
+    },
+    {
+      "orden": 5,
+      "name": "Natalia Lavilla Marti",
+      "licencia": "AM62955024",
+      "hcp": 5.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 6,
+      "name": "Ignacio Cenarro Puga",
+      "licencia": "AM65075812",
+      "hcp": 8.6,
+      "nivel": "I"
+    },
+    {
+      "orden": 7,
+      "name": "Alberto Perez Gonzalez",
+      "licencia": "AM62922100",
+      "hcp": 3.5,
+      "nivel": "C"
+    },
+    {
+      "orden": 8,
+      "name": "Luis Fernando Hidalgo Rejon",
+      "licencia": "AM65979236",
+      "hcp": 3.5,
+      "nivel": "C"
+    },
+    {
+      "orden": 9,
+      "name": "Adria Amaya Esteras",
+      "licencia": "AM63983145",
+      "hcp": 13.2,
+      "nivel": "A"
+    },
+    {
+      "orden": 10,
+      "name": "Nicolas Muñoz Aragon",
+      "licencia": "AMA2344657",
+      "hcp": 23.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 11,
+      "name": "Jessica Roskosch",
+      "licencia": "AM63910777",
+      "hcp": 28.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 12,
+      "name": "Carolina Muñoz Zamorano",
+      "licencia": "AM23899762",
+      "hcp": 10.9,
+      "nivel": "C"
+    },
+    {
+      "orden": 13,
+      "name": "Gonzalo Peinado Padilla",
+      "licencia": "AMC7966801",
+      "hcp": 12.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 14,
+      "name": "Lucas Martin Alvarez",
+      "licencia": "AM23918308",
+      "hcp": 4.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 15,
+      "name": "Diego Torres Gallardo",
+      "licencia": "AMC7933775",
+      "hcp": 18,
+      "nivel": "I"
+    },
+    {
+      "orden": 16,
+      "name": "Hugo Rubio Rodriguez",
+      "licencia": "AM59992596",
+      "hcp": 13.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 17,
+      "name": "Pablo Enrique Sierra Sainz-Pardo",
+      "licencia": "AM23092039",
+      "hcp": 14.7,
+      "nivel": "C"
     }
   ],
   "horarios": [
@@ -1260,5 +1048,210 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:11:59.438Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 64727
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Lopez Caceres, Marcos",
+          "holeNumber": 10,
+          "createdAt": "22/09/24 13:58:14"
+        },
+        {
+          "playerName": "Ruiz Diaz, Dayron",
+          "holeNumber": 2,
+          "createdAt": "22/09/24 13:58:49"
+        },
+        {
+          "playerName": "Ruiz Diaz, Dayron",
+          "holeNumber": 5,
+          "createdAt": "22/09/24 13:58:49"
+        },
+        {
+          "playerName": "Ruiz Diaz, Dayron",
+          "holeNumber": 7,
+          "createdAt": "22/09/24 13:58:49"
+        },
+        {
+          "playerName": "Ruiz Diaz, Dayron",
+          "holeNumber": 16,
+          "createdAt": "22/09/24 13:58:49"
+        },
+        {
+          "playerName": "Ruiz Diaz, Dayron",
+          "holeNumber": 17,
+          "createdAt": "22/09/24 13:58:49"
+        },
+        {
+          "playerName": "Ruiz Diaz, Dayron",
+          "holeNumber": 18,
+          "createdAt": "22/09/24 13:58:49"
+        },
+        {
+          "playerName": "Lopez Moreno, Rafael",
+          "holeNumber": 5,
+          "createdAt": "22/09/24 14:00:05"
+        },
+        {
+          "playerName": "Bassi, Graham",
+          "holeNumber": 3,
+          "createdAt": "22/09/24 14:01:14"
+        },
+        {
+          "playerName": "Martin Lopez, David",
+          "holeNumber": 9,
+          "createdAt": "22/09/24 14:01:37"
+        },
+        {
+          "playerName": "Martin Lopez, David",
+          "holeNumber": 14,
+          "createdAt": "22/09/24 14:01:37"
+        },
+        {
+          "playerName": "Fergusson-Batte, Andrew",
+          "holeNumber": 3,
+          "createdAt": "22/09/24 14:01:57"
+        },
+        {
+          "playerName": "Hurley, Bruce",
+          "holeNumber": 17,
+          "createdAt": "22/09/24 14:15:55"
+        },
+        {
+          "playerName": "Tineo Tineo, Francisco",
+          "holeNumber": 8,
+          "createdAt": "22/09/24 14:17:20"
+        },
+        {
+          "playerName": "Tineo Tineo, Francisco",
+          "holeNumber": 14,
+          "createdAt": "22/09/24 14:17:20"
+        },
+        {
+          "playerName": "D`heere  Pierre, Nick",
+          "holeNumber": 15,
+          "createdAt": "22/09/24 14:19:58"
+        },
+        {
+          "playerName": "Kuznetsova, Tatiana",
+          "holeNumber": 6,
+          "createdAt": "22/09/24 14:35:29"
+        },
+        {
+          "playerName": "Svetlana Valentinouna, Kripaytite",
+          "holeNumber": 1,
+          "createdAt": "22/09/24 14:36:06"
+        },
+        {
+          "playerName": "Svetlana Valentinouna, Kripaytite",
+          "holeNumber": 15,
+          "createdAt": "22/09/24 14:36:06"
+        },
+        {
+          "playerName": "Lopez De Abreu, Javier",
+          "holeNumber": 4,
+          "createdAt": "22/09/24 14:37:00"
+        },
+        {
+          "playerName": "Brune, Helmut",
+          "holeNumber": 3,
+          "createdAt": "22/09/24 14:41:36"
+        },
+        {
+          "playerName": "Brune, Helmut",
+          "holeNumber": 18,
+          "createdAt": "22/09/24 14:41:36"
+        },
+        {
+          "playerName": "Lopez Hernandez, Juan Jose",
+          "holeNumber": 13,
+          "createdAt": "22/09/24 14:51:37"
+        },
+        {
+          "playerName": "Danko, Jakub",
+          "holeNumber": 15,
+          "createdAt": "22/09/24 14:54:14"
+        },
+        {
+          "playerName": "Danko, Jakub",
+          "holeNumber": 17,
+          "createdAt": "22/09/24 14:54:14"
+        },
+        {
+          "playerName": "Svensson, Ulf Holger",
+          "holeNumber": 10,
+          "createdAt": "22/09/24 15:00:14"
+        },
+        {
+          "playerName": "Svensson, Ulf Holger",
+          "holeNumber": 14,
+          "createdAt": "22/09/24 15:00:14"
+        },
+        {
+          "playerName": "Kulyukin Romanov, Maxim",
+          "holeNumber": 8,
+          "createdAt": "22/09/24 15:01:21"
+        },
+        {
+          "playerName": "Acosta Raluy, Yann",
+          "holeNumber": 16,
+          "createdAt": "22/09/24 15:04:29"
+        },
+        {
+          "playerName": "Rubiales Ortiz, Sergio",
+          "holeNumber": 5,
+          "createdAt": "22/09/24 15:07:00"
+        },
+        {
+          "playerName": "Perez Fernandez, Maria Del Mar",
+          "holeNumber": 10,
+          "createdAt": "22/09/24 15:07:40"
+        },
+        {
+          "playerName": "Serna Postigo, Pedro",
+          "holeNumber": 5,
+          "createdAt": "22/09/24 15:07:57"
+        },
+        {
+          "playerName": "Salas Jimenez, Fernando",
+          "holeNumber": 4,
+          "createdAt": "22/09/24 15:10:33"
+        },
+        {
+          "playerName": "Van Laere, Gert",
+          "holeNumber": 17,
+          "createdAt": "22/09/24 15:11:33"
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Lopez Moreno, Rafael",
+          "holeNumber": 8,
+          "createdAt": "22/09/24 14:00:05"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/circular/2026/2aa56b471e796fb607d471d2b9ad0c4c.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:50.703Z"
 }

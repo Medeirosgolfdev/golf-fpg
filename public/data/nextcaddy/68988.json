@@ -1,14 +1,14 @@
 {
   "tourId": 68988,
   "url": "https://www.nextcaddy.com/tour/68988",
-  "scrapedAt": "2026-05-09T09:58:03.113Z",
+  "scrapedAt": "2026-05-21T16:37:38.533Z",
   "meta": {
     "name": "Los Gallos 07/03",
     "organizer": null,
     "course": "Alhaurín Golf Hotel & Resort",
     "courseCode": "AM22",
-    "dateStart": "07 mar 2026",
-    "dateEnd": "07 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-07"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 15,
       "header": [
         "Pos",
         "Jugador",
@@ -204,6 +205,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 15
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -428,6 +436,148 @@
       "licencia": "05-03-26 14:41",
       "hcp": 19,
       "nivel": "AM22941675"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Xavier Sierra Lacam",
+          "hcp": 15.9,
+          "ins": "2274683",
+          "jid": "73705",
+          "nivel": "M"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Kees De Cock",
+          "hcp": 21.3,
+          "ins": "2274684",
+          "jid": "73705",
+          "nivel": "S"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "John Sprajc",
+          "hcp": 9.6,
+          "ins": "2274685",
+          "jid": "73705",
+          "nivel": "M"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Francisco Farfan Rueda",
+          "hcp": 7.5,
+          "ins": "2274686",
+          "jid": "73705",
+          "nivel": "M"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Francisco Burgos Garcia",
+          "hcp": 28,
+          "ins": "2274687",
+          "jid": "73705",
+          "nivel": "S"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Jose Angel Yañez Poyatos",
+          "hcp": 23.7,
+          "ins": "2274696",
+          "jid": "73705",
+          "nivel": "S"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Francisco Miguel Garcia Bravo",
+          "hcp": 19,
+          "ins": "2274697",
+          "jid": "73705",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Kairi Kahn Kahn",
+          "hcp": 21.8,
+          "ins": "2274682",
+          "jid": "73705",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Maria Elena Zea Martin",
+          "hcp": 16.7,
+          "ins": "2274688",
+          "jid": "73705",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Juan Jesus Perez Martin",
+          "hcp": 15.5,
+          "ins": "2274691",
+          "jid": "73705",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Cristobal Herrera Garcia",
+          "hcp": 11.8,
+          "ins": "2274692",
+          "jid": "73705",
+          "nivel": "S"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Salvador Cardenas Jimenez",
+          "hcp": 12.1,
+          "ins": "2274689",
+          "jid": "73705",
+          "nivel": "S"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Jose Gallego Martin",
+          "hcp": 20,
+          "ins": "2274693",
+          "jid": "73705",
+          "nivel": "S"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Pedro Martin Plaza",
+          "hcp": 19.1,
+          "ins": "2274694",
+          "jid": "73705",
+          "nivel": "S"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Juan Garcia Gallego",
+          "hcp": 20.6,
+          "ins": "2274695",
+          "jid": "73705",
+          "nivel": "M"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -924,147 +1074,6 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "08:40",
-          "tee": 1,
-          "name": "Xavier Sierra Lacam",
-          "hcp": 15.9,
-          "ins": "2274683",
-          "jid": "73705",
-          "nivel": "M"
-        },
-        {
-          "time": "08:40",
-          "tee": 1,
-          "name": "Kees De Cock",
-          "hcp": 21.3,
-          "ins": "2274684",
-          "jid": "73705",
-          "nivel": "S"
-        },
-        {
-          "time": "08:40",
-          "tee": 1,
-          "name": "John Sprajc",
-          "hcp": 9.6,
-          "ins": "2274685",
-          "jid": "73705",
-          "nivel": "M"
-        },
-        {
-          "time": "08:40",
-          "tee": 1,
-          "name": "Francisco Farfan Rueda",
-          "hcp": 7.5,
-          "ins": "2274686",
-          "jid": "73705",
-          "nivel": "M"
-        },
-        {
-          "time": "08:50",
-          "tee": 1,
-          "name": "Francisco Burgos Garcia",
-          "hcp": 28,
-          "ins": "2274687",
-          "jid": "73705",
-          "nivel": "S"
-        },
-        {
-          "time": "08:50",
-          "tee": 1,
-          "name": "Jose Angel Yañez Poyatos",
-          "hcp": 23.7,
-          "ins": "2274696",
-          "jid": "73705",
-          "nivel": "S"
-        },
-        {
-          "time": "08:50",
-          "tee": 1,
-          "name": "Francisco Miguel Garcia Bravo",
-          "hcp": 19,
-          "ins": "2274697",
-          "jid": "73705",
-          "nivel": "M"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Kairi Kahn Kahn",
-          "hcp": 21.8,
-          "ins": "2274682",
-          "jid": "73705",
-          "nivel": "M"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Maria Elena Zea Martin",
-          "hcp": 16.7,
-          "ins": "2274688",
-          "jid": "73705",
-          "nivel": "M"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Juan Jesus Perez Martin",
-          "hcp": 15.5,
-          "ins": "2274691",
-          "jid": "73705",
-          "nivel": "S"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Cristobal Herrera Garcia",
-          "hcp": 11.8,
-          "ins": "2274692",
-          "jid": "73705",
-          "nivel": "S"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Salvador Cardenas Jimenez",
-          "hcp": 12.1,
-          "ins": "2274689",
-          "jid": "73705",
-          "nivel": "S"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Jose Gallego Martin",
-          "hcp": 20,
-          "ins": "2274693",
-          "jid": "73705",
-          "nivel": "S"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Pedro Martin Plaza",
-          "hcp": 19.1,
-          "ins": "2274694",
-          "jid": "73705",
-          "nivel": "S"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Juan Garcia Gallego",
-          "hcp": 20.6,
-          "ins": "2274695",
-          "jid": "73705",
-          "nivel": "M"
-        }
-      ]
-    }
-  ],
-  "horariosScrapedAt": "2026-05-09T12:12:31.234Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:29.438Z"
 }

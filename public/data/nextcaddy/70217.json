@@ -1,14 +1,14 @@
 {
   "tourId": 70217,
   "url": "https://www.nextcaddy.com/tour/70217",
-  "scrapedAt": "2026-05-09T10:15:38.844Z",
+  "scrapedAt": "2026-05-21T16:39:03.006Z",
   "meta": {
     "name": "11ª P. TORNEO DAMAS 22-04-26",
     "organizer": null,
     "course": "Real Club de Golf Vista Hermosa",
     "courseCode": "AM05",
-    "dateStart": "22 abr 2026",
-    "dateEnd": "22 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras Facebook",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-22"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "2ª Cat",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -128,6 +129,8 @@
     },
     {
       "category": 2,
+      "categoryName": "1ª Cat",
+      "expectedJugadores": 9,
       "header": [
         "Pos",
         "Jugador",
@@ -242,6 +245,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "2ª Cat",
+      "jugadores": 8
+    },
+    "2": {
+      "name": "1ª Cat",
+      "jugadores": 9
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -489,22 +503,6 @@
       "nivel": "AM05288848"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75123
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -665,5 +663,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:58.237Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75123
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:38.866Z"
 }

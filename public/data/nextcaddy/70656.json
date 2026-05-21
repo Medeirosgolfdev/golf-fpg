@@ -1,14 +1,14 @@
 {
   "tourId": 70656,
   "url": "https://www.nextcaddy.com/tour/70656",
-  "scrapedAt": "2026-05-09T10:16:38.714Z",
+  "scrapedAt": "2026-05-21T16:40:11.565Z",
   "meta": {
     "name": "JOVENES PROMESA - ZONAL BENJAMINES HCP NACIONAL",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "30 may 2026",
-    "dateEnd": "30 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "BENJAMIN",
@@ -19,12 +19,36 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-05-30"
+    ]
   },
   "course": null,
   "leaderboard": [],
-  "inscritos": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Paula Casas Fernandez",
+      "licencia": "7770474202",
+      "hcp": 20.8,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Paula Casas Fernandez",
+      "licencia": "7770474202",
+      "hcp": 20.8,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -61,6 +85,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:45.461Z"
+  "pdfs": [
+    "/uploads/competiciones/cartel/131829823_70656-jovenes-promesa-zonal-benjamines-hcp-nacional.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:43.337Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 67778,
   "url": "https://www.nextcaddy.com/tour/67778",
-  "scrapedAt": "2026-05-09T10:38:37.630Z",
+  "scrapedAt": "2026-05-21T16:38:08.109Z",
   "meta": {
     "name": "Torneo Benjamín Femenino \"Las Rejas\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Forus Golf Las Rejas",
     "courseCode": "CM22",
-    "dateStart": "22 mar 2026",
-    "dateEnd": "22 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) Circuito Juvenil 20",
     "categories": [
       "Benjamín Femenino",
@@ -17,74 +17,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-03-22"
-  },
-  "course": {
-    "par": [
-      4,
-      4,
-      3,
-      5,
-      4,
-      4,
-      3,
-      5,
-      3,
-      4,
-      4,
-      3,
-      5,
-      4,
-      4,
-      3,
-      5,
-      3
-    ],
-    "si": [
-      7,
-      3,
-      13,
-      5,
-      11,
-      9,
-      15,
-      1,
-      17,
-      8,
-      4,
-      14,
-      6,
-      12,
-      10,
-      16,
-      2,
-      18
-    ],
-    "meters": [
-      290,
-      312,
-      113,
-      403,
-      257,
-      290,
-      87,
-      390,
-      87,
-      290,
-      312,
-      113,
-      403,
-      257,
-      290,
-      87,
-      390,
-      87
     ]
   },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual Femenino",
+      "expectedJugadores": 6,
       "header": [
         "Pos",
         "Jugador",
@@ -106,8 +46,7 @@
           "rounds": [],
           "total": 44,
           "toPar": 9,
-          "inscribedId": 2277776,
-          "roundScores": []
+          "inscribedId": 2277776
         },
         {
           "pos": 2,
@@ -118,8 +57,7 @@
           "rounds": [],
           "total": 47,
           "toPar": 12,
-          "inscribedId": 2281237,
-          "roundScores": []
+          "inscribedId": 2281237
         },
         {
           "pos": 3,
@@ -130,8 +68,7 @@
           "rounds": [],
           "total": 54,
           "toPar": 19,
-          "inscribedId": 2277500,
-          "roundScores": []
+          "inscribedId": 2277500
         },
         {
           "pos": 4,
@@ -142,8 +79,7 @@
           "rounds": [],
           "total": 55,
           "toPar": 20,
-          "inscribedId": 2277087,
-          "roundScores": []
+          "inscribedId": 2277087
         },
         {
           "pos": 5,
@@ -154,8 +90,7 @@
           "rounds": [],
           "total": 55,
           "toPar": 20,
-          "inscribedId": 2277310,
-          "roundScores": []
+          "inscribedId": 2277310
         },
         {
           "pos": 6,
@@ -166,13 +101,14 @@
           "rounds": [],
           "total": 61,
           "toPar": 26,
-          "inscribedId": 2277533,
-          "roundScores": []
+          "inscribedId": 2277533
         }
       ]
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual Femenino",
+      "expectedJugadores": 6,
       "header": [
         "Pos",
         "Jugador",
@@ -194,8 +130,7 @@
           "rounds": [],
           "total": 32,
           "toPar": -3,
-          "inscribedId": 2281237,
-          "roundScores": []
+          "inscribedId": 2281237
         },
         {
           "pos": 2,
@@ -206,8 +141,7 @@
           "rounds": [],
           "total": 35,
           "toPar": null,
-          "inscribedId": 2277776,
-          "roundScores": []
+          "inscribedId": 2277776
         },
         {
           "pos": 3,
@@ -218,8 +152,7 @@
           "rounds": [],
           "total": 36,
           "toPar": 1,
-          "inscribedId": 2277087,
-          "roundScores": []
+          "inscribedId": 2277087
         },
         {
           "pos": 4,
@@ -230,8 +163,7 @@
           "rounds": [],
           "total": 37,
           "toPar": 2,
-          "inscribedId": 2277500,
-          "roundScores": []
+          "inscribedId": 2277500
         },
         {
           "pos": 5,
@@ -242,8 +174,7 @@
           "rounds": [],
           "total": 37,
           "toPar": 2,
-          "inscribedId": 2277310,
-          "roundScores": []
+          "inscribedId": 2277310
         },
         {
           "pos": 6,
@@ -254,12 +185,22 @@
           "rounds": [],
           "total": 44,
           "toPar": 9,
-          "inscribedId": 2277533,
-          "roundScores": []
+          "inscribedId": 2277533
         }
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual Femenino",
+      "jugadores": 6
+    },
+    "2": {
+      "name": "Handicap Individual Femenino",
+      "jugadores": 6
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -351,6 +292,67 @@
       "licencia": "CMA8478469",
       "hcp": 29.4,
       "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:30",
+          "tee": 2,
+          "name": "Aitana Puerta Revuelta",
+          "hcp": 18.1,
+          "ins": "2277776",
+          "jid": "72262",
+          "nivel": "B"
+        },
+        {
+          "time": "09:30",
+          "tee": 2,
+          "name": "Paula Ruiperez Mendoza",
+          "hcp": 29.4,
+          "ins": "2281237",
+          "jid": "72262",
+          "nivel": "B"
+        },
+        {
+          "time": "09:30",
+          "tee": 2,
+          "name": "Alejandra Massana Arias",
+          "hcp": 33.3,
+          "ins": "2277533",
+          "jid": "72262",
+          "nivel": "B"
+        },
+        {
+          "time": "09:30",
+          "tee": 4,
+          "name": "Lucia Yarte Delgado",
+          "hcp": 34.9,
+          "ins": "2277500",
+          "jid": "72262",
+          "nivel": "B"
+        },
+        {
+          "time": "09:30",
+          "tee": 4,
+          "name": "Valeria Fernandez Gallardo",
+          "hcp": 35.9,
+          "ins": "2277310",
+          "jid": "72262",
+          "nivel": "B"
+        },
+        {
+          "time": "09:30",
+          "tee": 4,
+          "name": "Alejandra Sevillano Sanchez",
+          "hcp": 38.7,
+          "ins": "2277087",
+          "jid": "72262",
+          "nivel": "B"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -550,66 +552,8 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "09:30",
-          "tee": 2,
-          "name": "Aitana Puerta Revuelta",
-          "hcp": 18.1,
-          "ins": "2277776",
-          "jid": "72262",
-          "nivel": "B"
-        },
-        {
-          "time": "09:30",
-          "tee": 2,
-          "name": "Paula Ruiperez Mendoza",
-          "hcp": 29.4,
-          "ins": "2281237",
-          "jid": "72262",
-          "nivel": "B"
-        },
-        {
-          "time": "09:30",
-          "tee": 2,
-          "name": "Alejandra Massana Arias",
-          "hcp": 33.3,
-          "ins": "2277533",
-          "jid": "72262",
-          "nivel": "B"
-        },
-        {
-          "time": "09:30",
-          "tee": 4,
-          "name": "Lucia Yarte Delgado",
-          "hcp": 34.9,
-          "ins": "2277500",
-          "jid": "72262",
-          "nivel": "B"
-        },
-        {
-          "time": "09:30",
-          "tee": 4,
-          "name": "Valeria Fernandez Gallardo",
-          "hcp": 35.9,
-          "ins": "2277310",
-          "jid": "72262",
-          "nivel": "B"
-        },
-        {
-          "time": "09:30",
-          "tee": 4,
-          "name": "Alejandra Sevillano Sanchez",
-          "hcp": 38.7,
-          "ins": "2277087",
-          "jid": "72262",
-          "nivel": "B"
-        }
-      ]
-    }
+  "pdfs": [
+    "/uploads/competiciones/pdf/2638627959_rrll_las_rejas.pdf"
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:12.046Z"
+  "horariosScrapedAt": "2026-05-21T16:42:07.865Z"
 }

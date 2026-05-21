@@ -1,14 +1,14 @@
 {
   "tourId": 68714,
   "url": "https://www.nextcaddy.com/tour/68714",
-  "scrapedAt": "2026-05-09T10:38:25.402Z",
+  "scrapedAt": "2026-05-21T16:38:54.605Z",
   "meta": {
     "name": "XXXVI CAMPEONATO JUVENIL  DE CyL 2026 (9 Hoyos)",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "18 abr 2026",
-    "dateEnd": "18 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "JUVENIL",
@@ -18,74 +18,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-04-18"
-  },
-  "course": {
-    "par": [
-      5,
-      4,
-      4,
-      3,
-      4,
-      3,
-      4,
-      4,
-      4,
-      3,
-      4,
-      3,
-      4,
-      4,
-      4,
-      4,
-      5,
-      4
-    ],
-    "si": [
-      2,
-      12,
-      8,
-      14,
-      15,
-      16,
-      3,
-      17,
-      11,
-      7,
-      1,
-      5,
-      18,
-      4,
-      9,
-      13,
-      6,
-      10
-    ],
-    "meters": [
-      426,
-      225,
-      299,
-      161,
-      259,
-      136,
-      334,
-      276,
-      274,
-      157,
-      347,
-      156,
-      235,
-      264,
-      261,
-      263,
-      425,
-      279
     ]
   },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Individual Scratch Femenino",
+      "expectedJugadores": 1,
       "header": [
         "Pos",
         "Jugador",
@@ -107,13 +47,14 @@
           "rounds": [],
           "total": 47,
           "toPar": 12,
-          "inscribedId": 2295314,
-          "roundScores": []
+          "inscribedId": 2295314
         }
       ]
     },
     {
       "category": 2,
+      "categoryName": "Individual Handicap Femenino",
+      "expectedJugadores": 1,
       "header": [
         "Pos",
         "Jugador",
@@ -135,13 +76,14 @@
           "rounds": [],
           "total": 36,
           "toPar": 1,
-          "inscribedId": 2295314,
-          "roundScores": []
+          "inscribedId": 2295314
         }
       ]
     },
     {
       "category": 3,
+      "categoryName": "Individual Scratch Masculino",
+      "expectedJugadores": 3,
       "header": [
         "Pos",
         "Jugador",
@@ -163,8 +105,7 @@
           "rounds": [],
           "total": 50,
           "toPar": 15,
-          "inscribedId": 2283681,
-          "roundScores": []
+          "inscribedId": 2283681
         },
         {
           "pos": 2,
@@ -175,8 +116,7 @@
           "rounds": [],
           "total": 60,
           "toPar": 25,
-          "inscribedId": 2294047,
-          "roundScores": []
+          "inscribedId": 2294047
         },
         {
           "pos": 3,
@@ -187,13 +127,14 @@
           "rounds": [],
           "total": 62,
           "toPar": 27,
-          "inscribedId": 2299901,
-          "roundScores": []
+          "inscribedId": 2299901
         }
       ]
     },
     {
       "category": 4,
+      "categoryName": "Individual Handicap Masculino",
+      "expectedJugadores": 3,
       "header": [
         "Pos",
         "Jugador",
@@ -215,8 +156,7 @@
           "rounds": [],
           "total": 40,
           "toPar": 5,
-          "inscribedId": 2283681,
-          "roundScores": []
+          "inscribedId": 2283681
         },
         {
           "pos": 2,
@@ -227,8 +167,7 @@
           "rounds": [],
           "total": 51,
           "toPar": 16,
-          "inscribedId": 2299901,
-          "roundScores": []
+          "inscribedId": 2299901
         },
         {
           "pos": 3,
@@ -239,12 +178,30 @@
           "rounds": [],
           "total": 53,
           "toPar": 18,
-          "inscribedId": 2294047,
-          "roundScores": []
+          "inscribedId": 2294047
         }
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Scratch Femenino",
+      "jugadores": 1
+    },
+    "2": {
+      "name": "Individual Handicap Femenino",
+      "jugadores": 1
+    },
+    "3": {
+      "name": "Individual Scratch Masculino",
+      "jugadores": 3
+    },
+    "4": {
+      "name": "Individual Handicap Masculino",
+      "jugadores": 3
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -317,22 +274,6 @@
       "nivel": "7700354371"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73363
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -376,5 +317,25 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:28.508Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73363
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/1236302086_cuadro_de_honor.pdf",
+    "/uploads/circulares/cirfgcyl0726-1.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:26.414Z"
 }

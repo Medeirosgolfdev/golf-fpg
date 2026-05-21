@@ -1,14 +1,14 @@
 {
   "tourId": 70036,
   "url": "https://www.nextcaddy.com/tour/70036",
-  "scrapedAt": "2026-05-09T10:15:35.760Z",
+  "scrapedAt": "2026-05-21T16:38:58.732Z",
   "meta": {
     "name": "VILLANUEVA GOLF SCHOOL",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "19 abr 2026",
-    "dateEnd": "19 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -19,13 +19,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-19"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 11,
       "header": [
         "Pos",
         "Jugador",
@@ -163,6 +164,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 11,
       "header": [
         "Pos",
         "Jugador",
@@ -299,6 +302,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 11
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 11
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -476,78 +490,6 @@
       "nivel": "I"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74931
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Naranjo Alba, Daniel",
-          "holeNumber": 15,
-          "createdAt": "06/12/25 09:28:02"
-        },
-        {
-          "playerName": "Silva Gomez, Fernando",
-          "holeNumber": 16,
-          "createdAt": "06/12/25 09:55:40"
-        },
-        {
-          "playerName": "Naranjo Alba, Daniel",
-          "holeNumber": 17,
-          "createdAt": "06/12/25 10:01:47"
-        },
-        {
-          "playerName": "Medina Martinez, Angel",
-          "holeNumber": 3,
-          "createdAt": "06/12/25 10:22:38"
-        },
-        {
-          "playerName": "De La Hoz Gomez, Eduardo",
-          "holeNumber": 9,
-          "createdAt": "06/12/25 10:58:46"
-        },
-        {
-          "playerName": "Lelieur Jimenez-O., Hugo",
-          "holeNumber": 18,
-          "createdAt": "06/12/25 11:37:31"
-        },
-        {
-          "playerName": "Torres Paredes, Antonio",
-          "holeNumber": 6,
-          "createdAt": "06/12/25 11:56:37"
-        },
-        {
-          "playerName": "Castro Herrero, Jose",
-          "holeNumber": 14,
-          "createdAt": "06/12/25 12:45:33"
-        },
-        {
-          "playerName": "Naranjo Alba, Daniel",
-          "holeNumber": 10,
-          "createdAt": "06/12/25 13:02:08"
-        },
-        {
-          "playerName": "Rousseau Vincent, Cecile",
-          "holeNumber": 15,
-          "createdAt": "06/12/25 13:59:47"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -654,5 +596,80 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:57.220Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74931
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Naranjo Alba, Daniel",
+          "holeNumber": 15,
+          "createdAt": "06/12/25 09:28:02"
+        },
+        {
+          "playerName": "Silva Gomez, Fernando",
+          "holeNumber": 16,
+          "createdAt": "06/12/25 09:55:40"
+        },
+        {
+          "playerName": "Naranjo Alba, Daniel",
+          "holeNumber": 17,
+          "createdAt": "06/12/25 10:01:47"
+        },
+        {
+          "playerName": "Medina Martinez, Angel",
+          "holeNumber": 3,
+          "createdAt": "06/12/25 10:22:38"
+        },
+        {
+          "playerName": "De La Hoz Gomez, Eduardo",
+          "holeNumber": 9,
+          "createdAt": "06/12/25 10:58:46"
+        },
+        {
+          "playerName": "Lelieur Jimenez-O., Hugo",
+          "holeNumber": 18,
+          "createdAt": "06/12/25 11:37:31"
+        },
+        {
+          "playerName": "Torres Paredes, Antonio",
+          "holeNumber": 6,
+          "createdAt": "06/12/25 11:56:37"
+        },
+        {
+          "playerName": "Castro Herrero, Jose",
+          "holeNumber": 14,
+          "createdAt": "06/12/25 12:45:33"
+        },
+        {
+          "playerName": "Naranjo Alba, Daniel",
+          "holeNumber": 10,
+          "createdAt": "06/12/25 13:02:08"
+        },
+        {
+          "playerName": "Rousseau Vincent, Cecile",
+          "holeNumber": 15,
+          "createdAt": "06/12/25 13:59:47"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/cartel/3386998336_70036-villanueva-golf-school.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:37.639Z"
 }

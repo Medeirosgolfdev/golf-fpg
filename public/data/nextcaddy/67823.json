@@ -1,14 +1,14 @@
 {
   "tourId": 67823,
   "url": "https://www.nextcaddy.com/tour/67823",
-  "scrapedAt": "2026-05-09T09:49:40.949Z",
+  "scrapedAt": "2026-05-21T16:38:18.903Z",
   "meta": {
     "name": "Torneo de 3ª Categoría Pitch & Putt \"Golf Park\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Golf Park Entertainment",
     "courseCode": "CM18",
-    "dateStart": "28 mar 2026",
-    "dateEnd": "28 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Circuito De 3ª Cat",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-28"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Hándicap Indistinta",
+      "expectedJugadores": 73,
       "header": [
         "Pos",
         "Jugador",
@@ -842,6 +843,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Hándicap Indistinta",
+      "jugadores": 73
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1880,43 +1888,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72319
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Wood, Susan",
-          "holeNumber": 16,
-          "createdAt": "21/07/25 14:35:05"
-        },
-        {
-          "playerName": "Lethbridge, David Robert",
-          "holeNumber": 16,
-          "createdAt": "21/07/25 14:35:06"
-        },
-        {
-          "playerName": "Grant, Karen",
-          "holeNumber": 16,
-          "createdAt": "21/07/25 14:35:06"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -2581,5 +2552,46 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:14.211Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72319
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Wood, Susan",
+          "holeNumber": 16,
+          "createdAt": "21/07/25 14:35:05"
+        },
+        {
+          "playerName": "Lethbridge, David Robert",
+          "holeNumber": 16,
+          "createdAt": "21/07/25 14:35:06"
+        },
+        {
+          "playerName": "Grant, Karen",
+          "holeNumber": 16,
+          "createdAt": "21/07/25 14:35:06"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/67823_cartel_168.pdf",
+    "/uploads/competiciones/pdf/4170175036_rrll_3_cat.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:10.445Z"
 }

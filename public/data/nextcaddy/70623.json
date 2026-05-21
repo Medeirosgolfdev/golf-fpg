@@ -1,14 +1,14 @@
 {
   "tourId": 70623,
   "url": "https://www.nextcaddy.com/tour/70623",
-  "scrapedAt": "2026-05-09T10:15:53.813Z",
+  "scrapedAt": "2026-05-21T16:39:27.313Z",
   "meta": {
     "name": "VOBS COMPETITION",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "07 may 2026",
-    "dateEnd": "07 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-07"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 11,
       "header": [
         "Pos",
         "Jugador",
@@ -161,6 +162,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 11
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -331,33 +339,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75593
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Antoli Aparicio, Florencio",
-          "holeNumber": 9,
-          "createdAt": "20/11/25 19:05:34"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -464,5 +445,35 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:13:01.836Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75593
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Antoli Aparicio, Florencio",
+          "holeNumber": 9,
+          "createdAt": "20/11/25 19:05:34"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/cartel/2892171706_70623-vobs-competition.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:42.833Z"
 }

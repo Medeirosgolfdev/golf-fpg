@@ -1,14 +1,14 @@
 {
   "tourId": 66411,
   "url": "https://www.nextcaddy.com/tour/66411",
-  "scrapedAt": "2026-05-09T09:57:21.720Z",
+  "scrapedAt": "2026-05-21T16:36:34.216Z",
   "meta": {
     "name": "Torneo WAGR Global College USA",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "17 ene 2026",
-    "dateEnd": "17 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-17"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual Femenino",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -238,6 +239,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Scratch Individual Masculino",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -714,6 +717,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual Femenino",
+      "jugadores": 8
+    },
+    "2": {
+      "name": "Scratch Individual Masculino",
+      "jugadores": 19
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1108,191 +1122,6 @@
       "nivel": "J"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 70715
-    },
-    {
-      "roundNumber": 2,
-      "roundId": 70717
-    },
-    {
-      "roundNumber": 3,
-      "roundId": 70718
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Moreno Aguirre, Julia",
-          "holeNumber": 3,
-          "createdAt": "17/05/25 12:54:48"
-        },
-        {
-          "playerName": "Moreno Aguirre, Julia",
-          "holeNumber": 4,
-          "createdAt": "17/05/25 12:57:50"
-        },
-        {
-          "playerName": "Medina Enkler, Aitor",
-          "holeNumber": 4,
-          "createdAt": "17/05/25 13:20:53"
-        },
-        {
-          "playerName": "Quintanilla Gutierrez, Noelia",
-          "holeNumber": 4,
-          "createdAt": "17/05/25 13:26:10"
-        },
-        {
-          "playerName": "Moreno Aguirre, Julia",
-          "holeNumber": 6,
-          "createdAt": "17/05/25 13:27:39"
-        },
-        {
-          "playerName": "Fernandez Fernandez, Ivan",
-          "holeNumber": 4,
-          "createdAt": "17/05/25 13:28:43"
-        },
-        {
-          "playerName": "Aguirre Caballero, Matias",
-          "holeNumber": 1,
-          "createdAt": "17/05/25 13:32:14"
-        },
-        {
-          "playerName": "Medina Enkler, Aitor",
-          "holeNumber": 6,
-          "createdAt": "17/05/25 13:36:49"
-        },
-        {
-          "playerName": "Fernandez Fernandez, Javier",
-          "holeNumber": 4,
-          "createdAt": "17/05/25 13:49:33"
-        },
-        {
-          "playerName": "Fernandez Gallegos, Alvaro",
-          "holeNumber": 4,
-          "createdAt": "17/05/25 14:19:59"
-        },
-        {
-          "playerName": "Urquijo Romero, Santiago",
-          "holeNumber": 8,
-          "createdAt": "17/05/25 14:22:57"
-        },
-        {
-          "playerName": "Quintanilla Gutierrez, Bosco",
-          "holeNumber": 9,
-          "createdAt": "17/05/25 14:30:54"
-        },
-        {
-          "playerName": "Moreno Aguirre, Julia",
-          "holeNumber": 11,
-          "createdAt": "17/05/25 14:39:40"
-        },
-        {
-          "playerName": "Fernandez De Cordova Garrido, Juan",
-          "holeNumber": 8,
-          "createdAt": "17/05/25 14:43:30"
-        },
-        {
-          "playerName": "Bermudo Del Rio, Cornelia",
-          "holeNumber": 8,
-          "createdAt": "17/05/25 14:43:31"
-        },
-        {
-          "playerName": "Moreno Aguirre, Julia",
-          "holeNumber": 12,
-          "createdAt": "17/05/25 14:57:08"
-        },
-        {
-          "playerName": "Medina Enkler, Aitor",
-          "holeNumber": 12,
-          "createdAt": "17/05/25 15:03:39"
-        },
-        {
-          "playerName": "Moreno Aguirre, Julia",
-          "holeNumber": 13,
-          "createdAt": "17/05/25 15:10:48"
-        },
-        {
-          "playerName": "Fernandez Fernandez, Ivan",
-          "holeNumber": 11,
-          "createdAt": "17/05/25 15:11:02"
-        },
-        {
-          "playerName": "Quintanilla Gutierrez, Noelia",
-          "holeNumber": 11,
-          "createdAt": "17/05/25 15:11:36"
-        },
-        {
-          "playerName": "Bermudo Del Rio, Cornelia",
-          "holeNumber": 12,
-          "createdAt": "17/05/25 15:35:42"
-        },
-        {
-          "playerName": "Fernandez Gallegos, Alvaro",
-          "holeNumber": 9,
-          "createdAt": "17/05/25 15:42:29"
-        },
-        {
-          "playerName": "Bermudo Del Rio, Cornelia",
-          "holeNumber": 13,
-          "createdAt": "17/05/25 15:50:47"
-        },
-        {
-          "playerName": "Escamez Marin, Lucia",
-          "holeNumber": 17,
-          "createdAt": "17/05/25 16:13:12"
-        },
-        {
-          "playerName": "Fernandez Fernandez, Javier",
-          "holeNumber": 10,
-          "createdAt": "17/05/25 16:20:32"
-        },
-        {
-          "playerName": "Fernandez Fernandez, Javier",
-          "holeNumber": 12,
-          "createdAt": "17/05/25 16:20:32"
-        },
-        {
-          "playerName": "Fernandez Fernandez, Javier",
-          "holeNumber": 15,
-          "createdAt": "17/05/25 16:20:32"
-        },
-        {
-          "playerName": "Medina Enkler, Aitor",
-          "holeNumber": 18,
-          "createdAt": "17/05/25 16:28:00"
-        },
-        {
-          "playerName": "Gutierrez Loro, Luis",
-          "holeNumber": 18,
-          "createdAt": "17/05/25 16:57:58"
-        }
-      ]
-    },
-    "eagle": {
-      "scoreTypeKey": "eagle",
-      "players": [
-        {
-          "playerName": "Quintanilla Gutierrez, Bosco",
-          "holeNumber": 8,
-          "createdAt": "17/05/25 14:20:37"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -2039,5 +1868,195 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:03.781Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 70715
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 70717
+    },
+    {
+      "roundNumber": 3,
+      "roundId": 70718
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Moreno Aguirre, Julia",
+          "holeNumber": 3,
+          "createdAt": "17/05/25 12:54:48"
+        },
+        {
+          "playerName": "Moreno Aguirre, Julia",
+          "holeNumber": 4,
+          "createdAt": "17/05/25 12:57:50"
+        },
+        {
+          "playerName": "Medina Enkler, Aitor",
+          "holeNumber": 4,
+          "createdAt": "17/05/25 13:20:53"
+        },
+        {
+          "playerName": "Quintanilla Gutierrez, Noelia",
+          "holeNumber": 4,
+          "createdAt": "17/05/25 13:26:10"
+        },
+        {
+          "playerName": "Moreno Aguirre, Julia",
+          "holeNumber": 6,
+          "createdAt": "17/05/25 13:27:39"
+        },
+        {
+          "playerName": "Fernandez Fernandez, Ivan",
+          "holeNumber": 4,
+          "createdAt": "17/05/25 13:28:43"
+        },
+        {
+          "playerName": "Aguirre Caballero, Matias",
+          "holeNumber": 1,
+          "createdAt": "17/05/25 13:32:14"
+        },
+        {
+          "playerName": "Medina Enkler, Aitor",
+          "holeNumber": 6,
+          "createdAt": "17/05/25 13:36:49"
+        },
+        {
+          "playerName": "Fernandez Fernandez, Javier",
+          "holeNumber": 4,
+          "createdAt": "17/05/25 13:49:33"
+        },
+        {
+          "playerName": "Fernandez Gallegos, Alvaro",
+          "holeNumber": 4,
+          "createdAt": "17/05/25 14:19:59"
+        },
+        {
+          "playerName": "Urquijo Romero, Santiago",
+          "holeNumber": 8,
+          "createdAt": "17/05/25 14:22:57"
+        },
+        {
+          "playerName": "Quintanilla Gutierrez, Bosco",
+          "holeNumber": 9,
+          "createdAt": "17/05/25 14:30:54"
+        },
+        {
+          "playerName": "Moreno Aguirre, Julia",
+          "holeNumber": 11,
+          "createdAt": "17/05/25 14:39:40"
+        },
+        {
+          "playerName": "Fernandez De Cordova Garrido, Juan",
+          "holeNumber": 8,
+          "createdAt": "17/05/25 14:43:30"
+        },
+        {
+          "playerName": "Bermudo Del Rio, Cornelia",
+          "holeNumber": 8,
+          "createdAt": "17/05/25 14:43:31"
+        },
+        {
+          "playerName": "Moreno Aguirre, Julia",
+          "holeNumber": 12,
+          "createdAt": "17/05/25 14:57:08"
+        },
+        {
+          "playerName": "Medina Enkler, Aitor",
+          "holeNumber": 12,
+          "createdAt": "17/05/25 15:03:39"
+        },
+        {
+          "playerName": "Moreno Aguirre, Julia",
+          "holeNumber": 13,
+          "createdAt": "17/05/25 15:10:48"
+        },
+        {
+          "playerName": "Fernandez Fernandez, Ivan",
+          "holeNumber": 11,
+          "createdAt": "17/05/25 15:11:02"
+        },
+        {
+          "playerName": "Quintanilla Gutierrez, Noelia",
+          "holeNumber": 11,
+          "createdAt": "17/05/25 15:11:36"
+        },
+        {
+          "playerName": "Bermudo Del Rio, Cornelia",
+          "holeNumber": 12,
+          "createdAt": "17/05/25 15:35:42"
+        },
+        {
+          "playerName": "Fernandez Gallegos, Alvaro",
+          "holeNumber": 9,
+          "createdAt": "17/05/25 15:42:29"
+        },
+        {
+          "playerName": "Bermudo Del Rio, Cornelia",
+          "holeNumber": 13,
+          "createdAt": "17/05/25 15:50:47"
+        },
+        {
+          "playerName": "Escamez Marin, Lucia",
+          "holeNumber": 17,
+          "createdAt": "17/05/25 16:13:12"
+        },
+        {
+          "playerName": "Fernandez Fernandez, Javier",
+          "holeNumber": 10,
+          "createdAt": "17/05/25 16:20:32"
+        },
+        {
+          "playerName": "Fernandez Fernandez, Javier",
+          "holeNumber": 12,
+          "createdAt": "17/05/25 16:20:32"
+        },
+        {
+          "playerName": "Fernandez Fernandez, Javier",
+          "holeNumber": 15,
+          "createdAt": "17/05/25 16:20:32"
+        },
+        {
+          "playerName": "Medina Enkler, Aitor",
+          "holeNumber": 18,
+          "createdAt": "17/05/25 16:28:00"
+        },
+        {
+          "playerName": "Gutierrez Loro, Luis",
+          "holeNumber": 18,
+          "createdAt": "17/05/25 16:57:58"
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Quintanilla Gutierrez, Bosco",
+          "holeNumber": 8,
+          "createdAt": "17/05/25 14:20:37"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/1813095965_torneo_wagr_global_college_usa_flyer.pdf",
+    "/uploads/competiciones/pdf/1348441603_flyer_torneo_wagr_visual_gcusa.pdf",
+    "/uploads/competiciones/pdf/3357524194_circular_wagr_global_college_usa.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:58.522Z"
 }

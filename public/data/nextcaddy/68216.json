@@ -1,14 +1,14 @@
 {
   "tourId": 68216,
   "url": "https://www.nextcaddy.com/tour/68216",
-  "scrapedAt": "2026-05-09T09:57:39.038Z",
+  "scrapedAt": "2026-05-21T16:37:03.998Z",
   "meta": {
     "name": "2 J. CIRCUITO VNG 2026. CATEGORIA BRONCE (24,1 - 36)",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "15 feb 2026",
-    "dateEnd": "15 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-15"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 33,
       "header": [
         "Pos",
         "Jugador",
@@ -404,6 +405,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 33,
       "header": [
         "Pos",
         "Jugador",
@@ -782,6 +785,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 33
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 33
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1274,58 +1288,6 @@
       "nivel": "AM00903693"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72763
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "De Elejabeitia Rodriguez, Diego",
-          "holeNumber": 17,
-          "createdAt": "22/08/25 10:56:25"
-        },
-        {
-          "playerName": "Ximenez De Embun  Monjardin, Rafael",
-          "holeNumber": 16,
-          "createdAt": "22/08/25 10:56:29"
-        },
-        {
-          "playerName": "Garcia Ortega, Jose Luis",
-          "holeNumber": 8,
-          "createdAt": "22/08/25 12:56:41"
-        },
-        {
-          "playerName": "Alcaraz Velazquez-Duro, Rafael",
-          "holeNumber": 6,
-          "createdAt": "22/08/25 13:07:05"
-        },
-        {
-          "playerName": "Cotta Martinez De Azagra, Cristobal",
-          "holeNumber": 9,
-          "createdAt": "22/08/25 13:39:30"
-        },
-        {
-          "playerName": "Pesquera Redondo, Jaime",
-          "holeNumber": 3,
-          "createdAt": "22/08/25 14:28:59"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1630,5 +1592,60 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:22.133Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72763
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "De Elejabeitia Rodriguez, Diego",
+          "holeNumber": 17,
+          "createdAt": "22/08/25 10:56:25"
+        },
+        {
+          "playerName": "Ximenez De Embun  Monjardin, Rafael",
+          "holeNumber": 16,
+          "createdAt": "22/08/25 10:56:29"
+        },
+        {
+          "playerName": "Garcia Ortega, Jose Luis",
+          "holeNumber": 8,
+          "createdAt": "22/08/25 12:56:41"
+        },
+        {
+          "playerName": "Alcaraz Velazquez-Duro, Rafael",
+          "holeNumber": 6,
+          "createdAt": "22/08/25 13:07:05"
+        },
+        {
+          "playerName": "Cotta Martinez De Azagra, Cristobal",
+          "holeNumber": 9,
+          "createdAt": "22/08/25 13:39:30"
+        },
+        {
+          "playerName": "Pesquera Redondo, Jaime",
+          "holeNumber": 3,
+          "createdAt": "22/08/25 14:28:59"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/2595485952_reglamento_circuito_villanueva_golf_2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:19.426Z"
 }

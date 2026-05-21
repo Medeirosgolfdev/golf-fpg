@@ -1,14 +1,14 @@
 {
   "tourId": 68939,
   "url": "https://www.nextcaddy.com/tour/68939",
-  "scrapedAt": "2026-05-09T09:58:05.385Z",
+  "scrapedAt": "2026-05-21T16:37:42.202Z",
   "meta": {
     "name": "ClubBanus",
     "organizer": null,
     "course": "Miraflores Golf",
     "courseCode": "AM76",
-    "dateStart": "08 mar 2026",
-    "dateEnd": "08 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-08"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 30,
       "header": [
         "Pos",
         "Jugador",
@@ -369,6 +370,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 30
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -805,6 +813,7 @@
       "nivel": "AM00762381"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {
       "p": {
@@ -1178,6 +1187,6 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:40.697Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:29.010Z"
 }

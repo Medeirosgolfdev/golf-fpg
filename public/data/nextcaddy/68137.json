@@ -1,14 +1,14 @@
 {
   "tourId": 68137,
   "url": "https://www.nextcaddy.com/tour/68137",
-  "scrapedAt": "2026-05-09T09:57:51.708Z",
+  "scrapedAt": "2026-05-21T16:37:18.455Z",
   "meta": {
     "name": "Curso Intermedio de Difusión de Reglas 2026",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Real Federacion de Golf de Madrid",
     "courseCode": "CM00",
-    "dateStart": "23 feb 2026",
-    "dateEnd": "23 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-23"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -556,6 +557,7 @@
       "nivel": "S"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -572,6 +574,6 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:33.646Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:17.009Z"
 }

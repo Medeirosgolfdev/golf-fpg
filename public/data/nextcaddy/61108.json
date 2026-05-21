@@ -1,14 +1,14 @@
 {
   "tourId": 61108,
   "url": "https://www.nextcaddy.com/tour/61108",
-  "scrapedAt": "2026-05-09T10:15:40.535Z",
+  "scrapedAt": "2026-05-21T16:39:05.411Z",
   "meta": {
     "name": "Torneo Senior Almería (Alborán)",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Alborán Golf",
     "courseCode": "AMC7",
-    "dateStart": "25 abr 2026",
-    "dateEnd": "25 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Senior",
@@ -18,13 +18,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-25"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Senior 1A Categoria",
+      "expectedJugadores": 28,
       "header": [
         "Pos",
         "Jugador",
@@ -349,6 +350,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Senior 2A Categoria",
+      "expectedJugadores": 20,
       "header": [
         "Pos",
         "Jugador",
@@ -585,6 +588,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Handicap Senior 3A Categoria",
+      "expectedJugadores": 29,
       "header": [
         "Pos",
         "Jugador",
@@ -920,6 +925,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Handicap Damas Senior 1A Categoria",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -1068,6 +1075,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Handicap Damas Senior 2A Categoria",
+      "expectedJugadores": 7,
       "header": [
         "Pos",
         "Jugador",
@@ -1161,6 +1170,8 @@
     },
     {
       "category": 6,
+      "categoryName": "Handicap Super Seniors",
+      "expectedJugadores": 14,
       "header": [
         "Pos",
         "Jugador",
@@ -1330,6 +1341,33 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Senior 1A Categoria",
+      "jugadores": 28
+    },
+    "2": {
+      "name": "Handicap Senior 2A Categoria",
+      "jugadores": 20
+    },
+    "3": {
+      "name": "Handicap Senior 3A Categoria",
+      "jugadores": 29
+    },
+    "4": {
+      "name": "Handicap Damas Senior 1A Categoria",
+      "jugadores": 12
+    },
+    "5": {
+      "name": "Handicap Damas Senior 2A Categoria",
+      "jugadores": 7
+    },
+    "6": {
+      "name": "Handicap Super Seniors",
+      "jugadores": 14
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2893,379 +2931,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {
-      "p": {
-        "id": 158934,
-        "datos": [
-          [
-            "Tipo",
-            "Total"
-          ],
-          [
-            "Par",
-            300
-          ],
-          [
-            "Birdie",
-            22
-          ],
-          [
-            "Eagle",
-            0
-          ],
-          [
-            "Bogey",
-            679
-          ],
-          [
-            "Peor",
-            787
-          ]
-        ]
-      },
-      "bvg": {
-        "id": 158935,
-        "datos": [
-          [
-            "Hoyo",
-            "Sobrepar"
-          ],
-          [
-            "1",
-            131
-          ],
-          [
-            "2",
-            111
-          ],
-          [
-            "3",
-            122
-          ],
-          [
-            "4",
-            166
-          ],
-          [
-            "5",
-            140
-          ],
-          [
-            "6",
-            118
-          ],
-          [
-            "7",
-            178
-          ],
-          [
-            "8",
-            141
-          ],
-          [
-            "9",
-            120
-          ],
-          [
-            "10",
-            130
-          ],
-          [
-            "11",
-            141
-          ],
-          [
-            "12",
-            120
-          ],
-          [
-            "13",
-            126
-          ],
-          [
-            "14",
-            201
-          ],
-          [
-            "15",
-            124
-          ],
-          [
-            "16",
-            146
-          ],
-          [
-            "17",
-            125
-          ],
-          [
-            "18",
-            166
-          ]
-        ]
-      }
-    },
-    "1": {
-      "lxy": {
-        "id": 158936,
-        "datos": [
-          [
-            "Hoyo",
-            "Sergio Haro Rodriguez",
-            "CARLOS WALTER AZPITARTE FERNANDEZ",
-            "FRANCISCO NAVARRO IMBERLON"
-          ],
-          [
-            "Hoyo 0",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 1",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 2",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 3",
-            1,
-            -1,
-            0
-          ],
-          [
-            "Hoyo 4",
-            1,
-            -1,
-            -1
-          ],
-          [
-            "Hoyo 5",
-            1,
-            -1,
-            0
-          ],
-          [
-            "Hoyo 6",
-            -1,
-            -2,
-            0
-          ],
-          [
-            "Hoyo 7",
-            -2,
-            -1,
-            0
-          ],
-          [
-            "Hoyo 8",
-            -2,
-            -2,
-            -1
-          ],
-          [
-            "Hoyo 9",
-            -2,
-            -2,
-            -1
-          ],
-          [
-            "Hoyo 10",
-            -2,
-            -1,
-            -2
-          ],
-          [
-            "Hoyo 11",
-            -2,
-            -3,
-            -3
-          ],
-          [
-            "Hoyo 12",
-            -3,
-            -3,
-            -3
-          ],
-          [
-            "Hoyo 13",
-            -5,
-            -4,
-            -2
-          ],
-          [
-            "Hoyo 14",
-            -5,
-            -4,
-            -1
-          ],
-          [
-            "Hoyo 15",
-            -4,
-            -4,
-            -1
-          ],
-          [
-            "Hoyo 16",
-            -3,
-            -3,
-            -2
-          ],
-          [
-            "Hoyo 17",
-            -4,
-            -1,
-            -2
-          ],
-          [
-            "Hoyo 18",
-            -3,
-            -2,
-            -1
-          ]
-        ]
-      },
-      "hvg": {
-        "id": 158937,
-        "datos": [
-          [
-            "Hoyo",
-            "Sergio Haro Rodriguez",
-            "CARLOS WALTER AZPITARTE FERNANDEZ",
-            "FRANCISCO NAVARRO IMBERLON"
-          ],
-          [
-            "Hoyo 0",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 1",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 2",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 3",
-            1,
-            -1,
-            0
-          ],
-          [
-            "Hoyo 4",
-            0,
-            0,
-            -1
-          ],
-          [
-            "Hoyo 5",
-            0,
-            0,
-            1
-          ],
-          [
-            "Hoyo 6",
-            -2,
-            -1,
-            0
-          ],
-          [
-            "Hoyo 7",
-            -1,
-            1,
-            0
-          ],
-          [
-            "Hoyo 8",
-            0,
-            -1,
-            -1
-          ],
-          [
-            "Hoyo 9",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 10",
-            0,
-            1,
-            -1
-          ],
-          [
-            "Hoyo 11",
-            0,
-            -2,
-            -1
-          ],
-          [
-            "Hoyo 12",
-            -1,
-            0,
-            0
-          ],
-          [
-            "Hoyo 13",
-            -2,
-            -1,
-            1
-          ],
-          [
-            "Hoyo 14",
-            0,
-            0,
-            1
-          ],
-          [
-            "Hoyo 15",
-            1,
-            0,
-            0
-          ],
-          [
-            "Hoyo 16",
-            1,
-            1,
-            -1
-          ],
-          [
-            "Hoyo 17",
-            -1,
-            2,
-            0
-          ],
-          [
-            "Hoyo 18",
-            1,
-            -1,
-            1
-          ]
-        ]
-      }
-    }
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 64723
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -4263,5 +3928,383 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:11:59.838Z"
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 158934,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            300
+          ],
+          [
+            "Birdie",
+            22
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            679
+          ],
+          [
+            "Peor",
+            787
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 158935,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            131
+          ],
+          [
+            "2",
+            111
+          ],
+          [
+            "3",
+            122
+          ],
+          [
+            "4",
+            166
+          ],
+          [
+            "5",
+            140
+          ],
+          [
+            "6",
+            118
+          ],
+          [
+            "7",
+            178
+          ],
+          [
+            "8",
+            141
+          ],
+          [
+            "9",
+            120
+          ],
+          [
+            "10",
+            130
+          ],
+          [
+            "11",
+            141
+          ],
+          [
+            "12",
+            120
+          ],
+          [
+            "13",
+            126
+          ],
+          [
+            "14",
+            201
+          ],
+          [
+            "15",
+            124
+          ],
+          [
+            "16",
+            146
+          ],
+          [
+            "17",
+            125
+          ],
+          [
+            "18",
+            166
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 158936,
+        "datos": [
+          [
+            "Hoyo",
+            "Sergio Haro Rodriguez",
+            "CARLOS WALTER AZPITARTE FERNANDEZ",
+            "FRANCISCO NAVARRO IMBERLON"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 2",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 3",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 4",
+            1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 5",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 7",
+            -2,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 8",
+            -2,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 9",
+            -2,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            -2,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 11",
+            -2,
+            -3,
+            -3
+          ],
+          [
+            "Hoyo 12",
+            -3,
+            -3,
+            -3
+          ],
+          [
+            "Hoyo 13",
+            -5,
+            -4,
+            -2
+          ],
+          [
+            "Hoyo 14",
+            -5,
+            -4,
+            -1
+          ],
+          [
+            "Hoyo 15",
+            -4,
+            -4,
+            -1
+          ],
+          [
+            "Hoyo 16",
+            -3,
+            -3,
+            -2
+          ],
+          [
+            "Hoyo 17",
+            -4,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 18",
+            -3,
+            -2,
+            -1
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 158937,
+        "datos": [
+          [
+            "Hoyo",
+            "Sergio Haro Rodriguez",
+            "CARLOS WALTER AZPITARTE FERNANDEZ",
+            "FRANCISCO NAVARRO IMBERLON"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 2",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 3",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 4",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 5",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 6",
+            -2,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 8",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 9",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 10",
+            0,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 11",
+            0,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            -2,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 14",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 15",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 17",
+            -1,
+            2,
+            0
+          ],
+          [
+            "Hoyo 18",
+            1,
+            -1,
+            1
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 64723
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/3138525079_cartel_alboran_2.pdf",
+    "/uploads/circular/2026/539256dd2240e917cb5b247e369c5c30.pdf",
+    "/uploads/competiciones/pdf/1281906386_reglas_locales_alboran_golf.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:51.054Z"
 }

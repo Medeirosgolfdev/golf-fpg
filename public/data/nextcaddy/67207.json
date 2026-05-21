@@ -1,14 +1,14 @@
 {
   "tourId": 67207,
   "url": "https://www.nextcaddy.com/tour/67207",
-  "scrapedAt": "2026-05-09T10:16:33.628Z",
+  "scrapedAt": "2026-05-21T16:40:17.304Z",
   "meta": {
     "name": "Clasificación Final Interclubes de Castilla y León",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "17 may 2026",
-    "dateEnd": "17 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-17"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -105,6 +107,9 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:26.738Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/67207_cartel_282.pdf",
+    "/uploads/competiciones/pdf/1745961589_c.20.26_campeonato_interclubes_de_cyl_2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:00.556Z"
 }

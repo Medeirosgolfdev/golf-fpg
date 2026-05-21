@@ -1,14 +1,14 @@
 {
   "tourId": 69491,
   "url": "https://www.nextcaddy.com/tour/69491",
-  "scrapedAt": "2026-05-09T10:07:55.255Z",
+  "scrapedAt": "2026-05-21T16:38:38.822Z",
   "meta": {
     "name": "VII  Liga Promesas 2025-2026",
     "organizer": null,
     "course": "Escuela de Golf Miguel ángel Jiménez",
     "courseCode": "AMI5",
-    "dateStart": "11 abr 2026",
-    "dateEnd": "11 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-11"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -99,6 +100,58 @@
       "licencia": "08-04-26 14:08",
       "hcp": 25.3,
       "nivel": "AMI5467648"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "13:30",
+          "tee": 7,
+          "name": "Jose Luis Garcia Perez",
+          "hcp": 24.1,
+          "ins": "2289635",
+          "jid": "74262",
+          "nivel": "M"
+        },
+        {
+          "time": "13:30",
+          "tee": 7,
+          "name": "Juan Jose Muñoz Mora",
+          "hcp": 25.3,
+          "ins": "2294392",
+          "jid": "74262",
+          "nivel": "S"
+        },
+        {
+          "time": "13:40",
+          "tee": 6,
+          "name": "Jose Luis Ortega Herraiz",
+          "hcp": 25.7,
+          "ins": "2289709",
+          "jid": "74262",
+          "nivel": "S"
+        },
+        {
+          "time": "13:40",
+          "tee": 6,
+          "name": "Carlos Colombo Flethes",
+          "hcp": 29.9,
+          "ins": "2293833",
+          "jid": "74262",
+          "nivel": "S"
+        },
+        {
+          "time": "13:40",
+          "tee": 6,
+          "name": "Francisco Manuel Méndez Modelo",
+          "hcp": 30.3,
+          "ins": "2293020",
+          "jid": "74262",
+          "nivel": "S"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -193,57 +246,6 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "13:30",
-          "tee": 7,
-          "name": "Jose Luis Garcia Perez",
-          "hcp": 24.1,
-          "ins": "2289635",
-          "jid": "74262",
-          "nivel": "M"
-        },
-        {
-          "time": "13:30",
-          "tee": 7,
-          "name": "Juan Jose Muñoz Mora",
-          "hcp": 25.3,
-          "ins": "2294392",
-          "jid": "74262",
-          "nivel": "S"
-        },
-        {
-          "time": "13:40",
-          "tee": 6,
-          "name": "Jose Luis Ortega Herraiz",
-          "hcp": 25.7,
-          "ins": "2289709",
-          "jid": "74262",
-          "nivel": "S"
-        },
-        {
-          "time": "13:40",
-          "tee": 6,
-          "name": "Carlos Colombo Flethes",
-          "hcp": 29.9,
-          "ins": "2293833",
-          "jid": "74262",
-          "nivel": "S"
-        },
-        {
-          "time": "13:40",
-          "tee": 6,
-          "name": "Francisco Manuel Méndez Modelo",
-          "hcp": 30.3,
-          "ins": "2293020",
-          "jid": "74262",
-          "nivel": "S"
-        }
-      ]
-    }
-  ],
-  "horariosScrapedAt": "2026-05-09T12:12:54.604Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:34.785Z"
 }

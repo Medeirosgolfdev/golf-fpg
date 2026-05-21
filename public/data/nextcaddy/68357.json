@@ -1,14 +1,14 @@
 {
   "tourId": 68357,
   "url": "https://www.nextcaddy.com/tour/68357",
-  "scrapedAt": "2026-05-09T09:49:51.472Z",
+  "scrapedAt": "2026-05-21T16:41:17.764Z",
   "meta": {
     "name": "Torneo Alevín Masculino \"Illescas\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": null,
     "courseCode": null,
-    "dateStart": "14 nov 2026",
-    "dateEnd": "14 nov 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) Circuito Juvenil 20",
     "categories": [
       "Alevín Masculino",
@@ -18,12 +18,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-11-14"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -276,6 +278,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:36.677Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:21.706Z"
 }

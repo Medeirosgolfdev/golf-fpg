@@ -1,14 +1,14 @@
 {
   "tourId": 70551,
   "url": "https://www.nextcaddy.com/tour/70551",
-  "scrapedAt": "2026-05-09T10:16:51.245Z",
+  "scrapedAt": "2026-05-21T16:40:36.778Z",
   "meta": {
     "name": "1ª Prueba Ranking y Series Roll Up Sherry Golf 2026 (Aplazada, nueva fecha)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "12 jul 2026",
-    "dateEnd": "12 jul 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -19,12 +19,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-07-12"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -62,6 +64,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:44.842Z"
+  "pdfs": [
+    "/uploads/REGLAMENTO-RANKING-SHERRY-GOLF-2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:41.848Z"
 }

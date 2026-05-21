@@ -1,14 +1,14 @@
 {
   "tourId": 68620,
   "url": "https://www.nextcaddy.com/tour/68620",
-  "scrapedAt": "2026-05-08T17:27:13.839Z",
+  "scrapedAt": "2026-05-21T16:37:15.196Z",
   "meta": {
     "name": "Match Play Invierno  Sub 16 Cuadro Femenino",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Granada Club de Golf",
     "courseCode": "AM65",
-    "dateStart": "22 feb 2026",
-    "dateEnd": "22 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Match Play Invierno Sub 16 Cuadro Femeni",
     "categories": [
       "Señoras",
@@ -16,11 +16,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-22"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -254,6 +255,7 @@
       "nivel": "C"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -285,11 +287,12 @@
         },
         {
           "playerName": "Loring Santolalla, Jose Maria",
-          "holeNumber": 17
+          "holeNumber": 17,
+          "createdAt": "25/08/25 20:34:10"
         }
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:38.515Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:24.849Z"
 }

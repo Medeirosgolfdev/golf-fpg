@@ -1,14 +1,14 @@
 {
   "tourId": 70136,
   "url": "https://www.nextcaddy.com/tour/70136",
-  "scrapedAt": "2026-05-09T10:15:45.738Z",
+  "scrapedAt": "2026-05-21T16:39:14.356Z",
   "meta": {
     "name": "Torneo Jubilata's Race",
     "organizer": null,
     "course": "Club de Golf Bellavista",
     "courseCode": "AM07",
-    "dateStart": "28 abr 2026",
-    "dateEnd": "28 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-28"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -255,22 +256,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75040
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -422,5 +407,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:57.955Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75040
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/cartel/4160475477_70136-torneo-jubilata-s-race.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:38.417Z"
 }

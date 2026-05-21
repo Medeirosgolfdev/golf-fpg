@@ -1,14 +1,14 @@
 {
   "tourId": 69831,
   "url": "https://www.nextcaddy.com/tour/69831",
-  "scrapedAt": "2026-05-09T10:15:34.366Z",
+  "scrapedAt": "2026-05-21T16:38:56.320Z",
   "meta": {
     "name": "LIGA DE DAMAS 2025-26  IV JORNADA",
     "organizer": null,
     "course": "Club de Golf Pozoblanco",
     "courseCode": "AM10",
-    "dateStart": "18 abr 2026",
-    "dateEnd": "18 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras Facebook",
     "categories": [
       "Señoras",
@@ -16,13 +16,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-18"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Liga De Damas Vi 25-26",
+      "expectedJugadores": 7,
       "header": [
         "Pos",
         "Jugador",
@@ -115,6 +116,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Liga De Damas Vi 25-26",
+      "jugadores": 7
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -236,22 +244,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74634
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -331,5 +323,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:57.162Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74634
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/cartel/3798325622_69831-liga-de-damas-2025-26-iv-jornada.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:37.616Z"
 }

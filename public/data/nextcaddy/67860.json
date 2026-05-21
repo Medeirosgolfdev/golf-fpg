@@ -1,14 +1,14 @@
 {
   "tourId": 67860,
   "url": "https://www.nextcaddy.com/tour/67860",
-  "scrapedAt": "2026-05-09T09:58:05.828Z",
+  "scrapedAt": "2026-05-21T16:37:42.825Z",
   "meta": {
     "name": "Circuito de Madrid de Profesionales \"Olivar de la Hinojosa\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Club de Golf Olivar de la Hinojosa",
     "courseCode": "CM81",
-    "dateStart": "09 mar 2026",
-    "dateEnd": "09 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) 25º Circuito De Mad",
     "categories": [
       "Profesional",
@@ -17,13 +17,14 @@
       "Senior",
       "Infantil",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-09"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Final",
+      "expectedJugadores": 85,
       "header": [
         "Pos",
         "Jugador",
@@ -974,6 +975,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Final",
+      "jugadores": 85
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2187,83 +2195,6 @@
       "nivel": "P+"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72375
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Cargill, Young Gin",
-          "holeNumber": 9,
-          "createdAt": "22/07/25 16:48:34"
-        },
-        {
-          "playerName": "Cargill, Young Gin",
-          "holeNumber": 14,
-          "createdAt": "22/07/25 16:48:34"
-        },
-        {
-          "playerName": "John Mcleod, Ewan",
-          "holeNumber": 14,
-          "createdAt": "22/07/25 17:03:45"
-        },
-        {
-          "playerName": "Van Laere, Gert",
-          "holeNumber": 4,
-          "createdAt": "22/07/25 17:04:16"
-        },
-        {
-          "playerName": "Dekuypere, Albert Charles",
-          "holeNumber": 9,
-          "createdAt": "22/07/25 17:04:42"
-        },
-        {
-          "playerName": "Dalton, Michael",
-          "holeNumber": 8,
-          "createdAt": "22/07/25 17:06:22"
-        },
-        {
-          "playerName": "Dalton, Michael",
-          "holeNumber": 15,
-          "createdAt": "22/07/25 17:06:22"
-        },
-        {
-          "playerName": "Halford, Jerry",
-          "holeNumber": 13,
-          "createdAt": "22/07/25 17:06:54"
-        },
-        {
-          "playerName": "Nieto Gonzalez, Alejandro",
-          "holeNumber": 11,
-          "createdAt": "22/07/25 17:07:28"
-        },
-        {
-          "playerName": "Ingham, John Richard",
-          "holeNumber": 4,
-          "createdAt": "22/07/25 17:08:12"
-        },
-        {
-          "playerName": "Purcell, Ronan",
-          "holeNumber": 14,
-          "createdAt": "22/07/25 17:08:54"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -3036,5 +2967,83 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:15.381Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72375
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Cargill, Young Gin",
+          "holeNumber": 9,
+          "createdAt": "22/07/25 16:48:34"
+        },
+        {
+          "playerName": "Cargill, Young Gin",
+          "holeNumber": 14,
+          "createdAt": "22/07/25 16:48:34"
+        },
+        {
+          "playerName": "John Mcleod, Ewan",
+          "holeNumber": 14,
+          "createdAt": "22/07/25 17:03:45"
+        },
+        {
+          "playerName": "Van Laere, Gert",
+          "holeNumber": 4,
+          "createdAt": "22/07/25 17:04:16"
+        },
+        {
+          "playerName": "Dekuypere, Albert Charles",
+          "holeNumber": 9,
+          "createdAt": "22/07/25 17:04:42"
+        },
+        {
+          "playerName": "Dalton, Michael",
+          "holeNumber": 8,
+          "createdAt": "22/07/25 17:06:22"
+        },
+        {
+          "playerName": "Dalton, Michael",
+          "holeNumber": 15,
+          "createdAt": "22/07/25 17:06:22"
+        },
+        {
+          "playerName": "Halford, Jerry",
+          "holeNumber": 13,
+          "createdAt": "22/07/25 17:06:54"
+        },
+        {
+          "playerName": "Nieto Gonzalez, Alejandro",
+          "holeNumber": 11,
+          "createdAt": "22/07/25 17:07:28"
+        },
+        {
+          "playerName": "Ingham, John Richard",
+          "holeNumber": 4,
+          "createdAt": "22/07/25 17:08:12"
+        },
+        {
+          "playerName": "Purcell, Ronan",
+          "holeNumber": 14,
+          "createdAt": "22/07/25 17:08:54"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:11.613Z"
 }

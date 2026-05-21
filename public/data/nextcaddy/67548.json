@@ -1,14 +1,14 @@
 {
   "tourId": 67548,
   "url": "https://www.nextcaddy.com/tour/67548",
-  "scrapedAt": "2026-05-09T09:57:25.664Z",
+  "scrapedAt": "2026-05-21T16:36:40.227Z",
   "meta": {
     "name": "Sherry International Golf Group (SIGG) -  22 Enero 2026 (Grupo privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "22 ene 2026",
-    "dateEnd": "22 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-22"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 25,
       "header": [
         "Pos",
         "Jugador",
@@ -71,7 +72,7 @@
         },
         {
           "pos": 4,
-          "name": "Antonio Manuel Ure?A Serrano",
+          "name": "Antonio Manuel Ureña Serrano",
           "licencia": "AM32612444",
           "hcp": 8.9,
           "nivel": "S",
@@ -314,6 +315,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 25
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -429,7 +437,7 @@
     },
     {
       "orden": 14,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "AM32612444",
       "hcp": 8.9,
       "nivel": "S"
@@ -618,7 +626,7 @@
     },
     {
       "orden": 16,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "21-01-26 10:17",
       "hcp": 8.9,
       "nivel": "AM32612444"
@@ -687,33 +695,6 @@
       "nivel": "EXX1465100"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72015
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Diaz Casbas, Ignacio",
-          "holeNumber": 2,
-          "createdAt": "06/07/25 12:59:53"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -721,7 +702,7 @@
         {
           "time": "09:20",
           "tee": 1,
-          "name": "Antonio Manuel Ure?A Serrano",
+          "name": "Antonio Manuel Ureña Serrano",
           "hcp": 8.9,
           "ins": "2249735",
           "jid": "72015",
@@ -946,5 +927,33 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:09.851Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72015
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Diaz Casbas, Ignacio",
+          "holeNumber": 2,
+          "createdAt": "06/07/25 12:59:53"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:05.516Z"
 }

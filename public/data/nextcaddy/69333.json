@@ -1,14 +1,14 @@
 {
   "tourId": 69333,
   "url": "https://www.nextcaddy.com/tour/69333",
-  "scrapedAt": "2026-05-09T10:07:48.744Z",
+  "scrapedAt": "2026-05-21T16:38:27.500Z",
   "meta": {
     "name": "POOL DE SENIORS  DE PRIMAVERA (02/04/2026).",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "02 abr 2026",
-    "dateEnd": "02 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "SENIOR",
@@ -18,11 +18,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-02"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -305,43 +306,6 @@
       "nivel": "4401052517"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74094
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Panadero Millan, David",
-          "holeNumber": 5,
-          "createdAt": "28/09/25 18:16:38"
-        },
-        {
-          "playerName": "Castro Vacas, David",
-          "holeNumber": 8,
-          "createdAt": "28/09/25 18:39:18"
-        },
-        {
-          "playerName": "Castro Vacas, David",
-          "holeNumber": 9,
-          "createdAt": "28/09/25 18:39:18"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -520,5 +484,43 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:52.799Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74094
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Panadero Millan, David",
+          "holeNumber": 5,
+          "createdAt": "28/09/25 18:16:38"
+        },
+        {
+          "playerName": "Castro Vacas, David",
+          "holeNumber": 8,
+          "createdAt": "28/09/25 18:39:18"
+        },
+        {
+          "playerName": "Castro Vacas, David",
+          "holeNumber": 9,
+          "createdAt": "28/09/25 18:39:18"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:33.052Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 69255,
   "url": "https://www.nextcaddy.com/tour/69255",
-  "scrapedAt": "2026-05-09T10:15:36.250Z",
+  "scrapedAt": "2026-05-21T16:38:59.419Z",
   "meta": {
     "name": "Las Pinaillas 3º Categoría",
     "organizer": null,
     "course": "",
     "courseCode": "MAJC",
-    "dateStart": "19 abr 2026",
-    "dateEnd": "19 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -21,11 +21,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-19"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -82,6 +83,40 @@
       "licencia": "12-04-26 20:22",
       "hcp": 40.5,
       "nivel": "MM17068963"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Sofia Garcia Gimenez",
+          "hcp": 20.7,
+          "ins": "2296432",
+          "jid": "74000",
+          "nivel": "B"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Pepe Marin Martinez",
+          "hcp": 37.7,
+          "ins": "2296090",
+          "jid": "74000",
+          "nivel": "B"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Maria Fernandez Garcia",
+          "hcp": 40.5,
+          "ins": "2297273",
+          "jid": "74000",
+          "nivel": "B"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -436,39 +471,8 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "10:30",
-          "tee": 1,
-          "name": "Sofia Garcia Gimenez",
-          "hcp": 20.7,
-          "ins": "2296432",
-          "jid": "74000",
-          "nivel": "B"
-        },
-        {
-          "time": "10:30",
-          "tee": 1,
-          "name": "Pepe Marin Martinez",
-          "hcp": 37.7,
-          "ins": "2296090",
-          "jid": "74000",
-          "nivel": "B"
-        },
-        {
-          "time": "10:30",
-          "tee": 1,
-          "name": "Maria Fernandez Garcia",
-          "hcp": 40.5,
-          "ins": "2297273",
-          "jid": "74000",
-          "nivel": "B"
-        }
-      ]
-    }
+  "pdfs": [
+    "/uploads/competiciones/pdf/1155007906_rrll_pinaillas.pdf"
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:33.881Z"
+  "horariosScrapedAt": "2026-05-21T16:42:32.102Z"
 }

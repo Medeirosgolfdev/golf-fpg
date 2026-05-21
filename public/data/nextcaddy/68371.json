@@ -1,14 +1,14 @@
 {
   "tourId": 68371,
   "url": "https://www.nextcaddy.com/tour/68371",
-  "scrapedAt": "2026-05-09T09:57:49.641Z",
+  "scrapedAt": "2026-05-21T16:37:14.695Z",
   "meta": {
     "name": "XVI Torneo Interclub Dos Marinas  6º Gran Premio Ron Dos Maderas",
     "organizer": null,
     "course": "Rota Club de Golf",
     "courseCode": "AME7",
-    "dateStart": "21 feb 2026",
-    "dateEnd": "21 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-21"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -682,6 +683,7 @@
       "nivel": "S"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -698,6 +700,8 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:36.847Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/4293364133_cartel_anunciador_del_xvi_torneo_dos_marinas-v_ron_dos_maderas_2026_ida.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:21.838Z"
 }

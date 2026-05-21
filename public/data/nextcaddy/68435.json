@@ -1,14 +1,14 @@
 {
   "tourId": 68435,
   "url": "https://www.nextcaddy.com/tour/68435",
-  "scrapedAt": "2026-05-09T10:07:44.377Z",
+  "scrapedAt": "2026-05-21T16:38:19.325Z",
   "meta": {
     "name": "Campeonato de Puerta de Hierro Senior Masculino \"RCPH\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Real Club de la Puerta de Hierro",
     "courseCode": "CM01",
-    "dateStart": "28 mar 2026",
-    "dateEnd": "28 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) Ranking Mid-Amateur",
     "categories": [
       "Senior Masculino",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-28"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -234,6 +235,7 @@
       "nivel": "S"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -254,6 +256,8 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:37.133Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/3411463173_cto._ph_senior_de_senores.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:22.423Z"
 }

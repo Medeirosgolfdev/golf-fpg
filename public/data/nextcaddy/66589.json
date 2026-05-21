@@ -1,14 +1,14 @@
 {
   "tourId": 66589,
   "url": "https://www.nextcaddy.com/tour/66589",
-  "scrapedAt": "2026-05-09T09:49:32.062Z",
+  "scrapedAt": "2026-05-21T16:36:20.872Z",
   "meta": {
     "name": "Torneo de Navidad Padres e Hijos Alevin y Benjamin Four ball · Turno de mañana 10:30 · Turno de tarde 13:30",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "04 ene 2026",
-    "dateEnd": "04 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Alevin",
@@ -23,11 +23,21 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-04"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Pareja Scratch General",
+      "jugadores": 38
+    },
+    "2": {
+      "name": "Pareja Handicap General",
+      "jugadores": 38
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -560,6 +570,697 @@
       "licencia": "CM41958283",
       "hcp": 20.1,
       "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Diego Carril Rodriguez-Casanova",
+          "hcp": 7,
+          "ins": "2236369",
+          "jid": "70953",
+          "nivel": "M"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Jacobo Tarrero Carril",
+          "hcp": 27.5,
+          "ins": "2236368",
+          "jid": "70953",
+          "nivel": "B"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Julio Garcia Ceballos",
+          "hcp": 16.3,
+          "ins": "2239856",
+          "jid": "70953",
+          "nivel": "A"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "David Garcia Martinez",
+          "hcp": 20.1,
+          "ins": "2239857",
+          "jid": "70953",
+          "nivel": "S"
+        },
+        {
+          "time": "10:30",
+          "tee": 2,
+          "name": "Jose Luis Ceballos Hernandez",
+          "hcp": 13.2,
+          "ins": "2236659",
+          "jid": "70953",
+          "nivel": "S"
+        },
+        {
+          "time": "10:30",
+          "tee": 2,
+          "name": "Marcos Ceballos Redondo",
+          "hcp": 27.4,
+          "ins": "2236658",
+          "jid": "70953",
+          "nivel": "B"
+        },
+        {
+          "time": "10:30",
+          "tee": 2,
+          "name": "Jose Iglesias Vilan",
+          "hcp": 19.5,
+          "ins": "2236269",
+          "jid": "70953",
+          "nivel": "S"
+        },
+        {
+          "time": "10:30",
+          "tee": 2,
+          "name": "Tomas Iglesias Silva",
+          "hcp": 22,
+          "ins": "2236268",
+          "jid": "70953",
+          "nivel": "I"
+        },
+        {
+          "time": "10:30",
+          "tee": 3,
+          "name": "Luz Tarrero Carril",
+          "hcp": 13.1,
+          "ins": "2236359",
+          "jid": "70953",
+          "nivel": "A"
+        },
+        {
+          "time": "10:30",
+          "tee": 3,
+          "name": "M. Luisa Carril Rodriguez-C.",
+          "hcp": 32.1,
+          "ins": "2236360",
+          "jid": "70953",
+          "nivel": "M"
+        },
+        {
+          "time": "10:30",
+          "tee": 3,
+          "name": "David Rodriguez Carrera",
+          "hcp": 10.7,
+          "ins": "2236175",
+          "jid": "70953",
+          "nivel": "M"
+        },
+        {
+          "time": "10:30",
+          "tee": 3,
+          "name": "Nicolas Rodriguez Martin",
+          "hcp": 50,
+          "ins": "2236176",
+          "jid": "70953",
+          "nivel": "B"
+        },
+        {
+          "time": "10:30",
+          "tee": 4,
+          "name": "Jose Luis Vallarino Maestro",
+          "hcp": 6.9,
+          "ins": "2236350",
+          "jid": "70953",
+          "nivel": "M"
+        },
+        {
+          "time": "10:30",
+          "tee": 4,
+          "name": "Alejandra Vallarino Anchuela",
+          "hcp": 54,
+          "ins": "2236351",
+          "jid": "70953",
+          "nivel": "B"
+        },
+        {
+          "time": "10:30",
+          "tee": 4,
+          "name": "Borja Vallarino Maestro",
+          "hcp": 8.4,
+          "ins": "2236364",
+          "jid": "70953",
+          "nivel": "M"
+        },
+        {
+          "time": "10:30",
+          "tee": 4,
+          "name": "Alvaro Vallarino Cabo",
+          "hcp": 54,
+          "ins": "2236363",
+          "jid": "70953",
+          "nivel": "B"
+        },
+        {
+          "time": "10:30",
+          "tee": 5,
+          "name": "Marcos Lozano Davila",
+          "hcp": 28.7,
+          "ins": "2237479",
+          "jid": "70953",
+          "nivel": "B"
+        },
+        {
+          "time": "10:30",
+          "tee": 5,
+          "name": "Carlos Lozano Dominguez",
+          "hcp": 36,
+          "ins": "2237480",
+          "jid": "70953",
+          "nivel": "S"
+        },
+        {
+          "time": "10:30",
+          "tee": 5,
+          "name": "Carlos Torija Arbizu",
+          "hcp": 28.3,
+          "ins": "2237291",
+          "jid": "70953",
+          "nivel": "M"
+        },
+        {
+          "time": "10:30",
+          "tee": 5,
+          "name": "Marcos Torija Fernandez",
+          "hcp": 53.2,
+          "ins": "2237290",
+          "jid": "70953",
+          "nivel": "B"
+        },
+        {
+          "time": "10:30",
+          "tee": 6,
+          "name": "Carlos Peña Soria",
+          "hcp": 13.9,
+          "ins": "2239274",
+          "jid": "70953",
+          "nivel": "M"
+        },
+        {
+          "time": "10:30",
+          "tee": 6,
+          "name": "Alba Peña Tribaldos",
+          "hcp": 54,
+          "ins": "2239275",
+          "jid": "70953",
+          "nivel": "B"
+        },
+        {
+          "time": "10:30",
+          "tee": 6,
+          "name": "Leo Diez De Llano",
+          "hcp": 35.2,
+          "ins": "2237430",
+          "jid": "70953",
+          "nivel": "A"
+        },
+        {
+          "time": "10:30",
+          "tee": 6,
+          "name": "Vanessa De Llano Sanchez",
+          "hcp": 36,
+          "ins": "2237429",
+          "jid": "70953",
+          "nivel": "M"
+        },
+        {
+          "time": "10:30",
+          "tee": 7,
+          "name": "Raul Hernanz De Lucas",
+          "hcp": 25.5,
+          "ins": "2236172",
+          "jid": "70953",
+          "nivel": "S"
+        },
+        {
+          "time": "10:30",
+          "tee": 7,
+          "name": "Pablo Hernanz Hernando",
+          "hcp": 54,
+          "ins": "2236171",
+          "jid": "70953",
+          "nivel": "B"
+        },
+        {
+          "time": "10:30",
+          "tee": 7,
+          "name": "Maria Hernanz Hernando",
+          "hcp": 30.9,
+          "ins": "2236168",
+          "jid": "70953",
+          "nivel": "A"
+        },
+        {
+          "time": "10:30",
+          "tee": 7,
+          "name": "Enrique Rodriguez Lopez De Coca",
+          "hcp": 36,
+          "ins": "2236167",
+          "jid": "70953",
+          "nivel": "M"
+        },
+        {
+          "time": "10:30",
+          "tee": 8,
+          "name": "Maria Lourdes Maestro Fernandez",
+          "hcp": 28.1,
+          "ins": "2237340",
+          "jid": "70953",
+          "nivel": "S"
+        },
+        {
+          "time": "10:30",
+          "tee": 8,
+          "name": "Claudia Vallarino Cabo",
+          "hcp": 54,
+          "ins": "2237339",
+          "jid": "70953",
+          "nivel": "B"
+        },
+        {
+          "time": "10:30",
+          "tee": 8,
+          "name": "Maria Del Valle Martinez Martinez",
+          "hcp": 35,
+          "ins": "2236133",
+          "jid": "70953",
+          "nivel": "M"
+        },
+        {
+          "time": "10:30",
+          "tee": 8,
+          "name": "Nicolas Martin Martinez",
+          "hcp": 53.2,
+          "ins": "2236134",
+          "jid": "70953",
+          "nivel": "A"
+        },
+        {
+          "time": "10:30",
+          "tee": 9,
+          "name": "Sandra Villa Guillen",
+          "hcp": 36,
+          "ins": "2236227",
+          "jid": "70953",
+          "nivel": "M"
+        },
+        {
+          "time": "10:30",
+          "tee": 9,
+          "name": "Alexandra Serrano Villa",
+          "hcp": 52.6,
+          "ins": "2236226",
+          "jid": "70953",
+          "nivel": "B"
+        },
+        {
+          "time": "10:30",
+          "tee": 9,
+          "name": "Alberto Redondo Crespo",
+          "hcp": 35,
+          "ins": "2236158",
+          "jid": "70953",
+          "nivel": "M"
+        },
+        {
+          "time": "10:30",
+          "tee": 9,
+          "name": "Cesar Redondo Fernandez",
+          "hcp": 54,
+          "ins": "2236159",
+          "jid": "70953",
+          "nivel": "A"
+        },
+        {
+          "time": "10:40",
+          "tee": 6,
+          "name": "Fernando Jañez Moral",
+          "hcp": 19.7,
+          "ins": "2236146",
+          "jid": "70953",
+          "nivel": "S"
+        },
+        {
+          "time": "10:40",
+          "tee": 6,
+          "name": "Cesar Jañez Guijarro",
+          "hcp": 54,
+          "ins": "2236147",
+          "jid": "70953",
+          "nivel": "B"
+        },
+        {
+          "time": "10:40",
+          "tee": 6,
+          "name": "Jose Luis Borreguero Blanco",
+          "hcp": 20.3,
+          "ins": "2236224",
+          "jid": "70953",
+          "nivel": "S"
+        },
+        {
+          "time": "10:40",
+          "tee": 6,
+          "name": "Javier Velazco Borreguero",
+          "hcp": 54,
+          "ins": "2236225",
+          "jid": "70953",
+          "nivel": "A"
+        },
+        {
+          "time": "13:30",
+          "tee": 1,
+          "name": "Jose Manuel Almansa Lapeira",
+          "hcp": 6.9,
+          "ins": "2236404",
+          "jid": "70953",
+          "nivel": "S"
+        },
+        {
+          "time": "13:30",
+          "tee": 1,
+          "name": "Maria Almansa Recasens",
+          "hcp": 13.2,
+          "ins": "2236405",
+          "jid": "70953",
+          "nivel": "A"
+        },
+        {
+          "time": "13:30",
+          "tee": 1,
+          "name": "Begoña Vallarino Maestro",
+          "hcp": 7.7,
+          "ins": "2236388",
+          "jid": "70953",
+          "nivel": "M"
+        },
+        {
+          "time": "13:30",
+          "tee": 1,
+          "name": "Cristina Aparicio Vallarino",
+          "hcp": 21.1,
+          "ins": "2236387",
+          "jid": "70953",
+          "nivel": "A"
+        },
+        {
+          "time": "13:30",
+          "tee": 2,
+          "name": "Arturo Vasquez Simbaqueba",
+          "hcp": 8.9,
+          "ins": "2236506",
+          "jid": "70953",
+          "nivel": "A"
+        },
+        {
+          "time": "13:30",
+          "tee": 2,
+          "name": "Yezid Vasquez Feliciano",
+          "hcp": 28.5,
+          "ins": "2236507",
+          "jid": "70953",
+          "nivel": "M"
+        },
+        {
+          "time": "13:30",
+          "tee": 2,
+          "name": "Alberto Soler Alonso",
+          "hcp": 17.8,
+          "ins": "2236694",
+          "jid": "70953",
+          "nivel": "M"
+        },
+        {
+          "time": "13:30",
+          "tee": 2,
+          "name": "Macarena Soler Lavalle",
+          "hcp": 21.9,
+          "ins": "2236693",
+          "jid": "70953",
+          "nivel": "A"
+        },
+        {
+          "time": "13:30",
+          "tee": 3,
+          "name": "Fernando Gil Cabrera",
+          "hcp": 14.2,
+          "ins": "2236154",
+          "jid": "70953",
+          "nivel": "S"
+        },
+        {
+          "time": "13:30",
+          "tee": 3,
+          "name": "Miguel Gil Garcia",
+          "hcp": 26.4,
+          "ins": "2236155",
+          "jid": "70953",
+          "nivel": "A"
+        },
+        {
+          "time": "13:30",
+          "tee": 3,
+          "name": "Carlos Lopez Santamaria",
+          "hcp": 0.4,
+          "ins": "2236174",
+          "jid": "70953",
+          "nivel": "M"
+        },
+        {
+          "time": "13:30",
+          "tee": 3,
+          "name": "Claudia Mansilla Garcia De Oteyza",
+          "hcp": 40.6,
+          "ins": "2236173",
+          "jid": "70953",
+          "nivel": "A"
+        },
+        {
+          "time": "13:30",
+          "tee": 4,
+          "name": "Ana Maria Luna Caumel",
+          "hcp": 7.9,
+          "ins": "2236150",
+          "jid": "70953",
+          "nivel": "M"
+        },
+        {
+          "time": "13:30",
+          "tee": 4,
+          "name": "Lucia Rodriguez Luna",
+          "hcp": 39.1,
+          "ins": "2236151",
+          "jid": "70953",
+          "nivel": "A"
+        },
+        {
+          "time": "13:30",
+          "tee": 4,
+          "name": "Maria Soledad Caumel Parras",
+          "hcp": 21.2,
+          "ins": "2236156",
+          "jid": "70953",
+          "nivel": "S"
+        },
+        {
+          "time": "13:30",
+          "tee": 4,
+          "name": "Rodrigo Badillo Luna",
+          "hcp": 51.2,
+          "ins": "2236157",
+          "jid": "70953",
+          "nivel": "A"
+        },
+        {
+          "time": "13:30",
+          "tee": 5,
+          "name": "Miguel Ballesteros Peral",
+          "hcp": 15.7,
+          "ins": "2236153",
+          "jid": "70953",
+          "nivel": "M"
+        },
+        {
+          "time": "13:30",
+          "tee": 5,
+          "name": "Miguel Ballesteros Gutierrez De Rubalcava",
+          "hcp": 36,
+          "ins": "2236152",
+          "jid": "70953",
+          "nivel": "B"
+        },
+        {
+          "time": "13:30",
+          "tee": 5,
+          "name": "Juan Aparicio Munaiz",
+          "hcp": 5.1,
+          "ins": "2236381",
+          "jid": "70953",
+          "nivel": "M"
+        },
+        {
+          "time": "13:30",
+          "tee": 5,
+          "name": "Juan Aparicio Vallarino",
+          "hcp": 52.1,
+          "ins": "2236380",
+          "jid": "70953",
+          "nivel": "B"
+        },
+        {
+          "time": "13:30",
+          "tee": 6,
+          "name": "Victoria Fernandez Lorenzo-Arroyo",
+          "hcp": 20.3,
+          "ins": "2236163",
+          "jid": "70953",
+          "nivel": "M"
+        },
+        {
+          "time": "13:30",
+          "tee": 6,
+          "name": "Manuela Triguero Fernandez",
+          "hcp": 39.9,
+          "ins": "2236164",
+          "jid": "70953",
+          "nivel": "B"
+        },
+        {
+          "time": "13:30",
+          "tee": 6,
+          "name": "Maria Vainio Gyori-Molnar",
+          "hcp": 20.6,
+          "ins": "2236413",
+          "jid": "70953",
+          "nivel": "S"
+        },
+        {
+          "time": "13:30",
+          "tee": 6,
+          "name": "Amelia Vainio Rodriguez",
+          "hcp": 40,
+          "ins": "2236414",
+          "jid": "70953",
+          "nivel": "B"
+        },
+        {
+          "time": "13:30",
+          "tee": 7,
+          "name": "Pablo Mansilla De Sebastian",
+          "hcp": 15,
+          "ins": "2236166",
+          "jid": "70953",
+          "nivel": "M"
+        },
+        {
+          "time": "13:30",
+          "tee": 7,
+          "name": "Ines Mansilla Garcia De Oteyza",
+          "hcp": 51.9,
+          "ins": "2236165",
+          "jid": "70953",
+          "nivel": "B"
+        },
+        {
+          "time": "13:30",
+          "tee": 7,
+          "name": "Beltran Diaz De Bustamante Bellon",
+          "hcp": 31.8,
+          "ins": "2236759",
+          "jid": "70953",
+          "nivel": "A"
+        },
+        {
+          "time": "13:30",
+          "tee": 7,
+          "name": "Isidro Diaz De Bustamante Cores",
+          "hcp": 36,
+          "ins": "2236760",
+          "jid": "70953",
+          "nivel": "M"
+        },
+        {
+          "time": "13:30",
+          "tee": 8,
+          "name": "Jose Carlos De Lucas Villarrubia",
+          "hcp": 14,
+          "ins": "2236169",
+          "jid": "70953",
+          "nivel": "S"
+        },
+        {
+          "time": "13:30",
+          "tee": 8,
+          "name": "Mario Jañez Guijarro",
+          "hcp": 54,
+          "ins": "2236170",
+          "jid": "70953",
+          "nivel": "B"
+        },
+        {
+          "time": "13:30",
+          "tee": 8,
+          "name": "Clara Triguero Fernandez",
+          "hcp": 13.8,
+          "ins": "2236148",
+          "jid": "70953",
+          "nivel": "A"
+        },
+        {
+          "time": "13:30",
+          "tee": 8,
+          "name": "Jose Luis Fernandez De La Fuente",
+          "hcp": 34.8,
+          "ins": "2236149",
+          "jid": "70953",
+          "nivel": "S"
+        },
+        {
+          "time": "13:30",
+          "tee": 9,
+          "name": "Rocio Lorenzo-Arroyo Poullet",
+          "hcp": 34.6,
+          "ins": "2236161",
+          "jid": "70953",
+          "nivel": "S"
+        },
+        {
+          "time": "13:30",
+          "tee": 9,
+          "name": "Silvia Triguero Fernandez",
+          "hcp": 54,
+          "ins": "2236162",
+          "jid": "70953",
+          "nivel": "B"
+        },
+        {
+          "time": "13:30",
+          "tee": 9,
+          "name": "Manuel Canalda Miedes",
+          "hcp": 36,
+          "ins": "2236349",
+          "jid": "70953",
+          "nivel": "M"
+        },
+        {
+          "time": "13:30",
+          "tee": 9,
+          "name": "Nieves Maria Canalda Gutierrez",
+          "hcp": 54,
+          "ins": "2236348",
+          "jid": "70953",
+          "nivel": "A"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -1434,696 +2135,6 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "10:30",
-          "tee": 1,
-          "name": "Diego Carril Rodriguez-Casanova",
-          "hcp": 7,
-          "ins": "2236369",
-          "jid": "70953",
-          "nivel": "M"
-        },
-        {
-          "time": "10:30",
-          "tee": 1,
-          "name": "Jacobo Tarrero Carril",
-          "hcp": 27.5,
-          "ins": "2236368",
-          "jid": "70953",
-          "nivel": "B"
-        },
-        {
-          "time": "10:30",
-          "tee": 1,
-          "name": "Julio Garcia Ceballos",
-          "hcp": 16.3,
-          "ins": "2239856",
-          "jid": "70953",
-          "nivel": "A"
-        },
-        {
-          "time": "10:30",
-          "tee": 1,
-          "name": "David Garcia Martinez",
-          "hcp": 20.1,
-          "ins": "2239857",
-          "jid": "70953",
-          "nivel": "S"
-        },
-        {
-          "time": "10:30",
-          "tee": 2,
-          "name": "Jose Luis Ceballos Hernandez",
-          "hcp": 13.2,
-          "ins": "2236659",
-          "jid": "70953",
-          "nivel": "S"
-        },
-        {
-          "time": "10:30",
-          "tee": 2,
-          "name": "Marcos Ceballos Redondo",
-          "hcp": 27.4,
-          "ins": "2236658",
-          "jid": "70953",
-          "nivel": "B"
-        },
-        {
-          "time": "10:30",
-          "tee": 2,
-          "name": "Jose Iglesias Vilan",
-          "hcp": 19.5,
-          "ins": "2236269",
-          "jid": "70953",
-          "nivel": "S"
-        },
-        {
-          "time": "10:30",
-          "tee": 2,
-          "name": "Tomas Iglesias Silva",
-          "hcp": 22,
-          "ins": "2236268",
-          "jid": "70953",
-          "nivel": "I"
-        },
-        {
-          "time": "10:30",
-          "tee": 3,
-          "name": "Luz Tarrero Carril",
-          "hcp": 13.1,
-          "ins": "2236359",
-          "jid": "70953",
-          "nivel": "A"
-        },
-        {
-          "time": "10:30",
-          "tee": 3,
-          "name": "M. Luisa Carril Rodriguez-C.",
-          "hcp": 32.1,
-          "ins": "2236360",
-          "jid": "70953",
-          "nivel": "M"
-        },
-        {
-          "time": "10:30",
-          "tee": 3,
-          "name": "David Rodriguez Carrera",
-          "hcp": 10.7,
-          "ins": "2236175",
-          "jid": "70953",
-          "nivel": "M"
-        },
-        {
-          "time": "10:30",
-          "tee": 3,
-          "name": "Nicolas Rodriguez Martin",
-          "hcp": 50,
-          "ins": "2236176",
-          "jid": "70953",
-          "nivel": "B"
-        },
-        {
-          "time": "10:30",
-          "tee": 4,
-          "name": "Jose Luis Vallarino Maestro",
-          "hcp": 6.9,
-          "ins": "2236350",
-          "jid": "70953",
-          "nivel": "M"
-        },
-        {
-          "time": "10:30",
-          "tee": 4,
-          "name": "Alejandra Vallarino Anchuela",
-          "hcp": 54,
-          "ins": "2236351",
-          "jid": "70953",
-          "nivel": "B"
-        },
-        {
-          "time": "10:30",
-          "tee": 4,
-          "name": "Borja Vallarino Maestro",
-          "hcp": 8.4,
-          "ins": "2236364",
-          "jid": "70953",
-          "nivel": "M"
-        },
-        {
-          "time": "10:30",
-          "tee": 4,
-          "name": "Alvaro Vallarino Cabo",
-          "hcp": 54,
-          "ins": "2236363",
-          "jid": "70953",
-          "nivel": "B"
-        },
-        {
-          "time": "10:30",
-          "tee": 5,
-          "name": "Marcos Lozano Davila",
-          "hcp": 28.7,
-          "ins": "2237479",
-          "jid": "70953",
-          "nivel": "B"
-        },
-        {
-          "time": "10:30",
-          "tee": 5,
-          "name": "Carlos Lozano Dominguez",
-          "hcp": 36,
-          "ins": "2237480",
-          "jid": "70953",
-          "nivel": "S"
-        },
-        {
-          "time": "10:30",
-          "tee": 5,
-          "name": "Carlos Torija Arbizu",
-          "hcp": 28.3,
-          "ins": "2237291",
-          "jid": "70953",
-          "nivel": "M"
-        },
-        {
-          "time": "10:30",
-          "tee": 5,
-          "name": "Marcos Torija Fernandez",
-          "hcp": 53.2,
-          "ins": "2237290",
-          "jid": "70953",
-          "nivel": "B"
-        },
-        {
-          "time": "10:30",
-          "tee": 6,
-          "name": "Carlos Peña Soria",
-          "hcp": 13.9,
-          "ins": "2239274",
-          "jid": "70953",
-          "nivel": "M"
-        },
-        {
-          "time": "10:30",
-          "tee": 6,
-          "name": "Alba Peña Tribaldos",
-          "hcp": 54,
-          "ins": "2239275",
-          "jid": "70953",
-          "nivel": "B"
-        },
-        {
-          "time": "10:30",
-          "tee": 6,
-          "name": "Leo Diez De Llano",
-          "hcp": 35.2,
-          "ins": "2237430",
-          "jid": "70953",
-          "nivel": "A"
-        },
-        {
-          "time": "10:30",
-          "tee": 6,
-          "name": "Vanessa De Llano Sanchez",
-          "hcp": 36,
-          "ins": "2237429",
-          "jid": "70953",
-          "nivel": "M"
-        },
-        {
-          "time": "10:30",
-          "tee": 7,
-          "name": "Raul Hernanz De Lucas",
-          "hcp": 25.5,
-          "ins": "2236172",
-          "jid": "70953",
-          "nivel": "S"
-        },
-        {
-          "time": "10:30",
-          "tee": 7,
-          "name": "Pablo Hernanz Hernando",
-          "hcp": 54,
-          "ins": "2236171",
-          "jid": "70953",
-          "nivel": "B"
-        },
-        {
-          "time": "10:30",
-          "tee": 7,
-          "name": "Maria Hernanz Hernando",
-          "hcp": 30.9,
-          "ins": "2236168",
-          "jid": "70953",
-          "nivel": "A"
-        },
-        {
-          "time": "10:30",
-          "tee": 7,
-          "name": "Enrique Rodriguez Lopez De Coca",
-          "hcp": 36,
-          "ins": "2236167",
-          "jid": "70953",
-          "nivel": "M"
-        },
-        {
-          "time": "10:30",
-          "tee": 8,
-          "name": "Maria Lourdes Maestro Fernandez",
-          "hcp": 28.1,
-          "ins": "2237340",
-          "jid": "70953",
-          "nivel": "S"
-        },
-        {
-          "time": "10:30",
-          "tee": 8,
-          "name": "Claudia Vallarino Cabo",
-          "hcp": 54,
-          "ins": "2237339",
-          "jid": "70953",
-          "nivel": "B"
-        },
-        {
-          "time": "10:30",
-          "tee": 8,
-          "name": "Maria Del Valle Martinez Martinez",
-          "hcp": 35,
-          "ins": "2236133",
-          "jid": "70953",
-          "nivel": "M"
-        },
-        {
-          "time": "10:30",
-          "tee": 8,
-          "name": "Nicolas Martin Martinez",
-          "hcp": 53.2,
-          "ins": "2236134",
-          "jid": "70953",
-          "nivel": "A"
-        },
-        {
-          "time": "10:30",
-          "tee": 9,
-          "name": "Sandra Villa Guillen",
-          "hcp": 36,
-          "ins": "2236227",
-          "jid": "70953",
-          "nivel": "M"
-        },
-        {
-          "time": "10:30",
-          "tee": 9,
-          "name": "Alexandra Serrano Villa",
-          "hcp": 52.6,
-          "ins": "2236226",
-          "jid": "70953",
-          "nivel": "B"
-        },
-        {
-          "time": "10:30",
-          "tee": 9,
-          "name": "Alberto Redondo Crespo",
-          "hcp": 35,
-          "ins": "2236158",
-          "jid": "70953",
-          "nivel": "M"
-        },
-        {
-          "time": "10:30",
-          "tee": 9,
-          "name": "Cesar Redondo Fernandez",
-          "hcp": 54,
-          "ins": "2236159",
-          "jid": "70953",
-          "nivel": "A"
-        },
-        {
-          "time": "10:40",
-          "tee": 6,
-          "name": "Fernando Jañez Moral",
-          "hcp": 19.7,
-          "ins": "2236146",
-          "jid": "70953",
-          "nivel": "S"
-        },
-        {
-          "time": "10:40",
-          "tee": 6,
-          "name": "Cesar Jañez Guijarro",
-          "hcp": 54,
-          "ins": "2236147",
-          "jid": "70953",
-          "nivel": "B"
-        },
-        {
-          "time": "10:40",
-          "tee": 6,
-          "name": "Jose Luis Borreguero Blanco",
-          "hcp": 20.3,
-          "ins": "2236224",
-          "jid": "70953",
-          "nivel": "S"
-        },
-        {
-          "time": "10:40",
-          "tee": 6,
-          "name": "Javier Velazco Borreguero",
-          "hcp": 54,
-          "ins": "2236225",
-          "jid": "70953",
-          "nivel": "A"
-        },
-        {
-          "time": "13:30",
-          "tee": 1,
-          "name": "Jose Manuel Almansa Lapeira",
-          "hcp": 6.9,
-          "ins": "2236404",
-          "jid": "70953",
-          "nivel": "S"
-        },
-        {
-          "time": "13:30",
-          "tee": 1,
-          "name": "Maria Almansa Recasens",
-          "hcp": 13.2,
-          "ins": "2236405",
-          "jid": "70953",
-          "nivel": "A"
-        },
-        {
-          "time": "13:30",
-          "tee": 1,
-          "name": "Begoña Vallarino Maestro",
-          "hcp": 7.7,
-          "ins": "2236388",
-          "jid": "70953",
-          "nivel": "M"
-        },
-        {
-          "time": "13:30",
-          "tee": 1,
-          "name": "Cristina Aparicio Vallarino",
-          "hcp": 21.1,
-          "ins": "2236387",
-          "jid": "70953",
-          "nivel": "A"
-        },
-        {
-          "time": "13:30",
-          "tee": 2,
-          "name": "Arturo Vasquez Simbaqueba",
-          "hcp": 8.9,
-          "ins": "2236506",
-          "jid": "70953",
-          "nivel": "A"
-        },
-        {
-          "time": "13:30",
-          "tee": 2,
-          "name": "Yezid Vasquez Feliciano",
-          "hcp": 28.5,
-          "ins": "2236507",
-          "jid": "70953",
-          "nivel": "M"
-        },
-        {
-          "time": "13:30",
-          "tee": 2,
-          "name": "Alberto Soler Alonso",
-          "hcp": 17.8,
-          "ins": "2236694",
-          "jid": "70953",
-          "nivel": "M"
-        },
-        {
-          "time": "13:30",
-          "tee": 2,
-          "name": "Macarena Soler Lavalle",
-          "hcp": 21.9,
-          "ins": "2236693",
-          "jid": "70953",
-          "nivel": "A"
-        },
-        {
-          "time": "13:30",
-          "tee": 3,
-          "name": "Fernando Gil Cabrera",
-          "hcp": 14.2,
-          "ins": "2236154",
-          "jid": "70953",
-          "nivel": "S"
-        },
-        {
-          "time": "13:30",
-          "tee": 3,
-          "name": "Miguel Gil Garcia",
-          "hcp": 26.4,
-          "ins": "2236155",
-          "jid": "70953",
-          "nivel": "A"
-        },
-        {
-          "time": "13:30",
-          "tee": 3,
-          "name": "Carlos Lopez Santamaria",
-          "hcp": 0.4,
-          "ins": "2236174",
-          "jid": "70953",
-          "nivel": "M"
-        },
-        {
-          "time": "13:30",
-          "tee": 3,
-          "name": "Claudia Mansilla Garcia De Oteyza",
-          "hcp": 40.6,
-          "ins": "2236173",
-          "jid": "70953",
-          "nivel": "A"
-        },
-        {
-          "time": "13:30",
-          "tee": 4,
-          "name": "Ana Maria Luna Caumel",
-          "hcp": 7.9,
-          "ins": "2236150",
-          "jid": "70953",
-          "nivel": "M"
-        },
-        {
-          "time": "13:30",
-          "tee": 4,
-          "name": "Lucia Rodriguez Luna",
-          "hcp": 39.1,
-          "ins": "2236151",
-          "jid": "70953",
-          "nivel": "A"
-        },
-        {
-          "time": "13:30",
-          "tee": 4,
-          "name": "Maria Soledad Caumel Parras",
-          "hcp": 21.2,
-          "ins": "2236156",
-          "jid": "70953",
-          "nivel": "S"
-        },
-        {
-          "time": "13:30",
-          "tee": 4,
-          "name": "Rodrigo Badillo Luna",
-          "hcp": 51.2,
-          "ins": "2236157",
-          "jid": "70953",
-          "nivel": "A"
-        },
-        {
-          "time": "13:30",
-          "tee": 5,
-          "name": "Miguel Ballesteros Peral",
-          "hcp": 15.7,
-          "ins": "2236153",
-          "jid": "70953",
-          "nivel": "M"
-        },
-        {
-          "time": "13:30",
-          "tee": 5,
-          "name": "Miguel Ballesteros Gutierrez De Rubalcava",
-          "hcp": 36,
-          "ins": "2236152",
-          "jid": "70953",
-          "nivel": "B"
-        },
-        {
-          "time": "13:30",
-          "tee": 5,
-          "name": "Juan Aparicio Munaiz",
-          "hcp": 5.1,
-          "ins": "2236381",
-          "jid": "70953",
-          "nivel": "M"
-        },
-        {
-          "time": "13:30",
-          "tee": 5,
-          "name": "Juan Aparicio Vallarino",
-          "hcp": 52.1,
-          "ins": "2236380",
-          "jid": "70953",
-          "nivel": "B"
-        },
-        {
-          "time": "13:30",
-          "tee": 6,
-          "name": "Victoria Fernandez Lorenzo-Arroyo",
-          "hcp": 20.3,
-          "ins": "2236163",
-          "jid": "70953",
-          "nivel": "M"
-        },
-        {
-          "time": "13:30",
-          "tee": 6,
-          "name": "Manuela Triguero Fernandez",
-          "hcp": 39.9,
-          "ins": "2236164",
-          "jid": "70953",
-          "nivel": "B"
-        },
-        {
-          "time": "13:30",
-          "tee": 6,
-          "name": "Maria Vainio Gyori-Molnar",
-          "hcp": 20.6,
-          "ins": "2236413",
-          "jid": "70953",
-          "nivel": "S"
-        },
-        {
-          "time": "13:30",
-          "tee": 6,
-          "name": "Amelia Vainio Rodriguez",
-          "hcp": 40,
-          "ins": "2236414",
-          "jid": "70953",
-          "nivel": "B"
-        },
-        {
-          "time": "13:30",
-          "tee": 7,
-          "name": "Pablo Mansilla De Sebastian",
-          "hcp": 15,
-          "ins": "2236166",
-          "jid": "70953",
-          "nivel": "M"
-        },
-        {
-          "time": "13:30",
-          "tee": 7,
-          "name": "Ines Mansilla Garcia De Oteyza",
-          "hcp": 51.9,
-          "ins": "2236165",
-          "jid": "70953",
-          "nivel": "B"
-        },
-        {
-          "time": "13:30",
-          "tee": 7,
-          "name": "Beltran Diaz De Bustamante Bellon",
-          "hcp": 31.8,
-          "ins": "2236759",
-          "jid": "70953",
-          "nivel": "A"
-        },
-        {
-          "time": "13:30",
-          "tee": 7,
-          "name": "Isidro Diaz De Bustamante Cores",
-          "hcp": 36,
-          "ins": "2236760",
-          "jid": "70953",
-          "nivel": "M"
-        },
-        {
-          "time": "13:30",
-          "tee": 8,
-          "name": "Jose Carlos De Lucas Villarrubia",
-          "hcp": 14,
-          "ins": "2236169",
-          "jid": "70953",
-          "nivel": "S"
-        },
-        {
-          "time": "13:30",
-          "tee": 8,
-          "name": "Mario Jañez Guijarro",
-          "hcp": 54,
-          "ins": "2236170",
-          "jid": "70953",
-          "nivel": "B"
-        },
-        {
-          "time": "13:30",
-          "tee": 8,
-          "name": "Clara Triguero Fernandez",
-          "hcp": 13.8,
-          "ins": "2236148",
-          "jid": "70953",
-          "nivel": "A"
-        },
-        {
-          "time": "13:30",
-          "tee": 8,
-          "name": "Jose Luis Fernandez De La Fuente",
-          "hcp": 34.8,
-          "ins": "2236149",
-          "jid": "70953",
-          "nivel": "S"
-        },
-        {
-          "time": "13:30",
-          "tee": 9,
-          "name": "Rocio Lorenzo-Arroyo Poullet",
-          "hcp": 34.6,
-          "ins": "2236161",
-          "jid": "70953",
-          "nivel": "S"
-        },
-        {
-          "time": "13:30",
-          "tee": 9,
-          "name": "Silvia Triguero Fernandez",
-          "hcp": 54,
-          "ins": "2236162",
-          "jid": "70953",
-          "nivel": "B"
-        },
-        {
-          "time": "13:30",
-          "tee": 9,
-          "name": "Manuel Canalda Miedes",
-          "hcp": 36,
-          "ins": "2236349",
-          "jid": "70953",
-          "nivel": "M"
-        },
-        {
-          "time": "13:30",
-          "tee": 9,
-          "name": "Nieves Maria Canalda Gutierrez",
-          "hcp": 54,
-          "ins": "2236348",
-          "jid": "70953",
-          "nivel": "A"
-        }
-      ]
-    }
-  ],
-  "horariosScrapedAt": "2026-05-09T12:12:03.714Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:41:58.488Z"
 }

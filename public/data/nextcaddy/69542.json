@@ -1,14 +1,14 @@
 {
   "tourId": 69542,
   "url": "https://www.nextcaddy.com/tour/69542",
-  "scrapedAt": "2026-05-09T10:07:56.069Z",
+  "scrapedAt": "2026-05-21T16:38:39.858Z",
   "meta": {
     "name": "Torneo de primavera",
     "organizer": null,
     "course": "Alborán Golf",
     "courseCode": "AMC7",
-    "dateStart": "11 abr 2026",
-    "dateEnd": "11 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-11"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Primera Categoría -0 A 15-",
+      "expectedJugadores": 31,
       "header": [
         "Pos",
         "Jugador",
@@ -381,6 +382,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Segunda Categoría -15,1 A 26,4-_",
+      "expectedJugadores": 40,
       "header": [
         "Pos",
         "Jugador",
@@ -837,6 +840,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Tercera Categoría -26,5 A 36-",
+      "expectedJugadores": 28,
       "header": [
         "Pos",
         "Jugador",
@@ -1160,6 +1165,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Primera Categoría -0 A 15-",
+      "jugadores": 31
+    },
+    "2": {
+      "name": "Segunda Categoría -15,1 A 26,4-_",
+      "jugadores": 40
+    },
+    "3": {
+      "name": "Tercera Categoría -26,5 A 36-",
+      "jugadores": 28
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2604,33 +2624,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74313
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Roman Sanchez, Miguel Angel - Vicente Vicente, Manolo",
-          "holeNumber": 16,
-          "createdAt": "11/10/25 12:16:23"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -3556,5 +3549,33 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:55.418Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74313
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Roman Sanchez, Miguel Angel - Vicente Vicente, Manolo",
+          "holeNumber": 16,
+          "createdAt": "11/10/25 12:16:23"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:35.751Z"
 }

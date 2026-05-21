@@ -1,14 +1,14 @@
 {
   "tourId": 67526,
   "url": "https://www.nextcaddy.com/tour/67526",
-  "scrapedAt": "2026-05-09T09:57:31.898Z",
+  "scrapedAt": "2026-05-21T16:36:49.374Z",
   "meta": {
     "name": "1 J. CIRCUITO VNG 2026. CATEGORIA BRONCE (24,1 - 36)",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "31 ene 2026",
-    "dateEnd": "31 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-31"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 34,
       "header": [
         "Pos",
         "Jugador",
@@ -415,6 +416,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 34,
       "header": [
         "Pos",
         "Jugador",
@@ -804,6 +807,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 34
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 34
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1310,113 +1324,6 @@
       "nivel": "AMD5993751"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71990
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Garcia Gonzalez, Fernando",
-          "holeNumber": 7,
-          "createdAt": "10/07/25 09:35:15"
-        },
-        {
-          "playerName": "Gonzalez Saavedra, Alfonso",
-          "holeNumber": 1,
-          "createdAt": "10/07/25 09:54:13"
-        },
-        {
-          "playerName": "Sancho Llorente, Santiago",
-          "holeNumber": 7,
-          "createdAt": "10/07/25 09:58:15"
-        },
-        {
-          "playerName": "Piedrafita Martin, Julian",
-          "holeNumber": 6,
-          "createdAt": "10/07/25 09:59:08"
-        },
-        {
-          "playerName": "Montalvo Guitart, Carlos",
-          "holeNumber": 10,
-          "createdAt": "10/07/25 10:09:14"
-        },
-        {
-          "playerName": "Sancho Llorente, Luis Miguel",
-          "holeNumber": 9,
-          "createdAt": "10/07/25 10:11:59"
-        },
-        {
-          "playerName": "Moreno Sanchez, Mercedes",
-          "holeNumber": 13,
-          "createdAt": "10/07/25 10:28:30"
-        },
-        {
-          "playerName": "Sancho Llorente, Luis Miguel",
-          "holeNumber": 12,
-          "createdAt": "10/07/25 10:40:01"
-        },
-        {
-          "playerName": "Rivera Navajas, Antonio",
-          "holeNumber": 13,
-          "createdAt": "10/07/25 10:40:09"
-        },
-        {
-          "playerName": "Moreno Sanchez, Mercedes",
-          "holeNumber": 15,
-          "createdAt": "10/07/25 10:43:55"
-        },
-        {
-          "playerName": "Garcia Gonzalez, Fernando",
-          "holeNumber": 17,
-          "createdAt": "10/07/25 11:00:21"
-        },
-        {
-          "playerName": "Hell Horstgen, Marilu",
-          "holeNumber": 15,
-          "createdAt": "10/07/25 11:07:37"
-        },
-        {
-          "playerName": "Garcia Gonzalez, Fernando",
-          "holeNumber": 18,
-          "createdAt": "10/07/25 11:11:18"
-        },
-        {
-          "playerName": "Garcia Gonzalez, Fernando",
-          "holeNumber": 1,
-          "createdAt": "10/07/25 11:23:25"
-        },
-        {
-          "playerName": "Bosch Fernandez, Jose",
-          "holeNumber": 3,
-          "createdAt": "10/07/25 11:53:54"
-        },
-        {
-          "playerName": "Montalvo Guitart, Carlos",
-          "holeNumber": 5,
-          "createdAt": "10/07/25 12:09:37"
-        },
-        {
-          "playerName": "Murcia Hernandez, Francisco",
-          "holeNumber": 11,
-          "createdAt": "10/07/25 12:39:59"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1730,5 +1637,115 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:09.048Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71990
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Garcia Gonzalez, Fernando",
+          "holeNumber": 7,
+          "createdAt": "10/07/25 09:35:15"
+        },
+        {
+          "playerName": "Gonzalez Saavedra, Alfonso",
+          "holeNumber": 1,
+          "createdAt": "10/07/25 09:54:13"
+        },
+        {
+          "playerName": "Sancho Llorente, Santiago",
+          "holeNumber": 7,
+          "createdAt": "10/07/25 09:58:15"
+        },
+        {
+          "playerName": "Piedrafita Martin, Julian",
+          "holeNumber": 6,
+          "createdAt": "10/07/25 09:59:08"
+        },
+        {
+          "playerName": "Montalvo Guitart, Carlos",
+          "holeNumber": 10,
+          "createdAt": "10/07/25 10:09:14"
+        },
+        {
+          "playerName": "Sancho Llorente, Luis Miguel",
+          "holeNumber": 9,
+          "createdAt": "10/07/25 10:11:59"
+        },
+        {
+          "playerName": "Moreno Sanchez, Mercedes",
+          "holeNumber": 13,
+          "createdAt": "10/07/25 10:28:30"
+        },
+        {
+          "playerName": "Sancho Llorente, Luis Miguel",
+          "holeNumber": 12,
+          "createdAt": "10/07/25 10:40:01"
+        },
+        {
+          "playerName": "Rivera Navajas, Antonio",
+          "holeNumber": 13,
+          "createdAt": "10/07/25 10:40:09"
+        },
+        {
+          "playerName": "Moreno Sanchez, Mercedes",
+          "holeNumber": 15,
+          "createdAt": "10/07/25 10:43:55"
+        },
+        {
+          "playerName": "Garcia Gonzalez, Fernando",
+          "holeNumber": 17,
+          "createdAt": "10/07/25 11:00:21"
+        },
+        {
+          "playerName": "Hell Horstgen, Marilu",
+          "holeNumber": 15,
+          "createdAt": "10/07/25 11:07:37"
+        },
+        {
+          "playerName": "Garcia Gonzalez, Fernando",
+          "holeNumber": 18,
+          "createdAt": "10/07/25 11:11:18"
+        },
+        {
+          "playerName": "Garcia Gonzalez, Fernando",
+          "holeNumber": 1,
+          "createdAt": "10/07/25 11:23:25"
+        },
+        {
+          "playerName": "Bosch Fernandez, Jose",
+          "holeNumber": 3,
+          "createdAt": "10/07/25 11:53:54"
+        },
+        {
+          "playerName": "Montalvo Guitart, Carlos",
+          "holeNumber": 5,
+          "createdAt": "10/07/25 12:09:37"
+        },
+        {
+          "playerName": "Murcia Hernandez, Francisco",
+          "holeNumber": 11,
+          "createdAt": "10/07/25 12:39:59"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/2595485952_reglamento_circuito_villanueva_golf_2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:04.742Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 67927,
   "url": "https://www.nextcaddy.com/tour/67927",
-  "scrapedAt": "2026-05-09T09:58:24.245Z",
+  "scrapedAt": "2026-05-21T16:37:53.738Z",
   "meta": {
     "name": "III Torneo RKN Alumnos · Turno de Mañana 10:00 · Turno de Tarde 13:00",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "15 mar 2026",
-    "dateEnd": "15 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-15"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Femenino Handicap General",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -249,6 +250,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Femenino Scratch General",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -474,6 +477,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Masculino Scratch General",
+      "expectedJugadores": 46,
       "header": [
         "Pos",
         "Jugador",
@@ -996,6 +1001,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Masculino Handicap General",
+      "expectedJugadores": 46,
       "header": [
         "Pos",
         "Jugador",
@@ -1517,6 +1524,25 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Femenino Handicap General",
+      "jugadores": 19
+    },
+    "2": {
+      "name": "Femenino Scratch General",
+      "jugadores": 19
+    },
+    "3": {
+      "name": "Masculino Scratch General",
+      "jugadores": 46
+    },
+    "4": {
+      "name": "Masculino Handicap General",
+      "jugadores": 46
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2443,43 +2469,6 @@
       "nivel": "J"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72445
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Ellis, Charles",
-          "holeNumber": 14,
-          "createdAt": "24/07/25 14:54:09"
-        },
-        {
-          "playerName": "Robinson, Michael William",
-          "holeNumber": 1,
-          "createdAt": "24/07/25 14:56:20"
-        },
-        {
-          "playerName": "Robinson, Michael William",
-          "holeNumber": 3,
-          "createdAt": "24/07/25 14:56:20"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -3072,5 +3061,43 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:16.135Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72445
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Ellis, Charles",
+          "holeNumber": 14,
+          "createdAt": "24/07/25 14:54:09"
+        },
+        {
+          "playerName": "Robinson, Michael William",
+          "holeNumber": 1,
+          "createdAt": "24/07/25 14:56:20"
+        },
+        {
+          "playerName": "Robinson, Michael William",
+          "holeNumber": 3,
+          "createdAt": "24/07/25 14:56:20"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:12.759Z"
 }

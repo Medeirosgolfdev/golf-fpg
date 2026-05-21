@@ -1,14 +1,14 @@
 {
   "tourId": 67144,
   "url": "https://www.nextcaddy.com/tour/67144",
-  "scrapedAt": "2026-05-09T09:57:47.800Z",
+  "scrapedAt": "2026-05-21T16:37:11.584Z",
   "meta": {
     "name": "I Prueba del Circuito de P&P de CyL 2026 (Valedera Sace P&P)",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "21 feb 2026",
-    "dateEnd": "21 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Señoras  Caballero",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-21"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Final",
+      "expectedJugadores": 70,
       "header": [
         "Pos",
         "Jugador",
@@ -1443,6 +1444,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Final",
+      "expectedJugadores": 70,
       "header": [
         "Pos",
         "Jugador",
@@ -2862,6 +2865,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Clasificacion Handicap Vuelta 1",
+      "expectedJugadores": 70,
       "header": [
         "Pos",
         "Jugador",
@@ -3648,6 +3653,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Clasificacion Scratch Vuelta 1",
+      "expectedJugadores": 70,
       "header": [
         "Pos",
         "Jugador",
@@ -4433,6 +4440,25 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Final",
+      "jugadores": 70
+    },
+    "2": {
+      "name": "Handicap Final",
+      "jugadores": 70
+    },
+    "3": {
+      "name": "Clasificacion Handicap Vuelta 1",
+      "jugadores": 70
+    },
+    "4": {
+      "name": "Clasificacion Scratch Vuelta 1",
+      "jugadores": 70
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -4925,37 +4951,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71540
-    },
-    {
-      "roundNumber": 2,
-      "roundId": 71541
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Cañizares Fernandez, Ramon",
-          "holeNumber": 12,
-          "createdAt": "13/06/25 21:08:00"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -5922,5 +5917,41 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:04.775Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71540
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 71541
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Cañizares Fernandez, Ramon",
+          "holeNumber": 12,
+          "createdAt": "13/06/25 21:08:00"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/2387421680_suspensiorn_del_juego_renedo_2025.pdf",
+    "/uploads/2026/01/cirfgcyl0626.pdf",
+    "/uploads/competiciones/pdf/3452519021_p&amp;p_reglas_locales_renedo_2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:59.700Z"
 }

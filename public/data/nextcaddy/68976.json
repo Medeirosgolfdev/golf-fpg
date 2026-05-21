@@ -1,14 +1,14 @@
 {
   "tourId": 68976,
   "url": "https://www.nextcaddy.com/tour/68976",
-  "scrapedAt": "2026-05-09T09:58:10.551Z",
+  "scrapedAt": "2026-05-21T16:37:51.040Z",
   "meta": {
     "name": "ÚLTIMA PRUEBA CLASIFICATORIA GRAN PREMIO",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "14 mar 2026",
-    "dateEnd": "14 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-14"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Hasta Hcp 26,4",
+      "expectedJugadores": 17,
       "header": [
         "Pos",
         "Jugador",
@@ -228,6 +229,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Hándicap Hasta Hcp 26,4",
+      "expectedJugadores": 17,
       "header": [
         "Pos",
         "Jugador",
@@ -431,6 +434,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Especial Promoción - Hcp 26,5 O Superior",
+      "expectedJugadores": 5,
       "header": [
         "Pos",
         "Jugador",
@@ -501,6 +506,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Hasta Hcp 26,4",
+      "jugadores": 17
+    },
+    "2": {
+      "name": "Hándicap Hasta Hcp 26,4",
+      "jugadores": 17
+    },
+    "3": {
+      "name": "Especial Promoción - Hcp 26,5 O Superior",
+      "jugadores": 5
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -825,22 +845,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73693
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -1046,5 +1050,25 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:31.091Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73693
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/circulares/cirfgcyl0126.pdf",
+    "/uploads/competiciones/pdf/958048577_rl_isla_dos_aguas.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:29.278Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 67213,
   "url": "https://www.nextcaddy.com/tour/67213",
-  "scrapedAt": "2026-05-09T09:57:21.763Z",
+  "scrapedAt": "2026-05-21T16:36:33.460Z",
   "meta": {
     "name": "I Torneo RKN Alumnos · Turno de Mañana 10:00 · Turno de Tarde 13:00 TORNEO SUSPENDIDO",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "17 ene 2026",
-    "dateEnd": "17 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-17"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -906,63 +907,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71618
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Castillo Rodriguez, Jose Manuel",
-          "holeNumber": 2,
-          "createdAt": "21/06/25 14:28:28"
-        },
-        {
-          "playerName": "Lopez Gomez, Luis Ignacio",
-          "holeNumber": 1,
-          "createdAt": "21/06/25 14:28:28"
-        },
-        {
-          "playerName": "Peña Chacon, Pedro",
-          "holeNumber": 1,
-          "createdAt": "21/06/25 14:28:28"
-        },
-        {
-          "playerName": "Gonzalez Perez, Ignacio",
-          "holeNumber": 10,
-          "createdAt": "21/06/25 14:28:29"
-        },
-        {
-          "playerName": "Borrachero Garro, Antonio",
-          "holeNumber": 1,
-          "createdAt": "21/06/25 14:28:30"
-        },
-        {
-          "playerName": "Borrachero Garro, Antonio",
-          "holeNumber": 2,
-          "createdAt": "21/06/25 14:28:30"
-        },
-        {
-          "playerName": "Borrachero Garro, Antonio",
-          "holeNumber": 16,
-          "createdAt": "21/06/25 14:28:30"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1528,5 +1472,63 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:06.130Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71618
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Castillo Rodriguez, Jose Manuel",
+          "holeNumber": 2,
+          "createdAt": "21/06/25 14:28:28"
+        },
+        {
+          "playerName": "Lopez Gomez, Luis Ignacio",
+          "holeNumber": 1,
+          "createdAt": "21/06/25 14:28:28"
+        },
+        {
+          "playerName": "Peña Chacon, Pedro",
+          "holeNumber": 1,
+          "createdAt": "21/06/25 14:28:28"
+        },
+        {
+          "playerName": "Gonzalez Perez, Ignacio",
+          "holeNumber": 10,
+          "createdAt": "21/06/25 14:28:29"
+        },
+        {
+          "playerName": "Borrachero Garro, Antonio",
+          "holeNumber": 1,
+          "createdAt": "21/06/25 14:28:30"
+        },
+        {
+          "playerName": "Borrachero Garro, Antonio",
+          "holeNumber": 2,
+          "createdAt": "21/06/25 14:28:30"
+        },
+        {
+          "playerName": "Borrachero Garro, Antonio",
+          "holeNumber": 16,
+          "createdAt": "21/06/25 14:28:30"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:01.308Z"
 }

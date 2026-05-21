@@ -1,14 +1,14 @@
 {
   "tourId": 67196,
   "url": "https://www.nextcaddy.com/tour/67196",
-  "scrapedAt": "2026-05-09T10:15:48.723Z",
+  "scrapedAt": "2026-05-21T16:39:18.566Z",
   "meta": {
     "name": "XXXVI CAMPEONATO SENIOR DE CyL 2026 (Valedero SACE)",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "01 may 2026",
-    "dateEnd": "01 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "SENIOR",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-01"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Stableford Scratch",
+      "expectedJugadores": 92,
       "header": [
         "Pos",
         "Jugador",
@@ -1053,6 +1054,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Stableford Handicap",
+      "expectedJugadores": 92,
       "header": [
         "Pos",
         "Jugador",
@@ -2081,6 +2084,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Scratch Individual Caballeros Masculino Desde 18.5 Hcp",
+      "expectedJugadores": 26,
       "header": [
         "Pos",
         "Jugador",
@@ -2383,6 +2388,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Scratch Individual Caballeros Masculino Entre 11.5 Y 18.5 Hcp",
+      "expectedJugadores": 29,
       "header": [
         "Pos",
         "Jugador",
@@ -2718,6 +2725,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Scratch Individual Caballeros Masculino Hasta 11.4 Hcp",
+      "expectedJugadores": 20,
       "header": [
         "Pos",
         "Jugador",
@@ -2954,6 +2963,8 @@
     },
     {
       "category": 6,
+      "categoryName": "Handicap Individual Caballeros Masculino",
+      "expectedJugadores": 75,
       "header": [
         "Pos",
         "Jugador",
@@ -3795,6 +3806,8 @@
     },
     {
       "category": 7,
+      "categoryName": "Handicap Individual Señoras Femenino",
+      "expectedJugadores": 17,
       "header": [
         "Pos",
         "Jugador",
@@ -3998,6 +4011,8 @@
     },
     {
       "category": 8,
+      "categoryName": "Scratch Individual Señoras Femenino Desde 18.5 Hcp",
+      "expectedJugadores": 7,
       "header": [
         "Pos",
         "Jugador",
@@ -4091,6 +4106,8 @@
     },
     {
       "category": 9,
+      "categoryName": "Scratch Individual Señoras Femenino Hasta 18.4 Hcp",
+      "expectedJugadores": 10,
       "header": [
         "Pos",
         "Jugador",
@@ -4216,6 +4233,45 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Stableford Scratch",
+      "jugadores": 92
+    },
+    "2": {
+      "name": "Stableford Handicap",
+      "jugadores": 92
+    },
+    "3": {
+      "name": "Scratch Individual Caballeros Masculino Desde 18.5 Hcp",
+      "jugadores": 26
+    },
+    "4": {
+      "name": "Scratch Individual Caballeros Masculino Entre 11.5 Y 18.5 Hcp",
+      "jugadores": 29
+    },
+    "5": {
+      "name": "Scratch Individual Caballeros Masculino Hasta 11.4 Hcp",
+      "jugadores": 20
+    },
+    "6": {
+      "name": "Handicap Individual Caballeros Masculino",
+      "jugadores": 75
+    },
+    "7": {
+      "name": "Handicap Individual Señoras Femenino",
+      "jugadores": 17
+    },
+    "8": {
+      "name": "Scratch Individual Señoras Femenino Desde 18.5 Hcp",
+      "jugadores": 7
+    },
+    "9": {
+      "name": "Scratch Individual Señoras Femenino Hasta 18.4 Hcp",
+      "jugadores": 10
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -5520,93 +5576,6 @@
       "nivel": "CM66749042"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71596
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Ortiz Garcia, Jose",
-          "holeNumber": 6,
-          "createdAt": "21/06/25 15:42:15"
-        },
-        {
-          "playerName": "Jaramillo Gonzalez, Diego",
-          "holeNumber": 11,
-          "createdAt": "21/06/25 15:42:15"
-        },
-        {
-          "playerName": "Alessandrini, Enrique Miguel",
-          "holeNumber": 1,
-          "createdAt": "21/06/25 15:42:15"
-        },
-        {
-          "playerName": "Alessandrini, Enrique Miguel",
-          "holeNumber": 12,
-          "createdAt": "21/06/25 15:42:15"
-        },
-        {
-          "playerName": "Garcia Del Castillo, Alberto",
-          "holeNumber": 6,
-          "createdAt": "21/06/25 15:42:16"
-        },
-        {
-          "playerName": "Garcia Del Castillo, Alberto",
-          "holeNumber": 11,
-          "createdAt": "21/06/25 15:42:16"
-        },
-        {
-          "playerName": "Garcia Del Castillo, Alberto",
-          "holeNumber": 13,
-          "createdAt": "21/06/25 15:42:16"
-        },
-        {
-          "playerName": "Mudarra Quintero, Francisco",
-          "holeNumber": 13,
-          "createdAt": "21/06/25 15:42:17"
-        },
-        {
-          "playerName": "Anguas Quintero, Manuel",
-          "holeNumber": 4,
-          "createdAt": "21/06/25 15:42:19"
-        },
-        {
-          "playerName": "Oliva Perea, Juan Jesus",
-          "holeNumber": 14,
-          "createdAt": "21/06/25 15:42:19"
-        },
-        {
-          "playerName": "Baldwyn, Neil",
-          "holeNumber": 3,
-          "createdAt": "21/06/25 15:42:22"
-        },
-        {
-          "playerName": "Rico Cordoba, Javier",
-          "holeNumber": 17,
-          "createdAt": "21/06/25 15:42:23"
-        },
-        {
-          "playerName": "Vazquez Hierro, Jose Joaquin",
-          "holeNumber": 11,
-          "createdAt": "21/06/25 15:42:24"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -6442,5 +6411,97 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:05.382Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71596
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Ortiz Garcia, Jose",
+          "holeNumber": 6,
+          "createdAt": "21/06/25 15:42:15"
+        },
+        {
+          "playerName": "Jaramillo Gonzalez, Diego",
+          "holeNumber": 11,
+          "createdAt": "21/06/25 15:42:15"
+        },
+        {
+          "playerName": "Alessandrini, Enrique Miguel",
+          "holeNumber": 1,
+          "createdAt": "21/06/25 15:42:15"
+        },
+        {
+          "playerName": "Alessandrini, Enrique Miguel",
+          "holeNumber": 12,
+          "createdAt": "21/06/25 15:42:15"
+        },
+        {
+          "playerName": "Garcia Del Castillo, Alberto",
+          "holeNumber": 6,
+          "createdAt": "21/06/25 15:42:16"
+        },
+        {
+          "playerName": "Garcia Del Castillo, Alberto",
+          "holeNumber": 11,
+          "createdAt": "21/06/25 15:42:16"
+        },
+        {
+          "playerName": "Garcia Del Castillo, Alberto",
+          "holeNumber": 13,
+          "createdAt": "21/06/25 15:42:16"
+        },
+        {
+          "playerName": "Mudarra Quintero, Francisco",
+          "holeNumber": 13,
+          "createdAt": "21/06/25 15:42:17"
+        },
+        {
+          "playerName": "Anguas Quintero, Manuel",
+          "holeNumber": 4,
+          "createdAt": "21/06/25 15:42:19"
+        },
+        {
+          "playerName": "Oliva Perea, Juan Jesus",
+          "holeNumber": 14,
+          "createdAt": "21/06/25 15:42:19"
+        },
+        {
+          "playerName": "Baldwyn, Neil",
+          "holeNumber": 3,
+          "createdAt": "21/06/25 15:42:22"
+        },
+        {
+          "playerName": "Rico Cordoba, Javier",
+          "holeNumber": 17,
+          "createdAt": "21/06/25 15:42:23"
+        },
+        {
+          "playerName": "Vazquez Hierro, Jose Joaquin",
+          "holeNumber": 11,
+          "createdAt": "21/06/25 15:42:24"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/21356220_suspension_zarapicos.pdf",
+    "/uploads/circulares/cirfgcyl1326.pdf",
+    "/uploads/competiciones/pdf/2004621803_reglas_locales_zarapicos_senior_26.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:00.321Z"
 }

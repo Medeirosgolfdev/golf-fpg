@@ -1,14 +1,14 @@
 {
   "tourId": 70304,
   "url": "https://www.nextcaddy.com/tour/70304",
-  "scrapedAt": "2026-05-09T10:15:41.210Z",
+  "scrapedAt": "2026-05-21T16:39:07.818Z",
   "meta": {
     "name": "LOS GALLOS 25-04",
     "organizer": null,
     "course": "Alhaurín Golf Hotel & Resort",
     "courseCode": "AM22",
-    "dateStart": "25 abr 2026",
-    "dateEnd": "25 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-25"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap 1A Categoria",
+      "expectedJugadores": 6,
       "header": [
         "Pos",
         "Jugador",
@@ -106,6 +107,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap 19,1",
+      "expectedJugadores": 11,
       "header": [
         "Pos",
         "Jugador",
@@ -242,6 +245,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap 1A Categoria",
+      "jugadores": 6
+    },
+    "2": {
+      "name": "Handicap 19,1",
+      "jugadores": 11
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -494,6 +508,148 @@
       "licencia": "25-04-26 16:20",
       "hcp": 29.5,
       "nivel": "AMC8604925"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Jose Angel Yañez Poyatos",
+          "hcp": 23,
+          "ins": "2305306",
+          "jid": "75238",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Francisco Miguel Garcia Bravo",
+          "hcp": 18.3,
+          "ins": "2305307",
+          "jid": "75238",
+          "nivel": "M"
+        },
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Jose Gallego Martin",
+          "hcp": 20,
+          "ins": "2305308",
+          "jid": "75238",
+          "nivel": "S"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Juan Garcia Serrano",
+          "hcp": 27.5,
+          "ins": "2305310",
+          "jid": "75238",
+          "nivel": "S"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Antonio Rueda Garcia",
+          "hcp": 24.6,
+          "ins": "2305311",
+          "jid": "75238",
+          "nivel": "S"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Cristobal Herrera Garcia",
+          "hcp": 12.1,
+          "ins": "2305312",
+          "jid": "75238",
+          "nivel": "S"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Dirk De Bisschop",
+          "hcp": 28,
+          "ins": "2305313",
+          "jid": "75238",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Pedro Martin Plaza",
+          "hcp": 19.1,
+          "ins": "2305314",
+          "jid": "75238",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Salvador Cardenas Jimenez",
+          "hcp": 12.1,
+          "ins": "2305315",
+          "jid": "75238",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Jaime Quilis Jimenez",
+          "hcp": 21.7,
+          "ins": "2305316",
+          "jid": "75238",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Said Barakat",
+          "hcp": 7.3,
+          "ins": "2305317",
+          "jid": "75238",
+          "nivel": "S"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Kairi Kahn Kahn",
+          "hcp": 21.4,
+          "ins": "2305318",
+          "jid": "75238",
+          "nivel": "M"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Xavier Sierra Lacam",
+          "hcp": 16.3,
+          "ins": "2305319",
+          "jid": "75238",
+          "nivel": "M"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Maria Jose Vazquez Presencio",
+          "hcp": 32,
+          "ins": "2305320",
+          "jid": "75238",
+          "nivel": "S"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Fernando Fernandez Tapia-Ruano",
+          "hcp": 28,
+          "ins": "2305321",
+          "jid": "75238",
+          "nivel": "S"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -1565,147 +1721,6 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "08:30",
-          "tee": 1,
-          "name": "Jose Angel Yañez Poyatos",
-          "hcp": 23,
-          "ins": "2305306",
-          "jid": "75238",
-          "nivel": "S"
-        },
-        {
-          "time": "08:30",
-          "tee": 1,
-          "name": "Francisco Miguel Garcia Bravo",
-          "hcp": 18.3,
-          "ins": "2305307",
-          "jid": "75238",
-          "nivel": "M"
-        },
-        {
-          "time": "08:30",
-          "tee": 1,
-          "name": "Jose Gallego Martin",
-          "hcp": 20,
-          "ins": "2305308",
-          "jid": "75238",
-          "nivel": "S"
-        },
-        {
-          "time": "08:40",
-          "tee": 1,
-          "name": "Juan Garcia Serrano",
-          "hcp": 27.5,
-          "ins": "2305310",
-          "jid": "75238",
-          "nivel": "S"
-        },
-        {
-          "time": "08:40",
-          "tee": 1,
-          "name": "Antonio Rueda Garcia",
-          "hcp": 24.6,
-          "ins": "2305311",
-          "jid": "75238",
-          "nivel": "S"
-        },
-        {
-          "time": "08:50",
-          "tee": 1,
-          "name": "Cristobal Herrera Garcia",
-          "hcp": 12.1,
-          "ins": "2305312",
-          "jid": "75238",
-          "nivel": "S"
-        },
-        {
-          "time": "08:50",
-          "tee": 1,
-          "name": "Dirk De Bisschop",
-          "hcp": 28,
-          "ins": "2305313",
-          "jid": "75238",
-          "nivel": "M"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Pedro Martin Plaza",
-          "hcp": 19.1,
-          "ins": "2305314",
-          "jid": "75238",
-          "nivel": "S"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Salvador Cardenas Jimenez",
-          "hcp": 12.1,
-          "ins": "2305315",
-          "jid": "75238",
-          "nivel": "S"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Jaime Quilis Jimenez",
-          "hcp": 21.7,
-          "ins": "2305316",
-          "jid": "75238",
-          "nivel": "S"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Said Barakat",
-          "hcp": 7.3,
-          "ins": "2305317",
-          "jid": "75238",
-          "nivel": "S"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Kairi Kahn Kahn",
-          "hcp": 21.4,
-          "ins": "2305318",
-          "jid": "75238",
-          "nivel": "M"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Xavier Sierra Lacam",
-          "hcp": 16.3,
-          "ins": "2305319",
-          "jid": "75238",
-          "nivel": "M"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Maria Jose Vazquez Presencio",
-          "hcp": 32,
-          "ins": "2305320",
-          "jid": "75238",
-          "nivel": "S"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Fernando Fernandez Tapia-Ruano",
-          "hcp": 28,
-          "ins": "2305321",
-          "jid": "75238",
-          "nivel": "S"
-        }
-      ]
-    }
-  ],
-  "horariosScrapedAt": "2026-05-09T12:12:59.221Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:39.674Z"
 }

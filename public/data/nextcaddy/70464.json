@@ -1,14 +1,14 @@
 {
   "tourId": 70464,
   "url": "https://www.nextcaddy.com/tour/70464",
-  "scrapedAt": "2026-05-09T10:15:51.328Z",
+  "scrapedAt": "2026-05-21T16:39:23.078Z",
   "meta": {
     "name": "ANITA RUIZ 0305",
     "organizer": null,
     "course": "Miraflores Golf",
     "courseCode": "AM76",
-    "dateStart": "03 may 2026",
-    "dateEnd": "03 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-03"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 105,
       "header": [
         "Pos",
         "Jugador",
@@ -1194,6 +1195,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 105
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2680,6 +2688,7 @@
       "nivel": "AM24372729"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {
       "p": {
@@ -3053,6 +3062,6 @@
     }
   ],
   "scoreTypes": null,
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:44.582Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:40.987Z"
 }

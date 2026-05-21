@@ -1,14 +1,14 @@
 {
   "tourId": 67453,
   "url": "https://www.nextcaddy.com/tour/67453",
-  "scrapedAt": "2026-05-09T09:57:18.049Z",
+  "scrapedAt": "2026-05-21T16:36:28.303Z",
   "meta": {
     "name": "torneo privado somontes",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "11 ene 2026",
-    "dateEnd": "11 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-11"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Individual Scratch General",
+      "expectedJugadores": 22,
       "header": [
         "Pos",
         "Jugador",
@@ -282,6 +283,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Individual Handicap General",
+      "expectedJugadores": 22,
       "header": [
         "Pos",
         "Jugador",
@@ -539,6 +542,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Scratch General",
+      "jugadores": 22
+    },
+    "2": {
+      "name": "Individual Handicap General",
+      "jugadores": 22
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -863,6 +877,7 @@
       "nivel": "I"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -879,6 +894,6 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:27.610Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:03.059Z"
 }

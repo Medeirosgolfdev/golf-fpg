@@ -1,14 +1,14 @@
 {
   "tourId": 69374,
   "url": "https://www.nextcaddy.com/tour/69374",
-  "scrapedAt": "2026-05-09T10:07:41.875Z",
+  "scrapedAt": "2026-05-21T16:38:14.137Z",
   "meta": {
     "name": "Torneo Golfeando \"3 Palos\"  (Grupo privado) - 25 Marzo 2026",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "25 mar 2026",
-    "dateEnd": "25 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-25"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -74,7 +75,7 @@
     },
     {
       "orden": 8,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "AM32612444",
       "hcp": 9.7,
       "nivel": "S"
@@ -284,7 +285,7 @@
     },
     {
       "orden": 8,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "AM32612444",
       "hcp": 9.7,
       "nivel": "S"
@@ -430,53 +431,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74135
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Van Laere, Gert",
-          "holeNumber": 13,
-          "createdAt": "01/10/25 14:56:01"
-        },
-        {
-          "playerName": "Van Laere, Gert",
-          "holeNumber": 14,
-          "createdAt": "01/10/25 14:56:01"
-        },
-        {
-          "playerName": "Coleman, Brian",
-          "holeNumber": 15,
-          "createdAt": "01/10/25 14:56:31"
-        },
-        {
-          "playerName": "Rodgers, Paul",
-          "holeNumber": 4,
-          "createdAt": "01/10/25 14:58:36"
-        },
-        {
-          "playerName": "Bassi, Graham",
-          "holeNumber": 17,
-          "createdAt": "01/10/25 15:05:27"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -583,7 +537,7 @@
         {
           "time": "15:10",
           "tee": 1,
-          "name": "Antonio Manuel Ure?A Serrano",
+          "name": "Antonio Manuel Ureña Serrano",
           "hcp": 9.7,
           "ins": "2286947",
           "jid": "74135",
@@ -736,5 +690,53 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:53.301Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74135
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Van Laere, Gert",
+          "holeNumber": 13,
+          "createdAt": "01/10/25 14:56:01"
+        },
+        {
+          "playerName": "Van Laere, Gert",
+          "holeNumber": 14,
+          "createdAt": "01/10/25 14:56:01"
+        },
+        {
+          "playerName": "Coleman, Brian",
+          "holeNumber": 15,
+          "createdAt": "01/10/25 14:56:31"
+        },
+        {
+          "playerName": "Rodgers, Paul",
+          "holeNumber": 4,
+          "createdAt": "01/10/25 14:58:36"
+        },
+        {
+          "playerName": "Bassi, Graham",
+          "holeNumber": 17,
+          "createdAt": "01/10/25 15:05:27"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:33.612Z"
 }

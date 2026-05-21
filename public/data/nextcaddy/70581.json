@@ -1,14 +1,14 @@
 {
   "tourId": 70581,
   "url": "https://www.nextcaddy.com/tour/70581",
-  "scrapedAt": "2026-05-09T10:15:53.895Z",
+  "scrapedAt": "2026-05-21T16:39:27.183Z",
   "meta": {
     "name": "II Prueba Circuito Interescolar 2025-2026 ( P&P)",
     "organizer": "Federacion de Golf de Madrid",
     "course": "el Encin Golf",
     "courseCode": "CMC8",
-    "dateStart": "07 may 2026",
-    "dateEnd": "07 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-07"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 58,
       "header": [
         "Pos",
         "Jugador",
@@ -678,6 +679,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 58,
       "header": [
         "Pos",
         "Jugador",
@@ -1331,6 +1334,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 58
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 58
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2159,31 +2173,6 @@
       "nivel": "A"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75537
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": []
-    },
-    "eagle": {
-      "scoreTypeKey": "eagle",
-      "players": []
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -2704,5 +2693,35 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:13:01.683Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75537
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": []
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": []
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/cartel/1905198843_70581-ii-prueba-circuito-interescolar-2025-2026-p-p.pdf",
+    "/uploads/competiciones/pdf/2636170452_clasificaciorn_circuito_interescolar_2025-2026.pdf",
+    "/uploads/competiciones/pdf/3855987918_rrll_el_encin_p&amp;p_14032024.docx.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:42.566Z"
 }

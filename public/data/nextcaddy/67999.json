@@ -1,14 +1,14 @@
 {
   "tourId": 67999,
   "url": "https://www.nextcaddy.com/tour/67999",
-  "scrapedAt": "2026-05-09T10:07:52.250Z",
+  "scrapedAt": "2026-05-21T16:38:32.739Z",
   "meta": {
     "name": "Torneo Senior Masculino \"El Encín\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "el Encin Golf",
     "courseCode": "CMC8",
-    "dateStart": "08 abr 2026",
-    "dateEnd": "08 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Circuito Senior Ma",
     "categories": [
       "Senior Masculino",
@@ -19,13 +19,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-08"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual Masculino",
+      "expectedJugadores": 104,
       "header": [
         "Pos",
         "Jugador",
@@ -1186,6 +1187,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Clasificación 1ª Categoría",
+      "expectedJugadores": 34,
       "header": [
         "Pos",
         "Jugador",
@@ -1576,6 +1579,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Clasificación 2ª Categoría",
+      "expectedJugadores": 39,
       "header": [
         "Pos",
         "Jugador",
@@ -2021,6 +2026,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Clasificación 3ª Categoría",
+      "expectedJugadores": 40,
       "header": [
         "Pos",
         "Jugador",
@@ -2476,6 +2483,25 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual Masculino",
+      "jugadores": 104
+    },
+    "2": {
+      "name": "Clasificación 1ª Categoría",
+      "jugadores": 34
+    },
+    "3": {
+      "name": "Clasificación 2ª Categoría",
+      "jugadores": 39
+    },
+    "4": {
+      "name": "Clasificación 3ª Categoría",
+      "jugadores": 40
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -4081,53 +4107,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72536
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Vasquez Simbaqueba, Arturo",
-          "holeNumber": 5,
-          "createdAt": "31/08/25 17:14:34"
-        },
-        {
-          "playerName": "Lopez Gutierrez, Eduardo",
-          "holeNumber": 5,
-          "createdAt": "31/08/25 17:19:39"
-        },
-        {
-          "playerName": "Gil Garcia, Miguel",
-          "holeNumber": 5,
-          "createdAt": "31/08/25 17:20:50"
-        },
-        {
-          "playerName": "Iniesta Rangel, Orion",
-          "holeNumber": 1,
-          "createdAt": "31/08/25 17:28:13"
-        },
-        {
-          "playerName": "Martin Tamaral, Ekaitz",
-          "holeNumber": 8,
-          "createdAt": "31/08/25 17:43:18"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -5152,5 +5131,55 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:18.625Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72536
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Vasquez Simbaqueba, Arturo",
+          "holeNumber": 5,
+          "createdAt": "31/08/25 17:14:34"
+        },
+        {
+          "playerName": "Lopez Gutierrez, Eduardo",
+          "holeNumber": 5,
+          "createdAt": "31/08/25 17:19:39"
+        },
+        {
+          "playerName": "Gil Garcia, Miguel",
+          "holeNumber": 5,
+          "createdAt": "31/08/25 17:20:50"
+        },
+        {
+          "playerName": "Iniesta Rangel, Orion",
+          "holeNumber": 1,
+          "createdAt": "31/08/25 17:28:13"
+        },
+        {
+          "playerName": "Martin Tamaral, Ekaitz",
+          "holeNumber": 8,
+          "createdAt": "31/08/25 17:43:18"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/570309197_reglas_locales_el_encin_senior_masculino_nuevas.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:15.329Z"
 }

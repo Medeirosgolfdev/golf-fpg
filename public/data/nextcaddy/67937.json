@@ -1,14 +1,14 @@
 {
   "tourId": 67937,
   "url": "https://www.nextcaddy.com/tour/67937",
-  "scrapedAt": "2026-05-09T10:16:39.845Z",
+  "scrapedAt": "2026-05-21T16:40:13.597Z",
   "meta": {
     "name": "Circuito de Madrid de Profesionales \"Retamares\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Golf Los Retamares",
     "courseCode": "CM60",
-    "dateStart": "01 jun 2026",
-    "dateEnd": "01 jun 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) 25º Circuito De Mad",
     "categories": [
       "Profesional",
@@ -18,12 +18,36 @@
       "Senior",
       "Infantil",
       "Juvenil"
-    ],
-    "dateIso": "2026-06-01"
+    ]
   },
   "course": null,
   "leaderboard": [],
-  "inscritos": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Pedro Oriol Sanchez-Blanco",
+      "licencia": "CM011840-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Pedro Oriol Sanchez-Blanco",
+      "licencia": "CM011840-P",
+      "hcp": 0,
+      "nivel": "P+"
+    }
+  ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -306,6 +330,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:30.736Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:12.870Z"
 }

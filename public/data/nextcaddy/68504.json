@@ -1,14 +1,14 @@
 {
   "tourId": 68504,
   "url": "https://www.nextcaddy.com/tour/68504",
-  "scrapedAt": "2026-05-09T09:57:45.335Z",
+  "scrapedAt": "2026-05-21T16:37:07.208Z",
   "meta": {
     "name": "8ª P. TORNEO DAMAS 18-02-26",
     "organizer": null,
     "course": "Real Club de Golf Vista Hermosa",
     "courseCode": "AM05",
-    "dateStart": "18 feb 2026",
-    "dateEnd": "18 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras Facebook",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-18"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual Hasta 20 Hcp",
+      "expectedJugadores": 9,
       "header": [
         "Pos",
         "Jugador",
@@ -139,6 +140,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual Desde 20.1 Hcp",
+      "expectedJugadores": 9,
       "header": [
         "Pos",
         "Jugador",
@@ -253,6 +256,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Hasta 20 Hcp",
+      "jugadores": 9
+    },
+    "2": {
+      "name": "Handicap Individual Desde 20.1 Hcp",
+      "jugadores": 9
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -514,22 +528,6 @@
       "nivel": "AM05146075"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73128
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -699,5 +697,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:25.530Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73128
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:23.076Z"
 }

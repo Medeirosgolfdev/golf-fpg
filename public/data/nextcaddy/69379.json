@@ -1,14 +1,14 @@
 {
   "tourId": 69379,
   "url": "https://www.nextcaddy.com/tour/69379",
-  "scrapedAt": "2026-05-09T10:07:42.375Z",
+  "scrapedAt": "2026-05-21T16:38:14.888Z",
   "meta": {
     "name": "TORNEO PRIMAVERA GLM",
     "organizer": null,
     "course": "Club de Golf Bellavista",
     "courseCode": "AM07",
-    "dateStart": "25 mar 2026",
-    "dateEnd": "25 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-25"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "2º Categoria",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -172,6 +173,8 @@
     },
     {
       "category": 2,
+      "categoryName": "1º Categoria",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -319,6 +322,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "2º Categoria",
+      "jugadores": 12
+    },
+    "2": {
+      "name": "1º Categoria",
+      "jugadores": 12
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -671,78 +685,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74140
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Forsgardh, Claes",
-          "holeNumber": 3,
-          "createdAt": "01/10/25 17:53:54"
-        },
-        {
-          "playerName": "Gustan Svensson, Leif",
-          "holeNumber": 9,
-          "createdAt": "01/10/25 18:17:30"
-        },
-        {
-          "playerName": "Gustan Svensson, Leif",
-          "holeNumber": 13,
-          "createdAt": "01/10/25 18:17:30"
-        },
-        {
-          "playerName": "Gustan Svensson, Leif",
-          "holeNumber": 17,
-          "createdAt": "01/10/25 18:17:30"
-        },
-        {
-          "playerName": "Olsson, Dan",
-          "holeNumber": 3,
-          "createdAt": "01/10/25 18:29:56"
-        },
-        {
-          "playerName": "Olsson, Dan",
-          "holeNumber": 14,
-          "createdAt": "01/10/25 18:29:56"
-        },
-        {
-          "playerName": "Olsson, Dan",
-          "holeNumber": 17,
-          "createdAt": "01/10/25 18:29:56"
-        },
-        {
-          "playerName": "Bjornander, Peder",
-          "holeNumber": 14,
-          "createdAt": "01/10/25 18:32:35"
-        }
-      ]
-    },
-    "eagle": {
-      "scoreTypeKey": "eagle",
-      "players": [
-        {
-          "playerName": "Bjornander, Peder",
-          "holeNumber": 15,
-          "createdAt": "01/10/25 18:32:35"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -966,5 +908,78 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:53.277Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74140
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Forsgardh, Claes",
+          "holeNumber": 3,
+          "createdAt": "01/10/25 17:53:54"
+        },
+        {
+          "playerName": "Gustan Svensson, Leif",
+          "holeNumber": 9,
+          "createdAt": "01/10/25 18:17:30"
+        },
+        {
+          "playerName": "Gustan Svensson, Leif",
+          "holeNumber": 13,
+          "createdAt": "01/10/25 18:17:30"
+        },
+        {
+          "playerName": "Gustan Svensson, Leif",
+          "holeNumber": 17,
+          "createdAt": "01/10/25 18:17:30"
+        },
+        {
+          "playerName": "Olsson, Dan",
+          "holeNumber": 3,
+          "createdAt": "01/10/25 18:29:56"
+        },
+        {
+          "playerName": "Olsson, Dan",
+          "holeNumber": 14,
+          "createdAt": "01/10/25 18:29:56"
+        },
+        {
+          "playerName": "Olsson, Dan",
+          "holeNumber": 17,
+          "createdAt": "01/10/25 18:29:56"
+        },
+        {
+          "playerName": "Bjornander, Peder",
+          "holeNumber": 14,
+          "createdAt": "01/10/25 18:32:35"
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Bjornander, Peder",
+          "holeNumber": 15,
+          "createdAt": "01/10/25 18:32:35"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:33.564Z"
 }

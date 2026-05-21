@@ -1,14 +1,14 @@
 {
   "tourId": 68339,
   "url": "https://www.nextcaddy.com/tour/68339",
-  "scrapedAt": "2026-05-09T10:17:17.182Z",
+  "scrapedAt": "2026-05-21T16:41:13.974Z",
   "meta": {
     "name": "Match Heptagonal Senior Masculino",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Golf Santander S A",
     "courseCode": "CMA5",
-    "dateStart": "30 oct 2026",
-    "dateEnd": "30 oct 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros C. Amat",
     "categories": [
       "Senior Masculino",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-10-30"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -378,6 +380,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:36.312Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:21.425Z"
 }

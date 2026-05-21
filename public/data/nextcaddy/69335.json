@@ -1,14 +1,14 @@
 {
   "tourId": 69335,
   "url": "https://www.nextcaddy.com/tour/69335",
-  "scrapedAt": "2026-05-09T10:07:40.614Z",
+  "scrapedAt": "2026-05-21T16:38:12.360Z",
   "meta": {
     "name": "VOBS COMPETITION",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "23 mar 2026",
-    "dateEnd": "23 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-23"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 17,
       "header": [
         "Pos",
         "Jugador",
@@ -226,6 +227,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 17
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -480,38 +488,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74096
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Cleffi, Maria - Garcia Garcia, Ines",
-          "holeNumber": 2,
-          "createdAt": "30/09/25 09:45:37"
-        },
-        {
-          "playerName": "Thijs, Annemieke - Van Der Hoeve, Josephine",
-          "holeNumber": 11,
-          "createdAt": "30/09/25 16:40:59"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -672,5 +648,38 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:52.784Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74096
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Cleffi, Maria - Garcia Garcia, Ines",
+          "holeNumber": 2,
+          "createdAt": "30/09/25 09:45:37"
+        },
+        {
+          "playerName": "Thijs, Annemieke - Van Der Hoeve, Josephine",
+          "holeNumber": 11,
+          "createdAt": "30/09/25 16:40:59"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:33.098Z"
 }

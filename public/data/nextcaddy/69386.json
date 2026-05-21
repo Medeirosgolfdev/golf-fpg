@@ -1,14 +1,14 @@
 {
   "tourId": 69386,
   "url": "https://www.nextcaddy.com/tour/69386",
-  "scrapedAt": "2026-05-09T10:07:43.119Z",
+  "scrapedAt": "2026-05-21T16:38:15.878Z",
   "meta": {
     "name": "VOBS COMPETITION",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "26 mar 2026",
-    "dateEnd": "26 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-26"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 16,
       "header": [
         "Pos",
         "Jugador",
@@ -215,6 +216,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 16
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -448,108 +456,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74147
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Wilson, James",
-          "holeNumber": 5,
-          "createdAt": "05/10/25 13:00:55"
-        },
-        {
-          "playerName": "Wilson, James",
-          "holeNumber": 6,
-          "createdAt": "05/10/25 13:00:55"
-        },
-        {
-          "playerName": "Wilson, James",
-          "holeNumber": 11,
-          "createdAt": "05/10/25 13:00:55"
-        },
-        {
-          "playerName": "Lutton, William",
-          "holeNumber": 1,
-          "createdAt": "05/10/25 13:01:48"
-        },
-        {
-          "playerName": "Lutton, William",
-          "holeNumber": 5,
-          "createdAt": "05/10/25 13:01:48"
-        },
-        {
-          "playerName": "Lutton, William",
-          "holeNumber": 10,
-          "createdAt": "05/10/25 13:01:48"
-        },
-        {
-          "playerName": "Lutton, William",
-          "holeNumber": 17,
-          "createdAt": "05/10/25 13:01:48"
-        },
-        {
-          "playerName": "Rowlands, Brian",
-          "holeNumber": 6,
-          "createdAt": "05/10/25 13:03:05"
-        },
-        {
-          "playerName": "Rowlands, Brian",
-          "holeNumber": 7,
-          "createdAt": "05/10/25 13:03:05"
-        },
-        {
-          "playerName": "Nordnes, Tom",
-          "holeNumber": 2,
-          "createdAt": "05/10/25 13:41:19"
-        },
-        {
-          "playerName": "Sharpe, David",
-          "holeNumber": 4,
-          "createdAt": "05/10/25 13:54:06"
-        },
-        {
-          "playerName": "Sharpe, David",
-          "holeNumber": 15,
-          "createdAt": "05/10/25 13:54:06"
-        },
-        {
-          "playerName": "Conway, Ann",
-          "holeNumber": 1,
-          "createdAt": "05/10/25 13:55:38"
-        },
-        {
-          "playerName": "Suffredini, Eugene Christopher",
-          "holeNumber": 1,
-          "createdAt": "05/10/25 14:06:52"
-        },
-        {
-          "playerName": "Tweed, Richard",
-          "holeNumber": 8,
-          "createdAt": "05/10/25 14:14:04"
-        },
-        {
-          "playerName": "Parkins, Paul",
-          "holeNumber": 12,
-          "createdAt": "05/10/25 14:15:46"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -692,5 +598,108 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:53.422Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74147
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Wilson, James",
+          "holeNumber": 5,
+          "createdAt": "05/10/25 13:00:55"
+        },
+        {
+          "playerName": "Wilson, James",
+          "holeNumber": 6,
+          "createdAt": "05/10/25 13:00:55"
+        },
+        {
+          "playerName": "Wilson, James",
+          "holeNumber": 11,
+          "createdAt": "05/10/25 13:00:55"
+        },
+        {
+          "playerName": "Lutton, William",
+          "holeNumber": 1,
+          "createdAt": "05/10/25 13:01:48"
+        },
+        {
+          "playerName": "Lutton, William",
+          "holeNumber": 5,
+          "createdAt": "05/10/25 13:01:48"
+        },
+        {
+          "playerName": "Lutton, William",
+          "holeNumber": 10,
+          "createdAt": "05/10/25 13:01:48"
+        },
+        {
+          "playerName": "Lutton, William",
+          "holeNumber": 17,
+          "createdAt": "05/10/25 13:01:48"
+        },
+        {
+          "playerName": "Rowlands, Brian",
+          "holeNumber": 6,
+          "createdAt": "05/10/25 13:03:05"
+        },
+        {
+          "playerName": "Rowlands, Brian",
+          "holeNumber": 7,
+          "createdAt": "05/10/25 13:03:05"
+        },
+        {
+          "playerName": "Nordnes, Tom",
+          "holeNumber": 2,
+          "createdAt": "05/10/25 13:41:19"
+        },
+        {
+          "playerName": "Sharpe, David",
+          "holeNumber": 4,
+          "createdAt": "05/10/25 13:54:06"
+        },
+        {
+          "playerName": "Sharpe, David",
+          "holeNumber": 15,
+          "createdAt": "05/10/25 13:54:06"
+        },
+        {
+          "playerName": "Conway, Ann",
+          "holeNumber": 1,
+          "createdAt": "05/10/25 13:55:38"
+        },
+        {
+          "playerName": "Suffredini, Eugene Christopher",
+          "holeNumber": 1,
+          "createdAt": "05/10/25 14:06:52"
+        },
+        {
+          "playerName": "Tweed, Richard",
+          "holeNumber": 8,
+          "createdAt": "05/10/25 14:14:04"
+        },
+        {
+          "playerName": "Parkins, Paul",
+          "holeNumber": 12,
+          "createdAt": "05/10/25 14:15:46"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:33.748Z"
 }

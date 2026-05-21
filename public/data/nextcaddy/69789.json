@@ -1,14 +1,14 @@
 {
   "tourId": 69789,
   "url": "https://www.nextcaddy.com/tour/69789",
-  "scrapedAt": "2026-05-09T10:07:58.672Z",
+  "scrapedAt": "2026-05-21T16:38:46.446Z",
   "meta": {
     "name": "VOBS COMPETITION",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "13 abr 2026",
-    "dateEnd": "13 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-13"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -237,6 +238,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 18
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -519,33 +527,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74589
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Aznar Blanes, Sabina",
-          "holeNumber": 1,
-          "createdAt": "21/10/25 15:45:30"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -724,5 +705,35 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:56.982Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74589
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Aznar Blanes, Sabina",
+          "holeNumber": 1,
+          "createdAt": "21/10/25 15:45:30"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/cartel/21069314_69789-vobs-competition.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:37.384Z"
 }

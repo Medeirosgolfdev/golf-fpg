@@ -1,14 +1,14 @@
 {
   "tourId": 67667,
   "url": "https://www.nextcaddy.com/tour/67667",
-  "scrapedAt": "2026-05-09T09:57:25.317Z",
+  "scrapedAt": "2026-05-21T16:36:39.707Z",
   "meta": {
     "name": "Circuito Senior 4ª Prueba 21-01-26",
     "organizer": null,
     "course": "Real Club de Golf Vista Hermosa",
     "courseCode": "AM05",
-    "dateStart": "21 ene 2026",
-    "dateEnd": "21 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Senior",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-21"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "2 Categoría",
+      "expectedJugadores": 7,
       "header": [
         "Pos",
         "Jugador",
@@ -117,6 +118,8 @@
     },
     {
       "category": 2,
+      "categoryName": "1ª Categoría",
+      "expectedJugadores": 11,
       "header": [
         "Pos",
         "Jugador",
@@ -253,6 +256,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "2 Categoría",
+      "jugadores": 7
+    },
+    "2": {
+      "name": "1ª Categoría",
+      "jugadores": 11
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -521,103 +535,6 @@
       "nivel": "AM05277780"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72149
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Meixner, Nicolas",
-          "holeNumber": 7,
-          "createdAt": "12/07/25 14:05:36"
-        },
-        {
-          "playerName": "Meixner, Nicolas",
-          "holeNumber": 8,
-          "createdAt": "12/07/25 14:05:36"
-        },
-        {
-          "playerName": "Meixner, Nicolas",
-          "holeNumber": 11,
-          "createdAt": "12/07/25 14:05:36"
-        },
-        {
-          "playerName": "Meixner, Nicolas",
-          "holeNumber": 15,
-          "createdAt": "12/07/25 14:05:36"
-        },
-        {
-          "playerName": "Meixner, Nicolas",
-          "holeNumber": 18,
-          "createdAt": "12/07/25 14:05:36"
-        },
-        {
-          "playerName": "Martinez Navarro, Alvaro",
-          "holeNumber": 4,
-          "createdAt": "12/07/25 14:05:36"
-        },
-        {
-          "playerName": "Martinez Navarro, Alvaro",
-          "holeNumber": 12,
-          "createdAt": "12/07/25 14:05:36"
-        },
-        {
-          "playerName": "Martinez Navarro, Alvaro",
-          "holeNumber": 18,
-          "createdAt": "12/07/25 14:05:36"
-        },
-        {
-          "playerName": "Wheeler, Rhys",
-          "holeNumber": 17,
-          "createdAt": "12/07/25 14:05:37"
-        },
-        {
-          "playerName": "Marshall, Alistair",
-          "holeNumber": 8,
-          "createdAt": "12/07/25 14:05:37"
-        },
-        {
-          "playerName": "Marshall, Alistair",
-          "holeNumber": 11,
-          "createdAt": "12/07/25 14:05:37"
-        },
-        {
-          "playerName": "Gramotkin, Mikhail",
-          "holeNumber": 11,
-          "createdAt": "12/07/25 14:05:37"
-        },
-        {
-          "playerName": "Gramotkin, Mikhail",
-          "holeNumber": 15,
-          "createdAt": "12/07/25 14:05:37"
-        }
-      ]
-    },
-    "eagle": {
-      "scoreTypeKey": "eagle",
-      "players": [
-        {
-          "playerName": "Gramotkin, Mikhail",
-          "holeNumber": 18,
-          "createdAt": "12/07/25 14:05:37"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -787,5 +704,103 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:11.210Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72149
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Meixner, Nicolas",
+          "holeNumber": 7,
+          "createdAt": "12/07/25 14:05:36"
+        },
+        {
+          "playerName": "Meixner, Nicolas",
+          "holeNumber": 8,
+          "createdAt": "12/07/25 14:05:36"
+        },
+        {
+          "playerName": "Meixner, Nicolas",
+          "holeNumber": 11,
+          "createdAt": "12/07/25 14:05:36"
+        },
+        {
+          "playerName": "Meixner, Nicolas",
+          "holeNumber": 15,
+          "createdAt": "12/07/25 14:05:36"
+        },
+        {
+          "playerName": "Meixner, Nicolas",
+          "holeNumber": 18,
+          "createdAt": "12/07/25 14:05:36"
+        },
+        {
+          "playerName": "Martinez Navarro, Alvaro",
+          "holeNumber": 4,
+          "createdAt": "12/07/25 14:05:36"
+        },
+        {
+          "playerName": "Martinez Navarro, Alvaro",
+          "holeNumber": 12,
+          "createdAt": "12/07/25 14:05:36"
+        },
+        {
+          "playerName": "Martinez Navarro, Alvaro",
+          "holeNumber": 18,
+          "createdAt": "12/07/25 14:05:36"
+        },
+        {
+          "playerName": "Wheeler, Rhys",
+          "holeNumber": 17,
+          "createdAt": "12/07/25 14:05:37"
+        },
+        {
+          "playerName": "Marshall, Alistair",
+          "holeNumber": 8,
+          "createdAt": "12/07/25 14:05:37"
+        },
+        {
+          "playerName": "Marshall, Alistair",
+          "holeNumber": 11,
+          "createdAt": "12/07/25 14:05:37"
+        },
+        {
+          "playerName": "Gramotkin, Mikhail",
+          "holeNumber": 11,
+          "createdAt": "12/07/25 14:05:37"
+        },
+        {
+          "playerName": "Gramotkin, Mikhail",
+          "holeNumber": 15,
+          "createdAt": "12/07/25 14:05:37"
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Gramotkin, Mikhail",
+          "holeNumber": 18,
+          "createdAt": "12/07/25 14:05:37"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:06.939Z"
 }

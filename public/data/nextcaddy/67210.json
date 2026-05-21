@@ -1,14 +1,14 @@
 {
   "tourId": 67210,
   "url": "https://www.nextcaddy.com/tour/67210",
-  "scrapedAt": "2026-05-09T10:16:38.572Z",
+  "scrapedAt": "2026-05-21T16:40:11.367Z",
   "meta": {
     "name": "II PUNTUABLE ZONAL CASTILLA LEON EXTREMADURA  (Valedera SACE)",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "30 may 2026",
-    "dateEnd": "30 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Cadete Masculino",
     "categories": [
       "Cadete Masculino",
@@ -21,31 +21,39 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-05-30"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
       "name": "Diego Martin Alonso",
       "licencia": "7759069356",
-      "hcp": 3.3,
+      "hcp": 3,
       "nivel": "C"
     },
     {
       "orden": 2,
       "name": "Gonzalo Alvarez Rodriguez",
       "licencia": "7776959774",
-      "hcp": 2.5,
+      "hcp": 2,
       "nivel": "C"
     },
     {
       "orden": 3,
       "name": "Hugo Montero Hidalgo",
       "licencia": "7751172083",
-      "hcp": 4.6,
+      "hcp": 4.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 4,
+      "name": "Rodrigo Gallego Sanchez",
+      "licencia": "7709940622",
+      "hcp": 6.3,
       "nivel": "C"
     },
     {
@@ -63,6 +71,27 @@
       "nivel": "J"
     },
     {
+      "orden": 2,
+      "name": "Maria Casas Fernandez",
+      "licencia": "7770078318",
+      "hcp": 12.8,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Carmen Manuela Calvo Crespo",
+      "licencia": "7770346991",
+      "hcp": 12.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Olivia Gallego Sanchez",
+      "licencia": "7709092740",
+      "hcp": 19.4,
+      "nivel": "I"
+    },
+    {
       "orden": null,
       "name": "Jugador",
       "licencia": "Licencia",
@@ -73,14 +102,35 @@
       "orden": 1,
       "name": "Mateo Fernandez Arteaga",
       "licencia": "7760479307",
-      "hcp": 8,
+      "hcp": 7.4,
       "nivel": "I"
     },
     {
       "orden": 2,
       "name": "Beltran Diez Sillero",
       "licencia": "7706962379",
-      "hcp": 7.9,
+      "hcp": 7.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Enzo Jimenez Puerta",
+      "licencia": "7753983104",
+      "hcp": 4.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Daniel Avila Sanz",
+      "licencia": "9901963985",
+      "hcp": 6.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 5,
+      "name": "Miguel Davila Sanchez",
+      "licencia": "9919966006",
+      "hcp": 12.4,
       "nivel": "I"
     },
     {
@@ -94,21 +144,63 @@
       "orden": 1,
       "name": "Marco Rojas Alonso",
       "licencia": "7776372629",
-      "hcp": 16.6,
+      "hcp": 16.3,
       "nivel": "A"
     },
     {
       "orden": 2,
       "name": "Jaime Pardo Gonzalez",
       "licencia": "7706966957",
-      "hcp": 12.1,
+      "hcp": 11.4,
       "nivel": "A"
     },
     {
       "orden": 3,
       "name": "Pablo Rodriguez Molina",
       "licencia": "7706966959",
-      "hcp": 11.7,
+      "hcp": 11.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Santiago Delgado Marcos",
+      "licencia": "9900996839",
+      "hcp": 19.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 5,
+      "name": "Alex Carron Miron",
+      "licencia": "9901948940",
+      "hcp": 8.2,
+      "nivel": "A"
+    },
+    {
+      "orden": 6,
+      "name": "Marco Barriga Perez",
+      "licencia": "9901950796",
+      "hcp": 7.7,
+      "nivel": "A"
+    },
+    {
+      "orden": 7,
+      "name": "Sergio Aguilar Garcia",
+      "licencia": "9906148776",
+      "hcp": 31.6,
+      "nivel": "A"
+    },
+    {
+      "orden": 8,
+      "name": "Wilfredo Navia Villafana",
+      "licencia": "9906068307",
+      "hcp": 13.1,
+      "nivel": "A"
+    },
+    {
+      "orden": 9,
+      "name": "Vidal Rodriguez Gallardo",
+      "licencia": "9906127549",
+      "hcp": 28.8,
       "nivel": "A"
     },
     {
@@ -136,21 +228,21 @@
       "orden": 1,
       "name": "Diego Martin Alonso",
       "licencia": "29-04-26 12:16",
-      "hcp": 3.3,
+      "hcp": 3,
       "nivel": "7759069356"
     },
     {
       "orden": 2,
       "name": "Gonzalo Alvarez Rodriguez",
       "licencia": "30-04-26 15:28",
-      "hcp": 2.5,
+      "hcp": 2,
       "nivel": "7776959774"
     },
     {
       "orden": 3,
       "name": "Hugo Montero Hidalgo",
       "licencia": "03-05-26 19:51",
-      "hcp": 4.6,
+      "hcp": 4.8,
       "nivel": "7751172083"
     },
     {
@@ -164,28 +256,28 @@
       "orden": 5,
       "name": "Mateo Fernandez Arteaga",
       "licencia": "05-05-26 22:06",
-      "hcp": 8,
+      "hcp": 7.4,
       "nivel": "7760479307"
     },
     {
       "orden": 6,
       "name": "Beltran Diez Sillero",
       "licencia": "05-05-26 23:07",
-      "hcp": 7.9,
+      "hcp": 7.4,
       "nivel": "7706962379"
     },
     {
       "orden": 7,
       "name": "Marco Rojas Alonso",
       "licencia": "08-05-26 15:08",
-      "hcp": 16.6,
+      "hcp": 16.3,
       "nivel": "7776372629"
     },
     {
       "orden": 8,
       "name": "Jaime Pardo Gonzalez",
       "licencia": "08-05-26 16:37",
-      "hcp": 12.1,
+      "hcp": 11.4,
       "nivel": "7706966957"
     },
     {
@@ -199,10 +291,102 @@
       "orden": 10,
       "name": "Pablo Rodriguez Molina",
       "licencia": "09-05-26 12:03",
-      "hcp": 11.7,
+      "hcp": 11.5,
       "nivel": "7706966959"
+    },
+    {
+      "orden": 11,
+      "name": "Maria Casas Fernandez",
+      "licencia": "11-05-26 11:23",
+      "hcp": 12.8,
+      "nivel": "7770078318"
+    },
+    {
+      "orden": 12,
+      "name": "Enzo Jimenez Puerta",
+      "licencia": "13-05-26 10:37",
+      "hcp": 4.5,
+      "nivel": "7753983104"
+    },
+    {
+      "orden": 13,
+      "name": "Santiago Delgado Marcos",
+      "licencia": "17-05-26 20:23",
+      "hcp": 19.3,
+      "nivel": "9900996839"
+    },
+    {
+      "orden": 14,
+      "name": "Alex Carron Miron",
+      "licencia": "17-05-26 20:33",
+      "hcp": 8.2,
+      "nivel": "9901948940"
+    },
+    {
+      "orden": 15,
+      "name": "Daniel Avila Sanz",
+      "licencia": "17-05-26 21:38",
+      "hcp": 6.4,
+      "nivel": "9901963985"
+    },
+    {
+      "orden": 16,
+      "name": "Marco Barriga Perez",
+      "licencia": "17-05-26 22:51",
+      "hcp": 7.7,
+      "nivel": "9901950796"
+    },
+    {
+      "orden": 17,
+      "name": "Sergio Aguilar Garcia",
+      "licencia": "18-05-26 09:11",
+      "hcp": 31.6,
+      "nivel": "9906148776"
+    },
+    {
+      "orden": 18,
+      "name": "Miguel Davila Sanchez",
+      "licencia": "18-05-26 11:36",
+      "hcp": 12.4,
+      "nivel": "9919966006"
+    },
+    {
+      "orden": 19,
+      "name": "Wilfredo Navia Villafana",
+      "licencia": "18-05-26 19:27",
+      "hcp": 13.1,
+      "nivel": "9906068307"
+    },
+    {
+      "orden": 20,
+      "name": "Carmen Manuela Calvo Crespo",
+      "licencia": "18-05-26 20:38",
+      "hcp": 12.5,
+      "nivel": "7770346991"
+    },
+    {
+      "orden": 21,
+      "name": "Vidal Rodriguez Gallardo",
+      "licencia": "19-05-26 12:35",
+      "hcp": 28.8,
+      "nivel": "9906127549"
+    },
+    {
+      "orden": 22,
+      "name": "Rodrigo Gallego Sanchez",
+      "licencia": "21-05-26 15:39",
+      "hcp": 6.3,
+      "nivel": "7709940622"
+    },
+    {
+      "orden": 23,
+      "name": "Olivia Gallego Sanchez",
+      "licencia": "21-05-26 15:43",
+      "hcp": 19.4,
+      "nivel": "7709092740"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -249,6 +433,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:26.830Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:00.755Z"
 }

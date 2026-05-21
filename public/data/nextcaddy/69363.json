@@ -1,14 +1,14 @@
 {
   "tourId": 69363,
   "url": "https://www.nextcaddy.com/tour/69363",
-  "scrapedAt": "2026-05-09T10:07:42.579Z",
+  "scrapedAt": "2026-05-21T16:38:15.092Z",
   "meta": {
     "name": "TORNEO MASTER SENIOR 25-03-26",
     "organizer": null,
     "course": "Real Club de Golf Vista Hermosa",
     "courseCode": "AM05",
-    "dateStart": "25 mar 2026",
-    "dateEnd": "25 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Espec",
     "categories": [
       "SENIOR",
@@ -18,13 +18,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-25"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 25,
       "header": [
         "Pos",
         "Jugador",
@@ -315,6 +316,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 25
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -681,48 +689,6 @@
       "nivel": "AM05056549"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74124
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Martinez Fernandez, Jose",
-          "holeNumber": 13,
-          "createdAt": "05/10/25 10:59:33"
-        },
-        {
-          "playerName": "Reyes Nuñez, Francisco Javier",
-          "holeNumber": 2,
-          "createdAt": "05/10/25 12:28:46"
-        },
-        {
-          "playerName": "Heras Hernanz, Jose Manuel",
-          "holeNumber": 1,
-          "createdAt": "05/10/25 12:47:32"
-        },
-        {
-          "playerName": "Molero Moreira, Rafael",
-          "holeNumber": 7,
-          "createdAt": "05/10/25 13:24:23"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -955,5 +921,48 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:53.149Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74124
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Martinez Fernandez, Jose",
+          "holeNumber": 13,
+          "createdAt": "05/10/25 10:59:33"
+        },
+        {
+          "playerName": "Reyes Nuñez, Francisco Javier",
+          "holeNumber": 2,
+          "createdAt": "05/10/25 12:28:46"
+        },
+        {
+          "playerName": "Heras Hernanz, Jose Manuel",
+          "holeNumber": 1,
+          "createdAt": "05/10/25 12:47:32"
+        },
+        {
+          "playerName": "Molero Moreira, Rafael",
+          "holeNumber": 7,
+          "createdAt": "05/10/25 13:24:23"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:33.473Z"
 }

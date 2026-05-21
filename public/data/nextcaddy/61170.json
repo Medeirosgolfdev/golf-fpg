@@ -1,14 +1,14 @@
 {
   "tourId": 61170,
   "url": "https://www.nextcaddy.com/tour/61170",
-  "scrapedAt": "2026-05-09T10:15:40.307Z",
+  "scrapedAt": "2026-05-21T16:39:05.731Z",
   "meta": {
     "name": "IV Prueba Puntuable P&P",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "la Loma Golf",
     "courseCode": "AMK3",
-    "dateStart": "25 abr 2026",
-    "dateEnd": "25 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-25"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 41,
       "header": [
         "Pos",
         "Jugador",
@@ -491,6 +492,8 @@
     },
     {
       "category": 2,
+      "categoryName": "1ª Categoría Handicap",
+      "expectedJugadores": 20,
       "header": [
         "Pos",
         "Jugador",
@@ -727,6 +730,8 @@
     },
     {
       "category": 3,
+      "categoryName": "2ª Categoría Handicap",
+      "expectedJugadores": 21,
       "header": [
         "Pos",
         "Jugador",
@@ -973,6 +978,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 41
+    },
+    "2": {
+      "name": "1ª Categoría Handicap",
+      "jugadores": 20
+    },
+    "3": {
+      "name": "2ª Categoría Handicap",
+      "jugadores": 21
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1563,58 +1583,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 64816
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Vasquez Simbaqueba, Arturo",
-          "holeNumber": 4,
-          "createdAt": "14/12/24 13:29:34"
-        },
-        {
-          "playerName": "Vasquez Simbaqueba, Arturo",
-          "holeNumber": 6,
-          "createdAt": "14/12/24 13:29:34"
-        },
-        {
-          "playerName": "Sun, Weilian",
-          "holeNumber": 6,
-          "createdAt": "14/12/24 13:29:56"
-        },
-        {
-          "playerName": "Timpanaro Abasolo, Gabriela",
-          "holeNumber": 2,
-          "createdAt": "14/12/24 13:40:02"
-        },
-        {
-          "playerName": "Corcoles Romay, Guillermo",
-          "holeNumber": 2,
-          "createdAt": "14/12/24 13:51:37"
-        },
-        {
-          "playerName": "Martinez De Murguia Garcia, Roberto",
-          "holeNumber": 2,
-          "createdAt": "14/12/24 14:05:12"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1991,5 +1959,63 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:01.196Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 64816
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Vasquez Simbaqueba, Arturo",
+          "holeNumber": 4,
+          "createdAt": "14/12/24 13:29:34"
+        },
+        {
+          "playerName": "Vasquez Simbaqueba, Arturo",
+          "holeNumber": 6,
+          "createdAt": "14/12/24 13:29:34"
+        },
+        {
+          "playerName": "Sun, Weilian",
+          "holeNumber": 6,
+          "createdAt": "14/12/24 13:29:56"
+        },
+        {
+          "playerName": "Timpanaro Abasolo, Gabriela",
+          "holeNumber": 2,
+          "createdAt": "14/12/24 13:40:02"
+        },
+        {
+          "playerName": "Corcoles Romay, Guillermo",
+          "holeNumber": 2,
+          "createdAt": "14/12/24 13:51:37"
+        },
+        {
+          "playerName": "Martinez De Murguia Garcia, Roberto",
+          "holeNumber": 2,
+          "createdAt": "14/12/24 14:05:12"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/626413927_4º_puntuable_la_loma.pdf",
+    "/uploads/competiciones/pdf/462875981_informacion_del_campeonato.pdf",
+    "/uploads/circular/2026/1bcb565407366d8953cb46fa5fbe8e7f.pdf",
+    "/uploads/competiciones/pdf/1297217291_reglas_web.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:52.808Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 69665,
   "url": "https://www.nextcaddy.com/tour/69665",
-  "scrapedAt": "2026-05-09T10:15:41.980Z",
+  "scrapedAt": "2026-05-21T16:39:08.745Z",
   "meta": {
     "name": "VIII Partida de liguilla \"Villanueva Golf\" temporada 2025-26",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "25 abr 2026",
-    "dateEnd": "25 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-25"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 79,
       "header": [
         "Pos",
         "Jugador",
@@ -908,6 +909,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 79
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2044,443 +2052,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74449
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Rodriguez Barba, Hugo - Corvera Cuevas, Santiago",
-          "holeNumber": 4,
-          "createdAt": "01/11/25 14:18:18"
-        },
-        {
-          "playerName": "Rodriguez Martin, Pablo - Cen, Zachary",
-          "holeNumber": 2,
-          "createdAt": "01/11/25 14:19:30"
-        },
-        {
-          "playerName": "Rodriguez Martin, Pablo - Cen, Zachary",
-          "holeNumber": 4,
-          "createdAt": "01/11/25 14:19:30"
-        },
-        {
-          "playerName": "Rodriguez Martin, Pablo - Cen, Zachary",
-          "holeNumber": 11,
-          "createdAt": "01/11/25 14:19:30"
-        },
-        {
-          "playerName": "Rodriguez Martin, Pablo - Cen, Zachary",
-          "holeNumber": 14,
-          "createdAt": "01/11/25 14:19:30"
-        },
-        {
-          "playerName": "Rodriguez Martin, Pablo - Cen, Zachary",
-          "holeNumber": 17,
-          "createdAt": "01/11/25 14:19:30"
-        },
-        {
-          "playerName": "Rodriguez Martin, Pablo - Cen, Zachary",
-          "holeNumber": 18,
-          "createdAt": "01/11/25 14:19:30"
-        },
-        {
-          "playerName": "Fernandez Gallardo, Nicolas - Rodriguez Sainz, Alfonso",
-          "holeNumber": 4,
-          "createdAt": "01/11/25 14:22:32"
-        },
-        {
-          "playerName": "Fernandez Gallardo, Nicolas - Rodriguez Sainz, Alfonso",
-          "holeNumber": 17,
-          "createdAt": "01/11/25 14:22:32"
-        },
-        {
-          "playerName": "Gil Garcia, Miguel - Agudo Goenechea, Juan",
-          "holeNumber": 2,
-          "createdAt": "01/11/25 14:24:05"
-        },
-        {
-          "playerName": "Cespedes Arroyo, Alberto - Yubero Astor, Martin",
-          "holeNumber": 13,
-          "createdAt": "01/11/25 14:24:26"
-        },
-        {
-          "playerName": "Cespedes Arroyo, Alberto - Yubero Astor, Martin",
-          "holeNumber": 17,
-          "createdAt": "01/11/25 14:24:26"
-        },
-        {
-          "playerName": "Fernandez De La Cruz, Nicolas - Fernandez  De La Cruz, Sofia",
-          "holeNumber": 5,
-          "createdAt": "01/11/25 14:27:45"
-        },
-        {
-          "playerName": "Gonzalez Rodriguez, Beltran - Gonzalez Rodriguez, Dario",
-          "holeNumber": 2,
-          "createdAt": "01/11/25 14:29:11"
-        },
-        {
-          "playerName": "Gonzalez Rodriguez, Beltran - Gonzalez Rodriguez, Dario",
-          "holeNumber": 3,
-          "createdAt": "01/11/25 14:29:11"
-        },
-        {
-          "playerName": "Gonzalez Rodriguez, Beltran - Gonzalez Rodriguez, Dario",
-          "holeNumber": 11,
-          "createdAt": "01/11/25 14:29:11"
-        },
-        {
-          "playerName": "Gonzalez Rodriguez, Beltran - Gonzalez Rodriguez, Dario",
-          "holeNumber": 13,
-          "createdAt": "01/11/25 14:29:11"
-        },
-        {
-          "playerName": "Barra Morris, Lucas - Barra Morris, Dylan",
-          "holeNumber": 11,
-          "createdAt": "01/11/25 14:30:51"
-        },
-        {
-          "playerName": "Guille Morales, Ruben - Galan Satrustegui, Cosme",
-          "holeNumber": 3,
-          "createdAt": "01/11/25 14:31:38"
-        },
-        {
-          "playerName": "Guille Morales, Ruben - Galan Satrustegui, Cosme",
-          "holeNumber": 17,
-          "createdAt": "01/11/25 14:31:38"
-        },
-        {
-          "playerName": "Martin Villena, Hugo - Lopez De Santiago, Fernando",
-          "holeNumber": 10,
-          "createdAt": "01/11/25 14:32:49"
-        },
-        {
-          "playerName": "Martin Villena, Hugo - Lopez De Santiago, Fernando",
-          "holeNumber": 15,
-          "createdAt": "01/11/25 14:32:49"
-        },
-        {
-          "playerName": "Martin Villena, Hugo - Lopez De Santiago, Fernando",
-          "holeNumber": 16,
-          "createdAt": "01/11/25 14:32:49"
-        },
-        {
-          "playerName": "Gonzalez Diaz-Benito De Las Huertas, Miguel - Vasquez Simbaqueba, Gabriela",
-          "holeNumber": 6,
-          "createdAt": "01/11/25 14:33:31"
-        },
-        {
-          "playerName": "Gonzalez Diaz-Benito De Las Huertas, Miguel - Vasquez Simbaqueba, Gabriela",
-          "holeNumber": 11,
-          "createdAt": "01/11/25 14:33:31"
-        },
-        {
-          "playerName": "Messina Arrieta, Ines - Viera Garcia, Miranda",
-          "holeNumber": 3,
-          "createdAt": "01/11/25 14:34:04"
-        },
-        {
-          "playerName": "Messina Arrieta, Ines - Viera Garcia, Miranda",
-          "holeNumber": 14,
-          "createdAt": "01/11/25 14:34:04"
-        },
-        {
-          "playerName": "Fernandez Gallardo, Valeria - Aparicio Vallarino, Cristina",
-          "holeNumber": 5,
-          "createdAt": "01/11/25 14:34:40"
-        },
-        {
-          "playerName": "Fernandez Gallardo, Valeria - Aparicio Vallarino, Cristina",
-          "holeNumber": 16,
-          "createdAt": "01/11/25 14:34:40"
-        },
-        {
-          "playerName": "Garcia Ceballos, Julio - Martinez Cerrada, Hugo",
-          "holeNumber": 6,
-          "createdAt": "01/11/25 14:35:38"
-        },
-        {
-          "playerName": "Garcia Ceballos, Julio - Martinez Cerrada, Hugo",
-          "holeNumber": 15,
-          "createdAt": "01/11/25 14:35:38"
-        },
-        {
-          "playerName": "Garcia Ceballos, Julio - Martinez Cerrada, Hugo",
-          "holeNumber": 17,
-          "createdAt": "01/11/25 14:35:38"
-        },
-        {
-          "playerName": "Montero Gonzalez, Leo - Pan Martin, Elisa",
-          "holeNumber": 1,
-          "createdAt": "01/11/25 14:36:21"
-        },
-        {
-          "playerName": "Montero Gonzalez, Leo - Pan Martin, Elisa",
-          "holeNumber": 6,
-          "createdAt": "01/11/25 14:36:21"
-        },
-        {
-          "playerName": "Montero Gonzalez, Leo - Pan Martin, Elisa",
-          "holeNumber": 7,
-          "createdAt": "01/11/25 14:36:21"
-        },
-        {
-          "playerName": "Montero Gonzalez, Leo - Pan Martin, Elisa",
-          "holeNumber": 11,
-          "createdAt": "01/11/25 14:36:21"
-        },
-        {
-          "playerName": "Lopez Gutierrez, Eduardo - Fernandez Montoto, Nicolas",
-          "holeNumber": 4,
-          "createdAt": "01/11/25 17:00:14"
-        },
-        {
-          "playerName": "Soler Lavalle, Macarena - Estallo Soler, Alejandra",
-          "holeNumber": 4,
-          "createdAt": "01/11/25 17:00:59"
-        },
-        {
-          "playerName": "Hernandez Perez, Paloma - Rubio Romero, Paula",
-          "holeNumber": 2,
-          "createdAt": "01/11/25 17:02:07"
-        },
-        {
-          "playerName": "Hernandez Perez, Paloma - Rubio Romero, Paula",
-          "holeNumber": 3,
-          "createdAt": "01/11/25 17:02:07"
-        },
-        {
-          "playerName": "Hernandez Perez, Paloma - Rubio Romero, Paula",
-          "holeNumber": 4,
-          "createdAt": "01/11/25 17:02:07"
-        },
-        {
-          "playerName": "Hernandez Perez, Paloma - Rubio Romero, Paula",
-          "holeNumber": 11,
-          "createdAt": "01/11/25 17:02:07"
-        },
-        {
-          "playerName": "Hernandez Perez, Paloma - Rubio Romero, Paula",
-          "holeNumber": 12,
-          "createdAt": "01/11/25 17:02:07"
-        },
-        {
-          "playerName": "Hernandez Perez, Paloma - Rubio Romero, Paula",
-          "holeNumber": 13,
-          "createdAt": "01/11/25 17:02:07"
-        },
-        {
-          "playerName": "Hernandez Perez, Paloma - Rubio Romero, Paula",
-          "holeNumber": 15,
-          "createdAt": "01/11/25 17:02:07"
-        },
-        {
-          "playerName": "Barra Morris, Alex - Lilly Fernandez, Harald",
-          "holeNumber": 4,
-          "createdAt": "01/11/25 17:02:56"
-        },
-        {
-          "playerName": "Barra Morris, Alex - Lilly Fernandez, Harald",
-          "holeNumber": 6,
-          "createdAt": "01/11/25 17:02:56"
-        },
-        {
-          "playerName": "Barra Morris, Alex - Lilly Fernandez, Harald",
-          "holeNumber": 10,
-          "createdAt": "01/11/25 17:02:56"
-        },
-        {
-          "playerName": "Moreno Fernandez, Claudia - Moreno Fernandez, Alejandra",
-          "holeNumber": 4,
-          "createdAt": "01/11/25 17:03:51"
-        },
-        {
-          "playerName": "Estallo Soler, Pablo - Estallo Soler, Jacobo",
-          "holeNumber": 5,
-          "createdAt": "01/11/25 17:04:30"
-        },
-        {
-          "playerName": "Vizcaino Serrano, Juan - Vizcaino Serrano, Alvaro",
-          "holeNumber": 5,
-          "createdAt": "01/11/25 17:05:05"
-        },
-        {
-          "playerName": "Vizcaino Serrano, Juan - Vizcaino Serrano, Alvaro",
-          "holeNumber": 6,
-          "createdAt": "01/11/25 17:05:05"
-        },
-        {
-          "playerName": "Vizcaino Serrano, Juan - Vizcaino Serrano, Alvaro",
-          "holeNumber": 15,
-          "createdAt": "01/11/25 17:05:05"
-        },
-        {
-          "playerName": "Navarro Urbano, Beltran - Urbano De Andres, Alvaro",
-          "holeNumber": 4,
-          "createdAt": "01/11/25 17:05:53"
-        },
-        {
-          "playerName": "Cuadrado Lopez, Guillermo - Viejo Micale, Gonzalo",
-          "holeNumber": 4,
-          "createdAt": "01/11/25 17:07:25"
-        },
-        {
-          "playerName": "Cuadrado Lopez, Guillermo - Viejo Micale, Gonzalo",
-          "holeNumber": 6,
-          "createdAt": "01/11/25 17:07:25"
-        },
-        {
-          "playerName": "Cuadrado Lopez, Guillermo - Viejo Micale, Gonzalo",
-          "holeNumber": 8,
-          "createdAt": "01/11/25 17:07:25"
-        },
-        {
-          "playerName": "Cuadrado Lopez, Guillermo - Viejo Micale, Gonzalo",
-          "holeNumber": 9,
-          "createdAt": "01/11/25 17:07:25"
-        },
-        {
-          "playerName": "Cuadrado Lopez, Guillermo - Viejo Micale, Gonzalo",
-          "holeNumber": 11,
-          "createdAt": "01/11/25 17:07:25"
-        },
-        {
-          "playerName": "Cuadrado Lopez, Guillermo - Viejo Micale, Gonzalo",
-          "holeNumber": 13,
-          "createdAt": "01/11/25 17:07:25"
-        },
-        {
-          "playerName": "Cuadrado Lopez, Guillermo - Viejo Micale, Gonzalo",
-          "holeNumber": 14,
-          "createdAt": "01/11/25 17:07:25"
-        },
-        {
-          "playerName": "Cuadrado Lopez, Guillermo - Viejo Micale, Gonzalo",
-          "holeNumber": 15,
-          "createdAt": "01/11/25 17:07:25"
-        },
-        {
-          "playerName": "Cuadrado Lopez, Guillermo - Viejo Micale, Gonzalo",
-          "holeNumber": 18,
-          "createdAt": "01/11/25 17:07:25"
-        },
-        {
-          "playerName": "Estallo Soler, Gonzalo - Soler Lavalle, Santiago",
-          "holeNumber": 4,
-          "createdAt": "01/11/25 17:08:04"
-        },
-        {
-          "playerName": "Estallo Soler, Gonzalo - Soler Lavalle, Santiago",
-          "holeNumber": 6,
-          "createdAt": "01/11/25 17:08:04"
-        },
-        {
-          "playerName": "Estallo Soler, Gonzalo - Soler Lavalle, Santiago",
-          "holeNumber": 8,
-          "createdAt": "01/11/25 17:08:04"
-        },
-        {
-          "playerName": "Estallo Soler, Gonzalo - Soler Lavalle, Santiago",
-          "holeNumber": 9,
-          "createdAt": "01/11/25 17:08:04"
-        },
-        {
-          "playerName": "Estallo Soler, Gonzalo - Soler Lavalle, Santiago",
-          "holeNumber": 11,
-          "createdAt": "01/11/25 17:08:04"
-        },
-        {
-          "playerName": "Estallo Soler, Gonzalo - Soler Lavalle, Santiago",
-          "holeNumber": 13,
-          "createdAt": "01/11/25 17:08:04"
-        },
-        {
-          "playerName": "Estallo Soler, Gonzalo - Soler Lavalle, Santiago",
-          "holeNumber": 14,
-          "createdAt": "01/11/25 17:08:04"
-        },
-        {
-          "playerName": "Estallo Soler, Gonzalo - Soler Lavalle, Santiago",
-          "holeNumber": 15,
-          "createdAt": "01/11/25 17:08:04"
-        },
-        {
-          "playerName": "Estallo Soler, Gonzalo - Soler Lavalle, Santiago",
-          "holeNumber": 18,
-          "createdAt": "01/11/25 17:08:04"
-        },
-        {
-          "playerName": "Lopez Gutierrez, Rodrigo - Lopez Gutierrez, Daniela",
-          "holeNumber": 1,
-          "createdAt": "01/11/25 17:08:29"
-        },
-        {
-          "playerName": "Lopez Gutierrez, Rodrigo - Lopez Gutierrez, Daniela",
-          "holeNumber": 6,
-          "createdAt": "01/11/25 17:08:29"
-        },
-        {
-          "playerName": "Lopez Gutierrez, Rodrigo - Lopez Gutierrez, Daniela",
-          "holeNumber": 13,
-          "createdAt": "01/11/25 17:08:29"
-        },
-        {
-          "playerName": "Lopez Gutierrez, Rodrigo - Lopez Gutierrez, Daniela",
-          "holeNumber": 15,
-          "createdAt": "01/11/25 17:08:29"
-        },
-        {
-          "playerName": "Kowalski Blanco, Macarena - Sacristan Añaños, Sofia",
-          "holeNumber": 1,
-          "createdAt": "01/11/25 17:09:03"
-        },
-        {
-          "playerName": "Kowalski Blanco, Macarena - Sacristan Añaños, Sofia",
-          "holeNumber": 15,
-          "createdAt": "01/11/25 17:09:03"
-        },
-        {
-          "playerName": "Martin-Pozuelo Medina, Sira - Guerra Vera, Candela",
-          "holeNumber": 4,
-          "createdAt": "01/11/25 17:10:23"
-        },
-        {
-          "playerName": "Martin-Pozuelo Medina, Sira - Guerra Vera, Candela",
-          "holeNumber": 14,
-          "createdAt": "01/11/25 17:10:23"
-        },
-        {
-          "playerName": "Hernanz Hernando, Maria - Villen Villamiel, Sara",
-          "holeNumber": 4,
-          "createdAt": "01/11/25 17:10:52"
-        },
-        {
-          "playerName": "Hernanz Hernando, Maria - Villen Villamiel, Sara",
-          "holeNumber": 14,
-          "createdAt": "01/11/25 17:10:52"
-        },
-        {
-          "playerName": "Fernandez Montoto, Eduardo - Garcia De Vinuesa Serrano, Barbara",
-          "holeNumber": 13,
-          "createdAt": "01/11/25 17:12:18"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -3208,5 +2779,443 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:56.500Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74449
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Rodriguez Barba, Hugo - Corvera Cuevas, Santiago",
+          "holeNumber": 4,
+          "createdAt": "01/11/25 14:18:18"
+        },
+        {
+          "playerName": "Rodriguez Martin, Pablo - Cen, Zachary",
+          "holeNumber": 2,
+          "createdAt": "01/11/25 14:19:30"
+        },
+        {
+          "playerName": "Rodriguez Martin, Pablo - Cen, Zachary",
+          "holeNumber": 4,
+          "createdAt": "01/11/25 14:19:30"
+        },
+        {
+          "playerName": "Rodriguez Martin, Pablo - Cen, Zachary",
+          "holeNumber": 11,
+          "createdAt": "01/11/25 14:19:30"
+        },
+        {
+          "playerName": "Rodriguez Martin, Pablo - Cen, Zachary",
+          "holeNumber": 14,
+          "createdAt": "01/11/25 14:19:30"
+        },
+        {
+          "playerName": "Rodriguez Martin, Pablo - Cen, Zachary",
+          "holeNumber": 17,
+          "createdAt": "01/11/25 14:19:30"
+        },
+        {
+          "playerName": "Rodriguez Martin, Pablo - Cen, Zachary",
+          "holeNumber": 18,
+          "createdAt": "01/11/25 14:19:30"
+        },
+        {
+          "playerName": "Fernandez Gallardo, Nicolas - Rodriguez Sainz, Alfonso",
+          "holeNumber": 4,
+          "createdAt": "01/11/25 14:22:32"
+        },
+        {
+          "playerName": "Fernandez Gallardo, Nicolas - Rodriguez Sainz, Alfonso",
+          "holeNumber": 17,
+          "createdAt": "01/11/25 14:22:32"
+        },
+        {
+          "playerName": "Gil Garcia, Miguel - Agudo Goenechea, Juan",
+          "holeNumber": 2,
+          "createdAt": "01/11/25 14:24:05"
+        },
+        {
+          "playerName": "Cespedes Arroyo, Alberto - Yubero Astor, Martin",
+          "holeNumber": 13,
+          "createdAt": "01/11/25 14:24:26"
+        },
+        {
+          "playerName": "Cespedes Arroyo, Alberto - Yubero Astor, Martin",
+          "holeNumber": 17,
+          "createdAt": "01/11/25 14:24:26"
+        },
+        {
+          "playerName": "Fernandez De La Cruz, Nicolas - Fernandez  De La Cruz, Sofia",
+          "holeNumber": 5,
+          "createdAt": "01/11/25 14:27:45"
+        },
+        {
+          "playerName": "Gonzalez Rodriguez, Beltran - Gonzalez Rodriguez, Dario",
+          "holeNumber": 2,
+          "createdAt": "01/11/25 14:29:11"
+        },
+        {
+          "playerName": "Gonzalez Rodriguez, Beltran - Gonzalez Rodriguez, Dario",
+          "holeNumber": 3,
+          "createdAt": "01/11/25 14:29:11"
+        },
+        {
+          "playerName": "Gonzalez Rodriguez, Beltran - Gonzalez Rodriguez, Dario",
+          "holeNumber": 11,
+          "createdAt": "01/11/25 14:29:11"
+        },
+        {
+          "playerName": "Gonzalez Rodriguez, Beltran - Gonzalez Rodriguez, Dario",
+          "holeNumber": 13,
+          "createdAt": "01/11/25 14:29:11"
+        },
+        {
+          "playerName": "Barra Morris, Lucas - Barra Morris, Dylan",
+          "holeNumber": 11,
+          "createdAt": "01/11/25 14:30:51"
+        },
+        {
+          "playerName": "Guille Morales, Ruben - Galan Satrustegui, Cosme",
+          "holeNumber": 3,
+          "createdAt": "01/11/25 14:31:38"
+        },
+        {
+          "playerName": "Guille Morales, Ruben - Galan Satrustegui, Cosme",
+          "holeNumber": 17,
+          "createdAt": "01/11/25 14:31:38"
+        },
+        {
+          "playerName": "Martin Villena, Hugo - Lopez De Santiago, Fernando",
+          "holeNumber": 10,
+          "createdAt": "01/11/25 14:32:49"
+        },
+        {
+          "playerName": "Martin Villena, Hugo - Lopez De Santiago, Fernando",
+          "holeNumber": 15,
+          "createdAt": "01/11/25 14:32:49"
+        },
+        {
+          "playerName": "Martin Villena, Hugo - Lopez De Santiago, Fernando",
+          "holeNumber": 16,
+          "createdAt": "01/11/25 14:32:49"
+        },
+        {
+          "playerName": "Gonzalez Diaz-Benito De Las Huertas, Miguel - Vasquez Simbaqueba, Gabriela",
+          "holeNumber": 6,
+          "createdAt": "01/11/25 14:33:31"
+        },
+        {
+          "playerName": "Gonzalez Diaz-Benito De Las Huertas, Miguel - Vasquez Simbaqueba, Gabriela",
+          "holeNumber": 11,
+          "createdAt": "01/11/25 14:33:31"
+        },
+        {
+          "playerName": "Messina Arrieta, Ines - Viera Garcia, Miranda",
+          "holeNumber": 3,
+          "createdAt": "01/11/25 14:34:04"
+        },
+        {
+          "playerName": "Messina Arrieta, Ines - Viera Garcia, Miranda",
+          "holeNumber": 14,
+          "createdAt": "01/11/25 14:34:04"
+        },
+        {
+          "playerName": "Fernandez Gallardo, Valeria - Aparicio Vallarino, Cristina",
+          "holeNumber": 5,
+          "createdAt": "01/11/25 14:34:40"
+        },
+        {
+          "playerName": "Fernandez Gallardo, Valeria - Aparicio Vallarino, Cristina",
+          "holeNumber": 16,
+          "createdAt": "01/11/25 14:34:40"
+        },
+        {
+          "playerName": "Garcia Ceballos, Julio - Martinez Cerrada, Hugo",
+          "holeNumber": 6,
+          "createdAt": "01/11/25 14:35:38"
+        },
+        {
+          "playerName": "Garcia Ceballos, Julio - Martinez Cerrada, Hugo",
+          "holeNumber": 15,
+          "createdAt": "01/11/25 14:35:38"
+        },
+        {
+          "playerName": "Garcia Ceballos, Julio - Martinez Cerrada, Hugo",
+          "holeNumber": 17,
+          "createdAt": "01/11/25 14:35:38"
+        },
+        {
+          "playerName": "Montero Gonzalez, Leo - Pan Martin, Elisa",
+          "holeNumber": 1,
+          "createdAt": "01/11/25 14:36:21"
+        },
+        {
+          "playerName": "Montero Gonzalez, Leo - Pan Martin, Elisa",
+          "holeNumber": 6,
+          "createdAt": "01/11/25 14:36:21"
+        },
+        {
+          "playerName": "Montero Gonzalez, Leo - Pan Martin, Elisa",
+          "holeNumber": 7,
+          "createdAt": "01/11/25 14:36:21"
+        },
+        {
+          "playerName": "Montero Gonzalez, Leo - Pan Martin, Elisa",
+          "holeNumber": 11,
+          "createdAt": "01/11/25 14:36:21"
+        },
+        {
+          "playerName": "Lopez Gutierrez, Eduardo - Fernandez Montoto, Nicolas",
+          "holeNumber": 4,
+          "createdAt": "01/11/25 17:00:14"
+        },
+        {
+          "playerName": "Soler Lavalle, Macarena - Estallo Soler, Alejandra",
+          "holeNumber": 4,
+          "createdAt": "01/11/25 17:00:59"
+        },
+        {
+          "playerName": "Hernandez Perez, Paloma - Rubio Romero, Paula",
+          "holeNumber": 2,
+          "createdAt": "01/11/25 17:02:07"
+        },
+        {
+          "playerName": "Hernandez Perez, Paloma - Rubio Romero, Paula",
+          "holeNumber": 3,
+          "createdAt": "01/11/25 17:02:07"
+        },
+        {
+          "playerName": "Hernandez Perez, Paloma - Rubio Romero, Paula",
+          "holeNumber": 4,
+          "createdAt": "01/11/25 17:02:07"
+        },
+        {
+          "playerName": "Hernandez Perez, Paloma - Rubio Romero, Paula",
+          "holeNumber": 11,
+          "createdAt": "01/11/25 17:02:07"
+        },
+        {
+          "playerName": "Hernandez Perez, Paloma - Rubio Romero, Paula",
+          "holeNumber": 12,
+          "createdAt": "01/11/25 17:02:07"
+        },
+        {
+          "playerName": "Hernandez Perez, Paloma - Rubio Romero, Paula",
+          "holeNumber": 13,
+          "createdAt": "01/11/25 17:02:07"
+        },
+        {
+          "playerName": "Hernandez Perez, Paloma - Rubio Romero, Paula",
+          "holeNumber": 15,
+          "createdAt": "01/11/25 17:02:07"
+        },
+        {
+          "playerName": "Barra Morris, Alex - Lilly Fernandez, Harald",
+          "holeNumber": 4,
+          "createdAt": "01/11/25 17:02:56"
+        },
+        {
+          "playerName": "Barra Morris, Alex - Lilly Fernandez, Harald",
+          "holeNumber": 6,
+          "createdAt": "01/11/25 17:02:56"
+        },
+        {
+          "playerName": "Barra Morris, Alex - Lilly Fernandez, Harald",
+          "holeNumber": 10,
+          "createdAt": "01/11/25 17:02:56"
+        },
+        {
+          "playerName": "Moreno Fernandez, Claudia - Moreno Fernandez, Alejandra",
+          "holeNumber": 4,
+          "createdAt": "01/11/25 17:03:51"
+        },
+        {
+          "playerName": "Estallo Soler, Pablo - Estallo Soler, Jacobo",
+          "holeNumber": 5,
+          "createdAt": "01/11/25 17:04:30"
+        },
+        {
+          "playerName": "Vizcaino Serrano, Juan - Vizcaino Serrano, Alvaro",
+          "holeNumber": 5,
+          "createdAt": "01/11/25 17:05:05"
+        },
+        {
+          "playerName": "Vizcaino Serrano, Juan - Vizcaino Serrano, Alvaro",
+          "holeNumber": 6,
+          "createdAt": "01/11/25 17:05:05"
+        },
+        {
+          "playerName": "Vizcaino Serrano, Juan - Vizcaino Serrano, Alvaro",
+          "holeNumber": 15,
+          "createdAt": "01/11/25 17:05:05"
+        },
+        {
+          "playerName": "Navarro Urbano, Beltran - Urbano De Andres, Alvaro",
+          "holeNumber": 4,
+          "createdAt": "01/11/25 17:05:53"
+        },
+        {
+          "playerName": "Cuadrado Lopez, Guillermo - Viejo Micale, Gonzalo",
+          "holeNumber": 4,
+          "createdAt": "01/11/25 17:07:25"
+        },
+        {
+          "playerName": "Cuadrado Lopez, Guillermo - Viejo Micale, Gonzalo",
+          "holeNumber": 6,
+          "createdAt": "01/11/25 17:07:25"
+        },
+        {
+          "playerName": "Cuadrado Lopez, Guillermo - Viejo Micale, Gonzalo",
+          "holeNumber": 8,
+          "createdAt": "01/11/25 17:07:25"
+        },
+        {
+          "playerName": "Cuadrado Lopez, Guillermo - Viejo Micale, Gonzalo",
+          "holeNumber": 9,
+          "createdAt": "01/11/25 17:07:25"
+        },
+        {
+          "playerName": "Cuadrado Lopez, Guillermo - Viejo Micale, Gonzalo",
+          "holeNumber": 11,
+          "createdAt": "01/11/25 17:07:25"
+        },
+        {
+          "playerName": "Cuadrado Lopez, Guillermo - Viejo Micale, Gonzalo",
+          "holeNumber": 13,
+          "createdAt": "01/11/25 17:07:25"
+        },
+        {
+          "playerName": "Cuadrado Lopez, Guillermo - Viejo Micale, Gonzalo",
+          "holeNumber": 14,
+          "createdAt": "01/11/25 17:07:25"
+        },
+        {
+          "playerName": "Cuadrado Lopez, Guillermo - Viejo Micale, Gonzalo",
+          "holeNumber": 15,
+          "createdAt": "01/11/25 17:07:25"
+        },
+        {
+          "playerName": "Cuadrado Lopez, Guillermo - Viejo Micale, Gonzalo",
+          "holeNumber": 18,
+          "createdAt": "01/11/25 17:07:25"
+        },
+        {
+          "playerName": "Estallo Soler, Gonzalo - Soler Lavalle, Santiago",
+          "holeNumber": 4,
+          "createdAt": "01/11/25 17:08:04"
+        },
+        {
+          "playerName": "Estallo Soler, Gonzalo - Soler Lavalle, Santiago",
+          "holeNumber": 6,
+          "createdAt": "01/11/25 17:08:04"
+        },
+        {
+          "playerName": "Estallo Soler, Gonzalo - Soler Lavalle, Santiago",
+          "holeNumber": 8,
+          "createdAt": "01/11/25 17:08:04"
+        },
+        {
+          "playerName": "Estallo Soler, Gonzalo - Soler Lavalle, Santiago",
+          "holeNumber": 9,
+          "createdAt": "01/11/25 17:08:04"
+        },
+        {
+          "playerName": "Estallo Soler, Gonzalo - Soler Lavalle, Santiago",
+          "holeNumber": 11,
+          "createdAt": "01/11/25 17:08:04"
+        },
+        {
+          "playerName": "Estallo Soler, Gonzalo - Soler Lavalle, Santiago",
+          "holeNumber": 13,
+          "createdAt": "01/11/25 17:08:04"
+        },
+        {
+          "playerName": "Estallo Soler, Gonzalo - Soler Lavalle, Santiago",
+          "holeNumber": 14,
+          "createdAt": "01/11/25 17:08:04"
+        },
+        {
+          "playerName": "Estallo Soler, Gonzalo - Soler Lavalle, Santiago",
+          "holeNumber": 15,
+          "createdAt": "01/11/25 17:08:04"
+        },
+        {
+          "playerName": "Estallo Soler, Gonzalo - Soler Lavalle, Santiago",
+          "holeNumber": 18,
+          "createdAt": "01/11/25 17:08:04"
+        },
+        {
+          "playerName": "Lopez Gutierrez, Rodrigo - Lopez Gutierrez, Daniela",
+          "holeNumber": 1,
+          "createdAt": "01/11/25 17:08:29"
+        },
+        {
+          "playerName": "Lopez Gutierrez, Rodrigo - Lopez Gutierrez, Daniela",
+          "holeNumber": 6,
+          "createdAt": "01/11/25 17:08:29"
+        },
+        {
+          "playerName": "Lopez Gutierrez, Rodrigo - Lopez Gutierrez, Daniela",
+          "holeNumber": 13,
+          "createdAt": "01/11/25 17:08:29"
+        },
+        {
+          "playerName": "Lopez Gutierrez, Rodrigo - Lopez Gutierrez, Daniela",
+          "holeNumber": 15,
+          "createdAt": "01/11/25 17:08:29"
+        },
+        {
+          "playerName": "Kowalski Blanco, Macarena - Sacristan Añaños, Sofia",
+          "holeNumber": 1,
+          "createdAt": "01/11/25 17:09:03"
+        },
+        {
+          "playerName": "Kowalski Blanco, Macarena - Sacristan Añaños, Sofia",
+          "holeNumber": 15,
+          "createdAt": "01/11/25 17:09:03"
+        },
+        {
+          "playerName": "Martin-Pozuelo Medina, Sira - Guerra Vera, Candela",
+          "holeNumber": 4,
+          "createdAt": "01/11/25 17:10:23"
+        },
+        {
+          "playerName": "Martin-Pozuelo Medina, Sira - Guerra Vera, Candela",
+          "holeNumber": 14,
+          "createdAt": "01/11/25 17:10:23"
+        },
+        {
+          "playerName": "Hernanz Hernando, Maria - Villen Villamiel, Sara",
+          "holeNumber": 4,
+          "createdAt": "01/11/25 17:10:52"
+        },
+        {
+          "playerName": "Hernanz Hernando, Maria - Villen Villamiel, Sara",
+          "holeNumber": 14,
+          "createdAt": "01/11/25 17:10:52"
+        },
+        {
+          "playerName": "Fernandez Montoto, Eduardo - Garcia De Vinuesa Serrano, Barbara",
+          "holeNumber": 13,
+          "createdAt": "01/11/25 17:12:18"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:36.906Z"
 }

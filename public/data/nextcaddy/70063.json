@@ -1,18 +1,21 @@
 {
   "tourId": 70063,
   "url": "https://www.nextcaddy.com/tour/70063",
-  "scrapedAt": "2026-05-09T10:16:33.872Z",
+  "scrapedAt": "2026-05-21T16:39:52.596Z",
   "meta": {
     "name": "Norba Club de Golf 1ª y 2ª Categoría",
     "organizer": null,
     "course": "",
     "courseCode": "MAJC",
-    "dateStart": "17 may 2026",
-    "dateEnd": "17 may 2026",
-    "format": "Medal Play (Handicap)  Caballeros  Señor",
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Medal Play (Handicap)  Cadete Masculino",
     "categories": [
-      "Caballeros",
+      "Cadete Masculino",
       "Señoras",
+      "Alevin Masculino",
+      "Junior Masculino",
+      "Infantil Masculino",
       "caballeros",
       "alevin",
       "Benjamin",
@@ -20,11 +23,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-17"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -35,72 +39,51 @@
     },
     {
       "orden": 2,
-      "name": "Jaime Gismera Dominguez",
-      "licencia": "CM41933278",
-      "hcp": 1.4,
-      "nivel": "J"
-    },
-    {
-      "orden": 3,
-      "name": "Santiago Delgado Marcos",
-      "licencia": "9900996839",
-      "hcp": 22.3,
-      "nivel": "A"
-    },
-    {
-      "orden": 4,
-      "name": "Marco Barriga Perez",
-      "licencia": "9901950796",
-      "hcp": 8.2,
-      "nivel": "A"
-    },
-    {
-      "orden": 5,
-      "name": "Daniel Avila Sanz",
-      "licencia": "9901963985",
-      "hcp": 6.4,
-      "nivel": "I"
-    },
-    {
-      "orden": 6,
-      "name": "Alex Carron Miron",
-      "licencia": "9901948940",
-      "hcp": 8,
-      "nivel": "A"
-    },
-    {
-      "orden": 7,
-      "name": "Vidal Rodriguez Gallardo",
-      "licencia": "9906127549",
-      "hcp": 29.1,
-      "nivel": "A"
-    },
-    {
-      "orden": 8,
-      "name": "Miguel Davila Sanchez",
-      "licencia": "9919966006",
-      "hcp": 12.7,
-      "nivel": "I"
-    },
-    {
-      "orden": 9,
       "name": "Beltran Ongallo Sevillano",
       "licencia": "9901901356",
       "hcp": 4.6,
       "nivel": "C"
     },
     {
-      "orden": 10,
-      "name": "Wilfredo Navia Villafana",
-      "licencia": "9906068307",
-      "hcp": 14.6,
-      "nivel": "A"
+      "orden": 3,
+      "name": "Ricardo Garcia De Arriba Lozano",
+      "licencia": "9906948974",
+      "hcp": 2.1,
+      "nivel": "C"
     },
     {
-      "orden": 11,
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Jaime Gismera Dominguez",
+      "licencia": "CM41933278",
+      "hcp": 1.5,
+      "nivel": "J"
+    },
+    {
+      "orden": 2,
       "name": "Jaime Burcio Macias",
       "licencia": "9912916365",
       "hcp": 3,
+      "nivel": "J"
+    },
+    {
+      "orden": 3,
+      "name": "Jaime Hernandez Bejarano",
+      "licencia": "9901040996",
+      "hcp": 1.2,
+      "nivel": "J"
+    },
+    {
+      "orden": 4,
+      "name": "Julio Perez Gomez",
+      "licencia": "9908162114",
+      "hcp": 0.9,
       "nivel": "J"
     },
     {
@@ -170,7 +153,7 @@
       "orden": 9,
       "name": "Carlota Alejandra Burcio Macias",
       "licencia": "9912953556",
-      "hcp": 2.7,
+      "hcp": 3,
       "nivel": "C"
     },
     {
@@ -178,6 +161,104 @@
       "name": "Cayetana Burcio Macias",
       "licencia": "9912953551",
       "hcp": 23.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 11,
+      "name": "Jimena Galan Hernandez",
+      "licencia": "9901961894",
+      "hcp": 27.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 12,
+      "name": "Paula Villafana Gutierrez",
+      "licencia": "9906151905",
+      "hcp": 7.1,
+      "nivel": "J"
+    },
+    {
+      "orden": 13,
+      "name": "Jimena Garcia De Arriba Lozano",
+      "licencia": "9906989946",
+      "hcp": 28.1,
+      "nivel": "A"
+    },
+    {
+      "orden": 14,
+      "name": "Angela Perez Gomez",
+      "licencia": "9908077406",
+      "hcp": 29.6,
+      "nivel": "I"
+    },
+    {
+      "orden": 15,
+      "name": "Ines Garcia-Miña Perez",
+      "licencia": "9908083171",
+      "hcp": 45,
+      "nivel": "A"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Santiago Delgado Marcos",
+      "licencia": "9900996839",
+      "hcp": 22.2,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Marco Barriga Perez",
+      "licencia": "9901950796",
+      "hcp": 8.2,
+      "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "Alex Carron Miron",
+      "licencia": "9901948940",
+      "hcp": 8.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Vidal Rodriguez Gallardo",
+      "licencia": "9906127549",
+      "hcp": 29.1,
+      "nivel": "A"
+    },
+    {
+      "orden": 5,
+      "name": "Wilfredo Navia Villafana",
+      "licencia": "9906068307",
+      "hcp": 14.6,
+      "nivel": "A"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Daniel Avila Sanz",
+      "licencia": "9901963985",
+      "hcp": 6.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Miguel Davila Sanchez",
+      "licencia": "9919966006",
+      "hcp": 12.7,
       "nivel": "I"
     },
     {
@@ -198,7 +279,7 @@
       "orden": 2,
       "name": "Jaime Gismera Dominguez",
       "licencia": "02-05-26 20:33",
-      "hcp": 1.4,
+      "hcp": 1.5,
       "nivel": "CM41933278"
     },
     {
@@ -226,7 +307,7 @@
       "orden": 6,
       "name": "Santiago Delgado Marcos",
       "licencia": "04-05-26 08:14",
-      "hcp": 22.3,
+      "hcp": 22.2,
       "nivel": "9900996839"
     },
     {
@@ -254,7 +335,7 @@
       "orden": 10,
       "name": "Alex Carron Miron",
       "licencia": "05-05-26 11:41",
-      "hcp": 8,
+      "hcp": 8.9,
       "nivel": "9901948940"
     },
     {
@@ -324,7 +405,7 @@
       "orden": 20,
       "name": "Carlota Alejandra Burcio Macias",
       "licencia": "08-05-26 19:10",
-      "hcp": 2.7,
+      "hcp": 3,
       "nivel": "9912953556"
     },
     {
@@ -333,8 +414,65 @@
       "licencia": "08-05-26 19:12",
       "hcp": 23.2,
       "nivel": "9912953551"
+    },
+    {
+      "orden": 22,
+      "name": "Jimena Galan Hernandez",
+      "licencia": "09-05-26 20:35",
+      "hcp": 27.5,
+      "nivel": "9901961894"
+    },
+    {
+      "orden": 23,
+      "name": "Paula Villafana Gutierrez",
+      "licencia": "09-05-26 23:29",
+      "hcp": 7.1,
+      "nivel": "9906151905"
+    },
+    {
+      "orden": 24,
+      "name": "Jaime Hernandez Bejarano",
+      "licencia": "09-05-26 23:34",
+      "hcp": 1.2,
+      "nivel": "9901040996"
+    },
+    {
+      "orden": 25,
+      "name": "Ricardo Garcia De Arriba Lozano",
+      "licencia": "10-05-26 00:10",
+      "hcp": 2.1,
+      "nivel": "9906948974"
+    },
+    {
+      "orden": 26,
+      "name": "Jimena Garcia De Arriba Lozano",
+      "licencia": "10-05-26 00:23",
+      "hcp": 28.1,
+      "nivel": "9906989946"
+    },
+    {
+      "orden": 27,
+      "name": "Julio Perez Gomez",
+      "licencia": "10-05-26 14:54",
+      "hcp": 0.9,
+      "nivel": "9908162114"
+    },
+    {
+      "orden": 28,
+      "name": "Angela Perez Gomez",
+      "licencia": "10-05-26 14:57",
+      "hcp": 29.6,
+      "nivel": "9908077406"
+    },
+    {
+      "orden": 29,
+      "name": "Ines Garcia-Miña Perez",
+      "licencia": "10-05-26 16:20",
+      "hcp": 45,
+      "nivel": "9908083171"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -402,6 +540,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:43.407Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/48786963_reglas_locales_actualizadas_2022.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:37.841Z"
 }

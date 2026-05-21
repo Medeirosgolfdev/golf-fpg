@@ -1,14 +1,14 @@
 {
   "tourId": 69238,
   "url": "https://www.nextcaddy.com/tour/69238",
-  "scrapedAt": "2026-05-09T10:07:34.326Z",
+  "scrapedAt": "2026-05-21T16:37:58.554Z",
   "meta": {
     "name": "10ª P. TORNEO DAMAS 18-03-26",
     "organizer": null,
     "course": "Real Club de Golf Vista Hermosa",
     "courseCode": "AM05",
-    "dateStart": "18 mar 2026",
-    "dateEnd": "18 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras Facebook",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-18"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "2ª Cat",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -128,6 +129,8 @@
     },
     {
       "category": 2,
+      "categoryName": "1ª Cat.",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -231,6 +234,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "2ª Cat",
+      "jugadores": 8
+    },
+    "2": {
+      "name": "1ª Cat.",
+      "jugadores": 8
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -464,58 +478,6 @@
       "nivel": "0202185800"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73982
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Camiña Montes, Cristian",
-          "holeNumber": 18,
-          "createdAt": "28/09/25 10:32:00"
-        },
-        {
-          "playerName": "Camiña Montes, Cristian",
-          "holeNumber": 1,
-          "createdAt": "28/09/25 10:51:52"
-        },
-        {
-          "playerName": "Gutierrez Meyer, Luis",
-          "holeNumber": 1,
-          "createdAt": "28/09/25 10:54:04"
-        },
-        {
-          "playerName": "Fonfria Sagaz, Juan Francisco",
-          "holeNumber": 3,
-          "createdAt": "28/09/25 11:26:18"
-        },
-        {
-          "playerName": "Moreno Perez, Victor Manuel",
-          "holeNumber": 10,
-          "createdAt": "28/09/25 13:34:12"
-        },
-        {
-          "playerName": "Fonfria Sagaz, Juan Francisco",
-          "holeNumber": 11,
-          "createdAt": "28/09/25 13:50:00"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -667,5 +629,58 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:33.632Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73982
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Camiña Montes, Cristian",
+          "holeNumber": 18,
+          "createdAt": "28/09/25 10:32:00"
+        },
+        {
+          "playerName": "Camiña Montes, Cristian",
+          "holeNumber": 1,
+          "createdAt": "28/09/25 10:51:52"
+        },
+        {
+          "playerName": "Gutierrez Meyer, Luis",
+          "holeNumber": 1,
+          "createdAt": "28/09/25 10:54:04"
+        },
+        {
+          "playerName": "Fonfria Sagaz, Juan Francisco",
+          "holeNumber": 3,
+          "createdAt": "28/09/25 11:26:18"
+        },
+        {
+          "playerName": "Moreno Perez, Victor Manuel",
+          "holeNumber": 10,
+          "createdAt": "28/09/25 13:34:12"
+        },
+        {
+          "playerName": "Fonfria Sagaz, Juan Francisco",
+          "holeNumber": 11,
+          "createdAt": "28/09/25 13:50:00"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:31.853Z"
 }

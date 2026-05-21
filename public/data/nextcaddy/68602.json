@@ -1,14 +1,14 @@
 {
   "tourId": 68602,
   "url": "https://www.nextcaddy.com/tour/68602",
-  "scrapedAt": "2026-05-09T10:07:41.090Z",
+  "scrapedAt": "2026-05-21T16:38:13.014Z",
   "meta": {
     "name": "Jubilatas Race (Grupo Privado) - 24 Marzo 2026",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "24 mar 2026",
-    "dateEnd": "24 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-24"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 15,
       "header": [
         "Pos",
         "Jugador",
@@ -204,6 +205,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 15
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -421,6 +429,148 @@
       "licencia": "21-03-26 23:55",
       "hcp": 21.9,
       "nivel": "AM00346043"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Jose Puertas Alcala",
+          "hcp": 20.8,
+          "ins": "2284720",
+          "jid": "73244",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Jesus Garcia Toledo",
+          "hcp": 21.9,
+          "ins": "2285889",
+          "jid": "73244",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Ignacio Valero Abad",
+          "hcp": 26.3,
+          "ins": "2283992",
+          "jid": "73244",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 10,
+          "name": "Antonio Lopez Escalona",
+          "hcp": 17.7,
+          "ins": "2284112",
+          "jid": "73244",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 10,
+          "name": "Jose Maria Gonzalez Herranz",
+          "hcp": 19.8,
+          "ins": "2283852",
+          "jid": "73244",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 10,
+          "name": "Jose Gomez Carrasco",
+          "hcp": 22.7,
+          "ins": "2283578",
+          "jid": "73244",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 10,
+          "name": "Carlos Ales Esteban",
+          "hcp": 28.4,
+          "ins": "2284727",
+          "jid": "73244",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Manuel Ortiz Garcia",
+          "hcp": 16.3,
+          "ins": "2283646",
+          "jid": "73244",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Gustavo Jose Marti Garcia",
+          "hcp": 22.2,
+          "ins": "2283588",
+          "jid": "73244",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Francisco Arteaga Alarcon",
+          "hcp": 23.7,
+          "ins": "2283635",
+          "jid": "73244",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Juan Ignacio Cuesta Rico",
+          "hcp": 27,
+          "ins": "2284211",
+          "jid": "73244",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 10,
+          "name": "Juan Antonio Navarrete De Carcer",
+          "hcp": 20.9,
+          "ins": "2283585",
+          "jid": "73244",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 10,
+          "name": "Jesus Joaquin Rodriguez Alvarez",
+          "hcp": 26.1,
+          "ins": "2284716",
+          "jid": "73244",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 10,
+          "name": "Pedro Mendez Zubiria",
+          "hcp": 27.9,
+          "ins": "2285852",
+          "jid": "73244",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 10,
+          "name": "Francisco De Campos Floren",
+          "hcp": 29.3,
+          "ins": "2284730",
+          "jid": "73244",
+          "nivel": "S"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -710,147 +860,6 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "Jose Puertas Alcala",
-          "hcp": 20.8,
-          "ins": "2284720",
-          "jid": "73244",
-          "nivel": "S"
-        },
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "Jesus Garcia Toledo",
-          "hcp": 21.9,
-          "ins": "2285889",
-          "jid": "73244",
-          "nivel": "S"
-        },
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "Ignacio Valero Abad",
-          "hcp": 26.3,
-          "ins": "2283992",
-          "jid": "73244",
-          "nivel": "S"
-        },
-        {
-          "time": "09:30",
-          "tee": 10,
-          "name": "Antonio Lopez Escalona",
-          "hcp": 17.7,
-          "ins": "2284112",
-          "jid": "73244",
-          "nivel": "S"
-        },
-        {
-          "time": "09:30",
-          "tee": 10,
-          "name": "Jose Maria Gonzalez Herranz",
-          "hcp": 19.8,
-          "ins": "2283852",
-          "jid": "73244",
-          "nivel": "S"
-        },
-        {
-          "time": "09:30",
-          "tee": 10,
-          "name": "Jose Gomez Carrasco",
-          "hcp": 22.7,
-          "ins": "2283578",
-          "jid": "73244",
-          "nivel": "S"
-        },
-        {
-          "time": "09:30",
-          "tee": 10,
-          "name": "Carlos Ales Esteban",
-          "hcp": 28.4,
-          "ins": "2284727",
-          "jid": "73244",
-          "nivel": "S"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Manuel Ortiz Garcia",
-          "hcp": 16.3,
-          "ins": "2283646",
-          "jid": "73244",
-          "nivel": "S"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Gustavo Jose Marti Garcia",
-          "hcp": 22.2,
-          "ins": "2283588",
-          "jid": "73244",
-          "nivel": "S"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Francisco Arteaga Alarcon",
-          "hcp": 23.7,
-          "ins": "2283635",
-          "jid": "73244",
-          "nivel": "S"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Juan Ignacio Cuesta Rico",
-          "hcp": 27,
-          "ins": "2284211",
-          "jid": "73244",
-          "nivel": "S"
-        },
-        {
-          "time": "09:40",
-          "tee": 10,
-          "name": "Juan Antonio Navarrete De Carcer",
-          "hcp": 20.9,
-          "ins": "2283585",
-          "jid": "73244",
-          "nivel": "S"
-        },
-        {
-          "time": "09:40",
-          "tee": 10,
-          "name": "Jesus Joaquin Rodriguez Alvarez",
-          "hcp": 26.1,
-          "ins": "2284716",
-          "jid": "73244",
-          "nivel": "S"
-        },
-        {
-          "time": "09:40",
-          "tee": 10,
-          "name": "Pedro Mendez Zubiria",
-          "hcp": 27.9,
-          "ins": "2285852",
-          "jid": "73244",
-          "nivel": "S"
-        },
-        {
-          "time": "09:40",
-          "tee": 10,
-          "name": "Francisco De Campos Floren",
-          "hcp": 29.3,
-          "ins": "2284730",
-          "jid": "73244",
-          "nivel": "S"
-        }
-      ]
-    }
-  ],
-  "horariosScrapedAt": "2026-05-09T12:12:27.081Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:24.851Z"
 }

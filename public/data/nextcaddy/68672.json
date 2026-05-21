@@ -1,14 +1,14 @@
 {
   "tourId": 68672,
   "url": "https://www.nextcaddy.com/tour/68672",
-  "scrapedAt": "2026-05-09T09:57:54.531Z",
+  "scrapedAt": "2026-05-21T16:37:22.560Z",
   "meta": {
     "name": "6ª P. TORNEO DAMAS 26-02-26",
     "organizer": null,
     "course": "Real Club de Golf Vista Hermosa",
     "courseCode": "AM05",
-    "dateStart": "26 feb 2026",
-    "dateEnd": "26 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras Facebook",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-26"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "1ª Categoría",
+      "expectedJugadores": 11,
       "header": [
         "Pos",
         "Jugador",
@@ -161,6 +162,8 @@
     },
     {
       "category": 2,
+      "categoryName": "2ª Categoría",
+      "expectedJugadores": 11,
       "header": [
         "Pos",
         "Jugador",
@@ -297,6 +300,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "1ª Categoría",
+      "jugadores": 11
+    },
+    "2": {
+      "name": "2ª Categoría",
+      "jugadores": 11
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -614,22 +628,6 @@
       "nivel": "AM05095330"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73316
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -835,5 +833,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:27.694Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73316
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:25.468Z"
 }

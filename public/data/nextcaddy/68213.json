@@ -1,7 +1,7 @@
 {
   "tourId": 68213,
   "url": "https://www.nextcaddy.com/tour/68213",
-  "scrapedAt": "2026-05-09T16:41:26.101Z",
+  "scrapedAt": "2026-05-21T16:38:01.497Z",
   "meta": {
     "name": "I Prueba Circuito Regional Amateur (INSCRIPCIÓN PROFESIONALES)",
     "organizer": null,
@@ -21,71 +21,7 @@
       "Senior"
     ]
   },
-  "course": {
-    "par": [
-      5,
-      4,
-      4,
-      4,
-      4,
-      3,
-      4,
-      4,
-      4,
-      4,
-      4,
-      3,
-      5,
-      4,
-      4,
-      4,
-      4,
-      4
-    ],
-    "si": [
-      11,
-      17,
-      3,
-      1,
-      7,
-      15,
-      5,
-      9,
-      13,
-      10,
-      12,
-      16,
-      4,
-      2,
-      14,
-      8,
-      6,
-      18
-    ],
-    "meters": [
-      379,
-      196,
-      433,
-      379,
-      457,
-      163,
-      331,
-      356,
-      358,
-      376,
-      321,
-      172,
-      510,
-      352,
-      197,
-      337,
-      348,
-      444
-    ],
-    "parTotal": 72,
-    "parInferred": true,
-    "parConfidence": "high"
-  },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
@@ -112,33 +48,7 @@
           "rounds": [],
           "total": 78,
           "toPar": 6,
-          "inscribedId": 2276363,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                5,
-                4,
-                5,
-                5,
-                3,
-                4,
-                4,
-                5,
-                5,
-                6,
-                3,
-                6,
-                3,
-                4,
-                3,
-                4,
-                4
-              ],
-              "total": 78
-            }
-          ]
+          "inscribedId": 2276363
         },
         {
           "pos": 2,
@@ -149,33 +59,7 @@
           "rounds": [],
           "total": 79,
           "toPar": 7,
-          "inscribedId": 2272281,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                3,
-                4,
-                5,
-                5,
-                3,
-                4,
-                4,
-                5,
-                5,
-                5,
-                3,
-                7,
-                4,
-                3,
-                5,
-                4,
-                5
-              ],
-              "total": 79
-            }
-          ]
+          "inscribedId": 2272281
         },
         {
           "pos": null,
@@ -186,33 +70,7 @@
           "rounds": [],
           "total": 79,
           "toPar": 7,
-          "inscribedId": 2275939,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                4,
-                4,
-                5,
-                4,
-                4,
-                3,
-                5,
-                4,
-                5,
-                6,
-                4,
-                2,
-                6,
-                4,
-                4,
-                5,
-                4,
-                6
-              ],
-              "total": 79
-            }
-          ]
+          "inscribedId": 2275939
         },
         {
           "pos": 4,
@@ -223,33 +81,7 @@
           "rounds": [],
           "total": 83,
           "toPar": 11,
-          "inscribedId": 2272974,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                4,
-                5,
-                6,
-                5,
-                5,
-                4,
-                5,
-                4,
-                5,
-                5,
-                4,
-                5,
-                5,
-                3,
-                4,
-                4,
-                5
-              ],
-              "total": 83
-            }
-          ]
+          "inscribedId": 2272974
         },
         {
           "pos": 5,
@@ -260,33 +92,7 @@
           "rounds": [],
           "total": 89,
           "toPar": 17,
-          "inscribedId": 2271910,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                4,
-                4,
-                6,
-                5,
-                5,
-                4,
-                4,
-                6,
-                7,
-                5,
-                5,
-                4,
-                7,
-                4,
-                5,
-                4,
-                4,
-                6
-              ],
-              "total": 89
-            }
-          ]
+          "inscribedId": 2271910
         },
         {
           "pos": null,
@@ -297,8 +103,7 @@
           "rounds": [],
           "total": null,
           "toPar": null,
-          "inscribedId": 2272117,
-          "roundScores": []
+          "inscribedId": 2272117
         }
       ]
     }
@@ -480,5 +285,6 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": []
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:19.141Z"
 }

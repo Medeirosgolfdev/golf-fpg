@@ -1,14 +1,14 @@
 {
   "tourId": 61052,
   "url": "https://www.nextcaddy.com/tour/61052",
-  "scrapedAt": "2026-05-09T09:57:47.226Z",
+  "scrapedAt": "2026-05-21T16:37:10.166Z",
   "meta": {
     "name": "Torneo Senior Málaga (Lauro)",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Lauro Golf",
     "courseCode": "AM83",
-    "dateStart": "21 feb 2026",
-    "dateEnd": "21 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Senior",
@@ -18,13 +18,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-21"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Damas Senior 2A Categoria",
+      "expectedJugadores": 23,
       "header": [
         "Pos",
         "Jugador",
@@ -294,6 +295,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Damas Senior 1A Categoria",
+      "expectedJugadores": 16,
       "header": [
         "Pos",
         "Jugador",
@@ -486,6 +489,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Handicap Senior 1A Categoria",
+      "expectedJugadores": 37,
       "header": [
         "Pos",
         "Jugador",
@@ -909,6 +914,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Handicap Super Seniors",
+      "expectedJugadores": 21,
       "header": [
         "Pos",
         "Jugador",
@@ -1155,6 +1162,25 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Damas Senior 2A Categoria",
+      "jugadores": 23
+    },
+    "2": {
+      "name": "Handicap Damas Senior 1A Categoria",
+      "jugadores": 16
+    },
+    "3": {
+      "name": "Handicap Senior 1A Categoria",
+      "jugadores": 37
+    },
+    "4": {
+      "name": "Handicap Super Seniors",
+      "jugadores": 21
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2536,390 +2562,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {
-      "p": {
-        "id": 157826,
-        "datos": [
-          [
-            "Tipo",
-            "Total"
-          ],
-          [
-            "Par",
-            375
-          ],
-          [
-            "Birdie",
-            43
-          ],
-          [
-            "Eagle",
-            0
-          ],
-          [
-            "Bogey",
-            619
-          ],
-          [
-            "Peor",
-            531
-          ]
-        ]
-      },
-      "bvg": {
-        "id": 157827,
-        "datos": [
-          [
-            "Hoyo",
-            "Sobrepar"
-          ],
-          [
-            "1",
-            94
-          ],
-          [
-            "2",
-            68
-          ],
-          [
-            "3",
-            117
-          ],
-          [
-            "4",
-            118
-          ],
-          [
-            "5",
-            119
-          ],
-          [
-            "6",
-            111
-          ],
-          [
-            "7",
-            102
-          ],
-          [
-            "8",
-            84
-          ],
-          [
-            "9",
-            82
-          ],
-          [
-            "10",
-            105
-          ],
-          [
-            "11",
-            122
-          ],
-          [
-            "12",
-            98
-          ],
-          [
-            "13",
-            88
-          ],
-          [
-            "14",
-            116
-          ],
-          [
-            "15",
-            108
-          ],
-          [
-            "16",
-            144
-          ],
-          [
-            "17",
-            95
-          ],
-          [
-            "18",
-            98
-          ]
-        ]
-      }
-    },
-    "1": {
-      "lxy": {
-        "id": 157828,
-        "datos": [
-          [
-            "Hoyo",
-            "BRENDA PIKE ",
-            "Jessica Welter",
-            "Mª JOSE  SANTIAGO SANCHEZ"
-          ],
-          [
-            "Hoyo 0",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 1",
-            0,
-            1,
-            0
-          ],
-          [
-            "Hoyo 2",
-            -1,
-            3,
-            -1
-          ],
-          [
-            "Hoyo 3",
-            -2,
-            3,
-            -2
-          ],
-          [
-            "Hoyo 4",
-            -3,
-            2,
-            -2
-          ],
-          [
-            "Hoyo 5",
-            -1,
-            0,
-            -2
-          ],
-          [
-            "Hoyo 6",
-            -1,
-            -1,
-            -2
-          ],
-          [
-            "Hoyo 7",
-            -2,
-            -1,
-            -3
-          ],
-          [
-            "Hoyo 8",
-            -2,
-            -1,
-            -3
-          ],
-          [
-            "Hoyo 9",
-            0,
-            0,
-            -1
-          ],
-          [
-            "Hoyo 10",
-            1,
-            0,
-            -1
-          ],
-          [
-            "Hoyo 11",
-            0,
-            -1,
-            -2
-          ],
-          [
-            "Hoyo 12",
-            0,
-            1,
-            -1
-          ],
-          [
-            "Hoyo 13",
-            0,
-            1,
-            -2
-          ],
-          [
-            "Hoyo 14",
-            -1,
-            1,
-            -2
-          ],
-          [
-            "Hoyo 15",
-            -1,
-            0,
-            -2
-          ],
-          [
-            "Hoyo 16",
-            -2,
-            -1,
-            -3
-          ],
-          [
-            "Hoyo 17",
-            -2,
-            -1,
-            -2
-          ],
-          [
-            "Hoyo 18",
-            -3,
-            -2,
-            0
-          ]
-        ]
-      },
-      "hvg": {
-        "id": 157829,
-        "datos": [
-          [
-            "Hoyo",
-            "BRENDA PIKE ",
-            "Jessica Welter",
-            "Mª JOSE  SANTIAGO SANCHEZ"
-          ],
-          [
-            "Hoyo 0",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 1",
-            0,
-            1,
-            0
-          ],
-          [
-            "Hoyo 2",
-            -1,
-            2,
-            -1
-          ],
-          [
-            "Hoyo 3",
-            -1,
-            0,
-            -1
-          ],
-          [
-            "Hoyo 4",
-            -1,
-            -1,
-            0
-          ],
-          [
-            "Hoyo 5",
-            2,
-            -2,
-            0
-          ],
-          [
-            "Hoyo 6",
-            0,
-            -1,
-            0
-          ],
-          [
-            "Hoyo 7",
-            -1,
-            0,
-            -1
-          ],
-          [
-            "Hoyo 8",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 9",
-            2,
-            1,
-            2
-          ],
-          [
-            "Hoyo 10",
-            1,
-            0,
-            0
-          ],
-          [
-            "Hoyo 11",
-            -1,
-            -1,
-            -1
-          ],
-          [
-            "Hoyo 12",
-            0,
-            2,
-            1
-          ],
-          [
-            "Hoyo 13",
-            0,
-            0,
-            -1
-          ],
-          [
-            "Hoyo 14",
-            -1,
-            0,
-            0
-          ],
-          [
-            "Hoyo 15",
-            0,
-            -1,
-            0
-          ],
-          [
-            "Hoyo 16",
-            -1,
-            -1,
-            -1
-          ],
-          [
-            "Hoyo 17",
-            0,
-            0,
-            1
-          ],
-          [
-            "Hoyo 18",
-            -1,
-            -1,
-            2
-          ]
-        ]
-      }
-    }
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 64650
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Rodgers, Glynn",
-          "holeNumber": 4,
-          "createdAt": "16/09/24 12:51:59"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -3584,18 +3226,18 @@
         {
           "time": "09:10",
           "tee": 6,
-          "name": "Juan Ignacio Arredondo Corzo",
+          "name": "Luca Scarponi",
           "hcp": 11.8,
-          "ins": "2261731",
+          "ins": "2261755",
           "jid": "64650",
           "nivel": "S"
         },
         {
           "time": "09:10",
           "tee": 6,
-          "name": "Luca Scarponi",
+          "name": "Juan Ignacio Arredondo Corzo",
           "hcp": 11.8,
-          "ins": "2261755",
+          "ins": "2261731",
           "jid": "64650",
           "nivel": "S"
         },
@@ -3800,5 +3442,393 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:11:57.023Z"
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 157826,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            375
+          ],
+          [
+            "Birdie",
+            43
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            619
+          ],
+          [
+            "Peor",
+            531
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 157827,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            94
+          ],
+          [
+            "2",
+            68
+          ],
+          [
+            "3",
+            117
+          ],
+          [
+            "4",
+            118
+          ],
+          [
+            "5",
+            119
+          ],
+          [
+            "6",
+            111
+          ],
+          [
+            "7",
+            102
+          ],
+          [
+            "8",
+            84
+          ],
+          [
+            "9",
+            82
+          ],
+          [
+            "10",
+            105
+          ],
+          [
+            "11",
+            122
+          ],
+          [
+            "12",
+            98
+          ],
+          [
+            "13",
+            88
+          ],
+          [
+            "14",
+            116
+          ],
+          [
+            "15",
+            108
+          ],
+          [
+            "16",
+            144
+          ],
+          [
+            "17",
+            95
+          ],
+          [
+            "18",
+            98
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 157828,
+        "datos": [
+          [
+            "Hoyo",
+            "BRENDA PIKE ",
+            "Jessica Welter",
+            "Mª JOSE  SANTIAGO SANCHEZ"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            3,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            -2,
+            3,
+            -2
+          ],
+          [
+            "Hoyo 4",
+            -3,
+            2,
+            -2
+          ],
+          [
+            "Hoyo 5",
+            -1,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 7",
+            -2,
+            -1,
+            -3
+          ],
+          [
+            "Hoyo 8",
+            -2,
+            -1,
+            -3
+          ],
+          [
+            "Hoyo 9",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 11",
+            0,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 12",
+            0,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 13",
+            0,
+            1,
+            -2
+          ],
+          [
+            "Hoyo 14",
+            -1,
+            1,
+            -2
+          ],
+          [
+            "Hoyo 15",
+            -1,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 16",
+            -2,
+            -1,
+            -3
+          ],
+          [
+            "Hoyo 17",
+            -2,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 18",
+            -3,
+            -2,
+            0
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 157829,
+        "datos": [
+          [
+            "Hoyo",
+            "BRENDA PIKE ",
+            "Jessica Welter",
+            "Mª JOSE  SANTIAGO SANCHEZ"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            2,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 5",
+            2,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 6",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 9",
+            2,
+            1,
+            2
+          ],
+          [
+            "Hoyo 10",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 11",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            0,
+            2,
+            1
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 14",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 15",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 16",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 18",
+            -1,
+            -1,
+            2
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 64650
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Rodgers, Glynn",
+          "holeNumber": 4,
+          "createdAt": "16/09/24 12:51:59"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/61052_cartel_45.pdf",
+    "/uploads/circular/2026/539256dd2240e917cb5b247e369c5c30.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:48.291Z"
 }

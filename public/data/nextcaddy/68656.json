@@ -1,14 +1,14 @@
 {
   "tourId": 68656,
   "url": "https://www.nextcaddy.com/tour/68656",
-  "scrapedAt": "2026-05-09T10:35:26.090Z",
+  "scrapedAt": "2026-05-21T16:39:10.449Z",
   "meta": {
     "name": "4ª PRUEBA VIII LIGUILLA BENJAMÍN Y ALEVÍN DE CASTILLA Y LEÓN 2026",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "26 abr 2026",
-    "dateEnd": "26 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Alevin Masculino",
     "categories": [
       "BENJAMÍN",
@@ -22,74 +22,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-26"
-  },
-  "course": {
-    "par": [
-      3,
-      3,
-      4,
-      3,
-      3,
-      4,
-      3,
-      3,
-      4,
-      3,
-      3,
-      3,
-      3,
-      5,
-      3,
-      4,
-      3,
-      3
-    ],
-    "si": [
-      16,
-      9,
-      8,
-      13,
-      11,
-      3,
-      18,
-      6,
-      2,
-      10,
-      17,
-      12,
-      15,
-      1,
-      14,
-      4,
-      5,
-      7
-    ],
-    "meters": [
-      94,
-      161,
-      261,
-      122,
-      151,
-      261,
-      111,
-      194,
-      285,
-      152,
-      73,
-      132,
-      109,
-      444,
-      86,
-      262,
-      121,
-      166
     ]
   },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual Alevín",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -111,8 +51,7 @@
           "rounds": [],
           "total": 15,
           "toPar": -15,
-          "inscribedId": 2300476,
-          "roundScores": []
+          "inscribedId": 2300476
         },
         {
           "pos": 2,
@@ -123,8 +62,7 @@
           "rounds": [],
           "total": 19,
           "toPar": -11,
-          "inscribedId": 2303846,
-          "roundScores": []
+          "inscribedId": 2303846
         },
         {
           "pos": 3,
@@ -135,8 +73,7 @@
           "rounds": [],
           "total": 25,
           "toPar": -5,
-          "inscribedId": 2302389,
-          "roundScores": []
+          "inscribedId": 2302389
         },
         {
           "pos": 4,
@@ -147,8 +84,7 @@
           "rounds": [],
           "total": 25,
           "toPar": -3,
-          "inscribedId": 2303388,
-          "roundScores": []
+          "inscribedId": 2303388
         },
         {
           "pos": 5,
@@ -159,8 +95,7 @@
           "rounds": [],
           "total": 28,
           "toPar": -2,
-          "inscribedId": 2302156,
-          "roundScores": []
+          "inscribedId": 2302156
         },
         {
           "pos": 6,
@@ -171,8 +106,7 @@
           "rounds": [],
           "total": 29,
           "toPar": -1,
-          "inscribedId": 2301782,
-          "roundScores": []
+          "inscribedId": 2301782
         },
         {
           "pos": 7,
@@ -183,8 +117,7 @@
           "rounds": [],
           "total": 30,
           "toPar": null,
-          "inscribedId": 2301380,
-          "roundScores": []
+          "inscribedId": 2301380
         },
         {
           "pos": 8,
@@ -195,8 +128,7 @@
           "rounds": [],
           "total": 30,
           "toPar": 2,
-          "inscribedId": 2302511,
-          "roundScores": []
+          "inscribedId": 2302511
         },
         {
           "pos": 9,
@@ -207,8 +139,7 @@
           "rounds": [],
           "total": 31,
           "toPar": 3,
-          "inscribedId": 2303140,
-          "roundScores": []
+          "inscribedId": 2303140
         },
         {
           "pos": 10,
@@ -219,8 +150,7 @@
           "rounds": [],
           "total": 33,
           "toPar": 3,
-          "inscribedId": 2304067,
-          "roundScores": []
+          "inscribedId": 2304067
         },
         {
           "pos": 11,
@@ -231,8 +161,7 @@
           "rounds": [],
           "total": 35,
           "toPar": 5,
-          "inscribedId": 2302398,
-          "roundScores": []
+          "inscribedId": 2302398
         },
         {
           "pos": 12,
@@ -243,13 +172,14 @@
           "rounds": [],
           "total": 34,
           "toPar": 6,
-          "inscribedId": 2304094,
-          "roundScores": []
+          "inscribedId": 2304094
         }
       ]
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual Benjamín",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -271,8 +201,7 @@
           "rounds": [],
           "total": 19,
           "toPar": -9,
-          "inscribedId": 2300479,
-          "roundScores": []
+          "inscribedId": 2300479
         },
         {
           "pos": 2,
@@ -283,8 +212,7 @@
           "rounds": [],
           "total": 21,
           "toPar": -7,
-          "inscribedId": 2302393,
-          "roundScores": []
+          "inscribedId": 2302393
         },
         {
           "pos": 3,
@@ -295,8 +223,7 @@
           "rounds": [],
           "total": 22,
           "toPar": -6,
-          "inscribedId": 2302201,
-          "roundScores": []
+          "inscribedId": 2302201
         },
         {
           "pos": 4,
@@ -307,8 +234,7 @@
           "rounds": [],
           "total": 23,
           "toPar": -5,
-          "inscribedId": 2304116,
-          "roundScores": []
+          "inscribedId": 2304116
         },
         {
           "pos": 5,
@@ -319,8 +245,7 @@
           "rounds": [],
           "total": 24,
           "toPar": -4,
-          "inscribedId": 2303124,
-          "roundScores": []
+          "inscribedId": 2303124
         },
         {
           "pos": 6,
@@ -331,8 +256,7 @@
           "rounds": [],
           "total": 24,
           "toPar": -4,
-          "inscribedId": 2303845,
-          "roundScores": []
+          "inscribedId": 2303845
         },
         {
           "pos": 7,
@@ -343,8 +267,7 @@
           "rounds": [],
           "total": 24,
           "toPar": -4,
-          "inscribedId": 2303125,
-          "roundScores": []
+          "inscribedId": 2303125
         },
         {
           "pos": 8,
@@ -355,12 +278,22 @@
           "rounds": [],
           "total": 25,
           "toPar": -3,
-          "inscribedId": 2303387,
-          "roundScores": []
+          "inscribedId": 2303387
         }
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Alevín",
+      "jugadores": 12
+    },
+    "2": {
+      "name": "Handicap Individual Benjamín",
+      "jugadores": 8
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -669,6 +602,193 @@
       "licencia": "22-04-26 22:11",
       "hcp": 43.7,
       "nivel": "7759968499"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Pablo Rodriguez Molina",
+          "hcp": 12.4,
+          "ins": "2301380",
+          "jid": "73298",
+          "nivel": "A"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Juan Aparicio Gonzalez",
+          "hcp": 27.7,
+          "ins": "2302201",
+          "jid": "73298",
+          "nivel": "B"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Erik Bautista Musina",
+          "hcp": 29.2,
+          "ins": "2303124",
+          "jid": "73298",
+          "nivel": "B"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Thiago Peralvo Vaquero",
+          "hcp": 34.7,
+          "ins": "2302398",
+          "jid": "73298",
+          "nivel": "A"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Rodrigo Garabito De Las Heras",
+          "hcp": 35.4,
+          "ins": "2301782",
+          "jid": "73298",
+          "nivel": "A"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Alvaro Sanchez Benito",
+          "hcp": 39.8,
+          "ins": "2302156",
+          "jid": "73298",
+          "nivel": "A"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "Antonio Garcia Pique",
+          "hcp": 40.8,
+          "ins": "2302389",
+          "jid": "73298",
+          "nivel": "A"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "Matias Martin Martin",
+          "hcp": 41.8,
+          "ins": "2304067",
+          "jid": "73298",
+          "nivel": "A"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "David Cerezal Criado",
+          "hcp": 43.7,
+          "ins": "2304116",
+          "jid": "73298",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Carlos Alonso Arrimadas",
+          "hcp": 43.4,
+          "ins": "2300476",
+          "jid": "73298",
+          "nivel": "A"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Manuel Basconcillos Rodriguez",
+          "hcp": 45.8,
+          "ins": "2303846",
+          "jid": "73298",
+          "nivel": "A"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Javier Alonso Arrimadas",
+          "hcp": 47.5,
+          "ins": "2300479",
+          "jid": "73298",
+          "nivel": "B"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Angela Basconcillos Rodriguez",
+          "hcp": 40.8,
+          "ins": "2303845",
+          "jid": "73298",
+          "nivel": "B"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Mara Comenge Garcia",
+          "hcp": 48.2,
+          "ins": "2303388",
+          "jid": "73298",
+          "nivel": "A"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Carmen Lopez Millan",
+          "hcp": 49.6,
+          "ins": "2303140",
+          "jid": "73298",
+          "nivel": "A"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Mateo Pretel Martin",
+          "hcp": 49.2,
+          "ins": "2302393",
+          "jid": "73298",
+          "nivel": "B"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Mark Bautista Musina",
+          "hcp": 53.8,
+          "ins": "2303125",
+          "jid": "73298",
+          "nivel": "B"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Lucas Comenge Garcia",
+          "hcp": 54,
+          "ins": "2303387",
+          "jid": "73298",
+          "nivel": "B"
+        },
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Anna Rodriguez Gomez",
+          "hcp": 53.6,
+          "ins": "2302511",
+          "jid": "73298",
+          "nivel": "A"
+        },
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Catalina Conde Garcia",
+          "hcp": 54,
+          "ins": "2304094",
+          "jid": "73298",
+          "nivel": "A"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -1267,192 +1387,9 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "11:00",
-          "tee": 1,
-          "name": "Pablo Rodriguez Molina",
-          "hcp": 12.4,
-          "ins": "2301380",
-          "jid": "73298",
-          "nivel": "A"
-        },
-        {
-          "time": "11:00",
-          "tee": 1,
-          "name": "Juan Aparicio Gonzalez",
-          "hcp": 27.7,
-          "ins": "2302201",
-          "jid": "73298",
-          "nivel": "B"
-        },
-        {
-          "time": "11:00",
-          "tee": 1,
-          "name": "Erik Bautista Musina",
-          "hcp": 29.2,
-          "ins": "2303124",
-          "jid": "73298",
-          "nivel": "B"
-        },
-        {
-          "time": "11:10",
-          "tee": 1,
-          "name": "Thiago Peralvo Vaquero",
-          "hcp": 34.7,
-          "ins": "2302398",
-          "jid": "73298",
-          "nivel": "A"
-        },
-        {
-          "time": "11:10",
-          "tee": 1,
-          "name": "Rodrigo Garabito De Las Heras",
-          "hcp": 35.4,
-          "ins": "2301782",
-          "jid": "73298",
-          "nivel": "A"
-        },
-        {
-          "time": "11:10",
-          "tee": 1,
-          "name": "Alvaro Sanchez Benito",
-          "hcp": 39.8,
-          "ins": "2302156",
-          "jid": "73298",
-          "nivel": "A"
-        },
-        {
-          "time": "11:20",
-          "tee": 1,
-          "name": "Antonio Garcia Pique",
-          "hcp": 40.8,
-          "ins": "2302389",
-          "jid": "73298",
-          "nivel": "A"
-        },
-        {
-          "time": "11:20",
-          "tee": 1,
-          "name": "Matias Martin Martin",
-          "hcp": 41.8,
-          "ins": "2304067",
-          "jid": "73298",
-          "nivel": "A"
-        },
-        {
-          "time": "11:20",
-          "tee": 1,
-          "name": "David Cerezal Criado",
-          "hcp": 43.7,
-          "ins": "2304116",
-          "jid": "73298",
-          "nivel": "B"
-        },
-        {
-          "time": "11:30",
-          "tee": 1,
-          "name": "Carlos Alonso Arrimadas",
-          "hcp": 43.4,
-          "ins": "2300476",
-          "jid": "73298",
-          "nivel": "A"
-        },
-        {
-          "time": "11:30",
-          "tee": 1,
-          "name": "Manuel Basconcillos Rodriguez",
-          "hcp": 45.8,
-          "ins": "2303846",
-          "jid": "73298",
-          "nivel": "A"
-        },
-        {
-          "time": "11:30",
-          "tee": 1,
-          "name": "Javier Alonso Arrimadas",
-          "hcp": 47.5,
-          "ins": "2300479",
-          "jid": "73298",
-          "nivel": "B"
-        },
-        {
-          "time": "11:40",
-          "tee": 1,
-          "name": "Angela Basconcillos Rodriguez",
-          "hcp": 40.8,
-          "ins": "2303845",
-          "jid": "73298",
-          "nivel": "B"
-        },
-        {
-          "time": "11:40",
-          "tee": 1,
-          "name": "Mara Comenge Garcia",
-          "hcp": 48.2,
-          "ins": "2303388",
-          "jid": "73298",
-          "nivel": "A"
-        },
-        {
-          "time": "11:40",
-          "tee": 1,
-          "name": "Carmen Lopez Millan",
-          "hcp": 49.6,
-          "ins": "2303140",
-          "jid": "73298",
-          "nivel": "A"
-        },
-        {
-          "time": "11:50",
-          "tee": 1,
-          "name": "Mateo Pretel Martin",
-          "hcp": 49.2,
-          "ins": "2302393",
-          "jid": "73298",
-          "nivel": "B"
-        },
-        {
-          "time": "11:50",
-          "tee": 1,
-          "name": "Mark Bautista Musina",
-          "hcp": 53.8,
-          "ins": "2303125",
-          "jid": "73298",
-          "nivel": "B"
-        },
-        {
-          "time": "11:50",
-          "tee": 1,
-          "name": "Lucas Comenge Garcia",
-          "hcp": 54,
-          "ins": "2303387",
-          "jid": "73298",
-          "nivel": "B"
-        },
-        {
-          "time": "12:00",
-          "tee": 1,
-          "name": "Anna Rodriguez Gomez",
-          "hcp": 53.6,
-          "ins": "2302511",
-          "jid": "73298",
-          "nivel": "A"
-        },
-        {
-          "time": "12:00",
-          "tee": 1,
-          "name": "Catalina Conde Garcia",
-          "hcp": 54,
-          "ins": "2304094",
-          "jid": "73298",
-          "nivel": "A"
-        }
-      ]
-    }
+  "pdfs": [
+    "/uploads/circulares/cirfgcyl4425-3-1.pdf",
+    "/uploads/competiciones/pdf/1436534196_250702_reglas_locales_sotoverde.pdf"
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:27.376Z"
+  "horariosScrapedAt": "2026-05-21T16:42:25.155Z"
 }

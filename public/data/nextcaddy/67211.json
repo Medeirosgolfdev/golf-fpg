@@ -1,14 +1,14 @@
 {
   "tourId": 67211,
   "url": "https://www.nextcaddy.com/tour/67211",
-  "scrapedAt": "2026-05-09T10:16:39.695Z",
+  "scrapedAt": "2026-05-21T16:40:13.395Z",
   "meta": {
     "name": "IV Prueba del Campeonato Regional de Castilla y León (Valedera Sace)",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "31 may 2026",
-    "dateEnd": "31 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -18,12 +18,113 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-31"
+    ]
   },
   "course": null,
   "leaderboard": [],
-  "inscritos": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Jose Nuñez Carballo",
+      "licencia": "7735980962",
+      "hcp": 12.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Andre Nilsson",
+      "licencia": "7707363836",
+      "hcp": 9.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Jose Luis Marfil Gutierrez",
+      "licencia": "7707804461",
+      "hcp": 7.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Manuel Hernandez Gajate",
+      "licencia": "7709283725",
+      "hcp": 13.6,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Pilar Elosua De Juan",
+      "licencia": "7770149280",
+      "hcp": 10.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Maria Yolanda Valbuena Rodrigo",
+      "licencia": "7709283726",
+      "hcp": 7.4,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Fecha Inscripción",
+      "hcp": null,
+      "nivel": "Licencia"
+    },
+    {
+      "orden": 1,
+      "name": "Jose Nuñez Carballo",
+      "licencia": "19-05-26 13:44",
+      "hcp": 12.3,
+      "nivel": "7735980962"
+    },
+    {
+      "orden": 2,
+      "name": "Andre Nilsson",
+      "licencia": "19-05-26 19:00",
+      "hcp": 9.3,
+      "nivel": "7707363836"
+    },
+    {
+      "orden": 3,
+      "name": "Jose Luis Marfil Gutierrez",
+      "licencia": "19-05-26 19:05",
+      "hcp": 7.5,
+      "nivel": "7707804461"
+    },
+    {
+      "orden": 4,
+      "name": "Pilar Elosua De Juan",
+      "licencia": "20-05-26 20:02",
+      "hcp": 10.8,
+      "nivel": "7770149280"
+    },
+    {
+      "orden": 5,
+      "name": "Manuel Hernandez Gajate",
+      "licencia": "21-05-26 09:06",
+      "hcp": 13.6,
+      "nivel": "7709283725"
+    },
+    {
+      "orden": 6,
+      "name": "Maria Yolanda Valbuena Rodrigo",
+      "licencia": "21-05-26 09:08",
+      "hcp": 7.4,
+      "nivel": "7709283726"
+    }
+  ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -56,6 +157,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:26.854Z"
+  "pdfs": [
+    "/uploads/circulares/cirfgcyl1226.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:00.759Z"
 }

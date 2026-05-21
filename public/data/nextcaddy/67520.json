@@ -1,14 +1,14 @@
 {
   "tourId": 67520,
   "url": "https://www.nextcaddy.com/tour/67520",
-  "scrapedAt": "2026-05-09T09:57:33.105Z",
+  "scrapedAt": "2026-05-21T16:36:51.033Z",
   "meta": {
     "name": "MY GOLF",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": "31 ene 2026",
-    "dateEnd": "31 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-31"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Categoria Damas",
+      "expectedJugadores": 7,
       "header": [
         "Pos",
         "Jugador",
@@ -117,6 +118,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Segunda Categoria",
+      "expectedJugadores": 29,
       "header": [
         "Pos",
         "Jugador",
@@ -452,6 +455,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Primera Categoria",
+      "expectedJugadores": 59,
       "header": [
         "Pos",
         "Jugador",
@@ -1116,6 +1121,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Categoria Damas",
+      "jugadores": 7
+    },
+    "2": {
+      "name": "Segunda Categoria",
+      "jugadores": 29
+    },
+    "3": {
+      "name": "Primera Categoria",
+      "jugadores": 59
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2364,88 +2384,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71984
-    }
-  ],
-  "scoreTypes": {
-    "eagle": {
-      "scoreTypeKey": "eagle",
-      "players": [
-        {
-          "playerName": "Santos Ximenez, Antonio",
-          "holeNumber": 11,
-          "createdAt": "05/07/25 15:18:03"
-        }
-      ]
-    },
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Casado Romero, Javier",
-          "holeNumber": 2,
-          "createdAt": "05/07/25 15:18:03"
-        },
-        {
-          "playerName": "Baron Romero, Manuel",
-          "holeNumber": 1,
-          "createdAt": "05/07/25 15:18:03"
-        },
-        {
-          "playerName": "Jimenez Hernandez, Rafael",
-          "holeNumber": 7,
-          "createdAt": "05/07/25 15:18:04"
-        },
-        {
-          "playerName": "Barranco Astorga, Rosario",
-          "holeNumber": 2,
-          "createdAt": "05/07/25 15:18:05"
-        },
-        {
-          "playerName": "Navarro Navarro, Fernando",
-          "holeNumber": 14,
-          "createdAt": "05/07/25 15:18:06"
-        },
-        {
-          "playerName": "Granados Jurado, Antonio Miguel",
-          "holeNumber": 16,
-          "createdAt": "05/07/25 15:18:08"
-        },
-        {
-          "playerName": "Pellegrini Alas-Pumariño, Javier",
-          "holeNumber": 3,
-          "createdAt": "05/07/25 15:18:08"
-        },
-        {
-          "playerName": "Gonzalez Valle, Jose Manuel",
-          "holeNumber": 8,
-          "createdAt": "05/07/25 15:18:09"
-        },
-        {
-          "playerName": "Gonzalez Valle, Jose Manuel",
-          "holeNumber": 13,
-          "createdAt": "05/07/25 15:18:09"
-        },
-        {
-          "playerName": "Caballero Perez, Jacinto",
-          "holeNumber": 2,
-          "createdAt": "05/07/25 15:18:09"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -3227,5 +3165,88 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:09.189Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71984
+    }
+  ],
+  "scoreTypes": {
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Santos Ximenez, Antonio",
+          "holeNumber": 11,
+          "createdAt": "05/07/25 15:18:03"
+        }
+      ]
+    },
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Casado Romero, Javier",
+          "holeNumber": 2,
+          "createdAt": "05/07/25 15:18:03"
+        },
+        {
+          "playerName": "Baron Romero, Manuel",
+          "holeNumber": 1,
+          "createdAt": "05/07/25 15:18:03"
+        },
+        {
+          "playerName": "Jimenez Hernandez, Rafael",
+          "holeNumber": 7,
+          "createdAt": "05/07/25 15:18:04"
+        },
+        {
+          "playerName": "Barranco Astorga, Rosario",
+          "holeNumber": 2,
+          "createdAt": "05/07/25 15:18:05"
+        },
+        {
+          "playerName": "Navarro Navarro, Fernando",
+          "holeNumber": 14,
+          "createdAt": "05/07/25 15:18:06"
+        },
+        {
+          "playerName": "Granados Jurado, Antonio Miguel",
+          "holeNumber": 16,
+          "createdAt": "05/07/25 15:18:08"
+        },
+        {
+          "playerName": "Pellegrini Alas-Pumariño, Javier",
+          "holeNumber": 3,
+          "createdAt": "05/07/25 15:18:08"
+        },
+        {
+          "playerName": "Gonzalez Valle, Jose Manuel",
+          "holeNumber": 8,
+          "createdAt": "05/07/25 15:18:09"
+        },
+        {
+          "playerName": "Gonzalez Valle, Jose Manuel",
+          "holeNumber": 13,
+          "createdAt": "05/07/25 15:18:09"
+        },
+        {
+          "playerName": "Caballero Perez, Jacinto",
+          "holeNumber": 2,
+          "createdAt": "05/07/25 15:18:09"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:04.776Z"
 }

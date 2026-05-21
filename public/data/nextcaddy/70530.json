@@ -1,14 +1,14 @@
 {
   "tourId": 70530,
   "url": "https://www.nextcaddy.com/tour/70530",
-  "scrapedAt": "2026-05-09T10:15:55.854Z",
+  "scrapedAt": "2026-05-21T16:39:30.137Z",
   "meta": {
     "name": "LIGA FEMENINA ULZAMA  2026 8 de mayo.",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "08 may 2026",
-    "dateEnd": "08 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Especial",
     "categories": [
       "Señoras",
@@ -16,13 +16,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-08"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 10,
       "header": [
         "Pos",
         "Jugador",
@@ -148,6 +149,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 10
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -297,48 +305,6 @@
       "nivel": "4401192938"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75474
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Rolfsson, Goeran",
-          "holeNumber": 4,
-          "createdAt": "19/11/25 14:09:33"
-        },
-        {
-          "playerName": "Lofgren, Anders",
-          "holeNumber": 9,
-          "createdAt": "19/11/25 14:59:29"
-        },
-        {
-          "playerName": "Rolfsson, Goeran",
-          "holeNumber": 12,
-          "createdAt": "19/11/25 16:20:00"
-        },
-        {
-          "playerName": "Lindstrom, Ann-Christin",
-          "holeNumber": 11,
-          "createdAt": "19/11/25 17:40:15"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -436,5 +402,48 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:13:01.031Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75474
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Rolfsson, Goeran",
+          "holeNumber": 4,
+          "createdAt": "19/11/25 14:09:33"
+        },
+        {
+          "playerName": "Lofgren, Anders",
+          "holeNumber": 9,
+          "createdAt": "19/11/25 14:59:29"
+        },
+        {
+          "playerName": "Rolfsson, Goeran",
+          "holeNumber": 12,
+          "createdAt": "19/11/25 16:20:00"
+        },
+        {
+          "playerName": "Lindstrom, Ann-Christin",
+          "holeNumber": 11,
+          "createdAt": "19/11/25 17:40:15"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:41.770Z"
 }

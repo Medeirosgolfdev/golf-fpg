@@ -1,14 +1,14 @@
 {
   "tourId": 67385,
   "url": "https://www.nextcaddy.com/tour/67385",
-  "scrapedAt": "2026-05-09T10:15:48.475Z",
+  "scrapedAt": "2026-05-21T16:39:19.768Z",
   "meta": {
     "name": "Campeonato Puerta de Hierro de Señores 2026 (Absoluto)",
     "organizer": null,
     "course": "Real Club de la Puerta de Hierro",
     "courseCode": "CM01",
-    "dateStart": "30 abr 2026",
-    "dateEnd": "30 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros Posicio",
     "categories": [
       "Caballeros",
@@ -16,13 +16,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-30"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual Masculino",
+      "expectedJugadores": 78,
       "header": [
         "Pos",
         "Jugador",
@@ -2230,6 +2231,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Scratch Individual Masculino",
+      "expectedJugadores": 132,
       "header": [
         "Pos",
         "Jugador",
@@ -5419,6 +5422,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Scratch Individual Masculino",
+      "expectedJugadores": 132,
       "header": [
         "Pos",
         "Jugador",
@@ -8078,6 +8083,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Scratch Individual Masculino",
+      "expectedJugadores": 132,
       "header": [
         "Pos",
         "Jugador",
@@ -9545,6 +9552,25 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual Masculino",
+      "jugadores": 78
+    },
+    "2": {
+      "name": "Scratch Individual Masculino",
+      "jugadores": 132
+    },
+    "3": {
+      "name": "Scratch Individual Masculino",
+      "jugadores": 132
+    },
+    "4": {
+      "name": "Scratch Individual Masculino",
+      "jugadores": 132
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -11402,34 +11428,6 @@
       "nivel": "CM01021502"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71818
-    },
-    {
-      "roundNumber": 2,
-      "roundId": 71819
-    },
-    {
-      "roundNumber": 3,
-      "roundId": 71820
-    },
-    {
-      "roundNumber": 4,
-      "roundId": 71821
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -15664,5 +15662,37 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:09.683Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71818
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 71819
+    },
+    {
+      "roundNumber": 3,
+      "roundId": 71820
+    },
+    {
+      "roundNumber": 4,
+      "roundId": 71821
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/3018484822_banderas_4.pdf",
+    "/uploads/competiciones/pdf/643288913_rl.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:05.111Z"
 }

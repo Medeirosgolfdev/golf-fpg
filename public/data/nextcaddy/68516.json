@@ -1,14 +1,14 @@
 {
   "tourId": 68516,
   "url": "https://www.nextcaddy.com/tour/68516",
-  "scrapedAt": "2026-05-09T09:57:57.577Z",
+  "scrapedAt": "2026-05-21T16:37:28.186Z",
   "meta": {
     "name": "RACE TO CANASTA - Sábado",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": "28 feb 2026",
-    "dateEnd": "28 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-28"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Primera Categoria",
+      "expectedJugadores": 40,
       "header": [
         "Pos",
         "Jugador",
@@ -480,6 +481,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Tercera Categoria",
+      "expectedJugadores": 47,
       "header": [
         "Pos",
         "Jugador",
@@ -1013,6 +1016,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Segunda Categoria",
+      "expectedJugadores": 38,
       "header": [
         "Pos",
         "Jugador",
@@ -1447,6 +1452,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 149,
       "header": [
         "Pos",
         "Jugador",
@@ -3102,6 +3109,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Clasificación Damas",
+      "expectedJugadores": 24,
       "header": [
         "Pos",
         "Jugador",
@@ -3381,6 +3390,29 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Primera Categoria",
+      "jugadores": 40
+    },
+    "2": {
+      "name": "Tercera Categoria",
+      "jugadores": 47
+    },
+    "3": {
+      "name": "Segunda Categoria",
+      "jugadores": 38
+    },
+    "4": {
+      "name": "Scratch Individual",
+      "jugadores": 149
+    },
+    "5": {
+      "name": "Clasificación Damas",
+      "jugadores": 24
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -4783,153 +4815,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73140
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Garcia Gonzalez, Nemesio",
-          "holeNumber": 9,
-          "createdAt": "30/08/25 09:29:04"
-        },
-        {
-          "playerName": "Popadines, Kevin",
-          "holeNumber": 3,
-          "createdAt": "30/08/25 09:39:30"
-        },
-        {
-          "playerName": "Perez Laynez, Juan Manuel",
-          "holeNumber": 6,
-          "createdAt": "30/08/25 10:05:15"
-        },
-        {
-          "playerName": "Garcia Linares, Juan Jesus",
-          "holeNumber": 6,
-          "createdAt": "30/08/25 10:28:19"
-        },
-        {
-          "playerName": "Galvez De Asis, Manuela",
-          "holeNumber": 3,
-          "createdAt": "30/08/25 10:36:56"
-        },
-        {
-          "playerName": "Garcia Linares, Juan Jesus",
-          "holeNumber": 8,
-          "createdAt": "30/08/25 10:55:55"
-        },
-        {
-          "playerName": "Cornago Diufain, Juan Antonio",
-          "holeNumber": 9,
-          "createdAt": "30/08/25 10:56:38"
-        },
-        {
-          "playerName": "Castaño Alba, Jesus Antonio",
-          "holeNumber": 13,
-          "createdAt": "30/08/25 11:08:59"
-        },
-        {
-          "playerName": "Jimenez Romero, Rafael",
-          "holeNumber": 10,
-          "createdAt": "30/08/25 11:11:47"
-        },
-        {
-          "playerName": "Molina Mackinlay, Guillermo",
-          "holeNumber": 10,
-          "createdAt": "30/08/25 11:19:12"
-        },
-        {
-          "playerName": "Ruiz Bobillo, Jose Maria",
-          "holeNumber": 18,
-          "createdAt": "30/08/25 11:49:32"
-        },
-        {
-          "playerName": "Castaño Alba, Jesus Antonio",
-          "holeNumber": 16,
-          "createdAt": "30/08/25 12:01:28"
-        },
-        {
-          "playerName": "Palomeque Lopez, Ramon",
-          "holeNumber": 13,
-          "createdAt": "30/08/25 12:04:17"
-        },
-        {
-          "playerName": "Vazquez Gomez, Juan Gabriel",
-          "holeNumber": 16,
-          "createdAt": "30/08/25 12:21:49"
-        },
-        {
-          "playerName": "Castro Alvarez, Jose Luis",
-          "holeNumber": 16,
-          "createdAt": "30/08/25 12:23:02"
-        },
-        {
-          "playerName": "Salgado Cachafeiro, Jose Alfonso",
-          "holeNumber": 16,
-          "createdAt": "30/08/25 12:30:48"
-        },
-        {
-          "playerName": "Cluck, Carl",
-          "holeNumber": 1,
-          "createdAt": "30/08/25 12:32:43"
-        },
-        {
-          "playerName": "Garcia Linares, Juan Jesus",
-          "holeNumber": 15,
-          "createdAt": "30/08/25 12:35:29"
-        },
-        {
-          "playerName": "Gonzalez Oliveros, Enrique",
-          "holeNumber": 16,
-          "createdAt": "30/08/25 12:46:51"
-        },
-        {
-          "playerName": "Palomeque Lopez, Ramon",
-          "holeNumber": 16,
-          "createdAt": "30/08/25 12:54:14"
-        },
-        {
-          "playerName": "Fernandez Moran, Salvador",
-          "holeNumber": 3,
-          "createdAt": "30/08/25 13:10:03"
-        },
-        {
-          "playerName": "Villar Barroso, Justino",
-          "holeNumber": 7,
-          "createdAt": "30/08/25 13:11:40"
-        },
-        {
-          "playerName": "Navarro Serrato, Rafael",
-          "holeNumber": 6,
-          "createdAt": "30/08/25 13:23:02"
-        }
-      ]
-    },
-    "eagle": {
-      "scoreTypeKey": "eagle",
-      "players": [
-        {
-          "playerName": "Garcia Linares, Juan Jesus",
-          "holeNumber": 16,
-          "createdAt": "30/08/25 12:52:42"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -5828,5 +5713,155 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:26.276Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73140
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Garcia Gonzalez, Nemesio",
+          "holeNumber": 9,
+          "createdAt": "30/08/25 09:29:04"
+        },
+        {
+          "playerName": "Popadines, Kevin",
+          "holeNumber": 3,
+          "createdAt": "30/08/25 09:39:30"
+        },
+        {
+          "playerName": "Perez Laynez, Juan Manuel",
+          "holeNumber": 6,
+          "createdAt": "30/08/25 10:05:15"
+        },
+        {
+          "playerName": "Garcia Linares, Juan Jesus",
+          "holeNumber": 6,
+          "createdAt": "30/08/25 10:28:19"
+        },
+        {
+          "playerName": "Galvez De Asis, Manuela",
+          "holeNumber": 3,
+          "createdAt": "30/08/25 10:36:56"
+        },
+        {
+          "playerName": "Garcia Linares, Juan Jesus",
+          "holeNumber": 8,
+          "createdAt": "30/08/25 10:55:55"
+        },
+        {
+          "playerName": "Cornago Diufain, Juan Antonio",
+          "holeNumber": 9,
+          "createdAt": "30/08/25 10:56:38"
+        },
+        {
+          "playerName": "Castaño Alba, Jesus Antonio",
+          "holeNumber": 13,
+          "createdAt": "30/08/25 11:08:59"
+        },
+        {
+          "playerName": "Jimenez Romero, Rafael",
+          "holeNumber": 10,
+          "createdAt": "30/08/25 11:11:47"
+        },
+        {
+          "playerName": "Molina Mackinlay, Guillermo",
+          "holeNumber": 10,
+          "createdAt": "30/08/25 11:19:12"
+        },
+        {
+          "playerName": "Ruiz Bobillo, Jose Maria",
+          "holeNumber": 18,
+          "createdAt": "30/08/25 11:49:32"
+        },
+        {
+          "playerName": "Castaño Alba, Jesus Antonio",
+          "holeNumber": 16,
+          "createdAt": "30/08/25 12:01:28"
+        },
+        {
+          "playerName": "Palomeque Lopez, Ramon",
+          "holeNumber": 13,
+          "createdAt": "30/08/25 12:04:17"
+        },
+        {
+          "playerName": "Vazquez Gomez, Juan Gabriel",
+          "holeNumber": 16,
+          "createdAt": "30/08/25 12:21:49"
+        },
+        {
+          "playerName": "Castro Alvarez, Jose Luis",
+          "holeNumber": 16,
+          "createdAt": "30/08/25 12:23:02"
+        },
+        {
+          "playerName": "Salgado Cachafeiro, Jose Alfonso",
+          "holeNumber": 16,
+          "createdAt": "30/08/25 12:30:48"
+        },
+        {
+          "playerName": "Cluck, Carl",
+          "holeNumber": 1,
+          "createdAt": "30/08/25 12:32:43"
+        },
+        {
+          "playerName": "Garcia Linares, Juan Jesus",
+          "holeNumber": 15,
+          "createdAt": "30/08/25 12:35:29"
+        },
+        {
+          "playerName": "Gonzalez Oliveros, Enrique",
+          "holeNumber": 16,
+          "createdAt": "30/08/25 12:46:51"
+        },
+        {
+          "playerName": "Palomeque Lopez, Ramon",
+          "holeNumber": 16,
+          "createdAt": "30/08/25 12:54:14"
+        },
+        {
+          "playerName": "Fernandez Moran, Salvador",
+          "holeNumber": 3,
+          "createdAt": "30/08/25 13:10:03"
+        },
+        {
+          "playerName": "Villar Barroso, Justino",
+          "holeNumber": 7,
+          "createdAt": "30/08/25 13:11:40"
+        },
+        {
+          "playerName": "Navarro Serrato, Rafael",
+          "holeNumber": 6,
+          "createdAt": "30/08/25 13:23:02"
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Garcia Linares, Juan Jesus",
+          "holeNumber": 16,
+          "createdAt": "30/08/25 12:52:42"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/2539672310_cartel_jerez.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:23.955Z"
 }

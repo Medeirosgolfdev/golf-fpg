@@ -1,14 +1,14 @@
 {
   "tourId": 68444,
   "url": "https://www.nextcaddy.com/tour/68444",
-  "scrapedAt": "2026-05-09T09:57:58.548Z",
+  "scrapedAt": "2026-05-21T16:37:30.051Z",
   "meta": {
     "name": "2ª Prueba Ranking y Series Roll Up Sherry Golf 2026",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "01 mar 2026",
-    "dateEnd": "01 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -19,13 +19,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-01"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 78,
       "header": [
         "Pos",
         "Jugador",
@@ -900,6 +901,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Categoría Junior",
+      "expectedJugadores": 2,
       "header": [
         "Pos",
         "Jugador",
@@ -938,6 +941,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Tercera Categoría De 21.1 A 36",
+      "expectedJugadores": 34,
       "header": [
         "Pos",
         "Jugador",
@@ -1328,6 +1333,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Segunda Categoría De 13.1 A 21",
+      "expectedJugadores": 26,
       "header": [
         "Pos",
         "Jugador",
@@ -1630,6 +1637,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Primera Categoría De 0 A 13",
+      "expectedJugadores": 16,
       "header": [
         "Pos",
         "Jugador",
@@ -1821,6 +1830,29 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 78
+    },
+    "2": {
+      "name": "Categoría Junior",
+      "jugadores": 2
+    },
+    "3": {
+      "name": "Tercera Categoría De 21.1 A 36",
+      "jugadores": 34
+    },
+    "4": {
+      "name": "Segunda Categoría De 13.1 A 21",
+      "jugadores": 26
+    },
+    "5": {
+      "name": "Primera Categoría De 0 A 13",
+      "jugadores": 16
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2943,22 +2975,6 @@
       "nivel": "AM32245694"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73059
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -3668,5 +3684,25 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:25.446Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73059
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/3584625969_2ª_prueba.pdf",
+    "/uploads/REGLAMENTO-RANKING-SHERRY-GOLF-2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:22.980Z"
 }

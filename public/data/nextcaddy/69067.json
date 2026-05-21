@@ -1,14 +1,14 @@
 {
   "tourId": 69067,
   "url": "https://www.nextcaddy.com/tour/69067",
-  "scrapedAt": "2026-05-09T10:16:27.550Z",
+  "scrapedAt": "2026-05-21T16:39:36.320Z",
   "meta": {
     "name": "Club de Golf Barcelona 3ª Categoría",
     "organizer": null,
     "course": "",
     "courseCode": "MAJC",
-    "dateStart": "10 may 2026",
-    "dateEnd": "10 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -21,11 +21,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-10"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -210,22 +211,6 @@
       "nivel": "CB01974860"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73795
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -341,5 +326,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:32.089Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73795
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/298186069_reglas_locales_executive_2024.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:30.186Z"
 }

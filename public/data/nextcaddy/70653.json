@@ -1,14 +1,14 @@
 {
   "tourId": 70653,
   "url": "https://www.nextcaddy.com/tour/70653",
-  "scrapedAt": "2026-05-09T10:15:57.772Z",
+  "scrapedAt": "2026-05-21T16:39:33.581Z",
   "meta": {
     "name": "C.D TAMISUEL GOLF",
     "organizer": null,
     "course": "Miraflores Golf",
     "courseCode": "AM76",
-    "dateStart": "09 may 2026",
-    "dateEnd": "09 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,20 +17,693 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-09"
+    ]
   },
   "course": null,
-  "leaderboard": [],
-  "inscritos": [],
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 11,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Juan Francisco Lazo Cordoba",
+          "licencia": "AMG1249416",
+          "hcp": 10.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2315750
+        },
+        {
+          "pos": 2,
+          "name": "Manuel Carlos Hernandez Leon",
+          "licencia": "AMG1328068",
+          "hcp": 16.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2315756
+        },
+        {
+          "pos": 3,
+          "name": "Juan Cortes Alcario",
+          "licencia": "AMG1346956",
+          "hcp": 29.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2315758
+        },
+        {
+          "pos": 4,
+          "name": "Carmen Dominguez Gonzalez",
+          "licencia": "AMG1251561",
+          "hcp": 27.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2315753
+        },
+        {
+          "pos": 5,
+          "name": "Sven Leiner",
+          "licencia": "AM00913613",
+          "hcp": 12,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2315754
+        },
+        {
+          "pos": 6,
+          "name": "Flavio Cassina",
+          "licencia": "AM81903347",
+          "hcp": 17.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2315755
+        },
+        {
+          "pos": 7,
+          "name": "Francisco Mangas Montes",
+          "licencia": "AMG1604659",
+          "hcp": 16.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2315757
+        },
+        {
+          "pos": 8,
+          "name": "Guillermo Martin Moreno",
+          "licencia": "AMG1346713",
+          "hcp": 24.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2315751
+        },
+        {
+          "pos": 9,
+          "name": "Jose Maria Roldan Jimenez",
+          "licencia": "AMG1610924",
+          "hcp": 27.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2315762
+        },
+        {
+          "pos": 10,
+          "name": "Rosamaria Artal Rozas",
+          "licencia": "AMG1232338",
+          "hcp": 38.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2315769
+        },
+        {
+          "pos": 11,
+          "name": "Roberto Buil Gascon",
+          "licencia": "AMG1267955",
+          "hcp": 31.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2315767
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 11
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Juan Francisco Lazo Cordoba",
+      "licencia": "AMG1249416",
+      "hcp": 10.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Guillermo Martin Moreno",
+      "licencia": "AMG1346713",
+      "hcp": 24.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Sven Leiner",
+      "licencia": "AM00913613",
+      "hcp": 12,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Flavio Cassina",
+      "licencia": "AM81903347",
+      "hcp": 17.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Manuel Carlos Hernandez Leon",
+      "licencia": "AMG1328068",
+      "hcp": 16.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 6,
+      "name": "Francisco Mangas Montes",
+      "licencia": "AMG1604659",
+      "hcp": 16.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 7,
+      "name": "Juan Cortes Alcario",
+      "licencia": "AMG1346956",
+      "hcp": 29.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 8,
+      "name": "Jose Maria Roldan Jimenez",
+      "licencia": "AMG1610924",
+      "hcp": 27.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 9,
+      "name": "Roberto Buil Gascon",
+      "licencia": "AMG1267955",
+      "hcp": 31.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 10,
+      "name": "Rosamaria Artal Rozas",
+      "licencia": "AMG1232338",
+      "hcp": 38.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Carmen Dominguez Gonzalez",
+      "licencia": "AMG1251561",
+      "hcp": 27.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Fecha Inscripción",
+      "hcp": null,
+      "nivel": "Licencia"
+    },
+    {
+      "orden": 1,
+      "name": "Juan Francisco Lazo Cordoba",
+      "licencia": "09-05-26 17:49",
+      "hcp": 10.8,
+      "nivel": "AMG1249416"
+    },
+    {
+      "orden": 2,
+      "name": "Guillermo Martin Moreno",
+      "licencia": "09-05-26 17:49",
+      "hcp": 24.6,
+      "nivel": "AMG1346713"
+    },
+    {
+      "orden": 3,
+      "name": "Carmen Dominguez Gonzalez",
+      "licencia": "09-05-26 17:50",
+      "hcp": 27.7,
+      "nivel": "AMG1251561"
+    },
+    {
+      "orden": 4,
+      "name": "Sven Leiner",
+      "licencia": "09-05-26 17:52",
+      "hcp": 12,
+      "nivel": "AM00913613"
+    },
+    {
+      "orden": 5,
+      "name": "Flavio Cassina",
+      "licencia": "09-05-26 17:53",
+      "hcp": 17.6,
+      "nivel": "AM81903347"
+    },
+    {
+      "orden": 6,
+      "name": "Manuel Carlos Hernandez Leon",
+      "licencia": "09-05-26 17:53",
+      "hcp": 16.7,
+      "nivel": "AMG1328068"
+    },
+    {
+      "orden": 7,
+      "name": "Francisco Mangas Montes",
+      "licencia": "09-05-26 17:54",
+      "hcp": 16.3,
+      "nivel": "AMG1604659"
+    },
+    {
+      "orden": 8,
+      "name": "Juan Cortes Alcario",
+      "licencia": "09-05-26 18:06",
+      "hcp": 29.1,
+      "nivel": "AMG1346956"
+    },
+    {
+      "orden": 9,
+      "name": "Jose Maria Roldan Jimenez",
+      "licencia": "09-05-26 18:06",
+      "hcp": 27.4,
+      "nivel": "AMG1610924"
+    },
+    {
+      "orden": 10,
+      "name": "Roberto Buil Gascon",
+      "licencia": "09-05-26 18:07",
+      "hcp": 31.8,
+      "nivel": "AMG1267955"
+    },
+    {
+      "orden": 11,
+      "name": "Rosamaria Artal Rozas",
+      "licencia": "09-05-26 18:07",
+      "hcp": 38.1,
+      "nivel": "AMG1232338"
+    }
+  ],
+  "horarios": [],
   "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
+    "0": {
+      "p": {
+        "id": 159228,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            31
+          ],
+          [
+            "Birdie",
+            6
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            65
+          ],
+          [
+            "Peor",
+            74
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 159229,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            8
+          ],
+          [
+            "2",
+            14
+          ],
+          [
+            "3",
+            16
+          ],
+          [
+            "4",
+            14
+          ],
+          [
+            "5",
+            8
+          ],
+          [
+            "6",
+            12
+          ],
+          [
+            "7",
+            11
+          ],
+          [
+            "8",
+            11
+          ],
+          [
+            "9",
+            14
+          ],
+          [
+            "10",
+            16
+          ],
+          [
+            "11",
+            8
+          ],
+          [
+            "12",
+            17
+          ],
+          [
+            "13",
+            11
+          ],
+          [
+            "14",
+            12
+          ],
+          [
+            "15",
+            12
+          ],
+          [
+            "16",
+            21
+          ],
+          [
+            "17",
+            12
+          ],
+          [
+            "18",
+            16
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 159230,
+        "datos": [
+          [
+            "Hoyo",
+            "MANUEL CARLOS HERNÁNDEZ LEÓN",
+            "JUAN FRANCISCO LAZO CORDOBA",
+            "CARMEN DOMINGUEZ GONZALEZ"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 2",
+            0,
+            1,
+            1
+          ],
+          [
+            "Hoyo 3",
+            1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 4",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 5",
+            1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 7",
+            0,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            1,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 9",
+            2,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            1,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 11",
+            1,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 12",
+            2,
+            1,
+            1
+          ],
+          [
+            "Hoyo 13",
+            2,
+            2,
+            1
+          ],
+          [
+            "Hoyo 14",
+            1,
+            2,
+            0
+          ],
+          [
+            "Hoyo 15",
+            2,
+            2,
+            1
+          ],
+          [
+            "Hoyo 16",
+            2,
+            0,
+            1
+          ],
+          [
+            "Hoyo 17",
+            2,
+            1,
+            2
+          ],
+          [
+            "Hoyo 18",
+            1,
+            1,
+            2
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 159231,
+        "datos": [
+          [
+            "Hoyo",
+            "MANUEL CARLOS HERNÁNDEZ LEÓN",
+            "JUAN FRANCISCO LAZO CORDOBA",
+            "CARMEN DOMINGUEZ GONZALEZ"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 3",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 4",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 5",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            -2,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 7",
+            1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 9",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 10",
+            -1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 12",
+            1,
+            2,
+            0
+          ],
+          [
+            "Hoyo 13",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 14",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 15",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 16",
+            0,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 17",
+            0,
+            1,
+            1
+          ],
+          [
+            "Hoyo 18",
+            -1,
+            0,
+            0
+          ]
+        ]
+      }
+    }
   },
   "roundIds": [
     {
@@ -39,6 +712,6 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:45.389Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:43.231Z"
 }

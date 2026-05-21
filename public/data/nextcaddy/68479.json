@@ -1,14 +1,14 @@
 {
   "tourId": 68479,
   "url": "https://www.nextcaddy.com/tour/68479",
-  "scrapedAt": "2026-05-09T09:57:39.706Z",
+  "scrapedAt": "2026-05-21T16:37:04.995Z",
   "meta": {
     "name": "MONDAY C. 16.2",
     "organizer": null,
     "course": "Santa María Golf & Country Club",
     "courseCode": "AM86",
-    "dateStart": "16 feb 2026",
-    "dateEnd": "16 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros Facebo",
     "categories": [
       "Caballeros",
@@ -16,13 +16,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-16"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 15,
       "header": [
         "Pos",
         "Jugador",
@@ -203,6 +204,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 15
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -422,6 +430,7 @@
       "nivel": "S"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -438,6 +447,6 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:37.410Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:22.718Z"
 }

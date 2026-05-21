@@ -1,14 +1,14 @@
 {
   "tourId": 69768,
   "url": "https://www.nextcaddy.com/tour/69768",
-  "scrapedAt": "2026-05-09T10:15:30.394Z",
+  "scrapedAt": "2026-05-21T16:38:49.556Z",
   "meta": {
     "name": "POOL DE SENIORS  DE PRIMAVERA (15/04/2026).",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "15 abr 2026",
-    "dateEnd": "15 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "SENIOR",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-15"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Pool De Seniors De Primavera (15/04/2026)",
+      "expectedJugadores": 20,
       "header": [
         "Pos",
         "Jugador",
@@ -260,6 +261,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Pool De Seniors De Primavera (15/04/2026)",
+      "jugadores": 20
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -556,183 +564,6 @@
       "nivel": "4401020013"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74568
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Fernandes, Anthony",
-          "holeNumber": 2,
-          "createdAt": "19/10/25 08:58:12"
-        },
-        {
-          "playerName": "Fontan Porrua, Rafael",
-          "holeNumber": 1,
-          "createdAt": "19/10/25 09:02:58"
-        },
-        {
-          "playerName": "Park, Sang Doo",
-          "holeNumber": 1,
-          "createdAt": "19/10/25 09:03:48"
-        },
-        {
-          "playerName": "Park, Sang Doo",
-          "holeNumber": 2,
-          "createdAt": "19/10/25 09:10:21"
-        },
-        {
-          "playerName": "Trowbridge, George",
-          "holeNumber": 4,
-          "createdAt": "19/10/25 09:21:45"
-        },
-        {
-          "playerName": "Trowbridge, George",
-          "holeNumber": 5,
-          "createdAt": "19/10/25 09:21:45"
-        },
-        {
-          "playerName": "Hidalgo Jordan, Angel",
-          "holeNumber": 5,
-          "createdAt": "19/10/25 09:23:27"
-        },
-        {
-          "playerName": "Trowbridge, George",
-          "holeNumber": 7,
-          "createdAt": "19/10/25 09:57:39"
-        },
-        {
-          "playerName": "Hidalgo Navarro, Maria Jose",
-          "holeNumber": 2,
-          "createdAt": "19/10/25 10:12:41"
-        },
-        {
-          "playerName": "Trowbridge, George",
-          "holeNumber": 9,
-          "createdAt": "19/10/25 10:14:52"
-        },
-        {
-          "playerName": "Fernandes, Anthony",
-          "holeNumber": 7,
-          "createdAt": "19/10/25 10:18:15"
-        },
-        {
-          "playerName": "Hidalgo Jordan, Angel",
-          "holeNumber": 10,
-          "createdAt": "19/10/25 10:30:13"
-        },
-        {
-          "playerName": "Orovio Borrego, Sergio",
-          "holeNumber": 3,
-          "createdAt": "19/10/25 11:05:33"
-        },
-        {
-          "playerName": "Escanez Galera, Nicolas",
-          "holeNumber": 3,
-          "createdAt": "19/10/25 11:05:49"
-        },
-        {
-          "playerName": "Sanchez Gonzalo, Rosa Maria",
-          "holeNumber": 11,
-          "createdAt": "19/10/25 11:24:26"
-        },
-        {
-          "playerName": "Benabdallah Driss, Jamal",
-          "holeNumber": 12,
-          "createdAt": "19/10/25 11:29:39"
-        },
-        {
-          "playerName": "Reijnders Le Rutte, Christiaan",
-          "holeNumber": 15,
-          "createdAt": "19/10/25 11:49:44"
-        },
-        {
-          "playerName": "Reijnders Le Rutte, Christiaan",
-          "holeNumber": 17,
-          "createdAt": "19/10/25 11:49:44"
-        },
-        {
-          "playerName": "Trowbridge, George",
-          "holeNumber": 17,
-          "createdAt": "19/10/25 11:51:01"
-        },
-        {
-          "playerName": "Park, Sang Doo",
-          "holeNumber": 15,
-          "createdAt": "19/10/25 12:01:28"
-        },
-        {
-          "playerName": "Barrdahl, Rutger",
-          "holeNumber": 15,
-          "createdAt": "19/10/25 12:01:34"
-        },
-        {
-          "playerName": "Cunningham, Rosaleen",
-          "holeNumber": 7,
-          "createdAt": "19/10/25 12:02:42"
-        },
-        {
-          "playerName": "Benabdallah Driss, Jamal",
-          "holeNumber": 14,
-          "createdAt": "19/10/25 12:03:26"
-        },
-        {
-          "playerName": "Park, Sang Doo",
-          "holeNumber": 16,
-          "createdAt": "19/10/25 12:20:19"
-        },
-        {
-          "playerName": "Castaño Bardisa, Francisco Jose",
-          "holeNumber": 17,
-          "createdAt": "19/10/25 12:28:29"
-        },
-        {
-          "playerName": "Fernandes, Anthony",
-          "holeNumber": 17,
-          "createdAt": "19/10/25 12:28:59"
-        },
-        {
-          "playerName": "Fontan Porrua, Rafael",
-          "holeNumber": 17,
-          "createdAt": "19/10/25 12:36:54"
-        },
-        {
-          "playerName": "Ahn, Yu Ree",
-          "holeNumber": 17,
-          "createdAt": "19/10/25 12:59:25"
-        },
-        {
-          "playerName": "Egaña Azurmendi, Juan Ignacio",
-          "holeNumber": 14,
-          "createdAt": "19/10/25 13:53:46"
-        },
-        {
-          "playerName": "Lazcano Goitia, Marisol",
-          "holeNumber": 2,
-          "createdAt": "19/10/25 13:56:16"
-        },
-        {
-          "playerName": "Cunningham, Rosaleen",
-          "holeNumber": 17,
-          "createdAt": "19/10/25 14:21:24"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -920,5 +751,183 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:56.950Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74568
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Fernandes, Anthony",
+          "holeNumber": 2,
+          "createdAt": "19/10/25 08:58:12"
+        },
+        {
+          "playerName": "Fontan Porrua, Rafael",
+          "holeNumber": 1,
+          "createdAt": "19/10/25 09:02:58"
+        },
+        {
+          "playerName": "Park, Sang Doo",
+          "holeNumber": 1,
+          "createdAt": "19/10/25 09:03:48"
+        },
+        {
+          "playerName": "Park, Sang Doo",
+          "holeNumber": 2,
+          "createdAt": "19/10/25 09:10:21"
+        },
+        {
+          "playerName": "Trowbridge, George",
+          "holeNumber": 4,
+          "createdAt": "19/10/25 09:21:45"
+        },
+        {
+          "playerName": "Trowbridge, George",
+          "holeNumber": 5,
+          "createdAt": "19/10/25 09:21:45"
+        },
+        {
+          "playerName": "Hidalgo Jordan, Angel",
+          "holeNumber": 5,
+          "createdAt": "19/10/25 09:23:27"
+        },
+        {
+          "playerName": "Trowbridge, George",
+          "holeNumber": 7,
+          "createdAt": "19/10/25 09:57:39"
+        },
+        {
+          "playerName": "Hidalgo Navarro, Maria Jose",
+          "holeNumber": 2,
+          "createdAt": "19/10/25 10:12:41"
+        },
+        {
+          "playerName": "Trowbridge, George",
+          "holeNumber": 9,
+          "createdAt": "19/10/25 10:14:52"
+        },
+        {
+          "playerName": "Fernandes, Anthony",
+          "holeNumber": 7,
+          "createdAt": "19/10/25 10:18:15"
+        },
+        {
+          "playerName": "Hidalgo Jordan, Angel",
+          "holeNumber": 10,
+          "createdAt": "19/10/25 10:30:13"
+        },
+        {
+          "playerName": "Orovio Borrego, Sergio",
+          "holeNumber": 3,
+          "createdAt": "19/10/25 11:05:33"
+        },
+        {
+          "playerName": "Escanez Galera, Nicolas",
+          "holeNumber": 3,
+          "createdAt": "19/10/25 11:05:49"
+        },
+        {
+          "playerName": "Sanchez Gonzalo, Rosa Maria",
+          "holeNumber": 11,
+          "createdAt": "19/10/25 11:24:26"
+        },
+        {
+          "playerName": "Benabdallah Driss, Jamal",
+          "holeNumber": 12,
+          "createdAt": "19/10/25 11:29:39"
+        },
+        {
+          "playerName": "Reijnders Le Rutte, Christiaan",
+          "holeNumber": 15,
+          "createdAt": "19/10/25 11:49:44"
+        },
+        {
+          "playerName": "Reijnders Le Rutte, Christiaan",
+          "holeNumber": 17,
+          "createdAt": "19/10/25 11:49:44"
+        },
+        {
+          "playerName": "Trowbridge, George",
+          "holeNumber": 17,
+          "createdAt": "19/10/25 11:51:01"
+        },
+        {
+          "playerName": "Park, Sang Doo",
+          "holeNumber": 15,
+          "createdAt": "19/10/25 12:01:28"
+        },
+        {
+          "playerName": "Barrdahl, Rutger",
+          "holeNumber": 15,
+          "createdAt": "19/10/25 12:01:34"
+        },
+        {
+          "playerName": "Cunningham, Rosaleen",
+          "holeNumber": 7,
+          "createdAt": "19/10/25 12:02:42"
+        },
+        {
+          "playerName": "Benabdallah Driss, Jamal",
+          "holeNumber": 14,
+          "createdAt": "19/10/25 12:03:26"
+        },
+        {
+          "playerName": "Park, Sang Doo",
+          "holeNumber": 16,
+          "createdAt": "19/10/25 12:20:19"
+        },
+        {
+          "playerName": "Castaño Bardisa, Francisco Jose",
+          "holeNumber": 17,
+          "createdAt": "19/10/25 12:28:29"
+        },
+        {
+          "playerName": "Fernandes, Anthony",
+          "holeNumber": 17,
+          "createdAt": "19/10/25 12:28:59"
+        },
+        {
+          "playerName": "Fontan Porrua, Rafael",
+          "holeNumber": 17,
+          "createdAt": "19/10/25 12:36:54"
+        },
+        {
+          "playerName": "Ahn, Yu Ree",
+          "holeNumber": 17,
+          "createdAt": "19/10/25 12:59:25"
+        },
+        {
+          "playerName": "Egaña Azurmendi, Juan Ignacio",
+          "holeNumber": 14,
+          "createdAt": "19/10/25 13:53:46"
+        },
+        {
+          "playerName": "Lazcano Goitia, Marisol",
+          "holeNumber": 2,
+          "createdAt": "19/10/25 13:56:16"
+        },
+        {
+          "playerName": "Cunningham, Rosaleen",
+          "holeNumber": 17,
+          "createdAt": "19/10/25 14:21:24"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:37.336Z"
 }

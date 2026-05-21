@@ -1,14 +1,14 @@
 {
   "tourId": 68405,
   "url": "https://www.nextcaddy.com/tour/68405",
-  "scrapedAt": "2026-05-09T10:36:26.920Z",
+  "scrapedAt": "2026-05-21T16:37:00.079Z",
   "meta": {
     "name": "4ª P. C. INFANTIL B.K. 9P3 HOYOS 14-02-26",
     "organizer": null,
     "course": "Real Club de Golf Vista Hermosa",
     "courseCode": "AM05",
-    "dateStart": "14 feb 2026",
-    "dateEnd": "14 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "INFANTIL",
@@ -18,74 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-14"
-  },
-  "course": {
-    "par": [
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3
-    ],
-    "si": [
-      15,
-      17,
-      13,
-      3,
-      9,
-      11,
-      7,
-      5,
-      1,
-      16,
-      18,
-      14,
-      4,
-      10,
-      12,
-      8,
-      6,
-      2
-    ],
-    "meters": [
-      120,
-      106,
-      120,
-      60,
-      117,
-      116,
-      118,
-      74,
-      69,
-      120,
-      106,
-      120,
-      60,
-      117,
-      116,
-      118,
-      74,
-      69
     ]
   },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "9 Hoyos Pares 3",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -107,8 +47,7 @@
           "rounds": [],
           "total": 17,
           "toPar": 1,
-          "inscribedId": 2259927,
-          "roundScores": []
+          "inscribedId": 2259927
         },
         {
           "pos": 2,
@@ -119,8 +58,7 @@
           "rounds": [],
           "total": 12,
           "toPar": 6,
-          "inscribedId": 2259924,
-          "roundScores": []
+          "inscribedId": 2259924
         },
         {
           "pos": 3,
@@ -131,8 +69,7 @@
           "rounds": [],
           "total": 11,
           "toPar": 7,
-          "inscribedId": 2259928,
-          "roundScores": []
+          "inscribedId": 2259928
         },
         {
           "pos": 4,
@@ -143,8 +80,7 @@
           "rounds": [],
           "total": 11,
           "toPar": 7,
-          "inscribedId": 2259923,
-          "roundScores": []
+          "inscribedId": 2259923
         },
         {
           "pos": 5,
@@ -155,8 +91,7 @@
           "rounds": [],
           "total": 9,
           "toPar": 9,
-          "inscribedId": 2259926,
-          "roundScores": []
+          "inscribedId": 2259926
         },
         {
           "pos": 6,
@@ -167,8 +102,7 @@
           "rounds": [],
           "total": 4,
           "toPar": 14,
-          "inscribedId": 2259930,
-          "roundScores": []
+          "inscribedId": 2259930
         },
         {
           "pos": 7,
@@ -179,8 +113,7 @@
           "rounds": [],
           "total": 4,
           "toPar": 14,
-          "inscribedId": 2259929,
-          "roundScores": []
+          "inscribedId": 2259929
         },
         {
           "pos": 8,
@@ -191,12 +124,18 @@
           "rounds": [],
           "total": 4,
           "toPar": 14,
-          "inscribedId": 2259925,
-          "roundScores": []
+          "inscribedId": 2259925
         }
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "9 Hoyos Pares 3",
+      "jugadores": 8
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -325,22 +264,6 @@
       "nivel": "AM05473782"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73011
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -420,5 +343,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:24.555Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73011
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:22.127Z"
 }

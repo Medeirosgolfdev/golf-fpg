@@ -1,14 +1,14 @@
 {
   "tourId": 69834,
   "url": "https://www.nextcaddy.com/tour/69834",
-  "scrapedAt": "2026-05-09T10:15:30.665Z",
+  "scrapedAt": "2026-05-21T16:38:49.786Z",
   "meta": {
     "name": "Circuito Senior 7ª Prueba 15-04-26",
     "organizer": null,
     "course": "Real Club de Golf Vista Hermosa",
     "courseCode": "AM05",
-    "dateStart": "15 abr 2026",
-    "dateEnd": "15 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Senior",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-15"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "2ª Categoría",
+      "expectedJugadores": 15,
       "header": [
         "Pos",
         "Jugador",
@@ -205,6 +206,8 @@
     },
     {
       "category": 2,
+      "categoryName": "1ª Categoría",
+      "expectedJugadores": 16,
       "header": [
         "Pos",
         "Jugador",
@@ -396,6 +399,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "2ª Categoría",
+      "jugadores": 15
+    },
+    "2": {
+      "name": "1ª Categoría",
+      "jugadores": 16
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -846,38 +860,6 @@
       "nivel": "AM05288848"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74637
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Calvo Borrego, Ignacio",
-          "holeNumber": 9,
-          "createdAt": "27/10/25 09:53:23"
-        },
-        {
-          "playerName": "Sampedro Abascal, Fernando",
-          "holeNumber": 7,
-          "createdAt": "27/10/25 12:01:53"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1164,5 +1146,38 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:57.322Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74637
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Calvo Borrego, Ignacio",
+          "holeNumber": 9,
+          "createdAt": "27/10/25 09:53:23"
+        },
+        {
+          "playerName": "Sampedro Abascal, Fernando",
+          "holeNumber": 7,
+          "createdAt": "27/10/25 12:01:53"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:37.697Z"
 }

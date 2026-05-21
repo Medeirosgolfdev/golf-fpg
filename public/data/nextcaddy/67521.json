@@ -1,14 +1,14 @@
 {
   "tourId": 67521,
   "url": "https://www.nextcaddy.com/tour/67521",
-  "scrapedAt": "2026-05-09T09:57:19.601Z",
+  "scrapedAt": "2026-05-21T16:36:30.556Z",
   "meta": {
     "name": "5ª P. TORNEO DAMAS 14/01/26",
     "organizer": null,
     "course": "Real Club de Golf Vista Hermosa",
     "courseCode": "AM05",
-    "dateStart": "14 ene 2026",
-    "dateEnd": "14 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras Facebook",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-14"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "2 Cat",
+      "expectedJugadores": 11,
       "header": [
         "Pos",
         "Jugador",
@@ -161,6 +162,8 @@
     },
     {
       "category": 2,
+      "categoryName": "1 Cat",
+      "expectedJugadores": 10,
       "header": [
         "Pos",
         "Jugador",
@@ -286,6 +289,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "2 Cat",
+      "jugadores": 11
+    },
+    "2": {
+      "name": "1 Cat",
+      "jugadores": 10
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -589,22 +603,6 @@
       "nivel": "AM05343743"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71985
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -801,5 +799,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:08.781Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71985
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:04.479Z"
 }

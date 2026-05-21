@@ -1,14 +1,14 @@
 {
   "tourId": 70607,
   "url": "https://www.nextcaddy.com/tour/70607",
-  "scrapedAt": "2026-05-09T10:17:02.301Z",
+  "scrapedAt": "2026-05-21T16:40:45.004Z",
   "meta": {
     "name": "Torneo de Verano Sherry Golf Jerez 2026",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "15 ago 2026",
-    "dateEnd": "15 ago 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -20,12 +20,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-08-15"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -42,6 +44,6 @@
     }
   ],
   "scoreTypes": null,
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:45.133Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:42.484Z"
 }

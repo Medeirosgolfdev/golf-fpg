@@ -1,14 +1,14 @@
 {
   "tourId": 67861,
   "url": "https://www.nextcaddy.com/tour/67861",
-  "scrapedAt": "2026-05-09T10:07:33.314Z",
+  "scrapedAt": "2026-05-21T16:37:56.547Z",
   "meta": {
     "name": "Circuito de Madrid de Profesionales \"El Encín\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "el Encin Golf",
     "courseCode": "CMC8",
-    "dateStart": "16 mar 2026",
-    "dateEnd": "16 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) 25º Circuito De Mad",
     "categories": [
       "Profesional",
@@ -17,13 +17,14 @@
       "Senior",
       "Infantil",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-16"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Final El Encín",
+      "expectedJugadores": 88,
       "header": [
         "Pos",
         "Jugador",
@@ -1007,6 +1008,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Final El Encín",
+      "jugadores": 88
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2276,48 +2284,6 @@
       "nivel": "P+"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72376
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Mansilla Jauregui, Francisco",
-          "holeNumber": 16,
-          "createdAt": "02/08/25 14:28:37"
-        },
-        {
-          "playerName": "Piñeira Fernandez, Fernando",
-          "holeNumber": 2,
-          "createdAt": "02/08/25 14:36:35"
-        },
-        {
-          "playerName": "Luque Cañamero, Victor Manuel",
-          "holeNumber": 14,
-          "createdAt": "02/08/25 14:46:01"
-        },
-        {
-          "playerName": "De La Torre Jaume, Eduardo",
-          "holeNumber": 11,
-          "createdAt": "02/08/25 14:49:21"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -3117,5 +3083,51 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:15.438Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72376
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Mansilla Jauregui, Francisco",
+          "holeNumber": 16,
+          "createdAt": "02/08/25 14:28:37"
+        },
+        {
+          "playerName": "Piñeira Fernandez, Fernando",
+          "holeNumber": 2,
+          "createdAt": "02/08/25 14:36:35"
+        },
+        {
+          "playerName": "Luque Cañamero, Victor Manuel",
+          "holeNumber": 14,
+          "createdAt": "02/08/25 14:46:01"
+        },
+        {
+          "playerName": "De La Torre Jaume, Eduardo",
+          "holeNumber": 11,
+          "createdAt": "02/08/25 14:49:21"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/2397090846_inscritos_pro_encin_2026_-_admitidos.pdf",
+    "/uploads/competiciones/pdf/2986782945_reglas_locales_el_encin_.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:11.710Z"
 }

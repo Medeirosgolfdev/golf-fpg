@@ -1,14 +1,14 @@
 {
   "tourId": 67214,
   "url": "https://www.nextcaddy.com/tour/67214",
-  "scrapedAt": "2026-05-09T09:57:22.890Z",
+  "scrapedAt": "2026-05-21T16:36:36.015Z",
   "meta": {
     "name": "I Torneo RKN Damas y Caballeros · Turno de Mañana 10:00 · Turno de Tarde 13:00",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "18 ene 2026",
-    "dateEnd": "18 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-18"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Individual Señoras Femenino Scratch General",
+      "expectedJugadores": 15,
       "header": [
         "Pos",
         "Jugador",
@@ -205,6 +206,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Individual Señoras Femenino Handicap General",
+      "expectedJugadores": 15,
       "header": [
         "Pos",
         "Jugador",
@@ -386,6 +389,8 @@
     },
     {
       "category": 3,
+      "categoryName": "2 Categoria Masculino Scratch General",
+      "expectedJugadores": 40,
       "header": [
         "Pos",
         "Jugador",
@@ -842,6 +847,8 @@
     },
     {
       "category": 4,
+      "categoryName": "2 Categoria Masculino Handicap General",
+      "expectedJugadores": 40,
       "header": [
         "Pos",
         "Jugador",
@@ -1298,6 +1305,8 @@
     },
     {
       "category": 5,
+      "categoryName": "1 Categoria Masculino Scratch General",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -1523,6 +1532,8 @@
     },
     {
       "category": 6,
+      "categoryName": "1 Categoria Masculino Handicap General",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -1747,6 +1758,33 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Señoras Femenino Scratch General",
+      "jugadores": 15
+    },
+    "2": {
+      "name": "Individual Señoras Femenino Handicap General",
+      "jugadores": 15
+    },
+    "3": {
+      "name": "2 Categoria Masculino Scratch General",
+      "jugadores": 40
+    },
+    "4": {
+      "name": "2 Categoria Masculino Handicap General",
+      "jugadores": 40
+    },
+    "5": {
+      "name": "1 Categoria Masculino Scratch General",
+      "jugadores": 19
+    },
+    "6": {
+      "name": "1 Categoria Masculino Handicap General",
+      "jugadores": 19
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2799,33 +2837,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71619
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Fowler, Joanne",
-          "holeNumber": 6,
-          "createdAt": "19/06/25 10:20:37"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -3499,5 +3510,33 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:06.286Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71619
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Fowler, Joanne",
+          "holeNumber": 6,
+          "createdAt": "19/06/25 10:20:37"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:01.366Z"
 }

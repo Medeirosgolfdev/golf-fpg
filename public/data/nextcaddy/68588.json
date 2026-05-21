@@ -1,7 +1,7 @@
 {
   "tourId": 68588,
   "url": "https://www.nextcaddy.com/tour/68588",
-  "scrapedAt": "2026-05-09T16:03:44.555Z",
+  "scrapedAt": "2026-05-21T16:39:46.365Z",
   "meta": {
     "name": "IV Prueba Circuito Juvenil de P&P (9 hoyos) 3ª Categoría y Noveles - Las Palmeras Golf",
     "organizer": null,
@@ -20,9 +20,187 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Noveles Hándicap",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Lucas Castro Ríos",
+          "licencia": "CP03013489",
+          "hcp": 52,
+          "nivel": "B",
+          "rounds": [],
+          "total": 25,
+          "toPar": -7,
+          "inscribedId": 2314866
+        },
+        {
+          "pos": 2,
+          "name": "Jaime Bravo De Laguna Mora",
+          "licencia": "CP01475679",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2315797
+        },
+        {
+          "pos": 3,
+          "name": "Adriel Sosa Sosa",
+          "licencia": "CP26003572",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2311533
+        },
+        {
+          "pos": 4,
+          "name": "Amir Esmaeilizadeh Padilla",
+          "licencia": "CP26188143",
+          "hcp": 54,
+          "nivel": "I",
+          "rounds": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2312142
+        },
+        {
+          "pos": 5,
+          "name": "Rodrigo Vega Garcia",
+          "licencia": "CP26172346",
+          "hcp": 50.5,
+          "nivel": "I",
+          "rounds": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2317943
+        },
+        {
+          "pos": 6,
+          "name": "Martin Robledano Perez",
+          "licencia": "CP01506145",
+          "hcp": 46.8,
+          "nivel": "B",
+          "rounds": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2314945
+        },
+        {
+          "pos": 7,
+          "name": "Luis Falcon Sarmiento",
+          "licencia": "CP01026149",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2317931
+        },
+        {
+          "pos": 8,
+          "name": "Alvaro Diaz Rodriguez",
+          "licencia": "CP26016110",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2317622
+        },
+        {
+          "pos": null,
+          "name": "Catalina Bagan Marquez",
+          "licencia": "CP26019896",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2317952
+        },
+        {
+          "pos": null,
+          "name": "Alejandro Bagan Marquez",
+          "licencia": "CP26006568",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2317950
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "3ª Categoría Hándicap",
+      "expectedJugadores": 2,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Mariam Gonzalez Jimenez",
+          "licencia": "CP26962412",
+          "hcp": 38.5,
+          "nivel": "A",
+          "rounds": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2309760
+        },
+        {
+          "pos": null,
+          "name": "Victoria Ramirez Santana",
+          "licencia": "CP26054982",
+          "hcp": 36.6,
+          "nivel": "I",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2312431
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Noveles Hándicap",
+      "jugadores": 10
+    },
+    "2": {
+      "name": "3ª Categoría Hándicap",
+      "jugadores": 2
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -37,6 +215,13 @@
       "licencia": "CP26054982",
       "hcp": 36.6,
       "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Catalina Bagan Marquez",
+      "licencia": "CP26019896",
+      "hcp": 54,
+      "nivel": "B"
     },
     {
       "orden": null,
@@ -74,53 +259,130 @@
       "nivel": "B"
     },
     {
+      "orden": 5,
+      "name": "Jaime Bravo De Laguna Mora",
+      "licencia": "CP01475679",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Alvaro Diaz Rodriguez",
+      "licencia": "CP26016110",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Luis Falcon Sarmiento",
+      "licencia": "CP01026149",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 8,
+      "name": "Rodrigo Vega Garcia",
+      "licencia": "CP26172346",
+      "hcp": 50.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 9,
+      "name": "Alejandro Bagan Marquez",
+      "licencia": "CP26006568",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
       "orden": null,
       "name": "Jugador",
-      "licencia": "Fecha Inscripción",
+      "licencia": "Licencia",
       "hcp": null,
-      "nivel": "Licencia"
+      "nivel": "Nivel"
     },
     {
       "orden": 1,
       "name": "Mariam Gonzalez Jimenez",
-      "licencia": "30-04-26 22:25",
+      "licencia": "CP26962412",
       "hcp": 38.5,
-      "nivel": "CP26962412"
+      "nivel": "A"
     },
     {
       "orden": 2,
       "name": "Adriel Sosa Sosa",
-      "licencia": "04-05-26 10:35",
+      "licencia": "CP26003572",
       "hcp": 54,
-      "nivel": "CP26003572"
+      "nivel": "B"
     },
     {
       "orden": 3,
       "name": "Amir Esmaeilizadeh Padilla",
-      "licencia": "04-05-26 21:33",
+      "licencia": "CP26188143",
       "hcp": 54,
-      "nivel": "CP26188143"
+      "nivel": "I"
     },
     {
       "orden": 4,
       "name": "Victoria Ramirez Santana",
-      "licencia": "05-05-26 12:55",
+      "licencia": "CP26054982",
       "hcp": 36.6,
-      "nivel": "CP26054982"
+      "nivel": "I"
     },
     {
       "orden": 5,
       "name": "Lucas Castro Ríos",
-      "licencia": "07-05-26 19:37",
+      "licencia": "CP03013489",
       "hcp": 52,
-      "nivel": "CP03013489"
+      "nivel": "B"
     },
     {
       "orden": 6,
       "name": "Martin Robledano Perez",
-      "licencia": "08-05-26 08:17",
+      "licencia": "CP01506145",
       "hcp": 46.8,
-      "nivel": "CP01506145"
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Jaime Bravo De Laguna Mora",
+      "licencia": "CP01475679",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "Alvaro Diaz Rodriguez",
+      "licencia": "CP26016110",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 9,
+      "name": "Luis Falcon Sarmiento",
+      "licencia": "CP01026149",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 10,
+      "name": "Rodrigo Vega Garcia",
+      "licencia": "CP26172346",
+      "hcp": 50.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 11,
+      "name": "Alejandro Bagan Marquez",
+      "licencia": "CP26006568",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 12,
+      "name": "Catalina Bagan Marquez",
+      "licencia": "CP26019896",
+      "hcp": 54,
+      "nivel": "B"
     }
   ],
   "horarios": [],
@@ -162,5 +424,5 @@
     }
   },
   "pdfs": [],
-  "horariosScrapedAt": "2026-05-18T08:08:37.986Z"
+  "horariosScrapedAt": "2026-05-21T16:42:24.393Z"
 }

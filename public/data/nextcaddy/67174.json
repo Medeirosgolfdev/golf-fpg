@@ -1,14 +1,14 @@
 {
   "tourId": 67174,
   "url": "https://www.nextcaddy.com/tour/67174",
-  "scrapedAt": "2026-05-09T09:57:14.669Z",
+  "scrapedAt": "2026-05-21T16:36:21.276Z",
   "meta": {
     "name": "TORNEO ESCUELA 1º TRIMESTRE",
     "organizer": null,
     "course": "Alborán Golf",
     "courseCode": "AMC7",
-    "dateStart": "04 ene 2026",
-    "dateEnd": "04 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Benjamín  Alevín",
     "categories": [
       "Benjamín",
@@ -18,11 +18,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-04"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -130,6 +131,7 @@
       "nivel": "B"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -146,6 +148,8 @@
     }
   ],
   "scoreTypes": null,
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:26.593Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/67174_cartel_495.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:59.481Z"
 }

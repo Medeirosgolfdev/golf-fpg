@@ -1,14 +1,14 @@
 {
   "tourId": 67830,
   "url": "https://www.nextcaddy.com/tour/67830",
-  "scrapedAt": "2026-05-09T09:49:36.787Z",
+  "scrapedAt": "2026-05-21T16:37:38.150Z",
   "meta": {
     "name": "Torneo de 1ª Categoría Pitch & Putt Masculino y Femenino \"Las Encinas de Boadilla\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Club de Golf Encinas de Boadilla",
     "courseCode": "CM09",
-    "dateStart": "07 mar 2026",
-    "dateEnd": "07 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap) Circuito General D",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-07"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Individual Handicap Femenino",
+      "expectedJugadores": 13,
       "header": [
         "Pos",
         "Jugador",
@@ -183,6 +184,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Individual Handicap Masculino",
+      "expectedJugadores": 49,
       "header": [
         "Pos",
         "Jugador",
@@ -738,6 +741,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Individual Scratch Femenino",
+      "expectedJugadores": 13,
       "header": [
         "Pos",
         "Jugador",
@@ -897,6 +902,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Individual Scratch Masculino",
+      "expectedJugadores": 49,
       "header": [
         "Pos",
         "Jugador",
@@ -1451,6 +1458,25 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Handicap Femenino",
+      "jugadores": 13
+    },
+    "2": {
+      "name": "Individual Handicap Masculino",
+      "jugadores": 49
+    },
+    "3": {
+      "name": "Individual Scratch Femenino",
+      "jugadores": 13
+    },
+    "4": {
+      "name": "Individual Scratch Masculino",
+      "jugadores": 49
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2335,123 +2361,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72326
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Burke, Kevin",
-          "holeNumber": 11,
-          "createdAt": "22/07/25 16:16:10"
-        },
-        {
-          "playerName": "Burke, Kevin",
-          "holeNumber": 15,
-          "createdAt": "22/07/25 16:16:10"
-        },
-        {
-          "playerName": "Davison , Lawrence",
-          "holeNumber": 18,
-          "createdAt": "22/07/25 16:16:11"
-        },
-        {
-          "playerName": "Gonzalez  Lasuen, Pedro",
-          "holeNumber": 10,
-          "createdAt": "22/07/25 16:16:11"
-        },
-        {
-          "playerName": "Gonzalez  Lasuen, Pedro",
-          "holeNumber": 11,
-          "createdAt": "22/07/25 16:16:11"
-        },
-        {
-          "playerName": "Howarth, Andrew",
-          "holeNumber": 6,
-          "createdAt": "22/07/25 16:16:12"
-        },
-        {
-          "playerName": "Pearson, Martin",
-          "holeNumber": 9,
-          "createdAt": "22/07/25 16:16:13"
-        },
-        {
-          "playerName": "Philippe Marcel, Lippens",
-          "holeNumber": 1,
-          "createdAt": "22/07/25 16:16:14"
-        },
-        {
-          "playerName": "Solbrig, Christian Andreas",
-          "holeNumber": 1,
-          "createdAt": "22/07/25 16:16:15"
-        },
-        {
-          "playerName": "Walsoe, Alexander",
-          "holeNumber": 2,
-          "createdAt": "22/07/25 16:16:16"
-        },
-        {
-          "playerName": "Stewart, Graham",
-          "holeNumber": 2,
-          "createdAt": "22/07/25 16:16:18"
-        },
-        {
-          "playerName": "Hill, John",
-          "holeNumber": 6,
-          "createdAt": "22/07/25 16:16:19"
-        },
-        {
-          "playerName": "Hill, John",
-          "holeNumber": 14,
-          "createdAt": "22/07/25 16:16:19"
-        },
-        {
-          "playerName": "Barrett, Paul",
-          "holeNumber": 1,
-          "createdAt": "22/07/25 16:16:19"
-        },
-        {
-          "playerName": "Froysaa, Oyvind",
-          "holeNumber": 1,
-          "createdAt": "22/07/25 16:16:20"
-        },
-        {
-          "playerName": "Froysaa, Oyvind",
-          "holeNumber": 12,
-          "createdAt": "22/07/25 16:16:20"
-        },
-        {
-          "playerName": "Enlart, Marc Antoine",
-          "holeNumber": 18,
-          "createdAt": "22/07/25 16:16:23"
-        }
-      ]
-    },
-    "eagle": {
-      "scoreTypeKey": "eagle",
-      "players": [
-        {
-          "playerName": "Howarth, Andrew",
-          "holeNumber": 9,
-          "createdAt": "22/07/25 16:16:12"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -3017,5 +2926,125 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:14.352Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72326
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Burke, Kevin",
+          "holeNumber": 11,
+          "createdAt": "22/07/25 16:16:10"
+        },
+        {
+          "playerName": "Burke, Kevin",
+          "holeNumber": 15,
+          "createdAt": "22/07/25 16:16:10"
+        },
+        {
+          "playerName": "Davison , Lawrence",
+          "holeNumber": 18,
+          "createdAt": "22/07/25 16:16:11"
+        },
+        {
+          "playerName": "Gonzalez  Lasuen, Pedro",
+          "holeNumber": 10,
+          "createdAt": "22/07/25 16:16:11"
+        },
+        {
+          "playerName": "Gonzalez  Lasuen, Pedro",
+          "holeNumber": 11,
+          "createdAt": "22/07/25 16:16:11"
+        },
+        {
+          "playerName": "Howarth, Andrew",
+          "holeNumber": 6,
+          "createdAt": "22/07/25 16:16:12"
+        },
+        {
+          "playerName": "Pearson, Martin",
+          "holeNumber": 9,
+          "createdAt": "22/07/25 16:16:13"
+        },
+        {
+          "playerName": "Philippe Marcel, Lippens",
+          "holeNumber": 1,
+          "createdAt": "22/07/25 16:16:14"
+        },
+        {
+          "playerName": "Solbrig, Christian Andreas",
+          "holeNumber": 1,
+          "createdAt": "22/07/25 16:16:15"
+        },
+        {
+          "playerName": "Walsoe, Alexander",
+          "holeNumber": 2,
+          "createdAt": "22/07/25 16:16:16"
+        },
+        {
+          "playerName": "Stewart, Graham",
+          "holeNumber": 2,
+          "createdAt": "22/07/25 16:16:18"
+        },
+        {
+          "playerName": "Hill, John",
+          "holeNumber": 6,
+          "createdAt": "22/07/25 16:16:19"
+        },
+        {
+          "playerName": "Hill, John",
+          "holeNumber": 14,
+          "createdAt": "22/07/25 16:16:19"
+        },
+        {
+          "playerName": "Barrett, Paul",
+          "holeNumber": 1,
+          "createdAt": "22/07/25 16:16:19"
+        },
+        {
+          "playerName": "Froysaa, Oyvind",
+          "holeNumber": 1,
+          "createdAt": "22/07/25 16:16:20"
+        },
+        {
+          "playerName": "Froysaa, Oyvind",
+          "holeNumber": 12,
+          "createdAt": "22/07/25 16:16:20"
+        },
+        {
+          "playerName": "Enlart, Marc Antoine",
+          "holeNumber": 18,
+          "createdAt": "22/07/25 16:16:23"
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Howarth, Andrew",
+          "holeNumber": 9,
+          "createdAt": "22/07/25 16:16:12"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/3922706819_arb_reg_loc_encinas_2024.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:10.684Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 70627,
   "url": "https://www.nextcaddy.com/tour/70627",
-  "scrapedAt": "2026-05-09T10:15:55.462Z",
+  "scrapedAt": "2026-05-21T16:39:29.493Z",
   "meta": {
     "name": "TORNEO DE GOLF COLEGIO INGENIEROS",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "08 may 2026",
-    "dateEnd": "08 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-08"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 37,
       "header": [
         "Pos",
         "Jugador",
@@ -447,6 +448,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual Desde 27.7 Hcp",
+      "expectedJugadores": 13,
       "header": [
         "Pos",
         "Jugador",
@@ -606,6 +609,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Handicap Individual Entre 19.6 Y 27.7 Hcp",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -754,6 +759,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Handicap Individual Hasta 19.5 Hcp",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -901,6 +908,25 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 37
+    },
+    "2": {
+      "name": "Handicap Individual Desde 27.7 Hcp",
+      "jugadores": 13
+    },
+    "3": {
+      "name": "Handicap Individual Entre 19.6 Y 27.7 Hcp",
+      "jugadores": 12
+    },
+    "4": {
+      "name": "Handicap Individual Hasta 19.5 Hcp",
+      "jugadores": 12
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1449,22 +1475,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75597
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -1814,5 +1824,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:13:01.997Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75597
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/cartel/1628046651_70627-torneo-de-golf-colegio-ingenieros.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:42.998Z"
 }

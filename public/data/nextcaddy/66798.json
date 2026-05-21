@@ -1,14 +1,14 @@
 {
   "tourId": 66798,
   "url": "https://www.nextcaddy.com/tour/66798",
-  "scrapedAt": "2026-05-09T09:57:23.212Z",
+  "scrapedAt": "2026-05-21T16:36:36.768Z",
   "meta": {
     "name": "1º y 2º Cat. Real Club de Golf de Sevilla",
     "organizer": null,
     "course": "",
     "courseCode": "MAJC",
-    "dateStart": "18 ene 2026",
-    "dateEnd": "18 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Alevin Masculino",
     "categories": [
       "Alevin Masculino",
@@ -22,13 +22,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-18"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Scratch 2ª Categoría",
+      "expectedJugadores": 42,
       "header": [
         "Pos",
         "Jugador",
@@ -507,6 +508,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Clasificación Handicap 2ª Categoría Femenino",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -611,6 +614,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Clasificación Handicap 2ª Categoría Masculino",
+      "expectedJugadores": 34,
       "header": [
         "Pos",
         "Jugador",
@@ -1001,6 +1006,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Clasificación Scratch 1ª Categoría",
+      "expectedJugadores": 38,
       "header": [
         "Pos",
         "Jugador",
@@ -1435,6 +1442,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Clasificación Handicap 1ª Categoría Femenino",
+      "expectedJugadores": 10,
       "header": [
         "Pos",
         "Jugador",
@@ -1561,6 +1570,8 @@
     },
     {
       "category": 6,
+      "categoryName": "Clasificación Handicap 1ª Categoría Masculino",
+      "expectedJugadores": 28,
       "header": [
         "Pos",
         "Jugador",
@@ -1884,6 +1895,33 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Scratch 2ª Categoría",
+      "jugadores": 42
+    },
+    "2": {
+      "name": "Clasificación Handicap 2ª Categoría Femenino",
+      "jugadores": 8
+    },
+    "3": {
+      "name": "Clasificación Handicap 2ª Categoría Masculino",
+      "jugadores": 34
+    },
+    "4": {
+      "name": "Clasificación Scratch 1ª Categoría",
+      "jugadores": 38
+    },
+    "5": {
+      "name": "Clasificación Handicap 1ª Categoría Femenino",
+      "jugadores": 10
+    },
+    "6": {
+      "name": "Clasificación Handicap 1ª Categoría Masculino",
+      "jugadores": 28
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2446,22 +2484,6 @@
       "nivel": "A"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71188
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -3189,5 +3211,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:03.895Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71188
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [
+    "/uploads/competiciones/pdf/3769963759_reglas_locales_2025.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:58.647Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 68910,
   "url": "https://www.nextcaddy.com/tour/68910",
-  "scrapedAt": "2026-05-09T10:16:36.912Z",
+  "scrapedAt": "2026-05-21T16:40:04.681Z",
   "meta": {
     "name": "IV Torneo RKN 2026  1ª a 5ª Categoría · Turno Mañana 9:30 · Turno Tarde 12:30",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "24 may 2026",
-    "dateEnd": "24 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -18,12 +18,505 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-24"
+    ]
   },
   "course": null,
   "leaderboard": [],
-  "inscritos": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Nicolas Serrano Villa",
+      "licencia": "CM41469063",
+      "hcp": 19.1,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Diego Corral Fuentes",
+      "licencia": "CM41348232",
+      "hcp": 32.1,
+      "nivel": "C"
+    },
+    {
+      "orden": 3,
+      "name": "Beltran Gonzalez Rodriguez",
+      "licencia": "CM41052120",
+      "hcp": 11.8,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Nicolas Fernandez Gallardo",
+      "licencia": "CM41993572",
+      "hcp": 12.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 5,
+      "name": "Nicolas Fernandez De La Cruz",
+      "licencia": "CM41969603",
+      "hcp": 12.1,
+      "nivel": "C"
+    },
+    {
+      "orden": 6,
+      "name": "Hugo Martin Villena",
+      "licencia": "CM41952396",
+      "hcp": 8.3,
+      "nivel": "I"
+    },
+    {
+      "orden": 7,
+      "name": "Alfonso Urbano De Andres",
+      "licencia": "CM41305718",
+      "hcp": 15.1,
+      "nivel": "C"
+    },
+    {
+      "orden": 8,
+      "name": "Rodrigo Lopez Gutierrez",
+      "licencia": "CM41963058",
+      "hcp": 9.6,
+      "nivel": "I"
+    },
+    {
+      "orden": 9,
+      "name": "Erik Martin-Pozuelo Medina",
+      "licencia": "CM41982802",
+      "hcp": 24.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 10,
+      "name": "Evan Ruiz Pescador",
+      "licencia": "CM41352712",
+      "hcp": 18.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 11,
+      "name": "Bruno Ruiz Pescador",
+      "licencia": "CM41929131",
+      "hcp": 13.5,
+      "nivel": "C"
+    },
+    {
+      "orden": 12,
+      "name": "Daniel Pastor Fernandez",
+      "licencia": "CM41964537",
+      "hcp": 29.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 13,
+      "name": "Eric Magret Monne",
+      "licencia": "CM41982545",
+      "hcp": 29.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 14,
+      "name": "Hugo Martinez Cerrada",
+      "licencia": "CM41993877",
+      "hcp": 12.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 15,
+      "name": "Arturo Vasquez Simbaqueba",
+      "licencia": "CM60982842",
+      "hcp": 10.7,
+      "nivel": "A"
+    },
+    {
+      "orden": 16,
+      "name": "Santiago Corvera Cuevas",
+      "licencia": "CM41952550",
+      "hcp": 15.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 17,
+      "name": "Pelayo Fernandez-Duran Gutierrez",
+      "licencia": "CM41419461",
+      "hcp": 35.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 18,
+      "name": "Zachary Cen",
+      "licencia": "CM41995218",
+      "hcp": 13.3,
+      "nivel": "I"
+    },
+    {
+      "orden": 19,
+      "name": "Alvaro Gomez-Carrillo Duro",
+      "licencia": "CM02355850",
+      "hcp": 12,
+      "nivel": "I"
+    },
+    {
+      "orden": 20,
+      "name": "Gonzalo Viejo Micale",
+      "licencia": "CM41967554",
+      "hcp": 10.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 21,
+      "name": "Dylan Carabias Agruña",
+      "licencia": "CM02374625",
+      "hcp": 28,
+      "nivel": "A"
+    },
+    {
+      "orden": 22,
+      "name": "Antonio Delgado Merinero",
+      "licencia": "CM02197971",
+      "hcp": 32.1,
+      "nivel": "A"
+    },
+    {
+      "orden": 23,
+      "name": "Juan Martin Martin",
+      "licencia": "CM41196123",
+      "hcp": 35.1,
+      "nivel": "A"
+    },
+    {
+      "orden": 24,
+      "name": "Javier Lorencio Manzano",
+      "licencia": "CM02484753",
+      "hcp": 16.3,
+      "nivel": "I"
+    },
+    {
+      "orden": 25,
+      "name": "Borja Lorencio Manzano",
+      "licencia": "CM02484752",
+      "hcp": 32,
+      "nivel": "I"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Lucia Teresa Gefaell Iñigo",
+      "licencia": "CM41972795",
+      "hcp": 31.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Paloma Hernandez Perez",
+      "licencia": "CM41925362",
+      "hcp": 14.1,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Barbara Garcia De Vinuesa Serrano",
+      "licencia": "CM41992466",
+      "hcp": 12.3,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Paula Rubio Romero",
+      "licencia": "CM41988996",
+      "hcp": 15.1,
+      "nivel": "I"
+    },
+    {
+      "orden": 5,
+      "name": "Macarena Kowalski Blanco",
+      "licencia": "CM41934118",
+      "hcp": 7.1,
+      "nivel": "C"
+    },
+    {
+      "orden": 6,
+      "name": "Daniela Lopez Gutierrez",
+      "licencia": "CM41972255",
+      "hcp": 10.5,
+      "nivel": "C"
+    },
+    {
+      "orden": 7,
+      "name": "Sira Martin-Pozuelo Medina",
+      "licencia": "CM02199385",
+      "hcp": 23.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 8,
+      "name": "Maria Hernanz Hernando",
+      "licencia": "CM41989534",
+      "hcp": 27.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 9,
+      "name": "Patricia Garcia Lopez",
+      "licencia": "CM41988009",
+      "hcp": 23.4,
+      "nivel": "C"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Nicolas Serrano Villa",
+      "licencia": "CM41469063",
+      "hcp": 19.1,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Diego Corral Fuentes",
+      "licencia": "CM41348232",
+      "hcp": 32.1,
+      "nivel": "C"
+    },
+    {
+      "orden": 3,
+      "name": "Lucia Teresa Gefaell Iñigo",
+      "licencia": "CM41972795",
+      "hcp": 31.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Paloma Hernandez Perez",
+      "licencia": "CM41925362",
+      "hcp": 14.1,
+      "nivel": "I"
+    },
+    {
+      "orden": 5,
+      "name": "Barbara Garcia De Vinuesa Serrano",
+      "licencia": "CM41992466",
+      "hcp": 12.3,
+      "nivel": "I"
+    },
+    {
+      "orden": 6,
+      "name": "Paula Rubio Romero",
+      "licencia": "CM41988996",
+      "hcp": 15.1,
+      "nivel": "I"
+    },
+    {
+      "orden": 7,
+      "name": "Beltran Gonzalez Rodriguez",
+      "licencia": "CM41052120",
+      "hcp": 11.8,
+      "nivel": "I"
+    },
+    {
+      "orden": 8,
+      "name": "Nicolas Fernandez Gallardo",
+      "licencia": "CM41993572",
+      "hcp": 12.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 9,
+      "name": "Nicolas Fernandez De La Cruz",
+      "licencia": "CM41969603",
+      "hcp": 12.1,
+      "nivel": "C"
+    },
+    {
+      "orden": 10,
+      "name": "Macarena Kowalski Blanco",
+      "licencia": "CM41934118",
+      "hcp": 7.1,
+      "nivel": "C"
+    },
+    {
+      "orden": 11,
+      "name": "Hugo Martin Villena",
+      "licencia": "CM41952396",
+      "hcp": 8.3,
+      "nivel": "I"
+    },
+    {
+      "orden": 12,
+      "name": "Alfonso Urbano De Andres",
+      "licencia": "CM41305718",
+      "hcp": 15.1,
+      "nivel": "C"
+    },
+    {
+      "orden": 13,
+      "name": "Rodrigo Lopez Gutierrez",
+      "licencia": "CM41963058",
+      "hcp": 9.6,
+      "nivel": "I"
+    },
+    {
+      "orden": 14,
+      "name": "Daniela Lopez Gutierrez",
+      "licencia": "CM41972255",
+      "hcp": 10.5,
+      "nivel": "C"
+    },
+    {
+      "orden": 15,
+      "name": "Erik Martin-Pozuelo Medina",
+      "licencia": "CM41982802",
+      "hcp": 24.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 16,
+      "name": "Sira Martin-Pozuelo Medina",
+      "licencia": "CM02199385",
+      "hcp": 23.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 17,
+      "name": "Evan Ruiz Pescador",
+      "licencia": "CM41352712",
+      "hcp": 18.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 18,
+      "name": "Bruno Ruiz Pescador",
+      "licencia": "CM41929131",
+      "hcp": 13.5,
+      "nivel": "C"
+    },
+    {
+      "orden": 19,
+      "name": "Daniel Pastor Fernandez",
+      "licencia": "CM41964537",
+      "hcp": 29.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 20,
+      "name": "Eric Magret Monne",
+      "licencia": "CM41982545",
+      "hcp": 29.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 21,
+      "name": "Hugo Martinez Cerrada",
+      "licencia": "CM41993877",
+      "hcp": 12.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 22,
+      "name": "Arturo Vasquez Simbaqueba",
+      "licencia": "CM60982842",
+      "hcp": 10.7,
+      "nivel": "A"
+    },
+    {
+      "orden": 23,
+      "name": "Santiago Corvera Cuevas",
+      "licencia": "CM41952550",
+      "hcp": 15.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 24,
+      "name": "Pelayo Fernandez-Duran Gutierrez",
+      "licencia": "CM41419461",
+      "hcp": 35.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 25,
+      "name": "Zachary Cen",
+      "licencia": "CM41995218",
+      "hcp": 13.3,
+      "nivel": "I"
+    },
+    {
+      "orden": 26,
+      "name": "Alvaro Gomez-Carrillo Duro",
+      "licencia": "CM02355850",
+      "hcp": 12,
+      "nivel": "I"
+    },
+    {
+      "orden": 27,
+      "name": "Gonzalo Viejo Micale",
+      "licencia": "CM41967554",
+      "hcp": 10.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 28,
+      "name": "Maria Hernanz Hernando",
+      "licencia": "CM41989534",
+      "hcp": 27.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 29,
+      "name": "Dylan Carabias Agruña",
+      "licencia": "CM02374625",
+      "hcp": 28,
+      "nivel": "A"
+    },
+    {
+      "orden": 30,
+      "name": "Antonio Delgado Merinero",
+      "licencia": "CM02197971",
+      "hcp": 32.1,
+      "nivel": "A"
+    },
+    {
+      "orden": 31,
+      "name": "Juan Martin Martin",
+      "licencia": "CM41196123",
+      "hcp": 35.1,
+      "nivel": "A"
+    },
+    {
+      "orden": 32,
+      "name": "Patricia Garcia Lopez",
+      "licencia": "CM41988009",
+      "hcp": 23.4,
+      "nivel": "C"
+    },
+    {
+      "orden": 33,
+      "name": "Javier Lorencio Manzano",
+      "licencia": "CM02484753",
+      "hcp": 16.3,
+      "nivel": "I"
+    },
+    {
+      "orden": 34,
+      "name": "Borja Lorencio Manzano",
+      "licencia": "CM02484752",
+      "hcp": 32,
+      "nivel": "I"
+    }
+  ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -40,6 +533,6 @@
     }
   ],
   "scoreTypes": null,
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:40.450Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:28.585Z"
 }

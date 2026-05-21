@@ -1,14 +1,14 @@
 {
   "tourId": 67788,
   "url": "https://www.nextcaddy.com/tour/67788",
-  "scrapedAt": "2026-05-09T09:49:38.587Z",
+  "scrapedAt": "2026-05-21T16:38:03.397Z",
   "meta": {
     "name": "Campeonato de Madrid Femenino Pitch & Putt 2026",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Palacio del Negralejo S A",
     "courseCode": "CM33",
-    "dateStart": "21 mar 2026",
-    "dateEnd": "21 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-21"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Scratch Individual Acumulada",
+      "expectedJugadores": 31,
       "header": [
         "Pos",
         "Jugador",
@@ -663,6 +664,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Clasificación Hándicap Individual Acumulada",
+      "expectedJugadores": 31,
       "header": [
         "Pos",
         "Jugador",
@@ -1301,6 +1304,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Scratch Individual Acumulada",
+      "jugadores": 31
+    },
+    "2": {
+      "name": "Clasificación Hándicap Individual Acumulada",
+      "jugadores": 31
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1744,82 +1758,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72278
-    },
-    {
-      "roundNumber": 2,
-      "roundId": 72279
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Rodenas Alarcon, Manuel",
-          "holeNumber": 3,
-          "createdAt": "24/07/25 10:26:25"
-        },
-        {
-          "playerName": "Rodenas Alarcon, Manuel",
-          "holeNumber": 5,
-          "createdAt": "24/07/25 10:47:29"
-        },
-        {
-          "playerName": "Moll Lorca, Salvador",
-          "holeNumber": 6,
-          "createdAt": "24/07/25 11:09:58"
-        },
-        {
-          "playerName": "Beltran Ruiz, Joaquin",
-          "holeNumber": 1,
-          "createdAt": "24/07/25 12:30:19"
-        },
-        {
-          "playerName": "Beltran Ruiz, Joaquin",
-          "holeNumber": 4,
-          "createdAt": "24/07/25 12:30:19"
-        },
-        {
-          "playerName": "Beltran Ruiz, Joaquin",
-          "holeNumber": 7,
-          "createdAt": "24/07/25 12:30:19"
-        },
-        {
-          "playerName": "Beltran Ruiz, Joaquin",
-          "holeNumber": 8,
-          "createdAt": "24/07/25 12:30:19"
-        },
-        {
-          "playerName": "Medina Enkler, Aitor",
-          "holeNumber": 3,
-          "createdAt": "24/07/25 12:31:09"
-        },
-        {
-          "playerName": "Medina Enkler, Aitor",
-          "holeNumber": 6,
-          "createdAt": "24/07/25 12:31:09"
-        },
-        {
-          "playerName": "Medina Enkler, Aitor",
-          "holeNumber": 8,
-          "createdAt": "24/07/25 12:31:09"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -2381,5 +2319,85 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:12.563Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72278
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 72279
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Rodenas Alarcon, Manuel",
+          "holeNumber": 3,
+          "createdAt": "24/07/25 10:26:25"
+        },
+        {
+          "playerName": "Rodenas Alarcon, Manuel",
+          "holeNumber": 5,
+          "createdAt": "24/07/25 10:47:29"
+        },
+        {
+          "playerName": "Moll Lorca, Salvador",
+          "holeNumber": 6,
+          "createdAt": "24/07/25 11:09:58"
+        },
+        {
+          "playerName": "Beltran Ruiz, Joaquin",
+          "holeNumber": 1,
+          "createdAt": "24/07/25 12:30:19"
+        },
+        {
+          "playerName": "Beltran Ruiz, Joaquin",
+          "holeNumber": 4,
+          "createdAt": "24/07/25 12:30:19"
+        },
+        {
+          "playerName": "Beltran Ruiz, Joaquin",
+          "holeNumber": 7,
+          "createdAt": "24/07/25 12:30:19"
+        },
+        {
+          "playerName": "Beltran Ruiz, Joaquin",
+          "holeNumber": 8,
+          "createdAt": "24/07/25 12:30:19"
+        },
+        {
+          "playerName": "Medina Enkler, Aitor",
+          "holeNumber": 3,
+          "createdAt": "24/07/25 12:31:09"
+        },
+        {
+          "playerName": "Medina Enkler, Aitor",
+          "holeNumber": 6,
+          "createdAt": "24/07/25 12:31:09"
+        },
+        {
+          "playerName": "Medina Enkler, Aitor",
+          "holeNumber": 8,
+          "createdAt": "24/07/25 12:31:09"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/67788_cartel_379.pdf",
+    "/uploads/competiciones/pdf/228283342_rrll_negralejo_p&amp;p.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:08.421Z"
 }

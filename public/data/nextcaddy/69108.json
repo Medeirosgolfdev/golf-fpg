@@ -1,14 +1,14 @@
 {
   "tourId": 69108,
   "url": "https://www.nextcaddy.com/tour/69108",
-  "scrapedAt": "2026-05-09T09:58:24.454Z",
+  "scrapedAt": "2026-05-21T16:37:54.442Z",
   "meta": {
     "name": "Liga de Damas Club de Golf Crisol",
     "organizer": null,
     "course": "Alhaurín Golf Hotel & Resort",
     "courseCode": "AM22",
-    "dateStart": "15 mar 2026",
-    "dateEnd": "15 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras Facebook",
     "categories": [
       "Señoras",
@@ -16,13 +16,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-15"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -170,6 +171,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 12
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -347,6 +355,7 @@
       "nivel": "AM00082623"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -363,6 +372,6 @@
     }
   ],
   "scoreTypes": null,
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:40.993Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:30.882Z"
 }

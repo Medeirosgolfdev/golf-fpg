@@ -1,14 +1,14 @@
 {
   "tourId": 61242,
   "url": "https://www.nextcaddy.com/tour/61242",
-  "scrapedAt": "2026-05-09T10:07:54.895Z",
+  "scrapedAt": "2026-05-21T16:38:37.291Z",
   "meta": {
     "name": "Torneo Senior Huelva",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "la Monacilla Golf Club",
     "courseCode": "AMG8",
-    "dateStart": "11 abr 2026",
-    "dateEnd": "11 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Senior",
@@ -18,13 +18,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-11"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Senior 1A Categoria",
+      "expectedJugadores": 31,
       "header": [
         "Pos",
         "Jugador",
@@ -382,6 +383,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Senior 2A Categoria",
+      "expectedJugadores": 20,
       "header": [
         "Pos",
         "Jugador",
@@ -618,6 +621,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Handicap Senior 3A Categoria",
+      "expectedJugadores": 14,
       "header": [
         "Pos",
         "Jugador",
@@ -788,6 +793,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Handicap Damas Senior 1A Categoria",
+      "expectedJugadores": 9,
       "header": [
         "Pos",
         "Jugador",
@@ -903,6 +910,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Handicap Damas Senior 2A Categoria",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -1051,6 +1060,8 @@
     },
     {
       "category": 6,
+      "categoryName": "Handicap Super Seniors",
+      "expectedJugadores": 9,
       "header": [
         "Pos",
         "Jugador",
@@ -1165,6 +1176,33 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Senior 1A Categoria",
+      "jugadores": 31
+    },
+    "2": {
+      "name": "Handicap Senior 2A Categoria",
+      "jugadores": 20
+    },
+    "3": {
+      "name": "Handicap Senior 3A Categoria",
+      "jugadores": 14
+    },
+    "4": {
+      "name": "Handicap Damas Senior 1A Categoria",
+      "jugadores": 9
+    },
+    "5": {
+      "name": "Handicap Damas Senior 2A Categoria",
+      "jugadores": 12
+    },
+    "6": {
+      "name": "Handicap Super Seniors",
+      "jugadores": 9
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2518,405 +2556,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {
-      "p": {
-        "id": 158616,
-        "datos": [
-          [
-            "Tipo",
-            "Total"
-          ],
-          [
-            "Par",
-            474
-          ],
-          [
-            "Birdie",
-            41
-          ],
-          [
-            "Eagle",
-            1
-          ],
-          [
-            "Bogey",
-            677
-          ],
-          [
-            "Peor",
-            428
-          ]
-        ]
-      },
-      "bvg": {
-        "id": 158617,
-        "datos": [
-          [
-            "Hoyo",
-            "Sobrepar"
-          ],
-          [
-            "1",
-            54
-          ],
-          [
-            "2",
-            64
-          ],
-          [
-            "3",
-            82
-          ],
-          [
-            "4",
-            82
-          ],
-          [
-            "5",
-            122
-          ],
-          [
-            "6",
-            77
-          ],
-          [
-            "7",
-            82
-          ],
-          [
-            "8",
-            92
-          ],
-          [
-            "9",
-            119
-          ],
-          [
-            "10",
-            77
-          ],
-          [
-            "11",
-            82
-          ],
-          [
-            "12",
-            55
-          ],
-          [
-            "13",
-            107
-          ],
-          [
-            "14",
-            56
-          ],
-          [
-            "15",
-            109
-          ],
-          [
-            "16",
-            104
-          ],
-          [
-            "17",
-            136
-          ],
-          [
-            "18",
-            124
-          ]
-        ]
-      }
-    },
-    "1": {
-      "lxy": {
-        "id": 158618,
-        "datos": [
-          [
-            "Hoyo",
-            "Cristobal Rojas Gonzalez",
-            "MIGUEL ASTORGA NUÑEZ",
-            "JOSE ANTONIO SANZ ALONSO"
-          ],
-          [
-            "Hoyo 0",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 1",
-            -1,
-            0,
-            0
-          ],
-          [
-            "Hoyo 2",
-            -1,
-            -1,
-            -1
-          ],
-          [
-            "Hoyo 3",
-            -2,
-            -1,
-            -1
-          ],
-          [
-            "Hoyo 4",
-            -4,
-            -2,
-            -1
-          ],
-          [
-            "Hoyo 5",
-            -4,
-            -2,
-            -2
-          ],
-          [
-            "Hoyo 6",
-            -4,
-            -3,
-            -3
-          ],
-          [
-            "Hoyo 7",
-            -6,
-            -3,
-            -3
-          ],
-          [
-            "Hoyo 8",
-            -5,
-            -3,
-            -3
-          ],
-          [
-            "Hoyo 9",
-            -5,
-            -2,
-            -3
-          ],
-          [
-            "Hoyo 10",
-            -6,
-            -1,
-            -2
-          ],
-          [
-            "Hoyo 11",
-            -7,
-            -1,
-            -4
-          ],
-          [
-            "Hoyo 12",
-            -7,
-            -2,
-            -3
-          ],
-          [
-            "Hoyo 13",
-            -8,
-            -2,
-            -5
-          ],
-          [
-            "Hoyo 14",
-            -7,
-            -3,
-            -5
-          ],
-          [
-            "Hoyo 15",
-            -8,
-            -4,
-            -7
-          ],
-          [
-            "Hoyo 16",
-            -7,
-            -4,
-            -5
-          ],
-          [
-            "Hoyo 17",
-            -8,
-            -5,
-            -6
-          ],
-          [
-            "Hoyo 18",
-            -7,
-            -6,
-            -5
-          ]
-        ]
-      },
-      "hvg": {
-        "id": 158619,
-        "datos": [
-          [
-            "Hoyo",
-            "Cristobal Rojas Gonzalez",
-            "MIGUEL ASTORGA NUÑEZ",
-            "JOSE ANTONIO SANZ ALONSO"
-          ],
-          [
-            "Hoyo 0",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 1",
-            -1,
-            0,
-            0
-          ],
-          [
-            "Hoyo 2",
-            0,
-            -1,
-            -1
-          ],
-          [
-            "Hoyo 3",
-            -1,
-            0,
-            0
-          ],
-          [
-            "Hoyo 4",
-            -2,
-            -1,
-            0
-          ],
-          [
-            "Hoyo 5",
-            0,
-            0,
-            -1
-          ],
-          [
-            "Hoyo 6",
-            0,
-            -1,
-            -1
-          ],
-          [
-            "Hoyo 7",
-            -2,
-            0,
-            0
-          ],
-          [
-            "Hoyo 8",
-            1,
-            0,
-            0
-          ],
-          [
-            "Hoyo 9",
-            0,
-            1,
-            0
-          ],
-          [
-            "Hoyo 10",
-            -1,
-            1,
-            1
-          ],
-          [
-            "Hoyo 11",
-            -1,
-            0,
-            -2
-          ],
-          [
-            "Hoyo 12",
-            0,
-            -1,
-            1
-          ],
-          [
-            "Hoyo 13",
-            -1,
-            0,
-            -2
-          ],
-          [
-            "Hoyo 14",
-            1,
-            -1,
-            0
-          ],
-          [
-            "Hoyo 15",
-            -1,
-            -1,
-            -2
-          ],
-          [
-            "Hoyo 16",
-            1,
-            0,
-            2
-          ],
-          [
-            "Hoyo 17",
-            -1,
-            -1,
-            -1
-          ],
-          [
-            "Hoyo 18",
-            1,
-            -1,
-            1
-          ]
-        ]
-      }
-    }
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 64931
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Byrne, Kieran",
-          "holeNumber": 9,
-          "createdAt": "30/09/24 11:16:15"
-        },
-        {
-          "playerName": "Rodgers, Glynn",
-          "holeNumber": 3,
-          "createdAt": "30/09/24 11:43:41"
-        },
-        {
-          "playerName": "Marney, Mike",
-          "holeNumber": 18,
-          "createdAt": "30/09/24 11:58:50"
-        },
-        {
-          "playerName": "Pearse 2, Tony",
-          "holeNumber": 8,
-          "createdAt": "30/09/24 12:35:25"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -3023,15 +2662,6 @@
         {
           "time": "09:00",
           "tee": 4,
-          "name": "Juan Jose Hernandez Gonzalez-Meneses",
-          "hcp": 9.6,
-          "ins": "2290083",
-          "jid": "64931",
-          "nivel": "S"
-        },
-        {
-          "time": "09:00",
-          "tee": 4,
           "name": "Juan Bautista Jimenez",
           "hcp": 9.6,
           "ins": "2292700",
@@ -3041,9 +2671,9 @@
         {
           "time": "09:00",
           "tee": 4,
-          "name": "Goyo Chanfreut Rodriguez",
-          "hcp": 9.8,
-          "ins": "2286691",
+          "name": "Juan Jose Hernandez Gonzalez-Meneses",
+          "hcp": 9.6,
+          "ins": "2290083",
           "jid": "64931",
           "nivel": "S"
         },
@@ -3053,6 +2683,15 @@
           "name": "Juan Manuel Perez Jurado",
           "hcp": 9.8,
           "ins": "2289594",
+          "jid": "64931",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 4,
+          "name": "Goyo Chanfreut Rodriguez",
+          "hcp": 9.8,
+          "ins": "2286691",
           "jid": "64931",
           "nivel": "S"
         },
@@ -3068,18 +2707,18 @@
         {
           "time": "09:00",
           "tee": 5,
-          "name": "Jorge Gonzalez Rincon",
+          "name": "Alistair Marshall",
           "hcp": 10.1,
-          "ins": "2294685",
+          "ins": "2292521",
           "jid": "64931",
           "nivel": "S"
         },
         {
           "time": "09:00",
           "tee": 5,
-          "name": "Alistair Marshall",
+          "name": "Jorge Gonzalez Rincon",
           "hcp": 10.1,
-          "ins": "2292521",
+          "ins": "2294685",
           "jid": "64931",
           "nivel": "S"
         },
@@ -3131,18 +2770,18 @@
         {
           "time": "09:00",
           "tee": 7,
-          "name": "Francisco Jose Martin Carrellan",
+          "name": "Tomas Gomez Fernandez",
           "hcp": 13.8,
-          "ins": "2292697",
+          "ins": "2290088",
           "jid": "64931",
           "nivel": "S"
         },
         {
           "time": "09:00",
           "tee": 7,
-          "name": "Tomas Gomez Fernandez",
+          "name": "Francisco Jose Martin Carrellan",
           "hcp": 13.8,
-          "ins": "2290088",
+          "ins": "2292697",
           "jid": "64931",
           "nivel": "S"
         },
@@ -3779,5 +3418,410 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:02.791Z"
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 158616,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            474
+          ],
+          [
+            "Birdie",
+            41
+          ],
+          [
+            "Eagle",
+            1
+          ],
+          [
+            "Bogey",
+            677
+          ],
+          [
+            "Peor",
+            428
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 158617,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            54
+          ],
+          [
+            "2",
+            64
+          ],
+          [
+            "3",
+            82
+          ],
+          [
+            "4",
+            82
+          ],
+          [
+            "5",
+            122
+          ],
+          [
+            "6",
+            77
+          ],
+          [
+            "7",
+            82
+          ],
+          [
+            "8",
+            92
+          ],
+          [
+            "9",
+            119
+          ],
+          [
+            "10",
+            77
+          ],
+          [
+            "11",
+            82
+          ],
+          [
+            "12",
+            55
+          ],
+          [
+            "13",
+            107
+          ],
+          [
+            "14",
+            56
+          ],
+          [
+            "15",
+            109
+          ],
+          [
+            "16",
+            104
+          ],
+          [
+            "17",
+            136
+          ],
+          [
+            "18",
+            124
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 158618,
+        "datos": [
+          [
+            "Hoyo",
+            "Cristobal Rojas Gonzalez",
+            "MIGUEL ASTORGA NUÑEZ",
+            "JOSE ANTONIO SANZ ALONSO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            -2,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 4",
+            -4,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 5",
+            -4,
+            -2,
+            -2
+          ],
+          [
+            "Hoyo 6",
+            -4,
+            -3,
+            -3
+          ],
+          [
+            "Hoyo 7",
+            -6,
+            -3,
+            -3
+          ],
+          [
+            "Hoyo 8",
+            -5,
+            -3,
+            -3
+          ],
+          [
+            "Hoyo 9",
+            -5,
+            -2,
+            -3
+          ],
+          [
+            "Hoyo 10",
+            -6,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 11",
+            -7,
+            -1,
+            -4
+          ],
+          [
+            "Hoyo 12",
+            -7,
+            -2,
+            -3
+          ],
+          [
+            "Hoyo 13",
+            -8,
+            -2,
+            -5
+          ],
+          [
+            "Hoyo 14",
+            -7,
+            -3,
+            -5
+          ],
+          [
+            "Hoyo 15",
+            -8,
+            -4,
+            -7
+          ],
+          [
+            "Hoyo 16",
+            -7,
+            -4,
+            -5
+          ],
+          [
+            "Hoyo 17",
+            -8,
+            -5,
+            -6
+          ],
+          [
+            "Hoyo 18",
+            -7,
+            -6,
+            -5
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 158619,
+        "datos": [
+          [
+            "Hoyo",
+            "Cristobal Rojas Gonzalez",
+            "MIGUEL ASTORGA NUÑEZ",
+            "JOSE ANTONIO SANZ ALONSO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 2",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 4",
+            -2,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 5",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 7",
+            -2,
+            0,
+            0
+          ],
+          [
+            "Hoyo 8",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 9",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 10",
+            -1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 11",
+            -1,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 12",
+            0,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 13",
+            -1,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 14",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 15",
+            -1,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 16",
+            1,
+            0,
+            2
+          ],
+          [
+            "Hoyo 17",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 18",
+            1,
+            -1,
+            1
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 64931
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Byrne, Kieran",
+          "holeNumber": 9,
+          "createdAt": "30/09/24 11:16:15"
+        },
+        {
+          "playerName": "Rodgers, Glynn",
+          "holeNumber": 3,
+          "createdAt": "30/09/24 11:43:41"
+        },
+        {
+          "playerName": "Marney, Mike",
+          "holeNumber": 18,
+          "createdAt": "30/09/24 11:58:50"
+        },
+        {
+          "playerName": "Pearse 2, Tony",
+          "holeNumber": 8,
+          "createdAt": "30/09/24 12:35:25"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/cartel/1334340437_61242-torneo-senior-huelva.pdf",
+    "/uploads/competiciones/pdf/3414180747_posiciones_banderas_next_caddy.pdf",
+    "/uploads/circular/2026/539256dd2240e917cb5b247e369c5c30.pdf",
+    "/uploads/competiciones/pdf/1813706562_reglas_locales.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:54.636Z"
 }

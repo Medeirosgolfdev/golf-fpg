@@ -1,14 +1,14 @@
 {
   "tourId": 69057,
   "url": "https://www.nextcaddy.com/tour/69057",
-  "scrapedAt": "2026-05-09T10:07:37.931Z",
+  "scrapedAt": "2026-05-21T16:38:07.012Z",
   "meta": {
     "name": "VII partida de liguilla temporada 2025-26",
     "organizer": null,
     "course": "Rota Club de Golf",
     "courseCode": "AME7",
-    "dateStart": "21 mar 2026",
-    "dateEnd": "21 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-21"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Vii Partida Liguilla Rcg 2025 - 26",
+      "expectedJugadores": 87,
       "header": [
         "Pos",
         "Jugador",
@@ -996,6 +997,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Vii Partida Liguilla Rcg 2025 - 26",
+      "jugadores": 87
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2230,22 +2238,6 @@
       "nivel": "J"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73785
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -3018,5 +3010,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:32.278Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73785
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:30.524Z"
 }

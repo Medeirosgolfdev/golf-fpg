@@ -1,14 +1,14 @@
 {
   "tourId": 68816,
   "url": "https://www.nextcaddy.com/tour/68816",
-  "scrapedAt": "2026-05-09T09:57:57.077Z",
+  "scrapedAt": "2026-05-21T16:37:26.358Z",
   "meta": {
     "name": "6ª JORNADA LIGA LA CARTUJA DE SEVILLA",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "28 feb 2026",
-    "dateEnd": "28 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-28"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual Femenino",
+      "expectedJugadores": 17,
       "header": [
         "Pos",
         "Jugador",
@@ -227,6 +228,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual Masculino Desde 30.1 Hcp",
+      "expectedJugadores": 16,
       "header": [
         "Pos",
         "Jugador",
@@ -419,6 +422,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Handicap Individual Masculino Entre 20.1 Y 30.1 Hcp",
+      "expectedJugadores": 31,
       "header": [
         "Pos",
         "Jugador",
@@ -776,6 +781,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Handicap Individual Masculino Hasta 20 Hcp",
+      "expectedJugadores": 15,
       "header": [
         "Pos",
         "Jugador",
@@ -956,6 +963,25 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Femenino",
+      "jugadores": 17
+    },
+    "2": {
+      "name": "Handicap Individual Masculino Desde 30.1 Hcp",
+      "jugadores": 16
+    },
+    "3": {
+      "name": "Handicap Individual Masculino Entre 20.1 Y 30.1 Hcp",
+      "jugadores": 31
+    },
+    "4": {
+      "name": "Handicap Individual Masculino Hasta 20 Hcp",
+      "jugadores": 15
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2078,22 +2104,6 @@
       "nivel": "AMF7608470"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73514
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -2812,5 +2822,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:30.257Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73514
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:28.374Z"
 }

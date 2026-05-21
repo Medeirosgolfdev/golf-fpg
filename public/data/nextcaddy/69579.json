@@ -1,14 +1,14 @@
 {
   "tourId": 69579,
   "url": "https://www.nextcaddy.com/tour/69579",
-  "scrapedAt": "2026-05-09T10:07:53.969Z",
+  "scrapedAt": "2026-05-21T16:38:35.394Z",
   "meta": {
     "name": "Sherry International Golf Group (SIGG) - Viernes 10 Abril 2026 (Grupo privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "10 abr 2026",
-    "dateEnd": "10 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-10"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 28,
       "header": [
         "Pos",
         "Jugador",
@@ -347,6 +348,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 28
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -762,38 +770,6 @@
       "nivel": "AM00909904"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74350
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Cunningham, Rosaleen",
-          "holeNumber": 11,
-          "createdAt": "14/10/25 11:04:39"
-        },
-        {
-          "playerName": "Sanchez Gonzalo, Rosa Maria",
-          "holeNumber": 12,
-          "createdAt": "14/10/25 11:27:50"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1053,5 +1029,38 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:55.307Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74350
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Cunningham, Rosaleen",
+          "holeNumber": 11,
+          "createdAt": "14/10/25 11:04:39"
+        },
+        {
+          "playerName": "Sanchez Gonzalo, Rosa Maria",
+          "holeNumber": 12,
+          "createdAt": "14/10/25 11:27:50"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:35.544Z"
 }

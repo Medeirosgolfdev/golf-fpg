@@ -1,14 +1,14 @@
 {
   "tourId": 70466,
   "url": "https://www.nextcaddy.com/tour/70466",
-  "scrapedAt": "2026-05-09T10:15:49.485Z",
+  "scrapedAt": "2026-05-21T16:39:20.584Z",
   "meta": {
     "name": "MEMORIAL GABRIEL LOPEZ",
     "organizer": null,
     "course": "Montecastillo Barceló Golf Club",
     "courseCode": "AM29",
-    "dateStart": "02 may 2026",
-    "dateEnd": "02 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-02"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -374,168 +375,6 @@
       "nivel": "M"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75410
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Gonzalez Alonso, Bernabe - Rodriguez Rivero, Carlos Javier",
-          "holeNumber": 1,
-          "createdAt": "15/11/25 14:32:45"
-        },
-        {
-          "playerName": "Dominguez Cabrera, Marcial - Macias Torres, Antonio",
-          "holeNumber": 1,
-          "createdAt": "15/11/25 14:37:19"
-        },
-        {
-          "playerName": "Muñoz Campos, Rosa - Escuder Martin, Ana Maria",
-          "holeNumber": 1,
-          "createdAt": "15/11/25 14:43:15"
-        },
-        {
-          "playerName": "Fernandez De Caleya Pujol, Cesar - Calzadilla Mangan, Noel",
-          "holeNumber": 4,
-          "createdAt": "15/11/25 14:53:21"
-        },
-        {
-          "playerName": "Velazquez Morales, Maria - Crespo, Cesar",
-          "holeNumber": 6,
-          "createdAt": "15/11/25 14:58:23"
-        },
-        {
-          "playerName": "Fernandez De Caleya Pujol, Cesar - Calzadilla Mangan, Noel",
-          "holeNumber": 5,
-          "createdAt": "15/11/25 14:58:27"
-        },
-        {
-          "playerName": "Gonzalez Alonso, Bernabe - Rodriguez Rivero, Carlos Javier",
-          "holeNumber": 6,
-          "createdAt": "15/11/25 14:59:34"
-        },
-        {
-          "playerName": "Caceres Rodriguez, Francisco - Marrero Benitez, Yeray",
-          "holeNumber": 3,
-          "createdAt": "15/11/25 15:00:32"
-        },
-        {
-          "playerName": "Gonzalez Alonso, Bernabe - Rodriguez Rivero, Carlos Javier",
-          "holeNumber": 8,
-          "createdAt": "15/11/25 15:08:44"
-        },
-        {
-          "playerName": "Dominguez Cabrera, Marcial - Macias Torres, Antonio",
-          "holeNumber": 8,
-          "createdAt": "15/11/25 15:14:01"
-        },
-        {
-          "playerName": "Velazquez Morales, Maria - Crespo, Cesar",
-          "holeNumber": 10,
-          "createdAt": "15/11/25 15:17:34"
-        },
-        {
-          "playerName": "Caceres Rodriguez, Francisco - Marrero Benitez, Yeray",
-          "holeNumber": 7,
-          "createdAt": "15/11/25 15:18:04"
-        },
-        {
-          "playerName": "Caceres Rodriguez, Francisco - Marrero Benitez, Yeray",
-          "holeNumber": 8,
-          "createdAt": "15/11/25 15:22:15"
-        },
-        {
-          "playerName": "Muñoz Campos, Rosa - Escuder Martin, Ana Maria",
-          "holeNumber": 8,
-          "createdAt": "15/11/25 15:23:15"
-        },
-        {
-          "playerName": "Gonzalez Garcia, Maria - Bernabeu Pardo, Jose Maria",
-          "holeNumber": 7,
-          "createdAt": "15/11/25 15:28:19"
-        },
-        {
-          "playerName": "Rodriguez Brito, Juan Pedro - Reyes  De Paz, Alejandro",
-          "holeNumber": 5,
-          "createdAt": "15/11/25 15:28:54"
-        },
-        {
-          "playerName": "Rodriguez Brito, Juan Pedro - Reyes  De Paz, Alejandro",
-          "holeNumber": 9,
-          "createdAt": "15/11/25 15:28:54"
-        },
-        {
-          "playerName": "Gonzalez Alonso, Bernabe - Rodriguez Rivero, Carlos Javier",
-          "holeNumber": 12,
-          "createdAt": "15/11/25 15:29:15"
-        },
-        {
-          "playerName": "Fernandez De Caleya Pujol, Cesar - Calzadilla Mangan, Noel",
-          "holeNumber": 11,
-          "createdAt": "15/11/25 15:35:19"
-        },
-        {
-          "playerName": "Gonzalez Garcia, Maria - Bernabeu Pardo, Jose Maria",
-          "holeNumber": 9,
-          "createdAt": "15/11/25 15:36:19"
-        },
-        {
-          "playerName": "Muñoz Campos, Rosa - Escuder Martin, Ana Maria",
-          "holeNumber": 11,
-          "createdAt": "15/11/25 15:38:23"
-        },
-        {
-          "playerName": "Fernandez De Caleya Pujol, Cesar - Calzadilla Mangan, Noel",
-          "holeNumber": 13,
-          "createdAt": "15/11/25 15:44:08"
-        },
-        {
-          "playerName": "Muñoz Campos, Rosa - Escuder Martin, Ana Maria",
-          "holeNumber": 13,
-          "createdAt": "15/11/25 15:51:15"
-        },
-        {
-          "playerName": "Caceres Rodriguez, Francisco - Marrero Benitez, Yeray",
-          "holeNumber": 13,
-          "createdAt": "15/11/25 15:53:18"
-        },
-        {
-          "playerName": "Ramirez Naranjo, Esther - Jimenez Garcia, Patricia Maria",
-          "holeNumber": 14,
-          "createdAt": "15/11/25 15:55:27"
-        },
-        {
-          "playerName": "Fernandez De Caleya Pujol, Cesar - Calzadilla Mangan, Noel",
-          "holeNumber": 16,
-          "createdAt": "15/11/25 16:01:03"
-        },
-        {
-          "playerName": "Caceres Rodriguez, Francisco - Marrero Benitez, Yeray",
-          "holeNumber": 15,
-          "createdAt": "15/11/25 16:05:51"
-        },
-        {
-          "playerName": "Ramirez Naranjo, Esther - Jimenez Garcia, Patricia Maria",
-          "holeNumber": 17,
-          "createdAt": "15/11/25 16:08:40"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -759,5 +598,170 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:13:00.683Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75410
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Gonzalez Alonso, Bernabe - Rodriguez Rivero, Carlos Javier",
+          "holeNumber": 1,
+          "createdAt": "15/11/25 14:32:45"
+        },
+        {
+          "playerName": "Dominguez Cabrera, Marcial - Macias Torres, Antonio",
+          "holeNumber": 1,
+          "createdAt": "15/11/25 14:37:19"
+        },
+        {
+          "playerName": "Muñoz Campos, Rosa - Escuder Martin, Ana Maria",
+          "holeNumber": 1,
+          "createdAt": "15/11/25 14:43:15"
+        },
+        {
+          "playerName": "Fernandez De Caleya Pujol, Cesar - Calzadilla Mangan, Noel",
+          "holeNumber": 4,
+          "createdAt": "15/11/25 14:53:21"
+        },
+        {
+          "playerName": "Velazquez Morales, Maria - Crespo, Cesar",
+          "holeNumber": 6,
+          "createdAt": "15/11/25 14:58:23"
+        },
+        {
+          "playerName": "Fernandez De Caleya Pujol, Cesar - Calzadilla Mangan, Noel",
+          "holeNumber": 5,
+          "createdAt": "15/11/25 14:58:27"
+        },
+        {
+          "playerName": "Gonzalez Alonso, Bernabe - Rodriguez Rivero, Carlos Javier",
+          "holeNumber": 6,
+          "createdAt": "15/11/25 14:59:34"
+        },
+        {
+          "playerName": "Caceres Rodriguez, Francisco - Marrero Benitez, Yeray",
+          "holeNumber": 3,
+          "createdAt": "15/11/25 15:00:32"
+        },
+        {
+          "playerName": "Gonzalez Alonso, Bernabe - Rodriguez Rivero, Carlos Javier",
+          "holeNumber": 8,
+          "createdAt": "15/11/25 15:08:44"
+        },
+        {
+          "playerName": "Dominguez Cabrera, Marcial - Macias Torres, Antonio",
+          "holeNumber": 8,
+          "createdAt": "15/11/25 15:14:01"
+        },
+        {
+          "playerName": "Velazquez Morales, Maria - Crespo, Cesar",
+          "holeNumber": 10,
+          "createdAt": "15/11/25 15:17:34"
+        },
+        {
+          "playerName": "Caceres Rodriguez, Francisco - Marrero Benitez, Yeray",
+          "holeNumber": 7,
+          "createdAt": "15/11/25 15:18:04"
+        },
+        {
+          "playerName": "Caceres Rodriguez, Francisco - Marrero Benitez, Yeray",
+          "holeNumber": 8,
+          "createdAt": "15/11/25 15:22:15"
+        },
+        {
+          "playerName": "Muñoz Campos, Rosa - Escuder Martin, Ana Maria",
+          "holeNumber": 8,
+          "createdAt": "15/11/25 15:23:15"
+        },
+        {
+          "playerName": "Gonzalez Garcia, Maria - Bernabeu Pardo, Jose Maria",
+          "holeNumber": 7,
+          "createdAt": "15/11/25 15:28:19"
+        },
+        {
+          "playerName": "Rodriguez Brito, Juan Pedro - Reyes  De Paz, Alejandro",
+          "holeNumber": 5,
+          "createdAt": "15/11/25 15:28:54"
+        },
+        {
+          "playerName": "Rodriguez Brito, Juan Pedro - Reyes  De Paz, Alejandro",
+          "holeNumber": 9,
+          "createdAt": "15/11/25 15:28:54"
+        },
+        {
+          "playerName": "Gonzalez Alonso, Bernabe - Rodriguez Rivero, Carlos Javier",
+          "holeNumber": 12,
+          "createdAt": "15/11/25 15:29:15"
+        },
+        {
+          "playerName": "Fernandez De Caleya Pujol, Cesar - Calzadilla Mangan, Noel",
+          "holeNumber": 11,
+          "createdAt": "15/11/25 15:35:19"
+        },
+        {
+          "playerName": "Gonzalez Garcia, Maria - Bernabeu Pardo, Jose Maria",
+          "holeNumber": 9,
+          "createdAt": "15/11/25 15:36:19"
+        },
+        {
+          "playerName": "Muñoz Campos, Rosa - Escuder Martin, Ana Maria",
+          "holeNumber": 11,
+          "createdAt": "15/11/25 15:38:23"
+        },
+        {
+          "playerName": "Fernandez De Caleya Pujol, Cesar - Calzadilla Mangan, Noel",
+          "holeNumber": 13,
+          "createdAt": "15/11/25 15:44:08"
+        },
+        {
+          "playerName": "Muñoz Campos, Rosa - Escuder Martin, Ana Maria",
+          "holeNumber": 13,
+          "createdAt": "15/11/25 15:51:15"
+        },
+        {
+          "playerName": "Caceres Rodriguez, Francisco - Marrero Benitez, Yeray",
+          "holeNumber": 13,
+          "createdAt": "15/11/25 15:53:18"
+        },
+        {
+          "playerName": "Ramirez Naranjo, Esther - Jimenez Garcia, Patricia Maria",
+          "holeNumber": 14,
+          "createdAt": "15/11/25 15:55:27"
+        },
+        {
+          "playerName": "Fernandez De Caleya Pujol, Cesar - Calzadilla Mangan, Noel",
+          "holeNumber": 16,
+          "createdAt": "15/11/25 16:01:03"
+        },
+        {
+          "playerName": "Caceres Rodriguez, Francisco - Marrero Benitez, Yeray",
+          "holeNumber": 15,
+          "createdAt": "15/11/25 16:05:51"
+        },
+        {
+          "playerName": "Ramirez Naranjo, Esther - Jimenez Garcia, Patricia Maria",
+          "holeNumber": 17,
+          "createdAt": "15/11/25 16:08:40"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/cartel/2145915858_70466-memorial-gabriel-lopez.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:41.286Z"
 }

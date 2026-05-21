@@ -1,14 +1,14 @@
 {
   "tourId": 69645,
   "url": "https://www.nextcaddy.com/tour/69645",
-  "scrapedAt": "2026-05-09T10:15:35.364Z",
+  "scrapedAt": "2026-05-21T16:38:58.066Z",
   "meta": {
     "name": "IV Torneo ZOF - 19 Abril 2026 (Grupo privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "19 abr 2026",
-    "dateEnd": "19 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-19"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 20,
       "header": [
         "Pos",
         "Jugador",
@@ -259,6 +260,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 20
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -546,6 +554,193 @@
       "licencia": "19-04-26 08:12",
       "hcp": 19.1,
       "nivel": "AMC3921569"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "08:20",
+          "tee": 10,
+          "name": "Rodrigo Cuadrado De Llano",
+          "hcp": 10.8,
+          "ins": "2293832",
+          "jid": "74418",
+          "nivel": "S"
+        },
+        {
+          "time": "08:20",
+          "tee": 10,
+          "name": "Francisco Javier De La Villa Ruiz",
+          "hcp": 20.3,
+          "ins": "2293371",
+          "jid": "74418",
+          "nivel": "S"
+        },
+        {
+          "time": "08:20",
+          "tee": 10,
+          "name": "Jaime Fe Ripalda",
+          "hcp": 22.1,
+          "ins": "2293355",
+          "jid": "74418",
+          "nivel": "S"
+        },
+        {
+          "time": "08:20",
+          "tee": 10,
+          "name": "Jesus Cantos Ruiz",
+          "hcp": 19.1,
+          "ins": "2301833",
+          "jid": "74418",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Jose Luis Oviedo Granados",
+          "hcp": 15.3,
+          "ins": "2293502",
+          "jid": "74418",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Jose Manuel Rodriguez Laguno",
+          "hcp": 14.4,
+          "ins": "2298199",
+          "jid": "74418",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Antonio Rios Rey",
+          "hcp": 14.1,
+          "ins": "2293363",
+          "jid": "74418",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Fermin Garcia Villaescusa",
+          "hcp": 17.9,
+          "ins": "2295966",
+          "jid": "74418",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 10,
+          "name": "Gabriel Fernandez Barbera",
+          "hcp": 26.4,
+          "ins": "2293369",
+          "jid": "74418",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 10,
+          "name": "Agustin Garcia Villaescusa",
+          "hcp": 18.5,
+          "ins": "2298198",
+          "jid": "74418",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 10,
+          "name": "Cayetano Del Pino Iñiguez",
+          "hcp": 18,
+          "ins": "2298242",
+          "jid": "74418",
+          "nivel": "S"
+        },
+        {
+          "time": "08:30",
+          "tee": 10,
+          "name": "Fernando Leon Fernandez",
+          "hcp": 22,
+          "ins": "2297161",
+          "jid": "74418",
+          "nivel": "S"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Juan Manuel Maraver Delgado",
+          "hcp": 13.9,
+          "ins": "2293439",
+          "jid": "74418",
+          "nivel": "S"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Ildefonso Garcia Muñoz",
+          "hcp": 24.6,
+          "ins": "2294627",
+          "jid": "74418",
+          "nivel": "S"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Diego Perez Blanco",
+          "hcp": 22.6,
+          "ins": "2299893",
+          "jid": "74418",
+          "nivel": "S"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Gonzalo Mateos Merchante",
+          "hcp": 15.6,
+          "ins": "2293491",
+          "jid": "74418",
+          "nivel": "S"
+        },
+        {
+          "time": "08:40",
+          "tee": 10,
+          "name": "Fernando Garcia Ramos-Catalina",
+          "hcp": 14.7,
+          "ins": "2294285",
+          "jid": "74418",
+          "nivel": "S"
+        },
+        {
+          "time": "08:40",
+          "tee": 10,
+          "name": "Jose Luis Perez Gonzalez",
+          "hcp": 26.4,
+          "ins": "2293786",
+          "jid": "74418",
+          "nivel": "M"
+        },
+        {
+          "time": "08:40",
+          "tee": 10,
+          "name": "Marcos Ruiz Atienza",
+          "hcp": 15,
+          "ins": "2293552",
+          "jid": "74418",
+          "nivel": "S"
+        },
+        {
+          "time": "08:40",
+          "tee": 10,
+          "name": "Jose Maria Rancaño Gijon",
+          "hcp": 17.6,
+          "ins": "2294111",
+          "jid": "74418",
+          "nivel": "S"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -840,192 +1035,6 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "08:20",
-          "tee": 10,
-          "name": "Rodrigo Cuadrado De Llano",
-          "hcp": 10.8,
-          "ins": "2293832",
-          "jid": "74418",
-          "nivel": "S"
-        },
-        {
-          "time": "08:20",
-          "tee": 10,
-          "name": "Francisco Javier De La Villa Ruiz",
-          "hcp": 20.3,
-          "ins": "2293371",
-          "jid": "74418",
-          "nivel": "S"
-        },
-        {
-          "time": "08:20",
-          "tee": 10,
-          "name": "Jaime Fe Ripalda",
-          "hcp": 22.1,
-          "ins": "2293355",
-          "jid": "74418",
-          "nivel": "S"
-        },
-        {
-          "time": "08:20",
-          "tee": 10,
-          "name": "Jesus Cantos Ruiz",
-          "hcp": 19.1,
-          "ins": "2301833",
-          "jid": "74418",
-          "nivel": "S"
-        },
-        {
-          "time": "08:30",
-          "tee": 1,
-          "name": "Jose Luis Oviedo Granados",
-          "hcp": 15.3,
-          "ins": "2293502",
-          "jid": "74418",
-          "nivel": "S"
-        },
-        {
-          "time": "08:30",
-          "tee": 1,
-          "name": "Jose Manuel Rodriguez Laguno",
-          "hcp": 14.4,
-          "ins": "2298199",
-          "jid": "74418",
-          "nivel": "S"
-        },
-        {
-          "time": "08:30",
-          "tee": 1,
-          "name": "Antonio Rios Rey",
-          "hcp": 14.1,
-          "ins": "2293363",
-          "jid": "74418",
-          "nivel": "S"
-        },
-        {
-          "time": "08:30",
-          "tee": 1,
-          "name": "Fermin Garcia Villaescusa",
-          "hcp": 17.9,
-          "ins": "2295966",
-          "jid": "74418",
-          "nivel": "S"
-        },
-        {
-          "time": "08:30",
-          "tee": 10,
-          "name": "Gabriel Fernandez Barbera",
-          "hcp": 26.4,
-          "ins": "2293369",
-          "jid": "74418",
-          "nivel": "S"
-        },
-        {
-          "time": "08:30",
-          "tee": 10,
-          "name": "Agustin Garcia Villaescusa",
-          "hcp": 18.5,
-          "ins": "2298198",
-          "jid": "74418",
-          "nivel": "S"
-        },
-        {
-          "time": "08:30",
-          "tee": 10,
-          "name": "Cayetano Del Pino Iñiguez",
-          "hcp": 18,
-          "ins": "2298242",
-          "jid": "74418",
-          "nivel": "S"
-        },
-        {
-          "time": "08:30",
-          "tee": 10,
-          "name": "Fernando Leon Fernandez",
-          "hcp": 22,
-          "ins": "2297161",
-          "jid": "74418",
-          "nivel": "S"
-        },
-        {
-          "time": "08:40",
-          "tee": 1,
-          "name": "Juan Manuel Maraver Delgado",
-          "hcp": 13.9,
-          "ins": "2293439",
-          "jid": "74418",
-          "nivel": "S"
-        },
-        {
-          "time": "08:40",
-          "tee": 1,
-          "name": "Ildefonso Garcia Muñoz",
-          "hcp": 24.6,
-          "ins": "2294627",
-          "jid": "74418",
-          "nivel": "S"
-        },
-        {
-          "time": "08:40",
-          "tee": 1,
-          "name": "Diego Perez Blanco",
-          "hcp": 22.6,
-          "ins": "2299893",
-          "jid": "74418",
-          "nivel": "S"
-        },
-        {
-          "time": "08:40",
-          "tee": 1,
-          "name": "Gonzalo Mateos Merchante",
-          "hcp": 15.6,
-          "ins": "2293491",
-          "jid": "74418",
-          "nivel": "S"
-        },
-        {
-          "time": "08:40",
-          "tee": 10,
-          "name": "Fernando Garcia Ramos-Catalina",
-          "hcp": 14.7,
-          "ins": "2294285",
-          "jid": "74418",
-          "nivel": "S"
-        },
-        {
-          "time": "08:40",
-          "tee": 10,
-          "name": "Jose Luis Perez Gonzalez",
-          "hcp": 26.4,
-          "ins": "2293786",
-          "jid": "74418",
-          "nivel": "M"
-        },
-        {
-          "time": "08:40",
-          "tee": 10,
-          "name": "Marcos Ruiz Atienza",
-          "hcp": 15,
-          "ins": "2293552",
-          "jid": "74418",
-          "nivel": "S"
-        },
-        {
-          "time": "08:40",
-          "tee": 10,
-          "name": "Jose Maria Rancaño Gijon",
-          "hcp": 17.6,
-          "ins": "2294111",
-          "jid": "74418",
-          "nivel": "S"
-        }
-      ]
-    }
-  ],
-  "horariosScrapedAt": "2026-05-09T12:12:55.667Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:36.058Z"
 }

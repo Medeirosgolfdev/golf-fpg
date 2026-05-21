@@ -1,14 +1,14 @@
 {
   "tourId": 68247,
   "url": "https://www.nextcaddy.com/tour/68247",
-  "scrapedAt": "2026-05-08T17:34:18.717Z",
+  "scrapedAt": "2026-05-21T16:40:35.819Z",
   "meta": {
     "name": "Campeonato Abierto de Madrid Masculino y Sub25",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Golf Santander S A",
     "courseCode": "CMA5",
-    "dateStart": "17 jul 2026",
-    "dateEnd": "17 jul 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) Circuito Juvenil 20",
     "categories": [
       "Juvenil",
@@ -16,12 +16,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-07-17"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -61,11 +63,12 @@
       "players": [
         {
           "playerName": "Diaz Lopez, Felix",
-          "holeNumber": 1
+          "holeNumber": 1,
+          "createdAt": "08/08/25 14:22:27"
         }
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:35.154Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:20.156Z"
 }

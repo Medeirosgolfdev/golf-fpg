@@ -1,14 +1,14 @@
 {
   "tourId": 69211,
   "url": "https://www.nextcaddy.com/tour/69211",
-  "scrapedAt": "2026-05-09T09:58:24.617Z",
+  "scrapedAt": "2026-05-21T16:37:54.612Z",
   "meta": {
     "name": "I Puntuable Zonal CyL- Extremadura  JOVENES PROMESA 9 HOYOS",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "15 mar 2026",
-    "dateEnd": "15 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-03-15"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 13,
       "header": [
         "Pos",
         "Jugador",
@@ -182,6 +183,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 13
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -380,6 +388,7 @@
       "nivel": "9901988851"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -417,6 +426,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:41.449Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/528843977_cuadro_de_honor_zonal_talayuela_2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:31.545Z"
 }

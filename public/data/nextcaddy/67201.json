@@ -1,14 +1,14 @@
 {
   "tourId": 67201,
   "url": "https://www.nextcaddy.com/tour/67201",
-  "scrapedAt": "2026-05-09T10:15:43.310Z",
+  "scrapedAt": "2026-05-21T16:39:10.414Z",
   "meta": {
     "name": "I PRUEBA CIRCUITO DE DOBLES DE CASTILLA Y LEON",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "26 abr 2026",
-    "dateEnd": "26 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,17 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-26"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Resultados 1 Prueba Cto Dobles La Valmuza",
+      "jugadores": 45
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -654,43 +660,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71602
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Torres Magriña, Lorenzo",
-          "holeNumber": 2,
-          "createdAt": "21/06/25 13:30:44"
-        },
-        {
-          "playerName": "Martinez Montes, Francisco Javier",
-          "holeNumber": 11,
-          "createdAt": "21/06/25 13:34:07"
-        },
-        {
-          "playerName": "Acebal Blanco, Faustino",
-          "holeNumber": 9,
-          "createdAt": "21/06/25 13:57:44"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1508,5 +1477,47 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:05.516Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71602
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Torres Magriña, Lorenzo",
+          "holeNumber": 2,
+          "createdAt": "21/06/25 13:30:44"
+        },
+        {
+          "playerName": "Martinez Montes, Francisco Javier",
+          "holeNumber": 11,
+          "createdAt": "21/06/25 13:34:07"
+        },
+        {
+          "playerName": "Acebal Blanco, Faustino",
+          "holeNumber": 9,
+          "createdAt": "21/06/25 13:57:44"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/3211642262_suspension_-_la_valmuza-2026.pdf",
+    "/uploads/2026/04/cirfgcyl1626.pdf",
+    "/uploads/competiciones/pdf/1858817864_reglas_locales_cto_dobles.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:00.462Z"
 }

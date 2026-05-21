@@ -1,14 +1,14 @@
 {
   "tourId": 61252,
   "url": "https://www.nextcaddy.com/tour/61252",
-  "scrapedAt": "2026-05-08T17:36:14.259Z",
+  "scrapedAt": "2026-05-21T16:41:23.762Z",
   "meta": {
     "name": "Final Pequecircuito",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Real Federacion Andaluza de Golf",
     "courseCode": "AM00",
-    "dateStart": "06 dic 2026",
-    "dateEnd": "06 dic 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Señoras  Caballero",
     "categories": [
       "Señoras",
@@ -17,12 +17,14 @@
       "Juvenil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-12-06"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -49,11 +51,12 @@
         },
         {
           "playerName": "Carrere Lovera, Maria",
-          "holeNumber": 2
+          "holeNumber": 2,
+          "createdAt": "01/10/24 19:28:23"
         }
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:24.956Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:41:54.416Z"
 }

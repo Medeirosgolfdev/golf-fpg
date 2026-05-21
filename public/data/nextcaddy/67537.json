@@ -1,14 +1,14 @@
 {
   "tourId": 67537,
   "url": "https://www.nextcaddy.com/tour/67537",
-  "scrapedAt": "2026-05-09T09:57:20.173Z",
+  "scrapedAt": "2026-05-21T16:36:31.255Z",
   "meta": {
     "name": "Sherry International Golf Group (SIGG) -  15 Enero 2026 (Grupo privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "15 ene 2026",
-    "dateEnd": "15 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-15"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 26,
       "header": [
         "Pos",
         "Jugador",
@@ -170,7 +171,7 @@
         },
         {
           "pos": 13,
-          "name": "Antonio Manuel Ure?A Serrano",
+          "name": "Antonio Manuel Ureña Serrano",
           "licencia": "AM32612444",
           "hcp": 8.2,
           "nivel": "S",
@@ -325,6 +326,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 26
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -391,7 +399,7 @@
     },
     {
       "orden": 10,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "AM32612444",
       "hcp": 8.2,
       "nivel": "S"
@@ -601,7 +609,7 @@
     },
     {
       "orden": 10,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "13-01-26 20:06",
       "hcp": 8.2,
       "nivel": "AM32612444"
@@ -726,53 +734,6 @@
       "nivel": "AME7220403"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72002
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Sampedro Abascal, Fernando",
-          "holeNumber": 9,
-          "createdAt": "10/07/25 10:01:17"
-        },
-        {
-          "playerName": "Lillo Guerra, Jose Antonio",
-          "holeNumber": 2,
-          "createdAt": "10/07/25 10:03:07"
-        },
-        {
-          "playerName": "Correa Rodriguez, Carlos",
-          "holeNumber": 9,
-          "createdAt": "10/07/25 10:36:41"
-        },
-        {
-          "playerName": "Nogales Porrua, Manuel",
-          "holeNumber": 5,
-          "createdAt": "10/07/25 10:41:01"
-        },
-        {
-          "playerName": "Fernandez-Rico Fernandez, Jose",
-          "holeNumber": 8,
-          "createdAt": "10/07/25 11:25:32"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -780,7 +741,7 @@
         {
           "time": "09:30",
           "tee": 1,
-          "name": "Antonio Manuel Ure?A Serrano",
+          "name": "Antonio Manuel Ureña Serrano",
           "hcp": 8.2,
           "ins": "2245819",
           "jid": "72002",
@@ -1023,5 +984,53 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:09.435Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72002
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Sampedro Abascal, Fernando",
+          "holeNumber": 9,
+          "createdAt": "10/07/25 10:01:17"
+        },
+        {
+          "playerName": "Lillo Guerra, Jose Antonio",
+          "holeNumber": 2,
+          "createdAt": "10/07/25 10:03:07"
+        },
+        {
+          "playerName": "Correa Rodriguez, Carlos",
+          "holeNumber": 9,
+          "createdAt": "10/07/25 10:36:41"
+        },
+        {
+          "playerName": "Nogales Porrua, Manuel",
+          "holeNumber": 5,
+          "createdAt": "10/07/25 10:41:01"
+        },
+        {
+          "playerName": "Fernandez-Rico Fernandez, Jose",
+          "holeNumber": 8,
+          "createdAt": "10/07/25 11:25:32"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:05.078Z"
 }

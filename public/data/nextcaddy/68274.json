@@ -1,14 +1,14 @@
 {
   "tourId": 68274,
   "url": "https://www.nextcaddy.com/tour/68274",
-  "scrapedAt": "2026-05-09T09:57:35.319Z",
+  "scrapedAt": "2026-05-21T16:36:54.647Z",
   "meta": {
     "name": "VOBS COMPETITION",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "09 feb 2026",
-    "dateEnd": "09 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-09"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -185,73 +186,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72847
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Laaroussi Ros, Juan",
-          "holeNumber": 6,
-          "createdAt": "13/08/25 16:42:55"
-        },
-        {
-          "playerName": "Perez-Barbadillo Martin, Iñigo",
-          "holeNumber": 5,
-          "createdAt": "13/08/25 17:12:45"
-        },
-        {
-          "playerName": "Garay Osorio De Moscoso, Antonio",
-          "holeNumber": 5,
-          "createdAt": "13/08/25 17:13:07"
-        },
-        {
-          "playerName": "Terry Diez, Salvador",
-          "holeNumber": 6,
-          "createdAt": "13/08/25 17:13:30"
-        },
-        {
-          "playerName": "Manrique Garcia-Jarana, Beltran",
-          "holeNumber": 9,
-          "createdAt": "13/08/25 18:13:38"
-        },
-        {
-          "playerName": "Ybarra Varela, Gonzalo",
-          "holeNumber": 14,
-          "createdAt": "13/08/25 18:54:31"
-        },
-        {
-          "playerName": "Armada Piñeyro, Luis",
-          "holeNumber": 15,
-          "createdAt": "13/08/25 19:27:34"
-        },
-        {
-          "playerName": "Garay Osorio De Moscoso, Antonio",
-          "holeNumber": 9,
-          "createdAt": "13/08/25 19:29:15"
-        },
-        {
-          "playerName": "Leon Morenes, Francisco Javier",
-          "holeNumber": 9,
-          "createdAt": "13/08/25 20:33:19"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -358,5 +292,73 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:23.261Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72847
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Laaroussi Ros, Juan",
+          "holeNumber": 6,
+          "createdAt": "13/08/25 16:42:55"
+        },
+        {
+          "playerName": "Perez-Barbadillo Martin, Iñigo",
+          "holeNumber": 5,
+          "createdAt": "13/08/25 17:12:45"
+        },
+        {
+          "playerName": "Garay Osorio De Moscoso, Antonio",
+          "holeNumber": 5,
+          "createdAt": "13/08/25 17:13:07"
+        },
+        {
+          "playerName": "Terry Diez, Salvador",
+          "holeNumber": 6,
+          "createdAt": "13/08/25 17:13:30"
+        },
+        {
+          "playerName": "Manrique Garcia-Jarana, Beltran",
+          "holeNumber": 9,
+          "createdAt": "13/08/25 18:13:38"
+        },
+        {
+          "playerName": "Ybarra Varela, Gonzalo",
+          "holeNumber": 14,
+          "createdAt": "13/08/25 18:54:31"
+        },
+        {
+          "playerName": "Armada Piñeyro, Luis",
+          "holeNumber": 15,
+          "createdAt": "13/08/25 19:27:34"
+        },
+        {
+          "playerName": "Garay Osorio De Moscoso, Antonio",
+          "holeNumber": 9,
+          "createdAt": "13/08/25 19:29:15"
+        },
+        {
+          "playerName": "Leon Morenes, Francisco Javier",
+          "holeNumber": 9,
+          "createdAt": "13/08/25 20:33:19"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:20.619Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 70047,
   "url": "https://www.nextcaddy.com/tour/70047",
-  "scrapedAt": "2026-05-09T10:15:30.992Z",
+  "scrapedAt": "2026-05-21T16:38:50.361Z",
   "meta": {
     "name": "VOBS COMPETITION",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "16 abr 2026",
-    "dateEnd": "16 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-16"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 15,
       "header": [
         "Pos",
         "Jugador",
@@ -204,6 +205,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 15
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -430,22 +438,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74942
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -525,18 +517,18 @@
         {
           "time": "09:40",
           "tee": 1,
-          "name": "Michael Marney",
+          "name": "Paul Boyce Howarth",
           "hcp": 21.8,
-          "ins": "2299933",
+          "ins": "2299924",
           "jid": "74942",
           "nivel": "S"
         },
         {
           "time": "09:40",
           "tee": 1,
-          "name": "Paul Boyce Howarth",
+          "name": "Michael Marney",
           "hcp": 21.8,
-          "ins": "2299924",
+          "ins": "2299933",
           "jid": "74942",
           "nivel": "S"
         },
@@ -588,5 +580,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:57.290Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74942
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [
+    "/uploads/competiciones/cartel/2498977625_70047-vobs-competition.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:37.686Z"
 }

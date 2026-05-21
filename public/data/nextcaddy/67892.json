@@ -1,14 +1,14 @@
 {
   "tourId": 67892,
   "url": "https://www.nextcaddy.com/tour/67892",
-  "scrapedAt": "2026-05-09T09:57:34.233Z",
+  "scrapedAt": "2026-05-21T16:36:52.925Z",
   "meta": {
     "name": "Sherry International Golf Group (SIGG) - Martes 3 Febrero 2026 (CANCELADO POR TEMPORAL DE LLUVIA)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "03 feb 2026",
-    "dateEnd": "03 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,11 +17,12 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-03"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -88,7 +89,7 @@
     },
     {
       "orden": 8,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "AM32612444",
       "hcp": 9.5,
       "nivel": "S"
@@ -179,7 +180,7 @@
     },
     {
       "orden": 9,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "02-02-26 10:42",
       "hcp": 9.5,
       "nivel": "AM32612444"
@@ -206,6 +207,7 @@
       "nivel": "AMC3082204"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -222,6 +224,6 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:30.456Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:11.581Z"
 }

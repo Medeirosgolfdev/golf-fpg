@@ -1,14 +1,14 @@
 {
   "tourId": 61089,
   "url": "https://www.nextcaddy.com/tour/61089",
-  "scrapedAt": "2026-05-08T17:52:59.168Z",
+  "scrapedAt": "2026-05-21T16:37:28.372Z",
   "meta": {
     "name": "Circuito Benjamin Zona W",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Campo de Golf Dehesa Montenmedio",
     "courseCode": "AM27",
-    "dateStart": "01 mar 2026",
-    "dateEnd": "01 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Benjamin",
@@ -19,74 +19,14 @@
       "benjamin",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-03-01"
-  },
-  "course": {
-    "par": [
-      4,
-      4,
-      5,
-      4,
-      5,
-      4,
-      3,
-      4,
-      4,
-      4,
-      5,
-      5,
-      3,
-      4,
-      4,
-      3,
-      4,
-      3
-    ],
-    "si": [
-      16,
-      12,
-      7,
-      10,
-      2,
-      15,
-      18,
-      14,
-      11,
-      4,
-      5,
-      3,
-      8,
-      1,
-      17,
-      9,
-      6,
-      13
-    ],
-    "meters": [
-      315,
-      237,
-      401,
-      326,
-      433,
-      290,
-      121,
-      255,
-      275,
-      318,
-      392,
-      472,
-      137,
-      349,
-      295,
-      147,
-      323,
-      128
     ]
   },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Señoras",
+      "expectedJugadores": 3,
       "header": [
         "Pos",
         "Jugador",
@@ -108,8 +48,7 @@
           "rounds": [],
           "total": 55,
           "toPar": 18,
-          "inscribedId": 2263291,
-          "roundScores": []
+          "inscribedId": 2263291
         },
         {
           "pos": 2,
@@ -120,8 +59,7 @@
           "rounds": [],
           "total": 80,
           "toPar": 43,
-          "inscribedId": 2266910,
-          "roundScores": []
+          "inscribedId": 2266910
         },
         {
           "pos": null,
@@ -132,38 +70,14 @@
           "rounds": [],
           "total": null,
           "toPar": null,
-          "inscribedId": 2257829,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-              ],
-              "total": null
-            }
-          ]
+          "inscribedId": 2257829
         }
       ]
     },
     {
       "category": 2,
+      "categoryName": "Scratch Caballeros",
+      "expectedJugadores": 10,
       "header": [
         "Pos",
         "Jugador",
@@ -185,8 +99,7 @@
           "rounds": [],
           "total": 48,
           "toPar": 11,
-          "inscribedId": 2257785,
-          "roundScores": []
+          "inscribedId": 2257785
         },
         {
           "pos": 2,
@@ -197,8 +110,7 @@
           "rounds": [],
           "total": 50,
           "toPar": 13,
-          "inscribedId": 2257897,
-          "roundScores": []
+          "inscribedId": 2257897
         },
         {
           "pos": 3,
@@ -209,8 +121,7 @@
           "rounds": [],
           "total": 53,
           "toPar": 16,
-          "inscribedId": 2259156,
-          "roundScores": []
+          "inscribedId": 2259156
         },
         {
           "pos": 4,
@@ -221,8 +132,7 @@
           "rounds": [],
           "total": 54,
           "toPar": 17,
-          "inscribedId": 2267041,
-          "roundScores": []
+          "inscribedId": 2267041
         },
         {
           "pos": 5,
@@ -233,8 +143,7 @@
           "rounds": [],
           "total": 54,
           "toPar": 17,
-          "inscribedId": 2259322,
-          "roundScores": []
+          "inscribedId": 2259322
         },
         {
           "pos": 6,
@@ -245,8 +154,7 @@
           "rounds": [],
           "total": 55,
           "toPar": 18,
-          "inscribedId": 2264256,
-          "roundScores": []
+          "inscribedId": 2264256
         },
         {
           "pos": 7,
@@ -257,8 +165,7 @@
           "rounds": [],
           "total": 57,
           "toPar": 20,
-          "inscribedId": 2261894,
-          "roundScores": []
+          "inscribedId": 2261894
         },
         {
           "pos": 8,
@@ -269,8 +176,7 @@
           "rounds": [],
           "total": 57,
           "toPar": 20,
-          "inscribedId": 2257941,
-          "roundScores": []
+          "inscribedId": 2257941
         },
         {
           "pos": 9,
@@ -281,8 +187,7 @@
           "rounds": [],
           "total": 59,
           "toPar": 22,
-          "inscribedId": 2262124,
-          "roundScores": []
+          "inscribedId": 2262124
         },
         {
           "pos": 10,
@@ -293,13 +198,14 @@
           "rounds": [],
           "total": 62,
           "toPar": 25,
-          "inscribedId": 2266498,
-          "roundScores": []
+          "inscribedId": 2266498
         }
       ]
     },
     {
       "category": 3,
+      "categoryName": "Handicap Señoras",
+      "expectedJugadores": 3,
       "header": [
         "Pos",
         "Jugador",
@@ -321,8 +227,7 @@
           "rounds": [],
           "total": 35,
           "toPar": -2,
-          "inscribedId": 2263291,
-          "roundScores": []
+          "inscribedId": 2263291
         },
         {
           "pos": 2,
@@ -333,8 +238,7 @@
           "rounds": [],
           "total": 57,
           "toPar": 20,
-          "inscribedId": 2266910,
-          "roundScores": []
+          "inscribedId": 2266910
         },
         {
           "pos": null,
@@ -345,38 +249,14 @@
           "rounds": [],
           "total": null,
           "toPar": null,
-          "inscribedId": 2257829,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-              ],
-              "total": null
-            }
-          ]
+          "inscribedId": 2257829
         }
       ]
     },
     {
       "category": 4,
+      "categoryName": "Handicap Masculino",
+      "expectedJugadores": 10,
       "header": [
         "Pos",
         "Jugador",
@@ -398,8 +278,7 @@
           "rounds": [],
           "total": 36,
           "toPar": -1,
-          "inscribedId": 2259156,
-          "roundScores": []
+          "inscribedId": 2259156
         },
         {
           "pos": 2,
@@ -410,8 +289,7 @@
           "rounds": [],
           "total": 37,
           "toPar": null,
-          "inscribedId": 2267041,
-          "roundScores": []
+          "inscribedId": 2267041
         },
         {
           "pos": 3,
@@ -422,8 +300,7 @@
           "rounds": [],
           "total": 38,
           "toPar": 1,
-          "inscribedId": 2257785,
-          "roundScores": []
+          "inscribedId": 2257785
         },
         {
           "pos": 4,
@@ -434,8 +311,7 @@
           "rounds": [],
           "total": 38,
           "toPar": 1,
-          "inscribedId": 2264256,
-          "roundScores": []
+          "inscribedId": 2264256
         },
         {
           "pos": 5,
@@ -446,8 +322,7 @@
           "rounds": [],
           "total": 39,
           "toPar": 2,
-          "inscribedId": 2259322,
-          "roundScores": []
+          "inscribedId": 2259322
         },
         {
           "pos": 6,
@@ -458,8 +333,7 @@
           "rounds": [],
           "total": 40,
           "toPar": 3,
-          "inscribedId": 2261894,
-          "roundScores": []
+          "inscribedId": 2261894
         },
         {
           "pos": 7,
@@ -470,8 +344,7 @@
           "rounds": [],
           "total": 42,
           "toPar": 5,
-          "inscribedId": 2257897,
-          "roundScores": []
+          "inscribedId": 2257897
         },
         {
           "pos": 8,
@@ -482,8 +355,7 @@
           "rounds": [],
           "total": 42,
           "toPar": 5,
-          "inscribedId": 2257941,
-          "roundScores": []
+          "inscribedId": 2257941
         },
         {
           "pos": 9,
@@ -494,8 +366,7 @@
           "rounds": [],
           "total": 43,
           "toPar": 6,
-          "inscribedId": 2266498,
-          "roundScores": []
+          "inscribedId": 2266498
         },
         {
           "pos": 10,
@@ -506,12 +377,30 @@
           "rounds": [],
           "total": 48,
           "toPar": 11,
-          "inscribedId": 2262124,
-          "roundScores": []
+          "inscribedId": 2262124
         }
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Señoras",
+      "jugadores": 3
+    },
+    "2": {
+      "name": "Scratch Caballeros",
+      "jugadores": 10
+    },
+    "3": {
+      "name": "Handicap Señoras",
+      "jugadores": 3
+    },
+    "4": {
+      "name": "Handicap Masculino",
+      "jugadores": 10
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -708,6 +597,130 @@
       "licencia": "AM05062617",
       "hcp": 40,
       "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Thiago Gonzalez Bernases",
+          "hcp": 20.6,
+          "ins": "2257897",
+          "jid": "64702",
+          "nivel": "B"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Nikita Elchaninov",
+          "hcp": 24.8,
+          "ins": "2257785",
+          "jid": "64702",
+          "nivel": "B"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Carlos Perez Pedraza",
+          "hcp": 28,
+          "ins": "2262124",
+          "jid": "64702",
+          "nivel": "B"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Ignacio De Lope Gomez",
+          "hcp": 34.5,
+          "ins": "2259322",
+          "jid": "64702",
+          "nivel": "B"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Lucas Santos Conde",
+          "hcp": 35.7,
+          "ins": "2257941",
+          "jid": "64702",
+          "nivel": "B"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Lucas Nuño Medinilla",
+          "hcp": 38.6,
+          "ins": "2261894",
+          "jid": "64702",
+          "nivel": "B"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Claudia Bermudo Del Rio",
+          "hcp": 35.2,
+          "ins": "2263291",
+          "jid": "64702",
+          "nivel": "B"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Mª Asuncion Sedeño Martin",
+          "hcp": 35.7,
+          "ins": "2257829",
+          "jid": "64702",
+          "nivel": "B"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Gadea Geldinovski Ruiz",
+          "hcp": 41.3,
+          "ins": "2266910",
+          "jid": "64702",
+          "nivel": "B"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Ivan Duran Campos",
+          "hcp": 38.9,
+          "ins": "2259156",
+          "jid": "64702",
+          "nivel": "B"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Marcos Fernandez Pina",
+          "hcp": 38.9,
+          "ins": "2264256",
+          "jid": "64702",
+          "nivel": "B"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Pablo Camacho Manuel De Villena",
+          "hcp": 40,
+          "ins": "2267041",
+          "jid": "64702",
+          "nivel": "B"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Rafael Ribeiro Crisostomo",
+          "hcp": 42.9,
+          "ins": "2266498",
+          "jid": "64702",
+          "nivel": "B"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -1064,133 +1077,107 @@
           "playerName": "Villaescusa Manrique, Beatriz - Parages Oosterling, Marta",
           "holeNumber": 6,
           "createdAt": "12/11/24 11:29:54"
+        },
+        {
+          "playerName": "Cucarella Huerta, Esperanza - Lain Martinez, Angela",
+          "holeNumber": 18,
+          "createdAt": "12/11/24 12:14:06"
+        },
+        {
+          "playerName": "Ruiz De Velasco Colas, Rocio - Serra Lopez De Chicheri, M Dolores",
+          "holeNumber": 9,
+          "createdAt": "12/11/24 12:16:14"
+        },
+        {
+          "playerName": "Villaescusa Manrique, Beatriz - Parages Oosterling, Marta",
+          "holeNumber": 9,
+          "createdAt": "12/11/24 12:17:52"
+        },
+        {
+          "playerName": "Martinez Molina, Nieves - Molina Martinez, Maria",
+          "holeNumber": 2,
+          "createdAt": "12/11/24 12:20:35"
+        },
+        {
+          "playerName": "Gomez Arbex, Mercedes - Fernandez De Araoz Gomez-Acebo, Soledad",
+          "holeNumber": 11,
+          "createdAt": "12/11/24 12:39:53"
+        },
+        {
+          "playerName": "Corrales Rodrigañez, Maria - Nebreda Villasante, Virginia",
+          "holeNumber": 15,
+          "createdAt": "12/11/24 12:54:16"
+        },
+        {
+          "playerName": "Moreno Galea, Purificacion - Alhambra Gomez, Maria Catalina",
+          "holeNumber": 15,
+          "createdAt": "12/11/24 13:03:40"
+        },
+        {
+          "playerName": "Syyap Calleja, Maria Montserrat - Ortega Hernandez-Agero, Teresa",
+          "holeNumber": 15,
+          "createdAt": "12/11/24 13:04:34"
+        },
+        {
+          "playerName": "Villaescusa Manrique, Beatriz - Parages Oosterling, Marta",
+          "holeNumber": 13,
+          "createdAt": "12/11/24 13:08:51"
+        },
+        {
+          "playerName": "Fernandez Fernandez, Rosario - Fernandez Fernandez, Belen",
+          "holeNumber": 18,
+          "createdAt": "12/11/24 13:28:26"
+        },
+        {
+          "playerName": "Jessen Rubio, Monica - Alonso Suau, Amelia",
+          "holeNumber": 15,
+          "createdAt": "12/11/24 13:30:45"
+        },
+        {
+          "playerName": "Hernandez Garcia, Mili - Ruiz Rodero, M Luisa",
+          "holeNumber": 2,
+          "createdAt": "12/11/24 13:34:34"
+        },
+        {
+          "playerName": "Diaz Luque, Maria Selina - Manzanero Diaz, Lucia",
+          "holeNumber": 17,
+          "createdAt": "12/11/24 13:37:11"
+        },
+        {
+          "playerName": "Ruiz De Velasco Colas, Rocio - Serra Lopez De Chicheri, M Dolores",
+          "holeNumber": 15,
+          "createdAt": "12/11/24 13:38:32"
+        },
+        {
+          "playerName": "Syyap Calleja, Maria Montserrat - Ortega Hernandez-Agero, Teresa",
+          "holeNumber": 18,
+          "createdAt": "12/11/24 13:40:53"
+        },
+        {
+          "playerName": "Lucas Muelas, Concepcion - Moreno Gomila, Maria Isabel",
+          "holeNumber": 4,
+          "createdAt": "12/11/24 13:47:27"
+        },
+        {
+          "playerName": "Corrales Rodrigañez, Maria - Nebreda Villasante, Virginia",
+          "holeNumber": 2,
+          "createdAt": "12/11/24 13:53:18"
+        },
+        {
+          "playerName": "Ruiz De Velasco Colas, Rocio - Serra Lopez De Chicheri, M Dolores",
+          "holeNumber": 17,
+          "createdAt": "12/11/24 14:02:38"
+        },
+        {
+          "playerName": "Fernandez Fernandez, Rosario - Fernandez Fernandez, Belen",
+          "holeNumber": 3,
+          "createdAt": "12/11/24 14:04:33"
         }
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "12:20",
-          "tee": 1,
-          "name": "Thiago Gonzalez Bernases",
-          "hcp": 20.6,
-          "ins": "2257897",
-          "jid": "64702",
-          "nivel": "B"
-        },
-        {
-          "time": "12:20",
-          "tee": 1,
-          "name": "Nikita Elchaninov",
-          "hcp": 24.8,
-          "ins": "2257785",
-          "jid": "64702",
-          "nivel": "B"
-        },
-        {
-          "time": "12:20",
-          "tee": 1,
-          "name": "Carlos Perez Pedraza",
-          "hcp": 28,
-          "ins": "2262124",
-          "jid": "64702",
-          "nivel": "B"
-        },
-        {
-          "time": "12:30",
-          "tee": 1,
-          "name": "Ignacio De Lope Gomez",
-          "hcp": 34.5,
-          "ins": "2259322",
-          "jid": "64702",
-          "nivel": "B"
-        },
-        {
-          "time": "12:30",
-          "tee": 1,
-          "name": "Lucas Santos Conde",
-          "hcp": 35.7,
-          "ins": "2257941",
-          "jid": "64702",
-          "nivel": "B"
-        },
-        {
-          "time": "12:30",
-          "tee": 1,
-          "name": "Lucas Nuño Medinilla",
-          "hcp": 38.6,
-          "ins": "2261894",
-          "jid": "64702",
-          "nivel": "B"
-        },
-        {
-          "time": "12:40",
-          "tee": 1,
-          "name": "Claudia Bermudo Del Rio",
-          "hcp": 35.2,
-          "ins": "2263291",
-          "jid": "64702",
-          "nivel": "B"
-        },
-        {
-          "time": "12:40",
-          "tee": 1,
-          "name": "Mª Asuncion Sedeño Martin",
-          "hcp": 35.7,
-          "ins": "2257829",
-          "jid": "64702",
-          "nivel": "B"
-        },
-        {
-          "time": "12:40",
-          "tee": 1,
-          "name": "Gadea Geldinovski Ruiz",
-          "hcp": 41.3,
-          "ins": "2266910",
-          "jid": "64702",
-          "nivel": "B"
-        },
-        {
-          "time": "12:50",
-          "tee": 1,
-          "name": "Marcos Fernandez Pina",
-          "hcp": 38.9,
-          "ins": "2264256",
-          "jid": "64702",
-          "nivel": "B"
-        },
-        {
-          "time": "12:50",
-          "tee": 1,
-          "name": "Ivan Duran Campos",
-          "hcp": 38.9,
-          "ins": "2259156",
-          "jid": "64702",
-          "nivel": "B"
-        },
-        {
-          "time": "12:50",
-          "tee": 1,
-          "name": "Pablo Camacho Manuel De Villena",
-          "hcp": 40,
-          "ins": "2267041",
-          "jid": "64702",
-          "nivel": "B"
-        },
-        {
-          "time": "12:50",
-          "tee": 1,
-          "name": "Rafael Ribeiro Crisostomo",
-          "hcp": 42.9,
-          "ins": "2266498",
-          "jid": "64702",
-          "nivel": "B"
-        }
-      ]
-    }
+  "pdfs": [
+    "/uploads/circular/2026/2aa56b471e796fb607d471d2b9ad0c4c.pdf"
   ],
-  "horariosScrapedAt": "2026-05-09T12:11:58.536Z"
+  "horariosScrapedAt": "2026-05-21T16:41:49.749Z"
 }

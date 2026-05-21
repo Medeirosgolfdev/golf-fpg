@@ -1,14 +1,14 @@
 {
   "tourId": 68257,
   "url": "https://www.nextcaddy.com/tour/68257",
-  "scrapedAt": "2026-05-09T09:57:34.901Z",
+  "scrapedAt": "2026-05-21T16:36:54.094Z",
   "meta": {
     "name": "Torneo Privado Campo de Tiro",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "08 feb 2026",
-    "dateEnd": "08 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-08"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 17,
       "header": [
         "Pos",
         "Jugador",
@@ -226,6 +227,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 17
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -480,6 +488,7 @@
       "nivel": "A"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -496,6 +505,8 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:35.478Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/68257_cartel_348.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:20.485Z"
 }

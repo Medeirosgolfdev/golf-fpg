@@ -1,14 +1,14 @@
 {
   "tourId": 68604,
   "url": "https://www.nextcaddy.com/tour/68604",
-  "scrapedAt": "2026-05-09T09:57:48.949Z",
+  "scrapedAt": "2026-05-21T16:37:13.909Z",
   "meta": {
     "name": "FINAL LIGA DE ABONADOS",
     "organizer": null,
     "course": "Montecastillo Barceló Golf Club",
     "courseCode": "AM29",
-    "dateStart": "21 feb 2026",
-    "dateEnd": "21 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-21"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 11,
       "header": [
         "Pos",
         "Jugador",
@@ -162,6 +163,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap",
+      "expectedJugadores": 11,
       "header": [
         "Pos",
         "Jugador",
@@ -298,6 +301,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 11
+    },
+    "2": {
+      "name": "Handicap",
+      "jugadores": 11
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -468,108 +482,6 @@
       "nivel": "A"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73246
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Ke, Jian",
-          "holeNumber": 12,
-          "createdAt": "28/09/25 10:13:39"
-        },
-        {
-          "playerName": "Perez Gonzalez, Alberto",
-          "holeNumber": 10,
-          "createdAt": "28/09/25 11:00:46"
-        },
-        {
-          "playerName": "Enrique Sanchez, Manuel",
-          "holeNumber": 14,
-          "createdAt": "28/09/25 11:15:51"
-        },
-        {
-          "playerName": "Rodriguez Fuentes, Francisco",
-          "holeNumber": 13,
-          "createdAt": "28/09/25 11:26:19"
-        },
-        {
-          "playerName": "Palanca Maresca, Cristobal",
-          "holeNumber": 17,
-          "createdAt": "28/09/25 11:34:47"
-        },
-        {
-          "playerName": "Reina Caparros, Francisco Javier",
-          "holeNumber": 7,
-          "createdAt": "28/09/25 11:42:31"
-        },
-        {
-          "playerName": "Martin Morales, Esteban",
-          "holeNumber": 11,
-          "createdAt": "28/09/25 11:53:54"
-        },
-        {
-          "playerName": "Enrique Sanchez, Manuel",
-          "holeNumber": 17,
-          "createdAt": "28/09/25 11:54:10"
-        },
-        {
-          "playerName": "Rigaud Galvez, Mario",
-          "holeNumber": 13,
-          "createdAt": "28/09/25 11:59:10"
-        },
-        {
-          "playerName": "Rigaud Galvez, Mario",
-          "holeNumber": 14,
-          "createdAt": "28/09/25 11:59:10"
-        },
-        {
-          "playerName": "Hellmich, Joerg",
-          "holeNumber": 13,
-          "createdAt": "28/09/25 12:05:37"
-        },
-        {
-          "playerName": "Rigaud Galvez, Mario",
-          "holeNumber": 17,
-          "createdAt": "28/09/25 12:36:43"
-        },
-        {
-          "playerName": "Castillo Gomez, Antonio",
-          "holeNumber": 11,
-          "createdAt": "28/09/25 12:38:24"
-        },
-        {
-          "playerName": "Maldonado Molero, Miguel Angel",
-          "holeNumber": 17,
-          "createdAt": "28/09/25 12:41:39"
-        },
-        {
-          "playerName": "Amaya Esteras, Adria",
-          "holeNumber": 14,
-          "createdAt": "28/09/25 12:44:57"
-        },
-        {
-          "playerName": "Perez Torres, Luis",
-          "holeNumber": 1,
-          "createdAt": "28/09/25 13:30:56"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -676,5 +588,108 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:27.090Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73246
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Ke, Jian",
+          "holeNumber": 12,
+          "createdAt": "28/09/25 10:13:39"
+        },
+        {
+          "playerName": "Perez Gonzalez, Alberto",
+          "holeNumber": 10,
+          "createdAt": "28/09/25 11:00:46"
+        },
+        {
+          "playerName": "Enrique Sanchez, Manuel",
+          "holeNumber": 14,
+          "createdAt": "28/09/25 11:15:51"
+        },
+        {
+          "playerName": "Rodriguez Fuentes, Francisco",
+          "holeNumber": 13,
+          "createdAt": "28/09/25 11:26:19"
+        },
+        {
+          "playerName": "Palanca Maresca, Cristobal",
+          "holeNumber": 17,
+          "createdAt": "28/09/25 11:34:47"
+        },
+        {
+          "playerName": "Reina Caparros, Francisco Javier",
+          "holeNumber": 7,
+          "createdAt": "28/09/25 11:42:31"
+        },
+        {
+          "playerName": "Martin Morales, Esteban",
+          "holeNumber": 11,
+          "createdAt": "28/09/25 11:53:54"
+        },
+        {
+          "playerName": "Enrique Sanchez, Manuel",
+          "holeNumber": 17,
+          "createdAt": "28/09/25 11:54:10"
+        },
+        {
+          "playerName": "Rigaud Galvez, Mario",
+          "holeNumber": 13,
+          "createdAt": "28/09/25 11:59:10"
+        },
+        {
+          "playerName": "Rigaud Galvez, Mario",
+          "holeNumber": 14,
+          "createdAt": "28/09/25 11:59:10"
+        },
+        {
+          "playerName": "Hellmich, Joerg",
+          "holeNumber": 13,
+          "createdAt": "28/09/25 12:05:37"
+        },
+        {
+          "playerName": "Rigaud Galvez, Mario",
+          "holeNumber": 17,
+          "createdAt": "28/09/25 12:36:43"
+        },
+        {
+          "playerName": "Castillo Gomez, Antonio",
+          "holeNumber": 11,
+          "createdAt": "28/09/25 12:38:24"
+        },
+        {
+          "playerName": "Maldonado Molero, Miguel Angel",
+          "holeNumber": 17,
+          "createdAt": "28/09/25 12:41:39"
+        },
+        {
+          "playerName": "Amaya Esteras, Adria",
+          "holeNumber": 14,
+          "createdAt": "28/09/25 12:44:57"
+        },
+        {
+          "playerName": "Perez Torres, Luis",
+          "holeNumber": 1,
+          "createdAt": "28/09/25 13:30:56"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:24.845Z"
 }

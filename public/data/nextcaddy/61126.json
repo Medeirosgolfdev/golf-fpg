@@ -1,14 +1,14 @@
 {
   "tourId": 61126,
   "url": "https://www.nextcaddy.com/tour/61126",
-  "scrapedAt": "2026-05-09T10:17:14.510Z",
+  "scrapedAt": "2026-05-21T16:41:08.513Z",
   "meta": {
     "name": "Torneo Senior Jaén (Sábado)",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Parque Deportivo la Garza",
     "courseCode": "AM45",
-    "dateStart": "17 oct 2026",
-    "dateEnd": "17 oct 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Senior",
@@ -17,12 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-10-17"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -60,6 +62,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:22.176Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:41:51.116Z"
 }

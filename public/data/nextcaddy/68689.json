@@ -1,14 +1,14 @@
 {
   "tourId": 68689,
   "url": "https://www.nextcaddy.com/tour/68689",
-  "scrapedAt": "2026-05-09T10:07:43.045Z",
+  "scrapedAt": "2026-05-21T16:38:15.739Z",
   "meta": {
     "name": "Torneo Privado Casino de Madrid · 26 de Marzo · 10:00 · Stableford",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "26 mar 2026",
-    "dateEnd": "26 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-26"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Individual Scratch General",
+      "expectedJugadores": 29,
       "header": [
         "Pos",
         "Jugador",
@@ -359,6 +360,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Individual Handicap General",
+      "expectedJugadores": 29,
       "header": [
         "Pos",
         "Jugador",
@@ -693,6 +696,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Scratch General",
+      "jugadores": 29
+    },
+    "2": {
+      "name": "Individual Handicap General",
+      "jugadores": 29
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1115,22 +1129,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73333
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -1390,5 +1388,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:28.050Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73333
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [
+    "/uploads/competiciones/pdf/68689_cartel_436.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:25.924Z"
 }

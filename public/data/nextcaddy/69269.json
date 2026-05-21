@@ -1,14 +1,14 @@
 {
   "tourId": 69269,
   "url": "https://www.nextcaddy.com/tour/69269",
-  "scrapedAt": "2026-05-09T10:07:46.353Z",
+  "scrapedAt": "2026-05-21T16:38:23.330Z",
   "meta": {
     "name": "Torneo Escuela juvenil de competición y perfeccionamiento SOLO JUGADORES SIN PAREJA",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "29 mar 2026",
-    "dateEnd": "29 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "juvenil",
@@ -19,11 +19,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-29"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -166,6 +167,7 @@
       "nivel": "B"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -203,6 +205,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:41.709Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/69269_cartel_266.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:32.336Z"
 }

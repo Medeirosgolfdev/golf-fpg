@@ -1,14 +1,14 @@
 {
   "tourId": 61071,
   "url": "https://www.nextcaddy.com/tour/61071",
-  "scrapedAt": "2026-05-09T09:57:26.933Z",
+  "scrapedAt": "2026-05-21T16:36:41.924Z",
   "meta": {
     "name": "I Prueba Puntuable P&P",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Benalmadena Golf",
     "courseCode": "AMC8",
-    "dateStart": "24 ene 2026",
-    "dateEnd": "24 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-24"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Scratch",
+      "expectedJugadores": 72,
       "header": [
         "Pos",
         "Jugador",
@@ -832,6 +833,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap 1A Categoria Handicap",
+      "expectedJugadores": 34,
       "header": [
         "Pos",
         "Jugador",
@@ -1222,6 +1225,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Handicap 2A Categoria Handicap",
+      "expectedJugadores": 38,
       "header": [
         "Pos",
         "Jugador",
@@ -1655,6 +1660,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Scratch",
+      "jugadores": 72
+    },
+    "2": {
+      "name": "Handicap 1A Categoria Handicap",
+      "jugadores": 34
+    },
+    "3": {
+      "name": "Handicap 2A Categoria Handicap",
+      "jugadores": 38
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2161,435 +2181,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {
-      "p": {
-        "id": 157408,
-        "datos": [
-          [
-            "Tipo",
-            "Total"
-          ],
-          [
-            "Par",
-            714
-          ],
-          [
-            "Birdie",
-            149
-          ],
-          [
-            "Eagle",
-            1
-          ],
-          [
-            "Bogey",
-            273
-          ],
-          [
-            "Peor",
-            105
-          ]
-        ]
-      },
-      "bvg": {
-        "id": 157409,
-        "datos": [
-          [
-            "Hoyo",
-            "Sobrepar"
-          ],
-          [
-            "1",
-            13
-          ],
-          [
-            "2",
-            -1
-          ],
-          [
-            "3",
-            16
-          ],
-          [
-            "4",
-            -2
-          ],
-          [
-            "5",
-            56
-          ],
-          [
-            "6",
-            24
-          ],
-          [
-            "7",
-            14
-          ],
-          [
-            "8",
-            31
-          ],
-          [
-            "9",
-            23
-          ],
-          [
-            "10",
-            12
-          ],
-          [
-            "11",
-            22
-          ],
-          [
-            "12",
-            17
-          ],
-          [
-            "13",
-            3
-          ],
-          [
-            "14",
-            62
-          ],
-          [
-            "15",
-            18
-          ],
-          [
-            "16",
-            12
-          ],
-          [
-            "17",
-            34
-          ],
-          [
-            "18",
-            35
-          ]
-        ]
-      }
-    },
-    "1": {
-      "lxy": {
-        "id": 157410,
-        "datos": [
-          [
-            "Hoyo",
-            "JUAN SOLER ESPINOSA",
-            "JAMES DUCKER ",
-            "JAMES LOVE "
-          ],
-          [
-            "Hoyo 0",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 1",
-            1,
-            0,
-            -1
-          ],
-          [
-            "Hoyo 2",
-            1,
-            0,
-            -1
-          ],
-          [
-            "Hoyo 3",
-            0,
-            0,
-            -1
-          ],
-          [
-            "Hoyo 4",
-            -1,
-            0,
-            -2
-          ],
-          [
-            "Hoyo 5",
-            -1,
-            0,
-            -1
-          ],
-          [
-            "Hoyo 6",
-            -1,
-            0,
-            -1
-          ],
-          [
-            "Hoyo 7",
-            -2,
-            0,
-            -1
-          ],
-          [
-            "Hoyo 8",
-            -3,
-            0,
-            -1
-          ],
-          [
-            "Hoyo 9",
-            -3,
-            -1,
-            -1
-          ],
-          [
-            "Hoyo 10",
-            -3,
-            -1,
-            -1
-          ],
-          [
-            "Hoyo 11",
-            -4,
-            -1,
-            0
-          ],
-          [
-            "Hoyo 12",
-            -4,
-            0,
-            0
-          ],
-          [
-            "Hoyo 13",
-            -5,
-            -1,
-            0
-          ],
-          [
-            "Hoyo 14",
-            -5,
-            -1,
-            0
-          ],
-          [
-            "Hoyo 15",
-            -6,
-            -1,
-            0
-          ],
-          [
-            "Hoyo 16",
-            -6,
-            -1,
-            0
-          ],
-          [
-            "Hoyo 17",
-            -6,
-            -1,
-            -1
-          ],
-          [
-            "Hoyo 18",
-            -6,
-            -1,
-            -1
-          ]
-        ]
-      },
-      "hvg": {
-        "id": 157411,
-        "datos": [
-          [
-            "Hoyo",
-            "JUAN SOLER ESPINOSA",
-            "JAMES DUCKER ",
-            "JAMES LOVE "
-          ],
-          [
-            "Hoyo 0",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 1",
-            1,
-            0,
-            -1
-          ],
-          [
-            "Hoyo 2",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 3",
-            -1,
-            0,
-            0
-          ],
-          [
-            "Hoyo 4",
-            -1,
-            0,
-            -1
-          ],
-          [
-            "Hoyo 5",
-            0,
-            0,
-            1
-          ],
-          [
-            "Hoyo 6",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 7",
-            -1,
-            0,
-            0
-          ],
-          [
-            "Hoyo 8",
-            -1,
-            0,
-            0
-          ],
-          [
-            "Hoyo 9",
-            0,
-            -1,
-            0
-          ],
-          [
-            "Hoyo 10",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 11",
-            -1,
-            0,
-            1
-          ],
-          [
-            "Hoyo 12",
-            0,
-            1,
-            0
-          ],
-          [
-            "Hoyo 13",
-            -1,
-            -1,
-            0
-          ],
-          [
-            "Hoyo 14",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 15",
-            -1,
-            0,
-            0
-          ],
-          [
-            "Hoyo 16",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 17",
-            0,
-            0,
-            -1
-          ],
-          [
-            "Hoyo 18",
-            0,
-            0,
-            0
-          ]
-        ]
-      }
-    }
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 64674
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Baron Rivero, Carlos",
-          "holeNumber": 2,
-          "createdAt": "08/10/24 10:12:58"
-        },
-        {
-          "playerName": "Roca De Togores Perez De Guzman, Felipe",
-          "holeNumber": 4,
-          "createdAt": "08/10/24 10:34:25"
-        },
-        {
-          "playerName": "Abaurre Llorente, Ignacio",
-          "holeNumber": 3,
-          "createdAt": "08/10/24 10:51:03"
-        },
-        {
-          "playerName": "Vazquez Terry, Cristina",
-          "holeNumber": 6,
-          "createdAt": "08/10/24 11:27:36"
-        },
-        {
-          "playerName": "Carranza Guell, Pilar",
-          "holeNumber": 7,
-          "createdAt": "08/10/24 11:37:23"
-        },
-        {
-          "playerName": "Martin Aguirre, Eduardo",
-          "holeNumber": 14,
-          "createdAt": "08/10/24 13:06:30"
-        },
-        {
-          "playerName": "De Alvear Davila, Antonio",
-          "holeNumber": 14,
-          "createdAt": "08/10/24 13:15:01"
-        },
-        {
-          "playerName": "Maestre Domecq, Manuel",
-          "holeNumber": 14,
-          "createdAt": "08/10/24 13:15:07"
-        },
-        {
-          "playerName": "Vazquez Terry, Cira",
-          "holeNumber": 7,
-          "createdAt": "08/10/24 13:43:54"
-        },
-        {
-          "playerName": "Osborne Cologan, Ignacio",
-          "holeNumber": 17,
-          "createdAt": "08/10/24 13:56:26"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -3218,5 +2809,437 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:11:58.282Z"
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 157408,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            714
+          ],
+          [
+            "Birdie",
+            149
+          ],
+          [
+            "Eagle",
+            1
+          ],
+          [
+            "Bogey",
+            273
+          ],
+          [
+            "Peor",
+            105
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 157409,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            13
+          ],
+          [
+            "2",
+            -1
+          ],
+          [
+            "3",
+            16
+          ],
+          [
+            "4",
+            -2
+          ],
+          [
+            "5",
+            56
+          ],
+          [
+            "6",
+            24
+          ],
+          [
+            "7",
+            14
+          ],
+          [
+            "8",
+            31
+          ],
+          [
+            "9",
+            23
+          ],
+          [
+            "10",
+            12
+          ],
+          [
+            "11",
+            22
+          ],
+          [
+            "12",
+            17
+          ],
+          [
+            "13",
+            3
+          ],
+          [
+            "14",
+            62
+          ],
+          [
+            "15",
+            18
+          ],
+          [
+            "16",
+            12
+          ],
+          [
+            "17",
+            34
+          ],
+          [
+            "18",
+            35
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 157410,
+        "datos": [
+          [
+            "Hoyo",
+            "JUAN SOLER ESPINOSA",
+            "JAMES DUCKER ",
+            "JAMES LOVE "
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 5",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 7",
+            -2,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            -3,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 9",
+            -3,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            -3,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 11",
+            -4,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 12",
+            -4,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            -5,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 14",
+            -5,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 15",
+            -6,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 16",
+            -6,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 17",
+            -6,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 18",
+            -6,
+            -1,
+            -1
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 157411,
+        "datos": [
+          [
+            "Hoyo",
+            "JUAN SOLER ESPINOSA",
+            "JAMES DUCKER ",
+            "JAMES LOVE "
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 5",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 6",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 8",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 9",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 10",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 11",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 12",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 13",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 14",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 15",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            0
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 64674
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Baron Rivero, Carlos",
+          "holeNumber": 2,
+          "createdAt": "08/10/24 10:12:58"
+        },
+        {
+          "playerName": "Roca De Togores Perez De Guzman, Felipe",
+          "holeNumber": 4,
+          "createdAt": "08/10/24 10:34:25"
+        },
+        {
+          "playerName": "Abaurre Llorente, Ignacio",
+          "holeNumber": 3,
+          "createdAt": "08/10/24 10:51:03"
+        },
+        {
+          "playerName": "Vazquez Terry, Cristina",
+          "holeNumber": 6,
+          "createdAt": "08/10/24 11:27:36"
+        },
+        {
+          "playerName": "Carranza Guell, Pilar",
+          "holeNumber": 7,
+          "createdAt": "08/10/24 11:37:23"
+        },
+        {
+          "playerName": "Martin Aguirre, Eduardo",
+          "holeNumber": 14,
+          "createdAt": "08/10/24 13:06:30"
+        },
+        {
+          "playerName": "De Alvear Davila, Antonio",
+          "holeNumber": 14,
+          "createdAt": "08/10/24 13:15:01"
+        },
+        {
+          "playerName": "Maestre Domecq, Manuel",
+          "holeNumber": 14,
+          "createdAt": "08/10/24 13:15:07"
+        },
+        {
+          "playerName": "Vazquez Terry, Cira",
+          "holeNumber": 7,
+          "createdAt": "08/10/24 13:43:54"
+        },
+        {
+          "playerName": "Osborne Cologan, Ignacio",
+          "holeNumber": 17,
+          "createdAt": "08/10/24 13:56:26"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/circular/2026/1bcb565407366d8953cb46fa5fbe8e7f.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:49.475Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 68341,
   "url": "https://www.nextcaddy.com/tour/68341",
-  "scrapedAt": "2026-05-09T09:57:51.117Z",
+  "scrapedAt": "2026-05-21T16:37:17.700Z",
   "meta": {
     "name": "Prueba Clasificatoria Gran Premio (Zarapicos)",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "22 feb 2026",
-    "dateEnd": "22 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-22"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -60,6 +62,9 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:36.408Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/3036124153_tcgp_salamanca_2026.pdf",
+    "/uploads/2026/02/gran-premio-junta-cyl-zarapicos-01-2026-3.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:21.493Z"
 }

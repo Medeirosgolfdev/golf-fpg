@@ -1,14 +1,14 @@
 {
   "tourId": 67959,
   "url": "https://www.nextcaddy.com/tour/67959",
-  "scrapedAt": "2026-05-09T10:15:37.987Z",
+  "scrapedAt": "2026-05-21T16:39:01.829Z",
   "meta": {
     "name": "Torneo Senior Damas \"Palomarejos\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": null,
     "courseCode": null,
-    "dateStart": "21 abr 2026",
-    "dateEnd": "21 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Circuito Senior Da",
     "categories": [
       "Senior",
@@ -18,13 +18,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-21"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "1ª Categoría Senior",
+      "expectedJugadores": 11,
       "header": [
         "Pos",
         "Jugador",
@@ -162,6 +163,8 @@
     },
     {
       "category": 2,
+      "categoryName": "2ª Categoría Senior",
+      "expectedJugadores": 16,
       "header": [
         "Pos",
         "Jugador",
@@ -354,6 +357,8 @@
     },
     {
       "category": 3,
+      "categoryName": "1ª Categoría Supersenior",
+      "expectedJugadores": 14,
       "header": [
         "Pos",
         "Jugador",
@@ -524,6 +529,8 @@
     },
     {
       "category": 4,
+      "categoryName": "2ª Categoría Supersenior",
+      "expectedJugadores": 16,
       "header": [
         "Pos",
         "Jugador",
@@ -716,6 +723,8 @@
     },
     {
       "category": 5,
+      "categoryName": "3ª Categoría Supersenior",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -820,6 +829,8 @@
     },
     {
       "category": 6,
+      "categoryName": "Scratch",
+      "expectedJugadores": 65,
       "header": [
         "Pos",
         "Jugador",
@@ -1550,6 +1561,33 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "1ª Categoría Senior",
+      "jugadores": 11
+    },
+    "2": {
+      "name": "2ª Categoría Senior",
+      "jugadores": 16
+    },
+    "3": {
+      "name": "1ª Categoría Supersenior",
+      "jugadores": 14
+    },
+    "4": {
+      "name": "2ª Categoría Supersenior",
+      "jugadores": 16
+    },
+    "5": {
+      "name": "3ª Categoría Supersenior",
+      "jugadores": 8
+    },
+    "6": {
+      "name": "Scratch",
+      "jugadores": 65
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2469,58 +2507,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72477
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Alvarez Fernandez, Elias",
-          "holeNumber": 5,
-          "createdAt": "31/07/25 09:49:22"
-        },
-        {
-          "playerName": "Salido Pachon, Antonio",
-          "holeNumber": 16,
-          "createdAt": "31/07/25 10:37:02"
-        },
-        {
-          "playerName": "James, Edward",
-          "holeNumber": 10,
-          "createdAt": "31/07/25 11:08:17"
-        },
-        {
-          "playerName": "Alvarez Fernandez, Elias",
-          "holeNumber": 11,
-          "createdAt": "31/07/25 11:19:49"
-        },
-        {
-          "playerName": "Terry Gomez De Terreros, Aurelio De",
-          "holeNumber": 11,
-          "createdAt": "31/07/25 11:27:59"
-        },
-        {
-          "playerName": "Davies, Christopher",
-          "holeNumber": 3,
-          "createdAt": "31/07/25 11:37:58"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -3113,5 +3099,60 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:17.312Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72477
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Alvarez Fernandez, Elias",
+          "holeNumber": 5,
+          "createdAt": "31/07/25 09:49:22"
+        },
+        {
+          "playerName": "Salido Pachon, Antonio",
+          "holeNumber": 16,
+          "createdAt": "31/07/25 10:37:02"
+        },
+        {
+          "playerName": "James, Edward",
+          "holeNumber": 10,
+          "createdAt": "31/07/25 11:08:17"
+        },
+        {
+          "playerName": "Alvarez Fernandez, Elias",
+          "holeNumber": 11,
+          "createdAt": "31/07/25 11:19:49"
+        },
+        {
+          "playerName": "Terry Gomez De Terreros, Aurelio De",
+          "holeNumber": 11,
+          "createdAt": "31/07/25 11:27:59"
+        },
+        {
+          "playerName": "Davies, Christopher",
+          "holeNumber": 3,
+          "createdAt": "31/07/25 11:37:58"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/3407494018_arb_reg_loc_palomarejos.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:13.916Z"
 }

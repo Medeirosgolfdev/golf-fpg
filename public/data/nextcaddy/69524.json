@@ -1,14 +1,14 @@
 {
   "tourId": 69524,
   "url": "https://www.nextcaddy.com/tour/69524",
-  "scrapedAt": "2026-05-09T10:07:49.120Z",
+  "scrapedAt": "2026-05-21T16:38:27.943Z",
   "meta": {
     "name": "LOS DANESES 0204",
     "organizer": null,
     "course": "Miraflores Golf",
     "courseCode": "AM76",
-    "dateStart": "02 abr 2026",
-    "dateEnd": "02 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-02"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 16,
       "header": [
         "Pos",
         "Jugador",
@@ -215,6 +216,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 16
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -455,6 +463,7 @@
       "nivel": "AM76198382"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {
       "p": {
@@ -828,6 +837,6 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:42.554Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:34.989Z"
 }

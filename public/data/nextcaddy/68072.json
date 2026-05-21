@@ -1,14 +1,14 @@
 {
   "tourId": 68072,
   "url": "https://www.nextcaddy.com/tour/68072",
-  "scrapedAt": "2026-05-09T09:49:52.295Z",
+  "scrapedAt": "2026-05-21T16:41:24.466Z",
   "meta": {
     "name": "V CAMPEONATO DE NAVIDAD  PADRES E HIJOS DE CASTILLA Y LEÓN (9 Hoyos) (copia)",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "12 dic 2026",
-    "dateEnd": "12 dic 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -22,12 +22,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-12-12"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -140,6 +142,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:33.387Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/2827373961_c.38.24_campeonato_pdres_e_hijos_2024.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:16.756Z"
 }

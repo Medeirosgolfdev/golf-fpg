@@ -1,14 +1,14 @@
 {
   "tourId": 67628,
   "url": "https://www.nextcaddy.com/tour/67628",
-  "scrapedAt": "2026-05-09T09:57:24.643Z",
+  "scrapedAt": "2026-05-21T16:36:38.736Z",
   "meta": {
     "name": "LADIES 20.1",
     "organizer": null,
     "course": "Santa María Golf & Country Club",
     "courseCode": "AM86",
-    "dateStart": "20 ene 2026",
-    "dateEnd": "20 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Especial",
     "categories": [
       "Señoras",
@@ -16,13 +16,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-20"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 15,
       "header": [
         "Pos",
         "Jugador",
@@ -204,6 +205,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 15,
       "header": [
         "Pos",
         "Jugador",
@@ -384,6 +387,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 15
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 15
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -610,6 +624,7 @@
       "nivel": "Mid"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -633,10 +648,30 @@
           "playerName": "Fowler, Joanne",
           "holeNumber": 8,
           "createdAt": "07/05/26 12:21:50"
+        },
+        {
+          "playerName": "De Rueda Rubio, Beatriz",
+          "holeNumber": 6,
+          "createdAt": "14/05/26 20:29:26"
+        },
+        {
+          "playerName": "Guerrero Pontivero, Amalia",
+          "holeNumber": 3,
+          "createdAt": "14/05/26 20:31:01"
+        },
+        {
+          "playerName": "Moreno Carranza, Manuela",
+          "holeNumber": 7,
+          "createdAt": "14/05/26 20:34:30"
+        },
+        {
+          "playerName": "Peña Aguirre, Isabel",
+          "holeNumber": 2,
+          "createdAt": "21/05/26 12:28:51"
         }
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:28.522Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:06.649Z"
 }

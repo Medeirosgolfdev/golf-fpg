@@ -1,14 +1,14 @@
 {
   "tourId": 67917,
   "url": "https://www.nextcaddy.com/tour/67917",
-  "scrapedAt": "2026-05-09T10:15:46.795Z",
+  "scrapedAt": "2026-05-21T16:39:15.836Z",
   "meta": {
     "name": "IV Torneo RKN Senior · Turno de Mañana 9:30 · Turno de Tarde 12:30",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "29 abr 2026",
-    "dateEnd": "29 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Senior",
@@ -18,13 +18,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-29"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Individual Señoras Femenino Scratch General",
+      "expectedJugadores": 16,
       "header": [
         "Pos",
         "Jugador",
@@ -217,6 +218,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Individual Señoras Femenino Handicap General",
+      "expectedJugadores": 16,
       "header": [
         "Pos",
         "Jugador",
@@ -409,6 +412,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Senior Masculino Scratch General",
+      "expectedJugadores": 14,
       "header": [
         "Pos",
         "Jugador",
@@ -579,6 +584,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Senior Masculino Handicap General",
+      "expectedJugadores": 14,
       "header": [
         "Pos",
         "Jugador",
@@ -749,6 +756,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Super Senior Masculino Scratch General",
+      "expectedJugadores": 41,
       "header": [
         "Pos",
         "Jugador",
@@ -1216,6 +1225,8 @@
     },
     {
       "category": 6,
+      "categoryName": "Super Senior Masculino Handicap General",
+      "expectedJugadores": 41,
       "header": [
         "Pos",
         "Jugador",
@@ -1682,6 +1693,33 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Señoras Femenino Scratch General",
+      "jugadores": 16
+    },
+    "2": {
+      "name": "Individual Señoras Femenino Handicap General",
+      "jugadores": 16
+    },
+    "3": {
+      "name": "Senior Masculino Scratch General",
+      "jugadores": 14
+    },
+    "4": {
+      "name": "Senior Masculino Handicap General",
+      "jugadores": 14
+    },
+    "5": {
+      "name": "Super Senior Masculino Scratch General",
+      "jugadores": 41
+    },
+    "6": {
+      "name": "Super Senior Masculino Handicap General",
+      "jugadores": 41
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2692,22 +2730,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72434
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -3354,5 +3376,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:15.843Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72434
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:12.208Z"
 }

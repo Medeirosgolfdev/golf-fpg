@@ -1,14 +1,14 @@
 {
   "tourId": 69745,
   "url": "https://www.nextcaddy.com/tour/69745",
-  "scrapedAt": "2026-05-09T10:07:55.679Z",
+  "scrapedAt": "2026-05-21T16:38:39.517Z",
   "meta": {
     "name": "LIGA ABONADOS SABADO 11/04",
     "organizer": null,
     "course": "Montecastillo Barceló Golf Club",
     "courseCode": "AM29",
-    "dateStart": "11 abr 2026",
-    "dateEnd": "11 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-11"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 15,
       "header": [
         "Pos",
         "Jugador",
@@ -204,6 +205,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 15
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -288,6 +296,58 @@
       "licencia": "AM25700334",
       "hcp": null,
       "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Juan Carlos Nuñez Benicio",
+          "hcp": 14.5,
+          "ins": "2296259",
+          "jid": "74545",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Juan Carlos Reina Rubio",
+          "hcp": 14.6,
+          "ins": "2296261",
+          "jid": "74545",
+          "nivel": "S"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Jose Maria Perez Garcia",
+          "hcp": 14.7,
+          "ins": "2296260",
+          "jid": "74545",
+          "nivel": "S"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Milagros Nieves Fernandez",
+          "hcp": 25,
+          "ins": "2296258",
+          "jid": "74545",
+          "nivel": "S"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Joaquin Ruiz Reyes",
+          "hcp": 26.4,
+          "ins": "2296262",
+          "jid": "74545",
+          "nivel": "S"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -582,57 +642,8 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Juan Carlos Nuñez Benicio",
-          "hcp": 14.5,
-          "ins": "2296259",
-          "jid": "74545",
-          "nivel": "S"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Juan Carlos Reina Rubio",
-          "hcp": 14.6,
-          "ins": "2296261",
-          "jid": "74545",
-          "nivel": "S"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
-          "name": "Jose Maria Perez Garcia",
-          "hcp": 14.7,
-          "ins": "2296260",
-          "jid": "74545",
-          "nivel": "S"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
-          "name": "Milagros Nieves Fernandez",
-          "hcp": 25,
-          "ins": "2296258",
-          "jid": "74545",
-          "nivel": "S"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
-          "name": "Joaquin Ruiz Reyes",
-          "hcp": 26.4,
-          "ins": "2296262",
-          "jid": "74545",
-          "nivel": "S"
-        }
-      ]
-    }
+  "pdfs": [
+    "/uploads/competiciones/cartel/408059931_69745-liga-abonados-sabado-11-04.pdf"
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:56.728Z"
+  "horariosScrapedAt": "2026-05-21T16:42:37.149Z"
 }

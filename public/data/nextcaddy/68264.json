@@ -1,14 +1,14 @@
 {
   "tourId": 68264,
   "url": "https://www.nextcaddy.com/tour/68264",
-  "scrapedAt": "2026-05-09T09:57:35.800Z",
+  "scrapedAt": "2026-05-21T16:36:55.290Z",
   "meta": {
     "name": "Sherry International Golf Group (SIGG) - Martes 10 Febrero 2026 (Grupo privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "10 feb 2026",
-    "dateEnd": "10 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-10"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 10,
       "header": [
         "Pos",
         "Jugador",
@@ -149,6 +150,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 10
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -305,33 +313,6 @@
       "nivel": "AMC3029818"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72837
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Carter, Ian Michael",
-          "holeNumber": 15,
-          "createdAt": "07/08/25 13:45:36"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -429,5 +410,33 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:23.216Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72837
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Carter, Ian Michael",
+          "holeNumber": 15,
+          "createdAt": "07/08/25 13:45:36"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:20.614Z"
 }

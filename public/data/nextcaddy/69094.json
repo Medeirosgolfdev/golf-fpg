@@ -1,14 +1,14 @@
 {
   "tourId": 69094,
   "url": "https://www.nextcaddy.com/tour/69094",
-  "scrapedAt": "2026-05-09T09:58:11.687Z",
+  "scrapedAt": "2026-05-21T16:37:52.426Z",
   "meta": {
     "name": "2ª Prueba del Circuito RCG Vista Hermosa 14-03-26",
     "organizer": null,
     "course": "Real Club de Golf Vista Hermosa",
     "courseCode": "AM05",
-    "dateStart": "14 mar 2026",
-    "dateEnd": "14 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,21 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-14"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Pareja",
+      "jugadores": 26
+    },
+    "2": {
+      "name": "Handicap Pareja",
+      "jugadores": 26
+    }
+  },
   "inscritos": [
     {
       "orden": null,
@@ -570,22 +580,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73823
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -1061,5 +1055,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:32.710Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73823
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:30.866Z"
 }

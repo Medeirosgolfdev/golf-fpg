@@ -1,6 +1,6 @@
 {
   "gameId": "675adcab5ce8ddb33f5fb90d",
-  "fetchedAt": "2026-05-09T19:51:09.949Z",
+  "fetchedAt": "2026-05-21T16:42:52.584Z",
   "game": {
     "_id": "675adcab5ce8ddb33f5fb90d",
     "name": "Jornada 2 - Foursomes",
@@ -52,21 +52,21 @@
       },
       {
         "gender": "M",
-        "color": "orange",
-        "lap": "lap18",
-        "rating": 61.9,
-        "slope": 105,
-        "par": 72,
-        "_id": "675adcab5ce8ddb33f5fba06"
-      },
-      {
-        "gender": "M",
         "color": "yellow",
         "lap": "lap18",
         "rating": 70.7,
         "slope": 133,
         "par": 72,
         "_id": "675adcab5ce8ddb33f5fba18"
+      },
+      {
+        "gender": "M",
+        "color": "orange",
+        "lap": "lap18",
+        "rating": 61.9,
+        "slope": 105,
+        "par": 72,
+        "_id": "675adcab5ce8ddb33f5fba06"
       },
       {
         "gender": "M",
@@ -81,30 +81,21 @@
     "teesFemale": [
       {
         "gender": "F",
-        "color": "red",
-        "lap": "lap18",
-        "rating": 71.6,
-        "slope": 120,
-        "par": 72,
-        "_id": "675adcab5ce8ddb33f5fb9e2"
-      },
-      {
-        "gender": "F",
-        "color": "white",
-        "lap": "lap18",
-        "rating": 78.7,
-        "slope": 136,
-        "par": 72,
-        "_id": "675adcab5ce8ddb33f5fba4e"
-      },
-      {
-        "gender": "F",
         "color": "blue",
         "lap": "lap18",
         "rating": 73.9,
         "slope": 128,
         "par": 72,
         "_id": "675adcab5ce8ddb33f5fb9be"
+      },
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 71.6,
+        "slope": 120,
+        "par": 72,
+        "_id": "675adcab5ce8ddb33f5fb9e2"
       },
       {
         "gender": "F",
@@ -123,6 +114,15 @@
         "slope": 132,
         "par": 72,
         "_id": "675adcab5ce8ddb33f5fba3c"
+      },
+      {
+        "gender": "F",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 78.7,
+        "slope": 136,
+        "par": 72,
+        "_id": "675adcab5ce8ddb33f5fba4e"
       }
     ]
   },

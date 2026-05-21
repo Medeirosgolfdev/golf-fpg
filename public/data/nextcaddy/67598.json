@@ -1,14 +1,14 @@
 {
   "tourId": 67598,
   "url": "https://www.nextcaddy.com/tour/67598",
-  "scrapedAt": "2026-05-09T09:57:31.344Z",
+  "scrapedAt": "2026-05-21T16:36:49.099Z",
   "meta": {
     "name": "Campeonato de Madrid Individual Masculino y Femenino de 2ª Categoría",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Centro Nacional de Golf",
     "courseCode": "CMA8",
-    "dateStart": "31 ene 2026",
-    "dateEnd": "31 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-31"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Final Masculino Scratch",
+      "expectedJugadores": 72,
       "header": [
         "Pos",
         "Jugador",
@@ -1483,6 +1484,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Final Femenino Scratch",
+      "expectedJugadores": 16,
       "header": [
         "Pos",
         "Jugador",
@@ -1822,6 +1825,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Final Masculino Handicap",
+      "expectedJugadores": 72,
       "header": [
         "Pos",
         "Jugador",
@@ -3281,6 +3286,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Final Femenino Handicap",
+      "expectedJugadores": 16,
       "header": [
         "Pos",
         "Jugador",
@@ -3619,6 +3626,25 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Final Masculino Scratch",
+      "jugadores": 72
+    },
+    "2": {
+      "name": "Final Femenino Scratch",
+      "jugadores": 16
+    },
+    "3": {
+      "name": "Final Masculino Handicap",
+      "jugadores": 72
+    },
+    "4": {
+      "name": "Final Femenino Handicap",
+      "jugadores": 16
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -4244,26 +4270,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72079
-    },
-    {
-      "roundNumber": 2,
-      "roundId": 72080
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -5815,5 +5821,26 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:11.409Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72079
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 72080
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:07.282Z"
 }

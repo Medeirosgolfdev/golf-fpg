@@ -1,14 +1,14 @@
 {
   "tourId": 68507,
   "url": "https://www.nextcaddy.com/tour/68507",
-  "scrapedAt": "2026-05-09T09:58:04.759Z",
+  "scrapedAt": "2026-05-21T16:37:41.473Z",
   "meta": {
     "name": "Torneo Fun&Golf \"Golf Negralejo\" Tiro 11:30",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Palacio del Negralejo S A",
     "courseCode": "CM33",
-    "dateStart": "08 mar 2026",
-    "dateEnd": "08 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Circuito Fun&Golf",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-03-08"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual Masculino",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -238,6 +239,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual Femenino",
+      "expectedJugadores": 15,
       "header": [
         "Pos",
         "Jugador",
@@ -419,6 +422,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Scratch Individual Masculino",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -633,6 +638,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Scratch Individual Femenino",
+      "expectedJugadores": 15,
       "header": [
         "Pos",
         "Jugador",
@@ -813,6 +820,25 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Masculino",
+      "jugadores": 18
+    },
+    "2": {
+      "name": "Handicap Individual Femenino",
+      "jugadores": 15
+    },
+    "3": {
+      "name": "Scratch Individual Masculino",
+      "jugadores": 18
+    },
+    "4": {
+      "name": "Scratch Individual Femenino",
+      "jugadores": 15
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1291,53 +1317,6 @@
       "nivel": "A"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73131
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Narvaez Rezola, Juan",
-          "holeNumber": 6,
-          "createdAt": "21/08/25 14:55:29"
-        },
-        {
-          "playerName": "Narvaez Rezola, Juan",
-          "holeNumber": 9,
-          "createdAt": "21/08/25 14:55:29"
-        },
-        {
-          "playerName": "Narvaez Rezola, Juan",
-          "holeNumber": 13,
-          "createdAt": "21/08/25 14:55:29"
-        },
-        {
-          "playerName": "Narvaez Rezola, Juan",
-          "holeNumber": 16,
-          "createdAt": "21/08/25 14:55:29"
-        },
-        {
-          "playerName": "Alvarez-Cienfuegos Fernandez, Gonzalo",
-          "holeNumber": 5,
-          "createdAt": "21/08/25 14:55:30"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1642,5 +1621,55 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:25.634Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73131
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Narvaez Rezola, Juan",
+          "holeNumber": 6,
+          "createdAt": "21/08/25 14:55:29"
+        },
+        {
+          "playerName": "Narvaez Rezola, Juan",
+          "holeNumber": 9,
+          "createdAt": "21/08/25 14:55:29"
+        },
+        {
+          "playerName": "Narvaez Rezola, Juan",
+          "holeNumber": 13,
+          "createdAt": "21/08/25 14:55:29"
+        },
+        {
+          "playerName": "Narvaez Rezola, Juan",
+          "holeNumber": 16,
+          "createdAt": "21/08/25 14:55:29"
+        },
+        {
+          "playerName": "Alvarez-Cienfuegos Fernandez, Gonzalo",
+          "holeNumber": 5,
+          "createdAt": "21/08/25 14:55:30"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/537455061_rrll_negralejo_p&amp;p.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:23.241Z"
 }

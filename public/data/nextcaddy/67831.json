@@ -1,14 +1,14 @@
 {
   "tourId": 67831,
   "url": "https://www.nextcaddy.com/tour/67831",
-  "scrapedAt": "2026-05-09T09:49:43.875Z",
+  "scrapedAt": "2026-05-21T16:38:57.149Z",
   "meta": {
     "name": "Torneo de 1ª Categoría Pitch & Putt Masculino y Femenino \"Green Paddock\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Green Paddock S A",
     "courseCode": "CM14",
-    "dateStart": "19 abr 2026",
-    "dateEnd": "19 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap) Circuito General D",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-19"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Hándicap Indistinta",
+      "expectedJugadores": 54,
       "header": [
         "Pos",
         "Jugador",
@@ -634,6 +635,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Clasificación Scratch Indistinta",
+      "expectedJugadores": 54,
       "header": [
         "Pos",
         "Jugador",
@@ -1243,6 +1246,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Hándicap Indistinta",
+      "jugadores": 54
+    },
+    "2": {
+      "name": "Clasificación Scratch Indistinta",
+      "jugadores": 54
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2015,43 +2029,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72327
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Espejo Perez, Simona",
-          "holeNumber": 2,
-          "createdAt": "24/07/25 09:25:20"
-        },
-        {
-          "playerName": "Gomez Varona, Victorio",
-          "holeNumber": 2,
-          "createdAt": "24/07/25 09:25:21"
-        },
-        {
-          "playerName": "Gomez Varona, Victorio",
-          "holeNumber": 9,
-          "createdAt": "24/07/25 09:25:21"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -2545,5 +2522,45 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:14.328Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72327
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Espejo Perez, Simona",
+          "holeNumber": 2,
+          "createdAt": "24/07/25 09:25:20"
+        },
+        {
+          "playerName": "Gomez Varona, Victorio",
+          "holeNumber": 2,
+          "createdAt": "24/07/25 09:25:21"
+        },
+        {
+          "playerName": "Gomez Varona, Victorio",
+          "holeNumber": 9,
+          "createdAt": "24/07/25 09:25:21"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/256391553_arb_cm14_reg_loc_green_paddock_2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:10.655Z"
 }

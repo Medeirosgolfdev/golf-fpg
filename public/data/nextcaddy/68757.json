@@ -1,14 +1,14 @@
 {
   "tourId": 68757,
   "url": "https://www.nextcaddy.com/tour/68757",
-  "scrapedAt": "2026-05-09T09:58:00.404Z",
+  "scrapedAt": "2026-05-21T16:37:32.924Z",
   "meta": {
     "name": "Sherry International Golf Group (SIGG)- MEDAL PLAY - Martes 03 marzo 2026 (Grupo privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "03 mar 2026",
-    "dateEnd": "03 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "MEDAL PLAY - Martes 03 marzo 2026 (Grupo",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-03"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 31,
       "header": [
         "Pos",
         "Jugador",
@@ -368,7 +369,7 @@
         },
         {
           "pos": null,
-          "name": "Antonio Manuel Ure?A Serrano",
+          "name": "Antonio Manuel Ureña Serrano",
           "licencia": "AM32612444",
           "hcp": 9.7,
           "nivel": "S",
@@ -380,6 +381,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 31
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -481,7 +489,7 @@
     },
     {
       "orden": 12,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "AM32612444",
       "hcp": 9.7,
       "nivel": "S"
@@ -719,7 +727,7 @@
     },
     {
       "orden": 15,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "01-03-26 16:23",
       "hcp": 9.7,
       "nivel": "AM32612444"
@@ -837,22 +845,6 @@
       "nivel": "EXX1911513"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73428
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -1130,5 +1122,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:29.214Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73428
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:27.257Z"
 }

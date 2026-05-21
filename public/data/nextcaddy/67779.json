@@ -1,14 +1,14 @@
 {
   "tourId": 67779,
   "url": "https://www.nextcaddy.com/tour/67779",
-  "scrapedAt": "2026-05-09T10:15:40.463Z",
+  "scrapedAt": "2026-05-21T16:39:06.394Z",
   "meta": {
     "name": "Torneo IMG Juvenil",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Golf Los Retamares",
     "courseCode": "CM60",
-    "dateStart": "25 abr 2026",
-    "dateEnd": "25 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) Circuito Juvenil 20",
     "categories": [
       "Juvenil",
@@ -24,12 +24,14 @@
       "Benjamín Femenino",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-04-25"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -50,6 +52,8 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:29.136Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/593684755_reglamento-xii-img_2026_v01-pdf_20260406111638.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:07.853Z"
 }

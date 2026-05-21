@@ -1,14 +1,14 @@
 {
   "tourId": 70125,
   "url": "https://www.nextcaddy.com/tour/70125",
-  "scrapedAt": "2026-05-09T10:15:36.872Z",
+  "scrapedAt": "2026-05-21T16:39:00.527Z",
   "meta": {
     "name": "LIGA DE DAMAS DOMINGO",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": "19 abr 2026",
-    "dateEnd": "19 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-19"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "2 Categoria",
+      "expectedJugadores": 13,
       "header": [
         "Pos",
         "Jugador",
@@ -183,6 +184,8 @@
     },
     {
       "category": 2,
+      "categoryName": "1 Categoria",
+      "expectedJugadores": 11,
       "header": [
         "Pos",
         "Jugador",
@@ -319,6 +322,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "2 Categoria",
+      "jugadores": 13
+    },
+    "2": {
+      "name": "1 Categoria",
+      "jugadores": 11
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -538,103 +552,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75029
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Sanchez Ortega, Juan",
-          "holeNumber": 3,
-          "createdAt": "03/11/25 09:42:49"
-        },
-        {
-          "playerName": "James, Edward",
-          "holeNumber": 16,
-          "createdAt": "03/11/25 10:51:44"
-        },
-        {
-          "playerName": "Ure?A Serrano, Antonio Manuel",
-          "holeNumber": 5,
-          "createdAt": "03/11/25 10:54:49"
-        },
-        {
-          "playerName": "Sanchez Ortega, Juan",
-          "holeNumber": 9,
-          "createdAt": "03/11/25 10:54:53"
-        },
-        {
-          "playerName": "Diaz  Rivera, Antonio",
-          "holeNumber": 8,
-          "createdAt": "03/11/25 11:13:11"
-        },
-        {
-          "playerName": "De La Calle Moya, Amaro",
-          "holeNumber": 10,
-          "createdAt": "03/11/25 11:22:04"
-        },
-        {
-          "playerName": "Maraver Delgado, Juan Manuel",
-          "holeNumber": 10,
-          "createdAt": "03/11/25 11:48:22"
-        },
-        {
-          "playerName": "James, Edward",
-          "holeNumber": 3,
-          "createdAt": "03/11/25 12:27:55"
-        },
-        {
-          "playerName": "Gago Perez, Valentin",
-          "holeNumber": 16,
-          "createdAt": "03/11/25 12:57:29"
-        },
-        {
-          "playerName": "Peralta Fraidias, Jose Antonio",
-          "holeNumber": 16,
-          "createdAt": "03/11/25 13:12:56"
-        },
-        {
-          "playerName": "Carrion Mata, Lorenzo",
-          "holeNumber": 16,
-          "createdAt": "03/11/25 13:13:39"
-        },
-        {
-          "playerName": "Maraver Delgado, Juan Manuel",
-          "holeNumber": 16,
-          "createdAt": "03/11/25 13:13:53"
-        },
-        {
-          "playerName": "Lafuente Ojuel, Jose Luis",
-          "holeNumber": 7,
-          "createdAt": "03/11/25 13:20:30"
-        },
-        {
-          "playerName": "James, Edward",
-          "holeNumber": 7,
-          "createdAt": "03/11/25 13:20:31"
-        },
-        {
-          "playerName": "Marin Blanco, Francisco Jose",
-          "holeNumber": 4,
-          "createdAt": "03/11/25 14:07:55"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -777,5 +694,105 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:57.705Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75029
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Sanchez Ortega, Juan",
+          "holeNumber": 3,
+          "createdAt": "03/11/25 09:42:49"
+        },
+        {
+          "playerName": "James, Edward",
+          "holeNumber": 16,
+          "createdAt": "03/11/25 10:51:44"
+        },
+        {
+          "playerName": "Ure?A Serrano, Antonio Manuel",
+          "holeNumber": 5,
+          "createdAt": "03/11/25 10:54:49"
+        },
+        {
+          "playerName": "Sanchez Ortega, Juan",
+          "holeNumber": 9,
+          "createdAt": "03/11/25 10:54:53"
+        },
+        {
+          "playerName": "Diaz  Rivera, Antonio",
+          "holeNumber": 8,
+          "createdAt": "03/11/25 11:13:11"
+        },
+        {
+          "playerName": "De La Calle Moya, Amaro",
+          "holeNumber": 10,
+          "createdAt": "03/11/25 11:22:04"
+        },
+        {
+          "playerName": "Maraver Delgado, Juan Manuel",
+          "holeNumber": 10,
+          "createdAt": "03/11/25 11:48:22"
+        },
+        {
+          "playerName": "James, Edward",
+          "holeNumber": 3,
+          "createdAt": "03/11/25 12:27:55"
+        },
+        {
+          "playerName": "Gago Perez, Valentin",
+          "holeNumber": 16,
+          "createdAt": "03/11/25 12:57:29"
+        },
+        {
+          "playerName": "Peralta Fraidias, Jose Antonio",
+          "holeNumber": 16,
+          "createdAt": "03/11/25 13:12:56"
+        },
+        {
+          "playerName": "Carrion Mata, Lorenzo",
+          "holeNumber": 16,
+          "createdAt": "03/11/25 13:13:39"
+        },
+        {
+          "playerName": "Maraver Delgado, Juan Manuel",
+          "holeNumber": 16,
+          "createdAt": "03/11/25 13:13:53"
+        },
+        {
+          "playerName": "Lafuente Ojuel, Jose Luis",
+          "holeNumber": 7,
+          "createdAt": "03/11/25 13:20:30"
+        },
+        {
+          "playerName": "James, Edward",
+          "holeNumber": 7,
+          "createdAt": "03/11/25 13:20:31"
+        },
+        {
+          "playerName": "Marin Blanco, Francisco Jose",
+          "holeNumber": 4,
+          "createdAt": "03/11/25 14:07:55"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/cartel/2082286032_70125-liga-de-damas-domingo.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:38.217Z"
 }

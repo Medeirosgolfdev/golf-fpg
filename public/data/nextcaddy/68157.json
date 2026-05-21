@@ -1,14 +1,14 @@
 {
   "tourId": 68157,
   "url": "https://www.nextcaddy.com/tour/68157",
-  "scrapedAt": "2026-05-09T10:15:51.493Z",
+  "scrapedAt": "2026-05-21T16:39:23.510Z",
   "meta": {
     "name": "Torneo Supersenior Masculino \"Aranjuez\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Club de Golf Aranjuez",
     "courseCode": "CM66",
-    "dateStart": "04 may 2026",
-    "dateEnd": "04 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Circuito Superseni",
     "categories": [
       "senior Masculino",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-04"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Hándicap 1ª Categoría",
+      "expectedJugadores": 47,
       "header": [
         "Pos",
         "Jugador",
@@ -558,6 +559,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Clasificación Hándicap 2ª Categoría",
+      "expectedJugadores": 38,
       "header": [
         "Pos",
         "Jugador",
@@ -992,6 +995,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Clasificación Scratch General",
+      "expectedJugadores": 85,
       "header": [
         "Pos",
         "Jugador",
@@ -1942,6 +1947,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Hándicap 1ª Categoría",
+      "jugadores": 47
+    },
+    "2": {
+      "name": "Clasificación Hándicap 2ª Categoría",
+      "jugadores": 38
+    },
+    "3": {
+      "name": "Clasificación Scratch General",
+      "jugadores": 85
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -3148,138 +3168,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72703
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Pons Ortega, Jose Luis",
-          "holeNumber": 8,
-          "createdAt": "13/08/25 18:36:46"
-        },
-        {
-          "playerName": "Sebastian Bueno, Concepcion",
-          "holeNumber": 6,
-          "createdAt": "13/08/25 18:36:47"
-        },
-        {
-          "playerName": "Mansilla De Sebastian, Pablo",
-          "holeNumber": 17,
-          "createdAt": "13/08/25 18:36:48"
-        },
-        {
-          "playerName": "Olaechea Pascual, Jose Ignacio",
-          "holeNumber": 11,
-          "createdAt": "13/08/25 18:36:48"
-        },
-        {
-          "playerName": "Santabarbara Moreno, Jose Maria",
-          "holeNumber": 11,
-          "createdAt": "13/08/25 18:36:48"
-        },
-        {
-          "playerName": "Aragon Ortiz, Antonio",
-          "holeNumber": 4,
-          "createdAt": "13/08/25 18:36:50"
-        },
-        {
-          "playerName": "Gomez Gordon, Ignacio",
-          "holeNumber": 14,
-          "createdAt": "13/08/25 18:36:50"
-        },
-        {
-          "playerName": "Gomez Gordon, Ignacio",
-          "holeNumber": 17,
-          "createdAt": "13/08/25 18:36:51"
-        },
-        {
-          "playerName": "Patiño Tornos, Luis",
-          "holeNumber": 1,
-          "createdAt": "13/08/25 18:36:52"
-        },
-        {
-          "playerName": "Luna Torres, Mercedes",
-          "holeNumber": 17,
-          "createdAt": "13/08/25 18:36:57"
-        },
-        {
-          "playerName": "Trinidad Martin-Arroyo, Jose Manuel",
-          "holeNumber": 1,
-          "createdAt": "13/08/25 18:36:57"
-        },
-        {
-          "playerName": "Gonzalez Castilla, Emilio L.",
-          "holeNumber": 11,
-          "createdAt": "13/08/25 18:36:58"
-        },
-        {
-          "playerName": "Anglada Gonzalez, Jorge",
-          "holeNumber": 9,
-          "createdAt": "13/08/25 18:36:58"
-        },
-        {
-          "playerName": "Aramburu Delgado, Jose",
-          "holeNumber": 10,
-          "createdAt": "13/08/25 18:36:59"
-        },
-        {
-          "playerName": "Aramburu Delgado, Jose",
-          "holeNumber": 14,
-          "createdAt": "13/08/25 18:36:59"
-        },
-        {
-          "playerName": "Santiago Moran, Jose Manuel",
-          "holeNumber": 12,
-          "createdAt": "13/08/25 18:37:01"
-        },
-        {
-          "playerName": "Santiago Moran, Jose Manuel",
-          "holeNumber": 13,
-          "createdAt": "13/08/25 18:37:01"
-        },
-        {
-          "playerName": "Santiago Moran, Jose Manuel",
-          "holeNumber": 17,
-          "createdAt": "13/08/25 18:37:02"
-        },
-        {
-          "playerName": "Gaeta Lendinez, Luis",
-          "holeNumber": 10,
-          "createdAt": "13/08/25 18:37:02"
-        },
-        {
-          "playerName": "Gaeta Lendinez, Luis",
-          "holeNumber": 12,
-          "createdAt": "13/08/25 18:37:02"
-        },
-        {
-          "playerName": "Garcia Perez, Jose Maria",
-          "holeNumber": 1,
-          "createdAt": "13/08/25 18:37:05"
-        },
-        {
-          "playerName": "Garcia Perez, Jose Maria",
-          "holeNumber": 13,
-          "createdAt": "13/08/25 18:37:06"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -4043,5 +3931,140 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:20.896Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72703
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Pons Ortega, Jose Luis",
+          "holeNumber": 8,
+          "createdAt": "13/08/25 18:36:46"
+        },
+        {
+          "playerName": "Sebastian Bueno, Concepcion",
+          "holeNumber": 6,
+          "createdAt": "13/08/25 18:36:47"
+        },
+        {
+          "playerName": "Mansilla De Sebastian, Pablo",
+          "holeNumber": 17,
+          "createdAt": "13/08/25 18:36:48"
+        },
+        {
+          "playerName": "Olaechea Pascual, Jose Ignacio",
+          "holeNumber": 11,
+          "createdAt": "13/08/25 18:36:48"
+        },
+        {
+          "playerName": "Santabarbara Moreno, Jose Maria",
+          "holeNumber": 11,
+          "createdAt": "13/08/25 18:36:48"
+        },
+        {
+          "playerName": "Aragon Ortiz, Antonio",
+          "holeNumber": 4,
+          "createdAt": "13/08/25 18:36:50"
+        },
+        {
+          "playerName": "Gomez Gordon, Ignacio",
+          "holeNumber": 14,
+          "createdAt": "13/08/25 18:36:50"
+        },
+        {
+          "playerName": "Gomez Gordon, Ignacio",
+          "holeNumber": 17,
+          "createdAt": "13/08/25 18:36:51"
+        },
+        {
+          "playerName": "Patiño Tornos, Luis",
+          "holeNumber": 1,
+          "createdAt": "13/08/25 18:36:52"
+        },
+        {
+          "playerName": "Luna Torres, Mercedes",
+          "holeNumber": 17,
+          "createdAt": "13/08/25 18:36:57"
+        },
+        {
+          "playerName": "Trinidad Martin-Arroyo, Jose Manuel",
+          "holeNumber": 1,
+          "createdAt": "13/08/25 18:36:57"
+        },
+        {
+          "playerName": "Gonzalez Castilla, Emilio L.",
+          "holeNumber": 11,
+          "createdAt": "13/08/25 18:36:58"
+        },
+        {
+          "playerName": "Anglada Gonzalez, Jorge",
+          "holeNumber": 9,
+          "createdAt": "13/08/25 18:36:58"
+        },
+        {
+          "playerName": "Aramburu Delgado, Jose",
+          "holeNumber": 10,
+          "createdAt": "13/08/25 18:36:59"
+        },
+        {
+          "playerName": "Aramburu Delgado, Jose",
+          "holeNumber": 14,
+          "createdAt": "13/08/25 18:36:59"
+        },
+        {
+          "playerName": "Santiago Moran, Jose Manuel",
+          "holeNumber": 12,
+          "createdAt": "13/08/25 18:37:01"
+        },
+        {
+          "playerName": "Santiago Moran, Jose Manuel",
+          "holeNumber": 13,
+          "createdAt": "13/08/25 18:37:01"
+        },
+        {
+          "playerName": "Santiago Moran, Jose Manuel",
+          "holeNumber": 17,
+          "createdAt": "13/08/25 18:37:02"
+        },
+        {
+          "playerName": "Gaeta Lendinez, Luis",
+          "holeNumber": 10,
+          "createdAt": "13/08/25 18:37:02"
+        },
+        {
+          "playerName": "Gaeta Lendinez, Luis",
+          "holeNumber": 12,
+          "createdAt": "13/08/25 18:37:02"
+        },
+        {
+          "playerName": "Garcia Perez, Jose Maria",
+          "holeNumber": 1,
+          "createdAt": "13/08/25 18:37:05"
+        },
+        {
+          "playerName": "Garcia Perez, Jose Maria",
+          "holeNumber": 13,
+          "createdAt": "13/08/25 18:37:06"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/2222584100_rrll_ranjuez.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:17.883Z"
 }

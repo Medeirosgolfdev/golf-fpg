@@ -1,14 +1,14 @@
 {
   "tourId": 68230,
   "url": "https://www.nextcaddy.com/tour/68230",
-  "scrapedAt": "2026-05-09T10:15:43.914Z",
+  "scrapedAt": "2026-05-21T16:39:11.612Z",
   "meta": {
     "name": "Campeonato de Madrid de Profesionales PGAE",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Club de Golf la Dehesa",
     "courseCode": "CM61",
-    "dateStart": "27 abr 2026",
-    "dateEnd": "27 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros C. Prof",
     "categories": [
       "Profesional",
@@ -17,13 +17,14 @@
       "Infantil",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-27"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Final",
+      "expectedJugadores": 73,
       "header": [
         "Pos",
         "Jugador",
@@ -1797,6 +1798,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Clasificación 2ª Jornada",
+      "expectedJugadores": 73,
       "header": [
         "Pos",
         "Jugador",
@@ -3275,6 +3278,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Final",
+      "jugadores": 73
+    },
+    "2": {
+      "name": "Clasificación 2ª Jornada",
+      "jugadores": 73
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -4306,246 +4320,6 @@
       "nivel": "P+"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72792
-    },
-    {
-      "roundNumber": 2,
-      "roundId": 72793
-    },
-    {
-      "roundNumber": 3,
-      "roundId": 72794
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Navarrete De Carcer, Juan Antonio",
-          "holeNumber": 7,
-          "createdAt": "13/08/25 09:12:02"
-        },
-        {
-          "playerName": "Contreras De Oliveira Da Cunha, Diogo",
-          "holeNumber": 7,
-          "createdAt": "13/08/25 09:31:33"
-        },
-        {
-          "playerName": "Garcia Gomez, Agustin",
-          "holeNumber": 5,
-          "createdAt": "13/08/25 09:36:27"
-        },
-        {
-          "playerName": "De Blas Aguilera, Isidoro",
-          "holeNumber": 7,
-          "createdAt": "13/08/25 09:48:07"
-        },
-        {
-          "playerName": "De Blas Aguilera, Jaime",
-          "holeNumber": 7,
-          "createdAt": "13/08/25 09:49:36"
-        },
-        {
-          "playerName": "Dominguez Campelo, Luis",
-          "holeNumber": 7,
-          "createdAt": "13/08/25 10:06:43"
-        },
-        {
-          "playerName": "Gonzalez De Boado Fedriani, Eduardo",
-          "holeNumber": 8,
-          "createdAt": "13/08/25 10:15:05"
-        },
-        {
-          "playerName": "Dipietro, Manuel",
-          "holeNumber": 12,
-          "createdAt": "13/08/25 10:17:47"
-        },
-        {
-          "playerName": "Pradera Fuste, Carlos",
-          "holeNumber": 3,
-          "createdAt": "13/08/25 10:43:33"
-        },
-        {
-          "playerName": "Pradera Fuste, Carlos",
-          "holeNumber": 4,
-          "createdAt": "13/08/25 10:43:33"
-        },
-        {
-          "playerName": "Pradera Fuste, Carlos",
-          "holeNumber": 5,
-          "createdAt": "13/08/25 10:43:33"
-        },
-        {
-          "playerName": "Pradera Fuste, Carlos",
-          "holeNumber": 7,
-          "createdAt": "13/08/25 10:43:33"
-        },
-        {
-          "playerName": "Nabal Estrada, Javier",
-          "holeNumber": 12,
-          "createdAt": "13/08/25 10:44:24"
-        },
-        {
-          "playerName": "Garcia-Loygorri Yllera, Iñigo",
-          "holeNumber": 7,
-          "createdAt": "13/08/25 10:47:51"
-        },
-        {
-          "playerName": "Gonzalez De Boado Fedriani, Eduardo",
-          "holeNumber": 11,
-          "createdAt": "13/08/25 10:54:25"
-        },
-        {
-          "playerName": "Maza Moreno, Alfredo",
-          "holeNumber": 11,
-          "createdAt": "13/08/25 10:54:55"
-        },
-        {
-          "playerName": "Ramirez Fernandez, Joao",
-          "holeNumber": 15,
-          "createdAt": "13/08/25 10:57:13"
-        },
-        {
-          "playerName": "De Blas Aguilera, Isidoro",
-          "holeNumber": 12,
-          "createdAt": "13/08/25 10:59:37"
-        },
-        {
-          "playerName": "Luis De Blas, Borja De",
-          "holeNumber": 12,
-          "createdAt": "13/08/25 10:59:40"
-        },
-        {
-          "playerName": "Fuertes Arrechea, Pablo",
-          "holeNumber": 9,
-          "createdAt": "13/08/25 11:04:06"
-        },
-        {
-          "playerName": "Gonzalez De Boado Fedriani, Carlos",
-          "holeNumber": 12,
-          "createdAt": "13/08/25 11:10:56"
-        },
-        {
-          "playerName": "Abollado Garro, Juan",
-          "holeNumber": 10,
-          "createdAt": "13/08/25 11:17:44"
-        },
-        {
-          "playerName": "Dominguez Campelo, Luis",
-          "holeNumber": 12,
-          "createdAt": "13/08/25 11:18:34"
-        },
-        {
-          "playerName": "Fuerte Flores, Manuel",
-          "holeNumber": 11,
-          "createdAt": "13/08/25 11:21:12"
-        },
-        {
-          "playerName": "Nabal Estrada, Javier",
-          "holeNumber": 15,
-          "createdAt": "13/08/25 11:32:43"
-        },
-        {
-          "playerName": "Blanco Duelo, Ramon",
-          "holeNumber": 12,
-          "createdAt": "13/08/25 11:37:40"
-        },
-        {
-          "playerName": "Madrigal Alvarez, Fernando",
-          "holeNumber": 13,
-          "createdAt": "13/08/25 11:49:29"
-        },
-        {
-          "playerName": "Pradera Fuste, Carlos",
-          "holeNumber": 12,
-          "createdAt": "13/08/25 11:50:41"
-        },
-        {
-          "playerName": "Fuertes Arrechea, Pablo",
-          "holeNumber": 12,
-          "createdAt": "13/08/25 11:51:22"
-        },
-        {
-          "playerName": "Borrachero Garro, Antonio",
-          "holeNumber": 12,
-          "createdAt": "13/08/25 11:53:10"
-        },
-        {
-          "playerName": "Fuertes Arrechea, Pablo",
-          "holeNumber": 13,
-          "createdAt": "13/08/25 12:01:46"
-        },
-        {
-          "playerName": "Maza Mora, Jesus",
-          "holeNumber": 3,
-          "createdAt": "13/08/25 12:02:58"
-        },
-        {
-          "playerName": "Luis De Blas, Borja De",
-          "holeNumber": 17,
-          "createdAt": "13/08/25 12:22:24"
-        },
-        {
-          "playerName": "Pradera Fuste, Carlos",
-          "holeNumber": 15,
-          "createdAt": "13/08/25 12:29:57"
-        },
-        {
-          "playerName": "Borrachero Garro, Antonio",
-          "holeNumber": 15,
-          "createdAt": "13/08/25 12:30:49"
-        },
-        {
-          "playerName": "Dominguez Gasco, Marina",
-          "holeNumber": 17,
-          "createdAt": "13/08/25 12:37:44"
-        },
-        {
-          "playerName": "Maza Moreno, Alfredo",
-          "holeNumber": 2,
-          "createdAt": "13/08/25 13:15:15"
-        },
-        {
-          "playerName": "Carretero Garcia, Juan Carlos",
-          "holeNumber": 7,
-          "createdAt": "13/08/25 13:34:10"
-        },
-        {
-          "playerName": "Carretero Garcia, Juan Carlos",
-          "holeNumber": 12,
-          "createdAt": "13/08/25 13:34:10"
-        },
-        {
-          "playerName": "De Blas Aguilera, Isidoro",
-          "holeNumber": 4,
-          "createdAt": "13/08/25 13:43:34"
-        }
-      ]
-    },
-    "eagle": {
-      "scoreTypeKey": "eagle",
-      "players": [
-        {
-          "playerName": "Abiega Garcia, Alberto",
-          "holeNumber": 2,
-          "createdAt": "13/08/25 11:48:56"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -4877,5 +4651,250 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:22.507Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72792
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 72793
+    },
+    {
+      "roundNumber": 3,
+      "roundId": 72794
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Navarrete De Carcer, Juan Antonio",
+          "holeNumber": 7,
+          "createdAt": "13/08/25 09:12:02"
+        },
+        {
+          "playerName": "Contreras De Oliveira Da Cunha, Diogo",
+          "holeNumber": 7,
+          "createdAt": "13/08/25 09:31:33"
+        },
+        {
+          "playerName": "Garcia Gomez, Agustin",
+          "holeNumber": 5,
+          "createdAt": "13/08/25 09:36:27"
+        },
+        {
+          "playerName": "De Blas Aguilera, Isidoro",
+          "holeNumber": 7,
+          "createdAt": "13/08/25 09:48:07"
+        },
+        {
+          "playerName": "De Blas Aguilera, Jaime",
+          "holeNumber": 7,
+          "createdAt": "13/08/25 09:49:36"
+        },
+        {
+          "playerName": "Dominguez Campelo, Luis",
+          "holeNumber": 7,
+          "createdAt": "13/08/25 10:06:43"
+        },
+        {
+          "playerName": "Gonzalez De Boado Fedriani, Eduardo",
+          "holeNumber": 8,
+          "createdAt": "13/08/25 10:15:05"
+        },
+        {
+          "playerName": "Dipietro, Manuel",
+          "holeNumber": 12,
+          "createdAt": "13/08/25 10:17:47"
+        },
+        {
+          "playerName": "Pradera Fuste, Carlos",
+          "holeNumber": 3,
+          "createdAt": "13/08/25 10:43:33"
+        },
+        {
+          "playerName": "Pradera Fuste, Carlos",
+          "holeNumber": 4,
+          "createdAt": "13/08/25 10:43:33"
+        },
+        {
+          "playerName": "Pradera Fuste, Carlos",
+          "holeNumber": 5,
+          "createdAt": "13/08/25 10:43:33"
+        },
+        {
+          "playerName": "Pradera Fuste, Carlos",
+          "holeNumber": 7,
+          "createdAt": "13/08/25 10:43:33"
+        },
+        {
+          "playerName": "Nabal Estrada, Javier",
+          "holeNumber": 12,
+          "createdAt": "13/08/25 10:44:24"
+        },
+        {
+          "playerName": "Garcia-Loygorri Yllera, Iñigo",
+          "holeNumber": 7,
+          "createdAt": "13/08/25 10:47:51"
+        },
+        {
+          "playerName": "Gonzalez De Boado Fedriani, Eduardo",
+          "holeNumber": 11,
+          "createdAt": "13/08/25 10:54:25"
+        },
+        {
+          "playerName": "Maza Moreno, Alfredo",
+          "holeNumber": 11,
+          "createdAt": "13/08/25 10:54:55"
+        },
+        {
+          "playerName": "Ramirez Fernandez, Joao",
+          "holeNumber": 15,
+          "createdAt": "13/08/25 10:57:13"
+        },
+        {
+          "playerName": "De Blas Aguilera, Isidoro",
+          "holeNumber": 12,
+          "createdAt": "13/08/25 10:59:37"
+        },
+        {
+          "playerName": "Luis De Blas, Borja De",
+          "holeNumber": 12,
+          "createdAt": "13/08/25 10:59:40"
+        },
+        {
+          "playerName": "Fuertes Arrechea, Pablo",
+          "holeNumber": 9,
+          "createdAt": "13/08/25 11:04:06"
+        },
+        {
+          "playerName": "Gonzalez De Boado Fedriani, Carlos",
+          "holeNumber": 12,
+          "createdAt": "13/08/25 11:10:56"
+        },
+        {
+          "playerName": "Abollado Garro, Juan",
+          "holeNumber": 10,
+          "createdAt": "13/08/25 11:17:44"
+        },
+        {
+          "playerName": "Dominguez Campelo, Luis",
+          "holeNumber": 12,
+          "createdAt": "13/08/25 11:18:34"
+        },
+        {
+          "playerName": "Fuerte Flores, Manuel",
+          "holeNumber": 11,
+          "createdAt": "13/08/25 11:21:12"
+        },
+        {
+          "playerName": "Nabal Estrada, Javier",
+          "holeNumber": 15,
+          "createdAt": "13/08/25 11:32:43"
+        },
+        {
+          "playerName": "Blanco Duelo, Ramon",
+          "holeNumber": 12,
+          "createdAt": "13/08/25 11:37:40"
+        },
+        {
+          "playerName": "Madrigal Alvarez, Fernando",
+          "holeNumber": 13,
+          "createdAt": "13/08/25 11:49:29"
+        },
+        {
+          "playerName": "Pradera Fuste, Carlos",
+          "holeNumber": 12,
+          "createdAt": "13/08/25 11:50:41"
+        },
+        {
+          "playerName": "Fuertes Arrechea, Pablo",
+          "holeNumber": 12,
+          "createdAt": "13/08/25 11:51:22"
+        },
+        {
+          "playerName": "Borrachero Garro, Antonio",
+          "holeNumber": 12,
+          "createdAt": "13/08/25 11:53:10"
+        },
+        {
+          "playerName": "Fuertes Arrechea, Pablo",
+          "holeNumber": 13,
+          "createdAt": "13/08/25 12:01:46"
+        },
+        {
+          "playerName": "Maza Mora, Jesus",
+          "holeNumber": 3,
+          "createdAt": "13/08/25 12:02:58"
+        },
+        {
+          "playerName": "Luis De Blas, Borja De",
+          "holeNumber": 17,
+          "createdAt": "13/08/25 12:22:24"
+        },
+        {
+          "playerName": "Pradera Fuste, Carlos",
+          "holeNumber": 15,
+          "createdAt": "13/08/25 12:29:57"
+        },
+        {
+          "playerName": "Borrachero Garro, Antonio",
+          "holeNumber": 15,
+          "createdAt": "13/08/25 12:30:49"
+        },
+        {
+          "playerName": "Dominguez Gasco, Marina",
+          "holeNumber": 17,
+          "createdAt": "13/08/25 12:37:44"
+        },
+        {
+          "playerName": "Maza Moreno, Alfredo",
+          "holeNumber": 2,
+          "createdAt": "13/08/25 13:15:15"
+        },
+        {
+          "playerName": "Carretero Garcia, Juan Carlos",
+          "holeNumber": 7,
+          "createdAt": "13/08/25 13:34:10"
+        },
+        {
+          "playerName": "Carretero Garcia, Juan Carlos",
+          "holeNumber": 12,
+          "createdAt": "13/08/25 13:34:10"
+        },
+        {
+          "playerName": "De Blas Aguilera, Isidoro",
+          "holeNumber": 4,
+          "createdAt": "13/08/25 13:43:34"
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Abiega Garcia, Alberto",
+          "holeNumber": 2,
+          "createdAt": "13/08/25 11:48:56"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/1713080791_2026.4.27_posiciones_de_bandera_cto_madrid_profesionales_3ª_jornada.pdf",
+    "/uploads/competiciones/pdf/1035180303_2026_cto_madrid_profesionales_-_reparto_de_premios.pdf",
+    "/uploads/competiciones/pdf/4244603436_arb_reg_loc_cm2762025.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:19.734Z"
 }

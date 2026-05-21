@@ -1,14 +1,14 @@
 {
   "tourId": 70618,
   "url": "https://www.nextcaddy.com/tour/70618",
-  "scrapedAt": "2026-05-09T09:49:45.322Z",
+  "scrapedAt": "2026-05-21T16:39:35.174Z",
   "meta": {
     "name": "Equipo de Competición Junior Sherry Golf - Domingo 10 mayo (grupo privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "10 may 2026",
-    "dateEnd": "10 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Junior",
@@ -18,11 +18,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-10"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -75,20 +76,13 @@
     },
     {
       "orden": 2,
-      "name": "Mateo Rodriguez Torrente",
-      "licencia": "AMD5084298",
-      "hcp": 42.4,
-      "nivel": "B"
-    },
-    {
-      "orden": 3,
       "name": "Fermin Elizburu Mostaza",
       "licencia": "AMC3061797",
       "hcp": 28.9,
       "nivel": "A"
     },
     {
-      "orden": 4,
+      "orden": 3,
       "name": "Nicolas Auriol Ruiz",
       "licencia": "AM05322812",
       "hcp": 45.9,
@@ -194,38 +188,146 @@
     },
     {
       "orden": 9,
-      "name": "Mateo Rodriguez Torrente",
-      "licencia": "07-05-26 07:54",
-      "hcp": 42.4,
-      "nivel": "AMD5084298"
-    },
-    {
-      "orden": 10,
       "name": "Fermin Elizburu Mostaza",
       "licencia": "07-05-26 08:29",
       "hcp": 28.9,
       "nivel": "AMC3061797"
     },
     {
-      "orden": 11,
+      "orden": 10,
       "name": "Constanza Auriol Ruiz",
       "licencia": "07-05-26 09:10",
       "hcp": 48.9,
       "nivel": "AM05322811"
     },
     {
-      "orden": 12,
+      "orden": 11,
       "name": "Nicolas Auriol Ruiz",
       "licencia": "07-05-26 09:11",
       "hcp": 45.9,
       "nivel": "AM05322812"
     },
     {
-      "orden": 13,
+      "orden": 12,
       "name": "Jose Maria Vega Ortega",
       "licencia": "08-05-26 12:47",
       "hcp": 26.8,
       "nivel": "AM11058990"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "11:30",
+          "tee": 10,
+          "name": "Moritz Humke",
+          "hcp": 3.7,
+          "ins": "2314241",
+          "jid": "75588",
+          "nivel": "J"
+        },
+        {
+          "time": "11:30",
+          "tee": 10,
+          "name": "Lea Esperanza Cicek",
+          "hcp": 3.9,
+          "ins": "2314242",
+          "jid": "75588",
+          "nivel": "C"
+        },
+        {
+          "time": "11:30",
+          "tee": 10,
+          "name": "Mark Mohacsi",
+          "hcp": 6.6,
+          "ins": "2314131",
+          "jid": "75588",
+          "nivel": "J"
+        },
+        {
+          "time": "11:40",
+          "tee": 10,
+          "name": "Bruno Mateos Alvarez",
+          "hcp": 7.2,
+          "ins": "2314280",
+          "jid": "75588",
+          "nivel": "C"
+        },
+        {
+          "time": "11:40",
+          "tee": 10,
+          "name": "Pierina Hartmann",
+          "hcp": 9.5,
+          "ins": "2314243",
+          "jid": "75588",
+          "nivel": "C"
+        },
+        {
+          "time": "11:40",
+          "tee": 10,
+          "name": "Borja Enriquez Sáinz De La Flor",
+          "hcp": 12.5,
+          "ins": "2314088",
+          "jid": "75588",
+          "nivel": "A"
+        },
+        {
+          "time": "11:50",
+          "tee": 10,
+          "name": "Jose Maria Vega Ortega",
+          "hcp": 26.8,
+          "ins": "2315082",
+          "jid": "75588",
+          "nivel": "A"
+        },
+        {
+          "time": "11:50",
+          "tee": 10,
+          "name": "Fermin Elizburu Mostaza",
+          "hcp": 28.9,
+          "ins": "2314310",
+          "jid": "75588",
+          "nivel": "A"
+        },
+        {
+          "time": "11:50",
+          "tee": 10,
+          "name": "Gadea Geldinovski Ruiz",
+          "hcp": 39.6,
+          "ins": "2314262",
+          "jid": "75588",
+          "nivel": "B"
+        },
+        {
+          "time": "12:00",
+          "tee": 10,
+          "name": "Andres Del Camino Muñoz",
+          "hcp": 44.7,
+          "ins": "2314090",
+          "jid": "75588",
+          "nivel": "A"
+        },
+        {
+          "time": "12:00",
+          "tee": 10,
+          "name": "Nicolas Auriol Ruiz",
+          "hcp": 45.9,
+          "ins": "2314329",
+          "jid": "75588",
+          "nivel": "B"
+        },
+        {
+          "time": "12:00",
+          "tee": 10,
+          "name": "Constanza Auriol Ruiz",
+          "hcp": 48.9,
+          "ins": "2314328",
+          "jid": "75588",
+          "nivel": "A"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -295,129 +397,6 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "09:30",
-          "tee": 10,
-          "name": "Moritz Humke",
-          "hcp": 3.7,
-          "ins": "2314241",
-          "jid": "75588",
-          "nivel": "J"
-        },
-        {
-          "time": "09:30",
-          "tee": 10,
-          "name": "Lea Esperanza Cicek",
-          "hcp": 3.9,
-          "ins": "2314242",
-          "jid": "75588",
-          "nivel": "C"
-        },
-        {
-          "time": "09:30",
-          "tee": 10,
-          "name": "Mark Mohacsi",
-          "hcp": 6.6,
-          "ins": "2314131",
-          "jid": "75588",
-          "nivel": "J"
-        },
-        {
-          "time": "09:30",
-          "tee": 10,
-          "name": "Bruno Mateos Alvarez",
-          "hcp": 7.2,
-          "ins": "2314280",
-          "jid": "75588",
-          "nivel": "C"
-        },
-        {
-          "time": "09:40",
-          "tee": 10,
-          "name": "Pierina Hartmann",
-          "hcp": 9.5,
-          "ins": "2314243",
-          "jid": "75588",
-          "nivel": "C"
-        },
-        {
-          "time": "09:40",
-          "tee": 10,
-          "name": "Borja Enriquez Sáinz De La Flor",
-          "hcp": 12.5,
-          "ins": "2314088",
-          "jid": "75588",
-          "nivel": "A"
-        },
-        {
-          "time": "09:40",
-          "tee": 10,
-          "name": "Jose Maria Vega Ortega",
-          "hcp": 26.8,
-          "ins": "2315082",
-          "jid": "75588",
-          "nivel": "A"
-        },
-        {
-          "time": "09:50",
-          "tee": 10,
-          "name": "Fermin Elizburu Mostaza",
-          "hcp": 28.9,
-          "ins": "2314310",
-          "jid": "75588",
-          "nivel": "A"
-        },
-        {
-          "time": "09:50",
-          "tee": 10,
-          "name": "Gadea Geldinovski Ruiz",
-          "hcp": 39.6,
-          "ins": "2314262",
-          "jid": "75588",
-          "nivel": "B"
-        },
-        {
-          "time": "09:50",
-          "tee": 10,
-          "name": "Mateo Rodriguez Torrente",
-          "hcp": 42.4,
-          "ins": "2314291",
-          "jid": "75588",
-          "nivel": "B"
-        },
-        {
-          "time": "10:00",
-          "tee": 10,
-          "name": "Andres Del Camino Muñoz",
-          "hcp": 44.7,
-          "ins": "2314090",
-          "jid": "75588",
-          "nivel": "A"
-        },
-        {
-          "time": "10:00",
-          "tee": 10,
-          "name": "Nicolas Auriol Ruiz",
-          "hcp": 45.9,
-          "ins": "2314329",
-          "jid": "75588",
-          "nivel": "B"
-        },
-        {
-          "time": "10:00",
-          "tee": 10,
-          "name": "Constanza Auriol Ruiz",
-          "hcp": 48.9,
-          "ins": "2314328",
-          "jid": "75588",
-          "nivel": "A"
-        }
-      ]
-    }
-  ],
-  "horariosScrapedAt": "2026-05-09T12:13:01.809Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:42.845Z"
 }

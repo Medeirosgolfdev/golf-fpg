@@ -1,28 +1,177 @@
 {
   "tourId": 68193,
   "url": "https://www.nextcaddy.com/tour/68193",
-  "scrapedAt": "2026-05-09T10:16:39.281Z",
+  "scrapedAt": "2026-05-21T16:40:12.758Z",
   "meta": {
     "name": "Liga Femenina (hcp igual o menor de 42.0)",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Golf Park Entertainment",
     "courseCode": "CM18",
-    "dateStart": "31 may 2026",
-    "dateEnd": "31 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Liga Femenina 2026",
     "categories": [
-      "Caballeros",
       "Señoras",
       "Juvenil",
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-05-31"
+    ]
   },
   "course": null,
   "leaderboard": [],
-  "inscritos": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Lucia Rodriguez Luna",
+      "licencia": "CM02977313",
+      "hcp": 37,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Irene Salgado Rodriguez",
+      "licencia": "CM06416641",
+      "hcp": 16.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Candela Guerra Vera",
+      "licencia": "CM41998364",
+      "hcp": 36.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Carlota Moser-Rothschild Morales",
+      "licencia": "CM06354307",
+      "hcp": 32.6,
+      "nivel": "A"
+    },
+    {
+      "orden": 5,
+      "name": "Sofia Sendagorta Rojo",
+      "licencia": "CM60066758",
+      "hcp": 36.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 6,
+      "name": "Sira Martin-Pozuelo Medina",
+      "licencia": "CM02199385",
+      "hcp": 23.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 7,
+      "name": "Barbara Osaba Rohleder",
+      "licencia": "CM04376811",
+      "hcp": 34.3,
+      "nivel": "I"
+    },
+    {
+      "orden": 8,
+      "name": "Alejandra Sevillano Sanchez",
+      "licencia": "CM22475563",
+      "hcp": 35.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 9,
+      "name": "Cristina Aparicio Vallarino",
+      "licencia": "CM41305716",
+      "hcp": 16.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 10,
+      "name": "Manuela Triguero Fernandez",
+      "licencia": "CM41373590",
+      "hcp": 36,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Lucia Rodriguez Luna",
+      "licencia": "CM02977313",
+      "hcp": 37,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Irene Salgado Rodriguez",
+      "licencia": "CM06416641",
+      "hcp": 16.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Candela Guerra Vera",
+      "licencia": "CM41998364",
+      "hcp": 36.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Carlota Moser-Rothschild Morales",
+      "licencia": "CM06354307",
+      "hcp": 32.6,
+      "nivel": "A"
+    },
+    {
+      "orden": 5,
+      "name": "Sofia Sendagorta Rojo",
+      "licencia": "CM60066758",
+      "hcp": 36.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 6,
+      "name": "Sira Martin-Pozuelo Medina",
+      "licencia": "CM02199385",
+      "hcp": 23.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 7,
+      "name": "Barbara Osaba Rohleder",
+      "licencia": "CM04376811",
+      "hcp": 34.3,
+      "nivel": "I"
+    },
+    {
+      "orden": 8,
+      "name": "Alejandra Sevillano Sanchez",
+      "licencia": "CM22475563",
+      "hcp": 35.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 9,
+      "name": "Cristina Aparicio Vallarino",
+      "licencia": "CM41305716",
+      "hcp": 16.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 10,
+      "name": "Manuela Triguero Fernandez",
+      "licencia": "CM41373590",
+      "hcp": 36,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -39,6 +188,6 @@
     }
   ],
   "scoreTypes": null,
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:34.284Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:18.488Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 68190,
   "url": "https://www.nextcaddy.com/tour/68190",
-  "scrapedAt": "2026-05-09T09:57:50.463Z",
+  "scrapedAt": "2026-05-21T16:37:16.673Z",
   "meta": {
     "name": "I Torneo RKN 2026  1ª a 5ª Categoría · Turno Mañana 12:30 · Turno Tarde 15:30",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "22 feb 2026",
-    "dateEnd": "22 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -23,13 +23,14 @@
       "Junior",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-02-22"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Infantil Cadete Y Junior Femenino Scratch",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -178,6 +179,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Infantil Cadete Y Junior Femenino Handicap General",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -326,6 +329,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Alevin Femenino Scratch",
+      "expectedJugadores": 7,
       "header": [
         "Pos",
         "Jugador",
@@ -340,7 +345,7 @@
       "players": [
         {
           "pos": 1,
-          "name": "Tesla Charlotte Chesneau",
+          "name": "Tesla Chesneau",
           "licencia": "CMA8002247",
           "hcp": 34.8,
           "nivel": "A",
@@ -419,6 +424,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Alevin Femenino Handicap",
+      "expectedJugadores": 7,
       "header": [
         "Pos",
         "Jugador",
@@ -433,7 +440,7 @@
       "players": [
         {
           "pos": 1,
-          "name": "Tesla Charlotte Chesneau",
+          "name": "Tesla Chesneau",
           "licencia": "CMA8002247",
           "hcp": 34.8,
           "nivel": "A",
@@ -512,6 +519,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Cadete Masculino Scratch",
+      "expectedJugadores": 6,
       "header": [
         "Pos",
         "Jugador",
@@ -594,6 +603,8 @@
     },
     {
       "category": 6,
+      "categoryName": "Cadete Masculino Handicap",
+      "expectedJugadores": 6,
       "header": [
         "Pos",
         "Jugador",
@@ -676,6 +687,8 @@
     },
     {
       "category": 7,
+      "categoryName": "Infantil Masculino Scratch",
+      "expectedJugadores": 17,
       "header": [
         "Pos",
         "Jugador",
@@ -879,6 +892,8 @@
     },
     {
       "category": 8,
+      "categoryName": "Infantil Masculino Handicap",
+      "expectedJugadores": 17,
       "header": [
         "Pos",
         "Jugador",
@@ -1082,6 +1097,8 @@
     },
     {
       "category": 9,
+      "categoryName": "Alevin Masculino Scratch",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -1229,7 +1246,7 @@
         {
           "pos": 13,
           "name": "Gonzalo Carvajal Gonzalez",
-          "licencia": "CM01958800",
+          "licencia": "CM02958800",
           "hcp": 32.9,
           "nivel": "A",
           "rounds": [],
@@ -1307,6 +1324,8 @@
     },
     {
       "category": 10,
+      "categoryName": "Alevin Masculino Handicap",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -1399,7 +1418,7 @@
         {
           "pos": 8,
           "name": "Gonzalo Carvajal Gonzalez",
-          "licencia": "CM01958800",
+          "licencia": "CM02958800",
           "hcp": 32.9,
           "nivel": "A",
           "rounds": [],
@@ -1532,6 +1551,8 @@
     },
     {
       "category": 11,
+      "categoryName": "Benjamin Masculino Scratch",
+      "expectedJugadores": 9,
       "header": [
         "Pos",
         "Jugador",
@@ -1647,6 +1668,8 @@
     },
     {
       "category": 12,
+      "categoryName": "Benjamin Masculino Handicap",
+      "expectedJugadores": 9,
       "header": [
         "Pos",
         "Jugador",
@@ -1761,6 +1784,57 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Infantil Cadete Y Junior Femenino Scratch",
+      "jugadores": 12
+    },
+    "2": {
+      "name": "Infantil Cadete Y Junior Femenino Handicap General",
+      "jugadores": 12
+    },
+    "3": {
+      "name": "Alevin Femenino Scratch",
+      "jugadores": 7
+    },
+    "4": {
+      "name": "Alevin Femenino Handicap",
+      "jugadores": 7
+    },
+    "5": {
+      "name": "Cadete Masculino Scratch",
+      "jugadores": 6
+    },
+    "6": {
+      "name": "Cadete Masculino Handicap",
+      "jugadores": 6
+    },
+    "7": {
+      "name": "Infantil Masculino Scratch",
+      "jugadores": 17
+    },
+    "8": {
+      "name": "Infantil Masculino Handicap",
+      "jugadores": 17
+    },
+    "9": {
+      "name": "Alevin Masculino Scratch",
+      "jugadores": 19
+    },
+    "10": {
+      "name": "Alevin Masculino Handicap",
+      "jugadores": 19
+    },
+    "11": {
+      "name": "Benjamin Masculino Scratch",
+      "jugadores": 9
+    },
+    "12": {
+      "name": "Benjamin Masculino Handicap",
+      "jugadores": 9
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2066,7 +2140,7 @@
     {
       "orden": 44,
       "name": "Gonzalo Carvajal Gonzalez",
-      "licencia": "CM01958800",
+      "licencia": "CM02958800",
       "hcp": 32.9,
       "nivel": "A"
     },
@@ -2156,7 +2230,7 @@
     },
     {
       "orden": 5,
-      "name": "Tesla Charlotte Chesneau",
+      "name": "Tesla Chesneau",
       "licencia": "CMA8002247",
       "hcp": 34.8,
       "nivel": "A"
@@ -2380,7 +2454,7 @@
     },
     {
       "orden": 17,
-      "name": "Tesla Charlotte Chesneau",
+      "name": "Tesla Chesneau",
       "licencia": "CMA8002247",
       "hcp": 34.8,
       "nivel": "A"
@@ -2682,7 +2756,7 @@
     {
       "orden": 60,
       "name": "Gonzalo Carvajal Gonzalez",
-      "licencia": "CM01958800",
+      "licencia": "CM02958800",
       "hcp": 32.9,
       "nivel": "A"
     },
@@ -2757,73 +2831,6 @@
       "nivel": "I"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72737
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Diez Domecq, Felipe - Del Camino Muñoz, Manuel",
-          "holeNumber": 5,
-          "createdAt": "05/08/25 14:26:48"
-        },
-        {
-          "playerName": "Rebuelta Melgarejo, Andres - Rebuelta Arizon, Federica",
-          "holeNumber": 2,
-          "createdAt": "05/08/25 14:34:20"
-        },
-        {
-          "playerName": "Diez Domecq, Felipe - Del Camino Muñoz, Manuel",
-          "holeNumber": 9,
-          "createdAt": "05/08/25 15:16:47"
-        },
-        {
-          "playerName": "Fernandez De Mesa Siloniz, Ana - Geldinovski Ruiz, Gadea",
-          "holeNumber": 8,
-          "createdAt": "05/08/25 15:18:46"
-        },
-        {
-          "playerName": "Sobrino Gaiztarro, Jaime - Sobrino Mañas, Pablo",
-          "holeNumber": 1,
-          "createdAt": "05/08/25 16:16:22"
-        },
-        {
-          "playerName": "Lizaso Velazquez, Miguel - Lizaso Perez-Minguez, Mariana",
-          "holeNumber": 2,
-          "createdAt": "05/08/25 17:12:05"
-        },
-        {
-          "playerName": "Martin Rojas, Elisa - Pan Martin, Elisa",
-          "holeNumber": 4,
-          "createdAt": "05/08/25 18:31:27"
-        },
-        {
-          "playerName": "Torres Dominguez, Antonio Manuel - Lasa Torres, Marco",
-          "holeNumber": 8,
-          "createdAt": "05/08/25 19:45:52"
-        },
-        {
-          "playerName": "Bononato Terry, Pedro Pablo - Bononato Guelfo, Pedro Pablo",
-          "holeNumber": 2,
-          "createdAt": "05/08/25 20:36:27"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -3119,7 +3126,7 @@
         {
           "time": "12:30",
           "tee": 9,
-          "name": "Tesla Charlotte Chesneau",
+          "name": "Tesla Chesneau",
           "hcp": 34.8,
           "ins": "2256637",
           "jid": "72737",
@@ -3461,5 +3468,75 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:21.565Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72737
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Diez Domecq, Felipe - Del Camino Muñoz, Manuel",
+          "holeNumber": 5,
+          "createdAt": "05/08/25 14:26:48"
+        },
+        {
+          "playerName": "Rebuelta Melgarejo, Andres - Rebuelta Arizon, Federica",
+          "holeNumber": 2,
+          "createdAt": "05/08/25 14:34:20"
+        },
+        {
+          "playerName": "Diez Domecq, Felipe - Del Camino Muñoz, Manuel",
+          "holeNumber": 9,
+          "createdAt": "05/08/25 15:16:47"
+        },
+        {
+          "playerName": "Fernandez De Mesa Siloniz, Ana - Geldinovski Ruiz, Gadea",
+          "holeNumber": 8,
+          "createdAt": "05/08/25 15:18:46"
+        },
+        {
+          "playerName": "Sobrino Gaiztarro, Jaime - Sobrino Mañas, Pablo",
+          "holeNumber": 1,
+          "createdAt": "05/08/25 16:16:22"
+        },
+        {
+          "playerName": "Lizaso Velazquez, Miguel - Lizaso Perez-Minguez, Mariana",
+          "holeNumber": 2,
+          "createdAt": "05/08/25 17:12:05"
+        },
+        {
+          "playerName": "Martin Rojas, Elisa - Pan Martin, Elisa",
+          "holeNumber": 4,
+          "createdAt": "05/08/25 18:31:27"
+        },
+        {
+          "playerName": "Torres Dominguez, Antonio Manuel - Lasa Torres, Marco",
+          "holeNumber": 8,
+          "createdAt": "05/08/25 19:45:52"
+        },
+        {
+          "playerName": "Bononato Terry, Pedro Pablo - Bononato Guelfo, Pedro Pablo",
+          "holeNumber": 2,
+          "createdAt": "05/08/25 20:36:27"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/68190_cartel_207.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:18.726Z"
 }
