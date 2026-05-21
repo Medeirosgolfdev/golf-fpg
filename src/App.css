@@ -3389,33 +3389,6 @@ table td.lb-col-divider {
 .player-list-name-link:hover {
   text-decoration: underline;
 }
-.player-list-name-link::after {
-  content: "external";
-  font-size: 9px;
-  margin-left: 3px;
-  opacity: 0.5;
-  vertical-align: super;
-}
-
-/* end of file */
-):hover {
-  background: var(--bg-hover, rgba(0, 0, 0, 0.05));
-}
-.player-list-name-link {
-  color: var(--accent, #0d61a8);
-  text-decoration: none;
-  cursor: pointer;
-}
-.player-list-name-link:hover {
-  text-decoration: underline;
-}
-.player-list-name-link::after {
-  content: "external";
-  font-size: 9px;
-  margin-left: 3px;
-  opacity: 0.5;
-  vertical-align: super;
-}
 
 /* end of file */
 
