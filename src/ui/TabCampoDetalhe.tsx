@@ -38,8 +38,11 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
   const escalaoM = escalaoManuelParaData(t.date_inicio);
   const sBase = seriesBase(t.name);
   const currentYear = parseInt((isoDate(t.date_inicio) || `${new Date().getFullYear()}-01-01`).slice(0, 4));
-  // escalaoManuelParaData retorna NUMBER; comparar com age_group, não com nome string
-  const b12     = t.escaloes.find(e => e.age_group === escalaoM);
+  // escalaoManuelParaData retorna NUMBER; comparar com age_group, não com nome string.
+  // Exigir escalão Boys — Manuel é rapaz. Sem o filtro de género, torneios com um
+  // escalão "Girls" do mesmo número (ex: Veteran Qualifier t=21666) destacavam o
+  // escalão errado. Se não existir Boys do escalão dele, não há destaque.
+  const b12     = t.escaloes.find(e => e.age_group === escalaoM && /boys/i.test(e.nome));
   const ptTotal = t.escaloes.flatMap(e => e.jogadores ?? []).filter(j => j.pais === "PT");
   const dias    = diasAte(t.date_inicio);
   const urgente = b12 && b12.vagas <= 3 && b12.vagas > 0;
@@ -106,6 +109,18 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
           </div>
         )}
 
+        {/* Flight IDs por escalão — acesso rápido ao número de cada flight (para scraping/pesquisa) */}
+        {!t.erro && !t.sem_flights && t.escaloes.some(e => e.flight_id) && (
+          <div style={{ display:"flex", gap:5, flexWrap:"wrap", marginTop:8, alignItems:"center" }}>
+            <span className="muted fs-11">Flights:</span>
+            {t.escaloes.filter(e => e.flight_id).map(e => (
+              <span key={e.flight_id} className="p p-sm p-muted" title={`${e.nome} — flight ${e.flight_id}`}>
+                {e.nome}: {e.flight_id}
+              </span>
+            ))}
+          </div>
+        )}
+
         {/* Alertas */}
         {t.sem_flights && (
           <div className="notice" style={{ marginTop:10 }}>⏳ Flights ainda não publicados</div>
@@ -151,7 +166,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
             {sortEscaloes(t.escaloes).map(e => {
               const bd  = badgeVagas(e.vagas, e.maximo);
               const dst = ESCALOES_DESTAQUE_USKIDS.has(e.nome);
-              const man = e.age_group === escalaoM;
+              const man = e.age_group === escalaoM && /boys/i.test(e.nome);
               const novos7d = (e.jogadores || []).filter(j => j.firstSeen && (Date.now() - new Date(j.firstSeen).getTime()) < 7 * 86400_000).length;
               return (
                 <div key={e.age_group} className="card" style={{

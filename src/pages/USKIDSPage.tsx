@@ -554,8 +554,10 @@ export default function USKidsFieldPage() {
       if (!t.t || !t.name) continue;
       if (!isUSKidsTorneio(t.name)) continue; // Filtrar torneios não-USKids
       const em = escalaoManuelParaData(t.date_inicio);
-      // escalaoManuelParaData retorna NUMBER (idade); comparar com age_group, não com nome ("Boys 11")
-      const esc = t.escaloes?.find((e: any) => e.age_group === em);
+      // escalaoManuelParaData retorna NUMBER (idade); comparar com age_group, não com nome ("Boys 11").
+      // Exigir escalão Boys — Manuel é rapaz; sem isto, torneios com Girls do mesmo número
+      // (ex: Veteran Qualifier t=21666 com "Girls 10") destacavam o escalão errado.
+      const esc = t.escaloes?.find((e: any) => e.age_group === em && /boys/i.test(e.nome));
       const ended = isTerminado(t.date_fim, t.date_inicio);
       // Verificar se Manuel está inscrito em QUALQUER escalão (escalões agrupados como "Boys 9-10" podem
       // não bater certo com a idade exacta — ser permissivo aqui evita falsos negativos no filtro Manuel)
@@ -838,6 +840,7 @@ export default function USKidsFieldPage() {
       const nPaises: number = t.nPaises ?? 0;
       const extraPills = (
         <>
+          <span className="p p-sm p-muted" title="Código do torneio (t=) USKids / signupanytime">t={t.t}</span>
           {reg && (
             <span className="p p-sm p-tourn" style={{
               background: isEuro ? "var(--bg-info)" : "var(--bg-warn-orange)",

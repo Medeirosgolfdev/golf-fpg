@@ -144,6 +144,14 @@ const CURRENT_YEAR       = new Date().getFullYear();
 const MAX_AGE_TODAY      = 18; // ignorar flights com crianças hoje ≥ 18 anos
 const TOP_N_PER_FLIGHT   = 5; // guardar só top-5 de cada escalão (0 = sem limite)
 
+// Restrição de escalões por torneio: quando um tcode está aqui, só os
+// escalões listados são processados (em vez de todos os Boys 9-13 da
+// auto-descoberta). Útil para torneios grandes onde só interessam alguns
+// escalões. Prefixos em minúsculas (startsWith).
+const ESCALOES_POR_TORNEIO = {
+  21004: ['boys 10', 'boys 11', 'boys 12'], // Desert Shootout 2026 — só 10/11/12
+};
+
 // Manuel nunca é filtrado (2 contas USKids — ver MANUEL_PLAYER_IDS em
 // src/constants/manuel.ts). Mantido como allowlist independente dos filtros.
 const MANUEL_MIDS = new Set(['630106', '605933']);
@@ -547,6 +555,14 @@ async function main() {
             }
           }
         }
+
+        // ── Restrição de escalões por torneio (se configurada) ──
+        const escRestric = ESCALOES_POR_TORNEIO[tcode];
+        if (escRestric && !escRestric.some(p => (ag || '').toLowerCase().startsWith(p))) {
+          console.log(`  ⏭️  ${ag} (flight ${fid}) — fora dos escalões configurados p/ t=${tcode}`);
+          continue;
+        }
+
         console.log(`  ⛳ ${ag} (flight ${fid})`);
 
         // Member IDs via GetTournamentPlayers
