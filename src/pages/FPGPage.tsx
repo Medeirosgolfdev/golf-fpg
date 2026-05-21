@@ -1493,7 +1493,7 @@ function Content() {
         {!loading && navMode === "torneios" && (
           <div style={{
             display: "flex", alignItems: "center", gap: md.isMobile ? 4 : 6,
-            padding: md.isMobile ? "4px 6px 6px" : "4px 10px 6px",
+            padding: "4px 12px 6px",
             overflowX: md.isMobile ? "visible" : "auto",
             flexWrap: md.isMobile ? "wrap" : "nowrap",
             rowGap: md.isMobile ? 4 : undefined,
