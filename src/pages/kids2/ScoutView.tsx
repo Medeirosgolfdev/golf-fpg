@@ -63,10 +63,117 @@ const ICON_SWORDS = "⚔️";
 const ICON_TROPHY = "\u{1F3C6}";
 const ICON_EXTERNAL = "↗";
 
+// ── Modelo de ameaça (quão perigoso é o rival para o Manuel) ──────────
+// Combina 4 sinais, do mais forte ao mais fraco:
+//   1. Confronto directo vs Manuel (vsM) — se o rival costuma bater o Manuel
+//      é o sinal decisivo, ponderado pela confiança (nº de confrontos).
+//   2. Tier (Elite / Forte / Sólido / ...).
+//   3. Forma recente (última posição conhecida).
+//   4. Vitórias na carreira.
+// Devolve score numérico (sort), nível categórico (chip) e razões (tooltip).
+type ThreatLevel = "high" | "med" | "low" | "none";
+
+const THREAT_META: Record<ThreatLevel, { label: string; bg: string; fg: string; border: string }> = {
+  high: { label: "Alto",  bg: "var(--bg-danger-strong)", fg: "var(--color-danger-dark)", border: "var(--border-danger)" },
+  med:  { label: "Médio", bg: "var(--bg-warn-subtle)",   fg: "var(--color-warn-dark)",   border: "var(--color-amber)" },
+  low:  { label: "Baixo", bg: "var(--bg-muted)",         fg: "var(--text-3)",            border: "var(--border-light)" },
+  none: { label: "—",     bg: "transparent",             fg: "var(--text-3)",            border: "transparent" },
+};
+
+const THREAT_BORDER: Record<ThreatLevel, string> = {
+  high: "3px solid var(--color-danger)",
+  med:  "3px solid var(--color-amber)",
+  low:  "3px solid transparent",
+  none: "3px solid transparent",
+};
+
+function fmtMargin(n: number): string {
+  const r = Math.round(n * 10) / 10;
+  return Number.isInteger(r) ? String(r) : r.toFixed(1);
+}
+
+function clampThreat(v: number, lo: number, hi: number): number {
+  return v < lo ? lo : v > hi ? hi : v;
+}
+
+interface ThreatArgs {
+  fieldOnly: boolean;
+  hasManuel: boolean;
+  vsMTotal: number | null;
+  vsMCount: number;
+  vsMSameFlight: number;
+  tier: ReturnType<typeof computeTier>;
+  recentPos: number | null;
+  wins: number;
+}
+
+interface ThreatInfo { score: number; level: ThreatLevel; reasons: string[] }
+
+function computeThreat(a: ThreatArgs): ThreatInfo {
+  // Inscritos sem perfil canónico — não há nada para avaliar.
+  if (a.fieldOnly) return { score: -1, level: "none", reasons: ["Sem perfil canónico"] };
+
+  const reasons: string[] = [];
+  let score = 0;
+  let h2hStrong = false;
+  let h2hBeatsManuel = false;
+
+  // 1. Confronto directo vs Manuel. vsMTotal = gross(rival) − gross(Manuel),
+  //    logo NEGATIVO significa que o rival joga MENOS pancadas → bate o Manuel.
+  if (a.hasManuel && a.vsMCount > 0 && a.vsMTotal != null) {
+    const margin = -a.vsMTotal; // positivo → rival bate o Manuel
+    const conf = clampThreat((a.vsMSameFlight || a.vsMCount) / 4, 0, 1); // 0..1
+    score += clampThreat(margin, -15, 15) * (0.6 + 0.4 * conf);
+    if (margin > 0.5) {
+      h2hBeatsManuel = true;
+      reasons.push(`Bate o Manuel em média (${fmtMargin(margin)} pancadas, ${a.vsMCount} confronto${a.vsMCount > 1 ? "s" : ""})`);
+      if (margin >= 3) h2hStrong = true;
+    } else if (margin < -0.5) {
+      reasons.push(`Manuel costuma bater (${fmtMargin(-margin)} pancadas a menos)`);
+    } else {
+      reasons.push(`Equilibrado com o Manuel (${a.vsMCount} confronto${a.vsMCount > 1 ? "s" : ""})`);
+    }
+  }
+
+  // 2. Tier.
+  const tierPts: Record<string, number> = { elite: 12, strong: 8, solid: 4, developing: 1, beginner: 0 };
+  if (a.tier) {
+    score += tierPts[a.tier] ?? 0;
+    if (a.tier === "elite" || a.tier === "strong") reasons.push(`Tier ${getTierLabel(a.tier)}`);
+  }
+
+  // 3. Forma recente.
+  if (a.recentPos != null) {
+    if (a.recentPos <= 3) { score += 5; reasons.push(`Forma recente forte (#${a.recentPos})`); }
+    else if (a.recentPos <= 10) { score += 2; }
+  }
+
+  // 4. Vitórias.
+  if (a.wins > 0) {
+    score += Math.min(a.wins, 5);
+    reasons.push(`${a.wins} vitória${a.wins > 1 ? "s" : ""}`);
+  }
+
+  // Nível categórico.
+  let level: ThreatLevel;
+  if (a.tier == null && a.vsMCount === 0 && a.recentPos == null && a.wins === 0) {
+    level = "none";
+    if (reasons.length === 0) reasons.push("Sem histórico suficiente");
+  } else if (h2hStrong || score >= 11) {
+    level = "high";
+  } else if (h2hBeatsManuel || score >= 5) {
+    level = "med";
+  } else {
+    level = "low";
+  }
+
+  return { score, level, reasons };
+}
+
 type ScoutKey =
   | "name" | "country" | "age" | "tier"
   | "pos" | "vsM" | "form"
-  | "wins" | "hcp";
+  | "wins" | "hcp" | "threat";
 
 interface ScoutRow {
   junior: Junior;
@@ -89,6 +196,9 @@ interface ScoutRow {
   hcp: number | null;
   club: string | null;
   circuits: string[];
+  threatScore: number;
+  threatLevel: ThreatLevel;
+  threatReasons: string[];
 }
 
 interface FieldPlayer { nome: string; pais?: string; cidade?: string; firstSeen?: string }
@@ -360,17 +470,28 @@ function ScoutContent({ data, tournament, onSelect }: {
         if (src.rfeg) circuits.push("ES");
         if (src.ffgolf) circuits.push("FR");
 
+        const tier = isFieldOnly ? null : computeTier(junior, data.tournamentById);
+        const threat = computeThreat({
+          fieldOnly: isFieldOnly,
+          hasManuel: !!manuel,
+          vsMTotal, vsMCount, vsMSameFlight,
+          tier, recentPos, wins,
+        });
+
         out.push({
           junior, flight: f,
           result: isFuture ? null : r,
           age,
-          tier: isFieldOnly ? null : computeTier(junior, data.tournamentById),
+          tier,
           bestPos, recentPos, formPositions,
           wins, top3, totalTourns, bestGross,
           vsMTotal, vsMCount, vsMSameFlight,
           fieldOnly: isFieldOnly,
           cidade,
           hcp, club, circuits,
+          threatScore: threat.score,
+          threatLevel: threat.level,
+          threatReasons: threat.reasons,
         });
       }
     }
@@ -406,11 +527,17 @@ function ScoutContent({ data, tournament, onSelect }: {
     };
   }, [allRows, manuel, tournament]);
 
-  const { sortKey, sortDir, toggleSort } = useSort<ScoutKey>(isFuture ? "tier" : "pos", "asc", {
-    name: "asc", country: "asc", age: "asc", tier: "asc",
-    pos: "asc", vsM: "asc", form: "asc",
-    wins: "desc", hcp: "asc",
-  });
+  // Quando o Manuel está inscrito, o que interessa é a ameaça → ordenar por
+  // ela (mais perigoso primeiro). Caso contrário, mantém o default histórico.
+  const manuelInField = manuelFlightKey !== null;
+  const { sortKey, sortDir, toggleSort } = useSort<ScoutKey>(
+    manuelInField ? "threat" : (isFuture ? "tier" : "pos"),
+    manuelInField ? "desc" : "asc",
+    {
+      name: "asc", country: "asc", age: "asc", tier: "asc",
+      pos: "asc", vsM: "asc", form: "asc",
+      wins: "desc", hcp: "asc", threat: "desc",
+    });
 
   const sorted = useMemo(() => {
     const arr = [...rows];
@@ -428,6 +555,7 @@ function ScoutContent({ data, tournament, onSelect }: {
         case "form":        return sign * (safe(a.recentPos) - safe(b.recentPos));
         case "wins":        return sign * (b.wins - a.wins);
         case "hcp":         return sign * (safe(a.hcp) - safe(b.hcp));
+        case "threat":      return sign * (a.threatScore - b.threatScore);
         default: return 0;
       }
     });
@@ -638,6 +766,7 @@ function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSe
           <tr>
             <SortableHdr<ScoutKey> k="country"     sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={thStyle}>Pais</SortableHdr>
             <SortableHdr<ScoutKey> k="name"        sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={thStyle}>Nome</SortableHdr>
+            <SortableHdr<ScoutKey> k="threat"      sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 92 }} title="Ameaça ao Manuel — combina confronto directo, tier, forma recente e vitórias">{ICON_SWORDS} Ameaça</SortableHdr>
             <SortableHdr<ScoutKey> k="age"         sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, textAlign: "center", width: 50 }}>Idade</SortableHdr>
             <SortableHdr<ScoutKey> k="tier"        sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 110 }}>Tier</SortableHdr>
             <SortableHdr<ScoutKey> k="hcp"         sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, textAlign: "center", width: 56 }} title="Handicap (PT / Espanha / França)">HCP</SortableHdr>
@@ -659,6 +788,7 @@ function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSe
                 key={row.junior.id}
                 style={{
                   borderBottom: "1px solid var(--border-light)",
+                  borderLeft: THREAT_BORDER[row.threatLevel],
                   cursor: clickable ? "pointer" : "default",
                   opacity: row.fieldOnly ? 0.6 : 1,
                 }}
@@ -675,6 +805,9 @@ function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSe
                     <span style={{ fontSize: 10, color: "var(--text-3)", marginLeft: 6 }}>{ICON_DOT} {row.flight.label}</span>
                   )}
                   {(row.club || row.cidade) && <div style={{ fontSize: 10, color: "var(--text-3)", marginTop: 1 }}>{row.club || row.cidade}</div>}
+                </td>
+                <td style={tdStyle}>
+                  <ThreatChip level={row.threatLevel} reasons={row.threatReasons} />
                 </td>
                 <td style={{ ...tdStyle, textAlign: "center", color: "var(--text-2)" }}>{row.age != null ? row.age : "-"}</td>
                 <td style={tdStyle}>
@@ -762,6 +895,24 @@ function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSe
         </tbody>
       </table>
     </div>
+  );
+}
+
+function ThreatChip({ level, reasons }: { level: ThreatLevel; reasons: string[] }) {
+  const m = THREAT_META[level];
+  const tip = reasons.length ? reasons.join(" · ") : m.label;
+  if (level === "none") {
+    return <span title={tip} style={{ color: "var(--text-3)", fontSize: 11 }}>—</span>;
+  }
+  return (
+    <span title={tip}
+          style={{
+            display: "inline-block", background: m.bg, color: m.fg,
+            border: "1px solid " + m.border, borderRadius: 10,
+            fontSize: 10, fontWeight: 700, padding: "2px 8px", whiteSpace: "nowrap",
+          }}>
+      {m.label}
+    </span>
   );
 }
 

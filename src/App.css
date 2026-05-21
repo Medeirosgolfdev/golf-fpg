@@ -1680,6 +1680,22 @@ tr.cross-current { background: var(--bg-success); }
 .tourn-pname { font-weight: 700; font-size: 14px; white-space: nowrap; color: var(--text); }
 .tourn-pname.tourn-pname-link { cursor: pointer; color: var(--link-color); text-decoration: underline; text-decoration-color: var(--link-underline); text-underline-offset: 2px; }
 .tourn-pname.tourn-pname-link:hover { color: var(--link-hover); text-decoration-color: var(--link-hover); }
+/* Quando o nome é renderizado como <button> (callback onSelectPlayer), repor o
+   styling default do browser (borda/fundo/padding) para parecer um link puro.
+   Sem isto, o botão aparece como caixa com chrome do sistema. */
+button.tourn-pname {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  font-weight: 700;
+  line-height: inherit;
+  text-align: left;
+  appearance: none;
+  -webkit-appearance: none;
+}
+button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline-offset: 2px; border-radius: 2px; }
 
 /* Override .p sizes for tournament draw context */
 .tourn-draw-player .p {

@@ -16,6 +16,30 @@ import { PillBadge } from "../ui/PillBadge";
 import ExtLink from "../ui/ExternalLink";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "../ui/SortableHdr";
+import { cachedFetchJson } from "../data/fetchCache";
+
+/* Mapa fed-code → nome para jogadores que não estão em players.json.
+   Gerado por scripts/build-course-player-names.js a partir de federados.json.
+   Carregado uma única vez ao nível do módulo. */
+let _coursePlayerNames: Record<string, string> | null = null;
+let _coursePlayerNamesPromise: Promise<Record<string, string>> | null = null;
+function loadCoursePlayerNames(): Promise<Record<string, string>> {
+  if (_coursePlayerNames) return Promise.resolve(_coursePlayerNames);
+  if (!_coursePlayerNamesPromise) {
+    _coursePlayerNamesPromise = cachedFetchJson<{ names?: Record<string, string> }>(
+      "/data/course-player-names.json"
+    )
+      .then((d) => {
+        _coursePlayerNames = d?.names ?? {};
+        return _coursePlayerNames;
+      })
+      .catch(() => {
+        _coursePlayerNames = {};
+        return _coursePlayerNames;
+      });
+  }
+  return _coursePlayerNamesPromise;
+}
 
 
 
@@ -274,6 +298,13 @@ function RatingsTable({ tees }: { tees: Tee[] }) {
 
 function CoursePlayersSection({ course, onSelectPlayer }: { course: Course; onSelectPlayer?: (fed: string) => void }) {
   const { players } = useAppContext();
+  const [nameMap, setNameMap] = useState<Record<string, string>>(_coursePlayerNames ?? {});
+
+  useEffect(() => {
+    let alive = true;
+    loadCoursePlayerNames().then((m) => { if (alive) setNameMap(m); });
+    return () => { alive = false; };
+  }, []);
 
   const entries = useMemo(() => {
     const raw = course.master._players;
@@ -282,7 +313,9 @@ function CoursePlayersSection({ course, onSelectPlayer }: { course: Course; onSe
       .map(([nfed, d]) => {
         const p = players[nfed];
         const date: string | null = (d as string | null) ?? null;
-        return { nfed, name: p?.name ?? nfed, date };
+        // Nome SEMPRE: players.json → mapa de federados → (último recurso) número
+        const name = p?.name ?? nameMap[nfed] ?? nfed;
+        return { nfed, name, date };
       })
       .sort((a, b) => {
         const da = a.date ? a.date.split("-").reverse().join("") : "0";
@@ -290,7 +323,7 @@ function CoursePlayersSection({ course, onSelectPlayer }: { course: Course; onSe
         if (db !== da) return db.localeCompare(da);
         return a.name.localeCompare(b.name, "pt");
       });
-  }, [course, players]);
+  }, [course, players, nameMap]);
 
   if (entries.length === 0) return null;
 
@@ -532,7 +565,7 @@ export default function CamposPage() {
         </select>
         <Counter ml="auto">{filtered.length} campos</Counter>
         <Counter>{totalTees} tees</Counter>
-        {intlCount > 0 && <Counter icon="\ud83c\udf0d">{intlCount} intl</Counter>}
+        {intlCount > 0 && <Counter icon={"\ud83c\udf0d"}>{intlCount} intl</Counter>}
       </Toolbar>
 
       {/* Master-detail */}
