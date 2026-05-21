@@ -1,14 +1,14 @@
 {
   "tourId": 70614,
   "url": "https://www.nextcaddy.com/tour/70614",
-  "scrapedAt": "2026-05-09T10:16:32.464Z",
+  "scrapedAt": "2026-05-21T16:39:53.588Z",
   "meta": {
     "name": "TORNEO AUDI QUATTRO 2026",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "16 may 2026",
-    "dateEnd": "16 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,17 +17,27 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-16"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "General Scratch",
+      "jugadores": 32
+    },
+    "2": {
+      "name": "General Hándicap",
+      "jugadores": 32
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
       "name": "Ivan Jimenez Garijo",
       "licencia": "4401756525",
-      "hcp": 9.3,
+      "hcp": 9.6,
       "nivel": "S"
     },
     {
@@ -41,7 +51,7 @@
       "orden": 2,
       "name": "Fco.javier Bermejo Oses",
       "licencia": "4402282430",
-      "hcp": 13.4,
+      "hcp": 13.7,
       "nivel": "S"
     },
     {
@@ -81,91 +91,397 @@
     },
     {
       "orden": 5,
-      "name": "Maria Patricia Segura Sadaba",
-      "licencia": "4401189896",
-      "hcp": 2.9,
-      "nivel": "S"
-    },
-    {
-      "orden": 5,
-      "name": "Pedro Hernandez Rogriguez",
-      "licencia": "4401189898",
-      "hcp": 13.3,
-      "nivel": "S"
-    },
-    {
-      "orden": 6,
       "name": "Javier Lazaro Sanchez",
       "licencia": "4401772117",
       "hcp": 8.3,
       "nivel": "Mid"
     },
     {
-      "orden": 6,
+      "orden": 5,
       "name": "Alberto Alvarez Ancizu",
       "licencia": "4401152128",
       "hcp": 13.2,
       "nivel": "S"
     },
     {
-      "orden": 7,
+      "orden": 6,
       "name": "Emilio Jose Rubio Cia",
       "licencia": "4401040418",
       "hcp": 9.3,
       "nivel": "S"
     },
     {
-      "orden": 7,
+      "orden": 6,
       "name": "Gonzalo Muñoz Baquero",
       "licencia": "4401915290",
       "hcp": null,
       "nivel": "S"
     },
     {
-      "orden": 8,
+      "orden": 7,
       "name": "Joseba Fernandez Gaztea",
       "licencia": "4401265346",
       "hcp": 21.8,
       "nivel": "Mid"
     },
     {
-      "orden": 8,
+      "orden": 7,
       "name": "Jose Maria Sadaba Chalezquer",
       "licencia": "4401969815",
       "hcp": 26.3,
       "nivel": "Mid"
     },
     {
-      "orden": 9,
+      "orden": 8,
       "name": "Carmen Navarro Liron De Robles",
       "licencia": "4401220387",
       "hcp": 19.5,
       "nivel": "S"
     },
     {
-      "orden": 9,
+      "orden": 8,
       "name": "Carlos Gurpide Ayarra",
       "licencia": "4401363722",
       "hcp": 20.1,
       "nivel": "S"
-    }
-  ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
+    },
     {
-      "roundNumber": 1,
-      "roundId": 75584
+      "orden": 9,
+      "name": "Pablo Eizaguirre Legorburu",
+      "licencia": "4401363117",
+      "hcp": 14.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Maria Español Batalla",
+      "licencia": "4401288941",
+      "hcp": 21.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Alvaro Mozota Bernad",
+      "licencia": "4401457388",
+      "hcp": 19.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Carmen Frauca Sagastibelza",
+      "licencia": "4401457389",
+      "hcp": 20.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Iñaki Riaño Brun",
+      "licencia": "4408265824",
+      "hcp": 19.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Marta Loredo Olaiz",
+      "licencia": "4401144435",
+      "hcp": 20.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Xabier Bergara Urbieta",
+      "licencia": "4401692518",
+      "hcp": 13.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Thomas Diedrich Schmidt",
+      "licencia": "4401399175",
+      "hcp": 18.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Jose Antonio Marcotegui Iturmendi",
+      "licencia": "4401757203",
+      "hcp": 12.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Miguel Sagardoy Briones",
+      "licencia": "VB09722398",
+      "hcp": 24.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Daniel Corcuera Urandurraga",
+      "licencia": "4401450195",
+      "hcp": 17.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Jose Maria Bariain Satrustegui",
+      "licencia": "4401188006",
+      "hcp": 19.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Pablo Garcia-Mina Freire",
+      "licencia": "4401028157",
+      "hcp": 18.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Jose Maria Garcia-Mina Freire",
+      "licencia": "4401937732",
+      "hcp": 25.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Tomas Lopez Alvarez",
+      "licencia": "4401395987",
+      "hcp": 4.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Mª Jose Rubio Arroyo",
+      "licencia": "4401797557",
+      "hcp": 16.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Gonzalo Irujo Echavarri",
+      "licencia": "4401199822",
+      "hcp": 18.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Miguel Torrea Larralde",
+      "licencia": "4401696255",
+      "hcp": 24.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Joaquin Oroz Abentin",
+      "licencia": "4401128746",
+      "hcp": 4.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Jose Antonio Fernandez Velaz",
+      "licencia": "4401383095",
+      "hcp": 7.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Santiago Millet Sancho",
+      "licencia": "0230150287",
+      "hcp": 13.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Sara Indurain Tornos",
+      "licencia": "4401168872",
+      "hcp": 20.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Esteban Morras Andres",
+      "licencia": "4401246308",
+      "hcp": 11.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Alberto De Miguel Ichaso",
+      "licencia": "4401365827",
+      "hcp": 13,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Yvonne Beatriz Figaredo Zeppenfeldt",
+      "licencia": "4401032085",
+      "hcp": 13.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Cristina Huarte Irujo",
+      "licencia": "4401028917",
+      "hcp": 18.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Vicente Villanueva Aleman",
+      "licencia": "4401442969",
+      "hcp": 25.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Javier Roncal Azanza",
+      "licencia": "4401397618",
+      "hcp": 26.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 23,
+      "name": "Jose Antonio Beloqui Arrondo",
+      "licencia": "4402240696",
+      "hcp": 8.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 23,
+      "name": "Ignacio Pina Garcia",
+      "licencia": "4409943828",
+      "hcp": 21.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 24,
+      "name": "Lucia Zorrilla Diaz",
+      "licencia": "4401802671",
+      "hcp": 18.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 24,
+      "name": "Javier Aranaz Baerts",
+      "licencia": "4401784403",
+      "hcp": 20.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 25,
+      "name": "Juan Bosco Barcena Ross",
+      "licencia": "4401367145",
+      "hcp": 22.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 25,
+      "name": "Maria Lourdes Goyena Huerta",
+      "licencia": "4401367146",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 26,
+      "name": "Jesus Moreno Orquin",
+      "licencia": "4401432312",
+      "hcp": 15.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 26,
+      "name": "Josep Claramunt Echart",
+      "licencia": "4401432313",
+      "hcp": 24.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 27,
+      "name": "Iñaki Guridi Murguiondo",
+      "licencia": "4401902097",
+      "hcp": 6.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 27,
+      "name": "Martin Echandi Serrano",
+      "licencia": "4401152132",
+      "hcp": 8.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 28,
+      "name": "Ibai Lopez Rubio",
+      "licencia": "4401799995",
+      "hcp": 1.6,
+      "nivel": "M"
+    },
+    {
+      "orden": 28,
+      "name": "Ildefonso Guerendiain Goñi",
+      "licencia": "4401447572",
+      "hcp": 3.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 29,
+      "name": "Ana Lopez Torres",
+      "licencia": "4401789073",
+      "hcp": 21.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 29,
+      "name": "Monica Chocarro Serrano",
+      "licencia": "4401061536",
+      "hcp": 21.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 30,
+      "name": "Patricia Diaz Alvarez-Maldonado",
+      "licencia": "4401134829",
+      "hcp": 24.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 30,
+      "name": "Cristina Ilzarbe Irizar",
+      "licencia": "4401171628",
+      "hcp": 26.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 31,
+      "name": "Pedro Jose Egaña Garcia",
+      "licencia": "4401964130",
+      "hcp": 17.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 31,
+      "name": "Enrique Echavarren Zozaya",
+      "licencia": "4401906015",
+      "hcp": 20.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 32,
+      "name": "Jose Manuel Abascal Rubio",
+      "licencia": "4401108213",
+      "hcp": 21,
+      "nivel": "S"
+    },
+    {
+      "orden": 32,
+      "name": "Guillermo Ruiz Cerrillo",
+      "licencia": "VB23734744",
+      "hcp": null,
+      "nivel": "S"
     }
   ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -749,5 +1065,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-17T12:43:16.968Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75584
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [
+    "/uploads/competiciones/cartel/1082810469_70614-torneo-audi-quattro-2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:42.954Z"
 }

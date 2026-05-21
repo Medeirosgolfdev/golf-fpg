@@ -1,14 +1,14 @@
 {
   "tourId": 70087,
   "url": "https://www.nextcaddy.com/tour/70087",
-  "scrapedAt": "2026-05-09T10:15:34.138Z",
+  "scrapedAt": "2026-05-21T16:38:56.102Z",
   "meta": {
     "name": "II PUNTUABLE RANKING ABSOLUTO",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "18 abr 2026",
-    "dateEnd": "18 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-18"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificacion General 2 Días. Femenino",
+      "expectedJugadores": 5,
       "header": [
         "Pos",
         "Jugador",
@@ -143,6 +144,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Clasificacion General 2 Días. Masculino",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -542,6 +545,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Scratch Individual Masculino",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -767,6 +772,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Scratch Individual Femenino",
+      "expectedJugadores": 5,
       "header": [
         "Pos",
         "Jugador",
@@ -838,6 +845,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Scratch Individual Femenino",
+      "expectedJugadores": 5,
       "header": [
         "Pos",
         "Jugador",
@@ -909,6 +918,8 @@
     },
     {
       "category": 6,
+      "categoryName": "Scratch Individual Masculino",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -1133,6 +1144,33 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificacion General 2 Días. Femenino",
+      "jugadores": 5
+    },
+    "2": {
+      "name": "Clasificacion General 2 Días. Masculino",
+      "jugadores": 19
+    },
+    "3": {
+      "name": "Scratch Individual Masculino",
+      "jugadores": 19
+    },
+    "4": {
+      "name": "Scratch Individual Femenino",
+      "jugadores": 5
+    },
+    "5": {
+      "name": "Scratch Individual Femenino",
+      "jugadores": 5
+    },
+    "6": {
+      "name": "Scratch Individual Masculino",
+      "jugadores": 19
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1485,127 +1523,6 @@
       "nivel": "J"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74986
-    },
-    {
-      "roundNumber": 2,
-      "roundId": 74987
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Mateos Alvarez, Bruno",
-          "holeNumber": 10,
-          "createdAt": "01/11/25 10:29:50"
-        },
-        {
-          "playerName": "Romero  Bernal, Juan",
-          "holeNumber": 10,
-          "createdAt": "01/11/25 10:30:02"
-        },
-        {
-          "playerName": "Cobos Rodriguez, Francisco Javier",
-          "holeNumber": 10,
-          "createdAt": "01/11/25 10:50:16"
-        },
-        {
-          "playerName": "Fernandez Fernandez, Rafael",
-          "holeNumber": 12,
-          "createdAt": "01/11/25 11:02:06"
-        },
-        {
-          "playerName": "Ponce Mauri, Jose Antonio",
-          "holeNumber": 12,
-          "createdAt": "01/11/25 11:10:22"
-        },
-        {
-          "playerName": "Gimenez De Aragon Sierra, Jose Tomas",
-          "holeNumber": 12,
-          "createdAt": "01/11/25 11:10:37"
-        },
-        {
-          "playerName": "Cobos Rodriguez, Francisco Javier",
-          "holeNumber": 12,
-          "createdAt": "01/11/25 11:22:41"
-        },
-        {
-          "playerName": "Mateos Alvarez, Bruno",
-          "holeNumber": 15,
-          "createdAt": "01/11/25 11:51:22"
-        },
-        {
-          "playerName": "Furphy, Anne",
-          "holeNumber": 11,
-          "createdAt": "01/11/25 12:00:36"
-        },
-        {
-          "playerName": "Panduro Aguilera, Manuel",
-          "holeNumber": 12,
-          "createdAt": "01/11/25 12:09:14"
-        },
-        {
-          "playerName": "Garcia Cordero, Emilio",
-          "holeNumber": 12,
-          "createdAt": "01/11/25 12:10:03"
-        },
-        {
-          "playerName": "Cascallana Garcia, Jesus Maria",
-          "holeNumber": 12,
-          "createdAt": "01/11/25 12:12:27"
-        },
-        {
-          "playerName": "Romero  Bernal, Juan",
-          "holeNumber": 17,
-          "createdAt": "01/11/25 12:22:05"
-        },
-        {
-          "playerName": "Fernandez Fernandez, Rafael",
-          "holeNumber": 17,
-          "createdAt": "01/11/25 12:22:35"
-        },
-        {
-          "playerName": "Navarro Serrato, Rafael",
-          "holeNumber": 17,
-          "createdAt": "01/11/25 12:23:00"
-        },
-        {
-          "playerName": "Cobos Rodriguez, Francisco Javier",
-          "holeNumber": 17,
-          "createdAt": "01/11/25 12:48:08"
-        },
-        {
-          "playerName": "Jimenez Marquez, Fco Javier",
-          "holeNumber": 17,
-          "createdAt": "01/11/25 13:03:18"
-        },
-        {
-          "playerName": "Fernandez Fernandez, Rafael",
-          "holeNumber": 2,
-          "createdAt": "01/11/25 13:22:32"
-        },
-        {
-          "playerName": "Panduro Aguilera, Manuel",
-          "holeNumber": 1,
-          "createdAt": "01/11/25 14:26:07"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -2050,5 +1967,127 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:57.847Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74986
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 74987
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Mateos Alvarez, Bruno",
+          "holeNumber": 10,
+          "createdAt": "01/11/25 10:29:50"
+        },
+        {
+          "playerName": "Romero  Bernal, Juan",
+          "holeNumber": 10,
+          "createdAt": "01/11/25 10:30:02"
+        },
+        {
+          "playerName": "Cobos Rodriguez, Francisco Javier",
+          "holeNumber": 10,
+          "createdAt": "01/11/25 10:50:16"
+        },
+        {
+          "playerName": "Fernandez Fernandez, Rafael",
+          "holeNumber": 12,
+          "createdAt": "01/11/25 11:02:06"
+        },
+        {
+          "playerName": "Ponce Mauri, Jose Antonio",
+          "holeNumber": 12,
+          "createdAt": "01/11/25 11:10:22"
+        },
+        {
+          "playerName": "Gimenez De Aragon Sierra, Jose Tomas",
+          "holeNumber": 12,
+          "createdAt": "01/11/25 11:10:37"
+        },
+        {
+          "playerName": "Cobos Rodriguez, Francisco Javier",
+          "holeNumber": 12,
+          "createdAt": "01/11/25 11:22:41"
+        },
+        {
+          "playerName": "Mateos Alvarez, Bruno",
+          "holeNumber": 15,
+          "createdAt": "01/11/25 11:51:22"
+        },
+        {
+          "playerName": "Furphy, Anne",
+          "holeNumber": 11,
+          "createdAt": "01/11/25 12:00:36"
+        },
+        {
+          "playerName": "Panduro Aguilera, Manuel",
+          "holeNumber": 12,
+          "createdAt": "01/11/25 12:09:14"
+        },
+        {
+          "playerName": "Garcia Cordero, Emilio",
+          "holeNumber": 12,
+          "createdAt": "01/11/25 12:10:03"
+        },
+        {
+          "playerName": "Cascallana Garcia, Jesus Maria",
+          "holeNumber": 12,
+          "createdAt": "01/11/25 12:12:27"
+        },
+        {
+          "playerName": "Romero  Bernal, Juan",
+          "holeNumber": 17,
+          "createdAt": "01/11/25 12:22:05"
+        },
+        {
+          "playerName": "Fernandez Fernandez, Rafael",
+          "holeNumber": 17,
+          "createdAt": "01/11/25 12:22:35"
+        },
+        {
+          "playerName": "Navarro Serrato, Rafael",
+          "holeNumber": 17,
+          "createdAt": "01/11/25 12:23:00"
+        },
+        {
+          "playerName": "Cobos Rodriguez, Francisco Javier",
+          "holeNumber": 17,
+          "createdAt": "01/11/25 12:48:08"
+        },
+        {
+          "playerName": "Jimenez Marquez, Fco Javier",
+          "holeNumber": 17,
+          "createdAt": "01/11/25 13:03:18"
+        },
+        {
+          "playerName": "Fernandez Fernandez, Rafael",
+          "holeNumber": 2,
+          "createdAt": "01/11/25 13:22:32"
+        },
+        {
+          "playerName": "Panduro Aguilera, Manuel",
+          "holeNumber": 1,
+          "createdAt": "01/11/25 14:26:07"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:38.342Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 67784,
   "url": "https://www.nextcaddy.com/tour/67784",
-  "scrapedAt": "2026-05-09T09:49:38.683Z",
+  "scrapedAt": "2026-05-21T16:38:03.142Z",
   "meta": {
     "name": "Campeonato de Madrid Masculino Pitch & Putt 2026",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "21 mar 2026",
-    "dateEnd": "21 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-21"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Scratch Final",
+      "expectedJugadores": 71,
       "header": [
         "Pos",
         "Jugador",
@@ -1463,6 +1464,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Clasificación Hándicap Final",
+      "expectedJugadores": 71,
       "header": [
         "Pos",
         "Jugador",
@@ -2901,6 +2904,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Scratch Final",
+      "jugadores": 71
+    },
+    "2": {
+      "name": "Clasificación Hándicap Final",
+      "jugadores": 71
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -3407,72 +3421,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72271
-    },
-    {
-      "roundNumber": 2,
-      "roundId": 72272
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Robinson, Michael William",
-          "holeNumber": 4,
-          "createdAt": "17/07/25 16:44:15"
-        },
-        {
-          "playerName": "Bradbury, Diane",
-          "holeNumber": 15,
-          "createdAt": "17/07/25 16:48:52"
-        },
-        {
-          "playerName": "Malcolm, Graham James",
-          "holeNumber": 7,
-          "createdAt": "17/07/25 16:50:59"
-        },
-        {
-          "playerName": "Malcolm, Graham James",
-          "holeNumber": 15,
-          "createdAt": "17/07/25 16:50:59"
-        },
-        {
-          "playerName": "Lumsden, Robert",
-          "holeNumber": 1,
-          "createdAt": "17/07/25 16:51:41"
-        },
-        {
-          "playerName": "Lumsden, Robert",
-          "holeNumber": 3,
-          "createdAt": "17/07/25 16:51:41"
-        }
-      ]
-    },
-    "hole_in_one": {
-      "scoreTypeKey": "hole_in_one",
-      "players": [
-        {
-          "playerName": "Dickson, Kathryn",
-          "holeNumber": 11,
-          "createdAt": "17/07/25 16:50:29"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -4754,5 +4702,75 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:12.953Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72271
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 72272
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Robinson, Michael William",
+          "holeNumber": 4,
+          "createdAt": "17/07/25 16:44:15"
+        },
+        {
+          "playerName": "Bradbury, Diane",
+          "holeNumber": 15,
+          "createdAt": "17/07/25 16:48:52"
+        },
+        {
+          "playerName": "Malcolm, Graham James",
+          "holeNumber": 7,
+          "createdAt": "17/07/25 16:50:59"
+        },
+        {
+          "playerName": "Malcolm, Graham James",
+          "holeNumber": 15,
+          "createdAt": "17/07/25 16:50:59"
+        },
+        {
+          "playerName": "Lumsden, Robert",
+          "holeNumber": 1,
+          "createdAt": "17/07/25 16:51:41"
+        },
+        {
+          "playerName": "Lumsden, Robert",
+          "holeNumber": 3,
+          "createdAt": "17/07/25 16:51:41"
+        }
+      ]
+    },
+    "hole_in_one": {
+      "scoreTypeKey": "hole_in_one",
+      "players": [
+        {
+          "playerName": "Dickson, Kathryn",
+          "holeNumber": 11,
+          "createdAt": "17/07/25 16:50:29"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/67784_cartel_399.pdf",
+    "/uploads/competiciones/pdf/552727025_arb_reg_loc_cm41_2019.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:08.871Z"
 }

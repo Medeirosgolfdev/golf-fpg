@@ -1,14 +1,14 @@
 {
   "tourId": 69385,
   "url": "https://www.nextcaddy.com/tour/69385",
-  "scrapedAt": "2026-05-09T10:07:43.749Z",
+  "scrapedAt": "2026-05-21T16:38:16.776Z",
   "meta": {
     "name": "TORNEO BENÉFICO HOGAR DE SAN JUAN PARTIDAS VIERNES",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "27 mar 2026",
-    "dateEnd": "27 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,15 +17,16 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-27"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "AM32612444",
       "hcp": 9.7,
       "nivel": "S"
@@ -186,7 +187,7 @@
     },
     {
       "orden": 1,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "04-03-26 12:53",
       "hcp": 9.7,
       "nivel": "AM32612444"
@@ -332,88 +333,6 @@
       "nivel": "CM00781648"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74146
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Wilson, James",
-          "holeNumber": 6,
-          "createdAt": "04/10/25 13:22:29"
-        },
-        {
-          "playerName": "Wilson, James",
-          "holeNumber": 14,
-          "createdAt": "04/10/25 13:22:29"
-        },
-        {
-          "playerName": "Lutton, William",
-          "holeNumber": 11,
-          "createdAt": "04/10/25 13:23:54"
-        },
-        {
-          "playerName": "Lutton, William",
-          "holeNumber": 12,
-          "createdAt": "04/10/25 13:23:54"
-        },
-        {
-          "playerName": "Sharpe, David",
-          "holeNumber": 2,
-          "createdAt": "04/10/25 13:24:49"
-        },
-        {
-          "playerName": "Rowlands, Brian",
-          "holeNumber": 5,
-          "createdAt": "04/10/25 13:50:44"
-        },
-        {
-          "playerName": "Conway, Ann",
-          "holeNumber": 11,
-          "createdAt": "04/10/25 13:57:27"
-        },
-        {
-          "playerName": "Anspach Lengemann, Axel",
-          "holeNumber": 8,
-          "createdAt": "04/10/25 14:00:37"
-        },
-        {
-          "playerName": "Anspach Lengemann, Axel",
-          "holeNumber": 12,
-          "createdAt": "04/10/25 14:00:37"
-        },
-        {
-          "playerName": "Tobin, Eileen",
-          "holeNumber": 16,
-          "createdAt": "04/10/25 14:44:05"
-        }
-      ]
-    },
-    "eagle": {
-      "scoreTypeKey": "eagle",
-      "players": [
-        {
-          "playerName": "Tobin, Eileen",
-          "holeNumber": 13,
-          "createdAt": "04/10/25 14:44:05"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -421,7 +340,7 @@
         {
           "time": "10:00",
           "tee": 1,
-          "name": "Antonio Manuel Ure?A Serrano",
+          "name": "Antonio Manuel Ureña Serrano",
           "hcp": 9.7,
           "ins": "2273884",
           "jid": "74146",
@@ -610,5 +529,88 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:53.364Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74146
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Wilson, James",
+          "holeNumber": 6,
+          "createdAt": "04/10/25 13:22:29"
+        },
+        {
+          "playerName": "Wilson, James",
+          "holeNumber": 14,
+          "createdAt": "04/10/25 13:22:29"
+        },
+        {
+          "playerName": "Lutton, William",
+          "holeNumber": 11,
+          "createdAt": "04/10/25 13:23:54"
+        },
+        {
+          "playerName": "Lutton, William",
+          "holeNumber": 12,
+          "createdAt": "04/10/25 13:23:54"
+        },
+        {
+          "playerName": "Sharpe, David",
+          "holeNumber": 2,
+          "createdAt": "04/10/25 13:24:49"
+        },
+        {
+          "playerName": "Rowlands, Brian",
+          "holeNumber": 5,
+          "createdAt": "04/10/25 13:50:44"
+        },
+        {
+          "playerName": "Conway, Ann",
+          "holeNumber": 11,
+          "createdAt": "04/10/25 13:57:27"
+        },
+        {
+          "playerName": "Anspach Lengemann, Axel",
+          "holeNumber": 8,
+          "createdAt": "04/10/25 14:00:37"
+        },
+        {
+          "playerName": "Anspach Lengemann, Axel",
+          "holeNumber": 12,
+          "createdAt": "04/10/25 14:00:37"
+        },
+        {
+          "playerName": "Tobin, Eileen",
+          "holeNumber": 16,
+          "createdAt": "04/10/25 14:44:05"
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Tobin, Eileen",
+          "holeNumber": 13,
+          "createdAt": "04/10/25 14:44:05"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:33.708Z"
 }

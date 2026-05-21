@@ -1,6 +1,6 @@
 {
   "gameId": "6809f9d7523b9365e3b183c3",
-  "fetchedAt": "2026-05-09T19:35:38.216Z",
+  "fetchedAt": "2026-05-21T16:45:14.639Z",
   "game": {
     "_id": "6809f9d7523b9365e3b183c3",
     "name": "Jornada 1",
@@ -43,21 +43,21 @@
       },
       {
         "gender": "M",
-        "color": "white",
-        "lap": "lap18",
-        "rating": 72.5,
-        "slope": 129,
-        "par": 71,
-        "_id": "6809f9d7523b9365e3b18476"
-      },
-      {
-        "gender": "M",
         "color": "blue",
         "lap": "lap18",
         "rating": 66.5,
         "slope": 120,
         "par": 71,
         "_id": "6809f9d7523b9365e3b184e2"
+      },
+      {
+        "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 72.5,
+        "slope": 129,
+        "par": 71,
+        "_id": "6809f9d7523b9365e3b18476"
       },
       {
         "gender": "M",
@@ -79,6 +79,15 @@
       }
     ],
     "teesFemale": [
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 69,
+        "slope": 119,
+        "par": 71,
+        "_id": "6809f9d7523b9365e3b184f4"
+      },
       {
         "gender": "F",
         "color": "orange",
@@ -105,15 +114,6 @@
         "slope": 137,
         "par": 71,
         "_id": "6809f9d7523b9365e3b18506"
-      },
-      {
-        "gender": "F",
-        "color": "red",
-        "lap": "lap18",
-        "rating": 69,
-        "slope": 119,
-        "par": 71,
-        "_id": "6809f9d7523b9365e3b184f4"
       },
       {
         "gender": "F",
@@ -12800,5 +12800,1769 @@
       "scorecardErrors": []
     }
   ],
-  "card": null
+  "card": [
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-05-24T07:00:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "HUGO",
+          "surname": "CARMONA RODRIGUEZ",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 1.7,
+          "hcpGame": 1,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "6818ac2bd12b16d1a6f3e915"
+        },
+        {
+          "firstName": "ALVARO",
+          "surname": "GONZALEZ MACIAS",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 2,
+          "hcpGame": 2,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "680b8b116bae2b7e95cb6e1f"
+        },
+        {
+          "firstName": "JAN",
+          "surname": "BERNET MARTINEZ DE MORENTIN",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 3,
+          "hcpGame": 3,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "680cc02dd8ca6b1bddb2bbf2"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd8cfc0a0bd4969d60352"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-05-24T07:09:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "KEALEBOGA",
+          "surname": "MDLULWA",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 4.3,
+          "hcpGame": 4,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "68166fbbd391ff1ef535f52a"
+        },
+        {
+          "firstName": "MARC",
+          "surname": "CAMPS ORTEGA",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 5,
+          "hcpGame": 5,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "68218f1b9029658c938bc5ac"
+        },
+        {
+          "firstName": "FELIX",
+          "surname": "BARRADO SANS",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 5.4,
+          "hcpGame": 5,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "6822ec642c0432cffced3adc"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd8cfc0a0bd4969d60354"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-05-24T07:18:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "EDUARDO",
+          "surname": "DE LA MACORRA ESCOBAR",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 5.6,
+          "hcpGame": 5,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "682ca00b627ad0abf426361b"
+        },
+        {
+          "firstName": "LEONARDO",
+          "surname": "OLIVER SEVERIN",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 5.8,
+          "hcpGame": 6,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "682468a6ec54a07293ab4e52"
+        },
+        {
+          "firstName": "ALVARO",
+          "surname": "DE CASTRO PIERA",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 6.5,
+          "hcpGame": 6,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "680a1e3d7febb51867138c2b"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd8cfc0a0bd4969d60356"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-05-24T07:27:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "MANUEL",
+          "surname": "GIRO AGUILO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 6.7,
+          "hcpGame": 7,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "6825d5f9db027273f2e65868"
+        },
+        {
+          "firstName": "MARCOS",
+          "surname": "LEACH LOPEZ",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 6.9,
+          "hcpGame": 7,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "680b97613a8907985fa006f4"
+        },
+        {
+          "firstName": "JAVIER",
+          "surname": "TOME CELIMENDIZ",
+          "nameSufix": null,
+          "country": "AND",
+          "hcpExact": 7,
+          "hcpGame": 7,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "68220005d8436a8ef5c429a8"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd8cfc0a0bd4969d60358"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-05-24T07:36:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "ANIS",
+          "surname": "HABABOU KELLAL",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 7.5,
+          "hcpGame": 7,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "680b88ee6bae2b7e95378867"
+        },
+        {
+          "firstName": "ISSA",
+          "surname": "HEDDAR",
+          "nameSufix": null,
+          "country": "FRA",
+          "hcpExact": 10.5,
+          "hcpGame": 11,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "68128df9d8942c135436e68d"
+        },
+        {
+          "firstName": "JOSE Mª",
+          "surname": "DURAN PIERA",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 11.9,
+          "hcpGame": 12,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "682a29324f496da84437ad2f"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd8cfc0a0bd4969d6035a"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-05-24T07:45:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "ARNAU",
+          "surname": "MIRO MATAS",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 12.7,
+          "hcpGame": 13,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "68276342225a616cf187500e"
+        },
+        {
+          "firstName": "MERT",
+          "surname": "GUNGOR",
+          "nameSufix": null,
+          "country": "TUR",
+          "hcpExact": 12.8,
+          "hcpGame": 13,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "680a573c803e78f2432db070"
+        },
+        {
+          "firstName": "JOAQUIN",
+          "surname": "MARTINEZ PAWLOFF",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 13.1,
+          "hcpGame": 13,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "6824de50d95974e6435be017"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd8cfc0a0bd4969d6035c"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-05-24T07:54:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "NACHO",
+          "surname": "LOPEZ BAS",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 14.4,
+          "hcpGame": 15,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "682abce9e1e992d40fe7a7a5"
+        },
+        {
+          "firstName": "ROGER",
+          "surname": "VILADOMIU DOBARRO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 13.2,
+          "hcpGame": 14,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "680b94c66bae2b7e950e2b3e"
+        },
+        {
+          "firstName": "ELLIOT",
+          "surname": "SANCHO ARAGONES",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 14.9,
+          "hcpGame": 15,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "6817ce72186b569f7f437363"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd8cfc0a0bd4969d6035e"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-05-24T08:03:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "GUILLERMO",
+          "surname": "BUCHEN ARREDONDA",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 15.8,
+          "hcpGame": 16,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "682a41b4043364ecf30b0b89"
+        },
+        {
+          "firstName": "LUIS",
+          "surname": "MALDONADO ROSAL",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 16.5,
+          "hcpGame": 17,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "68148924de1bf2c38c740d6f"
+        },
+        {
+          "firstName": "ALBERT",
+          "surname": "CAPELLA SANSO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 16.9,
+          "hcpGame": 17,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "681db64950ee78633c5ba022"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd8cfc0a0bd4969d60360"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-05-24T08:12:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "MIRKO",
+          "surname": "LOPEZ POLO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 17,
+          "hcpGame": 18,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "680b847fb9dc7f4e337045e9"
+        },
+        {
+          "firstName": "JAIME",
+          "surname": "CASAS NEPOMUCENO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 17.1,
+          "hcpGame": 18,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "6815294c7eab120dec67bddc"
+        },
+        {
+          "firstName": "BELTRAN",
+          "surname": "DETRY CANALE",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 17.3,
+          "hcpGame": 18,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "682b240ce1e992d40f0e80de"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd8cfc0a0bd4969d60362"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-05-24T08:21:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "MAX",
+          "surname": "RIBAS ARQUERO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 17.7,
+          "hcpGame": 18,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "680e36215dcb0e9945690d26"
+        },
+        {
+          "firstName": "PAU",
+          "surname": "FONFREDA PIRIS",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 17.9,
+          "hcpGame": 19,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "682b89f0df75419d66f6d8e1"
+        },
+        {
+          "firstName": "SERGI",
+          "surname": "RIERA MONTENEGRO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 17.9,
+          "hcpGame": 19,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "6814b427554e3c32a4ffb8c3"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd8cfc0a0bd4969d60364"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-05-24T08:30:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "MARC",
+          "surname": "BENITEZ QUERALT",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 18,
+          "hcpGame": 19,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "682b2defe1e992d40f2bcb0c"
+        },
+        {
+          "firstName": "GIULIO",
+          "surname": "LEZZI BOROVKOV",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 19.1,
+          "hcpGame": 20,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "680df257d1c99149806feba3"
+        },
+        {
+          "firstName": "CARLOS",
+          "surname": "FOULQUIE MARTIN",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 24.8,
+          "hcpGame": 26,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "yellow",
+            "_id": "6809f9d7523b9365e3b184ac"
+          },
+          "_id": "682a20d563a74e9ecc3c1052"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd8cfc0a0bd4969d60366"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-05-24T08:39:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "VALENTINA",
+          "surname": "CORRETJA DE MIGUEL",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 7.4,
+          "hcpGame": 6,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "6809f9d7523b9365e3b184f4"
+          },
+          "_id": "6815108597b7075ca7f6cb0f"
+        },
+        {
+          "firstName": "IONA",
+          "surname": "LAGE VILELLA",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 7.5,
+          "hcpGame": 6,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "6809f9d7523b9365e3b184f4"
+          },
+          "_id": "68161c570e5a1894209a42cb"
+        },
+        {
+          "firstName": "ITZIAR",
+          "surname": "DE ORMAECHEA PLANS",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 10.2,
+          "hcpGame": 8,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "6809f9d7523b9365e3b184f4"
+          },
+          "_id": "682119d01c12567a42f082ce"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd928c0a0bd4969ed8fb0"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-05-24T08:48:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "ANA",
+          "surname": "ITURMENDI SIMON",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 12.5,
+          "hcpGame": 11,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "6809f9d7523b9365e3b184f4"
+          },
+          "_id": "68233c294d575344d9641b14"
+        },
+        {
+          "firstName": "INES",
+          "surname": "APARICIO BEGUE",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 18.8,
+          "hcpGame": 17,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "6809f9d7523b9365e3b184f4"
+          },
+          "_id": "681e608f6309e9ffe3f5841a"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd928c0a0bd4969ed8fb2"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-05-24T08:57:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "DANIELA",
+          "surname": "ESTEVE ARCHIDONA",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 21.6,
+          "hcpGame": 20,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "6809f9d7523b9365e3b184f4"
+          },
+          "_id": "680b5551d21372a4c97ca909"
+        },
+        {
+          "firstName": "JULIA",
+          "surname": "CARRERA COSTA",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 24.6,
+          "hcpGame": 23,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "6809f9d7523b9365e3b184f4"
+          },
+          "_id": "681bae268fb5bb70e8318704"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd928c0a0bd4969ed8fb4"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-05-24T07:00:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "RODRIGO",
+          "surname": "TOME CELIMENDIZ",
+          "nameSufix": null,
+          "country": "AND",
+          "hcpExact": 7.4,
+          "hcpGame": 3,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "68220005d8436a8ef5c43018"
+        },
+        {
+          "firstName": "MARC",
+          "surname": "BALLESTER FERRERO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 9.2,
+          "hcpGame": 5,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "681bc42a0c3bdc6ff066e003"
+        },
+        {
+          "firstName": "SERGI",
+          "surname": "VILLALTA SERRANO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 9.9,
+          "hcpGame": 6,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "680bc0233a8907985f75cb8f"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd95ac0a0bd49690191d6"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-05-24T07:09:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "THEO",
+          "surname": "ODERINDE ODERINDE",
+          "nameSufix": null,
+          "country": "GBR",
+          "hcpExact": 9.7,
+          "hcpGame": 6,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "681ba5de8fb5bb70e8c85974"
+        },
+        {
+          "firstName": "ENEKO",
+          "surname": "DE ORMAECHEA PLANS",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 12.4,
+          "hcpGame": 8,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "68211adb4412d4fd4eeeb98f"
+        },
+        {
+          "firstName": "TITO",
+          "surname": "SERRA FLORIT",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 12.4,
+          "hcpGame": 8,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "680f53c92921c12c5d9f741d"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd95ac0a0bd49690191d8"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-05-24T07:18:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "ALEIX",
+          "surname": "TORRENTS ROVIRA",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 12.7,
+          "hcpGame": 9,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "6814e82a0236c6ce444a31cd"
+        },
+        {
+          "firstName": "TOMAS",
+          "surname": "CARBONELL DE CARALT",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 14.3,
+          "hcpGame": 10,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "681783b09a8c20660788c37a"
+        },
+        {
+          "firstName": "GABRIEL",
+          "surname": "DE SOUZA RODRIGUEZ",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 14.6,
+          "hcpGame": 10,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "680a4d7af61513d54444bf23"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd95ac0a0bd49690191da"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-05-24T07:27:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "JAUME",
+          "surname": "POLLINA PAREJA",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 14.7,
+          "hcpGame": 11,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "6821ff92e090bb0d78ec6b72"
+        },
+        {
+          "firstName": "BIEL",
+          "surname": "DOMENECH MATEO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 15.9,
+          "hcpGame": 12,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "680a7832803e78f2438af826"
+        },
+        {
+          "firstName": "TONI",
+          "surname": "VEGA BELTRAN",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 18.6,
+          "hcpGame": 14,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "680ddb09da692dfdf2f3206f"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd95ac0a0bd49690191dc"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-05-24T07:36:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "POL",
+          "surname": "RIBAS MESA",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 18.8,
+          "hcpGame": 15,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "6826e46c8d321cd78cd33d59"
+        },
+        {
+          "firstName": "ENOL",
+          "surname": "RAMOS SANCHEZ",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 19,
+          "hcpGame": 15,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "682a45ff043364ecf3673a64"
+        },
+        {
+          "firstName": "MAX",
+          "surname": "JIN",
+          "nameSufix": null,
+          "country": "CHN",
+          "hcpExact": 21.4,
+          "hcpGame": 17,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "681b8c158fb5bb70e85bdd92"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd95ac0a0bd49690191de"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-05-24T07:45:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "ERMON",
+          "surname": "MARQUES LUQUE",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 21.4,
+          "hcpGame": 17,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "6813651e5bd242e096ac64e7"
+        },
+        {
+          "firstName": "ARNAU",
+          "surname": "CASTILLA COLOM",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 22.4,
+          "hcpGame": 18,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "680bd415fa0c37002a66865d"
+        },
+        {
+          "firstName": "NEIL",
+          "surname": "KHELIF",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 22.8,
+          "hcpGame": 19,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "680a20b4c6ab274d124147c9"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd95ac0a0bd49690191e0"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-05-24T07:54:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "JESUS",
+          "surname": "BLASCO ORRIOLS",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 24.8,
+          "hcpGame": 21,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "681323c40963b0718ba536ea"
+        },
+        {
+          "firstName": "MATEO",
+          "surname": "CASTILLO VILAPLANA",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 27.6,
+          "hcpGame": 24,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "6820fcb936157a88000f0587"
+        },
+        {
+          "firstName": "SERGI",
+          "surname": "MACIA GONZALEZ",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 28.1,
+          "hcpGame": 24,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "680a17e0046bf74e66632cf2"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd95ac0a0bd49690191e2"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-05-24T08:03:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "YANNIK",
+          "surname": "SASTRE TEJEDOR",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 26.2,
+          "hcpGame": 22,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "681b563e6724e47c86da2439"
+        },
+        {
+          "firstName": "ALEXANDRE",
+          "surname": "SCHICKELE",
+          "nameSufix": null,
+          "country": "FRA",
+          "hcpExact": 28.9,
+          "hcpGame": 25,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "6821b936d8436a8ef5b671b5"
+        },
+        {
+          "firstName": "IAGO",
+          "surname": "CRUSELLAS AGUILO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 29,
+          "hcpGame": 25,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "681a52326724e47c861f3b7e"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd95ac0a0bd49690191e4"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-05-24T08:12:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "BOSCO",
+          "surname": "DE CHECA FISAS",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 29.4,
+          "hcpGame": 25,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "68247736d95974e643c5f4f4"
+        },
+        {
+          "firstName": "RODRIGO",
+          "surname": "BLASCO ORRIOLS",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 29.9,
+          "hcpGame": 26,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "681323c40963b0718ba5362d"
+        },
+        {
+          "firstName": "MARC",
+          "surname": "GARCIA PANNON",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 31.5,
+          "hcpGame": 28,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "680b9f58cdf01779b09a0339"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd95ac0a0bd49690191e6"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-05-24T08:21:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "POL",
+          "surname": "MARTINEZ BALASTEGUI",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 35.7,
+          "hcpGame": 32,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "680f4d98d3da3b61c4c6860a"
+        },
+        {
+          "firstName": "ANTONIO",
+          "surname": "ESCODA DE ROS",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 36.6,
+          "hcpGame": 33,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "6809f9d7523b9365e3b184e2"
+          },
+          "_id": "682c348e765d7f0f80d98a61"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd95ac0a0bd49690191e8"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-05-24T08:30:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "TXELL",
+          "surname": "ALOS MARTINEZ",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 4,
+          "hcpGame": 2,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "6809f9d7523b9365e3b184f4"
+          },
+          "_id": "680b485a3a8907985f377a27"
+        },
+        {
+          "firstName": "MARIA",
+          "surname": "ROS BADIA",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 5.4,
+          "hcpGame": 4,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "6809f9d7523b9365e3b184f4"
+          },
+          "_id": "680bb895d21372a4c9add0eb"
+        },
+        {
+          "firstName": "CARLA",
+          "surname": "VELAZQUEZ SEGUI",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 7.3,
+          "hcpGame": 5,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "6809f9d7523b9365e3b184f4"
+          },
+          "_id": "680a2863803e78f243d61b23"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd9cac0a0bd4969217885"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-05-24T08:39:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "NICOLE",
+          "surname": "LIKHOMANOVA GARCIA",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 9.1,
+          "hcpGame": 7,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "6809f9d7523b9365e3b184f4"
+          },
+          "_id": "680a270d0dfb67e00fc3bc6c"
+        },
+        {
+          "firstName": "ONA",
+          "surname": "MARTINEZ CUCCO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 10.4,
+          "hcpGame": 9,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "6809f9d7523b9365e3b184f4"
+          },
+          "_id": "680b93c73a8907985f1acced"
+        },
+        {
+          "firstName": "ROSA",
+          "surname": "MORENO MIQUEL",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 12.2,
+          "hcpGame": 10,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "6809f9d7523b9365e3b184f4"
+          },
+          "_id": "681f048a38653c655b124d9e"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd9cac0a0bd4969217887"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-05-24T08:48:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "LOLA",
+          "surname": "ROMERA ESCOBEDO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 12.2,
+          "hcpGame": 10,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "6809f9d7523b9365e3b184f4"
+          },
+          "_id": "680a1dce803e78f243dd5a83"
+        },
+        {
+          "firstName": "PAULA",
+          "surname": "ALBADALEJO LUGO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 13.5,
+          "hcpGame": 12,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "6809f9d7523b9365e3b184f4"
+          },
+          "_id": "680a3da97febb518672afd95"
+        },
+        {
+          "firstName": "ADRIANA",
+          "surname": "MONTOLIO REYES",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 13.9,
+          "hcpGame": 12,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "6809f9d7523b9365e3b184f4"
+          },
+          "_id": "680a5bf9803e78f243c6b6fc"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd9cac0a0bd4969217889"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-05-24T08:57:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "NEUS",
+          "surname": "MACIA GONZALEZ",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 15,
+          "hcpGame": 13,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "6809f9d7523b9365e3b184f4"
+          },
+          "_id": "680a17a77febb518679708f1"
+        },
+        {
+          "firstName": "INES",
+          "surname": "ORBAÑANOS ANDREU",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 14.8,
+          "hcpGame": 13,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "6809f9d7523b9365e3b184f4"
+          },
+          "_id": "681fa19e3f90c496755f564c"
+        },
+        {
+          "firstName": "BLANCA",
+          "surname": "APARICIO BEGUE",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 17.2,
+          "hcpGame": 15,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "6809f9d7523b9365e3b184f4"
+          },
+          "_id": "681e5f765cd64693e6404372"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd9cac0a0bd496921788b"
+    },
+    {
+      "teeNumber": 10,
+      "teeTime": "2025-05-24T09:06:59.348Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "players": [
+        {
+          "firstName": "JANA",
+          "surname": "FIGULS GARRIGA",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 19.7,
+          "hcpGame": 18,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "6809f9d7523b9365e3b184f4"
+          },
+          "_id": "6810a0cd51d9d84e0e3820ca"
+        },
+        {
+          "firstName": "MARIA",
+          "surname": "SANCHEZ COLOMINAS",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 22.1,
+          "hcpGame": 20,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "6809f9d7523b9365e3b184f4"
+          },
+          "_id": "680a62d8f61513d544f5c65c"
+        }
+      ],
+      "groups": [],
+      "_id": "682dd9cac0a0bd496921788d"
+    }
+  ]
 }

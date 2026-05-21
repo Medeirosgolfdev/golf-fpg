@@ -1,14 +1,14 @@
 {
   "tourId": 61069,
   "url": "https://www.nextcaddy.com/tour/61069",
-  "scrapedAt": "2026-05-08T17:52:55.927Z",
+  "scrapedAt": "2026-05-21T16:36:57.989Z",
   "meta": {
     "name": "Pequecircuito Zona E",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Los Moriscos Club de Golf",
     "courseCode": "AM67",
-    "dateStart": "14 feb 2026",
-    "dateEnd": "14 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,74 +17,14 @@
       "Juvenil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-02-14"
-  },
-  "course": {
-    "par": [
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3
-    ],
-    "si": [
-      3,
-      7,
-      13,
-      5,
-      17,
-      15,
-      11,
-      9,
-      1,
-      4,
-      8,
-      14,
-      6,
-      18,
-      16,
-      12,
-      10,
-      2
-    ],
-    "meters": [
-      136,
-      101,
-      68,
-      124,
-      64,
-      50,
-      61,
-      82,
-      141,
-      136,
-      101,
-      68,
-      124,
-      64,
-      50,
-      61,
-      82,
-      141
     ]
   },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Pequecircuito Damas Categoria 3 (11 Y 12 Años)",
+      "expectedJugadores": 6,
       "header": [
         "Pos",
         "Jugador",
@@ -106,8 +46,7 @@
           "rounds": [],
           "total": 38,
           "toPar": 11,
-          "inscribedId": 2255066,
-          "roundScores": []
+          "inscribedId": 2255066
         },
         {
           "pos": 2,
@@ -118,8 +57,7 @@
           "rounds": [],
           "total": 46,
           "toPar": 19,
-          "inscribedId": 2257816,
-          "roundScores": []
+          "inscribedId": 2257816
         },
         {
           "pos": 3,
@@ -130,8 +68,7 @@
           "rounds": [],
           "total": 47,
           "toPar": 20,
-          "inscribedId": 2249432,
-          "roundScores": []
+          "inscribedId": 2249432
         },
         {
           "pos": 4,
@@ -142,8 +79,7 @@
           "rounds": [],
           "total": 48,
           "toPar": 21,
-          "inscribedId": 2249719,
-          "roundScores": []
+          "inscribedId": 2249719
         },
         {
           "pos": 5,
@@ -154,8 +90,7 @@
           "rounds": [],
           "total": 68,
           "toPar": 41,
-          "inscribedId": 2247935,
-          "roundScores": []
+          "inscribedId": 2247935
         },
         {
           "pos": 6,
@@ -166,13 +101,14 @@
           "rounds": [],
           "total": 71,
           "toPar": 44,
-          "inscribedId": 2257316,
-          "roundScores": []
+          "inscribedId": 2257316
         }
       ]
     },
     {
       "category": 2,
+      "categoryName": "Scratch Pequecircuito Damas Categoria 2 (9 A 10 Años)",
+      "expectedJugadores": 3,
       "header": [
         "Pos",
         "Jugador",
@@ -194,8 +130,7 @@
           "rounds": [],
           "total": 47,
           "toPar": 20,
-          "inscribedId": 2255370,
-          "roundScores": []
+          "inscribedId": 2255370
         },
         {
           "pos": 2,
@@ -206,8 +141,7 @@
           "rounds": [],
           "total": 54,
           "toPar": 27,
-          "inscribedId": 2246455,
-          "roundScores": []
+          "inscribedId": 2246455
         },
         {
           "pos": 3,
@@ -218,13 +152,14 @@
           "rounds": [],
           "total": 60,
           "toPar": 33,
-          "inscribedId": 2246454,
-          "roundScores": []
+          "inscribedId": 2246454
         }
       ]
     },
     {
       "category": 3,
+      "categoryName": "Scratch Pequecircuito Damas Categoria 1 (8 Años O Menos)",
+      "expectedJugadores": 1,
       "header": [
         "Pos",
         "Jugador",
@@ -246,13 +181,14 @@
           "rounds": [],
           "total": 71,
           "toPar": 44,
-          "inscribedId": 2254880,
-          "roundScores": []
+          "inscribedId": 2254880
         }
       ]
     },
     {
       "category": 4,
+      "categoryName": "Scratch Pequecircuito Caballeros Categoria 3 (11 Y 12 Años)",
+      "expectedJugadores": 1,
       "header": [
         "Pos",
         "Jugador",
@@ -274,13 +210,14 @@
           "rounds": [],
           "total": 47,
           "toPar": 20,
-          "inscribedId": 2253045,
-          "roundScores": []
+          "inscribedId": 2253045
         }
       ]
     },
     {
       "category": 5,
+      "categoryName": "Scratch Pequecircuito Caballeros Categoria 2 (9 A 10 Años)",
+      "expectedJugadores": 7,
       "header": [
         "Pos",
         "Jugador",
@@ -302,8 +239,7 @@
           "rounds": [],
           "total": 37,
           "toPar": 10,
-          "inscribedId": 2247785,
-          "roundScores": []
+          "inscribedId": 2247785
         },
         {
           "pos": 2,
@@ -314,8 +250,7 @@
           "rounds": [],
           "total": 38,
           "toPar": 11,
-          "inscribedId": 2254879,
-          "roundScores": []
+          "inscribedId": 2254879
         },
         {
           "pos": 3,
@@ -326,8 +261,7 @@
           "rounds": [],
           "total": 39,
           "toPar": 12,
-          "inscribedId": 2256877,
-          "roundScores": []
+          "inscribedId": 2256877
         },
         {
           "pos": 4,
@@ -338,8 +272,7 @@
           "rounds": [],
           "total": 39,
           "toPar": 12,
-          "inscribedId": 2256985,
-          "roundScores": []
+          "inscribedId": 2256985
         },
         {
           "pos": 5,
@@ -350,8 +283,7 @@
           "rounds": [],
           "total": 42,
           "toPar": 15,
-          "inscribedId": 2255388,
-          "roundScores": []
+          "inscribedId": 2255388
         },
         {
           "pos": 6,
@@ -362,8 +294,7 @@
           "rounds": [],
           "total": 46,
           "toPar": 19,
-          "inscribedId": 2257814,
-          "roundScores": []
+          "inscribedId": 2257814
         },
         {
           "pos": 7,
@@ -374,13 +305,14 @@
           "rounds": [],
           "total": 54,
           "toPar": 27,
-          "inscribedId": 2256932,
-          "roundScores": []
+          "inscribedId": 2256932
         }
       ]
     },
     {
       "category": 6,
+      "categoryName": "Scratch Pequecircuito Caballeros Categoria 1 (8 Años O Menos)",
+      "expectedJugadores": 3,
       "header": [
         "Pos",
         "Jugador",
@@ -402,8 +334,7 @@
           "rounds": [],
           "total": 43,
           "toPar": 16,
-          "inscribedId": 2256448,
-          "roundScores": []
+          "inscribedId": 2256448
         },
         {
           "pos": 2,
@@ -414,8 +345,7 @@
           "rounds": [],
           "total": 44,
           "toPar": 17,
-          "inscribedId": 2256984,
-          "roundScores": []
+          "inscribedId": 2256984
         },
         {
           "pos": 3,
@@ -426,12 +356,38 @@
           "rounds": [],
           "total": 67,
           "toPar": 40,
-          "inscribedId": 2256905,
-          "roundScores": []
+          "inscribedId": 2256905
         }
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Pequecircuito Damas Categoria 3 (11 Y 12 Años)",
+      "jugadores": 6
+    },
+    "2": {
+      "name": "Scratch Pequecircuito Damas Categoria 2 (9 A 10 Años)",
+      "jugadores": 3
+    },
+    "3": {
+      "name": "Scratch Pequecircuito Damas Categoria 1 (8 Años O Menos)",
+      "jugadores": 1
+    },
+    "4": {
+      "name": "Scratch Pequecircuito Caballeros Categoria 3 (11 Y 12 Años)",
+      "jugadores": 1
+    },
+    "5": {
+      "name": "Scratch Pequecircuito Caballeros Categoria 2 (9 A 10 Años)",
+      "jugadores": 7
+    },
+    "6": {
+      "name": "Scratch Pequecircuito Caballeros Categoria 1 (8 Años O Menos)",
+      "jugadores": 3
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -740,6 +696,202 @@
       "licencia": "AM92069656",
       "hcp": 37.3,
       "nivel": "A"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Rafael Valle Garcia-Valdecasas",
+          "hcp": 37.9,
+          "ins": "2247785",
+          "jid": "64672",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Ivan Duran Campos",
+          "hcp": 38.7,
+          "ins": "2255388",
+          "jid": "64672",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Tiago Dos Santos Vicente",
+          "hcp": 42,
+          "ins": "2256985",
+          "jid": "64672",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Carlos Cerdan Ruiz",
+          "hcp": 46.3,
+          "ins": "2254879",
+          "jid": "64672",
+          "nivel": "B"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Lucia Valle Calvente",
+          "hcp": 37.3,
+          "ins": "2257816",
+          "jid": "64672",
+          "nivel": "A"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Demija Smirnova",
+          "hcp": 40.6,
+          "ins": "2249432",
+          "jid": "64672",
+          "nivel": "A"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Blanca Doña Del Rio",
+          "hcp": 44,
+          "ins": "2249719",
+          "jid": "64672",
+          "nivel": "A"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Martina Pineda De Las Infantas",
+          "hcp": 50.1,
+          "ins": "2255370",
+          "jid": "64672",
+          "nivel": "B"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Mario Dos Santos Vicente",
+          "hcp": 46.7,
+          "ins": "2256984",
+          "jid": "64672",
+          "nivel": "B"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Alberto Valle Calvente",
+          "hcp": 48.1,
+          "ins": "2257814",
+          "jid": "64672",
+          "nivel": "B"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "David Prieto Perez",
+          "hcp": 49.6,
+          "ins": "2256877",
+          "jid": "64672",
+          "nivel": "B"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Jose Ramon Callejon Sanchez",
+          "hcp": 54,
+          "ins": "2256932",
+          "jid": "64672",
+          "nivel": "B"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Raquel Ocaña Illanes",
+          "hcp": 48,
+          "ins": "2246454",
+          "jid": "64672",
+          "nivel": "B"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Noa Carrere Aguiar",
+          "hcp": 54,
+          "ins": "2255066",
+          "jid": "64672",
+          "nivel": "A"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Maria Hurtado Hidalgo",
+          "hcp": 54,
+          "ins": "2246455",
+          "jid": "64672",
+          "nivel": "B"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Paula Martinez Skaudickaite",
+          "hcp": 54,
+          "ins": "2247935",
+          "jid": "64672",
+          "nivel": "A"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Rosa Gimenez Ruiz Del Portal",
+          "hcp": 54,
+          "ins": "2254880",
+          "jid": "64672",
+          "nivel": "B"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Maria Martin Sabiote",
+          "hcp": 54,
+          "ins": "2257316",
+          "jid": "64672",
+          "nivel": "A"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Alvaro Montes De Oca Olea",
+          "hcp": 54,
+          "ins": "2256448",
+          "jid": "64672",
+          "nivel": "B"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Gonzalo Krauel Pineda",
+          "hcp": 54,
+          "ins": "2253045",
+          "jid": "64672",
+          "nivel": "A"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Lucas Lope De Lima",
+          "hcp": 54,
+          "ins": "2256905",
+          "jid": "64672",
+          "nivel": "B"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -1105,201 +1257,8 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Rafael Valle Garcia-Valdecasas",
-          "hcp": 37.9,
-          "ins": "2247785",
-          "jid": "64672",
-          "nivel": "B"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Ivan Duran Campos",
-          "hcp": 38.7,
-          "ins": "2255388",
-          "jid": "64672",
-          "nivel": "B"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Tiago Dos Santos Vicente",
-          "hcp": 42,
-          "ins": "2256985",
-          "jid": "64672",
-          "nivel": "B"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Carlos Cerdan Ruiz",
-          "hcp": 46.3,
-          "ins": "2254879",
-          "jid": "64672",
-          "nivel": "B"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Lucia Valle Calvente",
-          "hcp": 37.3,
-          "ins": "2257816",
-          "jid": "64672",
-          "nivel": "A"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Demija Smirnova",
-          "hcp": 40.6,
-          "ins": "2249432",
-          "jid": "64672",
-          "nivel": "A"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Blanca Doña Del Rio",
-          "hcp": 44,
-          "ins": "2249719",
-          "jid": "64672",
-          "nivel": "A"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Martina Pineda De Las Infantas",
-          "hcp": 50.1,
-          "ins": "2255370",
-          "jid": "64672",
-          "nivel": "B"
-        },
-        {
-          "time": "10:20",
-          "tee": 1,
-          "name": "Mario Dos Santos Vicente",
-          "hcp": 46.7,
-          "ins": "2256984",
-          "jid": "64672",
-          "nivel": "B"
-        },
-        {
-          "time": "10:20",
-          "tee": 1,
-          "name": "Alberto Valle Calvente",
-          "hcp": 48.1,
-          "ins": "2257814",
-          "jid": "64672",
-          "nivel": "B"
-        },
-        {
-          "time": "10:20",
-          "tee": 1,
-          "name": "David Prieto Perez",
-          "hcp": 49.6,
-          "ins": "2256877",
-          "jid": "64672",
-          "nivel": "B"
-        },
-        {
-          "time": "10:20",
-          "tee": 1,
-          "name": "Jose Ramon Callejon Sanchez",
-          "hcp": 54,
-          "ins": "2256932",
-          "jid": "64672",
-          "nivel": "B"
-        },
-        {
-          "time": "10:30",
-          "tee": 1,
-          "name": "Raquel Ocaña Illanes",
-          "hcp": 48,
-          "ins": "2246454",
-          "jid": "64672",
-          "nivel": "B"
-        },
-        {
-          "time": "10:30",
-          "tee": 1,
-          "name": "Maria Hurtado Hidalgo",
-          "hcp": 54,
-          "ins": "2246455",
-          "jid": "64672",
-          "nivel": "B"
-        },
-        {
-          "time": "10:30",
-          "tee": 1,
-          "name": "Noa Carrere Aguiar",
-          "hcp": 54,
-          "ins": "2255066",
-          "jid": "64672",
-          "nivel": "A"
-        },
-        {
-          "time": "10:40",
-          "tee": 1,
-          "name": "Rosa Gimenez Ruiz Del Portal",
-          "hcp": 54,
-          "ins": "2254880",
-          "jid": "64672",
-          "nivel": "B"
-        },
-        {
-          "time": "10:40",
-          "tee": 1,
-          "name": "Maria Martin Sabiote",
-          "hcp": 54,
-          "ins": "2257316",
-          "jid": "64672",
-          "nivel": "A"
-        },
-        {
-          "time": "10:40",
-          "tee": 1,
-          "name": "Paula Martinez Skaudickaite",
-          "hcp": 54,
-          "ins": "2247935",
-          "jid": "64672",
-          "nivel": "A"
-        },
-        {
-          "time": "10:50",
-          "tee": 1,
-          "name": "Lucas Lope De Lima",
-          "hcp": 54,
-          "ins": "2256905",
-          "jid": "64672",
-          "nivel": "B"
-        },
-        {
-          "time": "10:50",
-          "tee": 1,
-          "name": "Alvaro Montes De Oca Olea",
-          "hcp": 54,
-          "ins": "2256448",
-          "jid": "64672",
-          "nivel": "B"
-        },
-        {
-          "time": "10:50",
-          "tee": 1,
-          "name": "Gonzalo Krauel Pineda",
-          "hcp": 54,
-          "ins": "2253045",
-          "jid": "64672",
-          "nivel": "A"
-        }
-      ]
-    }
+  "pdfs": [
+    "/uploads/circular/2026/60646390603b16b04fdebb02436999ef.pdf"
   ],
-  "horariosScrapedAt": "2026-05-09T12:11:58.044Z"
+  "horariosScrapedAt": "2026-05-21T16:41:49.208Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 67980,
   "url": "https://www.nextcaddy.com/tour/67980",
-  "scrapedAt": "2026-05-09T09:57:29.856Z",
+  "scrapedAt": "2026-05-21T16:36:45.934Z",
   "meta": {
     "name": "monthly stableford",
     "organizer": null,
     "course": "Santa María Golf & Country Club",
     "courseCode": "AM86",
-    "dateStart": "28 ene 2026",
-    "dateEnd": "28 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "stableford",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-28"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -276,6 +277,7 @@
       "nivel": "S"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -388,6 +390,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:31.780Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:14.479Z"
 }

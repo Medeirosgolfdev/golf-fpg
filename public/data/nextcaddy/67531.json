@@ -1,14 +1,14 @@
 {
   "tourId": 67531,
   "url": "https://www.nextcaddy.com/tour/67531",
-  "scrapedAt": "2026-05-09T09:58:05.358Z",
+  "scrapedAt": "2026-05-21T16:37:42.210Z",
   "meta": {
     "name": "II Torneo RKN 2026 · 6ª Categoría · 8 de Marzo · Turno Mañana 13:30 · Turno Tarde 15:30",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "08 mar 2026",
-    "dateEnd": "08 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -21,13 +21,14 @@
       "junior",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-03-08"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Alevin Infantil Y Cadete Femenino Handicap General",
+      "expectedJugadores": 17,
       "header": [
         "Pos",
         "Jugador",
@@ -231,6 +232,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Alevin Infantil Y Cadete Femenino Scratch General",
+      "expectedJugadores": 17,
       "header": [
         "Pos",
         "Jugador",
@@ -434,6 +437,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Benjamin Femenino Scratch General",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -582,6 +587,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Benjamin Femenino Handicap General",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -730,6 +737,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Infantil Y Cadete Masculino Scratch General",
+      "expectedJugadores": 10,
       "header": [
         "Pos",
         "Jugador",
@@ -856,6 +865,8 @@
     },
     {
       "category": 6,
+      "categoryName": "Infantil Y Cadete Masculino Handicap General",
+      "expectedJugadores": 10,
       "header": [
         "Pos",
         "Jugador",
@@ -982,6 +993,8 @@
     },
     {
       "category": 7,
+      "categoryName": "Alevin Masculino Scratch General",
+      "expectedJugadores": 7,
       "header": [
         "Pos",
         "Jugador",
@@ -1075,6 +1088,8 @@
     },
     {
       "category": 8,
+      "categoryName": "Alevin Masculino Handicap General",
+      "expectedJugadores": 7,
       "header": [
         "Pos",
         "Jugador",
@@ -1168,6 +1183,8 @@
     },
     {
       "category": 9,
+      "categoryName": "Benjamin Masculino Scratch General",
+      "expectedJugadores": 23,
       "header": [
         "Pos",
         "Jugador",
@@ -1437,6 +1454,8 @@
     },
     {
       "category": 10,
+      "categoryName": "Benjamin Masculino Handicap General",
+      "expectedJugadores": 23,
       "header": [
         "Pos",
         "Jugador",
@@ -1705,6 +1724,49 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Alevin Infantil Y Cadete Femenino Handicap General",
+      "jugadores": 17
+    },
+    "2": {
+      "name": "Alevin Infantil Y Cadete Femenino Scratch General",
+      "jugadores": 17
+    },
+    "3": {
+      "name": "Benjamin Femenino Scratch General",
+      "jugadores": 12
+    },
+    "4": {
+      "name": "Benjamin Femenino Handicap General",
+      "jugadores": 12
+    },
+    "5": {
+      "name": "Infantil Y Cadete Masculino Scratch General",
+      "jugadores": 10
+    },
+    "6": {
+      "name": "Infantil Y Cadete Masculino Handicap General",
+      "jugadores": 10
+    },
+    "7": {
+      "name": "Alevin Masculino Scratch General",
+      "jugadores": 7
+    },
+    "8": {
+      "name": "Alevin Masculino Handicap General",
+      "jugadores": 7
+    },
+    "9": {
+      "name": "Benjamin Masculino Scratch General",
+      "jugadores": 23
+    },
+    "10": {
+      "name": "Benjamin Masculino Handicap General",
+      "jugadores": 23
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2687,22 +2749,6 @@
       "nivel": "A"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71995
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -3331,5 +3377,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:09.563Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71995
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/67531_cartel_13.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:05.183Z"
 }

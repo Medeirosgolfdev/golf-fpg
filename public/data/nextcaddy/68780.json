@@ -1,14 +1,14 @@
 {
   "tourId": 68780,
   "url": "https://www.nextcaddy.com/tour/68780",
-  "scrapedAt": "2026-05-09T09:58:04.195Z",
+  "scrapedAt": "2026-05-21T16:37:40.283Z",
   "meta": {
     "name": "Partida de vuelta del  XVI Torneo Interclub Dos Marinas 6º Gran Premio Ron Dos Maderas",
     "organizer": null,
     "course": "Rota Club de Golf",
     "courseCode": "AME7",
-    "dateStart": "07 mar 2026",
-    "dateEnd": "07 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-07"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Rota",
+      "expectedJugadores": 47,
       "header": [
         "Pos",
         "Jugador",
@@ -557,6 +558,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Sherry",
+      "expectedJugadores": 45,
       "header": [
         "Pos",
         "Jugador",
@@ -1068,6 +1071,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 47,
       "header": [
         "Pos",
         "Jugador",
@@ -1600,6 +1605,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Rota",
+      "jugadores": 47
+    },
+    "2": {
+      "name": "Sherry",
+      "jugadores": 45
+    },
+    "3": {
+      "name": "Handicap Individual",
+      "jugadores": 47
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2904,22 +2924,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73469
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -3755,5 +3759,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:30.100Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73469
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/1377925903_cartel_anunciador_del_xvi_torneo_dos_marinas-v_ron_dos_maderas_2026_vuelta.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:28.208Z"
 }

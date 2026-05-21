@@ -1,6 +1,6 @@
 {
   "gameId": "67fccfa5fcae0157910ce88c",
-  "fetchedAt": "2026-05-09T19:52:46.083Z",
+  "fetchedAt": "2026-05-21T16:44:45.492Z",
   "game": {
     "_id": "67fccfa5fcae0157910ce88c",
     "name": "Jornada 1",
@@ -32,6 +32,15 @@
       "isPitchAndPutt": false
     },
     "teesMale": [
+      {
+        "gender": "M",
+        "color": "black",
+        "lap": "lap18",
+        "rating": 72.7,
+        "slope": 140,
+        "par": 71,
+        "_id": "67fccfa5fcae0157910ce9cc"
+      },
       {
         "gender": "M",
         "color": "white",
@@ -67,15 +76,6 @@
         "slope": 129,
         "par": 71,
         "_id": "67fccfa5fcae0157910ce94e"
-      },
-      {
-        "gender": "M",
-        "color": "black",
-        "lap": "lap18",
-        "rating": 72.7,
-        "slope": 140,
-        "par": 71,
-        "_id": "67fccfa5fcae0157910ce9cc"
       },
       {
         "gender": "M",

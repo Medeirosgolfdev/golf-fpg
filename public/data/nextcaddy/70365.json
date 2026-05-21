@@ -1,14 +1,14 @@
 {
   "tourId": 70365,
   "url": "https://www.nextcaddy.com/tour/70365",
-  "scrapedAt": "2026-05-09T10:15:44.778Z",
+  "scrapedAt": "2026-05-21T16:39:12.918Z",
   "meta": {
     "name": "TORNEO SAN JORGE",
     "organizer": null,
     "course": "Club de Golf Bellavista",
     "courseCode": "AM07",
-    "dateStart": "27 abr 2026",
-    "dateEnd": "27 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-27"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Hcp General",
+      "expectedJugadores": 14,
       "header": [
         "Pos",
         "Jugador",
@@ -193,6 +194,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Hcp General",
+      "jugadores": 14
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -398,6 +406,7 @@
       "nivel": "S"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -455,6 +464,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:44.170Z"
+  "pdfs": [
+    "/uploads/competiciones/cartel/995031677_70365-torneo-san-jorge.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:40.295Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 70232,
   "url": "https://www.nextcaddy.com/tour/70232",
-  "scrapedAt": "2026-05-09T10:15:47.134Z",
+  "scrapedAt": "2026-05-21T16:39:16.138Z",
   "meta": {
     "name": "GOLFISTAS SEVILLA LIGA PRIMAVERA J1",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": "29 abr 2026",
-    "dateEnd": "29 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-29"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "1 Categoria",
+      "expectedJugadores": 10,
       "header": [
         "Pos",
         "Jugador",
@@ -150,6 +151,8 @@
     },
     {
       "category": 2,
+      "categoryName": "3 Categoria",
+      "expectedJugadores": 25,
       "header": [
         "Pos",
         "Jugador",
@@ -441,6 +444,8 @@
     },
     {
       "category": 3,
+      "categoryName": "2 Categoria",
+      "expectedJugadores": 13,
       "header": [
         "Pos",
         "Jugador",
@@ -599,6 +604,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "1 Categoria",
+      "jugadores": 10
+    },
+    "2": {
+      "name": "3 Categoria",
+      "jugadores": 25
+    },
+    "3": {
+      "name": "2 Categoria",
+      "jugadores": 13
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1287,43 +1307,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75152
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Garcia-Pita Reda, Daniel",
-          "holeNumber": 2,
-          "createdAt": "04/11/25 08:47:46"
-        },
-        {
-          "playerName": "Garcia-Pita Reda, Daniel",
-          "holeNumber": 8,
-          "createdAt": "04/11/25 08:47:46"
-        },
-        {
-          "playerName": "Garcia-Pita Reda, Daniel",
-          "holeNumber": 15,
-          "createdAt": "04/11/25 08:47:46"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1637,5 +1620,45 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:58.572Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75152
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Garcia-Pita Reda, Daniel",
+          "holeNumber": 2,
+          "createdAt": "04/11/25 08:47:46"
+        },
+        {
+          "playerName": "Garcia-Pita Reda, Daniel",
+          "holeNumber": 8,
+          "createdAt": "04/11/25 08:47:46"
+        },
+        {
+          "playerName": "Garcia-Pita Reda, Daniel",
+          "holeNumber": 15,
+          "createdAt": "04/11/25 08:47:46"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/1268902647_cartel-ligaprimavera.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:39.107Z"
 }

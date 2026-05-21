@@ -1,14 +1,14 @@
 {
   "tourId": 69170,
   "url": "https://www.nextcaddy.com/tour/69170",
-  "scrapedAt": "2026-05-09T10:07:32.506Z",
+  "scrapedAt": "2026-05-21T16:37:55.717Z",
   "meta": {
     "name": "LIGA DE DAMAS - DOMINGO",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": "15 mar 2026",
-    "dateEnd": "15 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras Facebook",
     "categories": [
       "Señoras",
@@ -16,13 +16,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-15"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 14,
       "header": [
         "Pos",
         "Jugador",
@@ -193,6 +194,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 11,
       "header": [
         "Pos",
         "Jugador",
@@ -329,6 +332,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 14
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 11
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -492,22 +506,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73911
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -614,5 +612,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:33.315Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73911
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [
+    "/uploads/competiciones/pdf/69170_cartel_248.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:31.511Z"
 }

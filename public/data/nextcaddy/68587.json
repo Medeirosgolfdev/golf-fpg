@@ -1,7 +1,7 @@
 {
   "tourId": 68587,
   "url": "https://www.nextcaddy.com/tour/68587",
-  "scrapedAt": "2026-05-09T16:03:44.316Z",
+  "scrapedAt": "2026-05-21T16:39:46.186Z",
   "meta": {
     "name": "IV Prueba Circuito Juvenil de P&P (18 Hoyos) 1ª y 2ª Categoría - Las Palmeras Golf",
     "organizer": null,
@@ -20,10 +20,221 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "2ª Categoría Hándicap",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Beatrice Sparicio",
+          "licencia": "CP26979413",
+          "hcp": 26.9,
+          "nivel": "I",
+          "rounds": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2317306
+        },
+        {
+          "pos": null,
+          "name": "Antonio Mira Melian",
+          "licencia": "CP26079834",
+          "hcp": 32.3,
+          "nivel": "A",
+          "rounds": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2317821
+        },
+        {
+          "pos": 3,
+          "name": "Jorge Alvarez Muñoz",
+          "licencia": "CP26003516",
+          "hcp": 29,
+          "nivel": "A",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2317750
+        },
+        {
+          "pos": 4,
+          "name": "Enrique Perez Trapero",
+          "licencia": "CP26967032",
+          "hcp": 29.6,
+          "nivel": "I",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2317470
+        },
+        {
+          "pos": 5,
+          "name": "Sofia Mendoza Duque",
+          "licencia": "CP04972681",
+          "hcp": 29.9,
+          "nivel": "A",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2318282
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "1ª Categoría Hándicap",
+      "expectedJugadores": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Massimo Amoni Gamardo",
+          "licencia": "CP04942811",
+          "hcp": 8.1,
+          "nivel": "I",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2317525
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "2ª Categoría Hándicap",
+      "jugadores": 5
+    },
+    "2": {
+      "name": "1ª Categoría Hándicap",
+      "jugadores": 1
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Beatrice Sparicio",
+      "licencia": "CP26979413",
+      "hcp": 26.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Sofia Mendoza Duque",
+      "licencia": "CP04972681",
+      "hcp": 29.9,
+      "nivel": "A"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Enrique Perez Trapero",
+      "licencia": "CP26967032",
+      "hcp": 29.6,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Massimo Amoni Gamardo",
+      "licencia": "CP04942811",
+      "hcp": 8.1,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Jorge Alvarez Muñoz",
+      "licencia": "CP26003516",
+      "hcp": 29,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Antonio Mira Melian",
+      "licencia": "CP26079834",
+      "hcp": 32.3,
+      "nivel": "A"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Beatrice Sparicio",
+      "licencia": "CP26979413",
+      "hcp": 26.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Enrique Perez Trapero",
+      "licencia": "CP26967032",
+      "hcp": 29.6,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Massimo Amoni Gamardo",
+      "licencia": "CP04942811",
+      "hcp": 8.1,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Jorge Alvarez Muñoz",
+      "licencia": "CP26003516",
+      "hcp": 29,
+      "nivel": "A"
+    },
+    {
+      "orden": 5,
+      "name": "Antonio Mira Melian",
+      "licencia": "CP26079834",
+      "hcp": 32.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 6,
+      "name": "Sofia Mendoza Duque",
+      "licencia": "CP04972681",
+      "hcp": 29.9,
+      "nivel": "A"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -68,5 +279,5 @@
     }
   },
   "pdfs": [],
-  "horariosScrapedAt": "2026-05-18T08:08:37.947Z"
+  "horariosScrapedAt": "2026-05-21T16:42:24.379Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 68908,
   "url": "https://www.nextcaddy.com/tour/68908",
-  "scrapedAt": "2026-05-09T10:07:45.103Z",
+  "scrapedAt": "2026-05-21T16:38:20.048Z",
   "meta": {
     "name": "II Torneo RKN 2026  1ª a 5ª Categoría · Turno Mañana 9:30 · Turno Tarde 12:30",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "28 mar 2026",
-    "dateEnd": "28 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-28"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Infantil Cadete Junior Femenino Scratch General",
+      "expectedJugadores": 10,
       "header": [
         "Pos",
         "Jugador",
@@ -151,6 +152,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Infantil Cadete Junior Femenino Handicap General",
+      "expectedJugadores": 10,
       "header": [
         "Pos",
         "Jugador",
@@ -277,6 +280,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Benjamin Alevin Femenino Scratch General",
+      "expectedJugadores": 9,
       "header": [
         "Pos",
         "Jugador",
@@ -347,7 +352,7 @@
         {
           "pos": 6,
           "name": "Sara Villen Villamiel",
-          "licencia": "CM41152966",
+          "licencia": "CM61152966",
           "hcp": 23,
           "nivel": "A",
           "rounds": [],
@@ -368,7 +373,7 @@
         },
         {
           "pos": 8,
-          "name": "Tesla Charlotte Chesneau",
+          "name": "Tesla Chesneau",
           "licencia": "CMA8002247",
           "hcp": 26.3,
           "nivel": "A",
@@ -392,6 +397,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Benjamin Alevin Femenino Handicap General",
+      "expectedJugadores": 9,
       "header": [
         "Pos",
         "Jugador",
@@ -462,7 +469,7 @@
         {
           "pos": 6,
           "name": "Sara Villen Villamiel",
-          "licencia": "CM41152966",
+          "licencia": "CM61152966",
           "hcp": 23,
           "nivel": "A",
           "rounds": [],
@@ -494,7 +501,7 @@
         },
         {
           "pos": 9,
-          "name": "Tesla Charlotte Chesneau",
+          "name": "Tesla Chesneau",
           "licencia": "CMA8002247",
           "hcp": 26.3,
           "nivel": "A",
@@ -507,6 +514,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Cadete Masculino Scratch General",
+      "expectedJugadores": 7,
       "header": [
         "Pos",
         "Jugador",
@@ -600,6 +609,8 @@
     },
     {
       "category": 6,
+      "categoryName": "Cadete Masculino Handicap General",
+      "expectedJugadores": 7,
       "header": [
         "Pos",
         "Jugador",
@@ -693,6 +704,8 @@
     },
     {
       "category": 7,
+      "categoryName": "Infantil Masculino Scratch General",
+      "expectedJugadores": 21,
       "header": [
         "Pos",
         "Jugador",
@@ -940,6 +953,8 @@
     },
     {
       "category": 8,
+      "categoryName": "Infantil Masculino Handicap General",
+      "expectedJugadores": 21,
       "header": [
         "Pos",
         "Jugador",
@@ -1187,6 +1202,8 @@
     },
     {
       "category": 9,
+      "categoryName": "Alevin Masculino Scratch General",
+      "expectedJugadores": 14,
       "header": [
         "Pos",
         "Jugador",
@@ -1323,7 +1340,7 @@
         {
           "pos": 12,
           "name": "Pablo Rodriguez Martin",
-          "licencia": "CM41988735",
+          "licencia": "CM60988735",
           "hcp": 28.2,
           "nivel": "A",
           "rounds": [],
@@ -1357,6 +1374,8 @@
     },
     {
       "category": 10,
+      "categoryName": "Alevin Masculino Handicap General",
+      "expectedJugadores": 14,
       "header": [
         "Pos",
         "Jugador",
@@ -1482,7 +1501,7 @@
         {
           "pos": 11,
           "name": "Pablo Rodriguez Martin",
-          "licencia": "CM41988735",
+          "licencia": "CM60988735",
           "hcp": 28.2,
           "nivel": "A",
           "rounds": [],
@@ -1527,6 +1546,8 @@
     },
     {
       "category": 11,
+      "categoryName": "Benjamin Masculino Scratch General",
+      "expectedJugadores": 6,
       "header": [
         "Pos",
         "Jugador",
@@ -1609,6 +1630,8 @@
     },
     {
       "category": 12,
+      "categoryName": "Benjamin Masculino Handicap General",
+      "expectedJugadores": 6,
       "header": [
         "Pos",
         "Jugador",
@@ -1690,6 +1713,57 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Infantil Cadete Junior Femenino Scratch General",
+      "jugadores": 10
+    },
+    "2": {
+      "name": "Infantil Cadete Junior Femenino Handicap General",
+      "jugadores": 10
+    },
+    "3": {
+      "name": "Benjamin Alevin Femenino Scratch General",
+      "jugadores": 9
+    },
+    "4": {
+      "name": "Benjamin Alevin Femenino Handicap General",
+      "jugadores": 9
+    },
+    "5": {
+      "name": "Cadete Masculino Scratch General",
+      "jugadores": 7
+    },
+    "6": {
+      "name": "Cadete Masculino Handicap General",
+      "jugadores": 7
+    },
+    "7": {
+      "name": "Infantil Masculino Scratch General",
+      "jugadores": 21
+    },
+    "8": {
+      "name": "Infantil Masculino Handicap General",
+      "jugadores": 21
+    },
+    "9": {
+      "name": "Alevin Masculino Scratch General",
+      "jugadores": 14
+    },
+    "10": {
+      "name": "Alevin Masculino Handicap General",
+      "jugadores": 14
+    },
+    "11": {
+      "name": "Benjamin Masculino Scratch General",
+      "jugadores": 6
+    },
+    "12": {
+      "name": "Benjamin Masculino Handicap General",
+      "jugadores": 6
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2002,7 +2076,7 @@
     {
       "orden": 45,
       "name": "Pablo Rodriguez Martin",
-      "licencia": "CM41988735",
+      "licencia": "CM60988735",
       "hcp": 28.2,
       "nivel": "A"
     },
@@ -2043,7 +2117,7 @@
     },
     {
       "orden": 2,
-      "name": "Tesla Charlotte Chesneau",
+      "name": "Tesla Chesneau",
       "licencia": "CMA8002247",
       "hcp": 26.3,
       "nivel": "A"
@@ -2135,7 +2209,7 @@
     {
       "orden": 15,
       "name": "Sara Villen Villamiel",
-      "licencia": "CM41152966",
+      "licencia": "CM61152966",
       "hcp": 23,
       "nivel": "A"
     },
@@ -2211,7 +2285,7 @@
     },
     {
       "orden": 6,
-      "name": "Tesla Charlotte Chesneau",
+      "name": "Tesla Chesneau",
       "licencia": "CMA8002247",
       "hcp": 26.3,
       "nivel": "A"
@@ -2478,7 +2552,7 @@
     {
       "orden": 44,
       "name": "Sara Villen Villamiel",
-      "licencia": "CM41152966",
+      "licencia": "CM61152966",
       "hcp": 23,
       "nivel": "A"
     },
@@ -2618,7 +2692,7 @@
     {
       "orden": 64,
       "name": "Pablo Rodriguez Martin",
-      "licencia": "CM41988735",
+      "licencia": "CM60988735",
       "hcp": 28.2,
       "nivel": "A"
     },
@@ -2644,53 +2718,6 @@
       "nivel": "I"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73608
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Clarke, Sarah",
-          "holeNumber": 1,
-          "createdAt": "10/09/25 15:28:32"
-        },
-        {
-          "playerName": "Rehlinger, Jeannine",
-          "holeNumber": 18,
-          "createdAt": "10/09/25 15:28:32"
-        },
-        {
-          "playerName": "Jones, Christine Una",
-          "holeNumber": 11,
-          "createdAt": "10/09/25 15:28:32"
-        },
-        {
-          "playerName": "Lawson, Margaret",
-          "holeNumber": 14,
-          "createdAt": "10/09/25 15:28:35"
-        },
-        {
-          "playerName": "Loiret, Joelle",
-          "holeNumber": 9,
-          "createdAt": "11/09/25 13:59:24"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -2896,7 +2923,7 @@
         {
           "time": "09:30",
           "tee": 6,
-          "name": "Tesla Charlotte Chesneau",
+          "name": "Tesla Chesneau",
           "hcp": 26.3,
           "ins": "2281207",
           "jid": "73608",
@@ -3301,5 +3328,53 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:30.744Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73608
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Clarke, Sarah",
+          "holeNumber": 1,
+          "createdAt": "10/09/25 15:28:32"
+        },
+        {
+          "playerName": "Rehlinger, Jeannine",
+          "holeNumber": 18,
+          "createdAt": "10/09/25 15:28:32"
+        },
+        {
+          "playerName": "Jones, Christine Una",
+          "holeNumber": 11,
+          "createdAt": "10/09/25 15:28:32"
+        },
+        {
+          "playerName": "Lawson, Margaret",
+          "holeNumber": 14,
+          "createdAt": "10/09/25 15:28:35"
+        },
+        {
+          "playerName": "Loiret, Joelle",
+          "holeNumber": 9,
+          "createdAt": "11/09/25 13:59:24"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:28.904Z"
 }

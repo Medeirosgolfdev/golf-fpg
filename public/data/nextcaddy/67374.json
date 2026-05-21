@@ -1,14 +1,14 @@
 {
   "tourId": 67374,
   "url": "https://www.nextcaddy.com/tour/67374",
-  "scrapedAt": "2026-05-09T10:07:53.577Z",
+  "scrapedAt": "2026-05-21T16:38:34.760Z",
   "meta": {
     "name": "Premio Social Doble de Señoras y Señores (Indistinto)",
     "organizer": null,
     "course": "Real Club de la Puerta de Hierro",
     "courseCode": "CM01",
-    "dateStart": "09 abr 2026",
-    "dateEnd": "09 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Especi",
     "categories": [
       "Señoras",
@@ -17,11 +17,21 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-09"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Pareja",
+      "jugadores": 29
+    },
+    "2": {
+      "name": "Handicap Pareja",
+      "jugadores": 34
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -500,43 +510,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71805
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Barnes, Steve",
-          "holeNumber": 12,
-          "createdAt": "27/06/25 14:15:07"
-        },
-        {
-          "playerName": "Oldroyd, Nigel",
-          "holeNumber": 3,
-          "createdAt": "27/06/25 14:15:07"
-        },
-        {
-          "playerName": "Gell, Tessa",
-          "holeNumber": 12,
-          "createdAt": "27/06/25 14:15:09"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1156,5 +1129,45 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:07.664Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71805
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Barnes, Steve",
+          "holeNumber": 12,
+          "createdAt": "27/06/25 14:15:07"
+        },
+        {
+          "playerName": "Oldroyd, Nigel",
+          "holeNumber": 3,
+          "createdAt": "27/06/25 14:15:07"
+        },
+        {
+          "playerName": "Gell, Tessa",
+          "holeNumber": 12,
+          "createdAt": "27/06/25 14:15:09"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/1415991236_rl.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:02.942Z"
 }

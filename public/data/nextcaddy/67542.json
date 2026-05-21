@@ -1,14 +1,14 @@
 {
   "tourId": 67542,
   "url": "https://www.nextcaddy.com/tour/67542",
-  "scrapedAt": "2026-05-09T09:57:20.581Z",
+  "scrapedAt": "2026-05-21T16:36:31.869Z",
   "meta": {
     "name": "TORNEO MASTER SENIOR 15-01-26",
     "organizer": null,
     "course": "Real Club de Golf Vista Hermosa",
     "courseCode": "AM05",
-    "dateStart": "15 ene 2026",
-    "dateEnd": "15 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Espec",
     "categories": [
       "SENIOR",
@@ -18,13 +18,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-15"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 22,
       "header": [
         "Pos",
         "Jugador",
@@ -282,6 +283,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 22
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -606,22 +614,6 @@
       "nivel": "AM05263286"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72008
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -827,5 +819,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:09.516Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72008
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:05.360Z"
 }

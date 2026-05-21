@@ -1,14 +1,14 @@
 {
   "tourId": 68017,
   "url": "https://www.nextcaddy.com/tour/68017",
-  "scrapedAt": "2026-05-08T17:34:07.532Z",
+  "scrapedAt": "2026-05-21T16:41:18.892Z",
   "meta": {
     "name": "Final Circuito de Madrid de Profesionales",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Golf Santander S A",
     "courseCode": "CMA5",
-    "dateStart": "16 nov 2026",
-    "dateEnd": "16 nov 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) 25º Circuito De Mad",
     "categories": [
       "Profesional",
@@ -18,12 +18,14 @@
       "Senior",
       "Infantil",
       "Juvenil"
-    ],
-    "dateIso": "2026-11-16"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -44,6 +46,6 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:32.090Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:15.422Z"
 }

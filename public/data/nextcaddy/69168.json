@@ -1,14 +1,14 @@
 {
   "tourId": 69168,
   "url": "https://www.nextcaddy.com/tour/69168",
-  "scrapedAt": "2026-05-09T10:38:44.112Z",
+  "scrapedAt": "2026-05-21T16:37:53.983Z",
   "meta": {
     "name": "Equipo de Competición Junior Sherry Golf (grupo privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "15 mar 2026",
-    "dateEnd": "15 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Junior",
@@ -18,77 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-15"
+    ]
   },
-  "course": {
-    "par": [
-      5,
-      4,
-      4,
-      4,
-      5,
-      5,
-      4,
-      5,
-      4,
-      4,
-      5,
-      4,
-      5,
-      5,
-      5,
-      4,
-      5,
-      4
-    ],
-    "si": [
-      2,
-      13,
-      14,
-      8,
-      9,
-      15,
-      17,
-      3,
-      7,
-      10,
-      5,
-      18,
-      1,
-      11,
-      6,
-      12,
-      16,
-      4
-    ],
-    "meters": [
-      321,
-      348,
-      435,
-      138,
-      483,
-      287,
-      127,
-      363,
-      353,
-      303,
-      464,
-      128,
-      365,
-      117,
-      361,
-      230,
-      423,
-      345
-    ],
-    "parTotal": 77,
-    "parInferred": true,
-    "parConfidence": "low"
-  },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 10,
       "header": [
         "Pos",
         "Jugador",
@@ -110,33 +47,7 @@
           "rounds": [],
           "total": 42,
           "toPar": -6,
-          "inscribedId": 2281031,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                4,
-                4,
-                3,
-                6,
-                3,
-                4,
-                5,
-                5,
-                3,
-                5,
-                3,
-                3,
-                2,
-                4,
-                4,
-                3,
-                5
-              ],
-              "total": 71
-            }
-          ]
+          "inscribedId": 2281031
         },
         {
           "pos": 2,
@@ -147,33 +58,7 @@
           "rounds": [],
           "total": 41,
           "toPar": -5,
-          "inscribedId": 2280954,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                6,
-                5,
-                5,
-                4,
-                7,
-                6,
-                4,
-                6,
-                5,
-                4,
-                7,
-                4,
-                6,
-                7,
-                7,
-                4,
-                7,
-                5
-              ],
-              "total": 99
-            }
-          ]
+          "inscribedId": 2280954
         },
         {
           "pos": 3,
@@ -184,8 +69,7 @@
           "rounds": [],
           "total": 40,
           "toPar": -4,
-          "inscribedId": 2281193,
-          "roundScores": []
+          "inscribedId": 2281193
         },
         {
           "pos": 4,
@@ -196,8 +80,7 @@
           "rounds": [],
           "total": 37,
           "toPar": -1,
-          "inscribedId": 2280950,
-          "roundScores": []
+          "inscribedId": 2280950
         },
         {
           "pos": 5,
@@ -208,8 +91,7 @@
           "rounds": [],
           "total": 36,
           "toPar": null,
-          "inscribedId": 2281564,
-          "roundScores": []
+          "inscribedId": 2281564
         },
         {
           "pos": 6,
@@ -220,8 +102,7 @@
           "rounds": [],
           "total": 36,
           "toPar": null,
-          "inscribedId": 2280953,
-          "roundScores": []
+          "inscribedId": 2280953
         },
         {
           "pos": 7,
@@ -232,8 +113,7 @@
           "rounds": [],
           "total": 32,
           "toPar": 4,
-          "inscribedId": 2281013,
-          "roundScores": []
+          "inscribedId": 2281013
         },
         {
           "pos": 8,
@@ -244,8 +124,7 @@
           "rounds": [],
           "total": 32,
           "toPar": 4,
-          "inscribedId": 2281019,
-          "roundScores": []
+          "inscribedId": 2281019
         },
         {
           "pos": 9,
@@ -256,8 +135,7 @@
           "rounds": [],
           "total": 31,
           "toPar": 5,
-          "inscribedId": 2281024,
-          "roundScores": []
+          "inscribedId": 2281024
         },
         {
           "pos": null,
@@ -268,37 +146,18 @@
           "rounds": [],
           "total": null,
           "toPar": null,
-          "inscribedId": 2281021,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-              ],
-              "total": null
-            }
-          ]
+          "inscribedId": 2281021
         }
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 10
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -462,93 +321,6 @@
       "nivel": "AMC3018662"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73909
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Sillero Vigil, Jose Manuel",
-          "holeNumber": 11,
-          "createdAt": "21/09/25 15:02:33"
-        },
-        {
-          "playerName": "Sillero Vigil, Jose Manuel",
-          "holeNumber": 18,
-          "createdAt": "21/09/25 15:02:33"
-        },
-        {
-          "playerName": "Reus Lara, Jose Alfonso",
-          "holeNumber": 6,
-          "createdAt": "21/09/25 15:02:33"
-        },
-        {
-          "playerName": "Reus Lara, Jose Alfonso",
-          "holeNumber": 9,
-          "createdAt": "21/09/25 15:02:33"
-        },
-        {
-          "playerName": "Lopez Jerez, Francisco",
-          "holeNumber": 9,
-          "createdAt": "21/09/25 15:02:34"
-        },
-        {
-          "playerName": "Lopez Jerez, Francisco",
-          "holeNumber": 18,
-          "createdAt": "21/09/25 15:02:34"
-        },
-        {
-          "playerName": "Cantero Pineda, Martin Miguel",
-          "holeNumber": 1,
-          "createdAt": "21/09/25 15:02:34"
-        },
-        {
-          "playerName": "Ruiz  Moreno, Antonio Leopoldo",
-          "holeNumber": 18,
-          "createdAt": "21/09/25 15:02:35"
-        },
-        {
-          "playerName": "Fernandez Moya, Julio",
-          "holeNumber": 6,
-          "createdAt": "21/09/25 15:02:36"
-        },
-        {
-          "playerName": "Jaime Pareja-Obregon, Cristobal",
-          "holeNumber": 1,
-          "createdAt": "21/09/25 15:02:37"
-        },
-        {
-          "playerName": "Jaime Pareja-Obregon, Cristobal",
-          "holeNumber": 8,
-          "createdAt": "21/09/25 15:02:37"
-        },
-        {
-          "playerName": "Jaime Pareja-Obregon, Cristobal",
-          "holeNumber": 9,
-          "createdAt": "21/09/25 15:02:37"
-        },
-        {
-          "playerName": "Solano Valverde, Ignacio",
-          "holeNumber": 9,
-          "createdAt": "21/09/25 15:02:38"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -646,5 +418,93 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:33.268Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73909
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Sillero Vigil, Jose Manuel",
+          "holeNumber": 11,
+          "createdAt": "21/09/25 15:02:33"
+        },
+        {
+          "playerName": "Sillero Vigil, Jose Manuel",
+          "holeNumber": 18,
+          "createdAt": "21/09/25 15:02:33"
+        },
+        {
+          "playerName": "Reus Lara, Jose Alfonso",
+          "holeNumber": 6,
+          "createdAt": "21/09/25 15:02:33"
+        },
+        {
+          "playerName": "Reus Lara, Jose Alfonso",
+          "holeNumber": 9,
+          "createdAt": "21/09/25 15:02:33"
+        },
+        {
+          "playerName": "Lopez Jerez, Francisco",
+          "holeNumber": 9,
+          "createdAt": "21/09/25 15:02:34"
+        },
+        {
+          "playerName": "Lopez Jerez, Francisco",
+          "holeNumber": 18,
+          "createdAt": "21/09/25 15:02:34"
+        },
+        {
+          "playerName": "Cantero Pineda, Martin Miguel",
+          "holeNumber": 1,
+          "createdAt": "21/09/25 15:02:34"
+        },
+        {
+          "playerName": "Ruiz  Moreno, Antonio Leopoldo",
+          "holeNumber": 18,
+          "createdAt": "21/09/25 15:02:35"
+        },
+        {
+          "playerName": "Fernandez Moya, Julio",
+          "holeNumber": 6,
+          "createdAt": "21/09/25 15:02:36"
+        },
+        {
+          "playerName": "Jaime Pareja-Obregon, Cristobal",
+          "holeNumber": 1,
+          "createdAt": "21/09/25 15:02:37"
+        },
+        {
+          "playerName": "Jaime Pareja-Obregon, Cristobal",
+          "holeNumber": 8,
+          "createdAt": "21/09/25 15:02:37"
+        },
+        {
+          "playerName": "Jaime Pareja-Obregon, Cristobal",
+          "holeNumber": 9,
+          "createdAt": "21/09/25 15:02:37"
+        },
+        {
+          "playerName": "Solano Valverde, Ignacio",
+          "holeNumber": 9,
+          "createdAt": "21/09/25 15:02:38"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:31.419Z"
 }

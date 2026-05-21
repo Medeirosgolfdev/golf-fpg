@@ -1,14 +1,14 @@
 {
   "tourId": 67807,
   "url": "https://www.nextcaddy.com/tour/67807",
-  "scrapedAt": "2026-05-09T10:16:46.804Z",
+  "scrapedAt": "2026-05-21T16:40:27.593Z",
   "meta": {
     "name": "Torneo Senior Pitch & Putt \"Green Paddock\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Green Paddock S A",
     "courseCode": "CM14",
-    "dateStart": "25 jun 2026",
-    "dateEnd": "25 jun 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap) Circuito Senior De",
     "categories": [
       "Senior",
@@ -17,12 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-06-25"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -250,6 +252,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:29.427Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/67807_cartel_30.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:09.067Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 67146,
   "url": "https://www.nextcaddy.com/tour/67146",
-  "scrapedAt": "2026-05-09T10:07:39.443Z",
+  "scrapedAt": "2026-05-21T16:38:10.345Z",
   "meta": {
     "name": "I Prueba del Campeonato Regional de Castilla y León (Valedera Sace)",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "22 mar 2026",
-    "dateEnd": "22 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-22"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual Masculino Hasta 11.4 Hcp",
+      "expectedJugadores": 13,
       "header": [
         "Pos",
         "Jugador",
@@ -184,6 +185,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Scratch Individual Masculino Entre 11.5 Y 18.5 Hcp",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -398,6 +401,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Scratch Individual Masculino Desde 18.5 Hcp",
+      "expectedJugadores": 11,
       "header": [
         "Pos",
         "Jugador",
@@ -535,6 +540,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Scratch Individual Femenino Hasta 18.4 Hcp",
+      "expectedJugadores": 6,
       "header": [
         "Pos",
         "Jugador",
@@ -617,6 +624,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Scratch Individual Femenino Desde 18.5 Hcp",
+      "expectedJugadores": 4,
       "header": [
         "Pos",
         "Jugador",
@@ -677,6 +686,8 @@
     },
     {
       "category": 6,
+      "categoryName": "Scratch Individual Masculino",
+      "expectedJugadores": 42,
       "header": [
         "Pos",
         "Jugador",
@@ -1155,6 +1166,8 @@
     },
     {
       "category": 7,
+      "categoryName": "Scratch Individual Femenino",
+      "expectedJugadores": 10,
       "header": [
         "Pos",
         "Jugador",
@@ -1281,6 +1294,8 @@
     },
     {
       "category": 8,
+      "categoryName": "Handicap Individual Masculino",
+      "expectedJugadores": 42,
       "header": [
         "Pos",
         "Jugador",
@@ -1759,6 +1774,8 @@
     },
     {
       "category": 9,
+      "categoryName": "Handicap Individual Femenino",
+      "expectedJugadores": 10,
       "header": [
         "Pos",
         "Jugador",
@@ -1884,6 +1901,45 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual Masculino Hasta 11.4 Hcp",
+      "jugadores": 13
+    },
+    "2": {
+      "name": "Scratch Individual Masculino Entre 11.5 Y 18.5 Hcp",
+      "jugadores": 18
+    },
+    "3": {
+      "name": "Scratch Individual Masculino Desde 18.5 Hcp",
+      "jugadores": 11
+    },
+    "4": {
+      "name": "Scratch Individual Femenino Hasta 18.4 Hcp",
+      "jugadores": 6
+    },
+    "5": {
+      "name": "Scratch Individual Femenino Desde 18.5 Hcp",
+      "jugadores": 4
+    },
+    "6": {
+      "name": "Scratch Individual Masculino",
+      "jugadores": 42
+    },
+    "7": {
+      "name": "Scratch Individual Femenino",
+      "jugadores": 10
+    },
+    "8": {
+      "name": "Handicap Individual Masculino",
+      "jugadores": 42
+    },
+    "9": {
+      "name": "Handicap Individual Femenino",
+      "jugadores": 10
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2628,48 +2684,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71544
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Piñeros Barrera, Claudia Rocio",
-          "holeNumber": 12,
-          "createdAt": "14/06/25 09:49:18"
-        },
-        {
-          "playerName": "Barea De Lara, Rosario",
-          "holeNumber": 17,
-          "createdAt": "14/06/25 11:46:08"
-        },
-        {
-          "playerName": "Jimenez Adame, Reyes",
-          "holeNumber": 17,
-          "createdAt": "14/06/25 12:08:52"
-        },
-        {
-          "playerName": "Valenzuela Sanz, Mª Carmen",
-          "holeNumber": 15,
-          "createdAt": "14/06/25 14:27:12"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -3145,5 +3159,53 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:04.555Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71544
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Piñeros Barrera, Claudia Rocio",
+          "holeNumber": 12,
+          "createdAt": "14/06/25 09:49:18"
+        },
+        {
+          "playerName": "Barea De Lara, Rosario",
+          "holeNumber": 17,
+          "createdAt": "14/06/25 11:46:08"
+        },
+        {
+          "playerName": "Jimenez Adame, Reyes",
+          "holeNumber": 17,
+          "createdAt": "14/06/25 12:08:52"
+        },
+        {
+          "playerName": "Valenzuela Sanz, Mª Carmen",
+          "holeNumber": 15,
+          "createdAt": "14/06/25 14:27:12"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/3007439381_clasificaciones-67146_clasificacion.pdf",
+    "/uploads/competiciones/pdf/1217312544_suspension_zarapicos.pdf",
+    "/uploads/circulares/cirfgcyl1226.pdf",
+    "/uploads/competiciones/pdf/1850580912_merged.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:59.363Z"
 }

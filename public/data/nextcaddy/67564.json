@@ -1,14 +1,14 @@
 {
   "tourId": 67564,
   "url": "https://www.nextcaddy.com/tour/67564",
-  "scrapedAt": "2026-05-09T09:57:27.820Z",
+  "scrapedAt": "2026-05-21T16:36:43.225Z",
   "meta": {
     "name": "Torneo cuesta de enero",
     "organizer": null,
     "course": "Alborán Golf",
     "courseCode": "AMC7",
-    "dateStart": "24 ene 2026",
-    "dateEnd": "24 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,17 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-24"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Pareja",
+      "jugadores": 51
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -738,188 +744,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72031
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Joergensen, Orla Martin",
-          "holeNumber": 1,
-          "createdAt": "08/07/25 16:23:34"
-        },
-        {
-          "playerName": "Burke, Kevin",
-          "holeNumber": 1,
-          "createdAt": "08/07/25 16:23:34"
-        },
-        {
-          "playerName": "Gonzalez  Lasuen, Pedro",
-          "holeNumber": 1,
-          "createdAt": "08/07/25 16:23:36"
-        },
-        {
-          "playerName": "Abbasciano, Jordan Antony",
-          "holeNumber": 2,
-          "createdAt": "08/07/25 16:23:36"
-        },
-        {
-          "playerName": "Blackburn, Graham",
-          "holeNumber": 13,
-          "createdAt": "08/07/25 16:23:37"
-        },
-        {
-          "playerName": "Cooper, Derek",
-          "holeNumber": 1,
-          "createdAt": "08/07/25 16:23:37"
-        },
-        {
-          "playerName": "Howarth, Andrew",
-          "holeNumber": 4,
-          "createdAt": "08/07/25 16:23:38"
-        },
-        {
-          "playerName": "Partridge, Michael",
-          "holeNumber": 15,
-          "createdAt": "08/07/25 16:23:38"
-        },
-        {
-          "playerName": "Partridge, Michael",
-          "holeNumber": 18,
-          "createdAt": "08/07/25 16:23:38"
-        },
-        {
-          "playerName": "Philippe Marcel, Lippens",
-          "holeNumber": 13,
-          "createdAt": "08/07/25 16:23:39"
-        },
-        {
-          "playerName": "Philippe Marcel, Lippens",
-          "holeNumber": 18,
-          "createdAt": "08/07/25 16:23:39"
-        },
-        {
-          "playerName": "Theuvenet, Ronald",
-          "holeNumber": 1,
-          "createdAt": "08/07/25 16:23:39"
-        },
-        {
-          "playerName": "Richards, Robert",
-          "holeNumber": 13,
-          "createdAt": "08/07/25 16:23:40"
-        },
-        {
-          "playerName": "Solbrig, Christian Andreas",
-          "holeNumber": 1,
-          "createdAt": "08/07/25 16:23:42"
-        },
-        {
-          "playerName": "Solbrig, Christian Andreas",
-          "holeNumber": 18,
-          "createdAt": "08/07/25 16:23:42"
-        },
-        {
-          "playerName": "Clelland, George",
-          "holeNumber": 1,
-          "createdAt": "08/07/25 16:23:43"
-        },
-        {
-          "playerName": "Watts, Allan",
-          "holeNumber": 18,
-          "createdAt": "08/07/25 16:23:46"
-        },
-        {
-          "playerName": "Froysaa, Oyvind",
-          "holeNumber": 17,
-          "createdAt": "08/07/25 16:23:46"
-        },
-        {
-          "playerName": "Orr, Philip",
-          "holeNumber": 1,
-          "createdAt": "08/07/25 16:23:47"
-        },
-        {
-          "playerName": "Ball, Michael",
-          "holeNumber": 6,
-          "createdAt": "08/07/25 16:23:47"
-        },
-        {
-          "playerName": "O`sullivan, Ross",
-          "holeNumber": 1,
-          "createdAt": "08/07/25 16:23:48"
-        },
-        {
-          "playerName": "O`sullivan, Ross",
-          "holeNumber": 2,
-          "createdAt": "08/07/25 16:23:48"
-        },
-        {
-          "playerName": "O`sullivan, Ross",
-          "holeNumber": 14,
-          "createdAt": "08/07/25 16:23:48"
-        },
-        {
-          "playerName": "O`sullivan, Ross",
-          "holeNumber": 16,
-          "createdAt": "08/07/25 16:23:48"
-        },
-        {
-          "playerName": "Shiers, John",
-          "holeNumber": 15,
-          "createdAt": "08/07/25 16:23:48"
-        },
-        {
-          "playerName": "Ford, Graham Peter",
-          "holeNumber": 18,
-          "createdAt": "08/07/25 16:23:49"
-        },
-        {
-          "playerName": "Sewell, Alex",
-          "holeNumber": 1,
-          "createdAt": "08/07/25 16:23:51"
-        },
-        {
-          "playerName": "Sewell, Alex",
-          "holeNumber": 6,
-          "createdAt": "08/07/25 16:23:51"
-        },
-        {
-          "playerName": "Oliver, Melvyn",
-          "holeNumber": 1,
-          "createdAt": "08/07/25 16:23:51"
-        }
-      ]
-    },
-    "eagle": {
-      "scoreTypeKey": "eagle",
-      "players": [
-        {
-          "playerName": "Abbasciano, Jordan Antony",
-          "holeNumber": 10,
-          "createdAt": "08/07/25 16:23:36"
-        },
-        {
-          "playerName": "Howarth, Andrew",
-          "holeNumber": 2,
-          "createdAt": "08/07/25 16:23:38"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1845,5 +1669,188 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:10.516Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72031
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Joergensen, Orla Martin",
+          "holeNumber": 1,
+          "createdAt": "08/07/25 16:23:34"
+        },
+        {
+          "playerName": "Burke, Kevin",
+          "holeNumber": 1,
+          "createdAt": "08/07/25 16:23:34"
+        },
+        {
+          "playerName": "Gonzalez  Lasuen, Pedro",
+          "holeNumber": 1,
+          "createdAt": "08/07/25 16:23:36"
+        },
+        {
+          "playerName": "Abbasciano, Jordan Antony",
+          "holeNumber": 2,
+          "createdAt": "08/07/25 16:23:36"
+        },
+        {
+          "playerName": "Blackburn, Graham",
+          "holeNumber": 13,
+          "createdAt": "08/07/25 16:23:37"
+        },
+        {
+          "playerName": "Cooper, Derek",
+          "holeNumber": 1,
+          "createdAt": "08/07/25 16:23:37"
+        },
+        {
+          "playerName": "Howarth, Andrew",
+          "holeNumber": 4,
+          "createdAt": "08/07/25 16:23:38"
+        },
+        {
+          "playerName": "Partridge, Michael",
+          "holeNumber": 15,
+          "createdAt": "08/07/25 16:23:38"
+        },
+        {
+          "playerName": "Partridge, Michael",
+          "holeNumber": 18,
+          "createdAt": "08/07/25 16:23:38"
+        },
+        {
+          "playerName": "Philippe Marcel, Lippens",
+          "holeNumber": 13,
+          "createdAt": "08/07/25 16:23:39"
+        },
+        {
+          "playerName": "Philippe Marcel, Lippens",
+          "holeNumber": 18,
+          "createdAt": "08/07/25 16:23:39"
+        },
+        {
+          "playerName": "Theuvenet, Ronald",
+          "holeNumber": 1,
+          "createdAt": "08/07/25 16:23:39"
+        },
+        {
+          "playerName": "Richards, Robert",
+          "holeNumber": 13,
+          "createdAt": "08/07/25 16:23:40"
+        },
+        {
+          "playerName": "Solbrig, Christian Andreas",
+          "holeNumber": 1,
+          "createdAt": "08/07/25 16:23:42"
+        },
+        {
+          "playerName": "Solbrig, Christian Andreas",
+          "holeNumber": 18,
+          "createdAt": "08/07/25 16:23:42"
+        },
+        {
+          "playerName": "Clelland, George",
+          "holeNumber": 1,
+          "createdAt": "08/07/25 16:23:43"
+        },
+        {
+          "playerName": "Watts, Allan",
+          "holeNumber": 18,
+          "createdAt": "08/07/25 16:23:46"
+        },
+        {
+          "playerName": "Froysaa, Oyvind",
+          "holeNumber": 17,
+          "createdAt": "08/07/25 16:23:46"
+        },
+        {
+          "playerName": "Orr, Philip",
+          "holeNumber": 1,
+          "createdAt": "08/07/25 16:23:47"
+        },
+        {
+          "playerName": "Ball, Michael",
+          "holeNumber": 6,
+          "createdAt": "08/07/25 16:23:47"
+        },
+        {
+          "playerName": "O`sullivan, Ross",
+          "holeNumber": 1,
+          "createdAt": "08/07/25 16:23:48"
+        },
+        {
+          "playerName": "O`sullivan, Ross",
+          "holeNumber": 2,
+          "createdAt": "08/07/25 16:23:48"
+        },
+        {
+          "playerName": "O`sullivan, Ross",
+          "holeNumber": 14,
+          "createdAt": "08/07/25 16:23:48"
+        },
+        {
+          "playerName": "O`sullivan, Ross",
+          "holeNumber": 16,
+          "createdAt": "08/07/25 16:23:48"
+        },
+        {
+          "playerName": "Shiers, John",
+          "holeNumber": 15,
+          "createdAt": "08/07/25 16:23:48"
+        },
+        {
+          "playerName": "Ford, Graham Peter",
+          "holeNumber": 18,
+          "createdAt": "08/07/25 16:23:49"
+        },
+        {
+          "playerName": "Sewell, Alex",
+          "holeNumber": 1,
+          "createdAt": "08/07/25 16:23:51"
+        },
+        {
+          "playerName": "Sewell, Alex",
+          "holeNumber": 6,
+          "createdAt": "08/07/25 16:23:51"
+        },
+        {
+          "playerName": "Oliver, Melvyn",
+          "holeNumber": 1,
+          "createdAt": "08/07/25 16:23:51"
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Abbasciano, Jordan Antony",
+          "holeNumber": 10,
+          "createdAt": "08/07/25 16:23:36"
+        },
+        {
+          "playerName": "Howarth, Andrew",
+          "holeNumber": 2,
+          "createdAt": "08/07/25 16:23:38"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:06.200Z"
 }

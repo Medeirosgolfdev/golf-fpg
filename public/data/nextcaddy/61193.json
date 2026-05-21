@@ -1,14 +1,14 @@
 {
   "tourId": 61193,
   "url": "https://www.nextcaddy.com/tour/61193",
-  "scrapedAt": "2026-05-08T17:34:04.059Z",
+  "scrapedAt": "2026-05-21T16:40:40.386Z",
   "meta": {
     "name": "Campeonato Andalucía Sub 18 Masculino y Femenino",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Parador Málaga del Golf",
     "courseCode": "AMD2",
-    "dateStart": "31 jul 2026",
-    "dateEnd": "31 jul 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-07-31"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -72,11 +74,12 @@
         },
         {
           "playerName": "Jakobsson, Maud",
-          "holeNumber": 11
+          "holeNumber": 11,
+          "createdAt": "25/09/24 15:13:19"
         }
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:23.288Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:41:53.102Z"
 }

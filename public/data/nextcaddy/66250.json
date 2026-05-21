@@ -1,14 +1,14 @@
 {
   "tourId": 66250,
   "url": "https://www.nextcaddy.com/tour/66250",
-  "scrapedAt": "2026-05-09T10:16:49.058Z",
+  "scrapedAt": "2026-05-21T16:40:31.712Z",
   "meta": {
     "name": "IX Prueba Circuito 4ª, 5ª y 6ª categoría campo corto",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Club de Golf Pozoblanco",
     "courseCode": "AM10",
-    "dateStart": "04 jul 2026",
-    "dateEnd": "04 jul 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-07-04"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -135,6 +137,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:26.219Z"
+  "pdfs": [
+    "/uploads/circular/2026/42824416ec7bcd5d806eea121047c678.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:57.707Z"
 }

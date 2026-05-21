@@ -1,14 +1,14 @@
 {
   "tourId": 67781,
   "url": "https://www.nextcaddy.com/tour/67781",
-  "scrapedAt": "2026-05-09T10:07:40.189Z",
+  "scrapedAt": "2026-05-21T16:38:11.598Z",
   "meta": {
     "name": "Golf La Peñaza 2ª Categoría",
     "organizer": null,
     "course": "",
     "courseCode": "MAJC",
-    "dateStart": "22 mar 2026",
-    "dateEnd": "22 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -21,11 +21,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-22"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -392,6 +393,7 @@
       "nivel": "CM02926917"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -474,6 +476,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:29.134Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:07.923Z"
 }

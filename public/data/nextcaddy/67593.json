@@ -1,14 +1,14 @@
 {
   "tourId": 67593,
   "url": "https://www.nextcaddy.com/tour/67593",
-  "scrapedAt": "2026-05-09T10:07:37.194Z",
+  "scrapedAt": "2026-05-21T16:38:04.249Z",
   "meta": {
     "name": "Final Gran Premio (La Valmuza)",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "21 mar 2026",
-    "dateEnd": "21 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-21"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual Femenino Hasta 16.9 Hcp",
+      "expectedJugadores": 10,
       "header": [
         "Pos",
         "Jugador",
@@ -151,6 +152,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual Femenino Desde 26.5 Hcp",
+      "expectedJugadores": 3,
       "header": [
         "Pos",
         "Jugador",
@@ -200,6 +203,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Handicap Individual Femenino Entre 17 Y 26.5 Hcp",
+      "expectedJugadores": 11,
       "header": [
         "Pos",
         "Jugador",
@@ -337,6 +342,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Handicap Masculino Categorias Entre 17.7 Y 26.5 Hcp",
+      "expectedJugadores": 24,
       "header": [
         "Pos",
         "Jugador",
@@ -617,6 +624,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Handicap Masculino Categorias Hasta 9.7 Hcp",
+      "expectedJugadores": 23,
       "header": [
         "Pos",
         "Jugador",
@@ -886,6 +895,8 @@
     },
     {
       "category": 6,
+      "categoryName": "Handicap Masculino Categorias Desde 26.5 Hcp",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -1034,6 +1045,8 @@
     },
     {
       "category": 7,
+      "categoryName": "Handicap Masculino Categorias Entre 9.8 Y 17.7 Hcp",
+      "expectedJugadores": 26,
       "header": [
         "Pos",
         "Jugador",
@@ -1336,6 +1349,8 @@
     },
     {
       "category": 8,
+      "categoryName": "Scratch Individual Femenino",
+      "expectedJugadores": 24,
       "header": [
         "Pos",
         "Jugador",
@@ -1616,6 +1631,8 @@
     },
     {
       "category": 9,
+      "categoryName": "Scratch Individual Masculino",
+      "expectedJugadores": 85,
       "header": [
         "Pos",
         "Jugador",
@@ -2567,6 +2584,8 @@
     },
     {
       "category": 10,
+      "categoryName": "Handicap Individual Femenino",
+      "expectedJugadores": 24,
       "header": [
         "Pos",
         "Jugador",
@@ -2847,6 +2866,8 @@
     },
     {
       "category": 11,
+      "categoryName": "Handicap Individual Masculino",
+      "expectedJugadores": 85,
       "header": [
         "Pos",
         "Jugador",
@@ -3797,6 +3818,53 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Femenino Hasta 16.9 Hcp",
+      "jugadores": 10
+    },
+    "2": {
+      "name": "Handicap Individual Femenino Desde 26.5 Hcp",
+      "jugadores": 3
+    },
+    "3": {
+      "name": "Handicap Individual Femenino Entre 17 Y 26.5 Hcp",
+      "jugadores": 11
+    },
+    "4": {
+      "name": "Handicap Masculino Categorias Entre 17.7 Y 26.5 Hcp",
+      "jugadores": 24
+    },
+    "5": {
+      "name": "Handicap Masculino Categorias Hasta 9.7 Hcp",
+      "jugadores": 23
+    },
+    "6": {
+      "name": "Handicap Masculino Categorias Desde 26.5 Hcp",
+      "jugadores": 12
+    },
+    "7": {
+      "name": "Handicap Masculino Categorias Entre 9.8 Y 17.7 Hcp",
+      "jugadores": 26
+    },
+    "8": {
+      "name": "Scratch Individual Femenino",
+      "jugadores": 24
+    },
+    "9": {
+      "name": "Scratch Individual Masculino",
+      "jugadores": 85
+    },
+    "10": {
+      "name": "Handicap Individual Femenino",
+      "jugadores": 24
+    },
+    "11": {
+      "name": "Handicap Individual Masculino",
+      "jugadores": 85
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -5346,22 +5414,6 @@
       "nivel": "7713818807"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72074
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -6350,5 +6402,26 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:11.060Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72074
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [
+    "/uploads/competiciones/pdf/3456824326_suspension_-_la_valmuza-2026.pdf",
+    "/uploads/circulares/cirfgcyl0126.pdf",
+    "/uploads/competiciones/pdf/2801274584_merged.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:06.905Z"
 }

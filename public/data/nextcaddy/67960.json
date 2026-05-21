@@ -1,14 +1,14 @@
 {
   "tourId": 67960,
   "url": "https://www.nextcaddy.com/tour/67960",
-  "scrapedAt": "2026-05-09T10:16:29.341Z",
+  "scrapedAt": "2026-05-21T16:39:39.211Z",
   "meta": {
     "name": "Torneo Senior Damas \"Olivar de la Hinojosa\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Club de Golf Olivar de la Hinojosa",
     "courseCode": "CM81",
-    "dateStart": "12 may 2026",
-    "dateEnd": "12 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Circuito Senior Da",
     "categories": [
       "Senior",
@@ -18,31 +18,1068 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-12"
+    ]
   },
   "course": null,
-  "leaderboard": [],
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Senior 1ª Categoría",
+      "expectedJugadores": 12,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Ana Maria Poggio Diaz-Tejeiro",
+          "licencia": "CM05044989",
+          "hcp": 11.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2308517
+        },
+        {
+          "pos": 2,
+          "name": "Liqin Chen Zhou",
+          "licencia": "CM05966799",
+          "hcp": 18.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2308633
+        },
+        {
+          "pos": 3,
+          "name": "Araceli Huici Diaz",
+          "licencia": "CM52094381",
+          "hcp": 9.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2308625
+        },
+        {
+          "pos": 4,
+          "name": "Maria Elena Delgado Palomar",
+          "licencia": "CMD3933144",
+          "hcp": 17,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2308467
+        },
+        {
+          "pos": 5,
+          "name": "Irene Baamonde Arenales",
+          "licencia": "CM00304157",
+          "hcp": 20,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2308628
+        },
+        {
+          "pos": 6,
+          "name": "Graciela Del Moral Barilari",
+          "licencia": "CM05297123",
+          "hcp": 16.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2308516
+        },
+        {
+          "pos": 7,
+          "name": "Elena Belen Jimenez Salvador",
+          "licencia": "CM00151732",
+          "hcp": 14.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2308483
+        },
+        {
+          "pos": 8,
+          "name": "Monica Loma Martinez",
+          "licencia": "CM61154278",
+          "hcp": 17.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2308531
+        },
+        {
+          "pos": 9,
+          "name": "Ana Conejero Martinez",
+          "licencia": "CM52164328",
+          "hcp": 12.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2308501
+        },
+        {
+          "pos": 10,
+          "name": "Susana Calle Rodriguez",
+          "licencia": "CM41691369",
+          "hcp": 19.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2308589
+        },
+        {
+          "pos": null,
+          "name": "Susana Segura Barrios",
+          "licencia": "CM52672438",
+          "hcp": 15.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2308506
+        },
+        {
+          "pos": null,
+          "name": "M ªangeles Gonzalez Martinez",
+          "licencia": "CM02102494",
+          "hcp": 13.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2308499
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Senior 2ª Categoría",
+      "expectedJugadores": 16,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Claudia Bertoncello",
+          "licencia": "CM04108465",
+          "hcp": 22.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2308598
+        },
+        {
+          "pos": 2,
+          "name": "Maria Raquel Sanchez Cantarino",
+          "licencia": "CM41932709",
+          "hcp": 21.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2308473
+        },
+        {
+          "pos": 3,
+          "name": "Ilaria Cereda Tanzi",
+          "licencia": "CM00149195",
+          "hcp": 30.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2308497
+        },
+        {
+          "pos": 4,
+          "name": "Maria Del Pilar Sanchez Garcia",
+          "licencia": "CM33959845",
+          "hcp": 26.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2308495
+        },
+        {
+          "pos": 5,
+          "name": "Belen Valcarce Rodriguez",
+          "licencia": "CM00157046",
+          "hcp": 29.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2308636
+        },
+        {
+          "pos": 6,
+          "name": "Margarita Isabel Gomez Lopez",
+          "licencia": "CM41691818",
+          "hcp": 30.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2308488
+        },
+        {
+          "pos": 7,
+          "name": "Salvi Parra Garcia",
+          "licencia": "CM07614596",
+          "hcp": 21.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2308595
+        },
+        {
+          "pos": 8,
+          "name": "Natalia Jimenez Toro",
+          "licencia": "CMA5635451",
+          "hcp": 26.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2308618
+        },
+        {
+          "pos": 9,
+          "name": "Maria Herminia Ballesteros Martinez-Blanco",
+          "licencia": "CM05782223",
+          "hcp": 26,
+          "nivel": "S",
+          "rounds": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2308475
+        },
+        {
+          "pos": 10,
+          "name": "Mara Ron Roman",
+          "licencia": "CM05504401",
+          "hcp": 27.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2308474
+        },
+        {
+          "pos": 11,
+          "name": "Angela Lain Martinez",
+          "licencia": "CM66065097",
+          "hcp": 22.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2308600
+        },
+        {
+          "pos": 12,
+          "name": "Maria Selina Diaz Luque",
+          "licencia": "CM66883452",
+          "hcp": 22.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2308596
+        },
+        {
+          "pos": 13,
+          "name": "Aurora Losada Gomez",
+          "licencia": "CM61251520",
+          "hcp": 23.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2308697
+        },
+        {
+          "pos": 14,
+          "name": "Soledad Iglesias Garcia",
+          "licencia": "CM00254391",
+          "hcp": 27.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2308547
+        },
+        {
+          "pos": 15,
+          "name": "Mar Mendiola Lopez",
+          "licencia": "CM00211612",
+          "hcp": 22.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2308490
+        },
+        {
+          "pos": 16,
+          "name": "Francis Alcantara Torres",
+          "licencia": "CMC2888436",
+          "hcp": 25.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2308468
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Supersenior 1ª Categoría",
+      "expectedJugadores": 22,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Maria Del Carmen Martin Hernandez",
+          "licencia": "CM41301522",
+          "hcp": 16.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2308481
+        },
+        {
+          "pos": 2,
+          "name": "Mºeugenia Blanco Garcia",
+          "licencia": "CM52062647",
+          "hcp": 17.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2308654
+        },
+        {
+          "pos": 3,
+          "name": "Pilar Marquez Pastrana",
+          "licencia": "CM02127706",
+          "hcp": 16,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2308989
+        },
+        {
+          "pos": 4,
+          "name": "Maria Jose Gonzalez Fernandez",
+          "licencia": "CM52441195",
+          "hcp": 16.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2308477
+        },
+        {
+          "pos": 5,
+          "name": "Aurelia Basagoiti Garcia-Tuñon",
+          "licencia": "CM52017546",
+          "hcp": 14.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2308641
+        },
+        {
+          "pos": 6,
+          "name": "Belen Fernandez Fernandez",
+          "licencia": "CM00433681",
+          "hcp": 19.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2308513
+        },
+        {
+          "pos": 7,
+          "name": "Isabel Alonso Gonzalez",
+          "licencia": "CM02143046",
+          "hcp": 9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2308500
+        },
+        {
+          "pos": 8,
+          "name": "María Pilar Bienzobas Fernandez",
+          "licencia": "CM61219690",
+          "hcp": 16.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2308512
+        },
+        {
+          "pos": 9,
+          "name": "Isabel De Carlos Da Riva",
+          "licencia": "CM02095529",
+          "hcp": 19.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2308538
+        },
+        {
+          "pos": 10,
+          "name": "M Luisa Ruiz Rodero",
+          "licencia": "CM52061333",
+          "hcp": 18.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2308510
+        },
+        {
+          "pos": 11,
+          "name": "Maria Cruz Molina Moreno",
+          "licencia": "CM02156802",
+          "hcp": 17.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2308524
+        },
+        {
+          "pos": 12,
+          "name": "Belen Martorell Aroca",
+          "licencia": "CM02257618",
+          "hcp": 20,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2308658
+        },
+        {
+          "pos": 13,
+          "name": "Marianela Sanchez-Gomez Navarro",
+          "licencia": "CM06300739",
+          "hcp": 19.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2308509
+        },
+        {
+          "pos": 14,
+          "name": "Marta Boville Garcia De Vinuesa",
+          "licencia": "CM61142659",
+          "hcp": 16.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2308591
+        },
+        {
+          "pos": 15,
+          "name": "Esperanza Cucarella Huerta",
+          "licencia": "CM66670338",
+          "hcp": 19.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2308592
+        },
+        {
+          "pos": 16,
+          "name": "Maria Jesus Rodriguez Ortiz",
+          "licencia": "CM66308179",
+          "hcp": 16.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2308466
+        },
+        {
+          "pos": 17,
+          "name": "Maria Vainio Gyori-Molnar",
+          "licencia": "CM52309678",
+          "hcp": 20,
+          "nivel": "S",
+          "rounds": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2308709
+        },
+        {
+          "pos": 18,
+          "name": "Maria Perez-Seoane Alvarez De Toledo",
+          "licencia": "CM01083111",
+          "hcp": 20,
+          "nivel": "S",
+          "rounds": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2308507
+        },
+        {
+          "pos": 19,
+          "name": "Purificacion Moreno Galea",
+          "licencia": "CM41632807",
+          "hcp": 16.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2308526
+        },
+        {
+          "pos": 20,
+          "name": "Virginia Ruiz Gonzalez-Mateo",
+          "licencia": "CM61306519",
+          "hcp": 15.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2308520
+        },
+        {
+          "pos": 21,
+          "name": "Concepcion Lucas Muelas",
+          "licencia": "CM12132906",
+          "hcp": 20.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 15,
+          "toPar": 21,
+          "inscribedId": 2308602
+        },
+        {
+          "pos": 22,
+          "name": "Rosario Fernandez Fernandez",
+          "licencia": "CM12622574",
+          "hcp": 19,
+          "nivel": "S",
+          "rounds": [],
+          "total": 14,
+          "toPar": 22,
+          "inscribedId": 2308519
+        }
+      ]
+    },
+    {
+      "category": 4,
+      "categoryName": "Supersenior 2ª Categoría",
+      "expectedJugadores": 17,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Cristina Rodriguez Maeso",
+          "licencia": "CM06144077",
+          "hcp": 21.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2308476
+        },
+        {
+          "pos": 2,
+          "name": "Gloria Miguel Rodriguez",
+          "licencia": "CM05251093",
+          "hcp": 23.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2308518
+        },
+        {
+          "pos": 3,
+          "name": "Monica Brun De Quevedo",
+          "licencia": "CM00347478",
+          "hcp": 21.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2308514
+        },
+        {
+          "pos": 4,
+          "name": "Consuelo Azabal Arroyo",
+          "licencia": "CMD9792576",
+          "hcp": 25.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2308491
+        },
+        {
+          "pos": 5,
+          "name": "Matilde Ramirez Ustariz",
+          "licencia": "CM41671977",
+          "hcp": 22.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2308482
+        },
+        {
+          "pos": 6,
+          "name": "Maria Cervera Fernandez",
+          "licencia": "CM81297137",
+          "hcp": 22.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2308546
+        },
+        {
+          "pos": 7,
+          "name": "Isabel Verdeja Lizama",
+          "licencia": "CM52082907",
+          "hcp": 25.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2308543
+        },
+        {
+          "pos": 8,
+          "name": "Maria Del Mar Cansado Comas",
+          "licencia": "CM04082189",
+          "hcp": 24.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2308544
+        },
+        {
+          "pos": 9,
+          "name": "Mili Hernandez Garcia",
+          "licencia": "CM41254306",
+          "hcp": 25.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2308646
+        },
+        {
+          "pos": 10,
+          "name": "Carmen Buesa Galiano",
+          "licencia": "CM81211788",
+          "hcp": 25.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2308485
+        },
+        {
+          "pos": 11,
+          "name": "Maria Del Pilar Lucas Viejo",
+          "licencia": "CM00620648",
+          "hcp": 21.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2308529
+        },
+        {
+          "pos": 12,
+          "name": "Agustina Maria Olarra Goiriena",
+          "licencia": "CM00253430",
+          "hcp": 26.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2308605
+        },
+        {
+          "pos": 13,
+          "name": "Matilde Gonzalez De Mesa Elio",
+          "licencia": "CM18386605",
+          "hcp": 25.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2308594
+        },
+        {
+          "pos": 14,
+          "name": "M. Carmen Fernandez Iriarte",
+          "licencia": "CM12157301",
+          "hcp": 22.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2308726
+        },
+        {
+          "pos": 15,
+          "name": "Maria Catalina Alhambra Gomez",
+          "licencia": "CM81804972",
+          "hcp": 23.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 13,
+          "toPar": 23,
+          "inscribedId": 2308773
+        },
+        {
+          "pos": 16,
+          "name": "Adriangela Dornaleteche Uguina",
+          "licencia": "CM41798092",
+          "hcp": 24.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 13,
+          "toPar": 23,
+          "inscribedId": 2308505
+        },
+        {
+          "pos": null,
+          "name": "Pilar Alegre Gil",
+          "licencia": "CM61638409",
+          "hcp": 23.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2308492
+        }
+      ]
+    },
+    {
+      "category": 5,
+      "categoryName": "Supersenior 3ª Categoría",
+      "expectedJugadores": 17,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Maria Luisa Leyva Salmeron",
+          "licencia": "CM02073809",
+          "hcp": 27.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2308508
+        },
+        {
+          "pos": 2,
+          "name": "Julia Ramirez Ustariz",
+          "licencia": "CM81674380",
+          "hcp": 30.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2308548
+        },
+        {
+          "pos": 3,
+          "name": "Consuelo Azabal Arroyo",
+          "licencia": "CMD9792576",
+          "hcp": 25.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2308491
+        },
+        {
+          "pos": 4,
+          "name": "Isabel Verdeja Lizama",
+          "licencia": "CM52082907",
+          "hcp": 25.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2308543
+        },
+        {
+          "pos": 5,
+          "name": "Julia Alfaro Garcia",
+          "licencia": "CM02262309",
+          "hcp": 28.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2308530
+        },
+        {
+          "pos": 6,
+          "name": "Mercedes Ferrandez Del Cacho",
+          "licencia": "CM41063031",
+          "hcp": 29.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2308479
+        },
+        {
+          "pos": 7,
+          "name": "Cristina Conejero Martinez",
+          "licencia": "CM03251013",
+          "hcp": 27.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2308545
+        },
+        {
+          "pos": 8,
+          "name": "Montserrat Casals Avila",
+          "licencia": "CM41801998",
+          "hcp": 28.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2308535
+        },
+        {
+          "pos": 9,
+          "name": "Maria Begoña Arnaiz Quintana",
+          "licencia": "CM04110390",
+          "hcp": 29.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2308532
+        },
+        {
+          "pos": 10,
+          "name": "Agustina Maria Olarra Goiriena",
+          "licencia": "CM00253430",
+          "hcp": 26.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2308605
+        },
+        {
+          "pos": 11,
+          "name": "Matilde Gonzalez De Mesa Elio",
+          "licencia": "CM18386605",
+          "hcp": 25.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2308594
+        },
+        {
+          "pos": 12,
+          "name": "Alicia Garcia Ruiz",
+          "licencia": "CME8898223",
+          "hcp": 31.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2308539
+        },
+        {
+          "pos": 13,
+          "name": "Rocio Lorenzo-Arroyo Poullet",
+          "licencia": "CM41633399",
+          "hcp": 30.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2308484
+        },
+        {
+          "pos": 14,
+          "name": "Margarita Nava Burgos",
+          "licencia": "CM41214439",
+          "hcp": 27.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2308614
+        },
+        {
+          "pos": null,
+          "name": "Ana Maria Gonzalez Candanedo",
+          "licencia": "CM41308668",
+          "hcp": 30.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2308478
+        },
+        {
+          "pos": null,
+          "name": "Maria Jose Gonzalez Martinez",
+          "licencia": "CM02160325",
+          "hcp": 35,
+          "nivel": "S",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2308521
+        },
+        {
+          "pos": null,
+          "name": "Isabel Gonzalez Riveriego",
+          "licencia": "CM52131548",
+          "hcp": 28.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2308660
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Senior 1ª Categoría",
+      "jugadores": 12
+    },
+    "2": {
+      "name": "Senior 2ª Categoría",
+      "jugadores": 16
+    },
+    "3": {
+      "name": "Supersenior 1ª Categoría",
+      "jugadores": 22
+    },
+    "4": {
+      "name": "Supersenior 2ª Categoría",
+      "jugadores": 17
+    },
+    "5": {
+      "name": "Supersenior 3ª Categoría",
+      "jugadores": 17
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
       "name": "Maria Jesus Rodriguez Ortiz",
       "licencia": "CM66308179",
-      "hcp": 16.6,
+      "hcp": 16.5,
       "nivel": "S"
     },
     {
       "orden": 2,
       "name": "Maria Elena Delgado Palomar",
       "licencia": "CMD3933144",
-      "hcp": 17.1,
+      "hcp": 17,
       "nivel": "S"
     },
     {
       "orden": 3,
       "name": "Francis Alcantara Torres",
       "licencia": "CMC2888436",
-      "hcp": 26.2,
+      "hcp": 25.4,
       "nivel": "S"
     },
     {
@@ -63,7 +1100,7 @@
       "orden": 6,
       "name": "Maria Herminia Ballesteros Martinez-Blanco",
       "licencia": "CM05782223",
-      "hcp": 25.8,
+      "hcp": 26,
       "nivel": "S"
     },
     {
@@ -77,7 +1114,7 @@
       "orden": 8,
       "name": "Maria Jose Gonzalez Fernandez",
       "licencia": "CM52441195",
-      "hcp": 16.8,
+      "hcp": 16.9,
       "nivel": "S"
     },
     {
@@ -91,7 +1128,7 @@
       "orden": 10,
       "name": "Mercedes Ferrandez Del Cacho",
       "licencia": "CM41063031",
-      "hcp": 29.7,
+      "hcp": 29.3,
       "nivel": "S"
     },
     {
@@ -119,7 +1156,7 @@
       "orden": 14,
       "name": "Rocio Lorenzo-Arroyo Poullet",
       "licencia": "CM41633399",
-      "hcp": 30.3,
+      "hcp": 30.8,
       "nivel": "S"
     },
     {
@@ -147,7 +1184,7 @@
       "orden": 18,
       "name": "Consuelo Azabal Arroyo",
       "licencia": "CMD9792576",
-      "hcp": 25.8,
+      "hcp": 25.6,
       "nivel": "S"
     },
     {
@@ -161,14 +1198,14 @@
       "orden": 20,
       "name": "Maria Del Pilar Sanchez Garcia",
       "licencia": "CM33959845",
-      "hcp": 26.8,
+      "hcp": 26.7,
       "nivel": "S"
     },
     {
       "orden": 21,
       "name": "Ilaria Cereda Tanzi",
       "licencia": "CM00149195",
-      "hcp": 30.9,
+      "hcp": 30.6,
       "nivel": "S"
     },
     {
@@ -189,7 +1226,7 @@
       "orden": 24,
       "name": "Ana Conejero Martinez",
       "licencia": "CM52164328",
-      "hcp": 12.2,
+      "hcp": 12.4,
       "nivel": "S"
     },
     {
@@ -210,7 +1247,7 @@
       "orden": 27,
       "name": "Maria Perez-Seoane Alvarez De Toledo",
       "licencia": "CM01083111",
-      "hcp": 19.9,
+      "hcp": 20,
       "nivel": "S"
     },
     {
@@ -231,7 +1268,7 @@
       "orden": 30,
       "name": "M Luisa Ruiz Rodero",
       "licencia": "CM52061333",
-      "hcp": 17.9,
+      "hcp": 18.1,
       "nivel": "S"
     },
     {
@@ -266,7 +1303,7 @@
       "orden": 35,
       "name": "Ana Maria Poggio Diaz-Tejeiro",
       "licencia": "CM05044989",
-      "hcp": 11.4,
+      "hcp": 11.6,
       "nivel": "S"
     },
     {
@@ -308,7 +1345,7 @@
       "orden": 41,
       "name": "Purificacion Moreno Galea",
       "licencia": "CM41632807",
-      "hcp": 17.1,
+      "hcp": 16.8,
       "nivel": "S"
     },
     {
@@ -322,7 +1359,7 @@
       "orden": 43,
       "name": "Julia Alfaro Garcia",
       "licencia": "CM02262309",
-      "hcp": 28.7,
+      "hcp": 28.6,
       "nivel": "S"
     },
     {
@@ -406,7 +1443,7 @@
       "orden": 55,
       "name": "Susana Calle Rodriguez",
       "licencia": "CM41691369",
-      "hcp": 18.9,
+      "hcp": 19.1,
       "nivel": "S"
     },
     {
@@ -420,7 +1457,7 @@
       "orden": 57,
       "name": "Esperanza Cucarella Huerta",
       "licencia": "CM66670338",
-      "hcp": 20.1,
+      "hcp": 19.9,
       "nivel": "S"
     },
     {
@@ -441,21 +1478,21 @@
       "orden": 60,
       "name": "Maria Selina Diaz Luque",
       "licencia": "CM66883452",
-      "hcp": 22.4,
+      "hcp": 22.6,
       "nivel": "S"
     },
     {
       "orden": 61,
       "name": "Claudia Bertoncello",
       "licencia": "CM04108465",
-      "hcp": 23,
+      "hcp": 22.5,
       "nivel": "S"
     },
     {
       "orden": 62,
       "name": "Angela Lain Martinez",
       "licencia": "CM66065097",
-      "hcp": 22.4,
+      "hcp": 22.3,
       "nivel": "S"
     },
     {
@@ -476,7 +1513,7 @@
       "orden": 65,
       "name": "Margarita Nava Burgos",
       "licencia": "CM41214439",
-      "hcp": 27.6,
+      "hcp": 27.3,
       "nivel": "S"
     },
     {
@@ -490,7 +1527,7 @@
       "orden": 67,
       "name": "Araceli Huici Diaz",
       "licencia": "CM52094381",
-      "hcp": 9.2,
+      "hcp": 9.4,
       "nivel": "S"
     },
     {
@@ -518,7 +1555,7 @@
       "orden": 71,
       "name": "Aurelia Basagoiti Garcia-Tuñon",
       "licencia": "CM52017546",
-      "hcp": 14.5,
+      "hcp": 14.3,
       "nivel": "S"
     },
     {
@@ -532,21 +1569,21 @@
       "orden": 73,
       "name": "Mºeugenia Blanco Garcia",
       "licencia": "CM52062647",
-      "hcp": 17.6,
+      "hcp": 17.5,
       "nivel": "S"
     },
     {
       "orden": 74,
       "name": "Belen Martorell Aroca",
       "licencia": "CM02257618",
-      "hcp": 19.4,
+      "hcp": 20,
       "nivel": "S"
     },
     {
       "orden": 75,
       "name": "Isabel Gonzalez Riveriego",
       "licencia": "CM52131548",
-      "hcp": 28.3,
+      "hcp": 28.2,
       "nivel": "S"
     },
     {
@@ -565,23 +1602,23 @@
     },
     {
       "orden": 78,
-      "name": "Cristina Echevarria De Rada",
-      "licencia": "CM41034817",
-      "hcp": 26.7,
-      "nivel": "S"
-    },
-    {
-      "orden": 79,
       "name": "M. Carmen Fernandez Iriarte",
       "licencia": "CM12157301",
       "hcp": 22.7,
       "nivel": "S"
     },
     {
-      "orden": 80,
+      "orden": 79,
       "name": "Maria Catalina Alhambra Gomez",
       "licencia": "CM81804972",
       "hcp": 23.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 80,
+      "name": "Pilar Marquez Pastrana",
+      "licencia": "CM02127706",
+      "hcp": 16,
       "nivel": "S"
     },
     {
@@ -595,21 +1632,21 @@
       "orden": 1,
       "name": "Maria Jesus Rodriguez Ortiz",
       "licencia": "CM66308179",
-      "hcp": 16.6,
+      "hcp": 16.5,
       "nivel": "S"
     },
     {
       "orden": 2,
       "name": "Maria Elena Delgado Palomar",
       "licencia": "CMD3933144",
-      "hcp": 17.1,
+      "hcp": 17,
       "nivel": "S"
     },
     {
       "orden": 3,
       "name": "Francis Alcantara Torres",
       "licencia": "CMC2888436",
-      "hcp": 26.2,
+      "hcp": 25.4,
       "nivel": "S"
     },
     {
@@ -630,7 +1667,7 @@
       "orden": 6,
       "name": "Maria Herminia Ballesteros Martinez-Blanco",
       "licencia": "CM05782223",
-      "hcp": 25.8,
+      "hcp": 26,
       "nivel": "S"
     },
     {
@@ -644,7 +1681,7 @@
       "orden": 8,
       "name": "Maria Jose Gonzalez Fernandez",
       "licencia": "CM52441195",
-      "hcp": 16.8,
+      "hcp": 16.9,
       "nivel": "S"
     },
     {
@@ -658,7 +1695,7 @@
       "orden": 10,
       "name": "Mercedes Ferrandez Del Cacho",
       "licencia": "CM41063031",
-      "hcp": 29.7,
+      "hcp": 29.3,
       "nivel": "S"
     },
     {
@@ -686,7 +1723,7 @@
       "orden": 14,
       "name": "Rocio Lorenzo-Arroyo Poullet",
       "licencia": "CM41633399",
-      "hcp": 30.3,
+      "hcp": 30.8,
       "nivel": "S"
     },
     {
@@ -714,7 +1751,7 @@
       "orden": 18,
       "name": "Consuelo Azabal Arroyo",
       "licencia": "CMD9792576",
-      "hcp": 25.8,
+      "hcp": 25.6,
       "nivel": "S"
     },
     {
@@ -728,14 +1765,14 @@
       "orden": 20,
       "name": "Maria Del Pilar Sanchez Garcia",
       "licencia": "CM33959845",
-      "hcp": 26.8,
+      "hcp": 26.7,
       "nivel": "S"
     },
     {
       "orden": 21,
       "name": "Ilaria Cereda Tanzi",
       "licencia": "CM00149195",
-      "hcp": 30.9,
+      "hcp": 30.6,
       "nivel": "S"
     },
     {
@@ -756,7 +1793,7 @@
       "orden": 24,
       "name": "Ana Conejero Martinez",
       "licencia": "CM52164328",
-      "hcp": 12.2,
+      "hcp": 12.4,
       "nivel": "S"
     },
     {
@@ -777,7 +1814,7 @@
       "orden": 27,
       "name": "Maria Perez-Seoane Alvarez De Toledo",
       "licencia": "CM01083111",
-      "hcp": 19.9,
+      "hcp": 20,
       "nivel": "S"
     },
     {
@@ -798,7 +1835,7 @@
       "orden": 30,
       "name": "M Luisa Ruiz Rodero",
       "licencia": "CM52061333",
-      "hcp": 17.9,
+      "hcp": 18.1,
       "nivel": "S"
     },
     {
@@ -833,7 +1870,7 @@
       "orden": 35,
       "name": "Ana Maria Poggio Diaz-Tejeiro",
       "licencia": "CM05044989",
-      "hcp": 11.4,
+      "hcp": 11.6,
       "nivel": "S"
     },
     {
@@ -875,7 +1912,7 @@
       "orden": 41,
       "name": "Purificacion Moreno Galea",
       "licencia": "CM41632807",
-      "hcp": 17.1,
+      "hcp": 16.8,
       "nivel": "S"
     },
     {
@@ -889,7 +1926,7 @@
       "orden": 43,
       "name": "Julia Alfaro Garcia",
       "licencia": "CM02262309",
-      "hcp": 28.7,
+      "hcp": 28.6,
       "nivel": "S"
     },
     {
@@ -973,7 +2010,7 @@
       "orden": 55,
       "name": "Susana Calle Rodriguez",
       "licencia": "CM41691369",
-      "hcp": 18.9,
+      "hcp": 19.1,
       "nivel": "S"
     },
     {
@@ -987,7 +2024,7 @@
       "orden": 57,
       "name": "Esperanza Cucarella Huerta",
       "licencia": "CM66670338",
-      "hcp": 20.1,
+      "hcp": 19.9,
       "nivel": "S"
     },
     {
@@ -1008,21 +2045,21 @@
       "orden": 60,
       "name": "Maria Selina Diaz Luque",
       "licencia": "CM66883452",
-      "hcp": 22.4,
+      "hcp": 22.6,
       "nivel": "S"
     },
     {
       "orden": 61,
       "name": "Claudia Bertoncello",
       "licencia": "CM04108465",
-      "hcp": 23,
+      "hcp": 22.5,
       "nivel": "S"
     },
     {
       "orden": 62,
       "name": "Angela Lain Martinez",
       "licencia": "CM66065097",
-      "hcp": 22.4,
+      "hcp": 22.3,
       "nivel": "S"
     },
     {
@@ -1043,7 +2080,7 @@
       "orden": 65,
       "name": "Margarita Nava Burgos",
       "licencia": "CM41214439",
-      "hcp": 27.6,
+      "hcp": 27.3,
       "nivel": "S"
     },
     {
@@ -1057,7 +2094,7 @@
       "orden": 67,
       "name": "Araceli Huici Diaz",
       "licencia": "CM52094381",
-      "hcp": 9.2,
+      "hcp": 9.4,
       "nivel": "S"
     },
     {
@@ -1085,7 +2122,7 @@
       "orden": 71,
       "name": "Aurelia Basagoiti Garcia-Tuñon",
       "licencia": "CM52017546",
-      "hcp": 14.5,
+      "hcp": 14.3,
       "nivel": "S"
     },
     {
@@ -1099,21 +2136,21 @@
       "orden": 73,
       "name": "Mºeugenia Blanco Garcia",
       "licencia": "CM52062647",
-      "hcp": 17.6,
+      "hcp": 17.5,
       "nivel": "S"
     },
     {
       "orden": 74,
       "name": "Belen Martorell Aroca",
       "licencia": "CM02257618",
-      "hcp": 19.4,
+      "hcp": 20,
       "nivel": "S"
     },
     {
       "orden": 75,
       "name": "Isabel Gonzalez Riveriego",
       "licencia": "CM52131548",
-      "hcp": 28.3,
+      "hcp": 28.2,
       "nivel": "S"
     },
     {
@@ -1132,117 +2169,26 @@
     },
     {
       "orden": 78,
-      "name": "Cristina Echevarria De Rada",
-      "licencia": "CM41034817",
-      "hcp": 26.7,
-      "nivel": "S"
-    },
-    {
-      "orden": 79,
       "name": "M. Carmen Fernandez Iriarte",
       "licencia": "CM12157301",
       "hcp": 22.7,
       "nivel": "S"
     },
     {
-      "orden": 80,
+      "orden": 79,
       "name": "Maria Catalina Alhambra Gomez",
       "licencia": "CM81804972",
       "hcp": 23.6,
       "nivel": "S"
     },
     {
-      "orden": 900,
-      "name": "Los jugadores por debajo de esta línea se encuentran en lista de espera Al estar cubierto el máximo de inscritos, la participación de los jugadores en lista de espera estará pendiente de posibles bajas de otros jugadores. En caso de no ser incluidos en la lista final de participantes se les devolverá el importe de la inscripción por el mismo medio empleado para su pago \">",
-      "hcp": null
-    },
-    {
-      "orden": 1081,
+      "orden": 80,
       "name": "Pilar Marquez Pastrana",
       "licencia": "CM02127706",
       "hcp": 16,
       "nivel": "S"
-    },
-    {
-      "orden": 1082,
-      "name": "Maria Cruz Obispo De Torres",
-      "licencia": "CM41294002",
-      "hcp": 23.2,
-      "nivel": "S"
-    },
-    {
-      "orden": 1083,
-      "name": "Regina Del Rio Schoneseiffen",
-      "licencia": "CM05205661",
-      "hcp": 16.8,
-      "nivel": "S"
-    },
-    {
-      "orden": 1084,
-      "name": "Rocio Alvarez-Mallo De Mesa",
-      "licencia": "CM07190944",
-      "hcp": 19.8,
-      "nivel": "S"
-    },
-    {
-      "orden": 1085,
-      "name": "Carmen Tapia Puche",
-      "licencia": "CM61358214",
-      "hcp": 25,
-      "nivel": "S"
-    },
-    {
-      "orden": 1086,
-      "name": "Paloma Cuadrado Diez",
-      "licencia": "CM07256164",
-      "hcp": 19.1,
-      "nivel": "S"
-    },
-    {
-      "orden": 1087,
-      "name": "Esther Drukaroff Rey",
-      "licencia": "CM41907879",
-      "hcp": 20.5,
-      "nivel": "S"
-    },
-    {
-      "orden": 1088,
-      "name": "Araceli Marques Mayoral",
-      "licencia": "CM02217549",
-      "hcp": 20.4,
-      "nivel": "S"
-    },
-    {
-      "orden": 1089,
-      "name": "Maria Jesus Gamez Alderete",
-      "licencia": "CM22930127",
-      "hcp": 28.2,
-      "nivel": "S"
-    },
-    {
-      "orden": 1090,
-      "name": "Thepin Infante Praingam",
-      "licencia": "CM61214933",
-      "hcp": 20.1,
-      "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72478
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -1251,7 +2197,7 @@
           "time": "09:30",
           "tee": 1,
           "name": "Esperanza Cucarella Huerta",
-          "hcp": 20.1,
+          "hcp": 19.9,
           "ins": "2308592",
           "jid": "72478",
           "nivel": "S"
@@ -1323,7 +2269,7 @@
           "time": "09:50",
           "tee": 1,
           "name": "Maria Selina Diaz Luque",
-          "hcp": 22.4,
+          "hcp": 22.6,
           "ins": "2308596",
           "jid": "72478",
           "nivel": "S"
@@ -1332,7 +2278,7 @@
           "time": "09:50",
           "tee": 1,
           "name": "Angela Lain Martinez",
-          "hcp": 22.4,
+          "hcp": 22.3,
           "ins": "2308600",
           "jid": "72478",
           "nivel": "S"
@@ -1368,7 +2314,7 @@
           "time": "10:00",
           "tee": 1,
           "name": "Claudia Bertoncello",
-          "hcp": 23,
+          "hcp": 22.5,
           "ins": "2308598",
           "jid": "72478",
           "nivel": "S"
@@ -1449,7 +2395,7 @@
           "time": "10:20",
           "tee": 1,
           "name": "Maria Herminia Ballesteros Martinez-Blanco",
-          "hcp": 25.8,
+          "hcp": 26,
           "ins": "2308475",
           "jid": "72478",
           "nivel": "S"
@@ -1467,7 +2413,7 @@
           "time": "10:30",
           "tee": 1,
           "name": "Consuelo Azabal Arroyo",
-          "hcp": 25.8,
+          "hcp": 25.6,
           "ins": "2308491",
           "jid": "72478",
           "nivel": "S"
@@ -1485,7 +2431,7 @@
           "time": "10:30",
           "tee": 1,
           "name": "Francis Alcantara Torres",
-          "hcp": 26.2,
+          "hcp": 25.4,
           "ins": "2308468",
           "jid": "72478",
           "nivel": "S"
@@ -1512,7 +2458,7 @@
           "time": "10:40",
           "tee": 1,
           "name": "Maria Del Pilar Sanchez Garcia",
-          "hcp": 26.8,
+          "hcp": 26.7,
           "ins": "2308495",
           "jid": "72478",
           "nivel": "S"
@@ -1539,7 +2485,7 @@
           "time": "10:50",
           "tee": 1,
           "name": "Margarita Nava Burgos",
-          "hcp": 27.6,
+          "hcp": 27.3,
           "ins": "2308614",
           "jid": "72478",
           "nivel": "S"
@@ -1566,7 +2512,7 @@
           "time": "10:50",
           "tee": 1,
           "name": "Isabel Gonzalez Riveriego",
-          "hcp": 28.3,
+          "hcp": 28.2,
           "ins": "2308660",
           "jid": "72478",
           "nivel": "S"
@@ -1575,7 +2521,7 @@
           "time": "11:00",
           "tee": 1,
           "name": "Julia Alfaro Garcia",
-          "hcp": 28.7,
+          "hcp": 28.6,
           "ins": "2308530",
           "jid": "72478",
           "nivel": "S"
@@ -1611,7 +2557,7 @@
           "time": "11:20",
           "tee": 1,
           "name": "Mercedes Ferrandez Del Cacho",
-          "hcp": 29.7,
+          "hcp": 29.3,
           "ins": "2308479",
           "jid": "72478",
           "nivel": "S"
@@ -1647,7 +2593,7 @@
           "time": "11:30",
           "tee": 1,
           "name": "Ilaria Cereda Tanzi",
-          "hcp": 30.9,
+          "hcp": 30.6,
           "ins": "2308497",
           "jid": "72478",
           "nivel": "S"
@@ -1665,7 +2611,7 @@
           "time": "11:30",
           "tee": 1,
           "name": "Rocio Lorenzo-Arroyo Poullet",
-          "hcp": 30.3,
+          "hcp": 30.8,
           "ins": "2308484",
           "jid": "72478",
           "nivel": "S"
@@ -1692,7 +2638,7 @@
           "time": "11:40",
           "tee": 1,
           "name": "Araceli Huici Diaz",
-          "hcp": 9.2,
+          "hcp": 9.4,
           "ins": "2308625",
           "jid": "72478",
           "nivel": "S"
@@ -1701,7 +2647,7 @@
           "time": "11:40",
           "tee": 1,
           "name": "Ana Maria Poggio Diaz-Tejeiro",
-          "hcp": 11.4,
+          "hcp": 11.6,
           "ins": "2308517",
           "jid": "72478",
           "nivel": "S"
@@ -1710,7 +2656,7 @@
           "time": "11:40",
           "tee": 1,
           "name": "Ana Conejero Martinez",
-          "hcp": 12.2,
+          "hcp": 12.4,
           "ins": "2308501",
           "jid": "72478",
           "nivel": "S"
@@ -1737,7 +2683,7 @@
           "time": "11:50",
           "tee": 1,
           "name": "Aurelia Basagoiti Garcia-Tuñon",
-          "hcp": 14.5,
+          "hcp": 14.3,
           "ins": "2308641",
           "jid": "72478",
           "nivel": "S"
@@ -1791,7 +2737,7 @@
           "time": "12:10",
           "tee": 1,
           "name": "Maria Jesus Rodriguez Ortiz",
-          "hcp": 16.6,
+          "hcp": 16.5,
           "ins": "2308466",
           "jid": "72478",
           "nivel": "S"
@@ -1809,7 +2755,7 @@
           "time": "12:10",
           "tee": 1,
           "name": "Maria Jose Gonzalez Fernandez",
-          "hcp": 16.8,
+          "hcp": 16.9,
           "ins": "2308477",
           "jid": "72478",
           "nivel": "S"
@@ -1827,7 +2773,7 @@
           "time": "12:20",
           "tee": 1,
           "name": "Maria Elena Delgado Palomar",
-          "hcp": 17.1,
+          "hcp": 17,
           "ins": "2308467",
           "jid": "72478",
           "nivel": "S"
@@ -1836,7 +2782,7 @@
           "time": "12:20",
           "tee": 1,
           "name": "Purificacion Moreno Galea",
-          "hcp": 17.1,
+          "hcp": 16.8,
           "ins": "2308526",
           "jid": "72478",
           "nivel": "S"
@@ -1854,7 +2800,7 @@
           "time": "12:20",
           "tee": 1,
           "name": "Mºeugenia Blanco Garcia",
-          "hcp": 17.6,
+          "hcp": 17.5,
           "ins": "2308654",
           "jid": "72478",
           "nivel": "S"
@@ -1872,7 +2818,7 @@
           "time": "12:30",
           "tee": 1,
           "name": "M Luisa Ruiz Rodero",
-          "hcp": 17.9,
+          "hcp": 18.1,
           "ins": "2308510",
           "jid": "72478",
           "nivel": "S"
@@ -1890,7 +2836,7 @@
           "time": "12:30",
           "tee": 1,
           "name": "Susana Calle Rodriguez",
-          "hcp": 18.9,
+          "hcp": 19.1,
           "ins": "2308589",
           "jid": "72478",
           "nivel": "S"
@@ -1917,7 +2863,7 @@
           "time": "12:40",
           "tee": 1,
           "name": "Belen Martorell Aroca",
-          "hcp": 19.4,
+          "hcp": 20,
           "ins": "2308658",
           "jid": "72478",
           "nivel": "S"
@@ -1935,7 +2881,7 @@
           "time": "12:50",
           "tee": 1,
           "name": "Maria Perez-Seoane Alvarez De Toledo",
-          "hcp": 19.9,
+          "hcp": 20,
           "ins": "2308507",
           "jid": "72478",
           "nivel": "S"
@@ -1970,5 +2916,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:17.384Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72478
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:13.951Z"
 }

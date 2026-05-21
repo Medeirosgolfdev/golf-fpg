@@ -1,14 +1,14 @@
 {
   "tourId": 68181,
   "url": "https://www.nextcaddy.com/tour/68181",
-  "scrapedAt": "2026-05-09T09:58:10.398Z",
+  "scrapedAt": "2026-05-21T16:37:50.848Z",
   "meta": {
     "name": "Campeonato de Madrid Mid-Amateur Masculino - I Puntuable Nacional Mid-Amateur Masculino",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Real Club la Moraleja",
     "courseCode": "CM52",
-    "dateStart": "14 mar 2026",
-    "dateEnd": "14 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) Ranking Mid-Amateur",
     "categories": [
       "Senior Masculino",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-14"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Premio Mayores De 40 Años",
+      "expectedJugadores": 32,
       "header": [
         "Pos",
         "Jugador",
@@ -683,6 +684,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 90,
       "header": [
         "Pos",
         "Jugador",
@@ -2501,6 +2504,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Premio Mayores De 40 Años",
+      "jugadores": 32
+    },
+    "2": {
+      "name": "Scratch Individual",
+      "jugadores": 90
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -3770,152 +3784,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72727
-    },
-    {
-      "roundNumber": 2,
-      "roundId": 72728
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Gonzalez  Lasuen, Pedro",
-          "holeNumber": 18,
-          "createdAt": "05/08/25 16:06:14"
-        },
-        {
-          "playerName": "Hirschfeld Cobian, Carlos Maria",
-          "holeNumber": 11,
-          "createdAt": "05/08/25 16:06:14"
-        },
-        {
-          "playerName": "Burke, Kevin",
-          "holeNumber": 10,
-          "createdAt": "05/08/25 16:06:14"
-        },
-        {
-          "playerName": "Elsworth, Stephen",
-          "holeNumber": 17,
-          "createdAt": "05/08/25 16:06:16"
-        },
-        {
-          "playerName": "Howarth, Andrew",
-          "holeNumber": 8,
-          "createdAt": "05/08/25 16:06:16"
-        },
-        {
-          "playerName": "Howarth, Andrew",
-          "holeNumber": 12,
-          "createdAt": "05/08/25 16:06:16"
-        },
-        {
-          "playerName": "Howarth, Andrew",
-          "holeNumber": 13,
-          "createdAt": "05/08/25 16:06:16"
-        },
-        {
-          "playerName": "Viljanen, Op.",
-          "holeNumber": 9,
-          "createdAt": "05/08/25 16:06:17"
-        },
-        {
-          "playerName": "Miller, Garry",
-          "holeNumber": 16,
-          "createdAt": "05/08/25 16:06:17"
-        },
-        {
-          "playerName": "Partridge, Michael",
-          "holeNumber": 8,
-          "createdAt": "05/08/25 16:06:18"
-        },
-        {
-          "playerName": "Philippe Marcel, Lippens",
-          "holeNumber": 2,
-          "createdAt": "05/08/25 16:06:19"
-        },
-        {
-          "playerName": "O`sullivan, Ross",
-          "holeNumber": 1,
-          "createdAt": "05/08/25 16:06:20"
-        },
-        {
-          "playerName": "O`sullivan, Ross",
-          "holeNumber": 5,
-          "createdAt": "05/08/25 16:06:20"
-        },
-        {
-          "playerName": "O`sullivan, Ross",
-          "holeNumber": 14,
-          "createdAt": "05/08/25 16:06:20"
-        },
-        {
-          "playerName": "Marco, Adrian De",
-          "holeNumber": 1,
-          "createdAt": "05/08/25 16:06:21"
-        },
-        {
-          "playerName": "Oliver, Melvyn",
-          "holeNumber": 12,
-          "createdAt": "05/08/25 16:06:21"
-        },
-        {
-          "playerName": "Bensley, Neil",
-          "holeNumber": 7,
-          "createdAt": "05/08/25 16:06:22"
-        },
-        {
-          "playerName": "Harrington, Martin",
-          "holeNumber": 1,
-          "createdAt": "05/08/25 16:06:22"
-        },
-        {
-          "playerName": "Stewart, Graham",
-          "holeNumber": 5,
-          "createdAt": "05/08/25 16:06:23"
-        },
-        {
-          "playerName": "Shiers, John",
-          "holeNumber": 13,
-          "createdAt": "05/08/25 16:06:23"
-        },
-        {
-          "playerName": "Hill, John",
-          "holeNumber": 14,
-          "createdAt": "05/08/25 16:06:24"
-        },
-        {
-          "playerName": "Watts, Allan",
-          "holeNumber": 13,
-          "createdAt": "05/08/25 16:06:24"
-        },
-        {
-          "playerName": "Ford, Graham Peter",
-          "holeNumber": 13,
-          "createdAt": "05/08/25 16:06:25"
-        },
-        {
-          "playerName": "Ford, Graham Peter",
-          "holeNumber": 16,
-          "createdAt": "05/08/25 16:06:25"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -5548,5 +5416,155 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:21.925Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72727
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 72728
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Gonzalez  Lasuen, Pedro",
+          "holeNumber": 18,
+          "createdAt": "05/08/25 16:06:14"
+        },
+        {
+          "playerName": "Hirschfeld Cobian, Carlos Maria",
+          "holeNumber": 11,
+          "createdAt": "05/08/25 16:06:14"
+        },
+        {
+          "playerName": "Burke, Kevin",
+          "holeNumber": 10,
+          "createdAt": "05/08/25 16:06:14"
+        },
+        {
+          "playerName": "Elsworth, Stephen",
+          "holeNumber": 17,
+          "createdAt": "05/08/25 16:06:16"
+        },
+        {
+          "playerName": "Howarth, Andrew",
+          "holeNumber": 8,
+          "createdAt": "05/08/25 16:06:16"
+        },
+        {
+          "playerName": "Howarth, Andrew",
+          "holeNumber": 12,
+          "createdAt": "05/08/25 16:06:16"
+        },
+        {
+          "playerName": "Howarth, Andrew",
+          "holeNumber": 13,
+          "createdAt": "05/08/25 16:06:16"
+        },
+        {
+          "playerName": "Viljanen, Op.",
+          "holeNumber": 9,
+          "createdAt": "05/08/25 16:06:17"
+        },
+        {
+          "playerName": "Miller, Garry",
+          "holeNumber": 16,
+          "createdAt": "05/08/25 16:06:17"
+        },
+        {
+          "playerName": "Partridge, Michael",
+          "holeNumber": 8,
+          "createdAt": "05/08/25 16:06:18"
+        },
+        {
+          "playerName": "Philippe Marcel, Lippens",
+          "holeNumber": 2,
+          "createdAt": "05/08/25 16:06:19"
+        },
+        {
+          "playerName": "O`sullivan, Ross",
+          "holeNumber": 1,
+          "createdAt": "05/08/25 16:06:20"
+        },
+        {
+          "playerName": "O`sullivan, Ross",
+          "holeNumber": 5,
+          "createdAt": "05/08/25 16:06:20"
+        },
+        {
+          "playerName": "O`sullivan, Ross",
+          "holeNumber": 14,
+          "createdAt": "05/08/25 16:06:20"
+        },
+        {
+          "playerName": "Marco, Adrian De",
+          "holeNumber": 1,
+          "createdAt": "05/08/25 16:06:21"
+        },
+        {
+          "playerName": "Oliver, Melvyn",
+          "holeNumber": 12,
+          "createdAt": "05/08/25 16:06:21"
+        },
+        {
+          "playerName": "Bensley, Neil",
+          "holeNumber": 7,
+          "createdAt": "05/08/25 16:06:22"
+        },
+        {
+          "playerName": "Harrington, Martin",
+          "holeNumber": 1,
+          "createdAt": "05/08/25 16:06:22"
+        },
+        {
+          "playerName": "Stewart, Graham",
+          "holeNumber": 5,
+          "createdAt": "05/08/25 16:06:23"
+        },
+        {
+          "playerName": "Shiers, John",
+          "holeNumber": 13,
+          "createdAt": "05/08/25 16:06:23"
+        },
+        {
+          "playerName": "Hill, John",
+          "holeNumber": 14,
+          "createdAt": "05/08/25 16:06:24"
+        },
+        {
+          "playerName": "Watts, Allan",
+          "holeNumber": 13,
+          "createdAt": "05/08/25 16:06:24"
+        },
+        {
+          "playerName": "Ford, Graham Peter",
+          "holeNumber": 13,
+          "createdAt": "05/08/25 16:06:25"
+        },
+        {
+          "playerName": "Ford, Graham Peter",
+          "holeNumber": 16,
+          "createdAt": "05/08/25 16:06:25"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/2719940078_inscritos_mid_amateur_-_actualizado.pdf",
+    "/uploads/competiciones/pdf/3260209776_rrll_moraleja_2.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:19.087Z"
 }

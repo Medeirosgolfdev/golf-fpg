@@ -1,14 +1,14 @@
 {
   "tourId": 61233,
   "url": "https://www.nextcaddy.com/tour/61233",
-  "scrapedAt": "2026-05-08T17:36:13.778Z",
+  "scrapedAt": "2026-05-21T16:41:20.568Z",
   "meta": {
     "name": "Circuito Juvenil Zona C",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Real Club de Golf Guadalmina",
     "courseCode": "AM51",
-    "dateStart": "22 nov 2026",
-    "dateEnd": "22 nov 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Alevin Masculino",
     "categories": [
       "Juvenil",
@@ -19,12 +19,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-11-22"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -61,11 +63,12 @@
         },
         {
           "playerName": "Bejarano Lopez, Mª Angeles",
-          "holeNumber": 6
+          "holeNumber": 6,
+          "createdAt": "26/10/24 16:44:40"
         }
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:24.335Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:41:53.853Z"
 }

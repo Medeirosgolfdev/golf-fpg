@@ -1,14 +1,14 @@
 {
   "tourId": 67198,
   "url": "https://www.nextcaddy.com/tour/67198",
-  "scrapedAt": "2026-05-09T10:15:35.983Z",
+  "scrapedAt": "2026-05-21T16:38:58.967Z",
   "meta": {
     "name": "II Prueba del Campeonato Regional de Castilla y León (Valedera Sace)",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "19 abr 2026",
-    "dateEnd": "19 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-19"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual Caballeros Masculino",
+      "expectedJugadores": 77,
       "header": [
         "Pos",
         "Jugador",
@@ -888,6 +889,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual Caballeros Masculino",
+      "expectedJugadores": 77,
       "header": [
         "Pos",
         "Jugador",
@@ -1751,6 +1754,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Scratch Individual Caballeros Masculino Entre 11.5 Y 18.5 Hcp",
+      "expectedJugadores": 25,
       "header": [
         "Pos",
         "Jugador",
@@ -2042,6 +2047,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Scratch Individual Caballeros Masculino Desde 18.5 Hcp",
+      "expectedJugadores": 20,
       "header": [
         "Pos",
         "Jugador",
@@ -2278,6 +2285,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Scratch Individual Caballeros Masculino Hasta 11.4 Hcp",
+      "expectedJugadores": 32,
       "header": [
         "Pos",
         "Jugador",
@@ -2646,6 +2655,8 @@
     },
     {
       "category": 6,
+      "categoryName": "Scratch Individual Señoras Femenino Hasta 18.4 Hcp",
+      "expectedJugadores": 7,
       "header": [
         "Pos",
         "Jugador",
@@ -2739,6 +2750,8 @@
     },
     {
       "category": 7,
+      "categoryName": "Scratch Individual Señoras Femenino Desde 18.5 Hcp",
+      "expectedJugadores": 3,
       "header": [
         "Pos",
         "Jugador",
@@ -2788,6 +2801,8 @@
     },
     {
       "category": 8,
+      "categoryName": "Handicap Individual Señoras Femenino",
+      "expectedJugadores": 10,
       "header": [
         "Pos",
         "Jugador",
@@ -2913,6 +2928,41 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Caballeros Masculino",
+      "jugadores": 77
+    },
+    "2": {
+      "name": "Handicap Individual Caballeros Masculino",
+      "jugadores": 77
+    },
+    "3": {
+      "name": "Scratch Individual Caballeros Masculino Entre 11.5 Y 18.5 Hcp",
+      "jugadores": 25
+    },
+    "4": {
+      "name": "Scratch Individual Caballeros Masculino Desde 18.5 Hcp",
+      "jugadores": 20
+    },
+    "5": {
+      "name": "Scratch Individual Caballeros Masculino Hasta 11.4 Hcp",
+      "jugadores": 32
+    },
+    "6": {
+      "name": "Scratch Individual Señoras Femenino Hasta 18.4 Hcp",
+      "jugadores": 7
+    },
+    "7": {
+      "name": "Scratch Individual Señoras Femenino Desde 18.5 Hcp",
+      "jugadores": 3
+    },
+    "8": {
+      "name": "Handicap Individual Señoras Femenino",
+      "jugadores": 10
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -4147,22 +4197,6 @@
       "nivel": "7739248662"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71598
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -4953,5 +4987,26 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:05.491Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71598
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/2289980072_suspension.pdf",
+    "/uploads/circulares/cirfgcyl1226.pdf",
+    "/uploads/competiciones/pdf/1328619928_merged.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:00.358Z"
 }

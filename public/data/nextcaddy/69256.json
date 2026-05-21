@@ -1,14 +1,14 @@
 {
   "tourId": 69256,
   "url": "https://www.nextcaddy.com/tour/69256",
-  "scrapedAt": "2026-05-09T10:15:36.460Z",
+  "scrapedAt": "2026-05-21T16:38:59.631Z",
   "meta": {
     "name": "Las Pinaillas 1ª Categoria",
     "organizer": null,
     "course": "",
     "courseCode": "MAJC",
-    "dateStart": "19 abr 2026",
-    "dateEnd": "19 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -21,11 +21,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-19"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -138,6 +139,76 @@
       "licencia": "11-04-26 12:16",
       "hcp": 5,
       "nivel": "MM04921368"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Jose Maria Garcia Real",
+          "hcp": 4,
+          "ins": "2294597",
+          "jid": "74001",
+          "nivel": "C"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Manuel Fajardo Segovia",
+          "hcp": 4.2,
+          "ins": "2292511",
+          "jid": "74001",
+          "nivel": "C"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Cesar Garcia Gimenez",
+          "hcp": 5,
+          "ins": "2296427",
+          "jid": "74001",
+          "nivel": "C"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Martina Gutierrez Garcia",
+          "hcp": 5.5,
+          "ins": "2293224",
+          "jid": "74001",
+          "nivel": "J"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Mireia Ivars Anguita",
+          "hcp": 9,
+          "ins": "2290357",
+          "jid": "74001",
+          "nivel": "J"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "David Navas Hidalgo",
+          "hcp": 10.2,
+          "ins": "2295399",
+          "jid": "74001",
+          "nivel": "C"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Elvira Herraiz Lopez",
+          "hcp": 17,
+          "ins": "2296388",
+          "jid": "74001",
+          "nivel": "C"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -437,75 +508,8 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "Jose Maria Garcia Real",
-          "hcp": 4,
-          "ins": "2294597",
-          "jid": "74001",
-          "nivel": "C"
-        },
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "Manuel Fajardo Segovia",
-          "hcp": 4.2,
-          "ins": "2292511",
-          "jid": "74001",
-          "nivel": "C"
-        },
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "Cesar Garcia Gimenez",
-          "hcp": 5,
-          "ins": "2296427",
-          "jid": "74001",
-          "nivel": "C"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Martina Gutierrez Garcia",
-          "hcp": 5.5,
-          "ins": "2293224",
-          "jid": "74001",
-          "nivel": "J"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Mireia Ivars Anguita",
-          "hcp": 9,
-          "ins": "2290357",
-          "jid": "74001",
-          "nivel": "J"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "David Navas Hidalgo",
-          "hcp": 10.2,
-          "ins": "2295399",
-          "jid": "74001",
-          "nivel": "C"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Elvira Herraiz Lopez",
-          "hcp": 17,
-          "ins": "2296388",
-          "jid": "74001",
-          "nivel": "C"
-        }
-      ]
-    }
+  "pdfs": [
+    "/uploads/competiciones/pdf/749415127_rrll_pinaillas.pdf"
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:33.919Z"
+  "horariosScrapedAt": "2026-05-21T16:42:32.155Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 67790,
   "url": "https://www.nextcaddy.com/tour/67790",
-  "scrapedAt": "2026-05-09T09:49:46.807Z",
+  "scrapedAt": "2026-05-21T16:40:16.312Z",
   "meta": {
     "name": "I Puntuable Pitch & Putt 2026",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Real Club de Campo Villa de Madrid",
     "courseCode": "CM02",
-    "dateStart": "06 jun 2026",
-    "dateEnd": "06 jun 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) Puntables Para La S",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-06-06"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -43,6 +45,8 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:29.343Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/67790_cartel_92.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:08.106Z"
 }

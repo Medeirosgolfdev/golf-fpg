@@ -1,14 +1,14 @@
 {
   "tourId": 68185,
   "url": "https://www.nextcaddy.com/tour/68185",
-  "scrapedAt": "2026-05-09T09:57:50.830Z",
+  "scrapedAt": "2026-05-21T16:37:17.334Z",
   "meta": {
     "name": "Prueba Clasificatoria Gran Premio (La Faisanera)",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "22 feb 2026",
-    "dateEnd": "22 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-22"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -225,6 +227,9 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:34.167Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/3599874211_tcgp_faisanera_2026.pdf",
+    "/uploads/2026/02/gran-premio-junta-cyl-la-faisanera-01-2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:18.284Z"
 }

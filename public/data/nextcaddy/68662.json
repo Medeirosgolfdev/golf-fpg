@@ -1,14 +1,14 @@
 {
   "tourId": 68662,
   "url": "https://www.nextcaddy.com/tour/68662",
-  "scrapedAt": "2026-05-09T09:57:52.534Z",
+  "scrapedAt": "2026-05-21T16:37:19.789Z",
   "meta": {
     "name": "THE GOLF FRIENDS (24 FEBRERO)",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": "24 feb 2026",
-    "dateEnd": "24 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-24"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -255,48 +256,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73304
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Rodgers, Glynn",
-          "holeNumber": 1,
-          "createdAt": "28/08/25 09:33:10"
-        },
-        {
-          "playerName": "Rodgers, Glynn",
-          "holeNumber": 4,
-          "createdAt": "28/08/25 10:13:29"
-        },
-        {
-          "playerName": "Fennelly, Barry",
-          "holeNumber": 1,
-          "createdAt": "28/08/25 11:36:19"
-        },
-        {
-          "playerName": "Boyce Howarth, Paul",
-          "holeNumber": 2,
-          "createdAt": "28/08/25 11:46:17"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -448,5 +407,48 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:27.362Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73304
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Rodgers, Glynn",
+          "holeNumber": 1,
+          "createdAt": "28/08/25 09:33:10"
+        },
+        {
+          "playerName": "Rodgers, Glynn",
+          "holeNumber": 4,
+          "createdAt": "28/08/25 10:13:29"
+        },
+        {
+          "playerName": "Fennelly, Barry",
+          "holeNumber": 1,
+          "createdAt": "28/08/25 11:36:19"
+        },
+        {
+          "playerName": "Boyce Howarth, Paul",
+          "holeNumber": 2,
+          "createdAt": "28/08/25 11:46:17"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:25.165Z"
 }

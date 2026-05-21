@@ -1,14 +1,14 @@
 {
   "tourId": 67507,
   "url": "https://www.nextcaddy.com/tour/67507",
-  "scrapedAt": "2026-05-09T09:57:26.369Z",
+  "scrapedAt": "2026-05-21T16:36:41.153Z",
   "meta": {
     "name": "LIGA DE INVIERNO 2026 GOLFISTA (MAÑANA 9:30)",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": "23 ene 2026",
-    "dateEnd": "23 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-23"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual Desde 26.1 Hcpjuego",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -249,6 +250,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual Hasta 18 Hcpjuego",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -353,6 +356,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Handicap Individual Entre 18.1 Y 26.1 Hcpjuego",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -456,6 +461,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Desde 26.1 Hcpjuego",
+      "jugadores": 19
+    },
+    "2": {
+      "name": "Handicap Individual Hasta 18 Hcpjuego",
+      "jugadores": 8
+    },
+    "3": {
+      "name": "Handicap Individual Entre 18.1 Y 26.1 Hcpjuego",
+      "jugadores": 8
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -822,33 +842,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71971
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Godoy Del Roj, Manuel Jesus",
-          "holeNumber": 3,
-          "createdAt": "04/07/25 17:31:18"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1081,5 +1074,35 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:08.518Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71971
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Godoy Del Roj, Manuel Jesus",
+          "holeNumber": 3,
+          "createdAt": "04/07/25 17:31:18"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/67507_cartel_208.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:04.194Z"
 }

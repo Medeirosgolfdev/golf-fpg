@@ -1,14 +1,14 @@
 {
   "tourId": 70392,
   "url": "https://www.nextcaddy.com/tour/70392",
-  "scrapedAt": "2026-05-09T10:15:54.387Z",
+  "scrapedAt": "2026-05-21T16:39:27.819Z",
   "meta": {
     "name": "TORNEO MERCEDES BENZ TROPHY 2026",
     "organizer": null,
     "course": "Club de Golf Bellavista",
     "courseCode": "AM07",
-    "dateStart": "07 may 2026",
-    "dateEnd": "07 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-07"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "2A Categoria",
+      "expectedJugadores": 41,
       "header": [
         "Pos",
         "Jugador",
@@ -491,6 +492,8 @@
     },
     {
       "category": 2,
+      "categoryName": "1A Categoria",
+      "expectedJugadores": 28,
       "header": [
         "Pos",
         "Jugador",
@@ -815,6 +818,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Scratch",
+      "expectedJugadores": 69,
       "header": [
         "Pos",
         "Jugador",
@@ -1589,6 +1594,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "2A Categoria",
+      "jugadores": 41
+    },
+    "2": {
+      "name": "1A Categoria",
+      "jugadores": 28
+    },
+    "3": {
+      "name": "Scratch",
+      "jugadores": 69
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2571,183 +2591,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75331
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Gonzalez  Lasuen, Pedro",
-          "holeNumber": 13,
-          "createdAt": "11/11/25 18:42:58"
-        },
-        {
-          "playerName": "Watson, Michael Alan",
-          "holeNumber": 10,
-          "createdAt": "11/11/25 18:42:59"
-        },
-        {
-          "playerName": "Burke Burke, Paddy",
-          "holeNumber": 14,
-          "createdAt": "11/11/25 18:43:01"
-        },
-        {
-          "playerName": "Potoker, Tage",
-          "holeNumber": 15,
-          "createdAt": "11/11/25 18:43:02"
-        },
-        {
-          "playerName": "Pearson, Martin",
-          "holeNumber": 9,
-          "createdAt": "11/11/25 18:43:03"
-        },
-        {
-          "playerName": "Mcilwaine, James",
-          "holeNumber": 1,
-          "createdAt": "11/11/25 18:43:03"
-        },
-        {
-          "playerName": "Mcilwaine, James",
-          "holeNumber": 2,
-          "createdAt": "11/11/25 18:43:03"
-        },
-        {
-          "playerName": "Mcilwaine, James",
-          "holeNumber": 15,
-          "createdAt": "11/11/25 18:43:03"
-        },
-        {
-          "playerName": "Marco, Adrian De",
-          "holeNumber": 1,
-          "createdAt": "11/11/25 18:43:05"
-        },
-        {
-          "playerName": "Webster, Lawrence",
-          "holeNumber": 9,
-          "createdAt": "11/11/25 18:43:07"
-        },
-        {
-          "playerName": "Ford, Graham Peter",
-          "holeNumber": 11,
-          "createdAt": "11/11/25 18:43:09"
-        },
-        {
-          "playerName": "Ford, Graham Peter",
-          "holeNumber": 16,
-          "createdAt": "11/11/25 18:43:09"
-        },
-        {
-          "playerName": "Dideriksen, Bjarne",
-          "holeNumber": 1,
-          "createdAt": "11/11/25 18:43:11"
-        },
-        {
-          "playerName": "Nymann, Leif",
-          "holeNumber": 9,
-          "createdAt": "11/11/25 18:43:11"
-        },
-        {
-          "playerName": "Bell Andersen, Lars Ole",
-          "holeNumber": 10,
-          "createdAt": "11/11/25 18:43:12"
-        },
-        {
-          "playerName": "Bundgard, Peter",
-          "holeNumber": 16,
-          "createdAt": "11/11/25 18:43:12"
-        },
-        {
-          "playerName": "Hill, John",
-          "holeNumber": 16,
-          "createdAt": "11/11/25 18:43:13"
-        },
-        {
-          "playerName": "Howarth, Andrew",
-          "holeNumber": 1,
-          "createdAt": "11/11/25 18:43:13"
-        },
-        {
-          "playerName": "Howarth, Andrew",
-          "holeNumber": 2,
-          "createdAt": "11/11/25 18:43:13"
-        },
-        {
-          "playerName": "Howarth, Andrew",
-          "holeNumber": 9,
-          "createdAt": "11/11/25 18:43:13"
-        },
-        {
-          "playerName": "Monaghan, Brendan",
-          "holeNumber": 10,
-          "createdAt": "11/11/25 18:43:14"
-        },
-        {
-          "playerName": "Froysaa, Oyvind",
-          "holeNumber": 10,
-          "createdAt": "11/11/25 18:43:17"
-        },
-        {
-          "playerName": "Froysaa, Oyvind",
-          "holeNumber": 18,
-          "createdAt": "11/11/25 18:43:17"
-        },
-        {
-          "playerName": "Michael, Holst",
-          "holeNumber": 16,
-          "createdAt": "11/11/25 18:43:17"
-        },
-        {
-          "playerName": "Partridge, Michael",
-          "holeNumber": 1,
-          "createdAt": "11/11/25 18:43:18"
-        },
-        {
-          "playerName": "Harrington, Martin",
-          "holeNumber": 6,
-          "createdAt": "11/11/25 18:43:19"
-        },
-        {
-          "playerName": "Stewart, Gordon",
-          "holeNumber": 2,
-          "createdAt": "11/11/25 18:43:20"
-        },
-        {
-          "playerName": "Rodriguez De La Riva, Pablo",
-          "holeNumber": 12,
-          "createdAt": "11/11/25 18:43:22"
-        },
-        {
-          "playerName": "Mudie, Shawn",
-          "holeNumber": 18,
-          "createdAt": "11/11/25 18:43:22"
-        }
-      ]
-    },
-    "eagle": {
-      "scoreTypeKey": "eagle",
-      "players": [
-        {
-          "playerName": "Barrett, Paul",
-          "holeNumber": 1,
-          "createdAt": "11/11/25 18:43:07"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -3367,5 +3210,185 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:13:00.336Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75331
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Gonzalez  Lasuen, Pedro",
+          "holeNumber": 13,
+          "createdAt": "11/11/25 18:42:58"
+        },
+        {
+          "playerName": "Watson, Michael Alan",
+          "holeNumber": 10,
+          "createdAt": "11/11/25 18:42:59"
+        },
+        {
+          "playerName": "Burke Burke, Paddy",
+          "holeNumber": 14,
+          "createdAt": "11/11/25 18:43:01"
+        },
+        {
+          "playerName": "Potoker, Tage",
+          "holeNumber": 15,
+          "createdAt": "11/11/25 18:43:02"
+        },
+        {
+          "playerName": "Pearson, Martin",
+          "holeNumber": 9,
+          "createdAt": "11/11/25 18:43:03"
+        },
+        {
+          "playerName": "Mcilwaine, James",
+          "holeNumber": 1,
+          "createdAt": "11/11/25 18:43:03"
+        },
+        {
+          "playerName": "Mcilwaine, James",
+          "holeNumber": 2,
+          "createdAt": "11/11/25 18:43:03"
+        },
+        {
+          "playerName": "Mcilwaine, James",
+          "holeNumber": 15,
+          "createdAt": "11/11/25 18:43:03"
+        },
+        {
+          "playerName": "Marco, Adrian De",
+          "holeNumber": 1,
+          "createdAt": "11/11/25 18:43:05"
+        },
+        {
+          "playerName": "Webster, Lawrence",
+          "holeNumber": 9,
+          "createdAt": "11/11/25 18:43:07"
+        },
+        {
+          "playerName": "Ford, Graham Peter",
+          "holeNumber": 11,
+          "createdAt": "11/11/25 18:43:09"
+        },
+        {
+          "playerName": "Ford, Graham Peter",
+          "holeNumber": 16,
+          "createdAt": "11/11/25 18:43:09"
+        },
+        {
+          "playerName": "Dideriksen, Bjarne",
+          "holeNumber": 1,
+          "createdAt": "11/11/25 18:43:11"
+        },
+        {
+          "playerName": "Nymann, Leif",
+          "holeNumber": 9,
+          "createdAt": "11/11/25 18:43:11"
+        },
+        {
+          "playerName": "Bell Andersen, Lars Ole",
+          "holeNumber": 10,
+          "createdAt": "11/11/25 18:43:12"
+        },
+        {
+          "playerName": "Bundgard, Peter",
+          "holeNumber": 16,
+          "createdAt": "11/11/25 18:43:12"
+        },
+        {
+          "playerName": "Hill, John",
+          "holeNumber": 16,
+          "createdAt": "11/11/25 18:43:13"
+        },
+        {
+          "playerName": "Howarth, Andrew",
+          "holeNumber": 1,
+          "createdAt": "11/11/25 18:43:13"
+        },
+        {
+          "playerName": "Howarth, Andrew",
+          "holeNumber": 2,
+          "createdAt": "11/11/25 18:43:13"
+        },
+        {
+          "playerName": "Howarth, Andrew",
+          "holeNumber": 9,
+          "createdAt": "11/11/25 18:43:13"
+        },
+        {
+          "playerName": "Monaghan, Brendan",
+          "holeNumber": 10,
+          "createdAt": "11/11/25 18:43:14"
+        },
+        {
+          "playerName": "Froysaa, Oyvind",
+          "holeNumber": 10,
+          "createdAt": "11/11/25 18:43:17"
+        },
+        {
+          "playerName": "Froysaa, Oyvind",
+          "holeNumber": 18,
+          "createdAt": "11/11/25 18:43:17"
+        },
+        {
+          "playerName": "Michael, Holst",
+          "holeNumber": 16,
+          "createdAt": "11/11/25 18:43:17"
+        },
+        {
+          "playerName": "Partridge, Michael",
+          "holeNumber": 1,
+          "createdAt": "11/11/25 18:43:18"
+        },
+        {
+          "playerName": "Harrington, Martin",
+          "holeNumber": 6,
+          "createdAt": "11/11/25 18:43:19"
+        },
+        {
+          "playerName": "Stewart, Gordon",
+          "holeNumber": 2,
+          "createdAt": "11/11/25 18:43:20"
+        },
+        {
+          "playerName": "Rodriguez De La Riva, Pablo",
+          "holeNumber": 12,
+          "createdAt": "11/11/25 18:43:22"
+        },
+        {
+          "playerName": "Mudie, Shawn",
+          "holeNumber": 18,
+          "createdAt": "11/11/25 18:43:22"
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Barrett, Paul",
+          "holeNumber": 1,
+          "createdAt": "11/11/25 18:43:07"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/cartel/1146268403_70392-torneo-mercedes-benz-trophy-2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:40.973Z"
 }

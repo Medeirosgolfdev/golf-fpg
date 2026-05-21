@@ -1,14 +1,14 @@
 {
   "tourId": 67761,
   "url": "https://www.nextcaddy.com/tour/67761",
-  "scrapedAt": "2026-05-09T10:17:06.203Z",
+  "scrapedAt": "2026-05-21T16:40:53.818Z",
   "meta": {
     "name": "Torneo de Golf Adaptado \"Golf Santander\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Golf Santander S A",
     "courseCode": "CMA5",
-    "dateStart": "13 sep 2026",
-    "dateEnd": "13 sep 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Circuito De Golf A",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-09-13"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -145,6 +147,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:28.878Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:07.504Z"
 }

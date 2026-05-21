@@ -1,14 +1,14 @@
 {
   "tourId": 68307,
   "url": "https://www.nextcaddy.com/tour/68307",
-  "scrapedAt": "2026-05-09T09:57:52.281Z",
+  "scrapedAt": "2026-05-21T16:37:19.407Z",
   "meta": {
     "name": "Torneo Privado Enlace Verde · 10:00 ·",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "24 feb 2026",
-    "dateEnd": "24 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-24"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Torneo Privado Enlace Verde Clasificacion Scratch",
+      "expectedJugadores": 23,
       "header": [
         "Pos",
         "Jugador",
@@ -293,6 +294,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Torneo Privado Enlace Verde Clasificacion Handicap",
+      "expectedJugadores": 23,
       "header": [
         "Pos",
         "Jugador",
@@ -561,6 +564,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Torneo Privado Enlace Verde Clasificacion Scratch",
+      "jugadores": 23
+    },
+    "2": {
+      "name": "Torneo Privado Enlace Verde Clasificacion Handicap",
+      "jugadores": 23
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -913,133 +927,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72891
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Careaga Berge, Miguel",
-          "holeNumber": 10,
-          "createdAt": "11/08/25 09:17:38"
-        },
-        {
-          "playerName": "Careaga Berge, Miguel",
-          "holeNumber": 12,
-          "createdAt": "11/08/25 09:17:54"
-        },
-        {
-          "playerName": "Roman Garcia, Fco Javier",
-          "holeNumber": 12,
-          "createdAt": "11/08/25 09:19:19"
-        },
-        {
-          "playerName": "Davies, Christopher",
-          "holeNumber": 10,
-          "createdAt": "11/08/25 09:31:04"
-        },
-        {
-          "playerName": "Becerra Moya, Miguel Angel",
-          "holeNumber": 4,
-          "createdAt": "11/08/25 09:46:58"
-        },
-        {
-          "playerName": "Oviedo Granados, Jose Luis",
-          "holeNumber": 12,
-          "createdAt": "11/08/25 09:47:06"
-        },
-        {
-          "playerName": "Ure?A Serrano, Antonio Manuel",
-          "holeNumber": 5,
-          "createdAt": "11/08/25 10:10:51"
-        },
-        {
-          "playerName": "Rodrigo Antona, Javier",
-          "holeNumber": 6,
-          "createdAt": "11/08/25 10:25:50"
-        },
-        {
-          "playerName": "Contepomi, Gustavo Adolfo Ernesto",
-          "holeNumber": 16,
-          "createdAt": "11/08/25 10:52:56"
-        },
-        {
-          "playerName": "Roman Garcia, Fco Javier",
-          "holeNumber": 2,
-          "createdAt": "11/08/25 11:15:42"
-        },
-        {
-          "playerName": "Roman Garcia, Fco Javier",
-          "holeNumber": 3,
-          "createdAt": "11/08/25 11:33:35"
-        },
-        {
-          "playerName": "Rodrigo Antona, Javier",
-          "holeNumber": 12,
-          "createdAt": "11/08/25 11:39:02"
-        },
-        {
-          "playerName": "Lozano Cintado, Miguel",
-          "holeNumber": 2,
-          "createdAt": "11/08/25 11:55:01"
-        },
-        {
-          "playerName": "Rosado Sabido, Fernando",
-          "holeNumber": 4,
-          "createdAt": "11/08/25 12:02:41"
-        },
-        {
-          "playerName": "Salido Pachon, Antonio",
-          "holeNumber": 2,
-          "createdAt": "11/08/25 12:03:44"
-        },
-        {
-          "playerName": "Alvarez Fernandez, Elias",
-          "holeNumber": 5,
-          "createdAt": "11/08/25 12:07:42"
-        },
-        {
-          "playerName": "Jameson, Christopher J.",
-          "holeNumber": 4,
-          "createdAt": "11/08/25 12:17:20"
-        },
-        {
-          "playerName": "Becerra Moya, Miguel Angel",
-          "holeNumber": 16,
-          "createdAt": "11/08/25 12:30:52"
-        },
-        {
-          "playerName": "Romero Abad, Tomas",
-          "holeNumber": 16,
-          "createdAt": "11/08/25 12:31:19"
-        },
-        {
-          "playerName": "Marin Blanco, Francisco Jose",
-          "holeNumber": 7,
-          "createdAt": "11/08/25 12:44:52"
-        },
-        {
-          "playerName": "Oviedo Granados, Jose Luis",
-          "holeNumber": 7,
-          "createdAt": "11/08/25 12:57:29"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1263,5 +1150,135 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:23.382Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72891
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Careaga Berge, Miguel",
+          "holeNumber": 10,
+          "createdAt": "11/08/25 09:17:38"
+        },
+        {
+          "playerName": "Careaga Berge, Miguel",
+          "holeNumber": 12,
+          "createdAt": "11/08/25 09:17:54"
+        },
+        {
+          "playerName": "Roman Garcia, Fco Javier",
+          "holeNumber": 12,
+          "createdAt": "11/08/25 09:19:19"
+        },
+        {
+          "playerName": "Davies, Christopher",
+          "holeNumber": 10,
+          "createdAt": "11/08/25 09:31:04"
+        },
+        {
+          "playerName": "Becerra Moya, Miguel Angel",
+          "holeNumber": 4,
+          "createdAt": "11/08/25 09:46:58"
+        },
+        {
+          "playerName": "Oviedo Granados, Jose Luis",
+          "holeNumber": 12,
+          "createdAt": "11/08/25 09:47:06"
+        },
+        {
+          "playerName": "Ure?A Serrano, Antonio Manuel",
+          "holeNumber": 5,
+          "createdAt": "11/08/25 10:10:51"
+        },
+        {
+          "playerName": "Rodrigo Antona, Javier",
+          "holeNumber": 6,
+          "createdAt": "11/08/25 10:25:50"
+        },
+        {
+          "playerName": "Contepomi, Gustavo Adolfo Ernesto",
+          "holeNumber": 16,
+          "createdAt": "11/08/25 10:52:56"
+        },
+        {
+          "playerName": "Roman Garcia, Fco Javier",
+          "holeNumber": 2,
+          "createdAt": "11/08/25 11:15:42"
+        },
+        {
+          "playerName": "Roman Garcia, Fco Javier",
+          "holeNumber": 3,
+          "createdAt": "11/08/25 11:33:35"
+        },
+        {
+          "playerName": "Rodrigo Antona, Javier",
+          "holeNumber": 12,
+          "createdAt": "11/08/25 11:39:02"
+        },
+        {
+          "playerName": "Lozano Cintado, Miguel",
+          "holeNumber": 2,
+          "createdAt": "11/08/25 11:55:01"
+        },
+        {
+          "playerName": "Rosado Sabido, Fernando",
+          "holeNumber": 4,
+          "createdAt": "11/08/25 12:02:41"
+        },
+        {
+          "playerName": "Salido Pachon, Antonio",
+          "holeNumber": 2,
+          "createdAt": "11/08/25 12:03:44"
+        },
+        {
+          "playerName": "Alvarez Fernandez, Elias",
+          "holeNumber": 5,
+          "createdAt": "11/08/25 12:07:42"
+        },
+        {
+          "playerName": "Jameson, Christopher J.",
+          "holeNumber": 4,
+          "createdAt": "11/08/25 12:17:20"
+        },
+        {
+          "playerName": "Becerra Moya, Miguel Angel",
+          "holeNumber": 16,
+          "createdAt": "11/08/25 12:30:52"
+        },
+        {
+          "playerName": "Romero Abad, Tomas",
+          "holeNumber": 16,
+          "createdAt": "11/08/25 12:31:19"
+        },
+        {
+          "playerName": "Marin Blanco, Francisco Jose",
+          "holeNumber": 7,
+          "createdAt": "11/08/25 12:44:52"
+        },
+        {
+          "playerName": "Oviedo Granados, Jose Luis",
+          "holeNumber": 7,
+          "createdAt": "11/08/25 12:57:29"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/68307_cartel_268.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:20.789Z"
 }

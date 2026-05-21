@@ -1,14 +1,14 @@
 {
   "tourId": 68388,
   "url": "https://www.nextcaddy.com/tour/68388",
-  "scrapedAt": "2026-05-09T09:57:36.886Z",
+  "scrapedAt": "2026-05-21T16:36:56.932Z",
   "meta": {
     "name": "VOBS COMPETITION",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "12 feb 2026",
-    "dateEnd": "12 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-12"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -171,6 +172,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 12
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -362,6 +370,130 @@
       "nivel": "S"
     }
   ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Paul Monks",
+          "hcp": 18.1,
+          "ins": "2259159",
+          "jid": "72992",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Louis Jorfi",
+          "hcp": 17.8,
+          "ins": "2259160",
+          "jid": "72992",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Bret Myles Duncan",
+          "hcp": 22.2,
+          "ins": "2259161",
+          "jid": "72992",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 10,
+          "name": "Mickey Allen Padron",
+          "hcp": 11.7,
+          "ins": "2259166",
+          "jid": "72992",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 10,
+          "name": "Glynn Rodgers",
+          "hcp": 4.3,
+          "ins": "2259167",
+          "jid": "72992",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 10,
+          "name": "Darren Clithero",
+          "hcp": 11.5,
+          "ins": "2259168",
+          "jid": "72992",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Matthew Colin Anderson",
+          "hcp": 21.2,
+          "ins": "2259162",
+          "jid": "72992",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Paul Boyce Howarth",
+          "hcp": 20.9,
+          "ins": "2259163",
+          "jid": "72992",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "David Alan Rees",
+          "hcp": 29.8,
+          "ins": "2259164",
+          "jid": "72992",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Tony Pearse",
+          "hcp": 12.2,
+          "ins": "2259165",
+          "jid": "72992",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 10,
+          "name": "Kieran Byrne",
+          "hcp": 14.3,
+          "ins": "2259169",
+          "jid": "72992",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 10,
+          "name": "Barry Fennelly",
+          "hcp": 12.7,
+          "ins": "2259170",
+          "jid": "72992",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 10,
+          "name": "Michael Marney",
+          "hcp": 20.8,
+          "ins": "2259171",
+          "jid": "72992",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -544,129 +676,6 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "Paul Monks",
-          "hcp": 18.1,
-          "ins": "2259159",
-          "jid": "72992",
-          "nivel": "S"
-        },
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "Louis Jorfi",
-          "hcp": 17.8,
-          "ins": "2259160",
-          "jid": "72992",
-          "nivel": "S"
-        },
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "Bret Myles Duncan",
-          "hcp": 22.2,
-          "ins": "2259161",
-          "jid": "72992",
-          "nivel": "S"
-        },
-        {
-          "time": "09:30",
-          "tee": 10,
-          "name": "Mickey Allen Padron",
-          "hcp": 11.7,
-          "ins": "2259166",
-          "jid": "72992",
-          "nivel": "S"
-        },
-        {
-          "time": "09:30",
-          "tee": 10,
-          "name": "Glynn Rodgers",
-          "hcp": 4.3,
-          "ins": "2259167",
-          "jid": "72992",
-          "nivel": "S"
-        },
-        {
-          "time": "09:30",
-          "tee": 10,
-          "name": "Darren Clithero",
-          "hcp": 11.5,
-          "ins": "2259168",
-          "jid": "72992",
-          "nivel": "S"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Matthew Colin Anderson",
-          "hcp": 21.2,
-          "ins": "2259162",
-          "jid": "72992",
-          "nivel": "S"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Paul Boyce Howarth",
-          "hcp": 20.9,
-          "ins": "2259163",
-          "jid": "72992",
-          "nivel": "S"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "David Alan Rees",
-          "hcp": 29.8,
-          "ins": "2259164",
-          "jid": "72992",
-          "nivel": "S"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Tony Pearse",
-          "hcp": 12.2,
-          "ins": "2259165",
-          "jid": "72992",
-          "nivel": "S"
-        },
-        {
-          "time": "09:40",
-          "tee": 10,
-          "name": "Kieran Byrne",
-          "hcp": 14.3,
-          "ins": "2259169",
-          "jid": "72992",
-          "nivel": "S"
-        },
-        {
-          "time": "09:40",
-          "tee": 10,
-          "name": "Barry Fennelly",
-          "hcp": 12.7,
-          "ins": "2259170",
-          "jid": "72992",
-          "nivel": "S"
-        },
-        {
-          "time": "09:40",
-          "tee": 10,
-          "name": "Michael Marney",
-          "hcp": 20.8,
-          "ins": "2259171",
-          "jid": "72992",
-          "nivel": "S"
-        }
-      ]
-    }
-  ],
-  "horariosScrapedAt": "2026-05-09T12:12:24.463Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:21.972Z"
 }

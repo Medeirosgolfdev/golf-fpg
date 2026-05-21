@@ -1,6 +1,6 @@
 {
   "gameId": "67a2111a67edb43b19085615",
-  "fetchedAt": "2026-05-09T19:51:34.561Z",
+  "fetchedAt": "2026-05-21T16:43:29.168Z",
   "game": {
     "_id": "67a2111a67edb43b19085615",
     "name": "Jornada 1",
@@ -34,15 +34,6 @@
     "teesMale": [
       {
         "gender": "M",
-        "color": "gold",
-        "lap": "lap18",
-        "rating": 68.8,
-        "slope": 131,
-        "par": 72,
-        "_id": "67a2111a67edb43b190856a8"
-      },
-      {
-        "gender": "M",
         "color": "black",
         "lap": "lap18",
         "rating": 73.1,
@@ -52,12 +43,30 @@
       },
       {
         "gender": "M",
+        "color": "gold",
+        "lap": "lap18",
+        "rating": 68.8,
+        "slope": 131,
+        "par": 72,
+        "_id": "67a2111a67edb43b190856a8"
+      },
+      {
+        "gender": "M",
         "color": "white",
         "lap": "lap18",
         "rating": 72.5,
         "slope": 141,
         "par": 72,
         "_id": "67a2111a67edb43b190856cc"
+      },
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 66.5,
+        "slope": 123,
+        "par": 72,
+        "_id": "67a2111a67edb43b19085726"
       },
       {
         "gender": "M",
@@ -76,27 +85,9 @@
         "slope": 136,
         "par": 72,
         "_id": "67a2111a67edb43b190856de"
-      },
-      {
-        "gender": "M",
-        "color": "red",
-        "lap": "lap18",
-        "rating": 66.5,
-        "slope": 123,
-        "par": 72,
-        "_id": "67a2111a67edb43b19085726"
       }
     ],
     "teesFemale": [
-      {
-        "gender": "F",
-        "color": "red",
-        "lap": "lap18",
-        "rating": 71.3,
-        "slope": 132,
-        "par": 72,
-        "_id": "67a2111a67edb43b19085714"
-      },
       {
         "gender": "F",
         "color": "blue",
@@ -105,6 +96,15 @@
         "slope": 133,
         "par": 72,
         "_id": "67a2111a67edb43b190856f0"
+      },
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 71.3,
+        "slope": 132,
+        "par": 72,
+        "_id": "67a2111a67edb43b19085714"
       }
     ]
   },

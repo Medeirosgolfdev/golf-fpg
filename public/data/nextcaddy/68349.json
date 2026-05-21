@@ -1,14 +1,14 @@
 {
   "tourId": 68349,
   "url": "https://www.nextcaddy.com/tour/68349",
-  "scrapedAt": "2026-05-09T10:17:17.574Z",
+  "scrapedAt": "2026-05-21T16:41:14.728Z",
   "meta": {
     "name": "Torneo Juvenil Absoluto \"El Robledal\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "el Robledal Golf",
     "courseCode": "CM08",
-    "dateStart": "31 oct 2026",
-    "dateEnd": "31 oct 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) Circuito Juvenil 20",
     "categories": [
       "Juvenil",
@@ -17,12 +17,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-10-31"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -75,6 +77,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:36.517Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:21.494Z"
 }

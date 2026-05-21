@@ -1,14 +1,14 @@
 {
   "tourId": 68327,
   "url": "https://www.nextcaddy.com/tour/68327",
-  "scrapedAt": "2026-05-09T09:49:50.795Z",
+  "scrapedAt": "2026-05-21T16:41:10.611Z",
   "meta": {
     "name": "Torneo Alevín Femenino \"Olivar de la Hinojosa\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Club de Golf Olivar de la Hinojosa",
     "courseCode": "CM81",
-    "dateStart": "18 oct 2026",
-    "dateEnd": "18 oct 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) Circuito Juvenil 20",
     "categories": [
       "Alevín Femenino",
@@ -17,12 +17,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-10-18"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -50,6 +52,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:35.986Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:21.107Z"
 }

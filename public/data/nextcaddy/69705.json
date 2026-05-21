@@ -1,14 +1,14 @@
 {
   "tourId": 69705,
   "url": "https://www.nextcaddy.com/tour/69705",
-  "scrapedAt": "2026-05-09T10:07:57.724Z",
+  "scrapedAt": "2026-05-21T16:38:45.246Z",
   "meta": {
     "name": "CAMPEONATO DE NAVARRA MID AMATEUR 1ª y 2ª CAT.",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "12 abr 2026",
-    "dateEnd": "12 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-12"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "1ª Categoría",
+      "expectedJugadores": 20,
       "header": [
         "Pos",
         "Jugador",
@@ -260,6 +261,8 @@
     },
     {
       "category": 2,
+      "categoryName": "2ª Categoría",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -407,6 +410,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "1ª Categoría",
+      "jugadores": 20
+    },
+    "2": {
+      "name": "2ª Categoría",
+      "jugadores": 12
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -696,33 +710,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74504
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Rodriguez Gala, Vicente",
-          "holeNumber": 5,
-          "createdAt": "17/10/25 10:47:52"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -910,5 +897,33 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:56.446Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74504
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Rodriguez Gala, Vicente",
+          "holeNumber": 5,
+          "createdAt": "17/10/25 10:47:52"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:36.827Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 69289,
   "url": "https://www.nextcaddy.com/tour/69289",
-  "scrapedAt": "2026-05-09T10:37:51.332Z",
+  "scrapedAt": "2026-05-21T16:38:05.906Z",
   "meta": {
     "name": "5ª P. C. INFANTIL B.K. 9 HOYOS 21-03-26",
     "organizer": null,
     "course": "Real Club de Golf Vista Hermosa",
     "courseCode": "AM05",
-    "dateStart": "21 mar 2026",
-    "dateEnd": "21 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "INFANTIL",
@@ -18,74 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-21"
-  },
-  "course": {
-    "par": [
-      5,
-      3,
-      4,
-      3,
-      4,
-      4,
-      4,
-      4,
-      5,
-      5,
-      3,
-      4,
-      3,
-      4,
-      4,
-      4,
-      4,
-      5
-    ],
-    "si": [
-      9,
-      17,
-      3,
-      11,
-      15,
-      5,
-      1,
-      13,
-      7,
-      10,
-      18,
-      4,
-      12,
-      16,
-      6,
-      2,
-      14,
-      8
-    ],
-    "meters": [
-      412,
-      133,
-      304,
-      107,
-      246,
-      291,
-      295,
-      189,
-      388,
-      412,
-      133,
-      304,
-      107,
-      246,
-      291,
-      295,
-      189,
-      388
     ]
   },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -107,8 +47,7 @@
           "rounds": [],
           "total": 28,
           "toPar": -10,
-          "inscribedId": 2284482,
-          "roundScores": []
+          "inscribedId": 2284482
         },
         {
           "pos": 2,
@@ -119,8 +58,7 @@
           "rounds": [],
           "total": 22,
           "toPar": -4,
-          "inscribedId": 2284484,
-          "roundScores": []
+          "inscribedId": 2284484
         },
         {
           "pos": 3,
@@ -131,8 +69,7 @@
           "rounds": [],
           "total": 22,
           "toPar": -4,
-          "inscribedId": 2284492,
-          "roundScores": []
+          "inscribedId": 2284492
         },
         {
           "pos": 4,
@@ -143,8 +80,7 @@
           "rounds": [],
           "total": 21,
           "toPar": -3,
-          "inscribedId": 2284483,
-          "roundScores": []
+          "inscribedId": 2284483
         },
         {
           "pos": 5,
@@ -155,8 +91,7 @@
           "rounds": [],
           "total": 20,
           "toPar": -2,
-          "inscribedId": 2284486,
-          "roundScores": []
+          "inscribedId": 2284486
         },
         {
           "pos": 6,
@@ -167,8 +102,7 @@
           "rounds": [],
           "total": 19,
           "toPar": -1,
-          "inscribedId": 2284489,
-          "roundScores": []
+          "inscribedId": 2284489
         },
         {
           "pos": 7,
@@ -179,8 +113,7 @@
           "rounds": [],
           "total": 19,
           "toPar": -1,
-          "inscribedId": 2284493,
-          "roundScores": []
+          "inscribedId": 2284493
         },
         {
           "pos": 8,
@@ -191,8 +124,7 @@
           "rounds": [],
           "total": 17,
           "toPar": 1,
-          "inscribedId": 2284490,
-          "roundScores": []
+          "inscribedId": 2284490
         },
         {
           "pos": 9,
@@ -203,8 +135,7 @@
           "rounds": [],
           "total": 15,
           "toPar": 3,
-          "inscribedId": 2284491,
-          "roundScores": []
+          "inscribedId": 2284491
         },
         {
           "pos": 10,
@@ -215,8 +146,7 @@
           "rounds": [],
           "total": 11,
           "toPar": 7,
-          "inscribedId": 2284494,
-          "roundScores": []
+          "inscribedId": 2284494
         },
         {
           "pos": 11,
@@ -227,8 +157,7 @@
           "rounds": [],
           "total": 10,
           "toPar": 8,
-          "inscribedId": 2284487,
-          "roundScores": []
+          "inscribedId": 2284487
         },
         {
           "pos": 12,
@@ -239,12 +168,18 @@
           "rounds": [],
           "total": 1,
           "toPar": 17,
-          "inscribedId": 2284488,
-          "roundScores": []
+          "inscribedId": 2284488
         }
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 12
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -429,63 +364,6 @@
       "nivel": "AM05889140"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74035
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Ruiz Torres, Ana Maria",
-          "holeNumber": 9,
-          "createdAt": "26/09/25 12:33:26"
-        },
-        {
-          "playerName": "Martin Muñoz, Juan Jose",
-          "holeNumber": 16,
-          "createdAt": "26/09/25 12:33:56"
-        },
-        {
-          "playerName": "Benavides Castro, Ana",
-          "holeNumber": 2,
-          "createdAt": "26/09/25 12:45:56"
-        },
-        {
-          "playerName": "Cantero Angulo, Juan Jose",
-          "holeNumber": 11,
-          "createdAt": "26/09/25 12:46:06"
-        },
-        {
-          "playerName": "Del Moral Chaneta, Genoveva",
-          "holeNumber": 4,
-          "createdAt": "26/09/25 12:46:26"
-        },
-        {
-          "playerName": "Ponce Lucena, Miguel",
-          "holeNumber": 11,
-          "createdAt": "26/09/25 12:46:46"
-        },
-        {
-          "playerName": "Benitez Martinez, Eloisa Carmen",
-          "holeNumber": 4,
-          "createdAt": "26/09/25 13:13:46"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -601,5 +479,63 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:52.235Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74035
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Ruiz Torres, Ana Maria",
+          "holeNumber": 9,
+          "createdAt": "26/09/25 12:33:26"
+        },
+        {
+          "playerName": "Martin Muñoz, Juan Jose",
+          "holeNumber": 16,
+          "createdAt": "26/09/25 12:33:56"
+        },
+        {
+          "playerName": "Benavides Castro, Ana",
+          "holeNumber": 2,
+          "createdAt": "26/09/25 12:45:56"
+        },
+        {
+          "playerName": "Cantero Angulo, Juan Jose",
+          "holeNumber": 11,
+          "createdAt": "26/09/25 12:46:06"
+        },
+        {
+          "playerName": "Del Moral Chaneta, Genoveva",
+          "holeNumber": 4,
+          "createdAt": "26/09/25 12:46:26"
+        },
+        {
+          "playerName": "Ponce Lucena, Miguel",
+          "holeNumber": 11,
+          "createdAt": "26/09/25 12:46:46"
+        },
+        {
+          "playerName": "Benitez Martinez, Eloisa Carmen",
+          "holeNumber": 4,
+          "createdAt": "26/09/25 13:13:46"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:32.600Z"
 }

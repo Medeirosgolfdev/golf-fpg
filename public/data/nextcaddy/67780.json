@@ -1,14 +1,14 @@
 {
   "tourId": 67780,
   "url": "https://www.nextcaddy.com/tour/67780",
-  "scrapedAt": "2026-05-09T09:49:45.583Z",
+  "scrapedAt": "2026-05-21T16:40:00.787Z",
   "meta": {
     "name": "Campeonato de Madrid Benjamín",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Club de Golf Aranjuez",
     "courseCode": "CM66",
-    "dateStart": "23 may 2026",
-    "dateEnd": "23 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) Circuito Juvenil 20",
     "categories": [
       "Benjamín",
@@ -20,12 +20,863 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-05-23"
+    ]
   },
   "course": null,
   "leaderboard": [],
-  "inscritos": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Martin Andres Troccoli Vivas",
+      "licencia": "CM33469770",
+      "hcp": 34.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Fabian Rodriguez Martos",
+      "licencia": "CM41349426",
+      "hcp": 27.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Orion Iniesta Rangel",
+      "licencia": "CMA8990764",
+      "hcp": 26.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Marcos Ceballos Redondo",
+      "licencia": "CM41055975",
+      "hcp": 26.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Manuel Martinez De Murguia Garcia",
+      "licencia": "CM41418069",
+      "hcp": 35.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Eduardo Lopez Gutierrez",
+      "licencia": "CM41350035",
+      "hcp": 25.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Roberto Martinez De Murguia Garcia",
+      "licencia": "CM41982734",
+      "hcp": 24.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "Juan Agudo Goenechea",
+      "licencia": "CM41410936",
+      "hcp": 22.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 9,
+      "name": "Marcos Lozano Davila",
+      "licencia": "CM41414699",
+      "hcp": 21.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 10,
+      "name": "Borja Zurita Travesedo",
+      "licencia": "CM41985756",
+      "hcp": 35.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 11,
+      "name": "Juan Alvarez-Rendueles Mendez",
+      "licencia": "CM01072868",
+      "hcp": 35.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 12,
+      "name": "Hugo Amado Garcia Del Pino",
+      "licencia": "CMA5496404",
+      "hcp": 36.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 13,
+      "name": "Ignacio Maortua Valdes",
+      "licencia": "CM02183721",
+      "hcp": 33.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 14,
+      "name": "Rodrigo Figueroa Ruiz De Larramendi",
+      "licencia": "CM41410725",
+      "hcp": 35.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 15,
+      "name": "Jacobo Tarrero Carril",
+      "licencia": "CM01373991",
+      "hcp": 24.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 16,
+      "name": "Beltran Ortega Fernandez De Luis",
+      "licencia": "CM52070439",
+      "hcp": 36.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 17,
+      "name": "Johan Clement Stuyck",
+      "licencia": "CM04523792",
+      "hcp": 34,
+      "nivel": "B"
+    },
+    {
+      "orden": 18,
+      "name": "Jorge Diez Del Potro",
+      "licencia": "CM04351986",
+      "hcp": 24.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 19,
+      "name": "Rodrigo De Diego Calvo",
+      "licencia": "CM02173440",
+      "hcp": 36.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 20,
+      "name": "Aritz Alarza Marques",
+      "licencia": "CM60969102",
+      "hcp": 26.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 21,
+      "name": "Antonio Javier Payo Gil",
+      "licencia": "CM41322611",
+      "hcp": 15.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 22,
+      "name": "Marcos Yarte Delgado",
+      "licencia": "CM06466864",
+      "hcp": 36.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 23,
+      "name": "Diego Guijarro Pulido",
+      "licencia": "CMD9358871",
+      "hcp": 30,
+      "nivel": "B"
+    },
+    {
+      "orden": 24,
+      "name": "Nicolas Fernandez Montoto",
+      "licencia": "CM41476509",
+      "hcp": 35.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 25,
+      "name": "Matias Aparicio Matamoros",
+      "licencia": "CM41355522",
+      "hcp": 21.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 26,
+      "name": "Miguel Espinos Vallejo",
+      "licencia": "CM01468038",
+      "hcp": 36.8,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Manuela Triguero Fernandez",
+      "licencia": "CM41373590",
+      "hcp": 36,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Carlotta Casas Velez-Osorio",
+      "licencia": "CM06355871",
+      "hcp": 32.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Alejandra Sevillano Sanchez",
+      "licencia": "CM22475563",
+      "hcp": 35.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Carla Amado Garcia Del Pino",
+      "licencia": "CMA5496403",
+      "hcp": 38.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Sofia Lopez De Santiago",
+      "licencia": "CM11472210",
+      "hcp": 37.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Ana Chercasky Puiggari",
+      "licencia": "CM04480500",
+      "hcp": 35.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Alejandra Massana Arias",
+      "licencia": "CMA8354339",
+      "hcp": 31,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "Lucia Yarte Delgado",
+      "licencia": "CM06351648",
+      "hcp": 35.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 9,
+      "name": "Aitana Puerta Revuelta",
+      "licencia": "CM66442882",
+      "hcp": 16.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 10,
+      "name": "Paula Ruiperez Mendoza",
+      "licencia": "CMA8478469",
+      "hcp": 28.1,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Martin Andres Troccoli Vivas",
+      "licencia": "CM33469770",
+      "hcp": 34.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Fabian Rodriguez Martos",
+      "licencia": "CM41349426",
+      "hcp": 27.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Orion Iniesta Rangel",
+      "licencia": "CMA8990764",
+      "hcp": 26.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Manuela Triguero Fernandez",
+      "licencia": "CM41373590",
+      "hcp": 36,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Marcos Ceballos Redondo",
+      "licencia": "CM41055975",
+      "hcp": 26.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Carlotta Casas Velez-Osorio",
+      "licencia": "CM06355871",
+      "hcp": 32.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Manuel Martinez De Murguia Garcia",
+      "licencia": "CM41418069",
+      "hcp": 35.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "Eduardo Lopez Gutierrez",
+      "licencia": "CM41350035",
+      "hcp": 25.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 9,
+      "name": "Roberto Martinez De Murguia Garcia",
+      "licencia": "CM41982734",
+      "hcp": 24.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 10,
+      "name": "Juan Agudo Goenechea",
+      "licencia": "CM41410936",
+      "hcp": 22.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 11,
+      "name": "Marcos Lozano Davila",
+      "licencia": "CM41414699",
+      "hcp": 21.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 12,
+      "name": "Borja Zurita Travesedo",
+      "licencia": "CM41985756",
+      "hcp": 35.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 13,
+      "name": "Alejandra Sevillano Sanchez",
+      "licencia": "CM22475563",
+      "hcp": 35.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 14,
+      "name": "Juan Alvarez-Rendueles Mendez",
+      "licencia": "CM01072868",
+      "hcp": 35.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 15,
+      "name": "Hugo Amado Garcia Del Pino",
+      "licencia": "CMA5496404",
+      "hcp": 36.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 16,
+      "name": "Carla Amado Garcia Del Pino",
+      "licencia": "CMA5496403",
+      "hcp": 38.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 17,
+      "name": "Ignacio Maortua Valdes",
+      "licencia": "CM02183721",
+      "hcp": 33.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 18,
+      "name": "Rodrigo Figueroa Ruiz De Larramendi",
+      "licencia": "CM41410725",
+      "hcp": 35.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 19,
+      "name": "Jacobo Tarrero Carril",
+      "licencia": "CM01373991",
+      "hcp": 24.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 20,
+      "name": "Sofia Lopez De Santiago",
+      "licencia": "CM11472210",
+      "hcp": 37.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 21,
+      "name": "Ana Chercasky Puiggari",
+      "licencia": "CM04480500",
+      "hcp": 35.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 22,
+      "name": "Beltran Ortega Fernandez De Luis",
+      "licencia": "CM52070439",
+      "hcp": 36.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 23,
+      "name": "Johan Clement Stuyck",
+      "licencia": "CM04523792",
+      "hcp": 34,
+      "nivel": "B"
+    },
+    {
+      "orden": 24,
+      "name": "Jorge Diez Del Potro",
+      "licencia": "CM04351986",
+      "hcp": 24.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 25,
+      "name": "Rodrigo De Diego Calvo",
+      "licencia": "CM02173440",
+      "hcp": 36.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 26,
+      "name": "Aritz Alarza Marques",
+      "licencia": "CM60969102",
+      "hcp": 26.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 27,
+      "name": "Alejandra Massana Arias",
+      "licencia": "CMA8354339",
+      "hcp": 31,
+      "nivel": "B"
+    },
+    {
+      "orden": 28,
+      "name": "Antonio Javier Payo Gil",
+      "licencia": "CM41322611",
+      "hcp": 15.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 29,
+      "name": "Lucia Yarte Delgado",
+      "licencia": "CM06351648",
+      "hcp": 35.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 30,
+      "name": "Marcos Yarte Delgado",
+      "licencia": "CM06466864",
+      "hcp": 36.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 31,
+      "name": "Diego Guijarro Pulido",
+      "licencia": "CMD9358871",
+      "hcp": 30,
+      "nivel": "B"
+    },
+    {
+      "orden": 32,
+      "name": "Nicolas Fernandez Montoto",
+      "licencia": "CM41476509",
+      "hcp": 35.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 33,
+      "name": "Aitana Puerta Revuelta",
+      "licencia": "CM66442882",
+      "hcp": 16.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 34,
+      "name": "Matias Aparicio Matamoros",
+      "licencia": "CM41355522",
+      "hcp": 21.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 35,
+      "name": "Paula Ruiperez Mendoza",
+      "licencia": "CMA8478469",
+      "hcp": 28.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 36,
+      "name": "Miguel Espinos Vallejo",
+      "licencia": "CM01468038",
+      "hcp": 36.8,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:30",
+          "tee": 9,
+          "name": "Antonio Javier Payo Gil",
+          "hcp": 15.9,
+          "ins": "2317310",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "09:30",
+          "tee": 9,
+          "name": "Marcos Lozano Davila",
+          "hcp": 21.7,
+          "ins": "2316689",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "09:30",
+          "tee": 9,
+          "name": "Matias Aparicio Matamoros",
+          "hcp": 21.7,
+          "ins": "2320869",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "09:30",
+          "tee": 9,
+          "name": "Juan Agudo Goenechea",
+          "hcp": 22.9,
+          "ins": "2316683",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "09:39",
+          "tee": 2,
+          "name": "Roberto Martinez De Murguia Garcia",
+          "hcp": 24.6,
+          "ins": "2316671",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "09:39",
+          "tee": 2,
+          "name": "Jacobo Tarrero Carril",
+          "hcp": 24.9,
+          "ins": "2316853",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "09:39",
+          "tee": 2,
+          "name": "Jorge Diez Del Potro",
+          "hcp": 24.9,
+          "ins": "2317230",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "09:39",
+          "tee": 2,
+          "name": "Eduardo Lopez Gutierrez",
+          "hcp": 25.7,
+          "ins": "2316664",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "09:39",
+          "tee": 4,
+          "name": "Marcos Ceballos Redondo",
+          "hcp": 26.2,
+          "ins": "2316629",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "09:39",
+          "tee": 4,
+          "name": "Orion Iniesta Rangel",
+          "hcp": 26.9,
+          "ins": "2316579",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "09:39",
+          "tee": 4,
+          "name": "Aritz Alarza Marques",
+          "hcp": 26.9,
+          "ins": "2317251",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "09:39",
+          "tee": 4,
+          "name": "Fabian Rodriguez Martos",
+          "hcp": 27.2,
+          "ins": "2316572",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "09:39",
+          "tee": 6,
+          "name": "Diego Guijarro Pulido",
+          "hcp": 30,
+          "ins": "2317808",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "09:39",
+          "tee": 6,
+          "name": "Ignacio Maortua Valdes",
+          "hcp": 33.7,
+          "ins": "2316732",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "09:39",
+          "tee": 6,
+          "name": "Johan Clement Stuyck",
+          "hcp": 34,
+          "ins": "2317137",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "09:39",
+          "tee": 6,
+          "name": "Martin Andres Troccoli Vivas",
+          "hcp": 34.6,
+          "ins": "2316570",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "09:39",
+          "tee": 8,
+          "name": "Aitana Puerta Revuelta",
+          "hcp": 16.6,
+          "ins": "2319563",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "09:39",
+          "tee": 8,
+          "name": "Paula Ruiperez Mendoza",
+          "hcp": 28.1,
+          "ins": "2321032",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "09:39",
+          "tee": 8,
+          "name": "Alejandra Massana Arias",
+          "hcp": 31,
+          "ins": "2317265",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "09:39",
+          "tee": 8,
+          "name": "Carlotta Casas Velez-Osorio",
+          "hcp": 32.7,
+          "ins": "2316642",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "14:00",
+          "tee": 9,
+          "name": "Manuel Martinez De Murguia Garcia",
+          "hcp": 35.2,
+          "ins": "2316660",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "14:00",
+          "tee": 9,
+          "name": "Juan Alvarez-Rendueles Mendez",
+          "hcp": 35.6,
+          "ins": "2316721",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "14:00",
+          "tee": 9,
+          "name": "Nicolas Fernandez Montoto",
+          "hcp": 35.6,
+          "ins": "2319050",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "14:00",
+          "tee": 9,
+          "name": "Borja Zurita Travesedo",
+          "hcp": 35.7,
+          "ins": "2316714",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "14:09",
+          "tee": 2,
+          "name": "Rodrigo Figueroa Ruiz De Larramendi",
+          "hcp": 35.8,
+          "ins": "2316791",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "14:09",
+          "tee": 2,
+          "name": "Hugo Amado Garcia Del Pino",
+          "hcp": 36.1,
+          "ins": "2316725",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "14:09",
+          "tee": 2,
+          "name": "Marcos Yarte Delgado",
+          "hcp": 36.2,
+          "ins": "2317613",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "14:09",
+          "tee": 4,
+          "name": "Rodrigo De Diego Calvo",
+          "hcp": 36.4,
+          "ins": "2317241",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "14:09",
+          "tee": 4,
+          "name": "Beltran Ortega Fernandez De Luis",
+          "hcp": 36.7,
+          "ins": "2316919",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "14:09",
+          "tee": 4,
+          "name": "Miguel Espinos Vallejo",
+          "hcp": 36.8,
+          "ins": "2321285",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "14:09",
+          "tee": 6,
+          "name": "Alejandra Sevillano Sanchez",
+          "hcp": 35.2,
+          "ins": "2316715",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "14:09",
+          "tee": 6,
+          "name": "Lucia Yarte Delgado",
+          "hcp": 35.2,
+          "ins": "2317606",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "14:09",
+          "tee": 6,
+          "name": "Ana Chercasky Puiggari",
+          "hcp": 35.8,
+          "ins": "2316861",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "14:09",
+          "tee": 8,
+          "name": "Manuela Triguero Fernandez",
+          "hcp": 36,
+          "ins": "2316598",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "14:09",
+          "tee": 8,
+          "name": "Sofia Lopez De Santiago",
+          "hcp": 37.7,
+          "ins": "2316856",
+          "jid": "72265",
+          "nivel": "B"
+        },
+        {
+          "time": "14:09",
+          "tee": 8,
+          "name": "Carla Amado Garcia Del Pino",
+          "hcp": 38.8,
+          "ins": "2316730",
+          "jid": "72265",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -152,6 +1003,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:29.150Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/2228487229_rrll_aranjuez.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:08.047Z"
 }

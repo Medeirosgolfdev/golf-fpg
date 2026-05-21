@@ -1,14 +1,14 @@
 {
   "tourId": 67952,
   "url": "https://www.nextcaddy.com/tour/67952",
-  "scrapedAt": "2026-05-09T09:57:31.657Z",
+  "scrapedAt": "2026-05-21T16:36:48.801Z",
   "meta": {
     "name": "II TORNEO ERRE QUE ERRE",
     "organizer": null,
     "course": "Alhaurín Golf Hotel & Resort",
     "courseCode": "AM22",
-    "dateStart": "31 ene 2026",
-    "dateEnd": "31 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-31"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 91,
       "header": [
         "Pos",
         "Jugador",
@@ -534,7 +535,7 @@
         {
           "pos": 46,
           "name": "Francisco Jose Ruiz Zamora",
-          "licencia": "AMI5969367",
+          "licencia": "AMC8969367",
           "hcp": 14.2,
           "nivel": "Mid",
           "rounds": [],
@@ -1040,6 +1041,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 91
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1072,7 +1080,7 @@
     {
       "orden": 5,
       "name": "Francisco Jose Ruiz Zamora",
-      "licencia": "AMI5969367",
+      "licencia": "AMC8969367",
       "hcp": 14.2,
       "nivel": "Mid"
     },
@@ -1739,7 +1747,7 @@
       "name": "Francisco Jose Ruiz Zamora",
       "licencia": "30-01-26 13:07",
       "hcp": 14.2,
-      "nivel": "AMI5969367"
+      "nivel": "AMC8969367"
     },
     {
       "orden": 7,
@@ -2337,379 +2345,6 @@
       "nivel": "AM22607027"
     }
   ],
-  "estadisticas": {
-    "0": {
-      "p": {
-        "id": 157524,
-        "datos": [
-          [
-            "Tipo",
-            "Total"
-          ],
-          [
-            "Par",
-            281
-          ],
-          [
-            "Birdie",
-            33
-          ],
-          [
-            "Eagle",
-            0
-          ],
-          [
-            "Bogey",
-            526
-          ],
-          [
-            "Peor",
-            597
-          ]
-        ]
-      },
-      "bvg": {
-        "id": 157525,
-        "datos": [
-          [
-            "Hoyo",
-            "Sobrepar"
-          ],
-          [
-            "1",
-            117
-          ],
-          [
-            "2",
-            125
-          ],
-          [
-            "3",
-            92
-          ],
-          [
-            "4",
-            93
-          ],
-          [
-            "5",
-            74
-          ],
-          [
-            "6",
-            125
-          ],
-          [
-            "7",
-            116
-          ],
-          [
-            "8",
-            133
-          ],
-          [
-            "9",
-            120
-          ],
-          [
-            "10",
-            69
-          ],
-          [
-            "11",
-            121
-          ],
-          [
-            "12",
-            89
-          ],
-          [
-            "13",
-            113
-          ],
-          [
-            "14",
-            85
-          ],
-          [
-            "15",
-            130
-          ],
-          [
-            "16",
-            129
-          ],
-          [
-            "17",
-            110
-          ],
-          [
-            "18",
-            105
-          ]
-        ]
-      }
-    },
-    "1": {
-      "lxy": {
-        "id": 157526,
-        "datos": [
-          [
-            "Hoyo",
-            "OSCAR MAYA ",
-            "ELOISA CARMEN BENITEZ MARTINEZ",
-            "FERNANDO  AMARO DURO"
-          ],
-          [
-            "Hoyo 0",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 1",
-            -1,
-            1,
-            2
-          ],
-          [
-            "Hoyo 2",
-            -1,
-            2,
-            2
-          ],
-          [
-            "Hoyo 3",
-            -1,
-            1,
-            2
-          ],
-          [
-            "Hoyo 4",
-            -2,
-            -2,
-            2
-          ],
-          [
-            "Hoyo 5",
-            -1,
-            0,
-            0
-          ],
-          [
-            "Hoyo 6",
-            -1,
-            -1,
-            0
-          ],
-          [
-            "Hoyo 7",
-            -1,
-            0,
-            -1
-          ],
-          [
-            "Hoyo 8",
-            -1,
-            -1,
-            -2
-          ],
-          [
-            "Hoyo 9",
-            -2,
-            -2,
-            -3
-          ],
-          [
-            "Hoyo 10",
-            -3,
-            -4,
-            -4
-          ],
-          [
-            "Hoyo 11",
-            -3,
-            -5,
-            -5
-          ],
-          [
-            "Hoyo 12",
-            -4,
-            -6,
-            -4
-          ],
-          [
-            "Hoyo 13",
-            -4,
-            -6,
-            -5
-          ],
-          [
-            "Hoyo 14",
-            -3,
-            -6,
-            -5
-          ],
-          [
-            "Hoyo 15",
-            -3,
-            -5,
-            -5
-          ],
-          [
-            "Hoyo 16",
-            -2,
-            -6,
-            -3
-          ],
-          [
-            "Hoyo 17",
-            -2,
-            -4,
-            -2
-          ],
-          [
-            "Hoyo 18",
-            -3,
-            -3,
-            -3
-          ]
-        ]
-      },
-      "hvg": {
-        "id": 157527,
-        "datos": [
-          [
-            "Hoyo",
-            "OSCAR MAYA ",
-            "ELOISA CARMEN BENITEZ MARTINEZ",
-            "FERNANDO  AMARO DURO"
-          ],
-          [
-            "Hoyo 0",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 1",
-            -1,
-            1,
-            2
-          ],
-          [
-            "Hoyo 2",
-            0,
-            1,
-            0
-          ],
-          [
-            "Hoyo 3",
-            0,
-            -1,
-            0
-          ],
-          [
-            "Hoyo 4",
-            -1,
-            -3,
-            0
-          ],
-          [
-            "Hoyo 5",
-            1,
-            2,
-            -2
-          ],
-          [
-            "Hoyo 6",
-            0,
-            -1,
-            0
-          ],
-          [
-            "Hoyo 7",
-            0,
-            1,
-            -1
-          ],
-          [
-            "Hoyo 8",
-            0,
-            -1,
-            -1
-          ],
-          [
-            "Hoyo 9",
-            -1,
-            -1,
-            -1
-          ],
-          [
-            "Hoyo 10",
-            -1,
-            -2,
-            -1
-          ],
-          [
-            "Hoyo 11",
-            0,
-            -1,
-            -1
-          ],
-          [
-            "Hoyo 12",
-            -1,
-            -1,
-            1
-          ],
-          [
-            "Hoyo 13",
-            0,
-            0,
-            -1
-          ],
-          [
-            "Hoyo 14",
-            1,
-            0,
-            0
-          ],
-          [
-            "Hoyo 15",
-            0,
-            1,
-            0
-          ],
-          [
-            "Hoyo 16",
-            1,
-            -1,
-            2
-          ],
-          [
-            "Hoyo 17",
-            0,
-            2,
-            1
-          ],
-          [
-            "Hoyo 18",
-            -1,
-            1,
-            -1
-          ]
-        ]
-      }
-    }
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72470
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -3509,5 +3144,379 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:17.353Z"
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 157524,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            281
+          ],
+          [
+            "Birdie",
+            33
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            526
+          ],
+          [
+            "Peor",
+            597
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 157525,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            117
+          ],
+          [
+            "2",
+            125
+          ],
+          [
+            "3",
+            92
+          ],
+          [
+            "4",
+            93
+          ],
+          [
+            "5",
+            74
+          ],
+          [
+            "6",
+            125
+          ],
+          [
+            "7",
+            116
+          ],
+          [
+            "8",
+            133
+          ],
+          [
+            "9",
+            120
+          ],
+          [
+            "10",
+            69
+          ],
+          [
+            "11",
+            121
+          ],
+          [
+            "12",
+            89
+          ],
+          [
+            "13",
+            113
+          ],
+          [
+            "14",
+            85
+          ],
+          [
+            "15",
+            130
+          ],
+          [
+            "16",
+            129
+          ],
+          [
+            "17",
+            110
+          ],
+          [
+            "18",
+            105
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 157526,
+        "datos": [
+          [
+            "Hoyo",
+            "OSCAR MAYA ",
+            "ELOISA CARMEN BENITEZ MARTINEZ",
+            "FERNANDO  AMARO DURO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            2,
+            2
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 4",
+            -2,
+            -2,
+            2
+          ],
+          [
+            "Hoyo 5",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            -1,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 9",
+            -2,
+            -2,
+            -3
+          ],
+          [
+            "Hoyo 10",
+            -3,
+            -4,
+            -4
+          ],
+          [
+            "Hoyo 11",
+            -3,
+            -5,
+            -5
+          ],
+          [
+            "Hoyo 12",
+            -4,
+            -6,
+            -4
+          ],
+          [
+            "Hoyo 13",
+            -4,
+            -6,
+            -5
+          ],
+          [
+            "Hoyo 14",
+            -3,
+            -6,
+            -5
+          ],
+          [
+            "Hoyo 15",
+            -3,
+            -5,
+            -5
+          ],
+          [
+            "Hoyo 16",
+            -2,
+            -6,
+            -3
+          ],
+          [
+            "Hoyo 17",
+            -2,
+            -4,
+            -2
+          ],
+          [
+            "Hoyo 18",
+            -3,
+            -3,
+            -3
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 157527,
+        "datos": [
+          [
+            "Hoyo",
+            "OSCAR MAYA ",
+            "ELOISA CARMEN BENITEZ MARTINEZ",
+            "FERNANDO  AMARO DURO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 2",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 3",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            -3,
+            0
+          ],
+          [
+            "Hoyo 5",
+            1,
+            2,
+            -2
+          ],
+          [
+            "Hoyo 6",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 7",
+            0,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            -1,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 11",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 14",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 15",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 16",
+            1,
+            -1,
+            2
+          ],
+          [
+            "Hoyo 17",
+            0,
+            2,
+            1
+          ],
+          [
+            "Hoyo 18",
+            -1,
+            1,
+            -1
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72470
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:13.995Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 68750,
   "url": "https://www.nextcaddy.com/tour/68750",
-  "scrapedAt": "2026-05-09T10:38:03.883Z",
+  "scrapedAt": "2026-05-21T16:37:26.827Z",
   "meta": {
     "name": "IV Interclub Infantil RCG Vista Hermosa - RC Pineda 18 Hoyos",
     "organizer": null,
     "course": "Real Club de Golf Vista Hermosa",
     "courseCode": "AM05",
-    "dateStart": "28 feb 2026",
-    "dateEnd": "28 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Alevín  Caballero",
     "categories": [
       "Infantil",
@@ -18,77 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-28"
+    ]
   },
-  "course": {
-    "par": [
-      5,
-      4,
-      4,
-      4,
-      5,
-      4,
-      4,
-      4,
-      5,
-      5,
-      4,
-      4,
-      4,
-      4,
-      4,
-      5,
-      4,
-      5
-    ],
-    "si": [
-      9,
-      17,
-      3,
-      11,
-      15,
-      5,
-      1,
-      13,
-      7,
-      10,
-      18,
-      4,
-      12,
-      16,
-      6,
-      2,
-      14,
-      8
-    ],
-    "meters": [
-      428,
-      136,
-      341,
-      119,
-      252,
-      297,
-      319,
-      219,
-      399,
-      428,
-      136,
-      341,
-      119,
-      252,
-      297,
-      319,
-      219,
-      399
-    ],
-    "parTotal": 78,
-    "parInferred": true,
-    "parConfidence": "medium"
-  },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 30,
       "header": [
         "Pos",
         "Jugador",
@@ -110,33 +47,7 @@
           "rounds": [],
           "total": 61,
           "toPar": -11,
-          "inscribedId": 2268710,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                4,
-                5,
-                4,
-                4,
-                5,
-                5,
-                4,
-                6,
-                5,
-                4,
-                4,
-                5,
-                5,
-                4,
-                9,
-                5,
-                6
-              ],
-              "total": 89
-            }
-          ]
+          "inscribedId": 2268710
         },
         {
           "pos": 2,
@@ -147,33 +58,7 @@
           "rounds": [],
           "total": 63,
           "toPar": -9,
-          "inscribedId": 2269556,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                7,
-                4,
-                4,
-                4,
-                6,
-                4,
-                4,
-                4,
-                6,
-                6,
-                4,
-                4,
-                4,
-                4,
-                4,
-                5,
-                4,
-                7
-              ],
-              "total": 85
-            }
-          ]
+          "inscribedId": 2269556
         },
         {
           "pos": 3,
@@ -184,8 +69,7 @@
           "rounds": [],
           "total": 63,
           "toPar": -9,
-          "inscribedId": 2268730,
-          "roundScores": []
+          "inscribedId": 2268730
         },
         {
           "pos": 4,
@@ -196,8 +80,7 @@
           "rounds": [],
           "total": 69,
           "toPar": -3,
-          "inscribedId": 2268722,
-          "roundScores": []
+          "inscribedId": 2268722
         },
         {
           "pos": 5,
@@ -208,8 +91,7 @@
           "rounds": [],
           "total": 71,
           "toPar": -1,
-          "inscribedId": 2268711,
-          "roundScores": []
+          "inscribedId": 2268711
         },
         {
           "pos": 6,
@@ -220,8 +102,7 @@
           "rounds": [],
           "total": 72,
           "toPar": null,
-          "inscribedId": 2269546,
-          "roundScores": []
+          "inscribedId": 2269546
         },
         {
           "pos": 7,
@@ -232,8 +113,7 @@
           "rounds": [],
           "total": 73,
           "toPar": 1,
-          "inscribedId": 2269544,
-          "roundScores": []
+          "inscribedId": 2269544
         },
         {
           "pos": 8,
@@ -244,8 +124,7 @@
           "rounds": [],
           "total": 73,
           "toPar": 1,
-          "inscribedId": 2268728,
-          "roundScores": []
+          "inscribedId": 2268728
         },
         {
           "pos": 9,
@@ -256,8 +135,7 @@
           "rounds": [],
           "total": 73,
           "toPar": 1,
-          "inscribedId": 2268736,
-          "roundScores": []
+          "inscribedId": 2268736
         },
         {
           "pos": 10,
@@ -268,8 +146,7 @@
           "rounds": [],
           "total": 73,
           "toPar": 1,
-          "inscribedId": 2269553,
-          "roundScores": []
+          "inscribedId": 2269553
         },
         {
           "pos": 11,
@@ -280,8 +157,7 @@
           "rounds": [],
           "total": 73,
           "toPar": 1,
-          "inscribedId": 2269552,
-          "roundScores": []
+          "inscribedId": 2269552
         },
         {
           "pos": 12,
@@ -292,8 +168,7 @@
           "rounds": [],
           "total": 73,
           "toPar": 1,
-          "inscribedId": 2268734,
-          "roundScores": []
+          "inscribedId": 2268734
         },
         {
           "pos": 13,
@@ -304,8 +179,7 @@
           "rounds": [],
           "total": 74,
           "toPar": 2,
-          "inscribedId": 2268727,
-          "roundScores": []
+          "inscribedId": 2268727
         },
         {
           "pos": 14,
@@ -316,8 +190,7 @@
           "rounds": [],
           "total": 74,
           "toPar": 2,
-          "inscribedId": 2268724,
-          "roundScores": []
+          "inscribedId": 2268724
         },
         {
           "pos": 15,
@@ -328,8 +201,7 @@
           "rounds": [],
           "total": 75,
           "toPar": 3,
-          "inscribedId": 2269554,
-          "roundScores": []
+          "inscribedId": 2269554
         },
         {
           "pos": 16,
@@ -340,8 +212,7 @@
           "rounds": [],
           "total": 76,
           "toPar": 4,
-          "inscribedId": 2269545,
-          "roundScores": []
+          "inscribedId": 2269545
         },
         {
           "pos": 17,
@@ -352,8 +223,7 @@
           "rounds": [],
           "total": 76,
           "toPar": 4,
-          "inscribedId": 2268732,
-          "roundScores": []
+          "inscribedId": 2268732
         },
         {
           "pos": 18,
@@ -364,8 +234,7 @@
           "rounds": [],
           "total": 76,
           "toPar": 4,
-          "inscribedId": 2269550,
-          "roundScores": []
+          "inscribedId": 2269550
         },
         {
           "pos": 19,
@@ -376,8 +245,7 @@
           "rounds": [],
           "total": 76,
           "toPar": 4,
-          "inscribedId": 2268733,
-          "roundScores": []
+          "inscribedId": 2268733
         },
         {
           "pos": 20,
@@ -388,8 +256,7 @@
           "rounds": [],
           "total": 77,
           "toPar": 5,
-          "inscribedId": 2268720,
-          "roundScores": []
+          "inscribedId": 2268720
         },
         {
           "pos": 21,
@@ -400,8 +267,7 @@
           "rounds": [],
           "total": 77,
           "toPar": 5,
-          "inscribedId": 2269547,
-          "roundScores": []
+          "inscribedId": 2269547
         },
         {
           "pos": 22,
@@ -412,8 +278,7 @@
           "rounds": [],
           "total": 79,
           "toPar": 7,
-          "inscribedId": 2268737,
-          "roundScores": []
+          "inscribedId": 2268737
         },
         {
           "pos": 23,
@@ -424,8 +289,7 @@
           "rounds": [],
           "total": 80,
           "toPar": 8,
-          "inscribedId": 2269557,
-          "roundScores": []
+          "inscribedId": 2269557
         },
         {
           "pos": 24,
@@ -436,8 +300,7 @@
           "rounds": [],
           "total": 81,
           "toPar": 9,
-          "inscribedId": 2268731,
-          "roundScores": []
+          "inscribedId": 2268731
         },
         {
           "pos": 25,
@@ -448,8 +311,7 @@
           "rounds": [],
           "total": 81,
           "toPar": 9,
-          "inscribedId": 2269548,
-          "roundScores": []
+          "inscribedId": 2269548
         },
         {
           "pos": 26,
@@ -460,8 +322,7 @@
           "rounds": [],
           "total": 81,
           "toPar": 9,
-          "inscribedId": 2269549,
-          "roundScores": []
+          "inscribedId": 2269549
         },
         {
           "pos": 27,
@@ -472,8 +333,7 @@
           "rounds": [],
           "total": 81,
           "toPar": 9,
-          "inscribedId": 2269551,
-          "roundScores": []
+          "inscribedId": 2269551
         },
         {
           "pos": 28,
@@ -484,8 +344,7 @@
           "rounds": [],
           "total": 81,
           "toPar": 9,
-          "inscribedId": 2268735,
-          "roundScores": []
+          "inscribedId": 2268735
         },
         {
           "pos": 29,
@@ -496,8 +355,7 @@
           "rounds": [],
           "total": 81,
           "toPar": 9,
-          "inscribedId": 2269558,
-          "roundScores": []
+          "inscribedId": 2269558
         },
         {
           "pos": 30,
@@ -508,12 +366,18 @@
           "rounds": [],
           "total": 87,
           "toPar": 15,
-          "inscribedId": 2268729,
-          "roundScores": []
+          "inscribedId": 2268729
         }
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 30
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -957,6 +821,283 @@
       "nivel": "AM02082590"
     }
   ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Santiago Bernal Bollullos",
+          "hcp": 0.7,
+          "ins": "2268711",
+          "jid": "73420",
+          "nivel": "J"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Pablo Colin Cosano",
+          "hcp": 0.7,
+          "ins": "2268727",
+          "jid": "73420",
+          "nivel": "J"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Jaime Medina Martinez",
+          "hcp": 2.3,
+          "ins": "2269544",
+          "jid": "73420",
+          "nivel": "J"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Alvaro Cerezo Reina",
+          "hcp": 3,
+          "ins": "2269545",
+          "jid": "73420",
+          "nivel": "C"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Manuel Molina Fernandez De La Mela",
+          "hcp": 5.7,
+          "ins": "2269546",
+          "jid": "73420",
+          "nivel": "J"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Juan Moran Amado",
+          "hcp": 9.3,
+          "ins": "2268731",
+          "jid": "73420",
+          "nivel": "C"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Fatima Salas Labrado",
+          "hcp": 9.4,
+          "ins": "2269547",
+          "jid": "73420",
+          "nivel": "J"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Eduardo Brandariz Carvallo",
+          "hcp": 9.5,
+          "ins": "2268720",
+          "jid": "73420",
+          "nivel": "C"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Fernando Pascual Del Pobil Toscano",
+          "hcp": 9.9,
+          "ins": "2268732",
+          "jid": "73420",
+          "nivel": "I"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Candela De Lope Gomez",
+          "hcp": 10.2,
+          "ins": "2268728",
+          "jid": "73420",
+          "nivel": "C"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Luis Piñar De La Paz",
+          "hcp": 11.7,
+          "ins": "2269548",
+          "jid": "73420",
+          "nivel": "J"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Ignacio Delgado Montoto",
+          "hcp": 12.7,
+          "ins": "2269549",
+          "jid": "73420",
+          "nivel": "C"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Martin Serrano Rodriguez",
+          "hcp": 12.9,
+          "ins": "2268736",
+          "jid": "73420",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Felipe Fernandez Pina",
+          "hcp": 14.6,
+          "ins": "2269550",
+          "jid": "73420",
+          "nivel": "A"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Miguel De La Rosa Tassara",
+          "hcp": 14.7,
+          "ins": "2269551",
+          "jid": "73420",
+          "nivel": "C"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Alvaro Toledano Martinez Del Cerro",
+          "hcp": 17.7,
+          "ins": "2268737",
+          "jid": "73420",
+          "nivel": "C"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Nicolas Brandariz Carvallo",
+          "hcp": 18.5,
+          "ins": "2268722",
+          "jid": "73420",
+          "nivel": "A"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Ignacio Pascual Del Pobil Toscano",
+          "hcp": 20.1,
+          "ins": "2268733",
+          "jid": "73420",
+          "nivel": "A"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Javier Aguado Medina",
+          "hcp": 20.4,
+          "ins": "2269552",
+          "jid": "73420",
+          "nivel": "C"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Eduardo Miralles Serra",
+          "hcp": 21.5,
+          "ins": "2269553",
+          "jid": "73420",
+          "nivel": "A"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Jaime Castro Garzon",
+          "hcp": 22.1,
+          "ins": "2268724",
+          "jid": "73420",
+          "nivel": "C"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Fernando Medina Caliz",
+          "hcp": 22.6,
+          "ins": "2269554",
+          "jid": "73420",
+          "nivel": "C"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Ignacio Moreno Baena",
+          "hcp": 22.6,
+          "ins": "2269556",
+          "jid": "73420",
+          "nivel": "C"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Fernando Salamero Catalan",
+          "hcp": 24.2,
+          "ins": "2268735",
+          "jid": "73420",
+          "nivel": "I"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Luis Fernandez Fernandez",
+          "hcp": 27.3,
+          "ins": "2269557",
+          "jid": "73420",
+          "nivel": "I"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Juan Ignacio Saenz Vidau",
+          "hcp": 27.9,
+          "ins": "2268734",
+          "jid": "73420",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Alfonso Mas Gonzalez",
+          "hcp": 30.6,
+          "ins": "2268730",
+          "jid": "73420",
+          "nivel": "A"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Sebastian Delgado Perez De Guzman",
+          "hcp": 33.1,
+          "ins": "2268729",
+          "jid": "73420",
+          "nivel": "I"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Carlos Arriaga Sanchez",
+          "hcp": 33.6,
+          "ins": "2268710",
+          "jid": "73420",
+          "nivel": "A"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Andres De La Rosa Tassara",
+          "hcp": 36,
+          "ins": "2269558",
+          "jid": "73420",
+          "nivel": "I"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -1254,282 +1395,6 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Santiago Bernal Bollullos",
-          "hcp": 0.7,
-          "ins": "2268711",
-          "jid": "73420",
-          "nivel": "J"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Pablo Colin Cosano",
-          "hcp": 0.7,
-          "ins": "2268727",
-          "jid": "73420",
-          "nivel": "J"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Jaime Medina Martinez",
-          "hcp": 2.3,
-          "ins": "2269544",
-          "jid": "73420",
-          "nivel": "J"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Alvaro Cerezo Reina",
-          "hcp": 3,
-          "ins": "2269545",
-          "jid": "73420",
-          "nivel": "C"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Manuel Molina Fernandez De La Mela",
-          "hcp": 5.7,
-          "ins": "2269546",
-          "jid": "73420",
-          "nivel": "J"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Juan Moran Amado",
-          "hcp": 9.3,
-          "ins": "2268731",
-          "jid": "73420",
-          "nivel": "C"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Fatima Salas Labrado",
-          "hcp": 9.4,
-          "ins": "2269547",
-          "jid": "73420",
-          "nivel": "J"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Eduardo Brandariz Carvallo",
-          "hcp": 9.5,
-          "ins": "2268720",
-          "jid": "73420",
-          "nivel": "C"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Fernando Pascual Del Pobil Toscano",
-          "hcp": 9.9,
-          "ins": "2268732",
-          "jid": "73420",
-          "nivel": "I"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Candela De Lope Gomez",
-          "hcp": 10.2,
-          "ins": "2268728",
-          "jid": "73420",
-          "nivel": "C"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Luis Piñar De La Paz",
-          "hcp": 11.7,
-          "ins": "2269548",
-          "jid": "73420",
-          "nivel": "J"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Ignacio Delgado Montoto",
-          "hcp": 12.7,
-          "ins": "2269549",
-          "jid": "73420",
-          "nivel": "C"
-        },
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "Martin Serrano Rodriguez",
-          "hcp": 12.9,
-          "ins": "2268736",
-          "jid": "73420",
-          "nivel": "I"
-        },
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "Felipe Fernandez Pina",
-          "hcp": 14.6,
-          "ins": "2269550",
-          "jid": "73420",
-          "nivel": "A"
-        },
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "Miguel De La Rosa Tassara",
-          "hcp": 14.7,
-          "ins": "2269551",
-          "jid": "73420",
-          "nivel": "C"
-        },
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "Alvaro Toledano Martinez Del Cerro",
-          "hcp": 17.7,
-          "ins": "2268737",
-          "jid": "73420",
-          "nivel": "C"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Nicolas Brandariz Carvallo",
-          "hcp": 18.5,
-          "ins": "2268722",
-          "jid": "73420",
-          "nivel": "A"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Ignacio Pascual Del Pobil Toscano",
-          "hcp": 20.1,
-          "ins": "2268733",
-          "jid": "73420",
-          "nivel": "A"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Javier Aguado Medina",
-          "hcp": 20.4,
-          "ins": "2269552",
-          "jid": "73420",
-          "nivel": "C"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Eduardo Miralles Serra",
-          "hcp": 21.5,
-          "ins": "2269553",
-          "jid": "73420",
-          "nivel": "A"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
-          "name": "Jaime Castro Garzon",
-          "hcp": 22.1,
-          "ins": "2268724",
-          "jid": "73420",
-          "nivel": "C"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
-          "name": "Fernando Medina Caliz",
-          "hcp": 22.6,
-          "ins": "2269554",
-          "jid": "73420",
-          "nivel": "C"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
-          "name": "Ignacio Moreno Baena",
-          "hcp": 22.6,
-          "ins": "2269556",
-          "jid": "73420",
-          "nivel": "C"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
-          "name": "Fernando Salamero Catalan",
-          "hcp": 24.2,
-          "ins": "2268735",
-          "jid": "73420",
-          "nivel": "I"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Luis Fernandez Fernandez",
-          "hcp": 27.3,
-          "ins": "2269557",
-          "jid": "73420",
-          "nivel": "I"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Juan Ignacio Saenz Vidau",
-          "hcp": 27.9,
-          "ins": "2268734",
-          "jid": "73420",
-          "nivel": "A"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Alfonso Mas Gonzalez",
-          "hcp": 30.6,
-          "ins": "2268730",
-          "jid": "73420",
-          "nivel": "A"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Sebastian Delgado Perez De Guzman",
-          "hcp": 33.1,
-          "ins": "2268729",
-          "jid": "73420",
-          "nivel": "I"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Carlos Arriaga Sanchez",
-          "hcp": 33.6,
-          "ins": "2268710",
-          "jid": "73420",
-          "nivel": "A"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Andres De La Rosa Tassara",
-          "hcp": 36,
-          "ins": "2269558",
-          "jid": "73420",
-          "nivel": "I"
-        }
-      ]
-    }
-  ],
-  "horariosScrapedAt": "2026-05-09T12:12:29.027Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:27.073Z"
 }

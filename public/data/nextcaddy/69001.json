@@ -1,14 +1,14 @@
 {
   "tourId": 69001,
   "url": "https://www.nextcaddy.com/tour/69001",
-  "scrapedAt": "2026-05-09T09:58:04.526Z",
+  "scrapedAt": "2026-05-21T16:37:40.685Z",
   "meta": {
     "name": "CAPTAINS DAY 0703",
     "organizer": null,
     "course": "Miraflores Golf",
     "courseCode": "AM76",
-    "dateStart": "07 mar 2026",
-    "dateEnd": "07 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-07"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 73,
       "header": [
         "Pos",
         "Jugador",
@@ -842,6 +843,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 73
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1880,6 +1888,7 @@
       "nivel": "AM76898519"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {
       "p": {
@@ -2253,6 +2262,6 @@
     }
   ],
   "scoreTypes": null,
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:40.734Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:29.674Z"
 }

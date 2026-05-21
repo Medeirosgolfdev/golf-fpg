@@ -1,14 +1,14 @@
 {
   "tourId": 69190,
   "url": "https://www.nextcaddy.com/tour/69190",
-  "scrapedAt": "2026-05-09T09:58:25.055Z",
+  "scrapedAt": "2026-05-21T16:37:55.220Z",
   "meta": {
     "name": "CLUB DE GOLF DINAMARCA",
     "organizer": null,
     "course": "Santa María Golf & Country Club",
     "courseCode": "AM86",
-    "dateStart": "15 mar 2026",
-    "dateEnd": "15 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-15"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -127,6 +128,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 8
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -255,6 +263,7 @@
       "nivel": "S"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -271,6 +280,6 @@
     }
   ],
   "scoreTypes": null,
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:41.324Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:31.544Z"
 }

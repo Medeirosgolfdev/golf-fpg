@@ -1,14 +1,14 @@
 {
   "tourId": 70487,
   "url": "https://www.nextcaddy.com/tour/70487",
-  "scrapedAt": "2026-05-09T10:15:51.519Z",
+  "scrapedAt": "2026-05-21T16:39:23.571Z",
   "meta": {
     "name": "Sherry International Golf Group (SIGG) - MEDAL PLAY - Lunes 04 Mayo 2026 (Grupo privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "04 may 2026",
-    "dateEnd": "04 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "MEDAL PLAY - Lunes 04 Mayo 2026 (Grupo p",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-04"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 25,
       "header": [
         "Pos",
         "Jugador",
@@ -314,6 +315,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 25
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -687,22 +695,6 @@
       "nivel": "AME7220403"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75431
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -935,5 +927,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:13:00.919Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75431
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:41.632Z"
 }

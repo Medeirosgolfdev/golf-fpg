@@ -1,14 +1,14 @@
 {
   "tourId": 68237,
   "url": "https://www.nextcaddy.com/tour/68237",
-  "scrapedAt": "2026-05-09T10:16:41.425Z",
+  "scrapedAt": "2026-05-21T16:40:16.737Z",
   "meta": {
     "name": "II Puntuable Universitario",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Golf Santander S A",
     "courseCode": "CMA5",
-    "dateStart": "06 jun 2026",
-    "dateEnd": "06 jun 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Scratch) Liga Universitaria",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-06-06"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -485,6 +487,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:34.886Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:19.867Z"
 }

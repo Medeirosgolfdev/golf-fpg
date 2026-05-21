@@ -1,14 +1,14 @@
 {
   "tourId": 69041,
   "url": "https://www.nextcaddy.com/tour/69041",
-  "scrapedAt": "2026-05-09T10:07:39.946Z",
+  "scrapedAt": "2026-05-21T16:38:11.165Z",
   "meta": {
     "name": "TORNEO DE PRIMAVERA CADIZ GOLF 2026",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "22 mar 2026",
-    "dateEnd": "22 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-22"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 76,
       "header": [
         "Pos",
         "Jugador",
@@ -875,6 +876,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 76
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1955,148 +1963,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73769
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Flynn, John",
-          "holeNumber": 14,
-          "createdAt": "16/09/25 15:50:03"
-        },
-        {
-          "playerName": "Burke Burke, Paddy",
-          "holeNumber": 13,
-          "createdAt": "16/09/25 15:50:03"
-        },
-        {
-          "playerName": "Froysaa, Oyvind",
-          "holeNumber": 1,
-          "createdAt": "16/09/25 15:50:04"
-        },
-        {
-          "playerName": "Froysaa, Oyvind",
-          "holeNumber": 2,
-          "createdAt": "16/09/25 15:50:04"
-        },
-        {
-          "playerName": "Marco, Adrian De",
-          "holeNumber": 1,
-          "createdAt": "16/09/25 15:50:05"
-        },
-        {
-          "playerName": "Webster, Lawrence",
-          "holeNumber": 1,
-          "createdAt": "16/09/25 15:50:06"
-        },
-        {
-          "playerName": "Webster, Lawrence",
-          "holeNumber": 11,
-          "createdAt": "16/09/25 15:50:06"
-        },
-        {
-          "playerName": "Packebusch, Kevin",
-          "holeNumber": 1,
-          "createdAt": "16/09/25 15:50:06"
-        },
-        {
-          "playerName": "Philippe Marcel, Lippens",
-          "holeNumber": 1,
-          "createdAt": "16/09/25 15:50:07"
-        },
-        {
-          "playerName": "Mcilwaine, James",
-          "holeNumber": 1,
-          "createdAt": "16/09/25 15:50:08"
-        },
-        {
-          "playerName": "Mcilwaine, James",
-          "holeNumber": 2,
-          "createdAt": "16/09/25 15:50:08"
-        },
-        {
-          "playerName": "Mcilwaine, James",
-          "holeNumber": 17,
-          "createdAt": "16/09/25 15:50:08"
-        },
-        {
-          "playerName": "Malloy, Matthew",
-          "holeNumber": 11,
-          "createdAt": "16/09/25 15:50:08"
-        },
-        {
-          "playerName": "O`sullivan, Ross",
-          "holeNumber": 1,
-          "createdAt": "16/09/25 15:50:09"
-        },
-        {
-          "playerName": "O`sullivan, Ross",
-          "holeNumber": 5,
-          "createdAt": "16/09/25 15:50:09"
-        },
-        {
-          "playerName": "O`sullivan, Ross",
-          "holeNumber": 7,
-          "createdAt": "16/09/25 15:50:09"
-        },
-        {
-          "playerName": "Richards, Robert",
-          "holeNumber": 1,
-          "createdAt": "16/09/25 15:50:11"
-        },
-        {
-          "playerName": "Richards, Robert",
-          "holeNumber": 4,
-          "createdAt": "16/09/25 15:50:11"
-        },
-        {
-          "playerName": "Howarth, Andrew",
-          "holeNumber": 2,
-          "createdAt": "16/09/25 15:50:14"
-        },
-        {
-          "playerName": "Howarth, Andrew",
-          "holeNumber": 14,
-          "createdAt": "16/09/25 15:50:14"
-        },
-        {
-          "playerName": "Bisin, Guy",
-          "holeNumber": 18,
-          "createdAt": "16/09/25 15:50:15"
-        },
-        {
-          "playerName": "Mitchell, Andrew",
-          "holeNumber": 8,
-          "createdAt": "16/09/25 15:50:17"
-        },
-        {
-          "playerName": "Ardley, Albert",
-          "holeNumber": 10,
-          "createdAt": "16/09/25 15:50:18"
-        },
-        {
-          "playerName": "Rodriguez De La Riva, Pablo",
-          "holeNumber": 1,
-          "createdAt": "16/09/25 15:50:18"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -2788,5 +2654,150 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:32.217Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73769
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Flynn, John",
+          "holeNumber": 14,
+          "createdAt": "16/09/25 15:50:03"
+        },
+        {
+          "playerName": "Burke Burke, Paddy",
+          "holeNumber": 13,
+          "createdAt": "16/09/25 15:50:03"
+        },
+        {
+          "playerName": "Froysaa, Oyvind",
+          "holeNumber": 1,
+          "createdAt": "16/09/25 15:50:04"
+        },
+        {
+          "playerName": "Froysaa, Oyvind",
+          "holeNumber": 2,
+          "createdAt": "16/09/25 15:50:04"
+        },
+        {
+          "playerName": "Marco, Adrian De",
+          "holeNumber": 1,
+          "createdAt": "16/09/25 15:50:05"
+        },
+        {
+          "playerName": "Webster, Lawrence",
+          "holeNumber": 1,
+          "createdAt": "16/09/25 15:50:06"
+        },
+        {
+          "playerName": "Webster, Lawrence",
+          "holeNumber": 11,
+          "createdAt": "16/09/25 15:50:06"
+        },
+        {
+          "playerName": "Packebusch, Kevin",
+          "holeNumber": 1,
+          "createdAt": "16/09/25 15:50:06"
+        },
+        {
+          "playerName": "Philippe Marcel, Lippens",
+          "holeNumber": 1,
+          "createdAt": "16/09/25 15:50:07"
+        },
+        {
+          "playerName": "Mcilwaine, James",
+          "holeNumber": 1,
+          "createdAt": "16/09/25 15:50:08"
+        },
+        {
+          "playerName": "Mcilwaine, James",
+          "holeNumber": 2,
+          "createdAt": "16/09/25 15:50:08"
+        },
+        {
+          "playerName": "Mcilwaine, James",
+          "holeNumber": 17,
+          "createdAt": "16/09/25 15:50:08"
+        },
+        {
+          "playerName": "Malloy, Matthew",
+          "holeNumber": 11,
+          "createdAt": "16/09/25 15:50:08"
+        },
+        {
+          "playerName": "O`sullivan, Ross",
+          "holeNumber": 1,
+          "createdAt": "16/09/25 15:50:09"
+        },
+        {
+          "playerName": "O`sullivan, Ross",
+          "holeNumber": 5,
+          "createdAt": "16/09/25 15:50:09"
+        },
+        {
+          "playerName": "O`sullivan, Ross",
+          "holeNumber": 7,
+          "createdAt": "16/09/25 15:50:09"
+        },
+        {
+          "playerName": "Richards, Robert",
+          "holeNumber": 1,
+          "createdAt": "16/09/25 15:50:11"
+        },
+        {
+          "playerName": "Richards, Robert",
+          "holeNumber": 4,
+          "createdAt": "16/09/25 15:50:11"
+        },
+        {
+          "playerName": "Howarth, Andrew",
+          "holeNumber": 2,
+          "createdAt": "16/09/25 15:50:14"
+        },
+        {
+          "playerName": "Howarth, Andrew",
+          "holeNumber": 14,
+          "createdAt": "16/09/25 15:50:14"
+        },
+        {
+          "playerName": "Bisin, Guy",
+          "holeNumber": 18,
+          "createdAt": "16/09/25 15:50:15"
+        },
+        {
+          "playerName": "Mitchell, Andrew",
+          "holeNumber": 8,
+          "createdAt": "16/09/25 15:50:17"
+        },
+        {
+          "playerName": "Ardley, Albert",
+          "holeNumber": 10,
+          "createdAt": "16/09/25 15:50:18"
+        },
+        {
+          "playerName": "Rodriguez De La Riva, Pablo",
+          "holeNumber": 1,
+          "createdAt": "16/09/25 15:50:18"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/3344704325_cartel_torneoprimavera_2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:30.266Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 70579,
   "url": "https://www.nextcaddy.com/tour/70579",
-  "scrapedAt": "2026-05-09T10:15:53.468Z",
+  "scrapedAt": "2026-05-21T16:39:26.619Z",
   "meta": {
     "name": "II Prueba Circuito Interescolar 2025-2026 ( Hoyos 1-9)",
     "organizer": "Federacion de Golf de Madrid",
     "course": "el Encin Golf",
     "courseCode": "CMC8",
-    "dateStart": "07 may 2026",
-    "dateEnd": "07 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-07"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Individual Scratch General",
+      "expectedJugadores": 59,
       "header": [
         "Pos",
         "Jugador",
@@ -690,6 +691,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Individual Handicap General",
+      "expectedJugadores": 59,
       "header": [
         "Pos",
         "Jugador",
@@ -1354,6 +1357,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Scratch General",
+      "jugadores": 59
+    },
+    "2": {
+      "name": "Individual Handicap General",
+      "jugadores": 59
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2203,22 +2217,6 @@
       "nivel": "B"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75535
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -2757,5 +2755,26 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:13:01.607Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75535
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [
+    "/uploads/competiciones/cartel/58694038_70579-ii-prueba-circuito-interescolar-2025-2026-hoyos-1-9.pdf",
+    "/uploads/competiciones/pdf/1825246409_clasificaciorn_circuito_interescolar_2025-2026.pdf",
+    "/uploads/competiciones/pdf/1162029473_reglas_locales_el_encin_.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:42.608Z"
 }

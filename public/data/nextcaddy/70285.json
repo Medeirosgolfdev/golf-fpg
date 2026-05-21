@@ -1,14 +1,14 @@
 {
   "tourId": 70285,
   "url": "https://www.nextcaddy.com/tour/70285",
-  "scrapedAt": "2026-05-09T10:15:45.914Z",
+  "scrapedAt": "2026-05-21T16:39:14.096Z",
   "meta": {
     "name": "ProAm 2ª Jornada - Campeonato de Madrid de Profesionales PGAE",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Club de Golf la Dehesa",
     "courseCode": "CM61",
-    "dateStart": "28 abr 2026",
-    "dateEnd": "28 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Espec",
     "categories": [
       "Profesional",
@@ -18,11 +18,21 @@
       "Infantil",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-28"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Proam Turno De Tarde",
+      "jugadores": 36
+    },
+    "2": {
+      "name": "Clasificación Proam Turno De Mañana",
+      "jugadores": 35
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1033,158 +1043,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75211
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Barrenas Padura, Francisco De Paula",
-          "holeNumber": 8,
-          "createdAt": "10/11/25 11:26:19"
-        },
-        {
-          "playerName": "Bautista Bejarano, Romualdo",
-          "holeNumber": 8,
-          "createdAt": "10/11/25 11:27:25"
-        },
-        {
-          "playerName": "Carrington, Lucy",
-          "holeNumber": 2,
-          "createdAt": "10/11/25 11:28:37"
-        },
-        {
-          "playerName": "Escudero Pazos, Jose",
-          "holeNumber": 6,
-          "createdAt": "10/11/25 11:29:17"
-        },
-        {
-          "playerName": "Sanchez Perez, Tirso",
-          "holeNumber": 8,
-          "createdAt": "10/11/25 11:47:33"
-        },
-        {
-          "playerName": "Rivas Zapata, Antonio",
-          "holeNumber": 5,
-          "createdAt": "10/11/25 12:02:47"
-        },
-        {
-          "playerName": "Serrano Cuenca, Francisco Manuel",
-          "holeNumber": 3,
-          "createdAt": "10/11/25 12:03:20"
-        },
-        {
-          "playerName": "Torralva Piñero, Enrique",
-          "holeNumber": 8,
-          "createdAt": "10/11/25 12:32:43"
-        },
-        {
-          "playerName": "De La Viesca Saenz-Diez, Luis",
-          "holeNumber": 8,
-          "createdAt": "10/11/25 13:13:11"
-        },
-        {
-          "playerName": "Conesa Leal, Jose Antonio",
-          "holeNumber": 3,
-          "createdAt": "10/11/25 13:16:35"
-        },
-        {
-          "playerName": "Guerrero Toledo, Tomas",
-          "holeNumber": 8,
-          "createdAt": "10/11/25 13:49:33"
-        },
-        {
-          "playerName": "Barbacid Sanchez, Asuncion",
-          "holeNumber": 9,
-          "createdAt": "10/11/25 16:30:16"
-        },
-        {
-          "playerName": "Lopez Silgo, Mª Carmen",
-          "holeNumber": 4,
-          "createdAt": "10/11/25 16:34:20"
-        },
-        {
-          "playerName": "Fernandez De Alarcon, Pedro A.",
-          "holeNumber": 1,
-          "createdAt": "10/11/25 17:12:29"
-        },
-        {
-          "playerName": "Fernandez De Alarcon, Pedro A.",
-          "holeNumber": 8,
-          "createdAt": "10/11/25 17:12:29"
-        },
-        {
-          "playerName": "Garcia Navarro, Rafael",
-          "holeNumber": 5,
-          "createdAt": "10/11/25 17:13:31"
-        },
-        {
-          "playerName": "Luque Pecci, Francisco Javier",
-          "holeNumber": 8,
-          "createdAt": "10/11/25 17:16:10"
-        },
-        {
-          "playerName": "Mendez Martinez, Eloy",
-          "holeNumber": 3,
-          "createdAt": "10/11/25 17:19:09"
-        },
-        {
-          "playerName": "Trancoso Navarro, Pablo",
-          "holeNumber": 2,
-          "createdAt": "10/11/25 17:26:06"
-        },
-        {
-          "playerName": "Trancoso Navarro, Pablo",
-          "holeNumber": 9,
-          "createdAt": "10/11/25 17:26:06"
-        },
-        {
-          "playerName": "Piñero Diaz, Ramon Tomas",
-          "holeNumber": 8,
-          "createdAt": "10/11/25 18:14:11"
-        },
-        {
-          "playerName": "Queiro Quijada, Ramon",
-          "holeNumber": 2,
-          "createdAt": "10/11/25 18:21:24"
-        },
-        {
-          "playerName": "Queiro Quijada, Ramon",
-          "holeNumber": 8,
-          "createdAt": "10/11/25 18:21:24"
-        },
-        {
-          "playerName": "Casanova Solano, Maria Concepcion",
-          "holeNumber": 8,
-          "createdAt": "10/11/25 18:22:26"
-        },
-        {
-          "playerName": "Saldaña Guinea, Alfonso Mª",
-          "holeNumber": 5,
-          "createdAt": "10/11/25 18:23:29"
-        },
-        {
-          "playerName": "Fernandez Martinez, Abraham",
-          "holeNumber": 7,
-          "createdAt": "10/11/25 18:24:52"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -2488,5 +2346,160 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:59.777Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75211
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Barrenas Padura, Francisco De Paula",
+          "holeNumber": 8,
+          "createdAt": "10/11/25 11:26:19"
+        },
+        {
+          "playerName": "Bautista Bejarano, Romualdo",
+          "holeNumber": 8,
+          "createdAt": "10/11/25 11:27:25"
+        },
+        {
+          "playerName": "Carrington, Lucy",
+          "holeNumber": 2,
+          "createdAt": "10/11/25 11:28:37"
+        },
+        {
+          "playerName": "Escudero Pazos, Jose",
+          "holeNumber": 6,
+          "createdAt": "10/11/25 11:29:17"
+        },
+        {
+          "playerName": "Sanchez Perez, Tirso",
+          "holeNumber": 8,
+          "createdAt": "10/11/25 11:47:33"
+        },
+        {
+          "playerName": "Rivas Zapata, Antonio",
+          "holeNumber": 5,
+          "createdAt": "10/11/25 12:02:47"
+        },
+        {
+          "playerName": "Serrano Cuenca, Francisco Manuel",
+          "holeNumber": 3,
+          "createdAt": "10/11/25 12:03:20"
+        },
+        {
+          "playerName": "Torralva Piñero, Enrique",
+          "holeNumber": 8,
+          "createdAt": "10/11/25 12:32:43"
+        },
+        {
+          "playerName": "De La Viesca Saenz-Diez, Luis",
+          "holeNumber": 8,
+          "createdAt": "10/11/25 13:13:11"
+        },
+        {
+          "playerName": "Conesa Leal, Jose Antonio",
+          "holeNumber": 3,
+          "createdAt": "10/11/25 13:16:35"
+        },
+        {
+          "playerName": "Guerrero Toledo, Tomas",
+          "holeNumber": 8,
+          "createdAt": "10/11/25 13:49:33"
+        },
+        {
+          "playerName": "Barbacid Sanchez, Asuncion",
+          "holeNumber": 9,
+          "createdAt": "10/11/25 16:30:16"
+        },
+        {
+          "playerName": "Lopez Silgo, Mª Carmen",
+          "holeNumber": 4,
+          "createdAt": "10/11/25 16:34:20"
+        },
+        {
+          "playerName": "Fernandez De Alarcon, Pedro A.",
+          "holeNumber": 1,
+          "createdAt": "10/11/25 17:12:29"
+        },
+        {
+          "playerName": "Fernandez De Alarcon, Pedro A.",
+          "holeNumber": 8,
+          "createdAt": "10/11/25 17:12:29"
+        },
+        {
+          "playerName": "Garcia Navarro, Rafael",
+          "holeNumber": 5,
+          "createdAt": "10/11/25 17:13:31"
+        },
+        {
+          "playerName": "Luque Pecci, Francisco Javier",
+          "holeNumber": 8,
+          "createdAt": "10/11/25 17:16:10"
+        },
+        {
+          "playerName": "Mendez Martinez, Eloy",
+          "holeNumber": 3,
+          "createdAt": "10/11/25 17:19:09"
+        },
+        {
+          "playerName": "Trancoso Navarro, Pablo",
+          "holeNumber": 2,
+          "createdAt": "10/11/25 17:26:06"
+        },
+        {
+          "playerName": "Trancoso Navarro, Pablo",
+          "holeNumber": 9,
+          "createdAt": "10/11/25 17:26:06"
+        },
+        {
+          "playerName": "Piñero Diaz, Ramon Tomas",
+          "holeNumber": 8,
+          "createdAt": "10/11/25 18:14:11"
+        },
+        {
+          "playerName": "Queiro Quijada, Ramon",
+          "holeNumber": 2,
+          "createdAt": "10/11/25 18:21:24"
+        },
+        {
+          "playerName": "Queiro Quijada, Ramon",
+          "holeNumber": 8,
+          "createdAt": "10/11/25 18:21:24"
+        },
+        {
+          "playerName": "Casanova Solano, Maria Concepcion",
+          "holeNumber": 8,
+          "createdAt": "10/11/25 18:22:26"
+        },
+        {
+          "playerName": "Saldaña Guinea, Alfonso Mª",
+          "holeNumber": 5,
+          "createdAt": "10/11/25 18:23:29"
+        },
+        {
+          "playerName": "Fernandez Martinez, Abraham",
+          "holeNumber": 7,
+          "createdAt": "10/11/25 18:24:52"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/1701914894_arb_reg_loc_cm2762025.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:40.302Z"
 }

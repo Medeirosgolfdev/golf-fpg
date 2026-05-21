@@ -1,14 +1,14 @@
 {
   "tourId": 61113,
   "url": "https://www.nextcaddy.com/tour/61113",
-  "scrapedAt": "2026-05-08T17:53:39.611Z",
+  "scrapedAt": "2026-05-21T16:38:42.805Z",
   "meta": {
     "name": "Circuito Benjamín Zona E",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Aguilon Golf",
     "courseCode": "AMF8",
-    "dateStart": "12 abr 2026",
-    "dateEnd": "12 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Benjamín",
@@ -18,74 +18,14 @@
       "Juvenil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-04-12"
-  },
-  "course": {
-    "par": [
-      4,
-      4,
-      3,
-      4,
-      5,
-      4,
-      4,
-      3,
-      5,
-      5,
-      4,
-      3,
-      4,
-      3,
-      4,
-      4,
-      3,
-      5
-    ],
-    "si": [
-      4,
-      11,
-      9,
-      14,
-      5,
-      6,
-      7,
-      18,
-      1,
-      8,
-      15,
-      10,
-      2,
-      17,
-      12,
-      16,
-      13,
-      3
-    ],
-    "meters": [
-      275,
-      222,
-      103,
-      236,
-      391,
-      255,
-      222,
-      106,
-      367,
-      375,
-      265,
-      103,
-      278,
-      81,
-      200,
-      221,
-      76,
-      371
     ]
   },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Categoria Benjamin",
+      "expectedJugadores": 1,
       "header": [
         "Pos",
         "Jugador",
@@ -107,12 +47,18 @@
           "rounds": [],
           "total": 49,
           "toPar": 13,
-          "inscribedId": 2288902,
-          "roundScores": []
+          "inscribedId": 2288902
         }
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Categoria Benjamin",
+      "jugadores": 1
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -134,6 +80,22 @@
       "licencia": "AM65965658",
       "hcp": 36.3,
       "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Rafael Valle Garcia-Valdecasas",
+          "hcp": 36.3,
+          "ins": "2288902",
+          "jid": "64728",
+          "nivel": "B"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -306,26 +268,35 @@
           "createdAt": "22/09/24 14:18:46"
         },
         {
-          "playerName": "Fernandez De Araoz Gomez-Acebo, Soledad"
+          "playerName": "Fernandez De Araoz Gomez-Acebo, Soledad",
+          "holeNumber": 16,
+          "createdAt": "22/09/24 14:26:41"
+        },
+        {
+          "playerName": "Silvela Mendizabal, Ana",
+          "holeNumber": 14,
+          "createdAt": "22/09/24 14:37:54"
+        },
+        {
+          "playerName": "Castro Perez-Manzuco, Mar",
+          "holeNumber": 6,
+          "createdAt": "22/09/24 14:44:40"
+        },
+        {
+          "playerName": "Aguilar Azaola, Cristina",
+          "holeNumber": 11,
+          "createdAt": "22/09/24 14:50:25"
+        },
+        {
+          "playerName": "Soriano Ferrer, Maria",
+          "holeNumber": 13,
+          "createdAt": "22/09/24 15:03:50"
         }
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "12:20",
-          "tee": 1,
-          "name": "Rafael Valle Garcia-Valdecasas",
-          "hcp": 36.3,
-          "ins": "2288902",
-          "jid": "64728",
-          "nivel": "B"
-        }
-      ]
-    }
+  "pdfs": [
+    "/uploads/circular/2026/2aa56b471e796fb607d471d2b9ad0c4c.pdf"
   ],
-  "horariosScrapedAt": "2026-05-09T12:11:59.463Z"
+  "horariosScrapedAt": "2026-05-21T16:41:50.727Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 67186,
   "url": "https://www.nextcaddy.com/tour/67186",
-  "scrapedAt": "2026-05-09T09:57:15.817Z",
+  "scrapedAt": "2026-05-21T16:36:22.793Z",
   "meta": {
     "name": "Sherry International Golf Group (SIGG) - Miércoles 7 Enero 2026 (Grupo privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "07 ene 2026",
-    "dateEnd": "07 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-07"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -170,7 +171,7 @@
         },
         {
           "pos": 13,
-          "name": "Antonio Manuel Ure?A Serrano",
+          "name": "Antonio Manuel Ureña Serrano",
           "licencia": "AM32612444",
           "hcp": 8,
           "nivel": "S",
@@ -248,6 +249,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 19
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -349,7 +357,7 @@
     },
     {
       "orden": 12,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "AM32612444",
       "hcp": 8,
       "nivel": "S"
@@ -496,7 +504,7 @@
     },
     {
       "orden": 14,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "05-01-26 19:39",
       "hcp": 8,
       "nivel": "AM32612444"
@@ -537,68 +545,6 @@
       "nivel": "AMC3937809"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71586
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Terrero Prada, Enrique",
-          "holeNumber": 3,
-          "createdAt": "22/06/25 08:58:43"
-        },
-        {
-          "playerName": "Ferrer Frias, Rafael",
-          "holeNumber": 4,
-          "createdAt": "22/06/25 09:26:18"
-        },
-        {
-          "playerName": "Dorantes Sanchez, Antonio",
-          "holeNumber": 6,
-          "createdAt": "22/06/25 10:00:51"
-        },
-        {
-          "playerName": "Ferrer Frias, Rafael",
-          "holeNumber": 8,
-          "createdAt": "22/06/25 10:28:27"
-        },
-        {
-          "playerName": "Barea Fimia, German",
-          "holeNumber": 3,
-          "createdAt": "22/06/25 10:49:38"
-        },
-        {
-          "playerName": "Ferrin Paramio, Rocio",
-          "holeNumber": 9,
-          "createdAt": "22/06/25 10:51:19"
-        },
-        {
-          "playerName": "Caballero Calavia, Manuel",
-          "holeNumber": 9,
-          "createdAt": "22/06/25 12:32:09"
-        },
-        {
-          "playerName": "Blanco Alfonso, Sergio",
-          "holeNumber": 7,
-          "createdAt": "22/06/25 12:47:39"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -606,7 +552,7 @@
         {
           "time": "09:30",
           "tee": 1,
-          "name": "Antonio Manuel Ure?A Serrano",
+          "name": "Antonio Manuel Ureña Serrano",
           "hcp": 8,
           "ins": "2240887",
           "jid": "71586",
@@ -768,5 +714,68 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:04.892Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71586
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Terrero Prada, Enrique",
+          "holeNumber": 3,
+          "createdAt": "22/06/25 08:58:43"
+        },
+        {
+          "playerName": "Ferrer Frias, Rafael",
+          "holeNumber": 4,
+          "createdAt": "22/06/25 09:26:18"
+        },
+        {
+          "playerName": "Dorantes Sanchez, Antonio",
+          "holeNumber": 6,
+          "createdAt": "22/06/25 10:00:51"
+        },
+        {
+          "playerName": "Ferrer Frias, Rafael",
+          "holeNumber": 8,
+          "createdAt": "22/06/25 10:28:27"
+        },
+        {
+          "playerName": "Barea Fimia, German",
+          "holeNumber": 3,
+          "createdAt": "22/06/25 10:49:38"
+        },
+        {
+          "playerName": "Ferrin Paramio, Rocio",
+          "holeNumber": 9,
+          "createdAt": "22/06/25 10:51:19"
+        },
+        {
+          "playerName": "Caballero Calavia, Manuel",
+          "holeNumber": 9,
+          "createdAt": "22/06/25 12:32:09"
+        },
+        {
+          "playerName": "Blanco Alfonso, Sergio",
+          "holeNumber": 7,
+          "createdAt": "22/06/25 12:47:39"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:41:59.777Z"
 }

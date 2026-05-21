@@ -1,14 +1,14 @@
 {
   "tourId": 69746,
   "url": "https://www.nextcaddy.com/tour/69746",
-  "scrapedAt": "2026-05-09T10:15:29.606Z",
+  "scrapedAt": "2026-05-21T16:38:48.308Z",
   "meta": {
     "name": "Sherry International Golf Group (SIGG) - Martes 14  Abril 2026 (Grupo privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "14 abr 2026",
-    "dateEnd": "14 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-14"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 24,
       "header": [
         "Pos",
         "Jugador",
@@ -303,6 +304,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 24
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -662,68 +670,6 @@
       "nivel": "AMC3029818"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74546
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Guillen Cano, Javier",
-          "holeNumber": 2,
-          "createdAt": "18/10/25 16:47:53"
-        },
-        {
-          "playerName": "Quintero Rodriguez, Francisco Manuel",
-          "holeNumber": 5,
-          "createdAt": "18/10/25 16:47:55"
-        },
-        {
-          "playerName": "Martin Terron, Antonio",
-          "holeNumber": 18,
-          "createdAt": "18/10/25 16:47:55"
-        },
-        {
-          "playerName": "Barroso Camacho, Francisco",
-          "holeNumber": 8,
-          "createdAt": "18/10/25 16:48:04"
-        },
-        {
-          "playerName": "Saquete Garbajosa, Fcº Javier",
-          "holeNumber": 17,
-          "createdAt": "18/10/25 16:48:05"
-        },
-        {
-          "playerName": "Minguez Perez, Francisco Javier",
-          "holeNumber": 2,
-          "createdAt": "18/10/25 16:48:07"
-        },
-        {
-          "playerName": "Minguez Perez, Francisco Javier",
-          "holeNumber": 16,
-          "createdAt": "18/10/25 16:48:07"
-        },
-        {
-          "playerName": "Carreño Fernandez, Jose Martin",
-          "holeNumber": 8,
-          "createdAt": "18/10/25 16:48:11"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -947,5 +893,68 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:56.842Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74546
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Guillen Cano, Javier",
+          "holeNumber": 2,
+          "createdAt": "18/10/25 16:47:53"
+        },
+        {
+          "playerName": "Quintero Rodriguez, Francisco Manuel",
+          "holeNumber": 5,
+          "createdAt": "18/10/25 16:47:55"
+        },
+        {
+          "playerName": "Martin Terron, Antonio",
+          "holeNumber": 18,
+          "createdAt": "18/10/25 16:47:55"
+        },
+        {
+          "playerName": "Barroso Camacho, Francisco",
+          "holeNumber": 8,
+          "createdAt": "18/10/25 16:48:04"
+        },
+        {
+          "playerName": "Saquete Garbajosa, Fcº Javier",
+          "holeNumber": 17,
+          "createdAt": "18/10/25 16:48:05"
+        },
+        {
+          "playerName": "Minguez Perez, Francisco Javier",
+          "holeNumber": 2,
+          "createdAt": "18/10/25 16:48:07"
+        },
+        {
+          "playerName": "Minguez Perez, Francisco Javier",
+          "holeNumber": 16,
+          "createdAt": "18/10/25 16:48:07"
+        },
+        {
+          "playerName": "Carreño Fernandez, Jose Martin",
+          "holeNumber": 8,
+          "createdAt": "18/10/25 16:48:11"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:37.252Z"
 }

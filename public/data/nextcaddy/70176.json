@@ -1,14 +1,14 @@
 {
   "tourId": 70176,
   "url": "https://www.nextcaddy.com/tour/70176",
-  "scrapedAt": "2026-05-09T10:15:42.291Z",
+  "scrapedAt": "2026-05-21T16:39:09.170Z",
   "meta": {
     "name": "LIGA SOCIAL GOLF ULZAMA 2026",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "25 abr 2026",
-    "dateEnd": "25 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-25"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "General Primera Prueba Liga Social + Invitados 2026",
+      "expectedJugadores": 70,
       "header": [
         "Pos",
         "Jugador",
@@ -809,6 +810,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "General Primera Prueba Liga Social + Invitados 2026",
+      "jugadores": 70
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1812,48 +1820,6 @@
       "nivel": "CM00945331"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75080
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Iturralde Adrian, Josetxo",
-          "holeNumber": 2,
-          "createdAt": "05/11/25 10:12:27"
-        },
-        {
-          "playerName": "Garcia-Mayoral De Castro, Julian",
-          "holeNumber": 8,
-          "createdAt": "05/11/25 11:16:27"
-        },
-        {
-          "playerName": "Garcia-Mayoral De Castro, Julian",
-          "holeNumber": 14,
-          "createdAt": "05/11/25 13:03:47"
-        },
-        {
-          "playerName": "Garcia-Mayoral De Castro, Julian",
-          "holeNumber": 17,
-          "createdAt": "05/11/25 13:30:47"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -2491,5 +2457,48 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:58.393Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75080
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Iturralde Adrian, Josetxo",
+          "holeNumber": 2,
+          "createdAt": "05/11/25 10:12:27"
+        },
+        {
+          "playerName": "Garcia-Mayoral De Castro, Julian",
+          "holeNumber": 8,
+          "createdAt": "05/11/25 11:16:27"
+        },
+        {
+          "playerName": "Garcia-Mayoral De Castro, Julian",
+          "holeNumber": 14,
+          "createdAt": "05/11/25 13:03:47"
+        },
+        {
+          "playerName": "Garcia-Mayoral De Castro, Julian",
+          "holeNumber": 17,
+          "createdAt": "05/11/25 13:30:47"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:38.892Z"
 }

@@ -1,49 +1,42 @@
 {
   "tourId": 70065,
   "url": "https://www.nextcaddy.com/tour/70065",
-  "scrapedAt": "2026-05-09T10:16:34.182Z",
+  "scrapedAt": "2026-05-21T16:39:53.045Z",
   "meta": {
     "name": "Norba Club de Golf Categoría Especial",
     "organizer": null,
     "course": "",
     "courseCode": "MAJC",
-    "dateStart": "17 may 2026",
-    "dateEnd": "17 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
       "Señoras",
-      "benjamin",
       "Infantil",
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-17"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
-      "name": "Jacobo Hernandez Sanchez",
-      "licencia": "9901498148",
-      "hcp": 54,
-      "nivel": "B"
-    },
-    {
-      "orden": 2,
-      "name": "Alonso Hernandez Sanchez",
-      "licencia": "9901498147",
-      "hcp": 54,
-      "nivel": "B"
-    },
-    {
-      "orden": 3,
       "name": "Gonzalo Garrido Arias",
       "licencia": "9901473868",
       "hcp": 50,
       "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Jacobo Hernandez Sanchez",
+      "licencia": "9901498148",
+      "hcp": 54,
+      "nivel": "B"
     },
     {
       "orden": null,
@@ -67,6 +60,20 @@
       "nivel": "A"
     },
     {
+      "orden": 3,
+      "name": "Marina Tejedor Moreno",
+      "licencia": "9901988851",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Elsa Morales Barrientos",
+      "licencia": "9900997511",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
       "orden": null,
       "name": "Jugador",
       "licencia": "Fecha Inscripción",
@@ -75,40 +82,48 @@
     },
     {
       "orden": 1,
-      "name": "Jacobo Hernandez Sanchez",
-      "licencia": "05-05-26 10:57",
-      "hcp": 54,
-      "nivel": "9901498148"
-    },
-    {
-      "orden": 2,
-      "name": "Alonso Hernandez Sanchez",
-      "licencia": "05-05-26 10:59",
-      "hcp": 54,
-      "nivel": "9901498147"
-    },
-    {
-      "orden": 3,
       "name": "Gonzalo Garrido Arias",
       "licencia": "05-05-26 21:30",
       "hcp": 50,
       "nivel": "9901473868"
     },
     {
-      "orden": 4,
+      "orden": 2,
       "name": "Cecilia Garrido Arias",
       "licencia": "05-05-26 21:33",
       "hcp": 48,
       "nivel": "9901473869"
     },
     {
-      "orden": 5,
+      "orden": 3,
       "name": "Sofia Iglesias Monreal",
       "licencia": "08-05-26 13:18",
       "hcp": 54,
       "nivel": "9901988730"
+    },
+    {
+      "orden": 4,
+      "name": "Marina Tejedor Moreno",
+      "licencia": "09-05-26 23:15",
+      "hcp": 54,
+      "nivel": "9901988851"
+    },
+    {
+      "orden": 5,
+      "name": "Elsa Morales Barrientos",
+      "licencia": "11-05-26 18:32",
+      "hcp": 54,
+      "nivel": "9900997511"
+    },
+    {
+      "orden": 6,
+      "name": "Jacobo Hernandez Sanchez",
+      "licencia": "12-05-26 18:31",
+      "hcp": 54,
+      "nivel": "9901498148"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -125,6 +140,8 @@
     }
   ],
   "scoreTypes": null,
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:43.442Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/2525242979_reglas_locales_actualizadas_2022.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:37.876Z"
 }

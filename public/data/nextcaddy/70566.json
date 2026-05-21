@@ -1,14 +1,14 @@
 {
   "tourId": 70566,
   "url": "https://www.nextcaddy.com/tour/70566",
-  "scrapedAt": "2026-05-09T10:16:29.363Z",
+  "scrapedAt": "2026-05-21T16:39:39.862Z",
   "meta": {
     "name": "Torneo La Peña - 12 de Mayo 2026 (Grupo Privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "12 may 2026",
-    "dateEnd": "12 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,322 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-12"
+    ]
   },
   "course": null,
-  "leaderboard": [],
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 12,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Manuel Martin Delgado",
+          "licencia": "AMG3792091",
+          "hcp": 11,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2314333
+        },
+        {
+          "pos": 2,
+          "name": "Raimundo Romero Gonzalez",
+          "licencia": "AMG3888336",
+          "hcp": 18.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2313886
+        },
+        {
+          "pos": 3,
+          "name": "Ricardo Garcia Crespo",
+          "licencia": "AMF7755109",
+          "hcp": 26.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 14,
+          "toPar": 22,
+          "inscribedId": 2314714
+        },
+        {
+          "pos": 4,
+          "name": "Luis Belloso Arias",
+          "licencia": "AM80805251",
+          "hcp": 25.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 13,
+          "toPar": 23,
+          "inscribedId": 2315446
+        },
+        {
+          "pos": 5,
+          "name": "Antonio Rivas Zapata",
+          "licencia": "AMG3098616",
+          "hcp": 22.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 12,
+          "toPar": 24,
+          "inscribedId": 2314343
+        },
+        {
+          "pos": 6,
+          "name": "Leonardo Chaves Gonzalez",
+          "licencia": "AMG3502756",
+          "hcp": 27.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 10,
+          "toPar": 26,
+          "inscribedId": 2314791
+        },
+        {
+          "pos": 7,
+          "name": "Fernando Gonzalez De La Flor",
+          "licencia": "AM25511873",
+          "hcp": 29.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 8,
+          "toPar": 28,
+          "inscribedId": 2314715
+        },
+        {
+          "pos": 8,
+          "name": "Jose Aguilar Martin",
+          "licencia": "AMG3816592",
+          "hcp": 26.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 8,
+          "toPar": 28,
+          "inscribedId": 2316690
+        },
+        {
+          "pos": 9,
+          "name": "Jose Lorente Vergara",
+          "licencia": "AMG3162059",
+          "hcp": 23.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 7,
+          "toPar": 29,
+          "inscribedId": 2313887
+        },
+        {
+          "pos": 10,
+          "name": "Antonio Aparicio Rite",
+          "licencia": "AMG3798674",
+          "hcp": 16.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 6,
+          "toPar": 30,
+          "inscribedId": 2314072
+        },
+        {
+          "pos": 11,
+          "name": "Antonio Dominguez Fresco",
+          "licencia": "AMG3819778",
+          "hcp": 25.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 5,
+          "toPar": 31,
+          "inscribedId": 2314713
+        },
+        {
+          "pos": 12,
+          "name": "Manuel Dominguez Del Valle",
+          "licencia": "AM25075424",
+          "hcp": 42.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 1,
+          "toPar": 35,
+          "inscribedId": 2314365
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 12,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Raimundo Romero Gonzalez",
+          "licencia": "AMG3888336",
+          "hcp": 18.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2313886
+        },
+        {
+          "pos": 2,
+          "name": "Manuel Martin Delgado",
+          "licencia": "AMG3792091",
+          "hcp": 11,
+          "nivel": "S",
+          "rounds": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2314333
+        },
+        {
+          "pos": 3,
+          "name": "Luis Belloso Arias",
+          "licencia": "AM80805251",
+          "hcp": 25.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2315446
+        },
+        {
+          "pos": 4,
+          "name": "Leonardo Chaves Gonzalez",
+          "licencia": "AMG3502756",
+          "hcp": 27.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2314791
+        },
+        {
+          "pos": 5,
+          "name": "Ricardo Garcia Crespo",
+          "licencia": "AMF7755109",
+          "hcp": 26.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2314714
+        },
+        {
+          "pos": 6,
+          "name": "Antonio Rivas Zapata",
+          "licencia": "AMG3098616",
+          "hcp": 22.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2314343
+        },
+        {
+          "pos": 7,
+          "name": "Jose Aguilar Martin",
+          "licencia": "AMG3816592",
+          "hcp": 26.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2316690
+        },
+        {
+          "pos": 8,
+          "name": "Fernando Gonzalez De La Flor",
+          "licencia": "AM25511873",
+          "hcp": 29.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2314715
+        },
+        {
+          "pos": 9,
+          "name": "Jose Lorente Vergara",
+          "licencia": "AMG3162059",
+          "hcp": 23.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2313887
+        },
+        {
+          "pos": 10,
+          "name": "Manuel Dominguez Del Valle",
+          "licencia": "AM25075424",
+          "hcp": 42.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2314365
+        },
+        {
+          "pos": 11,
+          "name": "Antonio Dominguez Fresco",
+          "licencia": "AMG3819778",
+          "hcp": 25.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2314713
+        },
+        {
+          "pos": 12,
+          "name": "Antonio Aparicio Rite",
+          "licencia": "AMG3798674",
+          "hcp": 16.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2314072
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 12
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 12
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -98,6 +409,13 @@
       "name": "Luis Belloso Arias",
       "licencia": "AM80805251",
       "hcp": 25.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Jose Aguilar Martin",
+      "licencia": "AMG3816592",
+      "hcp": 26.1,
       "nivel": "S"
     },
     {
@@ -183,120 +501,15 @@
       "licencia": "08-05-26 21:00",
       "hcp": 25.9,
       "nivel": "AM80805251"
-    }
-  ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
+    },
     {
-      "roundNumber": 1,
-      "roundId": 75520
+      "orden": 12,
+      "name": "Jose Aguilar Martin",
+      "licencia": "11-05-26 10:16",
+      "hcp": 26.1,
+      "nivel": "AMG3816592"
     }
   ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Diaz Muñoz, Maria",
-          "holeNumber": 18,
-          "createdAt": "29/11/25 09:41:52"
-        },
-        {
-          "playerName": "Villarrubia De Francisco, Ignacio J",
-          "holeNumber": 16,
-          "createdAt": "29/11/25 10:03:45"
-        },
-        {
-          "playerName": "Neira Lopez, Santiago",
-          "holeNumber": 7,
-          "createdAt": "29/11/25 10:29:08"
-        },
-        {
-          "playerName": "Blanco Fernandez, Raul",
-          "holeNumber": 9,
-          "createdAt": "29/11/25 10:46:37"
-        },
-        {
-          "playerName": "Garcia Cerdan, Miguel",
-          "holeNumber": 8,
-          "createdAt": "29/11/25 11:03:22"
-        },
-        {
-          "playerName": "Ayoso Cantador, Andres",
-          "holeNumber": 8,
-          "createdAt": "29/11/25 11:13:12"
-        },
-        {
-          "playerName": "Velon Ororbia, Pedro",
-          "holeNumber": 11,
-          "createdAt": "29/11/25 11:29:18"
-        },
-        {
-          "playerName": "Rubiales Guisado, Manuel",
-          "holeNumber": 13,
-          "createdAt": "29/11/25 11:43:41"
-        },
-        {
-          "playerName": "De Castro Martin, Manuel",
-          "holeNumber": 16,
-          "createdAt": "29/11/25 12:00:29"
-        },
-        {
-          "playerName": "Jimenez Romero, Rafael",
-          "holeNumber": 14,
-          "createdAt": "29/11/25 12:23:04"
-        },
-        {
-          "playerName": "Rodriguez Edenborg, Marcos",
-          "holeNumber": 14,
-          "createdAt": "29/11/25 12:25:47"
-        },
-        {
-          "playerName": "Cornago Diufain, Juan Antonio",
-          "holeNumber": 15,
-          "createdAt": "29/11/25 12:39:37"
-        },
-        {
-          "playerName": "Blanco Fernandez, Raul",
-          "holeNumber": 18,
-          "createdAt": "29/11/25 12:57:08"
-        },
-        {
-          "playerName": "Jimenez Romero, Rafael",
-          "holeNumber": 17,
-          "createdAt": "29/11/25 13:10:15"
-        },
-        {
-          "playerName": "Ayoso Cantador, Andres",
-          "holeNumber": 18,
-          "createdAt": "29/11/25 13:39:43"
-        },
-        {
-          "playerName": "Iglesias Salado, Jose Luis",
-          "holeNumber": 18,
-          "createdAt": "29/11/25 13:39:55"
-        },
-        {
-          "playerName": "Benitez Escribano, Francisco",
-          "holeNumber": 18,
-          "createdAt": "29/11/25 13:40:05"
-        },
-        {
-          "playerName": "Niño Bernal, Sergio",
-          "holeNumber": 6,
-          "createdAt": "29/11/25 13:41:46"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -412,5 +625,118 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-17T12:43:16.502Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75520
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Diaz Muñoz, Maria",
+          "holeNumber": 18,
+          "createdAt": "29/11/25 09:41:52"
+        },
+        {
+          "playerName": "Villarrubia De Francisco, Ignacio J",
+          "holeNumber": 16,
+          "createdAt": "29/11/25 10:03:45"
+        },
+        {
+          "playerName": "Neira Lopez, Santiago",
+          "holeNumber": 7,
+          "createdAt": "29/11/25 10:29:08"
+        },
+        {
+          "playerName": "Blanco Fernandez, Raul",
+          "holeNumber": 9,
+          "createdAt": "29/11/25 10:46:37"
+        },
+        {
+          "playerName": "Garcia Cerdan, Miguel",
+          "holeNumber": 8,
+          "createdAt": "29/11/25 11:03:22"
+        },
+        {
+          "playerName": "Ayoso Cantador, Andres",
+          "holeNumber": 8,
+          "createdAt": "29/11/25 11:13:12"
+        },
+        {
+          "playerName": "Velon Ororbia, Pedro",
+          "holeNumber": 11,
+          "createdAt": "29/11/25 11:29:18"
+        },
+        {
+          "playerName": "Rubiales Guisado, Manuel",
+          "holeNumber": 13,
+          "createdAt": "29/11/25 11:43:41"
+        },
+        {
+          "playerName": "De Castro Martin, Manuel",
+          "holeNumber": 16,
+          "createdAt": "29/11/25 12:00:29"
+        },
+        {
+          "playerName": "Jimenez Romero, Rafael",
+          "holeNumber": 14,
+          "createdAt": "29/11/25 12:23:04"
+        },
+        {
+          "playerName": "Rodriguez Edenborg, Marcos",
+          "holeNumber": 14,
+          "createdAt": "29/11/25 12:25:47"
+        },
+        {
+          "playerName": "Cornago Diufain, Juan Antonio",
+          "holeNumber": 15,
+          "createdAt": "29/11/25 12:39:37"
+        },
+        {
+          "playerName": "Blanco Fernandez, Raul",
+          "holeNumber": 18,
+          "createdAt": "29/11/25 12:57:08"
+        },
+        {
+          "playerName": "Jimenez Romero, Rafael",
+          "holeNumber": 17,
+          "createdAt": "29/11/25 13:10:15"
+        },
+        {
+          "playerName": "Ayoso Cantador, Andres",
+          "holeNumber": 18,
+          "createdAt": "29/11/25 13:39:43"
+        },
+        {
+          "playerName": "Iglesias Salado, Jose Luis",
+          "holeNumber": 18,
+          "createdAt": "29/11/25 13:39:55"
+        },
+        {
+          "playerName": "Benitez Escribano, Francisco",
+          "holeNumber": 18,
+          "createdAt": "29/11/25 13:40:05"
+        },
+        {
+          "playerName": "Niño Bernal, Sergio",
+          "holeNumber": 6,
+          "createdAt": "29/11/25 13:41:46"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:42.036Z"
 }

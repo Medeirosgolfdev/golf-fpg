@@ -1,7 +1,7 @@
 {
   "tourId": 70875,
   "url": "https://www.nextcaddy.com/tour/70875",
-  "scrapedAt": "2026-05-17T12:42:45.582Z",
+  "scrapedAt": "2026-05-21T16:39:57.169Z",
   "meta": {
     "name": "POOL DE SENIORS  DE PRIMAVERA (20/05/2026).",
     "organizer": null,
@@ -20,11 +20,532 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
-  "horarios": [],
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Pool Seniors",
+      "expectedJugadores": 14,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jose Manuel Echevarria Salaverria",
+          "licencia": "4401262357",
+          "hcp": 15.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2322521
+        },
+        {
+          "pos": 2,
+          "name": "Alberto Guinaldo Iglesias",
+          "licencia": "4401726220",
+          "hcp": 18.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2322470
+        },
+        {
+          "pos": 3,
+          "name": "Jose Maria Bariain Satrustegui",
+          "licencia": "4401188006",
+          "hcp": 19.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2322309
+        },
+        {
+          "pos": 4,
+          "name": "Julio De Pablos Fernandez",
+          "licencia": "4401059883",
+          "hcp": 17,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2322469
+        },
+        {
+          "pos": 5,
+          "name": "Miguel Torrea Larralde",
+          "licencia": "4401696255",
+          "hcp": 24.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2322232
+        },
+        {
+          "pos": 6,
+          "name": "Jose Maria Mateo Fuertes",
+          "licencia": "4401013872",
+          "hcp": 25.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2321829
+        },
+        {
+          "pos": 7,
+          "name": "Argimiro Sola Martinez",
+          "licencia": "4401245559",
+          "hcp": 21.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2321828
+        },
+        {
+          "pos": 8,
+          "name": "Santiago Iglesias Gines",
+          "licencia": "4401244035",
+          "hcp": 23.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2322258
+        },
+        {
+          "pos": 9,
+          "name": "Javier Inchausti Estomba",
+          "licencia": "4401722753",
+          "hcp": 23.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2322045
+        },
+        {
+          "pos": 10,
+          "name": "Josetxo Iturralde Adrian",
+          "licencia": "4401329054",
+          "hcp": 25.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2322471
+        },
+        {
+          "pos": 11,
+          "name": "Fernando Llarena Gonzalez",
+          "licencia": "4401924165",
+          "hcp": 23.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2322259
+        },
+        {
+          "pos": 12,
+          "name": "Javier Roncal Azanza",
+          "licencia": "4401397618",
+          "hcp": 26.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2322468
+        },
+        {
+          "pos": 13,
+          "name": "Miguel Angel Saenz Garcia",
+          "licencia": "VB14734386",
+          "hcp": 28.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2322052
+        },
+        {
+          "pos": null,
+          "name": "Vicente Villanueva Aleman",
+          "licencia": "4401442969",
+          "hcp": 25.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2322473
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Pool Seniors",
+      "jugadores": 14
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Argimiro Sola Martinez",
+      "licencia": "4401245559",
+      "hcp": 21.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Jose Maria Mateo Fuertes",
+      "licencia": "4401013872",
+      "hcp": 25.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Fernando Llarena Gonzalez",
+      "licencia": "4401924165",
+      "hcp": 23.9,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Javier Inchausti Estomba",
+      "licencia": "4401722753",
+      "hcp": 23.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Miguel Angel Saenz Garcia",
+      "licencia": "VB14734386",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Miguel Torrea Larralde",
+      "licencia": "4401696255",
+      "hcp": 24.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Santiago Iglesias Gines",
+      "licencia": "4401244035",
+      "hcp": 23.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Jose Maria Bariain Satrustegui",
+      "licencia": "4401188006",
+      "hcp": 19.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Javier Roncal Azanza",
+      "licencia": "4401397618",
+      "hcp": 26.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Julio De Pablos Fernandez",
+      "licencia": "4401059883",
+      "hcp": 17,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Alberto Guinaldo Iglesias",
+      "licencia": "4401726220",
+      "hcp": 18.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Josetxo Iturralde Adrian",
+      "licencia": "4401329054",
+      "hcp": 25.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Vicente Villanueva Aleman",
+      "licencia": "4401442969",
+      "hcp": 25.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Jose Manuel Echevarria Salaverria",
+      "licencia": "4401262357",
+      "hcp": 15.4,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Fecha Inscripción",
+      "hcp": null,
+      "nivel": "Licencia"
+    },
+    {
+      "orden": 1,
+      "name": "Argimiro Sola Martinez",
+      "licencia": "18-05-26 09:34",
+      "hcp": 21.7,
+      "nivel": "4401245559"
+    },
+    {
+      "orden": 2,
+      "name": "Jose Maria Mateo Fuertes",
+      "licencia": "18-05-26 09:34",
+      "hcp": 25.2,
+      "nivel": "4401013872"
+    },
+    {
+      "orden": 3,
+      "name": "Javier Inchausti Estomba",
+      "licencia": "18-05-26 10:17",
+      "hcp": 23.1,
+      "nivel": "4401722753"
+    },
+    {
+      "orden": 4,
+      "name": "Miguel Angel Saenz Garcia",
+      "licencia": "18-05-26 10:20",
+      "hcp": null,
+      "nivel": "VB14734386"
+    },
+    {
+      "orden": 5,
+      "name": "Miguel Torrea Larralde",
+      "licencia": "18-05-26 12:16",
+      "hcp": 24.7,
+      "nivel": "4401696255"
+    },
+    {
+      "orden": 6,
+      "name": "Santiago Iglesias Gines",
+      "licencia": "18-05-26 12:23",
+      "hcp": 23.3,
+      "nivel": "4401244035"
+    },
+    {
+      "orden": 7,
+      "name": "Fernando Llarena Gonzalez",
+      "licencia": "18-05-26 12:24",
+      "hcp": 23.9,
+      "nivel": "4401924165"
+    },
+    {
+      "orden": 8,
+      "name": "Jose Maria Bariain Satrustegui",
+      "licencia": "18-05-26 12:39",
+      "hcp": 19.2,
+      "nivel": "4401188006"
+    },
+    {
+      "orden": 9,
+      "name": "Javier Roncal Azanza",
+      "licencia": "18-05-26 14:01",
+      "hcp": 26.2,
+      "nivel": "4401397618"
+    },
+    {
+      "orden": 10,
+      "name": "Julio De Pablos Fernandez",
+      "licencia": "18-05-26 14:02",
+      "hcp": 17,
+      "nivel": "4401059883"
+    },
+    {
+      "orden": 11,
+      "name": "Alberto Guinaldo Iglesias",
+      "licencia": "18-05-26 14:02",
+      "hcp": 18.6,
+      "nivel": "4401726220"
+    },
+    {
+      "orden": 12,
+      "name": "Josetxo Iturralde Adrian",
+      "licencia": "18-05-26 14:02",
+      "hcp": 25.5,
+      "nivel": "4401329054"
+    },
+    {
+      "orden": 13,
+      "name": "Vicente Villanueva Aleman",
+      "licencia": "18-05-26 14:04",
+      "hcp": 25.3,
+      "nivel": "4401442969"
+    },
+    {
+      "orden": 14,
+      "name": "Jose Manuel Echevarria Salaverria",
+      "licencia": "18-05-26 15:27",
+      "hcp": 15.4,
+      "nivel": "4401262357"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Jose Manuel Echevarria Salaverria",
+          "hcp": 15.4,
+          "ins": "2322521",
+          "jid": "75877",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Julio De Pablos Fernandez",
+          "hcp": 17,
+          "ins": "2322469",
+          "jid": "75877",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Alberto Guinaldo Iglesias",
+          "hcp": 18.6,
+          "ins": "2322470",
+          "jid": "75877",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Jose Maria Bariain Satrustegui",
+          "hcp": 19.2,
+          "ins": "2322309",
+          "jid": "75877",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Argimiro Sola Martinez",
+          "hcp": 21.7,
+          "ins": "2321828",
+          "jid": "75877",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Javier Inchausti Estomba",
+          "hcp": 23.1,
+          "ins": "2322045",
+          "jid": "75877",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Santiago Iglesias Gines",
+          "hcp": 23.3,
+          "ins": "2322258",
+          "jid": "75877",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Fernando Llarena Gonzalez",
+          "hcp": 23.9,
+          "ins": "2322259",
+          "jid": "75877",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Miguel Torrea Larralde",
+          "hcp": 24.7,
+          "ins": "2322232",
+          "jid": "75877",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Jose Maria Mateo Fuertes",
+          "hcp": 25.2,
+          "ins": "2321829",
+          "jid": "75877",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Vicente Villanueva Aleman",
+          "hcp": 25.3,
+          "ins": "2322473",
+          "jid": "75877",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Josetxo Iturralde Adrian",
+          "hcp": 25.5,
+          "ins": "2322471",
+          "jid": "75877",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Javier Roncal Azanza",
+          "hcp": 26.2,
+          "ins": "2322468",
+          "jid": "75877",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Miguel Angel Saenz Garcia",
+          "hcp": 26.4,
+          "ins": "2322052",
+          "jid": "75877",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -42,5 +563,5 @@
   ],
   "scoreTypes": [],
   "pdfs": [],
-  "horariosScrapedAt": "2026-05-18T08:08:46.516Z"
+  "horariosScrapedAt": "2026-05-21T16:42:44.862Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 68146,
   "url": "https://www.nextcaddy.com/tour/68146",
-  "scrapedAt": "2026-05-09T09:58:04.577Z",
+  "scrapedAt": "2026-05-21T16:37:40.888Z",
   "meta": {
     "name": "Torneo Fun&Golf \"Golf Negralejo\" Tiro 9:30",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Palacio del Negralejo S A",
     "courseCode": "CM33",
-    "dateStart": "08 mar 2026",
-    "dateEnd": "08 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Circuito Fun&Golf",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-03-08"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual Masculino",
+      "expectedJugadores": 25,
       "header": [
         "Pos",
         "Jugador",
@@ -315,6 +316,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Scratch Individual Femenino",
+      "expectedJugadores": 6,
       "header": [
         "Pos",
         "Jugador",
@@ -397,6 +400,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Handicap Individual Masculino",
+      "expectedJugadores": 25,
       "header": [
         "Pos",
         "Jugador",
@@ -688,6 +693,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Handicap Individual Femenino",
+      "expectedJugadores": 6,
       "header": [
         "Pos",
         "Jugador",
@@ -769,6 +776,25 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual Masculino",
+      "jugadores": 25
+    },
+    "2": {
+      "name": "Scratch Individual Femenino",
+      "jugadores": 6
+    },
+    "3": {
+      "name": "Handicap Individual Masculino",
+      "jugadores": 25
+    },
+    "4": {
+      "name": "Handicap Individual Femenino",
+      "jugadores": 6
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1219,33 +1245,6 @@
       "nivel": "B"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72692
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Martinez Pajuelo, Alberto",
-          "holeNumber": 14,
-          "createdAt": "04/10/25 17:34:35"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1532,5 +1531,35 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:20.290Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72692
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Martinez Pajuelo, Alberto",
+          "holeNumber": 14,
+          "createdAt": "04/10/25 17:34:35"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/962734910_rrll_negralejo_p&amp;p.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:17.230Z"
 }

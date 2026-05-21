@@ -1,14 +1,14 @@
 {
   "tourId": 67792,
   "url": "https://www.nextcaddy.com/tour/67792",
-  "scrapedAt": "2026-05-09T09:49:49.163Z",
+  "scrapedAt": "2026-05-21T16:40:57.025Z",
   "meta": {
     "name": "III Puntuable Pitch & Putt 2026",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Green Paddock S A",
     "courseCode": "CM14",
-    "dateStart": "19 sep 2026",
-    "dateEnd": "19 sep 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) Puntables Para La S",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-09-19"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -139,6 +141,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:29.411Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/67792_cartel_20.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:08.244Z"
 }

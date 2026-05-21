@@ -1,14 +1,14 @@
 {
   "tourId": 69343,
   "url": "https://www.nextcaddy.com/tour/69343",
-  "scrapedAt": "2026-05-09T10:07:57.269Z",
+  "scrapedAt": "2026-05-21T16:38:44.512Z",
   "meta": {
     "name": "3 J. CIRCUITO VNG 2026. CATEGORIA ORO (0 - 12)",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "12 abr 2026",
-    "dateEnd": "12 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-12"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -250,6 +251,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -474,6 +477,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 19
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 19
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -756,6 +770,184 @@
       "nivel": "AMD5926544"
     }
   ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Jose Ignacio Andrades Torrecillas",
+          "hcp": 1.2,
+          "ins": "2293341",
+          "jid": "74104",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Alvaro Brandariz Borrero",
+          "hcp": 1.8,
+          "ins": "2293725",
+          "jid": "74104",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Javier Cañas Bartivas",
+          "hcp": 3,
+          "ins": "2291599",
+          "jid": "74104",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Javier Fernandez Bustelo",
+          "hcp": 4.3,
+          "ins": "2294601",
+          "jid": "74104",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 2,
+          "name": "Fernando Muñoz Rodriguez",
+          "hcp": 8,
+          "ins": "2296017",
+          "jid": "74104",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 2,
+          "name": "Ramon Guerrero Ruiz-Mateos",
+          "hcp": 9.4,
+          "ins": "2296263",
+          "jid": "74104",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 2,
+          "name": "Joaquin Escalante Boceta",
+          "hcp": 10.9,
+          "ins": "2296352",
+          "jid": "74104",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 2,
+          "name": "Mario Calvo Piñero",
+          "hcp": 12.3,
+          "ins": "2292040",
+          "jid": "74104",
+          "nivel": "C"
+        },
+        {
+          "time": "09:00",
+          "tee": 3,
+          "name": "Pedro Velon Ororbia",
+          "hcp": 12.8,
+          "ins": "2294599",
+          "jid": "74104",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 3,
+          "name": "Sergio Alejandro Cordero Gomez",
+          "hcp": 13.3,
+          "ins": "2296019",
+          "jid": "74104",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 3,
+          "name": "Eva Camacho Torrent",
+          "hcp": 13.5,
+          "ins": "2292550",
+          "jid": "74104",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 3,
+          "name": "Jaime Noain Calabuig",
+          "hcp": 13.5,
+          "ins": "2296313",
+          "jid": "74104",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 4,
+          "name": "Jeff Shellton",
+          "hcp": 14.5,
+          "ins": "2286423",
+          "jid": "74104",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 4,
+          "name": "Juan Rego Olvera",
+          "hcp": 14.5,
+          "ins": "2296403",
+          "jid": "74104",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 4,
+          "name": "Manuel Barnes Fiscer",
+          "hcp": 15.3,
+          "ins": "2294631",
+          "jid": "74104",
+          "nivel": "S"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Leandro Guillermo Scholtis Noceto",
+          "hcp": 4.9,
+          "ins": "2294325",
+          "jid": "74104",
+          "nivel": "S"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Pedro Jose Cantero Ortega",
+          "hcp": 6,
+          "ins": "2296396",
+          "jid": "74104",
+          "nivel": "M"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Antonio Sierra Galan",
+          "hcp": 6.2,
+          "ins": "2292543",
+          "jid": "74104",
+          "nivel": "M"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Maximo Quintero Diaz",
+          "hcp": 7.1,
+          "ins": "2296049",
+          "jid": "74104",
+          "nivel": "M"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -1033,183 +1225,8 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Jose Ignacio Andrades Torrecillas",
-          "hcp": 1.2,
-          "ins": "2293341",
-          "jid": "74104",
-          "nivel": "M"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Alvaro Brandariz Borrero",
-          "hcp": 1.8,
-          "ins": "2293725",
-          "jid": "74104",
-          "nivel": "M"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Javier Cañas Bartivas",
-          "hcp": 3,
-          "ins": "2291599",
-          "jid": "74104",
-          "nivel": "M"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Javier Fernandez Bustelo",
-          "hcp": 4.3,
-          "ins": "2294601",
-          "jid": "74104",
-          "nivel": "M"
-        },
-        {
-          "time": "09:00",
-          "tee": 2,
-          "name": "Fernando Muñoz Rodriguez",
-          "hcp": 8,
-          "ins": "2296017",
-          "jid": "74104",
-          "nivel": "S"
-        },
-        {
-          "time": "09:00",
-          "tee": 2,
-          "name": "Ramon Guerrero Ruiz-Mateos",
-          "hcp": 9.4,
-          "ins": "2296263",
-          "jid": "74104",
-          "nivel": "M"
-        },
-        {
-          "time": "09:00",
-          "tee": 2,
-          "name": "Joaquin Escalante Boceta",
-          "hcp": 10.9,
-          "ins": "2296352",
-          "jid": "74104",
-          "nivel": "S"
-        },
-        {
-          "time": "09:00",
-          "tee": 2,
-          "name": "Mario Calvo Piñero",
-          "hcp": 12.3,
-          "ins": "2292040",
-          "jid": "74104",
-          "nivel": "C"
-        },
-        {
-          "time": "09:00",
-          "tee": 3,
-          "name": "Pedro Velon Ororbia",
-          "hcp": 12.8,
-          "ins": "2294599",
-          "jid": "74104",
-          "nivel": "S"
-        },
-        {
-          "time": "09:00",
-          "tee": 3,
-          "name": "Sergio Alejandro Cordero Gomez",
-          "hcp": 13.3,
-          "ins": "2296019",
-          "jid": "74104",
-          "nivel": "M"
-        },
-        {
-          "time": "09:00",
-          "tee": 3,
-          "name": "Eva Camacho Torrent",
-          "hcp": 13.5,
-          "ins": "2292550",
-          "jid": "74104",
-          "nivel": "S"
-        },
-        {
-          "time": "09:00",
-          "tee": 3,
-          "name": "Jaime Noain Calabuig",
-          "hcp": 13.5,
-          "ins": "2296313",
-          "jid": "74104",
-          "nivel": "S"
-        },
-        {
-          "time": "09:00",
-          "tee": 4,
-          "name": "Jeff Shellton",
-          "hcp": 14.5,
-          "ins": "2286423",
-          "jid": "74104",
-          "nivel": "S"
-        },
-        {
-          "time": "09:00",
-          "tee": 4,
-          "name": "Juan Rego Olvera",
-          "hcp": 14.5,
-          "ins": "2296403",
-          "jid": "74104",
-          "nivel": "M"
-        },
-        {
-          "time": "09:00",
-          "tee": 4,
-          "name": "Manuel Barnes Fiscer",
-          "hcp": 15.3,
-          "ins": "2294631",
-          "jid": "74104",
-          "nivel": "S"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Leandro Guillermo Scholtis Noceto",
-          "hcp": 4.9,
-          "ins": "2294325",
-          "jid": "74104",
-          "nivel": "S"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Pedro Jose Cantero Ortega",
-          "hcp": 6,
-          "ins": "2296396",
-          "jid": "74104",
-          "nivel": "M"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Antonio Sierra Galan",
-          "hcp": 6.2,
-          "ins": "2292543",
-          "jid": "74104",
-          "nivel": "M"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Maximo Quintero Diaz",
-          "hcp": 7.1,
-          "ins": "2296049",
-          "jid": "74104",
-          "nivel": "M"
-        }
-      ]
-    }
+  "pdfs": [
+    "/uploads/competiciones/pdf/2336797973_reglamento_circuito_villanueva_golf_2026.pdf"
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:52.868Z"
+  "horariosScrapedAt": "2026-05-21T16:42:33.190Z"
 }

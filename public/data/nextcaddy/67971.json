@@ -1,14 +1,14 @@
 {
   "tourId": 67971,
   "url": "https://www.nextcaddy.com/tour/67971",
-  "scrapedAt": "2026-05-09T10:16:50.155Z",
+  "scrapedAt": "2026-05-21T16:40:33.954Z",
   "meta": {
     "name": "Campeonato de Madrid Dobles de Profesionales",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Centro Nacional de Golf",
     "courseCode": "CMA8",
-    "dateStart": "06 jul 2026",
-    "dateEnd": "06 jul 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) 25º Circuito De Mad",
     "categories": [
       "Profesional",
@@ -17,12 +17,14 @@
       "Infantil",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-07-06"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -69,6 +71,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:31.517Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:14.315Z"
 }

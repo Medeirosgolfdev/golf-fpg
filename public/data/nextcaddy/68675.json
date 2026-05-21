@@ -1,14 +1,14 @@
 {
   "tourId": 68675,
   "url": "https://www.nextcaddy.com/tour/68675",
-  "scrapedAt": "2026-05-09T09:49:39.029Z",
+  "scrapedAt": "2026-05-21T16:38:04.906Z",
   "meta": {
     "name": "VI Torneo Academia Infantil 2025-2026 - 4 hoyos",
     "organizer": null,
     "course": "Escuela de Golf Miguel ángel Jiménez",
     "courseCode": "AMI5",
-    "dateStart": "21 mar 2026",
-    "dateEnd": "21 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Infantil",
@@ -18,11 +18,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-21"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -137,38 +138,6 @@
       "nivel": "AMI5519024"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73319
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Lopez Menjibar, Martin",
-          "holeNumber": 2,
-          "createdAt": "14/09/25 15:18:23"
-        },
-        {
-          "playerName": "Capitan Noguera, Alejandro",
-          "holeNumber": 7,
-          "createdAt": "14/09/25 15:34:55"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -239,5 +208,38 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:27.704Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73319
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Lopez Menjibar, Martin",
+          "holeNumber": 2,
+          "createdAt": "14/09/25 15:18:23"
+        },
+        {
+          "playerName": "Capitan Noguera, Alejandro",
+          "holeNumber": 7,
+          "createdAt": "14/09/25 15:34:55"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:25.579Z"
 }

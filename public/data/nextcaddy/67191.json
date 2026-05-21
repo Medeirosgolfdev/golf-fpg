@@ -1,14 +1,14 @@
 {
   "tourId": 67191,
   "url": "https://www.nextcaddy.com/tour/67191",
-  "scrapedAt": "2026-05-09T09:57:14.327Z",
+  "scrapedAt": "2026-05-21T16:36:19.492Z",
   "meta": {
     "name": "TORNEO FUNDACIÓN CAJASOL - ROSCÓN DE REYES",
     "organizer": null,
     "course": "Real Club de Golf Vista Hermosa",
     "courseCode": "AM05",
-    "dateStart": "03 ene 2026",
-    "dateEnd": "03 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -18,13 +18,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-03"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "3ª Cat Hcp",
+      "expectedJugadores": 13,
       "header": [
         "Pos",
         "Jugador",
@@ -184,6 +185,8 @@
     },
     {
       "category": 2,
+      "categoryName": "2ª Cat Hcp",
+      "expectedJugadores": 23,
       "header": [
         "Pos",
         "Jugador",
@@ -453,6 +456,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Scratch",
+      "expectedJugadores": 44,
       "header": [
         "Pos",
         "Jugador",
@@ -953,6 +958,8 @@
     },
     {
       "category": 4,
+      "categoryName": "1º Cat Hcp",
+      "expectedJugadores": 16,
       "header": [
         "Pos",
         "Jugador",
@@ -1144,6 +1151,25 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "3ª Cat Hcp",
+      "jugadores": 13
+    },
+    "2": {
+      "name": "2ª Cat Hcp",
+      "jugadores": 23
+    },
+    "3": {
+      "name": "Scratch",
+      "jugadores": 44
+    },
+    "4": {
+      "name": "1º Cat Hcp",
+      "jugadores": 16
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1902,33 +1928,6 @@
       "nivel": "C"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71591
-    }
-  ],
-  "scoreTypes": {
-    "hole_in_one": {
-      "scoreTypeKey": "hole_in_one",
-      "players": [
-        {
-          "playerName": "Fernandez Nuñez, Paloma",
-          "holeNumber": 8,
-          "createdAt": "21/06/25 18:16:11"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -2404,5 +2403,33 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:05.089Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71591
+    }
+  ],
+  "scoreTypes": {
+    "hole_in_one": {
+      "scoreTypeKey": "hole_in_one",
+      "players": [
+        {
+          "playerName": "Fernandez Nuñez, Paloma",
+          "holeNumber": 8,
+          "createdAt": "21/06/25 18:16:11"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:00.040Z"
 }

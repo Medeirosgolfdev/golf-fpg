@@ -1,14 +1,14 @@
 {
   "tourId": 66820,
   "url": "https://www.nextcaddy.com/tour/66820",
-  "scrapedAt": "2026-05-09T09:57:17.289Z",
+  "scrapedAt": "2026-05-21T16:36:25.691Z",
   "meta": {
     "name": "IV Liga Beginners 2025-2026",
     "organizer": null,
     "course": "Escuela de Golf Miguel ángel Jiménez",
     "courseCode": "AMI5",
-    "dateStart": "10 ene 2026",
-    "dateEnd": "10 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,17 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-10"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Couple All",
+      "jugadores": 12
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -192,22 +198,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71214
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -431,5 +421,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:03.798Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71214
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:41:58.480Z"
 }

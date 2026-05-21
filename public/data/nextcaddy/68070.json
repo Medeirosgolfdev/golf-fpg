@@ -1,14 +1,14 @@
 {
   "tourId": 68070,
   "url": "https://www.nextcaddy.com/tour/68070",
-  "scrapedAt": "2026-05-09T10:17:16.316Z",
+  "scrapedAt": "2026-05-21T16:41:12.273Z",
   "meta": {
     "name": "I Prueba del Circuito Parejas Senior de Castilla y León",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "21 oct 2026",
-    "dateEnd": "21 oct 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Senior",
@@ -17,12 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-10-21"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -80,6 +82,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:33.292Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/68070_cartel_444.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:16.695Z"
 }

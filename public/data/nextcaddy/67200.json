@@ -1,14 +1,14 @@
 {
   "tourId": 67200,
   "url": "https://www.nextcaddy.com/tour/67200",
-  "scrapedAt": "2026-05-09T10:15:41.641Z",
+  "scrapedAt": "2026-05-21T16:39:08.271Z",
   "meta": {
     "name": "III Prueba del Circuito Senior de CyL",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "25 abr 2026",
-    "dateEnd": "25 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Senior",
@@ -18,13 +18,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-25"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch_Roja_Caballeros",
+      "expectedJugadores": 1,
       "header": [
         "Pos",
         "Jugador",
@@ -52,6 +53,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Tercera_Categoria_23,5",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -200,6 +203,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Seguna_Categoria_16,5-23,4",
+      "expectedJugadores": 15,
       "header": [
         "Pos",
         "Jugador",
@@ -381,6 +386,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Primera_Categoria_Hasta_16,4",
+      "expectedJugadores": 24,
       "header": [
         "Pos",
         "Jugador",
@@ -661,6 +668,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Handicap_General",
+      "expectedJugadores": 51,
       "header": [
         "Pos",
         "Jugador",
@@ -1238,6 +1247,8 @@
     },
     {
       "category": 6,
+      "categoryName": "Scratch_Damas",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -1342,6 +1353,8 @@
     },
     {
       "category": 7,
+      "categoryName": "Scratch_Caballeros",
+      "expectedJugadores": 42,
       "header": [
         "Pos",
         "Jugador",
@@ -1819,6 +1832,37 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch_Roja_Caballeros",
+      "jugadores": 1
+    },
+    "2": {
+      "name": "Tercera_Categoria_23,5",
+      "jugadores": 12
+    },
+    "3": {
+      "name": "Seguna_Categoria_16,5-23,4",
+      "jugadores": 15
+    },
+    "4": {
+      "name": "Primera_Categoria_Hasta_16,4",
+      "jugadores": 24
+    },
+    "5": {
+      "name": "Handicap_General",
+      "jugadores": 51
+    },
+    "6": {
+      "name": "Scratch_Damas",
+      "jugadores": 8
+    },
+    "7": {
+      "name": "Scratch_Caballeros",
+      "jugadores": 42
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2556,363 +2600,6 @@
       "nivel": "7770693113"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71601
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Andrades Torrecillas, Jose Ignacio - Pombo Jimenez, Jaime",
-          "holeNumber": 2,
-          "createdAt": "06/08/25 15:49:11"
-        },
-        {
-          "playerName": "Bejar Frias, Juan - Angell Harmsen, Alexander",
-          "holeNumber": 3,
-          "createdAt": "06/08/25 15:52:16"
-        },
-        {
-          "playerName": "Liniers Pierrand, Alfonso - Millan  Romero, Francisco",
-          "holeNumber": 14,
-          "createdAt": "06/08/25 15:53:06"
-        },
-        {
-          "playerName": "Yñiguez Aragon, Pelayo - Daroca Guerrero, Tomas",
-          "holeNumber": 2,
-          "createdAt": "06/08/25 16:03:14"
-        },
-        {
-          "playerName": "Lopez Rubio, Luis - Contreras Caro, Cesar",
-          "holeNumber": 2,
-          "createdAt": "06/08/25 16:03:48"
-        },
-        {
-          "playerName": "Pablo-Romero Carranza, Maria Isabel - Ladron De Guevara Ruiz, Ignacio",
-          "holeNumber": 3,
-          "createdAt": "06/08/25 16:05:48"
-        },
-        {
-          "playerName": "Perez Andrade, Gonzalo - Sanchez De Luque, Alvaro",
-          "holeNumber": 16,
-          "createdAt": "06/08/25 16:11:56"
-        },
-        {
-          "playerName": "Camacho Rodriguez, Santiago - Goy Gallardo, Gonzalo",
-          "holeNumber": 3,
-          "createdAt": "06/08/25 16:29:42"
-        },
-        {
-          "playerName": "Lopez Rubio, Luis - Contreras Caro, Cesar",
-          "holeNumber": 4,
-          "createdAt": "06/08/25 16:32:46"
-        },
-        {
-          "playerName": "Camacho Rodriguez, Santiago - Goy Gallardo, Gonzalo",
-          "holeNumber": 5,
-          "createdAt": "06/08/25 16:46:13"
-        },
-        {
-          "playerName": "Pierrard Hardy, Felipe - Copano Fernandez, Ignacio",
-          "holeNumber": 17,
-          "createdAt": "06/08/25 16:52:50"
-        },
-        {
-          "playerName": "Andrades Torrecillas, Jose Ignacio - Pombo Jimenez, Jaime",
-          "holeNumber": 6,
-          "createdAt": "06/08/25 17:00:55"
-        },
-        {
-          "playerName": "Parrilla Serra, Antonio - Castro Del Olmo, Raul",
-          "holeNumber": 12,
-          "createdAt": "06/08/25 17:06:45"
-        },
-        {
-          "playerName": "Mora-Figueroa Madariaga, Romualdo - Olavarria Martinez De Salinas, Antonio",
-          "holeNumber": 5,
-          "createdAt": "06/08/25 17:07:51"
-        },
-        {
-          "playerName": "Berbel Anaya, Pedro - Garate De Las Heras, Cristina",
-          "holeNumber": 16,
-          "createdAt": "06/08/25 17:08:12"
-        },
-        {
-          "playerName": "Camacho Rodriguez, Santiago - Goy Gallardo, Gonzalo",
-          "holeNumber": 7,
-          "createdAt": "06/08/25 17:12:05"
-        },
-        {
-          "playerName": "Romero Gallego, Luis - Bonilla Damia, Gonzalo",
-          "holeNumber": 10,
-          "createdAt": "06/08/25 17:29:19"
-        },
-        {
-          "playerName": "Mora-Figueroa Madariaga, Romualdo - Olavarria Martinez De Salinas, Antonio",
-          "holeNumber": 7,
-          "createdAt": "06/08/25 17:29:47"
-        },
-        {
-          "playerName": "Delso Noguera, Salvador - Escatllar De Alvear, Enrique",
-          "holeNumber": 16,
-          "createdAt": "06/08/25 17:32:26"
-        },
-        {
-          "playerName": "Moran Sanchez, Eduardo - Esteban Garmendia, Isabel",
-          "holeNumber": 11,
-          "createdAt": "06/08/25 17:33:02"
-        },
-        {
-          "playerName": "Delage Estevez, Carlos - Rodriguez Benavente, Juan",
-          "holeNumber": 12,
-          "createdAt": "06/08/25 17:37:26"
-        },
-        {
-          "playerName": "Camacho Rodriguez, Santiago - Goy Gallardo, Gonzalo",
-          "holeNumber": 8,
-          "createdAt": "06/08/25 17:40:56"
-        },
-        {
-          "playerName": "Gabarda Pery, Luis - Gallardo Rojo, Lorenzo",
-          "holeNumber": 7,
-          "createdAt": "06/08/25 17:47:20"
-        },
-        {
-          "playerName": "Guerrero Almagro, Juan Carlos - Chaila, Jerome",
-          "holeNumber": 14,
-          "createdAt": "06/08/25 17:49:55"
-        },
-        {
-          "playerName": "Morales Sierra, Carlos - Sainz De La Maza Ramirez, Magdalena",
-          "holeNumber": 14,
-          "createdAt": "06/08/25 17:50:26"
-        },
-        {
-          "playerName": "Camacho Rodriguez, Santiago - Goy Gallardo, Gonzalo",
-          "holeNumber": 9,
-          "createdAt": "06/08/25 17:52:08"
-        },
-        {
-          "playerName": "Roman Molina, Juan - Burgos Correa, Juan Manuel",
-          "holeNumber": 17,
-          "createdAt": "06/08/25 18:05:55"
-        },
-        {
-          "playerName": "Andrades Torrecillas, Jose Ignacio - Pombo Jimenez, Jaime",
-          "holeNumber": 11,
-          "createdAt": "06/08/25 18:34:00"
-        },
-        {
-          "playerName": "Parrilla Serra, Antonio - Castro Del Olmo, Raul",
-          "holeNumber": 16,
-          "createdAt": "06/08/25 18:35:21"
-        },
-        {
-          "playerName": "Gandarias Maestre, Santiago - Arbona Palancar, Joaquin",
-          "holeNumber": 12,
-          "createdAt": "06/08/25 18:36:14"
-        },
-        {
-          "playerName": "Berbel Anaya, Pedro - Garate De Las Heras, Cristina",
-          "holeNumber": 3,
-          "createdAt": "06/08/25 18:45:16"
-        },
-        {
-          "playerName": "Perez Andres, Alfonso - Gonzalez Diaz, Juan Jose",
-          "holeNumber": 7,
-          "createdAt": "06/08/25 18:48:25"
-        },
-        {
-          "playerName": "Gabarda Pery, Luis - Gallardo Rojo, Lorenzo",
-          "holeNumber": 11,
-          "createdAt": "06/08/25 19:01:16"
-        },
-        {
-          "playerName": "Ramirez Moreno, Alfredo - Sanchez Lluch, Gustavo",
-          "holeNumber": 17,
-          "createdAt": "06/08/25 19:02:34"
-        },
-        {
-          "playerName": "Marañon Cervantes, Manuel - Restituto Molero, Francisco Javier",
-          "holeNumber": 16,
-          "createdAt": "06/08/25 19:03:05"
-        },
-        {
-          "playerName": "Serrano Melendez, Jose Carlos - Guerrero Almagro, Javier",
-          "holeNumber": 16,
-          "createdAt": "06/08/25 19:04:05"
-        },
-        {
-          "playerName": "Andrades Torrecillas, Jose Ignacio - Pombo Jimenez, Jaime",
-          "holeNumber": 13,
-          "createdAt": "06/08/25 19:06:29"
-        },
-        {
-          "playerName": "Camacho Rodriguez, Santiago - Goy Gallardo, Gonzalo",
-          "holeNumber": 13,
-          "createdAt": "06/08/25 19:07:59"
-        },
-        {
-          "playerName": "Camacho Rodriguez, Santiago - Goy Gallardo, Gonzalo",
-          "holeNumber": 14,
-          "createdAt": "06/08/25 19:17:51"
-        },
-        {
-          "playerName": "Roman Molina, Juan - Burgos Correa, Juan Manuel",
-          "holeNumber": 3,
-          "createdAt": "06/08/25 19:22:12"
-        },
-        {
-          "playerName": "Camacho Rodriguez, Santiago - Goy Gallardo, Gonzalo",
-          "holeNumber": 15,
-          "createdAt": "06/08/25 19:38:29"
-        },
-        {
-          "playerName": "Gandarias Maestre, Santiago - Arbona Palancar, Joaquin",
-          "holeNumber": 16,
-          "createdAt": "06/08/25 19:44:40"
-        },
-        {
-          "playerName": "Moran Sanchez, Eduardo - Esteban Garmendia, Isabel",
-          "holeNumber": 1,
-          "createdAt": "06/08/25 19:46:52"
-        },
-        {
-          "playerName": "Castilla Baro, Jose Maria - Taboada De Zuñiga Caballo, Alvaro",
-          "holeNumber": 3,
-          "createdAt": "06/08/25 19:52:51"
-        },
-        {
-          "playerName": "Camacho Rodriguez, Santiago - Goy Gallardo, Gonzalo",
-          "holeNumber": 16,
-          "createdAt": "06/08/25 19:59:36"
-        },
-        {
-          "playerName": "Marañon Cervantes, Manuel - Restituto Molero, Francisco Javier",
-          "holeNumber": 1,
-          "createdAt": "06/08/25 19:59:47"
-        },
-        {
-          "playerName": "Perez Andres, Alfonso - Gonzalez Diaz, Juan Jose",
-          "holeNumber": 12,
-          "createdAt": "06/08/25 20:04:28"
-        },
-        {
-          "playerName": "Lopez Rubio, Luis - Contreras Caro, Cesar",
-          "holeNumber": 16,
-          "createdAt": "06/08/25 20:06:27"
-        },
-        {
-          "playerName": "Velasco Aguirre, Jaime - Ollero Ruiz-Gollury, Javier",
-          "holeNumber": 3,
-          "createdAt": "06/08/25 20:11:01"
-        },
-        {
-          "playerName": "Mora-Figueroa Madariaga, Romualdo - Olavarria Martinez De Salinas, Antonio",
-          "holeNumber": 16,
-          "createdAt": "06/08/25 20:11:34"
-        },
-        {
-          "playerName": "Camacho Rodriguez, Santiago - Goy Gallardo, Gonzalo",
-          "holeNumber": 17,
-          "createdAt": "06/08/25 20:14:34"
-        },
-        {
-          "playerName": "Jimenez Bidon, Carlos - De Leon-Sotelo Garcia-Patiño, Alfonso",
-          "holeNumber": 16,
-          "createdAt": "06/08/25 20:19:44"
-        },
-        {
-          "playerName": "Fideo Beca, Gonzalo - Del Castillo Valenzuela, Rodrigo",
-          "holeNumber": 10,
-          "createdAt": "06/08/25 20:21:01"
-        },
-        {
-          "playerName": "Yñiguez Aragon, Pelayo - Daroca Guerrero, Tomas",
-          "holeNumber": 16,
-          "createdAt": "06/08/25 20:24:06"
-        },
-        {
-          "playerName": "Pablo-Romero Carranza, Maria Isabel - Ladron De Guevara Ruiz, Ignacio",
-          "holeNumber": 18,
-          "createdAt": "06/08/25 20:24:07"
-        },
-        {
-          "playerName": "Mora-Figueroa Madariaga, Romualdo - Olavarria Martinez De Salinas, Antonio",
-          "holeNumber": 17,
-          "createdAt": "06/08/25 20:30:57"
-        },
-        {
-          "playerName": "Moran Sanchez, Eduardo - Esteban Garmendia, Isabel",
-          "holeNumber": 3,
-          "createdAt": "06/08/25 20:31:06"
-        },
-        {
-          "playerName": "Gabarda Pery, Luis - Gallardo Rojo, Lorenzo",
-          "holeNumber": 17,
-          "createdAt": "06/08/25 20:40:55"
-        },
-        {
-          "playerName": "Moran Sanchez, Eduardo - Esteban Garmendia, Isabel",
-          "holeNumber": 4,
-          "createdAt": "06/08/25 20:42:04"
-        },
-        {
-          "playerName": "Mora-Figueroa Madariaga, Romualdo - Olavarria Martinez De Salinas, Antonio",
-          "holeNumber": 18,
-          "createdAt": "06/08/25 20:45:28"
-        },
-        {
-          "playerName": "Perez Andres, Alfonso - Gonzalez Diaz, Juan Jose",
-          "holeNumber": 14,
-          "createdAt": "06/08/25 20:49:39"
-        },
-        {
-          "playerName": "Castrillo Muñoz, Javier - Caballero Caro, Jesus",
-          "holeNumber": 3,
-          "createdAt": "06/08/25 20:55:04"
-        },
-        {
-          "playerName": "Baque Perez, Arturo - Capellan Barreras, Jose Maria",
-          "holeNumber": 11,
-          "createdAt": "06/08/25 20:58:18"
-        },
-        {
-          "playerName": "Pierrard Hardy, Felipe - Copano Fernandez, Ignacio",
-          "holeNumber": 13,
-          "createdAt": "06/08/25 21:00:04"
-        },
-        {
-          "playerName": "Moran Sanchez, Eduardo - Esteban Garmendia, Isabel",
-          "holeNumber": 5,
-          "createdAt": "06/08/25 21:05:00"
-        }
-      ]
-    },
-    "eagle": {
-      "scoreTypeKey": "eagle",
-      "players": [
-        {
-          "playerName": "Fideo Beca, Gonzalo - Del Castillo Valenzuela, Rodrigo",
-          "holeNumber": 5,
-          "createdAt": "06/08/25 19:02:14"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -3379,5 +3066,366 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:05.349Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71601
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Andrades Torrecillas, Jose Ignacio - Pombo Jimenez, Jaime",
+          "holeNumber": 2,
+          "createdAt": "06/08/25 15:49:11"
+        },
+        {
+          "playerName": "Bejar Frias, Juan - Angell Harmsen, Alexander",
+          "holeNumber": 3,
+          "createdAt": "06/08/25 15:52:16"
+        },
+        {
+          "playerName": "Liniers Pierrand, Alfonso - Millan  Romero, Francisco",
+          "holeNumber": 14,
+          "createdAt": "06/08/25 15:53:06"
+        },
+        {
+          "playerName": "Yñiguez Aragon, Pelayo - Daroca Guerrero, Tomas",
+          "holeNumber": 2,
+          "createdAt": "06/08/25 16:03:14"
+        },
+        {
+          "playerName": "Lopez Rubio, Luis - Contreras Caro, Cesar",
+          "holeNumber": 2,
+          "createdAt": "06/08/25 16:03:48"
+        },
+        {
+          "playerName": "Pablo-Romero Carranza, Maria Isabel - Ladron De Guevara Ruiz, Ignacio",
+          "holeNumber": 3,
+          "createdAt": "06/08/25 16:05:48"
+        },
+        {
+          "playerName": "Perez Andrade, Gonzalo - Sanchez De Luque, Alvaro",
+          "holeNumber": 16,
+          "createdAt": "06/08/25 16:11:56"
+        },
+        {
+          "playerName": "Camacho Rodriguez, Santiago - Goy Gallardo, Gonzalo",
+          "holeNumber": 3,
+          "createdAt": "06/08/25 16:29:42"
+        },
+        {
+          "playerName": "Lopez Rubio, Luis - Contreras Caro, Cesar",
+          "holeNumber": 4,
+          "createdAt": "06/08/25 16:32:46"
+        },
+        {
+          "playerName": "Camacho Rodriguez, Santiago - Goy Gallardo, Gonzalo",
+          "holeNumber": 5,
+          "createdAt": "06/08/25 16:46:13"
+        },
+        {
+          "playerName": "Pierrard Hardy, Felipe - Copano Fernandez, Ignacio",
+          "holeNumber": 17,
+          "createdAt": "06/08/25 16:52:50"
+        },
+        {
+          "playerName": "Andrades Torrecillas, Jose Ignacio - Pombo Jimenez, Jaime",
+          "holeNumber": 6,
+          "createdAt": "06/08/25 17:00:55"
+        },
+        {
+          "playerName": "Parrilla Serra, Antonio - Castro Del Olmo, Raul",
+          "holeNumber": 12,
+          "createdAt": "06/08/25 17:06:45"
+        },
+        {
+          "playerName": "Mora-Figueroa Madariaga, Romualdo - Olavarria Martinez De Salinas, Antonio",
+          "holeNumber": 5,
+          "createdAt": "06/08/25 17:07:51"
+        },
+        {
+          "playerName": "Berbel Anaya, Pedro - Garate De Las Heras, Cristina",
+          "holeNumber": 16,
+          "createdAt": "06/08/25 17:08:12"
+        },
+        {
+          "playerName": "Camacho Rodriguez, Santiago - Goy Gallardo, Gonzalo",
+          "holeNumber": 7,
+          "createdAt": "06/08/25 17:12:05"
+        },
+        {
+          "playerName": "Romero Gallego, Luis - Bonilla Damia, Gonzalo",
+          "holeNumber": 10,
+          "createdAt": "06/08/25 17:29:19"
+        },
+        {
+          "playerName": "Mora-Figueroa Madariaga, Romualdo - Olavarria Martinez De Salinas, Antonio",
+          "holeNumber": 7,
+          "createdAt": "06/08/25 17:29:47"
+        },
+        {
+          "playerName": "Delso Noguera, Salvador - Escatllar De Alvear, Enrique",
+          "holeNumber": 16,
+          "createdAt": "06/08/25 17:32:26"
+        },
+        {
+          "playerName": "Moran Sanchez, Eduardo - Esteban Garmendia, Isabel",
+          "holeNumber": 11,
+          "createdAt": "06/08/25 17:33:02"
+        },
+        {
+          "playerName": "Delage Estevez, Carlos - Rodriguez Benavente, Juan",
+          "holeNumber": 12,
+          "createdAt": "06/08/25 17:37:26"
+        },
+        {
+          "playerName": "Camacho Rodriguez, Santiago - Goy Gallardo, Gonzalo",
+          "holeNumber": 8,
+          "createdAt": "06/08/25 17:40:56"
+        },
+        {
+          "playerName": "Gabarda Pery, Luis - Gallardo Rojo, Lorenzo",
+          "holeNumber": 7,
+          "createdAt": "06/08/25 17:47:20"
+        },
+        {
+          "playerName": "Guerrero Almagro, Juan Carlos - Chaila, Jerome",
+          "holeNumber": 14,
+          "createdAt": "06/08/25 17:49:55"
+        },
+        {
+          "playerName": "Morales Sierra, Carlos - Sainz De La Maza Ramirez, Magdalena",
+          "holeNumber": 14,
+          "createdAt": "06/08/25 17:50:26"
+        },
+        {
+          "playerName": "Camacho Rodriguez, Santiago - Goy Gallardo, Gonzalo",
+          "holeNumber": 9,
+          "createdAt": "06/08/25 17:52:08"
+        },
+        {
+          "playerName": "Roman Molina, Juan - Burgos Correa, Juan Manuel",
+          "holeNumber": 17,
+          "createdAt": "06/08/25 18:05:55"
+        },
+        {
+          "playerName": "Andrades Torrecillas, Jose Ignacio - Pombo Jimenez, Jaime",
+          "holeNumber": 11,
+          "createdAt": "06/08/25 18:34:00"
+        },
+        {
+          "playerName": "Parrilla Serra, Antonio - Castro Del Olmo, Raul",
+          "holeNumber": 16,
+          "createdAt": "06/08/25 18:35:21"
+        },
+        {
+          "playerName": "Gandarias Maestre, Santiago - Arbona Palancar, Joaquin",
+          "holeNumber": 12,
+          "createdAt": "06/08/25 18:36:14"
+        },
+        {
+          "playerName": "Berbel Anaya, Pedro - Garate De Las Heras, Cristina",
+          "holeNumber": 3,
+          "createdAt": "06/08/25 18:45:16"
+        },
+        {
+          "playerName": "Perez Andres, Alfonso - Gonzalez Diaz, Juan Jose",
+          "holeNumber": 7,
+          "createdAt": "06/08/25 18:48:25"
+        },
+        {
+          "playerName": "Gabarda Pery, Luis - Gallardo Rojo, Lorenzo",
+          "holeNumber": 11,
+          "createdAt": "06/08/25 19:01:16"
+        },
+        {
+          "playerName": "Ramirez Moreno, Alfredo - Sanchez Lluch, Gustavo",
+          "holeNumber": 17,
+          "createdAt": "06/08/25 19:02:34"
+        },
+        {
+          "playerName": "Marañon Cervantes, Manuel - Restituto Molero, Francisco Javier",
+          "holeNumber": 16,
+          "createdAt": "06/08/25 19:03:05"
+        },
+        {
+          "playerName": "Serrano Melendez, Jose Carlos - Guerrero Almagro, Javier",
+          "holeNumber": 16,
+          "createdAt": "06/08/25 19:04:05"
+        },
+        {
+          "playerName": "Andrades Torrecillas, Jose Ignacio - Pombo Jimenez, Jaime",
+          "holeNumber": 13,
+          "createdAt": "06/08/25 19:06:29"
+        },
+        {
+          "playerName": "Camacho Rodriguez, Santiago - Goy Gallardo, Gonzalo",
+          "holeNumber": 13,
+          "createdAt": "06/08/25 19:07:59"
+        },
+        {
+          "playerName": "Camacho Rodriguez, Santiago - Goy Gallardo, Gonzalo",
+          "holeNumber": 14,
+          "createdAt": "06/08/25 19:17:51"
+        },
+        {
+          "playerName": "Roman Molina, Juan - Burgos Correa, Juan Manuel",
+          "holeNumber": 3,
+          "createdAt": "06/08/25 19:22:12"
+        },
+        {
+          "playerName": "Camacho Rodriguez, Santiago - Goy Gallardo, Gonzalo",
+          "holeNumber": 15,
+          "createdAt": "06/08/25 19:38:29"
+        },
+        {
+          "playerName": "Gandarias Maestre, Santiago - Arbona Palancar, Joaquin",
+          "holeNumber": 16,
+          "createdAt": "06/08/25 19:44:40"
+        },
+        {
+          "playerName": "Moran Sanchez, Eduardo - Esteban Garmendia, Isabel",
+          "holeNumber": 1,
+          "createdAt": "06/08/25 19:46:52"
+        },
+        {
+          "playerName": "Castilla Baro, Jose Maria - Taboada De Zuñiga Caballo, Alvaro",
+          "holeNumber": 3,
+          "createdAt": "06/08/25 19:52:51"
+        },
+        {
+          "playerName": "Camacho Rodriguez, Santiago - Goy Gallardo, Gonzalo",
+          "holeNumber": 16,
+          "createdAt": "06/08/25 19:59:36"
+        },
+        {
+          "playerName": "Marañon Cervantes, Manuel - Restituto Molero, Francisco Javier",
+          "holeNumber": 1,
+          "createdAt": "06/08/25 19:59:47"
+        },
+        {
+          "playerName": "Perez Andres, Alfonso - Gonzalez Diaz, Juan Jose",
+          "holeNumber": 12,
+          "createdAt": "06/08/25 20:04:28"
+        },
+        {
+          "playerName": "Lopez Rubio, Luis - Contreras Caro, Cesar",
+          "holeNumber": 16,
+          "createdAt": "06/08/25 20:06:27"
+        },
+        {
+          "playerName": "Velasco Aguirre, Jaime - Ollero Ruiz-Gollury, Javier",
+          "holeNumber": 3,
+          "createdAt": "06/08/25 20:11:01"
+        },
+        {
+          "playerName": "Mora-Figueroa Madariaga, Romualdo - Olavarria Martinez De Salinas, Antonio",
+          "holeNumber": 16,
+          "createdAt": "06/08/25 20:11:34"
+        },
+        {
+          "playerName": "Camacho Rodriguez, Santiago - Goy Gallardo, Gonzalo",
+          "holeNumber": 17,
+          "createdAt": "06/08/25 20:14:34"
+        },
+        {
+          "playerName": "Jimenez Bidon, Carlos - De Leon-Sotelo Garcia-Patiño, Alfonso",
+          "holeNumber": 16,
+          "createdAt": "06/08/25 20:19:44"
+        },
+        {
+          "playerName": "Fideo Beca, Gonzalo - Del Castillo Valenzuela, Rodrigo",
+          "holeNumber": 10,
+          "createdAt": "06/08/25 20:21:01"
+        },
+        {
+          "playerName": "Yñiguez Aragon, Pelayo - Daroca Guerrero, Tomas",
+          "holeNumber": 16,
+          "createdAt": "06/08/25 20:24:06"
+        },
+        {
+          "playerName": "Pablo-Romero Carranza, Maria Isabel - Ladron De Guevara Ruiz, Ignacio",
+          "holeNumber": 18,
+          "createdAt": "06/08/25 20:24:07"
+        },
+        {
+          "playerName": "Mora-Figueroa Madariaga, Romualdo - Olavarria Martinez De Salinas, Antonio",
+          "holeNumber": 17,
+          "createdAt": "06/08/25 20:30:57"
+        },
+        {
+          "playerName": "Moran Sanchez, Eduardo - Esteban Garmendia, Isabel",
+          "holeNumber": 3,
+          "createdAt": "06/08/25 20:31:06"
+        },
+        {
+          "playerName": "Gabarda Pery, Luis - Gallardo Rojo, Lorenzo",
+          "holeNumber": 17,
+          "createdAt": "06/08/25 20:40:55"
+        },
+        {
+          "playerName": "Moran Sanchez, Eduardo - Esteban Garmendia, Isabel",
+          "holeNumber": 4,
+          "createdAt": "06/08/25 20:42:04"
+        },
+        {
+          "playerName": "Mora-Figueroa Madariaga, Romualdo - Olavarria Martinez De Salinas, Antonio",
+          "holeNumber": 18,
+          "createdAt": "06/08/25 20:45:28"
+        },
+        {
+          "playerName": "Perez Andres, Alfonso - Gonzalez Diaz, Juan Jose",
+          "holeNumber": 14,
+          "createdAt": "06/08/25 20:49:39"
+        },
+        {
+          "playerName": "Castrillo Muñoz, Javier - Caballero Caro, Jesus",
+          "holeNumber": 3,
+          "createdAt": "06/08/25 20:55:04"
+        },
+        {
+          "playerName": "Baque Perez, Arturo - Capellan Barreras, Jose Maria",
+          "holeNumber": 11,
+          "createdAt": "06/08/25 20:58:18"
+        },
+        {
+          "playerName": "Pierrard Hardy, Felipe - Copano Fernandez, Ignacio",
+          "holeNumber": 13,
+          "createdAt": "06/08/25 21:00:04"
+        },
+        {
+          "playerName": "Moran Sanchez, Eduardo - Esteban Garmendia, Isabel",
+          "holeNumber": 5,
+          "createdAt": "06/08/25 21:05:00"
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Fideo Beca, Gonzalo - Del Castillo Valenzuela, Rodrigo",
+          "holeNumber": 5,
+          "createdAt": "06/08/25 19:02:14"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/4280313141_recomendaciones.pdf",
+    "/uploads/circulares/cirfgcyl1426.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:00.295Z"
 }

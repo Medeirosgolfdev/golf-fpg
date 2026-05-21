@@ -1,14 +1,14 @@
 {
   "tourId": 67553,
   "url": "https://www.nextcaddy.com/tour/67553",
-  "scrapedAt": "2026-05-09T09:57:33.472Z",
+  "scrapedAt": "2026-05-21T16:36:51.551Z",
   "meta": {
     "name": "WINTER SWING - LIGA DE INVIERNO \"ERIZADA\"",
     "organizer": null,
     "course": "Montecastillo Barceló Golf Club",
     "courseCode": "AM29",
-    "dateStart": "01 feb 2026",
-    "dateEnd": "01 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -19,13 +19,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-01"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "2ª Categoria",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -251,6 +252,8 @@
     },
     {
       "category": 2,
+      "categoryName": "1ª Categoria",
+      "expectedJugadores": 32,
       "header": [
         "Pos",
         "Jugador",
@@ -419,7 +422,7 @@
         },
         {
           "pos": 15,
-          "name": "Antonio Manuel Ure?A Serrano",
+          "name": "Antonio Manuel Ureña Serrano",
           "licencia": "AM32612444",
           "hcp": 9.5,
           "nivel": "S",
@@ -619,6 +622,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 52,
       "header": [
         "Pos",
         "Jugador",
@@ -798,7 +803,7 @@
         },
         {
           "pos": 16,
-          "name": "Antonio Manuel Ure?A Serrano",
+          "name": "Antonio Manuel Ureña Serrano",
           "licencia": "AM32612444",
           "hcp": 9.5,
           "nivel": "S",
@@ -1206,6 +1211,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "2ª Categoria",
+      "jugadores": 19
+    },
+    "2": {
+      "name": "1ª Categoria",
+      "jugadores": 32
+    },
+    "3": {
+      "name": "Scratch Individual",
+      "jugadores": 52
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1447,7 +1467,7 @@
     },
     {
       "orden": 35,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "AM32612444",
       "hcp": 9.5,
       "nivel": "S"
@@ -1832,7 +1852,7 @@
     },
     {
       "orden": 36,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "AM32612444",
       "hcp": 9.5,
       "nivel": "S"
@@ -1950,228 +1970,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72020
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "De Lope Aleman, Alberto",
-          "holeNumber": 1,
-          "createdAt": "14/08/25 09:14:12"
-        },
-        {
-          "playerName": "Sanchis Robina, Guillermo",
-          "holeNumber": 15,
-          "createdAt": "14/08/25 09:15:27"
-        },
-        {
-          "playerName": "Adnot, Sebastian",
-          "holeNumber": 9,
-          "createdAt": "14/08/25 09:53:28"
-        },
-        {
-          "playerName": "Estevez Zurita, Jose Alejandro",
-          "holeNumber": 4,
-          "createdAt": "14/08/25 09:54:19"
-        },
-        {
-          "playerName": "Ramirez Martin, Marcos",
-          "holeNumber": 7,
-          "createdAt": "14/08/25 10:04:55"
-        },
-        {
-          "playerName": "Estevez Jimenez, Pablo",
-          "holeNumber": 8,
-          "createdAt": "14/08/25 10:11:50"
-        },
-        {
-          "playerName": "Colomer Barrigon, Marco",
-          "holeNumber": 5,
-          "createdAt": "14/08/25 10:18:50"
-        },
-        {
-          "playerName": "Candido De Oliveira, Jose",
-          "holeNumber": 5,
-          "createdAt": "14/08/25 10:24:44"
-        },
-        {
-          "playerName": "Estevez Rueda, Alvaro",
-          "holeNumber": 9,
-          "createdAt": "14/08/25 10:34:02"
-        },
-        {
-          "playerName": "Ortega Amezaga, Carlos",
-          "holeNumber": 9,
-          "createdAt": "14/08/25 10:40:11"
-        },
-        {
-          "playerName": "Estevez Zurita, Carlos",
-          "holeNumber": 7,
-          "createdAt": "14/08/25 10:42:33"
-        },
-        {
-          "playerName": "Colomer Berrocal, Marco",
-          "holeNumber": 2,
-          "createdAt": "14/08/25 10:49:24"
-        },
-        {
-          "playerName": "Rodriguez Zapatero, Javier",
-          "holeNumber": 7,
-          "createdAt": "14/08/25 10:50:57"
-        },
-        {
-          "playerName": "Ortega Amezaga, Carlos",
-          "holeNumber": 10,
-          "createdAt": "14/08/25 10:51:18"
-        },
-        {
-          "playerName": "Fuentes Arroyo, Gaspar",
-          "holeNumber": 1,
-          "createdAt": "14/08/25 11:04:04"
-        },
-        {
-          "playerName": "Moreno Carreño, Jose Manuel",
-          "holeNumber": 17,
-          "createdAt": "14/08/25 11:07:21"
-        },
-        {
-          "playerName": "Pernas Gonzalez, Pablo Jose",
-          "holeNumber": 13,
-          "createdAt": "14/08/25 11:07:57"
-        },
-        {
-          "playerName": "Adnot, Sebastian",
-          "holeNumber": 13,
-          "createdAt": "14/08/25 11:10:11"
-        },
-        {
-          "playerName": "Estevez Zurita, Jose Alejandro",
-          "holeNumber": 9,
-          "createdAt": "14/08/25 11:13:19"
-        },
-        {
-          "playerName": "Diaz Rodriguez, Miguel Angel",
-          "holeNumber": 1,
-          "createdAt": "14/08/25 11:25:25"
-        },
-        {
-          "playerName": "Rodriguez Zapatero, Javier",
-          "holeNumber": 9,
-          "createdAt": "14/08/25 11:27:40"
-        },
-        {
-          "playerName": "Rodriguez Garcia-Herrera, Jose Carlos",
-          "holeNumber": 13,
-          "createdAt": "14/08/25 11:28:44"
-        },
-        {
-          "playerName": "Colomer Berrocal, Marco",
-          "holeNumber": 9,
-          "createdAt": "14/08/25 11:36:05"
-        },
-        {
-          "playerName": "Rousseau Vincent, Cecile",
-          "holeNumber": 16,
-          "createdAt": "14/08/25 11:42:45"
-        },
-        {
-          "playerName": "Guijarro Zarceño, Javier",
-          "holeNumber": 7,
-          "createdAt": "14/08/25 11:44:15"
-        },
-        {
-          "playerName": "Adnot, Sebastian",
-          "holeNumber": 15,
-          "createdAt": "14/08/25 11:45:26"
-        },
-        {
-          "playerName": "Fernandez Cuadrado, Jose Miguel",
-          "holeNumber": 15,
-          "createdAt": "14/08/25 11:50:24"
-        },
-        {
-          "playerName": "Guerrero Padron, Pedro",
-          "holeNumber": 13,
-          "createdAt": "14/08/25 11:53:54"
-        },
-        {
-          "playerName": "Santos  Señor, Federico Javier",
-          "holeNumber": 5,
-          "createdAt": "14/08/25 12:03:15"
-        },
-        {
-          "playerName": "Rastrojo Lucas, Jesus Javier",
-          "holeNumber": 15,
-          "createdAt": "14/08/25 12:13:31"
-        },
-        {
-          "playerName": "De Lope  Rumayor, Alberto",
-          "holeNumber": 12,
-          "createdAt": "14/08/25 12:24:21"
-        },
-        {
-          "playerName": "Rodriguez Zapatero, Javier",
-          "holeNumber": 13,
-          "createdAt": "14/08/25 12:33:33"
-        },
-        {
-          "playerName": "Borao Pallas, Angel",
-          "holeNumber": 5,
-          "createdAt": "14/08/25 12:53:22"
-        },
-        {
-          "playerName": "Estevez Rueda, Alvaro",
-          "holeNumber": 1,
-          "createdAt": "14/08/25 12:58:52"
-        },
-        {
-          "playerName": "Parron Dorado, Alvaro",
-          "holeNumber": 15,
-          "createdAt": "14/08/25 13:18:37"
-        },
-        {
-          "playerName": "Perez Perez, Francisco Javier",
-          "holeNumber": 7,
-          "createdAt": "14/08/25 13:24:14"
-        },
-        {
-          "playerName": "Parron Dorado, Alvaro",
-          "holeNumber": 16,
-          "createdAt": "14/08/25 13:31:25"
-        },
-        {
-          "playerName": "Rastrojo Lucas, Jesus Javier",
-          "holeNumber": 3,
-          "createdAt": "14/08/25 13:46:18"
-        },
-        {
-          "playerName": "Ramirez Martin, Marcos",
-          "holeNumber": 3,
-          "createdAt": "14/08/25 13:47:03"
-        },
-        {
-          "playerName": "Anega Guijarro, Luis",
-          "holeNumber": 2,
-          "createdAt": "14/08/25 14:07:57"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -2278,7 +2076,7 @@
         {
           "time": "09:00",
           "tee": 3,
-          "name": "Antonio Manuel Ure?A Serrano",
+          "name": "Antonio Manuel Ureña Serrano",
           "hcp": 9.5,
           "ins": "2253782",
           "jid": "72020",
@@ -2647,5 +2445,231 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:10.002Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72020
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "De Lope Aleman, Alberto",
+          "holeNumber": 1,
+          "createdAt": "14/08/25 09:14:12"
+        },
+        {
+          "playerName": "Sanchis Robina, Guillermo",
+          "holeNumber": 15,
+          "createdAt": "14/08/25 09:15:27"
+        },
+        {
+          "playerName": "Adnot, Sebastian",
+          "holeNumber": 9,
+          "createdAt": "14/08/25 09:53:28"
+        },
+        {
+          "playerName": "Estevez Zurita, Jose Alejandro",
+          "holeNumber": 4,
+          "createdAt": "14/08/25 09:54:19"
+        },
+        {
+          "playerName": "Ramirez Martin, Marcos",
+          "holeNumber": 7,
+          "createdAt": "14/08/25 10:04:55"
+        },
+        {
+          "playerName": "Estevez Jimenez, Pablo",
+          "holeNumber": 8,
+          "createdAt": "14/08/25 10:11:50"
+        },
+        {
+          "playerName": "Colomer Barrigon, Marco",
+          "holeNumber": 5,
+          "createdAt": "14/08/25 10:18:50"
+        },
+        {
+          "playerName": "Candido De Oliveira, Jose",
+          "holeNumber": 5,
+          "createdAt": "14/08/25 10:24:44"
+        },
+        {
+          "playerName": "Estevez Rueda, Alvaro",
+          "holeNumber": 9,
+          "createdAt": "14/08/25 10:34:02"
+        },
+        {
+          "playerName": "Ortega Amezaga, Carlos",
+          "holeNumber": 9,
+          "createdAt": "14/08/25 10:40:11"
+        },
+        {
+          "playerName": "Estevez Zurita, Carlos",
+          "holeNumber": 7,
+          "createdAt": "14/08/25 10:42:33"
+        },
+        {
+          "playerName": "Colomer Berrocal, Marco",
+          "holeNumber": 2,
+          "createdAt": "14/08/25 10:49:24"
+        },
+        {
+          "playerName": "Rodriguez Zapatero, Javier",
+          "holeNumber": 7,
+          "createdAt": "14/08/25 10:50:57"
+        },
+        {
+          "playerName": "Ortega Amezaga, Carlos",
+          "holeNumber": 10,
+          "createdAt": "14/08/25 10:51:18"
+        },
+        {
+          "playerName": "Fuentes Arroyo, Gaspar",
+          "holeNumber": 1,
+          "createdAt": "14/08/25 11:04:04"
+        },
+        {
+          "playerName": "Moreno Carreño, Jose Manuel",
+          "holeNumber": 17,
+          "createdAt": "14/08/25 11:07:21"
+        },
+        {
+          "playerName": "Pernas Gonzalez, Pablo Jose",
+          "holeNumber": 13,
+          "createdAt": "14/08/25 11:07:57"
+        },
+        {
+          "playerName": "Adnot, Sebastian",
+          "holeNumber": 13,
+          "createdAt": "14/08/25 11:10:11"
+        },
+        {
+          "playerName": "Estevez Zurita, Jose Alejandro",
+          "holeNumber": 9,
+          "createdAt": "14/08/25 11:13:19"
+        },
+        {
+          "playerName": "Diaz Rodriguez, Miguel Angel",
+          "holeNumber": 1,
+          "createdAt": "14/08/25 11:25:25"
+        },
+        {
+          "playerName": "Rodriguez Zapatero, Javier",
+          "holeNumber": 9,
+          "createdAt": "14/08/25 11:27:40"
+        },
+        {
+          "playerName": "Rodriguez Garcia-Herrera, Jose Carlos",
+          "holeNumber": 13,
+          "createdAt": "14/08/25 11:28:44"
+        },
+        {
+          "playerName": "Colomer Berrocal, Marco",
+          "holeNumber": 9,
+          "createdAt": "14/08/25 11:36:05"
+        },
+        {
+          "playerName": "Rousseau Vincent, Cecile",
+          "holeNumber": 16,
+          "createdAt": "14/08/25 11:42:45"
+        },
+        {
+          "playerName": "Guijarro Zarceño, Javier",
+          "holeNumber": 7,
+          "createdAt": "14/08/25 11:44:15"
+        },
+        {
+          "playerName": "Adnot, Sebastian",
+          "holeNumber": 15,
+          "createdAt": "14/08/25 11:45:26"
+        },
+        {
+          "playerName": "Fernandez Cuadrado, Jose Miguel",
+          "holeNumber": 15,
+          "createdAt": "14/08/25 11:50:24"
+        },
+        {
+          "playerName": "Guerrero Padron, Pedro",
+          "holeNumber": 13,
+          "createdAt": "14/08/25 11:53:54"
+        },
+        {
+          "playerName": "Santos  Señor, Federico Javier",
+          "holeNumber": 5,
+          "createdAt": "14/08/25 12:03:15"
+        },
+        {
+          "playerName": "Rastrojo Lucas, Jesus Javier",
+          "holeNumber": 15,
+          "createdAt": "14/08/25 12:13:31"
+        },
+        {
+          "playerName": "De Lope  Rumayor, Alberto",
+          "holeNumber": 12,
+          "createdAt": "14/08/25 12:24:21"
+        },
+        {
+          "playerName": "Rodriguez Zapatero, Javier",
+          "holeNumber": 13,
+          "createdAt": "14/08/25 12:33:33"
+        },
+        {
+          "playerName": "Borao Pallas, Angel",
+          "holeNumber": 5,
+          "createdAt": "14/08/25 12:53:22"
+        },
+        {
+          "playerName": "Estevez Rueda, Alvaro",
+          "holeNumber": 1,
+          "createdAt": "14/08/25 12:58:52"
+        },
+        {
+          "playerName": "Parron Dorado, Alvaro",
+          "holeNumber": 15,
+          "createdAt": "14/08/25 13:18:37"
+        },
+        {
+          "playerName": "Perez Perez, Francisco Javier",
+          "holeNumber": 7,
+          "createdAt": "14/08/25 13:24:14"
+        },
+        {
+          "playerName": "Parron Dorado, Alvaro",
+          "holeNumber": 16,
+          "createdAt": "14/08/25 13:31:25"
+        },
+        {
+          "playerName": "Rastrojo Lucas, Jesus Javier",
+          "holeNumber": 3,
+          "createdAt": "14/08/25 13:46:18"
+        },
+        {
+          "playerName": "Ramirez Martin, Marcos",
+          "holeNumber": 3,
+          "createdAt": "14/08/25 13:47:03"
+        },
+        {
+          "playerName": "Anega Guijarro, Luis",
+          "holeNumber": 2,
+          "createdAt": "14/08/25 14:07:57"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/1107002131_winter_swing_-_liga_de_invierno_barcelo_montecastillo_2025-2026.pdf",
+    "/uploads/competiciones/pdf/991839811_nuevo_reglamento_winter_swing_-_liga_invierno_2025-2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:05.764Z"
 }

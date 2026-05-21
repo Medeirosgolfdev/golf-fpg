@@ -1,14 +1,14 @@
 {
   "tourId": 68945,
   "url": "https://www.nextcaddy.com/tour/68945",
-  "scrapedAt": "2026-05-09T10:07:47.133Z",
+  "scrapedAt": "2026-05-21T16:38:24.132Z",
   "meta": {
     "name": "3ª Prueba Ranking y Series Roll Up Sherry Golf 2026",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "29 mar 2026",
-    "dateEnd": "29 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -19,13 +19,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-29"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 97,
       "header": [
         "Pos",
         "Jugador",
@@ -1109,6 +1110,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Junior Handicap Individual",
+      "expectedJugadores": 15,
       "header": [
         "Pos",
         "Jugador",
@@ -1290,6 +1293,8 @@
     },
     {
       "category": 3,
+      "categoryName": "3ª Cat. Handicap Individual",
+      "expectedJugadores": 38,
       "header": [
         "Pos",
         "Jugador",
@@ -1724,6 +1729,8 @@
     },
     {
       "category": 4,
+      "categoryName": "2ª Cat. Handicap Individual",
+      "expectedJugadores": 24,
       "header": [
         "Pos",
         "Jugador",
@@ -2004,6 +2011,8 @@
     },
     {
       "category": 5,
+      "categoryName": "1ª Cat. Handicap Individual",
+      "expectedJugadores": 20,
       "header": [
         "Pos",
         "Jugador",
@@ -2239,6 +2248,29 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 97
+    },
+    "2": {
+      "name": "Junior Handicap Individual",
+      "jugadores": 15
+    },
+    "3": {
+      "name": "3ª Cat. Handicap Individual",
+      "jugadores": 38
+    },
+    "4": {
+      "name": "2ª Cat. Handicap Individual",
+      "jugadores": 24
+    },
+    "5": {
+      "name": "1ª Cat. Handicap Individual",
+      "jugadores": 20
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -3627,22 +3659,6 @@
       "nivel": "AMG3093868"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73650
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -4523,5 +4539,25 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:31.425Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73650
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/3180277227_ranking_2026.pdf",
+    "/uploads/REGLAMENTO-RANKING-SHERRY-GOLF-2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:29.649Z"
 }

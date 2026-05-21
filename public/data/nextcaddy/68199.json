@@ -1,14 +1,14 @@
 {
   "tourId": 68199,
   "url": "https://www.nextcaddy.com/tour/68199",
-  "scrapedAt": "2026-05-09T10:07:57.148Z",
+  "scrapedAt": "2026-05-21T16:38:44.341Z",
   "meta": {
     "name": "Liga Femenina (hcp mayor o igual a 42.1)",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Golf Park Entertainment",
     "courseCode": "CM18",
-    "dateStart": "12 abr 2026",
-    "dateEnd": "12 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Liga Femenina 2026",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-04-12"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual Señoras Femenino",
+      "expectedJugadores": 22,
       "header": [
         "Pos",
         "Jugador",
@@ -281,6 +282,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Señoras Femenino",
+      "jugadores": 22
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -598,33 +606,6 @@
       "nivel": "B"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72746
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Marin Sanchez De Leri, Jaime",
-          "holeNumber": 4,
-          "createdAt": "04/08/25 16:49:47"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -830,5 +811,35 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:21.694Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72746
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Marin Sanchez De Leri, Jaime",
+          "holeNumber": 4,
+          "createdAt": "04/08/25 16:49:47"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/2195549404_arb_reg_loc_cm18_2019_-_golf_park_-_documentos_de_google.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:18.854Z"
 }

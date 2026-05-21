@@ -1,14 +1,14 @@
 {
   "tourId": 69370,
   "url": "https://www.nextcaddy.com/tour/69370",
-  "scrapedAt": "2026-05-09T10:07:42.675Z",
+  "scrapedAt": "2026-05-21T16:38:15.219Z",
   "meta": {
     "name": "LADIES DAY 2503",
     "organizer": null,
     "course": "Miraflores Golf",
     "courseCode": "AM76",
-    "dateStart": "25 mar 2026",
-    "dateEnd": "25 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras Facebook",
     "categories": [
       "Señoras",
@@ -16,13 +16,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-25"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 23,
       "header": [
         "Pos",
         "Jugador",
@@ -291,6 +292,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 23
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -622,6 +630,7 @@
       "nivel": "AM76809386"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {
       "p": {
@@ -995,6 +1004,6 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:42.080Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:33.404Z"
 }

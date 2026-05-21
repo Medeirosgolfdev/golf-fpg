@@ -1,14 +1,14 @@
 {
   "tourId": 70256,
   "url": "https://www.nextcaddy.com/tour/70256",
-  "scrapedAt": "2026-05-09T10:15:50.116Z",
+  "scrapedAt": "2026-05-21T16:39:21.375Z",
   "meta": {
     "name": "IX Partida de Liguilla temporada 2025-26",
     "organizer": null,
     "course": "Rota Club de Golf",
     "courseCode": "AME7",
-    "dateStart": "02 may 2026",
-    "dateEnd": "02 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-02"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "9º Partida Liguilla Temporada 2025 - 26",
+      "expectedJugadores": 76,
       "header": [
         "Pos",
         "Jugador",
@@ -875,6 +876,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "9º Partida Liguilla Temporada 2025 - 26",
+      "jugadores": 76
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1955,22 +1963,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75178
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -2662,5 +2654,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:59.080Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75178
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/cartel/839188286_70256-xix-partida-de-liguilla-temporada-2025-26.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:39.576Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 69603,
   "url": "https://www.nextcaddy.com/tour/69603",
-  "scrapedAt": "2026-05-09T10:07:52.294Z",
+  "scrapedAt": "2026-05-21T16:38:33.094Z",
   "meta": {
     "name": "POOL DE SENIORS  DE PRIMAVERA (08/04/2026).",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "08 abr 2026",
-    "dateEnd": "08 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "SENIOR",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-08"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "General Hándicap Pool Seniors 8 Abril 2026.",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -249,6 +250,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "General Hándicap Pool Seniors 8 Abril 2026.",
+      "jugadores": 19
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -531,22 +539,6 @@
       "nivel": "4401074583"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74374
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -725,5 +717,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:55.398Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74374
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:35.704Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 61103,
   "url": "https://www.nextcaddy.com/tour/61103",
-  "scrapedAt": "2026-05-09T10:16:35.584Z",
+  "scrapedAt": "2026-05-21T16:39:59.576Z",
   "meta": {
     "name": "V Prueba Circuito 4ª, 5ª y 6ª categoría campo corto",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "23 may 2026",
-    "dateEnd": "23 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-23"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -48,99 +49,106 @@
       "orden": 1,
       "name": "Antonio Dorantes Sanchez",
       "licencia": "AMG3482682",
-      "hcp": 48.4,
+      "hcp": 48.6,
       "nivel": "S"
     },
     {
       "orden": 2,
-      "name": "Guillermo Sebastian Ponsetti",
-      "licencia": "AMD2889209",
-      "hcp": 33.4,
-      "nivel": "S"
-    },
-    {
-      "orden": 3,
       "name": "Christyan De La Cruz Santaolalla",
       "licencia": "AM58520221",
       "hcp": 36,
       "nivel": "Mid"
     },
     {
-      "orden": 4,
+      "orden": 3,
       "name": "Guilhem Valette Jordao",
       "licencia": "AM11484221",
       "hcp": 51.8,
       "nivel": "B"
     },
     {
-      "orden": 5,
-      "name": "Daniel Olid Del Rio",
-      "licencia": "AM11895760",
-      "hcp": 41.1,
-      "nivel": "A"
-    },
-    {
-      "orden": 6,
+      "orden": 4,
       "name": "Salvador Espinosa Rodriguez",
       "licencia": "AMC3018258",
       "hcp": 36,
       "nivel": "S"
     },
     {
-      "orden": 7,
+      "orden": 5,
       "name": "Lucas Martin Marin",
       "licencia": "AM11495197",
       "hcp": 48.6,
       "nivel": "B"
     },
     {
-      "orden": 8,
+      "orden": 6,
       "name": "Alejandro Perez Bracho",
       "licencia": "AM55498798",
-      "hcp": 45.1,
+      "hcp": 38.8,
       "nivel": "C"
+    },
+    {
+      "orden": 7,
+      "name": "Victor Martin Marin",
+      "licencia": "AM11067728",
+      "hcp": 22.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 8,
+      "name": "Alfonso Queipo De Llano Burgos",
+      "licencia": "AM15156485",
+      "hcp": 44.6,
+      "nivel": "A"
     },
     {
       "orden": 9,
-      "name": "Victor Martin Marin",
-      "licencia": "AM11067728",
-      "hcp": 25.9,
-      "nivel": "C"
+      "name": "Pablo Camacho Gonzalez",
+      "licencia": "AM11062339",
+      "hcp": 26.9,
+      "nivel": "A"
     },
     {
       "orden": 10,
-      "name": "Alfonso Queipo De Llano Burgos",
-      "licencia": "AM15156485",
-      "hcp": 45.4,
-      "nivel": "A"
-    },
-    {
-      "orden": 11,
-      "name": "Francisco Manuel Cala Barrera",
-      "licencia": "AM00903693",
-      "hcp": 28,
-      "nivel": "S"
-    },
-    {
-      "orden": 12,
-      "name": "Pau Caceres Gago",
-      "licencia": "AM11352016",
-      "hcp": 22.6,
-      "nivel": "B"
-    },
-    {
-      "orden": 13,
-      "name": "Pablo Camacho Gonzalez",
-      "licencia": "AM11062339",
-      "hcp": 27.3,
-      "nivel": "A"
-    },
-    {
-      "orden": 14,
       "name": "Francisco Alberto Dominguez Gonzalez",
       "licencia": "AMF7519767",
       "hcp": 36,
       "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Mateo Rodriguez Fernandez",
+      "licencia": "AM85486641",
+      "hcp": 50.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 12,
+      "name": "Manuel Antonio Rodriguez Navarro",
+      "licencia": "AMG3353177",
+      "hcp": 28.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 13,
+      "name": "Daniel Omarzhanov",
+      "licencia": "AM55491755",
+      "hcp": 22.1,
+      "nivel": "C"
+    },
+    {
+      "orden": 14,
+      "name": "Nicolas Gomez Brage",
+      "licencia": "AMD5984031",
+      "hcp": 41.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 15,
+      "name": "Jose Maria Gessa Aguilera",
+      "licencia": "AMG3010991",
+      "hcp": 37,
+      "nivel": "Mid"
     },
     {
       "orden": null,
@@ -160,108 +168,116 @@
       "orden": 2,
       "name": "Antonio Dorantes Sanchez",
       "licencia": "AMG3482682",
-      "hcp": 48.4,
+      "hcp": 48.6,
       "nivel": "S"
     },
     {
       "orden": 3,
-      "name": "Guillermo Sebastian Ponsetti",
-      "licencia": "AMD2889209",
-      "hcp": 33.4,
-      "nivel": "S"
-    },
-    {
-      "orden": 4,
       "name": "Christyan De La Cruz Santaolalla",
       "licencia": "AM58520221",
       "hcp": 36,
       "nivel": "Mid"
     },
     {
-      "orden": 5,
+      "orden": 4,
       "name": "Guilhem Valette Jordao",
       "licencia": "AM11484221",
       "hcp": 51.8,
       "nivel": "B"
     },
     {
-      "orden": 6,
-      "name": "Daniel Olid Del Rio",
-      "licencia": "AM11895760",
-      "hcp": 41.1,
-      "nivel": "A"
-    },
-    {
-      "orden": 7,
+      "orden": 5,
       "name": "Isabel Ceballos Guerrero",
       "licencia": "AMD5083140",
       "hcp": 46,
       "nivel": "S"
     },
     {
-      "orden": 8,
+      "orden": 6,
       "name": "Salvador Espinosa Rodriguez",
       "licencia": "AMC3018258",
       "hcp": 36,
       "nivel": "S"
     },
     {
-      "orden": 9,
+      "orden": 7,
       "name": "Lucas Martin Marin",
       "licencia": "AM11495197",
       "hcp": 48.6,
       "nivel": "B"
     },
     {
-      "orden": 10,
+      "orden": 8,
       "name": "Alejandro Perez Bracho",
       "licencia": "AM55498798",
-      "hcp": 45.1,
+      "hcp": 38.8,
       "nivel": "C"
+    },
+    {
+      "orden": 9,
+      "name": "Victor Martin Marin",
+      "licencia": "AM11067728",
+      "hcp": 22.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 10,
+      "name": "Alfonso Queipo De Llano Burgos",
+      "licencia": "AM15156485",
+      "hcp": 44.6,
+      "nivel": "A"
     },
     {
       "orden": 11,
-      "name": "Victor Martin Marin",
-      "licencia": "AM11067728",
-      "hcp": 25.9,
-      "nivel": "C"
+      "name": "Pablo Camacho Gonzalez",
+      "licencia": "AM11062339",
+      "hcp": 26.9,
+      "nivel": "A"
     },
     {
       "orden": 12,
-      "name": "Alfonso Queipo De Llano Burgos",
-      "licencia": "AM15156485",
-      "hcp": 45.4,
-      "nivel": "A"
-    },
-    {
-      "orden": 13,
-      "name": "Francisco Manuel Cala Barrera",
-      "licencia": "AM00903693",
-      "hcp": 28,
-      "nivel": "S"
-    },
-    {
-      "orden": 14,
-      "name": "Pau Caceres Gago",
-      "licencia": "AM11352016",
-      "hcp": 22.6,
-      "nivel": "B"
-    },
-    {
-      "orden": 15,
-      "name": "Pablo Camacho Gonzalez",
-      "licencia": "AM11062339",
-      "hcp": 27.3,
-      "nivel": "A"
-    },
-    {
-      "orden": 16,
       "name": "Francisco Alberto Dominguez Gonzalez",
       "licencia": "AMF7519767",
       "hcp": 36,
       "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Mateo Rodriguez Fernandez",
+      "licencia": "AM85486641",
+      "hcp": 50.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 14,
+      "name": "Manuel Antonio Rodriguez Navarro",
+      "licencia": "AMG3353177",
+      "hcp": 28.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 15,
+      "name": "Daniel Omarzhanov",
+      "licencia": "AM55491755",
+      "hcp": 22.1,
+      "nivel": "C"
+    },
+    {
+      "orden": 16,
+      "name": "Nicolas Gomez Brage",
+      "licencia": "AMD5984031",
+      "hcp": 41.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 17,
+      "name": "Jose Maria Gessa Aguilera",
+      "licencia": "AMG3010991",
+      "hcp": 37,
+      "nivel": "Mid"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -529,6 +545,9 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:21.976Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/2947627247_cartel_2305.pdf",
+    "/uploads/circular/2026/42824416ec7bcd5d806eea121047c678.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:50.345Z"
 }

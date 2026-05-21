@@ -1,14 +1,14 @@
 {
   "tourId": 69241,
   "url": "https://www.nextcaddy.com/tour/69241",
-  "scrapedAt": "2026-05-09T10:07:36.142Z",
+  "scrapedAt": "2026-05-21T16:38:01.273Z",
   "meta": {
     "name": "Torneo Senior Córdoba (sábado)",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Real Club de Campo de Cordoba",
     "courseCode": "AM06",
-    "dateStart": "21 mar 2026",
-    "dateEnd": "21 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Senior",
@@ -18,11 +18,12 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-21"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -1194,27 +1195,6 @@
       "nivel": "AM06982371"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73985
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": []
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1312,18 +1292,18 @@
         {
           "time": "09:30",
           "tee": 3,
-          "name": "Javier Garcia Lopez",
+          "name": "Ernesto Ruiz Martinez",
           "hcp": 12.2,
-          "ins": "2283251",
+          "ins": "2283250",
           "jid": "73985",
           "nivel": "S"
         },
         {
           "time": "09:30",
           "tee": 3,
-          "name": "Ernesto Ruiz Martinez",
+          "name": "Javier Garcia Lopez",
           "hcp": 12.2,
-          "ins": "2283250",
+          "ins": "2283251",
           "jid": "73985",
           "nivel": "S"
         },
@@ -1960,5 +1940,31 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:52.271Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73985
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": []
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/2181694193_clasificacion_senior_codoba.pdf",
+    "/uploads/circular/2026/539256dd2240e917cb5b247e369c5c30.pdf",
+    "/uploads/competiciones/pdf/4063798085_info_comitie_senior_federacion_2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:32.280Z"
 }

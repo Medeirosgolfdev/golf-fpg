@@ -1,14 +1,14 @@
 {
   "tourId": 67304,
   "url": "https://www.nextcaddy.com/tour/67304",
-  "scrapedAt": "2026-05-09T09:57:16.636Z",
+  "scrapedAt": "2026-05-21T16:36:23.874Z",
   "meta": {
     "name": "Malaca Enero 2026",
     "organizer": null,
     "course": "Escuela de Golf Miguel ángel Jiménez",
     "courseCode": "AMI5",
-    "dateStart": "08 ene 2026",
-    "dateEnd": "08 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-08"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 40,
       "header": [
         "Pos",
         "Jugador",
@@ -479,6 +480,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 40
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1083,33 +1091,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71714
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Moreno Quiros, Juana",
-          "holeNumber": 11,
-          "createdAt": "24/06/25 12:29:21"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1495,5 +1476,33 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:06.862Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71714
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Moreno Quiros, Juana",
+          "holeNumber": 11,
+          "createdAt": "24/06/25 12:29:21"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:01.976Z"
 }

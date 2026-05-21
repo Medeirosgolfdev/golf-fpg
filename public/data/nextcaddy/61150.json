@@ -1,14 +1,14 @@
 {
   "tourId": 61150,
   "url": "https://www.nextcaddy.com/tour/61150",
-  "scrapedAt": "2026-05-09T10:15:52.112Z",
+  "scrapedAt": "2026-05-21T16:39:24.842Z",
   "meta": {
     "name": "Previa Challenge de España 2026",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Almenara Hotel - Golf",
     "courseCode": "AM99",
-    "dateStart": "06 may 2026",
-    "dateEnd": "06 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros C. Prof",
     "categories": [
       "Caballeros",
@@ -16,13 +16,14 @@
       "Infantil",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-06"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch General",
+      "expectedJugadores": 20,
       "header": [
         "Pos",
         "Jugador",
@@ -259,6 +260,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Scratch Clasificacion General",
+      "expectedJugadores": 20,
       "header": [
         "Pos",
         "Jugador",
@@ -494,6 +497,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch General",
+      "jugadores": 20
+    },
+    "2": {
+      "name": "Scratch Clasificacion General",
+      "jugadores": 20
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -781,6 +795,193 @@
       "licencia": "AM613803-P",
       "hcp": 0,
       "nivel": "Mid"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "David Garrido Jimenez",
+          "hcp": 0,
+          "ins": "2311939",
+          "jid": "64788",
+          "nivel": "M"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Mitchell Jon Shutes",
+          "hcp": 0,
+          "ins": "2307820",
+          "jid": "64788",
+          "nivel": "M"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Jose Luis Garcia Jimenez",
+          "hcp": 0,
+          "ins": "2307106",
+          "jid": "64788",
+          "nivel": "M"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Leopoldo Moreno De La Cova Ybarra",
+          "hcp": 0,
+          "ins": "2307497",
+          "jid": "64788",
+          "nivel": "M"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Daniel Barbero Custodio",
+          "hcp": 0,
+          "ins": "2307099",
+          "jid": "64788",
+          "nivel": "M"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Pedro Marin Santander",
+          "hcp": 0,
+          "ins": "2307714",
+          "jid": "64788",
+          "nivel": "M"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Victor Jimenez Bravo",
+          "hcp": 0,
+          "ins": "2307037",
+          "jid": "64788",
+          "nivel": "M"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Roberto Jean Pa Lantsoght Schnabel",
+          "hcp": 0,
+          "ins": "2311919",
+          "jid": "64788",
+          "nivel": "M"
+        },
+        {
+          "time": "13:00",
+          "tee": 1,
+          "name": "Alfonso Gutierrez Mohedano",
+          "hcp": 0,
+          "ins": "2311075",
+          "jid": "64788",
+          "nivel": "M"
+        },
+        {
+          "time": "13:00",
+          "tee": 1,
+          "name": "Emilio Hernandez Lirola",
+          "hcp": 0,
+          "ins": "2307272",
+          "jid": "64788",
+          "nivel": "M"
+        },
+        {
+          "time": "13:00",
+          "tee": 1,
+          "name": "Gonzalo Moreno Montojo",
+          "hcp": 0,
+          "ins": "2309982",
+          "jid": "64788",
+          "nivel": "M"
+        },
+        {
+          "time": "13:10",
+          "tee": 1,
+          "name": "Enrique Marin Santander",
+          "hcp": 0,
+          "ins": "2307030",
+          "jid": "64788",
+          "nivel": "M"
+        },
+        {
+          "time": "13:10",
+          "tee": 1,
+          "name": "Marcos Pastor Rufian",
+          "hcp": 0,
+          "ins": "2310979",
+          "jid": "64788",
+          "nivel": "M"
+        },
+        {
+          "time": "13:10",
+          "tee": 1,
+          "name": "Scott William Fernandez Salmon",
+          "hcp": 0,
+          "ins": "2307965",
+          "jid": "64788",
+          "nivel": "M"
+        },
+        {
+          "time": "13:20",
+          "tee": 1,
+          "name": "Haiko Dana",
+          "hcp": 0,
+          "ins": "2307036",
+          "jid": "64788",
+          "nivel": "M"
+        },
+        {
+          "time": "13:20",
+          "tee": 1,
+          "name": "Manuel Morugan",
+          "hcp": 0,
+          "ins": "2308162",
+          "jid": "64788",
+          "nivel": "M"
+        },
+        {
+          "time": "13:20",
+          "tee": 1,
+          "name": "Pablo Martin Benavides",
+          "hcp": 0,
+          "ins": "2311147",
+          "jid": "64788",
+          "nivel": "M"
+        },
+        {
+          "time": "13:30",
+          "tee": 1,
+          "name": "Alexander Victor Korioth",
+          "hcp": 0,
+          "ins": "2307737",
+          "jid": "64788",
+          "nivel": "M"
+        },
+        {
+          "time": "13:30",
+          "tee": 1,
+          "name": "Zak Karkaletsos",
+          "hcp": 0,
+          "ins": "2307032",
+          "jid": "64788",
+          "nivel": "M"
+        },
+        {
+          "time": "13:30",
+          "tee": 1,
+          "name": "Mario Garcia Garoz",
+          "hcp": 0,
+          "ins": "2307033",
+          "jid": "64788",
+          "nivel": "M"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -1217,192 +1418,10 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "12:30",
-          "tee": 1,
-          "name": "Mitchell Jon Shutes",
-          "hcp": 0,
-          "ins": "2307820",
-          "jid": "64788",
-          "nivel": "M"
-        },
-        {
-          "time": "12:30",
-          "tee": 1,
-          "name": "David Garrido Jimenez",
-          "hcp": 0,
-          "ins": "2311939",
-          "jid": "64788",
-          "nivel": "M"
-        },
-        {
-          "time": "12:40",
-          "tee": 1,
-          "name": "Leopoldo Moreno De La Cova Ybarra",
-          "hcp": 0,
-          "ins": "2307497",
-          "jid": "64788",
-          "nivel": "M"
-        },
-        {
-          "time": "12:40",
-          "tee": 1,
-          "name": "Daniel Barbero Custodio",
-          "hcp": 0,
-          "ins": "2307099",
-          "jid": "64788",
-          "nivel": "M"
-        },
-        {
-          "time": "12:40",
-          "tee": 1,
-          "name": "Jose Luis Garcia Jimenez",
-          "hcp": 0,
-          "ins": "2307106",
-          "jid": "64788",
-          "nivel": "M"
-        },
-        {
-          "time": "12:50",
-          "tee": 1,
-          "name": "Victor Jimenez Bravo",
-          "hcp": 0,
-          "ins": "2307037",
-          "jid": "64788",
-          "nivel": "M"
-        },
-        {
-          "time": "12:50",
-          "tee": 1,
-          "name": "Roberto Jean Pa Lantsoght Schnabel",
-          "hcp": 0,
-          "ins": "2311919",
-          "jid": "64788",
-          "nivel": "M"
-        },
-        {
-          "time": "12:50",
-          "tee": 1,
-          "name": "Pedro Marin Santander",
-          "hcp": 0,
-          "ins": "2307714",
-          "jid": "64788",
-          "nivel": "M"
-        },
-        {
-          "time": "13:00",
-          "tee": 1,
-          "name": "Gonzalo Moreno Montojo",
-          "hcp": 0,
-          "ins": "2309982",
-          "jid": "64788",
-          "nivel": "M"
-        },
-        {
-          "time": "13:00",
-          "tee": 1,
-          "name": "Alfonso Gutierrez Mohedano",
-          "hcp": 0,
-          "ins": "2311075",
-          "jid": "64788",
-          "nivel": "M"
-        },
-        {
-          "time": "13:00",
-          "tee": 1,
-          "name": "Emilio Hernandez Lirola",
-          "hcp": 0,
-          "ins": "2307272",
-          "jid": "64788",
-          "nivel": "M"
-        },
-        {
-          "time": "13:10",
-          "tee": 1,
-          "name": "Marcos Pastor Rufian",
-          "hcp": 0,
-          "ins": "2310979",
-          "jid": "64788",
-          "nivel": "M"
-        },
-        {
-          "time": "13:10",
-          "tee": 1,
-          "name": "Scott William Fernandez Salmon",
-          "hcp": 0,
-          "ins": "2307965",
-          "jid": "64788",
-          "nivel": "M"
-        },
-        {
-          "time": "13:10",
-          "tee": 1,
-          "name": "Enrique Marin Santander",
-          "hcp": 0,
-          "ins": "2307030",
-          "jid": "64788",
-          "nivel": "M"
-        },
-        {
-          "time": "13:20",
-          "tee": 1,
-          "name": "Pablo Martin Benavides",
-          "hcp": 0,
-          "ins": "2311147",
-          "jid": "64788",
-          "nivel": "M"
-        },
-        {
-          "time": "13:20",
-          "tee": 1,
-          "name": "Haiko Dana",
-          "hcp": 0,
-          "ins": "2307036",
-          "jid": "64788",
-          "nivel": "M"
-        },
-        {
-          "time": "13:20",
-          "tee": 1,
-          "name": "Manuel Morugan",
-          "hcp": 0,
-          "ins": "2308162",
-          "jid": "64788",
-          "nivel": "M"
-        },
-        {
-          "time": "13:30",
-          "tee": 1,
-          "name": "Zak Karkaletsos",
-          "hcp": 0,
-          "ins": "2307032",
-          "jid": "64788",
-          "nivel": "M"
-        },
-        {
-          "time": "13:30",
-          "tee": 1,
-          "name": "Mario Garcia Garoz",
-          "hcp": 0,
-          "ins": "2307033",
-          "jid": "64788",
-          "nivel": "M"
-        },
-        {
-          "time": "13:30",
-          "tee": 1,
-          "name": "Alexander Victor Korioth",
-          "hcp": 0,
-          "ins": "2307737",
-          "jid": "64788",
-          "nivel": "M"
-        }
-      ]
-    }
+  "pdfs": [
+    "/uploads/competiciones/pdf/2605013089_informacion_web_the_alto_club_2026_v1.pdf",
+    "/uploads/circular/2026/4d777bc7b27b4843428ebba9fc4c871f.pdf",
+    "/uploads/competiciones/pdf/2625053032_reglas_web_thealtoclub_06052026_.pdf"
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:00.653Z"
+  "horariosScrapedAt": "2026-05-21T16:41:52.128Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 67567,
   "url": "https://www.nextcaddy.com/tour/67567",
-  "scrapedAt": "2026-05-09T09:57:24.506Z",
+  "scrapedAt": "2026-05-21T16:36:38.609Z",
   "meta": {
     "name": "LUNES AL GOLF J2 (TARDE 15:45)",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": "19 ene 2026",
-    "dateEnd": "19 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-19"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Primera Categoria",
+      "expectedJugadores": 17,
       "header": [
         "Pos",
         "Jugador",
@@ -228,6 +229,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Segunda Categoria",
+      "expectedJugadores": 37,
       "header": [
         "Pos",
         "Jugador",
@@ -650,6 +653,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Primera Categoria",
+      "jugadores": 17
+    },
+    "2": {
+      "name": "Segunda Categoria",
+      "jugadores": 37
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1023,117 +1037,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72034
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Romero Gallego, Luis - Bonilla Damia, Gonzalo",
-          "holeNumber": 7,
-          "createdAt": "26/07/25 18:17:42"
-        },
-        {
-          "playerName": "De Noriega Del Rio, Alfonso - Ceballos Alcoba, Cayetano",
-          "holeNumber": 4,
-          "createdAt": "26/07/25 18:17:44"
-        },
-        {
-          "playerName": "Ribera Zabalbeascoa, Juan - Martinez-Fresno Moreno, Nicolas",
-          "holeNumber": 11,
-          "createdAt": "26/07/25 18:17:47"
-        },
-        {
-          "playerName": "Diaz Del Moral Berdun, Miguel - Aleman Rodriguez, Luis Felipe",
-          "holeNumber": 4,
-          "createdAt": "26/07/25 18:17:50"
-        },
-        {
-          "playerName": "Diaz Del Moral Berdun, Miguel - Aleman Rodriguez, Luis Felipe",
-          "holeNumber": 13,
-          "createdAt": "26/07/25 18:17:50"
-        },
-        {
-          "playerName": "Diaz Del Moral Berdun, Miguel - Aleman Rodriguez, Luis Felipe",
-          "holeNumber": 18,
-          "createdAt": "26/07/25 18:17:50"
-        },
-        {
-          "playerName": "Totorika Garabieta, Joseba Xabier - Alonso Lesmes, Jose Maria",
-          "holeNumber": 7,
-          "createdAt": "26/07/25 18:17:52"
-        },
-        {
-          "playerName": "Arias-Camison Laurnaga, Jose Luis - Mezquia Pardo, Juan",
-          "holeNumber": 2,
-          "createdAt": "26/07/25 18:17:58"
-        },
-        {
-          "playerName": "Arias-Camison Laurnaga, Jose Luis - Mezquia Pardo, Juan",
-          "holeNumber": 11,
-          "createdAt": "26/07/25 18:17:58"
-        },
-        {
-          "playerName": "Torres Sanchez, David Jesus - Sanchez Gallego, Jose",
-          "holeNumber": 14,
-          "createdAt": "26/07/25 18:18:04"
-        },
-        {
-          "playerName": "Ramos Galvin, Ernesto - Manzano Lopez, Javier",
-          "holeNumber": 18,
-          "createdAt": "26/07/25 18:18:07"
-        },
-        {
-          "playerName": "Gisonno, Antonio - Gonzales Gisonno, Nora Alicia",
-          "holeNumber": 12,
-          "createdAt": "26/07/25 18:18:07"
-        },
-        {
-          "playerName": "Gonzalo Lafuente, Gabriel Esteban - Gonzalo Martin, Alonso",
-          "holeNumber": 2,
-          "createdAt": "26/07/25 18:18:09"
-        },
-        {
-          "playerName": "Gonzalo Lafuente, Gabriel Esteban - Gonzalo Martin, Alonso",
-          "holeNumber": 14,
-          "createdAt": "26/07/25 18:18:10"
-        },
-        {
-          "playerName": "Shutes, Mitchell Jon - Grimm, Dirk",
-          "holeNumber": 8,
-          "createdAt": "26/07/25 18:18:15"
-        },
-        {
-          "playerName": "Shutes, Mitchell Jon - Grimm, Dirk",
-          "holeNumber": 13,
-          "createdAt": "26/07/25 18:18:15"
-        },
-        {
-          "playerName": "Haller, Jens - SANDER, KNUT",
-          "holeNumber": 3,
-          "createdAt": "26/07/25 18:18:19"
-        }
-      ]
-    },
-    "eagle": {
-      "scoreTypeKey": "eagle",
-      "players": []
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1366,5 +1269,119 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:10.179Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72034
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Romero Gallego, Luis - Bonilla Damia, Gonzalo",
+          "holeNumber": 7,
+          "createdAt": "26/07/25 18:17:42"
+        },
+        {
+          "playerName": "De Noriega Del Rio, Alfonso - Ceballos Alcoba, Cayetano",
+          "holeNumber": 4,
+          "createdAt": "26/07/25 18:17:44"
+        },
+        {
+          "playerName": "Ribera Zabalbeascoa, Juan - Martinez-Fresno Moreno, Nicolas",
+          "holeNumber": 11,
+          "createdAt": "26/07/25 18:17:47"
+        },
+        {
+          "playerName": "Diaz Del Moral Berdun, Miguel - Aleman Rodriguez, Luis Felipe",
+          "holeNumber": 4,
+          "createdAt": "26/07/25 18:17:50"
+        },
+        {
+          "playerName": "Diaz Del Moral Berdun, Miguel - Aleman Rodriguez, Luis Felipe",
+          "holeNumber": 13,
+          "createdAt": "26/07/25 18:17:50"
+        },
+        {
+          "playerName": "Diaz Del Moral Berdun, Miguel - Aleman Rodriguez, Luis Felipe",
+          "holeNumber": 18,
+          "createdAt": "26/07/25 18:17:50"
+        },
+        {
+          "playerName": "Totorika Garabieta, Joseba Xabier - Alonso Lesmes, Jose Maria",
+          "holeNumber": 7,
+          "createdAt": "26/07/25 18:17:52"
+        },
+        {
+          "playerName": "Arias-Camison Laurnaga, Jose Luis - Mezquia Pardo, Juan",
+          "holeNumber": 2,
+          "createdAt": "26/07/25 18:17:58"
+        },
+        {
+          "playerName": "Arias-Camison Laurnaga, Jose Luis - Mezquia Pardo, Juan",
+          "holeNumber": 11,
+          "createdAt": "26/07/25 18:17:58"
+        },
+        {
+          "playerName": "Torres Sanchez, David Jesus - Sanchez Gallego, Jose",
+          "holeNumber": 14,
+          "createdAt": "26/07/25 18:18:04"
+        },
+        {
+          "playerName": "Ramos Galvin, Ernesto - Manzano Lopez, Javier",
+          "holeNumber": 18,
+          "createdAt": "26/07/25 18:18:07"
+        },
+        {
+          "playerName": "Gisonno, Antonio - Gonzales Gisonno, Nora Alicia",
+          "holeNumber": 12,
+          "createdAt": "26/07/25 18:18:07"
+        },
+        {
+          "playerName": "Gonzalo Lafuente, Gabriel Esteban - Gonzalo Martin, Alonso",
+          "holeNumber": 2,
+          "createdAt": "26/07/25 18:18:09"
+        },
+        {
+          "playerName": "Gonzalo Lafuente, Gabriel Esteban - Gonzalo Martin, Alonso",
+          "holeNumber": 14,
+          "createdAt": "26/07/25 18:18:10"
+        },
+        {
+          "playerName": "Shutes, Mitchell Jon - Grimm, Dirk",
+          "holeNumber": 8,
+          "createdAt": "26/07/25 18:18:15"
+        },
+        {
+          "playerName": "Shutes, Mitchell Jon - Grimm, Dirk",
+          "holeNumber": 13,
+          "createdAt": "26/07/25 18:18:15"
+        },
+        {
+          "playerName": "Haller, Jens - SANDER, KNUT",
+          "holeNumber": 3,
+          "createdAt": "26/07/25 18:18:19"
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": []
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/67567_cartel_202.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:05.897Z"
 }

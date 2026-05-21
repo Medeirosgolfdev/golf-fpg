@@ -1,15 +1,15 @@
 {
   "tourId": 70473,
   "url": "https://www.nextcaddy.com/tour/70473",
-  "scrapedAt": "2026-05-09T10:16:36.749Z",
+  "scrapedAt": "2026-05-21T16:40:02.983Z",
   "meta": {
     "name": "PUNTUABLE ZARAPICOS (9 HOYOS)",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "23 may 2026",
-    "dateEnd": "23 may 2026",
-    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
       "Señoras",
@@ -17,12 +17,173 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-23"
+    ]
   },
   "course": null,
   "leaderboard": [],
-  "inscritos": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Paula Casas Fernandez",
+      "licencia": "7770474202",
+      "hcp": 20.8,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Carlos Alonso Arrimadas",
+      "licencia": "7706083589",
+      "hcp": 36,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Javier Alonso Arrimadas",
+      "licencia": "7706083592",
+      "hcp": 41.3,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Mateo Pretel Martin",
+      "licencia": "7744007411",
+      "hcp": 44.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Juan Aparicio Gonzalez",
+      "licencia": "7707094609",
+      "hcp": 27.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Javier Ovejero Portillo",
+      "licencia": "7706071587",
+      "hcp": 40.3,
+      "nivel": "A"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Fecha Inscripción",
+      "hcp": null,
+      "nivel": "Licencia"
+    },
+    {
+      "orden": 1,
+      "name": "Paula Casas Fernandez",
+      "licencia": "11-05-26 12:05",
+      "hcp": 20.8,
+      "nivel": "7770474202"
+    },
+    {
+      "orden": 2,
+      "name": "Carlos Alonso Arrimadas",
+      "licencia": "18-05-26 13:29",
+      "hcp": 36,
+      "nivel": "7706083589"
+    },
+    {
+      "orden": 3,
+      "name": "Javier Alonso Arrimadas",
+      "licencia": "18-05-26 13:30",
+      "hcp": 41.3,
+      "nivel": "7706083592"
+    },
+    {
+      "orden": 4,
+      "name": "Mateo Pretel Martin",
+      "licencia": "19-05-26 12:36",
+      "hcp": 44.7,
+      "nivel": "7744007411"
+    },
+    {
+      "orden": 5,
+      "name": "Juan Aparicio Gonzalez",
+      "licencia": "20-05-26 09:17",
+      "hcp": 27.5,
+      "nivel": "7707094609"
+    },
+    {
+      "orden": 6,
+      "name": "Javier Ovejero Portillo",
+      "licencia": "20-05-26 18:13",
+      "hcp": 40.3,
+      "nivel": "7706071587"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Paula Casas Fernandez",
+          "hcp": 20.8,
+          "ins": "2316880",
+          "jid": "75417",
+          "nivel": "B"
+        },
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Juan Aparicio Gonzalez",
+          "hcp": 27.5,
+          "ins": "2323492",
+          "jid": "75417",
+          "nivel": "B"
+        },
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Carlos Alonso Arrimadas",
+          "hcp": 36,
+          "ins": "2322447",
+          "jid": "75417",
+          "nivel": "A"
+        },
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Javier Ovejero Portillo",
+          "hcp": 40.3,
+          "ins": "2324426",
+          "jid": "75417",
+          "nivel": "A"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Javier Alonso Arrimadas",
+          "hcp": 41.3,
+          "ins": "2322448",
+          "jid": "75417",
+          "nivel": "B"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Mateo Pretel Martin",
+          "hcp": 44.7,
+          "ins": "2323028",
+          "jid": "75417",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -39,6 +200,8 @@
     }
   ],
   "scoreTypes": null,
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:44.632Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/131587992_puntuable_de_zarapicos_23_de_mayo_2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:41.217Z"
 }

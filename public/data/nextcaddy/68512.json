@@ -1,14 +1,14 @@
 {
   "tourId": 68512,
   "url": "https://www.nextcaddy.com/tour/68512",
-  "scrapedAt": "2026-05-09T09:58:10.920Z",
+  "scrapedAt": "2026-05-21T16:37:51.528Z",
   "meta": {
     "name": "VI Liga Beginners 2025-2026",
     "organizer": null,
     "course": "Escuela de Golf Miguel ángel Jiménez",
     "courseCode": "AMI5",
-    "dateStart": "14 mar 2026",
-    "dateEnd": "14 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-14"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 25,
       "header": [
         "Pos",
         "Jugador",
@@ -314,6 +315,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 25
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -680,38 +688,6 @@
       "nivel": "AMD2374667"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73136
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Bay Macaya, Luis Javier",
-          "holeNumber": 11,
-          "createdAt": "19/08/25 19:50:10"
-        },
-        {
-          "playerName": "Bay Macaya, Luis Javier",
-          "holeNumber": 12,
-          "createdAt": "19/08/25 19:50:10"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -944,5 +920,38 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:25.795Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73136
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Bay Macaya, Luis Javier",
+          "holeNumber": 11,
+          "createdAt": "19/08/25 19:50:10"
+        },
+        {
+          "playerName": "Bay Macaya, Luis Javier",
+          "holeNumber": 12,
+          "createdAt": "19/08/25 19:50:10"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:23.367Z"
 }

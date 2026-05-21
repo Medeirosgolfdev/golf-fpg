@@ -1,14 +1,14 @@
 {
   "tourId": 69394,
   "url": "https://www.nextcaddy.com/tour/69394",
-  "scrapedAt": "2026-05-09T10:07:56.089Z",
+  "scrapedAt": "2026-05-21T16:38:40.194Z",
   "meta": {
     "name": "LIGA FEMENINA ULZAMA  2026",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "11 abr 2026",
-    "dateEnd": "11 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Especial",
     "categories": [
       "Señoras",
@@ -16,11 +16,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-11"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -268,22 +269,6 @@
       "nivel": "4401775398"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74155
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -444,5 +429,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:53.486Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74155
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:33.860Z"
 }

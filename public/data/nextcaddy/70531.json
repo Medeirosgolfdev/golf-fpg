@@ -1,14 +1,14 @@
 {
   "tourId": 70531,
   "url": "https://www.nextcaddy.com/tour/70531",
-  "scrapedAt": "2026-05-09T10:16:27.897Z",
+  "scrapedAt": "2026-05-21T16:39:36.992Z",
   "meta": {
     "name": "LIGA FEMENINA ULZAMA  2026 10 de mayo.",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "10 may 2026",
-    "dateEnd": "10 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Especial",
     "categories": [
       "Señoras",
@@ -16,11 +16,311 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-10"
+    ]
   },
   "course": null,
-  "leaderboard": [],
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 25,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Cristina Huarte Irujo",
+          "licencia": "4401028917",
+          "hcp": 18.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2312099
+        },
+        {
+          "pos": 2,
+          "name": "Carmen Frauca Sagastibelza",
+          "licencia": "4401457389",
+          "hcp": 20.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2311086
+        },
+        {
+          "pos": 3,
+          "name": "Luisa Eugui Martinicorena",
+          "licencia": "4401321441",
+          "hcp": 19.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2315269
+        },
+        {
+          "pos": 4,
+          "name": "Blanca Elorz Guibert",
+          "licencia": "4401775398",
+          "hcp": 31.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2315086
+        },
+        {
+          "pos": 5,
+          "name": "Lydia Anoz Iribarren",
+          "licencia": "4401896690",
+          "hcp": 22.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2311051
+        },
+        {
+          "pos": 6,
+          "name": "Maria Español Batalla",
+          "licencia": "4401288941",
+          "hcp": 21.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2313508
+        },
+        {
+          "pos": 7,
+          "name": "Ana Galindez Zubiria",
+          "licencia": "4401457896",
+          "hcp": 38.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2311552
+        },
+        {
+          "pos": 8,
+          "name": "Susana Beñaran Arocena",
+          "licencia": "4401010052",
+          "hcp": 7.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2313139
+        },
+        {
+          "pos": 9,
+          "name": "Virginia Ibiricu Diaz",
+          "licencia": "4401022759",
+          "hcp": 24.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2315096
+        },
+        {
+          "pos": 10,
+          "name": "Yvonne Beatriz Figaredo Zeppenfeldt",
+          "licencia": "4401032085",
+          "hcp": 13.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2311109
+        },
+        {
+          "pos": 11,
+          "name": "Victoria Ochoa Bengoechea",
+          "licencia": "4401244766",
+          "hcp": 22.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2311681
+        },
+        {
+          "pos": 12,
+          "name": "Ana Lopez Torres",
+          "licencia": "4401789073",
+          "hcp": 21.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2314634
+        },
+        {
+          "pos": 13,
+          "name": "Susana Herreros Lopetegui",
+          "licencia": "4401395734",
+          "hcp": 29.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2314109
+        },
+        {
+          "pos": 14,
+          "name": "Maria Lourdes Goyena Huerta",
+          "licencia": "4401367146",
+          "hcp": 29.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2314257
+        },
+        {
+          "pos": 15,
+          "name": "Laura Eugui Martinicorena",
+          "licencia": "4401783764",
+          "hcp": 22.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2315270
+        },
+        {
+          "pos": 16,
+          "name": "Carmen Galindez Zubiria",
+          "licencia": "4401246302",
+          "hcp": 29.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2311573
+        },
+        {
+          "pos": 17,
+          "name": "Nieves Fernandez De Arcaya",
+          "licencia": "4401077121",
+          "hcp": 46.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2311574
+        },
+        {
+          "pos": 18,
+          "name": "Edna Maria Gomara Gomez",
+          "licencia": "4401072045",
+          "hcp": 21.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2311127
+        },
+        {
+          "pos": 19,
+          "name": "Maria Zubeldia Diaz",
+          "licencia": "4402980738",
+          "hcp": 24.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2315095
+        },
+        {
+          "pos": 20,
+          "name": "Maria Luisa Iñarra Castiella",
+          "licencia": "4401944184",
+          "hcp": 42.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2311551
+        },
+        {
+          "pos": null,
+          "name": "Magdalena Lopez Taberna",
+          "licencia": "4401200252",
+          "hcp": 22.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2314636
+        },
+        {
+          "pos": null,
+          "name": "Lucia Zorrilla Diaz",
+          "licencia": "4401802671",
+          "hcp": 18.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2314635
+        },
+        {
+          "pos": null,
+          "name": "Patricia Diaz Alvarez-Maldonado",
+          "licencia": "4401134829",
+          "hcp": 24.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2314135
+        },
+        {
+          "pos": null,
+          "name": "Cristina Ilzarbe Irizar",
+          "licencia": "4401171628",
+          "hcp": 26.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2314575
+        },
+        {
+          "pos": null,
+          "name": "Mª.josefa Vallejos Huesa",
+          "licencia": "4401192938",
+          "hcp": 31.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2314320
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 25
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -73,62 +373,55 @@
     },
     {
       "orden": 8,
-      "name": "Maria Luisa Garces Larrea",
-      "licencia": "4401282434",
-      "hcp": 17.1,
-      "nivel": "S"
-    },
-    {
-      "orden": 9,
       "name": "Ana Lopez Torres",
       "licencia": "4401789073",
       "hcp": 21.6,
       "nivel": "S"
     },
     {
-      "orden": 10,
+      "orden": 9,
       "name": "Lucia Zorrilla Diaz",
       "licencia": "4401802671",
       "hcp": 18.2,
       "nivel": "S"
     },
     {
-      "orden": 11,
+      "orden": 10,
       "name": "Magdalena Lopez Taberna",
       "licencia": "4401200252",
       "hcp": 22.8,
       "nivel": "S"
     },
     {
-      "orden": 12,
+      "orden": 11,
       "name": "Blanca Elorz Guibert",
       "licencia": "4401775398",
       "hcp": 31.9,
       "nivel": "S"
     },
     {
-      "orden": 13,
+      "orden": 12,
       "name": "Maria Zubeldia Diaz",
       "licencia": "4402980738",
       "hcp": 24.2,
       "nivel": "S"
     },
     {
-      "orden": 14,
+      "orden": 13,
       "name": "Virginia Ibiricu Diaz",
       "licencia": "4401022759",
       "hcp": 24.2,
       "nivel": "S"
     },
     {
-      "orden": 15,
+      "orden": 14,
       "name": "Luisa Eugui Martinicorena",
       "licencia": "4401321441",
       "hcp": 19.6,
       "nivel": "S"
     },
     {
-      "orden": 16,
+      "orden": 15,
       "name": "Laura Eugui Martinicorena",
       "licencia": "4401783764",
       "hcp": 22.2,
@@ -192,84 +485,61 @@
     },
     {
       "orden": 8,
-      "name": "Maria Luisa Garces Larrea",
-      "licencia": "07-05-26 11:58",
-      "hcp": 17.1,
-      "nivel": "4401282434"
-    },
-    {
-      "orden": 9,
       "name": "Ana Lopez Torres",
       "licencia": "07-05-26 12:24",
       "hcp": 21.6,
       "nivel": "4401789073"
     },
     {
-      "orden": 10,
+      "orden": 9,
       "name": "Lucia Zorrilla Diaz",
       "licencia": "07-05-26 12:30",
       "hcp": 18.2,
       "nivel": "4401802671"
     },
     {
-      "orden": 11,
+      "orden": 10,
       "name": "Magdalena Lopez Taberna",
       "licencia": "07-05-26 12:30",
       "hcp": 22.8,
       "nivel": "4401200252"
     },
     {
-      "orden": 12,
+      "orden": 11,
       "name": "Blanca Elorz Guibert",
       "licencia": "08-05-26 12:55",
       "hcp": 31.9,
       "nivel": "4401775398"
     },
     {
-      "orden": 13,
+      "orden": 12,
       "name": "Maria Zubeldia Diaz",
       "licencia": "08-05-26 13:23",
       "hcp": 24.2,
       "nivel": "4402980738"
     },
     {
-      "orden": 14,
+      "orden": 13,
       "name": "Virginia Ibiricu Diaz",
       "licencia": "08-05-26 13:24",
       "hcp": 24.2,
       "nivel": "4401022759"
     },
     {
-      "orden": 15,
+      "orden": 14,
       "name": "Luisa Eugui Martinicorena",
       "licencia": "08-05-26 16:00",
       "hcp": 19.6,
       "nivel": "4401321441"
     },
     {
-      "orden": 16,
+      "orden": 15,
       "name": "Laura Eugui Martinicorena",
       "licencia": "08-05-26 16:01",
       "hcp": 22.2,
       "nivel": "4401783764"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75475
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -412,5 +682,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:13:01.094Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75475
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:41.836Z"
 }

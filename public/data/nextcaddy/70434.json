@@ -1,14 +1,14 @@
 {
   "tourId": 70434,
   "url": "https://www.nextcaddy.com/tour/70434",
-  "scrapedAt": "2026-05-09T10:15:51.964Z",
+  "scrapedAt": "2026-05-21T16:39:24.099Z",
   "meta": {
     "name": "LUNES AL GOLF - Jornada 3",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": "04 may 2026",
-    "dateEnd": "04 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-04"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "2 Categoria",
+      "expectedJugadores": 37,
       "header": [
         "Pos",
         "Jugador",
@@ -447,6 +448,8 @@
     },
     {
       "category": 2,
+      "categoryName": "1 Categoria",
+      "expectedJugadores": 9,
       "header": [
         "Pos",
         "Jugador",
@@ -561,6 +564,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "2 Categoria",
+      "jugadores": 37
+    },
+    "2": {
+      "name": "1 Categoria",
+      "jugadores": 9
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1221,22 +1235,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75376
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -1388,5 +1386,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:13:00.213Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75376
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [
+    "/uploads/competiciones/cartel/3590207021_70434-lunes-al-golf-jornada-3.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:40.788Z"
 }

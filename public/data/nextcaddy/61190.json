@@ -1,14 +1,14 @@
 {
   "tourId": 61190,
   "url": "https://www.nextcaddy.com/tour/61190",
-  "scrapedAt": "2026-05-09T10:16:51.652Z",
+  "scrapedAt": "2026-05-21T16:40:37.157Z",
   "meta": {
     "name": "Circuito Miguel Ángel Jiménez",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Real Guadalhorce Club de Golf",
     "courseCode": "AM15",
-    "dateStart": "15 jul 2026",
-    "dateEnd": "15 jul 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Señoras  Caballero",
     "categories": [
       "Señoras",
@@ -17,12 +17,14 @@
       "Juvenil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-07-15"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -1210,6 +1212,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:23.211Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:41:53.029Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 67184,
   "url": "https://www.nextcaddy.com/tour/67184",
-  "scrapedAt": "2026-05-09T09:57:13.483Z",
+  "scrapedAt": "2026-05-21T16:36:18.556Z",
   "meta": {
     "name": "VOBS COMPETITION",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "02 ene 2026",
-    "dateEnd": "02 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-02"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 7,
       "header": [
         "Pos",
         "Jugador",
@@ -116,6 +117,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 7
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -265,68 +273,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71584
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Holliday, Paul",
-          "holeNumber": 9,
-          "createdAt": "18/06/25 13:51:59"
-        },
-        {
-          "playerName": "Holliday, Paul",
-          "holeNumber": 15,
-          "createdAt": "18/06/25 13:51:59"
-        },
-        {
-          "playerName": "Asplet, Steven",
-          "holeNumber": 14,
-          "createdAt": "18/06/25 13:53:38"
-        },
-        {
-          "playerName": "Fisher, Keith",
-          "holeNumber": 17,
-          "createdAt": "18/06/25 14:41:22"
-        },
-        {
-          "playerName": "Tidmarsh, Tony",
-          "holeNumber": 3,
-          "createdAt": "18/06/25 14:42:19"
-        },
-        {
-          "playerName": "Tidmarsh, Tony",
-          "holeNumber": 9,
-          "createdAt": "18/06/25 14:42:19"
-        },
-        {
-          "playerName": "Bassi, Graham",
-          "holeNumber": 15,
-          "createdAt": "18/06/25 14:48:43"
-        },
-        {
-          "playerName": "Bassi, Graham",
-          "holeNumber": 17,
-          "createdAt": "18/06/25 14:48:43"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -424,5 +370,68 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:04.804Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71584
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Holliday, Paul",
+          "holeNumber": 9,
+          "createdAt": "18/06/25 13:51:59"
+        },
+        {
+          "playerName": "Holliday, Paul",
+          "holeNumber": 15,
+          "createdAt": "18/06/25 13:51:59"
+        },
+        {
+          "playerName": "Asplet, Steven",
+          "holeNumber": 14,
+          "createdAt": "18/06/25 13:53:38"
+        },
+        {
+          "playerName": "Fisher, Keith",
+          "holeNumber": 17,
+          "createdAt": "18/06/25 14:41:22"
+        },
+        {
+          "playerName": "Tidmarsh, Tony",
+          "holeNumber": 3,
+          "createdAt": "18/06/25 14:42:19"
+        },
+        {
+          "playerName": "Tidmarsh, Tony",
+          "holeNumber": 9,
+          "createdAt": "18/06/25 14:42:19"
+        },
+        {
+          "playerName": "Bassi, Graham",
+          "holeNumber": 15,
+          "createdAt": "18/06/25 14:48:43"
+        },
+        {
+          "playerName": "Bassi, Graham",
+          "holeNumber": 17,
+          "createdAt": "18/06/25 14:48:43"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:41:59.703Z"
 }

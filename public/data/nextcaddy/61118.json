@@ -1,14 +1,14 @@
 {
   "tourId": 61118,
   "url": "https://www.nextcaddy.com/tour/61118",
-  "scrapedAt": "2026-05-09T10:16:39.013Z",
+  "scrapedAt": "2026-05-21T16:40:12.146Z",
   "meta": {
     "name": "VI Prueba Circuito 4ª, 5ª y 6ª categoría campo corto",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": "31 may 2026",
-    "dateEnd": "31 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-31"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -34,7 +35,7 @@
       "orden": 2,
       "name": "Antonio Dorantes Sanchez",
       "licencia": "AMG3482682",
-      "hcp": 48.4,
+      "hcp": 48.6,
       "nivel": "S"
     },
     {
@@ -43,6 +44,62 @@
       "licencia": "AMC3061797",
       "hcp": 28.9,
       "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Javier Ruiz Delaire",
+      "licencia": "AM55471602",
+      "hcp": 49,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Ignacio Luis Martinez Encinas",
+      "licencia": "AM95950638",
+      "hcp": 33.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Juan Manuel Blanco Poley",
+      "licencia": "AM95950893",
+      "hcp": 21.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Mateo Rodriguez Torrente",
+      "licencia": "AMD5084298",
+      "hcp": 41.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "Jose Maria Gessa Aguilera",
+      "licencia": "AMG3010991",
+      "hcp": 37,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 9,
+      "name": "Victor Ruiz Gonzalez",
+      "licencia": "AM00030794",
+      "hcp": 48,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 10,
+      "name": "David Hijon Morillo",
+      "licencia": "AMG3071275",
+      "hcp": 29.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Carlos Jorge Gonzalez Carrasco",
+      "licencia": "AM95094540",
+      "hcp": 23.4,
+      "nivel": "S"
     },
     {
       "orden": null,
@@ -62,15 +119,36 @@
       "orden": 2,
       "name": "Inmaculada Gomez Alvarez",
       "licencia": "AMG3478304",
-      "hcp": 37.8,
+      "hcp": 37.9,
       "nivel": "S"
     },
     {
       "orden": 3,
       "name": "Asuncion Arizti Bayon",
       "licencia": "AM85919823",
-      "hcp": 37,
+      "hcp": 37.8,
       "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Daniela Mena Chaparro",
+      "licencia": "AM11092816",
+      "hcp": 46.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Rocio Chaparro Dominguez",
+      "licencia": "AM11080438",
+      "hcp": 39.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 6,
+      "name": "Amalia Guerrero Pontivero",
+      "licencia": "AMG3982774",
+      "hcp": 24.7,
+      "nivel": "Mid"
     },
     {
       "orden": null,
@@ -90,7 +168,7 @@
       "orden": 2,
       "name": "Antonio Dorantes Sanchez",
       "licencia": "AMG3482682",
-      "hcp": 48.4,
+      "hcp": 48.6,
       "nivel": "S"
     },
     {
@@ -104,7 +182,7 @@
       "orden": 4,
       "name": "Inmaculada Gomez Alvarez",
       "licencia": "AMG3478304",
-      "hcp": 37.8,
+      "hcp": 37.9,
       "nivel": "S"
     },
     {
@@ -118,10 +196,88 @@
       "orden": 6,
       "name": "Asuncion Arizti Bayon",
       "licencia": "AM85919823",
-      "hcp": 37,
+      "hcp": 37.8,
       "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Javier Ruiz Delaire",
+      "licencia": "AM55471602",
+      "hcp": 49,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "Ignacio Luis Martinez Encinas",
+      "licencia": "AM95950638",
+      "hcp": 33.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Juan Manuel Blanco Poley",
+      "licencia": "AM95950893",
+      "hcp": 21.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Mateo Rodriguez Torrente",
+      "licencia": "AMD5084298",
+      "hcp": 41.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 11,
+      "name": "Jose Maria Gessa Aguilera",
+      "licencia": "AMG3010991",
+      "hcp": 37,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 12,
+      "name": "Victor Ruiz Gonzalez",
+      "licencia": "AM00030794",
+      "hcp": 48,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 13,
+      "name": "Daniela Mena Chaparro",
+      "licencia": "AM11092816",
+      "hcp": 46.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 14,
+      "name": "Rocio Chaparro Dominguez",
+      "licencia": "AM11080438",
+      "hcp": 39.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 15,
+      "name": "David Hijon Morillo",
+      "licencia": "AMG3071275",
+      "hcp": 29.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Carlos Jorge Gonzalez Carrasco",
+      "licencia": "AM95094540",
+      "hcp": 23.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Amalia Guerrero Pontivero",
+      "licencia": "AMG3982774",
+      "hcp": 24.7,
+      "nivel": "Mid"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -179,6 +335,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:22.012Z"
+  "pdfs": [
+    "/uploads/circular/2026/42824416ec7bcd5d806eea121047c678.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:50.912Z"
 }

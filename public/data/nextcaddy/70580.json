@@ -1,14 +1,14 @@
 {
   "tourId": 70580,
   "url": "https://www.nextcaddy.com/tour/70580",
-  "scrapedAt": "2026-05-09T10:15:53.600Z",
+  "scrapedAt": "2026-05-21T16:39:26.869Z",
   "meta": {
     "name": "II Prueba Circuito Interescolar 2025-2026 ( Hoyos 10-18)",
     "organizer": "Federacion de Golf de Madrid",
     "course": "el Encin Golf",
     "courseCode": "CMC8",
-    "dateStart": "07 may 2026",
-    "dateEnd": "07 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-07"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 58,
       "header": [
         "Pos",
         "Jugador",
@@ -679,6 +680,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 58,
       "header": [
         "Pos",
         "Jugador",
@@ -1332,6 +1335,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 58
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 58
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2160,43 +2174,6 @@
       "nivel": "A"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75536
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Dideriksen, Bjarne",
-          "holeNumber": 10,
-          "createdAt": "20/11/25 18:27:28"
-        },
-        {
-          "playerName": "Gehring, Martin Joerg",
-          "holeNumber": 4,
-          "createdAt": "20/11/25 18:27:30"
-        },
-        {
-          "playerName": "Gehring, Martin Joerg",
-          "holeNumber": 13,
-          "createdAt": "20/11/25 18:27:30"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -2726,5 +2703,47 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:13:01.625Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75536
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Dideriksen, Bjarne",
+          "holeNumber": 10,
+          "createdAt": "20/11/25 18:27:28"
+        },
+        {
+          "playerName": "Gehring, Martin Joerg",
+          "holeNumber": 4,
+          "createdAt": "20/11/25 18:27:30"
+        },
+        {
+          "playerName": "Gehring, Martin Joerg",
+          "holeNumber": 13,
+          "createdAt": "20/11/25 18:27:30"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/cartel/1252375008_70580-ii-prueba-circuito-interescolar-2025-2026-hoyos-10-18.pdf",
+    "/uploads/competiciones/pdf/146874922_clasificaciorn_circuito_interescolar_2025-2026.pdf",
+    "/uploads/competiciones/pdf/2205755505_reglas_locales_el_encin_.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:42.575Z"
 }

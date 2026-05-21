@@ -1,14 +1,14 @@
 {
   "tourId": 68055,
   "url": "https://www.nextcaddy.com/tour/68055",
-  "scrapedAt": "2026-05-09T10:17:00.456Z",
+  "scrapedAt": "2026-05-21T16:40:41.508Z",
   "meta": {
     "name": "IX Copa Castilla y León Competición Femenina  (SACE - WAGR)",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "01 ago 2026",
-    "dateEnd": "01 ago 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-08-01"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -43,6 +45,8 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:32.860Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/68055_cartel_15.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:16.324Z"
 }

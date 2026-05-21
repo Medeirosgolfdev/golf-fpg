@@ -1,14 +1,14 @@
 {
   "tourId": 70278,
   "url": "https://www.nextcaddy.com/tour/70278",
-  "scrapedAt": "2026-05-09T10:15:45.416Z",
+  "scrapedAt": "2026-05-21T16:39:13.802Z",
   "meta": {
     "name": "Sherry International Golf Group (SIGG) - Tuesday 28 April 2026 (Grupo privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "28 abr 2026",
-    "dateEnd": "28 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-28"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 32,
       "header": [
         "Pos",
         "Jugador",
@@ -391,6 +392,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 32
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -862,22 +870,6 @@
       "nivel": "CM00419265"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75202
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -1173,5 +1165,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:59.151Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75202
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:39.708Z"
 }

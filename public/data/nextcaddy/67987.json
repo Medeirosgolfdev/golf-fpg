@@ -1,14 +1,14 @@
 {
   "tourId": 67987,
   "url": "https://www.nextcaddy.com/tour/67987",
-  "scrapedAt": "2026-05-09T09:57:30.325Z",
+  "scrapedAt": "2026-05-21T16:36:46.728Z",
   "meta": {
     "name": "VOBS COMPETITION",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "29 ene 2026",
-    "dateEnd": "29 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-29"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -171,33 +172,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72516
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Raggini Paternain, Hugo",
-          "holeNumber": 14,
-          "createdAt": "28/07/25 19:54:39"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -295,5 +269,33 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:17.886Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72516
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Raggini Paternain, Hugo",
+          "holeNumber": 14,
+          "createdAt": "28/07/25 19:54:39"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:14.622Z"
 }

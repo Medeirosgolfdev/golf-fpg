@@ -1,14 +1,14 @@
 {
   "tourId": 68165,
   "url": "https://www.nextcaddy.com/tour/68165",
-  "scrapedAt": "2026-05-09T10:16:44.178Z",
+  "scrapedAt": "2026-05-21T16:40:22.403Z",
   "meta": {
     "name": "Torneo de 5ª Categoría 9 hoyos campo largo \"Las Rejas\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Forus Golf Las Rejas",
     "courseCode": "CM22",
-    "dateStart": "14 jun 2026",
-    "dateEnd": "14 jun 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Circuito 5ª Catego",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-06-14"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -39,6 +41,6 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:34.073Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:17.795Z"
 }

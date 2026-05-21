@@ -1,14 +1,14 @@
 {
   "tourId": 68542,
   "url": "https://www.nextcaddy.com/tour/68542",
-  "scrapedAt": "2026-05-09T09:57:52.083Z",
+  "scrapedAt": "2026-05-21T16:37:19.084Z",
   "meta": {
     "name": "LUNES AL GOLF J7 (TARDE 15:45)",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": "23 feb 2026",
-    "dateEnd": "23 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-23"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "1 Categoria",
+      "expectedJugadores": 16,
       "header": [
         "Pos",
         "Jugador",
@@ -216,6 +217,8 @@
     },
     {
       "category": 2,
+      "categoryName": "2 Categoria",
+      "expectedJugadores": 30,
       "header": [
         "Pos",
         "Jugador",
@@ -561,6 +564,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "1 Categoria",
+      "jugadores": 16
+    },
+    "2": {
+      "name": "2 Categoria",
+      "jugadores": 30
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -801,68 +815,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73169
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Bautista Bejarano, Romualdo",
-          "holeNumber": 1,
-          "createdAt": "13/09/25 09:35:49"
-        },
-        {
-          "playerName": "Diaz Municio, Sergio",
-          "holeNumber": 5,
-          "createdAt": "13/09/25 10:19:38"
-        },
-        {
-          "playerName": "Barazar Herrera, Francisco Antonio",
-          "holeNumber": 5,
-          "createdAt": "13/09/25 10:33:15"
-        },
-        {
-          "playerName": "Bautista Bejarano, Romualdo",
-          "holeNumber": 5,
-          "createdAt": "13/09/25 10:45:09"
-        },
-        {
-          "playerName": "Carretero Enrique, Juan",
-          "holeNumber": 8,
-          "createdAt": "13/09/25 11:08:12"
-        },
-        {
-          "playerName": "Fonseca Palacios, Fernando",
-          "holeNumber": 12,
-          "createdAt": "13/09/25 12:07:36"
-        },
-        {
-          "playerName": "Santos Genero, Francisco Javier",
-          "holeNumber": 5,
-          "createdAt": "13/09/25 13:54:13"
-        },
-        {
-          "playerName": "Ibañez Martinez, David",
-          "holeNumber": 18,
-          "createdAt": "13/09/25 14:17:16"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1014,5 +966,70 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:26.210Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73169
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Bautista Bejarano, Romualdo",
+          "holeNumber": 1,
+          "createdAt": "13/09/25 09:35:49"
+        },
+        {
+          "playerName": "Diaz Municio, Sergio",
+          "holeNumber": 5,
+          "createdAt": "13/09/25 10:19:38"
+        },
+        {
+          "playerName": "Barazar Herrera, Francisco Antonio",
+          "holeNumber": 5,
+          "createdAt": "13/09/25 10:33:15"
+        },
+        {
+          "playerName": "Bautista Bejarano, Romualdo",
+          "holeNumber": 5,
+          "createdAt": "13/09/25 10:45:09"
+        },
+        {
+          "playerName": "Carretero Enrique, Juan",
+          "holeNumber": 8,
+          "createdAt": "13/09/25 11:08:12"
+        },
+        {
+          "playerName": "Fonseca Palacios, Fernando",
+          "holeNumber": 12,
+          "createdAt": "13/09/25 12:07:36"
+        },
+        {
+          "playerName": "Santos Genero, Francisco Javier",
+          "holeNumber": 5,
+          "createdAt": "13/09/25 13:54:13"
+        },
+        {
+          "playerName": "Ibañez Martinez, David",
+          "holeNumber": 18,
+          "createdAt": "13/09/25 14:17:16"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/68542_cartel_102.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:23.839Z"
 }

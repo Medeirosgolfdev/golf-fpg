@@ -1,14 +1,14 @@
 {
   "tourId": 68721,
   "url": "https://www.nextcaddy.com/tour/68721",
-  "scrapedAt": "2026-05-09T09:58:02.253Z",
+  "scrapedAt": "2026-05-21T16:37:35.988Z",
   "meta": {
     "name": "GOLFISTAS DE SEVILLA ( MAÑANA 9:30)",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": "05 mar 2026",
-    "dateEnd": "05 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-05"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -430,93 +431,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73373
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Aranguren Zubeldia, Francisco Javier",
-          "holeNumber": 18,
-          "createdAt": "03/09/25 10:17:31"
-        },
-        {
-          "playerName": "Llarena Gonzalez, Fernando",
-          "holeNumber": 18,
-          "createdAt": "03/09/25 12:45:31"
-        },
-        {
-          "playerName": "Molina Garicano, Fco. Javier",
-          "holeNumber": 18,
-          "createdAt": "03/09/25 12:48:02"
-        },
-        {
-          "playerName": "Ruiz Urra, Fernando",
-          "holeNumber": 18,
-          "createdAt": "03/09/25 14:04:33"
-        },
-        {
-          "playerName": "De Pablos Fernandez, Julio",
-          "holeNumber": 18,
-          "createdAt": "03/09/25 14:10:34"
-        },
-        {
-          "playerName": "Gonzalez Herranz, Jesus",
-          "holeNumber": 18,
-          "createdAt": "03/09/25 14:11:14"
-        },
-        {
-          "playerName": "Guinaldo Iglesias, Alberto",
-          "holeNumber": 18,
-          "createdAt": "03/09/25 14:17:17"
-        },
-        {
-          "playerName": "Taberna Chacartegui, Jesus",
-          "holeNumber": 18,
-          "createdAt": "03/09/25 18:14:35"
-        }
-      ]
-    },
-    "eagle": {
-      "scoreTypeKey": "eagle",
-      "players": [
-        {
-          "playerName": "Inchausti Estomba, Javier",
-          "holeNumber": 18,
-          "createdAt": "03/09/25 14:01:38"
-        },
-        {
-          "playerName": "Bariain Satrustegui, Jose Maria",
-          "holeNumber": 18,
-          "createdAt": "03/09/25 14:03:05"
-        },
-        {
-          "playerName": "Echevarria Salaverria, Jose Manuel",
-          "holeNumber": 18,
-          "createdAt": "03/09/25 14:04:52"
-        },
-        {
-          "playerName": "Miguez Andres, Jose Angel",
-          "holeNumber": 18,
-          "createdAt": "03/09/25 18:14:38"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -767,5 +681,93 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:28.781Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73373
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Aranguren Zubeldia, Francisco Javier",
+          "holeNumber": 18,
+          "createdAt": "03/09/25 10:17:31"
+        },
+        {
+          "playerName": "Llarena Gonzalez, Fernando",
+          "holeNumber": 18,
+          "createdAt": "03/09/25 12:45:31"
+        },
+        {
+          "playerName": "Molina Garicano, Fco. Javier",
+          "holeNumber": 18,
+          "createdAt": "03/09/25 12:48:02"
+        },
+        {
+          "playerName": "Ruiz Urra, Fernando",
+          "holeNumber": 18,
+          "createdAt": "03/09/25 14:04:33"
+        },
+        {
+          "playerName": "De Pablos Fernandez, Julio",
+          "holeNumber": 18,
+          "createdAt": "03/09/25 14:10:34"
+        },
+        {
+          "playerName": "Gonzalez Herranz, Jesus",
+          "holeNumber": 18,
+          "createdAt": "03/09/25 14:11:14"
+        },
+        {
+          "playerName": "Guinaldo Iglesias, Alberto",
+          "holeNumber": 18,
+          "createdAt": "03/09/25 14:17:17"
+        },
+        {
+          "playerName": "Taberna Chacartegui, Jesus",
+          "holeNumber": 18,
+          "createdAt": "03/09/25 18:14:35"
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Inchausti Estomba, Javier",
+          "holeNumber": 18,
+          "createdAt": "03/09/25 14:01:38"
+        },
+        {
+          "playerName": "Bariain Satrustegui, Jose Maria",
+          "holeNumber": 18,
+          "createdAt": "03/09/25 14:03:05"
+        },
+        {
+          "playerName": "Echevarria Salaverria, Jose Manuel",
+          "holeNumber": 18,
+          "createdAt": "03/09/25 14:04:52"
+        },
+        {
+          "playerName": "Miguez Andres, Jose Angel",
+          "holeNumber": 18,
+          "createdAt": "03/09/25 18:14:38"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:26.640Z"
 }

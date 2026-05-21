@@ -1,14 +1,14 @@
 {
   "tourId": 70216,
   "url": "https://www.nextcaddy.com/tour/70216",
-  "scrapedAt": "2026-05-09T10:15:38.471Z",
+  "scrapedAt": "2026-05-21T16:39:02.554Z",
   "meta": {
     "name": "MONTHLY STABLEFORD",
     "organizer": null,
     "course": "Santa María Golf & Country Club",
     "courseCode": "AM86",
-    "dateStart": "22 abr 2026",
-    "dateEnd": "22 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "STABLEFORD",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-22"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 14,
       "header": [
         "Pos",
         "Jugador",
@@ -193,6 +194,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 14
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -405,6 +413,7 @@
       "nivel": "S"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -421,6 +430,8 @@
     }
   ],
   "scoreTypes": null,
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:43.708Z"
+  "pdfs": [
+    "/uploads/competiciones/cartel/3077653644_70216-monthly-stableford.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:38.667Z"
 }

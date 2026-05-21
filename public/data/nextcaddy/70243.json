@@ -1,14 +1,14 @@
 {
   "tourId": 70243,
   "url": "https://www.nextcaddy.com/tour/70243",
-  "scrapedAt": "2026-05-09T10:15:45.142Z",
+  "scrapedAt": "2026-05-21T16:39:13.364Z",
   "meta": {
     "name": "LUNES AL GOLF - J2",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": "27 abr 2026",
-    "dateEnd": "27 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-27"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Segunda Categoria",
+      "expectedJugadores": 38,
       "header": [
         "Pos",
         "Jugador",
@@ -458,6 +459,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Primera Categoría",
+      "expectedJugadores": 6,
       "header": [
         "Pos",
         "Jugador",
@@ -539,6 +542,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Segunda Categoria",
+      "jugadores": 38
+    },
+    "2": {
+      "name": "Primera Categoría",
+      "jugadores": 6
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1185,22 +1199,6 @@
       "nivel": "C"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75163
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -1397,5 +1395,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:58.737Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75163
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/cartel/2272732725_70243-lunes-al-golf-j2.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:39.257Z"
 }

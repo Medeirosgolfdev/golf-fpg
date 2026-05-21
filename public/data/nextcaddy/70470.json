@@ -1,14 +1,14 @@
 {
   "tourId": 70470,
   "url": "https://www.nextcaddy.com/tour/70470",
-  "scrapedAt": "2026-05-09T10:15:50.447Z",
+  "scrapedAt": "2026-05-21T16:39:22.102Z",
   "meta": {
     "name": "LIGA ABONADOS 03 MAYO 2026",
     "organizer": null,
     "course": "Montecastillo Barceló Golf Club",
     "courseCode": "AM29",
-    "dateStart": "03 may 2026",
-    "dateEnd": "03 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-03"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -238,6 +239,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -451,6 +454,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 18
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 18
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -607,22 +621,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75414
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -720,5 +718,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:13:00.593Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75414
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/cartel/3923521481_70470-liga-abonados-03-mayo-2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:41.226Z"
 }

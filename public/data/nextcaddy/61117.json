@@ -1,14 +1,14 @@
 {
   "tourId": 61117,
   "url": "https://www.nextcaddy.com/tour/61117",
-  "scrapedAt": "2026-05-09T10:15:47.537Z",
+  "scrapedAt": "2026-05-21T16:39:16.820Z",
   "meta": {
     "name": "Circuito Femenino Jueves",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Real Club Pineda de Sevilla",
     "courseCode": "AM02",
-    "dateStart": "30 abr 2026",
-    "dateEnd": "30 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras C. Femeni",
     "categories": [
       "Señoras",
@@ -16,11 +16,17 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-30"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Equipos Handicap",
+      "jugadores": 18
+    }
+  },
   "inscritos": [
     {
       "orden": null,
@@ -220,7 +226,7 @@
     },
     {
       "orden": null,
-      "name": "Olga Brinkman Morales",
+      "name": "Olga Brinkmann Morales",
       "licencia": "AM06990073",
       "hcp": 30,
       "nivel": "S"
@@ -653,128 +659,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 64732
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Maxwell, Malcolm",
-          "holeNumber": 8,
-          "createdAt": "20/09/24 13:03:16"
-        },
-        {
-          "playerName": "Scott, Colin",
-          "holeNumber": 7,
-          "createdAt": "20/09/24 13:04:16"
-        },
-        {
-          "playerName": "Balding, Mark",
-          "holeNumber": 4,
-          "createdAt": "20/09/24 13:09:56"
-        },
-        {
-          "playerName": "Marquez Contioso, Jose Luis",
-          "holeNumber": 6,
-          "createdAt": "20/09/24 13:11:56"
-        },
-        {
-          "playerName": "Marquez Contioso, Jose Luis",
-          "holeNumber": 8,
-          "createdAt": "20/09/24 13:11:56"
-        },
-        {
-          "playerName": "Marquez Contioso, Jose Luis",
-          "holeNumber": 9,
-          "createdAt": "20/09/24 13:11:56"
-        },
-        {
-          "playerName": "Leckie, Mark Ian",
-          "holeNumber": 18,
-          "createdAt": "20/09/24 13:37:37"
-        },
-        {
-          "playerName": "Macdougall, Daniel Lindsay",
-          "holeNumber": 10,
-          "createdAt": "20/09/24 13:40:47"
-        },
-        {
-          "playerName": "Mooney, Michael",
-          "holeNumber": 8,
-          "createdAt": "20/09/24 13:41:37"
-        },
-        {
-          "playerName": "Mooney, Michael",
-          "holeNumber": 18,
-          "createdAt": "20/09/24 13:41:37"
-        },
-        {
-          "playerName": "Treacy, George",
-          "holeNumber": 12,
-          "createdAt": "20/09/24 13:42:58"
-        },
-        {
-          "playerName": "Bosbach, Cornelia",
-          "holeNumber": 10,
-          "createdAt": "20/09/24 13:45:38"
-        },
-        {
-          "playerName": "Walsh, Geoffrey",
-          "holeNumber": 13,
-          "createdAt": "20/09/24 13:47:48"
-        },
-        {
-          "playerName": "Parsons, Mark",
-          "holeNumber": 8,
-          "createdAt": "20/09/24 13:48:38"
-        },
-        {
-          "playerName": "Parsons, Mark",
-          "holeNumber": 10,
-          "createdAt": "20/09/24 13:48:38"
-        },
-        {
-          "playerName": "Kerr, Karla",
-          "holeNumber": 3,
-          "createdAt": "20/09/24 13:49:08"
-        },
-        {
-          "playerName": "Freezer, Kirk",
-          "holeNumber": 8,
-          "createdAt": "20/09/24 13:51:48"
-        },
-        {
-          "playerName": "Macintyre, Harvey John",
-          "holeNumber": 6,
-          "createdAt": "20/09/24 13:53:48"
-        },
-        {
-          "playerName": "Young, Harry",
-          "holeNumber": 8,
-          "createdAt": "20/09/24 13:54:28"
-        },
-        {
-          "playerName": "O`brien, Justin",
-          "holeNumber": 8,
-          "createdAt": "20/09/24 14:17:39"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1295,7 +1179,7 @@
         {
           "time": "09:40",
           "tee": 11,
-          "name": "Olga Brinkman Morales",
+          "name": "Olga Brinkmann Morales",
           "hcp": 30,
           "ins": "2277237",
           "jid": "64732",
@@ -1430,5 +1314,131 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:11:59.990Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 64732
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Maxwell, Malcolm",
+          "holeNumber": 8,
+          "createdAt": "20/09/24 13:03:16"
+        },
+        {
+          "playerName": "Scott, Colin",
+          "holeNumber": 7,
+          "createdAt": "20/09/24 13:04:16"
+        },
+        {
+          "playerName": "Balding, Mark",
+          "holeNumber": 4,
+          "createdAt": "20/09/24 13:09:56"
+        },
+        {
+          "playerName": "Marquez Contioso, Jose Luis",
+          "holeNumber": 6,
+          "createdAt": "20/09/24 13:11:56"
+        },
+        {
+          "playerName": "Marquez Contioso, Jose Luis",
+          "holeNumber": 8,
+          "createdAt": "20/09/24 13:11:56"
+        },
+        {
+          "playerName": "Marquez Contioso, Jose Luis",
+          "holeNumber": 9,
+          "createdAt": "20/09/24 13:11:56"
+        },
+        {
+          "playerName": "Leckie, Mark Ian",
+          "holeNumber": 18,
+          "createdAt": "20/09/24 13:37:37"
+        },
+        {
+          "playerName": "Macdougall, Daniel Lindsay",
+          "holeNumber": 10,
+          "createdAt": "20/09/24 13:40:47"
+        },
+        {
+          "playerName": "Mooney, Michael",
+          "holeNumber": 8,
+          "createdAt": "20/09/24 13:41:37"
+        },
+        {
+          "playerName": "Mooney, Michael",
+          "holeNumber": 18,
+          "createdAt": "20/09/24 13:41:37"
+        },
+        {
+          "playerName": "Treacy, George",
+          "holeNumber": 12,
+          "createdAt": "20/09/24 13:42:58"
+        },
+        {
+          "playerName": "Bosbach, Cornelia",
+          "holeNumber": 10,
+          "createdAt": "20/09/24 13:45:38"
+        },
+        {
+          "playerName": "Walsh, Geoffrey",
+          "holeNumber": 13,
+          "createdAt": "20/09/24 13:47:48"
+        },
+        {
+          "playerName": "Parsons, Mark",
+          "holeNumber": 8,
+          "createdAt": "20/09/24 13:48:38"
+        },
+        {
+          "playerName": "Parsons, Mark",
+          "holeNumber": 10,
+          "createdAt": "20/09/24 13:48:38"
+        },
+        {
+          "playerName": "Kerr, Karla",
+          "holeNumber": 3,
+          "createdAt": "20/09/24 13:49:08"
+        },
+        {
+          "playerName": "Freezer, Kirk",
+          "holeNumber": 8,
+          "createdAt": "20/09/24 13:51:48"
+        },
+        {
+          "playerName": "Macintyre, Harvey John",
+          "holeNumber": 6,
+          "createdAt": "20/09/24 13:53:48"
+        },
+        {
+          "playerName": "Young, Harry",
+          "holeNumber": 8,
+          "createdAt": "20/09/24 13:54:28"
+        },
+        {
+          "playerName": "O`brien, Justin",
+          "holeNumber": 8,
+          "createdAt": "20/09/24 14:17:39"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/circular/2026/960db328bdb9e41e59f0fd895701cb97.pdf",
+    "/uploads/competiciones/pdf/2939761397_reglas_locales_circuito_femenino_rfga_2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:51.289Z"
 }

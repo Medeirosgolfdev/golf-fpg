@@ -1,7 +1,7 @@
 {
   "tourId": 70924,
   "url": "https://www.nextcaddy.com/tour/70924",
-  "scrapedAt": "2026-05-18T08:08:13.495Z",
+  "scrapedAt": "2026-05-21T16:39:54.368Z",
   "meta": {
     "name": "VOBS COMPETITION",
     "organizer": null,
@@ -21,9 +21,187 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 14,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "David James Corston",
+          "licencia": "AMD5033553",
+          "hcp": 15.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2321545
+        },
+        {
+          "pos": 2,
+          "name": "Paul Boyce Howarth",
+          "licencia": "AMD5485623",
+          "hcp": 21.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2321544
+        },
+        {
+          "pos": 3,
+          "name": "Robert Edward Jewell",
+          "licencia": "AM25603729",
+          "hcp": 10.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2321546
+        },
+        {
+          "pos": 4,
+          "name": "Louis Jorfi",
+          "licencia": "AM25979495",
+          "hcp": 17.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2321550
+        },
+        {
+          "pos": 5,
+          "name": "Paul Monks",
+          "licencia": "AMD5980718",
+          "hcp": 16.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2321543
+        },
+        {
+          "pos": 6,
+          "name": "Jeffrey Wadsworth",
+          "licencia": "AMD5979795",
+          "hcp": 17.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2321542
+        },
+        {
+          "pos": 7,
+          "name": "Matthew Colin Anderson",
+          "licencia": "AMC3064506",
+          "hcp": 20.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2321552
+        },
+        {
+          "pos": 8,
+          "name": "Jeff Shellton",
+          "licencia": "AMD5975115",
+          "hcp": 14.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2321541
+        },
+        {
+          "pos": 9,
+          "name": "Kieran Byrne",
+          "licencia": "AM66981542",
+          "hcp": 12.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2321553
+        },
+        {
+          "pos": 10,
+          "name": "Morgan Matthew",
+          "licencia": "AMD5518776",
+          "hcp": 9.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2321547
+        },
+        {
+          "pos": 11,
+          "name": "Bret Myles Duncan",
+          "licencia": "AME7775047",
+          "hcp": 22.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2321540
+        },
+        {
+          "pos": 12,
+          "name": "Mickey Allen Padron",
+          "licencia": "AMD5030872",
+          "hcp": 14.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2321551
+        },
+        {
+          "pos": 13,
+          "name": "Carl Cluck",
+          "licencia": "AME7902244",
+          "hcp": 21.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2321820
+        },
+        {
+          "pos": 14,
+          "name": "Mark Oakley Alan",
+          "licencia": "AMD5492066",
+          "hcp": 24.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2321555
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 14
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -421,5 +599,6 @@
   },
   "pdfs": [
     "/uploads/competiciones/cartel/2474004366_70924-vobs-competition.pdf"
-  ]
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:45.301Z"
 }

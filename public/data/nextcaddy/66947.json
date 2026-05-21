@@ -1,14 +1,14 @@
 {
   "tourId": 66947,
   "url": "https://www.nextcaddy.com/tour/66947",
-  "scrapedAt": "2026-05-09T09:57:15.092Z",
+  "scrapedAt": "2026-05-21T16:36:21.712Z",
   "meta": {
     "name": "Torneo de Reyes",
     "organizer": null,
     "course": "Alborán Golf",
     "courseCode": "AMC7",
-    "dateStart": "04 ene 2026",
-    "dateEnd": "04 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-04"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Tercera Categoría -26,5 A 36-",
+      "expectedJugadores": 35,
       "header": [
         "Pos",
         "Jugador",
@@ -425,6 +426,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Segunda Categoría -15,1 A 26,4-",
+      "expectedJugadores": 34,
       "header": [
         "Pos",
         "Jugador",
@@ -815,6 +818,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Primera Categoría -0 A 15-",
+      "expectedJugadores": 35,
       "header": [
         "Pos",
         "Jugador",
@@ -1215,6 +1220,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Tercera Categoría -26,5 A 36-",
+      "jugadores": 35
+    },
+    "2": {
+      "name": "Segunda Categoría -15,1 A 26,4-",
+      "jugadores": 34
+    },
+    "3": {
+      "name": "Primera Categoría -0 A 15-",
+      "jugadores": 35
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2694,93 +2714,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71342
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Rojas Callejon, Carlos",
-          "holeNumber": 2,
-          "createdAt": "07/06/25 10:59:51"
-        },
-        {
-          "playerName": "Villahermosa Espinosa, Javier",
-          "holeNumber": 5,
-          "createdAt": "07/06/25 12:02:57"
-        },
-        {
-          "playerName": "Villahermosa Espinosa, Javier",
-          "holeNumber": 7,
-          "createdAt": "07/06/25 12:21:59"
-        },
-        {
-          "playerName": "Villahermosa Espinosa, Javier",
-          "holeNumber": 8,
-          "createdAt": "07/06/25 12:44:44"
-        },
-        {
-          "playerName": "Villahermosa Espinosa, Javier",
-          "holeNumber": 10,
-          "createdAt": "07/06/25 13:13:58"
-        },
-        {
-          "playerName": "Perez Rodriguez, Hugo",
-          "holeNumber": 12,
-          "createdAt": "07/06/25 13:32:11"
-        },
-        {
-          "playerName": "Rojas Callejon, Carlos",
-          "holeNumber": 12,
-          "createdAt": "07/06/25 13:40:58"
-        },
-        {
-          "playerName": "Villahermosa Espinosa, Javier",
-          "holeNumber": 14,
-          "createdAt": "07/06/25 14:10:20"
-        },
-        {
-          "playerName": "Scheffer, Antony Nicolas",
-          "holeNumber": 15,
-          "createdAt": "07/06/25 14:24:46"
-        },
-        {
-          "playerName": "Perez Rodriguez, Hugo",
-          "holeNumber": 16,
-          "createdAt": "07/06/25 14:30:04"
-        },
-        {
-          "playerName": "Villahermosa Espinosa, Javier",
-          "holeNumber": 16,
-          "createdAt": "07/06/25 14:35:42"
-        },
-        {
-          "playerName": "Perez Rodriguez, Hugo",
-          "holeNumber": 18,
-          "createdAt": "07/06/25 15:00:16"
-        },
-        {
-          "playerName": "Villahermosa Espinosa, Javier",
-          "holeNumber": 18,
-          "createdAt": "07/06/25 15:07:54"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -3715,5 +3648,93 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:04.313Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71342
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Rojas Callejon, Carlos",
+          "holeNumber": 2,
+          "createdAt": "07/06/25 10:59:51"
+        },
+        {
+          "playerName": "Villahermosa Espinosa, Javier",
+          "holeNumber": 5,
+          "createdAt": "07/06/25 12:02:57"
+        },
+        {
+          "playerName": "Villahermosa Espinosa, Javier",
+          "holeNumber": 7,
+          "createdAt": "07/06/25 12:21:59"
+        },
+        {
+          "playerName": "Villahermosa Espinosa, Javier",
+          "holeNumber": 8,
+          "createdAt": "07/06/25 12:44:44"
+        },
+        {
+          "playerName": "Villahermosa Espinosa, Javier",
+          "holeNumber": 10,
+          "createdAt": "07/06/25 13:13:58"
+        },
+        {
+          "playerName": "Perez Rodriguez, Hugo",
+          "holeNumber": 12,
+          "createdAt": "07/06/25 13:32:11"
+        },
+        {
+          "playerName": "Rojas Callejon, Carlos",
+          "holeNumber": 12,
+          "createdAt": "07/06/25 13:40:58"
+        },
+        {
+          "playerName": "Villahermosa Espinosa, Javier",
+          "holeNumber": 14,
+          "createdAt": "07/06/25 14:10:20"
+        },
+        {
+          "playerName": "Scheffer, Antony Nicolas",
+          "holeNumber": 15,
+          "createdAt": "07/06/25 14:24:46"
+        },
+        {
+          "playerName": "Perez Rodriguez, Hugo",
+          "holeNumber": 16,
+          "createdAt": "07/06/25 14:30:04"
+        },
+        {
+          "playerName": "Villahermosa Espinosa, Javier",
+          "holeNumber": 16,
+          "createdAt": "07/06/25 14:35:42"
+        },
+        {
+          "playerName": "Perez Rodriguez, Hugo",
+          "holeNumber": 18,
+          "createdAt": "07/06/25 15:00:16"
+        },
+        {
+          "playerName": "Villahermosa Espinosa, Javier",
+          "holeNumber": 18,
+          "createdAt": "07/06/25 15:07:54"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:41:59.275Z"
 }

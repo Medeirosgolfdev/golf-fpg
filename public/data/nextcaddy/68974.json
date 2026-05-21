@@ -1,14 +1,14 @@
 {
   "tourId": 68974,
   "url": "https://www.nextcaddy.com/tour/68974",
-  "scrapedAt": "2026-05-09T09:58:03.452Z",
+  "scrapedAt": "2026-05-21T16:37:39.260Z",
   "meta": {
     "name": "V COPA PISCIS",
     "organizer": null,
     "course": "Club de Golf Bellavista",
     "courseCode": "AM07",
-    "dateStart": "07 mar 2026",
-    "dateEnd": "07 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-07"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -304,33 +305,6 @@
       "nivel": "P+"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73691
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Gonzalez Bernases, Kira",
-          "holeNumber": 4,
-          "createdAt": "12/09/25 08:21:42"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -509,5 +483,35 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:31.050Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73691
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Gonzalez Bernases, Kira",
+          "holeNumber": 4,
+          "createdAt": "12/09/25 08:21:42"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/68974_cartel_295.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:29.201Z"
 }

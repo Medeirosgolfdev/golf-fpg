@@ -1,14 +1,14 @@
 {
   "tourId": 67699,
   "url": "https://www.nextcaddy.com/tour/67699",
-  "scrapedAt": "2026-05-09T09:57:30.059Z",
+  "scrapedAt": "2026-05-21T16:36:46.314Z",
   "meta": {
     "name": "Sherry International Golf Group (SIGG) - Jueves 29 Enero 2026 (CANCELADO POR TEMPORAL)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "29 ene 2026",
-    "dateEnd": "29 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,11 +17,12 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-29"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -143,48 +144,6 @@
       "nivel": "AMC9784516"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72181
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Nuñez Gomez, Rafael",
-          "holeNumber": 10,
-          "createdAt": "17/07/25 18:13:55"
-        },
-        {
-          "playerName": "Ros Carretero, Francisco Javier",
-          "holeNumber": 12,
-          "createdAt": "17/07/25 19:03:14"
-        },
-        {
-          "playerName": "Olmedo Garcia, Ignacio",
-          "holeNumber": 12,
-          "createdAt": "17/07/25 19:26:50"
-        },
-        {
-          "playerName": "Felipe  Perez, Manuel Francisco",
-          "holeNumber": 15,
-          "createdAt": "17/07/25 19:44:29"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -264,5 +223,48 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:11.280Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72181
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Nuñez Gomez, Rafael",
+          "holeNumber": 10,
+          "createdAt": "17/07/25 18:13:55"
+        },
+        {
+          "playerName": "Ros Carretero, Francisco Javier",
+          "holeNumber": 12,
+          "createdAt": "17/07/25 19:03:14"
+        },
+        {
+          "playerName": "Olmedo Garcia, Ignacio",
+          "holeNumber": 12,
+          "createdAt": "17/07/25 19:26:50"
+        },
+        {
+          "playerName": "Felipe  Perez, Manuel Francisco",
+          "holeNumber": 15,
+          "createdAt": "17/07/25 19:44:29"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:07.017Z"
 }

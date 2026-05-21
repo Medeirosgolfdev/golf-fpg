@@ -1,14 +1,14 @@
 {
   "tourId": 68090,
   "url": "https://www.nextcaddy.com/tour/68090",
-  "scrapedAt": "2026-05-09T10:16:44.000Z",
+  "scrapedAt": "2026-05-21T16:40:22.219Z",
   "meta": {
     "name": "Final Interclubes de Castilla y León",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "13 jun 2026",
-    "dateEnd": "13 jun 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Match Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-06-13"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -60,6 +62,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:33.517Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/68090_cartel_98.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:16.841Z"
 }

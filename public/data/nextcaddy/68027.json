@@ -1,14 +1,14 @@
 {
   "tourId": 68027,
   "url": "https://www.nextcaddy.com/tour/68027",
-  "scrapedAt": "2026-05-08T17:34:57.672Z",
+  "scrapedAt": "2026-05-21T16:41:19.821Z",
   "meta": {
     "name": "Final Circuito Amateur",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Golf Santander S A",
     "courseCode": "CMA5",
-    "dateStart": "21 nov 2026",
-    "dateEnd": "21 nov 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Scratch) Circuito Amateur 20",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-11-21"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -50,6 +52,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:32.275Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:15.584Z"
 }

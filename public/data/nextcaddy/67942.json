@@ -1,14 +1,14 @@
 {
   "tourId": 67942,
   "url": "https://www.nextcaddy.com/tour/67942",
-  "scrapedAt": "2026-05-09T10:15:47.515Z",
+  "scrapedAt": "2026-05-21T16:39:16.824Z",
   "meta": {
     "name": "Torneo Privado LJG · 30 de Abril· 9:30 ·",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "30 abr 2026",
-    "dateEnd": "30 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-30"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Individual Scratch General",
+      "expectedJugadores": 35,
       "header": [
         "Pos",
         "Jugador",
@@ -425,6 +426,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Individual Handicap General",
+      "expectedJugadores": 35,
       "header": [
         "Pos",
         "Jugador",
@@ -825,6 +828,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Scratch General",
+      "jugadores": 35
+    },
+    "2": {
+      "name": "Individual Handicap General",
+      "jugadores": 35
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1331,33 +1345,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72460
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Alcantara Sanchez, Rafael",
-          "holeNumber": 6,
-          "createdAt": "31/07/25 22:04:00"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1680,5 +1667,33 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:16.620Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72460
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Alcantara Sanchez, Rafael",
+          "holeNumber": 6,
+          "createdAt": "31/07/25 22:04:00"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:13.308Z"
 }

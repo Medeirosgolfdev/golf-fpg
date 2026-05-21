@@ -1,14 +1,14 @@
 {
   "tourId": 67839,
   "url": "https://www.nextcaddy.com/tour/67839",
-  "scrapedAt": "2026-05-09T09:49:47.369Z",
+  "scrapedAt": "2026-05-21T16:40:24.754Z",
   "meta": {
     "name": "Torneo de 2ª Categoría Pitch & Putt Masculino y Femenino \"Villa El Escorial\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Asociacion de Golf Villa el Escorial",
     "courseCode": "CM77",
-    "dateStart": "20 jun 2026",
-    "dateEnd": "20 jun 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap) Circuito General D",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-06-20"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -890,6 +892,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:30.123Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:10.636Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 69653,
   "url": "https://www.nextcaddy.com/tour/69653",
-  "scrapedAt": "2026-05-09T10:07:52.409Z",
+  "scrapedAt": "2026-05-21T16:38:33.229Z",
   "meta": {
     "name": "JUEGOS DEPORTIVOS NAVARROS 2026 9 HOYOS",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "08 abr 2026",
-    "dateEnd": "08 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Benjamín  Especia",
     "categories": [
       "Benjamín",
@@ -16,13 +16,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-08"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual 9 Hoyos Juegos Deportivos",
+      "expectedJugadores": 3,
       "header": [
         "Pos",
         "Jugador",
@@ -71,6 +72,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual 9 Hoyos Juegos Deportivos",
+      "jugadores": 3
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -122,22 +130,6 @@
       "nivel": "B"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74426
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -172,5 +164,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:55.796Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74426
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:36.188Z"
 }

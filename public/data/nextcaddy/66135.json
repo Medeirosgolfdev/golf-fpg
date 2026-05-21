@@ -1,14 +1,14 @@
 {
   "tourId": 66135,
   "url": "https://www.nextcaddy.com/tour/66135",
-  "scrapedAt": "2026-05-09T10:16:52.177Z",
+  "scrapedAt": "2026-05-21T16:40:37.876Z",
   "meta": {
     "name": "Memorial Norberto Goizueta",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Real Club de Golf Guadalmina",
     "courseCode": "AM51",
-    "dateStart": "17 jul 2026",
-    "dateEnd": "17 jul 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-07-17"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -47,6 +49,8 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:26.125Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/3076181224_web.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:57.577Z"
 }

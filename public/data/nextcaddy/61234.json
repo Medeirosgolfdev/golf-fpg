@@ -1,14 +1,14 @@
 {
   "tourId": 61234,
   "url": "https://www.nextcaddy.com/tour/61234",
-  "scrapedAt": "2026-05-09T10:17:17.469Z",
+  "scrapedAt": "2026-05-21T16:41:14.342Z",
   "meta": {
     "name": "Cuadrangular Andalucía- Canarias- Galicia- Madrid P&P",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Real Federacion Andaluza de Golf",
     "courseCode": "AM00",
-    "dateStart": "31 oct 2026",
-    "dateEnd": "31 oct 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Señoras  Caballero",
     "categories": [
       "Señoras",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-10-31"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -43,6 +45,6 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:24.368Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:41:53.864Z"
 }

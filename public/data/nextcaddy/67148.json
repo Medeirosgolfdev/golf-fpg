@@ -1,14 +1,14 @@
 {
   "tourId": 67148,
   "url": "https://www.nextcaddy.com/tour/67148",
-  "scrapedAt": "2026-05-09T10:07:47.081Z",
+  "scrapedAt": "2026-05-21T16:38:24.519Z",
   "meta": {
     "name": "II Prueba del Circuito de P&P de CyL 2026 (Valedera Sace P&P)",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "29 mar 2026",
-    "dateEnd": "29 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-29"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual - Total",
+      "expectedJugadores": 55,
       "header": [
         "Pos",
         "Jugador",
@@ -1143,6 +1144,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Scratch Individual - Total",
+      "expectedJugadores": 55,
       "header": [
         "Pos",
         "Jugador",
@@ -2262,6 +2265,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Handicap Individual Femenino",
+      "expectedJugadores": 2,
       "header": [
         "Pos",
         "Jugador",
@@ -2321,6 +2326,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Handicap Individual - 1ª Vuelta",
+      "expectedJugadores": 55,
       "header": [
         "Pos",
         "Jugador",
@@ -2942,6 +2949,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Scratch Individual - 1ª Vuelta",
+      "expectedJugadores": 55,
       "header": [
         "Pos",
         "Jugador",
@@ -3562,6 +3571,29 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual - Total",
+      "jugadores": 55
+    },
+    "2": {
+      "name": "Scratch Individual - Total",
+      "jugadores": 55
+    },
+    "3": {
+      "name": "Handicap Individual Femenino",
+      "jugadores": 2
+    },
+    "4": {
+      "name": "Handicap Individual - 1ª Vuelta",
+      "jugadores": 55
+    },
+    "5": {
+      "name": "Scratch Individual - 1ª Vuelta",
+      "jugadores": 55
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -4348,26 +4380,6 @@
       "nivel": "7713398944"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71546
-    },
-    {
-      "roundNumber": 2,
-      "roundId": 71547
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -5199,5 +5211,30 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:04.817Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71546
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 71547
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/1221641258_67148_clasificacion-scratch_total.pdf",
+    "/uploads/competiciones/pdf/4064956686_reglas_locales_p&amp;p_29-03-2026.pdf",
+    "/uploads/circulares/cirfgcyl0626-1.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:59.718Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 61228,
   "url": "https://www.nextcaddy.com/tour/61228",
-  "scrapedAt": "2026-05-09T10:17:17.998Z",
+  "scrapedAt": "2026-05-21T16:41:15.259Z",
   "meta": {
     "name": "Torneo Senior Granada",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Los Moriscos Club de Golf",
     "courseCode": "AM67",
-    "dateStart": "07 nov 2026",
-    "dateEnd": "07 nov 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Senior",
@@ -17,12 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-11-07"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -39,6 +41,6 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:24.275Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:41:53.816Z"
 }

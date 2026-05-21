@@ -1,14 +1,14 @@
 {
   "tourId": 69345,
   "url": "https://www.nextcaddy.com/tour/69345",
-  "scrapedAt": "2026-05-09T10:07:57.757Z",
+  "scrapedAt": "2026-05-21T16:38:45.088Z",
   "meta": {
     "name": "3 J. CIRCUITO VNG 2026. CATEGORIA BRONCE (24,1 - 36)",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "12 abr 2026",
-    "dateEnd": "12 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-12"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 34,
       "header": [
         "Pos",
         "Jugador",
@@ -415,6 +416,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 34,
       "header": [
         "Pos",
         "Jugador",
@@ -804,6 +807,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 34
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 34
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1303,73 +1317,6 @@
       "nivel": "AMC9611946"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74106
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Balding, Mark",
-          "holeNumber": 6,
-          "createdAt": "30/09/25 09:14:40"
-        },
-        {
-          "playerName": "Bell, Les",
-          "holeNumber": 3,
-          "createdAt": "30/09/25 09:15:54"
-        },
-        {
-          "playerName": "Bell, Les",
-          "holeNumber": 15,
-          "createdAt": "30/09/25 09:15:54"
-        },
-        {
-          "playerName": "Freezer, Kirk",
-          "holeNumber": 8,
-          "createdAt": "30/09/25 09:17:40"
-        },
-        {
-          "playerName": "Moynihan, Sandy",
-          "holeNumber": 16,
-          "createdAt": "30/09/25 09:25:46"
-        },
-        {
-          "playerName": "Robertson, Elizabeth Ann",
-          "holeNumber": 8,
-          "createdAt": "30/09/25 09:34:17"
-        },
-        {
-          "playerName": "Robertson, Elizabeth Ann",
-          "holeNumber": 10,
-          "createdAt": "30/09/25 09:34:17"
-        },
-        {
-          "playerName": "Robertson, Elizabeth Ann",
-          "holeNumber": 14,
-          "createdAt": "30/09/25 09:34:17"
-        },
-        {
-          "playerName": "Ruiz De La Fuente, Milagros",
-          "holeNumber": 15,
-          "createdAt": "30/09/25 09:34:33"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1683,5 +1630,75 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:52.957Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74106
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Balding, Mark",
+          "holeNumber": 6,
+          "createdAt": "30/09/25 09:14:40"
+        },
+        {
+          "playerName": "Bell, Les",
+          "holeNumber": 3,
+          "createdAt": "30/09/25 09:15:54"
+        },
+        {
+          "playerName": "Bell, Les",
+          "holeNumber": 15,
+          "createdAt": "30/09/25 09:15:54"
+        },
+        {
+          "playerName": "Freezer, Kirk",
+          "holeNumber": 8,
+          "createdAt": "30/09/25 09:17:40"
+        },
+        {
+          "playerName": "Moynihan, Sandy",
+          "holeNumber": 16,
+          "createdAt": "30/09/25 09:25:46"
+        },
+        {
+          "playerName": "Robertson, Elizabeth Ann",
+          "holeNumber": 8,
+          "createdAt": "30/09/25 09:34:17"
+        },
+        {
+          "playerName": "Robertson, Elizabeth Ann",
+          "holeNumber": 10,
+          "createdAt": "30/09/25 09:34:17"
+        },
+        {
+          "playerName": "Robertson, Elizabeth Ann",
+          "holeNumber": 14,
+          "createdAt": "30/09/25 09:34:17"
+        },
+        {
+          "playerName": "Ruiz De La Fuente, Milagros",
+          "holeNumber": 15,
+          "createdAt": "30/09/25 09:34:33"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/2595485952_reglamento_circuito_villanueva_golf_2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:33.382Z"
 }

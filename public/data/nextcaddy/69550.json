@@ -1,14 +1,14 @@
 {
   "tourId": 69550,
   "url": "https://www.nextcaddy.com/tour/69550",
-  "scrapedAt": "2026-05-09T10:07:59.337Z",
+  "scrapedAt": "2026-05-21T16:38:47.456Z",
   "meta": {
     "name": "LUNES AL GOLF J1 (TARDE 17:00)",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": "13 abr 2026",
-    "dateEnd": "13 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-13"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "1 Categoria",
+      "expectedJugadores": 10,
       "header": [
         "Pos",
         "Jugador",
@@ -150,6 +151,8 @@
     },
     {
       "category": 2,
+      "categoryName": "2 Categoria",
+      "expectedJugadores": 32,
       "header": [
         "Pos",
         "Jugador",
@@ -517,6 +520,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "1 Categoria",
+      "jugadores": 10
+    },
+    "2": {
+      "name": "2 Categoria",
+      "jugadores": 32
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -841,128 +855,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74321
-    }
-  ],
-  "scoreTypes": {
-    "eagle": {
-      "scoreTypeKey": "eagle",
-      "players": [
-        {
-          "playerName": "Stancey, Graham",
-          "holeNumber": 1,
-          "createdAt": "11/10/25 18:38:25"
-        },
-        {
-          "playerName": "Van Schaik, Philip",
-          "holeNumber": 12,
-          "createdAt": "11/10/25 18:38:31"
-        },
-        {
-          "playerName": "O`sullivan, Ross",
-          "holeNumber": 2,
-          "createdAt": "11/10/25 18:38:37"
-        }
-      ]
-    },
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Stancey, Graham",
-          "holeNumber": 14,
-          "createdAt": "11/10/25 18:38:25"
-        },
-        {
-          "playerName": "Burke Burke, Paddy",
-          "holeNumber": 2,
-          "createdAt": "11/10/25 18:38:25"
-        },
-        {
-          "playerName": "Burke Burke, Paddy",
-          "holeNumber": 15,
-          "createdAt": "11/10/25 18:38:25"
-        },
-        {
-          "playerName": "Mudie, Shawn",
-          "holeNumber": 13,
-          "createdAt": "11/10/25 18:38:26"
-        },
-        {
-          "playerName": "Gonzalez  Lasuen, Pedro",
-          "holeNumber": 9,
-          "createdAt": "11/10/25 18:38:26"
-        },
-        {
-          "playerName": "Hopmans, Cornelia Johanna",
-          "holeNumber": 15,
-          "createdAt": "11/10/25 18:38:27"
-        },
-        {
-          "playerName": "Philippe Marcel, Lippens",
-          "holeNumber": 2,
-          "createdAt": "11/10/25 18:38:29"
-        },
-        {
-          "playerName": "Alsop, David",
-          "holeNumber": 1,
-          "createdAt": "11/10/25 18:38:31"
-        },
-        {
-          "playerName": "Howarth, Andrew",
-          "holeNumber": 1,
-          "createdAt": "11/10/25 18:38:33"
-        },
-        {
-          "playerName": "Brown, Lesley",
-          "holeNumber": 1,
-          "createdAt": "11/10/25 18:38:34"
-        },
-        {
-          "playerName": "Ford, Graham Peter",
-          "holeNumber": 2,
-          "createdAt": "11/10/25 18:38:36"
-        },
-        {
-          "playerName": "Ford, Graham Peter",
-          "holeNumber": 11,
-          "createdAt": "11/10/25 18:38:36"
-        },
-        {
-          "playerName": "Ford, Graham Peter",
-          "holeNumber": 18,
-          "createdAt": "11/10/25 18:38:36"
-        },
-        {
-          "playerName": "O`sullivan, Ross",
-          "holeNumber": 11,
-          "createdAt": "11/10/25 18:38:37"
-        },
-        {
-          "playerName": "Clarke, Sarah",
-          "holeNumber": 18,
-          "createdAt": "11/10/25 18:38:38"
-        },
-        {
-          "playerName": "Partridge, Michael",
-          "holeNumber": 13,
-          "createdAt": "11/10/25 18:38:44"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1168,5 +1060,130 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:55.028Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74321
+    }
+  ],
+  "scoreTypes": {
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Stancey, Graham",
+          "holeNumber": 1,
+          "createdAt": "11/10/25 18:38:25"
+        },
+        {
+          "playerName": "Van Schaik, Philip",
+          "holeNumber": 12,
+          "createdAt": "11/10/25 18:38:31"
+        },
+        {
+          "playerName": "O`sullivan, Ross",
+          "holeNumber": 2,
+          "createdAt": "11/10/25 18:38:37"
+        }
+      ]
+    },
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Stancey, Graham",
+          "holeNumber": 14,
+          "createdAt": "11/10/25 18:38:25"
+        },
+        {
+          "playerName": "Burke Burke, Paddy",
+          "holeNumber": 2,
+          "createdAt": "11/10/25 18:38:25"
+        },
+        {
+          "playerName": "Burke Burke, Paddy",
+          "holeNumber": 15,
+          "createdAt": "11/10/25 18:38:25"
+        },
+        {
+          "playerName": "Mudie, Shawn",
+          "holeNumber": 13,
+          "createdAt": "11/10/25 18:38:26"
+        },
+        {
+          "playerName": "Gonzalez  Lasuen, Pedro",
+          "holeNumber": 9,
+          "createdAt": "11/10/25 18:38:26"
+        },
+        {
+          "playerName": "Hopmans, Cornelia Johanna",
+          "holeNumber": 15,
+          "createdAt": "11/10/25 18:38:27"
+        },
+        {
+          "playerName": "Philippe Marcel, Lippens",
+          "holeNumber": 2,
+          "createdAt": "11/10/25 18:38:29"
+        },
+        {
+          "playerName": "Alsop, David",
+          "holeNumber": 1,
+          "createdAt": "11/10/25 18:38:31"
+        },
+        {
+          "playerName": "Howarth, Andrew",
+          "holeNumber": 1,
+          "createdAt": "11/10/25 18:38:33"
+        },
+        {
+          "playerName": "Brown, Lesley",
+          "holeNumber": 1,
+          "createdAt": "11/10/25 18:38:34"
+        },
+        {
+          "playerName": "Ford, Graham Peter",
+          "holeNumber": 2,
+          "createdAt": "11/10/25 18:38:36"
+        },
+        {
+          "playerName": "Ford, Graham Peter",
+          "holeNumber": 11,
+          "createdAt": "11/10/25 18:38:36"
+        },
+        {
+          "playerName": "Ford, Graham Peter",
+          "holeNumber": 18,
+          "createdAt": "11/10/25 18:38:36"
+        },
+        {
+          "playerName": "O`sullivan, Ross",
+          "holeNumber": 11,
+          "createdAt": "11/10/25 18:38:37"
+        },
+        {
+          "playerName": "Clarke, Sarah",
+          "holeNumber": 18,
+          "createdAt": "11/10/25 18:38:38"
+        },
+        {
+          "playerName": "Partridge, Michael",
+          "holeNumber": 13,
+          "createdAt": "11/10/25 18:38:44"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/69550_cartel_155.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:35.413Z"
 }

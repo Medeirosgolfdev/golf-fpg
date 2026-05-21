@@ -1,14 +1,14 @@
 {
   "tourId": 69722,
   "url": "https://www.nextcaddy.com/tour/69722",
-  "scrapedAt": "2026-05-09T10:07:54.117Z",
+  "scrapedAt": "2026-05-21T16:38:35.686Z",
   "meta": {
     "name": "LIGA ABONADOS VIERNES 10/04/26",
     "organizer": null,
     "course": "Montecastillo Barceló Golf Club",
     "courseCode": "AM29",
-    "dateStart": "10 abr 2026",
-    "dateEnd": "10 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-10"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -178,22 +179,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74521
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -282,5 +267,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:56.691Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74521
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [
+    "/uploads/competiciones/cartel/82795236_69722-liga-abonados-viernes-10-04-26.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:37.090Z"
 }

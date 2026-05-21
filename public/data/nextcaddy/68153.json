@@ -1,14 +1,14 @@
 {
   "tourId": 68153,
   "url": "https://www.nextcaddy.com/tour/68153",
-  "scrapedAt": "2026-05-09T10:17:09.488Z",
+  "scrapedAt": "2026-05-21T16:40:59.054Z",
   "meta": {
     "name": "Torneo Senior Masculino \"Retamares\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Golf Los Retamares",
     "courseCode": "CM60",
-    "dateStart": "23 sep 2026",
-    "dateEnd": "23 sep 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Circuito Senior Ma",
     "categories": [
       "Senior Masculino",
@@ -19,12 +19,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-09-23"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -107,6 +109,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:33.803Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:17.232Z"
 }

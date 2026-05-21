@@ -1,14 +1,14 @@
 {
   "tourId": 68476,
   "url": "https://www.nextcaddy.com/tour/68476",
-  "scrapedAt": "2026-05-09T09:57:39.569Z",
+  "scrapedAt": "2026-05-21T16:37:04.862Z",
   "meta": {
     "name": "VOBS COMPETITON",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "16 feb 2026",
-    "dateEnd": "16 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-16"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 21,
       "header": [
         "Pos",
         "Jugador",
@@ -270,6 +271,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 21
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -573,113 +581,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73091
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Cascallana Hernandez, Carlos",
-          "holeNumber": 11,
-          "createdAt": "21/08/25 09:17:20"
-        },
-        {
-          "playerName": "Cascallana Hernandez, Carlos",
-          "holeNumber": 13,
-          "createdAt": "21/08/25 09:45:42"
-        },
-        {
-          "playerName": "Cascallana Hernandez, Carlos",
-          "holeNumber": 16,
-          "createdAt": "21/08/25 10:19:09"
-        },
-        {
-          "playerName": "Alvarez Briongos, Fernando",
-          "holeNumber": 13,
-          "createdAt": "21/08/25 10:22:05"
-        },
-        {
-          "playerName": "Lozano Rubio, Juan Carlos",
-          "holeNumber": 15,
-          "createdAt": "21/08/25 10:23:19"
-        },
-        {
-          "playerName": "Carro Paulete, Angel",
-          "holeNumber": 15,
-          "createdAt": "21/08/25 10:36:05"
-        },
-        {
-          "playerName": "Lamett Martin, Daniel",
-          "holeNumber": 14,
-          "createdAt": "21/08/25 10:39:07"
-        },
-        {
-          "playerName": "Cascallana Hernandez, Carlos",
-          "holeNumber": 18,
-          "createdAt": "21/08/25 10:48:21"
-        },
-        {
-          "playerName": "Lozano Venegas, Carlos",
-          "holeNumber": 16,
-          "createdAt": "21/08/25 11:05:08"
-        },
-        {
-          "playerName": "Cascallana Hernandez, Carlos",
-          "holeNumber": 2,
-          "createdAt": "21/08/25 11:24:33"
-        },
-        {
-          "playerName": "Bardallo Concepcion, Guillermo",
-          "holeNumber": 2,
-          "createdAt": "21/08/25 11:44:22"
-        },
-        {
-          "playerName": "Carrasco Perez, Carlos Alberto",
-          "holeNumber": 2,
-          "createdAt": "21/08/25 11:46:31"
-        },
-        {
-          "playerName": "Cascallana Hernandez, Carlos",
-          "holeNumber": 5,
-          "createdAt": "21/08/25 12:06:29"
-        },
-        {
-          "playerName": "Carro Paulete, Angel",
-          "holeNumber": 4,
-          "createdAt": "21/08/25 12:12:35"
-        },
-        {
-          "playerName": "Oliva Perea, Juan Jesus",
-          "holeNumber": 7,
-          "createdAt": "21/08/25 12:44:01"
-        },
-        {
-          "playerName": "Bardallo Concepcion, Guillermo",
-          "holeNumber": 7,
-          "createdAt": "21/08/25 12:52:45"
-        },
-        {
-          "playerName": "Burgos Espinosa, Javier",
-          "holeNumber": 9,
-          "createdAt": "21/08/25 14:16:44"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -876,5 +777,113 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:25.261Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73091
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Cascallana Hernandez, Carlos",
+          "holeNumber": 11,
+          "createdAt": "21/08/25 09:17:20"
+        },
+        {
+          "playerName": "Cascallana Hernandez, Carlos",
+          "holeNumber": 13,
+          "createdAt": "21/08/25 09:45:42"
+        },
+        {
+          "playerName": "Cascallana Hernandez, Carlos",
+          "holeNumber": 16,
+          "createdAt": "21/08/25 10:19:09"
+        },
+        {
+          "playerName": "Alvarez Briongos, Fernando",
+          "holeNumber": 13,
+          "createdAt": "21/08/25 10:22:05"
+        },
+        {
+          "playerName": "Lozano Rubio, Juan Carlos",
+          "holeNumber": 15,
+          "createdAt": "21/08/25 10:23:19"
+        },
+        {
+          "playerName": "Carro Paulete, Angel",
+          "holeNumber": 15,
+          "createdAt": "21/08/25 10:36:05"
+        },
+        {
+          "playerName": "Lamett Martin, Daniel",
+          "holeNumber": 14,
+          "createdAt": "21/08/25 10:39:07"
+        },
+        {
+          "playerName": "Cascallana Hernandez, Carlos",
+          "holeNumber": 18,
+          "createdAt": "21/08/25 10:48:21"
+        },
+        {
+          "playerName": "Lozano Venegas, Carlos",
+          "holeNumber": 16,
+          "createdAt": "21/08/25 11:05:08"
+        },
+        {
+          "playerName": "Cascallana Hernandez, Carlos",
+          "holeNumber": 2,
+          "createdAt": "21/08/25 11:24:33"
+        },
+        {
+          "playerName": "Bardallo Concepcion, Guillermo",
+          "holeNumber": 2,
+          "createdAt": "21/08/25 11:44:22"
+        },
+        {
+          "playerName": "Carrasco Perez, Carlos Alberto",
+          "holeNumber": 2,
+          "createdAt": "21/08/25 11:46:31"
+        },
+        {
+          "playerName": "Cascallana Hernandez, Carlos",
+          "holeNumber": 5,
+          "createdAt": "21/08/25 12:06:29"
+        },
+        {
+          "playerName": "Carro Paulete, Angel",
+          "holeNumber": 4,
+          "createdAt": "21/08/25 12:12:35"
+        },
+        {
+          "playerName": "Oliva Perea, Juan Jesus",
+          "holeNumber": 7,
+          "createdAt": "21/08/25 12:44:01"
+        },
+        {
+          "playerName": "Bardallo Concepcion, Guillermo",
+          "holeNumber": 7,
+          "createdAt": "21/08/25 12:52:45"
+        },
+        {
+          "playerName": "Burgos Espinosa, Javier",
+          "holeNumber": 9,
+          "createdAt": "21/08/25 14:16:44"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:22.798Z"
 }

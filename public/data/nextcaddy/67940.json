@@ -1,14 +1,14 @@
 {
   "tourId": 67940,
   "url": "https://www.nextcaddy.com/tour/67940",
-  "scrapedAt": "2026-05-09T09:57:45.576Z",
+  "scrapedAt": "2026-05-21T16:37:07.602Z",
   "meta": {
     "name": "Torneo Privado LJG · 19 de Febrero · 10:00 ·",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "19 feb 2026",
-    "dateEnd": "19 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-19"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Individual Scratch General",
+      "expectedJugadores": 36,
       "header": [
         "Pos",
         "Jugador",
@@ -436,6 +437,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Individual Handicap General",
+      "expectedJugadores": 36,
       "header": [
         "Pos",
         "Jugador",
@@ -847,6 +850,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Scratch General",
+      "jugadores": 36
+    },
+    "2": {
+      "name": "Individual Handicap General",
+      "jugadores": 36
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1367,38 +1381,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72458
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Valenzuela Etayo, Carlos",
-          "holeNumber": 4,
-          "createdAt": "25/07/25 14:56:49"
-        },
-        {
-          "playerName": "Valenzuela Etayo, Carlos",
-          "holeNumber": 6,
-          "createdAt": "25/07/25 14:56:49"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1730,5 +1712,38 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:16.607Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72458
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Valenzuela Etayo, Carlos",
+          "holeNumber": 4,
+          "createdAt": "25/07/25 14:56:49"
+        },
+        {
+          "playerName": "Valenzuela Etayo, Carlos",
+          "holeNumber": 6,
+          "createdAt": "25/07/25 14:56:49"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:13.127Z"
 }

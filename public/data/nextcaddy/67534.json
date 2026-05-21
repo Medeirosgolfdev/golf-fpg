@@ -1,14 +1,14 @@
 {
   "tourId": 67534,
   "url": "https://www.nextcaddy.com/tour/67534",
-  "scrapedAt": "2026-05-09T09:57:47.574Z",
+  "scrapedAt": "2026-05-21T16:37:10.793Z",
   "meta": {
     "name": "XVI Torneo Dos Marinas - Interclub Sherry Golf Jerez Vs Rota Club de Golf  (Grupo privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "21 feb 2026",
-    "dateEnd": "21 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-21"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Equipo Rota Club De Golf",
+      "expectedJugadores": 46,
       "header": [
         "Pos",
         "Jugador",
@@ -546,6 +547,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Equipo Sherry Golf",
+      "expectedJugadores": 46,
       "header": [
         "Pos",
         "Jugador",
@@ -1067,6 +1070,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Equipo Rota Club De Golf",
+      "jugadores": 46
+    },
+    "2": {
+      "name": "Equipo Sherry Golf",
+      "jugadores": 46
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2371,22 +2385,6 @@
       "nivel": "AMC3482080"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71999
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -3222,5 +3220,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:09.798Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71999
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:05.584Z"
 }

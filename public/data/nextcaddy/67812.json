@@ -1,14 +1,14 @@
 {
   "tourId": 67812,
   "url": "https://www.nextcaddy.com/tour/67812",
-  "scrapedAt": "2026-05-09T09:49:43.540Z",
+  "scrapedAt": "2026-05-21T16:38:48.251Z",
   "meta": {
     "name": "Torneo Dobles Pitch & Putt \"Olivar de la Hinojosa\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Club de Golf Olivar de la Hinojosa",
     "courseCode": "CM81",
-    "dateStart": "14 abr 2026",
-    "dateEnd": "14 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap) Circuito Dobles &",
     "categories": [
       "Caballeros",
@@ -18,11 +18,17 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-14"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificacion Handicap Parejas",
+      "jugadores": 54
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -781,22 +787,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72307
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -1776,5 +1766,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:13.713Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72307
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/67812_cartel_468.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:09.954Z"
 }

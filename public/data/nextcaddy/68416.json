@@ -1,14 +1,14 @@
 {
   "tourId": 68416,
   "url": "https://www.nextcaddy.com/tour/68416",
-  "scrapedAt": "2026-05-09T10:16:47.611Z",
+  "scrapedAt": "2026-05-21T16:40:28.902Z",
   "meta": {
     "name": "Torneo Mixto de Golf Adaptado \"El Robledal\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "el Robledal Golf",
     "courseCode": "CM08",
-    "dateStart": "27 jun 2026",
-    "dateEnd": "27 jun 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-06-27"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -130,6 +132,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:37.062Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/68416_cartel_370.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:22.233Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 69549,
   "url": "https://www.nextcaddy.com/tour/69549",
-  "scrapedAt": "2026-05-09T10:07:59.099Z",
+  "scrapedAt": "2026-05-21T16:38:47.256Z",
   "meta": {
     "name": "LUNES AL GOLF J1 (MAÑANA 9:30)",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": "13 abr 2026",
-    "dateEnd": "13 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-13"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -311,48 +312,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74320
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Quero Zumaquero, Francisco",
-          "holeNumber": 1,
-          "createdAt": "11/10/25 13:12:38"
-        },
-        {
-          "playerName": "Quero Zumaquero, Francisco",
-          "holeNumber": 2,
-          "createdAt": "11/10/25 13:12:38"
-        },
-        {
-          "playerName": "Ragau Santos, Pedro",
-          "holeNumber": 1,
-          "createdAt": "11/10/25 13:12:38"
-        },
-        {
-          "playerName": "Caspueñas Bello, Gustavo",
-          "holeNumber": 15,
-          "createdAt": "11/10/25 13:12:39"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -531,5 +490,50 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:54.959Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74320
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Quero Zumaquero, Francisco",
+          "holeNumber": 1,
+          "createdAt": "11/10/25 13:12:38"
+        },
+        {
+          "playerName": "Quero Zumaquero, Francisco",
+          "holeNumber": 2,
+          "createdAt": "11/10/25 13:12:38"
+        },
+        {
+          "playerName": "Ragau Santos, Pedro",
+          "holeNumber": 1,
+          "createdAt": "11/10/25 13:12:38"
+        },
+        {
+          "playerName": "Caspueñas Bello, Gustavo",
+          "holeNumber": 15,
+          "createdAt": "11/10/25 13:12:39"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/69549_cartel_251.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:35.378Z"
 }

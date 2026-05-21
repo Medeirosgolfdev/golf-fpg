@@ -1,14 +1,14 @@
 {
   "tourId": 68998,
   "url": "https://www.nextcaddy.com/tour/68998",
-  "scrapedAt": "2026-05-09T09:58:09.269Z",
+  "scrapedAt": "2026-05-21T16:37:47.945Z",
   "meta": {
     "name": "Sherry International Golf Group (SIGG) - Viernes 13 marzo 2026 (Grupo privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "13 mar 2026",
-    "dateEnd": "13 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-13"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 28,
       "header": [
         "Pos",
         "Jugador",
@@ -247,7 +248,7 @@
         },
         {
           "pos": 20,
-          "name": "Antonio Manuel Ure?A Serrano",
+          "name": "Antonio Manuel Ureña Serrano",
           "licencia": "AM32612444",
           "hcp": 9.7,
           "nivel": "S",
@@ -347,6 +348,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 28
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -497,7 +505,7 @@
     },
     {
       "orden": 16,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "AM32612444",
       "hcp": 9.7,
       "nivel": "S"
@@ -707,7 +715,7 @@
     },
     {
       "orden": 21,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "12-03-26 09:38",
       "hcp": 9.7,
       "nivel": "AM32612444"
@@ -762,22 +770,6 @@
       "nivel": "AMC3981690"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73722
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -785,7 +777,7 @@
         {
           "time": "09:30",
           "tee": 1,
-          "name": "Antonio Manuel Ure?A Serrano",
+          "name": "Antonio Manuel Ureña Serrano",
           "hcp": 9.7,
           "ins": "2279382",
           "jid": "73722",
@@ -1037,5 +1029,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:31.571Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73722
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:29.623Z"
 }

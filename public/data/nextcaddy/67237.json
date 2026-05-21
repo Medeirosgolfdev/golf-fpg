@@ -1,14 +1,14 @@
 {
   "tourId": 67237,
   "url": "https://www.nextcaddy.com/tour/67237",
-  "scrapedAt": "2026-05-09T10:16:48.007Z",
+  "scrapedAt": "2026-05-21T16:40:29.440Z",
   "meta": {
     "name": "II TORNEO MUJER GOLFISTA DE CASTILLA Y LEÓN",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "27 jun 2026",
-    "dateEnd": "27 jun 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Scratch)  Señoras Reglas Fac",
     "categories": [
       "Señoras",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-06-27"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -100,6 +102,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:27.132Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/3509279041_3_reglas_locales_entrepinos.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:01.510Z"
 }

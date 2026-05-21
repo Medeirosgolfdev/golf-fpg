@@ -1,14 +1,14 @@
 {
   "tourId": 70329,
   "url": "https://www.nextcaddy.com/tour/70329",
-  "scrapedAt": "2026-05-09T10:15:44.740Z",
+  "scrapedAt": "2026-05-21T16:39:12.871Z",
   "meta": {
     "name": "Malaca",
     "organizer": null,
     "course": "Escuela de Golf Miguel ángel Jiménez",
     "courseCode": "AMI5",
-    "dateStart": "27 abr 2026",
-    "dateEnd": "27 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-27"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 41,
       "header": [
         "Pos",
         "Jugador",
@@ -490,6 +491,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 41
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1108,33 +1116,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75268
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Arlaban Gabeiras, Miguel",
-          "holeNumber": 4,
-          "createdAt": "07/11/25 09:59:37"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1529,5 +1510,35 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:59.617Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75268
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Arlaban Gabeiras, Miguel",
+          "holeNumber": 4,
+          "createdAt": "07/11/25 09:59:37"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/cartel/621459191_70329-malaca.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:40.144Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 68468,
   "url": "https://www.nextcaddy.com/tour/68468",
-  "scrapedAt": "2026-05-09T09:57:39.214Z",
+  "scrapedAt": "2026-05-21T16:37:04.398Z",
   "meta": {
     "name": "FEBRERO",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "15 feb 2026",
-    "dateEnd": "15 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-15"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -45,6 +46,7 @@
       "nivel": "S"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -77,6 +79,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:37.344Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/68468_cartel_489.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:22.630Z"
 }

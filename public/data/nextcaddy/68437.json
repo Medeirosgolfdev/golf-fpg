@@ -1,14 +1,14 @@
 {
   "tourId": 68437,
   "url": "https://www.nextcaddy.com/tour/68437",
-  "scrapedAt": "2026-05-09T10:16:48.512Z",
+  "scrapedAt": "2026-05-21T16:40:30.432Z",
   "meta": {
     "name": "College Golf Showcase",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "30 jun 2026",
-    "dateEnd": "30 jun 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,102 +17,117 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-06-30"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
-      "name": "Juan Murube Peman",
-      "licencia": "AM02608616",
-      "hcp": null,
-      "nivel": "Mid"
-    },
-    {
-      "orden": 2,
       "name": "Bernardo Sanchez Gutierrez",
       "licencia": "AM32168645",
       "hcp": 1.9,
       "nivel": "J"
     },
     {
-      "orden": 3,
+      "orden": 2,
       "name": "Luis Abeledo Miranda",
       "licencia": "CP02167542",
       "hcp": 0.6,
       "nivel": "C"
     },
     {
-      "orden": 4,
+      "orden": 3,
       "name": "Pelayo Cortina Garnung",
       "licencia": "0201947347",
       "hcp": 7.1,
       "nivel": "J"
     },
     {
-      "orden": 5,
+      "orden": 4,
       "name": "Mario Gonzalez Amieva",
       "licencia": "CM52897069",
       "hcp": 3.1,
       "nivel": "C"
     },
     {
-      "orden": 6,
+      "orden": 5,
       "name": "Adrian Torres Maroto",
       "licencia": "7707995130",
       "hcp": 1,
       "nivel": "J"
     },
     {
-      "orden": 7,
+      "orden": 6,
       "name": "Tim Buchholz",
       "licencia": "EXX1911612",
       "hcp": 1.1,
       "nivel": "J"
     },
     {
-      "orden": 8,
+      "orden": 7,
       "name": "Unai Zubiaur Sanchez",
       "licencia": "VB04726345",
       "hcp": 1.9,
       "nivel": "J"
     },
     {
-      "orden": 9,
+      "orden": 8,
       "name": "Manuel Galindo Llorente",
       "licencia": "0117961019",
       "hcp": 12,
       "nivel": "J"
     },
     {
-      "orden": 10,
+      "orden": 9,
       "name": "Bruno Quinto Fernandez",
       "licencia": "MM04938004",
       "hcp": 0.5,
       "nivel": "C"
     },
     {
-      "orden": 11,
+      "orden": 10,
       "name": "Vicent Pedro Navarro",
       "licencia": "BP07065293",
       "hcp": 2.2,
       "nivel": "J"
     },
     {
-      "orden": 12,
+      "orden": 11,
       "name": "Aurelio Cazenave Alos",
       "licencia": "AM07374944",
       "hcp": 2,
       "nivel": "J"
     },
     {
-      "orden": 13,
+      "orden": 12,
       "name": "Eric Heinold",
       "licencia": "EXX1911634",
       "hcp": 2.4,
       "nivel": "M"
+    },
+    {
+      "orden": 13,
+      "name": "Gonzalo Guillen Carmona",
+      "licencia": "AM85914437",
+      "hcp": 0.3,
+      "nivel": "C"
+    },
+    {
+      "orden": 14,
+      "name": "Alvaro Garcia Alvarez",
+      "licencia": "LV02924007",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 15,
+      "name": "Xisco Martorell Sureda",
+      "licencia": "BP13927933",
+      "hcp": 2.1,
+      "nivel": "C"
     },
     {
       "orden": null,
@@ -145,7 +160,7 @@
     {
       "orden": 4,
       "name": "Edurne Lairihoy Gonzalez",
-      "licencia": "CP06944877",
+      "licencia": "CP24944877",
       "hcp": 4.3,
       "nivel": "C"
     },
@@ -171,6 +186,20 @@
       "nivel": "J"
     },
     {
+      "orden": 8,
+      "name": "Lea Esperanza Cicek",
+      "licencia": "AMC3016293",
+      "hcp": 3.6,
+      "nivel": "C"
+    },
+    {
+      "orden": 9,
+      "name": "Nerea Acosta Ruiz",
+      "licencia": "AMC2938667",
+      "hcp": 11.2,
+      "nivel": "J"
+    },
+    {
       "orden": null,
       "name": "Jugador",
       "licencia": "Fecha Inscripción",
@@ -179,145 +208,174 @@
     },
     {
       "orden": 1,
-      "name": "Juan Murube Peman",
-      "licencia": "14-04-26 13:53",
-      "hcp": null,
-      "nivel": "AM02608616"
-    },
-    {
-      "orden": 2,
       "name": "Bernardo Sanchez Gutierrez",
       "licencia": "14-04-26 13:53",
       "hcp": 1.9,
       "nivel": "AM32168645"
     },
     {
-      "orden": 3,
+      "orden": 2,
       "name": "Luis Abeledo Miranda",
       "licencia": "15-04-26 10:02",
       "hcp": 0.6,
       "nivel": "CP02167542"
     },
     {
-      "orden": 4,
+      "orden": 3,
       "name": "Miranda Viera Garcia",
       "licencia": "15-04-26 10:21",
       "hcp": 7,
       "nivel": "CM41414516"
     },
     {
-      "orden": 5,
+      "orden": 4,
       "name": "Pelayo Cortina Garnung",
       "licencia": "15-04-26 10:40",
       "hcp": 7.1,
       "nivel": "0201947347"
     },
     {
-      "orden": 6,
+      "orden": 5,
       "name": "Sofia Caballer Catiru",
       "licencia": "15-04-26 10:56",
       "hcp": 9.3,
       "nivel": "LV06927410"
     },
     {
-      "orden": 7,
+      "orden": 6,
       "name": "Adriana Vigon Garcia",
       "licencia": "15-04-26 11:35",
       "hcp": null,
       "nivel": "CM11909813"
     },
     {
-      "orden": 8,
+      "orden": 7,
       "name": "Edurne Lairihoy Gonzalez",
       "licencia": "15-04-26 13:57",
       "hcp": 4.3,
-      "nivel": "CP06944877"
+      "nivel": "CP24944877"
     },
     {
-      "orden": 9,
+      "orden": 8,
       "name": "Mario Gonzalez Amieva",
       "licencia": "15-04-26 18:11",
       "hcp": 3.1,
       "nivel": "CM52897069"
     },
     {
-      "orden": 10,
+      "orden": 9,
       "name": "Adrian Torres Maroto",
       "licencia": "16-04-26 13:36",
       "hcp": 1,
       "nivel": "7707995130"
     },
     {
-      "orden": 11,
+      "orden": 10,
       "name": "Tim Buchholz",
       "licencia": "16-04-26 15:17",
       "hcp": 1.1,
       "nivel": "EXX1911612"
     },
     {
-      "orden": 12,
+      "orden": 11,
       "name": "Unai Zubiaur Sanchez",
       "licencia": "17-04-26 12:26",
       "hcp": 1.9,
       "nivel": "VB04726345"
     },
     {
-      "orden": 13,
+      "orden": 12,
       "name": "Manuel Galindo Llorente",
       "licencia": "19-04-26 21:49",
       "hcp": 12,
       "nivel": "0117961019"
     },
     {
-      "orden": 14,
+      "orden": 13,
       "name": "Bruno Quinto Fernandez",
       "licencia": "25-04-26 20:46",
       "hcp": 0.5,
       "nivel": "MM04938004"
     },
     {
-      "orden": 15,
+      "orden": 14,
       "name": "Diana Fraile Herrero",
       "licencia": "28-04-26 12:03",
       "hcp": 1.2,
       "nivel": "7706912557"
     },
     {
-      "orden": 16,
+      "orden": 15,
       "name": "Vicent Pedro Navarro",
       "licencia": "29-04-26 19:15",
       "hcp": 2.2,
       "nivel": "BP07065293"
     },
     {
-      "orden": 17,
+      "orden": 16,
       "name": "Romina Camarillo Alarcon",
       "licencia": "03-05-26 12:17",
       "hcp": 1.5,
       "nivel": "BP02169066"
     },
     {
-      "orden": 18,
+      "orden": 17,
       "name": "Aurelio Cazenave Alos",
       "licencia": "05-05-26 13:08",
       "hcp": 2,
       "nivel": "AM07374944"
     },
     {
-      "orden": 19,
+      "orden": 18,
       "name": "Julia Moreno Aguirre",
       "licencia": "05-05-26 17:25",
       "hcp": null,
       "nivel": "AM85916478"
     },
     {
-      "orden": 20,
+      "orden": 19,
       "name": "Eric Heinold",
       "licencia": "09-05-26 10:04",
       "hcp": 2.4,
       "nivel": "EXX1911634"
+    },
+    {
+      "orden": 20,
+      "name": "Gonzalo Guillen Carmona",
+      "licencia": "11-05-26 11:34",
+      "hcp": 0.3,
+      "nivel": "AM85914437"
+    },
+    {
+      "orden": 21,
+      "name": "Alvaro Garcia Alvarez",
+      "licencia": "12-05-26 13:23",
+      "hcp": null,
+      "nivel": "LV02924007"
+    },
+    {
+      "orden": 22,
+      "name": "Lea Esperanza Cicek",
+      "licencia": "17-05-26 16:08",
+      "hcp": 3.6,
+      "nivel": "AMC3016293"
+    },
+    {
+      "orden": 23,
+      "name": "Nerea Acosta Ruiz",
+      "licencia": "18-05-26 09:12",
+      "hcp": 11.2,
+      "nivel": "AMC2938667"
+    },
+    {
+      "orden": 24,
+      "name": "Xisco Martorell Sureda",
+      "licencia": "18-05-26 22:31",
+      "hcp": 2.1,
+      "nivel": "BP13927933"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -342,6 +400,8 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:37.181Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/3117914523_college_golf_showcase.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:22.521Z"
 }

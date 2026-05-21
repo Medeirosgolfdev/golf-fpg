@@ -1,14 +1,14 @@
 {
   "tourId": 67249,
   "url": "https://www.nextcaddy.com/tour/67249",
-  "scrapedAt": "2026-05-09T09:57:22.313Z",
+  "scrapedAt": "2026-05-21T16:36:35.279Z",
   "meta": {
     "name": "CIRCUITO SOCIAL CADIZ CLUB DE GOLF (SOLO SOCIOS)",
     "organizer": null,
     "course": "Montecastillo Barceló Golf Club",
     "courseCode": "AM29",
-    "dateStart": "17 ene 2026",
-    "dateEnd": "17 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-17"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificacion Scratch",
+      "expectedJugadores": 95,
       "header": [
         "Pos",
         "Jugador",
@@ -1086,6 +1087,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Clasificacion Handicap",
+      "expectedJugadores": 95,
       "header": [
         "Pos",
         "Jugador",
@@ -2146,6 +2149,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificacion Scratch",
+      "jugadores": 95
+    },
+    "2": {
+      "name": "Clasificacion Handicap",
+      "jugadores": 95
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -3492,78 +3506,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71658
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Baldwyn, Neil",
-          "holeNumber": 10,
-          "createdAt": "19/06/25 11:51:55"
-        },
-        {
-          "playerName": "Baldwyn, Neil",
-          "holeNumber": 17,
-          "createdAt": "19/06/25 11:51:55"
-        },
-        {
-          "playerName": "Callard, Michael",
-          "holeNumber": 6,
-          "createdAt": "19/06/25 11:56:17"
-        },
-        {
-          "playerName": "Golding, John",
-          "holeNumber": 6,
-          "createdAt": "19/06/25 13:20:19"
-        },
-        {
-          "playerName": "Mooney, Michael",
-          "holeNumber": 10,
-          "createdAt": "19/06/25 13:23:47"
-        },
-        {
-          "playerName": "Partner, Barry",
-          "holeNumber": 10,
-          "createdAt": "19/06/25 13:27:32"
-        },
-        {
-          "playerName": "Pautard, Stephen",
-          "holeNumber": 7,
-          "createdAt": "19/06/25 13:27:51"
-        },
-        {
-          "playerName": "Pautard, Stephen",
-          "holeNumber": 15,
-          "createdAt": "19/06/25 13:27:51"
-        },
-        {
-          "playerName": "Ruffing, Thomas",
-          "holeNumber": 8,
-          "createdAt": "19/06/25 13:29:15"
-        },
-        {
-          "playerName": "Ward, John",
-          "holeNumber": 3,
-          "createdAt": "19/06/25 13:31:25"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -4426,5 +4368,78 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:06.830Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71658
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Baldwyn, Neil",
+          "holeNumber": 10,
+          "createdAt": "19/06/25 11:51:55"
+        },
+        {
+          "playerName": "Baldwyn, Neil",
+          "holeNumber": 17,
+          "createdAt": "19/06/25 11:51:55"
+        },
+        {
+          "playerName": "Callard, Michael",
+          "holeNumber": 6,
+          "createdAt": "19/06/25 11:56:17"
+        },
+        {
+          "playerName": "Golding, John",
+          "holeNumber": 6,
+          "createdAt": "19/06/25 13:20:19"
+        },
+        {
+          "playerName": "Mooney, Michael",
+          "holeNumber": 10,
+          "createdAt": "19/06/25 13:23:47"
+        },
+        {
+          "playerName": "Partner, Barry",
+          "holeNumber": 10,
+          "createdAt": "19/06/25 13:27:32"
+        },
+        {
+          "playerName": "Pautard, Stephen",
+          "holeNumber": 7,
+          "createdAt": "19/06/25 13:27:51"
+        },
+        {
+          "playerName": "Pautard, Stephen",
+          "holeNumber": 15,
+          "createdAt": "19/06/25 13:27:51"
+        },
+        {
+          "playerName": "Ruffing, Thomas",
+          "holeNumber": 8,
+          "createdAt": "19/06/25 13:29:15"
+        },
+        {
+          "playerName": "Ward, John",
+          "holeNumber": 3,
+          "createdAt": "19/06/25 13:31:25"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:02.209Z"
 }

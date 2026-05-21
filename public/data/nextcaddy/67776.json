@@ -1,14 +1,14 @@
 {
   "tourId": 67776,
   "url": "https://www.nextcaddy.com/tour/67776",
-  "scrapedAt": "2026-05-09T10:36:06.117Z",
+  "scrapedAt": "2026-05-21T16:38:02.139Z",
   "meta": {
     "name": "Torneo Benjamín Femenino \"JAS\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Ciudad Deportiva Juan Antonio Samaranch",
     "courseCode": "CMD9",
-    "dateStart": "21 mar 2026",
-    "dateEnd": "21 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) Circuito Juvenil 20",
     "categories": [
       "Benjamín Femenino",
@@ -18,74 +18,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-03-21"
-  },
-  "course": {
-    "par": [
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3
-    ],
-    "si": [
-      15,
-      3,
-      7,
-      11,
-      13,
-      5,
-      9,
-      17,
-      1,
-      16,
-      4,
-      8,
-      12,
-      14,
-      6,
-      10,
-      18,
-      2
-    ],
-    "meters": [
-      75,
-      80,
-      90,
-      60,
-      55,
-      70,
-      85,
-      60,
-      75,
-      75,
-      80,
-      90,
-      60,
-      55,
-      70,
-      85,
-      60,
-      75
     ]
   },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual Benjamin Femenino",
+      "expectedJugadores": 9,
       "header": [
         "Pos",
         "Jugador",
@@ -107,8 +47,7 @@
           "rounds": [],
           "total": 24,
           "toPar": -3,
-          "inscribedId": 2281787,
-          "roundScores": []
+          "inscribedId": 2281787
         },
         {
           "pos": 2,
@@ -119,8 +58,7 @@
           "rounds": [],
           "total": 26,
           "toPar": -1,
-          "inscribedId": 2277585,
-          "roundScores": []
+          "inscribedId": 2277585
         },
         {
           "pos": 3,
@@ -131,8 +69,7 @@
           "rounds": [],
           "total": 30,
           "toPar": 3,
-          "inscribedId": 2277792,
-          "roundScores": []
+          "inscribedId": 2277792
         },
         {
           "pos": 4,
@@ -143,8 +80,7 @@
           "rounds": [],
           "total": 31,
           "toPar": 4,
-          "inscribedId": 2277499,
-          "roundScores": []
+          "inscribedId": 2277499
         },
         {
           "pos": 5,
@@ -155,8 +91,7 @@
           "rounds": [],
           "total": 31,
           "toPar": 4,
-          "inscribedId": 2276908,
-          "roundScores": []
+          "inscribedId": 2276908
         },
         {
           "pos": 6,
@@ -167,8 +102,7 @@
           "rounds": [],
           "total": 32,
           "toPar": 5,
-          "inscribedId": 2277528,
-          "roundScores": []
+          "inscribedId": 2277528
         },
         {
           "pos": 7,
@@ -179,8 +113,7 @@
           "rounds": [],
           "total": 32,
           "toPar": 5,
-          "inscribedId": 2277082,
-          "roundScores": []
+          "inscribedId": 2277082
         },
         {
           "pos": 8,
@@ -191,8 +124,7 @@
           "rounds": [],
           "total": 33,
           "toPar": 6,
-          "inscribedId": 2277309,
-          "roundScores": []
+          "inscribedId": 2277309
         },
         {
           "pos": 9,
@@ -203,13 +135,14 @@
           "rounds": [],
           "total": 34,
           "toPar": 7,
-          "inscribedId": 2282177,
-          "roundScores": []
+          "inscribedId": 2282177
         }
       ]
     },
     {
       "category": 2,
+      "categoryName": "Scratch Individual Benjamin Femenino",
+      "expectedJugadores": 9,
       "header": [
         "Pos",
         "Jugador",
@@ -231,8 +164,7 @@
           "rounds": [],
           "total": 30,
           "toPar": 3,
-          "inscribedId": 2281787,
-          "roundScores": []
+          "inscribedId": 2281787
         },
         {
           "pos": 2,
@@ -243,8 +175,7 @@
           "rounds": [],
           "total": 33,
           "toPar": 6,
-          "inscribedId": 2277585,
-          "roundScores": []
+          "inscribedId": 2277585
         },
         {
           "pos": 3,
@@ -255,8 +186,7 @@
           "rounds": [],
           "total": 34,
           "toPar": 7,
-          "inscribedId": 2277792,
-          "roundScores": []
+          "inscribedId": 2277792
         },
         {
           "pos": 4,
@@ -267,8 +197,7 @@
           "rounds": [],
           "total": 40,
           "toPar": 13,
-          "inscribedId": 2277499,
-          "roundScores": []
+          "inscribedId": 2277499
         },
         {
           "pos": 5,
@@ -279,8 +208,7 @@
           "rounds": [],
           "total": 41,
           "toPar": 14,
-          "inscribedId": 2276908,
-          "roundScores": []
+          "inscribedId": 2276908
         },
         {
           "pos": 6,
@@ -291,8 +219,7 @@
           "rounds": [],
           "total": 41,
           "toPar": 14,
-          "inscribedId": 2277528,
-          "roundScores": []
+          "inscribedId": 2277528
         },
         {
           "pos": 7,
@@ -303,8 +230,7 @@
           "rounds": [],
           "total": 42,
           "toPar": 15,
-          "inscribedId": 2277082,
-          "roundScores": []
+          "inscribedId": 2277082
         },
         {
           "pos": 8,
@@ -315,8 +241,7 @@
           "rounds": [],
           "total": 42,
           "toPar": 15,
-          "inscribedId": 2277309,
-          "roundScores": []
+          "inscribedId": 2277309
         },
         {
           "pos": 9,
@@ -327,12 +252,22 @@
           "rounds": [],
           "total": 43,
           "toPar": 16,
-          "inscribedId": 2282177,
-          "roundScores": []
+          "inscribedId": 2282177
         }
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Benjamin Femenino",
+      "jugadores": 9
+    },
+    "2": {
+      "name": "Scratch Individual Benjamin Femenino",
+      "jugadores": 9
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -466,6 +401,94 @@
       "licencia": "CM04480500",
       "hcp": 34,
       "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:00",
+          "tee": 6,
+          "name": "Aitana Puerta Revuelta",
+          "hcp": 17.8,
+          "ins": "2277792",
+          "jid": "72260",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 6,
+          "name": "Paula Casas Fernandez",
+          "hcp": 23.1,
+          "ins": "2281787",
+          "jid": "72260",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 6,
+          "name": "Paula Ruiperez Mendoza",
+          "hcp": 29.5,
+          "ins": "2277585",
+          "jid": "72260",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 7,
+          "name": "Alejandra Massana Arias",
+          "hcp": 33.5,
+          "ins": "2277528",
+          "jid": "72260",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 7,
+          "name": "Ana Chercasky Puiggari",
+          "hcp": 34,
+          "ins": "2282177",
+          "jid": "72260",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 7,
+          "name": "Lucia Yarte Delgado",
+          "hcp": 34.9,
+          "ins": "2277499",
+          "jid": "72260",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 8,
+          "name": "Valeria Fernandez Gallardo",
+          "hcp": 35.9,
+          "ins": "2277309",
+          "jid": "72260",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 8,
+          "name": "Alejandra Sevillano Sanchez",
+          "hcp": 38.7,
+          "ins": "2277082",
+          "jid": "72260",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 8,
+          "name": "Manuela Triguero Fernandez",
+          "hcp": 38.9,
+          "ins": "2276908",
+          "jid": "72260",
+          "nivel": "B"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -640,93 +663,8 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "10:00",
-          "tee": 6,
-          "name": "Aitana Puerta Revuelta",
-          "hcp": 17.8,
-          "ins": "2277792",
-          "jid": "72260",
-          "nivel": "B"
-        },
-        {
-          "time": "10:00",
-          "tee": 6,
-          "name": "Paula Casas Fernandez",
-          "hcp": 23.1,
-          "ins": "2281787",
-          "jid": "72260",
-          "nivel": "B"
-        },
-        {
-          "time": "10:00",
-          "tee": 6,
-          "name": "Paula Ruiperez Mendoza",
-          "hcp": 29.5,
-          "ins": "2277585",
-          "jid": "72260",
-          "nivel": "B"
-        },
-        {
-          "time": "10:00",
-          "tee": 7,
-          "name": "Alejandra Massana Arias",
-          "hcp": 33.5,
-          "ins": "2277528",
-          "jid": "72260",
-          "nivel": "B"
-        },
-        {
-          "time": "10:00",
-          "tee": 7,
-          "name": "Ana Chercasky Puiggari",
-          "hcp": 34,
-          "ins": "2282177",
-          "jid": "72260",
-          "nivel": "B"
-        },
-        {
-          "time": "10:00",
-          "tee": 7,
-          "name": "Lucia Yarte Delgado",
-          "hcp": 34.9,
-          "ins": "2277499",
-          "jid": "72260",
-          "nivel": "B"
-        },
-        {
-          "time": "10:00",
-          "tee": 8,
-          "name": "Valeria Fernandez Gallardo",
-          "hcp": 35.9,
-          "ins": "2277309",
-          "jid": "72260",
-          "nivel": "B"
-        },
-        {
-          "time": "10:00",
-          "tee": 8,
-          "name": "Alejandra Sevillano Sanchez",
-          "hcp": 38.7,
-          "ins": "2277082",
-          "jid": "72260",
-          "nivel": "B"
-        },
-        {
-          "time": "10:00",
-          "tee": 8,
-          "name": "Manuela Triguero Fernandez",
-          "hcp": 38.9,
-          "ins": "2276908",
-          "jid": "72260",
-          "nivel": "B"
-        }
-      ]
-    }
+  "pdfs": [
+    "/uploads/competiciones/pdf/3894426828_rrll_colmenar.pdf"
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:12.061Z"
+  "horariosScrapedAt": "2026-05-21T16:42:07.859Z"
 }

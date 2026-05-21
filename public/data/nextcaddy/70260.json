@@ -1,14 +1,14 @@
 {
   "tourId": 70260,
   "url": "https://www.nextcaddy.com/tour/70260",
-  "scrapedAt": "2026-05-09T10:15:50.169Z",
+  "scrapedAt": "2026-05-21T16:39:21.678Z",
   "meta": {
     "name": "V Torneo ZOF - 03 Mayo 2026 (Grupo privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "03 may 2026",
-    "dateEnd": "03 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-03"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 24,
       "header": [
         "Pos",
         "Jugador",
@@ -303,6 +304,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 24
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -648,48 +656,6 @@
       "nivel": "AMC3921569"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75184
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Auriol Ruiz, Constanza",
-          "holeNumber": 2,
-          "createdAt": "07/12/25 11:19:48"
-        },
-        {
-          "playerName": "Gil  Ortega, Marta",
-          "holeNumber": 7,
-          "createdAt": "07/12/25 11:20:11"
-        },
-        {
-          "playerName": "Elizburu Mostaza, Fermin",
-          "holeNumber": 2,
-          "createdAt": "07/12/25 11:27:27"
-        },
-        {
-          "playerName": "De Lope Gomez, Ignacio",
-          "holeNumber": 7,
-          "createdAt": "07/12/25 11:28:27"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -913,5 +879,48 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:58.876Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75184
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Auriol Ruiz, Constanza",
+          "holeNumber": 2,
+          "createdAt": "07/12/25 11:19:48"
+        },
+        {
+          "playerName": "Gil  Ortega, Marta",
+          "holeNumber": 7,
+          "createdAt": "07/12/25 11:20:11"
+        },
+        {
+          "playerName": "Elizburu Mostaza, Fermin",
+          "holeNumber": 2,
+          "createdAt": "07/12/25 11:27:27"
+        },
+        {
+          "playerName": "De Lope Gomez, Ignacio",
+          "holeNumber": 7,
+          "createdAt": "07/12/25 11:28:27"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:39.404Z"
 }

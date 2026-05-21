@@ -1,14 +1,14 @@
 {
   "tourId": 69544,
   "url": "https://www.nextcaddy.com/tour/69544",
-  "scrapedAt": "2026-05-09T10:07:48.392Z",
+  "scrapedAt": "2026-05-21T16:38:27.055Z",
   "meta": {
     "name": "Grupo Cartujanos",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "02 abr 2026",
-    "dateEnd": "02 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-02"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -127,6 +128,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 8
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -246,6 +254,85 @@
       "licencia": "CM11749765",
       "hcp": 9.1,
       "nivel": "Mid"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Manuel Ayoso Alvarez",
+          "hcp": 0,
+          "ins": "2290991",
+          "jid": "74315",
+          "nivel": "P"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Gonzalo Bonilla Damia",
+          "hcp": 13.1,
+          "ins": "2290987",
+          "jid": "74315",
+          "nivel": "M"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Francisco De Borja Ojeda Becerra",
+          "hcp": 13.9,
+          "ins": "2290985",
+          "jid": "74315",
+          "nivel": "M"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Miguel Lozano Cintado",
+          "hcp": 14.6,
+          "ins": "2290986",
+          "jid": "74315",
+          "nivel": "S"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Alvaro De Bonilla Damia",
+          "hcp": 15.9,
+          "ins": "2290992",
+          "jid": "74315",
+          "nivel": "M"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Javier Ojeda Becerra",
+          "hcp": 18.5,
+          "ins": "2290988",
+          "jid": "74315",
+          "nivel": "M"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Gonzalo Marin Valderrama",
+          "hcp": 20.3,
+          "ins": "2290990",
+          "jid": "74315",
+          "nivel": "M"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Juan Luis Marin Valderrama",
+          "hcp": 36,
+          "ins": "2290989",
+          "jid": "74315",
+          "nivel": "M"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -515,84 +602,6 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "08:40",
-          "tee": 1,
-          "name": "Manuel Ayoso Alvarez",
-          "hcp": 0,
-          "ins": "2290991",
-          "jid": "74315",
-          "nivel": "P"
-        },
-        {
-          "time": "08:40",
-          "tee": 1,
-          "name": "Gonzalo Bonilla Damia",
-          "hcp": 13.1,
-          "ins": "2290987",
-          "jid": "74315",
-          "nivel": "M"
-        },
-        {
-          "time": "08:40",
-          "tee": 1,
-          "name": "Francisco De Borja Ojeda Becerra",
-          "hcp": 13.9,
-          "ins": "2290985",
-          "jid": "74315",
-          "nivel": "M"
-        },
-        {
-          "time": "08:40",
-          "tee": 1,
-          "name": "Miguel Lozano Cintado",
-          "hcp": 14.6,
-          "ins": "2290986",
-          "jid": "74315",
-          "nivel": "S"
-        },
-        {
-          "time": "08:50",
-          "tee": 1,
-          "name": "Alvaro De Bonilla Damia",
-          "hcp": 15.9,
-          "ins": "2290992",
-          "jid": "74315",
-          "nivel": "M"
-        },
-        {
-          "time": "08:50",
-          "tee": 1,
-          "name": "Javier Ojeda Becerra",
-          "hcp": 18.5,
-          "ins": "2290988",
-          "jid": "74315",
-          "nivel": "M"
-        },
-        {
-          "time": "08:50",
-          "tee": 1,
-          "name": "Gonzalo Marin Valderrama",
-          "hcp": 20.3,
-          "ins": "2290990",
-          "jid": "74315",
-          "nivel": "M"
-        },
-        {
-          "time": "08:50",
-          "tee": 1,
-          "name": "Juan Luis Marin Valderrama",
-          "hcp": 36,
-          "ins": "2290989",
-          "jid": "74315",
-          "nivel": "M"
-        }
-      ]
-    }
-  ],
-  "horariosScrapedAt": "2026-05-09T12:12:54.856Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:35.205Z"
 }

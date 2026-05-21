@@ -1,14 +1,14 @@
 {
   "tourId": 70477,
   "url": "https://www.nextcaddy.com/tour/70477",
-  "scrapedAt": "2026-05-09T10:15:56.091Z",
+  "scrapedAt": "2026-05-21T16:39:30.532Z",
   "meta": {
     "name": "GOLFISTAS DE SEVILLA (TARDE 16:00)",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": "08 may 2026",
-    "dateEnd": "08 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-08"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Primera Categoría",
+      "expectedJugadores": 15,
       "header": [
         "Pos",
         "Jugador",
@@ -205,6 +206,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Tercera Categoría",
+      "expectedJugadores": 23,
       "header": [
         "Pos",
         "Jugador",
@@ -474,6 +477,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Segunda Categoria",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -621,6 +626,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Primera Categoría",
+      "jugadores": 15
+    },
+    "2": {
+      "name": "Tercera Categoría",
+      "jugadores": 23
+    },
+    "3": {
+      "name": "Segunda Categoria",
+      "jugadores": 12
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -840,22 +860,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75421
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -989,5 +993,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:13:00.668Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75421
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [
+    "/uploads/competiciones/cartel/3951593511_70477-golfistas-de-sevilla-tarde-16-00.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:41.288Z"
 }

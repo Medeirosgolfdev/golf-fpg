@@ -1,14 +1,14 @@
 {
   "tourId": 70298,
   "url": "https://www.nextcaddy.com/tour/70298",
-  "scrapedAt": "2026-05-09T10:15:42.261Z",
+  "scrapedAt": "2026-05-21T16:39:09.147Z",
   "meta": {
     "name": "3ª Prueba del Circuito RCG Vista Hermosa 25-04-26",
     "organizer": null,
     "course": "Real Club de Golf Vista Hermosa",
     "courseCode": "AM05",
-    "dateStart": "25 abr 2026",
-    "dateEnd": "25 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-25"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "1ª Categoría",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -249,6 +250,8 @@
     },
     {
       "category": 2,
+      "categoryName": "2ª Categoría",
+      "expectedJugadores": 11,
       "header": [
         "Pos",
         "Jugador",
@@ -385,6 +388,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "1ª Categoría",
+      "jugadores": 19
+    },
+    "2": {
+      "name": "2ª Categoría",
+      "jugadores": 11
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -821,183 +835,6 @@
       "nivel": "AM05109092"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75232
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Santana Garcia, Samuel",
-          "holeNumber": 2,
-          "createdAt": "09/11/25 09:57:08"
-        },
-        {
-          "playerName": "Fajardo Monzon, Alicia",
-          "holeNumber": 1,
-          "createdAt": "09/11/25 10:02:36"
-        },
-        {
-          "playerName": "Velazquez Morales, Maria",
-          "holeNumber": 1,
-          "createdAt": "09/11/25 10:04:13"
-        },
-        {
-          "playerName": "Velazquez Morales, Maria",
-          "holeNumber": 2,
-          "createdAt": "09/11/25 10:31:40"
-        },
-        {
-          "playerName": "Fajardo Monzon, Alicia",
-          "holeNumber": 2,
-          "createdAt": "09/11/25 10:33:24"
-        },
-        {
-          "playerName": "Fajardo Monzon, Rafael",
-          "holeNumber": 5,
-          "createdAt": "09/11/25 10:55:33"
-        },
-        {
-          "playerName": "Rodriguez Diaz, Mario",
-          "holeNumber": 5,
-          "createdAt": "09/11/25 10:55:39"
-        },
-        {
-          "playerName": "Ruiz Garcia, Juan Carlos",
-          "holeNumber": 3,
-          "createdAt": "09/11/25 11:00:08"
-        },
-        {
-          "playerName": "Montalat Braojos, Jaume",
-          "holeNumber": 5,
-          "createdAt": "09/11/25 11:13:11"
-        },
-        {
-          "playerName": "Dominguez Siemens, Juan Carlos",
-          "holeNumber": 5,
-          "createdAt": "09/11/25 11:23:43"
-        },
-        {
-          "playerName": "Fajardo Monzon, Rafael",
-          "holeNumber": 7,
-          "createdAt": "09/11/25 11:27:59"
-        },
-        {
-          "playerName": "Santana Garcia, Samuel",
-          "holeNumber": 5,
-          "createdAt": "09/11/25 11:38:51"
-        },
-        {
-          "playerName": "Breen, Brendan",
-          "holeNumber": 7,
-          "createdAt": "09/11/25 11:56:19"
-        },
-        {
-          "playerName": "Faussurier, Emmanuel",
-          "holeNumber": 7,
-          "createdAt": "09/11/25 11:56:21"
-        },
-        {
-          "playerName": "Rubio Alvarez, Elena",
-          "holeNumber": 2,
-          "createdAt": "09/11/25 12:03:01"
-        },
-        {
-          "playerName": "Fajardo Monzon, Rafael",
-          "holeNumber": 10,
-          "createdAt": "09/11/25 12:26:25"
-        },
-        {
-          "playerName": "Fajardo Monzon, Alicia",
-          "holeNumber": 10,
-          "createdAt": "09/11/25 12:34:30"
-        },
-        {
-          "playerName": "Rodriguez Diaz, Mario",
-          "holeNumber": 11,
-          "createdAt": "09/11/25 12:41:20"
-        },
-        {
-          "playerName": "De Jorge Lopez, Carlos Alberto",
-          "holeNumber": 9,
-          "createdAt": "09/11/25 12:53:18"
-        },
-        {
-          "playerName": "Lopez Fernandez, Rafael Victor",
-          "holeNumber": 8,
-          "createdAt": "09/11/25 12:55:21"
-        },
-        {
-          "playerName": "Lopez Fernandez, Rafael Victor",
-          "holeNumber": 10,
-          "createdAt": "09/11/25 12:55:21"
-        },
-        {
-          "playerName": "Santana Garcia, Samuel",
-          "holeNumber": 10,
-          "createdAt": "09/11/25 13:00:54"
-        },
-        {
-          "playerName": "Montalat Braojos, Jaume",
-          "holeNumber": 10,
-          "createdAt": "09/11/25 13:10:28"
-        },
-        {
-          "playerName": "Faussurier, Emmanuel",
-          "holeNumber": 11,
-          "createdAt": "09/11/25 13:19:53"
-        },
-        {
-          "playerName": "Martin Robayna, Julio",
-          "holeNumber": 13,
-          "createdAt": "09/11/25 13:49:15"
-        },
-        {
-          "playerName": "Padilla Medina, Orenay",
-          "holeNumber": 14,
-          "createdAt": "09/11/25 13:55:02"
-        },
-        {
-          "playerName": "Fajardo Monzon, Alicia",
-          "holeNumber": 16,
-          "createdAt": "09/11/25 14:00:13"
-        },
-        {
-          "playerName": "Martin Hernandez, Marco Antonio",
-          "holeNumber": 17,
-          "createdAt": "09/11/25 14:04:47"
-        },
-        {
-          "playerName": "Dominguez Siemens, Juan Carlos",
-          "holeNumber": 18,
-          "createdAt": "09/11/25 14:45:34"
-        }
-      ]
-    },
-    "eagle": {
-      "scoreTypeKey": "eagle",
-      "players": [
-        {
-          "playerName": "Montalat Braojos, Jaume",
-          "holeNumber": 13,
-          "createdAt": "09/11/25 13:10:29"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1275,5 +1112,183 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:59.239Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75232
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Santana Garcia, Samuel",
+          "holeNumber": 2,
+          "createdAt": "09/11/25 09:57:08"
+        },
+        {
+          "playerName": "Fajardo Monzon, Alicia",
+          "holeNumber": 1,
+          "createdAt": "09/11/25 10:02:36"
+        },
+        {
+          "playerName": "Velazquez Morales, Maria",
+          "holeNumber": 1,
+          "createdAt": "09/11/25 10:04:13"
+        },
+        {
+          "playerName": "Velazquez Morales, Maria",
+          "holeNumber": 2,
+          "createdAt": "09/11/25 10:31:40"
+        },
+        {
+          "playerName": "Fajardo Monzon, Alicia",
+          "holeNumber": 2,
+          "createdAt": "09/11/25 10:33:24"
+        },
+        {
+          "playerName": "Fajardo Monzon, Rafael",
+          "holeNumber": 5,
+          "createdAt": "09/11/25 10:55:33"
+        },
+        {
+          "playerName": "Rodriguez Diaz, Mario",
+          "holeNumber": 5,
+          "createdAt": "09/11/25 10:55:39"
+        },
+        {
+          "playerName": "Ruiz Garcia, Juan Carlos",
+          "holeNumber": 3,
+          "createdAt": "09/11/25 11:00:08"
+        },
+        {
+          "playerName": "Montalat Braojos, Jaume",
+          "holeNumber": 5,
+          "createdAt": "09/11/25 11:13:11"
+        },
+        {
+          "playerName": "Dominguez Siemens, Juan Carlos",
+          "holeNumber": 5,
+          "createdAt": "09/11/25 11:23:43"
+        },
+        {
+          "playerName": "Fajardo Monzon, Rafael",
+          "holeNumber": 7,
+          "createdAt": "09/11/25 11:27:59"
+        },
+        {
+          "playerName": "Santana Garcia, Samuel",
+          "holeNumber": 5,
+          "createdAt": "09/11/25 11:38:51"
+        },
+        {
+          "playerName": "Breen, Brendan",
+          "holeNumber": 7,
+          "createdAt": "09/11/25 11:56:19"
+        },
+        {
+          "playerName": "Faussurier, Emmanuel",
+          "holeNumber": 7,
+          "createdAt": "09/11/25 11:56:21"
+        },
+        {
+          "playerName": "Rubio Alvarez, Elena",
+          "holeNumber": 2,
+          "createdAt": "09/11/25 12:03:01"
+        },
+        {
+          "playerName": "Fajardo Monzon, Rafael",
+          "holeNumber": 10,
+          "createdAt": "09/11/25 12:26:25"
+        },
+        {
+          "playerName": "Fajardo Monzon, Alicia",
+          "holeNumber": 10,
+          "createdAt": "09/11/25 12:34:30"
+        },
+        {
+          "playerName": "Rodriguez Diaz, Mario",
+          "holeNumber": 11,
+          "createdAt": "09/11/25 12:41:20"
+        },
+        {
+          "playerName": "De Jorge Lopez, Carlos Alberto",
+          "holeNumber": 9,
+          "createdAt": "09/11/25 12:53:18"
+        },
+        {
+          "playerName": "Lopez Fernandez, Rafael Victor",
+          "holeNumber": 8,
+          "createdAt": "09/11/25 12:55:21"
+        },
+        {
+          "playerName": "Lopez Fernandez, Rafael Victor",
+          "holeNumber": 10,
+          "createdAt": "09/11/25 12:55:21"
+        },
+        {
+          "playerName": "Santana Garcia, Samuel",
+          "holeNumber": 10,
+          "createdAt": "09/11/25 13:00:54"
+        },
+        {
+          "playerName": "Montalat Braojos, Jaume",
+          "holeNumber": 10,
+          "createdAt": "09/11/25 13:10:28"
+        },
+        {
+          "playerName": "Faussurier, Emmanuel",
+          "holeNumber": 11,
+          "createdAt": "09/11/25 13:19:53"
+        },
+        {
+          "playerName": "Martin Robayna, Julio",
+          "holeNumber": 13,
+          "createdAt": "09/11/25 13:49:15"
+        },
+        {
+          "playerName": "Padilla Medina, Orenay",
+          "holeNumber": 14,
+          "createdAt": "09/11/25 13:55:02"
+        },
+        {
+          "playerName": "Fajardo Monzon, Alicia",
+          "holeNumber": 16,
+          "createdAt": "09/11/25 14:00:13"
+        },
+        {
+          "playerName": "Martin Hernandez, Marco Antonio",
+          "holeNumber": 17,
+          "createdAt": "09/11/25 14:04:47"
+        },
+        {
+          "playerName": "Dominguez Siemens, Juan Carlos",
+          "holeNumber": 18,
+          "createdAt": "09/11/25 14:45:34"
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Montalat Braojos, Jaume",
+          "holeNumber": 13,
+          "createdAt": "09/11/25 13:10:29"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:39.773Z"
 }

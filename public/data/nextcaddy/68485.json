@@ -1,14 +1,14 @@
 {
   "tourId": 68485,
   "url": "https://www.nextcaddy.com/tour/68485",
-  "scrapedAt": "2026-05-09T09:57:49.053Z",
+  "scrapedAt": "2026-05-21T16:37:13.736Z",
   "meta": {
     "name": "Torneo San Valentín*",
     "organizer": null,
     "course": "Alborán Golf",
     "courseCode": "AMC7",
-    "dateStart": "21 feb 2026",
-    "dateEnd": "21 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,17 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-21"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Pareja",
+      "jugadores": 50
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -724,22 +730,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73100
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -1647,5 +1637,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:25.587Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73100
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:23.248Z"
 }

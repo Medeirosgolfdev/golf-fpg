@@ -1,14 +1,14 @@
 {
   "tourId": 69306,
   "url": "https://www.nextcaddy.com/tour/69306",
-  "scrapedAt": "2026-05-09T10:07:39.151Z",
+  "scrapedAt": "2026-05-21T16:38:09.806Z",
   "meta": {
     "name": "II Prueba Liga 2 Banderas",
     "organizer": null,
     "course": "Alhaurín Golf Hotel & Resort",
     "courseCode": "AM22",
-    "dateStart": "22 mar 2026",
-    "dateEnd": "22 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-22"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Adultos",
+      "expectedJugadores": 20,
       "header": [
         "Pos",
         "Jugador",
@@ -260,6 +261,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Junior",
+      "expectedJugadores": 6,
       "header": [
         "Pos",
         "Jugador",
@@ -341,6 +344,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Adultos",
+      "jugadores": 20
+    },
+    "2": {
+      "name": "Handicap Junior",
+      "jugadores": 6
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -719,6 +733,247 @@
       "licencia": "21-03-26 14:55",
       "hcp": 36,
       "nivel": "TAM2222553"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "MAXI OLIVELLA",
+          "hcp": 28,
+          "ins": "2285820",
+          "jid": "74059",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 2,
+          "name": "Francisco Garcia Bonilla",
+          "hcp": 51.9,
+          "ins": "2285796",
+          "jid": "74059",
+          "nivel": "J"
+        },
+        {
+          "time": "09:30",
+          "tee": 2,
+          "name": "Francisco Miguel Garcia Bravo",
+          "hcp": 18.4,
+          "ins": "2285797",
+          "jid": "74059",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 2,
+          "name": "Alvaro Fernandez Gonzalez",
+          "hcp": 19.2,
+          "ins": "2285799",
+          "jid": "74059",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 2,
+          "name": "Alejandro Seron Pana",
+          "hcp": 9.3,
+          "ins": "2285813",
+          "jid": "74059",
+          "nivel": "J"
+        },
+        {
+          "time": "09:30",
+          "tee": 3,
+          "name": "Guillermo Alvarez Martin",
+          "hcp": 40.9,
+          "ins": "2285795",
+          "jid": "74059",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 3,
+          "name": "Alfonso Gonzalez Macho",
+          "hcp": 14.8,
+          "ins": "2285800",
+          "jid": "74059",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 3,
+          "name": "MIGUEL ANGEL CEBALLOS",
+          "hcp": 29.4,
+          "ins": "2285810",
+          "jid": "74059",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 3,
+          "name": "Juan Porras Sanchez",
+          "hcp": 8.4,
+          "ins": "2285814",
+          "jid": "74059",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 4,
+          "name": "MARC ANAYA",
+          "hcp": 36,
+          "ins": "2285803",
+          "jid": "74059",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 4,
+          "name": "PABLO LUCENA",
+          "hcp": 36,
+          "ins": "2285806",
+          "jid": "74059",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 4,
+          "name": "SADIF BHAT",
+          "hcp": 36,
+          "ins": "2285822",
+          "jid": "74059",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 5,
+          "name": "Ivan Criado Palomo",
+          "hcp": 46.1,
+          "ins": "2285805",
+          "jid": "74059",
+          "nivel": "J"
+        },
+        {
+          "time": "09:30",
+          "tee": 5,
+          "name": "Javier Mowinckel Muñoz",
+          "hcp": 30.7,
+          "ins": "2285811",
+          "jid": "74059",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 5,
+          "name": "VERO",
+          "hcp": 36,
+          "ins": "2285819",
+          "jid": "74059",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 5,
+          "name": "PADILLA",
+          "hcp": 36,
+          "ins": "2285821",
+          "jid": "74059",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 7,
+          "name": "Francisco Miguel Cabrera Mayo",
+          "hcp": 33.9,
+          "ins": "2285809",
+          "jid": "74059",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 7,
+          "name": "Alvaro Niederleytner Garcia-Lliberos",
+          "hcp": 18.9,
+          "ins": "2285812",
+          "jid": "74059",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 7,
+          "name": "Lucas Cabrera Sanchez",
+          "hcp": 33.1,
+          "ins": "2285817",
+          "jid": "74059",
+          "nivel": "J"
+        },
+        {
+          "time": "09:30",
+          "tee": 8,
+          "name": "DENNIS MOLLART",
+          "hcp": 36,
+          "ins": "2285801",
+          "jid": "74059",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 8,
+          "name": "ROBERT BUCHEL",
+          "hcp": 25,
+          "ins": "2285802",
+          "jid": "74059",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 8,
+          "name": "ROBBERT STEENWYK",
+          "hcp": 28,
+          "ins": "2285804",
+          "jid": "74059",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 9,
+          "name": "Sofia Morillas Benitez",
+          "hcp": 39.4,
+          "ins": "2285807",
+          "jid": "74059",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 9,
+          "name": "Alfonso Morillas Benitez",
+          "hcp": 28.1,
+          "ins": "2285808",
+          "jid": "74059",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 9,
+          "name": "Samuel Forster Garcia",
+          "hcp": 15.9,
+          "ins": "2285815",
+          "jid": "74059",
+          "nivel": "J"
+        },
+        {
+          "time": "09:30",
+          "tee": 9,
+          "name": "Silas Forster Garcia",
+          "hcp": 16.9,
+          "ins": "2285816",
+          "jid": "74059",
+          "nivel": "J"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -1150,246 +1405,6 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "MAXI OLIVELLA",
-          "hcp": 28,
-          "ins": "2285820",
-          "jid": "74059",
-          "nivel": "M"
-        },
-        {
-          "time": "09:30",
-          "tee": 2,
-          "name": "Francisco Garcia Bonilla",
-          "hcp": 51.9,
-          "ins": "2285796",
-          "jid": "74059",
-          "nivel": "J"
-        },
-        {
-          "time": "09:30",
-          "tee": 2,
-          "name": "Francisco Miguel Garcia Bravo",
-          "hcp": 18.4,
-          "ins": "2285797",
-          "jid": "74059",
-          "nivel": "M"
-        },
-        {
-          "time": "09:30",
-          "tee": 2,
-          "name": "Alvaro Fernandez Gonzalez",
-          "hcp": 19.2,
-          "ins": "2285799",
-          "jid": "74059",
-          "nivel": "M"
-        },
-        {
-          "time": "09:30",
-          "tee": 2,
-          "name": "Alejandro Seron Pana",
-          "hcp": 9.3,
-          "ins": "2285813",
-          "jid": "74059",
-          "nivel": "J"
-        },
-        {
-          "time": "09:30",
-          "tee": 3,
-          "name": "Guillermo Alvarez Martin",
-          "hcp": 40.9,
-          "ins": "2285795",
-          "jid": "74059",
-          "nivel": "M"
-        },
-        {
-          "time": "09:30",
-          "tee": 3,
-          "name": "Alfonso Gonzalez Macho",
-          "hcp": 14.8,
-          "ins": "2285800",
-          "jid": "74059",
-          "nivel": "M"
-        },
-        {
-          "time": "09:30",
-          "tee": 3,
-          "name": "MIGUEL ANGEL CEBALLOS",
-          "hcp": 29.4,
-          "ins": "2285810",
-          "jid": "74059",
-          "nivel": "M"
-        },
-        {
-          "time": "09:30",
-          "tee": 3,
-          "name": "Juan Porras Sanchez",
-          "hcp": 8.4,
-          "ins": "2285814",
-          "jid": "74059",
-          "nivel": "M"
-        },
-        {
-          "time": "09:30",
-          "tee": 4,
-          "name": "MARC ANAYA",
-          "hcp": 36,
-          "ins": "2285803",
-          "jid": "74059",
-          "nivel": "M"
-        },
-        {
-          "time": "09:30",
-          "tee": 4,
-          "name": "PABLO LUCENA",
-          "hcp": 36,
-          "ins": "2285806",
-          "jid": "74059",
-          "nivel": "M"
-        },
-        {
-          "time": "09:30",
-          "tee": 4,
-          "name": "SADIF BHAT",
-          "hcp": 36,
-          "ins": "2285822",
-          "jid": "74059",
-          "nivel": "M"
-        },
-        {
-          "time": "09:30",
-          "tee": 5,
-          "name": "Ivan Criado Palomo",
-          "hcp": 46.1,
-          "ins": "2285805",
-          "jid": "74059",
-          "nivel": "J"
-        },
-        {
-          "time": "09:30",
-          "tee": 5,
-          "name": "Javier Mowinckel Muñoz",
-          "hcp": 30.7,
-          "ins": "2285811",
-          "jid": "74059",
-          "nivel": "M"
-        },
-        {
-          "time": "09:30",
-          "tee": 5,
-          "name": "VERO",
-          "hcp": 36,
-          "ins": "2285819",
-          "jid": "74059",
-          "nivel": "M"
-        },
-        {
-          "time": "09:30",
-          "tee": 5,
-          "name": "PADILLA",
-          "hcp": 36,
-          "ins": "2285821",
-          "jid": "74059",
-          "nivel": "M"
-        },
-        {
-          "time": "09:30",
-          "tee": 7,
-          "name": "Francisco Miguel Cabrera Mayo",
-          "hcp": 33.9,
-          "ins": "2285809",
-          "jid": "74059",
-          "nivel": "M"
-        },
-        {
-          "time": "09:30",
-          "tee": 7,
-          "name": "Alvaro Niederleytner Garcia-Lliberos",
-          "hcp": 18.9,
-          "ins": "2285812",
-          "jid": "74059",
-          "nivel": "M"
-        },
-        {
-          "time": "09:30",
-          "tee": 7,
-          "name": "Lucas Cabrera Sanchez",
-          "hcp": 33.1,
-          "ins": "2285817",
-          "jid": "74059",
-          "nivel": "J"
-        },
-        {
-          "time": "09:30",
-          "tee": 8,
-          "name": "DENNIS MOLLART",
-          "hcp": 36,
-          "ins": "2285801",
-          "jid": "74059",
-          "nivel": "M"
-        },
-        {
-          "time": "09:30",
-          "tee": 8,
-          "name": "ROBERT BUCHEL",
-          "hcp": 25,
-          "ins": "2285802",
-          "jid": "74059",
-          "nivel": "M"
-        },
-        {
-          "time": "09:30",
-          "tee": 8,
-          "name": "ROBBERT STEENWYK",
-          "hcp": 28,
-          "ins": "2285804",
-          "jid": "74059",
-          "nivel": "M"
-        },
-        {
-          "time": "09:30",
-          "tee": 9,
-          "name": "Sofia Morillas Benitez",
-          "hcp": 39.4,
-          "ins": "2285807",
-          "jid": "74059",
-          "nivel": "M"
-        },
-        {
-          "time": "09:30",
-          "tee": 9,
-          "name": "Alfonso Morillas Benitez",
-          "hcp": 28.1,
-          "ins": "2285808",
-          "jid": "74059",
-          "nivel": "M"
-        },
-        {
-          "time": "09:30",
-          "tee": 9,
-          "name": "Samuel Forster Garcia",
-          "hcp": 15.9,
-          "ins": "2285815",
-          "jid": "74059",
-          "nivel": "J"
-        },
-        {
-          "time": "09:30",
-          "tee": 9,
-          "name": "Silas Forster Garcia",
-          "hcp": 16.9,
-          "ins": "2285816",
-          "jid": "74059",
-          "nivel": "J"
-        }
-      ]
-    }
-  ],
-  "horariosScrapedAt": "2026-05-09T12:12:52.748Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:32.999Z"
 }

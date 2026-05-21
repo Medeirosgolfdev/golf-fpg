@@ -1,14 +1,14 @@
 {
   "tourId": 65944,
   "url": "https://www.nextcaddy.com/tour/65944",
-  "scrapedAt": "2026-05-08T17:26:49.536Z",
+  "scrapedAt": "2026-05-21T16:37:03.005Z",
   "meta": {
     "name": "II LIGUILLA SUB21 DE CASTILLA Y LEÓN - VILLAMAYOR (Valedera SACE)  - APLAZADA -",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "15 feb 2026",
-    "dateEnd": "15 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-15"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -79,11 +81,14 @@
         },
         {
           "playerName": "Alberti Rodriguez, Jose Maria",
-          "holeNumber": 9
+          "holeNumber": 9,
+          "createdAt": "30/04/25 19:58:16"
         }
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:25.986Z"
+  "pdfs": [
+    "/uploads/2025/10/cirfgcyl4525.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:57.296Z"
 }

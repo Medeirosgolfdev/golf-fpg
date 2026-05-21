@@ -1,6 +1,6 @@
 {
   "gameId": "68aeeb70ac5ab10a41701260",
-  "fetchedAt": "2026-05-09T19:54:03.617Z",
+  "fetchedAt": "2026-05-21T16:46:15.749Z",
   "game": {
     "_id": "68aeeb70ac5ab10a41701260",
     "name": "CAMPIONAT DE CATALUNYA MATCH-PLAY SOTS-14 2025",
@@ -52,21 +52,21 @@
       },
       {
         "gender": "M",
+        "color": "gold",
+        "lap": "lap18",
+        "rating": 64.9,
+        "slope": 121,
+        "par": 70,
+        "_id": "68aeeb70ac5ab10a41701347"
+      },
+      {
+        "gender": "M",
         "color": "orange",
         "lap": "lap18",
         "rating": 68.4,
         "slope": 129,
         "par": 70,
         "_id": "68aeeb70ac5ab10a417013b9"
-      },
-      {
-        "gender": "M",
-        "color": "blue",
-        "lap": "lap18",
-        "rating": 66.4,
-        "slope": 118,
-        "par": 70,
-        "_id": "68aeeb70ac5ab10a417013a6"
       },
       {
         "gender": "M",
@@ -79,33 +79,15 @@
       },
       {
         "gender": "M",
-        "color": "gold",
+        "color": "blue",
         "lap": "lap18",
-        "rating": 64.9,
-        "slope": 121,
+        "rating": 66.4,
+        "slope": 118,
         "par": 70,
-        "_id": "68aeeb70ac5ab10a41701347"
+        "_id": "68aeeb70ac5ab10a417013a6"
       }
     ],
     "teesFemale": [
-      {
-        "gender": "F",
-        "color": "blue",
-        "lap": "lap18",
-        "rating": 71.5,
-        "slope": 127,
-        "par": 70,
-        "_id": "68aeeb70ac5ab10a41701393"
-      },
-      {
-        "gender": "F",
-        "color": "white",
-        "lap": "lap18",
-        "rating": 76.2,
-        "slope": 134,
-        "par": 70,
-        "_id": "68aeeb70ac5ab10a417013cc"
-      },
       {
         "gender": "F",
         "color": "gold",
@@ -123,6 +105,24 @@
         "slope": 126,
         "par": 70,
         "_id": "68aeeb70ac5ab10a4170135a"
+      },
+      {
+        "gender": "F",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 76.2,
+        "slope": 134,
+        "par": 70,
+        "_id": "68aeeb70ac5ab10a417013cc"
+      },
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 71.5,
+        "slope": 127,
+        "par": 70,
+        "_id": "68aeeb70ac5ab10a41701393"
       },
       {
         "gender": "F",

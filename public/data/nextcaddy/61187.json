@@ -1,14 +1,14 @@
 {
   "tourId": 61187,
   "url": "https://www.nextcaddy.com/tour/61187",
-  "scrapedAt": "2026-05-08T17:34:53.278Z",
+  "scrapedAt": "2026-05-21T16:40:35.477Z",
   "meta": {
     "name": "Campeonato de Andalucía Sub 16 y Benjamín P&P",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Benalmadena Golf",
     "courseCode": "AMC8",
-    "dateStart": "11 jul 2026",
-    "dateEnd": "11 jul 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Señoras  Caballero",
     "categories": [
       "Benjamín",
@@ -18,12 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-07-11"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -349,11 +351,12 @@
       "players": [
         {
           "playerName": "Rossi Borrero, Alvaro",
-          "holeNumber": 8
+          "holeNumber": 8,
+          "createdAt": "04/10/24 11:04:02"
         }
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:23.200Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:41:52.996Z"
 }

@@ -1,6 +1,6 @@
 {
   "gameId": "680a4a31523b9365e346a9b8",
-  "fetchedAt": "2026-05-09T19:53:25.801Z",
+  "fetchedAt": "2026-05-21T16:45:37.888Z",
   "game": {
     "_id": "680a4a31523b9365e346a9b8",
     "name": "Jornada 1",
@@ -32,6 +32,15 @@
       "isPitchAndPutt": false
     },
     "teesMale": [
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap9b",
+        "rating": 31.5,
+        "slope": 110,
+        "par": 35,
+        "_id": "680a4a31523b9365e346aa77"
+      },
       {
         "gender": "M",
         "color": "white",
@@ -67,36 +76,9 @@
         "slope": 119,
         "par": 35,
         "_id": "680a4a31523b9365e346aad1"
-      },
-      {
-        "gender": "M",
-        "color": "red",
-        "lap": "lap9b",
-        "rating": 31.5,
-        "slope": 110,
-        "par": 35,
-        "_id": "680a4a31523b9365e346aa77"
       }
     ],
     "teesFemale": [
-      {
-        "gender": "F",
-        "color": "blue",
-        "lap": "lap9b",
-        "rating": 34.7,
-        "slope": 118,
-        "par": 35,
-        "_id": "680a4a31523b9365e346aabf"
-      },
-      {
-        "gender": "F",
-        "color": "white",
-        "lap": "lap9b",
-        "rating": 38.2,
-        "slope": 137,
-        "par": 35,
-        "_id": "680a4a31523b9365e346ab07"
-      },
       {
         "gender": "F",
         "color": "orange",
@@ -105,6 +87,15 @@
         "slope": 124,
         "par": 35,
         "_id": "680a4a31523b9365e346aa89"
+      },
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap9b",
+        "rating": 34.7,
+        "slope": 118,
+        "par": 35,
+        "_id": "680a4a31523b9365e346aabf"
       },
       {
         "gender": "F",
@@ -123,6 +114,15 @@
         "slope": 116,
         "par": 35,
         "_id": "680a4a31523b9365e346aae3"
+      },
+      {
+        "gender": "F",
+        "color": "white",
+        "lap": "lap9b",
+        "rating": 38.2,
+        "slope": 137,
+        "par": 35,
+        "_id": "680a4a31523b9365e346ab07"
       }
     ]
   },

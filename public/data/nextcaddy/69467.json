@@ -1,14 +1,14 @@
 {
   "tourId": 69467,
   "url": "https://www.nextcaddy.com/tour/69467",
-  "scrapedAt": "2026-05-09T10:35:47.632Z",
+  "scrapedAt": "2026-05-21T16:38:24.778Z",
   "meta": {
     "name": "TORNEO INFANTIL VILLANUEVA 9 HOYOS",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "29 mar 2026",
-    "dateEnd": "29 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "INFANTIL",
@@ -20,74 +20,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-29"
-  },
-  "course": {
-    "par": [
-      4,
-      3,
-      4,
-      4,
-      5,
-      3,
-      4,
-      3,
-      5,
-      4,
-      4,
-      5,
-      3,
-      4,
-      5,
-      3,
-      4,
-      4
-    ],
-    "si": [
-      14,
-      9,
-      7,
-      16,
-      1,
-      18,
-      5,
-      11,
-      3,
-      12,
-      15,
-      17,
-      8,
-      13,
-      4,
-      10,
-      2,
-      6
-    ],
-    "meters": [
-      295,
-      102,
-      329,
-      258,
-      469,
-      104,
-      345,
-      85,
-      383,
-      287,
-      299,
-      425,
-      112,
-      318,
-      426,
-      147,
-      345,
-      305
     ]
   },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 6,
       "header": [
         "Pos",
         "Jugador",
@@ -109,8 +49,7 @@
           "rounds": [],
           "total": 14,
           "toPar": 4,
-          "inscribedId": 2288755,
-          "roundScores": []
+          "inscribedId": 2288755
         },
         {
           "pos": 2,
@@ -121,8 +60,7 @@
           "rounds": [],
           "total": 13,
           "toPar": 5,
-          "inscribedId": 2288751,
-          "roundScores": []
+          "inscribedId": 2288751
         },
         {
           "pos": 3,
@@ -133,8 +71,7 @@
           "rounds": [],
           "total": 11,
           "toPar": 7,
-          "inscribedId": 2288756,
-          "roundScores": []
+          "inscribedId": 2288756
         },
         {
           "pos": 4,
@@ -145,8 +82,7 @@
           "rounds": [],
           "total": 6,
           "toPar": 12,
-          "inscribedId": 2288752,
-          "roundScores": []
+          "inscribedId": 2288752
         },
         {
           "pos": 5,
@@ -157,8 +93,7 @@
           "rounds": [],
           "total": 5,
           "toPar": 13,
-          "inscribedId": 2288753,
-          "roundScores": []
+          "inscribedId": 2288753
         },
         {
           "pos": 6,
@@ -169,12 +104,18 @@
           "rounds": [],
           "total": 2,
           "toPar": 16,
-          "inscribedId": 2288754,
-          "roundScores": []
+          "inscribedId": 2288754
         }
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 6
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -282,33 +223,6 @@
       "nivel": "A"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74238
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Prat Batlle, Mariona",
-          "holeNumber": 15,
-          "createdAt": "07/10/25 13:51:14"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -370,5 +284,33 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:54.267Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74238
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Prat Batlle, Mariona",
+          "holeNumber": 15,
+          "createdAt": "07/10/25 13:51:14"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:34.687Z"
 }

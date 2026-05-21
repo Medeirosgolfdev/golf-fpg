@@ -1,14 +1,14 @@
 {
   "tourId": 66233,
   "url": "https://www.nextcaddy.com/tour/66233",
-  "scrapedAt": "2026-05-09T09:57:16.249Z",
+  "scrapedAt": "2026-05-21T16:36:23.331Z",
   "meta": {
     "name": "Torneo de Reyes Femenino",
     "organizer": "Federacion de Golf de Madrid",
     "course": "el Encin Golf",
     "courseCode": "CMC8",
-    "dateStart": "08 ene 2026",
-    "dateEnd": "08 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras C. Amateu",
     "categories": [
       "Señoras",
@@ -16,13 +16,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-08"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "1ª Categoría Handicap",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -237,6 +238,8 @@
     },
     {
       "category": 2,
+      "categoryName": "2ª Categoría Handicap",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -450,6 +453,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "1ª Categoría Handicap",
+      "jugadores": 18
+    },
+    "2": {
+      "name": "2ª Categoría Handicap",
+      "jugadores": 18
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -963,22 +977,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 70520
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -1310,5 +1308,25 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:03.182Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 70520
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/2760198524_condiciones_competicion_torneo_de_reyes_femenino_2026.pdf",
+    "/uploads/competiciones/pdf/3989616200_reglas_locales_el_encin.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:57.818Z"
 }

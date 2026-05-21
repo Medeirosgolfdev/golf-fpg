@@ -1,14 +1,14 @@
 {
   "tourId": 67751,
   "url": "https://www.nextcaddy.com/tour/67751",
-  "scrapedAt": "2026-05-09T09:57:50.001Z",
+  "scrapedAt": "2026-05-21T16:37:16.179Z",
   "meta": {
     "name": "Torneo de Golf Adaptado \"Negralejo\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Palacio del Negralejo S A",
     "courseCode": "CM33",
-    "dateStart": "22 feb 2026",
-    "dateEnd": "22 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,21 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-22"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificacion Handicap Parejas",
+      "jugadores": 13
+    },
+    "2": {
+      "name": "Clasificacion Scratch Parejas",
+      "jugadores": 13
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -206,22 +216,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72233
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -463,5 +457,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:11.525Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72233
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/2202039489_rrll_negralejo.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:07.262Z"
 }

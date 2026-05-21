@@ -1,14 +1,14 @@
 {
   "tourId": 67824,
   "url": "https://www.nextcaddy.com/tour/67824",
-  "scrapedAt": "2026-05-09T09:49:42.957Z",
+  "scrapedAt": "2026-05-21T16:38:43.697Z",
   "meta": {
     "name": "Torneo de 3ª Categoría Pitch & Putt \"Villa El Escorial\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Asociacion de Golf Villa el Escorial",
     "courseCode": "CM77",
-    "dateStart": "12 abr 2026",
-    "dateEnd": "12 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Circuito De 3ª Cat",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-12"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Hándicap",
+      "expectedJugadores": 44,
       "header": [
         "Pos",
         "Jugador",
@@ -523,6 +524,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Hándicap",
+      "jugadores": 44
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1155,53 +1163,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72320
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Ruiz  Hernandez, Jose Luis",
-          "holeNumber": 11,
-          "createdAt": "24/07/25 11:09:29"
-        },
-        {
-          "playerName": "Oliver, Rodger",
-          "holeNumber": 15,
-          "createdAt": "24/07/25 12:03:37"
-        },
-        {
-          "playerName": "Armitage, Anthony John",
-          "holeNumber": 11,
-          "createdAt": "24/07/25 12:06:12"
-        },
-        {
-          "playerName": "Armitage, Anthony John",
-          "holeNumber": 15,
-          "createdAt": "24/07/25 12:06:12"
-        },
-        {
-          "playerName": "Leitloff, Axel",
-          "holeNumber": 15,
-          "createdAt": "24/07/25 12:19:37"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1605,5 +1566,56 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:14.096Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72320
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Ruiz  Hernandez, Jose Luis",
+          "holeNumber": 11,
+          "createdAt": "24/07/25 11:09:29"
+        },
+        {
+          "playerName": "Oliver, Rodger",
+          "holeNumber": 15,
+          "createdAt": "24/07/25 12:03:37"
+        },
+        {
+          "playerName": "Armitage, Anthony John",
+          "holeNumber": 11,
+          "createdAt": "24/07/25 12:06:12"
+        },
+        {
+          "playerName": "Armitage, Anthony John",
+          "holeNumber": 15,
+          "createdAt": "24/07/25 12:06:12"
+        },
+        {
+          "playerName": "Leitloff, Axel",
+          "holeNumber": 15,
+          "createdAt": "24/07/25 12:19:37"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/67824_cartel_371.pdf",
+    "/uploads/competiciones/pdf/2151445871_reglas_locales_mod_villa_escorial_-_documentos_de_google.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:10.235Z"
 }

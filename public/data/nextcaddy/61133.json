@@ -1,14 +1,14 @@
 {
   "tourId": 61133,
   "url": "https://www.nextcaddy.com/tour/61133",
-  "scrapedAt": "2026-05-09T09:58:09.910Z",
+  "scrapedAt": "2026-05-21T16:37:49.028Z",
   "meta": {
     "name": "III Prueba Puntuable P&P",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Alhaurín Golf Hotel & Resort",
     "courseCode": "AM22",
-    "dateStart": "14 mar 2026",
-    "dateEnd": "14 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-14"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 66,
       "header": [
         "Pos",
         "Jugador",
@@ -766,6 +767,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap 1ª Categoría",
+      "expectedJugadores": 32,
       "header": [
         "Pos",
         "Jugador",
@@ -1134,6 +1137,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Handicap 2ª Categoria",
+      "expectedJugadores": 34,
       "header": [
         "Pos",
         "Jugador",
@@ -1523,6 +1528,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 66
+    },
+    "2": {
+      "name": "Handicap 1ª Categoría",
+      "jugadores": 32
+    },
+    "3": {
+      "name": "Handicap 2ª Categoria",
+      "jugadores": 34
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2463,22 +2483,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 64762
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -3080,5 +3084,26 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:00.459Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 64762
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/719290208_informacion_del_campeonato.pdf",
+    "/uploads/circular/2026/1bcb565407366d8953cb46fa5fbe8e7f.pdf",
+    "/uploads/competiciones/pdf/4270840084_reglas_web.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:51.685Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 61239,
   "url": "https://www.nextcaddy.com/tour/61239",
-  "scrapedAt": "2026-05-08T17:36:12.801Z",
+  "scrapedAt": "2026-05-21T16:41:18.126Z",
   "meta": {
     "name": "Pequecircuito Zona E",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "la Envia Golf",
     "courseCode": "AM23",
-    "dateStart": "15 nov 2026",
-    "dateEnd": "15 nov 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Señoras  Caballero",
     "categories": [
       "Señoras",
@@ -17,12 +17,14 @@
       "Juvenil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-11-15"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -119,11 +121,12 @@
         },
         {
           "playerName": "Balding, Mark",
-          "holeNumber": 4
+          "holeNumber": 4,
+          "createdAt": "29/09/24 12:41:41"
         }
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:24.563Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:41:54.021Z"
 }

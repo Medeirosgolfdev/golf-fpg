@@ -1,14 +1,14 @@
 {
   "tourId": 67916,
   "url": "https://www.nextcaddy.com/tour/67916",
-  "scrapedAt": "2026-05-09T10:07:41.304Z",
+  "scrapedAt": "2026-05-21T16:38:13.203Z",
   "meta": {
     "name": "III Torneo RKN Senior · Turno de Mañana 9:30 · Turno de Tarde 12:30",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "24 mar 2026",
-    "dateEnd": "24 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Senior",
@@ -18,13 +18,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-24"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Supersenior Masculino Scratch General",
+      "expectedJugadores": 42,
       "header": [
         "Pos",
         "Jugador",
@@ -503,6 +504,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Supersenior Masculino Handicap General",
+      "expectedJugadores": 42,
       "header": [
         "Pos",
         "Jugador",
@@ -981,6 +984,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Senior Masculino Scratch",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -1195,6 +1200,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Senior Masculino Handicap",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -1409,6 +1416,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Femenino Scratch",
+      "expectedJugadores": 15,
       "header": [
         "Pos",
         "Jugador",
@@ -1590,6 +1599,8 @@
     },
     {
       "category": 6,
+      "categoryName": "Femenino Handicap",
+      "expectedJugadores": 15,
       "header": [
         "Pos",
         "Jugador",
@@ -1770,6 +1781,33 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Supersenior Masculino Scratch General",
+      "jugadores": 42
+    },
+    "2": {
+      "name": "Supersenior Masculino Handicap General",
+      "jugadores": 42
+    },
+    "3": {
+      "name": "Senior Masculino Scratch",
+      "jugadores": 18
+    },
+    "4": {
+      "name": "Senior Masculino Handicap",
+      "jugadores": 18
+    },
+    "5": {
+      "name": "Femenino Scratch",
+      "jugadores": 15
+    },
+    "6": {
+      "name": "Femenino Handicap",
+      "jugadores": 15
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2836,35 +2874,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72433
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": []
-    },
-    "eagle": {
-      "scoreTypeKey": "eagle",
-      "players": []
-    },
-    "hole_in_one": {
-      "scoreTypeKey": "hole_in_one",
-      "players": []
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -3547,5 +3556,35 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:15.883Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72433
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": []
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": []
+    },
+    "hole_in_one": {
+      "scoreTypeKey": "hole_in_one",
+      "players": []
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:12.194Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 69298,
   "url": "https://www.nextcaddy.com/tour/69298",
-  "scrapedAt": "2026-05-09T10:07:41.676Z",
+  "scrapedAt": "2026-05-21T16:38:13.825Z",
   "meta": {
     "name": "Sherry International Golf Group (SIGG) - Miercoles 25 marzo 2026 (Grupo privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "25 mar 2026",
-    "dateEnd": "25 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-25"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 22,
       "header": [
         "Pos",
         "Jugador",
@@ -281,6 +282,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 22
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -612,6 +620,193 @@
       "nivel": "AM25818745"
     }
   ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Elias Alvarez Fernandez",
+          "hcp": 10.1,
+          "ins": "2286544",
+          "jid": "74044",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "James Major",
+          "hcp": 12,
+          "ins": "2286536",
+          "jid": "74044",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Miguel Angel Becerra Moya",
+          "hcp": 12.8,
+          "ins": "2286535",
+          "jid": "74044",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Christopher Davies",
+          "hcp": 13,
+          "ins": "2286524",
+          "jid": "74044",
+          "nivel": "S"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Edward James",
+          "hcp": 14.5,
+          "ins": "2286529",
+          "jid": "74044",
+          "nivel": "S"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Jose Luis Oviedo Granados",
+          "hcp": 15.3,
+          "ins": "2286538",
+          "jid": "74044",
+          "nivel": "S"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Juan Jose Mier-Teran Franco",
+          "hcp": 16.4,
+          "ins": "2286540",
+          "jid": "74044",
+          "nivel": "S"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Peter Green",
+          "hcp": 19.5,
+          "ins": "2286530",
+          "jid": "74044",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 10,
+          "name": "Antonio Diaz Rivera",
+          "hcp": 20.2,
+          "ins": "2286532",
+          "jid": "74044",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 10,
+          "name": "Francisco Jose Marin Blanco",
+          "hcp": 20.4,
+          "ins": "2286528",
+          "jid": "74044",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 10,
+          "name": "Valentin Gago Perez",
+          "hcp": 20.9,
+          "ins": "2286527",
+          "jid": "74044",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 10,
+          "name": "Jesus Cantos Ruiz",
+          "hcp": 21,
+          "ins": "2286523",
+          "jid": "74044",
+          "nivel": "S"
+        },
+        {
+          "time": "10:20",
+          "tee": 10,
+          "name": "Jose Romero Abad",
+          "hcp": 21.6,
+          "ins": "2286543",
+          "jid": "74044",
+          "nivel": "S"
+        },
+        {
+          "time": "10:20",
+          "tee": 10,
+          "name": "Douglas Thomson Bone",
+          "hcp": 22.1,
+          "ins": "2286526",
+          "jid": "74044",
+          "nivel": "S"
+        },
+        {
+          "time": "10:20",
+          "tee": 10,
+          "name": "Tomas Romero Abad",
+          "hcp": 23.1,
+          "ins": "2286542",
+          "jid": "74044",
+          "nivel": "S"
+        },
+        {
+          "time": "10:20",
+          "tee": 10,
+          "name": "Christopher J. Jameson",
+          "hcp": 24.5,
+          "ins": "2286522",
+          "jid": "74044",
+          "nivel": "S"
+        },
+        {
+          "time": "10:30",
+          "tee": 10,
+          "name": "Carmen Medina Alvarez",
+          "hcp": 27.6,
+          "ins": "2286539",
+          "jid": "74044",
+          "nivel": "S"
+        },
+        {
+          "time": "10:30",
+          "tee": 10,
+          "name": "Jose Manuel Salido Hedrera",
+          "hcp": 31,
+          "ins": "2286537",
+          "jid": "74044",
+          "nivel": "S"
+        },
+        {
+          "time": "10:30",
+          "tee": 10,
+          "name": "Antonio Guindo Guindo",
+          "hcp": 32,
+          "ins": "2286533",
+          "jid": "74044",
+          "nivel": "S"
+        },
+        {
+          "time": "10:30",
+          "tee": 10,
+          "name": "Linda Jameson",
+          "hcp": 33.2,
+          "ins": "2286521",
+          "jid": "74044",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -819,192 +1014,6 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Elias Alvarez Fernandez",
-          "hcp": 10.1,
-          "ins": "2286544",
-          "jid": "74044",
-          "nivel": "S"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "James Major",
-          "hcp": 12,
-          "ins": "2286536",
-          "jid": "74044",
-          "nivel": "S"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Miguel Angel Becerra Moya",
-          "hcp": 12.8,
-          "ins": "2286535",
-          "jid": "74044",
-          "nivel": "S"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Christopher Davies",
-          "hcp": 13,
-          "ins": "2286524",
-          "jid": "74044",
-          "nivel": "S"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
-          "name": "Edward James",
-          "hcp": 14.5,
-          "ins": "2286529",
-          "jid": "74044",
-          "nivel": "S"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
-          "name": "Jose Luis Oviedo Granados",
-          "hcp": 15.3,
-          "ins": "2286538",
-          "jid": "74044",
-          "nivel": "S"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
-          "name": "Juan Jose Mier-Teran Franco",
-          "hcp": 16.4,
-          "ins": "2286540",
-          "jid": "74044",
-          "nivel": "S"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
-          "name": "Peter Green",
-          "hcp": 19.5,
-          "ins": "2286530",
-          "jid": "74044",
-          "nivel": "S"
-        },
-        {
-          "time": "10:10",
-          "tee": 10,
-          "name": "Antonio Diaz Rivera",
-          "hcp": 20.2,
-          "ins": "2286532",
-          "jid": "74044",
-          "nivel": "S"
-        },
-        {
-          "time": "10:10",
-          "tee": 10,
-          "name": "Francisco Jose Marin Blanco",
-          "hcp": 20.4,
-          "ins": "2286528",
-          "jid": "74044",
-          "nivel": "S"
-        },
-        {
-          "time": "10:10",
-          "tee": 10,
-          "name": "Valentin Gago Perez",
-          "hcp": 20.9,
-          "ins": "2286527",
-          "jid": "74044",
-          "nivel": "S"
-        },
-        {
-          "time": "10:10",
-          "tee": 10,
-          "name": "Jesus Cantos Ruiz",
-          "hcp": 21,
-          "ins": "2286523",
-          "jid": "74044",
-          "nivel": "S"
-        },
-        {
-          "time": "10:20",
-          "tee": 10,
-          "name": "Jose Romero Abad",
-          "hcp": 21.6,
-          "ins": "2286543",
-          "jid": "74044",
-          "nivel": "S"
-        },
-        {
-          "time": "10:20",
-          "tee": 10,
-          "name": "Douglas Thomson Bone",
-          "hcp": 22.1,
-          "ins": "2286526",
-          "jid": "74044",
-          "nivel": "S"
-        },
-        {
-          "time": "10:20",
-          "tee": 10,
-          "name": "Tomas Romero Abad",
-          "hcp": 23.1,
-          "ins": "2286542",
-          "jid": "74044",
-          "nivel": "S"
-        },
-        {
-          "time": "10:20",
-          "tee": 10,
-          "name": "Christopher J. Jameson",
-          "hcp": 24.5,
-          "ins": "2286522",
-          "jid": "74044",
-          "nivel": "S"
-        },
-        {
-          "time": "10:30",
-          "tee": 10,
-          "name": "Carmen Medina Alvarez",
-          "hcp": 27.6,
-          "ins": "2286539",
-          "jid": "74044",
-          "nivel": "S"
-        },
-        {
-          "time": "10:30",
-          "tee": 10,
-          "name": "Jose Manuel Salido Hedrera",
-          "hcp": 31,
-          "ins": "2286537",
-          "jid": "74044",
-          "nivel": "S"
-        },
-        {
-          "time": "10:30",
-          "tee": 10,
-          "name": "Antonio Guindo Guindo",
-          "hcp": 32,
-          "ins": "2286533",
-          "jid": "74044",
-          "nivel": "S"
-        },
-        {
-          "time": "10:30",
-          "tee": 10,
-          "name": "Linda Jameson",
-          "hcp": 33.2,
-          "ins": "2286521",
-          "jid": "74044",
-          "nivel": "S"
-        }
-      ]
-    }
-  ],
-  "horariosScrapedAt": "2026-05-09T12:12:52.523Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:32.810Z"
 }

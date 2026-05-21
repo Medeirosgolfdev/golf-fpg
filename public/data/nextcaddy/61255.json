@@ -1,14 +1,14 @@
 {
   "tourId": 61255,
   "url": "https://www.nextcaddy.com/tour/61255",
-  "scrapedAt": "2026-05-09T10:16:47.451Z",
+  "scrapedAt": "2026-05-21T16:40:28.495Z",
   "meta": {
     "name": "Torneo Senior de Verano",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "la Cala Resort",
     "courseCode": "AM81",
-    "dateStart": "27 jun 2026",
-    "dateEnd": "27 jun 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Senior",
@@ -17,12 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-06-27"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -39,6 +41,6 @@
     }
   ],
   "scoreTypes": null,
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:25.042Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:41:54.456Z"
 }

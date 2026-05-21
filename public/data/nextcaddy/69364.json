@@ -1,14 +1,14 @@
 {
   "tourId": 69364,
   "url": "https://www.nextcaddy.com/tour/69364",
-  "scrapedAt": "2026-05-09T10:07:41.977Z",
+  "scrapedAt": "2026-05-21T16:38:14.427Z",
   "meta": {
     "name": "Liga entre semana Club de Golf Crisol",
     "organizer": null,
     "course": "Alhaurín Golf Hotel & Resort",
     "courseCode": "AM22",
-    "dateStart": "25 mar 2026",
-    "dateEnd": "25 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-25"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -248,6 +249,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 19
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -530,33 +538,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74125
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Forsstrom, Christer",
-          "holeNumber": 2,
-          "createdAt": "03/10/25 15:05:50"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -735,5 +716,33 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:53.178Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74125
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Forsstrom, Christer",
+          "holeNumber": 2,
+          "createdAt": "03/10/25 15:05:50"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:33.521Z"
 }

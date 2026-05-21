@@ -1,14 +1,14 @@
 {
   "tourId": 70064,
   "url": "https://www.nextcaddy.com/tour/70064",
-  "scrapedAt": "2026-05-09T10:16:34.018Z",
+  "scrapedAt": "2026-05-21T16:39:52.803Z",
   "meta": {
     "name": "Norba Club de Golf 3ª Categoría",
     "organizer": null,
     "course": "",
     "courseCode": "MAJC",
-    "dateStart": "17 may 2026",
-    "dateEnd": "17 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -20,11 +20,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-17"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -51,6 +52,27 @@
       "orden": 4,
       "name": "Lazaro Salguero Muñana",
       "licencia": "9901375703",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Martin Ramos Romero",
+      "licencia": "9919966523",
+      "hcp": 37,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Alonso Hernandez Sanchez",
+      "licencia": "9901498147",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "German Moreno Peña",
+      "licencia": "9901498052",
       "hcp": 54,
       "nivel": "B"
     },
@@ -109,8 +131,30 @@
       "licencia": "06-05-26 21:52",
       "hcp": 54,
       "nivel": "9901375703"
+    },
+    {
+      "orden": 6,
+      "name": "Martin Ramos Romero",
+      "licencia": "10-05-26 15:31",
+      "hcp": 37,
+      "nivel": "9919966523"
+    },
+    {
+      "orden": 7,
+      "name": "Alonso Hernandez Sanchez",
+      "licencia": "11-05-26 18:29",
+      "hcp": 54,
+      "nivel": "9901498147"
+    },
+    {
+      "orden": 8,
+      "name": "German Moreno Peña",
+      "licencia": "11-05-26 18:35",
+      "hcp": 54,
+      "nivel": "9901498052"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -127,6 +171,8 @@
     }
   ],
   "scoreTypes": null,
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:43.417Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/2229941393_reglas_locales_actualizadas_2022.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:37.864Z"
 }

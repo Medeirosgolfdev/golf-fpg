@@ -1,14 +1,14 @@
 {
   "tourId": 68324,
   "url": "https://www.nextcaddy.com/tour/68324",
-  "scrapedAt": "2026-05-09T09:57:36.407Z",
+  "scrapedAt": "2026-05-21T16:36:56.112Z",
   "meta": {
     "name": "Malacas  11 Febrero",
     "organizer": null,
     "course": "Escuela de Golf Miguel ángel Jiménez",
     "courseCode": "AMI5",
-    "dateStart": "11 feb 2026",
-    "dateEnd": "11 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-11"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 43,
       "header": [
         "Pos",
         "Jugador",
@@ -512,6 +513,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 43
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1130,22 +1138,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72908
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -1540,5 +1532,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:23.827Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72908
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:21.290Z"
 }

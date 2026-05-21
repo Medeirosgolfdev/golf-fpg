@@ -1,14 +1,14 @@
 {
   "tourId": 69118,
   "url": "https://www.nextcaddy.com/tour/69118",
-  "scrapedAt": "2026-05-09T09:58:09.491Z",
+  "scrapedAt": "2026-05-21T16:37:48.215Z",
   "meta": {
     "name": "LIGA DE DAMAS - VIERNES",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": "13 mar 2026",
-    "dateEnd": "13 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras Facebook",
     "categories": [
       "Señoras",
@@ -16,11 +16,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-13"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -184,22 +185,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73856
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -306,5 +291,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:32.948Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73856
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/69118_cartel_45.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:31.151Z"
 }

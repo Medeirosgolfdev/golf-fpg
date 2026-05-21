@@ -1,14 +1,14 @@
 {
   "tourId": 69743,
   "url": "https://www.nextcaddy.com/tour/69743",
-  "scrapedAt": "2026-05-09T10:07:59.041Z",
+  "scrapedAt": "2026-05-21T16:38:47.066Z",
   "meta": {
     "name": "GRUPO SULLASTRES CAIXA",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "13 abr 2026",
-    "dateEnd": "13 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-13"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -472,22 +473,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74543
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -774,5 +759,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:56.866Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74543
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [
+    "/uploads/competiciones/cartel/1497161166_69743-grupo-sullastres-caixa.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:37.212Z"
 }

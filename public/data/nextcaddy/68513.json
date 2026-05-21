@@ -1,14 +1,14 @@
 {
   "tourId": 68513,
   "url": "https://www.nextcaddy.com/tour/68513",
-  "scrapedAt": "2026-05-09T09:58:11.035Z",
+  "scrapedAt": "2026-05-21T16:37:51.835Z",
   "meta": {
     "name": "VI  Liga Promesas 2025-2026",
     "organizer": null,
     "course": "Escuela de Golf Miguel ángel Jiménez",
     "courseCode": "AMI5",
-    "dateStart": "14 mar 2026",
-    "dateEnd": "14 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-14"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 3,
       "header": [
         "Pos",
         "Jugador",
@@ -72,6 +73,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 3
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -123,33 +131,6 @@
       "nivel": "AMI5467648"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73137
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Castellanos Osorio, Carlos",
-          "holeNumber": 7,
-          "createdAt": "19/08/25 18:15:32"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -184,5 +165,33 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:25.663Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73137
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Castellanos Osorio, Carlos",
+          "holeNumber": 7,
+          "createdAt": "19/08/25 18:15:32"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:23.205Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 67941,
   "url": "https://www.nextcaddy.com/tour/67941",
-  "scrapedAt": "2026-05-09T09:58:08.514Z",
+  "scrapedAt": "2026-05-21T16:37:46.601Z",
   "meta": {
     "name": "Torneo Privado LJG · 12 de Marzo · 10:00 ·",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "12 mar 2026",
-    "dateEnd": "12 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-12"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Individual Scratch General",
+      "expectedJugadores": 40,
       "header": [
         "Pos",
         "Jugador",
@@ -480,6 +481,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Individual Handicap General",
+      "expectedJugadores": 40,
       "header": [
         "Pos",
         "Jugador",
@@ -935,6 +938,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Scratch General",
+      "jugadores": 40
+    },
+    "2": {
+      "name": "Individual Handicap General",
+      "jugadores": 40
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1511,33 +1525,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72459
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Frauca Araquistain, Miguel",
-          "holeNumber": 2,
-          "createdAt": "26/07/25 17:18:30"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1905,5 +1892,33 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:16.674Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72459
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Frauca Araquistain, Miguel",
+          "holeNumber": 2,
+          "createdAt": "26/07/25 17:18:30"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:13.150Z"
 }

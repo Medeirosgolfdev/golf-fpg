@@ -1,14 +1,14 @@
 {
   "tourId": 68000,
   "url": "https://www.nextcaddy.com/tour/68000",
-  "scrapedAt": "2026-05-09T09:57:45.184Z",
+  "scrapedAt": "2026-05-21T16:37:07.083Z",
   "meta": {
     "name": "Torneo Supersenior Masculino \"El Robledal\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "el Robledal Golf",
     "courseCode": "CM08",
-    "dateStart": "18 feb 2026",
-    "dateEnd": "18 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Circuito Superseni",
     "categories": [
       "senior Masculino",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-18"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Scratch (Barras Rojas)",
+      "expectedJugadores": 57,
       "header": [
         "Pos",
         "Jugador",
@@ -668,6 +669,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Clasificación 1ª Categoría",
+      "expectedJugadores": 36,
       "header": [
         "Pos",
         "Jugador",
@@ -1080,6 +1083,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Clasificación 2ª Categoría",
+      "expectedJugadores": 41,
       "header": [
         "Pos",
         "Jugador",
@@ -1547,6 +1552,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Clasificación Scratch",
+      "expectedJugadores": 77,
       "header": [
         "Pos",
         "Jugador",
@@ -2409,6 +2416,25 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Scratch (Barras Rojas)",
+      "jugadores": 57
+    },
+    "2": {
+      "name": "Clasificación 1ª Categoría",
+      "jugadores": 36
+    },
+    "3": {
+      "name": "Clasificación 2ª Categoría",
+      "jugadores": 41
+    },
+    "4": {
+      "name": "Clasificación Scratch",
+      "jugadores": 77
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -3503,22 +3529,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72537
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -4219,5 +4229,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:18.445Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72537
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/2421708504_rrll_el_robledal_19_10_2025.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:15.173Z"
 }

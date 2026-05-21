@@ -1,14 +1,14 @@
 {
   "tourId": 68455,
   "url": "https://www.nextcaddy.com/tour/68455",
-  "scrapedAt": "2026-05-09T09:57:45.784Z",
+  "scrapedAt": "2026-05-21T16:37:07.815Z",
   "meta": {
     "name": "Sherry International Golf Group (SIGG) - Jueves 19 Febrero 2026 (Grupo privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "19 feb 2026",
-    "dateEnd": "19 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-19"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 28,
       "header": [
         "Pos",
         "Jugador",
@@ -137,7 +138,7 @@
         },
         {
           "pos": 10,
-          "name": "Antonio Manuel Ure?A Serrano",
+          "name": "Antonio Manuel Ureña Serrano",
           "licencia": "AM32612444",
           "hcp": 9.7,
           "nivel": "S",
@@ -347,6 +348,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 28
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -462,7 +470,7 @@
     },
     {
       "orden": 12,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "AM32612444",
       "hcp": 9.7,
       "nivel": "S"
@@ -672,7 +680,7 @@
     },
     {
       "orden": 14,
-      "name": "Antonio Manuel Ure?A Serrano",
+      "name": "Antonio Manuel Ureña Serrano",
       "licencia": "17-02-26 21:46",
       "hcp": 9.7,
       "nivel": "AM32612444"
@@ -790,98 +798,6 @@
       "nivel": "EXX1911448"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73070
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Gonzalez  Lasuen, Pedro",
-          "holeNumber": 7,
-          "createdAt": "19/08/25 16:00:42"
-        },
-        {
-          "playerName": "Gonzalez  Lasuen, Pedro",
-          "holeNumber": 15,
-          "createdAt": "19/08/25 16:00:42"
-        },
-        {
-          "playerName": "Gonzalez  Lasuen, Pedro",
-          "holeNumber": 18,
-          "createdAt": "19/08/25 16:00:42"
-        },
-        {
-          "playerName": "Burke, Kevin",
-          "holeNumber": 6,
-          "createdAt": "19/08/25 16:00:42"
-        },
-        {
-          "playerName": "Howarth, Andrew",
-          "holeNumber": 10,
-          "createdAt": "19/08/25 16:00:44"
-        },
-        {
-          "playerName": "Vilianen, Olli-Pekka",
-          "holeNumber": 5,
-          "createdAt": "19/08/25 16:00:45"
-        },
-        {
-          "playerName": "Miller, Garry",
-          "holeNumber": 6,
-          "createdAt": "19/08/25 16:00:45"
-        },
-        {
-          "playerName": "Mudie, Shawn",
-          "holeNumber": 2,
-          "createdAt": "19/08/25 16:00:46"
-        },
-        {
-          "playerName": "Mudie, Shawn",
-          "holeNumber": 16,
-          "createdAt": "19/08/25 16:00:46"
-        },
-        {
-          "playerName": "Greenaway, John",
-          "holeNumber": 10,
-          "createdAt": "19/08/25 16:00:47"
-        },
-        {
-          "playerName": "Stewart, Graham",
-          "holeNumber": 10,
-          "createdAt": "19/08/25 16:00:48"
-        },
-        {
-          "playerName": "Oliver, Melvyn",
-          "holeNumber": 10,
-          "createdAt": "19/08/25 16:00:48"
-        },
-        {
-          "playerName": "Ford, Graham Peter",
-          "holeNumber": 1,
-          "createdAt": "19/08/25 16:00:49"
-        },
-        {
-          "playerName": "Ford, Graham Peter",
-          "holeNumber": 16,
-          "createdAt": "19/08/25 16:00:49"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -907,7 +823,7 @@
         {
           "time": "09:30",
           "tee": 1,
-          "name": "Antonio Manuel Ure?A Serrano",
+          "name": "Antonio Manuel Ureña Serrano",
           "hcp": 9.7,
           "ins": "2262630",
           "jid": "73070",
@@ -1141,5 +1057,98 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:25.251Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73070
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Gonzalez  Lasuen, Pedro",
+          "holeNumber": 7,
+          "createdAt": "19/08/25 16:00:42"
+        },
+        {
+          "playerName": "Gonzalez  Lasuen, Pedro",
+          "holeNumber": 15,
+          "createdAt": "19/08/25 16:00:42"
+        },
+        {
+          "playerName": "Gonzalez  Lasuen, Pedro",
+          "holeNumber": 18,
+          "createdAt": "19/08/25 16:00:42"
+        },
+        {
+          "playerName": "Burke, Kevin",
+          "holeNumber": 6,
+          "createdAt": "19/08/25 16:00:42"
+        },
+        {
+          "playerName": "Howarth, Andrew",
+          "holeNumber": 10,
+          "createdAt": "19/08/25 16:00:44"
+        },
+        {
+          "playerName": "Vilianen, Olli-Pekka",
+          "holeNumber": 5,
+          "createdAt": "19/08/25 16:00:45"
+        },
+        {
+          "playerName": "Miller, Garry",
+          "holeNumber": 6,
+          "createdAt": "19/08/25 16:00:45"
+        },
+        {
+          "playerName": "Mudie, Shawn",
+          "holeNumber": 2,
+          "createdAt": "19/08/25 16:00:46"
+        },
+        {
+          "playerName": "Mudie, Shawn",
+          "holeNumber": 16,
+          "createdAt": "19/08/25 16:00:46"
+        },
+        {
+          "playerName": "Greenaway, John",
+          "holeNumber": 10,
+          "createdAt": "19/08/25 16:00:47"
+        },
+        {
+          "playerName": "Stewart, Graham",
+          "holeNumber": 10,
+          "createdAt": "19/08/25 16:00:48"
+        },
+        {
+          "playerName": "Oliver, Melvyn",
+          "holeNumber": 10,
+          "createdAt": "19/08/25 16:00:48"
+        },
+        {
+          "playerName": "Ford, Graham Peter",
+          "holeNumber": 1,
+          "createdAt": "19/08/25 16:00:49"
+        },
+        {
+          "playerName": "Ford, Graham Peter",
+          "holeNumber": 16,
+          "createdAt": "19/08/25 16:00:49"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:22.763Z"
 }

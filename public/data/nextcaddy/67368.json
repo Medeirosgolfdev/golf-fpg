@@ -1,14 +1,14 @@
 {
   "tourId": 67368,
   "url": "https://www.nextcaddy.com/tour/67368",
-  "scrapedAt": "2026-05-09T09:58:06.612Z",
+  "scrapedAt": "2026-05-21T16:37:44.023Z",
   "meta": {
     "name": "Premio Social de Señores Senior y SuperSenior (+65)",
     "organizer": null,
     "course": "Real Club de la Puerta de Hierro",
     "courseCode": "CM01",
-    "dateStart": "10 mar 2026",
-    "dateEnd": "10 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Especi",
     "categories": [
       "Senior",
@@ -16,13 +16,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-10"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 28,
       "header": [
         "Pos",
         "Jugador",
@@ -347,6 +348,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 24,
       "header": [
         "Pos",
         "Jugador",
@@ -626,6 +629,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 28
+    },
+    "2": {
+      "name": "Scratch Individual",
+      "jugadores": 24
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1041,22 +1055,6 @@
       "nivel": "CM00026406"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71797
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -1316,5 +1314,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:07.430Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71797
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/3940959666_reglas.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:02.626Z"
 }

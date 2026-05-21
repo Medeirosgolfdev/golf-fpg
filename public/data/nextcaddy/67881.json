@@ -1,14 +1,14 @@
 {
   "tourId": 67881,
   "url": "https://www.nextcaddy.com/tour/67881",
-  "scrapedAt": "2026-05-09T09:57:28.500Z",
+  "scrapedAt": "2026-05-21T16:36:44.153Z",
   "meta": {
     "name": "columbus cup",
     "organizer": null,
     "course": "Santa María Golf & Country Club",
     "courseCode": "AM86",
-    "dateStart": "25 ene 2026",
-    "dateEnd": "25 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-25"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 23,
       "header": [
         "Pos",
         "Jugador",
@@ -292,6 +293,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 23
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -637,6 +645,7 @@
       "nivel": "S"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -869,6 +878,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:30.394Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:11.432Z"
 }

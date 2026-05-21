@@ -1,28 +1,539 @@
 {
   "tourId": 68200,
   "url": "https://www.nextcaddy.com/tour/68200",
-  "scrapedAt": "2026-05-09T10:16:39.425Z",
+  "scrapedAt": "2026-05-21T16:40:13.100Z",
   "meta": {
     "name": "Liga Femenina (hcp mayor o igual a 42.1)",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Golf Park Entertainment",
     "courseCode": "CM18",
-    "dateStart": "31 may 2026",
-    "dateEnd": "31 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Liga Femenina 2026",
     "categories": [
-      "Caballeros",
       "Señoras",
       "Juvenil",
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-05-31"
+    ]
   },
   "course": null,
   "leaderboard": [],
-  "inscritos": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Claudia Lesmes Esteban",
+      "licencia": "CM18483268",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Sofia Carola Alvarez",
+      "licencia": "CM61481656",
+      "hcp": 52.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Maria Lama Gutierrez",
+      "licencia": "CMA8486913",
+      "hcp": 51.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Isabel Gutierrez Pascual Del Pobil",
+      "licencia": "CMA8418552",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Alexandra Serrano Villa",
+      "licencia": "CM41488811",
+      "hcp": 50,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Guadalupe Mata Pinilla",
+      "licencia": "CMA8514999",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 7,
+      "name": "Catalina Escobar Sanchez",
+      "licencia": "CMA8099127",
+      "hcp": 54,
+      "nivel": "I"
+    },
+    {
+      "orden": 8,
+      "name": "Sofia Del Valle Horta",
+      "licencia": "CM81508447",
+      "hcp": 48,
+      "nivel": "A"
+    },
+    {
+      "orden": 9,
+      "name": "Alejandra Vallarino Anchuela",
+      "licencia": "CM03495108",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 10,
+      "name": "Adriana Hontoria Cruz",
+      "licencia": "CM33085174",
+      "hcp": 44.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 11,
+      "name": "Nela Fernandez Imamovic",
+      "licencia": "CMD9479143",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 12,
+      "name": "Vera Endeiza Martinez",
+      "licencia": "CM52994103",
+      "hcp": 53.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 13,
+      "name": "Veronica Aguilar Rodriguez",
+      "licencia": "CM41479242",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 14,
+      "name": "Valeria Aguilar Rodriguez",
+      "licencia": "CM41479244",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 15,
+      "name": "Covadonga Zayas Perez",
+      "licencia": "CM01161541",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 16,
+      "name": "Catalina Garcia Alonso",
+      "licencia": "CM41490527",
+      "hcp": 51.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 17,
+      "name": "Alejandra Estallo Soler",
+      "licencia": "CM41078525",
+      "hcp": 45.7,
+      "nivel": "A"
+    },
+    {
+      "orden": 18,
+      "name": "Emma Porres Asensio",
+      "licencia": "CM61518525",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 19,
+      "name": "Ines Porres Asensio",
+      "licencia": "CM61518524",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 20,
+      "name": "Guadalupe Leon Allende",
+      "licencia": "CM06484126",
+      "hcp": 47.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 21,
+      "name": "Beatriz Gonzalez-Haba Carvallo",
+      "licencia": "CM02929496",
+      "hcp": 42.6,
+      "nivel": "I"
+    },
+    {
+      "orden": 22,
+      "name": "Claudia Vallarino Cabo",
+      "licencia": "CM03494717",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 23,
+      "name": "Sofia Fernandez De La Cruz",
+      "licencia": "CM41487421",
+      "hcp": 48.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 24,
+      "name": "Sol Fernandez De Cordoba Sanchez",
+      "licencia": "CM04985074",
+      "hcp": 48,
+      "nivel": "A"
+    },
+    {
+      "orden": 25,
+      "name": "Olivia Vargas Tejerina",
+      "licencia": "CM41491983",
+      "hcp": 43.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 26,
+      "name": "Lucia Gomez De La Vega",
+      "licencia": "CM18515481",
+      "hcp": 44,
+      "nivel": "A"
+    },
+    {
+      "orden": 27,
+      "name": "Blanca Gomez De La Vega",
+      "licencia": "CM18515480",
+      "hcp": 44,
+      "nivel": "A"
+    },
+    {
+      "orden": 28,
+      "name": "Mariana Lizaso Perez-Minguez",
+      "licencia": "CM06351644",
+      "hcp": 47.3,
+      "nivel": "B"
+    },
+    {
+      "orden": 29,
+      "name": "Elena Mas Martinez",
+      "licencia": "CMD9371925",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 30,
+      "name": "Casilda Aparicio Vallarino",
+      "licencia": "CM41508458",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 31,
+      "name": "Alicia Rey Valcarcel",
+      "licencia": "CM81069259",
+      "hcp": 46.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 32,
+      "name": "Silvia Triguero Fernandez",
+      "licencia": "CM41484593",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 33,
+      "name": "Marina Garcia Arias",
+      "licencia": "CM81985579",
+      "hcp": 47.1,
+      "nivel": "I"
+    },
+    {
+      "orden": 34,
+      "name": "Camino Castillejo Magan",
+      "licencia": "CM02486606",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 35,
+      "name": "Fernanda Castillejo Magan",
+      "licencia": "CM02486607",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Claudia Lesmes Esteban",
+      "licencia": "CM18483268",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Sofia Carola Alvarez",
+      "licencia": "CM61481656",
+      "hcp": 52.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Maria Lama Gutierrez",
+      "licencia": "CMA8486913",
+      "hcp": 51.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Isabel Gutierrez Pascual Del Pobil",
+      "licencia": "CMA8418552",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Alexandra Serrano Villa",
+      "licencia": "CM41488811",
+      "hcp": 50,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Guadalupe Mata Pinilla",
+      "licencia": "CMA8514999",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 7,
+      "name": "Catalina Escobar Sanchez",
+      "licencia": "CMA8099127",
+      "hcp": 54,
+      "nivel": "I"
+    },
+    {
+      "orden": 8,
+      "name": "Sofia Del Valle Horta",
+      "licencia": "CM81508447",
+      "hcp": 48,
+      "nivel": "A"
+    },
+    {
+      "orden": 9,
+      "name": "Alejandra Vallarino Anchuela",
+      "licencia": "CM03495108",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 10,
+      "name": "Adriana Hontoria Cruz",
+      "licencia": "CM33085174",
+      "hcp": 44.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 11,
+      "name": "Nela Fernandez Imamovic",
+      "licencia": "CMD9479143",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 12,
+      "name": "Vera Endeiza Martinez",
+      "licencia": "CM52994103",
+      "hcp": 53.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 13,
+      "name": "Veronica Aguilar Rodriguez",
+      "licencia": "CM41479242",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 14,
+      "name": "Valeria Aguilar Rodriguez",
+      "licencia": "CM41479244",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 15,
+      "name": "Covadonga Zayas Perez",
+      "licencia": "CM01161541",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 16,
+      "name": "Catalina Garcia Alonso",
+      "licencia": "CM41490527",
+      "hcp": 51.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 17,
+      "name": "Alejandra Estallo Soler",
+      "licencia": "CM41078525",
+      "hcp": 45.7,
+      "nivel": "A"
+    },
+    {
+      "orden": 18,
+      "name": "Emma Porres Asensio",
+      "licencia": "CM61518525",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 19,
+      "name": "Ines Porres Asensio",
+      "licencia": "CM61518524",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 20,
+      "name": "Guadalupe Leon Allende",
+      "licencia": "CM06484126",
+      "hcp": 47.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 21,
+      "name": "Beatriz Gonzalez-Haba Carvallo",
+      "licencia": "CM02929496",
+      "hcp": 42.6,
+      "nivel": "I"
+    },
+    {
+      "orden": 22,
+      "name": "Claudia Vallarino Cabo",
+      "licencia": "CM03494717",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 23,
+      "name": "Sofia Fernandez De La Cruz",
+      "licencia": "CM41487421",
+      "hcp": 48.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 24,
+      "name": "Sol Fernandez De Cordoba Sanchez",
+      "licencia": "CM04985074",
+      "hcp": 48,
+      "nivel": "A"
+    },
+    {
+      "orden": 25,
+      "name": "Olivia Vargas Tejerina",
+      "licencia": "CM41491983",
+      "hcp": 43.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 26,
+      "name": "Lucia Gomez De La Vega",
+      "licencia": "CM18515481",
+      "hcp": 44,
+      "nivel": "A"
+    },
+    {
+      "orden": 27,
+      "name": "Blanca Gomez De La Vega",
+      "licencia": "CM18515480",
+      "hcp": 44,
+      "nivel": "A"
+    },
+    {
+      "orden": 28,
+      "name": "Mariana Lizaso Perez-Minguez",
+      "licencia": "CM06351644",
+      "hcp": 47.3,
+      "nivel": "B"
+    },
+    {
+      "orden": 29,
+      "name": "Elena Mas Martinez",
+      "licencia": "CMD9371925",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 30,
+      "name": "Casilda Aparicio Vallarino",
+      "licencia": "CM41508458",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 31,
+      "name": "Alicia Rey Valcarcel",
+      "licencia": "CM81069259",
+      "hcp": 46.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 32,
+      "name": "Silvia Triguero Fernandez",
+      "licencia": "CM41484593",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 33,
+      "name": "Marina Garcia Arias",
+      "licencia": "CM81985579",
+      "hcp": 47.1,
+      "nivel": "I"
+    },
+    {
+      "orden": 34,
+      "name": "Camino Castillejo Magan",
+      "licencia": "CM02486606",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 35,
+      "name": "Fernanda Castillejo Magan",
+      "licencia": "CM02486607",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 900,
+      "name": "Los jugadores por debajo de esta línea se encuentran en lista de espera Al estar cubierto el máximo de inscritos, la participación de los jugadores en lista de espera estará pendiente de posibles bajas de otros jugadores. En caso de no ser incluidos en la lista final de participantes se les devolverá el importe de la inscripción por el mismo medio empleado para su pago \">",
+      "hcp": null
+    },
+    {
+      "orden": 1036,
+      "name": "Carla Escobar Sanchez",
+      "licencia": "0204016552",
+      "hcp": 54,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -39,6 +550,6 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:34.409Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:18.770Z"
 }

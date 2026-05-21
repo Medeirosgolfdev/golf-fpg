@@ -1,14 +1,14 @@
 {
   "tourId": 67993,
   "url": "https://www.nextcaddy.com/tour/67993",
-  "scrapedAt": "2026-05-09T09:57:53.272Z",
+  "scrapedAt": "2026-05-21T16:37:20.730Z",
   "meta": {
     "name": "Torneo Circuito Amateur \"Golf Santander\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Golf Santander S A",
     "courseCode": "CMA5",
-    "dateStart": "25 feb 2026",
-    "dateEnd": "25 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Circuito Amateur 2",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-25"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Scratch Indistinta",
+      "expectedJugadores": 92,
       "header": [
         "Pos",
         "Jugador",
@@ -1052,6 +1053,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Clasificación Hándicap Damas",
+      "expectedJugadores": 13,
       "header": [
         "Pos",
         "Jugador",
@@ -1211,6 +1214,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Clasificación Hándicap Caballeros 1ª Categoría",
+      "expectedJugadores": 47,
       "header": [
         "Pos",
         "Jugador",
@@ -1744,6 +1749,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Clasificación Hándicap Caballeros 2ª Categoría",
+      "expectedJugadores": 32,
       "header": [
         "Pos",
         "Jugador",
@@ -2111,6 +2118,25 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Scratch Indistinta",
+      "jugadores": 92
+    },
+    "2": {
+      "name": "Clasificación Hándicap Damas",
+      "jugadores": 13
+    },
+    "3": {
+      "name": "Clasificación Hándicap Caballeros 1ª Categoría",
+      "jugadores": 47
+    },
+    "4": {
+      "name": "Clasificación Hándicap Caballeros 2ª Categoría",
+      "jugadores": 32
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -3415,78 +3441,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72530
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Goñi  Del Cacho, Javier - Ximenez De Embun Monjardin, Gabriel",
-          "holeNumber": 10,
-          "createdAt": "14/08/25 14:56:48"
-        },
-        {
-          "playerName": "Goñi  Del Cacho, Javier - Ximenez De Embun Monjardin, Gabriel",
-          "holeNumber": 12,
-          "createdAt": "14/08/25 14:56:48"
-        },
-        {
-          "playerName": "Gomez De Barreda Garcia-Solans, Beltran - Izquierdo Coveñas, Leandro",
-          "holeNumber": 2,
-          "createdAt": "14/08/25 14:59:45"
-        },
-        {
-          "playerName": "Gomez De Barreda Garcia-Solans, Beltran - Izquierdo Coveñas, Leandro",
-          "holeNumber": 10,
-          "createdAt": "14/08/25 14:59:45"
-        },
-        {
-          "playerName": "Ximenez De Embun Olazabal, Bosco - Lago  Pavia, Nicolas",
-          "holeNumber": 3,
-          "createdAt": "14/08/25 15:03:09"
-        },
-        {
-          "playerName": "Ximenez De Embun Olazabal, Bosco - Lago  Pavia, Nicolas",
-          "holeNumber": 16,
-          "createdAt": "14/08/25 15:03:09"
-        },
-        {
-          "playerName": "Ximenez De Embun Olazabal, Bosco - Lago  Pavia, Nicolas",
-          "holeNumber": 17,
-          "createdAt": "14/08/25 15:03:09"
-        },
-        {
-          "playerName": "Izquierdo Quiros, Leandro - Diez De Rivera Oriol, Juan",
-          "holeNumber": 12,
-          "createdAt": "14/08/25 15:30:00"
-        }
-      ]
-    },
-    "eagle": {
-      "scoreTypeKey": "eagle",
-      "players": [
-        {
-          "playerName": "Gomez De Barreda Garcia-Solans, Beltran - Izquierdo Coveñas, Leandro",
-          "holeNumber": 17,
-          "createdAt": "14/08/25 14:59:45"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -4322,5 +4276,81 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:18.403Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72530
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Goñi  Del Cacho, Javier - Ximenez De Embun Monjardin, Gabriel",
+          "holeNumber": 10,
+          "createdAt": "14/08/25 14:56:48"
+        },
+        {
+          "playerName": "Goñi  Del Cacho, Javier - Ximenez De Embun Monjardin, Gabriel",
+          "holeNumber": 12,
+          "createdAt": "14/08/25 14:56:48"
+        },
+        {
+          "playerName": "Gomez De Barreda Garcia-Solans, Beltran - Izquierdo Coveñas, Leandro",
+          "holeNumber": 2,
+          "createdAt": "14/08/25 14:59:45"
+        },
+        {
+          "playerName": "Gomez De Barreda Garcia-Solans, Beltran - Izquierdo Coveñas, Leandro",
+          "holeNumber": 10,
+          "createdAt": "14/08/25 14:59:45"
+        },
+        {
+          "playerName": "Ximenez De Embun Olazabal, Bosco - Lago  Pavia, Nicolas",
+          "holeNumber": 3,
+          "createdAt": "14/08/25 15:03:09"
+        },
+        {
+          "playerName": "Ximenez De Embun Olazabal, Bosco - Lago  Pavia, Nicolas",
+          "holeNumber": 16,
+          "createdAt": "14/08/25 15:03:09"
+        },
+        {
+          "playerName": "Ximenez De Embun Olazabal, Bosco - Lago  Pavia, Nicolas",
+          "holeNumber": 17,
+          "createdAt": "14/08/25 15:03:09"
+        },
+        {
+          "playerName": "Izquierdo Quiros, Leandro - Diez De Rivera Oriol, Juan",
+          "holeNumber": 12,
+          "createdAt": "14/08/25 15:30:00"
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Gomez De Barreda Garcia-Solans, Beltran - Izquierdo Coveñas, Leandro",
+          "holeNumber": 17,
+          "createdAt": "14/08/25 14:59:45"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/67993_cartel_268.pdf",
+    "/uploads/competiciones/pdf/662961908_arb_reg_loc_cma5.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:15.184Z"
 }

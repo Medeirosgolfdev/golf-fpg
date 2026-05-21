@@ -1,14 +1,14 @@
 {
   "tourId": 70672,
   "url": "https://www.nextcaddy.com/tour/70672",
-  "scrapedAt": "2026-05-09T10:15:58.415Z",
+  "scrapedAt": "2026-05-21T16:39:34.976Z",
   "meta": {
     "name": "torneo privado campo de tiro",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "10 may 2026",
-    "dateEnd": "10 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,223 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-10"
+    ]
   },
   "course": null,
-  "leaderboard": [],
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 17,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Mario Fernandez Marsa",
+          "licencia": "CM15487999",
+          "hcp": 50.8,
+          "nivel": "A",
+          "rounds": [],
+          "total": 22,
+          "toPar": -4,
+          "inscribedId": 2315196
+        },
+        {
+          "pos": 2,
+          "name": "Manuel Gonzalez De Velandia Sanchez",
+          "licencia": "7753353200",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2315213
+        },
+        {
+          "pos": 3,
+          "name": "Victor Estefania Sedano",
+          "licencia": "CM15415256",
+          "hcp": 42.8,
+          "nivel": "I",
+          "rounds": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2315210
+        },
+        {
+          "pos": 4,
+          "name": "Antonio Fuentes Pueyo",
+          "licencia": "CM15058198",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2315203
+        },
+        {
+          "pos": 5,
+          "name": "Jose Luis Marsa Wamsteker",
+          "licencia": "CM15068353",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2316063
+        },
+        {
+          "pos": 6,
+          "name": "Mateo Hernandez Navarro",
+          "licencia": "CM15473456",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2315208
+        },
+        {
+          "pos": 7,
+          "name": "Ignacio Arcos Gonzalez De La Peña",
+          "licencia": "CM15492731",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2316065
+        },
+        {
+          "pos": 8,
+          "name": "Marcos Mañero Minguez",
+          "licencia": "CM15373832",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2316061
+        },
+        {
+          "pos": 9,
+          "name": "Natalia Martin Marin",
+          "licencia": "CM15037602",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2315204
+        },
+        {
+          "pos": 10,
+          "name": "Maria Mañero Minguez",
+          "licencia": "CM15373837",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2316062
+        },
+        {
+          "pos": 11,
+          "name": "Mateo Garnacho Garcia",
+          "licencia": "CM15036359",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2315209
+        },
+        {
+          "pos": 12,
+          "name": "Iñigo Gilsanz Villanueva",
+          "licencia": "CM15524195",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 3,
+          "toPar": 15,
+          "inscribedId": 2315194
+        },
+        {
+          "pos": 13,
+          "name": "Eugenio Fernandez Marsa",
+          "licencia": "CM15524506",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 3,
+          "toPar": 15,
+          "inscribedId": 2315195
+        },
+        {
+          "pos": 14,
+          "name": "Martin Pereyra Muñiz",
+          "licencia": "CM15525254",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "total": 1,
+          "toPar": 17,
+          "inscribedId": 2315214
+        },
+        {
+          "pos": 15,
+          "name": "Angel Navarro Prieto",
+          "licencia": "CM15525059",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 1,
+          "toPar": 17,
+          "inscribedId": 2315207
+        },
+        {
+          "pos": 16,
+          "name": "Carlota Arcos Gonzalez De La Peña",
+          "licencia": "CM15488657",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 1,
+          "toPar": 17,
+          "inscribedId": 2316064
+        },
+        {
+          "pos": null,
+          "name": "Guillermo Truan Pintor",
+          "licencia": "CM15376548",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2315199
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 17
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -101,6 +313,27 @@
       "nivel": "A"
     },
     {
+      "orden": 12,
+      "name": "Marcos Mañero Minguez",
+      "licencia": "CM15373832",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 13,
+      "name": "Jose Luis Marsa Wamsteker",
+      "licencia": "CM15068353",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 14,
+      "name": "Ignacio Arcos Gonzalez De La Peña",
+      "licencia": "CM15492731",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
       "orden": null,
       "name": "Jugador",
       "licencia": "Licencia",
@@ -113,6 +346,20 @@
       "licencia": "CM15037602",
       "hcp": 54,
       "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Maria Mañero Minguez",
+      "licencia": "CM15373837",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Carlota Arcos Gonzalez De La Peña",
+      "licencia": "CM15488657",
+      "hcp": 54,
+      "nivel": "B"
     },
     {
       "orden": null,
@@ -204,8 +451,44 @@
       "licencia": "CM15525254",
       "hcp": 54,
       "nivel": "A"
+    },
+    {
+      "orden": 13,
+      "name": "Marcos Mañero Minguez",
+      "licencia": "CM15373832",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 14,
+      "name": "Maria Mañero Minguez",
+      "licencia": "CM15373837",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 15,
+      "name": "Jose Luis Marsa Wamsteker",
+      "licencia": "CM15068353",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 16,
+      "name": "Carlota Arcos Gonzalez De La Peña",
+      "licencia": "CM15488657",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 17,
+      "name": "Ignacio Arcos Gonzalez De La Peña",
+      "licencia": "CM15492731",
+      "hcp": 54,
+      "nivel": "B"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -222,6 +505,8 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:45.646Z"
+  "pdfs": [
+    "/uploads/competiciones/cartel/2104397211_70672-torneo-privado-campo-de-tiro.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:43.514Z"
 }

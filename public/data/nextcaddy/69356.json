@@ -1,14 +1,14 @@
 {
   "tourId": 69356,
   "url": "https://www.nextcaddy.com/tour/69356",
-  "scrapedAt": "2026-05-09T10:07:36.846Z",
+  "scrapedAt": "2026-05-21T16:38:03.867Z",
   "meta": {
     "name": "PRUEBA ZONAL- LERMA - 9 hoyos (copia)",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "21 mar 2026",
-    "dateEnd": "21 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-03-21"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -108,38 +109,6 @@
       "nivel": "7700349897"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74117
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Garcia Velazquez, Marcelino",
-          "holeNumber": 6,
-          "createdAt": "02/10/25 10:28:13"
-        },
-        {
-          "playerName": "Oliver, Rodger",
-          "holeNumber": 15,
-          "createdAt": "02/10/25 11:40:42"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -192,5 +161,40 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:53.003Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74117
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Garcia Velazquez, Marcelino",
+          "holeNumber": 6,
+          "createdAt": "02/10/25 10:28:13"
+        },
+        {
+          "playerName": "Oliver, Rodger",
+          "holeNumber": 15,
+          "createdAt": "02/10/25 11:40:42"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/2965263761_reglas_locales_-_lerma.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:33.345Z"
 }

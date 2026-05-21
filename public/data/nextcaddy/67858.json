@@ -1,14 +1,14 @@
 {
   "tourId": 67858,
   "url": "https://www.nextcaddy.com/tour/67858",
-  "scrapedAt": "2026-05-09T09:57:51.428Z",
+  "scrapedAt": "2026-05-21T16:37:18.167Z",
   "meta": {
     "name": "Torneo de Ganadores 2025 Comité de Profesionales",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "23 feb 2026",
-    "dateEnd": "23 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Profesional",
@@ -17,11 +17,12 @@
       "Infantil",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-23"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -199,6 +200,121 @@
       "nivel": "P+"
     }
   ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:15",
+          "tee": 1,
+          "name": "Jose Davila Martin",
+          "hcp": 1,
+          "ins": "2264693",
+          "jid": "72373",
+          "nivel": "P"
+        },
+        {
+          "time": "10:15",
+          "tee": 1,
+          "name": "Carlos Balmaseda Sanchez",
+          "hcp": 4.2,
+          "ins": "2264679",
+          "jid": "72373",
+          "nivel": "P"
+        },
+        {
+          "time": "10:15",
+          "tee": 2,
+          "name": "Javier Herrero Gonzalez",
+          "hcp": 0,
+          "ins": "2264687",
+          "jid": "72373",
+          "nivel": "P"
+        },
+        {
+          "time": "10:15",
+          "tee": 2,
+          "name": "Juan Salama Monsalve",
+          "hcp": 0,
+          "ins": "2264690",
+          "jid": "72373",
+          "nivel": "P"
+        },
+        {
+          "time": "10:15",
+          "tee": 3,
+          "name": "Francisco Lagarto Alonso",
+          "hcp": 0,
+          "ins": "2264684",
+          "jid": "72373",
+          "nivel": "P"
+        },
+        {
+          "time": "10:15",
+          "tee": 3,
+          "name": "Vicente Blazquez Sanchez",
+          "hcp": 3.2,
+          "ins": "2264695",
+          "jid": "72373",
+          "nivel": "P"
+        },
+        {
+          "time": "10:15",
+          "tee": 4,
+          "name": "Gonzalo Fernandez-Castaño Hernando",
+          "hcp": 0,
+          "ins": "2264685",
+          "jid": "72373",
+          "nivel": "P"
+        },
+        {
+          "time": "10:15",
+          "tee": 4,
+          "name": "Daniel Berna Manzanares",
+          "hcp": 0,
+          "ins": "2264680",
+          "jid": "72373",
+          "nivel": "P"
+        },
+        {
+          "time": "10:15",
+          "tee": 5,
+          "name": "David Salgado Chacon",
+          "hcp": 0,
+          "ins": "2264683",
+          "jid": "72373",
+          "nivel": "P"
+        },
+        {
+          "time": "10:15",
+          "tee": 5,
+          "name": "Javier Colomo Hidalgo",
+          "hcp": 0,
+          "ins": "2264686",
+          "jid": "72373",
+          "nivel": "P"
+        },
+        {
+          "time": "10:15",
+          "tee": 6,
+          "name": "Antonio Hortal Ochoa",
+          "hcp": 0,
+          "ins": "2264676",
+          "jid": "72373",
+          "nivel": "P"
+        },
+        {
+          "time": "10:15",
+          "tee": 6,
+          "name": "Sigot Lopez",
+          "hcp": 0,
+          "ins": "2264694",
+          "jid": "72373",
+          "nivel": "P"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -331,120 +447,8 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "10:15",
-          "tee": 1,
-          "name": "Jose Davila Martin",
-          "hcp": 1,
-          "ins": "2264693",
-          "jid": "72373",
-          "nivel": "P"
-        },
-        {
-          "time": "10:15",
-          "tee": 1,
-          "name": "Carlos Balmaseda Sanchez",
-          "hcp": 4.2,
-          "ins": "2264679",
-          "jid": "72373",
-          "nivel": "P"
-        },
-        {
-          "time": "10:15",
-          "tee": 2,
-          "name": "Javier Herrero Gonzalez",
-          "hcp": 0,
-          "ins": "2264687",
-          "jid": "72373",
-          "nivel": "P"
-        },
-        {
-          "time": "10:15",
-          "tee": 2,
-          "name": "Juan Salama Monsalve",
-          "hcp": 0,
-          "ins": "2264690",
-          "jid": "72373",
-          "nivel": "P"
-        },
-        {
-          "time": "10:15",
-          "tee": 3,
-          "name": "Francisco Lagarto Alonso",
-          "hcp": 0,
-          "ins": "2264684",
-          "jid": "72373",
-          "nivel": "P"
-        },
-        {
-          "time": "10:15",
-          "tee": 3,
-          "name": "Vicente Blazquez Sanchez",
-          "hcp": 3.2,
-          "ins": "2264695",
-          "jid": "72373",
-          "nivel": "P"
-        },
-        {
-          "time": "10:15",
-          "tee": 4,
-          "name": "Gonzalo Fernandez-Castaño Hernando",
-          "hcp": 0,
-          "ins": "2264685",
-          "jid": "72373",
-          "nivel": "P"
-        },
-        {
-          "time": "10:15",
-          "tee": 4,
-          "name": "Daniel Berna Manzanares",
-          "hcp": 0,
-          "ins": "2264680",
-          "jid": "72373",
-          "nivel": "P"
-        },
-        {
-          "time": "10:15",
-          "tee": 5,
-          "name": "David Salgado Chacon",
-          "hcp": 0,
-          "ins": "2264683",
-          "jid": "72373",
-          "nivel": "P"
-        },
-        {
-          "time": "10:15",
-          "tee": 5,
-          "name": "Javier Colomo Hidalgo",
-          "hcp": 0,
-          "ins": "2264686",
-          "jid": "72373",
-          "nivel": "P"
-        },
-        {
-          "time": "10:15",
-          "tee": 6,
-          "name": "Antonio Hortal Ochoa",
-          "hcp": 0,
-          "ins": "2264676",
-          "jid": "72373",
-          "nivel": "P"
-        },
-        {
-          "time": "10:15",
-          "tee": 6,
-          "name": "Sigot Lopez",
-          "hcp": 0,
-          "ins": "2264694",
-          "jid": "72373",
-          "nivel": "P"
-        }
-      ]
-    }
+  "pdfs": [
+    "/uploads/competiciones/pdf/461396288_condiciones_competicion_torneo_virtual_de_profesionales_2026.pdf"
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:14.925Z"
+  "horariosScrapedAt": "2026-05-21T16:42:11.222Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 68306,
   "url": "https://www.nextcaddy.com/tour/68306",
-  "scrapedAt": "2026-05-09T09:57:46.284Z",
+  "scrapedAt": "2026-05-21T16:37:08.607Z",
   "meta": {
     "name": "GOLFISTA DE SEVILLA (TARDE)",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": "19 feb 2026",
-    "dateEnd": "19 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-19"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Primera Categoria",
+      "expectedJugadores": 9,
       "header": [
         "Pos",
         "Jugador",
@@ -139,6 +140,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Segunda Categoria",
+      "expectedJugadores": 13,
       "header": [
         "Pos",
         "Jugador",
@@ -298,6 +301,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Tercera Categoria",
+      "expectedJugadores": 20,
       "header": [
         "Pos",
         "Jugador",
@@ -533,6 +538,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Primera Categoria",
+      "jugadores": 9
+    },
+    "2": {
+      "name": "Segunda Categoria",
+      "jugadores": 13
+    },
+    "3": {
+      "name": "Tercera Categoria",
+      "jugadores": 20
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -717,33 +737,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72890
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Garvey Canivell, Luis",
-          "holeNumber": 8,
-          "createdAt": "09/08/25 13:10:58"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -859,5 +852,33 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:23.309Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72890
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Garvey Canivell, Luis",
+          "holeNumber": 8,
+          "createdAt": "09/08/25 13:10:58"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:20.705Z"
 }

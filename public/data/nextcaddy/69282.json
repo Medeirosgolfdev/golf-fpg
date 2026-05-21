@@ -1,14 +1,14 @@
 {
   "tourId": 69282,
   "url": "https://www.nextcaddy.com/tour/69282",
-  "scrapedAt": "2026-05-09T10:38:23.160Z",
+  "scrapedAt": "2026-05-21T16:38:54.804Z",
   "meta": {
     "name": "XXXVI CAMPEONATO JUVENIL  DE CyL  2025 (HCP MAYOR DE 36,0)",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "18 abr 2026",
-    "dateEnd": "18 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "JUVENIL",
@@ -18,74 +18,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-04-18"
-  },
-  "course": {
-    "par": [
-      4,
-      4,
-      4,
-      3,
-      4,
-      3,
-      4,
-      4,
-      4,
-      4,
-      4,
-      4,
-      3,
-      4,
-      3,
-      4,
-      4,
-      4
-    ],
-    "si": [
-      3,
-      13,
-      5,
-      15,
-      11,
-      17,
-      1,
-      9,
-      7,
-      4,
-      14,
-      6,
-      18,
-      12,
-      16,
-      2,
-      10,
-      8
-    ],
-    "meters": [
-      310,
-      221,
-      294,
-      96,
-      244,
-      81,
-      330,
-      273,
-      268,
-      310,
-      221,
-      294,
-      96,
-      244,
-      81,
-      330,
-      273,
-      268
     ]
   },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual Benjamín",
+      "expectedJugadores": 4,
       "header": [
         "Pos",
         "Jugador",
@@ -107,8 +47,7 @@
           "rounds": [],
           "total": 19,
           "toPar": -1,
-          "inscribedId": 2299912,
-          "roundScores": []
+          "inscribedId": 2299912
         },
         {
           "pos": 2,
@@ -119,8 +58,7 @@
           "rounds": [],
           "total": 19,
           "toPar": -1,
-          "inscribedId": 2298154,
-          "roundScores": []
+          "inscribedId": 2298154
         },
         {
           "pos": 3,
@@ -131,8 +69,7 @@
           "rounds": [],
           "total": 16,
           "toPar": 2,
-          "inscribedId": 2289222,
-          "roundScores": []
+          "inscribedId": 2289222
         },
         {
           "pos": 4,
@@ -143,13 +80,14 @@
           "rounds": [],
           "total": 15,
           "toPar": 3,
-          "inscribedId": 2299689,
-          "roundScores": []
+          "inscribedId": 2299689
         }
       ]
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual Alevín",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -171,8 +109,7 @@
           "rounds": [],
           "total": 23,
           "toPar": -5,
-          "inscribedId": 2299351,
-          "roundScores": []
+          "inscribedId": 2299351
         },
         {
           "pos": 2,
@@ -183,8 +120,7 @@
           "rounds": [],
           "total": 22,
           "toPar": -4,
-          "inscribedId": 2294534,
-          "roundScores": []
+          "inscribedId": 2294534
         },
         {
           "pos": 3,
@@ -195,8 +131,7 @@
           "rounds": [],
           "total": 21,
           "toPar": -3,
-          "inscribedId": 2299345,
-          "roundScores": []
+          "inscribedId": 2299345
         },
         {
           "pos": 4,
@@ -207,8 +142,7 @@
           "rounds": [],
           "total": 19,
           "toPar": -1,
-          "inscribedId": 2294383,
-          "roundScores": []
+          "inscribedId": 2294383
         },
         {
           "pos": 5,
@@ -219,8 +153,7 @@
           "rounds": [],
           "total": 18,
           "toPar": null,
-          "inscribedId": 2299911,
-          "roundScores": []
+          "inscribedId": 2299911
         },
         {
           "pos": 6,
@@ -231,8 +164,7 @@
           "rounds": [],
           "total": 17,
           "toPar": 1,
-          "inscribedId": 2294388,
-          "roundScores": []
+          "inscribedId": 2294388
         },
         {
           "pos": 7,
@@ -243,8 +175,7 @@
           "rounds": [],
           "total": 10,
           "toPar": 8,
-          "inscribedId": 2297658,
-          "roundScores": []
+          "inscribedId": 2297658
         },
         {
           "pos": 8,
@@ -255,13 +186,14 @@
           "rounds": [],
           "total": 9,
           "toPar": 9,
-          "inscribedId": 2298253,
-          "roundScores": []
+          "inscribedId": 2298253
         }
       ]
     },
     {
       "category": 3,
+      "categoryName": "Handicap Individual Infantil",
+      "expectedJugadores": 3,
       "header": [
         "Pos",
         "Jugador",
@@ -283,8 +215,7 @@
           "rounds": [],
           "total": 20,
           "toPar": -2,
-          "inscribedId": 2298041,
-          "roundScores": []
+          "inscribedId": 2298041
         },
         {
           "pos": 2,
@@ -295,8 +226,7 @@
           "rounds": [],
           "total": 18,
           "toPar": null,
-          "inscribedId": 2289221,
-          "roundScores": []
+          "inscribedId": 2289221
         },
         {
           "pos": 3,
@@ -307,12 +237,26 @@
           "rounds": [],
           "total": 13,
           "toPar": 5,
-          "inscribedId": 2299343,
-          "roundScores": []
+          "inscribedId": 2299343
         }
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Benjamín",
+      "jugadores": 4
+    },
+    "2": {
+      "name": "Handicap Individual Alevín",
+      "jugadores": 8
+    },
+    "3": {
+      "name": "Handicap Individual Infantil",
+      "jugadores": 3
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -539,22 +483,6 @@
       "nivel": "7752003383"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74028
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -697,5 +625,25 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:52.191Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74028
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [
+    "/uploads/competiciones/pdf/3698582336_cuadro_de_honor.pdf",
+    "/uploads/circulares/cirfgcyl0726-1.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:32.507Z"
 }

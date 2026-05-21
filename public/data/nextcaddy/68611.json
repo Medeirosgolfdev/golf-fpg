@@ -1,14 +1,14 @@
 {
   "tourId": 68611,
   "url": "https://www.nextcaddy.com/tour/68611",
-  "scrapedAt": "2026-05-09T09:57:46.443Z",
+  "scrapedAt": "2026-05-21T16:37:09.106Z",
   "meta": {
     "name": "brigitte",
     "organizer": null,
     "course": "Santa María Golf & Country Club",
     "courseCode": "AM86",
-    "dateStart": "20 feb 2026",
-    "dateEnd": "20 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras Facebook",
     "categories": [
       "Señoras",
@@ -16,11 +16,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-20"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -44,6 +45,7 @@
       "nivel": "S"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -81,6 +83,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:38.496Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:24.824Z"
 }

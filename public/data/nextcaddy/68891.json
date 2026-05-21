@@ -1,14 +1,14 @@
 {
   "tourId": 68891,
   "url": "https://www.nextcaddy.com/tour/68891",
-  "scrapedAt": "2026-05-09T10:37:57.923Z",
+  "scrapedAt": "2026-05-21T16:37:33.043Z",
   "meta": {
     "name": "Equipo de Competición Junior Sherry Golf",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "03 mar 2026",
-    "dateEnd": "03 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Junior",
@@ -18,77 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-03"
+    ]
   },
-  "course": {
-    "par": [
-      4,
-      5,
-      5,
-      3,
-      5,
-      3,
-      3,
-      5,
-      4,
-      4,
-      4,
-      3,
-      4,
-      4,
-      4,
-      4,
-      4,
-      4
-    ],
-    "si": [
-      2,
-      13,
-      14,
-      8,
-      9,
-      15,
-      17,
-      3,
-      7,
-      10,
-      5,
-      18,
-      1,
-      11,
-      6,
-      12,
-      16,
-      4
-    ],
-    "meters": [
-      269,
-      305,
-      384,
-      114,
-      459,
-      221,
-      111,
-      296,
-      318,
-      242,
-      428,
-      96,
-      328,
-      105,
-      296,
-      200,
-      375,
-      323
-    ],
-    "parTotal": 72,
-    "parInferred": true,
-    "parConfidence": "high"
-  },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Individual Scratch General",
+      "expectedJugadores": 6,
       "header": [
         "Pos",
         "Jugador",
@@ -110,33 +47,7 @@
           "rounds": [],
           "total": 31,
           "toPar": 5,
-          "inscribedId": 2271719,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                4,
-                5,
-                5,
-                3,
-                5,
-                3,
-                3,
-                5,
-                4,
-                5,
-                5,
-                3,
-                5,
-                4,
-                5,
-                4,
-                5,
-                4
-              ],
-              "total": 77
-            }
-          ]
+          "inscribedId": 2271719
         },
         {
           "pos": 2,
@@ -147,8 +58,7 @@
           "rounds": [],
           "total": 30,
           "toPar": 6,
-          "inscribedId": 2272429,
-          "roundScores": []
+          "inscribedId": 2272429
         },
         {
           "pos": 3,
@@ -159,8 +69,7 @@
           "rounds": [],
           "total": 30,
           "toPar": 6,
-          "inscribedId": 2271720,
-          "roundScores": []
+          "inscribedId": 2271720
         },
         {
           "pos": 4,
@@ -171,8 +80,7 @@
           "rounds": [],
           "total": 26,
           "toPar": 10,
-          "inscribedId": 2271716,
-          "roundScores": []
+          "inscribedId": 2271716
         },
         {
           "pos": 5,
@@ -183,8 +91,7 @@
           "rounds": [],
           "total": 23,
           "toPar": 13,
-          "inscribedId": 2271721,
-          "roundScores": []
+          "inscribedId": 2271721
         },
         {
           "pos": 6,
@@ -195,13 +102,14 @@
           "rounds": [],
           "total": 6,
           "toPar": 30,
-          "inscribedId": 2271766,
-          "roundScores": []
+          "inscribedId": 2271766
         }
       ]
     },
     {
       "category": 2,
+      "categoryName": "Individual Handicap General",
+      "expectedJugadores": 6,
       "header": [
         "Pos",
         "Jugador",
@@ -223,33 +131,7 @@
           "rounds": [],
           "total": 36,
           "toPar": null,
-          "inscribedId": 2271719,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                4,
-                5,
-                5,
-                3,
-                5,
-                3,
-                3,
-                5,
-                4,
-                5,
-                5,
-                3,
-                5,
-                4,
-                5,
-                4,
-                5,
-                4
-              ],
-              "total": 77
-            }
-          ]
+          "inscribedId": 2271719
         },
         {
           "pos": 2,
@@ -260,8 +142,7 @@
           "rounds": [],
           "total": 35,
           "toPar": 1,
-          "inscribedId": 2272429,
-          "roundScores": []
+          "inscribedId": 2272429
         },
         {
           "pos": 3,
@@ -272,8 +153,7 @@
           "rounds": [],
           "total": 34,
           "toPar": 2,
-          "inscribedId": 2271720,
-          "roundScores": []
+          "inscribedId": 2271720
         },
         {
           "pos": 4,
@@ -284,8 +164,7 @@
           "rounds": [],
           "total": 33,
           "toPar": 3,
-          "inscribedId": 2271716,
-          "roundScores": []
+          "inscribedId": 2271716
         },
         {
           "pos": 5,
@@ -296,8 +175,7 @@
           "rounds": [],
           "total": 33,
           "toPar": 3,
-          "inscribedId": 2271721,
-          "roundScores": []
+          "inscribedId": 2271721
         },
         {
           "pos": 6,
@@ -308,12 +186,22 @@
           "rounds": [],
           "total": 29,
           "toPar": 7,
-          "inscribedId": 2271766,
-          "roundScores": []
+          "inscribedId": 2271766
         }
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Scratch General",
+      "jugadores": 6
+    },
+    "2": {
+      "name": "Individual Handicap General",
+      "jugadores": 6
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -421,6 +309,7 @@
       "nivel": "AMC3018662"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -437,6 +326,6 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:40.299Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:28.137Z"
 }

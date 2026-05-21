@@ -1,14 +1,14 @@
 {
   "tourId": 66868,
   "url": "https://www.nextcaddy.com/tour/66868",
-  "scrapedAt": "2026-05-09T10:15:32.203Z",
+  "scrapedAt": "2026-05-21T16:38:53.005Z",
   "meta": {
     "name": "Campeonato de Andalucía Masculino P&P",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Banus Executive Golf",
     "courseCode": "AM88",
-    "dateStart": "18 abr 2026",
-    "dateEnd": "18 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-18"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 48,
       "header": [
         "Pos",
         "Jugador",
@@ -1197,6 +1198,8 @@
     },
     {
       "category": 2,
+      "categoryName": "1ª Categoría Handicap",
+      "expectedJugadores": 24,
       "header": [
         "Pos",
         "Jugador",
@@ -1794,6 +1797,8 @@
     },
     {
       "category": 3,
+      "categoryName": "2ª Categoría Handicap",
+      "expectedJugadores": 24,
       "header": [
         "Pos",
         "Jugador",
@@ -2390,6 +2395,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 48
+    },
+    "2": {
+      "name": "1ª Categoría Handicap",
+      "jugadores": 24
+    },
+    "3": {
+      "name": "2ª Categoría Handicap",
+      "jugadores": 24
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -3071,61 +3091,6 @@
       "nivel": "AM53998020"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71262
-    },
-    {
-      "roundNumber": 2,
-      "roundId": 71263
-    },
-    {
-      "roundNumber": 3,
-      "roundId": 75022
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Alvarez-Ossorio Mergelina, Jaime",
-          "holeNumber": 11,
-          "createdAt": "13/06/25 16:23:47"
-        },
-        {
-          "playerName": "Postigo Secano, Jose",
-          "holeNumber": 12,
-          "createdAt": "13/06/25 16:39:36"
-        },
-        {
-          "playerName": "Alvarez-Ossorio Mergelina, Jaime",
-          "holeNumber": 12,
-          "createdAt": "13/06/25 16:42:14"
-        },
-        {
-          "playerName": "Martin Carrero, Emilio",
-          "holeNumber": 12,
-          "createdAt": "13/06/25 16:55:34"
-        },
-        {
-          "playerName": "Martin Carrero, Emilio",
-          "holeNumber": 9,
-          "createdAt": "13/06/25 20:51:31"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -4430,5 +4395,66 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:04.479Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71262
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 71263
+    },
+    {
+      "roundNumber": 3,
+      "roundId": 75022
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Alvarez-Ossorio Mergelina, Jaime",
+          "holeNumber": 11,
+          "createdAt": "13/06/25 16:23:47"
+        },
+        {
+          "playerName": "Postigo Secano, Jose",
+          "holeNumber": 12,
+          "createdAt": "13/06/25 16:39:36"
+        },
+        {
+          "playerName": "Alvarez-Ossorio Mergelina, Jaime",
+          "holeNumber": 12,
+          "createdAt": "13/06/25 16:42:14"
+        },
+        {
+          "playerName": "Martin Carrero, Emilio",
+          "holeNumber": 12,
+          "createdAt": "13/06/25 16:55:34"
+        },
+        {
+          "playerName": "Martin Carrero, Emilio",
+          "holeNumber": 9,
+          "createdAt": "13/06/25 20:51:31"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/1082337077_campeonato_de_andalucia_masculino.pdf",
+    "/uploads/competiciones/pdf/3793826727_informacion_del_campeonato.pdf",
+    "/uploads/circular/2026/db30b655b2557cf5a4c2b45c89797125.pdf",
+    "/uploads/competiciones/pdf/15772479_reglas_web_tablon.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:59.244Z"
 }

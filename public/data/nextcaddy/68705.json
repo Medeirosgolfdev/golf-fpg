@@ -1,14 +1,14 @@
 {
   "tourId": 68705,
   "url": "https://www.nextcaddy.com/tour/68705",
-  "scrapedAt": "2026-05-09T10:16:48.614Z",
+  "scrapedAt": "2026-05-21T16:40:30.562Z",
   "meta": {
     "name": "Torneo Senior Damas \"RCCVM\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Real Club de Campo Villa de Madrid",
     "courseCode": "CM02",
-    "dateStart": "01 jul 2026",
-    "dateEnd": "01 jul 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Circuito Senior Da",
     "categories": [
       "Senior",
@@ -17,12 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-07-01"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -39,6 +41,6 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:39.166Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:26.179Z"
 }

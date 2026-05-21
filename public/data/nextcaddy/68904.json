@@ -1,14 +1,14 @@
 {
   "tourId": 68904,
   "url": "https://www.nextcaddy.com/tour/68904",
-  "scrapedAt": "2026-05-09T10:15:55.189Z",
+  "scrapedAt": "2026-05-21T16:39:29.036Z",
   "meta": {
     "name": "II Torneo RKN Dobles Fourball · Turno de Mañana 9:30 · Turno de Tarde 17:00",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "08 may 2026",
-    "dateEnd": "08 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,21 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-08"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Pareja Scratch General",
+      "jugadores": 38
+    },
+    "2": {
+      "name": "Pareja Handicap General",
+      "jugadores": 38
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -556,113 +566,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73604
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Vilchez Ruiz, Manuel Jesus",
-          "holeNumber": 1,
-          "createdAt": "04/10/25 14:18:06"
-        },
-        {
-          "playerName": "El Rubaidi Abdullah, Osamah",
-          "holeNumber": 1,
-          "createdAt": "04/10/25 14:31:08"
-        },
-        {
-          "playerName": "Del Rio Martin, Juan Manuel",
-          "holeNumber": 1,
-          "createdAt": "04/10/25 14:31:41"
-        },
-        {
-          "playerName": "Khan, Yaqub",
-          "holeNumber": 6,
-          "createdAt": "04/10/25 14:50:24"
-        },
-        {
-          "playerName": "Del Rio Pedregosa, Juan Manuel",
-          "holeNumber": 1,
-          "createdAt": "04/10/25 15:03:26"
-        },
-        {
-          "playerName": "Del Rio Martin, Juan Manuel",
-          "holeNumber": 7,
-          "createdAt": "04/10/25 16:13:14"
-        },
-        {
-          "playerName": "Sanchez Garate, Francisco",
-          "holeNumber": 14,
-          "createdAt": "04/10/25 16:56:21"
-        },
-        {
-          "playerName": "Del Rio Pedregosa, Juan Manuel",
-          "holeNumber": 10,
-          "createdAt": "04/10/25 17:00:21"
-        },
-        {
-          "playerName": "El Rubaidi Abdullah, Osamah",
-          "holeNumber": 9,
-          "createdAt": "04/10/25 17:00:44"
-        },
-        {
-          "playerName": "Del Rio Pedregosa, Juan Manuel",
-          "holeNumber": 13,
-          "createdAt": "04/10/25 17:57:17"
-        },
-        {
-          "playerName": "Vilchez Ruiz, Manuel Jesus",
-          "holeNumber": 7,
-          "createdAt": "04/10/25 18:21:06"
-        },
-        {
-          "playerName": "Vilchez Ruiz, Manuel Jesus",
-          "holeNumber": 8,
-          "createdAt": "04/10/25 18:21:06"
-        },
-        {
-          "playerName": "Vilchez Ruiz, Manuel Jesus",
-          "holeNumber": 9,
-          "createdAt": "04/10/25 18:21:06"
-        },
-        {
-          "playerName": "Lopez Barroso, Jose Luis",
-          "holeNumber": 14,
-          "createdAt": "04/10/25 18:21:23"
-        },
-        {
-          "playerName": "Vilchez Ruiz, Manuel Jesus",
-          "holeNumber": 17,
-          "createdAt": "04/10/25 18:38:12"
-        },
-        {
-          "playerName": "Del Rio Pedregosa, Juan Manuel",
-          "holeNumber": 16,
-          "createdAt": "04/10/25 18:48:17"
-        },
-        {
-          "playerName": "Gandia Egea, Salvador",
-          "holeNumber": 13,
-          "createdAt": "04/10/25 19:22:09"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1102,20 +1005,20 @@
         {
           "time": "17:00",
           "tee": 4,
-          "name": "David Diaz Hernandez",
-          "hcp": 19.2,
-          "ins": "2305585",
-          "jid": "73604",
-          "nivel": "S"
-        },
-        {
-          "time": "17:00",
-          "tee": 4,
           "name": "Jorge Navio Abad",
           "hcp": 19.2,
           "ins": "2305584",
           "jid": "73604",
           "nivel": "M"
+        },
+        {
+          "time": "17:00",
+          "tee": 4,
+          "name": "David Diaz Hernandez",
+          "hcp": 19.2,
+          "ins": "2305585",
+          "jid": "73604",
+          "nivel": "S"
         },
         {
           "time": "17:00",
@@ -1354,5 +1257,113 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:30.619Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73604
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Vilchez Ruiz, Manuel Jesus",
+          "holeNumber": 1,
+          "createdAt": "04/10/25 14:18:06"
+        },
+        {
+          "playerName": "El Rubaidi Abdullah, Osamah",
+          "holeNumber": 1,
+          "createdAt": "04/10/25 14:31:08"
+        },
+        {
+          "playerName": "Del Rio Martin, Juan Manuel",
+          "holeNumber": 1,
+          "createdAt": "04/10/25 14:31:41"
+        },
+        {
+          "playerName": "Khan, Yaqub",
+          "holeNumber": 6,
+          "createdAt": "04/10/25 14:50:24"
+        },
+        {
+          "playerName": "Del Rio Pedregosa, Juan Manuel",
+          "holeNumber": 1,
+          "createdAt": "04/10/25 15:03:26"
+        },
+        {
+          "playerName": "Del Rio Martin, Juan Manuel",
+          "holeNumber": 7,
+          "createdAt": "04/10/25 16:13:14"
+        },
+        {
+          "playerName": "Sanchez Garate, Francisco",
+          "holeNumber": 14,
+          "createdAt": "04/10/25 16:56:21"
+        },
+        {
+          "playerName": "Del Rio Pedregosa, Juan Manuel",
+          "holeNumber": 10,
+          "createdAt": "04/10/25 17:00:21"
+        },
+        {
+          "playerName": "El Rubaidi Abdullah, Osamah",
+          "holeNumber": 9,
+          "createdAt": "04/10/25 17:00:44"
+        },
+        {
+          "playerName": "Del Rio Pedregosa, Juan Manuel",
+          "holeNumber": 13,
+          "createdAt": "04/10/25 17:57:17"
+        },
+        {
+          "playerName": "Vilchez Ruiz, Manuel Jesus",
+          "holeNumber": 7,
+          "createdAt": "04/10/25 18:21:06"
+        },
+        {
+          "playerName": "Vilchez Ruiz, Manuel Jesus",
+          "holeNumber": 8,
+          "createdAt": "04/10/25 18:21:06"
+        },
+        {
+          "playerName": "Vilchez Ruiz, Manuel Jesus",
+          "holeNumber": 9,
+          "createdAt": "04/10/25 18:21:06"
+        },
+        {
+          "playerName": "Lopez Barroso, Jose Luis",
+          "holeNumber": 14,
+          "createdAt": "04/10/25 18:21:23"
+        },
+        {
+          "playerName": "Vilchez Ruiz, Manuel Jesus",
+          "holeNumber": 17,
+          "createdAt": "04/10/25 18:38:12"
+        },
+        {
+          "playerName": "Del Rio Pedregosa, Juan Manuel",
+          "holeNumber": 16,
+          "createdAt": "04/10/25 18:48:17"
+        },
+        {
+          "playerName": "Gandia Egea, Salvador",
+          "holeNumber": 13,
+          "createdAt": "04/10/25 19:22:09"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:28.676Z"
 }

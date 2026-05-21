@@ -1,14 +1,14 @@
 {
   "tourId": 67351,
   "url": "https://www.nextcaddy.com/tour/67351",
-  "scrapedAt": "2026-05-09T10:38:09.611Z",
+  "scrapedAt": "2026-05-21T16:36:26.236Z",
   "meta": {
     "name": "3ª P. C. INFANTIL B.K. 9 HOYOS 10-01-26",
     "organizer": null,
     "course": "Real Club de Golf Vista Hermosa",
     "courseCode": "AM05",
-    "dateStart": "10 ene 2026",
-    "dateEnd": "10 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "INFANTIL",
@@ -18,17 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-10"
+    ]
   },
-  "course": {
-    "par": null,
-    "si": null,
-    "meters": null
-  },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 14,
       "header": [
         "Pos",
         "Jugador",
@@ -50,8 +47,7 @@
           "rounds": [],
           "total": 19,
           "toPar": -1,
-          "inscribedId": 2242924,
-          "roundScores": []
+          "inscribedId": 2242924
         },
         {
           "pos": 2,
@@ -62,8 +58,7 @@
           "rounds": [],
           "total": 18,
           "toPar": null,
-          "inscribedId": 2242929,
-          "roundScores": []
+          "inscribedId": 2242929
         },
         {
           "pos": 3,
@@ -74,8 +69,7 @@
           "rounds": [],
           "total": 18,
           "toPar": null,
-          "inscribedId": 2242930,
-          "roundScores": []
+          "inscribedId": 2242930
         },
         {
           "pos": 4,
@@ -86,8 +80,7 @@
           "rounds": [],
           "total": 18,
           "toPar": null,
-          "inscribedId": 2242919,
-          "roundScores": []
+          "inscribedId": 2242919
         },
         {
           "pos": 5,
@@ -98,8 +91,7 @@
           "rounds": [],
           "total": 18,
           "toPar": null,
-          "inscribedId": 2242923,
-          "roundScores": []
+          "inscribedId": 2242923
         },
         {
           "pos": 6,
@@ -110,8 +102,7 @@
           "rounds": [],
           "total": 17,
           "toPar": 1,
-          "inscribedId": 2242927,
-          "roundScores": []
+          "inscribedId": 2242927
         },
         {
           "pos": 7,
@@ -122,8 +113,7 @@
           "rounds": [],
           "total": 17,
           "toPar": 1,
-          "inscribedId": 2242921,
-          "roundScores": []
+          "inscribedId": 2242921
         },
         {
           "pos": 8,
@@ -134,8 +124,7 @@
           "rounds": [],
           "total": 14,
           "toPar": 4,
-          "inscribedId": 2242925,
-          "roundScores": []
+          "inscribedId": 2242925
         },
         {
           "pos": 9,
@@ -146,8 +135,7 @@
           "rounds": [],
           "total": 14,
           "toPar": 4,
-          "inscribedId": 2242926,
-          "roundScores": []
+          "inscribedId": 2242926
         },
         {
           "pos": 10,
@@ -158,8 +146,7 @@
           "rounds": [],
           "total": 14,
           "toPar": 4,
-          "inscribedId": 2242922,
-          "roundScores": []
+          "inscribedId": 2242922
         },
         {
           "pos": 11,
@@ -170,8 +157,7 @@
           "rounds": [],
           "total": 12,
           "toPar": 6,
-          "inscribedId": 2242920,
-          "roundScores": []
+          "inscribedId": 2242920
         },
         {
           "pos": 12,
@@ -182,8 +168,7 @@
           "rounds": [],
           "total": 10,
           "toPar": 8,
-          "inscribedId": 2242931,
-          "roundScores": []
+          "inscribedId": 2242931
         },
         {
           "pos": 13,
@@ -194,8 +179,7 @@
           "rounds": [],
           "total": 8,
           "toPar": 10,
-          "inscribedId": 2242918,
-          "roundScores": []
+          "inscribedId": 2242918
         },
         {
           "pos": null,
@@ -206,12 +190,18 @@
           "rounds": [],
           "total": null,
           "toPar": null,
-          "inscribedId": 2242928,
-          "roundScores": []
+          "inscribedId": 2242928
         }
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 14
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -424,53 +414,6 @@
       "nivel": "AM05350633"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71779
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Garcia Ramos-Catalina, Fernando",
-          "holeNumber": 3,
-          "createdAt": "19/07/25 08:49:28"
-        },
-        {
-          "playerName": "Mateos Merchante, Gonzalo",
-          "holeNumber": 5,
-          "createdAt": "19/07/25 09:01:04"
-        },
-        {
-          "playerName": "Rios Rey, Antonio",
-          "holeNumber": 14,
-          "createdAt": "19/07/25 09:18:11"
-        },
-        {
-          "playerName": "Abollo Garcia, Eduardo Jose",
-          "holeNumber": 16,
-          "createdAt": "19/07/25 09:48:19"
-        },
-        {
-          "playerName": "Rodriguez De La Hera, Carlos",
-          "holeNumber": 12,
-          "createdAt": "19/07/25 11:18:44"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -604,5 +547,53 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:07.165Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71779
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Garcia Ramos-Catalina, Fernando",
+          "holeNumber": 3,
+          "createdAt": "19/07/25 08:49:28"
+        },
+        {
+          "playerName": "Mateos Merchante, Gonzalo",
+          "holeNumber": 5,
+          "createdAt": "19/07/25 09:01:04"
+        },
+        {
+          "playerName": "Rios Rey, Antonio",
+          "holeNumber": 14,
+          "createdAt": "19/07/25 09:18:11"
+        },
+        {
+          "playerName": "Abollo Garcia, Eduardo Jose",
+          "holeNumber": 16,
+          "createdAt": "19/07/25 09:48:19"
+        },
+        {
+          "playerName": "Rodriguez De La Hera, Carlos",
+          "holeNumber": 12,
+          "createdAt": "19/07/25 11:18:44"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:02.440Z"
 }

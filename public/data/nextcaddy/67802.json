@@ -1,14 +1,14 @@
 {
   "tourId": 67802,
   "url": "https://www.nextcaddy.com/tour/67802",
-  "scrapedAt": "2026-05-09T09:58:02.109Z",
+  "scrapedAt": "2026-05-21T16:37:35.420Z",
   "meta": {
     "name": "Torneo Senior Pitch & Putt \"Golf Negralejo\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Palacio del Negralejo S A",
     "courseCode": "CM33",
-    "dateStart": "05 mar 2026",
-    "dateEnd": "05 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap) Circuito Senior De",
     "categories": [
       "Senior",
@@ -18,13 +18,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-05"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificacion Supersenior",
+      "expectedJugadores": 80,
       "header": [
         "Pos",
         "Jugador",
@@ -921,6 +922,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Clasificacion Senior",
+      "expectedJugadores": 28,
       "header": [
         "Pos",
         "Jugador",
@@ -1245,6 +1248,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Clasificacion Damas",
+      "expectedJugadores": 22,
       "header": [
         "Pos",
         "Jugador",
@@ -1502,6 +1507,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificacion Supersenior",
+      "jugadores": 80
+    },
+    "2": {
+      "name": "Clasificacion Senior",
+      "jugadores": 28
+    },
+    "3": {
+      "name": "Clasificacion Damas",
+      "jugadores": 22
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -3338,22 +3358,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72297
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -4531,5 +4535,25 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:13.269Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72297
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/67802_cartel_112.pdf",
+    "/uploads/competiciones/pdf/3441611313_rrll_negralejo_p&amp;p.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:09.427Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 70654,
   "url": "https://www.nextcaddy.com/tour/70654",
-  "scrapedAt": "2026-05-09T10:15:57.920Z",
+  "scrapedAt": "2026-05-21T16:39:33.701Z",
   "meta": {
     "name": "AMIGOS DE MIRAFLORES",
     "organizer": null,
     "course": "Miraflores Golf",
     "courseCode": "AM76",
-    "dateStart": "09 may 2026",
-    "dateEnd": "09 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,20 +17,693 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-09"
+    ]
   },
   "course": null,
-  "leaderboard": [],
-  "inscritos": [],
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 11,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Dario Acedo Del Olmo Godino",
+          "licencia": "AM72967374",
+          "hcp": 13.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2315606
+        },
+        {
+          "pos": 2,
+          "name": "Francisco Quero Zumaquero",
+          "licencia": "AM57138495",
+          "hcp": 20.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2315601
+        },
+        {
+          "pos": 3,
+          "name": "Carlos Del Campo Vicente",
+          "licencia": "7724148919",
+          "hcp": 12,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2315612
+        },
+        {
+          "pos": 4,
+          "name": "Fernando Cerezo Lorente",
+          "licencia": "AM76799351",
+          "hcp": 20.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2315602
+        },
+        {
+          "pos": 5,
+          "name": "Jesus Lopez Fernandez",
+          "licencia": "AM76885942",
+          "hcp": 24.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2315604
+        },
+        {
+          "pos": 6,
+          "name": "Alfonso Gonzalez Peña",
+          "licencia": "CM52138410",
+          "hcp": 21.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2315600
+        },
+        {
+          "pos": 7,
+          "name": "Muriel Martin",
+          "licencia": "AMB5906267",
+          "hcp": 21.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2315613
+        },
+        {
+          "pos": 8,
+          "name": "Alfonso Rosales Mata",
+          "licencia": "AM76601307",
+          "hcp": 12.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2315605
+        },
+        {
+          "pos": 9,
+          "name": "Angel Chacon Pineda",
+          "licencia": "AM43287659",
+          "hcp": 17.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2315603
+        },
+        {
+          "pos": 10,
+          "name": "Rafael Gallego Aguado",
+          "licencia": "AM93902969",
+          "hcp": 25.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2315614
+        },
+        {
+          "pos": 11,
+          "name": "Roberto Regueiro Calleja",
+          "licencia": "AM76149178",
+          "hcp": 21.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2315599
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 11
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Roberto Regueiro Calleja",
+      "licencia": "AM76149178",
+      "hcp": 21.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Alfonso Gonzalez Peña",
+      "licencia": "CM52138410",
+      "hcp": 21.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Francisco Quero Zumaquero",
+      "licencia": "AM57138495",
+      "hcp": 20.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Fernando Cerezo Lorente",
+      "licencia": "AM76799351",
+      "hcp": 20.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Angel Chacon Pineda",
+      "licencia": "AM43287659",
+      "hcp": 17.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Jesus Lopez Fernandez",
+      "licencia": "AM76885942",
+      "hcp": 24.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Alfonso Rosales Mata",
+      "licencia": "AM76601307",
+      "hcp": 12.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Dario Acedo Del Olmo Godino",
+      "licencia": "AM72967374",
+      "hcp": 13.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Carlos Del Campo Vicente",
+      "licencia": "7724148919",
+      "hcp": 12,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Rafael Gallego Aguado",
+      "licencia": "AM93902969",
+      "hcp": 25.1,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Muriel Martin",
+      "licencia": "AMB5906267",
+      "hcp": 21.7,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Fecha Inscripción",
+      "hcp": null,
+      "nivel": "Licencia"
+    },
+    {
+      "orden": 1,
+      "name": "Roberto Regueiro Calleja",
+      "licencia": "09-05-26 12:28",
+      "hcp": 21.9,
+      "nivel": "AM76149178"
+    },
+    {
+      "orden": 2,
+      "name": "Alfonso Gonzalez Peña",
+      "licencia": "09-05-26 12:28",
+      "hcp": 21.9,
+      "nivel": "CM52138410"
+    },
+    {
+      "orden": 3,
+      "name": "Francisco Quero Zumaquero",
+      "licencia": "09-05-26 12:28",
+      "hcp": 20.2,
+      "nivel": "AM57138495"
+    },
+    {
+      "orden": 4,
+      "name": "Fernando Cerezo Lorente",
+      "licencia": "09-05-26 12:29",
+      "hcp": 20.8,
+      "nivel": "AM76799351"
+    },
+    {
+      "orden": 5,
+      "name": "Angel Chacon Pineda",
+      "licencia": "09-05-26 12:32",
+      "hcp": 17.7,
+      "nivel": "AM43287659"
+    },
+    {
+      "orden": 6,
+      "name": "Jesus Lopez Fernandez",
+      "licencia": "09-05-26 12:33",
+      "hcp": 24.1,
+      "nivel": "AM76885942"
+    },
+    {
+      "orden": 7,
+      "name": "Alfonso Rosales Mata",
+      "licencia": "09-05-26 12:33",
+      "hcp": 12.8,
+      "nivel": "AM76601307"
+    },
+    {
+      "orden": 8,
+      "name": "Dario Acedo Del Olmo Godino",
+      "licencia": "09-05-26 12:34",
+      "hcp": 13.3,
+      "nivel": "AM72967374"
+    },
+    {
+      "orden": 9,
+      "name": "Carlos Del Campo Vicente",
+      "licencia": "09-05-26 13:12",
+      "hcp": 12,
+      "nivel": "7724148919"
+    },
+    {
+      "orden": 10,
+      "name": "Muriel Martin",
+      "licencia": "09-05-26 13:12",
+      "hcp": 21.7,
+      "nivel": "AMB5906267"
+    },
+    {
+      "orden": 11,
+      "name": "Rafael Gallego Aguado",
+      "licencia": "09-05-26 13:12",
+      "hcp": 25.1,
+      "nivel": "AM93902969"
+    }
+  ],
+  "horarios": [],
   "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
+    "0": {
+      "p": {
+        "id": 159216,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            45
+          ],
+          [
+            "Birdie",
+            3
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            67
+          ],
+          [
+            "Peor",
+            63
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 159217,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            6
+          ],
+          [
+            "2",
+            12
+          ],
+          [
+            "3",
+            22
+          ],
+          [
+            "4",
+            9
+          ],
+          [
+            "5",
+            8
+          ],
+          [
+            "6",
+            21
+          ],
+          [
+            "7",
+            9
+          ],
+          [
+            "8",
+            16
+          ],
+          [
+            "9",
+            10
+          ],
+          [
+            "10",
+            8
+          ],
+          [
+            "11",
+            7
+          ],
+          [
+            "12",
+            15
+          ],
+          [
+            "13",
+            8
+          ],
+          [
+            "14",
+            16
+          ],
+          [
+            "15",
+            11
+          ],
+          [
+            "16",
+            9
+          ],
+          [
+            "17",
+            11
+          ],
+          [
+            "18",
+            9
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 159218,
+        "datos": [
+          [
+            "Hoyo",
+            "DARIO ACEDO DEL OLMO GODINO",
+            "FRANCISCO QUERO ZUMAQUERO",
+            "CARLOS DEL CAMPO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            -2,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 4",
+            -3,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 5",
+            -4,
+            1,
+            -2
+          ],
+          [
+            "Hoyo 6",
+            -4,
+            1,
+            0
+          ],
+          [
+            "Hoyo 7",
+            -5,
+            1,
+            1
+          ],
+          [
+            "Hoyo 8",
+            -4,
+            1,
+            3
+          ],
+          [
+            "Hoyo 9",
+            -4,
+            0,
+            2
+          ],
+          [
+            "Hoyo 10",
+            -2,
+            0,
+            3
+          ],
+          [
+            "Hoyo 11",
+            0,
+            -1,
+            4
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            -1,
+            3
+          ],
+          [
+            "Hoyo 13",
+            -1,
+            -2,
+            3
+          ],
+          [
+            "Hoyo 14",
+            -1,
+            -2,
+            3
+          ],
+          [
+            "Hoyo 15",
+            0,
+            -1,
+            3
+          ],
+          [
+            "Hoyo 16",
+            -1,
+            -1,
+            2
+          ],
+          [
+            "Hoyo 17",
+            -2,
+            1,
+            2
+          ],
+          [
+            "Hoyo 18",
+            -1,
+            0,
+            2
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 159219,
+        "datos": [
+          [
+            "Hoyo",
+            "DARIO ACEDO DEL OLMO GODINO",
+            "FRANCISCO QUERO ZUMAQUERO",
+            "CARLOS DEL CAMPO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            2,
+            0
+          ],
+          [
+            "Hoyo 5",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            0,
+            0,
+            2
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 8",
+            1,
+            0,
+            2
+          ],
+          [
+            "Hoyo 9",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            2,
+            0,
+            1
+          ],
+          [
+            "Hoyo 11",
+            2,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 13",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 14",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 15",
+            1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 16",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 17",
+            -1,
+            2,
+            0
+          ],
+          [
+            "Hoyo 18",
+            1,
+            -1,
+            0
+          ]
+        ]
+      }
+    }
   },
   "roundIds": [
     {
@@ -55,6 +728,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:45.387Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:43.235Z"
 }

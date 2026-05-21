@@ -1,14 +1,14 @@
 {
   "tourId": 69481,
   "url": "https://www.nextcaddy.com/tour/69481",
-  "scrapedAt": "2026-05-09T10:35:47.450Z",
+  "scrapedAt": "2026-05-21T16:38:25.163Z",
   "meta": {
     "name": "Equipo de Competición Junior Sherry Golf (grupo privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "30 mar 2026",
-    "dateEnd": "30 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Junior",
@@ -18,77 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-30"
+    ]
   },
-  "course": {
-    "par": [
-      5,
-      4,
-      5,
-      4,
-      5,
-      4,
-      3,
-      4,
-      5,
-      4,
-      5,
-      4,
-      5,
-      4,
-      4,
-      4,
-      4,
-      4
-    ],
-    "si": [
-      2,
-      13,
-      14,
-      8,
-      9,
-      15,
-      17,
-      3,
-      7,
-      10,
-      5,
-      18,
-      1,
-      11,
-      6,
-      12,
-      16,
-      4
-    ],
-    "meters": [
-      269,
-      305,
-      384,
-      114,
-      459,
-      221,
-      111,
-      296,
-      318,
-      242,
-      428,
-      96,
-      328,
-      105,
-      296,
-      200,
-      375,
-      323
-    ],
-    "parTotal": 77,
-    "parInferred": true,
-    "parConfidence": "high"
-  },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 9,
       "header": [
         "Pos",
         "Jugador",
@@ -110,33 +47,7 @@
           "rounds": [],
           "total": 45,
           "toPar": -9,
-          "inscribedId": 2289166,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                7,
-                5,
-                5,
-                4,
-                5,
-                4,
-                4,
-                4,
-                6,
-                4,
-                8,
-                4,
-                5,
-                5,
-                4,
-                6,
-                4,
-                5
-              ],
-              "total": 89
-            }
-          ]
+          "inscribedId": 2289166
         },
         {
           "pos": 2,
@@ -147,33 +58,7 @@
           "rounds": [],
           "total": 44,
           "toPar": -8,
-          "inscribedId": 2289121,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                6,
-                6,
-                7,
-                4,
-                8,
-                9,
-                3,
-                8,
-                6,
-                5,
-                8,
-                4,
-                7,
-                5,
-                6,
-                4,
-                6,
-                7
-              ],
-              "total": 109
-            }
-          ]
+          "inscribedId": 2289121
         },
         {
           "pos": 3,
@@ -184,33 +69,7 @@
           "rounds": [],
           "total": 42,
           "toPar": -6,
-          "inscribedId": 2289172,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                6,
-                5,
-                4,
-                3,
-                6,
-                5,
-                4,
-                5,
-                5,
-                4,
-                8,
-                3,
-                9,
-                3,
-                7,
-                4,
-                4,
-                6
-              ],
-              "total": 91
-            }
-          ]
+          "inscribedId": 2289172
         },
         {
           "pos": 4,
@@ -221,33 +80,7 @@
           "rounds": [],
           "total": 38,
           "toPar": -2,
-          "inscribedId": 2289161,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                4,
-                4,
-                4,
-                3,
-                5,
-                4,
-                3,
-                4,
-                4,
-                4,
-                6,
-                4,
-                5,
-                5,
-                3,
-                4,
-                5,
-                4
-              ],
-              "total": 75
-            }
-          ]
+          "inscribedId": 2289161
         },
         {
           "pos": 5,
@@ -258,33 +91,7 @@
           "rounds": [],
           "total": 38,
           "toPar": -2,
-          "inscribedId": 2289094,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                4,
-                5,
-                4,
-                5,
-                5,
-                3,
-                5,
-                5,
-                4,
-                7,
-                4,
-                5,
-                3,
-                4,
-                4,
-                5,
-                5
-              ],
-              "total": 82
-            }
-          ]
+          "inscribedId": 2289094
         },
         {
           "pos": 6,
@@ -295,8 +102,7 @@
           "rounds": [],
           "total": 38,
           "toPar": -2,
-          "inscribedId": 2289163,
-          "roundScores": []
+          "inscribedId": 2289163
         },
         {
           "pos": 7,
@@ -307,8 +113,7 @@
           "rounds": [],
           "total": 33,
           "toPar": 3,
-          "inscribedId": 2289116,
-          "roundScores": []
+          "inscribedId": 2289116
         },
         {
           "pos": 8,
@@ -319,8 +124,7 @@
           "rounds": [],
           "total": 30,
           "toPar": 6,
-          "inscribedId": 2289174,
-          "roundScores": []
+          "inscribedId": 2289174
         },
         {
           "pos": 9,
@@ -331,12 +135,18 @@
           "rounds": [],
           "total": 22,
           "toPar": 14,
-          "inscribedId": 2289164,
-          "roundScores": []
+          "inscribedId": 2289164
         }
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 9
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -479,73 +289,6 @@
       "nivel": "AM05959942"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74252
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Nuñez Escobedo, Alberto",
-          "holeNumber": 7,
-          "createdAt": "05/10/25 09:45:30"
-        },
-        {
-          "playerName": "Muñoz Rodrigo, David",
-          "holeNumber": 4,
-          "createdAt": "05/10/25 10:04:24"
-        },
-        {
-          "playerName": "De Lorenzo Rodriguez, Oscar Orsini",
-          "holeNumber": 12,
-          "createdAt": "05/10/25 11:55:56"
-        },
-        {
-          "playerName": "Rincon Muñoz, Angel",
-          "holeNumber": 15,
-          "createdAt": "05/10/25 13:49:27"
-        },
-        {
-          "playerName": "Palero Gonzalez, Juan Manuel",
-          "holeNumber": 1,
-          "createdAt": "05/10/25 14:26:30"
-        },
-        {
-          "playerName": "Montes Soler, Victor Manuel",
-          "holeNumber": 4,
-          "createdAt": "05/10/25 14:50:46"
-        },
-        {
-          "playerName": "Pascual Oliva, Jose Luis",
-          "holeNumber": 1,
-          "createdAt": "05/10/25 14:50:55"
-        },
-        {
-          "playerName": "Sanchez Herreros, Jose Manuel",
-          "holeNumber": 4,
-          "createdAt": "05/10/25 14:54:01"
-        },
-        {
-          "playerName": "Montes Soler, Victor Manuel",
-          "holeNumber": 6,
-          "createdAt": "05/10/25 15:23:06"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -634,5 +377,73 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:54.339Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74252
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Nuñez Escobedo, Alberto",
+          "holeNumber": 7,
+          "createdAt": "05/10/25 09:45:30"
+        },
+        {
+          "playerName": "Muñoz Rodrigo, David",
+          "holeNumber": 4,
+          "createdAt": "05/10/25 10:04:24"
+        },
+        {
+          "playerName": "De Lorenzo Rodriguez, Oscar Orsini",
+          "holeNumber": 12,
+          "createdAt": "05/10/25 11:55:56"
+        },
+        {
+          "playerName": "Rincon Muñoz, Angel",
+          "holeNumber": 15,
+          "createdAt": "05/10/25 13:49:27"
+        },
+        {
+          "playerName": "Palero Gonzalez, Juan Manuel",
+          "holeNumber": 1,
+          "createdAt": "05/10/25 14:26:30"
+        },
+        {
+          "playerName": "Montes Soler, Victor Manuel",
+          "holeNumber": 4,
+          "createdAt": "05/10/25 14:50:46"
+        },
+        {
+          "playerName": "Pascual Oliva, Jose Luis",
+          "holeNumber": 1,
+          "createdAt": "05/10/25 14:50:55"
+        },
+        {
+          "playerName": "Sanchez Herreros, Jose Manuel",
+          "holeNumber": 4,
+          "createdAt": "05/10/25 14:54:01"
+        },
+        {
+          "playerName": "Montes Soler, Victor Manuel",
+          "holeNumber": 6,
+          "createdAt": "05/10/25 15:23:06"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:34.733Z"
 }

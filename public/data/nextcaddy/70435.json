@@ -1,14 +1,14 @@
 {
   "tourId": 70435,
   "url": "https://www.nextcaddy.com/tour/70435",
-  "scrapedAt": "2026-05-09T10:16:27.068Z",
+  "scrapedAt": "2026-05-21T16:39:35.640Z",
   "meta": {
     "name": "4 J. CIRCUITO VNG 2026. CATEGORIA ORO (0 - 12)",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "10 may 2026",
-    "dateEnd": "10 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -18,11 +18,322 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-10"
+    ]
   },
   "course": null,
-  "leaderboard": [],
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 12,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Thomas Wangen Llanza",
+          "licencia": "CB05048081",
+          "hcp": 3,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 74,
+          "toPar": 3,
+          "inscribedId": 2310278
+        },
+        {
+          "pos": 2,
+          "name": "Javier Fernandez Bustelo",
+          "licencia": "AM17940245",
+          "hcp": 4.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 75,
+          "toPar": 4,
+          "inscribedId": 2315448
+        },
+        {
+          "pos": 3,
+          "name": "Maximo Quintero Diaz",
+          "licencia": "AM00606713",
+          "hcp": 7.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 77,
+          "toPar": 6,
+          "inscribedId": 2314247
+        },
+        {
+          "pos": 4,
+          "name": "Leandro Guillermo Scholtis Noceto",
+          "licencia": "AM66949341",
+          "hcp": 4.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 77,
+          "toPar": 6,
+          "inscribedId": 2315285
+        },
+        {
+          "pos": 5,
+          "name": "Fernando Moreno Perez",
+          "licencia": "AM84926800",
+          "hcp": 9,
+          "nivel": "C",
+          "rounds": [],
+          "total": 82,
+          "toPar": 11,
+          "inscribedId": 2314251
+        },
+        {
+          "pos": 6,
+          "name": "Fernando Muñoz Rodriguez",
+          "licencia": "AMD5749518",
+          "hcp": 8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 82,
+          "toPar": 11,
+          "inscribedId": 2314919
+        },
+        {
+          "pos": 7,
+          "name": "Antonio Sierra Galan",
+          "licencia": "AMD5696093",
+          "hcp": 7,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 84,
+          "toPar": 13,
+          "inscribedId": 2311575
+        },
+        {
+          "pos": 8,
+          "name": "Juan Rego Olvera",
+          "licencia": "AMD5926544",
+          "hcp": 14.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 87,
+          "toPar": 16,
+          "inscribedId": 2310777
+        },
+        {
+          "pos": 9,
+          "name": "Joaquin Escalante Boceta",
+          "licencia": "AMD5698526",
+          "hcp": 10.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 89,
+          "toPar": 18,
+          "inscribedId": 2314884
+        },
+        {
+          "pos": 10,
+          "name": "Manuel Barnes Fiscer",
+          "licencia": "AMC9600166",
+          "hcp": 14.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 90,
+          "toPar": 19,
+          "inscribedId": 2315466
+        },
+        {
+          "pos": 11,
+          "name": "Luis Ferrer Puga",
+          "licencia": "AM00357350",
+          "hcp": 11.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 90,
+          "toPar": 19,
+          "inscribedId": 2314823
+        },
+        {
+          "pos": 12,
+          "name": "Pedro Jose Cantero Ortega",
+          "licencia": "AMD5769349",
+          "hcp": 6,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 91,
+          "toPar": 20,
+          "inscribedId": 2314961
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 12,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Maximo Quintero Diaz",
+          "licencia": "AM00606713",
+          "hcp": 7.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 70,
+          "toPar": -1,
+          "inscribedId": 2314247
+        },
+        {
+          "pos": 2,
+          "name": "Javier Fernandez Bustelo",
+          "licencia": "AM17940245",
+          "hcp": 4.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 71,
+          "toPar": null,
+          "inscribedId": 2315448
+        },
+        {
+          "pos": 3,
+          "name": "Thomas Wangen Llanza",
+          "licencia": "CB05048081",
+          "hcp": 3,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 72,
+          "toPar": 1,
+          "inscribedId": 2310278
+        },
+        {
+          "pos": 4,
+          "name": "Leandro Guillermo Scholtis Noceto",
+          "licencia": "AM66949341",
+          "hcp": 4.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 73,
+          "toPar": 2,
+          "inscribedId": 2315285
+        },
+        {
+          "pos": 5,
+          "name": "Fernando Moreno Perez",
+          "licencia": "AM84926800",
+          "hcp": 9,
+          "nivel": "C",
+          "rounds": [],
+          "total": 73,
+          "toPar": 2,
+          "inscribedId": 2314251
+        },
+        {
+          "pos": 6,
+          "name": "Fernando Muñoz Rodriguez",
+          "licencia": "AMD5749518",
+          "hcp": 8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 74,
+          "toPar": 3,
+          "inscribedId": 2314919
+        },
+        {
+          "pos": 7,
+          "name": "Juan Rego Olvera",
+          "licencia": "AMD5926544",
+          "hcp": 14.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 75,
+          "toPar": 4,
+          "inscribedId": 2310777
+        },
+        {
+          "pos": 8,
+          "name": "Antonio Sierra Galan",
+          "licencia": "AMD5696093",
+          "hcp": 7,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 77,
+          "toPar": 6,
+          "inscribedId": 2311575
+        },
+        {
+          "pos": 9,
+          "name": "Joaquin Escalante Boceta",
+          "licencia": "AMD5698526",
+          "hcp": 10.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 78,
+          "toPar": 7,
+          "inscribedId": 2314884
+        },
+        {
+          "pos": 10,
+          "name": "Manuel Barnes Fiscer",
+          "licencia": "AMC9600166",
+          "hcp": 14.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 78,
+          "toPar": 7,
+          "inscribedId": 2315466
+        },
+        {
+          "pos": 11,
+          "name": "Luis Ferrer Puga",
+          "licencia": "AM00357350",
+          "hcp": 11.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 78,
+          "toPar": 7,
+          "inscribedId": 2314823
+        },
+        {
+          "pos": 12,
+          "name": "Pedro Jose Cantero Ortega",
+          "licencia": "AMD5769349",
+          "hcp": 6,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 85,
+          "toPar": 14,
+          "inscribedId": 2314961
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 12
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 12
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -200,22 +511,6 @@
       "nivel": "AMC9600166"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75377
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -331,5 +626,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:13:00.233Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75377
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [
+    "/uploads/competiciones/pdf/2336797973_reglamento_circuito_villanueva_golf_2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:40.814Z"
 }

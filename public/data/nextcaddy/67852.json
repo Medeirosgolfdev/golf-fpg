@@ -1,14 +1,14 @@
 {
   "tourId": 67852,
   "url": "https://www.nextcaddy.com/tour/67852",
-  "scrapedAt": "2026-05-09T10:16:31.362Z",
+  "scrapedAt": "2026-05-21T16:39:43.770Z",
   "meta": {
     "name": "Campeonato de Madrid Abierto Femenino",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Golf Santander S A",
     "courseCode": "CMA5",
-    "dateStart": "15 may 2026",
-    "dateEnd": "15 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Señoras C. Amateur",
     "categories": [
       "Señoras",
@@ -16,11 +16,3674 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-05-15"
+    ]
   },
   "course": null,
-  "leaderboard": [],
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Final",
+      "expectedJugadores": 82,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "J3",
+        "HcpJuego J3",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Angela Revuelta Goicoechea",
+          "licencia": "CM11904045",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 74
+            },
+            {
+              "round": 2,
+              "gross": 67
+            },
+            {
+              "round": 3,
+              "gross": 70
+            }
+          ],
+          "total": 211,
+          "toPar": -5,
+          "inscribedId": 2299895
+        },
+        {
+          "pos": 2,
+          "name": "Carlota Lopez Minguela",
+          "licencia": "LV02978781",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 73
+            },
+            {
+              "round": 2,
+              "gross": 73
+            },
+            {
+              "round": 3,
+              "gross": 67
+            }
+          ],
+          "total": 213,
+          "toPar": -3,
+          "inscribedId": 2301404
+        },
+        {
+          "pos": 3,
+          "name": "Adriana Garcia Terol",
+          "licencia": "CB01168758",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 68
+            },
+            {
+              "round": 2,
+              "gross": 72
+            },
+            {
+              "round": 3,
+              "gross": 74
+            }
+          ],
+          "total": 214,
+          "toPar": -2,
+          "inscribedId": 2302485
+        },
+        {
+          "pos": 4,
+          "name": "Nagore Martinez Salcedo",
+          "licencia": "CB01892885",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 70
+            },
+            {
+              "round": 2,
+              "gross": 71
+            },
+            {
+              "round": 3,
+              "gross": 73
+            }
+          ],
+          "total": 214,
+          "toPar": -2,
+          "inscribedId": 2299917
+        },
+        {
+          "pos": 5,
+          "name": "Claudia Lara Miravitlles",
+          "licencia": "CB03805418",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 67
+            },
+            {
+              "round": 3,
+              "gross": 73
+            }
+          ],
+          "total": 215,
+          "toPar": -1,
+          "inscribedId": 2302429
+        },
+        {
+          "pos": 6,
+          "name": "Iciar Rodriguez Crespo",
+          "licencia": "CM61964557",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 71
+            },
+            {
+              "round": 2,
+              "gross": 74
+            },
+            {
+              "round": 3,
+              "gross": 71
+            }
+          ],
+          "total": 216,
+          "toPar": null,
+          "inscribedId": 2299657
+        },
+        {
+          "pos": 7,
+          "name": "Martina Navarro Navarro",
+          "licencia": "LV65815921",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 75
+            },
+            {
+              "round": 3,
+              "gross": 65
+            }
+          ],
+          "total": 216,
+          "toPar": null,
+          "inscribedId": 2301407
+        },
+        {
+          "pos": 8,
+          "name": "Africa Oliva Cardell",
+          "licencia": "LV35885160",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 71
+            },
+            {
+              "round": 2,
+              "gross": 70
+            },
+            {
+              "round": 3,
+              "gross": 76
+            }
+          ],
+          "total": 217,
+          "toPar": 1,
+          "inscribedId": 2303463
+        },
+        {
+          "pos": 9,
+          "name": "Paula Jimenez Martinez",
+          "licencia": "CB02918149",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 71
+            },
+            {
+              "round": 2,
+              "gross": 75
+            },
+            {
+              "round": 3,
+              "gross": 72
+            }
+          ],
+          "total": 218,
+          "toPar": 2,
+          "inscribedId": 2299858
+        },
+        {
+          "pos": 10,
+          "name": "Ines Gonzalez Ortega",
+          "licencia": "1128887999",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 77
+            },
+            {
+              "round": 2,
+              "gross": 71
+            },
+            {
+              "round": 3,
+              "gross": 70
+            }
+          ],
+          "total": 218,
+          "toPar": 2,
+          "inscribedId": 2299442
+        },
+        {
+          "pos": 11,
+          "name": "Cristina Garcia Gonzalez",
+          "licencia": "7776896565",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 75
+            },
+            {
+              "round": 3,
+              "gross": 69
+            }
+          ],
+          "total": 219,
+          "toPar": 3,
+          "inscribedId": 2299449
+        },
+        {
+          "pos": 12,
+          "name": "Chanya Huaysan Songchaikul",
+          "licencia": "AM61910150",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 73
+            },
+            {
+              "round": 3,
+              "gross": 71
+            }
+          ],
+          "total": 219,
+          "toPar": 3,
+          "inscribedId": 2311540
+        },
+        {
+          "pos": 13,
+          "name": "Laura Gorgees Baeta",
+          "licencia": "0117897673",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 71
+            },
+            {
+              "round": 2,
+              "gross": 73
+            },
+            {
+              "round": 3,
+              "gross": 76
+            }
+          ],
+          "total": 220,
+          "toPar": 4,
+          "inscribedId": 2299413
+        },
+        {
+          "pos": 14,
+          "name": "Daniela Carrion Martinez",
+          "licencia": "LV06929070",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 70
+            },
+            {
+              "round": 2,
+              "gross": 75
+            },
+            {
+              "round": 3,
+              "gross": 76
+            }
+          ],
+          "total": 221,
+          "toPar": 5,
+          "inscribedId": 2299868
+        },
+        {
+          "pos": 15,
+          "name": "Fatima Noguera Perez",
+          "licencia": "LV65914845",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 73
+            },
+            {
+              "round": 2,
+              "gross": 71
+            },
+            {
+              "round": 3,
+              "gross": 77
+            }
+          ],
+          "total": 221,
+          "toPar": 5,
+          "inscribedId": 2311564
+        },
+        {
+          "pos": 16,
+          "name": "Clara Valls Alesanco",
+          "licencia": "RL04887723",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 72
+            },
+            {
+              "round": 3,
+              "gross": 74
+            }
+          ],
+          "total": 222,
+          "toPar": 6,
+          "inscribedId": 2299446
+        },
+        {
+          "pos": 17,
+          "name": "Clara Uso Jurado",
+          "licencia": "LV01899816",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 75
+            },
+            {
+              "round": 3,
+              "gross": 72
+            }
+          ],
+          "total": 222,
+          "toPar": 6,
+          "inscribedId": 2301834
+        },
+        {
+          "pos": 18,
+          "name": "Aroa Gonzalez Hernandez",
+          "licencia": "4402923441",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 74
+            },
+            {
+              "round": 2,
+              "gross": 75
+            },
+            {
+              "round": 3,
+              "gross": 73
+            }
+          ],
+          "total": 222,
+          "toPar": 6,
+          "inscribedId": 2302498
+        },
+        {
+          "pos": 19,
+          "name": "Amanda Revuelta Goicoechea",
+          "licencia": "CM11162442",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 75
+            },
+            {
+              "round": 3,
+              "gross": 72
+            }
+          ],
+          "total": 222,
+          "toPar": 6,
+          "inscribedId": 2299896
+        },
+        {
+          "pos": 20,
+          "name": "Rut Diaz Garcia",
+          "licencia": "CM41915757",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 73
+            },
+            {
+              "round": 2,
+              "gross": 76
+            },
+            {
+              "round": 3,
+              "gross": 74
+            }
+          ],
+          "total": 223,
+          "toPar": 7,
+          "inscribedId": 2299354
+        },
+        {
+          "pos": 21,
+          "name": "Maria Bastarrica Valentin-Fdez",
+          "licencia": "VB09725391",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 77
+            },
+            {
+              "round": 2,
+              "gross": 73
+            },
+            {
+              "round": 3,
+              "gross": 74
+            }
+          ],
+          "total": 224,
+          "toPar": 8,
+          "inscribedId": 2301662
+        },
+        {
+          "pos": 22,
+          "name": "Daniela Montolio Reyes",
+          "licencia": "CB05895291",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 74
+            },
+            {
+              "round": 3,
+              "gross": 72
+            }
+          ],
+          "total": 224,
+          "toPar": 8,
+          "inscribedId": 2299332
+        },
+        {
+          "pos": 23,
+          "name": "Gabriela Rincon De La Torre",
+          "licencia": "CM41913370",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 72
+            },
+            {
+              "round": 2,
+              "gross": 80
+            },
+            {
+              "round": 3,
+              "gross": 73
+            }
+          ],
+          "total": 225,
+          "toPar": 9,
+          "inscribedId": 2304403
+        },
+        {
+          "pos": 24,
+          "name": "Marta Muñoz Escudero",
+          "licencia": "CM05922733",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 71
+            },
+            {
+              "round": 2,
+              "gross": 76
+            },
+            {
+              "round": 3,
+              "gross": 78
+            }
+          ],
+          "total": 225,
+          "toPar": 9,
+          "inscribedId": 2299445
+        },
+        {
+          "pos": 25,
+          "name": "Lucia Albacete Carmona",
+          "licencia": "MM04914873",
+          "hcp": 1.3,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 77
+            },
+            {
+              "round": 2,
+              "gross": 72
+            },
+            {
+              "round": 3,
+              "gross": 77
+            }
+          ],
+          "total": 226,
+          "toPar": 10,
+          "inscribedId": 2304120
+        },
+        {
+          "pos": 26,
+          "name": "Ioana Garcia Trifu",
+          "licencia": "0102914715",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 77
+            },
+            {
+              "round": 2,
+              "gross": 75
+            },
+            {
+              "round": 3,
+              "gross": 74
+            }
+          ],
+          "total": 226,
+          "toPar": 10,
+          "inscribedId": 2299878
+        },
+        {
+          "pos": 27,
+          "name": "Luna Isabella Valencia Mejia",
+          "licencia": "MM23897228",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 74
+            },
+            {
+              "round": 3,
+              "gross": 72
+            }
+          ],
+          "total": 227,
+          "toPar": 11,
+          "inscribedId": 2301709
+        },
+        {
+          "pos": 28,
+          "name": "Adriana Vigon Garcia",
+          "licencia": "CM11909813",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 77
+            },
+            {
+              "round": 2,
+              "gross": 74
+            },
+            {
+              "round": 3,
+              "gross": 78
+            }
+          ],
+          "total": 229,
+          "toPar": 13,
+          "inscribedId": 2303102
+        },
+        {
+          "pos": 29,
+          "name": "Alejandra Hernandez Soto",
+          "licencia": "CM52890007",
+          "hcp": 0.5,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 80
+            },
+            {
+              "round": 2,
+              "gross": 77
+            },
+            {
+              "round": 3,
+              "gross": 74
+            }
+          ],
+          "total": 231,
+          "toPar": 15,
+          "inscribedId": 2309484
+        },
+        {
+          "pos": 30,
+          "name": "Rocio Caturla Broseta",
+          "licencia": "LV06897458",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 78
+            },
+            {
+              "round": 3,
+              "gross": 77
+            }
+          ],
+          "total": 231,
+          "toPar": 15,
+          "inscribedId": 2300816
+        },
+        {
+          "pos": 31,
+          "name": "Alba Camacho Brandariz",
+          "licencia": "AM05921634",
+          "hcp": 1.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 82
+            },
+            {
+              "round": 2,
+              "gross": 76
+            },
+            {
+              "round": 3,
+              "gross": 74
+            }
+          ],
+          "total": 232,
+          "toPar": 16,
+          "inscribedId": 2299348
+        },
+        {
+          "pos": 32,
+          "name": "Diana Fraile Herrero",
+          "licencia": "7706912557",
+          "hcp": 0.7,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 75
+            },
+            {
+              "round": 3,
+              "gross": 76
+            }
+          ],
+          "total": 232,
+          "toPar": 16,
+          "inscribedId": 2307910
+        },
+        {
+          "pos": 33,
+          "name": "Naia Goikoetxea Zapirain",
+          "licencia": "VB09728721",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 82
+            },
+            {
+              "round": 2,
+              "gross": 76
+            },
+            {
+              "round": 3,
+              "gross": 74
+            }
+          ],
+          "total": 232,
+          "toPar": 16,
+          "inscribedId": 2300433
+        },
+        {
+          "pos": 34,
+          "name": "Isabel Ping Martinez Guerra",
+          "licencia": "CP01929578",
+          "hcp": 1,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 76
+            },
+            {
+              "round": 3,
+              "gross": 78
+            }
+          ],
+          "total": 233,
+          "toPar": 17,
+          "inscribedId": 2299905
+        },
+        {
+          "pos": 35,
+          "name": "Ariana Perez Ruiz",
+          "licencia": "MM04931947",
+          "hcp": 1.5,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 78
+            },
+            {
+              "round": 3,
+              "gross": 76
+            }
+          ],
+          "total": 235,
+          "toPar": 19,
+          "inscribedId": 2299890
+        },
+        {
+          "pos": 36,
+          "name": "Amy Elizabeth Gay",
+          "licencia": "MM22088611",
+          "hcp": 0.9,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 73
+            },
+            {
+              "round": 2,
+              "gross": 78
+            },
+            {
+              "round": 3,
+              "gross": 84
+            }
+          ],
+          "total": 235,
+          "toPar": 19,
+          "inscribedId": 2299648
+        },
+        {
+          "pos": 37,
+          "name": "Blanca Gomez-Balboa Garcia",
+          "licencia": "CM11910423",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 77
+            },
+            {
+              "round": 2,
+              "gross": 75
+            },
+            {
+              "round": 3,
+              "gross": 83
+            }
+          ],
+          "total": 235,
+          "toPar": 19,
+          "inscribedId": 2300853
+        },
+        {
+          "pos": 38,
+          "name": "Minea Lizarriturry Pareja",
+          "licencia": "CB65937304",
+          "hcp": 1.7,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 75
+            },
+            {
+              "round": 3,
+              "gross": 80
+            }
+          ],
+          "total": 236,
+          "toPar": 20,
+          "inscribedId": 2299840
+        },
+        {
+          "pos": 39,
+          "name": "Carmen Fevre De La Peña",
+          "licencia": "CM01926741",
+          "hcp": 0.1,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 77
+            },
+            {
+              "round": 3,
+              "gross": 81
+            }
+          ],
+          "total": 236,
+          "toPar": 20,
+          "inscribedId": 2299327
+        },
+        {
+          "pos": 40,
+          "name": "Daniela Gallego Meseguer",
+          "licencia": "MM06916948",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 80
+            },
+            {
+              "round": 2,
+              "gross": 77
+            },
+            {
+              "round": 3,
+              "gross": 79
+            }
+          ],
+          "total": 236,
+          "toPar": 20,
+          "inscribedId": 2307698
+        },
+        {
+          "pos": 41,
+          "name": "Romina Camarillo Alarcon",
+          "licencia": "BP02169066",
+          "hcp": 1.5,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 82
+            },
+            {
+              "round": 3,
+              "gross": 77
+            }
+          ],
+          "total": 237,
+          "toPar": 21,
+          "inscribedId": 2299428
+        },
+        {
+          "pos": 42,
+          "name": "Alejandra Moreno Fernandez",
+          "licencia": "CM41939609",
+          "hcp": 3.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 81
+            },
+            {
+              "round": 3,
+              "gross": 78
+            }
+          ],
+          "total": 238,
+          "toPar": 22,
+          "inscribedId": 2311138
+        },
+        {
+          "pos": 43,
+          "name": "Constanza Beamonte Escartin",
+          "licencia": "0102820572",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 78
+            },
+            {
+              "round": 3,
+              "gross": 81
+            }
+          ],
+          "total": 238,
+          "toPar": 22,
+          "inscribedId": 2299359
+        },
+        {
+          "pos": 44,
+          "name": "Beatriz Sueiro Nieves",
+          "licencia": "VB09730862",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 77
+            },
+            {
+              "round": 3,
+              "gross": 83
+            }
+          ],
+          "total": 238,
+          "toPar": 22,
+          "inscribedId": 2300515
+        },
+        {
+          "pos": 45,
+          "name": "Martina Cerrillo Giral",
+          "licencia": "0117915369",
+          "hcp": 0.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 83
+            },
+            {
+              "round": 2,
+              "gross": 76
+            },
+            {
+              "round": 3,
+              "gross": 80
+            }
+          ],
+          "total": 239,
+          "toPar": 23,
+          "inscribedId": 2313451
+        },
+        {
+          "pos": 46,
+          "name": "Cornelia Bermudo Del Rio",
+          "licencia": "AM85948360",
+          "hcp": 0,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 83
+            },
+            {
+              "round": 2,
+              "gross": 76
+            },
+            {
+              "round": 3,
+              "gross": 80
+            }
+          ],
+          "total": 239,
+          "toPar": 23,
+          "inscribedId": 2301827
+        },
+        {
+          "pos": 47,
+          "name": "Norena Lueje Garcia",
+          "licencia": "0208385719",
+          "hcp": 2.1,
+          "nivel": "Mid",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 78
+            },
+            {
+              "round": 3,
+              "gross": 81
+            }
+          ],
+          "total": 240,
+          "toPar": 24,
+          "inscribedId": 2305782
+        },
+        {
+          "pos": 48,
+          "name": "Aurora Venneri Arnau",
+          "licencia": "LV35189229",
+          "hcp": 2,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 80
+            },
+            {
+              "round": 2,
+              "gross": 78
+            },
+            {
+              "round": 3,
+              "gross": 82
+            }
+          ],
+          "total": 240,
+          "toPar": 24,
+          "inscribedId": 2308276
+        },
+        {
+          "pos": 49,
+          "name": "Barbara De Pablo Chacon",
+          "licencia": "CM41896470",
+          "hcp": 4.3,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 77
+            },
+            {
+              "round": 2,
+              "gross": 80
+            },
+            {
+              "round": 3,
+              "gross": 84
+            }
+          ],
+          "total": 241,
+          "toPar": 25,
+          "inscribedId": 2302132
+        },
+        {
+          "pos": 50,
+          "name": "Liz Siyu Hao Zhang",
+          "licencia": "CM07897966",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 80
+            },
+            {
+              "round": 3,
+              "gross": 85
+            }
+          ],
+          "total": 241,
+          "toPar": 25,
+          "inscribedId": 2303804
+        },
+        {
+          "pos": 51,
+          "name": "Jimena Maria Garcia Mateo",
+          "licencia": "GC02897341",
+          "hcp": 1.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 80
+            },
+            {
+              "round": 3,
+              "gross": 85
+            }
+          ],
+          "total": 244,
+          "toPar": 28,
+          "inscribedId": 2299383
+        },
+        {
+          "pos": null,
+          "name": "Pilar Montells Jimenez",
+          "licencia": "CM41168220",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2299280
+        },
+        {
+          "pos": null,
+          "name": "Yaiza Morales Vazquez",
+          "licencia": "AM51914494",
+          "hcp": 1.8,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2302021
+        },
+        {
+          "pos": null,
+          "name": "Macarena Campomanes Eguiguren",
+          "licencia": "CM01017629",
+          "hcp": 0,
+          "nivel": "S",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2303808
+        },
+        {
+          "pos": null,
+          "name": "Ana Lorena Diaz De Aguilar Coll",
+          "licencia": "CMA8902350",
+          "hcp": 0.8,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2308985
+        },
+        {
+          "pos": null,
+          "name": "Sara Diaz Garcia",
+          "licencia": "CM41900064",
+          "hcp": 0.3,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2299353
+        },
+        {
+          "pos": null,
+          "name": "Lola Cabanes Cisneros",
+          "licencia": "CB05943852",
+          "hcp": 3.3,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2302339
+        },
+        {
+          "pos": null,
+          "name": "Angela Gomez Roca",
+          "licencia": "LV35040541",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2310233
+        },
+        {
+          "pos": null,
+          "name": "Alejandra Vilariño Targhetta",
+          "licencia": "CM02072365",
+          "hcp": 2.6,
+          "nivel": "Mid",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2299704
+        },
+        {
+          "pos": null,
+          "name": "Lola Prieto Cabrero",
+          "licencia": "CM04979403",
+          "hcp": 2.3,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2307498
+        },
+        {
+          "pos": null,
+          "name": "Carlota Alejandra Burcio Macias",
+          "licencia": "9912953556",
+          "hcp": 2.7,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2299841
+        },
+        {
+          "pos": null,
+          "name": "Lucia Uribe De Leon",
+          "licencia": "CP01944236",
+          "hcp": 4.3,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2313432
+        },
+        {
+          "pos": null,
+          "name": "Daniela Guerrero Alcoba",
+          "licencia": "7759921643",
+          "hcp": 0.7,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2299300
+        },
+        {
+          "pos": null,
+          "name": "Constanza Beatriz Rodriguez Ossorio",
+          "licencia": "AM83886268",
+          "hcp": 4.1,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2311179
+        },
+        {
+          "pos": null,
+          "name": "Sara Pedreira Luna",
+          "licencia": "0208885113",
+          "hcp": 5.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2311148
+        },
+        {
+          "pos": null,
+          "name": "Ana Carlon Obregon",
+          "licencia": "7712914056",
+          "hcp": 2.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2305353
+        },
+        {
+          "pos": null,
+          "name": "Vanessa Ristorcelli",
+          "licencia": "LV35022443",
+          "hcp": 3,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2304587
+        },
+        {
+          "pos": null,
+          "name": "Irene Elias Gonzalez",
+          "licencia": "7772981136",
+          "hcp": 5.3,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2312346
+        },
+        {
+          "pos": null,
+          "name": "Paloma Estevan Rodriguez",
+          "licencia": "CM11885347",
+          "hcp": 2.2,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2312097
+        },
+        {
+          "pos": null,
+          "name": "Marta Estevan Rodriguez",
+          "licencia": "CM11910930",
+          "hcp": 3,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2307693
+        },
+        {
+          "pos": null,
+          "name": "Olivia Ribot Soler-Cabot",
+          "licencia": "CB01921336",
+          "hcp": 3.2,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2305994
+        },
+        {
+          "pos": null,
+          "name": "Miranda Viera Garcia",
+          "licencia": "CM41414516",
+          "hcp": 6.8,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2304057
+        },
+        {
+          "pos": null,
+          "name": "Indira Gomez Montalva",
+          "licencia": "LV64923014",
+          "hcp": 0.4,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2302097
+        },
+        {
+          "pos": null,
+          "name": "Sofia Abeti Gil",
+          "licencia": "4402764235",
+          "hcp": 2.2,
+          "nivel": "Mid",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2301811
+        },
+        {
+          "pos": null,
+          "name": "Maria De Pablo Chacon",
+          "licencia": "CM41900882",
+          "hcp": 7.7,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2302137
+        },
+        {
+          "pos": null,
+          "name": "Noa Ayala-Hurtado",
+          "licencia": "EXX1911611",
+          "hcp": 4.1,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2300507
+        },
+        {
+          "pos": null,
+          "name": "Maria Del Pino Uribe De Leon",
+          "licencia": "CP01944235",
+          "hcp": 5.8,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2313430
+        },
+        {
+          "pos": null,
+          "name": "Carla Herrero Cantero",
+          "licencia": "LV00451891",
+          "hcp": 7.3,
+          "nivel": "Mid",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2310981
+        },
+        {
+          "pos": null,
+          "name": "Victoria Cid Fernandez",
+          "licencia": "CM61148753",
+          "hcp": 8.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2312125
+        },
+        {
+          "pos": null,
+          "name": "Mireia Ivars Anguita",
+          "licencia": "LV27958677",
+          "hcp": 8.7,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2309947
+        },
+        {
+          "pos": null,
+          "name": "Valeria Estevan Rodriguez",
+          "licencia": "CM11910932",
+          "hcp": 3.5,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2307696
+        },
+        {
+          "pos": null,
+          "name": "Claudia Almazan Bauzan",
+          "licencia": "CM22995567",
+          "hcp": 5.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2310577
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Clasificación 2ª Jornada",
+      "expectedJugadores": 82,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Adriana Garcia Terol",
+          "licencia": "CB01168758",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 68
+            },
+            {
+              "round": 2,
+              "gross": 72
+            }
+          ],
+          "total": 140,
+          "toPar": -4,
+          "inscribedId": 2302485
+        },
+        {
+          "pos": 2,
+          "name": "Angela Revuelta Goicoechea",
+          "licencia": "CM11904045",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 74
+            },
+            {
+              "round": 2,
+              "gross": 67
+            }
+          ],
+          "total": 141,
+          "toPar": -3,
+          "inscribedId": 2299895
+        },
+        {
+          "pos": 3,
+          "name": "Africa Oliva Cardell",
+          "licencia": "LV35885160",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 71
+            },
+            {
+              "round": 2,
+              "gross": 70
+            }
+          ],
+          "total": 141,
+          "toPar": -3,
+          "inscribedId": 2303463
+        },
+        {
+          "pos": 4,
+          "name": "Nagore Martinez Salcedo",
+          "licencia": "CB01892885",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 70
+            },
+            {
+              "round": 2,
+              "gross": 71
+            }
+          ],
+          "total": 141,
+          "toPar": -3,
+          "inscribedId": 2299917
+        },
+        {
+          "pos": 5,
+          "name": "Claudia Lara Miravitlles",
+          "licencia": "CB03805418",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 67
+            }
+          ],
+          "total": 142,
+          "toPar": -2,
+          "inscribedId": 2302429
+        },
+        {
+          "pos": 6,
+          "name": "Fatima Noguera Perez",
+          "licencia": "LV65914845",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 73
+            },
+            {
+              "round": 2,
+              "gross": 71
+            }
+          ],
+          "total": 144,
+          "toPar": null,
+          "inscribedId": 2311564
+        },
+        {
+          "pos": 7,
+          "name": "Laura Gorgees Baeta",
+          "licencia": "0117897673",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 71
+            },
+            {
+              "round": 2,
+              "gross": 73
+            }
+          ],
+          "total": 144,
+          "toPar": null,
+          "inscribedId": 2299413
+        },
+        {
+          "pos": 8,
+          "name": "Iciar Rodriguez Crespo",
+          "licencia": "CM61964557",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 71
+            },
+            {
+              "round": 2,
+              "gross": 74
+            }
+          ],
+          "total": 145,
+          "toPar": 1,
+          "inscribedId": 2299657
+        },
+        {
+          "pos": 9,
+          "name": "Daniela Carrion Martinez",
+          "licencia": "LV06929070",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 70
+            },
+            {
+              "round": 2,
+              "gross": 75
+            }
+          ],
+          "total": 145,
+          "toPar": 1,
+          "inscribedId": 2299868
+        },
+        {
+          "pos": 10,
+          "name": "Carlota Lopez Minguela",
+          "licencia": "LV02978781",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 73
+            },
+            {
+              "round": 2,
+              "gross": 73
+            }
+          ],
+          "total": 146,
+          "toPar": 2,
+          "inscribedId": 2301404
+        },
+        {
+          "pos": 11,
+          "name": "Paula Jimenez Martinez",
+          "licencia": "CB02918149",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 71
+            },
+            {
+              "round": 2,
+              "gross": 75
+            }
+          ],
+          "total": 146,
+          "toPar": 2,
+          "inscribedId": 2299858
+        },
+        {
+          "pos": 12,
+          "name": "Marta Muñoz Escudero",
+          "licencia": "CM05922733",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 71
+            },
+            {
+              "round": 2,
+              "gross": 76
+            }
+          ],
+          "total": 147,
+          "toPar": 3,
+          "inscribedId": 2299445
+        },
+        {
+          "pos": 13,
+          "name": "Ines Gonzalez Ortega",
+          "licencia": "1128887999",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 77
+            },
+            {
+              "round": 2,
+              "gross": 71
+            }
+          ],
+          "total": 148,
+          "toPar": 4,
+          "inscribedId": 2299442
+        },
+        {
+          "pos": 14,
+          "name": "Clara Valls Alesanco",
+          "licencia": "RL04887723",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 72
+            }
+          ],
+          "total": 148,
+          "toPar": 4,
+          "inscribedId": 2299446
+        },
+        {
+          "pos": 15,
+          "name": "Chanya Huaysan Songchaikul",
+          "licencia": "AM61910150",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 73
+            }
+          ],
+          "total": 148,
+          "toPar": 4,
+          "inscribedId": 2311540
+        },
+        {
+          "pos": 16,
+          "name": "Lucia Albacete Carmona",
+          "licencia": "MM04914873",
+          "hcp": 1.3,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 77
+            },
+            {
+              "round": 2,
+              "gross": 72
+            }
+          ],
+          "total": 149,
+          "toPar": 5,
+          "inscribedId": 2304120
+        },
+        {
+          "pos": 17,
+          "name": "Aroa Gonzalez Hernandez",
+          "licencia": "4402923441",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 74
+            },
+            {
+              "round": 2,
+              "gross": 75
+            }
+          ],
+          "total": 149,
+          "toPar": 5,
+          "inscribedId": 2302498
+        },
+        {
+          "pos": 18,
+          "name": "Rut Diaz Garcia",
+          "licencia": "CM41915757",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 73
+            },
+            {
+              "round": 2,
+              "gross": 76
+            }
+          ],
+          "total": 149,
+          "toPar": 5,
+          "inscribedId": 2299354
+        },
+        {
+          "pos": 19,
+          "name": "Maria Bastarrica Valentin-Fdez",
+          "licencia": "VB09725391",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 77
+            },
+            {
+              "round": 2,
+              "gross": 73
+            }
+          ],
+          "total": 150,
+          "toPar": 6,
+          "inscribedId": 2301662
+        },
+        {
+          "pos": 20,
+          "name": "Clara Uso Jurado",
+          "licencia": "LV01899816",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 75
+            }
+          ],
+          "total": 150,
+          "toPar": 6,
+          "inscribedId": 2301834
+        },
+        {
+          "pos": 21,
+          "name": "Cristina Garcia Gonzalez",
+          "licencia": "7776896565",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 75
+            }
+          ],
+          "total": 150,
+          "toPar": 6,
+          "inscribedId": 2299449
+        },
+        {
+          "pos": 22,
+          "name": "Amanda Revuelta Goicoechea",
+          "licencia": "CM11162442",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 75
+            }
+          ],
+          "total": 150,
+          "toPar": 6,
+          "inscribedId": 2299896
+        },
+        {
+          "pos": 23,
+          "name": "Adriana Vigon Garcia",
+          "licencia": "CM11909813",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 77
+            },
+            {
+              "round": 2,
+              "gross": 74
+            }
+          ],
+          "total": 151,
+          "toPar": 7,
+          "inscribedId": 2303102
+        },
+        {
+          "pos": 24,
+          "name": "Martina Navarro Navarro",
+          "licencia": "LV65815921",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 75
+            }
+          ],
+          "total": 151,
+          "toPar": 7,
+          "inscribedId": 2301407
+        },
+        {
+          "pos": 25,
+          "name": "Amy Elizabeth Gay",
+          "licencia": "MM22088611",
+          "hcp": 0.9,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 73
+            },
+            {
+              "round": 2,
+              "gross": 78
+            }
+          ],
+          "total": 151,
+          "toPar": 7,
+          "inscribedId": 2299648
+        },
+        {
+          "pos": 26,
+          "name": "Daniela Montolio Reyes",
+          "licencia": "CB05895291",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 74
+            }
+          ],
+          "total": 152,
+          "toPar": 8,
+          "inscribedId": 2299332
+        },
+        {
+          "pos": 27,
+          "name": "Blanca Gomez-Balboa Garcia",
+          "licencia": "CM11910423",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 77
+            },
+            {
+              "round": 2,
+              "gross": 75
+            }
+          ],
+          "total": 152,
+          "toPar": 8,
+          "inscribedId": 2300853
+        },
+        {
+          "pos": 28,
+          "name": "Ioana Garcia Trifu",
+          "licencia": "0102914715",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 77
+            },
+            {
+              "round": 2,
+              "gross": 75
+            }
+          ],
+          "total": 152,
+          "toPar": 8,
+          "inscribedId": 2299878
+        },
+        {
+          "pos": 29,
+          "name": "Gabriela Rincon De La Torre",
+          "licencia": "CM41913370",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 72
+            },
+            {
+              "round": 2,
+              "gross": 80
+            }
+          ],
+          "total": 152,
+          "toPar": 8,
+          "inscribedId": 2304403
+        },
+        {
+          "pos": 30,
+          "name": "Rocio Caturla Broseta",
+          "licencia": "LV06897458",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 78
+            }
+          ],
+          "total": 154,
+          "toPar": 10,
+          "inscribedId": 2300816
+        },
+        {
+          "pos": 31,
+          "name": "Luna Isabella Valencia Mejia",
+          "licencia": "MM23897228",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 74
+            }
+          ],
+          "total": 155,
+          "toPar": 11,
+          "inscribedId": 2301709
+        },
+        {
+          "pos": 32,
+          "name": "Isabel Ping Martinez Guerra",
+          "licencia": "CP01929578",
+          "hcp": 1,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 76
+            }
+          ],
+          "total": 155,
+          "toPar": 11,
+          "inscribedId": 2299905
+        },
+        {
+          "pos": 33,
+          "name": "Carmen Fevre De La Peña",
+          "licencia": "CM01926741",
+          "hcp": 0.1,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 77
+            }
+          ],
+          "total": 155,
+          "toPar": 11,
+          "inscribedId": 2299327
+        },
+        {
+          "pos": 34,
+          "name": "Beatriz Sueiro Nieves",
+          "licencia": "VB09730862",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 77
+            }
+          ],
+          "total": 155,
+          "toPar": 11,
+          "inscribedId": 2300515
+        },
+        {
+          "pos": 35,
+          "name": "Minea Lizarriturry Pareja",
+          "licencia": "CB65937304",
+          "hcp": 1.7,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 75
+            }
+          ],
+          "total": 156,
+          "toPar": 12,
+          "inscribedId": 2299840
+        },
+        {
+          "pos": 36,
+          "name": "Diana Fraile Herrero",
+          "licencia": "7706912557",
+          "hcp": 0.7,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 75
+            }
+          ],
+          "total": 156,
+          "toPar": 12,
+          "inscribedId": 2307910
+        },
+        {
+          "pos": 37,
+          "name": "Liz Siyu Hao Zhang",
+          "licencia": "CM07897966",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 80
+            }
+          ],
+          "total": 156,
+          "toPar": 12,
+          "inscribedId": 2303804
+        },
+        {
+          "pos": 38,
+          "name": "Daniela Gallego Meseguer",
+          "licencia": "MM06916948",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 80
+            },
+            {
+              "round": 2,
+              "gross": 77
+            }
+          ],
+          "total": 157,
+          "toPar": 13,
+          "inscribedId": 2307698
+        },
+        {
+          "pos": 39,
+          "name": "Alejandra Hernandez Soto",
+          "licencia": "CM52890007",
+          "hcp": 0.5,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 80
+            },
+            {
+              "round": 2,
+              "gross": 77
+            }
+          ],
+          "total": 157,
+          "toPar": 13,
+          "inscribedId": 2309484
+        },
+        {
+          "pos": 40,
+          "name": "Constanza Beamonte Escartin",
+          "licencia": "0102820572",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 78
+            }
+          ],
+          "total": 157,
+          "toPar": 13,
+          "inscribedId": 2299359
+        },
+        {
+          "pos": 41,
+          "name": "Barbara De Pablo Chacon",
+          "licencia": "CM41896470",
+          "hcp": 4.3,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 77
+            },
+            {
+              "round": 2,
+              "gross": 80
+            }
+          ],
+          "total": 157,
+          "toPar": 13,
+          "inscribedId": 2302132
+        },
+        {
+          "pos": 42,
+          "name": "Naia Goikoetxea Zapirain",
+          "licencia": "VB09728721",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 82
+            },
+            {
+              "round": 2,
+              "gross": 76
+            }
+          ],
+          "total": 158,
+          "toPar": 14,
+          "inscribedId": 2300433
+        },
+        {
+          "pos": 43,
+          "name": "Alba Camacho Brandariz",
+          "licencia": "AM05921634",
+          "hcp": 1.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 82
+            },
+            {
+              "round": 2,
+              "gross": 76
+            }
+          ],
+          "total": 158,
+          "toPar": 14,
+          "inscribedId": 2299348
+        },
+        {
+          "pos": 44,
+          "name": "Aurora Venneri Arnau",
+          "licencia": "LV35189229",
+          "hcp": 2,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 80
+            },
+            {
+              "round": 2,
+              "gross": 78
+            }
+          ],
+          "total": 158,
+          "toPar": 14,
+          "inscribedId": 2308276
+        },
+        {
+          "pos": 45,
+          "name": "Cornelia Bermudo Del Rio",
+          "licencia": "AM85948360",
+          "hcp": 0,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 83
+            },
+            {
+              "round": 2,
+              "gross": 76
+            }
+          ],
+          "total": 159,
+          "toPar": 15,
+          "inscribedId": 2301827
+        },
+        {
+          "pos": 46,
+          "name": "Martina Cerrillo Giral",
+          "licencia": "0117915369",
+          "hcp": 0.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 83
+            },
+            {
+              "round": 2,
+              "gross": 76
+            }
+          ],
+          "total": 159,
+          "toPar": 15,
+          "inscribedId": 2313451
+        },
+        {
+          "pos": 47,
+          "name": "Ariana Perez Ruiz",
+          "licencia": "MM04931947",
+          "hcp": 1.5,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 78
+            }
+          ],
+          "total": 159,
+          "toPar": 15,
+          "inscribedId": 2299890
+        },
+        {
+          "pos": 48,
+          "name": "Norena Lueje Garcia",
+          "licencia": "0208385719",
+          "hcp": 2.1,
+          "nivel": "Mid",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 78
+            }
+          ],
+          "total": 159,
+          "toPar": 15,
+          "inscribedId": 2305782
+        },
+        {
+          "pos": 49,
+          "name": "Jimena Maria Garcia Mateo",
+          "licencia": "GC02897341",
+          "hcp": 1.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 80
+            }
+          ],
+          "total": 159,
+          "toPar": 15,
+          "inscribedId": 2299383
+        },
+        {
+          "pos": 50,
+          "name": "Alejandra Moreno Fernandez",
+          "licencia": "CM41939609",
+          "hcp": 3.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 81
+            }
+          ],
+          "total": 160,
+          "toPar": 16,
+          "inscribedId": 2311138
+        },
+        {
+          "pos": 51,
+          "name": "Romina Camarillo Alarcon",
+          "licencia": "BP02169066",
+          "hcp": 1.5,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 82
+            }
+          ],
+          "total": 160,
+          "toPar": 16,
+          "inscribedId": 2299428
+        },
+        {
+          "pos": 52,
+          "name": "Pilar Montells Jimenez",
+          "licencia": "CM41168220",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 82
+            },
+            {
+              "round": 2,
+              "gross": 79
+            }
+          ],
+          "total": 161,
+          "toPar": 17,
+          "inscribedId": 2299280
+        },
+        {
+          "pos": 53,
+          "name": "Yaiza Morales Vazquez",
+          "licencia": "AM51914494",
+          "hcp": 1.8,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 80
+            },
+            {
+              "round": 2,
+              "gross": 82
+            }
+          ],
+          "total": 162,
+          "toPar": 18,
+          "inscribedId": 2302021
+        },
+        {
+          "pos": 54,
+          "name": "Macarena Campomanes Eguiguren",
+          "licencia": "CM01017629",
+          "hcp": 0,
+          "nivel": "S",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 83
+            },
+            {
+              "round": 2,
+              "gross": 80
+            }
+          ],
+          "total": 163,
+          "toPar": 19,
+          "inscribedId": 2303808
+        },
+        {
+          "pos": 55,
+          "name": "Ana Lorena Diaz De Aguilar Coll",
+          "licencia": "CMA8902350",
+          "hcp": 0.8,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 82
+            }
+          ],
+          "total": 163,
+          "toPar": 19,
+          "inscribedId": 2308985
+        },
+        {
+          "pos": 56,
+          "name": "Sara Diaz Garcia",
+          "licencia": "CM41900064",
+          "hcp": 0.3,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 80
+            },
+            {
+              "round": 2,
+              "gross": 83
+            }
+          ],
+          "total": 163,
+          "toPar": 19,
+          "inscribedId": 2299353
+        },
+        {
+          "pos": 57,
+          "name": "Lola Cabanes Cisneros",
+          "licencia": "CB05943852",
+          "hcp": 3.3,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 83
+            }
+          ],
+          "total": 164,
+          "toPar": 20,
+          "inscribedId": 2302339
+        },
+        {
+          "pos": 58,
+          "name": "Angela Gomez Roca",
+          "licencia": "LV35040541",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 85
+            },
+            {
+              "round": 2,
+              "gross": 80
+            }
+          ],
+          "total": 165,
+          "toPar": 21,
+          "inscribedId": 2310233
+        },
+        {
+          "pos": 59,
+          "name": "Carlota Alejandra Burcio Macias",
+          "licencia": "9912953556",
+          "hcp": 2.7,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 85
+            },
+            {
+              "round": 2,
+              "gross": 80
+            }
+          ],
+          "total": 165,
+          "toPar": 21,
+          "inscribedId": 2299841
+        },
+        {
+          "pos": 60,
+          "name": "Alejandra Vilariño Targhetta",
+          "licencia": "CM02072365",
+          "hcp": 2.6,
+          "nivel": "Mid",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 84
+            },
+            {
+              "round": 2,
+              "gross": 81
+            }
+          ],
+          "total": 165,
+          "toPar": 21,
+          "inscribedId": 2299704
+        },
+        {
+          "pos": 61,
+          "name": "Lola Prieto Cabrero",
+          "licencia": "CM04979403",
+          "hcp": 2.3,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 84
+            },
+            {
+              "round": 2,
+              "gross": 81
+            }
+          ],
+          "total": 165,
+          "toPar": 21,
+          "inscribedId": 2307498
+        },
+        {
+          "pos": 62,
+          "name": "Lucia Uribe De Leon",
+          "licencia": "CP01944236",
+          "hcp": 4.3,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 82
+            },
+            {
+              "round": 2,
+              "gross": 83
+            }
+          ],
+          "total": 165,
+          "toPar": 21,
+          "inscribedId": 2313432
+        },
+        {
+          "pos": 63,
+          "name": "Daniela Guerrero Alcoba",
+          "licencia": "7759921643",
+          "hcp": 0.7,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 83
+            },
+            {
+              "round": 2,
+              "gross": 83
+            }
+          ],
+          "total": 166,
+          "toPar": 22,
+          "inscribedId": 2299300
+        },
+        {
+          "pos": 64,
+          "name": "Sara Pedreira Luna",
+          "licencia": "0208885113",
+          "hcp": 5.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 86
+            },
+            {
+              "round": 2,
+              "gross": 81
+            }
+          ],
+          "total": 167,
+          "toPar": 23,
+          "inscribedId": 2311148
+        },
+        {
+          "pos": 65,
+          "name": "Constanza Beatriz Rodriguez Ossorio",
+          "licencia": "AM83886268",
+          "hcp": 4.1,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 80
+            },
+            {
+              "round": 2,
+              "gross": 87
+            }
+          ],
+          "total": 167,
+          "toPar": 23,
+          "inscribedId": 2311179
+        },
+        {
+          "pos": 66,
+          "name": "Ana Carlon Obregon",
+          "licencia": "7712914056",
+          "hcp": 2.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 88
+            },
+            {
+              "round": 2,
+              "gross": 80
+            }
+          ],
+          "total": 168,
+          "toPar": 24,
+          "inscribedId": 2305353
+        },
+        {
+          "pos": 67,
+          "name": "Vanessa Ristorcelli",
+          "licencia": "LV35022443",
+          "hcp": 3,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 85
+            },
+            {
+              "round": 2,
+              "gross": 83
+            }
+          ],
+          "total": 168,
+          "toPar": 24,
+          "inscribedId": 2304587
+        },
+        {
+          "pos": 68,
+          "name": "Irene Elias Gonzalez",
+          "licencia": "7772981136",
+          "hcp": 5.3,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 82
+            },
+            {
+              "round": 2,
+              "gross": 87
+            }
+          ],
+          "total": 169,
+          "toPar": 25,
+          "inscribedId": 2312346
+        },
+        {
+          "pos": 69,
+          "name": "Olivia Ribot Soler-Cabot",
+          "licencia": "CB01921336",
+          "hcp": 3.2,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 90
+            },
+            {
+              "round": 2,
+              "gross": 81
+            }
+          ],
+          "total": 171,
+          "toPar": 27,
+          "inscribedId": 2305994
+        },
+        {
+          "pos": 70,
+          "name": "Paloma Estevan Rodriguez",
+          "licencia": "CM11885347",
+          "hcp": 2.2,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 90
+            },
+            {
+              "round": 2,
+              "gross": 81
+            }
+          ],
+          "total": 171,
+          "toPar": 27,
+          "inscribedId": 2312097
+        },
+        {
+          "pos": 71,
+          "name": "Marta Estevan Rodriguez",
+          "licencia": "CM11910930",
+          "hcp": 3,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 82
+            },
+            {
+              "round": 2,
+              "gross": 89
+            }
+          ],
+          "total": 171,
+          "toPar": 27,
+          "inscribedId": 2307693
+        },
+        {
+          "pos": 72,
+          "name": "Miranda Viera Garcia",
+          "licencia": "CM41414516",
+          "hcp": 6.8,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 88
+            },
+            {
+              "round": 2,
+              "gross": 84
+            }
+          ],
+          "total": 172,
+          "toPar": 28,
+          "inscribedId": 2304057
+        },
+        {
+          "pos": 73,
+          "name": "Sofia Abeti Gil",
+          "licencia": "4402764235",
+          "hcp": 2.2,
+          "nivel": "Mid",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 91
+            },
+            {
+              "round": 2,
+              "gross": 82
+            }
+          ],
+          "total": 173,
+          "toPar": 29,
+          "inscribedId": 2301811
+        },
+        {
+          "pos": 74,
+          "name": "Indira Gomez Montalva",
+          "licencia": "LV64923014",
+          "hcp": 0.4,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 93
+            },
+            {
+              "round": 2,
+              "gross": 84
+            }
+          ],
+          "total": 177,
+          "toPar": 29,
+          "inscribedId": 2302097
+        },
+        {
+          "pos": 75,
+          "name": "Maria De Pablo Chacon",
+          "licencia": "CM41900882",
+          "hcp": 7.7,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 89
+            },
+            {
+              "round": 2,
+              "gross": 87
+            }
+          ],
+          "total": 176,
+          "toPar": 32,
+          "inscribedId": 2302137
+        },
+        {
+          "pos": 76,
+          "name": "Noa Ayala-Hurtado",
+          "licencia": "EXX1911611",
+          "hcp": 4.1,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 93
+            },
+            {
+              "round": 2,
+              "gross": 86
+            }
+          ],
+          "total": 179,
+          "toPar": 35,
+          "inscribedId": 2300507
+        },
+        {
+          "pos": 77,
+          "name": "Maria Del Pino Uribe De Leon",
+          "licencia": "CP01944235",
+          "hcp": 5.8,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 85
+            },
+            {
+              "round": 2,
+              "gross": 94
+            }
+          ],
+          "total": 179,
+          "toPar": 35,
+          "inscribedId": 2313430
+        },
+        {
+          "pos": 78,
+          "name": "Mireia Ivars Anguita",
+          "licencia": "LV27958677",
+          "hcp": 8.7,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 97
+            },
+            {
+              "round": 2,
+              "gross": 83
+            }
+          ],
+          "total": 180,
+          "toPar": 36,
+          "inscribedId": 2309947
+        },
+        {
+          "pos": 79,
+          "name": "Victoria Cid Fernandez",
+          "licencia": "CM61148753",
+          "hcp": 8.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 96
+            },
+            {
+              "round": 2,
+              "gross": 84
+            }
+          ],
+          "total": 180,
+          "toPar": 36,
+          "inscribedId": 2312125
+        },
+        {
+          "pos": 80,
+          "name": "Carla Herrero Cantero",
+          "licencia": "LV00451891",
+          "hcp": 7.3,
+          "nivel": "Mid",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 91
+            },
+            {
+              "round": 2,
+              "gross": 89
+            }
+          ],
+          "total": 180,
+          "toPar": 36,
+          "inscribedId": 2310981
+        },
+        {
+          "pos": 81,
+          "name": "Valeria Estevan Rodriguez",
+          "licencia": "CM11910932",
+          "hcp": 3.5,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 94
+            },
+            {
+              "round": 2,
+              "gross": 90
+            }
+          ],
+          "total": 184,
+          "toPar": 40,
+          "inscribedId": 2307696
+        },
+        {
+          "pos": 82,
+          "name": "Claudia Almazan Bauzan",
+          "licencia": "CM22995567",
+          "hcp": 5.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 95
+            },
+            {
+              "round": 2,
+              "gross": 90
+            }
+          ],
+          "total": 185,
+          "toPar": 41,
+          "inscribedId": 2310577
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Final",
+      "jugadores": 82
+    },
+    "2": {
+      "name": "Clasificación 2ª Jornada",
+      "jugadores": 82
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -33,14 +3696,14 @@
       "orden": 2,
       "name": "Daniela Guerrero Alcoba",
       "licencia": "7759921643",
-      "hcp": 0.6,
+      "hcp": 0.7,
       "nivel": "J"
     },
     {
       "orden": 3,
       "name": "Carmen Fevre De La Peña",
       "licencia": "CM01926741",
-      "hcp": null,
+      "hcp": 0.1,
       "nivel": "C"
     },
     {
@@ -61,7 +3724,7 @@
       "orden": 6,
       "name": "Sara Diaz Garcia",
       "licencia": "CM41900064",
-      "hcp": 0.4,
+      "hcp": 0.3,
       "nivel": "J"
     },
     {
@@ -82,7 +3745,7 @@
       "orden": 9,
       "name": "Jimena Maria Garcia Mateo",
       "licencia": "GC02897341",
-      "hcp": 1.7,
+      "hcp": 1.6,
       "nivel": "C"
     },
     {
@@ -94,542 +3757,507 @@
     },
     {
       "orden": 11,
-      "name": "Lucía Gonzalez Ortega",
-      "licencia": "1128915182",
-      "hcp": 2.4,
-      "nivel": "C"
-    },
-    {
-      "orden": 12,
       "name": "Romina Camarillo Alarcon",
       "licencia": "BP02169066",
       "hcp": 1.5,
       "nivel": "J"
     },
     {
-      "orden": 13,
+      "orden": 12,
       "name": "Ines Gonzalez Ortega",
       "licencia": "1128887999",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 14,
+      "orden": 13,
       "name": "Marta Muñoz Escudero",
       "licencia": "CM05922733",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 15,
+      "orden": 14,
       "name": "Clara Valls Alesanco",
       "licencia": "RL04887723",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 16,
+      "orden": 15,
       "name": "Cristina Garcia Gonzalez",
       "licencia": "7776896565",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 17,
+      "orden": 16,
       "name": "Amy Elizabeth Gay",
       "licencia": "MM22088611",
-      "hcp": 1.1,
+      "hcp": 0.9,
       "nivel": "J"
     },
     {
-      "orden": 18,
+      "orden": 17,
       "name": "Iciar Rodriguez Crespo",
       "licencia": "CM61964557",
       "hcp": null,
       "nivel": "C"
     },
     {
-      "orden": 19,
+      "orden": 18,
       "name": "Alejandra Vilariño Targhetta",
       "licencia": "CM02072365",
       "hcp": 2.6,
       "nivel": "Mid"
     },
     {
-      "orden": 20,
+      "orden": 19,
       "name": "Minea Lizarriturry Pareja",
       "licencia": "CB65937304",
       "hcp": 1.7,
       "nivel": "J"
     },
     {
-      "orden": 21,
+      "orden": 20,
       "name": "Carlota Alejandra Burcio Macias",
       "licencia": "9912953556",
       "hcp": 2.7,
       "nivel": "C"
     },
     {
-      "orden": 22,
+      "orden": 21,
       "name": "Paula Jimenez Martinez",
       "licencia": "CB02918149",
       "hcp": null,
       "nivel": "C"
     },
     {
-      "orden": 23,
+      "orden": 22,
       "name": "Daniela Carrion Martinez",
       "licencia": "LV06929070",
       "hcp": null,
       "nivel": "C"
     },
     {
-      "orden": 24,
+      "orden": 23,
       "name": "Ioana Garcia Trifu",
       "licencia": "0102914715",
       "hcp": null,
       "nivel": "C"
     },
     {
-      "orden": 25,
+      "orden": 24,
       "name": "Ariana Perez Ruiz",
       "licencia": "MM04931947",
       "hcp": 1.5,
       "nivel": "C"
     },
     {
-      "orden": 26,
+      "orden": 25,
       "name": "Angela Revuelta Goicoechea",
       "licencia": "CM11904045",
       "hcp": null,
       "nivel": "C"
     },
     {
-      "orden": 27,
+      "orden": 26,
       "name": "Amanda Revuelta Goicoechea",
       "licencia": "CM11162442",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 28,
+      "orden": 27,
       "name": "Isabel Ping Martinez Guerra",
       "licencia": "CP01929578",
       "hcp": 1,
       "nivel": "C"
     },
     {
-      "orden": 29,
+      "orden": 28,
       "name": "Nagore Martinez Salcedo",
       "licencia": "CB01892885",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 30,
+      "orden": 29,
       "name": "Naia Goikoetxea Zapirain",
       "licencia": "VB09728721",
       "hcp": null,
       "nivel": "C"
     },
     {
-      "orden": 31,
+      "orden": 30,
       "name": "Noa Ayala-Hurtado",
       "licencia": "EXX1911611",
       "hcp": 4.1,
       "nivel": "J"
     },
     {
-      "orden": 32,
+      "orden": 31,
       "name": "Beatriz Sueiro Nieves",
       "licencia": "VB09730862",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 33,
+      "orden": 32,
       "name": "Rocio Caturla Broseta",
       "licencia": "LV06897458",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 34,
+      "orden": 33,
       "name": "Blanca Gomez-Balboa Garcia",
       "licencia": "CM11910423",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 35,
+      "orden": 34,
       "name": "Carlota Lopez Minguela",
       "licencia": "LV02978781",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 36,
+      "orden": 35,
       "name": "Martina Navarro Navarro",
       "licencia": "LV65815921",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 37,
+      "orden": 36,
       "name": "Maria Bastarrica Valentin-Fdez",
       "licencia": "VB09725391",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 38,
+      "orden": 37,
       "name": "Luna Isabella Valencia Mejia",
       "licencia": "MM23897228",
       "hcp": null,
       "nivel": "C"
     },
     {
-      "orden": 39,
+      "orden": 38,
       "name": "Sofia Abeti Gil",
       "licencia": "4402764235",
-      "hcp": 1.9,
+      "hcp": 2.2,
       "nivel": "Mid"
     },
     {
-      "orden": 40,
+      "orden": 39,
       "name": "Cornelia Bermudo Del Rio",
       "licencia": "AM85948360",
       "hcp": 0,
       "nivel": "I"
     },
     {
-      "orden": 41,
+      "orden": 40,
       "name": "Clara Uso Jurado",
       "licencia": "LV01899816",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 42,
+      "orden": 41,
       "name": "Yaiza Morales Vazquez",
       "licencia": "AM51914494",
-      "hcp": 2.1,
+      "hcp": 1.8,
       "nivel": "C"
     },
     {
-      "orden": 43,
+      "orden": 42,
       "name": "Indira Gomez Montalva",
       "licencia": "LV64923014",
       "hcp": 0.4,
       "nivel": "J"
     },
     {
-      "orden": 44,
+      "orden": 43,
       "name": "Barbara De Pablo Chacon",
       "licencia": "CM41896470",
       "hcp": 4.3,
       "nivel": "J"
     },
     {
-      "orden": 45,
+      "orden": 44,
       "name": "Maria De Pablo Chacon",
       "licencia": "CM41900882",
       "hcp": 7.7,
       "nivel": "C"
     },
     {
-      "orden": 46,
+      "orden": 45,
       "name": "Lola Cabanes Cisneros",
       "licencia": "CB05943852",
       "hcp": 3.3,
       "nivel": "C"
     },
     {
-      "orden": 47,
+      "orden": 46,
       "name": "Claudia Lara Miravitlles",
       "licencia": "CB03805418",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 48,
+      "orden": 47,
       "name": "Adriana Garcia Terol",
       "licencia": "CB01168758",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 49,
+      "orden": 48,
       "name": "Aroa Gonzalez Hernandez",
       "licencia": "4402923441",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 50,
+      "orden": 49,
       "name": "Adriana Vigon Garcia",
       "licencia": "CM11909813",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 51,
+      "orden": 50,
       "name": "Africa Oliva Cardell",
       "licencia": "LV35885160",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 52,
+      "orden": 51,
       "name": "Liz Siyu Hao Zhang",
       "licencia": "CM07897966",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 53,
+      "orden": 52,
       "name": "Macarena Campomanes Eguiguren",
       "licencia": "CM01017629",
-      "hcp": null,
+      "hcp": 0,
       "nivel": "S"
     },
     {
-      "orden": 54,
+      "orden": 53,
       "name": "Miranda Viera Garcia",
       "licencia": "CM41414516",
       "hcp": 6.8,
       "nivel": "J"
     },
     {
-      "orden": 55,
+      "orden": 54,
       "name": "Lucia Albacete Carmona",
       "licencia": "MM04914873",
       "hcp": 1.3,
       "nivel": "C"
     },
     {
-      "orden": 56,
+      "orden": 55,
       "name": "Gabriela Rincon De La Torre",
       "licencia": "CM41913370",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 57,
+      "orden": 56,
       "name": "Vanessa Ristorcelli",
       "licencia": "LV35022443",
       "hcp": 3,
       "nivel": "J"
     },
     {
-      "orden": 58,
+      "orden": 57,
       "name": "Ana Carlon Obregon",
       "licencia": "7712914056",
       "hcp": 2.6,
       "nivel": "C"
     },
     {
-      "orden": 59,
+      "orden": 58,
       "name": "Norena Lueje Garcia",
       "licencia": "0208385719",
-      "hcp": 2.2,
+      "hcp": 2.1,
       "nivel": "Mid"
     },
     {
-      "orden": 60,
+      "orden": 59,
       "name": "Olivia Ribot Soler-Cabot",
       "licencia": "CB01921336",
       "hcp": 3.2,
       "nivel": "C"
     },
     {
-      "orden": 61,
-      "name": "Elena Isorna Felpeto",
-      "licencia": "GC08939553",
-      "hcp": 0.8,
-      "nivel": "C"
-    },
-    {
-      "orden": 62,
+      "orden": 60,
       "name": "Lola Prieto Cabrero",
       "licencia": "CM04979403",
       "hcp": 2.3,
       "nivel": "C"
     },
     {
-      "orden": 63,
+      "orden": 61,
       "name": "Marta Estevan Rodriguez",
       "licencia": "CM11910930",
       "hcp": 3,
       "nivel": "C"
     },
     {
-      "orden": 64,
+      "orden": 62,
       "name": "Valeria Estevan Rodriguez",
       "licencia": "CM11910932",
-      "hcp": 3,
+      "hcp": 3.5,
       "nivel": "C"
     },
     {
-      "orden": 65,
+      "orden": 63,
       "name": "Daniela Gallego Meseguer",
       "licencia": "MM06916948",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 66,
+      "orden": 64,
       "name": "Diana Fraile Herrero",
       "licencia": "7706912557",
       "hcp": 0.7,
       "nivel": "C"
     },
     {
-      "orden": 67,
+      "orden": 65,
       "name": "Aurora Venneri Arnau",
       "licencia": "LV35189229",
       "hcp": 2,
       "nivel": "C"
     },
     {
-      "orden": 68,
+      "orden": 66,
       "name": "Ana Lorena Diaz De Aguilar Coll",
       "licencia": "CMA8902350",
-      "hcp": 0,
+      "hcp": 0.8,
       "nivel": "J"
     },
     {
-      "orden": 69,
+      "orden": 67,
       "name": "Alejandra Hernandez Soto",
       "licencia": "CM52890007",
       "hcp": 0.5,
       "nivel": "C"
     },
     {
-      "orden": 70,
+      "orden": 68,
       "name": "Mireia Ivars Anguita",
       "licencia": "LV27958677",
       "hcp": 8.7,
       "nivel": "J"
     },
     {
-      "orden": 71,
-      "name": "Carla Revenga Bengoechea",
-      "licencia": "CMA8903766",
-      "hcp": null,
-      "nivel": "C"
-    },
-    {
-      "orden": 72,
+      "orden": 69,
       "name": "Angela Gomez Roca",
       "licencia": "LV35040541",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 73,
+      "orden": 70,
       "name": "Claudia Almazan Bauzan",
       "licencia": "CM22995567",
       "hcp": 5.6,
       "nivel": "C"
     },
     {
-      "orden": 74,
+      "orden": 71,
       "name": "Carla Herrero Cantero",
       "licencia": "LV00451891",
       "hcp": 7.3,
       "nivel": "Mid"
     },
     {
-      "orden": 75,
+      "orden": 72,
       "name": "Alejandra Moreno Fernandez",
       "licencia": "CM41939609",
       "hcp": 3.6,
       "nivel": "C"
     },
     {
-      "orden": 76,
+      "orden": 73,
       "name": "Sara Pedreira Luna",
       "licencia": "0208885113",
       "hcp": 5.6,
       "nivel": "C"
     },
     {
-      "orden": 77,
+      "orden": 74,
       "name": "Constanza Beatriz Rodriguez Ossorio",
       "licencia": "AM83886268",
       "hcp": 4.1,
       "nivel": "J"
     },
     {
-      "orden": 78,
+      "orden": 75,
       "name": "Chanya Huaysan Songchaikul",
       "licencia": "AM61910150",
       "hcp": null,
       "nivel": "C"
     },
     {
-      "orden": 79,
+      "orden": 76,
       "name": "Fatima Noguera Perez",
       "licencia": "LV65914845",
       "hcp": null,
       "nivel": "C"
     },
     {
-      "orden": 80,
-      "name": "Noelia Quintanilla Gutierrez",
-      "licencia": "AM85931978",
-      "hcp": 2.3,
-      "nivel": "C"
-    },
-    {
-      "orden": 81,
+      "orden": 77,
       "name": "Paloma Estevan Rodriguez",
       "licencia": "CM11885347",
       "hcp": 2.2,
       "nivel": "J"
     },
     {
-      "orden": 82,
+      "orden": 78,
       "name": "Victoria Cid Fernandez",
       "licencia": "CM61148753",
       "hcp": 8.6,
       "nivel": "C"
     },
     {
-      "orden": 83,
+      "orden": 79,
       "name": "Irene Elias Gonzalez",
       "licencia": "7772981136",
-      "hcp": 5.4,
+      "hcp": 5.3,
       "nivel": "I"
     },
     {
-      "orden": 84,
+      "orden": 80,
       "name": "Maria Del Pino Uribe De Leon",
       "licencia": "CP01944235",
       "hcp": 5.8,
       "nivel": "C"
     },
     {
-      "orden": 85,
+      "orden": 81,
       "name": "Lucia Uribe De Leon",
       "licencia": "CP01944236",
       "hcp": 4.3,
       "nivel": "C"
     },
     {
-      "orden": 86,
+      "orden": 82,
       "name": "Martina Cerrillo Giral",
       "licencia": "0117915369",
-      "hcp": 0.8,
+      "hcp": 0.6,
       "nivel": "C"
-    },
-    {
-      "orden": 87,
-      "name": "Andrea Arquero Fernandez",
-      "licencia": "CB05896356",
-      "hcp": 2.4,
-      "nivel": "Mid"
     },
     {
       "orden": null,
@@ -649,14 +4277,14 @@
       "orden": 2,
       "name": "Daniela Guerrero Alcoba",
       "licencia": "7759921643",
-      "hcp": 0.6,
+      "hcp": 0.7,
       "nivel": "J"
     },
     {
       "orden": 3,
       "name": "Carmen Fevre De La Peña",
       "licencia": "CM01926741",
-      "hcp": null,
+      "hcp": 0.1,
       "nivel": "C"
     },
     {
@@ -677,7 +4305,7 @@
       "orden": 6,
       "name": "Sara Diaz Garcia",
       "licencia": "CM41900064",
-      "hcp": 0.4,
+      "hcp": 0.3,
       "nivel": "J"
     },
     {
@@ -698,7 +4326,7 @@
       "orden": 9,
       "name": "Jimena Maria Garcia Mateo",
       "licencia": "GC02897341",
-      "hcp": 1.7,
+      "hcp": 1.6,
       "nivel": "C"
     },
     {
@@ -710,584 +4338,509 @@
     },
     {
       "orden": 11,
-      "name": "Lucía Gonzalez Ortega",
-      "licencia": "1128915182",
-      "hcp": 2.4,
-      "nivel": "C"
-    },
-    {
-      "orden": 12,
       "name": "Romina Camarillo Alarcon",
       "licencia": "BP02169066",
       "hcp": 1.5,
       "nivel": "J"
     },
     {
-      "orden": 13,
+      "orden": 12,
       "name": "Ines Gonzalez Ortega",
       "licencia": "1128887999",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 14,
+      "orden": 13,
       "name": "Marta Muñoz Escudero",
       "licencia": "CM05922733",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 15,
+      "orden": 14,
       "name": "Clara Valls Alesanco",
       "licencia": "RL04887723",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 16,
+      "orden": 15,
       "name": "Cristina Garcia Gonzalez",
       "licencia": "7776896565",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 17,
+      "orden": 16,
       "name": "Amy Elizabeth Gay",
       "licencia": "MM22088611",
-      "hcp": 1.1,
+      "hcp": 0.9,
       "nivel": "J"
     },
     {
-      "orden": 18,
+      "orden": 17,
       "name": "Iciar Rodriguez Crespo",
       "licencia": "CM61964557",
       "hcp": null,
       "nivel": "C"
     },
     {
-      "orden": 19,
+      "orden": 18,
       "name": "Alejandra Vilariño Targhetta",
       "licencia": "CM02072365",
       "hcp": 2.6,
       "nivel": "Mid"
     },
     {
-      "orden": 20,
+      "orden": 19,
       "name": "Minea Lizarriturry Pareja",
       "licencia": "CB65937304",
       "hcp": 1.7,
       "nivel": "J"
     },
     {
-      "orden": 21,
+      "orden": 20,
       "name": "Carlota Alejandra Burcio Macias",
       "licencia": "9912953556",
       "hcp": 2.7,
       "nivel": "C"
     },
     {
-      "orden": 22,
+      "orden": 21,
       "name": "Paula Jimenez Martinez",
       "licencia": "CB02918149",
       "hcp": null,
       "nivel": "C"
     },
     {
-      "orden": 23,
+      "orden": 22,
       "name": "Daniela Carrion Martinez",
       "licencia": "LV06929070",
       "hcp": null,
       "nivel": "C"
     },
     {
-      "orden": 24,
+      "orden": 23,
       "name": "Ioana Garcia Trifu",
       "licencia": "0102914715",
       "hcp": null,
       "nivel": "C"
     },
     {
-      "orden": 25,
+      "orden": 24,
       "name": "Ariana Perez Ruiz",
       "licencia": "MM04931947",
       "hcp": 1.5,
       "nivel": "C"
     },
     {
-      "orden": 26,
+      "orden": 25,
       "name": "Angela Revuelta Goicoechea",
       "licencia": "CM11904045",
       "hcp": null,
       "nivel": "C"
     },
     {
-      "orden": 27,
+      "orden": 26,
       "name": "Amanda Revuelta Goicoechea",
       "licencia": "CM11162442",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 28,
+      "orden": 27,
       "name": "Isabel Ping Martinez Guerra",
       "licencia": "CP01929578",
       "hcp": 1,
       "nivel": "C"
     },
     {
-      "orden": 29,
+      "orden": 28,
       "name": "Nagore Martinez Salcedo",
       "licencia": "CB01892885",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 30,
+      "orden": 29,
       "name": "Naia Goikoetxea Zapirain",
       "licencia": "VB09728721",
       "hcp": null,
       "nivel": "C"
     },
     {
-      "orden": 31,
+      "orden": 30,
       "name": "Noa Ayala-Hurtado",
       "licencia": "EXX1911611",
       "hcp": 4.1,
       "nivel": "J"
     },
     {
-      "orden": 32,
+      "orden": 31,
       "name": "Beatriz Sueiro Nieves",
       "licencia": "VB09730862",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 33,
+      "orden": 32,
       "name": "Rocio Caturla Broseta",
       "licencia": "LV06897458",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 34,
+      "orden": 33,
       "name": "Blanca Gomez-Balboa Garcia",
       "licencia": "CM11910423",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 35,
+      "orden": 34,
       "name": "Carlota Lopez Minguela",
       "licencia": "LV02978781",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 36,
+      "orden": 35,
       "name": "Martina Navarro Navarro",
       "licencia": "LV65815921",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 37,
+      "orden": 36,
       "name": "Maria Bastarrica Valentin-Fdez",
       "licencia": "VB09725391",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 38,
+      "orden": 37,
       "name": "Luna Isabella Valencia Mejia",
       "licencia": "MM23897228",
       "hcp": null,
       "nivel": "C"
     },
     {
-      "orden": 39,
+      "orden": 38,
       "name": "Sofia Abeti Gil",
       "licencia": "4402764235",
-      "hcp": 1.9,
+      "hcp": 2.2,
       "nivel": "Mid"
     },
     {
-      "orden": 40,
+      "orden": 39,
       "name": "Cornelia Bermudo Del Rio",
       "licencia": "AM85948360",
       "hcp": 0,
       "nivel": "I"
     },
     {
-      "orden": 41,
+      "orden": 40,
       "name": "Clara Uso Jurado",
       "licencia": "LV01899816",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 42,
+      "orden": 41,
       "name": "Yaiza Morales Vazquez",
       "licencia": "AM51914494",
-      "hcp": 2.1,
+      "hcp": 1.8,
       "nivel": "C"
     },
     {
-      "orden": 43,
+      "orden": 42,
       "name": "Indira Gomez Montalva",
       "licencia": "LV64923014",
       "hcp": 0.4,
       "nivel": "J"
     },
     {
-      "orden": 44,
+      "orden": 43,
       "name": "Barbara De Pablo Chacon",
       "licencia": "CM41896470",
       "hcp": 4.3,
       "nivel": "J"
     },
     {
-      "orden": 45,
+      "orden": 44,
       "name": "Maria De Pablo Chacon",
       "licencia": "CM41900882",
       "hcp": 7.7,
       "nivel": "C"
     },
     {
-      "orden": 46,
+      "orden": 45,
       "name": "Lola Cabanes Cisneros",
       "licencia": "CB05943852",
       "hcp": 3.3,
       "nivel": "C"
     },
     {
-      "orden": 47,
+      "orden": 46,
       "name": "Claudia Lara Miravitlles",
       "licencia": "CB03805418",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 48,
+      "orden": 47,
       "name": "Adriana Garcia Terol",
       "licencia": "CB01168758",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 49,
+      "orden": 48,
       "name": "Aroa Gonzalez Hernandez",
       "licencia": "4402923441",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 50,
+      "orden": 49,
       "name": "Adriana Vigon Garcia",
       "licencia": "CM11909813",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 51,
+      "orden": 50,
       "name": "Africa Oliva Cardell",
       "licencia": "LV35885160",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 52,
+      "orden": 51,
       "name": "Liz Siyu Hao Zhang",
       "licencia": "CM07897966",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 53,
+      "orden": 52,
       "name": "Macarena Campomanes Eguiguren",
       "licencia": "CM01017629",
-      "hcp": null,
+      "hcp": 0,
       "nivel": "S"
     },
     {
-      "orden": 54,
+      "orden": 53,
       "name": "Miranda Viera Garcia",
       "licencia": "CM41414516",
       "hcp": 6.8,
       "nivel": "J"
     },
     {
-      "orden": 55,
+      "orden": 54,
       "name": "Lucia Albacete Carmona",
       "licencia": "MM04914873",
       "hcp": 1.3,
       "nivel": "C"
     },
     {
-      "orden": 56,
+      "orden": 55,
       "name": "Gabriela Rincon De La Torre",
       "licencia": "CM41913370",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 57,
+      "orden": 56,
       "name": "Vanessa Ristorcelli",
       "licencia": "LV35022443",
       "hcp": 3,
       "nivel": "J"
     },
     {
-      "orden": 58,
+      "orden": 57,
       "name": "Ana Carlon Obregon",
       "licencia": "7712914056",
       "hcp": 2.6,
       "nivel": "C"
     },
     {
-      "orden": 59,
+      "orden": 58,
       "name": "Norena Lueje Garcia",
       "licencia": "0208385719",
-      "hcp": 2.2,
+      "hcp": 2.1,
       "nivel": "Mid"
     },
     {
-      "orden": 60,
+      "orden": 59,
       "name": "Olivia Ribot Soler-Cabot",
       "licencia": "CB01921336",
       "hcp": 3.2,
       "nivel": "C"
     },
     {
-      "orden": 61,
-      "name": "Elena Isorna Felpeto",
-      "licencia": "GC08939553",
-      "hcp": 0.8,
-      "nivel": "C"
-    },
-    {
-      "orden": 62,
+      "orden": 60,
       "name": "Lola Prieto Cabrero",
       "licencia": "CM04979403",
       "hcp": 2.3,
       "nivel": "C"
     },
     {
-      "orden": 63,
+      "orden": 61,
       "name": "Marta Estevan Rodriguez",
       "licencia": "CM11910930",
       "hcp": 3,
       "nivel": "C"
     },
     {
-      "orden": 64,
+      "orden": 62,
       "name": "Valeria Estevan Rodriguez",
       "licencia": "CM11910932",
-      "hcp": 3,
+      "hcp": 3.5,
       "nivel": "C"
     },
     {
-      "orden": 65,
+      "orden": 63,
       "name": "Daniela Gallego Meseguer",
       "licencia": "MM06916948",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 66,
+      "orden": 64,
       "name": "Diana Fraile Herrero",
       "licencia": "7706912557",
       "hcp": 0.7,
       "nivel": "C"
     },
     {
-      "orden": 67,
+      "orden": 65,
       "name": "Aurora Venneri Arnau",
       "licencia": "LV35189229",
       "hcp": 2,
       "nivel": "C"
     },
     {
-      "orden": 68,
+      "orden": 66,
       "name": "Ana Lorena Diaz De Aguilar Coll",
       "licencia": "CMA8902350",
-      "hcp": 0,
+      "hcp": 0.8,
       "nivel": "J"
     },
     {
-      "orden": 69,
+      "orden": 67,
       "name": "Alejandra Hernandez Soto",
       "licencia": "CM52890007",
       "hcp": 0.5,
       "nivel": "C"
     },
     {
-      "orden": 70,
+      "orden": 68,
       "name": "Mireia Ivars Anguita",
       "licencia": "LV27958677",
       "hcp": 8.7,
       "nivel": "J"
     },
     {
-      "orden": 71,
-      "name": "Carla Revenga Bengoechea",
-      "licencia": "CMA8903766",
-      "hcp": null,
-      "nivel": "C"
-    },
-    {
-      "orden": 72,
+      "orden": 69,
       "name": "Angela Gomez Roca",
       "licencia": "LV35040541",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 73,
+      "orden": 70,
       "name": "Claudia Almazan Bauzan",
       "licencia": "CM22995567",
       "hcp": 5.6,
       "nivel": "C"
     },
     {
-      "orden": 74,
+      "orden": 71,
       "name": "Carla Herrero Cantero",
       "licencia": "LV00451891",
       "hcp": 7.3,
       "nivel": "Mid"
     },
     {
-      "orden": 75,
+      "orden": 72,
       "name": "Alejandra Moreno Fernandez",
       "licencia": "CM41939609",
       "hcp": 3.6,
       "nivel": "C"
     },
     {
-      "orden": 76,
+      "orden": 73,
       "name": "Sara Pedreira Luna",
       "licencia": "0208885113",
       "hcp": 5.6,
       "nivel": "C"
     },
     {
-      "orden": 77,
+      "orden": 74,
       "name": "Constanza Beatriz Rodriguez Ossorio",
       "licencia": "AM83886268",
       "hcp": 4.1,
       "nivel": "J"
     },
     {
-      "orden": 78,
+      "orden": 75,
       "name": "Chanya Huaysan Songchaikul",
       "licencia": "AM61910150",
       "hcp": null,
       "nivel": "C"
     },
     {
-      "orden": 79,
+      "orden": 76,
       "name": "Fatima Noguera Perez",
       "licencia": "LV65914845",
       "hcp": null,
       "nivel": "C"
     },
     {
-      "orden": 80,
-      "name": "Noelia Quintanilla Gutierrez",
-      "licencia": "AM85931978",
-      "hcp": 2.3,
-      "nivel": "C"
-    },
-    {
-      "orden": 81,
+      "orden": 77,
       "name": "Paloma Estevan Rodriguez",
       "licencia": "CM11885347",
       "hcp": 2.2,
       "nivel": "J"
     },
     {
-      "orden": 82,
+      "orden": 78,
       "name": "Victoria Cid Fernandez",
       "licencia": "CM61148753",
       "hcp": 8.6,
       "nivel": "C"
     },
     {
-      "orden": 83,
+      "orden": 79,
       "name": "Irene Elias Gonzalez",
       "licencia": "7772981136",
-      "hcp": 5.4,
+      "hcp": 5.3,
       "nivel": "I"
     },
     {
-      "orden": 84,
+      "orden": 80,
       "name": "Maria Del Pino Uribe De Leon",
       "licencia": "CP01944235",
       "hcp": 5.8,
       "nivel": "C"
     },
     {
-      "orden": 85,
+      "orden": 81,
       "name": "Lucia Uribe De Leon",
       "licencia": "CP01944236",
       "hcp": 4.3,
       "nivel": "C"
     },
     {
-      "orden": 86,
+      "orden": 82,
       "name": "Martina Cerrillo Giral",
       "licencia": "0117915369",
-      "hcp": 0.8,
+      "hcp": 0.6,
       "nivel": "C"
-    },
-    {
-      "orden": 87,
-      "name": "Andrea Arquero Fernandez",
-      "licencia": "CB05896356",
-      "hcp": 2.4,
-      "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72363
-    },
-    {
-      "roundNumber": 2,
-      "roundId": 72364
-    },
-    {
-      "roundNumber": 3,
-      "roundId": 72365
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Fennelly, Barry",
-          "holeNumber": 1,
-          "createdAt": "24/07/25 09:31:06"
-        },
-        {
-          "playerName": "Fennelly, Barry",
-          "holeNumber": 12,
-          "createdAt": "24/07/25 11:50:40"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1754,5 +5307,49 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-17T12:43:04.293Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72363
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 72364
+    },
+    {
+      "roundNumber": 3,
+      "roundId": 72365
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Fennelly, Barry",
+          "holeNumber": 1,
+          "createdAt": "24/07/25 09:31:06"
+        },
+        {
+          "playerName": "Fennelly, Barry",
+          "holeNumber": 12,
+          "createdAt": "24/07/25 11:50:40"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/2779543887_banderas_3ª_jornada.pdf",
+    "/uploads/competiciones/pdf/711669248_rrll_espanol_merged.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:11.356Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 70214,
   "url": "https://www.nextcaddy.com/tour/70214",
-  "scrapedAt": "2026-05-09T10:15:57.035Z",
+  "scrapedAt": "2026-05-21T16:39:32.463Z",
   "meta": {
     "name": "VIII  Liga Promesas 2025-2026",
     "organizer": null,
     "course": "Escuela de Golf Miguel ángel Jiménez",
     "courseCode": "AMI5",
-    "dateStart": "09 may 2026",
-    "dateEnd": "09 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,113 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-09"
+    ]
   },
   "course": null,
-  "leaderboard": [],
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Carlos Colombo Flethes",
+          "licencia": "AMI5097186",
+          "hcp": 29.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2309390
+        },
+        {
+          "pos": 2,
+          "name": "Juan Jose Muñoz Mora",
+          "licencia": "AMI5467648",
+          "hcp": 25.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2310983
+        },
+        {
+          "pos": 3,
+          "name": "Jose Luis Ortega Herraiz",
+          "licencia": "CM66150463",
+          "hcp": 25.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2307767
+        },
+        {
+          "pos": 4,
+          "name": "Jose Luis Garcia Perez",
+          "licencia": "AM15488988",
+          "hcp": 25.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2313039
+        },
+        {
+          "pos": 5,
+          "name": "Javier Olmedo Ruiz",
+          "licencia": "AMI5076745",
+          "hcp": 33.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2310789
+        },
+        {
+          "pos": 6,
+          "name": "Jesus Terrazas Abad",
+          "licencia": "AMI5974282",
+          "hcp": 23.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2313883
+        },
+        {
+          "pos": 7,
+          "name": "Aida Khanafeeva Nasibulina",
+          "licencia": "AM15306327",
+          "hcp": 35,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2313475
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 7
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -136,22 +238,6 @@
       "nivel": "AMI5974282"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75120
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -222,5 +308,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:58.178Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75120
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:38.706Z"
 }

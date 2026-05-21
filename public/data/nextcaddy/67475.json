@@ -1,14 +1,14 @@
 {
   "tourId": 67475,
   "url": "https://www.nextcaddy.com/tour/67475",
-  "scrapedAt": "2026-05-09T09:57:18.368Z",
+  "scrapedAt": "2026-05-21T16:36:28.700Z",
   "meta": {
     "name": "VOBS COMPETITION",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "12 ene 2026",
-    "dateEnd": "12 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-12"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 14,
       "header": [
         "Pos",
         "Jugador",
@@ -193,6 +194,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 14
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -398,43 +406,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71935
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Guzman Celada, Fernando",
-          "holeNumber": 11,
-          "createdAt": "03/07/25 11:36:20"
-        },
-        {
-          "playerName": "Garcia Velazquez, Marcelino",
-          "holeNumber": 13,
-          "createdAt": "03/07/25 12:03:36"
-        },
-        {
-          "playerName": "Nolan, Tom",
-          "holeNumber": 10,
-          "createdAt": "03/07/25 12:52:04"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -568,5 +539,43 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:08.163Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71935
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Guzman Celada, Fernando",
+          "holeNumber": 11,
+          "createdAt": "03/07/25 11:36:20"
+        },
+        {
+          "playerName": "Garcia Velazquez, Marcelino",
+          "holeNumber": 13,
+          "createdAt": "03/07/25 12:03:36"
+        },
+        {
+          "playerName": "Nolan, Tom",
+          "holeNumber": 10,
+          "createdAt": "03/07/25 12:52:04"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:03.739Z"
 }

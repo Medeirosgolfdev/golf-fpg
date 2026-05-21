@@ -1,14 +1,14 @@
 {
   "tourId": 68666,
   "url": "https://www.nextcaddy.com/tour/68666",
-  "scrapedAt": "2026-05-09T09:57:52.971Z",
+  "scrapedAt": "2026-05-21T16:37:20.210Z",
   "meta": {
     "name": "MENS COMP 2402",
     "organizer": null,
     "course": "Miraflores Golf",
     "courseCode": "AM76",
-    "dateStart": "24 feb 2026",
-    "dateEnd": "24 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros Facebo",
     "categories": [
       "Caballeros",
@@ -16,13 +16,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-24"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 67,
       "header": [
         "Pos",
         "Jugador",
@@ -776,6 +777,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 67,
       "header": [
         "Pos",
         "Jugador",
@@ -1528,6 +1531,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 67
+    },
+    "2": {
+      "name": "Handicap General",
+      "jugadores": 67
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2475,6 +2489,7 @@
       "nivel": "AM76918998"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {
       "p": {
@@ -2859,6 +2874,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:38.774Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:25.327Z"
 }

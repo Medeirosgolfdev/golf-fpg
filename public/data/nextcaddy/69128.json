@@ -1,14 +1,14 @@
 {
   "tourId": 69128,
   "url": "https://www.nextcaddy.com/tour/69128",
-  "scrapedAt": "2026-05-09T09:49:41.506Z",
+  "scrapedAt": "2026-05-21T16:38:29.937Z",
   "meta": {
     "name": "Torneo Junior, Cadete e Infantil Puerta de Hierro",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Real Club de la Puerta de Hierro",
     "courseCode": "CM01",
-    "dateStart": "06 abr 2026",
-    "dateEnd": "06 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Junior",
@@ -22,11 +22,12 @@
       "INFANTIL",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-04-06"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -99,6 +100,7 @@
       "nivel": "I"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -166,6 +168,9 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:41.172Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/69128_cartel_455.pdf",
+    "/uploads/competiciones/pdf/2294781573_reglamento_cto._ph_infantil.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:31.159Z"
 }

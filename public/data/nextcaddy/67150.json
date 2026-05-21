@@ -1,14 +1,14 @@
 {
   "tourId": 67150,
   "url": "https://www.nextcaddy.com/tour/67150",
-  "scrapedAt": "2026-05-08T17:34:17.690Z",
+  "scrapedAt": "2026-05-21T16:38:38.418Z",
   "meta": {
     "name": "II MATCH PLAY SUB18 DE CASTILLA Y LEÓN 2026",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "11 abr 2026",
-    "dateEnd": "11 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "MATCH PLAY SUB18 DE CASTILLA Y LEÓN 2026",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-04-11"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -199,6 +200,7 @@
       "nivel": "7751172083"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -218,6 +220,12 @@
       "roundId": 71550
     }
   ],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:26.620Z"
+  "scoreTypes": null,
+  "pdfs": [
+    "/uploads/competiciones/pdf/237422911_resultados_finales_publicar.pdf",
+    "/uploads/competiciones/pdf/4188941806_modificaciorn_reglamento.pdf",
+    "/uploads/circulares/cirfgcyl0826-1.pdf",
+    "/uploads/competiciones/pdf/2991058926_procedimiento_de_suspensiorn.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:59.246Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 69431,
   "url": "https://www.nextcaddy.com/tour/69431",
-  "scrapedAt": "2026-05-09T10:07:54.247Z",
+  "scrapedAt": "2026-05-21T16:38:35.882Z",
   "meta": {
     "name": "GOLFISTAS SEVILLA ( TARDE 15:30)",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": "10 abr 2026",
-    "dateEnd": "10 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-10"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -213,43 +214,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74202
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Del Campo Vicente, Carlos",
-          "holeNumber": 9,
-          "createdAt": "04/10/25 14:23:26"
-        },
-        {
-          "playerName": "Del Campo Vicente, Carlos",
-          "holeNumber": 15,
-          "createdAt": "04/10/25 14:23:26"
-        },
-        {
-          "playerName": "Bisin, Guy",
-          "holeNumber": 9,
-          "createdAt": "04/10/25 14:23:27"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -374,5 +338,43 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:53.961Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74202
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Del Campo Vicente, Carlos",
+          "holeNumber": 9,
+          "createdAt": "04/10/25 14:23:26"
+        },
+        {
+          "playerName": "Del Campo Vicente, Carlos",
+          "holeNumber": 15,
+          "createdAt": "04/10/25 14:23:26"
+        },
+        {
+          "playerName": "Bisin, Guy",
+          "holeNumber": 9,
+          "createdAt": "04/10/25 14:23:27"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:34.213Z"
 }

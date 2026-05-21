@@ -1,14 +1,14 @@
 {
   "tourId": 68228,
   "url": "https://www.nextcaddy.com/tour/68228",
-  "scrapedAt": "2026-05-09T10:15:41.308Z",
+  "scrapedAt": "2026-05-21T16:39:07.500Z",
   "meta": {
     "name": "Campeonato de Madrid Senior Masculino - II Puntuable Nacional",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Real Club la Moraleja",
     "courseCode": "CM52",
-    "dateStart": "25 abr 2026",
-    "dateEnd": "25 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) Ranking Mid-Amateur",
     "categories": [
       "Senior Masculino",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-25"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Final",
+      "expectedJugadores": 120,
       "header": [
         "Pos",
         "Jugador",
@@ -2443,6 +2444,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Final",
+      "jugadores": 120
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -4132,77 +4140,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72789
-    },
-    {
-      "roundNumber": 2,
-      "roundId": 72790
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Calvo Perez, Miguel Angel",
-          "holeNumber": 9,
-          "createdAt": "31/08/25 09:30:33"
-        },
-        {
-          "playerName": "Ramirez Bermudez, Juan Manuel",
-          "holeNumber": 12,
-          "createdAt": "31/08/25 10:13:34"
-        },
-        {
-          "playerName": "Amaya Gonzalez, Tomas",
-          "holeNumber": 13,
-          "createdAt": "31/08/25 10:35:29"
-        },
-        {
-          "playerName": "Calvo Perez, Miguel Angel",
-          "holeNumber": 14,
-          "createdAt": "31/08/25 10:50:49"
-        },
-        {
-          "playerName": "Delcuvillo Silos, Josejavier",
-          "holeNumber": 6,
-          "createdAt": "31/08/25 12:34:19"
-        },
-        {
-          "playerName": "Rodriguez Gutierrez, Francisco",
-          "holeNumber": 4,
-          "createdAt": "31/08/25 12:35:53"
-        },
-        {
-          "playerName": "Gomez Gomez, Javier",
-          "holeNumber": 8,
-          "createdAt": "31/08/25 12:52:35"
-        },
-        {
-          "playerName": "Astolfi Garcia, Antonio",
-          "holeNumber": 6,
-          "createdAt": "31/08/25 12:58:18"
-        },
-        {
-          "playerName": "Rodriguez Parra, Jose Antonio",
-          "holeNumber": 6,
-          "createdAt": "31/08/25 13:32:23"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -5254,5 +5191,80 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:22.825Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72789
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 72790
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Calvo Perez, Miguel Angel",
+          "holeNumber": 9,
+          "createdAt": "31/08/25 09:30:33"
+        },
+        {
+          "playerName": "Ramirez Bermudez, Juan Manuel",
+          "holeNumber": 12,
+          "createdAt": "31/08/25 10:13:34"
+        },
+        {
+          "playerName": "Amaya Gonzalez, Tomas",
+          "holeNumber": 13,
+          "createdAt": "31/08/25 10:35:29"
+        },
+        {
+          "playerName": "Calvo Perez, Miguel Angel",
+          "holeNumber": 14,
+          "createdAt": "31/08/25 10:50:49"
+        },
+        {
+          "playerName": "Delcuvillo Silos, Josejavier",
+          "holeNumber": 6,
+          "createdAt": "31/08/25 12:34:19"
+        },
+        {
+          "playerName": "Rodriguez Gutierrez, Francisco",
+          "holeNumber": 4,
+          "createdAt": "31/08/25 12:35:53"
+        },
+        {
+          "playerName": "Gomez Gomez, Javier",
+          "holeNumber": 8,
+          "createdAt": "31/08/25 12:52:35"
+        },
+        {
+          "playerName": "Astolfi Garcia, Antonio",
+          "holeNumber": 6,
+          "createdAt": "31/08/25 12:58:18"
+        },
+        {
+          "playerName": "Rodriguez Parra, Jose Antonio",
+          "holeNumber": 6,
+          "createdAt": "31/08/25 13:32:23"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/3254817681_protocolo_tormentas.pdf",
+    "/uploads/competiciones/pdf/1951983555_arb_reg_loc_cm52_campo_i._2019_.docx.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:20.221Z"
 }

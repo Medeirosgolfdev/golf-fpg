@@ -1,14 +1,14 @@
 {
   "tourId": 67795,
   "url": "https://www.nextcaddy.com/tour/67795",
-  "scrapedAt": "2026-05-09T10:36:07.144Z",
+  "scrapedAt": "2026-05-21T16:38:02.904Z",
   "meta": {
     "name": "Torneo Alevín Femenino \"JAS\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Ciudad Deportiva Juan Antonio Samaranch",
     "courseCode": "CMD9",
-    "dateStart": "21 mar 2026",
-    "dateEnd": "21 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) Circuito Juvenil 20",
     "categories": [
       "Alevín Femenino",
@@ -17,77 +17,14 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-03-21"
+    ]
   },
-  "course": {
-    "par": [
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      4,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3,
-      3
-    ],
-    "si": [
-      15,
-      3,
-      7,
-      11,
-      13,
-      5,
-      9,
-      17,
-      1,
-      16,
-      4,
-      8,
-      12,
-      14,
-      6,
-      10,
-      18,
-      2
-    ],
-    "meters": [
-      75,
-      80,
-      90,
-      60,
-      55,
-      70,
-      85,
-      60,
-      75,
-      75,
-      80,
-      90,
-      60,
-      55,
-      70,
-      85,
-      60,
-      75
-    ],
-    "parTotal": 60,
-    "parInferred": true,
-    "parConfidence": "low"
-  },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual Alevin Femenino",
+      "expectedJugadores": 17,
       "header": [
         "Pos",
         "Jugador",
@@ -109,33 +46,7 @@
           "rounds": [],
           "total": 50,
           "toPar": -4,
-          "inscribedId": 2278366,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                3,
-                3,
-                3,
-                3,
-                3,
-                3,
-                3,
-                4,
-                3,
-                3,
-                3,
-                3,
-                3,
-                3,
-                3,
-                2,
-                3,
-                3
-              ],
-              "total": 54
-            }
-          ]
+          "inscribedId": 2278366
         },
         {
           "pos": 2,
@@ -146,33 +57,7 @@
           "rounds": [],
           "total": 50,
           "toPar": -4,
-          "inscribedId": 2277283,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                2,
-                3,
-                2,
-                4,
-                2,
-                3,
-                3,
-                3,
-                3,
-                3,
-                4,
-                3,
-                4,
-                4,
-                3,
-                3,
-                3,
-                3
-              ],
-              "total": 55
-            }
-          ]
+          "inscribedId": 2277283
         },
         {
           "pos": 3,
@@ -183,33 +68,7 @@
           "rounds": [],
           "total": 50,
           "toPar": -4,
-          "inscribedId": 2276858,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                2,
-                4,
-                2,
-                3,
-                3,
-                3,
-                4,
-                3,
-                3,
-                3,
-                5,
-                3,
-                3,
-                2,
-                4,
-                3,
-                3,
-                3
-              ],
-              "total": 56
-            }
-          ]
+          "inscribedId": 2276858
         },
         {
           "pos": 4,
@@ -220,33 +79,7 @@
           "rounds": [],
           "total": 53,
           "toPar": -1,
-          "inscribedId": 2277632,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                4,
-                2,
-                3,
-                3,
-                3,
-                3,
-                4,
-                4,
-                3,
-                4,
-                3,
-                3,
-                4,
-                3,
-                3,
-                3,
-                3,
-                3
-              ],
-              "total": 58
-            }
-          ]
+          "inscribedId": 2277632
         },
         {
           "pos": 5,
@@ -257,33 +90,7 @@
           "rounds": [],
           "total": 53,
           "toPar": -1,
-          "inscribedId": 2277681,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                3,
-                3,
-                3,
-                3,
-                3,
-                3,
-                3,
-                3,
-                5,
-                2,
-                3,
-                4,
-                5,
-                2,
-                2,
-                4,
-                5,
-                3
-              ],
-              "total": 59
-            }
-          ]
+          "inscribedId": 2277681
         },
         {
           "pos": 6,
@@ -294,8 +101,7 @@
           "rounds": [],
           "total": 53,
           "toPar": -1,
-          "inscribedId": 2276897,
-          "roundScores": []
+          "inscribedId": 2276897
         },
         {
           "pos": 7,
@@ -306,8 +112,7 @@
           "rounds": [],
           "total": 54,
           "toPar": null,
-          "inscribedId": 2277570,
-          "roundScores": []
+          "inscribedId": 2277570
         },
         {
           "pos": 8,
@@ -318,20 +123,18 @@
           "rounds": [],
           "total": 54,
           "toPar": null,
-          "inscribedId": 2277193,
-          "roundScores": []
+          "inscribedId": 2277193
         },
         {
           "pos": 9,
-          "name": "Tesla Charlotte Chesneau",
+          "name": "Tesla Chesneau",
           "licencia": "CMA8002247",
           "hcp": 27.6,
           "nivel": "A",
           "rounds": [],
           "total": 55,
           "toPar": 1,
-          "inscribedId": 2277526,
-          "roundScores": []
+          "inscribedId": 2277526
         },
         {
           "pos": 10,
@@ -342,8 +145,7 @@
           "rounds": [],
           "total": 56,
           "toPar": 2,
-          "inscribedId": 2282222,
-          "roundScores": []
+          "inscribedId": 2282222
         },
         {
           "pos": 11,
@@ -354,8 +156,7 @@
           "rounds": [],
           "total": 56,
           "toPar": 2,
-          "inscribedId": 2277058,
-          "roundScores": []
+          "inscribedId": 2277058
         },
         {
           "pos": 12,
@@ -366,8 +167,7 @@
           "rounds": [],
           "total": 56,
           "toPar": 2,
-          "inscribedId": 2277647,
-          "roundScores": []
+          "inscribedId": 2277647
         },
         {
           "pos": 13,
@@ -378,8 +178,7 @@
           "rounds": [],
           "total": 57,
           "toPar": 3,
-          "inscribedId": 2277126,
-          "roundScores": []
+          "inscribedId": 2277126
         },
         {
           "pos": 14,
@@ -390,8 +189,7 @@
           "rounds": [],
           "total": 58,
           "toPar": 4,
-          "inscribedId": 2277758,
-          "roundScores": []
+          "inscribedId": 2277758
         },
         {
           "pos": 15,
@@ -402,8 +200,7 @@
           "rounds": [],
           "total": 62,
           "toPar": 8,
-          "inscribedId": 2276963,
-          "roundScores": []
+          "inscribedId": 2276963
         },
         {
           "pos": 16,
@@ -414,8 +211,7 @@
           "rounds": [],
           "total": 76,
           "toPar": 22,
-          "inscribedId": 2277065,
-          "roundScores": []
+          "inscribedId": 2277065
         },
         {
           "pos": null,
@@ -426,13 +222,14 @@
           "rounds": [],
           "total": null,
           "toPar": null,
-          "inscribedId": 2279813,
-          "roundScores": []
+          "inscribedId": 2279813
         }
       ]
     },
     {
       "category": 2,
+      "categoryName": "Scratch Individual Femenino",
+      "expectedJugadores": 17,
       "header": [
         "Pos",
         "Jugador",
@@ -454,33 +251,7 @@
           "rounds": [],
           "total": 54,
           "toPar": null,
-          "inscribedId": 2278366,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                3,
-                3,
-                3,
-                3,
-                3,
-                3,
-                3,
-                4,
-                3,
-                3,
-                3,
-                3,
-                3,
-                3,
-                3,
-                2,
-                3,
-                3
-              ],
-              "total": 54
-            }
-          ]
+          "inscribedId": 2278366
         },
         {
           "pos": 2,
@@ -491,33 +262,7 @@
           "rounds": [],
           "total": 55,
           "toPar": 1,
-          "inscribedId": 2277283,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                2,
-                3,
-                2,
-                4,
-                2,
-                3,
-                3,
-                3,
-                3,
-                3,
-                4,
-                3,
-                4,
-                4,
-                3,
-                3,
-                3,
-                3
-              ],
-              "total": 55
-            }
-          ]
+          "inscribedId": 2277283
         },
         {
           "pos": 3,
@@ -528,33 +273,7 @@
           "rounds": [],
           "total": 56,
           "toPar": 2,
-          "inscribedId": 2276858,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                2,
-                4,
-                2,
-                3,
-                3,
-                3,
-                4,
-                3,
-                3,
-                3,
-                5,
-                3,
-                3,
-                2,
-                4,
-                3,
-                3,
-                3
-              ],
-              "total": 56
-            }
-          ]
+          "inscribedId": 2276858
         },
         {
           "pos": 4,
@@ -565,33 +284,7 @@
           "rounds": [],
           "total": 58,
           "toPar": 4,
-          "inscribedId": 2277632,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                4,
-                2,
-                3,
-                3,
-                3,
-                3,
-                4,
-                4,
-                3,
-                4,
-                3,
-                3,
-                4,
-                3,
-                3,
-                3,
-                3,
-                3
-              ],
-              "total": 58
-            }
-          ]
+          "inscribedId": 2277632
         },
         {
           "pos": 5,
@@ -602,8 +295,7 @@
           "rounds": [],
           "total": 58,
           "toPar": 4,
-          "inscribedId": 2277570,
-          "roundScores": []
+          "inscribedId": 2277570
         },
         {
           "pos": 6,
@@ -614,33 +306,7 @@
           "rounds": [],
           "total": 59,
           "toPar": 5,
-          "inscribedId": 2277681,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                3,
-                3,
-                3,
-                3,
-                3,
-                3,
-                3,
-                3,
-                5,
-                2,
-                3,
-                4,
-                5,
-                2,
-                2,
-                4,
-                5,
-                3
-              ],
-              "total": 59
-            }
-          ]
+          "inscribedId": 2277681
         },
         {
           "pos": 7,
@@ -651,8 +317,7 @@
           "rounds": [],
           "total": 59,
           "toPar": 5,
-          "inscribedId": 2277193,
-          "roundScores": []
+          "inscribedId": 2277193
         },
         {
           "pos": 8,
@@ -663,8 +328,7 @@
           "rounds": [],
           "total": 65,
           "toPar": 11,
-          "inscribedId": 2282222,
-          "roundScores": []
+          "inscribedId": 2282222
         },
         {
           "pos": 9,
@@ -675,20 +339,18 @@
           "rounds": [],
           "total": 67,
           "toPar": 13,
-          "inscribedId": 2277126,
-          "roundScores": []
+          "inscribedId": 2277126
         },
         {
           "pos": 10,
-          "name": "Tesla Charlotte Chesneau",
+          "name": "Tesla Chesneau",
           "licencia": "CMA8002247",
           "hcp": 27.6,
           "nivel": "A",
           "rounds": [],
           "total": 68,
           "toPar": 14,
-          "inscribedId": 2277526,
-          "roundScores": []
+          "inscribedId": 2277526
         },
         {
           "pos": 11,
@@ -699,8 +361,7 @@
           "rounds": [],
           "total": 70,
           "toPar": 16,
-          "inscribedId": 2277058,
-          "roundScores": []
+          "inscribedId": 2277058
         },
         {
           "pos": 12,
@@ -711,8 +372,7 @@
           "rounds": [],
           "total": 71,
           "toPar": 17,
-          "inscribedId": 2276897,
-          "roundScores": []
+          "inscribedId": 2276897
         },
         {
           "pos": 13,
@@ -723,8 +383,7 @@
           "rounds": [],
           "total": 71,
           "toPar": 17,
-          "inscribedId": 2277647,
-          "roundScores": []
+          "inscribedId": 2277647
         },
         {
           "pos": 14,
@@ -735,8 +394,7 @@
           "rounds": [],
           "total": 71,
           "toPar": 17,
-          "inscribedId": 2277758,
-          "roundScores": []
+          "inscribedId": 2277758
         },
         {
           "pos": 15,
@@ -747,8 +405,7 @@
           "rounds": [],
           "total": 74,
           "toPar": 20,
-          "inscribedId": 2276963,
-          "roundScores": []
+          "inscribedId": 2276963
         },
         {
           "pos": 16,
@@ -759,8 +416,7 @@
           "rounds": [],
           "total": 92,
           "toPar": 38,
-          "inscribedId": 2277065,
-          "roundScores": []
+          "inscribedId": 2277065
         },
         {
           "pos": null,
@@ -771,12 +427,22 @@
           "rounds": [],
           "total": null,
           "toPar": null,
-          "inscribedId": 2279813,
-          "roundScores": []
+          "inscribedId": 2279813
         }
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Alevin Femenino",
+      "jugadores": 17
+    },
+    "2": {
+      "name": "Scratch Individual Femenino",
+      "jugadores": 17
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -836,7 +502,7 @@
     },
     {
       "orden": 9,
-      "name": "Tesla Charlotte Chesneau",
+      "name": "Tesla Chesneau",
       "licencia": "CMA8002247",
       "hcp": 27.6,
       "nivel": "A"
@@ -962,7 +628,7 @@
     },
     {
       "orden": 9,
-      "name": "Tesla Charlotte Chesneau",
+      "name": "Tesla Chesneau",
       "licencia": "CMA8002247",
       "hcp": 27.6,
       "nivel": "A"
@@ -1022,6 +688,166 @@
       "licencia": "CM04255668",
       "hcp": 19.8,
       "nivel": "A"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Gabriela Timpanaro Abasolo",
+          "hcp": 10.3,
+          "ins": "2278366",
+          "jid": "72289",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Claudia Solana Rodriguez-Inciarte",
+          "hcp": 11.5,
+          "ins": "2277570",
+          "jid": "72289",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Sophia Mingyue Jiang",
+          "hcp": 12.9,
+          "ins": "2277193",
+          "jid": "72289",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Eva Pecharroman Canales",
+          "hcp": 12.9,
+          "ins": "2277632",
+          "jid": "72289",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 2,
+          "name": "Luz Tarrero Carril",
+          "hcp": 13.3,
+          "ins": "2277283",
+          "jid": "72289",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 2,
+          "name": "Maria Almansa Recasens",
+          "hcp": 13.9,
+          "ins": "2277681",
+          "jid": "72289",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 2,
+          "name": "Clara Triguero Fernandez",
+          "hcp": 14.4,
+          "ins": "2276858",
+          "jid": "72289",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 2,
+          "name": "Clara Maria De La Hoz Gordo",
+          "hcp": 19.8,
+          "ins": "2282222",
+          "jid": "72289",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 3,
+          "name": "Cristina Aparicio Vallarino",
+          "hcp": 20.8,
+          "ins": "2277126",
+          "jid": "72289",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 3,
+          "name": "Maria Yravedra Aresti",
+          "hcp": 24.2,
+          "ins": "2276963",
+          "jid": "72289",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 3,
+          "name": "Sira Martin-Pozuelo Medina",
+          "hcp": 24.2,
+          "ins": "2279813",
+          "jid": "72289",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 4,
+          "name": "Carlota Elviro Vallarino",
+          "hcp": 26.1,
+          "ins": "2277758",
+          "jid": "72289",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 4,
+          "name": "Tesla Chesneau",
+          "hcp": 27.6,
+          "ins": "2277526",
+          "jid": "72289",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 4,
+          "name": "Maria Hernanz Hernando",
+          "hcp": 29,
+          "ins": "2277058",
+          "jid": "72289",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 5,
+          "name": "Vega Plaza San Gil",
+          "hcp": 31.1,
+          "ins": "2277647",
+          "jid": "72289",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 5,
+          "name": "Victoria Bragado Elorza",
+          "hcp": 32.3,
+          "ins": "2277065",
+          "jid": "72289",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 5,
+          "name": "Carlota Moser-Rothschild Morales",
+          "hcp": 35,
+          "ins": "2276897",
+          "jid": "72289",
+          "nivel": "A"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -1196,165 +1022,8 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Gabriela Timpanaro Abasolo",
-          "hcp": 10.3,
-          "ins": "2278366",
-          "jid": "72289",
-          "nivel": "A"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Claudia Solana Rodriguez-Inciarte",
-          "hcp": 11.5,
-          "ins": "2277570",
-          "jid": "72289",
-          "nivel": "A"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Sophia Mingyue Jiang",
-          "hcp": 12.9,
-          "ins": "2277193",
-          "jid": "72289",
-          "nivel": "A"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Eva Pecharroman Canales",
-          "hcp": 12.9,
-          "ins": "2277632",
-          "jid": "72289",
-          "nivel": "A"
-        },
-        {
-          "time": "10:00",
-          "tee": 2,
-          "name": "Luz Tarrero Carril",
-          "hcp": 13.3,
-          "ins": "2277283",
-          "jid": "72289",
-          "nivel": "A"
-        },
-        {
-          "time": "10:00",
-          "tee": 2,
-          "name": "Maria Almansa Recasens",
-          "hcp": 13.9,
-          "ins": "2277681",
-          "jid": "72289",
-          "nivel": "A"
-        },
-        {
-          "time": "10:00",
-          "tee": 2,
-          "name": "Clara Triguero Fernandez",
-          "hcp": 14.4,
-          "ins": "2276858",
-          "jid": "72289",
-          "nivel": "A"
-        },
-        {
-          "time": "10:00",
-          "tee": 2,
-          "name": "Clara Maria De La Hoz Gordo",
-          "hcp": 19.8,
-          "ins": "2282222",
-          "jid": "72289",
-          "nivel": "A"
-        },
-        {
-          "time": "10:00",
-          "tee": 3,
-          "name": "Cristina Aparicio Vallarino",
-          "hcp": 20.8,
-          "ins": "2277126",
-          "jid": "72289",
-          "nivel": "A"
-        },
-        {
-          "time": "10:00",
-          "tee": 3,
-          "name": "Maria Yravedra Aresti",
-          "hcp": 24.2,
-          "ins": "2276963",
-          "jid": "72289",
-          "nivel": "A"
-        },
-        {
-          "time": "10:00",
-          "tee": 3,
-          "name": "Sira Martin-Pozuelo Medina",
-          "hcp": 24.2,
-          "ins": "2279813",
-          "jid": "72289",
-          "nivel": "A"
-        },
-        {
-          "time": "10:00",
-          "tee": 4,
-          "name": "Carlota Elviro Vallarino",
-          "hcp": 26.1,
-          "ins": "2277758",
-          "jid": "72289",
-          "nivel": "A"
-        },
-        {
-          "time": "10:00",
-          "tee": 4,
-          "name": "Tesla Charlotte Chesneau",
-          "hcp": 27.6,
-          "ins": "2277526",
-          "jid": "72289",
-          "nivel": "A"
-        },
-        {
-          "time": "10:00",
-          "tee": 4,
-          "name": "Maria Hernanz Hernando",
-          "hcp": 29,
-          "ins": "2277058",
-          "jid": "72289",
-          "nivel": "A"
-        },
-        {
-          "time": "10:00",
-          "tee": 5,
-          "name": "Vega Plaza San Gil",
-          "hcp": 31.1,
-          "ins": "2277647",
-          "jid": "72289",
-          "nivel": "A"
-        },
-        {
-          "time": "10:00",
-          "tee": 5,
-          "name": "Victoria Bragado Elorza",
-          "hcp": 32.3,
-          "ins": "2277065",
-          "jid": "72289",
-          "nivel": "A"
-        },
-        {
-          "time": "10:00",
-          "tee": 5,
-          "name": "Carlota Moser-Rothschild Morales",
-          "hcp": 35,
-          "ins": "2276897",
-          "jid": "72289",
-          "nivel": "A"
-        }
-      ]
-    }
+  "pdfs": [
+    "/uploads/competiciones/pdf/1121725796_rrll_colmenar.pdf"
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:12.504Z"
+  "horariosScrapedAt": "2026-05-21T16:42:08.411Z"
 }

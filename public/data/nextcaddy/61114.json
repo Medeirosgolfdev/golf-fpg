@@ -1,14 +1,14 @@
 {
   "tourId": 61114,
   "url": "https://www.nextcaddy.com/tour/61114",
-  "scrapedAt": "2026-05-08T17:53:54.519Z",
+  "scrapedAt": "2026-05-21T16:38:51.994Z",
   "meta": {
     "name": "Pequecircuito Zona E",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Alborán Golf",
     "courseCode": "AMC7",
-    "dateStart": "18 abr 2026",
-    "dateEnd": "18 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,17 +17,14 @@
       "Juvenil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-04-18"
+    ]
   },
-  "course": {
-    "par": null,
-    "si": null,
-    "meters": null
-  },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Peque Cat 3 (11 Y 12 Años) Masc",
+      "expectedJugadores": 3,
       "header": [
         "Pos",
         "Jugador",
@@ -49,8 +46,7 @@
           "rounds": [],
           "total": 47,
           "toPar": 20,
-          "inscribedId": 2297879,
-          "roundScores": []
+          "inscribedId": 2297879
         },
         {
           "pos": 2,
@@ -61,8 +57,7 @@
           "rounds": [],
           "total": 55,
           "toPar": 28,
-          "inscribedId": 2297166,
-          "roundScores": []
+          "inscribedId": 2297166
         },
         {
           "pos": 3,
@@ -73,13 +68,14 @@
           "rounds": [],
           "total": 57,
           "toPar": 30,
-          "inscribedId": 2297226,
-          "roundScores": []
+          "inscribedId": 2297226
         }
       ]
     },
     {
       "category": 2,
+      "categoryName": "Scratch Peque Cat 3 (11 Y 12 Años) Fem",
+      "expectedJugadores": 1,
       "header": [
         "Pos",
         "Jugador",
@@ -101,13 +97,14 @@
           "rounds": [],
           "total": 54,
           "toPar": 27,
-          "inscribedId": 2297375,
-          "roundScores": []
+          "inscribedId": 2297375
         }
       ]
     },
     {
       "category": 3,
+      "categoryName": "Scratch Peque Cat 2 (9 Y 10 Años) Masc",
+      "expectedJugadores": 7,
       "header": [
         "Pos",
         "Jugador",
@@ -129,8 +126,7 @@
           "rounds": [],
           "total": 34,
           "toPar": 7,
-          "inscribedId": 2293757,
-          "roundScores": []
+          "inscribedId": 2293757
         },
         {
           "pos": 2,
@@ -141,8 +137,7 @@
           "rounds": [],
           "total": 37,
           "toPar": 10,
-          "inscribedId": 2292716,
-          "roundScores": []
+          "inscribedId": 2292716
         },
         {
           "pos": 3,
@@ -153,8 +148,7 @@
           "rounds": [],
           "total": 41,
           "toPar": 14,
-          "inscribedId": 2297259,
-          "roundScores": []
+          "inscribedId": 2297259
         },
         {
           "pos": 4,
@@ -165,8 +159,7 @@
           "rounds": [],
           "total": 41,
           "toPar": 14,
-          "inscribedId": 2297798,
-          "roundScores": []
+          "inscribedId": 2297798
         },
         {
           "pos": 5,
@@ -177,8 +170,7 @@
           "rounds": [],
           "total": 46,
           "toPar": 19,
-          "inscribedId": 2296546,
-          "roundScores": []
+          "inscribedId": 2296546
         },
         {
           "pos": 6,
@@ -189,8 +181,7 @@
           "rounds": [],
           "total": 68,
           "toPar": 41,
-          "inscribedId": 2297298,
-          "roundScores": []
+          "inscribedId": 2297298
         },
         {
           "pos": 7,
@@ -201,13 +192,14 @@
           "rounds": [],
           "total": 71,
           "toPar": 44,
-          "inscribedId": 2297227,
-          "roundScores": []
+          "inscribedId": 2297227
         }
       ]
     },
     {
       "category": 4,
+      "categoryName": "Scratch Peque Cat 1 (8 Años O Menos) Masc",
+      "expectedJugadores": 2,
       "header": [
         "Pos",
         "Jugador",
@@ -229,8 +221,7 @@
           "rounds": [],
           "total": 40,
           "toPar": 13,
-          "inscribedId": 2293756,
-          "roundScores": []
+          "inscribedId": 2293756
         },
         {
           "pos": 2,
@@ -241,12 +232,30 @@
           "rounds": [],
           "total": 57,
           "toPar": 30,
-          "inscribedId": 2295307,
-          "roundScores": []
+          "inscribedId": 2295307
         }
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Peque Cat 3 (11 Y 12 Años) Masc",
+      "jugadores": 3
+    },
+    "2": {
+      "name": "Scratch Peque Cat 3 (11 Y 12 Años) Fem",
+      "jugadores": 1
+    },
+    "3": {
+      "name": "Scratch Peque Cat 2 (9 Y 10 Años) Masc",
+      "jugadores": 7
+    },
+    "4": {
+      "name": "Scratch Peque Cat 1 (8 Años O Menos) Masc",
+      "jugadores": 2
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -445,31 +454,6 @@
       "nivel": "A"
     }
   ],
-  "estadisticas": {
-    "1": {
-      "p": {
-        "id": 158812,
-        "datos": [
-          [
-            "Tipo",
-            "Total"
-          ],
-          [
-            "Par",
-            1
-          ],
-          [
-            "Birdie",
-            0
-          ],
-          [
-            "Eagle",
-            0
-          ]
-        ]
-      }
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -540,6 +524,15 @@
         {
           "time": "11:50",
           "tee": 1,
+          "name": "Maria Martin Sabiote",
+          "hcp": 54,
+          "ins": "2297375",
+          "jid": "64729",
+          "nivel": "A"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
           "name": "Carlos Villegas Martinez",
           "hcp": 54,
           "ins": "2297227",
@@ -554,15 +547,6 @@
           "ins": "2295307",
           "jid": "64729",
           "nivel": "B"
-        },
-        {
-          "time": "11:50",
-          "tee": 1,
-          "name": "Maria Martin Sabiote",
-          "hcp": 54,
-          "ins": "2297375",
-          "jid": "64729",
-          "nivel": "A"
         },
         {
           "time": "12:00",
@@ -594,5 +578,93 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:11:59.648Z"
+  "estadisticas": {
+    "1": {
+      "p": {
+        "id": 158812,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            1
+          ],
+          [
+            "Birdie",
+            0
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            6
+          ],
+          [
+            "Peor",
+            2
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 158813,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            2
+          ],
+          [
+            "2",
+            1
+          ],
+          [
+            "3",
+            1
+          ],
+          [
+            "4",
+            2
+          ],
+          [
+            "5",
+            1
+          ],
+          [
+            "6",
+            1
+          ],
+          [
+            "7",
+            0
+          ],
+          [
+            "8",
+            1
+          ],
+          [
+            "9",
+            1
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 64729
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/circular/2026/60646390603b16b04fdebb02436999ef.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:50.910Z"
 }

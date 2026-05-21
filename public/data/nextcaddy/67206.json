@@ -1,14 +1,14 @@
 {
   "tourId": 67206,
   "url": "https://www.nextcaddy.com/tour/67206",
-  "scrapedAt": "2026-05-09T10:16:32.361Z",
+  "scrapedAt": "2026-05-21T16:39:48.173Z",
   "meta": {
     "name": "XIX CAMPEONATO DE DOBLES MIXTOS DE CyL 2026",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "16 may 2026",
-    "dateEnd": "16 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,17 +17,27 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-16"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Pareja",
+      "jugadores": 21
+    },
+    "2": {
+      "name": "Handicap Pareja",
+      "jugadores": 21
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
       "name": "Maria Yolanda Valbuena Rodrigo",
       "licencia": "7709283726",
-      "hcp": 7.6,
+      "hcp": 7.7,
       "nivel": "S"
     },
     {
@@ -48,7 +58,7 @@
       "orden": 2,
       "name": "Juan Jose Palacios Burgos",
       "licencia": "7740780350",
-      "hcp": 12.1,
+      "hcp": 11.8,
       "nivel": "S"
     },
     {
@@ -132,7 +142,7 @@
       "orden": 8,
       "name": "Nuria Galisteo Alonso",
       "licencia": "7739279778",
-      "hcp": 21.9,
+      "hcp": 21.4,
       "nivel": "S"
     },
     {
@@ -167,7 +177,7 @@
       "orden": 11,
       "name": "Luis Lozano Romeo",
       "licencia": "0108447822",
-      "hcp": 2.7,
+      "hcp": 2.4,
       "nivel": "Mid"
     },
     {
@@ -181,14 +191,14 @@
       "orden": 12,
       "name": "Mercedes Arroyo Ordoñez",
       "licencia": "7713090056",
-      "hcp": 12.3,
+      "hcp": 11.8,
       "nivel": "S"
     },
     {
       "orden": 12,
       "name": "Jesus Carlos Jimenez Lopez",
       "licencia": "7713090054",
-      "hcp": 27.9,
+      "hcp": null,
       "nivel": "S"
     },
     {
@@ -216,67 +226,108 @@
       "orden": 14,
       "name": "Pilar Manzanares Sotillos",
       "licencia": "7753240411",
-      "hcp": 31.9,
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Luis Angel Rivero Friera",
+      "licencia": "7752759078",
+      "hcp": 20.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Eva Martinez Barroso",
+      "licencia": "7752759077",
+      "hcp": 24.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Jose Luis Palacios Garcia",
+      "licencia": "7753310656",
+      "hcp": 13.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Fuencisla Ramos Redondo",
+      "licencia": "7753364845",
+      "hcp": 16.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Carmen Ayllon Dominguez",
+      "licencia": "7753329358",
+      "hcp": 17.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Adolfo Caballero Garcia",
+      "licencia": "7753329359",
+      "hcp": 20.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Diego Fanlo Ibarra",
+      "licencia": "0108908231",
+      "hcp": null,
+      "nivel": "M"
+    },
+    {
+      "orden": 18,
+      "name": "Mª Gloria Alonso Recaj",
+      "licencia": "0108287909",
+      "hcp": 18.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Gloria Martinez Rubio",
+      "licencia": "7753691946",
+      "hcp": 25.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Jesus Sanz Arija",
+      "licencia": "7753691945",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Juan Carlos Garcia Ramirez",
+      "licencia": "7753277484",
+      "hcp": 14.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Sara Lopez Perez",
+      "licencia": "7753366307",
+      "hcp": 17.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Epifanio Ridruejo Timbal",
+      "licencia": "7753370707",
+      "hcp": 10.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Maria Dolores Sanchez Barreiro",
+      "licencia": "7753384715",
+      "hcp": 18.9,
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71610
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Gimenez De Aragon Moreno, Jose Tomas",
-          "holeNumber": 10,
-          "createdAt": "23/06/25 17:48:05"
-        },
-        {
-          "playerName": "Gimenez De Aragon Moreno, Jose Tomas",
-          "holeNumber": 12,
-          "createdAt": "23/06/25 18:09:50"
-        },
-        {
-          "playerName": "Martinez Carballo, Oscar",
-          "holeNumber": 12,
-          "createdAt": "23/06/25 18:10:50"
-        },
-        {
-          "playerName": "Ponce Mauri, Jose Antonio",
-          "holeNumber": 12,
-          "createdAt": "23/06/25 18:14:54"
-        },
-        {
-          "playerName": "Gimenez De Aragon Moreno, Jose Tomas",
-          "holeNumber": 17,
-          "createdAt": "23/06/25 19:17:45"
-        },
-        {
-          "playerName": "Gimenez De Aragon Sierra, Luis",
-          "holeNumber": 18,
-          "createdAt": "23/06/25 19:40:29"
-        },
-        {
-          "playerName": "Olmedo Halcon, Ignacio",
-          "holeNumber": 17,
-          "createdAt": "23/06/25 20:03:55"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -662,5 +713,67 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-17T12:43:00.811Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71610
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Gimenez De Aragon Moreno, Jose Tomas",
+          "holeNumber": 10,
+          "createdAt": "23/06/25 17:48:05"
+        },
+        {
+          "playerName": "Gimenez De Aragon Moreno, Jose Tomas",
+          "holeNumber": 12,
+          "createdAt": "23/06/25 18:09:50"
+        },
+        {
+          "playerName": "Martinez Carballo, Oscar",
+          "holeNumber": 12,
+          "createdAt": "23/06/25 18:10:50"
+        },
+        {
+          "playerName": "Ponce Mauri, Jose Antonio",
+          "holeNumber": 12,
+          "createdAt": "23/06/25 18:14:54"
+        },
+        {
+          "playerName": "Gimenez De Aragon Moreno, Jose Tomas",
+          "holeNumber": 17,
+          "createdAt": "23/06/25 19:17:45"
+        },
+        {
+          "playerName": "Gimenez De Aragon Sierra, Luis",
+          "holeNumber": 18,
+          "createdAt": "23/06/25 19:40:29"
+        },
+        {
+          "playerName": "Olmedo Halcon, Ignacio",
+          "holeNumber": 17,
+          "createdAt": "23/06/25 20:03:55"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/712163656_plan_de_evacuacion.pdf",
+    "/uploads/circulares/cirfgcyl1926-1.pdf",
+    "/uploads/competiciones/pdf/1761572276_merged.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:00.742Z"
 }

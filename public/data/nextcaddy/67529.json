@@ -1,14 +1,14 @@
 {
   "tourId": 67529,
   "url": "https://www.nextcaddy.com/tour/67529",
-  "scrapedAt": "2026-05-09T10:07:44.765Z",
+  "scrapedAt": "2026-05-21T16:38:19.737Z",
   "meta": {
     "name": "III Torneo RKN 2026 · 6ª Categoría · 28 de Marzo · Turno Mañana 15:30 · Turno Tarde 17:30",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "28 mar 2026",
-    "dateEnd": "28 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-28"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Infantil Y Cadete Masculino Scratch General",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -128,6 +129,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Infantil Y Cadete Masculino Handicap General",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -232,6 +235,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Alevin Masculino Scratch General",
+      "expectedJugadores": 10,
       "header": [
         "Pos",
         "Jugador",
@@ -358,6 +363,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Alevin Masculino Handicap General",
+      "expectedJugadores": 10,
       "header": [
         "Pos",
         "Jugador",
@@ -484,6 +491,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Benjamin Masculino Scratch General",
+      "expectedJugadores": 17,
       "header": [
         "Pos",
         "Jugador",
@@ -687,6 +696,8 @@
     },
     {
       "category": 6,
+      "categoryName": "Benjamin Masculino Handicap General",
+      "expectedJugadores": 17,
       "header": [
         "Pos",
         "Jugador",
@@ -890,6 +901,8 @@
     },
     {
       "category": 7,
+      "categoryName": "Alevin Infantil Cadete Y Junior Femenino Scratch General",
+      "expectedJugadores": 15,
       "header": [
         "Pos",
         "Jugador",
@@ -1071,6 +1084,8 @@
     },
     {
       "category": 8,
+      "categoryName": "Alevin Infantil Cadete Y Junior Femenino Handicap General",
+      "expectedJugadores": 15,
       "header": [
         "Pos",
         "Jugador",
@@ -1252,6 +1267,8 @@
     },
     {
       "category": 9,
+      "categoryName": "Benjamin Femenino Scratch General",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -1400,6 +1417,8 @@
     },
     {
       "category": 10,
+      "categoryName": "Benjamin Femenino Handicap General",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -1547,6 +1566,49 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Infantil Y Cadete Masculino Scratch General",
+      "jugadores": 8
+    },
+    "2": {
+      "name": "Infantil Y Cadete Masculino Handicap General",
+      "jugadores": 8
+    },
+    "3": {
+      "name": "Alevin Masculino Scratch General",
+      "jugadores": 10
+    },
+    "4": {
+      "name": "Alevin Masculino Handicap General",
+      "jugadores": 10
+    },
+    "5": {
+      "name": "Benjamin Masculino Scratch General",
+      "jugadores": 17
+    },
+    "6": {
+      "name": "Benjamin Masculino Handicap General",
+      "jugadores": 17
+    },
+    "7": {
+      "name": "Alevin Infantil Cadete Y Junior Femenino Scratch General",
+      "jugadores": 15
+    },
+    "8": {
+      "name": "Alevin Infantil Cadete Y Junior Femenino Handicap General",
+      "jugadores": 15
+    },
+    "9": {
+      "name": "Benjamin Femenino Scratch General",
+      "jugadores": 12
+    },
+    "10": {
+      "name": "Benjamin Femenino Handicap General",
+      "jugadores": 12
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2431,63 +2493,6 @@
       "nivel": "J"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71993
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Lazo Cordoba, Juan Francisco",
-          "holeNumber": 6,
-          "createdAt": "05/07/25 15:43:31"
-        },
-        {
-          "playerName": "Lazo Cordoba, Juan Francisco",
-          "holeNumber": 14,
-          "createdAt": "05/07/25 15:43:31"
-        },
-        {
-          "playerName": "Plocher, Manfredo Roberto",
-          "holeNumber": 2,
-          "createdAt": "05/07/25 15:43:31"
-        },
-        {
-          "playerName": "Plocher, Manfredo Roberto",
-          "holeNumber": 14,
-          "createdAt": "05/07/25 15:43:31"
-        },
-        {
-          "playerName": "Otero Diaz, Helios",
-          "holeNumber": 13,
-          "createdAt": "05/07/25 15:43:31"
-        },
-        {
-          "playerName": "Sillero Zamorano, Jose Ramon",
-          "holeNumber": 16,
-          "createdAt": "05/07/25 15:43:31"
-        },
-        {
-          "playerName": "Moscoso Garcia, Manuel",
-          "holeNumber": 16,
-          "createdAt": "05/07/25 15:43:32"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -3053,5 +3058,63 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:09.412Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71993
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Lazo Cordoba, Juan Francisco",
+          "holeNumber": 6,
+          "createdAt": "05/07/25 15:43:31"
+        },
+        {
+          "playerName": "Lazo Cordoba, Juan Francisco",
+          "holeNumber": 14,
+          "createdAt": "05/07/25 15:43:31"
+        },
+        {
+          "playerName": "Plocher, Manfredo Roberto",
+          "holeNumber": 2,
+          "createdAt": "05/07/25 15:43:31"
+        },
+        {
+          "playerName": "Plocher, Manfredo Roberto",
+          "holeNumber": 14,
+          "createdAt": "05/07/25 15:43:31"
+        },
+        {
+          "playerName": "Otero Diaz, Helios",
+          "holeNumber": 13,
+          "createdAt": "05/07/25 15:43:31"
+        },
+        {
+          "playerName": "Sillero Zamorano, Jose Ramon",
+          "holeNumber": 16,
+          "createdAt": "05/07/25 15:43:31"
+        },
+        {
+          "playerName": "Moscoso Garcia, Manuel",
+          "holeNumber": 16,
+          "createdAt": "05/07/25 15:43:32"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:05.243Z"
 }

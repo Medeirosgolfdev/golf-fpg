@@ -1,14 +1,14 @@
 {
   "tourId": 68209,
   "url": "https://www.nextcaddy.com/tour/68209",
-  "scrapedAt": "2026-05-09T10:07:59.379Z",
+  "scrapedAt": "2026-05-21T16:38:47.928Z",
   "meta": {
     "name": "Torneo Virtual de Golf Adaptado",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "14 abr 2026",
-    "dateEnd": "14 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-14"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -192,6 +193,7 @@
       "nivel": "S"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -334,6 +336,9 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:34.607Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/283057818_torneo_virtual_golf_adaptado_14.03_-_top_tracer.pdf",
+    "/uploads/competiciones/pdf/2014031785_cc_torneo_virtual_de_golf_adaptado_2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:19.022Z"
 }

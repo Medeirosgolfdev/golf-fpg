@@ -1,14 +1,14 @@
 {
   "tourId": 69084,
   "url": "https://www.nextcaddy.com/tour/69084",
-  "scrapedAt": "2026-05-09T09:58:09.032Z",
+  "scrapedAt": "2026-05-21T16:37:47.430Z",
   "meta": {
     "name": "9ª P. TORNEO DAMAS 12-03-26",
     "organizer": null,
     "course": "Real Club de Golf Vista Hermosa",
     "courseCode": "AM05",
-    "dateStart": "12 mar 2026",
-    "dateEnd": "12 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras Facebook",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-12"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -249,6 +250,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 19,
       "header": [
         "Pos",
         "Jugador",
@@ -473,6 +476,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 19
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 19
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -748,22 +762,6 @@
       "nivel": "AM05146075"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73812
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -942,5 +940,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:32.569Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73812
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:30.682Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 65802,
   "url": "https://www.nextcaddy.com/tour/65802",
-  "scrapedAt": "2026-05-09T09:58:02.849Z",
+  "scrapedAt": "2026-05-21T16:37:37.240Z",
   "meta": {
     "name": "Puntuable Zonal Nacional (femenino)",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "07 mar 2026",
-    "dateEnd": "07 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Señoras C. Infanti",
     "categories": [
       "Señoras",
@@ -16,13 +16,14 @@
       "Juvenil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-03-07"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Alevin Femenino",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -282,6 +283,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Scratch Infantil Femenino",
+      "expectedJugadores": 13,
       "header": [
         "Pos",
         "Jugador",
@@ -561,6 +564,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Scratch Cadete Femenino",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -939,6 +944,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Alevin Femenino",
+      "jugadores": 12
+    },
+    "2": {
+      "name": "Scratch Infantil Femenino",
+      "jugadores": 13
+    },
+    "3": {
+      "name": "Scratch Cadete Femenino",
+      "jugadores": 18
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1548,6 +1568,783 @@
       "licencia": "02-03-26 10:05",
       "hcp": 11.7,
       "nivel": "AM05962900"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Cornelia Bermudo Del Rio",
+          "hcp": 0.7,
+          "ins": "2256499",
+          "jid": "69991",
+          "nivel": "I"
+        },
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Sofia Gamilla Karpa",
+          "hcp": 0.5,
+          "ins": "2256908",
+          "jid": "69991",
+          "nivel": "I"
+        },
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Alba Camacho Brandariz",
+          "hcp": 0.8,
+          "ins": "2256939",
+          "jid": "69991",
+          "nivel": "C"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Zoey Sophia Papay",
+          "hcp": 0.8,
+          "ins": "2262665",
+          "jid": "69991",
+          "nivel": "I"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Noelia Quintanilla Gutierrez",
+          "hcp": 2.1,
+          "ins": "2270851",
+          "jid": "69991",
+          "nivel": "C"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Irene Lavilla Marti",
+          "hcp": 2.9,
+          "ins": "2255470",
+          "jid": "69991",
+          "nivel": "C"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Alejandra Gil Perez",
+          "hcp": 3.1,
+          "ins": "2256996",
+          "jid": "69991",
+          "nivel": "C"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Lucia Gomez Ponce",
+          "hcp": 3.5,
+          "ins": "2256545",
+          "jid": "69991",
+          "nivel": "I"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Charlotte Gosling Evans",
+          "hcp": 4.5,
+          "ins": "2268903",
+          "jid": "69991",
+          "nivel": "C"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Fabiola Merello Lloret",
+          "hcp": 4.6,
+          "ins": "2255512",
+          "jid": "69991",
+          "nivel": "I"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Lea Esperanza Cicek",
+          "hcp": 4.8,
+          "ins": "2270746",
+          "jid": "69991",
+          "nivel": "C"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Alba Malia Lopez",
+          "hcp": 4.9,
+          "ins": "2261258",
+          "jid": "69991",
+          "nivel": "C"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Natalia Lavilla Marti",
+          "hcp": 6,
+          "ins": "2255471",
+          "jid": "69991",
+          "nivel": "I"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Lucia Escamez Marin",
+          "hcp": 6.2,
+          "ins": "2258834",
+          "jid": "69991",
+          "nivel": "C"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Elisa Del Alcazar Grudtsina",
+          "hcp": 7.2,
+          "ins": "2271561",
+          "jid": "69991",
+          "nivel": "C"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Paula Jimenez Tirado",
+          "hcp": 7.5,
+          "ins": "2262744",
+          "jid": "69991",
+          "nivel": "I"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Agata Gonzalez Galvez",
+          "hcp": 8.4,
+          "ins": "2269105",
+          "jid": "69991",
+          "nivel": "C"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Sabrina Ribeiro Crisostomo",
+          "hcp": 8.4,
+          "ins": "2267403",
+          "jid": "69991",
+          "nivel": "A"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Amelia Toquero Flores",
+          "hcp": 8.7,
+          "ins": "2258149",
+          "jid": "69991",
+          "nivel": "C"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Pierina Hartmann",
+          "hcp": 8.8,
+          "ins": "2271005",
+          "jid": "69991",
+          "nivel": "C"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Anika Jimenez Rybak",
+          "hcp": 9.3,
+          "ins": "2271744",
+          "jid": "69991",
+          "nivel": "C"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Carolina Muñoz Zamorano",
+          "hcp": 9.3,
+          "ins": "2267093",
+          "jid": "69991",
+          "nivel": "C"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Claudia Casasola Garcia",
+          "hcp": 9.4,
+          "ins": "2256423",
+          "jid": "69991",
+          "nivel": "I"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Kira Gonzalez Bernases",
+          "hcp": 10,
+          "ins": "2256539",
+          "jid": "69991",
+          "nivel": "C"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Ines Pitarch Aguilar Tablada",
+          "hcp": 10.2,
+          "ins": "2259304",
+          "jid": "69991",
+          "nivel": "C"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Elizaveta Diaz Dominguez",
+          "hcp": 10.2,
+          "ins": "2257352",
+          "jid": "69991",
+          "nivel": "I"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Martina Tirado Gonzalez",
+          "hcp": 10.3,
+          "ins": "2271675",
+          "jid": "69991",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Olivia Powszuk",
+          "hcp": 11,
+          "ins": "2262332",
+          "jid": "69991",
+          "nivel": "I"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Adriana Martel Molina",
+          "hcp": 11.7,
+          "ins": "2272031",
+          "jid": "69991",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Catarina Sousa Conceicao",
+          "hcp": 12.1,
+          "ins": "2266070",
+          "jid": "69991",
+          "nivel": "I"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Adriana Varo Galiano",
+          "hcp": 12.2,
+          "ins": "2271139",
+          "jid": "69991",
+          "nivel": "C"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Ofelia Gonzalez-Carrascosa Benitez",
+          "hcp": 12.4,
+          "ins": "2262352",
+          "jid": "69991",
+          "nivel": "A"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Lis Ferreiro Luciano",
+          "hcp": 14.1,
+          "ins": "2256418",
+          "jid": "69991",
+          "nivel": "A"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Lara De Justo Fucs",
+          "hcp": 15.8,
+          "ins": "2261361",
+          "jid": "69991",
+          "nivel": "I"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Martina Parra Gonzalez",
+          "hcp": 15.9,
+          "ins": "2255632",
+          "jid": "69991",
+          "nivel": "A"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Elena Ros Carrero",
+          "hcp": 16.5,
+          "ins": "2255488",
+          "jid": "69991",
+          "nivel": "A"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Lucia Grimaldi Ferrer",
+          "hcp": 17.8,
+          "ins": "2260884",
+          "jid": "69991",
+          "nivel": "A"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Sara Natalia Nejno",
+          "hcp": 18.1,
+          "ins": "2266591",
+          "jid": "69991",
+          "nivel": "C"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Marina San Miguel Rivas",
+          "hcp": 19.3,
+          "ins": "2267419",
+          "jid": "69991",
+          "nivel": "A"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Elena Holgado Requena",
+          "hcp": 19.6,
+          "ins": "2255654",
+          "jid": "69991",
+          "nivel": "A"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Maria Marin Fernandez",
+          "hcp": 22.9,
+          "ins": "2262219",
+          "jid": "69991",
+          "nivel": "A"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Marta Breijo Cegarra",
+          "hcp": 23.5,
+          "ins": "2255481",
+          "jid": "69991",
+          "nivel": "I"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Noa Quel Gallardo",
+          "hcp": 24.7,
+          "ins": "2262565",
+          "jid": "69991",
+          "nivel": "A"
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "players": [
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Marina San Miguel Rivas",
+          "hcp": 19.3,
+          "ins": "2267419",
+          "jid": "69992",
+          "nivel": "A"
+        },
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Marta Breijo Cegarra",
+          "hcp": 23.5,
+          "ins": "2255481",
+          "jid": "69992",
+          "nivel": "I"
+        },
+        {
+          "time": "08:30",
+          "tee": 1,
+          "name": "Noa Quel Gallardo",
+          "hcp": 24.7,
+          "ins": "2262565",
+          "jid": "69992",
+          "nivel": "A"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Elizaveta Diaz Dominguez",
+          "hcp": 10.2,
+          "ins": "2257352",
+          "jid": "69992",
+          "nivel": "I"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Lara De Justo Fucs",
+          "hcp": 15.8,
+          "ins": "2261361",
+          "jid": "69992",
+          "nivel": "I"
+        },
+        {
+          "time": "08:40",
+          "tee": 1,
+          "name": "Martina Parra Gonzalez",
+          "hcp": 15.9,
+          "ins": "2255632",
+          "jid": "69992",
+          "nivel": "A"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Elena Ros Carrero",
+          "hcp": 16.5,
+          "ins": "2255488",
+          "jid": "69992",
+          "nivel": "A"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Lucia Grimaldi Ferrer",
+          "hcp": 17.8,
+          "ins": "2260884",
+          "jid": "69992",
+          "nivel": "A"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Elena Holgado Requena",
+          "hcp": 19.6,
+          "ins": "2255654",
+          "jid": "69992",
+          "nivel": "A"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Sabrina Ribeiro Crisostomo",
+          "hcp": 8.4,
+          "ins": "2267403",
+          "jid": "69992",
+          "nivel": "A"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Adriana Martel Molina",
+          "hcp": 11.7,
+          "ins": "2272031",
+          "jid": "69992",
+          "nivel": "A"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Adriana Varo Galiano",
+          "hcp": 12.2,
+          "ins": "2271139",
+          "jid": "69992",
+          "nivel": "C"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Amelia Toquero Flores",
+          "hcp": 8.7,
+          "ins": "2258149",
+          "jid": "69992",
+          "nivel": "C"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Pierina Hartmann",
+          "hcp": 8.8,
+          "ins": "2271005",
+          "jid": "69992",
+          "nivel": "C"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Carolina Muñoz Zamorano",
+          "hcp": 9.3,
+          "ins": "2267093",
+          "jid": "69992",
+          "nivel": "C"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Elisa Del Alcazar Grudtsina",
+          "hcp": 7.2,
+          "ins": "2271561",
+          "jid": "69992",
+          "nivel": "C"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Agata Gonzalez Galvez",
+          "hcp": 8.4,
+          "ins": "2269105",
+          "jid": "69992",
+          "nivel": "C"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Anika Jimenez Rybak",
+          "hcp": 9.3,
+          "ins": "2271744",
+          "jid": "69992",
+          "nivel": "C"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Lucia Escamez Marin",
+          "hcp": 6.2,
+          "ins": "2258834",
+          "jid": "69992",
+          "nivel": "C"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Catarina Sousa Conceicao",
+          "hcp": 12.1,
+          "ins": "2266070",
+          "jid": "69992",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Maria Marin Fernandez",
+          "hcp": 22.9,
+          "ins": "2262219",
+          "jid": "69992",
+          "nivel": "A"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Lea Esperanza Cicek",
+          "hcp": 4.8,
+          "ins": "2270746",
+          "jid": "69992",
+          "nivel": "C"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Ofelia Gonzalez-Carrascosa Benitez",
+          "hcp": 12.4,
+          "ins": "2262352",
+          "jid": "69992",
+          "nivel": "A"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Lis Ferreiro Luciano",
+          "hcp": 14.1,
+          "ins": "2256418",
+          "jid": "69992",
+          "nivel": "A"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Irene Lavilla Marti",
+          "hcp": 2.9,
+          "ins": "2255470",
+          "jid": "69992",
+          "nivel": "C"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Kira Gonzalez Bernases",
+          "hcp": 10,
+          "ins": "2256539",
+          "jid": "69992",
+          "nivel": "C"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Ines Pitarch Aguilar Tablada",
+          "hcp": 10.2,
+          "ins": "2259304",
+          "jid": "69992",
+          "nivel": "C"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Charlotte Gosling Evans",
+          "hcp": 4.5,
+          "ins": "2268903",
+          "jid": "69992",
+          "nivel": "C"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Claudia Casasola Garcia",
+          "hcp": 9.4,
+          "ins": "2256423",
+          "jid": "69992",
+          "nivel": "I"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Martina Tirado Gonzalez",
+          "hcp": 10.3,
+          "ins": "2271675",
+          "jid": "69992",
+          "nivel": "A"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Cornelia Bermudo Del Rio",
+          "hcp": 0.7,
+          "ins": "2256499",
+          "jid": "69992",
+          "nivel": "I"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Fabiola Merello Lloret",
+          "hcp": 4.6,
+          "ins": "2255512",
+          "jid": "69992",
+          "nivel": "I"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Paula Jimenez Tirado",
+          "hcp": 7.5,
+          "ins": "2262744",
+          "jid": "69992",
+          "nivel": "I"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Zoey Sophia Papay",
+          "hcp": 0.8,
+          "ins": "2262665",
+          "jid": "69992",
+          "nivel": "I"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Noelia Quintanilla Gutierrez",
+          "hcp": 2.1,
+          "ins": "2270851",
+          "jid": "69992",
+          "nivel": "C"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Alba Malia Lopez",
+          "hcp": 4.9,
+          "ins": "2261258",
+          "jid": "69992",
+          "nivel": "C"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Alejandra Gil Perez",
+          "hcp": 3.1,
+          "ins": "2256996",
+          "jid": "69992",
+          "nivel": "C"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Natalia Lavilla Marti",
+          "hcp": 6,
+          "ins": "2255471",
+          "jid": "69992",
+          "nivel": "I"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Olivia Powszuk",
+          "hcp": 11,
+          "ins": "2262332",
+          "jid": "69992",
+          "nivel": "I"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Sofia Gamilla Karpa",
+          "hcp": 0.5,
+          "ins": "2256908",
+          "jid": "69992",
+          "nivel": "I"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Alba Camacho Brandariz",
+          "hcp": 0.8,
+          "ins": "2256939",
+          "jid": "69992",
+          "nivel": "C"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Lucia Gomez Ponce",
+          "hcp": 3.5,
+          "ins": "2256545",
+          "jid": "69992",
+          "nivel": "I"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -2480,782 +3277,10 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "08:30",
-          "tee": 1,
-          "name": "Cornelia Bermudo Del Rio",
-          "hcp": 0.7,
-          "ins": "2256499",
-          "jid": "69991",
-          "nivel": "I"
-        },
-        {
-          "time": "08:30",
-          "tee": 1,
-          "name": "Sofia Gamilla Karpa",
-          "hcp": 0.5,
-          "ins": "2256908",
-          "jid": "69991",
-          "nivel": "I"
-        },
-        {
-          "time": "08:30",
-          "tee": 1,
-          "name": "Alba Camacho Brandariz",
-          "hcp": 0.8,
-          "ins": "2256939",
-          "jid": "69991",
-          "nivel": "C"
-        },
-        {
-          "time": "08:40",
-          "tee": 1,
-          "name": "Zoey Sophia Papay",
-          "hcp": 0.8,
-          "ins": "2262665",
-          "jid": "69991",
-          "nivel": "I"
-        },
-        {
-          "time": "08:40",
-          "tee": 1,
-          "name": "Noelia Quintanilla Gutierrez",
-          "hcp": 2.1,
-          "ins": "2270851",
-          "jid": "69991",
-          "nivel": "C"
-        },
-        {
-          "time": "08:40",
-          "tee": 1,
-          "name": "Irene Lavilla Marti",
-          "hcp": 2.9,
-          "ins": "2255470",
-          "jid": "69991",
-          "nivel": "C"
-        },
-        {
-          "time": "08:50",
-          "tee": 1,
-          "name": "Alejandra Gil Perez",
-          "hcp": 3.1,
-          "ins": "2256996",
-          "jid": "69991",
-          "nivel": "C"
-        },
-        {
-          "time": "08:50",
-          "tee": 1,
-          "name": "Lucia Gomez Ponce",
-          "hcp": 3.5,
-          "ins": "2256545",
-          "jid": "69991",
-          "nivel": "I"
-        },
-        {
-          "time": "08:50",
-          "tee": 1,
-          "name": "Charlotte Gosling Evans",
-          "hcp": 4.5,
-          "ins": "2268903",
-          "jid": "69991",
-          "nivel": "C"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Fabiola Merello Lloret",
-          "hcp": 4.6,
-          "ins": "2255512",
-          "jid": "69991",
-          "nivel": "I"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Lea Esperanza Cicek",
-          "hcp": 4.8,
-          "ins": "2270746",
-          "jid": "69991",
-          "nivel": "C"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Alba Malia Lopez",
-          "hcp": 4.9,
-          "ins": "2261258",
-          "jid": "69991",
-          "nivel": "C"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Natalia Lavilla Marti",
-          "hcp": 6,
-          "ins": "2255471",
-          "jid": "69991",
-          "nivel": "I"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Lucia Escamez Marin",
-          "hcp": 6.2,
-          "ins": "2258834",
-          "jid": "69991",
-          "nivel": "C"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Elisa Del Alcazar Grudtsina",
-          "hcp": 7.2,
-          "ins": "2271561",
-          "jid": "69991",
-          "nivel": "C"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Paula Jimenez Tirado",
-          "hcp": 7.5,
-          "ins": "2262744",
-          "jid": "69991",
-          "nivel": "I"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Agata Gonzalez Galvez",
-          "hcp": 8.4,
-          "ins": "2269105",
-          "jid": "69991",
-          "nivel": "C"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Sabrina Ribeiro Crisostomo",
-          "hcp": 8.4,
-          "ins": "2267403",
-          "jid": "69991",
-          "nivel": "A"
-        },
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "Amelia Toquero Flores",
-          "hcp": 8.7,
-          "ins": "2258149",
-          "jid": "69991",
-          "nivel": "C"
-        },
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "Pierina Hartmann",
-          "hcp": 8.8,
-          "ins": "2271005",
-          "jid": "69991",
-          "nivel": "C"
-        },
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "Anika Jimenez Rybak",
-          "hcp": 9.3,
-          "ins": "2271744",
-          "jid": "69991",
-          "nivel": "C"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Carolina Muñoz Zamorano",
-          "hcp": 9.3,
-          "ins": "2267093",
-          "jid": "69991",
-          "nivel": "C"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Claudia Casasola Garcia",
-          "hcp": 9.4,
-          "ins": "2256423",
-          "jid": "69991",
-          "nivel": "I"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Kira Gonzalez Bernases",
-          "hcp": 10,
-          "ins": "2256539",
-          "jid": "69991",
-          "nivel": "C"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
-          "name": "Ines Pitarch Aguilar Tablada",
-          "hcp": 10.2,
-          "ins": "2259304",
-          "jid": "69991",
-          "nivel": "C"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
-          "name": "Elizaveta Diaz Dominguez",
-          "hcp": 10.2,
-          "ins": "2257352",
-          "jid": "69991",
-          "nivel": "I"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
-          "name": "Martina Tirado Gonzalez",
-          "hcp": 10.3,
-          "ins": "2271675",
-          "jid": "69991",
-          "nivel": "A"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Olivia Powszuk",
-          "hcp": 11,
-          "ins": "2262332",
-          "jid": "69991",
-          "nivel": "I"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Adriana Martel Molina",
-          "hcp": 11.7,
-          "ins": "2272031",
-          "jid": "69991",
-          "nivel": "A"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Catarina Sousa Conceicao",
-          "hcp": 12.1,
-          "ins": "2266070",
-          "jid": "69991",
-          "nivel": "I"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Adriana Varo Galiano",
-          "hcp": 12.2,
-          "ins": "2271139",
-          "jid": "69991",
-          "nivel": "C"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Ofelia Gonzalez-Carrascosa Benitez",
-          "hcp": 12.4,
-          "ins": "2262352",
-          "jid": "69991",
-          "nivel": "A"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Lis Ferreiro Luciano",
-          "hcp": 14.1,
-          "ins": "2256418",
-          "jid": "69991",
-          "nivel": "A"
-        },
-        {
-          "time": "10:20",
-          "tee": 1,
-          "name": "Lara De Justo Fucs",
-          "hcp": 15.8,
-          "ins": "2261361",
-          "jid": "69991",
-          "nivel": "I"
-        },
-        {
-          "time": "10:20",
-          "tee": 1,
-          "name": "Martina Parra Gonzalez",
-          "hcp": 15.9,
-          "ins": "2255632",
-          "jid": "69991",
-          "nivel": "A"
-        },
-        {
-          "time": "10:20",
-          "tee": 1,
-          "name": "Elena Ros Carrero",
-          "hcp": 16.5,
-          "ins": "2255488",
-          "jid": "69991",
-          "nivel": "A"
-        },
-        {
-          "time": "10:30",
-          "tee": 1,
-          "name": "Lucia Grimaldi Ferrer",
-          "hcp": 17.8,
-          "ins": "2260884",
-          "jid": "69991",
-          "nivel": "A"
-        },
-        {
-          "time": "10:30",
-          "tee": 1,
-          "name": "Sara Natalia Nejno",
-          "hcp": 18.1,
-          "ins": "2266591",
-          "jid": "69991",
-          "nivel": "C"
-        },
-        {
-          "time": "10:30",
-          "tee": 1,
-          "name": "Marina San Miguel Rivas",
-          "hcp": 19.3,
-          "ins": "2267419",
-          "jid": "69991",
-          "nivel": "A"
-        },
-        {
-          "time": "10:40",
-          "tee": 1,
-          "name": "Elena Holgado Requena",
-          "hcp": 19.6,
-          "ins": "2255654",
-          "jid": "69991",
-          "nivel": "A"
-        },
-        {
-          "time": "10:40",
-          "tee": 1,
-          "name": "Maria Marin Fernandez",
-          "hcp": 22.9,
-          "ins": "2262219",
-          "jid": "69991",
-          "nivel": "A"
-        },
-        {
-          "time": "10:50",
-          "tee": 1,
-          "name": "Marta Breijo Cegarra",
-          "hcp": 23.5,
-          "ins": "2255481",
-          "jid": "69991",
-          "nivel": "I"
-        },
-        {
-          "time": "10:50",
-          "tee": 1,
-          "name": "Noa Quel Gallardo",
-          "hcp": 24.7,
-          "ins": "2262565",
-          "jid": "69991",
-          "nivel": "A"
-        }
-      ]
-    },
-    {
-      "round": 2,
-      "players": [
-        {
-          "time": "08:30",
-          "tee": 1,
-          "name": "Marina San Miguel Rivas",
-          "hcp": 19.3,
-          "ins": "2267419",
-          "jid": "69992",
-          "nivel": "A"
-        },
-        {
-          "time": "08:30",
-          "tee": 1,
-          "name": "Marta Breijo Cegarra",
-          "hcp": 23.5,
-          "ins": "2255481",
-          "jid": "69992",
-          "nivel": "I"
-        },
-        {
-          "time": "08:30",
-          "tee": 1,
-          "name": "Noa Quel Gallardo",
-          "hcp": 24.7,
-          "ins": "2262565",
-          "jid": "69992",
-          "nivel": "A"
-        },
-        {
-          "time": "08:40",
-          "tee": 1,
-          "name": "Elizaveta Diaz Dominguez",
-          "hcp": 10.2,
-          "ins": "2257352",
-          "jid": "69992",
-          "nivel": "I"
-        },
-        {
-          "time": "08:40",
-          "tee": 1,
-          "name": "Lara De Justo Fucs",
-          "hcp": 15.8,
-          "ins": "2261361",
-          "jid": "69992",
-          "nivel": "I"
-        },
-        {
-          "time": "08:40",
-          "tee": 1,
-          "name": "Martina Parra Gonzalez",
-          "hcp": 15.9,
-          "ins": "2255632",
-          "jid": "69992",
-          "nivel": "A"
-        },
-        {
-          "time": "08:50",
-          "tee": 1,
-          "name": "Elena Ros Carrero",
-          "hcp": 16.5,
-          "ins": "2255488",
-          "jid": "69992",
-          "nivel": "A"
-        },
-        {
-          "time": "08:50",
-          "tee": 1,
-          "name": "Lucia Grimaldi Ferrer",
-          "hcp": 17.8,
-          "ins": "2260884",
-          "jid": "69992",
-          "nivel": "A"
-        },
-        {
-          "time": "08:50",
-          "tee": 1,
-          "name": "Elena Holgado Requena",
-          "hcp": 19.6,
-          "ins": "2255654",
-          "jid": "69992",
-          "nivel": "A"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Sabrina Ribeiro Crisostomo",
-          "hcp": 8.4,
-          "ins": "2267403",
-          "jid": "69992",
-          "nivel": "A"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Adriana Martel Molina",
-          "hcp": 11.7,
-          "ins": "2272031",
-          "jid": "69992",
-          "nivel": "A"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Adriana Varo Galiano",
-          "hcp": 12.2,
-          "ins": "2271139",
-          "jid": "69992",
-          "nivel": "C"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Amelia Toquero Flores",
-          "hcp": 8.7,
-          "ins": "2258149",
-          "jid": "69992",
-          "nivel": "C"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Pierina Hartmann",
-          "hcp": 8.8,
-          "ins": "2271005",
-          "jid": "69992",
-          "nivel": "C"
-        },
-        {
-          "time": "09:10",
-          "tee": 1,
-          "name": "Carolina Muñoz Zamorano",
-          "hcp": 9.3,
-          "ins": "2267093",
-          "jid": "69992",
-          "nivel": "C"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Elisa Del Alcazar Grudtsina",
-          "hcp": 7.2,
-          "ins": "2271561",
-          "jid": "69992",
-          "nivel": "C"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Agata Gonzalez Galvez",
-          "hcp": 8.4,
-          "ins": "2269105",
-          "jid": "69992",
-          "nivel": "C"
-        },
-        {
-          "time": "09:20",
-          "tee": 1,
-          "name": "Anika Jimenez Rybak",
-          "hcp": 9.3,
-          "ins": "2271744",
-          "jid": "69992",
-          "nivel": "C"
-        },
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "Lucia Escamez Marin",
-          "hcp": 6.2,
-          "ins": "2258834",
-          "jid": "69992",
-          "nivel": "C"
-        },
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "Catarina Sousa Conceicao",
-          "hcp": 12.1,
-          "ins": "2266070",
-          "jid": "69992",
-          "nivel": "I"
-        },
-        {
-          "time": "09:30",
-          "tee": 1,
-          "name": "Maria Marin Fernandez",
-          "hcp": 22.9,
-          "ins": "2262219",
-          "jid": "69992",
-          "nivel": "A"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Lea Esperanza Cicek",
-          "hcp": 4.8,
-          "ins": "2270746",
-          "jid": "69992",
-          "nivel": "C"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Ofelia Gonzalez-Carrascosa Benitez",
-          "hcp": 12.4,
-          "ins": "2262352",
-          "jid": "69992",
-          "nivel": "A"
-        },
-        {
-          "time": "09:40",
-          "tee": 1,
-          "name": "Lis Ferreiro Luciano",
-          "hcp": 14.1,
-          "ins": "2256418",
-          "jid": "69992",
-          "nivel": "A"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
-          "name": "Irene Lavilla Marti",
-          "hcp": 2.9,
-          "ins": "2255470",
-          "jid": "69992",
-          "nivel": "C"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
-          "name": "Kira Gonzalez Bernases",
-          "hcp": 10,
-          "ins": "2256539",
-          "jid": "69992",
-          "nivel": "C"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
-          "name": "Ines Pitarch Aguilar Tablada",
-          "hcp": 10.2,
-          "ins": "2259304",
-          "jid": "69992",
-          "nivel": "C"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Charlotte Gosling Evans",
-          "hcp": 4.5,
-          "ins": "2268903",
-          "jid": "69992",
-          "nivel": "C"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Claudia Casasola Garcia",
-          "hcp": 9.4,
-          "ins": "2256423",
-          "jid": "69992",
-          "nivel": "I"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Martina Tirado Gonzalez",
-          "hcp": 10.3,
-          "ins": "2271675",
-          "jid": "69992",
-          "nivel": "A"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Cornelia Bermudo Del Rio",
-          "hcp": 0.7,
-          "ins": "2256499",
-          "jid": "69992",
-          "nivel": "I"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Fabiola Merello Lloret",
-          "hcp": 4.6,
-          "ins": "2255512",
-          "jid": "69992",
-          "nivel": "I"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Paula Jimenez Tirado",
-          "hcp": 7.5,
-          "ins": "2262744",
-          "jid": "69992",
-          "nivel": "I"
-        },
-        {
-          "time": "10:20",
-          "tee": 1,
-          "name": "Zoey Sophia Papay",
-          "hcp": 0.8,
-          "ins": "2262665",
-          "jid": "69992",
-          "nivel": "I"
-        },
-        {
-          "time": "10:20",
-          "tee": 1,
-          "name": "Noelia Quintanilla Gutierrez",
-          "hcp": 2.1,
-          "ins": "2270851",
-          "jid": "69992",
-          "nivel": "C"
-        },
-        {
-          "time": "10:20",
-          "tee": 1,
-          "name": "Alba Malia Lopez",
-          "hcp": 4.9,
-          "ins": "2261258",
-          "jid": "69992",
-          "nivel": "C"
-        },
-        {
-          "time": "10:30",
-          "tee": 1,
-          "name": "Alejandra Gil Perez",
-          "hcp": 3.1,
-          "ins": "2256996",
-          "jid": "69992",
-          "nivel": "C"
-        },
-        {
-          "time": "10:30",
-          "tee": 1,
-          "name": "Natalia Lavilla Marti",
-          "hcp": 6,
-          "ins": "2255471",
-          "jid": "69992",
-          "nivel": "I"
-        },
-        {
-          "time": "10:30",
-          "tee": 1,
-          "name": "Olivia Powszuk",
-          "hcp": 11,
-          "ins": "2262332",
-          "jid": "69992",
-          "nivel": "I"
-        },
-        {
-          "time": "10:40",
-          "tee": 1,
-          "name": "Sofia Gamilla Karpa",
-          "hcp": 0.5,
-          "ins": "2256908",
-          "jid": "69992",
-          "nivel": "I"
-        },
-        {
-          "time": "10:40",
-          "tee": 1,
-          "name": "Alba Camacho Brandariz",
-          "hcp": 0.8,
-          "ins": "2256939",
-          "jid": "69992",
-          "nivel": "C"
-        },
-        {
-          "time": "10:40",
-          "tee": 1,
-          "name": "Lucia Gomez Ponce",
-          "hcp": 3.5,
-          "ins": "2256545",
-          "jid": "69992",
-          "nivel": "I"
-        }
-      ]
-    }
+  "pdfs": [
+    "/uploads/competiciones/pdf/849119118_info_web.pdf",
+    "/uploads/circular/2026/44c0682ddc8adaf8b78bf468bc73494e.pdf",
+    "/uploads/competiciones/pdf/1396996198_web.pdf"
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:03.149Z"
+  "horariosScrapedAt": "2026-05-21T16:41:57.391Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 67804,
   "url": "https://www.nextcaddy.com/tour/67804",
-  "scrapedAt": "2026-05-09T10:07:53.251Z",
+  "scrapedAt": "2026-05-21T16:38:34.168Z",
   "meta": {
     "name": "Torneo Senior Pitch & Putt \"El Encín\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "el Encin Golf",
     "courseCode": "CMC8",
-    "dateStart": "09 abr 2026",
-    "dateEnd": "09 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap) Circuito Senior De",
     "categories": [
       "Senior",
@@ -19,13 +19,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-09"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Hándicap Damas",
+      "expectedJugadores": 14,
       "header": [
         "Pos",
         "Jugador",
@@ -196,6 +197,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Clasificación Hándicap Senior Masculina",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -410,6 +413,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Clasificación Hándicap Súpersenior Masculina",
+      "expectedJugadores": 48,
       "header": [
         "Pos",
         "Jugador",
@@ -953,6 +958,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Hándicap Damas",
+      "jugadores": 14
+    },
+    "2": {
+      "name": "Clasificación Hándicap Senior Masculina",
+      "jugadores": 18
+    },
+    "3": {
+      "name": "Clasificación Hándicap Súpersenior Masculina",
+      "jugadores": 48
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2089,22 +2109,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72299
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -2832,5 +2836,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:13.201Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72299
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/2979440285_rrll_el_encin_p&amp;p_14032024.docx.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:09.187Z"
 }

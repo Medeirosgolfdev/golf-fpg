@@ -1,14 +1,14 @@
 {
   "tourId": 68548,
   "url": "https://www.nextcaddy.com/tour/68548",
-  "scrapedAt": "2026-05-09T09:57:48.221Z",
+  "scrapedAt": "2026-05-21T16:37:12.204Z",
   "meta": {
     "name": "CLUB DE GOLF AIRBÚS",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "21 feb 2026",
-    "dateEnd": "21 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-21"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 17,
       "header": [
         "Pos",
         "Jugador",
@@ -227,6 +228,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 17,
       "header": [
         "Pos",
         "Jugador",
@@ -429,6 +432,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 17
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 17
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -683,78 +697,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73175
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Fernandez Soriano, Blas",
-          "holeNumber": 2,
-          "createdAt": "22/08/25 19:56:18"
-        },
-        {
-          "playerName": "Canton Carretero, Miguel",
-          "holeNumber": 17,
-          "createdAt": "22/08/25 19:56:18"
-        },
-        {
-          "playerName": "Sanz Ramirez, Jose Manuel",
-          "holeNumber": 1,
-          "createdAt": "22/08/25 19:56:18"
-        },
-        {
-          "playerName": "Terres Martos, Ramon",
-          "holeNumber": 12,
-          "createdAt": "22/08/25 19:56:19"
-        },
-        {
-          "playerName": "Terres Martos, Ramon",
-          "holeNumber": 16,
-          "createdAt": "22/08/25 19:56:19"
-        },
-        {
-          "playerName": "Somoano Cordero, Manuel",
-          "holeNumber": 10,
-          "createdAt": "22/08/25 19:56:19"
-        },
-        {
-          "playerName": "Baschwitz Rodriguez, Ernesto",
-          "holeNumber": 6,
-          "createdAt": "22/08/25 19:56:20"
-        },
-        {
-          "playerName": "Gazquez Piera, Carlos",
-          "holeNumber": 1,
-          "createdAt": "22/08/25 19:56:20"
-        },
-        {
-          "playerName": "Gazquez Piera, Carlos",
-          "holeNumber": 5,
-          "createdAt": "22/08/25 19:56:20"
-        },
-        {
-          "playerName": "Gazquez Piera, Carlos",
-          "holeNumber": 12,
-          "createdAt": "22/08/25 19:56:20"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -915,5 +857,78 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:26.303Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73175
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Fernandez Soriano, Blas",
+          "holeNumber": 2,
+          "createdAt": "22/08/25 19:56:18"
+        },
+        {
+          "playerName": "Canton Carretero, Miguel",
+          "holeNumber": 17,
+          "createdAt": "22/08/25 19:56:18"
+        },
+        {
+          "playerName": "Sanz Ramirez, Jose Manuel",
+          "holeNumber": 1,
+          "createdAt": "22/08/25 19:56:18"
+        },
+        {
+          "playerName": "Terres Martos, Ramon",
+          "holeNumber": 12,
+          "createdAt": "22/08/25 19:56:19"
+        },
+        {
+          "playerName": "Terres Martos, Ramon",
+          "holeNumber": 16,
+          "createdAt": "22/08/25 19:56:19"
+        },
+        {
+          "playerName": "Somoano Cordero, Manuel",
+          "holeNumber": 10,
+          "createdAt": "22/08/25 19:56:19"
+        },
+        {
+          "playerName": "Baschwitz Rodriguez, Ernesto",
+          "holeNumber": 6,
+          "createdAt": "22/08/25 19:56:20"
+        },
+        {
+          "playerName": "Gazquez Piera, Carlos",
+          "holeNumber": 1,
+          "createdAt": "22/08/25 19:56:20"
+        },
+        {
+          "playerName": "Gazquez Piera, Carlos",
+          "holeNumber": 5,
+          "createdAt": "22/08/25 19:56:20"
+        },
+        {
+          "playerName": "Gazquez Piera, Carlos",
+          "holeNumber": 12,
+          "createdAt": "22/08/25 19:56:20"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:23.984Z"
 }

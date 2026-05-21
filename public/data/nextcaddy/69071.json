@@ -1,14 +1,14 @@
 {
   "tourId": 69071,
   "url": "https://www.nextcaddy.com/tour/69071",
-  "scrapedAt": "2026-05-09T10:15:33.942Z",
+  "scrapedAt": "2026-05-21T16:38:55.642Z",
   "meta": {
     "name": "Centro Nacional de Golf - 1ª Categoria",
     "organizer": null,
     "course": "",
     "courseCode": "MAJC",
-    "dateStart": "18 abr 2026",
-    "dateEnd": "18 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -19,11 +19,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-18"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -280,7 +281,7 @@
     {
       "orden": 12,
       "name": "Ramon Moreno Pulido",
-      "licencia": "CM41899045",
+      "licencia": "CM02899045",
       "hcp": 0.2,
       "nivel": "J"
     },
@@ -716,7 +717,7 @@
       "name": "Ramon Moreno Pulido",
       "licencia": "21-03-26 12:39",
       "hcp": 0.2,
-      "nivel": "CM41899045"
+      "nivel": "CM02899045"
     },
     {
       "orden": 18,
@@ -1160,6 +1161,7 @@
       "nivel": "CM05900074"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -1977,6 +1979,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:40.985Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/3897402723_rrll_cng.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:30.378Z"
 }

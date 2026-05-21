@@ -1,14 +1,14 @@
 {
   "tourId": 69119,
   "url": "https://www.nextcaddy.com/tour/69119",
-  "scrapedAt": "2026-05-09T10:07:37.522Z",
+  "scrapedAt": "2026-05-21T16:38:05.485Z",
   "meta": {
     "name": "CIRCUITO GRUPO MOSQUITO",
     "organizer": null,
     "course": "Club de Golf Bellavista",
     "courseCode": "AM07",
-    "dateStart": "21 mar 2026",
-    "dateEnd": "21 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-21"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "2º Categoria",
+      "expectedJugadores": 21,
       "header": [
         "Pos",
         "Jugador",
@@ -271,6 +272,8 @@
     },
     {
       "category": 2,
+      "categoryName": "1º Categoria",
+      "expectedJugadores": 20,
       "header": [
         "Pos",
         "Jugador",
@@ -506,6 +509,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "2º Categoria",
+      "jugadores": 21
+    },
+    "2": {
+      "name": "1º Categoria",
+      "jugadores": 20
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1096,22 +1110,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73857
-    }
-  ],
-  "scoreTypes": null,
   "horarios": [
     {
       "round": 1,
@@ -1488,5 +1486,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:33.151Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73857
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [
+    "/uploads/competiciones/pdf/69119_cartel_258.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:31.335Z"
 }

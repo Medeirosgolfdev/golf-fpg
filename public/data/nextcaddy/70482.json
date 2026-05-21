@@ -1,14 +1,14 @@
 {
   "tourId": 70482,
   "url": "https://www.nextcaddy.com/tour/70482",
-  "scrapedAt": "2026-05-09T10:15:50.753Z",
+  "scrapedAt": "2026-05-21T16:39:22.398Z",
   "meta": {
     "name": "TORNEO GOLF AFFINITY",
     "organizer": null,
     "course": "Montecastillo Barceló Golf Club",
     "courseCode": "AM29",
-    "dateStart": "03 may 2026",
-    "dateEnd": "03 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,11 +17,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-03"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -542,148 +543,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75426
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Barrenas Padura, Francisco De Paula",
-          "holeNumber": 8,
-          "createdAt": "17/11/25 12:16:00"
-        },
-        {
-          "playerName": "Bautista Bejarano, Romualdo",
-          "holeNumber": 1,
-          "createdAt": "17/11/25 12:17:07"
-        },
-        {
-          "playerName": "Bautista Bejarano, Romualdo",
-          "holeNumber": 2,
-          "createdAt": "17/11/25 12:17:07"
-        },
-        {
-          "playerName": "Carrington, Lucy",
-          "holeNumber": 5,
-          "createdAt": "17/11/25 12:41:32"
-        },
-        {
-          "playerName": "Moreno Allgayer, Carlos",
-          "holeNumber": 1,
-          "createdAt": "17/11/25 12:43:02"
-        },
-        {
-          "playerName": "Moreno Allgayer, Carlos",
-          "holeNumber": 4,
-          "createdAt": "17/11/25 12:43:02"
-        },
-        {
-          "playerName": "Blanco Alfonso, Sergio",
-          "holeNumber": 2,
-          "createdAt": "17/11/25 14:53:36"
-        },
-        {
-          "playerName": "Blanco Alfonso, Sergio",
-          "holeNumber": 5,
-          "createdAt": "17/11/25 14:53:36"
-        },
-        {
-          "playerName": "Rivas Zapata, Antonio",
-          "holeNumber": 5,
-          "createdAt": "17/11/25 14:58:33"
-        },
-        {
-          "playerName": "Ruiz Palomar, Diego",
-          "holeNumber": 2,
-          "createdAt": "17/11/25 15:00:19"
-        },
-        {
-          "playerName": "Garcia Escalona, Juan",
-          "holeNumber": 4,
-          "createdAt": "17/11/25 16:47:01"
-        },
-        {
-          "playerName": "Garcia Navarro, Rafael",
-          "holeNumber": 8,
-          "createdAt": "17/11/25 16:47:51"
-        },
-        {
-          "playerName": "Houghton, Ian",
-          "holeNumber": 4,
-          "createdAt": "17/11/25 16:51:39"
-        },
-        {
-          "playerName": "Houghton, Ian",
-          "holeNumber": 5,
-          "createdAt": "17/11/25 16:51:39"
-        },
-        {
-          "playerName": "Houghton, Ian",
-          "holeNumber": 6,
-          "createdAt": "17/11/25 16:51:39"
-        },
-        {
-          "playerName": "Houghton, Ian",
-          "holeNumber": 8,
-          "createdAt": "17/11/25 16:51:39"
-        },
-        {
-          "playerName": "Luque Pecci, Francisco Javier",
-          "holeNumber": 4,
-          "createdAt": "17/11/25 16:54:22"
-        },
-        {
-          "playerName": "Matute Cano, Pedro",
-          "holeNumber": 4,
-          "createdAt": "17/11/25 16:55:00"
-        },
-        {
-          "playerName": "Martinez Rubio, Cayetano",
-          "holeNumber": 5,
-          "createdAt": "17/11/25 18:15:45"
-        },
-        {
-          "playerName": "Queiro Quijada, Ramon",
-          "holeNumber": 1,
-          "createdAt": "17/11/25 18:17:05"
-        },
-        {
-          "playerName": "Fernandez Galvez, Jose Manuel",
-          "holeNumber": 8,
-          "createdAt": "17/11/25 18:19:43"
-        },
-        {
-          "playerName": "Jimenez Lozano, Angel Luis",
-          "holeNumber": 6,
-          "createdAt": "17/11/25 18:58:29"
-        },
-        {
-          "playerName": "Montero Bernardino, Juan Francisco",
-          "holeNumber": 8,
-          "createdAt": "17/11/25 18:59:47"
-        },
-        {
-          "playerName": "Valenzuela Huertas, Jose Maria",
-          "holeNumber": 4,
-          "createdAt": "17/11/25 19:06:04"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1015,5 +874,150 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:13:00.976Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75426
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Barrenas Padura, Francisco De Paula",
+          "holeNumber": 8,
+          "createdAt": "17/11/25 12:16:00"
+        },
+        {
+          "playerName": "Bautista Bejarano, Romualdo",
+          "holeNumber": 1,
+          "createdAt": "17/11/25 12:17:07"
+        },
+        {
+          "playerName": "Bautista Bejarano, Romualdo",
+          "holeNumber": 2,
+          "createdAt": "17/11/25 12:17:07"
+        },
+        {
+          "playerName": "Carrington, Lucy",
+          "holeNumber": 5,
+          "createdAt": "17/11/25 12:41:32"
+        },
+        {
+          "playerName": "Moreno Allgayer, Carlos",
+          "holeNumber": 1,
+          "createdAt": "17/11/25 12:43:02"
+        },
+        {
+          "playerName": "Moreno Allgayer, Carlos",
+          "holeNumber": 4,
+          "createdAt": "17/11/25 12:43:02"
+        },
+        {
+          "playerName": "Blanco Alfonso, Sergio",
+          "holeNumber": 2,
+          "createdAt": "17/11/25 14:53:36"
+        },
+        {
+          "playerName": "Blanco Alfonso, Sergio",
+          "holeNumber": 5,
+          "createdAt": "17/11/25 14:53:36"
+        },
+        {
+          "playerName": "Rivas Zapata, Antonio",
+          "holeNumber": 5,
+          "createdAt": "17/11/25 14:58:33"
+        },
+        {
+          "playerName": "Ruiz Palomar, Diego",
+          "holeNumber": 2,
+          "createdAt": "17/11/25 15:00:19"
+        },
+        {
+          "playerName": "Garcia Escalona, Juan",
+          "holeNumber": 4,
+          "createdAt": "17/11/25 16:47:01"
+        },
+        {
+          "playerName": "Garcia Navarro, Rafael",
+          "holeNumber": 8,
+          "createdAt": "17/11/25 16:47:51"
+        },
+        {
+          "playerName": "Houghton, Ian",
+          "holeNumber": 4,
+          "createdAt": "17/11/25 16:51:39"
+        },
+        {
+          "playerName": "Houghton, Ian",
+          "holeNumber": 5,
+          "createdAt": "17/11/25 16:51:39"
+        },
+        {
+          "playerName": "Houghton, Ian",
+          "holeNumber": 6,
+          "createdAt": "17/11/25 16:51:39"
+        },
+        {
+          "playerName": "Houghton, Ian",
+          "holeNumber": 8,
+          "createdAt": "17/11/25 16:51:39"
+        },
+        {
+          "playerName": "Luque Pecci, Francisco Javier",
+          "holeNumber": 4,
+          "createdAt": "17/11/25 16:54:22"
+        },
+        {
+          "playerName": "Matute Cano, Pedro",
+          "holeNumber": 4,
+          "createdAt": "17/11/25 16:55:00"
+        },
+        {
+          "playerName": "Martinez Rubio, Cayetano",
+          "holeNumber": 5,
+          "createdAt": "17/11/25 18:15:45"
+        },
+        {
+          "playerName": "Queiro Quijada, Ramon",
+          "holeNumber": 1,
+          "createdAt": "17/11/25 18:17:05"
+        },
+        {
+          "playerName": "Fernandez Galvez, Jose Manuel",
+          "holeNumber": 8,
+          "createdAt": "17/11/25 18:19:43"
+        },
+        {
+          "playerName": "Jimenez Lozano, Angel Luis",
+          "holeNumber": 6,
+          "createdAt": "17/11/25 18:58:29"
+        },
+        {
+          "playerName": "Montero Bernardino, Juan Francisco",
+          "holeNumber": 8,
+          "createdAt": "17/11/25 18:59:47"
+        },
+        {
+          "playerName": "Valenzuela Huertas, Jose Maria",
+          "holeNumber": 4,
+          "createdAt": "17/11/25 19:06:04"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/cartel/1204892979_70482-torneo-golf-affinity.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:41.648Z"
 }

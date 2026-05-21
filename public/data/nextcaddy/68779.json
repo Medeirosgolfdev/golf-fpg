@@ -1,14 +1,14 @@
 {
   "tourId": 68779,
   "url": "https://www.nextcaddy.com/tour/68779",
-  "scrapedAt": "2026-05-09T09:58:00.098Z",
+  "scrapedAt": "2026-05-21T16:37:32.605Z",
   "meta": {
     "name": "LUNES AL GOLF-J FINAL(TARDE 15:45)",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": "02 mar 2026",
-    "dateEnd": "02 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-02"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual Hasta 9 Hcpjuego",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -172,6 +173,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual Desde 9.1 Hcpjuego",
+      "expectedJugadores": 29,
       "header": [
         "Pos",
         "Jugador",
@@ -506,6 +509,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Hasta 9 Hcpjuego",
+      "jugadores": 12
+    },
+    "2": {
+      "name": "Handicap Individual Desde 9.1 Hcpjuego",
+      "jugadores": 29
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -774,93 +788,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73468
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Ybarra Fontcuberta, Antonio",
-          "holeNumber": 3,
-          "createdAt": "06/09/25 09:28:29"
-        },
-        {
-          "playerName": "Castro Del Olmo, Raul",
-          "holeNumber": 5,
-          "createdAt": "06/09/25 10:20:40"
-        },
-        {
-          "playerName": "Fernandez Mensaque, Ivan",
-          "holeNumber": 5,
-          "createdAt": "06/09/25 10:20:54"
-        },
-        {
-          "playerName": "Ybarra Fontcuberta, Antonio",
-          "holeNumber": 7,
-          "createdAt": "06/09/25 10:42:05"
-        },
-        {
-          "playerName": "Fernandez Mensaque, Ivan",
-          "holeNumber": 8,
-          "createdAt": "06/09/25 11:06:06"
-        },
-        {
-          "playerName": "Castrillo Lopez, Jesus",
-          "holeNumber": 10,
-          "createdAt": "06/09/25 11:21:03"
-        },
-        {
-          "playerName": "Fdez-Salvador Fdez De Heredia, Jaime",
-          "holeNumber": 10,
-          "createdAt": "06/09/25 11:21:21"
-        },
-        {
-          "playerName": "Ybarra Fontcuberta, Antonio",
-          "holeNumber": 10,
-          "createdAt": "06/09/25 11:23:25"
-        },
-        {
-          "playerName": "De La Rica Silva, Rafael",
-          "holeNumber": 12,
-          "createdAt": "06/09/25 12:06:42"
-        },
-        {
-          "playerName": "Genebat Gonzalez, Pedro Luis",
-          "holeNumber": 15,
-          "createdAt": "06/09/25 12:45:25"
-        },
-        {
-          "playerName": "Marañon Cervantes, Manuel",
-          "holeNumber": 15,
-          "createdAt": "06/09/25 12:45:28"
-        },
-        {
-          "playerName": "Lopez-Cirera Benjumea, Ignacio",
-          "holeNumber": 7,
-          "createdAt": "06/09/25 12:47:28"
-        },
-        {
-          "playerName": "Ibañez De Aldecoa Silvela, Javier",
-          "holeNumber": 6,
-          "createdAt": "06/09/25 12:49:06"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1030,5 +957,93 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:29.668Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73468
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Ybarra Fontcuberta, Antonio",
+          "holeNumber": 3,
+          "createdAt": "06/09/25 09:28:29"
+        },
+        {
+          "playerName": "Castro Del Olmo, Raul",
+          "holeNumber": 5,
+          "createdAt": "06/09/25 10:20:40"
+        },
+        {
+          "playerName": "Fernandez Mensaque, Ivan",
+          "holeNumber": 5,
+          "createdAt": "06/09/25 10:20:54"
+        },
+        {
+          "playerName": "Ybarra Fontcuberta, Antonio",
+          "holeNumber": 7,
+          "createdAt": "06/09/25 10:42:05"
+        },
+        {
+          "playerName": "Fernandez Mensaque, Ivan",
+          "holeNumber": 8,
+          "createdAt": "06/09/25 11:06:06"
+        },
+        {
+          "playerName": "Castrillo Lopez, Jesus",
+          "holeNumber": 10,
+          "createdAt": "06/09/25 11:21:03"
+        },
+        {
+          "playerName": "Fdez-Salvador Fdez De Heredia, Jaime",
+          "holeNumber": 10,
+          "createdAt": "06/09/25 11:21:21"
+        },
+        {
+          "playerName": "Ybarra Fontcuberta, Antonio",
+          "holeNumber": 10,
+          "createdAt": "06/09/25 11:23:25"
+        },
+        {
+          "playerName": "De La Rica Silva, Rafael",
+          "holeNumber": 12,
+          "createdAt": "06/09/25 12:06:42"
+        },
+        {
+          "playerName": "Genebat Gonzalez, Pedro Luis",
+          "holeNumber": 15,
+          "createdAt": "06/09/25 12:45:25"
+        },
+        {
+          "playerName": "Marañon Cervantes, Manuel",
+          "holeNumber": 15,
+          "createdAt": "06/09/25 12:45:28"
+        },
+        {
+          "playerName": "Lopez-Cirera Benjumea, Ignacio",
+          "holeNumber": 7,
+          "createdAt": "06/09/25 12:47:28"
+        },
+        {
+          "playerName": "Ibañez De Aldecoa Silvela, Javier",
+          "holeNumber": 6,
+          "createdAt": "06/09/25 12:49:06"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:27.717Z"
 }

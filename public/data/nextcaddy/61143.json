@@ -1,14 +1,14 @@
 {
   "tourId": 61143,
   "url": "https://www.nextcaddy.com/tour/61143",
-  "scrapedAt": "2026-05-09T10:16:30.736Z",
+  "scrapedAt": "2026-05-21T16:39:42.253Z",
   "meta": {
     "name": "Circuito Femenino Jueves",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "14 may 2026",
-    "dateEnd": "14 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras C. Femeni",
     "categories": [
       "Señoras",
@@ -16,18 +16,31 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-14"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Equipo Todos",
+      "jugadores": 18
+    }
+  },
   "inscritos": [
     {
       "orden": null,
-      "name": "EQUIPO J",
+      "name": "Equipo J",
       "licencia": "",
       "hcp": null,
       "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Maria Dolores Ruiz Gimenez",
+      "licencia": "AM06089117",
+      "hcp": 27.9,
+      "nivel": "S"
     },
     {
       "orden": null,
@@ -38,28 +51,21 @@
     },
     {
       "orden": null,
-      "name": "Maria Dolores Ruiz Gimenez",
-      "licencia": "AM06089117",
-      "hcp": 29.7,
-      "nivel": "S"
-    },
-    {
-      "orden": null,
-      "name": "Olga Brinkman Morales",
+      "name": "Olga Brinkmann Morales",
       "licencia": "AM06990073",
-      "hcp": 27.5,
+      "hcp": 26.4,
       "nivel": "S"
     },
     {
       "orden": null,
       "name": "Concepcion Rodriguez Herrero",
       "licencia": "AM06959143",
-      "hcp": 29.7,
+      "hcp": 28.6,
       "nivel": "S"
     },
     {
       "orden": null,
-      "name": "EQUIPO P",
+      "name": "Equipo P",
       "licencia": "",
       "hcp": null,
       "nivel": ""
@@ -89,12 +95,12 @@
       "orden": null,
       "name": "Sagrario Huete Molina",
       "licencia": "AM11343010",
-      "hcp": 31.6,
+      "hcp": 31.4,
       "nivel": "S"
     },
     {
       "orden": null,
-      "name": "EQUIPO H",
+      "name": "Equipo H",
       "licencia": "",
       "hcp": null,
       "nivel": ""
@@ -103,14 +109,14 @@
       "orden": null,
       "name": "Maria Carrere Lovera",
       "licencia": "AM06310821",
-      "hcp": 12.8,
+      "hcp": 12.7,
       "nivel": "S"
     },
     {
       "orden": null,
       "name": "Asuncion Moreno Galiano",
       "licencia": "AM06221523",
-      "hcp": 13.8,
+      "hcp": 14,
       "nivel": "S"
     },
     {
@@ -124,12 +130,12 @@
       "orden": null,
       "name": "Rocio Garcia-Aranda Pez",
       "licencia": "AM06114520",
-      "hcp": 20.3,
+      "hcp": 20.8,
       "nivel": "S"
     },
     {
       "orden": null,
-      "name": "EQUIPO E",
+      "name": "Equipo E",
       "licencia": "",
       "hcp": null,
       "nivel": ""
@@ -164,7 +170,7 @@
     },
     {
       "orden": null,
-      "name": "EQUIPO C",
+      "name": "Equipo C",
       "licencia": "",
       "hcp": null,
       "nivel": ""
@@ -199,7 +205,7 @@
     },
     {
       "orden": null,
-      "name": "EQUIPO B",
+      "name": "Equipo B",
       "licencia": "",
       "hcp": null,
       "nivel": ""
@@ -234,7 +240,7 @@
     },
     {
       "orden": null,
-      "name": "EQUIPO L",
+      "name": "Equipo L",
       "licencia": "",
       "hcp": null,
       "nivel": ""
@@ -264,12 +270,12 @@
       "orden": null,
       "name": "Gemma Maria Curto Oliva",
       "licencia": "AMG3924550",
-      "hcp": 34.8,
+      "hcp": 34.5,
       "nivel": "S"
     },
     {
       "orden": null,
-      "name": "EQUIPO I",
+      "name": "Equipo I",
       "licencia": "",
       "hcp": null,
       "nivel": ""
@@ -304,7 +310,7 @@
     },
     {
       "orden": null,
-      "name": "EQUIPO N",
+      "name": "Equipo N",
       "licencia": "",
       "hcp": null,
       "nivel": ""
@@ -339,7 +345,7 @@
     },
     {
       "orden": null,
-      "name": "EQUIPO O",
+      "name": "Equipo O",
       "licencia": "",
       "hcp": null,
       "nivel": ""
@@ -355,7 +361,7 @@
       "orden": null,
       "name": "Susana De La Guerra Irazu",
       "licencia": "AM06358643",
-      "hcp": 20.4,
+      "hcp": 21.1,
       "nivel": "S"
     },
     {
@@ -369,12 +375,12 @@
       "orden": null,
       "name": "M. Angeles Martinez-Sagrera Martin",
       "licencia": "AM06818685",
-      "hcp": 29.3,
+      "hcp": 29.9,
       "nivel": "S"
     },
     {
       "orden": null,
-      "name": "EQUIPO R",
+      "name": "Equipo R",
       "licencia": "",
       "hcp": null,
       "nivel": ""
@@ -383,7 +389,7 @@
       "orden": null,
       "name": "Dolores Rios Cruz",
       "licencia": "AM11159484",
-      "hcp": 16.9,
+      "hcp": 16.8,
       "nivel": "S"
     },
     {
@@ -409,7 +415,7 @@
     },
     {
       "orden": null,
-      "name": "EQUIPO G",
+      "name": "Equipo G",
       "licencia": "",
       "hcp": null,
       "nivel": ""
@@ -444,7 +450,7 @@
     },
     {
       "orden": null,
-      "name": "EQUIPO K",
+      "name": "Equipo K",
       "licencia": "",
       "hcp": null,
       "nivel": ""
@@ -460,7 +466,7 @@
       "orden": null,
       "name": "Ana Vega Narvaez",
       "licencia": "AM11159480",
-      "hcp": 10.5,
+      "hcp": 10.9,
       "nivel": "S"
     },
     {
@@ -479,7 +485,7 @@
     },
     {
       "orden": null,
-      "name": "EQUIPO A",
+      "name": "Equipo A",
       "licencia": "",
       "hcp": null,
       "nivel": ""
@@ -514,7 +520,7 @@
     },
     {
       "orden": null,
-      "name": "EQUIPO S",
+      "name": "Equipo S",
       "licencia": "",
       "hcp": null,
       "nivel": ""
@@ -549,7 +555,7 @@
     },
     {
       "orden": null,
-      "name": "EQUIPO D",
+      "name": "Equipo D",
       "licencia": "",
       "hcp": null,
       "nivel": ""
@@ -565,14 +571,14 @@
       "orden": null,
       "name": "Rose Anne Voskertchian",
       "licencia": "AM87927398",
-      "hcp": 26.9,
+      "hcp": 26.5,
       "nivel": "S"
     },
     {
       "orden": null,
       "name": "Annissa Bayer",
       "licencia": "AM87155339",
-      "hcp": 27.5,
+      "hcp": 27.7,
       "nivel": "S"
     },
     {
@@ -584,7 +590,7 @@
     },
     {
       "orden": null,
-      "name": "EQUIPO F",
+      "name": "Equipo F",
       "licencia": "",
       "hcp": null,
       "nivel": ""
@@ -619,7 +625,7 @@
     },
     {
       "orden": null,
-      "name": "EQUIPO M",
+      "name": "Equipo M",
       "licencia": "",
       "hcp": null,
       "nivel": ""
@@ -653,43 +659,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 64773
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Cunningham, Paul",
-          "holeNumber": 9,
-          "createdAt": "23/09/24 13:44:10"
-        },
-        {
-          "playerName": "Sly, Peter",
-          "holeNumber": 12,
-          "createdAt": "23/09/24 13:55:33"
-        },
-        {
-          "playerName": "Sly, Peter",
-          "holeNumber": 16,
-          "createdAt": "23/09/24 13:55:34"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1345,5 +1314,404 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-17T12:42:57.023Z"
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 159294,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            149
+          ],
+          [
+            "Birdie",
+            12
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            443
+          ],
+          [
+            "Peor",
+            572
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 159295,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            63
+          ],
+          [
+            "2",
+            102
+          ],
+          [
+            "3",
+            91
+          ],
+          [
+            "4",
+            133
+          ],
+          [
+            "5",
+            71
+          ],
+          [
+            "6",
+            123
+          ],
+          [
+            "7",
+            67
+          ],
+          [
+            "8",
+            106
+          ],
+          [
+            "9",
+            101
+          ],
+          [
+            "10",
+            107
+          ],
+          [
+            "11",
+            63
+          ],
+          [
+            "12",
+            114
+          ],
+          [
+            "13",
+            104
+          ],
+          [
+            "14",
+            91
+          ],
+          [
+            "15",
+            151
+          ],
+          [
+            "16",
+            106
+          ],
+          [
+            "17",
+            101
+          ],
+          [
+            "18",
+            94
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 159296,
+        "datos": [
+          [
+            "Hoyo",
+            "ROCIO GARCIA-ARANDA PEZ",
+            "LAURA  RIOS IZQUIERDO",
+            "JULIE FORD "
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            -2,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            -2,
+            -2,
+            -2
+          ],
+          [
+            "Hoyo 4",
+            -2,
+            -3,
+            -2
+          ],
+          [
+            "Hoyo 5",
+            -2,
+            -2,
+            -2
+          ],
+          [
+            "Hoyo 6",
+            -2,
+            -3,
+            -3
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            -3,
+            -2
+          ],
+          [
+            "Hoyo 8",
+            -1,
+            -3,
+            -2
+          ],
+          [
+            "Hoyo 9",
+            -4,
+            -3,
+            -4
+          ],
+          [
+            "Hoyo 10",
+            -4,
+            -3,
+            -4
+          ],
+          [
+            "Hoyo 11",
+            -4,
+            -2,
+            -3
+          ],
+          [
+            "Hoyo 12",
+            -4,
+            -2,
+            -3
+          ],
+          [
+            "Hoyo 13",
+            -4,
+            -4,
+            -3
+          ],
+          [
+            "Hoyo 14",
+            -3,
+            -4,
+            -2
+          ],
+          [
+            "Hoyo 15",
+            -1,
+            -2,
+            -2
+          ],
+          [
+            "Hoyo 16",
+            -2,
+            -3,
+            -2
+          ],
+          [
+            "Hoyo 17",
+            -4,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 18",
+            -5,
+            -3,
+            -1
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 159297,
+        "datos": [
+          [
+            "Hoyo",
+            "ROCIO GARCIA-ARANDA PEZ",
+            "LAURA  RIOS IZQUIERDO",
+            "JULIE FORD "
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 3",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 4",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 5",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 6",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 7",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 8",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 9",
+            -3,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 10",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 11",
+            0,
+            1,
+            1
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            0,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 14",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 15",
+            2,
+            2,
+            0
+          ],
+          [
+            "Hoyo 16",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 17",
+            -2,
+            1,
+            1
+          ],
+          [
+            "Hoyo 18",
+            -1,
+            -1,
+            0
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 64773
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Cunningham, Paul",
+          "holeNumber": 9,
+          "createdAt": "23/09/24 13:44:10"
+        },
+        {
+          "playerName": "Sly, Peter",
+          "holeNumber": 12,
+          "createdAt": "23/09/24 13:55:33"
+        },
+        {
+          "playerName": "Sly, Peter",
+          "holeNumber": 16,
+          "createdAt": "23/09/24 13:55:34"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/1529281661_banderas.pdf",
+    "/uploads/circular/2026/960db328bdb9e41e59f0fd895701cb97.pdf",
+    "/uploads/competiciones/pdf/559681579_reglas_locales_villa_nueva.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:52.221Z"
 }

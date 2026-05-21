@@ -1,14 +1,14 @@
 {
   "tourId": 68680,
   "url": "https://www.nextcaddy.com/tour/68680",
-  "scrapedAt": "2026-05-09T09:49:36.077Z",
+  "scrapedAt": "2026-05-21T16:37:31.682Z",
   "meta": {
     "name": "World Pitch & Putt Tour - Domingo",
     "organizer": null,
     "course": "Escuela de Golf Miguel ángel Jiménez",
     "courseCode": "AMI5",
-    "dateStart": "01 mar 2026",
-    "dateEnd": "01 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -18,11 +18,25 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-01"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Femenino",
+      "jugadores": 4
+    },
+    "2": {
+      "name": "Handicap Masculino",
+      "jugadores": 12
+    },
+    "3": {
+      "name": "Handicap Mixto",
+      "jugadores": 23
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -137,22 +151,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73324
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -250,18 +248,18 @@
         {
           "time": "09:00",
           "tee": 9,
-          "name": "Javier Portillo Fernandez",
+          "name": "Maria Dolores Guerrero Avila",
           "hcp": 36,
-          "ins": "2269541",
+          "ins": "2269540",
           "jid": "73324",
           "nivel": "S"
         },
         {
           "time": "09:00",
           "tee": 9,
-          "name": "Maria Dolores Guerrero Avila",
+          "name": "Javier Portillo Fernandez",
           "hcp": 36,
-          "ins": "2269540",
+          "ins": "2269541",
           "jid": "73324",
           "nivel": "S"
         },
@@ -286,5 +284,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:27.935Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73324
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:25.772Z"
 }

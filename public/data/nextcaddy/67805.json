@@ -1,14 +1,14 @@
 {
   "tourId": 67805,
   "url": "https://www.nextcaddy.com/tour/67805",
-  "scrapedAt": "2026-05-09T10:15:39.385Z",
+  "scrapedAt": "2026-05-21T16:39:03.727Z",
   "meta": {
     "name": "Torneo Senior Pitch & Putt \"Las Rejas\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Forus Golf Las Rejas",
     "courseCode": "CM22",
-    "dateStart": "23 abr 2026",
-    "dateEnd": "23 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap) Circuito Senior De",
     "categories": [
       "Senior",
@@ -18,13 +18,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-23"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Hándicap Damas",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -239,6 +240,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Clasificación Hándicap Senior Caballeros",
+      "expectedJugadores": 27,
       "header": [
         "Pos",
         "Jugador",
@@ -552,6 +555,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Clasificación Hándicap Supersenior Caballeros",
+      "expectedJugadores": 63,
       "header": [
         "Pos",
         "Jugador",
@@ -1260,6 +1265,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Hándicap Damas",
+      "jugadores": 18
+    },
+    "2": {
+      "name": "Clasificación Hándicap Senior Caballeros",
+      "jugadores": 27
+    },
+    "3": {
+      "name": "Clasificación Hándicap Supersenior Caballeros",
+      "jugadores": 63
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2788,22 +2808,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72300
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -3783,5 +3787,25 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:13.304Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72300
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/67805_cartel_85.pdf",
+    "/uploads/competiciones/pdf/3492069457_rrll_las_rejas_p&amp;p_260423.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:09.596Z"
 }

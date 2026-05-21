@@ -1,14 +1,14 @@
 {
   "tourId": 68709,
   "url": "https://www.nextcaddy.com/tour/68709",
-  "scrapedAt": "2026-05-09T09:57:53.457Z",
+  "scrapedAt": "2026-05-21T16:37:21.057Z",
   "meta": {
     "name": "MONTHLY STAB. 25.2",
     "organizer": null,
     "course": "Santa María Golf & Country Club",
     "courseCode": "AM86",
-    "dateStart": "25 feb 2026",
-    "dateEnd": "25 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-25"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 21,
       "header": [
         "Pos",
         "Jugador",
@@ -270,6 +271,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 21
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -580,6 +588,7 @@
       "nivel": "S"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -596,6 +605,6 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:39.286Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:26.216Z"
 }

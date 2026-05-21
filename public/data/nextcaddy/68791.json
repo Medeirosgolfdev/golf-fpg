@@ -1,14 +1,14 @@
 {
   "tourId": 68791,
   "url": "https://www.nextcaddy.com/tour/68791",
-  "scrapedAt": "2026-05-09T09:58:03.964Z",
+  "scrapedAt": "2026-05-21T16:37:39.924Z",
   "meta": {
     "name": "Liga Externa - Cartuja Golf",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": "07 mar 2026",
-    "dateEnd": "07 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-07"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual Masculino Hasta 20 Hcp",
+      "expectedJugadores": 23,
       "header": [
         "Pos",
         "Jugador",
@@ -293,6 +294,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual Masculino Desde 30.1 Hcp",
+      "expectedJugadores": 22,
       "header": [
         "Pos",
         "Jugador",
@@ -551,6 +554,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Handicap Individual Masculino Entre 20.1 Y 30 Hcp",
+      "expectedJugadores": 27,
       "header": [
         "Pos",
         "Jugador",
@@ -863,6 +868,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Masculino Hasta 20 Hcp",
+      "jugadores": 23
+    },
+    "2": {
+      "name": "Handicap Individual Masculino Desde 30.1 Hcp",
+      "jugadores": 22
+    },
+    "3": {
+      "name": "Handicap Individual Masculino Entre 20.1 Y 30 Hcp",
+      "jugadores": 27
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2111,33 +2131,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73487
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Cebolla Huonder, Oliver",
-          "holeNumber": 14,
-          "createdAt": "02/09/25 18:23:10"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -2937,5 +2930,33 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:30.214Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73487
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Cebolla Huonder, Oliver",
+          "holeNumber": 14,
+          "createdAt": "02/09/25 18:23:10"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:28.163Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 70522,
   "url": "https://www.nextcaddy.com/tour/70522",
-  "scrapedAt": "2026-05-09T10:15:51.608Z",
+  "scrapedAt": "2026-05-21T16:39:23.762Z",
   "meta": {
     "name": "VOBS COMPETITION",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "04 may 2026",
-    "dateEnd": "04 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-04"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 17,
       "header": [
         "Pos",
         "Jugador",
@@ -227,6 +228,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 17
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -481,78 +489,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75466
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "So, Sotheavy",
-          "holeNumber": 7,
-          "createdAt": "18/11/25 11:04:03"
-        },
-        {
-          "playerName": "Vans Agnew, Alison",
-          "holeNumber": 7,
-          "createdAt": "18/11/25 11:16:09"
-        },
-        {
-          "playerName": "Abaitua Arrue, Maria",
-          "holeNumber": 12,
-          "createdAt": "18/11/25 11:34:23"
-        },
-        {
-          "playerName": "Hidalgo Navarro, Aurora",
-          "holeNumber": 17,
-          "createdAt": "18/11/25 12:43:48"
-        },
-        {
-          "playerName": "Rodrigues Da Costa, Rosenilda",
-          "holeNumber": 17,
-          "createdAt": "18/11/25 13:00:15"
-        },
-        {
-          "playerName": "Macias  Gomez, Rocio",
-          "holeNumber": 12,
-          "createdAt": "18/11/25 13:28:07"
-        },
-        {
-          "playerName": "Cluskey, Jennifer",
-          "holeNumber": 14,
-          "createdAt": "18/11/25 13:34:23"
-        },
-        {
-          "playerName": "Vans Agnew, Alison",
-          "holeNumber": 17,
-          "createdAt": "18/11/25 13:51:25"
-        },
-        {
-          "playerName": "Fahey, Marie",
-          "holeNumber": 12,
-          "createdAt": "18/11/25 14:36:22"
-        },
-        {
-          "playerName": "Diaz-Negrete Y Sanz, Ana",
-          "holeNumber": 3,
-          "createdAt": "18/11/25 16:34:24"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -713,5 +649,80 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:13:00.999Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75466
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "So, Sotheavy",
+          "holeNumber": 7,
+          "createdAt": "18/11/25 11:04:03"
+        },
+        {
+          "playerName": "Vans Agnew, Alison",
+          "holeNumber": 7,
+          "createdAt": "18/11/25 11:16:09"
+        },
+        {
+          "playerName": "Abaitua Arrue, Maria",
+          "holeNumber": 12,
+          "createdAt": "18/11/25 11:34:23"
+        },
+        {
+          "playerName": "Hidalgo Navarro, Aurora",
+          "holeNumber": 17,
+          "createdAt": "18/11/25 12:43:48"
+        },
+        {
+          "playerName": "Rodrigues Da Costa, Rosenilda",
+          "holeNumber": 17,
+          "createdAt": "18/11/25 13:00:15"
+        },
+        {
+          "playerName": "Macias  Gomez, Rocio",
+          "holeNumber": 12,
+          "createdAt": "18/11/25 13:28:07"
+        },
+        {
+          "playerName": "Cluskey, Jennifer",
+          "holeNumber": 14,
+          "createdAt": "18/11/25 13:34:23"
+        },
+        {
+          "playerName": "Vans Agnew, Alison",
+          "holeNumber": 17,
+          "createdAt": "18/11/25 13:51:25"
+        },
+        {
+          "playerName": "Fahey, Marie",
+          "holeNumber": 12,
+          "createdAt": "18/11/25 14:36:22"
+        },
+        {
+          "playerName": "Diaz-Negrete Y Sanz, Ana",
+          "holeNumber": 3,
+          "createdAt": "18/11/25 16:34:24"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/cartel/3239811685_70522-vobs-competition.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:41.574Z"
 }

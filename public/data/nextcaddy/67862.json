@@ -1,14 +1,14 @@
 {
   "tourId": 67862,
   "url": "https://www.nextcaddy.com/tour/67862",
-  "scrapedAt": "2026-05-09T10:07:58.822Z",
+  "scrapedAt": "2026-05-21T16:38:46.628Z",
   "meta": {
     "name": "Circuito de Madrid de Profesionales \"Torrejón\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Campo de Golf B A de Torrejon",
     "courseCode": "CM12",
-    "dateStart": "13 abr 2026",
-    "dateEnd": "13 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch) 25º Circuito De Mad",
     "categories": [
       "Profesional",
@@ -17,13 +17,14 @@
       "Senior",
       "Infantil",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-13"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 84,
       "header": [
         "Pos",
         "Jugador",
@@ -963,6 +964,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 84
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2169,22 +2177,6 @@
       "nivel": "P+"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72377
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -2948,5 +2940,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:15.413Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72377
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/2826195403_rrll_torrejon_1.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:11.848Z"
 }

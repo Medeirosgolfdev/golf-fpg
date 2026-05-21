@@ -1,14 +1,14 @@
 {
   "tourId": 70465,
   "url": "https://www.nextcaddy.com/tour/70465",
-  "scrapedAt": "2026-05-09T10:15:49.947Z",
+  "scrapedAt": "2026-05-21T16:39:21.424Z",
   "meta": {
     "name": "Amigos de Miraflores 02/05",
     "organizer": null,
     "course": "Miraflores Golf",
     "courseCode": "AM76",
-    "dateStart": "02 may 2026",
-    "dateEnd": "02 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-02"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -171,6 +172,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 12
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -355,6 +363,7 @@
       "nivel": "CM52138410"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {
       "p": {
@@ -737,6 +746,6 @@
       "players": []
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:44.590Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:41.012Z"
 }

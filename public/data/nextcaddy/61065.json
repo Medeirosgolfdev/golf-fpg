@@ -1,14 +1,14 @@
 {
   "tourId": 61065,
   "url": "https://www.nextcaddy.com/tour/61065",
-  "scrapedAt": "2026-05-09T10:07:51.660Z",
+  "scrapedAt": "2026-05-21T16:38:32.301Z",
   "meta": {
     "name": "Campeonato Andalucía Interclubs Femenino",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Campo de Golf Dehesa Montenmedio",
     "courseCode": "AM27",
-    "dateStart": "08 abr 2026",
-    "dateEnd": "08 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Señoras C. Femenin",
     "categories": [
       "Señoras",
@@ -16,11 +16,21 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-08"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Equipos Scratch",
+      "jugadores": 15
+    },
+    "2": {
+      "name": "Equipos Handicap",
+      "jugadores": 15
+    }
+  },
   "inscritos": [
     {
       "orden": null,
@@ -429,26 +439,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 64667
-    },
-    {
-      "roundNumber": 2,
-      "roundId": 64668
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -1235,5 +1225,30 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:11:57.741Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 64667
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 64668
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/1326447170_info_web.pdf",
+    "/uploads/circular/2026/71377cbbfb7c483e7b45c9bdf636818a.pdf",
+    "/uploads/competiciones/pdf/770605804_web.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:48.953Z"
 }

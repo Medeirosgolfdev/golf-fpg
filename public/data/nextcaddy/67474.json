@@ -1,14 +1,14 @@
 {
   "tourId": 67474,
   "url": "https://www.nextcaddy.com/tour/67474",
-  "scrapedAt": "2026-05-09T09:57:19.015Z",
+  "scrapedAt": "2026-05-21T16:36:29.659Z",
   "meta": {
     "name": "Sherry International Golf Group (SIGG) - 13 Enero 2026 (Grupo privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "13 ene 2026",
-    "dateEnd": "13 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-13"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 22,
       "header": [
         "Pos",
         "Jugador",
@@ -281,6 +282,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 22
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -612,98 +620,6 @@
       "nivel": "EXX1465100"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71934
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Ingham, John Richard",
-          "holeNumber": 4,
-          "createdAt": "01/07/25 13:35:05"
-        },
-        {
-          "playerName": "Spencer Terry, Geoffrey",
-          "holeNumber": 11,
-          "createdAt": "01/07/25 13:49:17"
-        },
-        {
-          "playerName": "Breakspear, Peter John",
-          "holeNumber": 4,
-          "createdAt": "01/07/25 14:05:51"
-        },
-        {
-          "playerName": "Breakspear, Peter John",
-          "holeNumber": 13,
-          "createdAt": "01/07/25 14:05:51"
-        },
-        {
-          "playerName": "Dent, Joey Vanney",
-          "holeNumber": 8,
-          "createdAt": "01/07/25 14:07:14"
-        },
-        {
-          "playerName": "Dakers, Anthony",
-          "holeNumber": 10,
-          "createdAt": "01/07/25 14:11:09"
-        },
-        {
-          "playerName": "Andrew Fogg, Graham",
-          "holeNumber": 16,
-          "createdAt": "01/07/25 14:11:52"
-        },
-        {
-          "playerName": "John Mcleod, Ewan",
-          "holeNumber": 11,
-          "createdAt": "01/07/25 14:12:50"
-        },
-        {
-          "playerName": "John Mcleod, Ewan",
-          "holeNumber": 14,
-          "createdAt": "01/07/25 14:12:50"
-        },
-        {
-          "playerName": "John Mcleod, Ewan",
-          "holeNumber": 16,
-          "createdAt": "01/07/25 14:12:50"
-        },
-        {
-          "playerName": "Bulley, Stephen",
-          "holeNumber": 10,
-          "createdAt": "01/07/25 15:06:55"
-        },
-        {
-          "playerName": "Bulley, Stephen",
-          "holeNumber": 13,
-          "createdAt": "01/07/25 15:06:55"
-        },
-        {
-          "playerName": "Bulley, Stephen",
-          "holeNumber": 17,
-          "createdAt": "01/07/25 15:06:55"
-        },
-        {
-          "playerName": "Battegay, Sholeh",
-          "holeNumber": 10,
-          "createdAt": "01/07/25 15:08:19"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -909,5 +825,98 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:08.222Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71934
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Ingham, John Richard",
+          "holeNumber": 4,
+          "createdAt": "01/07/25 13:35:05"
+        },
+        {
+          "playerName": "Spencer Terry, Geoffrey",
+          "holeNumber": 11,
+          "createdAt": "01/07/25 13:49:17"
+        },
+        {
+          "playerName": "Breakspear, Peter John",
+          "holeNumber": 4,
+          "createdAt": "01/07/25 14:05:51"
+        },
+        {
+          "playerName": "Breakspear, Peter John",
+          "holeNumber": 13,
+          "createdAt": "01/07/25 14:05:51"
+        },
+        {
+          "playerName": "Dent, Joey Vanney",
+          "holeNumber": 8,
+          "createdAt": "01/07/25 14:07:14"
+        },
+        {
+          "playerName": "Dakers, Anthony",
+          "holeNumber": 10,
+          "createdAt": "01/07/25 14:11:09"
+        },
+        {
+          "playerName": "Andrew Fogg, Graham",
+          "holeNumber": 16,
+          "createdAt": "01/07/25 14:11:52"
+        },
+        {
+          "playerName": "John Mcleod, Ewan",
+          "holeNumber": 11,
+          "createdAt": "01/07/25 14:12:50"
+        },
+        {
+          "playerName": "John Mcleod, Ewan",
+          "holeNumber": 14,
+          "createdAt": "01/07/25 14:12:50"
+        },
+        {
+          "playerName": "John Mcleod, Ewan",
+          "holeNumber": 16,
+          "createdAt": "01/07/25 14:12:50"
+        },
+        {
+          "playerName": "Bulley, Stephen",
+          "holeNumber": 10,
+          "createdAt": "01/07/25 15:06:55"
+        },
+        {
+          "playerName": "Bulley, Stephen",
+          "holeNumber": 13,
+          "createdAt": "01/07/25 15:06:55"
+        },
+        {
+          "playerName": "Bulley, Stephen",
+          "holeNumber": 17,
+          "createdAt": "01/07/25 15:06:55"
+        },
+        {
+          "playerName": "Battegay, Sholeh",
+          "holeNumber": 10,
+          "createdAt": "01/07/25 15:08:19"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:03.766Z"
 }

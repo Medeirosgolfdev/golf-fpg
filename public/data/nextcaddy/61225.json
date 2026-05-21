@@ -1,14 +1,14 @@
 {
   "tourId": 61225,
   "url": "https://www.nextcaddy.com/tour/61225",
-  "scrapedAt": "2026-05-09T10:17:13.264Z",
+  "scrapedAt": "2026-05-21T16:41:06.643Z",
   "meta": {
     "name": "Campeonato de Andalucía Dobles P&P",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Escuela de Golf Miguel ángel Jiménez",
     "courseCode": "AMI5",
-    "dateStart": "10 oct 2026",
-    "dateEnd": "10 oct 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-10-10"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -43,6 +45,6 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:24.109Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:41:53.795Z"
 }

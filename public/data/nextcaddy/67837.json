@@ -1,14 +1,14 @@
 {
   "tourId": 67837,
   "url": "https://www.nextcaddy.com/tour/67837",
-  "scrapedAt": "2026-05-09T09:49:44.510Z",
+  "scrapedAt": "2026-05-21T16:39:07.095Z",
   "meta": {
     "name": "Torneo de 2ª Categoría Pitch & Putt Masculino y Femenino \"Golf Park\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Golf Park Entertainment",
     "courseCode": "CM18",
-    "dateStart": "25 abr 2026",
-    "dateEnd": "25 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap) Circuito General D",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-25"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Hándicap",
+      "expectedJugadores": 75,
       "header": [
         "Pos",
         "Jugador",
@@ -865,6 +866,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Clasificación Scratch",
+      "expectedJugadores": 75,
       "header": [
         "Pos",
         "Jugador",
@@ -1705,6 +1708,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Hándicap",
+      "jugadores": 75
+    },
+    "2": {
+      "name": "Clasificación Scratch",
+      "jugadores": 75
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -2771,22 +2785,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72333
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -3469,5 +3467,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:14.647Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72333
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/1766923147_arb_reg_loc_cm18_2019_-_golf_park.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:10.973Z"
 }

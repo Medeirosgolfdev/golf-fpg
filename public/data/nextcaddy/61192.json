@@ -1,26 +1,28 @@
 {
   "tourId": 61192,
   "url": "https://www.nextcaddy.com/tour/61192",
-  "scrapedAt": "2026-05-08T17:36:09.334Z",
+  "scrapedAt": "2026-05-21T16:40:48.568Z",
   "meta": {
     "name": "Match Play Sub 16",
     "organizer": "Real Federacion Andaluza de Golf",
-    "course": "Golf el Rompido",
-    "courseCode": "AMA9",
-    "dateStart": "24 jul 2026",
-    "dateEnd": "24 jul 2026",
+    "course": "Club de Golf Playa Serena",
+    "courseCode": "AM62",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Match Play Sub 16",
     "categories": [
       "Infantil",
       "Juvenil",
       "Profesional",
       "Senior"
-    ],
-    "dateIso": "2026-07-24"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -120,11 +122,12 @@
         },
         {
           "playerName": "Fernandez Gonzalez, Alvaro",
-          "holeNumber": 16
+          "holeNumber": 16,
+          "createdAt": "28/09/24 13:56:53"
         }
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:23.274Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:41:53.022Z"
 }

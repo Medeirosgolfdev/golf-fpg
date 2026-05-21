@@ -1,14 +1,14 @@
 {
   "tourId": 68519,
   "url": "https://www.nextcaddy.com/tour/68519",
-  "scrapedAt": "2026-05-09T09:57:45.129Z",
+  "scrapedAt": "2026-05-21T16:37:07.013Z",
   "meta": {
     "name": "MONTHLY STAB. 18.2.",
     "organizer": null,
     "course": "Santa María Golf & Country Club",
     "courseCode": "AM86",
-    "dateStart": "18 feb 2026",
-    "dateEnd": "18 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-18"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 11,
       "header": [
         "Pos",
         "Jugador",
@@ -160,6 +161,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 11
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -330,6 +338,7 @@
       "nivel": "S"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -346,6 +355,6 @@
     }
   ],
   "scoreTypes": null,
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:37.388Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:23.413Z"
 }

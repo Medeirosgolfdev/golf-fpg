@@ -1,14 +1,14 @@
 {
   "tourId": 70589,
   "url": "https://www.nextcaddy.com/tour/70589",
-  "scrapedAt": "2026-05-09T10:15:52.472Z",
+  "scrapedAt": "2026-05-21T16:39:25.297Z",
   "meta": {
     "name": "COMPETITION VOBS VS SHERRY",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "06 may 2026",
-    "dateEnd": "06 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -18,11 +18,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-06"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -207,6 +208,7 @@
       "nivel": "S"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -223,6 +225,8 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:45.050Z"
+  "pdfs": [
+    "/uploads/competiciones/cartel/3017488733_70589-competition-vobs-vs-sherry.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:42.368Z"
 }

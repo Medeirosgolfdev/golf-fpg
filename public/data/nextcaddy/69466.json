@@ -1,14 +1,14 @@
 {
   "tourId": 69466,
   "url": "https://www.nextcaddy.com/tour/69466",
-  "scrapedAt": "2026-05-09T10:35:47.862Z",
+  "scrapedAt": "2026-05-21T16:38:24.586Z",
   "meta": {
     "name": "TORNEO INFANTIL VILLANUEVA 18 HOYOS",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "29 mar 2026",
-    "dateEnd": "29 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "INFANTIL",
@@ -20,77 +20,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-29"
+    ]
   },
-  "course": {
-    "par": [
-      4,
-      4,
-      4,
-      4,
-      5,
-      4,
-      4,
-      3,
-      4,
-      5,
-      4,
-      5,
-      4,
-      4,
-      5,
-      4,
-      4,
-      4
-    ],
-    "si": [
-      14,
-      9,
-      7,
-      16,
-      1,
-      18,
-      5,
-      11,
-      3,
-      12,
-      15,
-      17,
-      8,
-      13,
-      4,
-      10,
-      2,
-      6
-    ],
-    "meters": [
-      300,
-      118,
-      343,
-      294,
-      498,
-      116,
-      354,
-      100,
-      385,
-      297,
-      312,
-      437,
-      128,
-      332,
-      440,
-      164,
-      360,
-      315
-    ],
-    "parTotal": 75,
-    "parInferred": true,
-    "parConfidence": "medium"
-  },
+  "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -112,33 +49,7 @@
           "rounds": [],
           "total": 42,
           "toPar": -6,
-          "inscribedId": 2288749,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                6,
-                3,
-                5,
-                5,
-                6,
-                5,
-                10,
-                4,
-                9,
-                5,
-                7,
-                8,
-                5,
-                5,
-                9,
-                5,
-                6,
-                5
-              ],
-              "total": 108
-            }
-          ]
+          "inscribedId": 2288749
         },
         {
           "pos": 2,
@@ -149,33 +60,7 @@
           "rounds": [],
           "total": 30,
           "toPar": 6,
-          "inscribedId": 2288743,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                4,
-                5,
-                5,
-                7,
-                4,
-                4,
-                3,
-                5,
-                6,
-                5,
-                6,
-                null,
-                5,
-                7,
-                4,
-                5,
-                5
-              ],
-              "total": null
-            }
-          ]
+          "inscribedId": 2288743
         },
         {
           "pos": 3,
@@ -186,8 +71,7 @@
           "rounds": [],
           "total": 29,
           "toPar": 7,
-          "inscribedId": 2288746,
-          "roundScores": []
+          "inscribedId": 2288746
         },
         {
           "pos": 4,
@@ -198,8 +82,7 @@
           "rounds": [],
           "total": 29,
           "toPar": 7,
-          "inscribedId": 2288747,
-          "roundScores": []
+          "inscribedId": 2288747
         },
         {
           "pos": 5,
@@ -210,8 +93,7 @@
           "rounds": [],
           "total": 29,
           "toPar": 7,
-          "inscribedId": 2288748,
-          "roundScores": []
+          "inscribedId": 2288748
         },
         {
           "pos": 6,
@@ -222,8 +104,7 @@
           "rounds": [],
           "total": 28,
           "toPar": 8,
-          "inscribedId": 2288742,
-          "roundScores": []
+          "inscribedId": 2288742
         },
         {
           "pos": 7,
@@ -234,8 +115,7 @@
           "rounds": [],
           "total": 27,
           "toPar": 9,
-          "inscribedId": 2288740,
-          "roundScores": []
+          "inscribedId": 2288740
         },
         {
           "pos": 8,
@@ -246,8 +126,7 @@
           "rounds": [],
           "total": 27,
           "toPar": 9,
-          "inscribedId": 2288744,
-          "roundScores": []
+          "inscribedId": 2288744
         },
         {
           "pos": 9,
@@ -258,8 +137,7 @@
           "rounds": [],
           "total": 25,
           "toPar": 11,
-          "inscribedId": 2288739,
-          "roundScores": []
+          "inscribedId": 2288739
         },
         {
           "pos": 10,
@@ -270,8 +148,7 @@
           "rounds": [],
           "total": 25,
           "toPar": 11,
-          "inscribedId": 2288737,
-          "roundScores": []
+          "inscribedId": 2288737
         },
         {
           "pos": 11,
@@ -282,8 +159,7 @@
           "rounds": [],
           "total": 20,
           "toPar": 16,
-          "inscribedId": 2288738,
-          "roundScores": []
+          "inscribedId": 2288738
         },
         {
           "pos": 12,
@@ -294,13 +170,14 @@
           "rounds": [],
           "total": 20,
           "toPar": 16,
-          "inscribedId": 2288745,
-          "roundScores": []
+          "inscribedId": 2288745
         }
       ]
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 12,
       "header": [
         "Pos",
         "Jugador",
@@ -322,33 +199,7 @@
           "rounds": [],
           "total": 42,
           "toPar": -6,
-          "inscribedId": 2288749,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                6,
-                3,
-                5,
-                5,
-                6,
-                5,
-                10,
-                4,
-                9,
-                5,
-                7,
-                8,
-                5,
-                5,
-                9,
-                5,
-                6,
-                5
-              ],
-              "total": 108
-            }
-          ]
+          "inscribedId": 2288749
         },
         {
           "pos": 2,
@@ -359,8 +210,7 @@
           "rounds": [],
           "total": 29,
           "toPar": 7,
-          "inscribedId": 2288746,
-          "roundScores": []
+          "inscribedId": 2288746
         },
         {
           "pos": 3,
@@ -371,8 +221,7 @@
           "rounds": [],
           "total": 29,
           "toPar": 7,
-          "inscribedId": 2288747,
-          "roundScores": []
+          "inscribedId": 2288747
         },
         {
           "pos": 4,
@@ -383,8 +232,7 @@
           "rounds": [],
           "total": 29,
           "toPar": 7,
-          "inscribedId": 2288748,
-          "roundScores": []
+          "inscribedId": 2288748
         },
         {
           "pos": 5,
@@ -395,33 +243,7 @@
           "rounds": [],
           "total": 28,
           "toPar": 8,
-          "inscribedId": 2288743,
-          "roundScores": [
-            {
-              "round": 1,
-              "scores": [
-                5,
-                4,
-                5,
-                5,
-                7,
-                4,
-                4,
-                3,
-                5,
-                6,
-                5,
-                6,
-                null,
-                5,
-                7,
-                4,
-                5,
-                5
-              ],
-              "total": null
-            }
-          ]
+          "inscribedId": 2288743
         },
         {
           "pos": 6,
@@ -432,8 +254,7 @@
           "rounds": [],
           "total": 28,
           "toPar": 8,
-          "inscribedId": 2288742,
-          "roundScores": []
+          "inscribedId": 2288742
         },
         {
           "pos": 7,
@@ -444,8 +265,7 @@
           "rounds": [],
           "total": 27,
           "toPar": 9,
-          "inscribedId": 2288740,
-          "roundScores": []
+          "inscribedId": 2288740
         },
         {
           "pos": 8,
@@ -456,8 +276,7 @@
           "rounds": [],
           "total": 27,
           "toPar": 9,
-          "inscribedId": 2288744,
-          "roundScores": []
+          "inscribedId": 2288744
         },
         {
           "pos": 9,
@@ -468,8 +287,7 @@
           "rounds": [],
           "total": 25,
           "toPar": 11,
-          "inscribedId": 2288739,
-          "roundScores": []
+          "inscribedId": 2288739
         },
         {
           "pos": 10,
@@ -480,8 +298,7 @@
           "rounds": [],
           "total": 25,
           "toPar": 11,
-          "inscribedId": 2288737,
-          "roundScores": []
+          "inscribedId": 2288737
         },
         {
           "pos": 11,
@@ -492,8 +309,7 @@
           "rounds": [],
           "total": 20,
           "toPar": 16,
-          "inscribedId": 2288738,
-          "roundScores": []
+          "inscribedId": 2288738
         },
         {
           "pos": 12,
@@ -504,12 +320,22 @@
           "rounds": [],
           "total": 20,
           "toPar": 16,
-          "inscribedId": 2288745,
-          "roundScores": []
+          "inscribedId": 2288745
         }
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 12
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 12
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -701,6 +527,7 @@
       "nivel": "A"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -738,6 +565,6 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:42.387Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:34.542Z"
 }

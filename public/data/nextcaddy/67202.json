@@ -1,14 +1,14 @@
 {
   "tourId": 67202,
   "url": "https://www.nextcaddy.com/tour/67202",
-  "scrapedAt": "2026-05-09T10:15:49.564Z",
+  "scrapedAt": "2026-05-21T16:39:21.461Z",
   "meta": {
     "name": "I COPA CASTILLA Y LEON DE P&P 2026 (Valedera SACE P&P)",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "02 may 2026",
-    "dateEnd": "02 may 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-05-02"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 75,
       "header": [
         "Pos",
         "Jugador",
@@ -1845,6 +1846,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 75,
       "header": [
         "Pos",
         "Jugador",
@@ -3665,6 +3668,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 75
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 75
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -4192,61 +4206,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 71603
-    },
-    {
-      "roundNumber": 2,
-      "roundId": 71604
-    },
-    {
-      "roundNumber": 3,
-      "roundId": 71605
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Gomez Garcia, Juan",
-          "holeNumber": 1,
-          "createdAt": "22/06/25 20:12:24"
-        },
-        {
-          "playerName": "Romero Carballo, Jose",
-          "holeNumber": 1,
-          "createdAt": "22/06/25 20:24:24"
-        },
-        {
-          "playerName": "Beltran Lopez, Jose Antonio",
-          "holeNumber": 8,
-          "createdAt": "22/06/25 20:36:27"
-        },
-        {
-          "playerName": "Garcia Romacho, Ildefonso",
-          "holeNumber": 9,
-          "createdAt": "22/06/25 20:38:14"
-        },
-        {
-          "playerName": "Hernandez Lopez, Pablo",
-          "holeNumber": 1,
-          "createdAt": "22/06/25 20:44:22"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -6271,5 +6230,65 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:06.386Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71603
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 71604
+    },
+    {
+      "roundNumber": 3,
+      "roundId": 71605
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Gomez Garcia, Juan",
+          "holeNumber": 1,
+          "createdAt": "22/06/25 20:12:24"
+        },
+        {
+          "playerName": "Romero Carballo, Jose",
+          "holeNumber": 1,
+          "createdAt": "22/06/25 20:24:24"
+        },
+        {
+          "playerName": "Beltran Lopez, Jose Antonio",
+          "holeNumber": 8,
+          "createdAt": "22/06/25 20:36:27"
+        },
+        {
+          "playerName": "Garcia Romacho, Ildefonso",
+          "holeNumber": 9,
+          "createdAt": "22/06/25 20:38:14"
+        },
+        {
+          "playerName": "Hernandez Lopez, Pablo",
+          "holeNumber": 1,
+          "createdAt": "22/06/25 20:44:22"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/2485113946_cuadro_de_honor_copa_p&amp;p_2026.pdf",
+    "/uploads/circulares/cirfgcyl1726.pdf",
+    "/uploads/competiciones/pdf/140495674_reglas_locales-i_copa_p&amp;p_cyl_2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:01.385Z"
 }

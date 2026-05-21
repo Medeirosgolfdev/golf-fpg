@@ -1,14 +1,14 @@
 {
   "tourId": 70081,
   "url": "https://www.nextcaddy.com/tour/70081",
-  "scrapedAt": "2026-05-09T10:15:31.788Z",
+  "scrapedAt": "2026-05-21T16:38:51.523Z",
   "meta": {
     "name": "LIGA DE DAMAS VIERNES",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
-    "dateStart": "17 abr 2026",
-    "dateEnd": "17 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras Facebook",
     "categories": [
       "Señoras",
@@ -16,11 +16,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-17"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -156,43 +157,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 74980
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Rosales Mata, Alfonso",
-          "holeNumber": 1,
-          "createdAt": "01/11/25 13:51:45"
-        },
-        {
-          "playerName": "Rodriguez De La Riva, Pablo",
-          "holeNumber": 1,
-          "createdAt": "01/11/25 13:51:46"
-        },
-        {
-          "playerName": "Rodriguez De La Riva, Pablo",
-          "holeNumber": 2,
-          "createdAt": "01/11/25 13:51:46"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -281,5 +245,45 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:57.573Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74980
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Rosales Mata, Alfonso",
+          "holeNumber": 1,
+          "createdAt": "01/11/25 13:51:45"
+        },
+        {
+          "playerName": "Rodriguez De La Riva, Pablo",
+          "holeNumber": 1,
+          "createdAt": "01/11/25 13:51:46"
+        },
+        {
+          "playerName": "Rodriguez De La Riva, Pablo",
+          "holeNumber": 2,
+          "createdAt": "01/11/25 13:51:46"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/cartel/3053607395_70081-liga-de-damas-viernes.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:37.974Z"
 }

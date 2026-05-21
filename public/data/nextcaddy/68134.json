@@ -1,14 +1,14 @@
 {
   "tourId": 68134,
   "url": "https://www.nextcaddy.com/tour/68134",
-  "scrapedAt": "2026-05-09T09:57:36.070Z",
+  "scrapedAt": "2026-05-21T16:36:55.675Z",
   "meta": {
     "name": "1ª Serie Roll Up Sherry Golf 2026",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "11 feb 2026",
-    "dateEnd": "11 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-11"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 1,
       "header": [
         "Pos",
         "Jugador",
@@ -52,6 +53,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 2,
       "header": [
         "Pos",
         "Jugador",
@@ -90,6 +93,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -193,6 +198,21 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 1
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 2
+    },
+    "3": {
+      "name": "Handicap Individual",
+      "jugadores": 8
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -356,22 +376,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72678
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -478,5 +482,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:20.165Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72678
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/REGLAMENTO-RANKING-SHERRY-GOLF-2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:17.052Z"
 }

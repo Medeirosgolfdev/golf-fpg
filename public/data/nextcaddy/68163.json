@@ -1,14 +1,14 @@
 {
   "tourId": 68163,
   "url": "https://www.nextcaddy.com/tour/68163",
-  "scrapedAt": "2026-05-09T10:15:35.204Z",
+  "scrapedAt": "2026-05-21T16:38:57.489Z",
   "meta": {
     "name": "Torneo de 5ª Categoría 9 hoyos campo largo \"Golf Negralejo\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Palacio del Negralejo S A",
     "courseCode": "CM33",
-    "dateStart": "19 abr 2026",
-    "dateEnd": "19 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap) Circuito 5ª Catego",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-19"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Clasificación Masculina",
+      "expectedJugadores": 57,
       "header": [
         "Pos",
         "Jugador",
@@ -667,6 +668,8 @@
     },
     {
       "category": 2,
+      "categoryName": "Clasificación Femenina",
+      "expectedJugadores": 13,
       "header": [
         "Pos",
         "Jugador",
@@ -825,6 +828,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Masculina",
+      "jugadores": 57
+    },
+    "2": {
+      "name": "Clasificación Femenina",
+      "jugadores": 13
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1821,22 +1835,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72709
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -2474,5 +2472,24 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:21.034Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72709
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/3139347701_rrll_negralejo.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:18.056Z"
 }

@@ -1,14 +1,14 @@
 {
   "tourId": 68336,
   "url": "https://www.nextcaddy.com/tour/68336",
-  "scrapedAt": "2026-05-09T10:17:18.416Z",
+  "scrapedAt": "2026-05-21T16:41:16.808Z",
   "meta": {
     "name": "Match P&P RFGM - AESGOLG",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Ciudad Deportiva Juan Antonio Samaranch",
     "courseCode": "CMD9",
-    "dateStart": "12 nov 2026",
-    "dateEnd": "12 nov 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Match Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
@@ -17,12 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-11-12"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -249,6 +251,6 @@
       "players": []
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:36.268Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:21.302Z"
 }

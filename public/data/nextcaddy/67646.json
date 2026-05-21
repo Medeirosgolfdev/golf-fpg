@@ -1,14 +1,14 @@
 {
   "tourId": 67646,
   "url": "https://www.nextcaddy.com/tour/67646",
-  "scrapedAt": "2026-05-09T09:57:23.979Z",
+  "scrapedAt": "2026-05-21T16:36:37.901Z",
   "meta": {
     "name": "VOBS COMPETITION",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "19 ene 2026",
-    "dateEnd": "19 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-19"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 10,
       "header": [
         "Pos",
         "Jugador",
@@ -149,6 +150,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 10
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -296,6 +304,103 @@
       "licencia": "AMD5980718",
       "hcp": 18.3,
       "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Paul Monks",
+          "hcp": 18.3,
+          "ins": "2248527",
+          "jid": "72128",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Carl Cluck",
+          "hcp": 19.9,
+          "ins": "2248516",
+          "jid": "72128",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 10,
+          "name": "Mickey Allen Padron",
+          "hcp": 12.6,
+          "ins": "2248520",
+          "jid": "72128",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 10,
+          "name": "Robert Edward Jewell",
+          "hcp": 8.6,
+          "ins": "2248522",
+          "jid": "72128",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 10,
+          "name": "Jeffrey Wadsworth",
+          "hcp": 16.2,
+          "ins": "2248521",
+          "jid": "72128",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Michael Staley",
+          "hcp": 7.7,
+          "ins": "2248518",
+          "jid": "72128",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Jeff Shellton",
+          "hcp": 14.2,
+          "ins": "2248519",
+          "jid": "72128",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 10,
+          "name": "Tony Pearse",
+          "hcp": 12.2,
+          "ins": "2248523",
+          "jid": "72128",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 10,
+          "name": "David James Corston",
+          "hcp": 15.1,
+          "ins": "2248525",
+          "jid": "72128",
+          "nivel": "M"
+        },
+        {
+          "time": "10:10",
+          "tee": 10,
+          "name": "Michael Marney",
+          "hcp": 20.7,
+          "ins": "2248524",
+          "jid": "72128",
+          "nivel": "S"
+        }
+      ]
     }
   ],
   "estadisticas": {
@@ -465,102 +570,6 @@
       ]
     }
   },
-  "horarios": [
-    {
-      "round": 1,
-      "players": [
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Paul Monks",
-          "hcp": 18.3,
-          "ins": "2248527",
-          "jid": "72128",
-          "nivel": "S"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Carl Cluck",
-          "hcp": 19.9,
-          "ins": "2248516",
-          "jid": "72128",
-          "nivel": "S"
-        },
-        {
-          "time": "10:00",
-          "tee": 10,
-          "name": "Mickey Allen Padron",
-          "hcp": 12.6,
-          "ins": "2248520",
-          "jid": "72128",
-          "nivel": "S"
-        },
-        {
-          "time": "10:00",
-          "tee": 10,
-          "name": "Robert Edward Jewell",
-          "hcp": 8.6,
-          "ins": "2248522",
-          "jid": "72128",
-          "nivel": "S"
-        },
-        {
-          "time": "10:00",
-          "tee": 10,
-          "name": "Jeffrey Wadsworth",
-          "hcp": 16.2,
-          "ins": "2248521",
-          "jid": "72128",
-          "nivel": "S"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Michael Staley",
-          "hcp": 7.7,
-          "ins": "2248518",
-          "jid": "72128",
-          "nivel": "S"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
-          "name": "Jeff Shellton",
-          "hcp": 14.2,
-          "ins": "2248519",
-          "jid": "72128",
-          "nivel": "S"
-        },
-        {
-          "time": "10:10",
-          "tee": 10,
-          "name": "Tony Pearse",
-          "hcp": 12.2,
-          "ins": "2248523",
-          "jid": "72128",
-          "nivel": "S"
-        },
-        {
-          "time": "10:10",
-          "tee": 10,
-          "name": "David James Corston",
-          "hcp": 15.1,
-          "ins": "2248525",
-          "jid": "72128",
-          "nivel": "M"
-        },
-        {
-          "time": "10:10",
-          "tee": 10,
-          "name": "Michael Marney",
-          "hcp": 20.7,
-          "ins": "2248524",
-          "jid": "72128",
-          "nivel": "S"
-        }
-      ]
-    }
-  ],
-  "horariosScrapedAt": "2026-05-09T12:12:11.047Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:06.733Z"
 }

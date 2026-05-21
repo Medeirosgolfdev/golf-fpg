@@ -1,14 +1,14 @@
 {
   "tourId": 70325,
   "url": "https://www.nextcaddy.com/tour/70325",
-  "scrapedAt": "2026-05-09T10:15:44.377Z",
+  "scrapedAt": "2026-05-21T16:39:12.460Z",
   "meta": {
     "name": "MONDAY C. 27.4",
     "organizer": null,
     "course": "Santa María Golf & Country Club",
     "courseCode": "AM86",
-    "dateStart": "27 abr 2026",
-    "dateEnd": "27 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros Facebo",
     "categories": [
       "Caballeros",
@@ -16,13 +16,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-27"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 13,
       "header": [
         "Pos",
         "Jugador",
@@ -181,6 +182,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 13
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -372,6 +380,7 @@
       "nivel": "S"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -414,6 +423,8 @@
       ]
     }
   },
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:44.086Z"
+  "pdfs": [
+    "/uploads/competiciones/cartel/279102265_70325-monday-c-27-4.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:39.774Z"
 }

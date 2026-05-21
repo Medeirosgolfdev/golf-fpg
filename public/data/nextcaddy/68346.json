@@ -1,14 +1,14 @@
 {
   "tourId": 68346,
   "url": "https://www.nextcaddy.com/tour/68346",
-  "scrapedAt": "2026-05-09T09:57:36.451Z",
+  "scrapedAt": "2026-05-21T16:36:56.256Z",
   "meta": {
     "name": "Circuito Senior 5ª Prueba 11-02-26",
     "organizer": null,
     "course": "Real Club de Golf Vista Hermosa",
     "courseCode": "AM05",
-    "dateStart": "11 feb 2026",
-    "dateEnd": "11 feb 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Senior",
@@ -17,13 +17,14 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ],
-    "dateIso": "2026-02-11"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "2ª Categoría",
+      "expectedJugadores": 8,
       "header": [
         "Pos",
         "Jugador",
@@ -128,6 +129,8 @@
     },
     {
       "category": 2,
+      "categoryName": "1ª Categoría",
+      "expectedJugadores": 17,
       "header": [
         "Pos",
         "Jugador",
@@ -330,6 +333,17 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "2ª Categoría",
+      "jugadores": 8
+    },
+    "2": {
+      "name": "1ª Categoría",
+      "jugadores": 17
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -696,188 +710,6 @@
       "nivel": "AM05288848"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 72934
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Fernandez Sanchez, Manuel",
-          "holeNumber": 5,
-          "createdAt": "16/08/25 09:31:23"
-        },
-        {
-          "playerName": "Nieto Marcelo, Antonio",
-          "holeNumber": 10,
-          "createdAt": "16/08/25 09:49:18"
-        },
-        {
-          "playerName": "Mesa Del Olmo, Fernando",
-          "holeNumber": 12,
-          "createdAt": "16/08/25 09:50:16"
-        },
-        {
-          "playerName": "Garcia Del Castillo, Alberto",
-          "holeNumber": 5,
-          "createdAt": "16/08/25 09:50:22"
-        },
-        {
-          "playerName": "Bureo De Pablo, Miguel Angel",
-          "holeNumber": 8,
-          "createdAt": "16/08/25 10:01:42"
-        },
-        {
-          "playerName": "Garcia Escobar, Luis Miguel",
-          "holeNumber": 12,
-          "createdAt": "16/08/25 10:12:45"
-        },
-        {
-          "playerName": "Fernandez Echeverria, Ignacio",
-          "holeNumber": 11,
-          "createdAt": "16/08/25 10:16:42"
-        },
-        {
-          "playerName": "Fernandez Fernandez, Rafael",
-          "holeNumber": 15,
-          "createdAt": "16/08/25 10:27:51"
-        },
-        {
-          "playerName": "Raposo, Theophile",
-          "holeNumber": 13,
-          "createdAt": "16/08/25 10:29:01"
-        },
-        {
-          "playerName": "Ortiz Albarran, Santiago",
-          "holeNumber": 9,
-          "createdAt": "16/08/25 10:39:35"
-        },
-        {
-          "playerName": "Cabot Cienfuegos, Gonzalo",
-          "holeNumber": 5,
-          "createdAt": "16/08/25 10:51:22"
-        },
-        {
-          "playerName": "Ramirez Coronado, Sergio",
-          "holeNumber": 7,
-          "createdAt": "16/08/25 11:11:50"
-        },
-        {
-          "playerName": "Gonzalez De Canales Coca, Carlos",
-          "holeNumber": 8,
-          "createdAt": "16/08/25 11:16:55"
-        },
-        {
-          "playerName": "Bañon Marco, Alfonso",
-          "holeNumber": 5,
-          "createdAt": "16/08/25 11:18:53"
-        },
-        {
-          "playerName": "Joaquin, Ramalho",
-          "holeNumber": 4,
-          "createdAt": "16/08/25 11:21:09"
-        },
-        {
-          "playerName": "Moreno Mateos, Daniel",
-          "holeNumber": 16,
-          "createdAt": "16/08/25 11:25:14"
-        },
-        {
-          "playerName": "Regalado Corisco, Jesus C.",
-          "holeNumber": 14,
-          "createdAt": "16/08/25 11:30:17"
-        },
-        {
-          "playerName": "Summers Molero, Alvaro",
-          "holeNumber": 13,
-          "createdAt": "16/08/25 11:47:57"
-        },
-        {
-          "playerName": "Conde Robledo, Adrian",
-          "holeNumber": 5,
-          "createdAt": "16/08/25 12:06:59"
-        },
-        {
-          "playerName": "Conde Robledo, Adrian",
-          "holeNumber": 7,
-          "createdAt": "16/08/25 12:36:09"
-        },
-        {
-          "playerName": "Echevarria Casasola, Alvaro",
-          "holeNumber": 7,
-          "createdAt": "16/08/25 12:48:17"
-        },
-        {
-          "playerName": "Silva Segrelles, Rosendo",
-          "holeNumber": 13,
-          "createdAt": "16/08/25 12:52:28"
-        },
-        {
-          "playerName": "Fernandez Galvez, Jose Manuel",
-          "holeNumber": 7,
-          "createdAt": "16/08/25 12:59:25"
-        },
-        {
-          "playerName": "Fernandez Fernandez, Rafael",
-          "holeNumber": 6,
-          "createdAt": "16/08/25 13:19:59"
-        },
-        {
-          "playerName": "Smith, Jennifer",
-          "holeNumber": 6,
-          "createdAt": "16/08/25 13:23:03"
-        },
-        {
-          "playerName": "Perez Medina, Juan Antonio",
-          "holeNumber": 4,
-          "createdAt": "16/08/25 13:36:14"
-        },
-        {
-          "playerName": "Alonso Lopez, Mª Del Pilar",
-          "holeNumber": 4,
-          "createdAt": "16/08/25 13:47:32"
-        },
-        {
-          "playerName": "Bureo De Pablo, Miguel Angel",
-          "holeNumber": 4,
-          "createdAt": "16/08/25 13:47:50"
-        },
-        {
-          "playerName": "Jurado Muñoz, Ignacio",
-          "holeNumber": 5,
-          "createdAt": "16/08/25 13:49:56"
-        },
-        {
-          "playerName": "Jurado Muñoz, Manuel",
-          "holeNumber": 14,
-          "createdAt": "16/08/25 13:50:12"
-        },
-        {
-          "playerName": "Jurado Muñoz, Manuel",
-          "holeNumber": 17,
-          "createdAt": "16/08/25 13:50:13"
-        },
-        {
-          "playerName": "Conde Robledo, Adrian",
-          "holeNumber": 12,
-          "createdAt": "16/08/25 14:02:59"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -1110,5 +942,188 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:24.166Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72934
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Fernandez Sanchez, Manuel",
+          "holeNumber": 5,
+          "createdAt": "16/08/25 09:31:23"
+        },
+        {
+          "playerName": "Nieto Marcelo, Antonio",
+          "holeNumber": 10,
+          "createdAt": "16/08/25 09:49:18"
+        },
+        {
+          "playerName": "Mesa Del Olmo, Fernando",
+          "holeNumber": 12,
+          "createdAt": "16/08/25 09:50:16"
+        },
+        {
+          "playerName": "Garcia Del Castillo, Alberto",
+          "holeNumber": 5,
+          "createdAt": "16/08/25 09:50:22"
+        },
+        {
+          "playerName": "Bureo De Pablo, Miguel Angel",
+          "holeNumber": 8,
+          "createdAt": "16/08/25 10:01:42"
+        },
+        {
+          "playerName": "Garcia Escobar, Luis Miguel",
+          "holeNumber": 12,
+          "createdAt": "16/08/25 10:12:45"
+        },
+        {
+          "playerName": "Fernandez Echeverria, Ignacio",
+          "holeNumber": 11,
+          "createdAt": "16/08/25 10:16:42"
+        },
+        {
+          "playerName": "Fernandez Fernandez, Rafael",
+          "holeNumber": 15,
+          "createdAt": "16/08/25 10:27:51"
+        },
+        {
+          "playerName": "Raposo, Theophile",
+          "holeNumber": 13,
+          "createdAt": "16/08/25 10:29:01"
+        },
+        {
+          "playerName": "Ortiz Albarran, Santiago",
+          "holeNumber": 9,
+          "createdAt": "16/08/25 10:39:35"
+        },
+        {
+          "playerName": "Cabot Cienfuegos, Gonzalo",
+          "holeNumber": 5,
+          "createdAt": "16/08/25 10:51:22"
+        },
+        {
+          "playerName": "Ramirez Coronado, Sergio",
+          "holeNumber": 7,
+          "createdAt": "16/08/25 11:11:50"
+        },
+        {
+          "playerName": "Gonzalez De Canales Coca, Carlos",
+          "holeNumber": 8,
+          "createdAt": "16/08/25 11:16:55"
+        },
+        {
+          "playerName": "Bañon Marco, Alfonso",
+          "holeNumber": 5,
+          "createdAt": "16/08/25 11:18:53"
+        },
+        {
+          "playerName": "Joaquin, Ramalho",
+          "holeNumber": 4,
+          "createdAt": "16/08/25 11:21:09"
+        },
+        {
+          "playerName": "Moreno Mateos, Daniel",
+          "holeNumber": 16,
+          "createdAt": "16/08/25 11:25:14"
+        },
+        {
+          "playerName": "Regalado Corisco, Jesus C.",
+          "holeNumber": 14,
+          "createdAt": "16/08/25 11:30:17"
+        },
+        {
+          "playerName": "Summers Molero, Alvaro",
+          "holeNumber": 13,
+          "createdAt": "16/08/25 11:47:57"
+        },
+        {
+          "playerName": "Conde Robledo, Adrian",
+          "holeNumber": 5,
+          "createdAt": "16/08/25 12:06:59"
+        },
+        {
+          "playerName": "Conde Robledo, Adrian",
+          "holeNumber": 7,
+          "createdAt": "16/08/25 12:36:09"
+        },
+        {
+          "playerName": "Echevarria Casasola, Alvaro",
+          "holeNumber": 7,
+          "createdAt": "16/08/25 12:48:17"
+        },
+        {
+          "playerName": "Silva Segrelles, Rosendo",
+          "holeNumber": 13,
+          "createdAt": "16/08/25 12:52:28"
+        },
+        {
+          "playerName": "Fernandez Galvez, Jose Manuel",
+          "holeNumber": 7,
+          "createdAt": "16/08/25 12:59:25"
+        },
+        {
+          "playerName": "Fernandez Fernandez, Rafael",
+          "holeNumber": 6,
+          "createdAt": "16/08/25 13:19:59"
+        },
+        {
+          "playerName": "Smith, Jennifer",
+          "holeNumber": 6,
+          "createdAt": "16/08/25 13:23:03"
+        },
+        {
+          "playerName": "Perez Medina, Juan Antonio",
+          "holeNumber": 4,
+          "createdAt": "16/08/25 13:36:14"
+        },
+        {
+          "playerName": "Alonso Lopez, Mª Del Pilar",
+          "holeNumber": 4,
+          "createdAt": "16/08/25 13:47:32"
+        },
+        {
+          "playerName": "Bureo De Pablo, Miguel Angel",
+          "holeNumber": 4,
+          "createdAt": "16/08/25 13:47:50"
+        },
+        {
+          "playerName": "Jurado Muñoz, Ignacio",
+          "holeNumber": 5,
+          "createdAt": "16/08/25 13:49:56"
+        },
+        {
+          "playerName": "Jurado Muñoz, Manuel",
+          "holeNumber": 14,
+          "createdAt": "16/08/25 13:50:12"
+        },
+        {
+          "playerName": "Jurado Muñoz, Manuel",
+          "holeNumber": 17,
+          "createdAt": "16/08/25 13:50:13"
+        },
+        {
+          "playerName": "Conde Robledo, Adrian",
+          "holeNumber": 12,
+          "createdAt": "16/08/25 14:02:59"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:21.621Z"
 }

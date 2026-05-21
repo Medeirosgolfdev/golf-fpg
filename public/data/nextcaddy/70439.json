@@ -1,14 +1,14 @@
 {
   "tourId": 70439,
   "url": "https://www.nextcaddy.com/tour/70439",
-  "scrapedAt": "2026-05-09T10:15:47.589Z",
+  "scrapedAt": "2026-05-21T16:39:17.014Z",
   "meta": {
     "name": "VOBS COMPETITION",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": "30 abr 2026",
-    "dateEnd": "30 abr 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -18,13 +18,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-04-30"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 13,
       "header": [
         "Pos",
         "Jugador",
@@ -183,6 +184,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 13
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -381,63 +389,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 75381
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Salazar-Simpsom Sierra, Martin",
-          "holeNumber": 9,
-          "createdAt": "20/11/25 13:22:26"
-        },
-        {
-          "playerName": "Urbano De Andres, Alvaro",
-          "holeNumber": 2,
-          "createdAt": "20/11/25 13:32:36"
-        },
-        {
-          "playerName": "Gutierrez  Fernandez, Javier",
-          "holeNumber": 7,
-          "createdAt": "20/11/25 13:34:25"
-        },
-        {
-          "playerName": "Arjona Moran, Kilian",
-          "holeNumber": 2,
-          "createdAt": "20/11/25 13:37:55"
-        },
-        {
-          "playerName": "Aparicio Vallarino, Juan",
-          "holeNumber": 2,
-          "createdAt": "20/11/25 13:40:26"
-        },
-        {
-          "playerName": "Gonzalez Sanz, Asterio",
-          "holeNumber": 1,
-          "createdAt": "20/11/25 13:46:44"
-        },
-        {
-          "playerName": "Calvo Galicia, Nicolas",
-          "holeNumber": 9,
-          "createdAt": "20/11/25 13:51:36"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -562,5 +513,65 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:13:00.352Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75381
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Salazar-Simpsom Sierra, Martin",
+          "holeNumber": 9,
+          "createdAt": "20/11/25 13:22:26"
+        },
+        {
+          "playerName": "Urbano De Andres, Alvaro",
+          "holeNumber": 2,
+          "createdAt": "20/11/25 13:32:36"
+        },
+        {
+          "playerName": "Gutierrez  Fernandez, Javier",
+          "holeNumber": 7,
+          "createdAt": "20/11/25 13:34:25"
+        },
+        {
+          "playerName": "Arjona Moran, Kilian",
+          "holeNumber": 2,
+          "createdAt": "20/11/25 13:37:55"
+        },
+        {
+          "playerName": "Aparicio Vallarino, Juan",
+          "holeNumber": 2,
+          "createdAt": "20/11/25 13:40:26"
+        },
+        {
+          "playerName": "Gonzalez Sanz, Asterio",
+          "holeNumber": 1,
+          "createdAt": "20/11/25 13:46:44"
+        },
+        {
+          "playerName": "Calvo Galicia, Nicolas",
+          "holeNumber": 9,
+          "createdAt": "20/11/25 13:51:36"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/cartel/157611987_70439-vobs-competition.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:42:40.975Z"
 }

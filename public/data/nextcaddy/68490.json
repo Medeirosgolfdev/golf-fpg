@@ -1,14 +1,14 @@
 {
   "tourId": 68490,
   "url": "https://www.nextcaddy.com/tour/68490",
-  "scrapedAt": "2026-05-09T10:07:45.838Z",
+  "scrapedAt": "2026-05-21T16:38:21.051Z",
   "meta": {
     "name": "IV OPEN GOLF  HUELVA",
     "organizer": null,
     "course": "Club de Golf Bellavista",
     "courseCode": "AM07",
-    "dateStart": "28 mar 2026",
-    "dateEnd": "28 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-28"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "2 Categoria",
+      "expectedJugadores": 54,
       "header": [
         "Pos",
         "Jugador",
@@ -634,6 +635,8 @@
     },
     {
       "category": 2,
+      "categoryName": "1ª Categoria",
+      "expectedJugadores": 54,
       "header": [
         "Pos",
         "Jugador",
@@ -1244,6 +1247,8 @@
     },
     {
       "category": 3,
+      "categoryName": "Senior",
+      "expectedJugadores": 81,
       "header": [
         "Pos",
         "Jugador",
@@ -2151,6 +2156,8 @@
     },
     {
       "category": 4,
+      "categoryName": "Damas",
+      "expectedJugadores": 18,
       "header": [
         "Pos",
         "Jugador",
@@ -2365,6 +2372,8 @@
     },
     {
       "category": 5,
+      "categoryName": "Scratch",
+      "expectedJugadores": 108,
       "header": [
         "Pos",
         "Jugador",
@@ -3568,6 +3577,29 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "2 Categoria",
+      "jugadores": 54
+    },
+    "2": {
+      "name": "1ª Categoria",
+      "jugadores": 54
+    },
+    "3": {
+      "name": "Senior",
+      "jugadores": 81
+    },
+    "4": {
+      "name": "Damas",
+      "jugadores": 18
+    },
+    "5": {
+      "name": "Scratch",
+      "jugadores": 108
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -5096,22 +5128,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73114
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -6091,5 +6107,22 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:25.930Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73114
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:23.554Z"
 }

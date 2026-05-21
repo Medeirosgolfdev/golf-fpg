@@ -1,14 +1,14 @@
 {
   "tourId": 68089,
   "url": "https://www.nextcaddy.com/tour/68089",
-  "scrapedAt": "2026-05-09T09:57:32.135Z",
+  "scrapedAt": "2026-05-21T16:36:49.727Z",
   "meta": {
     "name": "DANTE DONNA",
     "organizer": null,
     "course": "Santa María Golf & Country Club",
     "courseCode": "AM86",
-    "dateStart": "31 ene 2026",
-    "dateEnd": "31 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros Facebo",
     "categories": [
       "Caballeros",
@@ -16,11 +16,12 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-31"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": true,
+  "categoryNames": {},
   "inscritos": [
     {
       "orden": 1,
@@ -44,6 +45,7 @@
       "nivel": "S"
     }
   ],
+  "horarios": [],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -60,6 +62,6 @@
     }
   ],
   "scoreTypes": [],
-  "horarios": [],
-  "horariosScrapedAt": "2026-05-18T08:08:33.530Z"
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:16.805Z"
 }

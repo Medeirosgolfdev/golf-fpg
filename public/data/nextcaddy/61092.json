@@ -1,14 +1,14 @@
 {
   "tourId": 61092,
   "url": "https://www.nextcaddy.com/tour/61092",
-  "scrapedAt": "2026-05-09T09:58:01.333Z",
+  "scrapedAt": "2026-05-21T16:37:34.474Z",
   "meta": {
     "name": "Circuito Femenino Jueves",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Real Guadalhorce Club de Golf",
     "courseCode": "AM15",
-    "dateStart": "05 mar 2026",
-    "dateEnd": "05 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Señoras C. Femeni",
     "categories": [
       "Señoras",
@@ -16,11 +16,17 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-05"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Equipo Todos",
+      "jugadores": 18
+    }
+  },
   "inscritos": [
     {
       "orden": null,
@@ -367,7 +373,7 @@
     },
     {
       "orden": null,
-      "name": "Olga Brinkman Morales",
+      "name": "Olga Brinkmann Morales",
       "licencia": "AM06990073",
       "hcp": 31.7,
       "nivel": "S"
@@ -653,379 +659,6 @@
       "nivel": "S"
     }
   ],
-  "estadisticas": {
-    "0": {
-      "p": {
-        "id": 157998,
-        "datos": [
-          [
-            "Tipo",
-            "Total"
-          ],
-          [
-            "Par",
-            144
-          ],
-          [
-            "Birdie",
-            8
-          ],
-          [
-            "Eagle",
-            0
-          ],
-          [
-            "Bogey",
-            400
-          ],
-          [
-            "Peor",
-            574
-          ]
-        ]
-      },
-      "bvg": {
-        "id": 157999,
-        "datos": [
-          [
-            "Hoyo",
-            "Sobrepar"
-          ],
-          [
-            "1",
-            106
-          ],
-          [
-            "2",
-            58
-          ],
-          [
-            "3",
-            85
-          ],
-          [
-            "4",
-            76
-          ],
-          [
-            "5",
-            105
-          ],
-          [
-            "6",
-            115
-          ],
-          [
-            "7",
-            72
-          ],
-          [
-            "8",
-            143
-          ],
-          [
-            "9",
-            91
-          ],
-          [
-            "10",
-            96
-          ],
-          [
-            "11",
-            107
-          ],
-          [
-            "12",
-            111
-          ],
-          [
-            "13",
-            102
-          ],
-          [
-            "14",
-            112
-          ],
-          [
-            "15",
-            86
-          ],
-          [
-            "16",
-            88
-          ],
-          [
-            "17",
-            97
-          ],
-          [
-            "18",
-            117
-          ]
-        ]
-      }
-    },
-    "1": {
-      "lxy": {
-        "id": 158000,
-        "datos": [
-          [
-            "Hoyo",
-            "CONCHA NUÑEZ PAYA",
-            "MARIA DOLORES PEREZ SAAVEDRA",
-            "ENCARNACION   ZAMUDIO LOBATO"
-          ],
-          [
-            "Hoyo 0",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 1",
-            0,
-            1,
-            0
-          ],
-          [
-            "Hoyo 2",
-            0,
-            1,
-            0
-          ],
-          [
-            "Hoyo 3",
-            0,
-            1,
-            0
-          ],
-          [
-            "Hoyo 4",
-            -1,
-            1,
-            0
-          ],
-          [
-            "Hoyo 5",
-            0,
-            0,
-            -1
-          ],
-          [
-            "Hoyo 6",
-            0,
-            1,
-            0
-          ],
-          [
-            "Hoyo 7",
-            -1,
-            -1,
-            -1
-          ],
-          [
-            "Hoyo 8",
-            -1,
-            -1,
-            -1
-          ],
-          [
-            "Hoyo 9",
-            0,
-            -3,
-            -1
-          ],
-          [
-            "Hoyo 10",
-            0,
-            -2,
-            -2
-          ],
-          [
-            "Hoyo 11",
-            -1,
-            -2,
-            -1
-          ],
-          [
-            "Hoyo 12",
-            -2,
-            -2,
-            -1
-          ],
-          [
-            "Hoyo 13",
-            -2,
-            -1,
-            -2
-          ],
-          [
-            "Hoyo 14",
-            -1,
-            -1,
-            -3
-          ],
-          [
-            "Hoyo 15",
-            -2,
-            -1,
-            -4
-          ],
-          [
-            "Hoyo 16",
-            -2,
-            -1,
-            -3
-          ],
-          [
-            "Hoyo 17",
-            -3,
-            -2,
-            -1
-          ],
-          [
-            "Hoyo 18",
-            -5,
-            -2,
-            -2
-          ]
-        ]
-      },
-      "hvg": {
-        "id": 158001,
-        "datos": [
-          [
-            "Hoyo",
-            "CONCHA NUÑEZ PAYA",
-            "MARIA DOLORES PEREZ SAAVEDRA",
-            "ENCARNACION   ZAMUDIO LOBATO"
-          ],
-          [
-            "Hoyo 0",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 1",
-            0,
-            1,
-            0
-          ],
-          [
-            "Hoyo 2",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 3",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 4",
-            -1,
-            0,
-            0
-          ],
-          [
-            "Hoyo 5",
-            1,
-            -1,
-            -1
-          ],
-          [
-            "Hoyo 6",
-            0,
-            1,
-            1
-          ],
-          [
-            "Hoyo 7",
-            -1,
-            -2,
-            -1
-          ],
-          [
-            "Hoyo 8",
-            0,
-            0,
-            0
-          ],
-          [
-            "Hoyo 9",
-            1,
-            -2,
-            0
-          ],
-          [
-            "Hoyo 10",
-            0,
-            1,
-            -1
-          ],
-          [
-            "Hoyo 11",
-            -1,
-            0,
-            1
-          ],
-          [
-            "Hoyo 12",
-            -1,
-            0,
-            0
-          ],
-          [
-            "Hoyo 13",
-            0,
-            1,
-            -1
-          ],
-          [
-            "Hoyo 14",
-            1,
-            0,
-            -1
-          ],
-          [
-            "Hoyo 15",
-            -1,
-            0,
-            -1
-          ],
-          [
-            "Hoyo 16",
-            0,
-            0,
-            1
-          ],
-          [
-            "Hoyo 17",
-            -1,
-            -1,
-            2
-          ],
-          [
-            "Hoyo 18",
-            -2,
-            0,
-            -1
-          ]
-        ]
-      }
-    }
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 64705
-    }
-  ],
-  "scoreTypes": [],
   "horarios": [
     {
       "round": 1,
@@ -1420,7 +1053,7 @@
         {
           "time": "09:00",
           "tee": 17,
-          "name": "Olga Brinkman Morales",
+          "name": "Olga Brinkmann Morales",
           "hcp": 31.7,
           "ins": "2259326",
           "jid": "64705",
@@ -1681,5 +1314,382 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:11:59.062Z"
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 157998,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            144
+          ],
+          [
+            "Birdie",
+            8
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            400
+          ],
+          [
+            "Peor",
+            574
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 157999,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            106
+          ],
+          [
+            "2",
+            58
+          ],
+          [
+            "3",
+            85
+          ],
+          [
+            "4",
+            76
+          ],
+          [
+            "5",
+            105
+          ],
+          [
+            "6",
+            115
+          ],
+          [
+            "7",
+            72
+          ],
+          [
+            "8",
+            143
+          ],
+          [
+            "9",
+            91
+          ],
+          [
+            "10",
+            96
+          ],
+          [
+            "11",
+            107
+          ],
+          [
+            "12",
+            111
+          ],
+          [
+            "13",
+            102
+          ],
+          [
+            "14",
+            112
+          ],
+          [
+            "15",
+            86
+          ],
+          [
+            "16",
+            88
+          ],
+          [
+            "17",
+            97
+          ],
+          [
+            "18",
+            117
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 158000,
+        "datos": [
+          [
+            "Hoyo",
+            "CONCHA NUÑEZ PAYA",
+            "MARIA DOLORES PEREZ SAAVEDRA",
+            "ENCARNACION   ZAMUDIO LOBATO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 2",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 3",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 5",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 9",
+            0,
+            -3,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            0,
+            -2,
+            -2
+          ],
+          [
+            "Hoyo 11",
+            -1,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            -2,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 13",
+            -2,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 14",
+            -1,
+            -1,
+            -3
+          ],
+          [
+            "Hoyo 15",
+            -2,
+            -1,
+            -4
+          ],
+          [
+            "Hoyo 16",
+            -2,
+            -1,
+            -3
+          ],
+          [
+            "Hoyo 17",
+            -3,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 18",
+            -5,
+            -2,
+            -2
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 158001,
+        "datos": [
+          [
+            "Hoyo",
+            "CONCHA NUÑEZ PAYA",
+            "MARIA DOLORES PEREZ SAAVEDRA",
+            "ENCARNACION   ZAMUDIO LOBATO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 2",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 3",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 5",
+            1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            0,
+            1,
+            1
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 9",
+            1,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 10",
+            0,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 11",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            0,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 14",
+            1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 15",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 16",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 17",
+            -1,
+            -1,
+            2
+          ],
+          [
+            "Hoyo 18",
+            -2,
+            0,
+            -1
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 64705
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/circular/2026/960db328bdb9e41e59f0fd895701cb97.pdf",
+    "/uploads/competiciones/pdf/3203862974_reglas-locales-2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:50.232Z"
 }

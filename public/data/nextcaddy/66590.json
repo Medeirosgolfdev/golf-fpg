@@ -1,14 +1,14 @@
 {
   "tourId": 66590,
   "url": "https://www.nextcaddy.com/tour/66590",
-  "scrapedAt": "2026-05-09T09:49:31.866Z",
+  "scrapedAt": "2026-05-21T16:36:20.822Z",
   "meta": {
     "name": "Torneo de Navidad Padres e Hijos Infantil / Cadete  Four ball ·  10:30",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": "04 ene 2026",
-    "dateEnd": "04 ene 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Infantil",
@@ -18,11 +18,21 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-01-04"
+    ]
   },
   "course": null,
   "leaderboard": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Pareja Scratch General",
+      "jugadores": 21
+    },
+    "2": {
+      "name": "Pareja Handicap General",
+      "jugadores": 21
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -319,288 +329,6 @@
       "nivel": "Mid"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 70954
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Herrero Isasi, Pablo - Lastres De Paz, Clemente",
-          "holeNumber": 10,
-          "createdAt": "30/11/25 10:17:29"
-        },
-        {
-          "playerName": "Bernaldo De Quiros Loring, Ignacio - Salama Monsalve, Gonzalo",
-          "holeNumber": 4,
-          "createdAt": "30/11/25 10:21:27"
-        },
-        {
-          "playerName": "Rojas Tames, Jorge De Asis - Ramirez Cerrudo, Jose Andres",
-          "holeNumber": 6,
-          "createdAt": "30/11/25 10:22:27"
-        },
-        {
-          "playerName": "Hernandez-Rubio Rodriguez, David - Padro Gutierrez, Sandro",
-          "holeNumber": 9,
-          "createdAt": "30/11/25 10:24:15"
-        },
-        {
-          "playerName": "Vicente Valle, Sergio - Martin Valle, Alejandro",
-          "holeNumber": 12,
-          "createdAt": "30/11/25 10:25:00"
-        },
-        {
-          "playerName": "Rodriguez Gregorio, Fernando - Muñoz Vicioso, Miguel",
-          "holeNumber": 5,
-          "createdAt": "30/11/25 10:25:13"
-        },
-        {
-          "playerName": "De La Peña Vazquez, Juan - Jimenez Vega De Seoane, Alvaro",
-          "holeNumber": 1,
-          "createdAt": "30/11/25 10:29:49"
-        },
-        {
-          "playerName": "De La Peña Vazquez, Juan - Jimenez Vega De Seoane, Alvaro",
-          "holeNumber": 3,
-          "createdAt": "30/11/25 10:39:45"
-        },
-        {
-          "playerName": "Pascual Lopez, Carlos - Pascual Naveda, Carlos",
-          "holeNumber": 8,
-          "createdAt": "30/11/25 10:46:32"
-        },
-        {
-          "playerName": "Nieto Cerezo, Jose Rafael - Iribas Olaortua, Javier",
-          "holeNumber": 8,
-          "createdAt": "30/11/25 10:48:56"
-        },
-        {
-          "playerName": "Castellanos Martin, Luis - Moreno Pulido, Ramon",
-          "holeNumber": 1,
-          "createdAt": "30/11/25 10:50:34"
-        },
-        {
-          "playerName": "Sutton, Richard - Sota Portilla, Alfonso",
-          "holeNumber": 1,
-          "createdAt": "30/11/25 10:55:14"
-        },
-        {
-          "playerName": "De Gandarillas Font, Miguel - De Gandarillas Font, Santos",
-          "holeNumber": 4,
-          "createdAt": "30/11/25 11:00:20"
-        },
-        {
-          "playerName": "Bernaldo De Quiros Loring, Ignacio - Salama Monsalve, Gonzalo",
-          "holeNumber": 8,
-          "createdAt": "30/11/25 11:00:35"
-        },
-        {
-          "playerName": "Gabarda Duran, Luis - Gabarda Pery, Jaime",
-          "holeNumber": 12,
-          "createdAt": "30/11/25 11:03:25"
-        },
-        {
-          "playerName": "Carabias Abaitua, Manuel - Aguilar Rodriguez, Gustavo",
-          "holeNumber": 13,
-          "createdAt": "30/11/25 11:12:15"
-        },
-        {
-          "playerName": "Bustamante Ybarra, Pedro - Nieto Aguirre, Borja",
-          "holeNumber": 1,
-          "createdAt": "30/11/25 11:45:31"
-        },
-        {
-          "playerName": "Rodriguez Del Castillo, Borja - Arias Prats, Miguel",
-          "holeNumber": 4,
-          "createdAt": "30/11/25 11:45:43"
-        },
-        {
-          "playerName": "Marin Gonzalez, Jorge - Cutropia Larrea, Pablo",
-          "holeNumber": 4,
-          "createdAt": "30/11/25 11:48:09"
-        },
-        {
-          "playerName": "Hidalgo Elizalde, Mateo - Gonzalez Bueno, Alvaro",
-          "holeNumber": 11,
-          "createdAt": "30/11/25 12:04:03"
-        },
-        {
-          "playerName": "Young Casanova, George - Epaillard Garcia-Cereceda, Luis",
-          "holeNumber": 7,
-          "createdAt": "30/11/25 12:07:03"
-        },
-        {
-          "playerName": "Lopez Vizcaino, Felipe - Tarazona Tudela, Federico",
-          "holeNumber": 8,
-          "createdAt": "30/11/25 12:10:04"
-        },
-        {
-          "playerName": "De La Peña Vazquez, Juan - Jimenez Vega De Seoane, Alvaro",
-          "holeNumber": 10,
-          "createdAt": "30/11/25 12:12:01"
-        },
-        {
-          "playerName": "Ramirez Lamo De Espinosa, Pedro - De Rivera Vega De Seoane, Jaime",
-          "holeNumber": 10,
-          "createdAt": "30/11/25 12:14:11"
-        },
-        {
-          "playerName": "Revenga Bengoechea, Jorge - Constanza Trinidad, Jose",
-          "holeNumber": 16,
-          "createdAt": "30/11/25 12:19:20"
-        },
-        {
-          "playerName": "Oyarzun Allendesalazar, Alejandro - Johansson Dinesen, Pedro",
-          "holeNumber": 7,
-          "createdAt": "30/11/25 12:23:22"
-        },
-        {
-          "playerName": "De Gandarillas Font, Miguel - De Gandarillas Font, Santos",
-          "holeNumber": 10,
-          "createdAt": "30/11/25 12:23:31"
-        },
-        {
-          "playerName": "De La Peña Vazquez, Juan - Jimenez Vega De Seoane, Alvaro",
-          "holeNumber": 11,
-          "createdAt": "30/11/25 12:25:13"
-        },
-        {
-          "playerName": "Martin-Simo Sanchez, Borja - Arribas Gridilla, Pablo",
-          "holeNumber": 13,
-          "createdAt": "30/11/25 12:27:33"
-        },
-        {
-          "playerName": "Escudero Muñoz, Gabriel - Chaves Vega De Seoane, Gonzalo",
-          "holeNumber": 4,
-          "createdAt": "30/11/25 12:31:45"
-        },
-        {
-          "playerName": "Villapun Sanchez, Jorge - Sanchez Garcia, Antonio",
-          "holeNumber": 8,
-          "createdAt": "30/11/25 12:38:52"
-        },
-        {
-          "playerName": "De La Peña Vazquez, Juan - Jimenez Vega De Seoane, Alvaro",
-          "holeNumber": 13,
-          "createdAt": "30/11/25 12:49:06"
-        },
-        {
-          "playerName": "Revenga Bengoechea, Jorge - Constanza Trinidad, Jose",
-          "holeNumber": 1,
-          "createdAt": "30/11/25 12:58:06"
-        },
-        {
-          "playerName": "Morales Merelo, Gonzalo - Gutierrez Manresa, Miguel",
-          "holeNumber": 1,
-          "createdAt": "30/11/25 13:04:24"
-        },
-        {
-          "playerName": "Morales Merelo, Gonzalo - Gutierrez Manresa, Miguel",
-          "holeNumber": 11,
-          "createdAt": "30/11/25 13:05:01"
-        },
-        {
-          "playerName": "Lopez Santamaria, Carlos - Corrales Arbeloa, Francisco De Asis",
-          "holeNumber": 7,
-          "createdAt": "30/11/25 13:05:27"
-        },
-        {
-          "playerName": "Ramirez Lamo De Espinosa, Pedro - De Rivera Vega De Seoane, Jaime",
-          "holeNumber": 15,
-          "createdAt": "30/11/25 13:14:12"
-        },
-        {
-          "playerName": "Morales Merelo, Gonzalo - Gutierrez Manresa, Miguel",
-          "holeNumber": 3,
-          "createdAt": "30/11/25 13:16:24"
-        },
-        {
-          "playerName": "Hernandez-Rubio Rodriguez, David - Padro Gutierrez, Sandro",
-          "holeNumber": 4,
-          "createdAt": "30/11/25 13:20:26"
-        },
-        {
-          "playerName": "Montalat Braojos, Jaume - Carballo Diaz, Jose Marcos",
-          "holeNumber": 4,
-          "createdAt": "30/11/25 13:20:38"
-        },
-        {
-          "playerName": "Young Casanova, George - Epaillard Garcia-Cereceda, Luis",
-          "holeNumber": 13,
-          "createdAt": "30/11/25 13:24:52"
-        },
-        {
-          "playerName": "Marin Gonzalez, Jorge - Cutropia Larrea, Pablo",
-          "holeNumber": 10,
-          "createdAt": "30/11/25 13:25:42"
-        },
-        {
-          "playerName": "De La Peña Vazquez, Juan - Jimenez Vega De Seoane, Alvaro",
-          "holeNumber": 16,
-          "createdAt": "30/11/25 13:27:09"
-        },
-        {
-          "playerName": "Morales Merelo, Gonzalo - Gutierrez Manresa, Miguel",
-          "holeNumber": 5,
-          "createdAt": "30/11/25 13:44:19"
-        },
-        {
-          "playerName": "Gabarda Duran, Luis - Gabarda Pery, Jaime",
-          "holeNumber": 6,
-          "createdAt": "30/11/25 13:47:38"
-        },
-        {
-          "playerName": "Carabias Abaitua, Manuel - Aguilar Rodriguez, Gustavo",
-          "holeNumber": 8,
-          "createdAt": "30/11/25 13:52:42"
-        },
-        {
-          "playerName": "Lopez Santamaria, Carlos - Corrales Arbeloa, Francisco De Asis",
-          "holeNumber": 11,
-          "createdAt": "30/11/25 13:57:14"
-        },
-        {
-          "playerName": "Sanchez Alonso, David Valentin - Garcia Molina, Hector",
-          "holeNumber": 10,
-          "createdAt": "30/11/25 14:01:03"
-        },
-        {
-          "playerName": "Herrero Isasi, Pablo - Lastres De Paz, Clemente",
-          "holeNumber": 8,
-          "createdAt": "30/11/25 14:08:03"
-        },
-        {
-          "playerName": "Ramos Zapatero, David - Arguelles Badillo, Jose Antonio",
-          "holeNumber": 18,
-          "createdAt": "30/11/25 14:10:04"
-        }
-      ]
-    },
-    "eagle": {
-      "scoreTypeKey": "eagle",
-      "players": [
-        {
-          "playerName": "Escudero Muñoz, Gabriel - Chaves Vega De Seoane, Gonzalo",
-          "holeNumber": 10,
-          "createdAt": "30/11/25 13:53:31"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -986,5 +714,290 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:03.541Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 70954
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Herrero Isasi, Pablo - Lastres De Paz, Clemente",
+          "holeNumber": 10,
+          "createdAt": "30/11/25 10:17:29"
+        },
+        {
+          "playerName": "Bernaldo De Quiros Loring, Ignacio - Salama Monsalve, Gonzalo",
+          "holeNumber": 4,
+          "createdAt": "30/11/25 10:21:27"
+        },
+        {
+          "playerName": "Rojas Tames, Jorge De Asis - Ramirez Cerrudo, Jose Andres",
+          "holeNumber": 6,
+          "createdAt": "30/11/25 10:22:27"
+        },
+        {
+          "playerName": "Hernandez-Rubio Rodriguez, David - Padro Gutierrez, Sandro",
+          "holeNumber": 9,
+          "createdAt": "30/11/25 10:24:15"
+        },
+        {
+          "playerName": "Vicente Valle, Sergio - Martin Valle, Alejandro",
+          "holeNumber": 12,
+          "createdAt": "30/11/25 10:25:00"
+        },
+        {
+          "playerName": "Rodriguez Gregorio, Fernando - Muñoz Vicioso, Miguel",
+          "holeNumber": 5,
+          "createdAt": "30/11/25 10:25:13"
+        },
+        {
+          "playerName": "De La Peña Vazquez, Juan - Jimenez Vega De Seoane, Alvaro",
+          "holeNumber": 1,
+          "createdAt": "30/11/25 10:29:49"
+        },
+        {
+          "playerName": "De La Peña Vazquez, Juan - Jimenez Vega De Seoane, Alvaro",
+          "holeNumber": 3,
+          "createdAt": "30/11/25 10:39:45"
+        },
+        {
+          "playerName": "Pascual Lopez, Carlos - Pascual Naveda, Carlos",
+          "holeNumber": 8,
+          "createdAt": "30/11/25 10:46:32"
+        },
+        {
+          "playerName": "Nieto Cerezo, Jose Rafael - Iribas Olaortua, Javier",
+          "holeNumber": 8,
+          "createdAt": "30/11/25 10:48:56"
+        },
+        {
+          "playerName": "Castellanos Martin, Luis - Moreno Pulido, Ramon",
+          "holeNumber": 1,
+          "createdAt": "30/11/25 10:50:34"
+        },
+        {
+          "playerName": "Sutton, Richard - Sota Portilla, Alfonso",
+          "holeNumber": 1,
+          "createdAt": "30/11/25 10:55:14"
+        },
+        {
+          "playerName": "De Gandarillas Font, Miguel - De Gandarillas Font, Santos",
+          "holeNumber": 4,
+          "createdAt": "30/11/25 11:00:20"
+        },
+        {
+          "playerName": "Bernaldo De Quiros Loring, Ignacio - Salama Monsalve, Gonzalo",
+          "holeNumber": 8,
+          "createdAt": "30/11/25 11:00:35"
+        },
+        {
+          "playerName": "Gabarda Duran, Luis - Gabarda Pery, Jaime",
+          "holeNumber": 12,
+          "createdAt": "30/11/25 11:03:25"
+        },
+        {
+          "playerName": "Carabias Abaitua, Manuel - Aguilar Rodriguez, Gustavo",
+          "holeNumber": 13,
+          "createdAt": "30/11/25 11:12:15"
+        },
+        {
+          "playerName": "Bustamante Ybarra, Pedro - Nieto Aguirre, Borja",
+          "holeNumber": 1,
+          "createdAt": "30/11/25 11:45:31"
+        },
+        {
+          "playerName": "Rodriguez Del Castillo, Borja - Arias Prats, Miguel",
+          "holeNumber": 4,
+          "createdAt": "30/11/25 11:45:43"
+        },
+        {
+          "playerName": "Marin Gonzalez, Jorge - Cutropia Larrea, Pablo",
+          "holeNumber": 4,
+          "createdAt": "30/11/25 11:48:09"
+        },
+        {
+          "playerName": "Hidalgo Elizalde, Mateo - Gonzalez Bueno, Alvaro",
+          "holeNumber": 11,
+          "createdAt": "30/11/25 12:04:03"
+        },
+        {
+          "playerName": "Young Casanova, George - Epaillard Garcia-Cereceda, Luis",
+          "holeNumber": 7,
+          "createdAt": "30/11/25 12:07:03"
+        },
+        {
+          "playerName": "Lopez Vizcaino, Felipe - Tarazona Tudela, Federico",
+          "holeNumber": 8,
+          "createdAt": "30/11/25 12:10:04"
+        },
+        {
+          "playerName": "De La Peña Vazquez, Juan - Jimenez Vega De Seoane, Alvaro",
+          "holeNumber": 10,
+          "createdAt": "30/11/25 12:12:01"
+        },
+        {
+          "playerName": "Ramirez Lamo De Espinosa, Pedro - De Rivera Vega De Seoane, Jaime",
+          "holeNumber": 10,
+          "createdAt": "30/11/25 12:14:11"
+        },
+        {
+          "playerName": "Revenga Bengoechea, Jorge - Constanza Trinidad, Jose",
+          "holeNumber": 16,
+          "createdAt": "30/11/25 12:19:20"
+        },
+        {
+          "playerName": "Oyarzun Allendesalazar, Alejandro - Johansson Dinesen, Pedro",
+          "holeNumber": 7,
+          "createdAt": "30/11/25 12:23:22"
+        },
+        {
+          "playerName": "De Gandarillas Font, Miguel - De Gandarillas Font, Santos",
+          "holeNumber": 10,
+          "createdAt": "30/11/25 12:23:31"
+        },
+        {
+          "playerName": "De La Peña Vazquez, Juan - Jimenez Vega De Seoane, Alvaro",
+          "holeNumber": 11,
+          "createdAt": "30/11/25 12:25:13"
+        },
+        {
+          "playerName": "Martin-Simo Sanchez, Borja - Arribas Gridilla, Pablo",
+          "holeNumber": 13,
+          "createdAt": "30/11/25 12:27:33"
+        },
+        {
+          "playerName": "Escudero Muñoz, Gabriel - Chaves Vega De Seoane, Gonzalo",
+          "holeNumber": 4,
+          "createdAt": "30/11/25 12:31:45"
+        },
+        {
+          "playerName": "Villapun Sanchez, Jorge - Sanchez Garcia, Antonio",
+          "holeNumber": 8,
+          "createdAt": "30/11/25 12:38:52"
+        },
+        {
+          "playerName": "De La Peña Vazquez, Juan - Jimenez Vega De Seoane, Alvaro",
+          "holeNumber": 13,
+          "createdAt": "30/11/25 12:49:06"
+        },
+        {
+          "playerName": "Revenga Bengoechea, Jorge - Constanza Trinidad, Jose",
+          "holeNumber": 1,
+          "createdAt": "30/11/25 12:58:06"
+        },
+        {
+          "playerName": "Morales Merelo, Gonzalo - Gutierrez Manresa, Miguel",
+          "holeNumber": 1,
+          "createdAt": "30/11/25 13:04:24"
+        },
+        {
+          "playerName": "Morales Merelo, Gonzalo - Gutierrez Manresa, Miguel",
+          "holeNumber": 11,
+          "createdAt": "30/11/25 13:05:01"
+        },
+        {
+          "playerName": "Lopez Santamaria, Carlos - Corrales Arbeloa, Francisco De Asis",
+          "holeNumber": 7,
+          "createdAt": "30/11/25 13:05:27"
+        },
+        {
+          "playerName": "Ramirez Lamo De Espinosa, Pedro - De Rivera Vega De Seoane, Jaime",
+          "holeNumber": 15,
+          "createdAt": "30/11/25 13:14:12"
+        },
+        {
+          "playerName": "Morales Merelo, Gonzalo - Gutierrez Manresa, Miguel",
+          "holeNumber": 3,
+          "createdAt": "30/11/25 13:16:24"
+        },
+        {
+          "playerName": "Hernandez-Rubio Rodriguez, David - Padro Gutierrez, Sandro",
+          "holeNumber": 4,
+          "createdAt": "30/11/25 13:20:26"
+        },
+        {
+          "playerName": "Montalat Braojos, Jaume - Carballo Diaz, Jose Marcos",
+          "holeNumber": 4,
+          "createdAt": "30/11/25 13:20:38"
+        },
+        {
+          "playerName": "Young Casanova, George - Epaillard Garcia-Cereceda, Luis",
+          "holeNumber": 13,
+          "createdAt": "30/11/25 13:24:52"
+        },
+        {
+          "playerName": "Marin Gonzalez, Jorge - Cutropia Larrea, Pablo",
+          "holeNumber": 10,
+          "createdAt": "30/11/25 13:25:42"
+        },
+        {
+          "playerName": "De La Peña Vazquez, Juan - Jimenez Vega De Seoane, Alvaro",
+          "holeNumber": 16,
+          "createdAt": "30/11/25 13:27:09"
+        },
+        {
+          "playerName": "Morales Merelo, Gonzalo - Gutierrez Manresa, Miguel",
+          "holeNumber": 5,
+          "createdAt": "30/11/25 13:44:19"
+        },
+        {
+          "playerName": "Gabarda Duran, Luis - Gabarda Pery, Jaime",
+          "holeNumber": 6,
+          "createdAt": "30/11/25 13:47:38"
+        },
+        {
+          "playerName": "Carabias Abaitua, Manuel - Aguilar Rodriguez, Gustavo",
+          "holeNumber": 8,
+          "createdAt": "30/11/25 13:52:42"
+        },
+        {
+          "playerName": "Lopez Santamaria, Carlos - Corrales Arbeloa, Francisco De Asis",
+          "holeNumber": 11,
+          "createdAt": "30/11/25 13:57:14"
+        },
+        {
+          "playerName": "Sanchez Alonso, David Valentin - Garcia Molina, Hector",
+          "holeNumber": 10,
+          "createdAt": "30/11/25 14:01:03"
+        },
+        {
+          "playerName": "Herrero Isasi, Pablo - Lastres De Paz, Clemente",
+          "holeNumber": 8,
+          "createdAt": "30/11/25 14:08:03"
+        },
+        {
+          "playerName": "Ramos Zapatero, David - Arguelles Badillo, Jose Antonio",
+          "holeNumber": 18,
+          "createdAt": "30/11/25 14:10:04"
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Escudero Muñoz, Gabriel - Chaves Vega De Seoane, Gonzalo",
+          "holeNumber": 10,
+          "createdAt": "30/11/25 13:53:31"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "/uploads/competiciones/pdf/66590_cartel_413.pdf"
+  ],
+  "horariosScrapedAt": "2026-05-21T16:41:58.382Z"
 }

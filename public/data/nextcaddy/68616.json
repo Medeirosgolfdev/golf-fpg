@@ -1,14 +1,14 @@
 {
   "tourId": 68616,
   "url": "https://www.nextcaddy.com/tour/68616",
-  "scrapedAt": "2026-05-09T09:58:24.157Z",
+  "scrapedAt": "2026-05-21T16:37:53.787Z",
   "meta": {
     "name": "III Torneo ZOF - 15 Marzo 2026 (Grupo privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "15 mar 2026",
-    "dateEnd": "15 mar 2026",
+    "dateStart": null,
+    "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
@@ -17,13 +17,14 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ],
-    "dateIso": "2026-03-15"
+    ]
   },
   "course": null,
   "leaderboard": [
     {
       "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 23,
       "header": [
         "Pos",
         "Jugador",
@@ -292,6 +293,13 @@
       ]
     }
   ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 23
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -623,38 +631,6 @@
       "nivel": "AM32509270"
     }
   ],
-  "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
-  },
-  "roundIds": [
-    {
-      "roundNumber": 1,
-      "roundId": 73258
-    }
-  ],
-  "scoreTypes": {
-    "birdie": {
-      "scoreTypeKey": "birdie",
-      "players": [
-        {
-          "playerName": "Pujol Lopez Araquistain, Javier",
-          "holeNumber": 5,
-          "createdAt": "25/08/25 20:32:21"
-        },
-        {
-          "playerName": "Pujol Lopez Araquistain, Javier",
-          "holeNumber": 8,
-          "createdAt": "25/08/25 20:32:21"
-        }
-      ]
-    }
-  },
   "horarios": [
     {
       "round": 1,
@@ -860,5 +836,38 @@
       ]
     }
   ],
-  "horariosScrapedAt": "2026-05-09T12:12:27.211Z"
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73258
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Pujol Lopez Araquistain, Javier",
+          "holeNumber": 5,
+          "createdAt": "25/08/25 20:32:21"
+        },
+        {
+          "playerName": "Pujol Lopez Araquistain, Javier",
+          "holeNumber": 8,
+          "createdAt": "25/08/25 20:32:21"
+        }
+      ]
+    }
+  },
+  "pdfs": [],
+  "horariosScrapedAt": "2026-05-21T16:42:24.947Z"
 }
