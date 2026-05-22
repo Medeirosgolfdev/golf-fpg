@@ -704,7 +704,7 @@ function useAutoRivals() {
             if (!rival.co && e.country === "FRA") rival.co = "France";
             frMatched++;
           }
-          console.log(`[france-enrich] ${frMatched} rivais enriquecidos`);
+          if (import.meta.env.DEV) console.log(`[france-enrich] ${frMatched} rivais enriquecidos`);
         }
       } catch { /* ignore */ }
 

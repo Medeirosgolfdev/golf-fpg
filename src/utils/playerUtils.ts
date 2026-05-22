@@ -98,7 +98,7 @@ export function resolveFedsFromPlayers(
   }
 
   _resolvedNorms.add(norm);
-  if (resolved > 0) console.log(`[resolveFedsFromPlayers] Resolved ${resolved} feds by name`);
+  if (resolved > 0 && import.meta.env.DEV) console.log(`[resolveFedsFromPlayers] Resolved ${resolved} feds by name`);
   return resolved;
 }
 
@@ -130,7 +130,7 @@ export function resolveFedsInTournaments(
       if (fed) { p.fed = fed; resolved++; }
     }
   }
-  if (resolved > 0) console.log(`[resolveFedsInTournaments] Resolved ${resolved} feds by name`);
+  if (resolved > 0 && import.meta.env.DEV) console.log(`[resolveFedsInTournaments] Resolved ${resolved} feds by name`);
   return resolved;
 }
 

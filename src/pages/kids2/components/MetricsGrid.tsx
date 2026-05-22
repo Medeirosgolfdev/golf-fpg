@@ -8,6 +8,7 @@
 
 import type { CanonicalData, Junior } from "../data";
 import { countWins, countTop3, computeRoundStats } from "../data";
+import { fmtToPar } from "../../../utils/format";
 
 interface Props {
   data: CanonicalData;
@@ -43,8 +44,6 @@ export default function MetricsGrid({ data, junior, filterTids }: Props) {
       bestSub = `${shortNameOf(fullName)} · R${stats.bestToPar.round}${datePart ? " · " + datePart : ""}`;
     }
   }
-
-  const fmtToPar = (n: number): string => n === 0 ? "E" : n > 0 ? `+${n}` : String(n);
 
   return (
     <div style={{

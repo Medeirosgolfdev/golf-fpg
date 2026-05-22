@@ -20,6 +20,7 @@
  */
 
 import type { Tournament, Player, RoundScore } from "./fpgTypes";
+import { fmtToPar } from "../utils/format";
 
 const MANUEL_FED = "52884";
 const SUB12_NACIONAL_2026_TCODE = "10941"; // Campeonato Nacional de Jovens Sub 12 H
@@ -594,13 +595,13 @@ export function buildKPIs(pkg: AnalisePackage, holes: HoleDistribution[]): KPI[]
   const validManuel = pkg.manuelHistory.filter(r => r.gross != null && r.scores.length === 18);
   if (validManuel.length) {
     const best = validManuel.reduce((b, r) => (r.gross! < b.gross! ? r : b), validManuel[0]);
-    out.push({ label: "⭐ Melhor ronda", value: String(best.gross), hint: `${best.date.slice(0, 10)} (${fmtToParStr(best.toPar ?? 0)}) — ${best.tournamentName}`, tone: "good" });
+    out.push({ label: "⭐ Melhor ronda", value: String(best.gross), hint: `${best.date.slice(0, 10)} (${fmtToPar(best.toPar ?? 0)}) — ${best.tournamentName}`, tone: "good" });
   }
   // Manuel: ronda mais recente
   const sortedRecent = [...validManuel].sort((a, b) => b.date.localeCompare(a.date) || b.round - a.round);
   if (sortedRecent[0]) {
     const r0 = sortedRecent[0];
-    out.push({ label: "⭐ Última ronda", value: String(r0.gross), hint: `${r0.date.slice(0, 10)} R${r0.round} (${fmtToParStr(r0.toPar ?? 0)})`, tone: r0.toPar != null && r0.toPar <= 7 ? "good" : r0.toPar != null && r0.toPar <= 15 ? "warn" : "danger" });
+    out.push({ label: "⭐ Última ronda", value: String(r0.gross), hint: `${r0.date.slice(0, 10)} R${r0.round} (${fmtToPar(r0.toPar ?? 0)})`, tone: r0.toPar != null && r0.toPar <= 7 ? "good" : r0.toPar != null && r0.toPar <= 15 ? "warn" : "danger" });
   }
   // Manuel: tendência (avg primeiras 3 vs últimas 2)
   if (validManuel.length >= 3) {
@@ -616,8 +617,6 @@ export function buildKPIs(pkg: AnalisePackage, holes: HoleDistribution[]): KPI[]
   }
   return out;
 }
-
-function fmtToParStr(n: number): string { return n === 0 ? "E" : n > 0 ? "+" + n : String(n); }
 
 export function buildParGroupStats(holes: HoleDistribution[]): ParGroupStats[] {
   const groups: ("Par 3" | "Par 4" | "Par 5")[] = ["Par 3", "Par 4", "Par 5"];

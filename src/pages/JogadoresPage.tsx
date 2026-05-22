@@ -3800,10 +3800,10 @@ export default function JogadoresPage() {
     if (!federados && !loadingFeds && !federadosError) {
       setLoadingFeds(true);
       setFederadosError(null);
-      console.log("[federados] A carregar /data/federados.json...");
+      if (import.meta.env.DEV) console.log("[federados] A carregar /data/federados.json...");
       loadFederados()
         .then(f => {
-          console.log("[federados] OK -", f.players?.length, "jogadores");
+          if (import.meta.env.DEV) console.log("[federados] OK -", f.players?.length, "jogadores");
           setFederados(f.players);
         })
         .catch(err => {
