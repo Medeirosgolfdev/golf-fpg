@@ -14,7 +14,7 @@ import golfBallSvg from "../assets/golf-ball.svg";
 
 type Tab =
   | "campos" | "jogadores" | "comparar" | "simulador" | "calendario"
-  | "drive" | "bjgt" | "kids" | "uskids" | "diversos" | "doral" | "ffg" | "england" | "rfeg" | "nacionais" | "global-junior" | "major";
+  | "drive" | "bjgt" | "kids" | "uskids" | "diversos" | "doral" | "ffg" | "england" | "rfeg" | "nacionais" | "global-junior" | "major" | "galeria";
 
 // ── Lista de itens de navegação — editar aqui para adicionar/reordenar ──
 // `external: true` → abre em nova aba sem SPA navigation (ficheiros estáticos
@@ -35,6 +35,7 @@ const NAV_ITEMS: { tab: Tab; label: string; path: string; external?: boolean; ti
   { tab: "campos",     label: "Campos",       path: "/campos"     },
   { tab: "comparar",   label: "Comparar",     path: "/comparar"   },
   { tab: "kids",       label: "🌍 Kids",      path: "/kids2"      },
+  { tab: "galeria",    label: "📁",           path: "/Logos/galeria.html", external: true, title: "Galeria de Logos" },
 ];
 
 // ── Helpers ────────────────────────────────────────────────────────
@@ -84,6 +85,7 @@ const TAB_TITLES: Record<Tab, string> = {
   rfeg:       "Golf Junior – RFEGolf",
   nacionais:  "Golf Junior – Títulos",
   "global-junior": "Golf Junior – Global Junior Golf Live",
+  galeria:    "Golf Junior – Galeria de Logos",
 };
 
 // ── Componente ─────────────────────────────────────────────────────
