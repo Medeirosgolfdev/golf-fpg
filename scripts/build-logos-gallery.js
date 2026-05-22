@@ -13,7 +13,10 @@
  * package.json) e também pode ser corrido à mão:
  *     node scripts/build-logos-gallery.js
  *
- * Tipos visualizáveis: png, jpg, jpeg, svg, avif, webp, gif.
+ * Tipos visualizáveis: png, jpg, jpeg, avif, webp, gif.
+ * SVG é EXCLUÍDO de propósito: a galeria é vista no iPhone, onde muitos SVG
+ * não renderizam e não podem ser guardados em Fotografias. Os PNG equivalentes
+ * (gerados a partir dos SVG) cobrem esses casos.
  * Tipos NÃO visualizáveis (ai, eps, pdf, mp4, ...) são ignorados de propósito.
  */
 
@@ -22,7 +25,7 @@ const path = require("path");
 
 const LOGOS_DIR = path.join(__dirname, "..", "public", "Logos");
 const OUT_FILE = path.join(LOGOS_DIR, "galeria.html");
-const VIEWABLE = new Set(["png", "jpg", "jpeg", "svg", "avif", "webp", "gif"]);
+const VIEWABLE = new Set(["png", "jpg", "jpeg", "avif", "webp", "gif"]);
 
 function human(n) {
   let v = Number(n);
@@ -103,8 +106,9 @@ function pageHtml(data) {
   .tag.png{color:#60a5fa}.tag.jpg{color:#f59e0b}.tag.jpeg{color:#f59e0b}.tag.svg{color:#22c55e}.tag.avif{color:#c084fc}.tag.webp{color:#f472b6}.tag.gif{color:#f87171}
   .row{display:flex; gap:7px}
   .row a, .row button{flex:1; text-align:center; text-decoration:none; font-size:12.5px; font-weight:600; padding:7px 6px; border-radius:8px; cursor:pointer; border:1px solid var(--line); background:var(--panel2); color:var(--text); transition:.15s;}
-  .row .dl{background:var(--accent); border-color:var(--accent); color:#fff}
-  .row .dl:hover{background:var(--accent2)}
+  .row .save{background:var(--accent); border-color:var(--accent); color:#fff}
+  .row .save:hover{background:var(--accent2)}
+  .row .dl:hover{border-color:#3a4150}
   .row .open:hover{border-color:#3a4150}
   .empty{color:var(--muted); text-align:center; padding:60px 20px}
   .lb{position:fixed; inset:0; background:rgba(0,0,0,.85); display:none; z-index:100; align-items:center; justify-content:center; padding:30px; cursor:zoom-out}
@@ -131,7 +135,6 @@ function pageHtml(data) {
     <span class="chip" data-type="png">PNG</span>
     <span class="chip" data-type="jpg">JPG</span>
     <span class="chip" data-type="jpeg">JPEG</span>
-    <span class="chip" data-type="svg">SVG</span>
     <span class="chip" data-type="webp">WEBP</span>
     <span class="chip" data-type="avif">AVIF</span>
     <span class="sep"></span>
@@ -171,9 +174,19 @@ function render(){
     card.innerHTML='<div class="thumb" data-url="'+url+'" data-name="'+esc(im.name)+'"><img loading="lazy" src="'+url+'" alt="'+esc(im.name)+'"></div>'+
       '<div class="meta"><div class="name">'+im.name+'</div>'+
       '<div class="sub"><span class="tag '+im.ext+'">'+im.ext+'</span><span>'+im.sizeh+'</span>'+(im.path.includes('/')?'<span>· '+im.path.split('/')[0]+'/</span>':'')+'</div>'+
-      '<div class="row"><a class="dl" href="'+url+'" download="'+esc(im.name)+'">Descarregar</a><a class="open" href="'+url+'" target="_blank" rel="noopener">Abrir</a></div></div>';
+      '<div class="row"><button class="save" data-url="'+url+'" data-name="'+esc(im.name)+'">📷 Fotografias</button><a class="dl" href="'+url+'" download="'+esc(im.name)+'">📁 Ficheiros</a><a class="open" href="'+url+'" target="_blank" rel="noopener">Abrir</a></div></div>';
     grid.appendChild(card);
   }
+}
+// Guardar na app Fotografias do iPhone via folha de partilha (opção "Guardar imagem").
+// Requer contexto seguro (HTTPS); em http faz fallback para abrir + toque longo.
+async function saveToPhotos(url,name){
+  try{
+    const res=await fetch(url); const blob=await res.blob();
+    const file=new File([blob],name,{type:blob.type||'image/png'});
+    if(navigator.canShare && navigator.canShare({files:[file]})){ await navigator.share({files:[file]}); return; }
+    window.open(url,'_blank'); showToast('Toque longo na imagem e "Guardar imagem"');
+  }catch(e){ if(e && e.name==='AbortError') return; showToast('Nao foi possivel guardar — toque longo na imagem'); }
 }
 document.querySelectorAll('.chip[data-type]').forEach(c=>c.addEventListener('click',()=>{document.querySelectorAll('.chip[data-type]').forEach(x=>x.classList.remove('on')); c.classList.add('on'); typeFilter=c.dataset.type; render();}));
 function setBg(v){document.body.dataset.bg=v; document.querySelectorAll('.bgchip').forEach(x=>x.classList.toggle('on', x.dataset.bgv===v));}
@@ -181,7 +194,9 @@ document.querySelectorAll('.bgchip').forEach(c=>c.addEventListener('click',()=>s
 setBg('check');
 q.addEventListener('input', render);
 const lb=document.getElementById('lb'), lbimg=document.getElementById('lbimg'), lbcap=document.getElementById('lbcap');
-grid.addEventListener('click', e=>{const t=e.target.closest('.thumb'); if(!t) return; lbimg.src=t.dataset.url; lbcap.innerHTML=t.dataset.name+' &nbsp;·&nbsp; <a href="'+t.dataset.url+'" download="'+t.dataset.name+'">descarregar</a>'; lb.classList.add('on');});
+grid.addEventListener('click', e=>{
+  const sv=e.target.closest('.save'); if(sv){ saveToPhotos(sv.dataset.url, sv.dataset.name); return; }
+  const t=e.target.closest('.thumb'); if(!t) return; lbimg.src=t.dataset.url; lbcap.innerHTML=t.dataset.name+' &nbsp;·&nbsp; <a href="'+t.dataset.url+'" download="'+t.dataset.name+'">descarregar</a>'; lb.classList.add('on');});
 lb.addEventListener('click',()=>lb.classList.remove('on'));
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') lb.classList.remove('on'); });
 const toast=document.getElementById('toast');

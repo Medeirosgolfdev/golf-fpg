@@ -98,3 +98,6 @@ probe6.mts
 # segredos locais
 .env.local
 .env
+
+# Certificados HTTPS dev (self-signed)
+.certs/

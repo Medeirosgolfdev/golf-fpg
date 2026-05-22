@@ -267,6 +267,26 @@ function diffJogadores(
   }
 }
 
+/* HTTPS no dev server — necessário para a galeria de Logos poder guardar
+   imagens em Fotografias no iPhone (a Web Share API de ficheiros só funciona
+   em contexto seguro). Certificado self-signed em .certs/ (gitignored, gerado
+   com openssl). Carregado só se os ficheiros existirem — assim outros
+   ambientes (CI, Vercel build) continuam a funcionar sem certificados. */
+function devHttps(): { key: Buffer; cert: Buffer } | undefined {
+  try {
+    const keyPath = join(process.cwd(), '.certs', 'dev-key.pem')
+    const certPath = join(process.cwd(), '.certs', 'dev-cert.pem')
+    if (existsSync(keyPath) && existsSync(certPath)) {
+      console.log('[https] certificados encontrados em .certs/ — dev server em HTTPS')
+      return { key: readFileSync(keyPath), cert: readFileSync(certPath) }
+    }
+    console.log('[https] sem certificados em .certs/ — dev server em HTTP')
+  } catch (e) {
+    console.warn('[https] erro a ler certificados:', (e as Error).message)
+  }
+  return undefined
+}
+
 /* ── Vite config ───────────────────────────────────────────────────── */
 export default defineConfig({
   plugins: [
@@ -685,6 +705,8 @@ export default defineConfig({
   },
 
   server: {
+    host: true,          // expõe na rede local (LAN) para o iPhone aceder
+    https: devHttps(),   // HTTPS se .certs/ existir, senão HTTP
     watch: {
       ignored: (p: string) => p.replace(/\\/g, '/').includes('/output/'),
     },
