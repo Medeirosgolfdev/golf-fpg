@@ -135,6 +135,7 @@ function pageHtml(data) {
     <span class="chip" data-type="png">PNG</span>
     <span class="chip" data-type="jpg">JPG</span>
     <span class="chip" data-type="jpeg">JPEG</span>
+    <span class="chip" data-type="gif">GIF</span>
     <span class="chip" data-type="webp">WEBP</span>
     <span class="chip" data-type="avif">AVIF</span>
     <span class="sep"></span>
