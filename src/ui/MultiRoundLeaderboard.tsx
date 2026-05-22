@@ -91,6 +91,12 @@ function buildSexByName(playersDB?: PlayersDB): Map<string, string> {
   return m;
 }
 
+/** Ano de nascimento de uma row (row.dob → playersDB[fed].dob). null se desconhecido. */
+function rowBirthYear(row: MultiRoundRow, playersDB?: PlayersDB): number | null {
+  const dob = row.dob || (row.fed ? (playersDB?.[row.fed] as any)?.dob ?? null : null);
+  return birthYearOf(dob);
+}
+
 function filterRows(rows: MultiRoundRow[], f: PlayerFilter, playersDB?: PlayersDB, byName?: Map<string, string>): MultiRoundRow[] {
   let ps = rows;
   if (f.name) { const q = f.name.toLowerCase(); ps = ps.filter(r => r.name.toLowerCase().includes(q) || (r.club || "").toLowerCase().includes(q)); }
@@ -98,6 +104,7 @@ function filterRows(rows: MultiRoundRow[], f: PlayerFilter, playersDB?: PlayersD
   if (f.tees.length) ps = ps.filter(r => r.teeName != null && f.tees.includes(r.teeName));
   if (f.club) ps = ps.filter(r => r.club === f.club);
   if (f.sex) ps = ps.filter(r => resolveSex(r, playersDB, byName) === f.sex);
+  if (f.birthYears && f.birthYears.length) ps = ps.filter(r => { const y = rowBirthYear(r, playersDB); return y != null && f.birthYears!.includes(y); });
   return ps;
 }
 
@@ -109,9 +116,11 @@ function PlayerFilterBar({ rows, filter, onChange, total, playersDB }: {
   const availClubs = useMemo(() => { const s = new Set<string>(); for (const r of rows) if (r.club) s.add(r.club); return [...s].sort((a,b) => a.localeCompare(b,"pt")); }, [rows]);
   const sexByName = useMemo(() => buildSexByName(playersDB), [playersDB]);
   const availSex   = useMemo(() => { const s = new Set<string>(); for (const r of rows) { const sx = resolveSex(r, playersDB, sexByName); if (sx) s.add(sx); } return [...s] as ("M"|"F")[]; }, [rows, playersDB, sexByName]);
-  const isActive = filter.name || filter.escs.length || filter.tees.length || filter.club || filter.sex;
+  const availYears = useMemo(() => { const s = new Set<number>(); for (const r of rows) { const y = rowBirthYear(r, playersDB); if (y != null) s.add(y); } return [...s].sort((a, b) => a - b); }, [rows, playersDB]);
+  const selYears = filter.birthYears || [];
+  const isActive = filter.name || filter.escs.length || filter.tees.length || filter.club || filter.sex || selYears.length;
   const filtered = useMemo(() => filterRows(rows, filter, playersDB, sexByName), [rows, filter, playersDB, sexByName]);
-  const hasOpts = availClubs.length > 1 || availEsc.length > 1 || availTees.length > 1 || availSex.length === 2;
+  const hasOpts = availClubs.length > 1 || availEsc.length > 1 || availTees.length > 1 || availSex.length === 2 || availYears.length > 1;
   if (total < 8 && !isActive) return null;
 
   return (
@@ -137,15 +146,60 @@ function PlayerFilterBar({ rows, filter, onChange, total, playersDB }: {
           <FilterChip active={filter.sex === "F"} onClick={() => onChange({ ...filter, sex: filter.sex === "F" ? "" : "F" })} color="var(--badge-female, #ec4899)">F</FilterChip>
         </>
       )}
+      {availYears.length > 1 && (
+        <>
+          <span style={{ color: "var(--border)", fontSize: 11 }}>|</span>
+          <span style={{ fontSize: 10, color: "var(--text-muted)", fontWeight: 600 }}>Nasc.</span>
+          {availYears.map(y => (
+            <FilterChip key={y} active={selYears.includes(y)} onClick={() => onChange({ ...filter, birthYears: toggleArr(selYears, y) })}>{y}</FilterChip>
+          ))}
+        </>
+      )}
       {isActive && <><span style={{ fontSize:10, color:"var(--text-muted)", marginLeft:2 }}>{filtered.length} de {total}</span><button onClick={() => onChange(EMPTY_FILTER)} className="filter-clear-btn" style={{ fontSize:10, color:"var(--text-muted)" }}>✕ limpar</button></>}
     </div>
   );
 }
 
 /* ══════════════════════════════════════════════════════════════
+   DATA DE NASCIMENTO / IDADE
+   ══════════════════════════════════════════════════════════════ */
+
+/** Converte dob ("YYYY-MM-DD" ou "DD/MM/YYYY") num Date. null se inválido. */
+function parseDob(dob?: string | null): Date | null {
+  if (!dob) return null;
+  const s = dob.trim();
+  let d: Date | null = null;
+  if (/^\d{4}-\d{2}-\d{2}/.test(s)) {
+    d = new Date(s.slice(0, 10));
+  } else {
+    const m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+    if (m) d = new Date(+m[3], +m[2] - 1, +m[1]);
+  }
+  return d && !isNaN(+d) ? d : null;
+}
+
+/** Ano de nascimento (number) a partir de dob. null se inválido. */
+function birthYearOf(dob?: string | null): number | null {
+  const d = parseDob(dob);
+  return d ? d.getFullYear() : null;
+}
+
+/** Idade (anos completos) à data de referência. null se inválido. */
+function ageAt(dob?: string | null, refDate?: string): number | null {
+  const d = parseDob(dob);
+  if (!d) return null;
+  const t = refDate ? new Date(refDate) : new Date();
+  if (isNaN(+t)) return null;
+  let age = t.getFullYear() - d.getFullYear();
+  const mo = t.getMonth() - d.getMonth();
+  if (mo < 0 || (mo === 0 && t.getDate() < d.getDate())) age--;
+  return age >= 0 && age < 100 ? age : null;
+}
+
+/* ══════════════════════════════════════════════════════════════
    TIPOS SORT
    ══════════════════════════════════════════════════════════════ */
-type MRSortKey = "pos" | "name" | "club" | "esc" | "hcp" | "gross" | "toPar" | "tee" | "sd";
+type MRSortKey = "pos" | "name" | "club" | "esc" | "hcp" | "gross" | "toPar" | "tee" | "sd" | "birthYear" | "age" | `sd:${number}`;
 
 /* ══════════════════════════════════════════════════════════════
    COMPONENTE PRINCIPAL
@@ -163,6 +217,10 @@ interface MultiRoundLBProps {
     tee?: boolean;
     club?: boolean;
     hcp?: boolean;
+    /** Mostrar coluna de ano de nascimento. Default: true (auto-escondida sem dados) */
+    birthYear?: boolean;
+    /** Mostrar coluna de idade à data do torneio. Default: true (auto-escondida sem dados) */
+    age?: boolean;
     /** Mostrar colunas de stats por ronda (SD/🐦/=/■). Default: true */
     roundStats?: boolean;
     /** Mostrar colunas de ±par por ronda. Default: true */
@@ -172,6 +230,8 @@ interface MultiRoundLBProps {
   filterable?: boolean;
   /** Labels de data para cada ronda (ex: ["25 Fev", "26 Fev"]) */
   roundDates?: string[];
+  /** Data do torneio (ISO) — usada para calcular a idade dos jogadores. */
+  tournamentDate?: string;
   /** Colunas extra no final da tabela (ex: evolução) */
   extraColumns?: ExtraColumn<RowWithPos>[];
   /** Renderização customizada do nome do jogador. Se omitido, usa TournPName */
@@ -184,6 +244,7 @@ export function MultiRoundLeaderboard({
   sortable = false,
   filterable = false,
   roundDates,
+  tournamentDate,
   extraColumns,
   renderName,
 }: MultiRoundLBProps) {
@@ -193,6 +254,8 @@ export function MultiRoundLeaderboard({
     tee: wantTee = true,
     club: wantClub = true,
     hcp: wantHcp = true,
+    birthYear: wantBirthYear = true,
+    age: wantAge = true,
     roundStats: wantRoundStats = true,
     roundToPar: wantRoundToPar = true,
   } = showCols;
@@ -208,12 +271,18 @@ export function MultiRoundLeaderboard({
   const hasAnyHcp  = useMemo(() => rows.some(r => r.hcp != null), [rows]);
   const hasAnyTee  = useMemo(() => rows.some(r => r.teeName != null && r.teeName !== ""), [rows]);
   const hasAnySD   = useMemo(() => rows.some(r => r.rounds?.some(rd => rd?.sd != null)), [rows]);
+  // Nasc./Idade: usa dob da row, com fallback ao playersDB[fed].dob.
+  const dobOf = useMemo(() => (r: MultiRoundRow): string | null =>
+    r.dob || (r.fed ? (playersDB?.[r.fed] as any)?.dob ?? null : null), [playersDB]);
+  const hasAnyDob  = useMemo(() => rows.some(r => parseDob(dobOf(r)) != null), [rows, dobOf]);
 
   const showEsc = wantEsc && hasAnyEsc;
   const showFed = wantFed && hasAnyFed;
   const showClub = wantClub && hasAnyClub;
   const showHcp = wantHcp && hasAnyHcp;
   const showTee = wantTee && hasAnyTee;
+  const showBirthYear = wantBirthYear && hasAnyDob;
+  const showAge = wantAge && hasAnyDob;
   const showRoundStats = wantRoundStats && hasAnySD;
   const showRoundToPar = wantRoundToPar;
 
@@ -253,6 +322,13 @@ export function MultiRoundLeaderboard({
   /* Sort */
   function cmp(a: RowWithPos, b: RowWithPos): number {
     const INF = 9999;
+    // SD por ronda específica: "sd:0", "sd:1", ... (índice 0-based da ronda)
+    if (typeof sortKey === "string" && sortKey.startsWith("sd:")) {
+      const ri = parseInt(sortKey.slice(3), 10);
+      const sa = a.rounds[ri]?.sd ?? INF;
+      const sb = b.rounds[ri]?.sd ?? INF;
+      return sortDir === "asc" ? sa - sb : sb - sa;
+    }
     switch (sortKey) {
       case "pos":   return sortDir === "asc" ? (a._pos ?? INF) - (b._pos ?? INF) : (b._pos ?? INF) - (a._pos ?? INF);
       case "name":  return sortDir === "asc" ? a.name.localeCompare(b.name,"pt") : b.name.localeCompare(a.name,"pt");
@@ -263,6 +339,24 @@ export function MultiRoundLeaderboard({
       case "gross": return sortDir === "asc" ? (a.gross ?? INF) - (b.gross ?? INF) : (b.gross ?? INF) - (a.gross ?? INF);
       case "toPar": return sortDir === "asc" ? ((a.gross ?? INF) - (a.parTotal ?? 0)) - ((b.gross ?? INF) - (b.parTotal ?? 0)) : ((b.gross ?? INF) - (b.parTotal ?? 0)) - ((a.gross ?? INF) - (a.parTotal ?? 0));
       case "sd":    { const sa = a.rounds[0]?.sd ?? INF; const sb = b.rounds[0]?.sd ?? INF; return sortDir === "asc" ? sa - sb : sb - sa; }
+      case "birthYear": {
+        const ya = birthYearOf(dobOf(a));
+        const yb = birthYearOf(dobOf(b));
+        if (ya == null && yb == null) return 0;
+        if (ya == null) return 1;   // sem data → sempre no fim
+        if (yb == null) return -1;
+        return sortDir === "asc" ? ya - yb : yb - ya;
+      }
+      case "age": {
+        // Idade real à data do torneio (não o ano) — dois jogadores do mesmo
+        // ano podem ter idades diferentes consoante já fizeram anos.
+        const aa = ageAt(dobOf(a), tournamentDate);
+        const ab = ageAt(dobOf(b), tournamentDate);
+        if (aa == null && ab == null) return 0;
+        if (aa == null) return 1;   // sem data → sempre no fim
+        if (ab == null) return -1;
+        return sortDir === "asc" ? aa - ab : ab - aa;
+      }
       default:      return 0;
     }
   }
@@ -304,6 +398,8 @@ export function MultiRoundLeaderboard({
               <th className="lb-pos sticky-col-0">#</th>
               <SHdr k="name" className="lb-name sticky-col-1">Jogador</SHdr>
               {showEsc && <SHdr k="esc" className="lb-esc">ESC.</SHdr>}
+              {showBirthYear && <SHdr k="birthYear" className="lb-esc">Nasc.</SHdr>}
+              {showAge && <SHdr k="age" className="lb-esc">Idade</SHdr>}
               {showFed && <th className="lb-fed">FED</th>}
               {showClub && <SHdr k="club" className="lb-club">Clube</SHdr>}
               {showHcp && <SHdr k="hcp"  className="lb-hcp">HCP</SHdr>}
@@ -330,7 +426,7 @@ export function MultiRoundLeaderboard({
                       </th>
                       {showRoundToPar && <th className="lb-rnd-tp">±</th>}
                       {showRoundStats && <>
-                        <th className="lb-rnd-sd">SD</th>
+                        <SHdr k={`sd:${r}` as MRSortKey} className="lb-rnd-sd">SD</SHdr>
                         <th className="lb-rnd-bird">🐦</th>
                         <th className="lb-rnd-par">=</th>
                         <th className="lb-rnd-bog">■</th>
@@ -339,7 +435,7 @@ export function MultiRoundLeaderboard({
                   ))
                 : <>
                     {showRoundStats && <>
-                      <th className="lb-sd">SD</th>
+                      <SHdr k="sd" className="lb-sd">SD</SHdr>
                       <th className="lb-bird">🐦</th>
                       <th className="lb-par-stat">Par</th>
                       <th className="lb-bog">■</th>
@@ -419,6 +515,22 @@ export function MultiRoundLeaderboard({
                     }
                     return <span className="muted">–</span>;
                   })()}</td>}
+                  {showBirthYear && (() => {
+                    const dob = dobOf(row);
+                    const yr = birthYearOf(dob);
+                    const age = ageAt(dob, tournamentDate);
+                    return <td className="lb-esc" title={age != null ? `${age} anos à data do torneio` : undefined}>
+                      {yr != null ? yr : <span className="muted">–</span>}
+                    </td>;
+                  })()}
+                  {showAge && (() => {
+                    const dob = dobOf(row);
+                    const yr = birthYearOf(dob);
+                    const age = ageAt(dob, tournamentDate);
+                    return <td className="lb-esc" title={yr != null ? `Nascido em ${dob}` : undefined}>
+                      {age != null ? `${age}a` : <span className="muted">–</span>}
+                    </td>;
+                  })()}
                   {showFed && <td className="lb-fed">{row.fed || "–"}</td>}
                   {showClub && (() => {
                     // Em torneios internacionais o "clube" é frequentemente

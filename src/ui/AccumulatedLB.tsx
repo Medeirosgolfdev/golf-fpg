@@ -43,6 +43,7 @@ export function AccumulatedLB({
   const rows: MRRow[] = useMemo(() => {
     return rawPlayers.map((p) => {
       const esc = resolveEsc(p, escLookup, { tournamentDate: tournament.date, playersDB, fedBirthdates }) || tournament.escalao || "";
+      const dob = (p.fedCode && ((playersDB as any)?.[p.fedCode]?.dob || fedBirthdates.get(p.fedCode))) || null;
       const roundScores = p.roundScores || [];
       // Posicionar cada ronda pelo seu número real (rounds[0]=R1, rounds[1]=R2, ...)
       // para que jogadores parciais mostrem "–" nas rondas que não jogaram
@@ -87,6 +88,7 @@ export function AccumulatedLB({
         club: p.club || "",
         hcp: p.hcpExact ?? null,
         esc: esc || undefined,
+        dob,
         teeName: p.teeName,
         gross: numGross(p),
         parTotal: parPerRound * (p._roundsPlayed ?? nRounds),
@@ -145,6 +147,7 @@ export function AccumulatedLB({
         nRounds={nRounds}
         playersDB={playersDB}
         showCols={showColsProp ?? { esc: true, fed: true, tee: true }}
+        tournamentDate={tournament.date}
         sortable
         filterable
         extraColumns={extraColumns}

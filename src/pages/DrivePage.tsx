@@ -22,7 +22,7 @@ import { resolveFedsInTournaments , buildEscLookup, normalizePlayer } from "../u
 import { resolveEsc, buildTemporalEscLookup, type TemporalEscLookup } from "../data/fpgUtils";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
-import { PILL_TCODE, EscPill, SIDEBAR_ACCENT } from "../ui/PillBadge";
+import { PILL_TCODE, EscPill, SIDEBAR_ACCENT, RoundPill, NineHPill } from "../ui/PillBadge";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import PlayerLink from "../ui/PlayerLink";
@@ -550,13 +550,16 @@ function DriveAccumulatedLB({ tournament, nRounds, escLookup, playersDB, sdLooku
       };
     });
     const numGross = typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : (p.grossTotal as number) ?? 999;
+    const _fed = p.fed || p.fedCode;
+    const dob = (_fed && (((playersDB as any)?.[_fed]?.dob) || fedBirthdates?.get(_fed))) || null;
     return {
       key: p.scoreId || p.name,
       name: p.name,
-      fed: p.fed || p.fedCode,
+      fed: _fed,
       club: p.club || "",
       hcp: p.hcpExact ?? null,
       esc: esc || undefined,
+      dob,
       teeName: p.teeName,
       pos: typeof p.pos === "number" ? p.pos : parseInt(String(p.pos)) || 999,
       gross: numGross,
@@ -597,6 +600,7 @@ function DriveAccumulatedLB({ tournament, nRounds, escLookup, playersDB, sdLooku
         nRounds={nRounds}
         playersDB={playersDB}
         showCols={{ esc: true, fed: true, tee: true }}
+        tournamentDate={tournament.date}
         sortable
         filterable
       />
@@ -1637,6 +1641,7 @@ function DriveContent() {
           <DataSourcesChip sources={allSources} />
           <ToolbarSep />
           <TabRow
+            style={{ marginBottom: 0 }}
             tabs={[
               { key: "torneios",      label: "Torneios" },
               { key: "ranking-sub12", label: "🏅 Ranking Sub-12" },
@@ -1647,6 +1652,7 @@ function DriveContent() {
           {navMode === "torneios" && (<>
             <ToolbarSep />
             <TabRow
+              style={{ marginBottom: 0 }}
               tabs={[
                 { key: "all",       label: "Todos" },
                 { key: "tour",      label: "🏌️ Tour", count: countTour },
@@ -1693,7 +1699,7 @@ function DriveContent() {
         {navMode === "torneios" && (availRegions.length > 1 || availEscs.length > 0) && (
           <div style={{
             display: "flex", alignItems: "center", gap: md.isMobile ? 4 : 6,
-            padding: md.isMobile ? "4px 6px 6px" : "4px 10px 6px",
+            padding: "4px 12px 6px",
             overflowX: md.isMobile ? "visible" : "auto",
             flexWrap: md.isMobile ? "wrap" : "nowrap",
             rowGap: md.isMobile ? 4 : undefined,
@@ -1722,7 +1728,7 @@ function DriveContent() {
               })}
               <ToolbarSep />
             </>)}
-            <button className={"tourn-tab tourn-tab-sm shrink-0" + (escFilter.length === 0 ? " active" : "")}
+            <button className={"tourn-tab tourn-tab-sm shrink-0" + (escFilter.length === 0 ? " active" : " tourn-tab-muted")}
               onClick={() => setEscFilter([])}>
               {md.isMobile ? `Todos ${uniquePCRegion}` : `Todos (${uniquePCRegion} jog)`}
             </button>
@@ -1879,12 +1885,13 @@ function DriveContent() {
             </div>
           </div>
 
-          {/* Conteúdo principal */}
-          <div className="content">
+          {/* Conteúdo principal — mesmo slot/estilo que a CircuitShell (.course-detail:
+              padding var(--space-inner) + background var(--bg-detail)). */}
+          <div className="course-detail" ref={md.detailRef}>
 
             {/* RESUMO */}
             {selectedGroupKey === null && (
-              <div style={{ padding: "0 12px 12px" }}>
+              <div>
                 <div className="card overflow-hidden">
                   <div className="h-md fs-14">
                     📋 {series === "tour" ? "Drive Tour" : series === "challenge" ? "Drive Challenge" : series === "aquapor" ? "AQUAPOR" : "DRIVE"}
@@ -1919,21 +1926,72 @@ function DriveContent() {
               drawRounds.sort((a, b) => a - b);
               const hasExtraTabs = hasAdmissions || drawRounds.length > 0;
               return (
-              <div style={{ padding: "0 12px 12px" }}>
+              <div>
+                {curTournament && (() => {
+                  const nholes = curTournament.players[0]?.nholes || 18;
+                  const nJog = curTournament.players.filter(p => !isDNS(p) && !p._incomplete).length;
+                  const parTotal = curTournament.players[0]?.parTotal
+                    || (curTournament.players[0]?.par?.reduce((a, b) => a + b, 0))
+                    || (curTournament.players[0]?.roundScores?.[0]?.pars?.reduce((a, b) => a + b, 0))
+                    || 0;
+                  return (
+                  <div className="detail-header">
+                    {/* Cabeçalho ao estilo CircuitShell: título grande + acções,
+                        sub-linha com campo/data e pills. Título clicável → link
+                        canónico `/drive/torneio/{ccode}-{tcode}` (partilhável). */}
+                    <div className="detail-header-top">
+                      {(() => {
+                        const canonicalUrl = tournamentUrl("drive", curTournament.ccode, curTournament.tcode);
+                        const titleText = selectedGroup.label || curTournament.campo || curTournament.name || "Torneio";
+                        return canonicalUrl ? (
+                          <a href={canonicalUrl} target="_blank" rel="noopener noreferrer"
+                            title="Link canónico do torneio (abrir em nova aba para partilhar)"
+                            style={{ color: "inherit", textDecoration: "none" }}>
+                            <h2 className="detail-title" style={{ margin: 0 }}>{titleText}</h2>
+                          </a>
+                        ) : <h2 className="detail-title" style={{ margin: 0 }}>{titleText}</h2>;
+                      })()}
+                      <div className="flex-wrap" style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                        <TournExtLinks ccode={curTournament.ccode} tcode={curTournament.tcode} />
+                        <PrintButton />
+                      </div>
+                    </div>
+                    <div className="detail-sub">
+                      {curTournament.campo && <span className="muted">📍 {curTournament.campo}</span>}
+                      <span className="muted ml-8">📅 {fmtDateShort(curTournament.date)}</span>
+                      <span className="gap-4 ml-8" style={{ display: "inline-flex", alignItems: "center", flexWrap: "wrap" }}>
+                        <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)", border: "1px solid var(--border)" }}>
+                          {nJog} jog
+                        </span>
+                        {selectedGroup.isMulti && <RoundPill nR={selectedGroup.totalRounds} />}
+                        {nholes <= 9 && <NineHPill />}
+                        {parTotal > 0 && (
+                          <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)", border: "1px solid var(--border)" }}>
+                            Par {parTotal}
+                          </span>
+                        )}
+                        {!selectedGroup.isEvent && curTournament.escalao && <EscPill esc={curTournament.escalao} />}
+                        {selectedGroup.isEvent && <span className="muted">{selectedGroup.entries.length} escalões</span>}
+                      </span>
+                    </div>
+                  </div>
+                  );
+                })()}
+
                 {/* Tabs: Inscrições / Draws + rondas (isMulti) ou escalões (isEvent) */}
                 {(selectedGroup.isMulti || selectedGroup.isEvent || hasExtraTabs) && (
-                  <div className="escalao-pills flex-wrap" style={{ gap: 3, padding: "8px 0 0" }}>
+                  <div className="tab-bar" style={{ marginBottom: 8 }}>
                     {hasAdmissions && (
                       <button
-                        className={"tourn-tab tourn-tab-sm" + (specialTab === "admissions" ? " active" : "")}
+                        className={"tab-under" + (specialTab === "admissions" ? " active" : "")}
                         onClick={() => setSpecialTab("admissions")}>
                         📝 Inscrições
-                        <span className="fs-10" style={{ marginLeft: 3, opacity: 0.7 }}>({adm.players.length})</span>
+                        <span className="muted fs-10" style={{ marginLeft: 4 }}>({adm.players.length})</span>
                       </button>
                     )}
                     {drawRounds.map(r => (
                       <button key={`draw:${r}`}
-                        className={"tourn-tab tourn-tab-sm" + (specialTab === `draw:${r}` ? " active" : "")}
+                        className={"tab-under" + (specialTab === `draw:${r}` ? " active" : "")}
                         onClick={() => setSpecialTab(`draw:${r}`)}>
                         🎯 Draw R{r}
                       </button>
@@ -1947,20 +2005,17 @@ function DriveContent() {
                       const isActive = specialTab === null && roundIdx === ri;
                       return (
                         <button key={entry.tcode + "_" + ri}
-                          className={"tourn-tab tourn-tab-sm" + (isActive ? " active" : "")}
-                          onClick={() => { setSpecialTab(null); setRoundIdx(ri); }}
-                          style={isActive ? {} : isResumo
-                            ? { background: "var(--bg-warn-strong)", color: "var(--color-warn-dark)", borderColor: "var(--bg-warn-strong)" }
-                            : {}}>
+                          className={"tab-under" + (isActive ? " active" : "")}
+                          onClick={() => { setSpecialTab(null); setRoundIdx(ri); }}>
                           {isResumo ? "📊" : selectedGroup.isEvent ? "⚡" : "🏌️"} {lbl}
-                          <span className="fs-10" style={{ marginLeft: 3, opacity: 0.7 }}>({activeCount} jog)</span>
+                          <span className="muted fs-10" style={{ marginLeft: 4 }}>({activeCount} jog)</span>
                         </button>
                       );
                     })}
                     {/* Tab Scorecards combinados — só para multi-ronda */}
                     {selectedGroup.isMulti && selectedGroup.entries.some(e => e._roundLabel === "Resumo") && (
                       <button
-                        className={"tourn-tab tourn-tab-sm" + (specialTab === null && roundIdx === selectedGroup.entries.length ? " active" : "")}
+                        className={"tab-under" + (specialTab === null && roundIdx === selectedGroup.entries.length ? " active" : "")}
                         onClick={() => { setSpecialTab(null); setRoundIdx(selectedGroup.entries.length); }}>
                         📋 Scorecards
                       </button>
@@ -1968,45 +2023,7 @@ function DriveContent() {
                   </div>
                 )}
                 {curTournament && (
-                  <div className="card overflow-hidden" style={{ marginTop: (selectedGroup.isMulti || selectedGroup.isEvent) ? 8 : 0 }}>
-                    <div className="h-md fs-14 gap-8" style={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
-                      {/* Título clicável → link canónico `/drive/torneio/{ccode}-{tcode}`.
-                          Permite partilhar deep-link via right-click "copiar endereço do link". */}
-                      {(() => {
-                        const canonicalUrl = tournamentUrl("drive", curTournament.ccode, curTournament.tcode);
-                        const content = (
-                          <>
-                            {selectedGroup.isEvent
-                              ? <>⚡ {curTournament.escalao} — {selectedGroup.campo}</>
-                              : selectedGroup.isMulti
-                                ? <>{curTournament._roundLabel === "Resumo" ? "📊 Acumulado" : "🏌️ " + curTournament._roundLabel} — {selectedGroup.campo}</>
-                                : <>🏆 Scorecard — {selectedGroup.label}</>}
-                          </>
-                        );
-                        return canonicalUrl ? (
-                          <a
-                            href={canonicalUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            title="Link canónico do torneio (abrir em nova aba para partilhar)"
-                            style={{ color: "inherit", textDecoration: "none" }}>
-                            <span>{content}</span>
-                          </a>
-                        ) : <span>{content}</span>;
-                      })()}
-                      <TournExtLinks ccode={curTournament.ccode} tcode={curTournament.tcode} />
-                      <PrintButton />
-                    </div>
-                    <div className="muted fs-11 mb-4">
-                      T{curTournament.num} · 📍 {curTournament.campo} · 📅 {fmtDateShort(curTournament.date)}
-                      {selectedGroup.isMulti && <> · {selectedGroup.totalRounds} rondas</>}
-                      {selectedGroup.isEvent && <> · {selectedGroup.entries.length} escalões</>}
-                      {" · "}{curTournament.players.filter(p => !isDNS(p) && !p._incomplete).length} jog
-                      {curTournament._roundLabel === "Resumo" && curTournament.players.some(p => p._incomplete) && (
-                        <> + {curTournament.players.filter(p => p._incomplete).length} inc</>
-                      )}
-                      {" · "}{curTournament.players[0]?.nholes || 18}h
-                    </div>
+                  <div className="overflow-hidden">
                     {specialTab === "admissions" && adm
                       ? <AdmissionsTab
                           admissions={adm}

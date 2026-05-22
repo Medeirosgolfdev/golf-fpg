@@ -1030,6 +1030,9 @@ tr.cross-current { background: var(--bg-success); }
 .sc-score.worse { background: var(--score-worse); color: #fff; border-radius: 0; }
 .sc-score.sc-empty { color: var(--border); font-weight: 400; background: none; }
 .sc-score.sc-nr { color: var(--border); font-weight: 400; font-size: 10px; background: none; }
+/* Buraco não terminado — valor inferido (Net Double Bogey). Pintado a cinzento
+   para distinguir de scores reais (como nos resultados de torneios sociais). */
+.sc-score.sc-inferred { background: var(--score-inferred-bg); color: var(--score-inferred-fg); border-radius: 0; font-style: italic; }
 
 @media (max-width: 900px) {
  .sc-header { flex-direction: column; align-items: flex-start; gap: 8px; }
