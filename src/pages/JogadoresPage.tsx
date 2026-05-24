@@ -6,6 +6,7 @@ import { norm, shortDate, fmtSign, fmtToPar, fpgScoringUrl } from "../utils/form
 import { getTeeHex, textOnColor, normKey, teeBorder } from "../utils/teeColors";
 import { clubShort, clubLong, hcpDisplay, escCls } from "../utils/playerUtils";
 import { numSafe, meanArr, stdevArr, minArr, maxArr, linearSlope } from "../utils/mathUtils";
+import { acesFromHoleScores } from "../utils/aces";
 import { scClass, fmtGrossDelta, fmtStb, sdClassByHcp, fmtSdVal, sc3m, SC, toParClass } from "../utils/scoreDisplay";
 import {
   type PlayerPageData, type CourseData, type RoundData,
@@ -1587,6 +1588,15 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
     return n;
   }, [data, curYear]);
 
+  // Holes-in-one: gross 1 em buraco par 3/4 (par conhecido), sobre todas as rondas.
+  const aces = useMemo(() => {
+    if (!data) return [];
+    // Lookup scoreId → {course, date} a partir de DATA para o tooltip.
+    const info = new Map<string, { course: string; date: string }>();
+    for (const c of data.DATA) for (const r of c.rounds) info.set(String(r.scoreId), { course: c.course, date: r.date });
+    return acesFromHoleScores(data.HOLES).map(a => ({ ...a, ...info.get(a.scoreId) }));
+  }, [data]);
+
   // Current HCP = post-round value from HCP_INFO (not pre-round r.hi)
   const latestHcp = data?.HCP_INFO?.current != null ? Number(data.HCP_INFO.current) : null;
   const meta = data?.META;
@@ -1691,6 +1701,17 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
           {totalCourses > 0 && <span className="p p-outline">{totalCourses} campos</span>}
           {totalRounds > 0 && <span className="p p-outline">{totalRounds} voltas</span>}
           {roundsThisYear > 0 && <span className="p p-outline" title={`Rondas em ${curYear}`}>{roundsThisYear} em {curYear}</span>}
+          {aces.length > 0 && (
+            <span
+              className="p"
+              style={{ background: "var(--score-eagle, #f59e0b)", color: "#fff", border: "1px solid var(--score-eagle, #f59e0b)" }}
+              title={aces
+                .map(a => `Buraco ${a.hole} (par ${a.par})${a.course ? ` · ${a.course}` : ""}${a.date ? ` · ${a.date}` : ""}`)
+                .join("\n")}
+            >
+              🕳️ {aces.length} hole-in-one
+            </span>
+          )}
           {meta?.lastUpdate && <span className="muted fs-11">Últ. act.: {meta.lastUpdate}</span>}
         </div>
       </div>

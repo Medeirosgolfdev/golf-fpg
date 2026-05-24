@@ -30,13 +30,13 @@ const UA = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like
 
 function loadCookies() {
   if (!fs.existsSync(COOKIES_FILE)) {
-    console.error("❌ Ficheiro não encontrado:", COOKIES_FILE);
+    console.error("[ERRO] Ficheiro nao encontrado:", COOKIES_FILE);
     console.error("   Corre primeiro: node scripts/refresh-all-cookies.js");
     process.exit(1);
   }
   const j = JSON.parse(fs.readFileSync(COOKIES_FILE, "utf8"));
   if (!j.cookieHeader) {
-    console.error("❌ cookieHeader vazio em", COOKIES_FILE);
+    console.error("[ERRO] cookieHeader vazio em", COOKIES_FILE);
     process.exit(1);
   }
   return j.cookieHeader;
@@ -44,10 +44,10 @@ function loadCookies() {
 
 async function main() {
   const COOKIE = loadCookies();
-  console.log("→ Cookies lidos de", COOKIES_FILE.replace(process.cwd(), "."));
+  console.log("-> Cookies lidos de", COOKIES_FILE.replace(process.cwd(), "."));
   console.log("  (" + COOKIE.length + " chars, " + (COOKIE.match(/=/g) || []).length + " cookies)");
 
-  console.log("→ POST", POST_URL);
+  console.log("-> POST", POST_URL);
   const r = await fetch(POST_URL, {
     method: "POST",
     headers: {
@@ -61,11 +61,11 @@ async function main() {
     },
     body: JSON.stringify(POST_BODY),
   });
-  console.log("← HTTP", r.status, r.statusText);
+  console.log("<- HTTP", r.status, r.statusText);
   const text = await r.text();
 
   if (text.includes("Runtime Error") || text.includes("Param_Errors") || text.includes("Erro 999")) {
-    console.log("\n❌ FALHA — cookies inválidos/expirados");
+    console.log("\n[ERRO] FALHA - cookies invalidos/expirados");
     console.log("Primeiros 400 chars:", text.slice(0, 400).replace(/\s+/g, " "));
     process.exit(2);
   }
@@ -74,7 +74,7 @@ async function main() {
     const j = JSON.parse(text);
     if (j.d?.Result === "OK") {
       const recs = j.d.Records || [];
-      console.log("\n✅ SUCESSO — Result:OK");
+      console.log("\n[OK] SUCESSO - Result:OK");
       console.log("   TotalRecordCount:", j.d.TotalRecordCount);
       console.log("   Records devolvidos:", recs.length);
       if (recs[0]) {
@@ -84,11 +84,11 @@ async function main() {
       }
       process.exit(0);
     }
-    console.log("\n⚠ Resposta JSON inesperada:");
+    console.log("\n[AVISO] Resposta JSON inesperada:");
     console.log(JSON.stringify(j, null, 2).slice(0, 1000));
     process.exit(3);
   } catch {
-    console.log("\n⚠ Resposta não é JSON:");
+    console.log("\n[AVISO] Resposta nao e JSON:");
     console.log(text.slice(0, 1000));
     process.exit(4);
   }

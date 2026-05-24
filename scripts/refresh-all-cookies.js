@@ -215,8 +215,8 @@ async function validateInPage(page, spec) {
     }, spec);
     const ok = r.status === 200 && r.result === "OK";
     const detail = ok
-      ? `HTTP ${r.status} · Result=OK · TotalRecordCount=${r.total}`
-      : `HTTP ${r.status} · Result=${r.result || "?"} · ${r.bodyPrev}`;
+      ? `HTTP ${r.status} | Result=OK | TotalRecordCount=${r.total}`
+      : `HTTP ${r.status} | Result=${r.result || "?"} | ${r.bodyPrev}`;
     return { ok, status: r.status, detail };
   } catch (e) {
     return { ok: false, status: 0, detail: e.message };
@@ -225,29 +225,29 @@ async function validateInPage(page, spec) {
 
 // ─── Main ────────────────────────────────────────────────────────────
 (async () => {
-  log("🚀 refresh-all-cookies — Playwright + Chrome 90");
+  log("refresh-all-cookies - Playwright + Chrome 90");
   log(`   CHROME90_PATH    = ${CHROME90_PATH}`);
   log(`   CHROME90_PROFILE = ${CHROME90_PROFILE}`);
   log(`   headless         = ${HEADLESS}`);
-  log(`   validação        = ${VALIDATE ? "on" : "off"}`);
+  log(`   validacao        = ${VALIDATE ? "on" : "off"}`);
 
   ensureDirs();
 
   // Validações iniciais
   if (!fs.existsSync(CHROME90_PATH)) {
-    log(`❌ Chrome 90 não encontrado em: ${CHROME90_PATH}`);
+    log(`[ERRO] Chrome 90 nao encontrado em: ${CHROME90_PATH}`);
     log("   Configura via env var CHROME90_PATH.");
     process.exit(1);
   }
   if (!fs.existsSync(CHROME90_PROFILE)) {
-    log(`⚠ Perfil não encontrado: ${CHROME90_PROFILE}`);
-    log("   Playwright vai criar um novo — mas estará vazio/sem login.");
-    log("   Setup: lança Chrome 90 com --user-data-dir apontando aí e faz login manual em area.my.fpg.pt.");
+    log(`[AVISO] Perfil nao encontrado: ${CHROME90_PROFILE}`);
+    log("   Playwright vai criar um novo - mas estara vazio/sem login.");
+    log("   Setup: lanca Chrome 90 com --user-data-dir apontando ai e faz login manual em area.my.fpg.pt.");
   }
 
   let context = null;
   try {
-    log("→ A lançar Chrome 90 com perfil persistente...");
+    log("-> A lancar Chrome 90 com perfil persistente...");
     context = await chromium.launchPersistentContext(CHROME90_PROFILE, {
       executablePath: CHROME90_PATH,
       headless:       HEADLESS,
@@ -265,8 +265,8 @@ async function validateInPage(page, spec) {
       ],
     });
   } catch (e) {
-    log(`❌ Falhou a lançar Chrome 90: ${e.message}`);
-    log("   Dica comum: Chrome 90 com o mesmo perfil já aberto → fecha-o primeiro.");
+    log(`[ERRO] Falhou a lancar Chrome 90: ${e.message}`);
+    log("   Dica comum: Chrome 90 com o mesmo perfil ja aberto -> fecha-o primeiro.");
     process.exit(1);
   }
 
@@ -276,22 +276,22 @@ async function validateInPage(page, spec) {
   let hardFail = false;
 
   for (const spec of HOSTS) {
-    log("─────────────────────────────────────────────────────");
-    log(`📍 Host: ${spec.host}`);
+    log("-------------------------------------------------------");
+    log(`Host: ${spec.host}`);
     try {
       for (const url of spec.warmup) {
-        log(`   → GET ${url}`);
+        log(`   -> GET ${url}`);
         const r = await page.goto(url, { waitUntil: "networkidle", timeout: 45000 });
-        log(`     status=${r?.status()} · title="${(await page.title()).slice(0, 60)}"`);
+        log(`     status=${r?.status()} | title="${(await page.title()).slice(0, 60)}"`);
         await sleep(1500);
       }
 
       // Capturar cookies desse host específico
       const cookies = await context.cookies(`https://${spec.host}`);
-      log(`   ✓ ${cookies.length} cookies capturados`);
+      log(`   [OK] ${cookies.length} cookies capturados`);
       cookies.forEach(c => {
         const v = c.value.length > 20 ? c.value.slice(0, 17) + "..." : c.value;
-        log(`     · ${c.name.padEnd(28)} = ${v.padEnd(22)}  [httpOnly=${c.httpOnly}]`);
+        log(`     - ${c.name.padEnd(28)} = ${v.padEnd(22)}  [httpOnly=${c.httpOnly}]`);
       });
 
       if (cookies.length === 0) {
@@ -301,18 +301,18 @@ async function validateInPage(page, spec) {
 
       // Escrever ficheiro
       const header = writeCookieFile(spec.file, spec.host, cookies);
-      log(`   💾 Gravado em ${path.relative(REPO_ROOT, spec.file)} (${header.length} chars)`);
+      log(`   Gravado em ${path.relative(REPO_ROOT, spec.file)} (${header.length} chars)`);
 
       // Validar
       const v = await validateInPage(page, spec.validate);
       if (v.ok) {
-        log(`   ✅ Validação: ${v.detail}`);
+        log(`   [OK] Validacao: ${v.detail}`);
       } else {
-        log(`   ⚠ Validação falhou: ${v.detail}`);
+        log(`   [AVISO] Validacao falhou: ${v.detail}`);
       }
       results.push({ host: spec.host, ok: v.ok, detail: v.detail, file: spec.file });
     } catch (e) {
-      log(`   ❌ Erro no host ${spec.host}: ${e.message}`);
+      log(`   [ERRO] Erro no host ${spec.host}: ${e.message}`);
       results.push({ host: spec.host, ok: false, detail: e.message });
     }
   }
@@ -320,26 +320,26 @@ async function validateInPage(page, spec) {
   await context.close();
 
   // ─── Sumário ────────────────────────────────────────────────────
-  log("═════════════════════════════════════════════════════");
-  log("📊 Sumário:");
+  log("=======================================================");
+  log("Sumario:");
   let okCount = 0;
   for (const r of results) {
-    const icon = r.ok ? "✅" : "❌";
+    const icon = r.ok ? "[OK]" : "[ERRO]";
     log(`   ${icon} ${r.host.padEnd(22)}  ${r.detail}`);
     if (r.ok) okCount++;
   }
   log(`   ${okCount}/${results.length} hosts OK`);
 
   if (okCount === 0) {
-    log("❌ Nenhum host válido. Provavelmente a sessão SSO expirou.");
+    log("[ERRO] Nenhum host valido. Provavelmente a sessao SSO expirou.");
     log("   Abre Chrome 90 com --user-data-dir=" + CHROME90_PROFILE);
     log("   e faz login em https://area.my.fpg.pt/login/");
     process.exit(2);
   }
   if (okCount < results.length) {
-    log(`⚠ Parcial: ${results.length - okCount} hosts falharam.`);
+    log(`[AVISO] Parcial: ${results.length - okCount} hosts falharam.`);
     process.exit(3);
   }
-  log("🎉 Tudo OK — cookies frescos escritos e validados.");
+  log("Tudo OK - cookies frescos escritos e validados.");
   process.exit(0);
 })();

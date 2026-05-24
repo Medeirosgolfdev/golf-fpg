@@ -31,6 +31,7 @@ import { IntlTournView } from "../IntlTournView";
 import { KidsLinkCtx } from "../KidsLink";
 import { useKidsLinkMap } from "../../hooks/useKidsLinkMap";
 import { isManuelByName } from "../../constants/manuel";
+import { tournamentAces } from "../../utils/aces";
 import SortableHdr from "../SortableHdr";
 import { useSort } from "../../hooks/useSort";
 import type { Tournament as FPGTournament, Player as FPGPlayer } from "../../data/fpgTypes";
@@ -39,7 +40,7 @@ import type {
   CircuitSectionKind, CircuitInscritoRow, CircuitDrawGroup,
 } from "./types";
 
-// ── Helpers ──────────────────────────────────────────────────────────
+// ── Helpers ─────────────────────────────────────────────────────────── //
 
 /** Normaliza nome para indexação (lowercase, sem diacríticos, espaços únicos). */
 function normName(s: string): string {
@@ -455,7 +456,9 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
     const nRounds = res?.rounds ?? curDiv?.roundLabels?.length ?? 0;
     const parArr = players[0]?.par;
     const parTotal = players[0]?.parTotal ?? (parArr ? parArr.reduce((a, b) => a + b, 0) : 0);
-    return { nPlayers, nRounds, parTotal };
+    // Holes-in-one da divisão (sobre a lista consolidada, NÃO a filtrada por toggles).
+    const aces = tournamentAces(players);
+    return { nPlayers, nRounds, parTotal, aces };
   })();
   const curDateStr = fmtDateRange(cur?.dateStart, cur?.dateEnd);
   /** Links de ação do header (cur.links + sourceUrl como "Leaderboard oficial"). */
@@ -639,6 +642,17 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
                         {headerStats.parTotal > 0 && (
                           <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)", border: "1px solid var(--border)" }}>
                             Par {headerStats.parTotal}
+                          </span>
+                        )}
+                        {headerStats.aces.length > 0 && (
+                          <span
+                            className="p p-sm"
+                            style={{ background: "var(--score-eagle, #f59e0b)", color: "#fff", border: "1px solid var(--score-eagle, #f59e0b)" }}
+                            title={headerStats.aces
+                              .map(a => `${a.name || "?"} — buraco ${a.hole} (par ${a.par})${a.round ? ` · R${a.round}` : ""}`)
+                              .join("\n")}
+                          >
+                            🕳️ {headerStats.aces.length} hole-in-one
                           </span>
                         )}
                         {(curDiv.tabLabel || curDiv.escalao) && <EscPill esc={curDiv.tabLabel || curDiv.escalao} />}

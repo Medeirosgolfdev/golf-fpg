@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <filter id="sombra" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="6" dy="8" stdDeviation="5" flood-color="#000000" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+
+  <!-- Corpo da bandeira -->
+  <g filter="url(#sombra)">
+    <!-- Vermelho (fundo) -->
+    <rect x="0" y="0" width="600" height="400" fill="#DA251D"/>
+    <!-- Verde (faixa esquerda ~40%) -->
+    <rect x="0" y="0" width="240" height="400" fill="#1A8A3A"/>
+  </g>
+
+  <!-- Emblema central, sobre a divisão verde/vermelho -->
+  <g transform="translate(240,200)">
+    <!-- Anel dourado exterior -->
+    <circle cx="0" cy="0" r="74" fill="#FFD24A" stroke="#E0A800" stroke-width="4"/>
+    <!-- Campo branco interior -->
+    <circle cx="0" cy="0" r="56" fill="#FFFFFF"/>
+
+    <!-- Escudo vermelho com bordo branco -->
+    <g transform="translate(0,-2)">
+      <path d="M -34 -40
+               L 34 -40
+               L 34 18
+               C 34 40, 18 52, 0 60
+               C -18 52, -34 40, -34 18
+               Z"
+            fill="#FFFFFF"/>
+      <path d="M -28 -34
+               L 28 -34
+               L 28 16
+               C 28 35, 14 46, 0 53
+               C -14 46, -28 35, -28 16
+               Z"
+            fill="#DA251D"/>
+
+      <!-- Quinas: 5 escudetes azuis com pontos brancos -->
+      <g fill="#143C8C">
+        <!-- escudete central de cima -->
+        <rect x="-9" y="-26" width="18" height="22" rx="3"/>
+        <!-- escudete central de baixo -->
+        <rect x="-9" y="6" width="18" height="22" rx="3"/>
+        <!-- escudete esquerdo -->
+        <rect x="-26" y="-10" width="18" height="22" rx="3"/>
+        <!-- escudete direito -->
+        <rect x="8" y="-10" width="18" height="22" rx="3"/>
+        <!-- escudete inferior central (em ponta) -->
+        <rect x="-9" y="-10" width="18" height="22" rx="3"/>
+      </g>
+      <!-- besantes (pontos brancos) das quinas -->
+      <g fill="#FFFFFF">
+        <circle cx="0" cy="-15" r="2.6"/>
+        <circle cx="0" cy="17" r="2.6"/>
+        <circle cx="-17" cy="1" r="2.6"/>
+        <circle cx="17" cy="1" r="2.6"/>
+        <circle cx="0" cy="1" r="2.6"/>
+      </g>
+    </g>
+  </g>
+</svg>

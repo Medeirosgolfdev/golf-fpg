@@ -16,12 +16,12 @@ const COOKIES_FILE = path.join(__dirname, "..", "api", ".datagolf-cookies.json")
 
 function loadCookies() {
   if (!fs.existsSync(COOKIES_FILE)) {
-    console.error("❌ Ficheiro não encontrado:", COOKIES_FILE);
+    console.error("[ERRO] Ficheiro nao encontrado:", COOKIES_FILE);
     process.exit(1);
   }
   const j = JSON.parse(fs.readFileSync(COOKIES_FILE, "utf8"));
   if (!j.cookieHeader) {
-    console.error("❌ cookieHeader vazio em", COOKIES_FILE);
+    console.error("[ERRO] cookieHeader vazio em", COOKIES_FILE);
     process.exit(1);
   }
   return j.cookieHeader;
@@ -29,12 +29,12 @@ function loadCookies() {
 
 async function main() {
   const COOKIE = loadCookies();
-  console.log("→ Cookies lidos de", COOKIES_FILE.replace(process.cwd(), "."));
+  console.log("-> Cookies lidos de", COOKIES_FILE.replace(process.cwd(), "."));
   console.log("  (" + COOKIE.length + " chars, " + (COOKIE.match(/=/g) || []).length + " cookies)");
 
   const url = "https://my.fpg.pt/Home/PlayerWHS.aspx/HCPWhsFederLST?fed_code=52884&pp=N&jtStartIndex=0&jtPageSize=100";
 
-  console.log("→ POST", url);
+  console.log("-> POST", url);
   const r = await fetch(url, {
     method: "POST",
     headers: {
@@ -54,11 +54,11 @@ async function main() {
     body: JSON.stringify({ fed_code: "52884", pp: "N", jtStartIndex: "0", jtPageSize: "100" }),
   });
 
-  console.log("← HTTP", r.status, r.statusText);
+  console.log("<- HTTP", r.status, r.statusText);
   const text = await r.text();
 
   if (text.includes("Param_Errors.aspx")) {
-    console.log("\n❌ FALHA — Param_Errors.aspx (cookies inválidos/expirados)");
+    console.log("\n[ERRO] FALHA - Param_Errors.aspx (cookies invalidos/expirados)");
     console.log("Primeiros 500 chars:", text.slice(0, 500));
     process.exit(2);
   }
@@ -66,7 +66,7 @@ async function main() {
   try {
     const j = JSON.parse(text);
     if (j.d && j.d.Result === "OK") {
-      console.log("\n✅ SUCESSO — autenticação funcionou!");
+      console.log("\n[OK] SUCESSO - autenticacao funcionou!");
       console.log("TotalRecordCount:", j.d.TotalRecordCount);
       console.log("Records devolvidos:", j.d.Records?.length);
       if (j.d.Records?.[0]) {
@@ -78,11 +78,11 @@ async function main() {
       }
       process.exit(0);
     }
-    console.log("\n⚠ Resposta JSON inesperada:");
+    console.log("\n[AVISO] Resposta JSON inesperada:");
     console.log(JSON.stringify(j, null, 2).slice(0, 2000));
     process.exit(3);
   } catch {
-    console.log("\n⚠ Resposta não é JSON:");
+    console.log("\n[AVISO] Resposta nao e JSON:");
     console.log(text.slice(0, 2000));
     process.exit(4);
   }
