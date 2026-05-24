@@ -34,6 +34,7 @@ import LoadingState from "../ui/LoadingState";
 import { ScorecardLeaderboard } from "../ui/ScorecardLeaderboard";
 import SexBadge from "../ui/SexBadge";
 import { C } from "../utils/colors";
+import { tournamentAces } from "../utils/aces";
 import { MultiRoundLeaderboard } from "../ui/MultiRoundLeaderboard";
 import type { MRRound, MultiRoundRow } from "../ui/multiRoundTypes";
 import {
@@ -1934,6 +1935,20 @@ function DriveContent() {
                     || (curTournament.players[0]?.par?.reduce((a, b) => a + b, 0))
                     || (curTournament.players[0]?.roundScores?.[0]?.pars?.reduce((a, b) => a + b, 0))
                     || 0;
+                  // Holes-in-one do torneio inteiro (agrega todas as rondas/escalões do grupo,
+                  // dedup por jogador+buraco para não duplicar entre rondas e o Resumo).
+                  const aces = (() => {
+                    const seen = new Set<string>();
+                    const out: { name: string; hole: number; par: number; round?: number }[] = [];
+                    for (const entry of selectedGroup.entries) {
+                      for (const a of tournamentAces(entry.players)) {
+                        const k = (a.name || "").toLowerCase().trim() + "|" + a.hole;
+                        if (seen.has(k)) continue;
+                        seen.add(k); out.push(a);
+                      }
+                    }
+                    return out;
+                  })();
                   return (
                   <div className="detail-header">
                     {/* Cabeçalho ao estilo CircuitShell: título grande + acções,
@@ -1968,6 +1983,13 @@ function DriveContent() {
                         {parTotal > 0 && (
                           <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)", border: "1px solid var(--border)" }}>
                             Par {parTotal}
+                          </span>
+                        )}
+                        {aces.length > 0 && (
+                          <span className="p p-sm"
+                            style={{ background: "var(--score-eagle, #f59e0b)", color: "#fff", border: "1px solid var(--score-eagle, #f59e0b)" }}
+                            title={aces.map(a => `${a.name || "?"} — buraco ${a.hole} (par ${a.par})${a.round ? ` · R${a.round}` : ""}`).join("\n")}>
+                            🕳️ {aces.length} hole-in-one
                           </span>
                         )}
                         {!selectedGroup.isEvent && curTournament.escalao && <EscPill esc={curTournament.escalao} />}

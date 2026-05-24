@@ -67,6 +67,12 @@ function entryPtState(e: CircuitEntry): boolean | undefined {
   if (e.divisions) return e.divisions.some(d => !!d.results?.players.some(p => isPt(p)));
   return undefined;
 }
+/** Houve hole-in-one neste torneio? Só calculável com divisões eager carregadas
+ *  (páginas lazy só mostram o marcador depois de abrir o torneio, nos tabs). */
+function entryHasAce(e: CircuitEntry): boolean {
+  if (!e.divisions) return false;
+  return e.divisions.some(d => !!d.results && tournamentAces(d.results.players).length > 0);
+}
 
 const TOGGLE_DEF: Record<CircuitToggle, { label: string; title: string }> = {
   manuel:      { label: "★ Manuel",      title: "Só o Manuel" },
@@ -693,6 +699,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
                     {curDivisions.map(d => {
                       const active = d.key === curDiv.key;
                       const nP = d.results?.players.length ?? 0;
+                      const nAces = d.results ? tournamentAces(d.results.players).length : 0;
                       return (
                         <button
                           key={d.key}
@@ -702,6 +709,9 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
                           {d.tabLabel || d.escalao}
                           {nP > 0 && <span className="fs-10 muted"> {nP}</span>}
                           {d.hasManuel && <span style={{ color: "var(--color-good)" }}> ★</span>}
+                          {nAces > 0 && (
+                            <span title={`${nAces} hole-in-one neste escalão`}> 🕳️</span>
+                          )}
                         </button>
                       );
                     })}
@@ -825,6 +835,7 @@ function CircuitSidebar({
                     <div className="course-item-name" style={{ fontSize: 12, fontWeight: active ? 700 : 500, lineHeight: 1.3 }}>
                       {e.name}
                       {e.hasManuel && <ManuelPill />}
+                      {entryHasAce(e) && <span title="Hole-in-one neste torneio"> 🕳️</span>}
                     </div>
 
                     {/* Linha 2: campo */}
