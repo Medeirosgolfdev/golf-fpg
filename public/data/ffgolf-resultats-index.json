@@ -1,8 +1,88 @@
 {
-  "generatedAt": "2026-05-18T17:04:56.377Z",
+  "generatedAt": "2026-05-25T06:33:33.612Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
-  "total": 1607,
+  "total": 1611,
   "tournaments": [
+    {
+      "file": "01-00-2601436643.json",
+      "trnId": "2601436643",
+      "name": "Mini Tour U10 PACA - Etape 4",
+      "formule": "Simple",
+      "date": "23/05/2026",
+      "dateIso": "2026-05-23",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 2,
+      "totalPlayers": 26,
+      "divisions": [
+        {
+          "serieId": "11",
+          "label": "Simple Stroke play",
+          "players": 20
+        },
+        {
+          "serieId": "22",
+          "label": "Simple Stroke play",
+          "players": 6
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
+    },
+    {
+      "file": "03-12-2601405897.json",
+      "trnId": "2601405897",
+      "name": "GRAND-PRIX JEUNES DE BOURGES 2026",
+      "formule": "Simple",
+      "date": "23/05/2026",
+      "dateIso": "2026-05-23",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "12",
+      "seriesCount": 6,
+      "totalPlayers": 91,
+      "divisions": [
+        {
+          "serieId": "19",
+          "label": "Simple Score maximum",
+          "players": 23
+        },
+        {
+          "serieId": "113",
+          "label": "Simple Score maximum",
+          "players": 31
+        },
+        {
+          "serieId": "117",
+          "label": "Simple Score maximum",
+          "players": 16
+        },
+        {
+          "serieId": "211",
+          "label": "Simple Score maximum",
+          "players": 11
+        },
+        {
+          "serieId": "215",
+          "label": "Simple Score maximum",
+          "players": 8
+        },
+        {
+          "serieId": "219",
+          "label": "Simple Score maximum",
+          "players": 2
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
+    },
     {
       "file": "01-00-2601405042.json",
       "trnId": "2601405042",
@@ -55,6 +135,31 @@
           "serieId": "211",
           "label": "Simple Score maximum",
           "players": 22
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
+    },
+    {
+      "file": "01-00-2601437177.json",
+      "trnId": "2601437177",
+      "name": "Qualification CFJ 2 - U12 Filles Ligue Paris Ile-de-France 2026",
+      "formule": "Simple",
+      "date": "16/05/2026",
+      "dateIso": "2026-05-16",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 1,
+      "totalPlayers": 27,
+      "divisions": [
+        {
+          "serieId": "23",
+          "label": "Simple Score maximum",
+          "players": 27
         }
       ],
       "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
@@ -188,22 +293,22 @@
         },
         {
           "serieId": "117",
-          "label": "MG",
+          "label": "Simple Score maximum",
           "players": 8
         },
         {
           "serieId": "211",
-          "label": "BG",
+          "label": "Simple Score maximum",
           "players": 11
         },
         {
           "serieId": "215",
-          "label": "BF",
+          "label": "Simple Score maximum",
           "players": 6
         },
         {
           "serieId": "219",
-          "label": "MF",
+          "label": "Simple Score maximum",
           "players": 1
         }
       ],
@@ -388,32 +493,32 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 12
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 53
         },
         {
           "serieId": "115",
-          "label": "U14G",
+          "label": "Simple Score maximum",
           "players": 47
         },
         {
           "serieId": "119",
-          "label": "U16G",
+          "label": "Simple Score maximum",
           "players": 16
         },
         {
           "serieId": "213",
-          "label": "U14F",
+          "label": "Simple Score maximum",
           "players": 7
         },
         {
           "serieId": "217",
-          "label": "U16F",
+          "label": "Simple Score maximum",
           "players": 9
         }
       ],
@@ -438,22 +543,22 @@
       "divisions": [
         {
           "serieId": "121",
-          "label": "U14G",
+          "label": "Simple Score maximum",
           "players": 56
         },
         {
           "serieId": "125",
-          "label": "U16G",
+          "label": "Simple Score maximum",
           "players": 19
         },
         {
           "serieId": "223",
-          "label": "U14F",
+          "label": "Simple Score maximum",
           "players": 12
         },
         {
           "serieId": "227",
-          "label": "U16F",
+          "label": "Simple Score maximum",
           "players": 7
         }
       ],
@@ -528,12 +633,12 @@
         },
         {
           "serieId": "219",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 5
         },
         {
           "serieId": "221",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 4
         }
       ],
@@ -728,22 +833,22 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 14
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 33
         },
         {
           "serieId": "115",
-          "label": "BENG",
+          "label": "Simple Score maximum",
           "players": 40
         },
         {
           "serieId": "213",
-          "label": "BENF",
+          "label": "Simple Score maximum",
           "players": 13
         }
       ],
@@ -3873,7 +3978,7 @@
         },
         {
           "serieId": "125",
-          "label": "U12",
+          "label": "Simple Score maximum",
           "players": 9
         },
         {
@@ -3888,7 +3993,7 @@
         },
         {
           "serieId": "226",
-          "label": "U12",
+          "label": "Simple Score maximum",
           "players": 2
         },
         {
@@ -5808,12 +5913,12 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 6
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 33
         }
       ],
@@ -8678,12 +8783,12 @@
         },
         {
           "serieId": "215",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 9
         },
         {
           "serieId": "219",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 7
         }
       ],
@@ -8898,22 +9003,22 @@
       "divisions": [
         {
           "serieId": "19",
-          "label": "U14",
+          "label": "Simple Score maximum",
           "players": 57
         },
         {
           "serieId": "113",
-          "label": "U16",
+          "label": "Simple Score maximum",
           "players": 24
         },
         {
           "serieId": "210",
-          "label": "U14",
+          "label": "Simple Score maximum",
           "players": 18
         },
         {
           "serieId": "214",
-          "label": "U16",
+          "label": "Simple Score maximum",
           "players": 9
         }
       ],
@@ -9248,22 +9353,22 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 15
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 39
         },
         {
           "serieId": "115",
-          "label": "BENG",
+          "label": "Simple Score maximum",
           "players": 42
         },
         {
           "serieId": "213",
-          "label": "BENF",
+          "label": "Simple Score maximum",
           "players": 12
         }
       ],
@@ -9318,22 +9423,22 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U14F",
+          "label": "Simple Stroke play",
           "players": 14
         },
         {
           "serieId": "111",
-          "label": "U41G",
+          "label": "Simple Stroke play",
           "players": 58
         },
         {
           "serieId": "115",
-          "label": "U16G",
+          "label": "Simple Stroke play",
           "players": 25
         },
         {
           "serieId": "213",
-          "label": "U16F",
+          "label": "Simple Stroke play",
           "players": 9
         }
       ],
@@ -11518,22 +11623,22 @@
       "divisions": [
         {
           "serieId": "15",
-          "label": "U14",
+          "label": "Simple Score maximum",
           "players": 63
         },
         {
           "serieId": "17",
-          "label": "U16",
+          "label": "Simple Score maximum",
           "players": 21
         },
         {
           "serieId": "26",
-          "label": "U14",
+          "label": "Simple Score maximum",
           "players": 17
         },
         {
           "serieId": "28",
-          "label": "U16",
+          "label": "Simple Score maximum",
           "players": 6
         }
       ],
@@ -11558,12 +11663,12 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "MF",
+          "label": "Simple Score maximum",
           "players": 3
         },
         {
           "serieId": "110",
-          "label": "MG",
+          "label": "Simple Score maximum",
           "players": 9
         }
       ],
@@ -12853,22 +12958,22 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 11
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 30
         },
         {
           "serieId": "115",
-          "label": "BG",
+          "label": "Simple Score maximum",
           "players": 33
         },
         {
           "serieId": "213",
-          "label": "BF",
+          "label": "Simple Score maximum",
           "players": 10
         }
       ],
@@ -14468,7 +14573,7 @@
         },
         {
           "serieId": "211",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 25
         }
       ],
@@ -14583,22 +14688,22 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 9
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 33
         },
         {
           "serieId": "115",
-          "label": "BG",
+          "label": "Simple Score maximum",
           "players": 27
         },
         {
           "serieId": "213",
-          "label": "BF",
+          "label": "Simple Score maximum",
           "players": 15
         }
       ],
@@ -16508,12 +16613,12 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 23
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 76
         }
       ],
@@ -16598,12 +16703,12 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 21
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 54
         }
       ],
@@ -16628,22 +16733,22 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "BENF",
+          "label": "Simple Score maximum",
           "players": 7
         },
         {
           "serieId": "111",
-          "label": "BENG",
+          "label": "Simple Score maximum",
           "players": 49
         },
         {
           "serieId": "115",
-          "label": "MING",
+          "label": "Simple Score maximum",
           "players": 6
         },
         {
           "serieId": "213",
-          "label": "MINF",
+          "label": "Simple Score maximum",
           "players": 3
         }
       ],
@@ -16668,22 +16773,22 @@
       "divisions": [
         {
           "serieId": "15",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 52
         },
         {
           "serieId": "19",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 15
         },
         {
           "serieId": "27",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 11
         },
         {
           "serieId": "211",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 6
         }
       ],
@@ -16708,12 +16813,12 @@
       "divisions": [
         {
           "serieId": "15",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 61
         },
         {
           "serieId": "27",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 20
         }
       ],
@@ -16848,7 +16953,7 @@
         },
         {
           "serieId": "117",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 6
         },
         {
@@ -16863,7 +16968,7 @@
         },
         {
           "serieId": "219",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 2
         }
       ],
@@ -16898,22 +17003,22 @@
         },
         {
           "serieId": "117",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 7
         },
         {
           "serieId": "211",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 11
         },
         {
           "serieId": "215",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 2
         },
         {
           "serieId": "219",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 1
         }
       ],
@@ -16938,32 +17043,32 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 16
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 39
         },
         {
           "serieId": "115",
-          "label": "BG",
+          "label": "Simple Score maximum",
           "players": 24
         },
         {
           "serieId": "119",
-          "label": "MG",
+          "label": "Simple Score maximum",
           "players": 6
         },
         {
           "serieId": "213",
-          "label": "BF",
+          "label": "Simple Score maximum",
           "players": 9
         },
         {
           "serieId": "217",
-          "label": "MF",
+          "label": "Simple Score maximum",
           "players": 2
         }
       ],
@@ -17008,7 +17113,7 @@
         },
         {
           "serieId": "210",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 1
         },
         {
@@ -17098,32 +17203,32 @@
       "divisions": [
         {
           "serieId": "19",
-          "label": "U12",
+          "label": "Simple Score maximum",
           "players": 41
         },
         {
           "serieId": "113",
-          "label": "U14",
+          "label": "Simple Score maximum",
           "players": 18
         },
         {
           "serieId": "117",
-          "label": "U16",
+          "label": "Simple Score maximum",
           "players": 5
         },
         {
           "serieId": "210",
-          "label": "U12",
+          "label": "Simple Score maximum",
           "players": 14
         },
         {
           "serieId": "214",
-          "label": "U14",
+          "label": "Simple Score maximum",
           "players": 8
         },
         {
           "serieId": "218",
-          "label": "U16",
+          "label": "Simple Score maximum",
           "players": 3
         }
       ],
@@ -17258,12 +17363,12 @@
         },
         {
           "serieId": "215",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 5
         },
         {
           "serieId": "219",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 3
         }
       ],
@@ -17303,7 +17408,7 @@
         },
         {
           "serieId": "211",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 6
         },
         {
@@ -17313,7 +17418,7 @@
         },
         {
           "serieId": "219",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 3
         }
       ],
@@ -17338,27 +17443,27 @@
       "divisions": [
         {
           "serieId": "19",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 31
         },
         {
           "serieId": "113",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 14
         },
         {
           "serieId": "117",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 12
         },
         {
           "serieId": "211",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 11
         },
         {
           "serieId": "215",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 4
         }
       ],
@@ -17383,27 +17488,27 @@
       "divisions": [
         {
           "serieId": "19",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 26
         },
         {
           "serieId": "113",
-          "label": "BG",
+          "label": "Simple Score maximum",
           "players": 15
         },
         {
           "serieId": "117",
-          "label": "MG",
+          "label": "Simple Score maximum",
           "players": 3
         },
         {
           "serieId": "211",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 7
         },
         {
           "serieId": "215",
-          "label": "BF",
+          "label": "Simple Score maximum",
           "players": 3
         }
       ],
@@ -17468,32 +17573,32 @@
       "divisions": [
         {
           "serieId": "19",
-          "label": "U12",
+          "label": "Simple Score maximum",
           "players": 38
         },
         {
           "serieId": "113",
-          "label": "BENJAMINS",
+          "label": "Simple Score maximum",
           "players": 23
         },
         {
           "serieId": "117",
-          "label": "MINIMES",
+          "label": "Simple Score maximum",
           "players": 16
         },
         {
           "serieId": "210",
-          "label": "U12",
+          "label": "Simple Score maximum",
           "players": 19
         },
         {
           "serieId": "214",
-          "label": "BENJAMINS",
+          "label": "Simple Score maximum",
           "players": 8
         },
         {
           "serieId": "218",
-          "label": "MINIMES",
+          "label": "Simple Score maximum",
           "players": 1
         }
       ],
@@ -17548,32 +17653,32 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 12
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 39
         },
         {
           "serieId": "115",
-          "label": "BG",
+          "label": "Simple Score maximum",
           "players": 23
         },
         {
           "serieId": "119",
-          "label": "MG",
+          "label": "Simple Score maximum",
           "players": 5
         },
         {
           "serieId": "213",
-          "label": "BF",
+          "label": "Simple Score maximum",
           "players": 4
         },
         {
           "serieId": "217",
-          "label": "MF",
+          "label": "Simple Score maximum",
           "players": 4
         }
       ],
@@ -17618,12 +17723,12 @@
         },
         {
           "serieId": "215",
-          "label": "BENJAMINS",
+          "label": "Simple Stroke play",
           "players": 2
         },
         {
           "serieId": "219",
-          "label": "BENJAMINES",
+          "label": "Simple Stroke play",
           "players": 1
         }
       ],
@@ -17648,27 +17753,27 @@
       "divisions": [
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 51
         },
         {
           "serieId": "115",
-          "label": "BENG",
+          "label": "Simple Score maximum",
           "players": 39
         },
         {
           "serieId": "119",
-          "label": "MING",
+          "label": "Simple Score maximum",
           "players": 9
         },
         {
           "serieId": "213",
-          "label": "BENF",
+          "label": "Simple Score maximum",
           "players": 8
         },
         {
           "serieId": "217",
-          "label": "MINF",
+          "label": "Simple Score maximum",
           "players": 3
         }
       ],
@@ -17723,32 +17828,32 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 14
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 44
         },
         {
           "serieId": "115",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 29
         },
         {
           "serieId": "119",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 16
         },
         {
           "serieId": "213",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 11
         },
         {
           "serieId": "217",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 1
         }
       ],
@@ -17783,7 +17888,7 @@
         },
         {
           "serieId": "117",
-          "label": "U12",
+          "label": "Simple Stroke play",
           "players": 9
         },
         {
@@ -18018,12 +18123,12 @@
         },
         {
           "serieId": "215",
-          "label": "MG",
+          "label": "Simple Score maximum",
           "players": 2
         },
         {
           "serieId": "219",
-          "label": "MF",
+          "label": "Simple Score maximum",
           "players": 1
         }
       ],
@@ -18048,7 +18153,7 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 13
         },
         {
@@ -18063,17 +18168,17 @@
         },
         {
           "serieId": "117",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 7
         },
         {
           "serieId": "213",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
           "serieId": "219",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 3
         }
       ],
@@ -18458,32 +18563,32 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 5
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 17
         },
         {
           "serieId": "115",
-          "label": "BG",
+          "label": "Simple Score maximum",
           "players": 13
         },
         {
           "serieId": "119",
-          "label": "MG",
+          "label": "Simple Score maximum",
           "players": 8
         },
         {
           "serieId": "213",
-          "label": "BF",
+          "label": "Simple Score maximum",
           "players": 2
         },
         {
           "serieId": "217",
-          "label": "MF",
+          "label": "Simple Score maximum",
           "players": 2
         }
       ],
@@ -18508,32 +18613,32 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 11
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 30
         },
         {
           "serieId": "115",
-          "label": "BG",
+          "label": "Simple Score maximum",
           "players": 15
         },
         {
           "serieId": "119",
-          "label": "MG",
+          "label": "Simple Score maximum",
           "players": 5
         },
         {
           "serieId": "213",
-          "label": "BF",
+          "label": "Simple Score maximum",
           "players": 5
         },
         {
           "serieId": "217",
-          "label": "MF",
+          "label": "Simple Score maximum",
           "players": 3
         }
       ],
@@ -18568,7 +18673,7 @@
         },
         {
           "serieId": "117",
-          "label": "BENJAMINES",
+          "label": "Simple Stroke play",
           "players": 1
         },
         {
@@ -18578,7 +18683,7 @@
         },
         {
           "serieId": "215",
-          "label": "BENJAMINS",
+          "label": "Simple Stroke play",
           "players": 6
         }
       ],
@@ -18603,32 +18708,32 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 18
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 45
         },
         {
           "serieId": "115",
-          "label": "BENG",
+          "label": "Simple Score maximum",
           "players": 39
         },
         {
           "serieId": "119",
-          "label": "MING",
+          "label": "Simple Score maximum",
           "players": 9
         },
         {
           "serieId": "213",
-          "label": "BENF",
+          "label": "Simple Score maximum",
           "players": 9
         },
         {
           "serieId": "217",
-          "label": "MINF",
+          "label": "Simple Score maximum",
           "players": 6
         }
       ],
@@ -18653,17 +18758,17 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 11
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 37
         },
         {
           "serieId": "115",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 11
         }
       ],
@@ -18698,22 +18803,22 @@
         },
         {
           "serieId": "119",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 7
         },
         {
           "serieId": "211",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
           "serieId": "215",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 3
         },
         {
           "serieId": "217",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 1
         }
       ],
@@ -18753,7 +18858,7 @@
         },
         {
           "serieId": "211",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 5
         },
         {
@@ -18763,7 +18868,7 @@
         },
         {
           "serieId": "219",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 2
         }
       ],
@@ -18818,32 +18923,32 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 17
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 47
         },
         {
           "serieId": "115",
-          "label": "BG",
+          "label": "Simple Score maximum",
           "players": 37
         },
         {
           "serieId": "119",
-          "label": "MG",
+          "label": "Simple Score maximum",
           "players": 23
         },
         {
           "serieId": "213",
-          "label": "BF",
+          "label": "Simple Score maximum",
           "players": 7
         },
         {
           "serieId": "217",
-          "label": "MF",
+          "label": "Simple Score maximum",
           "players": 1
         }
       ],
@@ -19058,22 +19163,22 @@
         },
         {
           "serieId": "117",
-          "label": "MG",
+          "label": "Simple Score maximum",
           "players": 12
         },
         {
           "serieId": "211",
-          "label": "BG",
+          "label": "Simple Score maximum",
           "players": 16
         },
         {
           "serieId": "215",
-          "label": "BF",
+          "label": "Simple Score maximum",
           "players": 5
         },
         {
           "serieId": "219",
-          "label": "MF",
+          "label": "Simple Score maximum",
           "players": 2
         }
       ],
@@ -19438,32 +19543,32 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 8
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 57
         },
         {
           "serieId": "115",
-          "label": "U14G",
+          "label": "Simple Score maximum",
           "players": 32
         },
         {
           "serieId": "119",
-          "label": "U16G",
+          "label": "Simple Score maximum",
           "players": 20
         },
         {
           "serieId": "213",
-          "label": "U14F",
+          "label": "Simple Score maximum",
           "players": 6
         },
         {
           "serieId": "217",
-          "label": "U16F",
+          "label": "Simple Score maximum",
           "players": 5
         }
       ],
@@ -19488,22 +19593,22 @@
       "divisions": [
         {
           "serieId": "113",
-          "label": "U14",
+          "label": "Simple Score maximum",
           "players": 19
         },
         {
           "serieId": "117",
-          "label": "U16",
+          "label": "Simple Score maximum",
           "players": 15
         },
         {
           "serieId": "214",
-          "label": "U14",
+          "label": "Simple Score maximum",
           "players": 8
         },
         {
           "serieId": "218",
-          "label": "U16",
+          "label": "Simple Score maximum",
           "players": 5
         }
       ],
@@ -19528,12 +19633,12 @@
       "divisions": [
         {
           "serieId": "15",
-          "label": "U12",
+          "label": "Simple Score maximum",
           "players": 26
         },
         {
           "serieId": "26",
-          "label": "U12",
+          "label": "Simple Score maximum",
           "players": 12
         }
       ],
@@ -19588,22 +19693,22 @@
       "divisions": [
         {
           "serieId": "117",
-          "label": "U14",
+          "label": "Simple Score maximum",
           "players": 50
         },
         {
           "serieId": "121",
-          "label": "U16",
+          "label": "Simple Score maximum",
           "players": 33
         },
         {
           "serieId": "218",
-          "label": "U14",
+          "label": "Simple Score maximum",
           "players": 17
         },
         {
           "serieId": "222",
-          "label": "U16",
+          "label": "Simple Score maximum",
           "players": 7
         }
       ],
@@ -19658,32 +19763,32 @@
       "divisions": [
         {
           "serieId": "17",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 24
         },
         {
           "serieId": "25",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
           "serieId": "29",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 5
         },
         {
           "serieId": "111",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 13
         },
         {
           "serieId": "115",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 5
         },
         {
           "serieId": "213",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 2
         }
       ],
@@ -19853,22 +19958,22 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 15
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 50
         },
         {
           "serieId": "115",
-          "label": "BENG",
+          "label": "Simple Score maximum",
           "players": 32
         },
         {
           "serieId": "213",
-          "label": "BENF",
+          "label": "Simple Score maximum",
           "players": 6
         }
       ],
@@ -20003,32 +20108,32 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 11
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 39
         },
         {
           "serieId": "115",
-          "label": "U14G",
+          "label": "Simple Score maximum",
           "players": 39
         },
         {
           "serieId": "119",
-          "label": "U16G",
+          "label": "Simple Score maximum",
           "players": 16
         },
         {
           "serieId": "213",
-          "label": "U14F",
+          "label": "Simple Score maximum",
           "players": 8
         },
         {
           "serieId": "217",
-          "label": "U16F",
+          "label": "Simple Score maximum",
           "players": 2
         }
       ],
@@ -20113,12 +20218,12 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 12
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 36
         }
       ],
@@ -20158,7 +20263,7 @@
         },
         {
           "serieId": "211",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 9
         },
         {
@@ -20168,7 +20273,7 @@
         },
         {
           "serieId": "219",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 5
         }
       ],
@@ -20263,12 +20368,12 @@
         },
         {
           "serieId": "215",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 10
         },
         {
           "serieId": "219",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 2
         }
       ],
@@ -20443,22 +20548,22 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 18
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 39
         },
         {
           "serieId": "115",
-          "label": "BENG",
+          "label": "Simple Score maximum",
           "players": 39
         },
         {
           "serieId": "213",
-          "label": "BENF",
+          "label": "Simple Score maximum",
           "players": 12
         }
       ],
@@ -20513,22 +20618,22 @@
       "divisions": [
         {
           "serieId": "113",
-          "label": "U14",
+          "label": "Simple Score maximum",
           "players": 52
         },
         {
           "serieId": "117",
-          "label": "U16",
+          "label": "Simple Score maximum",
           "players": 30
         },
         {
           "serieId": "214",
-          "label": "U14",
+          "label": "Simple Score maximum",
           "players": 15
         },
         {
           "serieId": "218",
-          "label": "U16",
+          "label": "Simple Score maximum",
           "players": 6
         }
       ],
@@ -20753,22 +20858,22 @@
       "divisions": [
         {
           "serieId": "19",
-          "label": "U14",
+          "label": "Simple Score maximum",
           "players": 64
         },
         {
           "serieId": "113",
-          "label": "U16",
+          "label": "Simple Score maximum",
           "players": 23
         },
         {
           "serieId": "210",
-          "label": "U14",
+          "label": "Simple Score maximum",
           "players": 13
         },
         {
           "serieId": "214",
-          "label": "U16",
+          "label": "Simple Score maximum",
           "players": 9
         }
       ],
@@ -20793,32 +20898,32 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 14
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 30
         },
         {
           "serieId": "115",
-          "label": "BG",
+          "label": "Simple Score maximum",
           "players": 23
         },
         {
           "serieId": "119",
-          "label": "MG",
+          "label": "Simple Score maximum",
           "players": 15
         },
         {
           "serieId": "213",
-          "label": "BF",
+          "label": "Simple Score maximum",
           "players": 12
         },
         {
           "serieId": "217",
-          "label": "MF",
+          "label": "Simple Score maximum",
           "players": 3
         }
       ],
@@ -20873,22 +20978,22 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 13
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 39
         },
         {
           "serieId": "115",
-          "label": "BG",
+          "label": "Simple Score maximum",
           "players": 26
         },
         {
           "serieId": "213",
-          "label": "BF",
+          "label": "Simple Score maximum",
           "players": 6
         }
       ],
@@ -20978,7 +21083,7 @@
         },
         {
           "serieId": "211",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 15
         }
       ],
@@ -21043,22 +21148,22 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 12
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 36
         },
         {
           "serieId": "115",
-          "label": "BG",
+          "label": "Simple Score maximum",
           "players": 27
         },
         {
           "serieId": "213",
-          "label": "BF",
+          "label": "Simple Score maximum",
           "players": 4
         }
       ],
@@ -21083,12 +21188,12 @@
       "divisions": [
         {
           "serieId": "19",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 61
         },
         {
           "serieId": "211",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 35
         }
       ],
@@ -21113,12 +21218,12 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "BF",
+          "label": "Simple Score maximum",
           "players": 25
         },
         {
           "serieId": "111",
-          "label": "BG",
+          "label": "Simple Score maximum",
           "players": 55
         }
       ],
@@ -21143,12 +21248,12 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 21
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 54
         }
       ],
@@ -21173,22 +21278,22 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "BENF",
+          "label": "Simple Score maximum",
           "players": 11
         },
         {
           "serieId": "111",
-          "label": "BENG",
+          "label": "Simple Score maximum",
           "players": 41
         },
         {
           "serieId": "115",
-          "label": "MING",
+          "label": "Simple Score maximum",
           "players": 15
         },
         {
           "serieId": "213",
-          "label": "MINF",
+          "label": "Simple Score maximum",
           "players": 5
         }
       ],
@@ -21353,32 +21458,32 @@
       "divisions": [
         {
           "serieId": "19",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 38
         },
         {
           "serieId": "113",
-          "label": "U14G",
+          "label": "Simple Score maximum",
           "players": 29
         },
         {
           "serieId": "117",
-          "label": "U16G",
+          "label": "Simple Score maximum",
           "players": 5
         },
         {
           "serieId": "211",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 3
         },
         {
           "serieId": "215",
-          "label": "U14F",
+          "label": "Simple Score maximum",
           "players": 9
         },
         {
           "serieId": "219",
-          "label": "U16F",
+          "label": "Simple Score maximum",
           "players": 2
         }
       ],
@@ -21428,22 +21533,22 @@
       "divisions": [
         {
           "serieId": "15",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 33
         },
         {
           "serieId": "19",
-          "label": "BG",
+          "label": "Simple Score maximum",
           "players": 19
         },
         {
           "serieId": "27",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 8
         },
         {
           "serieId": "211",
-          "label": "BF",
+          "label": "Simple Score maximum",
           "players": 6
         }
       ],
@@ -21483,7 +21588,7 @@
         },
         {
           "serieId": "211",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 11
         },
         {
@@ -21493,7 +21598,7 @@
         },
         {
           "serieId": "219",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 1
         }
       ],
@@ -21628,12 +21733,12 @@
       "divisions": [
         {
           "serieId": "19",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 47
         },
         {
           "serieId": "211",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 17
         }
       ],
@@ -21658,22 +21763,22 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "BF",
+          "label": "Simple Score maximum",
           "players": 7
         },
         {
           "serieId": "111",
-          "label": "BG",
+          "label": "Simple Score maximum",
           "players": 15
         },
         {
           "serieId": "115",
-          "label": "MG",
+          "label": "Simple Score maximum",
           "players": 12
         },
         {
           "serieId": "213",
-          "label": "MF",
+          "label": "Simple Score maximum",
           "players": 4
         }
       ],
@@ -21698,32 +21803,32 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 20
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 45
         },
         {
           "serieId": "115",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 30
         },
         {
           "serieId": "119",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
           "serieId": "213",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 4
         },
         {
           "serieId": "217",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 3
         }
       ],
@@ -21748,7 +21853,7 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 5
         },
         {
@@ -21763,7 +21868,7 @@
         },
         {
           "serieId": "213",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 2
         }
       ],
@@ -21808,7 +21913,7 @@
         },
         {
           "serieId": "210",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 3
         }
       ],
@@ -21888,7 +21993,7 @@
         },
         {
           "serieId": "211",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 11
         },
         {
@@ -21898,7 +22003,7 @@
         },
         {
           "serieId": "219",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 2
         }
       ],
@@ -21993,12 +22098,12 @@
         },
         {
           "serieId": "215",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 3
         },
         {
           "serieId": "219",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 3
         }
       ],
@@ -22053,32 +22158,32 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 17
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 20
         },
         {
           "serieId": "115",
-          "label": "BG",
+          "label": "Simple Score maximum",
           "players": 18
         },
         {
           "serieId": "119",
-          "label": "MG",
+          "label": "Simple Score maximum",
           "players": 9
         },
         {
           "serieId": "213",
-          "label": "BF",
+          "label": "Simple Score maximum",
           "players": 4
         },
         {
           "serieId": "217",
-          "label": "MF",
+          "label": "Simple Score maximum",
           "players": 3
         }
       ],
@@ -22103,27 +22208,27 @@
       "divisions": [
         {
           "serieId": "19",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 21
         },
         {
           "serieId": "113",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 10
         },
         {
           "serieId": "117",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 4
         },
         {
           "serieId": "211",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
           "serieId": "219",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 1
         }
       ],
@@ -22148,27 +22253,27 @@
       "divisions": [
         {
           "serieId": "19",
-          "label": "U12",
+          "label": "Simple Score maximum",
           "players": 37
         },
         {
           "serieId": "113",
-          "label": "BENJAMINS",
+          "label": "Simple Score maximum",
           "players": 22
         },
         {
           "serieId": "117",
-          "label": "MINIMES",
+          "label": "Simple Score maximum",
           "players": 12
         },
         {
           "serieId": "210",
-          "label": "U12",
+          "label": "Simple Score maximum",
           "players": 10
         },
         {
           "serieId": "214",
-          "label": "BENJAMINS",
+          "label": "Simple Score maximum",
           "players": 5
         }
       ],
@@ -22233,32 +22338,32 @@
       "divisions": [
         {
           "serieId": "19",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 39
         },
         {
           "serieId": "115",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 35
         },
         {
           "serieId": "117",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 14
         },
         {
           "serieId": "211",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 18
         },
         {
           "serieId": "213",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
           "serieId": "219",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 3
         }
       ],
@@ -22283,27 +22388,27 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 15
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 46
         },
         {
           "serieId": "115",
-          "label": "BENG",
+          "label": "Simple Stroke play",
           "players": 32
         },
         {
           "serieId": "119",
-          "label": "MING",
+          "label": "Simple Stroke play",
           "players": 14
         },
         {
           "serieId": "213",
-          "label": "BENF",
+          "label": "Simple Stroke play",
           "players": 9
         }
       ],
@@ -22528,7 +22633,7 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "BG",
+          "label": "Simple Score maximum",
           "players": 8
         },
         {
@@ -22543,12 +22648,12 @@
         },
         {
           "serieId": "117",
-          "label": "MG",
+          "label": "Simple Score maximum",
           "players": 6
         },
         {
           "serieId": "215",
-          "label": "BF",
+          "label": "Simple Score maximum",
           "players": 3
         }
       ],
@@ -22583,7 +22688,7 @@
         },
         {
           "serieId": "19",
-          "label": "U12",
+          "label": "Simple Stroke play",
           "players": 4
         },
         {
@@ -22593,7 +22698,7 @@
         },
         {
           "serieId": "28",
-          "label": "U12",
+          "label": "Simple Stroke play",
           "players": 3
         }
       ],
@@ -23078,32 +23183,32 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 12
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 51
         },
         {
           "serieId": "115",
-          "label": "BENG",
+          "label": "Simple Stroke play",
           "players": 38
         },
         {
           "serieId": "119",
-          "label": "MING",
+          "label": "Simple Stroke play",
           "players": 12
         },
         {
           "serieId": "213",
-          "label": "BENF",
+          "label": "Simple Stroke play",
           "players": 9
         },
         {
           "serieId": "217",
-          "label": "MINF",
+          "label": "Simple Stroke play",
           "players": 3
         }
       ],
@@ -23313,27 +23418,27 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 1
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 16
         },
         {
           "serieId": "115",
-          "label": "BG",
+          "label": "Simple Score maximum",
           "players": 6
         },
         {
           "serieId": "119",
-          "label": "MG",
+          "label": "Simple Score maximum",
           "players": 11
         },
         {
           "serieId": "213",
-          "label": "BF",
+          "label": "Simple Score maximum",
           "players": 1
         }
       ],
@@ -23358,32 +23463,32 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 16
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 56
         },
         {
           "serieId": "115",
-          "label": "BG",
+          "label": "Simple Score maximum",
           "players": 39
         },
         {
           "serieId": "119",
-          "label": "MG",
+          "label": "Simple Score maximum",
           "players": 24
         },
         {
           "serieId": "213",
-          "label": "BF",
+          "label": "Simple Score maximum",
           "players": 5
         },
         {
           "serieId": "217",
-          "label": "MF",
+          "label": "Simple Score maximum",
           "players": 3
         }
       ],
@@ -23658,32 +23763,32 @@
       "divisions": [
         {
           "serieId": "19",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 44
         },
         {
           "serieId": "113",
-          "label": "U14G",
+          "label": "Simple Score maximum",
           "players": 26
         },
         {
           "serieId": "117",
-          "label": "U16G",
+          "label": "Simple Score maximum",
           "players": 26
         },
         {
           "serieId": "211",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 15
         },
         {
           "serieId": "215",
-          "label": "U14F",
+          "label": "Simple Score maximum",
           "players": 5
         },
         {
           "serieId": "219",
-          "label": "U16F",
+          "label": "Simple Score maximum",
           "players": 3
         }
       ],
@@ -23838,17 +23943,17 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 27
         },
         {
           "serieId": "115",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 13
         }
       ],
@@ -23873,32 +23978,32 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 10
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 37
         },
         {
           "serieId": "115",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 16
         },
         {
           "serieId": "119",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
           "serieId": "213",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 5
         },
         {
           "serieId": "217",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 5
         }
       ],
@@ -23943,12 +24048,12 @@
         },
         {
           "serieId": "215",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 3
         },
         {
           "serieId": "219",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 1
         }
       ],
@@ -23988,7 +24093,7 @@
         },
         {
           "serieId": "211",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 12
         },
         {
@@ -23998,7 +24103,7 @@
         },
         {
           "serieId": "219",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 1
         }
       ],
@@ -24023,32 +24128,32 @@
       "divisions": [
         {
           "serieId": "19",
-          "label": "U12",
+          "label": "Simple Score maximum",
           "players": 29
         },
         {
           "serieId": "113",
-          "label": "U14",
+          "label": "Simple Score maximum",
           "players": 22
         },
         {
           "serieId": "117",
-          "label": "U16",
+          "label": "Simple Score maximum",
           "players": 12
         },
         {
           "serieId": "210",
-          "label": "U12",
+          "label": "Simple Score maximum",
           "players": 15
         },
         {
           "serieId": "214",
-          "label": "U14",
+          "label": "Simple Score maximum",
           "players": 6
         },
         {
           "serieId": "218",
-          "label": "U16",
+          "label": "Simple Score maximum",
           "players": 1
         }
       ],
@@ -24183,12 +24288,12 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U14F",
+          "label": "Simple Stroke play",
           "players": 24
         },
         {
           "serieId": "111",
-          "label": "U14G",
+          "label": "Simple Stroke play",
           "players": 48
         }
       ],
@@ -24213,12 +24318,12 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U14F",
+          "label": "Simple Stroke play",
           "players": 24
         },
         {
           "serieId": "111",
-          "label": "U14G",
+          "label": "Simple Stroke play",
           "players": 48
         }
       ],
@@ -24243,7 +24348,7 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "MG",
+          "label": "Simple Score maximum",
           "players": 15
         },
         {
@@ -24258,17 +24363,17 @@
         },
         {
           "serieId": "119",
-          "label": "BG",
+          "label": "Simple Score maximum",
           "players": 24
         },
         {
           "serieId": "213",
-          "label": "BF",
+          "label": "Simple Score maximum",
           "players": 10
         },
         {
           "serieId": "217",
-          "label": "MF",
+          "label": "Simple Score maximum",
           "players": 1
         }
       ],
@@ -24458,12 +24563,12 @@
       "divisions": [
         {
           "serieId": "16",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 41
         },
         {
           "serieId": "25",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 23
         }
       ],
@@ -24578,12 +24683,12 @@
       "divisions": [
         {
           "serieId": "19",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 44
         },
         {
           "serieId": "211",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 9
         }
       ],
@@ -24658,32 +24763,32 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 23
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 41
         },
         {
           "serieId": "115",
-          "label": "U14G",
+          "label": "Simple Stroke play",
           "players": 34
         },
         {
           "serieId": "119",
-          "label": "U16G",
+          "label": "Simple Stroke play",
           "players": 15
         },
         {
           "serieId": "213",
-          "label": "U14F",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
           "serieId": "217",
-          "label": "U16F",
+          "label": "Simple Stroke play",
           "players": 4
         }
       ],
@@ -24708,22 +24813,22 @@
       "divisions": [
         {
           "serieId": "115",
-          "label": "U14G",
+          "label": "Simple Stroke play",
           "players": 34
         },
         {
           "serieId": "119",
-          "label": "U16G",
+          "label": "Simple Stroke play",
           "players": 15
         },
         {
           "serieId": "213",
-          "label": "U14F",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
           "serieId": "217",
-          "label": "U16F",
+          "label": "Simple Stroke play",
           "players": 4
         }
       ],
@@ -24913,12 +25018,12 @@
         },
         {
           "serieId": "117",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 14
         },
         {
           "serieId": "211",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 11
         },
         {
@@ -24983,7 +25088,7 @@
         },
         {
           "serieId": "211",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 16
         }
       ],
@@ -25158,32 +25263,32 @@
       "divisions": [
         {
           "serieId": "19",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 10
         },
         {
           "serieId": "113",
-          "label": "U14G",
+          "label": "Simple Score maximum",
           "players": 10
         },
         {
           "serieId": "117",
-          "label": "U16G",
+          "label": "Simple Score maximum",
           "players": 7
         },
         {
           "serieId": "211",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 5
         },
         {
           "serieId": "215",
-          "label": "U14F",
+          "label": "Simple Score maximum",
           "players": 7
         },
         {
           "serieId": "219",
-          "label": "U16F",
+          "label": "Simple Score maximum",
           "players": 4
         }
       ],
@@ -25303,22 +25408,22 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 15
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 45
         },
         {
           "serieId": "115",
-          "label": "BENG",
+          "label": "Simple Score maximum",
           "players": 39
         },
         {
           "serieId": "213",
-          "label": "BENF",
+          "label": "Simple Score maximum",
           "players": 11
         }
       ],
@@ -25403,22 +25508,22 @@
       "divisions": [
         {
           "serieId": "19",
-          "label": "U14",
+          "label": "Simple Score maximum",
           "players": 67
         },
         {
           "serieId": "113",
-          "label": "U16",
+          "label": "Simple Score maximum",
           "players": 29
         },
         {
           "serieId": "210",
-          "label": "U14",
+          "label": "Simple Score maximum",
           "players": 9
         },
         {
           "serieId": "214",
-          "label": "U16",
+          "label": "Simple Score maximum",
           "players": 3
         }
       ],
@@ -25553,22 +25658,22 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 11
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 27
         },
         {
           "serieId": "115",
-          "label": "BG",
+          "label": "Simple Score maximum",
           "players": 28
         },
         {
           "serieId": "213",
-          "label": "BF",
+          "label": "Simple Score maximum",
           "players": 12
         }
       ],
@@ -25593,22 +25698,22 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "BF",
+          "label": "Simple Score maximum",
           "players": 21
         },
         {
           "serieId": "111",
-          "label": "BG",
+          "label": "Simple Score maximum",
           "players": 48
         },
         {
           "serieId": "115",
-          "label": "MG",
+          "label": "Simple Score maximum",
           "players": 18
         },
         {
           "serieId": "213",
-          "label": "MF",
+          "label": "Simple Score maximum",
           "players": 9
         }
       ],
@@ -25638,7 +25743,7 @@
         },
         {
           "serieId": "211",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 22
         }
       ],
@@ -25703,22 +25808,22 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Score maximum",
           "players": 11
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Score maximum",
           "players": 34
         },
         {
           "serieId": "115",
-          "label": "BG",
+          "label": "Simple Score maximum",
           "players": 18
         },
         {
           "serieId": "213",
-          "label": "BF",
+          "label": "Simple Score maximum",
           "players": 9
         }
       ],
@@ -25743,22 +25848,22 @@
       "divisions": [
         {
           "serieId": "16",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 33
         },
         {
           "serieId": "18",
-          "label": "BENG",
+          "label": "Simple Stroke play",
           "players": 24
         },
         {
           "serieId": "25",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 12
         },
         {
           "serieId": "27",
-          "label": "BENF",
+          "label": "Simple Stroke play",
           "players": 6
         }
       ],
@@ -25783,27 +25888,27 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 15
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 27
         },
         {
           "serieId": "115",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 20
         },
         {
           "serieId": "119",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
           "serieId": "213",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 8
         }
       ],
@@ -25858,7 +25963,7 @@
       "divisions": [
         {
           "serieId": "11",
-          "label": "BENJF",
+          "label": "Simple Stroke play",
           "players": 1
         },
         {
@@ -25868,12 +25973,12 @@
         },
         {
           "serieId": "18",
-          "label": "BENJG",
+          "label": "Simple Stroke play",
           "players": 12
         },
         {
           "serieId": "25",
-          "label": "MING",
+          "label": "Simple Stroke play",
           "players": 8
         }
       ],
@@ -25898,27 +26003,27 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 8
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 36
         },
         {
           "serieId": "115",
-          "label": "BENG",
+          "label": "Simple Stroke play",
           "players": 27
         },
         {
           "serieId": "119",
-          "label": "MING",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
           "serieId": "213",
-          "label": "BENF",
+          "label": "Simple Stroke play",
           "players": 9
         }
       ],
@@ -25943,27 +26048,27 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 8
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 36
         },
         {
           "serieId": "115",
-          "label": "BENG",
+          "label": "Simple Stroke play",
           "players": 27
         },
         {
           "serieId": "119",
-          "label": "MING",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
           "serieId": "213",
-          "label": "BENF",
+          "label": "Simple Stroke play",
           "players": 9
         }
       ],
@@ -26127,12 +26232,12 @@
         },
         {
           "serieId": "215",
-          "label": "BENJAMINS",
+          "label": "Simple Stroke play",
           "players": 5
         },
         {
           "serieId": "219",
-          "label": "BENJAMINES",
+          "label": "Simple Stroke play",
           "players": 2
         }
       ],
@@ -26242,27 +26347,27 @@
       "divisions": [
         {
           "serieId": "17",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 39
         },
         {
           "serieId": "25",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 13
         },
         {
           "serieId": "29",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 9
         },
         {
           "serieId": "111",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 27
         },
         {
           "serieId": "115",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 8
         }
       ],
@@ -26317,22 +26422,22 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 18
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 42
         },
         {
           "serieId": "115",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 34
         },
         {
           "serieId": "213",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 6
         }
       ],
@@ -26417,22 +26522,22 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 5
         },
         {
           "serieId": "111",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 34
         },
         {
           "serieId": "115",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 11
         },
         {
           "serieId": "213",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 1
         }
       ],
@@ -26547,32 +26652,32 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 10
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 22
         },
         {
           "serieId": "115",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 19
         },
         {
           "serieId": "119",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 9
         },
         {
           "serieId": "213",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 5
         },
         {
           "serieId": "217",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 4
         }
       ],
@@ -26627,32 +26732,32 @@
       "divisions": [
         {
           "serieId": "19",
-          "label": "U12",
+          "label": "Simple Stroke play",
           "players": 25
         },
         {
           "serieId": "113",
-          "label": "U14",
+          "label": "Simple Stroke play",
           "players": 27
         },
         {
           "serieId": "117",
-          "label": "U16",
+          "label": "Simple Stroke play",
           "players": 11
         },
         {
           "serieId": "210",
-          "label": "U12",
+          "label": "Simple Stroke play",
           "players": 18
         },
         {
           "serieId": "214",
-          "label": "U14",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
           "serieId": "218",
-          "label": "U16",
+          "label": "Simple Stroke play",
           "players": 1
         }
       ],
@@ -26692,12 +26797,12 @@
         },
         {
           "serieId": "28",
-          "label": "BENJAMINS",
+          "label": "Simple Stroke play",
           "players": 2
         },
         {
           "serieId": "29",
-          "label": "BENJAMINES",
+          "label": "Simple Stroke play",
           "players": 1
         }
       ],
@@ -26722,32 +26827,32 @@
       "divisions": [
         {
           "serieId": "19",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 22
         },
         {
           "serieId": "113",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 11
         },
         {
           "serieId": "117",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 7
         },
         {
           "serieId": "211",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 11
         },
         {
           "serieId": "215",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 2
         },
         {
           "serieId": "219",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 4
         }
       ],
@@ -26812,32 +26917,32 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 12
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 54
         },
         {
           "serieId": "115",
-          "label": "BENG",
+          "label": "Simple Stroke play",
           "players": 45
         },
         {
           "serieId": "119",
-          "label": "MING",
+          "label": "Simple Stroke play",
           "players": 9
         },
         {
           "serieId": "213",
-          "label": "BENF",
+          "label": "Simple Stroke play",
           "players": 7
         },
         {
           "serieId": "217",
-          "label": "MINF",
+          "label": "Simple Stroke play",
           "players": 3
         }
       ],
@@ -26902,32 +27007,32 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 18
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 58
         },
         {
           "serieId": "115",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 42
         },
         {
           "serieId": "119",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 15
         },
         {
           "serieId": "213",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 7
         },
         {
           "serieId": "217",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 1
         }
       ],
@@ -27112,7 +27217,7 @@
       "divisions": [
         {
           "serieId": "29",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 9
         },
         {
@@ -27127,17 +27232,17 @@
         },
         {
           "serieId": "117",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 5
         },
         {
           "serieId": "215",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 5
         },
         {
           "serieId": "219",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 1
         }
       ],
@@ -28482,32 +28587,32 @@
       "divisions": [
         {
           "serieId": "16",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 19
         },
         {
           "serieId": "18",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 10
         },
         {
           "serieId": "25",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 10
         },
         {
           "serieId": "27",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 8
         },
         {
           "serieId": "29",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 3
         },
         {
           "serieId": "110",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 2
         }
       ],
@@ -28722,12 +28827,12 @@
         },
         {
           "serieId": "26",
-          "label": "BENJAMINS",
+          "label": "Simple Stroke play",
           "players": 7
         },
         {
           "serieId": "28",
-          "label": "BENJAMINES",
+          "label": "Simple Stroke play",
           "players": 6
         }
       ],
@@ -28947,12 +29052,12 @@
         },
         {
           "serieId": "28",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 13
         },
         {
           "serieId": "210",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 5
         }
       ],
@@ -29187,22 +29292,22 @@
         },
         {
           "serieId": "25",
-          "label": "MIN",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
           "serieId": "29",
-          "label": "BEN",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
           "serieId": "113",
-          "label": "BEN",
+          "label": "Simple Stroke play",
           "players": 13
         },
         {
           "serieId": "213",
-          "label": "MIN",
+          "label": "Simple Stroke play",
           "players": 3
         }
       ],
@@ -29547,32 +29652,32 @@
       "divisions": [
         {
           "serieId": "16",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 36
         },
         {
           "serieId": "18",
-          "label": "U14G",
+          "label": "Simple Stroke play",
           "players": 42
         },
         {
           "serieId": "25",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 18
         },
         {
           "serieId": "27",
-          "label": "U14F",
+          "label": "Simple Stroke play",
           "players": 9
         },
         {
           "serieId": "29",
-          "label": "U16F",
+          "label": "Simple Stroke play",
           "players": 7
         },
         {
           "serieId": "110",
-          "label": "U16G",
+          "label": "Simple Stroke play",
           "players": 25
         }
       ],
@@ -30342,22 +30447,22 @@
       "divisions": [
         {
           "serieId": "13",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 24
         },
         {
           "serieId": "16",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 26
         },
         {
           "serieId": "24",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 8
         },
         {
           "serieId": "25",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 10
         }
       ],
@@ -30382,22 +30487,22 @@
       "divisions": [
         {
           "serieId": "15",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 24
         },
         {
           "serieId": "18",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 30
         },
         {
           "serieId": "26",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 12
         },
         {
           "serieId": "27",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 13
         }
       ],
@@ -30437,7 +30542,7 @@
         },
         {
           "serieId": "28",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 11
         }
       ],
@@ -30577,32 +30682,32 @@
       "divisions": [
         {
           "serieId": "16",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 24
         },
         {
           "serieId": "17",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 18
         },
         {
           "serieId": "25",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 12
         },
         {
           "serieId": "28",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 9
         },
         {
           "serieId": "29",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 3
         },
         {
           "serieId": "110",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 6
         }
       ],
@@ -30952,7 +31057,7 @@
         },
         {
           "serieId": "17",
-          "label": "BENJAMINS",
+          "label": "Simple Stroke play",
           "players": 8
         },
         {
@@ -30962,7 +31067,7 @@
         },
         {
           "serieId": "28",
-          "label": "BENJAMINES",
+          "label": "Simple Stroke play",
           "players": 3
         }
       ],
@@ -31102,7 +31207,7 @@
         },
         {
           "serieId": "19",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 4
         },
         {
@@ -31117,7 +31222,7 @@
         },
         {
           "serieId": "210",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 3
         }
       ],
@@ -31182,12 +31287,12 @@
         },
         {
           "serieId": "26",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
           "serieId": "210",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 4
         }
       ],
@@ -31282,32 +31387,32 @@
       "divisions": [
         {
           "serieId": "15",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 21
         },
         {
           "serieId": "17",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 10
         },
         {
           "serieId": "26",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 11
         },
         {
           "serieId": "28",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 1
         },
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 13
         },
         {
           "serieId": "110",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 35
         }
       ],
@@ -31332,27 +31437,27 @@
       "divisions": [
         {
           "serieId": "15",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 14
         },
         {
           "serieId": "17",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
           "serieId": "18",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 2
         },
         {
           "serieId": "26",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
           "serieId": "29",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 2
         }
       ],
@@ -31752,7 +31857,7 @@
         },
         {
           "serieId": "117",
-          "label": "U16GARCONS",
+          "label": "Simple Stroke play",
           "players": 2
         },
         {
@@ -33262,32 +33367,32 @@
       "divisions": [
         {
           "serieId": "16",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 25
         },
         {
           "serieId": "18",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 13
         },
         {
           "serieId": "25",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 10
         },
         {
           "serieId": "27",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 2
         },
         {
           "serieId": "29",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 3
         },
         {
           "serieId": "110",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 1
         }
       ],
@@ -33482,12 +33587,12 @@
         },
         {
           "serieId": "28",
-          "label": "BENJAMINS",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
           "serieId": "210",
-          "label": "BENJAMINES",
+          "label": "Simple Stroke play",
           "players": 4
         }
       ],
@@ -34052,12 +34157,12 @@
         },
         {
           "serieId": "26",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 7
         },
         {
           "serieId": "28",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 4
         }
       ],
@@ -34097,12 +34202,12 @@
         },
         {
           "serieId": "27",
-          "label": "BENJAMINS",
+          "label": "Simple Stroke play",
           "players": 7
         },
         {
           "serieId": "29",
-          "label": "BENJAMINES",
+          "label": "Simple Stroke play",
           "players": 1
         },
         {
@@ -34562,7 +34667,7 @@
         },
         {
           "serieId": "25",
-          "label": "BENJAMINS",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
@@ -34572,7 +34677,7 @@
         },
         {
           "serieId": "210",
-          "label": "BENJAMINES",
+          "label": "Simple Stroke play",
           "players": 1
         }
       ],
@@ -34907,22 +35012,22 @@
       "divisions": [
         {
           "serieId": "16",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 24
         },
         {
           "serieId": "18",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 25
         },
         {
           "serieId": "25",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 13
         },
         {
           "serieId": "27",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 15
         }
       ],
@@ -34947,32 +35052,32 @@
       "divisions": [
         {
           "serieId": "16",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 31
         },
         {
           "serieId": "18",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 20
         },
         {
           "serieId": "25",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 10
         },
         {
           "serieId": "27",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 8
         },
         {
           "serieId": "29",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 3
         },
         {
           "serieId": "110",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 6
         }
       ],
@@ -35572,32 +35677,32 @@
       "divisions": [
         {
           "serieId": "15",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 33
         },
         {
           "serieId": "17",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 10
         },
         {
           "serieId": "26",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 5
         },
         {
           "serieId": "28",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 3
         },
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 8
         },
         {
           "serieId": "110",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 36
         }
       ],
@@ -35652,7 +35757,7 @@
         },
         {
           "serieId": "211",
-          "label": "CADETTE",
+          "label": "Simple Stroke play",
           "players": 1
         }
       ],
@@ -36752,12 +36857,12 @@
         },
         {
           "serieId": "28",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 5
         },
         {
           "serieId": "210",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 4
         }
       ],
@@ -36852,12 +36957,12 @@
         },
         {
           "serieId": "28",
-          "label": "BENJAMINES",
+          "label": "Simple Stroke play",
           "players": 4
         },
         {
           "serieId": "210",
-          "label": "BENJAMINS",
+          "label": "Simple Stroke play",
           "players": 5
         }
       ],
@@ -36907,7 +37012,7 @@
         },
         {
           "serieId": "220",
-          "label": "BENJAMINES",
+          "label": "Simple Stroke play",
           "players": 2
         }
       ],
@@ -36952,12 +37057,12 @@
         },
         {
           "serieId": "28",
-          "label": "BENJAMINS",
+          "label": "Simple Stroke play",
           "players": 4
         },
         {
           "serieId": "210",
-          "label": "BENJAMINES",
+          "label": "Simple Stroke play",
           "players": 2
         }
       ],
@@ -37922,7 +38027,7 @@
         },
         {
           "serieId": "27",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 5
         }
       ],
@@ -38712,7 +38817,7 @@
         },
         {
           "serieId": "210",
-          "label": "BENJAMINES",
+          "label": "Simple Stroke play",
           "players": 3
         }
       ],
@@ -38737,32 +38842,32 @@
       "divisions": [
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 19
         },
         {
           "serieId": "113",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 12
         },
         {
           "serieId": "115",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 5
         },
         {
           "serieId": "212",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 7
         },
         {
           "serieId": "214",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 4
         },
         {
           "serieId": "216",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 3
         }
       ],
@@ -39017,12 +39122,12 @@
         },
         {
           "serieId": "216",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 3
         },
         {
           "serieId": "218",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 5
         }
       ],
@@ -39487,12 +39592,12 @@
       "divisions": [
         {
           "serieId": "13",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 42
         },
         {
           "serieId": "24",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 4
         }
       ],
@@ -39917,27 +40022,27 @@
       "divisions": [
         {
           "serieId": "16",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 30
         },
         {
           "serieId": "18",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 24
         },
         {
           "serieId": "19",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 5
         },
         {
           "serieId": "25",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
           "serieId": "27",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 5
         }
       ],
@@ -40032,12 +40137,12 @@
         },
         {
           "serieId": "216",
-          "label": "U12GARCONS",
+          "label": "Simple Stroke play",
           "players": 2
         },
         {
           "serieId": "218",
-          "label": "U12FILLES",
+          "label": "Simple Stroke play",
           "players": 1
         }
       ],
@@ -40532,32 +40637,32 @@
       "divisions": [
         {
           "serieId": "15",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 28
         },
         {
           "serieId": "17",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 13
         },
         {
           "serieId": "26",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 7
         },
         {
           "serieId": "28",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 2
         },
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 12
         },
         {
           "serieId": "110",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 32
         }
       ],
@@ -40702,32 +40807,32 @@
       "divisions": [
         {
           "serieId": "15",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 31
         },
         {
           "serieId": "17",
-          "label": "BENJG",
+          "label": "Simple Stroke play",
           "players": 16
         },
         {
           "serieId": "19",
-          "label": "MING",
+          "label": "Simple Stroke play",
           "players": 3
         },
         {
           "serieId": "26",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 9
         },
         {
           "serieId": "28",
-          "label": "BENJF",
+          "label": "Simple Stroke play",
           "players": 11
         },
         {
           "serieId": "210",
-          "label": "MINF",
+          "label": "Simple Stroke play",
           "players": 2
         }
       ],
@@ -41502,7 +41607,7 @@
         },
         {
           "serieId": "19",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 13
         },
         {
@@ -41512,7 +41617,7 @@
         },
         {
           "serieId": "28",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 5
         }
       ],
@@ -41537,32 +41642,32 @@
       "divisions": [
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 27
         },
         {
           "serieId": "113",
-          "label": "U14G",
+          "label": "Simple Stroke play",
           "players": 23
         },
         {
           "serieId": "115",
-          "label": "U16G",
+          "label": "Simple Stroke play",
           "players": 8
         },
         {
           "serieId": "212",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 12
         },
         {
           "serieId": "214",
-          "label": "U14F",
+          "label": "Simple Stroke play",
           "players": 4
         },
         {
           "serieId": "216",
-          "label": "U16F",
+          "label": "Simple Stroke play",
           "players": 3
         }
       ],
@@ -42027,32 +42132,32 @@
       "divisions": [
         {
           "serieId": "16",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 21
         },
         {
           "serieId": "18",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 24
         },
         {
           "serieId": "25",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 15
         },
         {
           "serieId": "27",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 9
         },
         {
           "serieId": "29",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 4
         },
         {
           "serieId": "110",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 6
         }
       ],
@@ -42282,32 +42387,32 @@
       "divisions": [
         {
           "serieId": "16",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 27
         },
         {
           "serieId": "18",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 23
         },
         {
           "serieId": "25",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 14
         },
         {
           "serieId": "27",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 5
         },
         {
           "serieId": "29",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
           "serieId": "110",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 9
         }
       ],
@@ -42502,12 +42607,12 @@
         },
         {
           "serieId": "26",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 5
         },
         {
           "serieId": "28",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 11
         }
       ],
@@ -42532,32 +42637,32 @@
       "divisions": [
         {
           "serieId": "113",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 24
         },
         {
           "serieId": "115",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 27
         },
         {
           "serieId": "118",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 10
         },
         {
           "serieId": "214",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 10
         },
         {
           "serieId": "216",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 3
         },
         {
           "serieId": "217",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 6
         }
       ],
@@ -42847,32 +42952,32 @@
       "divisions": [
         {
           "serieId": "15",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 27
         },
         {
           "serieId": "17",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 13
         },
         {
           "serieId": "26",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 8
         },
         {
           "serieId": "28",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 4
         },
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 13
         },
         {
           "serieId": "110",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 40
         }
       ],
@@ -42987,22 +43092,22 @@
         },
         {
           "serieId": "19",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 5
         },
         {
           "serieId": "26",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 16
         },
         {
           "serieId": "28",
-          "label": "MING",
+          "label": "Simple Stroke play",
           "players": 4
         },
         {
           "serieId": "210",
-          "label": "MINF",
+          "label": "Simple Stroke play",
           "players": 2
         }
       ],
@@ -43297,12 +43402,12 @@
         },
         {
           "serieId": "27",
-          "label": "BENJAMINE",
+          "label": "Simple Stroke play",
           "players": 3
         },
         {
           "serieId": "110",
-          "label": "BENJAMIN",
+          "label": "Simple Stroke play",
           "players": 4
         }
       ],
@@ -43337,7 +43442,7 @@
         },
         {
           "serieId": "19",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 7
         },
         {
@@ -43347,7 +43452,7 @@
         },
         {
           "serieId": "28",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 6
         }
       ],
@@ -43442,12 +43547,12 @@
         },
         {
           "serieId": "28",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 4
         },
         {
           "serieId": "210",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 3
         }
       ],
@@ -44992,7 +45097,7 @@
         },
         {
           "serieId": "212",
-          "label": "BENJAMINES",
+          "label": "Simple Stroke play",
           "players": 1
         },
         {
@@ -45067,12 +45172,12 @@
         },
         {
           "serieId": "214",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 4
         },
         {
           "serieId": "216",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 2
         },
         {
@@ -45182,22 +45287,22 @@
         },
         {
           "serieId": "19",
-          "label": "BENG",
+          "label": "Simple Stroke play",
           "players": 16
         },
         {
           "serieId": "26",
-          "label": "MING",
+          "label": "Simple Stroke play",
           "players": 10
         },
         {
           "serieId": "28",
-          "label": "BENF",
+          "label": "Simple Stroke play",
           "players": 5
         },
         {
           "serieId": "210",
-          "label": "MINF",
+          "label": "Simple Stroke play",
           "players": 3
         }
       ],
@@ -45636,12 +45741,12 @@
         },
         {
           "serieId": "28",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 5
         },
         {
           "serieId": "210",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 2
         }
       ],
@@ -45771,7 +45876,7 @@
         },
         {
           "serieId": "111",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
@@ -45781,7 +45886,7 @@
         },
         {
           "serieId": "212",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 3
         }
       ],
@@ -46596,32 +46701,32 @@
       "divisions": [
         {
           "serieId": "16",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 24
         },
         {
           "serieId": "18",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 21
         },
         {
           "serieId": "25",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 15
         },
         {
           "serieId": "27",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 9
         },
         {
           "serieId": "29",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 3
         },
         {
           "serieId": "110",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 6
         }
       ],
@@ -46926,32 +47031,32 @@
       "divisions": [
         {
           "serieId": "15",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 26
         },
         {
           "serieId": "17",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 25
         },
         {
           "serieId": "26",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 9
         },
         {
           "serieId": "28",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 2
         },
         {
           "serieId": "29",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 10
         },
         {
           "serieId": "110",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 4
         }
       ],
@@ -47071,12 +47176,12 @@
         },
         {
           "serieId": "26",
-          "label": "BENJAMIN",
+          "label": "Simple Stroke play",
           "players": 7
         },
         {
           "serieId": "27",
-          "label": "BENJAMINE",
+          "label": "Simple Stroke play",
           "players": 4
         },
         {
@@ -47136,32 +47241,32 @@
       "divisions": [
         {
           "serieId": "15",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 26
         },
         {
           "serieId": "17",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 9
         },
         {
           "serieId": "26",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
           "serieId": "28",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
           "serieId": "29",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 9
         },
         {
           "serieId": "110",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 39
         }
       ],
@@ -47276,12 +47381,12 @@
         },
         {
           "serieId": "19",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 9
         },
         {
           "serieId": "26",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 7
         },
         {
@@ -47516,7 +47621,7 @@
         },
         {
           "serieId": "19",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 9
         },
         {
@@ -47531,7 +47636,7 @@
         },
         {
           "serieId": "210",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 3
         }
       ],
@@ -47571,12 +47676,12 @@
         },
         {
           "serieId": "212",
-          "label": "BENJAMINES",
+          "label": "Simple Stroke play",
           "players": 1
         },
         {
           "serieId": "214",
-          "label": "BENJAMINS",
+          "label": "Simple Stroke play",
           "players": 3
         },
         {
@@ -49361,32 +49466,32 @@
       "divisions": [
         {
           "serieId": "15",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 29
         },
         {
           "serieId": "17",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 28
         },
         {
           "serieId": "19",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 19
         },
         {
           "serieId": "26",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 10
         },
         {
           "serieId": "28",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 5
         },
         {
           "serieId": "210",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 7
         }
       ],
@@ -49661,12 +49766,12 @@
         },
         {
           "serieId": "212",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 9
         },
         {
           "serieId": "214",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 3
         }
       ],
@@ -49756,12 +49861,12 @@
         },
         {
           "serieId": "214",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 7
         },
         {
           "serieId": "217",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 5
         },
         {
@@ -50256,7 +50361,7 @@
         },
         {
           "serieId": "28",
-          "label": "U16G",
+          "label": "Simple Stroke play",
           "players": 5
         },
         {
@@ -50296,7 +50401,7 @@
         },
         {
           "serieId": "25",
-          "label": "BENJAMINS",
+          "label": "Simple Stroke play",
           "players": 7
         },
         {
@@ -50306,7 +50411,7 @@
         },
         {
           "serieId": "29",
-          "label": "BENJAMINES",
+          "label": "Simple Stroke play",
           "players": 4
         },
         {
@@ -50771,32 +50876,32 @@
       "divisions": [
         {
           "serieId": "16",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 22
         },
         {
           "serieId": "18",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 25
         },
         {
           "serieId": "25",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 9
         },
         {
           "serieId": "27",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 9
         },
         {
           "serieId": "29",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 2
         },
         {
           "serieId": "110",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 9
         }
       ],
@@ -51011,32 +51116,32 @@
       "divisions": [
         {
           "serieId": "19",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 9
         },
         {
           "serieId": "110",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 24
         },
         {
           "serieId": "114",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 24
         },
         {
           "serieId": "211",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 9
         },
         {
           "serieId": "212",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 3
         },
         {
           "serieId": "213",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 9
         }
       ],
@@ -51106,22 +51211,22 @@
       "divisions": [
         {
           "serieId": "15",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 24
         },
         {
           "serieId": "17",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 36
         },
         {
           "serieId": "26",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 9
         },
         {
           "serieId": "28",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 9
         }
       ],
@@ -51196,32 +51301,32 @@
       "divisions": [
         {
           "serieId": "15",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 32
         },
         {
           "serieId": "16",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 22
         },
         {
           "serieId": "17",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 10
         },
         {
           "serieId": "28",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 7
         },
         {
           "serieId": "29",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 5
         },
         {
           "serieId": "210",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 4
         }
       ],
@@ -51516,27 +51621,27 @@
         },
         {
           "serieId": "17",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 30
         },
         {
           "serieId": "19",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 6
         },
         {
           "serieId": "26",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 12
         },
         {
           "serieId": "28",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 9
         },
         {
           "serieId": "210",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 3
         }
       ],
@@ -51846,12 +51951,12 @@
         },
         {
           "serieId": "28",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 12
         },
         {
           "serieId": "210",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 5
         }
       ],
@@ -51946,7 +52051,7 @@
         },
         {
           "serieId": "214",
-          "label": "U16GARCONS",
+          "label": "Simple Stroke play",
           "players": 3
         },
         {
@@ -52661,7 +52766,7 @@
         },
         {
           "serieId": "215",
-          "label": "U12",
+          "label": "Simple Stroke play",
           "players": 3
         },
         {
@@ -53011,32 +53116,32 @@
       "divisions": [
         {
           "serieId": "15",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 27
         },
         {
           "serieId": "17",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 40
         },
         {
           "serieId": "19",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 22
         },
         {
           "serieId": "26",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 14
         },
         {
           "serieId": "28",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 12
         },
         {
           "serieId": "210",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 7
         }
       ],
@@ -53306,12 +53411,12 @@
         },
         {
           "serieId": "215",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 5
         },
         {
           "serieId": "217",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 1
         },
         {
@@ -53557,6 +53662,56 @@
       "ffgolfSection": null
     },
     {
+      "file": "03-06-1700338448.json",
+      "trnId": "1700338448",
+      "name": "Masters Jeunes d&#039;Occitanie",
+      "formule": "Simple",
+      "date": "20/05/2017",
+      "dateIso": "2017-05-20",
+      "year": 2017,
+      "typeCompetition": "03",
+      "ligue": "06",
+      "seriesCount": 6,
+      "totalPlayers": 121,
+      "divisions": [
+        {
+          "serieId": "15",
+          "label": "Simple Stroke play",
+          "players": 38
+        },
+        {
+          "serieId": "17",
+          "label": "Simple Stroke play",
+          "players": 30
+        },
+        {
+          "serieId": "19",
+          "label": "Simple Stroke play",
+          "players": 31
+        },
+        {
+          "serieId": "26",
+          "label": "Simple Stroke play",
+          "players": 6
+        },
+        {
+          "serieId": "28",
+          "label": "Simple Stroke play",
+          "players": 7
+        },
+        {
+          "serieId": "210",
+          "label": "Simple Stroke play",
+          "players": 9
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
+    },
+    {
       "file": "01-00-1700336585.json",
       "trnId": "1700336585",
       "name": "QUALIFICATION REGIONALE DES JEUNES 2017",
@@ -53666,7 +53821,7 @@
         },
         {
           "serieId": "210",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 10
         },
         {
@@ -53676,7 +53831,7 @@
         },
         {
           "serieId": "214",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 8
         }
       ],
@@ -54151,32 +54306,32 @@
       "divisions": [
         {
           "serieId": "15",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 39
         },
         {
           "serieId": "17",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 45
         },
         {
           "serieId": "19",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 12
         },
         {
           "serieId": "26",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 9
         },
         {
           "serieId": "28",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 8
         },
         {
           "serieId": "210",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 6
         }
       ],
@@ -54441,32 +54596,32 @@
       "divisions": [
         {
           "serieId": "18",
-          "label": "U12G",
+          "label": "Simple Stroke play",
           "players": 24
         },
         {
           "serieId": "19",
-          "label": "BG",
+          "label": "Simple Stroke play",
           "players": 24
         },
         {
           "serieId": "25",
-          "label": "U12F",
+          "label": "Simple Stroke play",
           "players": 9
         },
         {
           "serieId": "26",
-          "label": "BF",
+          "label": "Simple Stroke play",
           "players": 9
         },
         {
           "serieId": "27",
-          "label": "MF",
+          "label": "Simple Stroke play",
           "players": 3
         },
         {
           "serieId": "110",
-          "label": "MG",
+          "label": "Simple Stroke play",
           "players": 9
         }
       ],
