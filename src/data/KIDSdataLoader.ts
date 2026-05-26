@@ -81,6 +81,11 @@ export interface AutoRivalPlayer {
   co: string;
   r: Record<string, AutoTournResult>;
   fpgClub?: string;
+  /** HCP exacto FPG do jogador (quando aplicável — só PT players federados). Usado
+   *  para cálculo preciso de SD (AGS) em tabelas USKids/internacionais. */
+  fpgHcpExact?: number;
+  /** Data do último update do HCP FPG (YYYY-MM-DD) — para tooltips e UX. */
+  fpgHcpDate?: string;
   dob?: string;
   memberId?: string;
   esLicencia?: string;
@@ -449,6 +454,13 @@ async function _buildAutoRivalsInternal(
     if (j.sources?.fpg?.fed) {
       p.ptFed = j.sources.fpg.fed;
       p.fpgClub = j.sources.fpg.club || undefined;
+      // HCP FPG (quando disponível em juniors.json sources.fpg.hcpExact)
+      if (typeof j.sources.fpg.hcpExact === "number") {
+        p.fpgHcpExact = j.sources.fpg.hcpExact;
+      }
+      if (typeof j.sources.fpg.hcpDate === "string") {
+        p.fpgHcpDate = j.sources.fpg.hcpDate;
+      }
     }
     if (j.sources?.rfeg?.lic) {
       p.esLicencia = j.sources.rfeg.lic;

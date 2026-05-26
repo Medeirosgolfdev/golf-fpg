@@ -173,16 +173,16 @@ export const TEES_LOOKUP: Record<number, Record<number, TeeInfo>> = {
     2102: { campo: "Marco Simone Golf & Country Club", tee: "Boys 9",  par: [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], metros: [240,262,238,103,200,201,127,298,308, 234,219,291,91,236,225,190,133,354] },
   },
   // ── European Championship 2026 — Multi-campo (East Lothian, Escócia) ─
-  // CR/Slope OFICIAIS do PDF USKids EUC 2025 (public/data/course_rating_and_slope_-_euc_2025.pdf).
-  // Campos e par/yardas confirmados via uskids-results.json (rondas reais 2026).
+  // CR/Slope OFICIAIS do PDF USKids EUC (course_rating_and_slope_-_euc_2025.pdf
+  // + tabela enviada pela organização para EUC 2026; valores idênticos).
+  // age_group → escalão (via uskids-field.json):
+  //   2104=Boys 11, 2105=Boys 12, 2114=Boys 13, 2115=Boys 14, 2111=Boys 15-18,
+  //   2120=Girls 12, 2121=Girls 13-14, 2112=Girls 15-18.
   //
-  // Escalões com CR/Slope conhecidos (mesmos campos/tees que EUC 2025):
-  //   • Boys 11 (2104) @ Craigielaw Golf Club — Tee 4
-  //   • Boys 12 (2105) @ Glen Golf Club — Tee 5 (=Red)
-  //
-  // Escalões SEM CR/Slope no PDF (Boys 9 e Boys 10 não foram publicados):
-  //   • Boys 9 (2102)  @ Musselburgh (par 72, 4451y) — SD ficará "—"
-  //   • Boys 10 (2103) @ Craigielaw  (par 72, 4805y) — SD ficará "—"
+  // SEM CR/Slope publicados (UI mostra "—"):
+  //   2101=Boys 8, 2102=Boys 9, 2103=Boys 10, 2113=Boys 7 & Under,
+  //   2116=Girls 8 & Under, 2117=Girls 9, 2118=Girls 10, 2119=Girls 11.
+  // Para esses escalões, par/metros são lidos do uskids-results.json em runtime.
   21131: {
     // Boys 11 @ Craigielaw Golf Club, Tee 4 — par 72, 5218y / 4771m
     2104: {
@@ -201,6 +201,60 @@ export const TEES_LOOKUP: Record<number, Record<number, TeeInfo>> = {
       metros: [299,314,305,148,324,427,329,347,180, 311,292,395,117,294,365,164,342,327],
       cr: 68.3,
       slope: 119,
+    },
+    // Boys 13 @ Royal Musselburgh Golf Club — par/metros vão chegar nos resultados
+    2114: {
+      campo: "Royal Musselburgh Golf Club",
+      tee: "Boys 13",
+      par: [],
+      metros: [],
+      cr: 68.8,
+      slope: 123,
+    },
+    // Boys 14 @ Glen Golf Club (mesmo campo que Boys 12, tee diferente)
+    2115: {
+      campo: "Glen Golf Club",
+      tee: "Boys 14",
+      par: [],
+      metros: [],
+      cr: 70.6,
+      slope: 124,
+    },
+    // Boys 15-18 @ Musselburgh Golf Club
+    2111: {
+      campo: "Musselburgh Golf Club",
+      tee: "Boys 15-18",
+      par: [],
+      metros: [],
+      cr: 72.4,
+      slope: 131,
+    },
+    // Girls 12 @ Glen Golf Club
+    2120: {
+      campo: "Glen Golf Club",
+      tee: "Girls 12",
+      par: [],
+      metros: [],
+      cr: 66.6,
+      slope: 110,
+    },
+    // Girls 13-14 @ Musselburgh Golf Club
+    2121: {
+      campo: "Musselburgh Golf Club",
+      tee: "Girls 13-14",
+      par: [],
+      metros: [],
+      cr: 69.5,
+      slope: 119,
+    },
+    // Girls 15-18 @ Royal Musselburgh Golf Club
+    2112: {
+      campo: "Royal Musselburgh Golf Club",
+      tee: "Girls 15-18",
+      par: [],
+      metros: [],
+      cr: 72.8,
+      slope: 128,
     },
   },
 };

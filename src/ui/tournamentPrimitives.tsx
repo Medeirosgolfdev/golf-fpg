@@ -77,11 +77,14 @@ export function TeeDot({ teeName }: { teeName?: string }) {
 
 /* ─── SD pill inline (sem <td>) ─── */
 export function SDPill({
-  sd, source, hcp,
+  sd, source, hcp, hideRawTip,
 }: {
   sd: number | null;
   source?: string | null;
   hcp?: number | null;
+  /** Quando true, esconde o símbolo "≈" para source="raw" (útil em USKids onde
+   *  todos os SDs raw são equivalentes — o símbolo passa a redundante). */
+  hideRawTip?: boolean;
 }) {
   if (sd == null) {
     return (
@@ -93,10 +96,16 @@ export function SDPill({
   }
   const cls = sdClassByHcp(sd, hcp ?? null);
   const tip = source === "fpg" ? "" : source === "ags" ? "~" : "≈";
+  const showTip = tip && !(hideRawTip && source !== "ags" && source !== "fpg");
+  const title = source === "ags"
+    ? `SD exacto (AGS — usa HCP ${hcp ?? "?"})`
+    : source === "fpg"
+      ? "SD oficial FPG"
+      : "SD aproximado (sem HCP — Net Double Bogey não aplicado)";
   return (
-    <span className={"p p-sm p-" + cls}>
+    <span className={"p p-sm p-" + cls} title={title}>
       {sd.toFixed(1)}
-      {tip && <span className="fs-10 op-6"> {tip}</span>}
+      {showTip && <span className="fs-10 op-6"> {tip}</span>}
     </span>
   );
 }

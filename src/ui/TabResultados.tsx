@@ -24,7 +24,11 @@ import { TEES_LOOKUP, LINKS_EXTRA, isWD, fmtTs, ArMapCtx, type TeeInfo } from ".
 // ─────────────────────────────────────────────
 // ADAPTER: escalaoToTournament
 // ─────────────────────────────────────────────
-function escalaoToTournament(e: EscalaoResult, t: TorneioResult): TATournament {
+function escalaoToTournament(
+  e: EscalaoResult,
+  t: TorneioResult,
+  arMap?: Map<string, AutoRivalPlayer>,
+): TATournament {
   const teeInfo = TEES_LOOKUP[t.t]?.[e.age_group];
   const rondasComDados = e.rondas.filter(r => (r.leaderboard ?? r.jogadores ?? []).length > 0);
 
@@ -53,6 +57,16 @@ function escalaoToTournament(e: EscalaoResult, t: TorneioResult): TATournament {
       const key = j.nome.toLowerCase().trim();
       const strokes: number[] = j.strokes?.length ? j.strokes : (j.rondas?.["1"]?.strokes ?? []);
       if (!playerMap.has(key)) {
+        // Lookup HCP FPG (só jogadores PT federados — via arMap → fpgHcpExact).
+        // Quando disponível, computeSD() vai pelo ramo AGS (Net Double Bogey)
+        // e devolve source="ags" — SD exacto em vez de "raw".
+        let hcpExact: number | undefined;
+        let fpgFed: string | undefined;
+        if (arMap && j.pais === "PT") {
+          const ar = arMap.get(normNameAuto(j.nome));
+          if (ar?.fpgHcpExact != null) hcpExact = ar.fpgHcpExact;
+          if (ar?.ptFed) fpgFed = ar.ptFed;
+        }
         playerMap.set(key, {
           scoreId: j.nome,
           pos: null,
@@ -69,6 +83,9 @@ function escalaoToTournament(e: EscalaoResult, t: TorneioResult): TATournament {
           slope: teeInfo?.slope,
           teeName: teeInfo?.tee,
           course: teeInfo?.campo,
+          // HCP FPG do jogador (só PT com licença federativa) — permite SD AGS exacto.
+          hcpExact,
+          fedCode: fpgFed,
           roundScores: [],
           _wd: false,
         });
@@ -83,6 +100,12 @@ function escalaoToTournament(e: EscalaoResult, t: TorneioResult): TATournament {
         pars: par,
         si: siForDisplay,
         meters,
+        // CR/Slope/teeName por ronda — expandMultiRound usa estes valores
+        // ao criar as views per-round (sem isto, o computeSD da R1/R2/R3
+        // não tem dados e devolve null → coluna SD fica "—").
+        courseRating: teeInfo?.cr,
+        slope: teeInfo?.slope,
+        teeName: teeInfo?.tee,
       });
       // scores / par / si do primeiro round (para ScorecardLB de ronda única)
       if (r.ronda === rondasComDados[0].ronda) {
@@ -140,7 +163,7 @@ function EscalaoSection({ escalao: e, torneio: t, arMap }: {
   })();
   const [tab, setTab] = useState(defaultTab);
 
-  const tournament = useMemo(() => escalaoToTournament(e, t), [e, t]);
+  const tournament = useMemo(() => escalaoToTournament(e, t, arMap), [e, t, arMap]);
   const expandedT = useMemo(() => expandMultiRound(tournament), [tournament]);
 
   const isAccTab       = hasAcumulado && tab === rondasComDados.length;
@@ -196,7 +219,7 @@ function EscalaoSection({ escalao: e, torneio: t, arMap }: {
           ? <AllRoundsScorecardLB tournament={tournament} escLookup={new Map()} playersDB={kidsDB} />
           : isAccTab
             ? <AccumulatedLB tournament={curT} nRounds={rondasComDados.length} escLookup={new Map()} playersDB={kidsDB} />
-            : <ScorecardLB tournament={curT} escLookup={new Map()} playersDB={kidsDB} siLabel="m" />;
+            : <ScorecardLB tournament={curT} escLookup={new Map()} playersDB={kidsDB} siLabel="m" options={{ hideRawSDTip: true }} />;
       })()}
 
     </div>

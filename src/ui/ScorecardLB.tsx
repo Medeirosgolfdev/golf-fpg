@@ -82,6 +82,7 @@ export function ScorecardLB({
 }) {
   const hideHCP_ = options?.hideHCP ?? false;
   const hideSD_ = options?.hideSD ?? false;
+  const hideRawSDTip_ = options?.hideRawSDTip ?? false;
   const hideEsc = options?.hideEsc ?? false;
   const hideFed = options?.hideFed ?? false;
   const hideTee = options?.hideTee ?? false;
@@ -437,7 +438,7 @@ export function ScorecardLB({
           {!hideSD_ && (
             <td className="lb-sd">
               {sd != null ? (
-                <SDPill sd={sd} source={source} hcp={p.hcpExact ?? null} />
+                <SDPill sd={sd} source={source} hcp={p.hcpExact ?? null} hideRawTip={hideRawSDTip_} />
               ) : (
                 <span className="muted">–</span>
               )}

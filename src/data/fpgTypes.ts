@@ -87,6 +87,9 @@ export interface ScorecardOptions {
   noPlayerLink?: boolean; // não criar link /jogadores/{fed} no nome (usado em RFEG: licenças espanholas não correspondem a fed codes FPG)
   clubLabel?: string;     // label alternativo para coluna Clube (ex: "País")
   startHole?: number;     // buraco inicial (default 1, back-9: 10)
+  /** Esconder símbolo "≈" do SD raw (jogadores sem HCP). Útil em USKids onde
+   *  o tip é redundante para todos. PT players com HCP FPG continuam a ver "~". */
+  hideRawSDTip?: boolean;
   /** Decorador que envolve o conteúdo do nome (ex: para adicionar ↗ Kids link). */
   nameDecorator?: (name: string, content: React.ReactNode) => React.ReactNode;
 }
