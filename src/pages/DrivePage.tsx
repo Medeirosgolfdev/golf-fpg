@@ -2025,12 +2025,14 @@ function DriveContent() {
                       const isResumo = lbl === "Resumo";
                       const activeCount = entry.players.filter(p => !isDNS(p)).length;
                       const isActive = specialTab === null && roundIdx === ri;
+                      const nAces = tournamentAces(entry.players).length;
                       return (
                         <button key={entry.tcode + "_" + ri}
                           className={"tab-under" + (isActive ? " active" : "")}
                           onClick={() => { setSpecialTab(null); setRoundIdx(ri); }}>
                           {isResumo ? "📊" : selectedGroup.isEvent ? "⚡" : "🏌️"} {lbl}
                           <span className="muted fs-10" style={{ marginLeft: 4 }}>({activeCount} jog)</span>
+                          {nAces > 0 && <span title={`${nAces} hole-in-one`}> 🕳️</span>}
                         </button>
                       );
                     })}

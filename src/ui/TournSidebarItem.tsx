@@ -13,6 +13,7 @@ import {
 } from "./PillBadge";
 import { shortDateSlash } from "../utils/format";
 import { FileBadge } from "./DataSources";
+import { tournamentAces } from "../utils/aces";
 
 export const SSERRA_CCODE = "007";
 
@@ -84,6 +85,15 @@ export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills
   // em _admissions/_draws — a flag `_manuelInscrito` é setada pelo caller nesses casos.
   const manuelPlayed = t.players.some(p => isManuel(p as any)) || !!t._manuelInscrito;
   const tcodes   = (t.tcode || "").split("+").map(s => s.trim()).filter(Boolean);
+  // Holes-in-one no torneio (dedup por jogador+buraco — os players podem vir
+  // repetidos por ronda em grupos multi-ronda).
+  const nAces = (() => {
+    const seen = new Set<string>();
+    for (const a of tournamentAces(t.players as unknown as Parameters<typeof tournamentAces>[0])) {
+      seen.add((a.name || "").toLowerCase().trim() + "|" + a.hole);
+    }
+    return seen.size;
+  })();
   const hasNacional = (t.name || "").toUpperCase().includes("NACIONAL");
   const hasJunior   = /JUNIOR|J[ÚU]NIOR/i.test(t.name || "");
 
@@ -127,6 +137,9 @@ export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills
         <span className="course-item-name" style={{ flex: 1, fontSize: 12, fontWeight: isActive ? 700 : 500, lineHeight: 1.3 }}>
           {t.name}
         </span>
+        {nAces > 0 && (
+          <span title={`${nAces} hole-in-one neste torneio`} style={{ flexShrink: 0, fontSize: 12 }}>🕳️</span>
+        )}
       </div>
 
       {/* Linha 2: campo */}

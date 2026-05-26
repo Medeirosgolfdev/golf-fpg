@@ -25,6 +25,9 @@ export interface PlayerStats {
   bestGross: number | null;
   avgGross5: number | null;
   avgGross20: number | null;
+  /** Nº de holes-in-one (gross 1 em par 3/4) nos scorecards do jogador.
+   *  Gerado por enrich-players.js. Ausente em stats antigos → tratar como 0. */
+  aces?: number;
 }
 
 export type PlayerStatsDb = Record<string, PlayerStats>;

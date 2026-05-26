@@ -69,7 +69,19 @@ function loadCanonicalCounts(fed) {
           }
         }
       }
-      return { total, thisYear, lastDate };
+      // Holes-in-one: gross 1 num buraco de par 3 ou 4 (par conhecido).
+      // Mesma regra do helper src/utils/aces.ts. HOLES/holeScores: { g[], p[] }.
+      const holes = d.HOLES || d.holeScores || {};
+      let aces = 0;
+      for (const sid of Object.keys(holes)) {
+        const e = holes[sid] || {};
+        const g = e.g || [], p = e.p || [];
+        const n = Math.min(g.length, p.length);
+        for (let i = 0; i < n; i++) {
+          if (g[i] === 1 && (p[i] === 3 || p[i] === 4)) aces++;
+        }
+      }
+      return { total, thisYear, lastDate, aces };
     } catch (parseErr) {
       // JSON inválido (ex: truncado a meio por escrita interrompida).
       // Marcar como corrompido e seguir para o próximo candidato/fallback.
@@ -200,6 +212,7 @@ for (const fed of targetFeds) {
     lastSD: r(raw.lastSD), currentHcp: r(raw.currentHcp),
     hcpTrend, hcpDelta3m, formAlert,
     bestGross, avgGross5: r(avgGross5), avgGross20: r(raw.avgGross20),
+    aces: canonical?.aces ?? 0,
   };
   processed++;
 }

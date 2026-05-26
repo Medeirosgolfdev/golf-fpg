@@ -47,7 +47,7 @@ import { buildCourseKeyMap, setCourseKeyMap, findCourseKey, CourseLink } from ".
    ──────────────────────────────────────────────────────────────────────────────────── */
 
 
-type SortKey = "name" | "hcp" | "club" | "escalao" | "ranking" | "rounds";
+type SortKey = "name" | "hcp" | "club" | "escalao" | "ranking" | "rounds" | "aces";
 type ViewKey = "by_course" | "by_course_analysis" | "by_date" | "by_tournament" | "analysis";
 type CourseSort = "last_desc" | "count_desc" | "name_asc";
 
@@ -4173,6 +4173,13 @@ export default function JogadoresPage() {
           };
           return dir * (roundCount(a) - roundCount(b)) || (dir * ((statsDb[a.fed]?.roundsTotal ?? 0) - (statsDb[b.fed]?.roundsTotal ?? 0)));
         }
+        case "aces": {
+          // Nº de holes-in-one (statsDb.aces, gerado por enrich-players.js).
+          // Desempate por nome para estabilidade entre jogadores com 0.
+          const av = statsDb[a.fed]?.aces ?? 0;
+          const bv = statsDb[b.fed]?.aces ?? 0;
+          return (dir * (av - bv)) || a.name.localeCompare(b.name, "pt");
+        }
         default: return 0;
       }
     });
@@ -4476,7 +4483,7 @@ export default function JogadoresPage() {
             onChange={e => {
               const k = e.target.value as SortKey;
               setSortKey(k);
-              setSortDir(k === "rounds" ? "desc" : "asc");
+              setSortDir(k === "rounds" || k === "aces" ? "desc" : "asc");
             }}
             style={{ borderTopRightRadius: 0, borderBottomRightRadius: 0 }}
           >
@@ -4486,6 +4493,7 @@ export default function JogadoresPage() {
             <option value="escalao">Ordenar: Escalão</option>
             <option value="ranking">Ordenar: 🏆 Ranking</option>
             <option value="rounds">Ordenar: Voltas</option>
+            <option value="aces">Ordenar: 🕳️ Hole-in-one</option>
           </select>
           <button
             className="p"
