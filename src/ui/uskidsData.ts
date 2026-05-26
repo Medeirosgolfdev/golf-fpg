@@ -172,4 +172,35 @@ export const TEES_LOOKUP: Record<number, Record<number, TeeInfo>> = {
     2103: { campo: "Marco Simone Golf & Country Club", tee: "Boys 10", par: [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], metros: [274,299,272,103,227,231,132,338,352, 267,219,356,91,270,237,225,133,404] },
     2102: { campo: "Marco Simone Golf & Country Club", tee: "Boys 9",  par: [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], metros: [240,262,238,103,200,201,127,298,308, 234,219,291,91,236,225,190,133,354] },
   },
+  // ── European Championship 2026 — Multi-campo (East Lothian, Escócia) ─
+  // CR/Slope OFICIAIS do PDF USKids EUC 2025 (public/data/course_rating_and_slope_-_euc_2025.pdf).
+  // Campos e par/yardas confirmados via uskids-results.json (rondas reais 2026).
+  //
+  // Escalões com CR/Slope conhecidos (mesmos campos/tees que EUC 2025):
+  //   • Boys 11 (2104) @ Craigielaw Golf Club — Tee 4
+  //   • Boys 12 (2105) @ Glen Golf Club — Tee 5 (=Red)
+  //
+  // Escalões SEM CR/Slope no PDF (Boys 9 e Boys 10 não foram publicados):
+  //   • Boys 9 (2102)  @ Musselburgh (par 72, 4451y) — SD ficará "—"
+  //   • Boys 10 (2103) @ Craigielaw  (par 72, 4805y) — SD ficará "—"
+  21131: {
+    // Boys 11 @ Craigielaw Golf Club, Tee 4 — par 72, 5218y / 4771m
+    2104: {
+      campo: "Craigielaw Golf Club",
+      tee: "Boys 11",
+      par: [4,5,3,5,5,3,4,3,4, 3,5,5,4,4,4,4,3,4],
+      metros: [247,401,123,397,359,112,249,115,270, 122,416,338,304,322,251,301,124,320],
+      cr: 66.9,
+      slope: 118,
+    },
+    // Boys 12 @ Glen Golf Club, Tee 5 (=Red tee) — par 72, 5773y / 5280m
+    2105: {
+      campo: "Glen Golf Club",
+      tee: "Boys 12",
+      par: [4,4,4,3,4,5,4,5,3, 4,4,5,3,4,5,3,4,4],
+      metros: [299,314,305,148,324,427,329,347,180, 311,292,395,117,294,365,164,342,327],
+      cr: 68.3,
+      slope: 119,
+    },
+  },
 };

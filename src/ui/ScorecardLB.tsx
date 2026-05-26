@@ -47,7 +47,23 @@ const PName = ({
 }) => <TournPName name={name} fedCode={fedCode} playersDB={playersDB} />;
 
 /* SortKey — usado pelo ScorecardLB */
-type SortKey = "pos" | "name" | "club" | "esc" | "age" | "hcp" | "gross" | "toPar" | "tee" | "sd";
+type SortKey =
+  | "pos"
+  | "name"
+  | "club"
+  | "esc"
+  | "age"
+  | "hcp"
+  | "gross"
+  | "toPar"
+  | "tee"
+  | "sd"
+  | "bird"
+  | "par-stat"
+  | "bog"
+  | "f9"
+  | "b9"
+  | `hole:${number}`;
 
 export function ScorecardLB({
   tournament,
@@ -138,13 +154,59 @@ export function ScorecardLB({
     [rawPlayers, filter, escLookup, playersDB, tournament.date, fedBirthdates]
   );
 
+  /** Stats por jogador (birds/pars/bogs) + scores/inferred — calculados uma
+   *  única vez para servir tanto o sort comparator como o render dos rows.
+   *  Usa fillBlankHoles (Net Double Bogey reconciliado) para coerência com
+   *  o que aparece na UI. */
+  const statsByPlayer = useMemo(() => {
+    const m = new Map<Player, { birds: number; pars: number; bogs: number; scores: number[]; inferred: boolean[] }>();
+    for (const p of rawPlayers) {
+      const { scores, inferred } = fillBlankHoles(p);
+      let birds = 0, pars = 0, bogs = 0;
+      for (let i = 0; i < scores.length && i < par.length; i++) {
+        if (!scores[i]) continue;
+        const d = scores[i] - par[i];
+        if (d <= -1) birds++;
+        else if (d === 0) pars++;
+        else bogs++;
+      }
+      m.set(p, { birds, pars, bogs, scores, inferred });
+    }
+    return m;
+  }, [rawPlayers, par]);
+
   const sorted = useMemo(() => {
+    const INF = 9999;
     return [...filteredPlayers].sort((a, b) => {
       // WD players sempre no fim, independentemente do sortKey
       const aWD = a._wd;
       const bWD = b._wd;
       if (aWD && !bWD) return 1;
       if (!aWD && bWD) return -1;
+
+      // Sort por buraco específico: "hole:N" (0-based)
+      if (typeof sortKey === "string" && sortKey.startsWith("hole:")) {
+        const hi = parseInt(sortKey.slice(5), 10);
+        const sa = statsByPlayer.get(a)?.scores[hi];
+        const sb = statsByPlayer.get(b)?.scores[hi];
+        const va = sa && sa > 0 ? sa : INF;
+        const vb = sb && sb > 0 ? sb : INF;
+        return sortDir === "asc" ? va - vb : vb - va;
+      }
+      // Sort por Out (f9) ou In (b9)
+      if (sortKey === "f9" || sortKey === "b9") {
+        const sumHalf = (p: typeof a) => {
+          const s = statsByPlayer.get(p)?.scores ?? [];
+          const arr = sortKey === "f9" ? s.slice(0, 9) : s.slice(9, 18);
+          const valid = arr.filter(v => v > 0);
+          if (!valid.length) return INF;
+          return arr.reduce((acc, v) => acc + (v || 0), 0);
+        };
+        const va = sumHalf(a);
+        const vb = sumHalf(b);
+        return sortDir === "asc" ? va - vb : vb - va;
+      }
+
       let av: any, bv: any;
       switch (sortKey) {
         case "pos":
@@ -187,6 +249,20 @@ export function ScorecardLB({
           av = computeSD(a).sd ?? 999;
           bv = computeSD(b).sd ?? 999;
           break;
+        case "bird":
+          // Mais birdies primeiro quando asc (mais útil) — invertemos o sinal.
+          av = -(statsByPlayer.get(a)?.birds ?? 0);
+          bv = -(statsByPlayer.get(b)?.birds ?? 0);
+          break;
+        case "par-stat":
+          av = -(statsByPlayer.get(a)?.pars ?? 0);
+          bv = -(statsByPlayer.get(b)?.pars ?? 0);
+          break;
+        case "bog":
+          // Bogeys: menos primeiro quando asc (clássico — quem fez menos bogeys jogou melhor).
+          av = statsByPlayer.get(a)?.bogs ?? 999;
+          bv = statsByPlayer.get(b)?.bogs ?? 999;
+          break;
         default:
           av = 0;
           bv = 0;
@@ -195,7 +271,7 @@ export function ScorecardLB({
         return sortDir === "asc" ? av.localeCompare(bv) : bv.localeCompare(av);
       return sortDir === "asc" ? av - bv : bv - av;
     });
-  }, [filteredPlayers, sortKey, sortDir, parTotal, escLookup, playersDB, tournament.date, fedBirthdates]);
+  }, [filteredPlayers, sortKey, sortDir, parTotal, escLookup, playersDB, tournament.date, fedBirthdates, statsByPlayer]);
 
   // Agora é seguro fazer early return — todos os hooks já foram chamados
   if (!rawPlayers.length) return <EmptyState size="sm" message="Scorecards não disponíveis." />;
@@ -220,18 +296,13 @@ export function ScorecardLB({
     // valor inferido (Net Double Bogey, reconciliado com o gross oficial). A
     // máscara `inferred` marca quais foram estimados — para a UI os pintar a
     // cinzento. Não altera os ficheiros de dados.
-    const { scores, inferred } = fillBlankHoles(p);
-    // Birdies / pars / bogeys (sobre os scores preenchidos)
-    let birds = 0,
-      pars = 0,
-      bogs = 0;
-    for (let i = 0; i < scores.length && i < par.length; i++) {
-      if (!scores[i]) continue; // buraco genuinamente sem dados
-      const d = scores[i] - par[i];
-      if (d <= -1) birds++;
-      else if (d === 0) pars++;
-      else bogs++;
-    }
+    // Reutilizamos statsByPlayer (calculado uma vez para sort + render).
+    const stats = statsByPlayer.get(p);
+    const scores = stats?.scores ?? [];
+    const inferred = stats?.inferred ?? [];
+    const birds = stats?.birds ?? 0;
+    const pars = stats?.pars ?? 0;
+    const bogs = stats?.bogs ?? 0;
 
     return {
       key: p.scoreId || idx,
@@ -467,8 +538,7 @@ export function ScorecardLB({
               HCP
             </SortableHdr>
           )}
-          {!
-hideTee && (
+          {!hideTee && (
             <SortableHdr
               k="tee"
               sortKey={sortKey}
@@ -487,23 +557,54 @@ hideTee && (
             <SortableHdr
               k="sd"
               sortKey={sortKey}
-              sor
-tDir={sortDir}
+              sortDir={sortDir}
               onSort={handleSort}
               className="lb-sd"
             >
               SD
             </SortableHdr>
           )}
-          <th className="lb-bird">🐦</th>
-          <th className="lb-par-stat">Par</th>
-          <th className="lb-bog">■</th>
+          <SortableHdr
+            k="bird"
+            sortKey={sortKey}
+            sortDir={sortDir}
+            onSort={handleSort}
+            className="lb-bird"
+            title="Clique para ordenar por nº de birdies (descendente)"
+          >
+            🐦
+          </SortableHdr>
+          <SortableHdr
+            k="par-stat"
+            sortKey={sortKey}
+            sortDir={sortDir}
+            onSort={handleSort}
+            className="lb-par-stat"
+            title="Clique para ordenar por nº de pares (descendente)"
+          >
+            Par
+          </SortableHdr>
+          <SortableHdr
+            k="bog"
+            sortKey={sortKey}
+            sortDir={sortDir}
+            onSort={handleSort}
+            className="lb-bog"
+            title="Clique para ordenar por nº de bogeys"
+          >
+            ■
+          </SortableHdr>
         </>
       }
       activeSortKey={sortKey}
       activeSortDir={sortDir}
       onSortPos={() => handleSort("pos")}
       onSortName={() => handleSort("name")}
+      onSortToPar={() => handleSort("toPar")}
+      onSortGross={() => handleSort("gross")}
+      onSortHole={(i) => handleSort(`hole:${i}` as SortKey)}
+      onSortF9={() => handleSort("f9")}
+      onSortB9={() => handleSort("b9")}
     />
   );
 }

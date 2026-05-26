@@ -83,7 +83,14 @@ export function SDPill({
   source?: string | null;
   hcp?: number | null;
 }) {
-  if (sd == null) return <span className="muted">–</span>;
+  if (sd == null) {
+    return (
+      <span
+        className="muted"
+        title="SD não calculável — falta Course Rating e/ou Slope deste tee. Adicionar os campos cr/slope no TEES_LOOKUP (src/ui/uskidsData.ts) para o torneio/escalão."
+      >–</span>
+    );
+  }
   const cls = sdClassByHcp(sd, hcp ?? null);
   const tip = source === "fpg" ? "" : source === "ags" ? "~" : "≈";
   return (
@@ -221,8 +228,7 @@ export function TournPName({
           href={`/kids2#${kidsHash}`}
           target="_blank"
           rel="noopener noreferrer"
-          title="Ver em Kids
-"
+          title="Ver em Kids"
           style={{ marginLeft: 4, fontWeight: 800, color: "var(--color-good-dark)", fontSize: 11, textDecoration: "none" }}>
           ↗
         </a>

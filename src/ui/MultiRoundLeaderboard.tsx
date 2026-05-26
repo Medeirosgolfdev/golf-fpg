@@ -199,7 +199,12 @@ function ageAt(dob?: string | null, refDate?: string): number | null {
 /* ══════════════════════════════════════════════════════════════
    TIPOS SORT
    ══════════════════════════════════════════════════════════════ */
-type MRSortKey = "pos" | "name" | "club" | "esc" | "hcp" | "gross" | "toPar" | "tee" | "sd" | "birthYear" | "age" | `sd:${number}`;
+type MRSortKey =
+  | "pos" | "name" | "club" | "esc" | "hcp" | "gross" | "toPar" | "tee"
+  | "sd" | "birthYear" | "age"
+  | "bird" | "par-stat" | "bog"
+  | "acc:bird" | "acc:par" | "acc:bog"
+  | `sd:${number}` | `bird:${number}` | `par:${number}` | `bog:${number}`;
 
 /* ══════════════════════════════════════════════════════════════
    COMPONENTE PRINCIPAL
@@ -329,6 +334,29 @@ export function MultiRoundLeaderboard({
       const sb = b.rounds[ri]?.sd ?? INF;
       return sortDir === "asc" ? sa - sb : sb - sa;
     }
+    // Birdies por ronda específica: "bird:0", "bird:1", ...
+    if (typeof sortKey === "string" && sortKey.startsWith("bird:")) {
+      const ri = parseInt(sortKey.slice(5), 10);
+      const sa = a.rounds[ri]?.birdies ?? 0;
+      const sb = b.rounds[ri]?.birdies ?? 0;
+      // Mais birdies primeiro em asc (mais útil — clica e vê quem fez mais).
+      return sortDir === "asc" ? sb - sa : sa - sb;
+    }
+    // Pares por ronda específica: "par:0", "par:1", ...
+    if (typeof sortKey === "string" && sortKey.startsWith("par:")) {
+      const ri = parseInt(sortKey.slice(4), 10);
+      const sa = a.rounds[ri]?.pars ?? 0;
+      const sb = b.rounds[ri]?.pars ?? 0;
+      return sortDir === "asc" ? sb - sa : sa - sb;
+    }
+    // Bogeys por ronda específica: "bog:0", "bog:1", ...
+    if (typeof sortKey === "string" && sortKey.startsWith("bog:")) {
+      const ri = parseInt(sortKey.slice(4), 10);
+      const sa = a.rounds[ri]?.bogeys ?? 999;
+      const sb = b.rounds[ri]?.bogeys ?? 999;
+      // Menos bogeys primeiro em asc (clássico — quem fez menos jogou melhor).
+      return sortDir === "asc" ? sa - sb : sb - sa;
+    }
     switch (sortKey) {
       case "pos":   return sortDir === "asc" ? (a._pos ?? INF) - (b._pos ?? INF) : (b._pos ?? INF) - (a._pos ?? INF);
       case "name":  return sortDir === "asc" ? a.name.localeCompare(b.name,"pt") : b.name.localeCompare(a.name,"pt");
@@ -339,6 +367,24 @@ export function MultiRoundLeaderboard({
       case "gross": return sortDir === "asc" ? (a.gross ?? INF) - (b.gross ?? INF) : (b.gross ?? INF) - (a.gross ?? INF);
       case "toPar": return sortDir === "asc" ? ((a.gross ?? INF) - (a.parTotal ?? 0)) - ((b.gross ?? INF) - (b.parTotal ?? 0)) : ((b.gross ?? INF) - (b.parTotal ?? 0)) - ((a.gross ?? INF) - (a.parTotal ?? 0));
       case "sd":    { const sa = a.rounds[0]?.sd ?? INF; const sb = b.rounds[0]?.sd ?? INF; return sortDir === "asc" ? sa - sb : sb - sa; }
+      case "bird":      { const sa = a.rounds[0]?.birdies ?? 0;  const sb = b.rounds[0]?.birdies ?? 0;  return sortDir === "asc" ? sb - sa : sa - sb; }
+      case "par-stat":  { const sa = a.rounds[0]?.pars ?? 0;     const sb = b.rounds[0]?.pars ?? 0;     return sortDir === "asc" ? sb - sa : sa - sb; }
+      case "bog":       { const sa = a.rounds[0]?.bogeys ?? 999; const sb = b.rounds[0]?.bogeys ?? 999; return sortDir === "asc" ? sa - sb : sb - sa; }
+      case "acc:bird":  {
+        const sa = a.rounds.reduce((t, r) => t + (r?.birdies || 0), 0);
+        const sb = b.rounds.reduce((t, r) => t + (r?.birdies || 0), 0);
+        return sortDir === "asc" ? sb - sa : sa - sb;
+      }
+      case "acc:par":   {
+        const sa = a.rounds.reduce((t, r) => t + (r?.pars || 0), 0);
+        const sb = b.rounds.reduce((t, r) => t + (r?.pars || 0), 0);
+        return sortDir === "asc" ? sb - sa : sa - sb;
+      }
+      case "acc:bog":   {
+        const sa = a.rounds.reduce((t, r) => t + (r?.bogeys || 0), 0);
+        const sb = b.rounds.reduce((t, r) => t + (r?.bogeys || 0), 0);
+        return sortDir === "asc" ? sa - sb : sb - sa;
+      }
       case "birthYear": {
         const ya = birthYearOf(dobOf(a));
         const yb = birthYearOf(dobOf(b));
@@ -411,9 +457,9 @@ export function MultiRoundLeaderboard({
 
               {/* Acumulados multi-ronda (entre Total e R1) */}
               {isMulti && showRoundStats && <>
-                <th className="lb-acc-bird">🐦</th>
-                <th className="lb-acc-par">=</th>
-                <th className="lb-acc-bog">■</th>
+                <SHdr k="acc:bird" className="lb-acc-bird">🐦</SHdr>
+                <SHdr k="acc:par"  className="lb-acc-par">=</SHdr>
+                <SHdr k="acc:bog"  className="lb-acc-bog">■</SHdr>
               </>}
 
               {/* Por ronda */}
@@ -427,18 +473,18 @@ export function MultiRoundLeaderboard({
                       {showRoundToPar && <th className="lb-rnd-tp">±</th>}
                       {showRoundStats && <>
                         <SHdr k={`sd:${r}` as MRSortKey} className="lb-rnd-sd">SD</SHdr>
-                        <th className="lb-rnd-bird">🐦</th>
-                        <th className="lb-rnd-par">=</th>
-                        <th className="lb-rnd-bog">■</th>
+                        <SHdr k={`bird:${r}` as MRSortKey} className="lb-rnd-bird">🐦</SHdr>
+                        <SHdr k={`par:${r}`  as MRSortKey} className="lb-rnd-par">=</SHdr>
+                        <SHdr k={`bog:${r}`  as MRSortKey} className="lb-rnd-bog">■</SHdr>
                       </>}
                     </React.Fragment>
                   ))
                 : <>
                     {showRoundStats && <>
                       <SHdr k="sd" className="lb-sd">SD</SHdr>
-                      <th className="lb-bird">🐦</th>
-                      <th className="lb-par-stat">Par</th>
-                      <th className="lb-bog">■</th>
+                      <SHdr k="bird"     className="lb-bird">🐦</SHdr>
+                      <SHdr k="par-stat" className="lb-par-stat">Par</SHdr>
+                      <SHdr k="bog"      className="lb-bog">■</SHdr>
                     </>}
                   </>
               }

@@ -91,6 +91,16 @@ interface ScorecardLeaderboardProps {
   filterBar?: React.ReactNode;
   onSortPos?: () => void;
   onSortName?: () => void;
+  /** Handler externo para ordenar pela coluna ±Par. Quando fornecido, o cabeçalho fica clicável mesmo com sortable=false. */
+  onSortToPar?: () => void;
+  /** Handler externo para ordenar pela coluna Tot/gross. */
+  onSortGross?: () => void;
+  /** Handler externo para ordenar por um buraco específico (0-based). */
+  onSortHole?: (holeIndex: number) => void;
+  /** Handler externo para ordenar pelo total dos primeiros 9 buracos (Out). */
+  onSortF9?: () => void;
+  /** Handler externo para ordenar pelo total dos últimos 9 buracos (In). */
+  onSortB9?: () => void;
   activeSortKey?: string;
   activeSortDir?: "asc" | "desc";
   /** Sorting interno — usa sortName/sortPos de ScorecardRow. Ignora onSortPos/onSortName. */
@@ -99,7 +109,7 @@ interface ScorecardLeaderboardProps {
   hideTotals?: boolean;
 }
 
-type SCSortKey = "pos" | "name" | "gross" | "toPar";
+type SCSortKey = "pos" | "name" | "gross" | "toPar" | "f9" | "b9" | `hole:${number}`;
 
 export function ScorecardLeaderboard({
   par, si, siLabel = "S.I.", teeMeters, rows,
@@ -111,7 +121,7 @@ export function ScorecardLeaderboard({
   startHole: startHoleProp,
   showScorecard, onToggleScorecard,
   metaLine, filterBar,
-  onSortPos, onSortName, activeSortKey, activeSortDir,
+  onSortPos, onSortName, onSortToPar, onSortGross, onSortHole, onSortF9, onSortB9, activeSortKey, activeSortDir,
   sortable = false,
   hideTotals = false,
 }: ScorecardLeaderboardProps) {
@@ -143,6 +153,26 @@ export function ScorecardLeaderboard({
     const INF = 9999;
     return [...rows].sort((a, b) => {
       const dir = intSortDir === "asc" ? 1 : -1;
+      // Sort por buraco específico: "hole:N" (0-based)
+      if (typeof intSortKey === "string" && intSortKey.startsWith("hole:")) {
+        const hi = parseInt(intSortKey.slice(5), 10);
+        const sa = a.scores?.[hi];
+        const sb = b.scores?.[hi];
+        const va = sa && sa > 0 ? sa : INF;
+        const vb = sb && sb > 0 ? sb : INF;
+        return dir * (va - vb);
+      }
+      // Sort por Out (F9) ou In (B9) — soma dos 9 primeiros / 9 últimos buracos
+      if (intSortKey === "f9" || intSortKey === "b9") {
+        const sliceFn = (s: number[] | undefined) => {
+          if (!s) return INF;
+          const arr = intSortKey === "f9" ? s.slice(0, 9) : s.slice(9, 18);
+          const valid = arr.filter(v => v > 0);
+          if (!valid.length) return INF;
+          return arr.reduce((acc, v) => acc + (v || 0), 0);
+        };
+        return dir * (sliceFn(a.scores) - sliceFn(b.scores));
+      }
       switch (intSortKey) {
         case "pos":   return dir * ((a.sortPos ?? INF) - (b.sortPos ?? INF));
         case "name":  return dir * ((a.sortName ?? a.key.toString()).localeCompare(b.sortName ?? b.key.toString(), "pt"));
@@ -153,9 +183,15 @@ export function ScorecardLeaderboard({
     });
   }, [rows, sortable, intSortKey, intSortDir]);
 
-  const handleSortPos  = sortable ? () => intToggle("pos")  : onSortPos;
-  const handleSortName = sortable ? () => intToggle("name") : onSortName;
-  const isSortable = sortable || !!onSortPos || !!onSortName;
+  const handleSortPos   = sortable ? () => intToggle("pos")   : onSortPos;
+  const handleSortName  = sortable ? () => intToggle("name")  : onSortName;
+  const handleSortToPar = sortable ? () => intToggle("toPar") : onSortToPar;
+  const handleSortGross = sortable ? () => intToggle("gross") : onSortGross;
+  const handleSortHole  = sortable
+    ? (i: number) => intToggle(`hole:${i}` as SCSortKey)
+    : onSortHole;
+  const handleSortF9    = sortable ? () => intToggle("f9") : onSortF9;
+  const handleSortB9    = sortable ? () => intToggle("b9") : onSortB9;
 
   function SortArrow({ col }: { col: string }) {
     if (effectiveSortKey !== col) return null;
@@ -265,23 +301,59 @@ export function ScorecardLeaderboard({
               {prefixHeaderCells}
               {!hideTotals && (
                 <>
-                  <th className={"lb-topar" + (sortable ? " lb-sortable" : "")} onClick={sortable ? () => intToggle("toPar") : undefined}>
+                  <th
+                    className={"lb-topar" + (handleSortToPar ? " lb-sortable" : "")}
+                    onClick={handleSortToPar}
+                    title={handleSortToPar ? "Clique para ordenar por ±Par" : undefined}
+                  >
                     ±<SortArrow col="toPar" />
                   </th>
-                  <th className={"lb-gross" + (sortable ? " lb-sortable" : "")} onClick={sortable ? () => intToggle("gross") : undefined}>
+                  <th
+                    className={"lb-gross" + (handleSortGross ? " lb-sortable" : "")}
+                    onClick={handleSortGross}
+                    title={handleSortGross ? "Clique para ordenar pelo total" : undefined}
+                  >
                     Tot<SortArrow col="gross" />
                   </th>
                 </>
               )}
               {showScorecard && <>
                 {Array.from({ length: Math.min(9, nh) }, (_, i) => (
-                  <th key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{startHole + i}</th>
+                  <th
+                    key={i}
+                    className={"lb-hole" + (i === 0 ? " lb-hole-first" : "") + (handleSortHole ? " lb-sortable" : "")}
+                    onClick={handleSortHole ? () => handleSortHole(i) : undefined}
+                    title={handleSortHole ? `Clique para ordenar pelo buraco ${startHole + i}` : undefined}
+                  >
+                    {startHole + i}<SortArrow col={`hole:${i}`} />
+                  </th>
                 ))}
-                <th className="lb-halftot">{is9 ? "Tot" : "Out"}</th>
+                <th
+                  className={"lb-halftot" + (handleSortF9 ? " lb-sortable" : "")}
+                  onClick={handleSortF9}
+                  title={handleSortF9 ? (is9 ? "Clique para ordenar pelo total" : "Clique para ordenar pelo total dos 9 primeiros (Out)") : undefined}
+                >
+                  {is9 ? "Tot" : "Out"}<SortArrow col="f9" />
+                </th>
                 {!is9 && Array.from({ length: Math.min(9, nh - 9) }, (_, i) => (
-                  <th key={i + 9} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{startHole + 9 + i}</th>
+                  <th
+                    key={i + 9}
+                    className={"lb-hole" + (i === 0 ? " lb-hole-first" : "") + (handleSortHole ? " lb-sortable" : "")}
+                    onClick={handleSortHole ? () => handleSortHole(9 + i) : undefined}
+                    title={handleSortHole ? `Clique para ordenar pelo buraco ${startHole + 9 + i}` : undefined}
+                  >
+                    {startHole + 9 + i}<SortArrow col={`hole:${9 + i}`} />
+                  </th>
                 ))}
-                {!is9 && <th className="lb-halftot">In</th>}
+                {!is9 && (
+                  <th
+                    className={"lb-halftot" + (handleSortB9 ? " lb-sortable" : "")}
+                    onClick={handleSortB9}
+                    title={handleSortB9 ? "Clique para ordenar pelo total dos 9 últimos (In)" : undefined}
+                  >
+                    In<SortArrow col="b9" />
+                  </th>
+                )}
               </>}
               {afterScorecardHeaders}
             </tr>

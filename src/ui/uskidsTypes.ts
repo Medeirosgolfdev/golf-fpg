@@ -167,4 +167,10 @@ export interface TeeInfo {
   tee: string;
   par: number[];
   metros: number[];
+  /** Course Rating (opcional) — necessário para cálculo de SD (Score Differential).
+   *  Quando ausente, a UI mostra "—" na coluna SD para este escalão. */
+  cr?: number;
+  /** Slope Rating (opcional, 55-155) — necessário para cálculo de SD.
+   *  Quando ausente, a UI mostra "—" na coluna SD para este escalão. */
+  slope?: number;
 }

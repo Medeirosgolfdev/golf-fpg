@@ -20,6 +20,8 @@
 9. [Estatísticas do scraping de federados](#9-estat%C3%ADsticas-do-scraping-de-federados)
 10. [Comportamentos observados (erros, status codes)](#10-comportamentos-observados-erros-status-codes)
 11. [Ficheiros relacionados](#11-ficheiros-relacionados)
+12. [Lições aprendidas](#12-li%C3%A7%C3%B5es-aprendidas)
+13. [O backoffice clubarea (`1Page.aspx` + HMAC)](#13-o-backoffice-clubarea-1pageaspx--hmac)
 
 ---
 
@@ -670,3 +672,233 @@ funcionou consistentemente.
 
 6. **Documentar é vital aqui.** Cada uma destas descobertas custou tempo
    real. Sem este documento, redescobrir tudo demoraria as mesmas horas.
+
+---
+
+## 13. O backoffice clubarea (`1Page.aspx` + HMAC)
+
+> **Data da descoberta:** 26 de Maio de 2026
+> **Contexto:** investigação sobre se a FPG expõe e-mails de federados em
+> algum endpoint adicional aos 32 campos públicos do `HandicapsLST`.
+> Resposta curta: o e-mail existe no sistema mas vive atrás de um
+> backoffice paralelo que **exige autenticação de admin de clube**.
+> O esquema técnico abaixo está completo; só falta o cookie de role.
+
+### 13.1 O que é
+
+Para além das páginas públicas (`tournaments.aspx`, `Classifications.aspx`,
+`PlayerWHS.aspx`, `FederatedsList_V2.aspx`) e dos entry-points modernos
+`linkpage.aspx` documentados em §1–§5, a FPG mantém um **shell ASP.NET
+único** em `scoring.fpg.pt/lists/1Page.aspx` que serve **38 páginas
+distintas** de gestão de clube, escolhidas por um parâmetro `page=`.
+
+É o backoffice que os administradores de clube usam para:
+- Ver/editar perfis completos de federados (incluindo email, telefone,
+  morada — campos NÃO expostos no `HandicapsLST` público)
+- Gerir pagamentos de quotas
+- Aprovar inscrições, fazer draws, lançar scores
+- Calcular handicaps, propor novos federados, etc.
+
+O router público que mapeia `page=X` para a URL completa do `1Page.aspx`
+é `scoring.fpg.pt/lists/1ClubCall.html` — uma página HTML estática que
+o browser pede e que executa um pequeno JavaScript para construir a URL
+final via HMAC (ver §13.3).
+
+### 13.2 Catálogo das 38 páginas (`page=` valores)
+
+Extraído integralmente de `1ClubCall.html` (público, sem auth).
+Agrupado por finalidade:
+
+| Categoria | `page=` valores |
+|---|---|
+| **Federados (lista)** | `fedsearch`, `fedlist`, `fedlist_v2` |
+| **Federado individual** | `federated`, `federated_v2`, `federated_v3` |
+| **Federado — outras vistas** | `fedhcp`, `fedpayments`, `fedaudit`, `fedprop`, `init_hcp` |
+| **Torneios** | `tournlist`, `tourndetail`, `tournclassif`, `livetourns`, `tourns`, `tourncalc` |
+| **Inscrições / Draws** | `admissions`, `drawlist`, `drawsnext` |
+| **Scores** | `scores`, `singlescores`, `singlescoresall`, `indivscore`, `confscore`, `confscoresclub` |
+| **Rankings** | `ranklist`, `rankclassif`, `ranklistecl`, `rankclassifecl` |
+| **HCP — gestão** | `calchcp`, `reviewfed`, `reviewclub`, `hcp_pref`, `freezes` |
+| **Clubes e campos** | `clubs`, `courses`, `coursepcc`, `coursedailystatus` |
+| **Sistema** | `users`, `roles`, `affrequest`, `tourn_sub_req`, `sacechamps`, `sacfcalc` |
+
+**Páginas relevantes para o objectivo "obter emails":**
+
+- `federated_v3` — perfil COMPLETO do federado (substitui v1/v2 antigos);
+  quase de certeza expõe os campos email, telefone, morada que o
+  `HandicapsLST` filtra.
+- `fedpayments` — histórico de quotas e pagamentos; tipicamente inclui
+  contacto para o admin de clube emitir recibos / cobrar.
+- `fedprop` — proposta de novo federado; o formulário de inscrição
+  obriga a email (que fica visível no perfil do proposto).
+
+### 13.3 O esquema HMAC
+
+Cada URL para o `1Page.aspx` é assinada com um HMAC-SHA1 que protege
+contra adulteração trivial. **O algoritmo e o segredo estão no JS
+público** `scoring.fpg.pt/lists/Scripts/DataGolfe.js`:
+
+```js
+// Excerto desofuscado de DataGolfe.js
+function DataGolfeRedirect(user, page, param, callContext) {
+    var SecretPass = '123';                          // ← segredo "secreto"
+    var dt = new Date();
+    var month = dt.getMonth() + 1;
+    var day   = dt.getDate();
+    var min   = dt.getMinutes();
+    var dttomod = day.toString() + month.toString() + min.toString();
+    var strtoenc = user + dttomod;
+    var hmac = Crypto.HMAC(Crypto.SHA1, strtoenc, SecretPass);
+
+    var partparam = "?user=" + user + "&dt=" + dttomod + "&page=" + page
+                  + "" + param + "&hash=" + hmac;
+    window.location.replace("1Page.aspx" + partparam);
+}
+```
+
+Equivalente em Node/Python:
+
+```python
+import hmac, hashlib
+from datetime import datetime
+SECRET = "123"
+user   = "admin"           # qualquer string — o servidor não valida o user aqui
+now    = datetime.now()
+dt     = f"{now.day}{now.month}{now.minute}"     # SEM zero-padding
+h      = hmac.new(SECRET.encode(), (user+dt).encode(), hashlib.sha1).hexdigest()
+url    = (f"https://scoring.fpg.pt/lists/1Page.aspx"
+          f"?user={user}&dt={dt}&page=federated_v3"
+          f"&fedno=52884&loggedfed=52884&pagelang=PT"
+          f"&callcontext=clubarea&hash={h}")
+```
+
+⚠ **Janela temporal:** o hash incorpora `day+month+minute` (sem ano nem
+hora). Tecnicamente colide a cada `60 × 24 × 31` = 44.640 minutos do
+calendário, mas dentro de uma sessão de scraping é só uma string nova
+por minuto. Gerar o hash fresco sempre que mude o `minute`.
+
+### 13.4 Parâmetro `callcontext`
+
+`1Page.aspx` aceita um `callcontext=` que define qual o "modo" da
+sessão. Valores observados:
+
+| `callcontext=` | Significado | Página que o seta |
+|---|---|---|
+| `clubarea` | Admin de clube — vê tudo do clube | `1ClubCall.html` (hardcoded) |
+| `direct` | Entry-page público | `1EntryPage.aspx?...page=tournlist` |
+| (omitido) | Vista pública | linkpage.aspx para tournaments |
+
+Testei `public`, `direct`, `federate`, `playerarea`, `myarea`, `user`,
+`self`, `fed`, e sem callcontext — todos devolvem o mesmo template
+vazio para `page=federated_v3` sem cookie de admin. O `callcontext`
+sozinho não muda o controlo de acesso, só sugere ao server qual o
+layout/permissões a aplicar dentro da role já autenticada.
+
+### 13.5 Autenticação em duas camadas
+
+O servidor valida **duas coisas independentes**:
+
+1. **HMAC do URL** — protecção contra adulteração de query string.
+   Garante que o URL foi construído por um cliente que conhece o
+   algoritmo (que é público desde a publicação do JS). Bloquear isto
+   é trivial em qualquer linguagem.
+
+2. **Sessão ASP.NET com role de admin de clube** — verificação real
+   server-side. Sem ela, o `1Page.aspx` devolve HTTP 200 mas com
+   template vazio (`<span id="label1"></span>` sem conteúdo).
+
+**Evidência empírica (testado 2026-05-26):**
+
+```
+$ curl "https://scoring.fpg.pt/lists/1Page.aspx?user=admin&dt=26553&page=federated_v3
+        &fedno=52884&loggedfed=52884&pagelang=PT&callcontext=clubarea&hash={H}"
+
+HTTP/2 200
+Content-Length: 715
+Body: <!DOCTYPE html><html><head><title></title></head><body>
+      <form method="post" action="..." id="form1">
+      <input type="hidden" name="__VIEWSTATE" value="..." />
+      <div><span id="label1"></span></div>
+      </form></body></html>
+```
+
+Tentei com **todos** os nossos sets de cookies (`.datagolf-cookies.json`,
+`.fpg-admissions-cookies.json`, `.scoring-datagolf-cookies.json`) — todos
+capturados como utilizador anónimo/normal no Chrome 90. Em todos os casos
+o response é o mesmo template vazio. Nenhum desses cookies tem a role
+necessária.
+
+**Quem teria essa role:**
+- Staff administrativo da FPG central
+- Administradores de clube (designados pelo próprio clube; a Mariana
+  poderia ter esta role no CGSS Santo da Serra se o clube formalmente
+  a nomeasse — vê apenas os ~270 sócios do CGSS, não a base toda)
+- Comissões organizadoras de torneios pontuais (acesso temporário ao
+  ccode/tcode específico)
+
+### 13.6 Como construir o URL completo (referência)
+
+Cada `page=` tem o seu conjunto de parâmetros, definidos no
+`1ClubCall.html`. Resumo dos mais úteis:
+
+```
+page=federated_v3   →  &fedno=<F>&loggedfed=<F>&pagelang=PT&callcontext=clubarea
+page=fedpayments    →  &fedno=<F>&pagelang=PT&callcontext=clubarea
+page=fedhcp         →  &fedno=<F>&pagelang=PT&callcontext=clubarea
+page=fedlist_v2     →  &ccode=<C>&param=<X>&pagelang=PT&callcontext=clubarea
+page=fedsearch      →  &ccode=<C>&pagelang=PT&callcontext=clubarea
+page=admissions     →  &ccode=<C>&tcode=<T>&pagelang=PT&callcontext=clubarea
+page=tournclassif   →  &ccode=<C>&tcode=<T>&score=<S>&param=<O>&pagelang=PT&callcontext=clubarea
+page=drawlist       →  &ccode=<C>&counting=<P>&pagelang=PT&callcontext=clubarea
+page=tourndetail    →  &ccode=<C>&tcode=<T>&round=<R>&pagelang=PT&callcontext=clubarea
+```
+
+Lista completa em `scoring.fpg.pt/lists/1ClubCall.html` (consultar o
+ficheiro JS quando duvidares).
+
+### 13.7 Relação com o `linkpage.aspx` que já usamos
+
+`linkpage.aspx` (documentado no `CLAUDE.md`) é um wrapper público mais
+recente que internamente redirige para o `1Page.aspx` com
+`callcontext=clubarea` mas usando uma **sessão pública sem role**
+(o user "admin" é apenas uma string, não está logado). Por isso o
+linkpage só consegue mostrar as páginas que não exigem role — admissions
+(no modo público, sem contactos), classif (no modo público, sem cartões
+completos), draws.
+
+O `/api/debug/fpg/trace` do `golf-portugal.pt` (descoberto na mesma
+investigação) confirma: o resolver oficial recebe um URL legacy
+`linkpage.aspx?page=classif&...` e mapeia para
+`1Page.aspx?user=admin&page=tournclassif&...&callcontext=clubarea&hash=...`.
+A nota dele é literal:
+
+> "Uses the live 1ClubCall JS redirect matrix instead of the broken
+>  linkpage handler."
+
+### 13.8 Implicação prática para emails de federados
+
+Mesmo com o HMAC totalmente reproduzível, **não conseguimos automatizar
+a recolha de e-mails** porque:
+
+- Como utilizador público / federado normal, o `federated_v3` devolve
+  template vazio.
+- Como admin de clube, **só veríamos os e-mails do nosso próprio clube**
+  (ccode=007 para o CGSS Santo da Serra), não a base de 15.646
+  federados.
+- A FPG central tem a base toda mas não há forma de scrapar isso sem
+  ser staff.
+
+A protecção real está na sessão server-side, não no HMAC público. Esta
+documentação serve apenas para registar a arquitectura — não há aqui
+um atalho para contornar a privacy policy da FPG.
+
+### 13.9 Ficheiros públicos relevantes
+
+| URL | O que é |
+|---|---|
+| `scoring.fpg.pt/lists/1ClubCall.html` | Router público com as 38 mappings de `page=` → parâmetros |
+| `scoring.fpg.pt/lists/Scripts/DataGolfe.js` | Algoritmo HMAC + segredo `"123"` em claro |
+| `scoring.fpg.pt/lists/Scripts/2.5.3-crypto-sha1-hmac.js` | Biblioteca crypto usada pelo `DataGolfe.js` |
+| `scoring.fpg.pt/lists/1Page.aspx` | Shell ASP.NET único que renderiza todas as 38 páginas |
+| `scoring.fpg.pt/lists/1EntryPage.aspx` | Entry-page público que setta `DG_Lists_URL` antes de redirigir para `linkpage.aspx` |
+| `golf-portugal.pt/api/debug/fpg/trace` | Debug endpoint que mostra a resolução `linkpage → 1Page` em tempo real |

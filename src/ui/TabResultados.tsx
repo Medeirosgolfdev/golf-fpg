@@ -63,6 +63,12 @@ function escalaoToTournament(e: EscalaoResult, t: TorneioResult): TATournament {
           par, si: siForDisplay, meters,
           parTotal: 0,
           nholes: buracos,
+          // Course Rating / Slope (quando disponíveis no TEES_LOOKUP) —
+          // necessários para o cálculo de SD em computeSD().
+          courseRating: teeInfo?.cr,
+          slope: teeInfo?.slope,
+          teeName: teeInfo?.tee,
+          course: teeInfo?.campo,
           roundScores: [],
           _wd: false,
         });
@@ -607,7 +613,7 @@ function TabResultados({ data, selectedT, greatgolfData }: {
         <div className="detail-header-top">
           <h2 className="detail-title">{t.name}</h2>
           <button onClick={printRondas} className="btn fs-12" style={{ display:"flex", alignItems:"center", gap:5 }}>
-            🖨�� Imprimir
+            🖨�� Imprimir
           </button>
         </div>
         <div className="detail-sub">
