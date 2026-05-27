@@ -41,6 +41,7 @@ import { MultiRoundLeaderboard } from "../ui/MultiRoundLeaderboard";
 import type { MultiRoundRow } from "../ui/multiRoundTypes";
 import TabelaGlobal from "../ui/TabelaGlobal";
 import { ESCALOES_DESTAQUE_USKIDS } from "../ui/uskidsData";
+import type { UskidsDrawsData } from "../ui/uskidsTypes"; // pairings (Draw R{n})
 
 
 
@@ -396,6 +397,7 @@ export default function USKidsFieldPage() {
 
   const [fieldData,   setFieldData]   = useState<FieldData | null>(null);
   const [resultsData, setResultsData] = useState<ResultsData | null>(null);
+  const [drawsData,   setDrawsData]   = useState<UskidsDrawsData | null>(null);
   const [autoRivals,  setAutoRivals]  = useState<AutoRivalPlayer[]>([]);
   const [erro,        setErro]        = useState<string | null>(null);
   const [tab, setTabState] = useState<Tab>(() => {
@@ -448,6 +450,30 @@ export default function USKidsFieldPage() {
       .catch(e => {
         setErro(e.message);
         upsertFileMeta({ path: "/data/uskids-field.json", status: "error", error: String(e), group: "field" });
+      });
+
+    // Draws (pairings) — escalão do Manuel + adjacentes ±1. Ficheiro pode não
+    // existir ainda nos primeiros dias antes do primeiro draw publicado;
+    // tratamos 404 silenciosamente (não é erro). O draw aparece automaticamente
+    // como tab "Draw R{n}" antes de cada ronda no escalão do Manuel.
+    fetch(`/data/uskids-draws.json?v=${daily}`)
+      .then(r => {
+        if (r.status === 404) {
+          // Ficheiro ainda não publicado — não é erro, é estado normal antes
+          // do workflow correr pela primeira vez na semana de um torneio.
+          upsertFileMeta({ path: "/data/uskids-draws.json", status: "error", error: "ainda não publicado", group: "draws" });
+          return null;
+        }
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json();
+      })
+      .then((d: UskidsDrawsData | null) => {
+        if (!d) return;
+        setDrawsData(d);
+        upsertFileMeta({ path: "/data/uskids-draws.json", status: "loaded", count: d.torneios?.length, group: "draws" });
+      })
+      .catch(e => {
+        upsertFileMeta({ path: "/data/uskids-draws.json", status: "error", error: String(e), group: "draws" });
       });
 
     // ── Carregar resultados: N ficheiros históricos permanentes + ficheiro auto-gerado ──
@@ -1017,6 +1043,7 @@ export default function USKidsFieldPage() {
         {tab === "resultados" && resultsData && (
           <TabResultados greatgolfData={null}
             data={resultsData}
+            drawsData={drawsData}
             selectedT={selectedT}
           />
         )}

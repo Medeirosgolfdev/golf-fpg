@@ -174,3 +174,54 @@ export interface TeeInfo {
    *  Quando ausente, a UI mostra "—" na coluna SD para este escalão. */
   slope?: number;
 }
+
+// ─────────────────────────────────────────────
+// TIPOS — DRAWS (pairings/tee times pré-jogo)
+// Gerado por scripts/fetch-uskids-draws.js
+// Foco no Manuel + escalões adjacentes (±1 idade).
+// ─────────────────────────────────────────────
+export interface UskidsDrawJogador {
+  nome: string;
+  pais: string;
+  cidade: string;
+}
+
+export interface UskidsDrawGrupo {
+  group_number: number;
+  tee_time: string;
+  start_hole: number;
+  course: string;
+  jogadores: UskidsDrawJogador[];
+}
+
+export interface UskidsDrawRonda {
+  ronda: number;
+  grupos: UskidsDrawGrupo[];
+}
+
+export interface UskidsDrawEscalao {
+  age_group: number;
+  nome: string;
+  flight_id: number;
+  is_manuel: boolean;
+  adjacent: boolean;
+  rondas: UskidsDrawRonda[];
+}
+
+export interface UskidsDrawTorneio {
+  t: number;
+  name: string;
+  date_inicio: string | null;
+  date_fim: string | null;
+  campo: string | null;
+  rondas_total: number;
+  escaloes: UskidsDrawEscalao[];
+  ultima_atualizacao: string;
+}
+
+export interface UskidsDrawsData {
+  gerado_em: string;
+  manuel_focus: boolean;
+  janela_dias_antes: number;
+  torneios: UskidsDrawTorneio[];
+}

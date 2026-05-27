@@ -281,3 +281,112 @@ export function V26({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
     </div>
   );
 }
+
+/* V36 · F9 vs B9 COMPARE — análise das duas voltas em linhas horizontais.
+   Cada nine é UMA linha com label + 9 circles + subtotal + vs par.
+   Por baixo: breakdown stats por nine + linha de diferença. */
+export function V36({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
+  const is18 = d.scores.length >= 18;
+  const hcl = hiChStr(d, v, s);
+  /* Stats por nine: contagem de eagles/birdies/pars/bogeys/etc. */
+  const calcNine = (start: number) => {
+    const st = { hio:0, eagles:0, birdies:0, pars:0, bogeys:0, doubles:0, triples:0 };
+    for (let i = start; i < start + 9; i++) {
+      const sc = d.scores[i]; const x = sc - d.par[i];
+      if (sc === 1) st.hio++;
+      else if (x <= -2) st.eagles++;
+      else if (x === -1) st.birdies++;
+      else if (x === 0) st.pars++;
+      else if (x === 1) st.bogeys++;
+      else if (x === 2) st.doubles++;
+      else st.triples++;
+    }
+    return st;
+  };
+  /* Fallback para 9H — não dá para comparar. */
+  if (!is18) {
+    return (
+      <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg||"rgba(0,0,0,.78)", borderRadius:10, padding:"10px 14px", textAlign:"center", minWidth:200 }}>
+        <div style={{ fontSize:11, fontWeight:700, color:tc3, letterSpacing:1, textTransform:"uppercase" }}>F9 / B9 Compare</div>
+        <div style={{ fontSize:12, color:tc3, marginTop:6 }}>Round de 9 buracos — sem comparação possível.</div>
+      </div>
+    );
+  }
+  const fNine = calcNine(0);
+  const bNine = calcNine(9);
+  /* Uma linha de stats inline. */
+  const StatsLine = ({ st }: { st: typeof fNine }) => {
+    const items = [
+      { n:st.hio, l:"HIO", c:"#10b981" },
+      { n:st.eagles, l:"Eagle", c:"#d4a017" },
+      { n:st.birdies, l:"Bir", c:"#dc2626" },
+      { n:st.pars, l:"Par", c:tc4 },
+      { n:st.bogeys, l:"Bog", c:"#5BADE6" },
+      { n:st.doubles, l:"Dbl", c:"#2B6EA0" },
+      { n:st.triples, l:"Tri+", c:"#1B4570" },
+    ].filter(x => x.n > 0);
+    if (!items.length) return null;
+    return (
+      <div style={{ display:"flex", gap:6, alignItems:"center", fontSize:9, fontWeight:700, flexWrap:"wrap" }}>
+        {items.map(x => (
+          <span key={x.l} style={{ display:"inline-flex", alignItems:"center", gap:3 }}>
+            <span style={{ width:6, height:6, borderRadius:"50%", background:x.c, display:"inline-block" }} />
+            <span style={{ color:x.c }}>{x.n} {x.l}</span>
+          </span>
+        ))}
+      </div>
+    );
+  };
+  /* Uma linha (Front 9 ou Back 9): label · 9 circles · subtotal · vs par. */
+  const NineRow = ({ label, sub, vpar, scores, pars }: { label: string; sub: number; vpar: number; scores: number[]; pars: number[] }) => (
+    <div>
+      <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+        <span style={{ fontFamily:OS, fontSize:10, fontWeight:800, letterSpacing:1.5, color:tc3, textTransform:"uppercase", minWidth:46, flexShrink:0 }}>{label}</span>
+        {v.holeScores && (
+          <div style={{ display:"flex", gap:1, flexShrink:0 }}>
+            {scores.map((sc,i) => <SC key={i} sc={sc} par={pars[i]} sz={22} />)}
+          </div>
+        )}
+        <span style={{ fontFamily:OS, fontSize:20, fontWeight:900, color:tc, marginLeft:"auto", minWidth:24, textAlign:"right" }}>{sub}</span>
+        <span style={{ fontSize:11, fontWeight:900, color:vpC(vpar), minWidth:22, textAlign:"right" }}>{fmtToPar(vpar)}</span>
+      </div>
+    </div>
+  );
+  return (
+    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg||"rgba(0,0,0,.82)", borderRadius:10, padding:"6px 10px" }}>
+      {/* Header: player + total */}
+      {(v.player&&d.player) && (
+        <div style={{ fontSize:13, fontWeight:900, textAlign:"center", letterSpacing:.5, marginBottom:3 }}>{d.player.toUpperCase()}</div>
+      )}
+      <div style={{ display:"flex", justifyContent:"center", alignItems:"baseline", gap:6, marginBottom:5 }}>
+        <span style={{ fontSize:9, fontWeight:700, letterSpacing:2, color:tc3 }}>TOTAL</span>
+        <span style={{ fontFamily:OS, fontSize:24, fontWeight:900, color:tc }}>{s.sT}</span>
+        <span style={{ fontSize:13, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
+      </div>
+      {/* 2 linhas: F9 + B9, cada uma com label · circles · sub · vs par */}
+      <div style={{ display:"flex", flexDirection:"column", gap:4, paddingTop:6, borderTop:"1px solid rgba(255,255,255,.12)" }}>
+        <NineRow label="Front 9" sub={s.sF} vpar={s.vpF} scores={d.scores.slice(0,9)} pars={d.par.slice(0,9)} />
+        <NineRow label="Back 9"  sub={s.sB} vpar={s.vpB} scores={d.scores.slice(9)}   pars={d.par.slice(9)}   />
+      </div>
+      {/* Stats por nine + diff */}
+      {v.stats && (
+        <div style={{ marginTop:5, paddingTop:4, borderTop:"1px solid rgba(255,255,255,.08)", display:"flex", flexDirection:"column", gap:2 }}>
+          <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+            <span style={{ fontSize:8, fontWeight:700, letterSpacing:1, color:tc3, minWidth:30 }}>F9</span>
+            <StatsLine st={fNine} />
+          </div>
+          <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+            <span style={{ fontSize:8, fontWeight:700, letterSpacing:1, color:tc3, minWidth:30 }}>B9</span>
+            <StatsLine st={bNine} />
+          </div>
+        </div>
+      )}
+      {(v.event||v.course||v.date||(v.position&&d.position)||hcl) && (
+        <div style={{ marginTop:4, fontSize:9, fontWeight:600, color:tc4, textAlign:"center", lineHeight:1.4, wordBreak:"break-word" }}>
+          <div>{[v.event&&d.event,v.course&&d.course,v.position&&d.position&&`POS ${d.position}`,v.date&&d.date].filter(Boolean).join(" · ")}</div>
+          {hcl && <div style={{ opacity:.85 }}>{hcl}</div>}
+        </div>
+      )}
+    </div>
+  );
+}

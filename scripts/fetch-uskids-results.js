@@ -50,6 +50,31 @@ const HISTORICOS = [
 const ESCALOES_PREFIXOS = ['boys 9', 'boys 10', 'boys 11', 'boys 12'];
 const escalaoApanhar = (nome) => ESCALOES_PREFIXOS.some(p => nome.toLowerCase().startsWith(p));
 
+/**
+ * Torneios PREMIUM: descarregar TODOS os escalões (Boys 7+ até Girls 15-18),
+ * ignorando o filtro Boys 9-12. Para torneios de referência onde queremos ver
+ * o leaderboard completo (irmãs do Manuel, contexto internacional).
+ *
+ * Política: 4 séries × todos os anos disponíveis
+ *   - European Championship (EURO)
+ *   - World Championship    (WORLD)
+ *   - Marco Simone Invitational (incluindo Local Tour)
+ *   - Venice Open
+ *
+ * Para adicionar uma série nova: pôr o tcode aqui. Para ver tcodes
+ * disponíveis: docs/api-fpg-endpoints.md ou USKIDS_KNOWN_TCODES no CLAUDE.md.
+ */
+const TORNEIOS_ALL_AGE_GROUPS = new Set([
+  // European Championship
+  8300, 13568, 15704, 18242, 21131,
+  // World Championship
+  11604, 14029, 15807, 18124, 21610,
+  // Marco Simone (Invitational + Local Tour)
+  18438, 21080, 21573,
+  // Venice Open
+  12229, 14302, 16428, 19418,
+]);
+
 const DELAY_MS   = 400;
 const DIR        = path.join(__dirname, '..', 'public', 'data');
 const CACHE_PATH = path.join(DIR, 'uskids-discovery-cache.json');
@@ -252,7 +277,13 @@ async function processarTorneio(page, torneio) {
   console.log(`  🏌️ ${nFlightRounds} flight_rounds, ${nComPar} com par/yards reais`);
 
   // Determinar quais age_groups apanhar
-  const agsFiltro = torneio.age_groups ? new Set(torneio.age_groups) : null;
+  //   1. Se o torneio está em TORNEIOS_ALL_AGE_GROUPS (premium: EURO/WORLD/Marco
+  //      Simone/Venice) → todos os escalões
+  //   2. Senão se torneio.age_groups está definido → só esses
+  //   3. Senão → apanha apenas Boys 9-12 via escalaoApanhar
+  const isAllAgeGroups = TORNEIOS_ALL_AGE_GROUPS.has(torneio.t);
+  const agsFiltro = (!isAllAgeGroups && torneio.age_groups) ? new Set(torneio.age_groups) : null;
+  if (isAllAgeGroups) console.log(`  ⭐ Torneio PREMIUM — todos os escalões serão descarregados`);
 
   // Agrupar flights por age_group
   const flightsPorAG = {};
@@ -261,9 +292,11 @@ async function processarTorneio(page, torneio) {
     const agInfo = ageGroups[ag];
     if (!agInfo) continue;
     const nome = agInfo.name || '';
-    const incluir = agsFiltro
-      ? agsFiltro.has(parseInt(ag))
-      : escalaoApanhar(nome);
+    const incluir = isAllAgeGroups
+      ? true
+      : agsFiltro
+        ? agsFiltro.has(parseInt(ag))
+        : escalaoApanhar(nome);
     if (incluir && !flightsPorAG[ag]) {
       flightsPorAG[ag] = { fid, nome, inscr: f.registered || 0 };
     }
@@ -406,6 +439,14 @@ async function main() {
         console.log(`  ♻️  ${h.name} — age_groups desactualizados, vai re-processar`);
         return true;
       }
+    }
+    // Premium: torneios que devem ter TODOS os escalões. Se o que temos é só o
+    // subset Boys 9-12 (ou outro filtro antigo), forçar re-processamento.
+    // Heurística: se está em TORNEIOS_ALL_AGE_GROUPS e tem ≤ 5 escalões, falta-
+    // -nos a versão completa (EURO+ costuma ter ~15 escalões).
+    if (TORNEIOS_ALL_AGE_GROUPS.has(h.t) && (existente.escaloes || []).length < 10) {
+      console.log(`  ♻️  ${h.name} — só ${(existente.escaloes || []).length} escalões, premium pede todos`);
+      return true;
     }
     // Re-processar se não tem par/yards (versão antiga)
     const temPar = (existente.escaloes || []).some(e =>

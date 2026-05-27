@@ -10,7 +10,7 @@ import { V48 } from "./designs/hio";
 import { V29, V30, V38, V45, V46, V47 } from "./designs/pro";
 import { V39, V41, V42, V43 } from "./designs/trans";
 import { V1, V2, V3, V4, V23, V25, V27 } from "./designs/minimal";
-import { V5, V6, V9, V10, V11, V12, V13, V22, V26 } from "./designs/grid";
+import { V5, V6, V9, V10, V11, V12, V13, V22, V26, V36 } from "./designs/grid";
 import { V14, V15, V16, V17, V28, V31, V32, V34, V35 } from "./designs/table";
 import { V19, V21, V24, V33 } from "./designs/cols";
 
@@ -67,6 +67,7 @@ export const DESIGNS: DesignDef[] = [
   { id:"V13", label:"Dashboard",      C:V13, needsHoles:true, cat:CAT_GRID },
   { id:"V5",  label:"Ticket",         C:V5,  needsHoles:true, cat:CAT_GRID },
   { id:"V26", label:"Signature",      C:V26, needsHoles:true, cat:CAT_GRID },
+  { id:"V36", label:"F9 vs B9",       C:V36, needsHoles:true, cat:CAT_GRID },
   /* 📊 Tabelas — scorecards detalhados */
   { id:"V15", label:"B&W Card",       C:V15, needsHoles:true, cat:CAT_TABLE },
   { id:"V28", label:"Full Table",     C:V28, needsHoles:true, cat:CAT_TABLE },
@@ -141,6 +142,6 @@ export const BG_OPTIONS: { id:string; label:string; hex:string|null }[] = [
   { id:"pga",         label:"PGA Blue",  hex:"#00205b" },
   { id:"masters",     label:"Masters",   hex:"#006747" },
   { id:"green",       label:"Verde",     hex:"#0d3320" },
-  { id:"wine",        label:"Vinho",     hex:"#4a1020" },
+  { id:"wine",        label:"Vinho", hex:"#4a1020" },
   { id:"white",       label:"Branco",    hex:"#f2f2f2" },
 ];

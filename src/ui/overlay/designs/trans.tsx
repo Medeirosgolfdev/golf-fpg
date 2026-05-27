@@ -45,7 +45,8 @@ export function V39({ d, v, s, bg, tc="white", tc3 }: P) {
         </div>
       )}
       {(v.player||v.event||v.round||v.course||v.date||(v.position&&d.position)||hcl) && (
-        <div style={{ marginTop:6, fontSize:10, fontWeight:700, letterSpacing:1.5, textTransform:"uppercase", color:tc3, lineHeight:1.4, wordBreak:"break-word" }}>
+        /* maxWidth alinhado com a largura da grelha de buracos (9 × 30 + score 88) ~360px. */
+        <div style={{ marginTop:6, fontSize:10, fontWeight:700, letterSpacing:1.5, textTransform:"uppercase", color:tc3, lineHeight:1.4, wordBreak:"break-word", maxWidth:360 }}>
           {v.player&&d.player && <div>{d.player}</div>}
           {[v.event&&d.event,v.course&&d.course,v.round&&`R${d.round}`,v.position&&d.position&&`POS ${d.position}`,v.date&&d.date].filter(Boolean).length > 0 && (
             <div style={{ fontSize:9 }}>{[v.event&&d.event,v.course&&d.course,v.round&&`R${d.round}`,v.position&&d.position&&`POS ${d.position}`,v.date&&d.date].filter(Boolean).join(" · ")}</div>
@@ -92,13 +93,26 @@ export function V42({ d, v, s, bg, tc="white", tc3 }: P) {
   const tx = isDark ? "#eee" : "#222";
   return (
     <div style={{ fontFamily:SG, display:"inline-block", background:bgF, color:tx, borderRadius:8, padding:"5px 8px" }}>
-      <div style={{ display:"flex", alignItems:"baseline", gap:5 }}>
-        <span style={{ fontFamily:BN, fontSize:62, lineHeight:.9, letterSpacing:-2, color:accent }}>{s.sT}</span>
-        <span style={{ fontSize:16, fontWeight:800, color:accent }}>{fmtToPar(s.vpT)}</span>
+      {/* Topo: 2 colunas — score+nome à esquerda, metadata à direita
+         (aproveita o espaço vazio em vez de empurrar tudo para baixo). */}
+      <div style={{ display:"flex", alignItems:"flex-start", gap:10 }}>
+        <div style={{ flexShrink:0 }}>
+          <div style={{ display:"flex", alignItems:"baseline", gap:5 }}>
+            <span style={{ fontFamily:BN, fontSize:62, lineHeight:.9, letterSpacing:-2, color:accent }}>{s.sT}</span>
+            <span style={{ fontSize:16, fontWeight:800, color:accent }}>{fmtToPar(s.vpT)}</span>
+          </div>
+          {v.player&&d.player && (
+            <div style={{ fontFamily:OS, fontSize:14, fontWeight:800, letterSpacing:1, textTransform:"uppercase", marginTop:1 }}>{d.player}</div>
+          )}
+        </div>
+        {(v.event||v.course||v.round||v.date||(v.position&&d.position)||hcl) && (
+          <div style={{ fontSize:9, fontWeight:600, color:tc3, letterSpacing:.5, lineHeight:1.4, wordBreak:"break-word", maxWidth:170, paddingTop:4 }}>
+            <div>{[v.event&&d.event,v.round&&`R${d.round}`,v.course&&d.course,v.position&&d.position&&`POS ${d.position}`].filter(Boolean).join(" · ")}</div>
+            {v.date&&d.date && <div style={{ marginTop:1 }}>{d.date}</div>}
+            {hcl && <div style={{ opacity:.85, marginTop:1 }}>{hcl}</div>}
+          </div>
+        )}
       </div>
-      {v.player&&d.player && (
-        <div style={{ fontFamily:OS, fontSize:14, fontWeight:800, letterSpacing:1, textTransform:"uppercase", marginTop:1 }}>{d.player}</div>
-      )}
       {v.holeScores && (
         <div style={{ marginTop:6 }}>
           {(is18 ? [[0,9],[9,9]] as [number,number][] : [[0,d.scores.length] as [number,number]]).map(([off,len]) => (
@@ -113,14 +127,7 @@ export function V42({ d, v, s, bg, tc="white", tc3 }: P) {
           ))}
         </div>
       )}
-      {(v.event||v.course||v.round||v.date||(v.position&&d.position)||hcl) && (
-        <div style={{ fontSize:9, fontWeight:600, color:tc3, marginTop:4, letterSpacing:1, lineHeight:1.4, wordBreak:"break-word" }}>
-          <div>{[v.event&&d.event,v.round&&`R${d.round}`,v.course&&d.course,v.position&&d.position&&`POS ${d.position}`].filter(Boolean).join(" · ")}</div>
-          {v.date&&d.date && <div>{d.date}</div>}
-          {hcl && <div style={{ opacity:.85 }}>{hcl}</div>}
-          {v.stats && <div style={{ marginTop:2 }}><StatsRow st={s.st} tc3={tc3} gap={4} fs={9} /></div>}
-        </div>
-      )}
+      {v.stats && <div style={{ marginTop:4 }}><StatsRow st={s.st} tc3={tc3} gap={4} fs={9} /></div>}
     </div>
   );
 }

@@ -69,11 +69,12 @@ function V21Col({ scores, pars, tc }: { scores:number[]; pars:number[]; tc:strin
 export function V21({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
   const is18 = d.scores.length >= 18;
   return (
-    <div style={{ fontFamily:II, display:"inline-flex", flexDirection:"column", alignItems:"center", color:tc, background:bg||"rgba(0,0,0,.72)", padding:"10px 12px", borderRadius:10, textShadow:TS }}>
+    /* maxWidth ~150 (scores são só ~90px, força wrap em ~2 linhas de texto). */
+    <div style={{ fontFamily:II, display:"inline-flex", flexDirection:"column", alignItems:"center", color:tc, background:bg||"rgba(0,0,0,.72)", padding:"10px 12px", borderRadius:10, textShadow:TS, maxWidth:150 }}>
       {(v.player||v.position||v.event||v.round) && (
-        <div style={{ width:"100%", marginBottom:4 }}>
-          {v.player&&d.player && <div style={{ fontFamily:OS, fontSize:13, fontWeight:700, letterSpacing:.3, textTransform:"uppercase", wordBreak:"break-word" }}>{d.player}</div>}
-          {(v.position||v.event) && <div style={{ fontSize:10, fontWeight:600, color:tc3, marginTop:2 }}>{[v.position&&d.position,v.event&&d.event].filter(Boolean).join(" · ")}</div>}
+        <div style={{ width:"100%", marginBottom:4, wordBreak:"break-word", overflowWrap:"anywhere" }}>
+          {v.player&&d.player && <div style={{ fontFamily:OS, fontSize:13, fontWeight:700, letterSpacing:.3, textTransform:"uppercase" }}>{d.player}</div>}
+          {(v.position||v.event) && <div style={{ fontSize:10, fontWeight:600, color:tc3, marginTop:2, lineHeight:1.4 }}>{[v.position&&d.position,v.event&&d.event].filter(Boolean).join(" · ")}</div>}
           {v.round && <div style={{ fontSize:10, fontWeight:600, color:tc3 }}>Round {d.round}</div>}
         </div>
       )}
@@ -91,11 +92,11 @@ export function V21({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
         </div>
       )}
       {(v.course||v.date||(v.position&&d.position)||hiChStr(d,v,s)) && (
-        <div style={{ marginTop:4, textAlign:"center" }}>
+        <div style={{ marginTop:4, textAlign:"center", wordBreak:"break-word", overflowWrap:"anywhere", maxWidth:"100%" }}>
           {[v.course&&d.course,v.position&&d.position&&`POS ${d.position}`,v.date&&d.date].filter(Boolean).map((p,i) => (
-            <div key={i} style={{ fontSize:10, fontWeight:600, color:tc4, lineHeight:1.7 }}>{p}</div>
+            <div key={i} style={{ fontSize:10, fontWeight:600, color:tc4, lineHeight:1.4 }}>{p}</div>
           ))}
-          {hiChStr(d,v,s) && <div style={{ fontSize:9, fontWeight:600, color:tc4, lineHeight:1.7, opacity:.85 }}>{hiChStr(d,v,s)}</div>}
+          {hiChStr(d,v,s) && <div style={{ fontSize:9, fontWeight:600, color:tc4, lineHeight:1.4, opacity:.85 }}>{hiChStr(d,v,s)}</div>}
         </div>
       )}
     </div>
@@ -148,7 +149,8 @@ export function V33({ d, v, s, bg, tc="white", tc3 }: P) {
   const is18 = d.scores.length >= 18;
   const hcl = hiChStr(d, v, s);
   return (
-    <div style={{ fontFamily:OS, display:"inline-block", color:tc, background:bg||"rgba(0,0,0,.85)", borderRadius:10, padding:"6px 8px", textShadow:TS }}>
+    /* maxWidth ~160 (scores ~90px, força wrap do titulo do torneio). */
+    <div style={{ fontFamily:OS, display:"inline-block", color:tc, background:bg||"rgba(0,0,0,.85)", borderRadius:10, padding:"6px 8px", textShadow:TS, maxWidth:160 }}>
       {v.player&&d.player && <div style={{ fontSize:12, fontFamily:II, fontWeight:800, letterSpacing:1, textTransform:"uppercase", textAlign:"center", marginBottom:4, color:tc3 }}>{d.player}</div>}
       {v.holeScores && is18 && (
         <div style={{ display:"flex", gap:4, justifyContent:"center" }}>
@@ -173,7 +175,7 @@ export function V33({ d, v, s, bg, tc="white", tc3 }: P) {
         <TpBadge vp={s.vpT} sz={16} />
       </div>
       {(v.event||v.course||v.date||v.round||(v.position&&d.position)||hcl) && (
-        <div style={{ fontFamily:II, textAlign:"center", marginTop:3, fontSize:9, fontWeight:600, color:tc3, lineHeight:1.4, maxWidth:200, wordBreak:"break-word" }}>
+        <div style={{ fontFamily:II, textAlign:"center", marginTop:3, fontSize:9, fontWeight:600, color:tc3, lineHeight:1.4, wordBreak:"break-word", overflowWrap:"anywhere" }}>
           <div>{[v.event&&d.event,v.course&&d.course,v.round&&`R${d.round}`,v.position&&d.position&&`POS ${d.position}`,v.date&&d.date].filter(Boolean).join(" · ")}</div>
           {hcl && <div style={{ opacity:.85 }}>{hcl}</div>}
         </div>
