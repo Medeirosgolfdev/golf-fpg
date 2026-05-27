@@ -332,7 +332,7 @@ function V5({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
       {v.holeScores && <Grid2 d={d} sz={28} gap={3} nc="#666" />}
       <div style={{ borderTop:"1px dashed rgba(255,255,255,0.2)", paddingTop:6, marginTop:3, fontFamily:II }}>
         {v.stats && <div className="u-flex-jc"><StatsRow st={s.st} tc3={tc3} gap={5} fs={11} /></div>}
-        {(v.date||v.tee||v.round||hcl) && <div style={{ textAlign:"center", fontSize:10, fontWeight:600, color:tc4, marginTop:2 }}>{[v.date&&d.date, v.tee&&d.tee, v.round&&`R${d.round}`, hcl].filter(Boolean).join(" · ")}</div>}
+        {(v.date||v.tee||v.teeDist||v.round||hcl) && <div style={{ textAlign:"center", fontSize:10, fontWeight:600, color:tc4, marginTop:2 }}>{[v.date&&d.date, v.tee&&d.tee, (v.teeDist&&d.teeDist)?`${d.teeDist}m`:null, v.round&&`R${d.round}`, hcl].filter(Boolean).join(" · ")}</div>}
       </div>
     </div>
   );
@@ -376,7 +376,7 @@ function V9({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:4 }}>
         <div>
           {v.course&&d.course && <div style={{ fontSize:14, fontWeight:700, letterSpacing:.3 }}>{d.course}</div>}
-          <div style={{ fontSize:10, fontWeight:600, color:tc3 }}>Par {s.pT}{v.tee&&d.tee?` · ${d.tee}`:""}{v.date&&d.date?` · ${d.date}`:""}</div>
+          <div style={{ fontSize:10, fontWeight:600, color:tc3 }}>Par {s.pT}{v.tee&&d.tee?` · ${d.tee}`:""}{v.teeDist&&d.teeDist?` · ${d.teeDist}m`:""}{v.date&&d.date?` · ${d.date}`:""}</div>
         </div>
         <div style={{ textAlign:"right", display:"flex", flexDirection:"column", alignItems:"flex-end", gap:2 }}>
           <div style={{ fontFamily:BN, fontSize:54, lineHeight:.9, letterSpacing:-1, color:tc, textShadow:TS_SCORE }}>{s.sT}</div>
@@ -429,7 +429,7 @@ function V11({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
       <div style={{ background:bg||"rgba(0,0,0,.75)", borderRadius:10, padding:"3px 5px", textShadow:TS }}>
         {v.round && <div style={{ fontFamily:II, fontSize:9, fontWeight:700, letterSpacing:3, color:tc3 }}>ROUND {d.round}</div>}
         {v.player&&d.player && <div style={{ fontSize:18, fontWeight:700, letterSpacing:.3, marginTop:1, wordBreak:"break-word" }}>{d.player.toUpperCase()}</div>}
-        {(v.course||v.tee) && <div style={{ fontFamily:II, fontSize:10, fontWeight:600, color:tc3 }}>{[v.course&&d.course,v.tee&&d.tee].filter(Boolean).join(" · ")}</div>}
+        {(v.course||v.tee||v.teeDist) && <div style={{ fontFamily:II, fontSize:10, fontWeight:600, color:tc3 }}>{[v.course&&d.course,v.tee&&d.tee,(v.teeDist&&d.teeDist)?`${d.teeDist}m`:null].filter(Boolean).join(" · ")}</div>}
         <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:8, margin:"6px 0 4px" }}>
           <span style={{ fontFamily:BN, fontSize:72, lineHeight:1, letterSpacing:-2, color:tc, textShadow:TS_SCORE }}>{s.sT}</span>
           <TpBadge vp={s.vpT} sz={20} />
@@ -512,7 +512,7 @@ function V14({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
         <span style={{ fontSize:20, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
         {(v.player||v.round) && <span style={{ fontSize:12, fontWeight:700, color:tc2, marginLeft:4 }}>{[v.player&&d.player,v.round&&`R${d.round}`].filter(Boolean).join(" · ")}</span>}
       </div>
-      {(v.course||v.date||v.tee) && <div style={{ fontSize:10, fontWeight:600, color:tc3, marginBottom:4 }}>{metaStr(d,{course:v.course,date:v.date,tee:v.tee})}</div>}
+      {(v.course||v.date||v.tee||v.teeDist) && <div style={{ fontSize:10, fontWeight:600, color:tc3, marginBottom:4 }}>{metaStr(d,{course:v.course,date:v.date,tee:v.tee,teeDist:v.teeDist})}</div>}
       {v.holeScores && (is18 ? [[0,9,s.sF,s.pF],[9,9,s.sB,s.pB]] as [number,number,number,number][] : [[0,d.scores.length,s.sT,s.pT] as [number,number,number,number]]).map(([off,len,sub,subP],ri) => (
         <div key={off}>
           <div style={{ display:"flex", background:"rgba(45,106,48,.65)", padding:"2px 0", borderRadius:ri===0?"5px 5px 0 0":0 }}>
@@ -588,10 +588,10 @@ function V16({ d, v, s, bg }: P) {
   return (
     <div style={{ fontFamily:II, display:"inline-block", background:bg||"rgba(255,255,255,0.92)", borderRadius:8, padding:"3px 5px", color:"#222", border:"1px solid rgba(0,0,0,.08)" }}>
       {/* Header: apenas campo + data, sem score */}
-      {(v.course||v.date||v.tee||v.round) && (
+      {(v.course||v.date||v.tee||v.teeDist||v.round) && (
         <div style={{ borderBottom:"1px solid #e5e7eb", paddingBottom:3, marginBottom:3 }}>
           {v.course&&d.course && <div style={{ fontSize:13, fontWeight:900, color:"#111" }}>{d.course}</div>}
-          {(v.date||v.tee||v.round) && <div style={{ fontSize:9, fontWeight:600, color:"#999" }}>{metaStr(d,{date:v.date,tee:v.tee,round:v.round})}</div>}
+          {(v.date||v.tee||v.teeDist||v.round) && <div style={{ fontSize:9, fontWeight:600, color:"#999" }}>{metaStr(d,{date:v.date,tee:v.tee,teeDist:v.teeDist,round:v.round})}</div>}
         </div>
       )}
       {v.holeScores && (is18 ? [[0,9],[9,9]] as [number,number][] : [[0,d.scores.length] as [number,number]]).map(([off,len],ri) => {
@@ -672,17 +672,26 @@ function V17({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
           </div>
         );
       })}
-      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginTop:3, padding:"3px 6px", background:"rgba(255,255,255,.07)", borderRadius:8, gap:5 }}>
-        <div style={{ display:"flex", alignItems:"baseline", gap:5, flexShrink:0 }}>
-          <span style={{ fontFamily:OS, fontSize:28, fontWeight:900, letterSpacing:-1 }}>{s.sT}</span>
-          <span style={{ fontSize:16, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
+      {/* Footer dividido em 2 zonas:
+         (a) linha topo com 68 -4 à esquerda e player/course/date/HI à direita
+         (b) stats numa linha PRÓPRIA por baixo, para não apertar o 68 -4 */}
+      <div style={{ marginTop:3, padding:"3px 6px", background:"rgba(255,255,255,.07)", borderRadius:8 }}>
+        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", gap:5 }}>
+          <div style={{ display:"flex", alignItems:"baseline", gap:5, flexShrink:0 }}>
+            <span style={{ fontFamily:OS, fontSize:28, fontWeight:900, letterSpacing:-1 }}>{s.sT}</span>
+            <span style={{ fontSize:16, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
+          </div>
+          <div style={{ display:"flex", flexDirection:"column", alignItems:"flex-end", gap:2, minWidth:0 }}>
+            {v.player&&d.player && <div style={{ fontSize:13, fontWeight:900 }}>{d.player}</div>}
+            {(v.course||v.date) && <div style={{ fontSize:10, fontWeight:600, color:tc2 }}>{[v.course&&d.course,v.date&&d.date].filter(Boolean).join(" · ")}</div>}
+            {hcl && <div style={{ fontSize:10, fontWeight:700, color:tc4 }}>{hcl}</div>}
+          </div>
         </div>
-        <div style={{ display:"flex", flexDirection:"column", alignItems:"flex-end", gap:2 }}>
-          {v.player&&d.player && <div style={{ fontSize:13, fontWeight:900 }}>{d.player}</div>}
-          {(v.course||v.date) && <div style={{ fontSize:10, fontWeight:600, color:tc2 }}>{[v.course&&d.course,v.date&&d.date].filter(Boolean).join(" · ")}</div>}
-          {hcl && <div style={{ fontSize:10, fontWeight:700, color:tc4 }}>{hcl}</div>}
-          {v.stats && <div style={{ display:"flex", justifyContent:"flex-end" }}><StatsRow st={s.st} tc3={tc3} gap={4} fs={10} /></div>}
-        </div>
+        {v.stats && (
+          <div style={{ display:"flex", justifyContent:"flex-end", marginTop:4, paddingTop:3, borderTop:"1px solid rgba(255,255,255,.08)" }}>
+            <StatsRow st={s.st} tc3={tc3} gap={5} fs={10} />
+          </div>
+        )}
       </div>
     </div>
   );
@@ -693,6 +702,7 @@ function V19({ d, v, s, bg, tc="white", tc3 }: P) {
   const is18 = d.scores.length >= 18;
   /* max width driven by the 2-column grid (~80px) — text must not exceed it */
   const maxW = is18 ? 80 : 42;
+  const teeLine = [v.tee && d.tee, v.teeDist && d.teeDist ? `${d.teeDist}m` : ""].filter(Boolean).join(" · ");
   return (
     <div style={{ fontFamily:OS, display:"inline-flex", flexDirection:"column", alignItems:"center", color:tc, background:bg, overflow:"hidden", borderRadius:8, textShadow:TS, maxWidth: maxW + 40 }}>
       {(v.player||v.event||v.round) && (
@@ -722,10 +732,10 @@ function V19({ d, v, s, bg, tc="white", tc3 }: P) {
         <div style={{ fontFamily:OS, fontSize:26, fontWeight:700, lineHeight:1, color:"#0d1e38" }}>{s.sT}</div>
         <div style={{ fontFamily:II, fontSize:14, fontWeight:900, color:vpCd(s.vpT), marginTop:0 }}>{fmtToPar(s.vpT)}</div>
       </div>
-      {(v.course||v.tee||v.date) && (
+      {(v.course||teeLine||v.date) && (
         <div style={{ fontFamily:II, padding:"3px 6px 5px", fontSize:9, fontWeight:600, color:tc3, textAlign:"center", lineHeight:1.6, maxWidth: maxW + 30, overflow:"hidden" }}>
           {v.course&&d.course && <div style={{ whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis" }}>{d.course}</div>}
-          {v.tee&&d.tee && <div>{d.tee}{v.teeDist&&d.teeDist?` · ${d.teeDist}m`:""}</div>}
+          {teeLine && <div>{teeLine}</div>}
           {v.date&&d.date && <div>{d.date}</div>}
         </div>
       )}
@@ -1586,21 +1596,22 @@ function SCA({ sc, par, sz = 36, accent = "#e87722" }: { sc: number; par: number
 function V45({ d, v, s, bg, tc="white", tc3 }: P) {
   const is18 = d.scores.length >= 18;
   return (
-    <div style={{ fontFamily: II, display: "inline-block", color: tc, background: bg, padding: "4px 6px 0" }}>
+    /* Container exterior transparente — bg só vai à volta dos buracos */
+    <div style={{ fontFamily: II, display: "inline-block", color: tc, padding: "4px 6px 0" }}>
       {/* Name */}
       {v.player && d.player && (
         <div style={{ fontFamily: LO, fontSize: 24, fontWeight: 700, fontStyle: "italic", letterSpacing: .5, marginBottom: 2 }}>
           {d.player}
         </div>
       )}
-      {/* Giant score + to-par badge */}
-      <div style={{ display: "flex", alignItems: "flex-start", gap: 6, marginBottom: 4 }}>
+      {/* Giant score + to-par badge — sem fundo (transparente sobre a foto) */}
+      <div style={{ display: "flex", alignItems: "flex-start", gap: 6, marginBottom: 6 }}>
         <TpBadge vp={s.vpT} sz={20} />
         <div style={{ fontFamily: BN, fontSize: 140, lineHeight: .9, letterSpacing: -6, color: tc }}>{s.sT}</div>
       </div>
-      {/* Score circles 2×9 com hole numbers — em 9H mostra só por cima */}
+      {/* Score circles 2×9 com hole numbers — bg APENAS aqui à volta dos buracos */}
       {v.holeScores && (
-        <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 1, background: bg, padding: "6px 8px", borderRadius: 8 }}>
           {(is18 ? [[0, 9], [9, 9]] as [number, number][] : [[0, d.scores.length] as [number, number]]).map(([off, len], ri) => (
             <div key={off}>
               <div style={{ display: "flex", gap: 2 }}>
@@ -1616,22 +1627,26 @@ function V45({ d, v, s, bg, tc="white", tc3 }: P) {
           ))}
         </div>
       )}
-      {/* Tournament bar */}
+      {/* Tournament bar — em 2 linhas: linha 1 = event/course, linha 2 = round + date */}
       {(v.event || v.round || v.course || v.date) && (
-        <div style={{ display: "flex", gap: 0, marginTop: 6 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 2, marginTop: 6, alignItems: "flex-start" }}>
           {(v.event || v.course) && (
             <div style={{ background: "#dc2626", padding: "3px 10px", fontSize: 9, fontWeight: 800, letterSpacing: 1.5, color: "#fff", textTransform: "uppercase" }}>
               {[v.event && d.event, v.course && d.course].filter(Boolean).join(" · ")}
             </div>
           )}
-          {v.round && (
-            <div style={{ background: "rgba(255,255,255,.15)", padding: "3px 10px", fontSize: 9, fontWeight: 800, letterSpacing: 1.5, color: tc, textTransform: "uppercase" }}>
-              ROUND {d.round}
-            </div>
-          )}
-          {v.date && d.date && (
-            <div style={{ background: "rgba(255,255,255,.08)", padding: "3px 10px", fontSize: 9, fontWeight: 700, letterSpacing: 1, color: tc3, textTransform: "uppercase" }}>
-              {d.date}
+          {(v.round || (v.date && d.date)) && (
+            <div style={{ display: "flex", gap: 0 }}>
+              {v.round && (
+                <div style={{ background: "rgba(255,255,255,.15)", padding: "3px 10px", fontSize: 9, fontWeight: 800, letterSpacing: 1.5, color: tc, textTransform: "uppercase" }}>
+                  ROUND {d.round}
+                </div>
+              )}
+              {v.date && d.date && (
+                <div style={{ background: "rgba(255,255,255,.08)", padding: "3px 10px", fontSize: 9, fontWeight: 700, letterSpacing: 1, color: tc3, textTransform: "uppercase" }}>
+                  {d.date}
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -1683,21 +1698,24 @@ function V46({ d, v, s, bg, tc="white", tc3 }: P) {
               </div>
             ))}
           </div>
-          {/* Giant score com to-par em badge sobreposta ao canto inferior-direito */}
-          <div style={{ flexShrink: 0, position:"relative", display:"inline-block" }}>
-            <div style={{ position:"absolute", right: -8, bottom: Math.round(scoreFs * 0.06), zIndex: 1 }}>
+          {/* Score gigante com badge to-par A FRENTE (efeito sobreposto).
+             paddingRight no pai garante que o badge fica DENTRO da bounding box
+             (html-to-image nao corta). Badge com zIndex maior renderiza POR CIMA
+             do score, cobrindo parcialmente o canto inferior-direito. */}
+          <div style={{ flexShrink: 0, position:"relative", display:"inline-block", paddingRight: Math.round(scoreFs * 0.18) }}>
+            <div style={{ fontFamily: BN, fontSize: scoreFs, lineHeight: 1, letterSpacing: -4, color: tc, position:"relative", zIndex: 1, paddingTop: 2 }}>{s.sT}</div>
+            <div style={{ position:"absolute", right: 0, bottom: Math.round(scoreFs * 0.06), zIndex: 2 }}>
               <TpBadge vp={s.vpT} sz={Math.round(scoreFs * 0.17)} />
             </div>
-            <div style={{ fontFamily: BN, fontSize: scoreFs, lineHeight: 1, letterSpacing: -4, color: tc, position:"relative", zIndex: 2, paddingTop: 2 }}>{s.sT}</div>
           </div>
         </div>
       )}
       {!v.holeScores && (
-        <div style={{ position:"relative", display:"inline-block" }}>
-          <div style={{ position:"absolute", right: -8, bottom: 6, zIndex: 1 }}>
+        <div style={{ position:"relative", display:"inline-block", paddingRight: 18 }}>
+          <div style={{ fontFamily: BN, fontSize: 110, lineHeight: 1, letterSpacing: -4, color: tc, position:"relative", zIndex: 1, paddingTop: 2 }}>{s.sT}</div>
+          <div style={{ position:"absolute", right: 0, bottom: 6, zIndex: 2 }}>
             <TpBadge vp={s.vpT} sz={20} />
           </div>
-          <div style={{ fontFamily: BN, fontSize: 110, lineHeight: 1, letterSpacing: -4, color: tc, position:"relative", zIndex: 2, paddingTop: 2 }}>{s.sT}</div>
         </div>
       )}
       {/* Footer: NOME · TORNEIO/CAMPO · ROUND — com gap para não colar */}
@@ -1758,14 +1776,17 @@ function V47({ d, v, s, bg, tc="white", tc3 }: P) {
           ))}
         </div>
       )}
-      {/* Giant score com to-par sobreposto — efeito layered (badge atrás do 33) */}
-      <div style={{ position:"relative", display:"inline-block", marginTop: 2 }}>
-        {/* Badge atrás (zIndex:1), sobreposta ao canto inferior-direito do 33 */}
-        <div style={{ position:"absolute", right: -14, bottom: 8, zIndex: 1 }}>
+      {/* Giant score com to-par A FRENTE (efeito sobreposto).
+         paddingRight no pai garante que o badge fica DENTRO da bounding box
+         (html-to-image nao corta). Badge zIndex maior = renderiza POR CIMA
+         do score, no canto inferior-direito. */}
+      <div style={{ position:"relative", display:"inline-block", marginTop: 2, paddingRight: 22 }}>
+        {/* Score por baixo (zIndex:1) */}
+        <div style={{ fontFamily: BN, fontSize: 120, lineHeight: 1, letterSpacing: -4, color: tc, position:"relative", zIndex: 1 }}>{s.sT}</div>
+        {/* Badge a frente (zIndex:2), no canto inferior-direito */}
+        <div style={{ position:"absolute", right: 0, bottom: 8, zIndex: 2 }}>
           <TpBadge vp={s.vpT} sz={24} />
         </div>
-        {/* 33 à frente (zIndex:2) */}
-        <div style={{ fontFamily: BN, fontSize: 120, lineHeight: 1, letterSpacing: -4, color: tc, position:"relative", zIndex: 2 }}>{s.sT}</div>
       </div>
       {/* Date */}
       {v.date && d.date && (
