@@ -19,7 +19,7 @@ export function SC({ sc, par, sz = 32 }: { sc: number; par: number; sz?: number 
     fontWeight: 900, fontSize: fs, lineHeight: 1, flexShrink: 0,
   };
   const bg = scBg(d, sc);
-  if (!bg) return <div style={{ ...base, color: "inherit", textShadow: "0 1px 2px rgba(0,0,0,.3)" }}>{sc}</div>;
+  if (!bg) return <div style={{ ...base, color: "inherit" }}>{sc}</div>;
   return <div style={{ ...base, background: bg, color: "#fff", borderRadius: d <= -1 ? "50%" : 0 }}>{sc}</div>;
 }
 

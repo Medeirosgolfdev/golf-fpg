@@ -83,9 +83,9 @@ export function V15({ d, v, s, bg }: P) {
           </div>
         </div>
       ))}
-      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"3px 6px", background:"#f8fafc", borderTop:"1px solid #e5e7eb", flexWrap:"wrap", gap:3 }}>
-        {v.stats ? <StatsRow st={s.st} tc3="#94a3b8" gap={5} fs={10} /> : <span />}
-        {(v.course||v.date) && <div style={{ fontSize:10, fontWeight:600, color:"#9ca3af" }}>{metaStr(d,{course:v.course,date:v.date})}</div>}
+      <div style={{ padding:"3px 6px", background:"#f8fafc", borderTop:"1px solid #e5e7eb" }}>
+        {v.stats && <div style={{ marginBottom:2 }}><StatsRow st={s.st} tc3="#94a3b8" gap={5} fs={10} /></div>}
+        {(v.course||v.date||v.tee||v.teeDist||hiChStr(d,v,s)) && <div style={{ fontSize:10, fontWeight:600, color:"#9ca3af", wordBreak:"break-word", lineHeight:1.4 }}>{[metaStr(d,{course:v.course,date:v.date,tee:v.tee,teeDist:v.teeDist}),hiChStr(d,v,s)].filter(Boolean).join(" · ")}</div>}
       </div>
     </div>
   );

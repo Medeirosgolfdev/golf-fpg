@@ -26,7 +26,7 @@ export function V48({ d, v, s, bg, tc="white", tc2="#aaa", tc3="#888" }: P) {
       {/* Top banner verde */}
       <div style={{ background: HIO_GREEN, padding: "14px 20px 10px", position: "relative" }}>
         <div style={{ fontFamily: OS, fontSize: 14, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", color: "rgba(255,255,255,.85)" }}>Hole-in-One</div>
-        <div style={{ fontFamily: BN, fontSize: 72, lineHeight: .85, color: "#fff", marginTop: 2, textShadow: "0 2px 8px rgba(0,0,0,.3)" }}>ACE!</div>
+        <div style={{ fontFamily: BN, fontSize: 72, lineHeight: .85, color: "#fff", marginTop: 2 }}>ACE!</div>
       </div>
       {/* Hole info */}
       <div style={{ padding: "18px 20px 14px", display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>

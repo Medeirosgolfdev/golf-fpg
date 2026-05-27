@@ -5,7 +5,7 @@
  */
 import React from "react";
 import { II, OS, LO, BN, SG, TS, TS_SCORE, hiChStr } from "../shared";
-import { SC, SCL, SCO, SCA, TpBadge } from "../badges";
+import { SC, SCL, SCO, SCA, TpBadge, StatsRow } from "../badges";
 import type { P } from "../types";
 
 /* V29 · TOUR CLASSIC — Estilo PGA Tour Americas / Auburn.
@@ -19,16 +19,16 @@ export function V29({ d, v, s, bg, tc="white", tc3 }: P) {
       <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg, padding:"6px 10px", borderRadius:6 }}>
         {v.holeScores && (
           <div style={{ display:"flex", alignItems:"center" }}>
-            <div style={{ display:"flex", flexDirection:"column", gap:3 }}>
+            <div style={{ display:"flex", flexDirection:"column", gap:2 }}>
               {(is18 ? [[0,9],[9,9]] as [number,number][] : [[0,d.scores.length] as [number,number]]).map(([off,len]) => (
                 <div key={off} style={{ display:"flex", gap:2 }}>
-                  {d.scores.slice(off,off+len).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} sz={36} />)}
+                  {d.scores.slice(off,off+len).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} sz={30} />)}
                 </div>
               ))}
             </div>
             {/* Score com -1 sobreposto (absolute) — alinhamento vertical com buracos via alignItems:center */}
-            <div style={{ flexShrink:0, marginLeft:14, position:"relative", display:"inline-block" }}>
-              <div style={{ fontFamily:BN, fontSize:84, lineHeight:1, letterSpacing:-3, color:tc, display:"block" }}>{s.sT}</div>
+            <div style={{ flexShrink:0, marginLeft:10, position:"relative", display:"inline-block" }}>
+              <div style={{ fontFamily:BN, fontSize:68, lineHeight:1, letterSpacing:-3, color:tc, display:"block" }}>{s.sT}</div>
               <div style={{ position:"absolute", right:-6, bottom:-8 }}>
                 <TpBadge vp={s.vpT} sz={20} />
               </div>
@@ -55,6 +55,7 @@ export function V29({ d, v, s, bg, tc="white", tc3 }: P) {
             <div style={{ fontSize:10, marginTop:1, opacity:0.85 }}>{[v.course&&d.course, v.teeDist&&d.teeDist?`${d.teeDist}m`:null].filter(Boolean).join(" · ")}</div>
           )}
           {hcl && <div style={{ fontSize:9, marginTop:1, opacity:0.75 }}>{hcl}</div>}
+          {v.stats && <div style={{ marginTop:3, display:"flex" }}><StatsRow st={s.st} tc3={tc3} gap={5} fs={10} /></div>}
         </div>
       )}
     </div>
@@ -96,12 +97,14 @@ export function V30({ d, v, s, bg, tc="white", tc3 }: P) {
           ))}
         </div>
       )}
-      {(v.event||v.course||v.date) && (
-        <div style={{ padding:"4px 10px 6px", borderTop:isDark?"1px solid rgba(255,255,255,.08)":"1px solid rgba(0,0,0,.08)", fontSize:9, fontWeight:600, color:tc3, display:"flex", justifyContent:"space-between" }}>
-          <span>{[v.event&&d.event,v.course&&d.course].filter(Boolean).join(" · ")}</span>
-          {v.date&&d.date && <span>{d.date}</span>}
+      {(v.event||v.course||v.date||v.tee||v.teeDist||(v.position&&d.position)) && (
+        <div style={{ padding:"4px 10px 4px", borderTop:isDark?"1px solid rgba(255,255,255,.08)":"1px solid rgba(0,0,0,.08)", fontSize:9, fontWeight:600, color:tc3, lineHeight:1.4, wordBreak:"break-word" }}>
+          <div>{[v.event&&d.event,v.course&&d.course,v.tee&&d.tee,v.teeDist&&d.teeDist&&`${d.teeDist}m`,v.position&&d.position&&`POS ${d.position}`].filter(Boolean).join(" · ")}</div>
+          {v.date&&d.date && <div>{d.date}</div>}
         </div>
       )}
+      {hiChStr(d,v,s) && <div style={{ padding:"2px 10px", fontSize:9, fontWeight:600, color:tc3, opacity:.85 }}>{hiChStr(d,v,s)}</div>}
+      {v.stats && <div style={{ padding:"2px 10px 6px" }}><StatsRow st={s.st} tc3={tc3} gap={4} fs={9} /></div>}
     </div>
   );
 }
@@ -110,17 +113,17 @@ export function V30({ d, v, s, bg, tc="white", tc3 }: P) {
    Transparente. Nome GRANDE em cima, hole numbers + 2 filas de circles, score ENORME à direita. */
 export function V38({ d, v, s, bg, tc="white", tc3 }: P) {
   const is18 = d.scores.length >= 18;
-  /* Score fontSize adaptativo: 18H tem 2 filas (~110px coluna) vs 9H 1 fila (~55px) */
-  const scoreFs = is18 ? 110 : 80;
+  /* Score fontSize compacto: 18H 80px (~altura 2 filas circles 28+28+gap) vs 9H 56px */
+  const scoreFs = is18 ? 80 : 56;
   return (
     <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg, padding:"6px 8px" }}>
       {v.player&&d.player && (
-        <div style={{ fontFamily:LO, fontSize:32, fontWeight:700, fontStyle:"italic", marginBottom:4, letterSpacing:.5 }}>
+        <div style={{ fontFamily:LO, fontSize:20, fontWeight:700, fontStyle:"italic", marginBottom:2, letterSpacing:.3 }}>
           {d.player}
         </div>
       )}
       {v.holeScores && (
-        <div style={{ display:"flex", alignItems:"center", gap:12 }}>
+        <div style={{ display:"flex", alignItems:"center", gap:8 }}>
           <div style={{ display:"flex", flexDirection:"column", gap:3 }}>
             {(is18 ? [[0,9],[9,9]] as [number,number][] : [[0,d.scores.length] as [number,number]]).map(([off,len],ri) => (
               <div key={off}>
@@ -128,7 +131,7 @@ export function V38({ d, v, s, bg, tc="white", tc3 }: P) {
                   {Array.from({length:len},(_,i) => <div key={i} style={{ width:36, textAlign:"center", fontSize:9, fontWeight:600, color:tc3 }}>{off+i+1}</div>)}
                 </div>}
                 <div style={{ display:"flex", gap:2 }}>
-                  {d.scores.slice(off,off+len).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} sz={36} />)}
+                  {d.scores.slice(off,off+len).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} sz={28} />)}
                 </div>
                 {is18 && ri === 1 && <div style={{ display:"flex", gap:2, marginTop:1 }}>
                   {Array.from({length:len},(_,i) => <div key={i} style={{ width:36, textAlign:"center", fontSize:9, fontWeight:600, color:tc3 }}>{off+i+1}</div>)}
@@ -155,11 +158,14 @@ export function V38({ d, v, s, bg, tc="white", tc3 }: P) {
           </div>
         </div>
       )}
-      {(v.round||v.event||v.course||v.date) && (
-        <div style={{ marginTop:6, fontSize:10, fontWeight:700, letterSpacing:1.5, textTransform:"uppercase", lineHeight:1.4 }}>
+      {(v.round||v.event||v.course||v.date||v.tee||v.teeDist||(v.position&&d.position)||hiChStr(d,v,s)) && (
+        <div style={{ marginTop:6, fontSize:10, fontWeight:700, letterSpacing:1.5, textTransform:"uppercase", lineHeight:1.4, wordBreak:"break-word" }}>
           {v.round && <span style={{ background:"#dc2626", padding:"2px 8px", fontSize:10, fontWeight:800, color:"#fff", marginRight:4 }}>R{d.round}</span>}
+          {v.position && d.position && <span style={{ background:"rgba(255,255,255,.15)", padding:"2px 8px", fontSize:10, fontWeight:800, color:tc, marginRight:4 }}>POS {d.position}</span>}
           {v.event&&d.event && <div style={{ fontSize:9, color:tc3, marginTop:2 }}>{d.event}</div>}
-          {(v.course||v.date) && <div style={{ fontSize:9, color:tc3 }}>{[v.course&&d.course,v.date&&d.date].filter(Boolean).join(" · ")}</div>}
+          {(v.course||v.date||v.tee||v.teeDist) && <div style={{ fontSize:9, color:tc3 }}>{[v.course&&d.course,v.tee&&d.tee,v.teeDist&&d.teeDist&&`${d.teeDist}m`,v.date&&d.date].filter(Boolean).join(" · ")}</div>}
+          {hiChStr(d,v,s) && <div style={{ fontSize:9, color:tc3, opacity:.85 }}>{hiChStr(d,v,s)}</div>}
+          {v.stats && <div style={{ marginTop:3, display:"flex", justifyContent:"flex-start" }}><StatsRow st={s.st} tc3={tc3} gap={4} fs={9} /></div>}
         </div>
       )}
     </div>
@@ -178,7 +184,7 @@ export function V45({ d, v, s, bg, tc="white", tc3 }: P) {
       <div style={{ display: "flex", alignItems: "flex-end", gap: 14, marginBottom: 6 }}>
         <div style={{ display: "flex", alignItems: "flex-start", gap: 6, flexShrink: 0 }}>
           <TpBadge vp={s.vpT} sz={20} />
-          <div style={{ fontFamily: BN, fontSize: 140, lineHeight: .9, letterSpacing: -6, color: tc }}>{s.sT}</div>
+          <div style={{ fontFamily: BN, fontSize: 100, lineHeight: .9, letterSpacing: -4, color: tc }}>{s.sT}</div>
         </div>
         {hasMeta && (
           /* maxWidth aperta a coluna do subtitulo para o pill do evento
@@ -190,8 +196,8 @@ export function V45({ d, v, s, bg, tc="white", tc3 }: P) {
             {v.event && d.event && (
               <div style={{ background: "#dc2626", padding: "3px 10px", fontSize: 10, fontWeight: 800, letterSpacing: 1.5, color: "#fff", textTransform: "uppercase", lineHeight: 1.35, wordBreak: "break-word" }}>{d.event}</div>
             )}
-            {v.course && d.course && (
-              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 1, color: tc3, textTransform: "uppercase", lineHeight: 1.35, wordBreak: "break-word" }}>{d.course}</div>
+            {(v.course || v.tee || v.teeDist) && (v.course&&d.course || v.tee&&d.tee || v.teeDist&&d.teeDist) && (
+              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 1, color: tc3, textTransform: "uppercase", lineHeight: 1.35, wordBreak: "break-word" }}>{[v.course&&d.course, v.tee&&d.tee, v.teeDist&&d.teeDist?`${d.teeDist}m`:null].filter(Boolean).join(" · ")}</div>
             )}
             {(v.round || (v.date && d.date) || (v.position && d.position)) && (
               <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
@@ -287,15 +293,13 @@ export function V46({ d, v, s, bg, tc="white", tc3 }: P) {
           </div>
         </div>
       )}
-      {/* Footer: NOME · TORNEIO/CAMPO · ROUND · POS · HI */}
-      {(v.player || v.event || v.round || v.course || v.date || (v.position && d.position) || hcl) && (
-        <div style={{ marginTop: 6, fontSize: 9, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase", color: tc3, lineHeight: 1.3 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
-            {v.player && d.player && <span>{d.player}</span>}
-            <span>{[v.event && d.event, v.course && d.course].filter(Boolean).join(" · ")}</span>
-            <span>{[v.round && `ROUND ${d.round}`, v.position && d.position && `POS ${d.position}`].filter(Boolean).join(" · ")}</span>
-          </div>
-          {hcl && <div style={{ marginTop: 2, fontSize: 8, letterSpacing: 1.5, opacity: .8 }}>{hcl}</div>}
+      {/* Footer com wrap em multi-linhas para evitar overflow horizontal. */}
+      {(v.player || v.event || v.round || v.course || v.tee || v.teeDist || v.date || (v.position && d.position) || hcl) && (
+        <div style={{ marginTop: 6, fontSize: 9, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase", color: tc3, lineHeight: 1.4, wordBreak: "break-word" }}>
+          {v.player && d.player && <div>{d.player}</div>}
+          {(v.event||v.course||v.tee||v.teeDist) && <div>{[v.event && d.event, v.course && d.course, v.tee && d.tee, v.teeDist && d.teeDist && `${d.teeDist}m`].filter(Boolean).join(" · ")}</div>}
+          {(v.round||(v.position&&d.position)||v.date) && <div>{[v.round && `ROUND ${d.round}`, v.position && d.position && `POS ${d.position}`, v.date && d.date].filter(Boolean).join(" · ")}</div>}
+          {hcl && <div style={{ fontSize: 8, letterSpacing: 1.5, opacity: .8 }}>{hcl}</div>}
         </div>
       )}
     </div>
@@ -318,16 +322,16 @@ export function V47({ d, v, s, bg, tc="white", tc3 }: P) {
         const last = parts[parts.length - 1] || "";
         return (
           <div style={{ fontFamily: OS, textTransform: "uppercase", lineHeight: .95, marginBottom: 2 }}>
-            {first && <div style={{ fontSize: 22, fontWeight: 500, letterSpacing: 2 }}>{first}</div>}
-            <div style={{ fontSize: 48, fontWeight: 700, letterSpacing: 1 }}>{last.toUpperCase()}</div>
+            {first && <div style={{ fontSize: 16, fontWeight: 500, letterSpacing: 1.5 }}>{first}</div>}
+            <div style={{ fontSize: 36, fontWeight: 700, letterSpacing: 1 }}>{last.toUpperCase()}</div>
           </div>
         );
       })()}
-      {/* Info bar roxo (event/round/course/position) */}
-      {(v.event || v.round || v.course || (v.position && d.position)) && (
-        <div style={{ background: accentBar, padding: "3px 10px", display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-          <div style={{ fontSize: 8, fontWeight: 800, letterSpacing: 1.5, color: "rgba(255,255,255,.8)", textTransform: "uppercase" }}>
-            {[v.event && d.event, v.round && `ROUND ${d.round}`, v.position && d.position && `POS ${d.position}`, v.course && d.course].filter(Boolean).join("  /  ")}
+      {/* Info bar roxo — wordBreak garante que texto longo quebra para multi-linhas. */}
+      {(v.event || v.round || v.course || v.tee || v.teeDist || (v.position && d.position)) && (
+        <div style={{ background: accentBar, padding: "3px 10px", marginBottom: 4 }}>
+          <div style={{ fontSize: 8, fontWeight: 800, letterSpacing: 1.5, color: "rgba(255,255,255,.8)", textTransform: "uppercase", wordBreak: "break-word", lineHeight: 1.5 }}>
+            {[v.event && d.event, v.round && `ROUND ${d.round}`, v.position && d.position && `POS ${d.position}`, v.course && d.course, v.tee && d.tee, v.teeDist && d.teeDist && `${d.teeDist}m`].filter(Boolean).join("  /  ")}
           </div>
         </div>
       )}
@@ -350,15 +354,16 @@ export function V47({ d, v, s, bg, tc="white", tc3 }: P) {
       )}
       {/* Score com badge em baixo (sticker semi-transparente) */}
       <div style={{ position:"relative", display:"inline-block", marginTop: 2 }}>
-        <div style={{ fontFamily: BN, fontSize: 120, lineHeight: 1, letterSpacing: -4, color: tc, position:"relative", zIndex: 1 }}>{s.sT}</div>
+        <div style={{ fontFamily: BN, fontSize: 90, lineHeight: 1, letterSpacing: -3, color: tc, position:"relative", zIndex: 1 }}>{s.sT}</div>
         <div style={{ position:"absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", zIndex: 2, opacity: 0.85 }}>
           <TpBadge vp={s.vpT} sz={26} />
         </div>
       </div>
-      {(v.date && d.date) || hcl ? (
-        <div style={{ fontSize: 9, fontWeight: 600, color: tc3, marginTop: 4, letterSpacing: 1, display: "flex", gap: 8 }}>
+      {(v.date && d.date) || hcl || v.stats ? (
+        <div style={{ fontSize: 9, fontWeight: 600, color: tc3, marginTop: 4, letterSpacing: 1, display: "flex", gap: 8, flexWrap:"wrap" }}>
           {v.date && d.date && <span>{d.date}</span>}
           {hcl && <span style={{ opacity: .85 }}>{hcl}</span>}
+          {v.stats && <span style={{ width:"100%" }}><StatsRow st={s.st} tc3={tc3} gap={4} fs={9} /></span>}
         </div>
       ) : null}
     </div>

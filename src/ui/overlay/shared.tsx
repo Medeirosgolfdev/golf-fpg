@@ -17,10 +17,11 @@ export const BN = "'Bebas Neue',sans-serif";
 export const SG = "'Space Grotesk',sans-serif";
 
 /* ═══════ TEXT SHADOWS ═══════ */
-/** Subtle shadow para texto sobre fotos. */
-export const TS = "0 1px 2px rgba(0,0,0,.35)";
-/** Shadow mais forte para números grandes (score). */
-export const TS_SCORE = "0 1px 3px rgba(0,0,0,.45)";
+/* User pediu zero sombras — constantes esvaziadas. Mantidas como exports
+   para não partir imports existentes. Leitura sobre fotos é garantida pelos
+   fundos opacos/pills/blocos sólidos de cada template, não por shadows. */
+export const TS = "none";
+export const TS_SCORE = "none";
 
 /* ═══════ CORES DE SCORE ═══════ */
 export const HIO_GREEN = "#10b981"; // hole-in-one — verde esmeralda

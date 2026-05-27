@@ -29,7 +29,7 @@ export function V2({ d, v, s, bg, tc="white", tc3 }: P) {
     <div style={{ fontFamily:II, display:"inline-flex", alignItems:"center", gap:6, padding:"4px 10px", background:bg||"rgba(0,0,0,.78)", color:tc, textShadow:TS }}>
       <div className="u-col-flex2">
         {v.player&&d.player && <div style={{ fontFamily:OS, fontSize:18, fontWeight:700 }}>{d.player.toUpperCase()}</div>}
-        {(v.course||v.date||v.round) && <div style={{ fontSize:11, fontWeight:600, color:tc3 }}>{metaStr(d,{course:v.course,date:v.date,round:v.round})}</div>}
+        {(v.course||v.date||v.round||(v.position&&d.position)) && <div style={{ fontSize:11, fontWeight:600, color:tc3 }}>{[metaStr(d,{course:v.course,date:v.date,round:v.round}), v.position&&d.position&&`POS ${d.position}`].filter(Boolean).join(" · ")}</div>}
         {v.stats && <StatsRow st={s.st} tc3={tc3} gap={4} fs={10} />}
       </div>
       <div style={{ width:1, background:"rgba(255,255,255,.15)", alignSelf:"stretch" }} />
@@ -56,7 +56,7 @@ export function V3({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
       {(v.player&&d.player || v.course&&d.course) && <>
         <div style={{ padding:"3px 6px 2px" }}>
           {v.player&&d.player && <div style={{ fontFamily:OS, fontSize:18, fontWeight:700 }}>{d.player.toUpperCase()}</div>}
-          {(v.course||v.date||v.round) && <div style={{ fontSize:10, fontWeight:600, color:tc3 }}>{metaStr(d,{course:v.course,date:v.date,round:v.round})}</div>}
+          {(v.course||v.date||v.round||(v.position&&d.position)) && <div style={{ fontSize:10, fontWeight:600, color:tc3 }}>{[metaStr(d,{course:v.course,date:v.date,round:v.round}), v.position&&d.position&&`POS ${d.position}`].filter(Boolean).join(" · ")}</div>}
         </div>
         <div style={{ height:1, background:"rgba(255,255,255,.12)" }} />
       </>}
@@ -87,7 +87,7 @@ export function V4({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
         <div style={{ fontSize:20, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</div>
       </div>
       {v.stats && <div style={{ display:"flex", justifyContent:"center", marginTop:2 }}><StatsRow st={s.st} tc3={tc3} gap={5} fs={11} /></div>}
-      {(v.date||v.round) && <div style={{ fontSize:10, fontWeight:600, color:tc4, marginTop:2 }}>{metaStr(d,{date:v.date,round:v.round})}</div>}
+      {(v.date||v.round||(v.position&&d.position)) && <div style={{ fontSize:10, fontWeight:600, color:tc4, marginTop:2 }}>{[metaStr(d,{date:v.date,round:v.round}), v.position&&d.position&&`POS ${d.position}`].filter(Boolean).join(" · ")}</div>}
     </div>
   );
 }
