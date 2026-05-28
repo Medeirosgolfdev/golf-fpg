@@ -245,6 +245,39 @@ function loadResultsFingerprints() {
   return fp;
 }
 
+// ── Match (flightId, round) → flight_course (par[18] + lengths[18]) ─────
+// O `meta.flight_courses` é indexado por `flight_round_id` (NÃO por flight_id).
+// Para mapear, cruzar com `meta.flight_rounds[frId]`:
+//   meta.flight_rounds[frId] = { flight: fid, round: r, ... }
+// Retorna { pars, lengths } onde lengths é em JARDAS (×0.9144 para metros).
+// Em flights 9H, pars[] tem 18 entries mas só 9 com par>0 — alinhar pelo par>0.
+function findFlightCourse(meta, flightId, round) {
+  if (!meta?.flight_rounds || !meta?.flight_courses) return null;
+  const targetFid = String(flightId);
+  const targetRound = parseInt(round, 10);
+  for (const [frId, fro] of Object.entries(meta.flight_rounds)) {
+    if (String(fro.flight) === targetFid && parseInt(fro.round, 10) === targetRound) {
+      const fc = meta.flight_courses[frId];
+      if (fc) return { pars: fc.pars, lengths: fc.lengths };
+    }
+  }
+  return null;
+}
+
+// Quantas rondas tem este flight? Lê do meta (mais fiável que meta.tournament).
+function flightRoundCount(meta, flightId) {
+  const fl = meta?.flights?.[String(flightId)];
+  if (!fl) return null;
+  const n = parseInt(fl.round_count ?? fl.active ?? 0, 10);
+  if (Number.isFinite(n) && n > 0) return n;
+  // Fallback: contar entradas em meta.flight_rounds com esta flight
+  let count = 0;
+  for (const fro of Object.values(meta?.flight_rounds || {})) {
+    if (String(fro.flight) === String(flightId)) count++;
+  }
+  return count || null;
+}
+
 // ── Match (memberID, tcode, p_age_group) → flight_id ─────────────────────
 function findFlightForAgeGroup(meta, ageGroupName) {
   if (!meta?.flights || !meta?.age_groups) return null;
@@ -398,10 +431,16 @@ async function fetchTournamentRichData(tcodeAgeMap, flightCache, opts = {}) {
     await sleep(DELAY_MS);
 
     const tournData = {
+      // ⚠ TEM de incluir flights + flight_rounds + flight_courses para que
+      // findFlightForAgeGroup() e findFlightCourse() funcionem na Phase 3.
+      // Sem isto, todos os campos ricos do jogador ficam null em cascata.
       meta: meta ? {
-        tournament: meta.tournament,
-        courses:    meta.courses,
-        age_groups: meta.age_groups,
+        tournament:     meta.tournament,
+        courses:        meta.courses,
+        age_groups:     meta.age_groups,
+        flights:        meta.flights,
+        flight_rounds:  meta.flight_rounds,
+        flight_courses: meta.flight_courses,
       } : null,
       name:      meta?.tournament?.name || `t=${tcode}`,
       startDate: meta?.tournament?.start_date || '',
@@ -432,29 +471,64 @@ async function fetchTournamentRichData(tcodeAgeMap, flightCache, opts = {}) {
       }
       await sleep(DELAY_MS);
 
+      // Distâncias e par do tee jogado, por ronda. Indexado por round number.
+      // Cada entry: { pars: number[18], lengths: number[18] } — lengths em JARDAS.
+      const coursesByRound = {};
+
       const flightData = {
         ageGroup:    ag,
         memberIds,
         players:     {},   // pid → flight_player completo (todos os campos)
         rounds:      {},   // ronda → array de strokes etc (opcional, deriva dos players)
+        coursesByRound,    // par+yards do tee jogado por ronda
       };
 
       const totalPages = Math.max(1, Math.ceil((memberIds.length || 20) / 20));
-      const numRounds  = meta?.tournament?.rounds_count || 4;
+      // numRounds: o campo correcto no JSON da API é `meta.tournament.rounds`
+      // (sem _count). Tentamos primeiro o flight-specific (round_count) e só
+      // depois o tournament-level. Hardcoded 4 era catastrófico em torneios
+      // de 1 ronda (Tour Championships locais), iterava R2/R3/R4 inexistentes.
+      const tournRounds = parseInt(meta?.tournament?.rounds ?? meta?.tournament?.rounds_count ?? 0, 10);
+      const flRounds   = flightRoundCount(meta, fid);
+      const numRounds  = (flRounds && tournRounds)
+        ? Math.min(flRounds, tournRounds)   // flight pode ter menos rondas que o tournament
+        : (flRounds || tournRounds || 4);
+
+      // Pre-popular coursesByRound a partir do meta (mesmo para rondas que não
+      // tenham scores ainda — útil para torneios futuros / em curso).
+      for (let r = 1; r <= numRounds; r++) {
+        const fc = findFlightCourse(meta, fid, r);
+        if (fc) coursesByRound[r] = fc;
+      }
 
       // Iterar TODAS as rondas + páginas para apanhar todos os jogadores.
       // GetPlayerTeeTimes devolve por ronda; precisamos de fazer 1 chamada por
       // (round × page) e fundir os rounds num único pl.rounds por pid.
       for (let round = 1; round <= numRounds; round++) {
+        let roundHasData = false;
+        let firstPageFailed = false;
         for (let p = 1; p <= totalPages; p++) {
           let d;
           try {
             d = await getPlayerTeeTimes(tcode, fid, round, p);
           } catch (err) {
+            // Se a 1ª página falha (ex: 500 porque a ronda nem existe), saltar
+            // a ronda inteira em vez de espalhar 500s por todas as páginas.
+            if (p === 1) {
+              console.warn(`    ⚠️ R${round}: primeira página falhou (${String(err.message).slice(0,40)}) — saltar ronda`);
+              firstPageFailed = true;
+              break;
+            }
             console.warn(`    ⚠️ GetPlayerTeeTimes(t=${tcode}, f=${fid}, r=${round}, p=${p}): ${err.message}`);
             continue;
           }
+          // Se nenhuma data útil na primeira página, ronda provavelmente vazia
+          if (p === 1 && (!d?.flight_players || Object.keys(d.flight_players).length === 0)) {
+            firstPageFailed = true;
+            break;
+          }
           if (!d?.flight_players) { await sleep(DELAY_MS); continue; }
+          roundHasData = true;
 
           for (const [pid, pl] of Object.entries(d.flight_players)) {
             if (!flightData.players[pid]) {
@@ -498,6 +572,17 @@ async function fetchTournamentRichData(tcodeAgeMap, flightCache, opts = {}) {
             }
           }
           await sleep(DELAY_MS);
+        }
+        // Se a ronda actual não respondeu (firstPageFailed) e já tínhamos
+        // dados numa ronda anterior, assumir que rondas seguintes não existem
+        // e sair do loop. Evita bombardear HTTP 500 em rondas inexistentes.
+        if (firstPageFailed && round > 1) {
+          break;
+        }
+        // Se a ronda 1 falhou, removê-la do coursesByRound (o meta tinha-a mas
+        // o GetPlayerTeeTimes diz que está vazia — pode ser bug do meta).
+        if (firstPageFailed && round === 1) {
+          delete coursesByRound[round];
         }
       }
 
@@ -600,6 +685,28 @@ function buildPlayerFile(mid, careerData, tournRich, resultsFP) {
       }
     }
 
+    // ── Distâncias e par do tee jogado, por ronda ────────────────────────
+    // Vêm de `meta.flight_courses` cruzado com `meta.flight_rounds` em
+    // fetchTournamentRichData → guardamos em `coursesByRound`. Lengths são
+    // em JARDAS (UI: ×0.9144 para metros). Em flights 9H, pars[18] tem
+    // zeros nos buracos não jogados — alinhar pelo par>0.
+    const coursesByRound = richFlight?.coursesByRound || {};
+    for (const rn of Object.keys(ronds)) {
+      const fc = coursesByRound[rn] || coursesByRound[parseInt(rn, 10)];
+      if (fc) {
+        ronds[rn].pars  = fc.pars;     // par[18]
+        ronds[rn].yards = fc.lengths;  // yards[18]
+      }
+    }
+
+    // Agregado por flight (par/yards mais detalhados do que t_pars/t_yards
+    // do GetMemberTournamentResults, que descrevem o percurso "tipo" e não
+    // o tee específico jogado).
+    const flightCourses = {};
+    for (const [rn, fc] of Object.entries(coursesByRound)) {
+      flightCourses[rn] = { pars: fc.pars, lengths: fc.lengths };
+    }
+
     out.torneios[tcodeStr] = {
       tcode:         tcodeStr,
       name:          t.t_name,
@@ -608,8 +715,9 @@ function buildPlayerFile(mid, careerData, tournRich, resultsFP) {
       endDate:       t.t_end_date,
       totalRounds:   t.t_rounds,
       holesPerRound: t.t_holes_per_round,
-      par:           t.t_pars,
-      yards:         t.t_yards,
+      par:           t.t_pars,            // par do percurso "tipo" (GetMemberTournamentResults)
+      yards:         t.t_yards,           // yards do percurso "tipo"
+      flightCourses,                       // ← NOVO: par+yards por ronda DO TEE JOGADO
       ageGroup:      ag,
       flightId:      richFlightId,
       pid,

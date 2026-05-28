@@ -176,6 +176,21 @@ interface FieldEscalao { nome: string; jogadores?: FieldPlayer[] }
 interface FieldTorneio { t: number; name: string; date_inicio: string; escaloes: FieldEscalao[] }
 interface FieldData { torneios: FieldTorneio[] }
 
+// uskids-results.json — leaderboards reais (a fonte mais rápida a actualizar
+// quando um torneio acaba). Estrutura usada apenas para sintetizar Passados
+// quando o member-history-slim ainda não foi regenerado.
+interface USKResLBPlayer { nome?: string; pais?: string; cidade?: string }
+interface USKResRonda { ronda?: number; leaderboard?: USKResLBPlayer[] }
+interface USKResEscalao { nome?: string; age_group?: number; rondas?: USKResRonda[] }
+interface USKResTorneio {
+  t: number;
+  name: string;
+  date_inicio?: string;
+  date_fim?: string;
+  escaloes?: USKResEscalao[];
+}
+interface USKResData { resultados?: USKResTorneio[] }
+
 interface MHRound { gross: number; strokes?: number[] }
 interface MHTorn { ageGroup: string; place: number | null; rounds: Record<string, MHRound> }
 interface MHPlr { name: string; country: string; torneios: Record<string, MHTorn> }
@@ -203,6 +218,9 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
 }) {
   const [field, setField] = useState<FieldData | null>(null);
   const [mh, setMh] = useState<MHSlim | null>(null);
+  // uskids-results.json — para sintetizar Passados quando o member-history
+  // ainda não foi regenerado (torneio acabou hoje/ontem).
+  const [uskRes, setUskRes] = useState<USKResData | null>(null);
   // Map neg ID → FFG file data (loaded on mount)
   const [ffgData, setFfgData] = useState<Map<number, FFGFile>>(new Map());
   const [torneioT, setTorneioT] = useState<number>(defaultT);
@@ -211,10 +229,12 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
   // SCORECARDS (pancadas hole-by-hole top-N) ou CAMPO (anatomia do campo).
   const [activeTab, setActiveTab] = useState<"players" | "scores" | "scorecards" | "campo">("players");
 
-  // Load field + member history
+  // Load field + member history + uskids-results (último é fallback para
+  // sintetizar Passados de torneios UP_TORN que acabaram hoje/ontem).
   useEffect(() => {
     cachedFetchJson<FieldData>("/data/uskids-field.json").then(d => d && setField(d)).catch(() => {});
     cachedFetchJson<MHSlim>("/data/uskids-member-history-slim.json").then(d => d && setMh(d)).catch(() => {});
+    cachedFetchJson<USKResData>("/data/uskids-results.json").then(d => d && setUskRes(d)).catch(() => {});
   }, []);
 
   // Load FFG Internationaux U14 files (carrega em paralelo, falhas silenciosas)
@@ -241,28 +261,73 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
     return `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
   };
 
-  /** Constrói um FieldTorneio sintético a partir de member-history-slim
-   *  para um tcode passado (sem entrada em uskids-field). Os escaloes vêm dos
-   *  ageGroup únicos no histórico; jogadores agrupados por escalão. */
+  /** Constrói um FieldTorneio sintético para um tcode passado.
+   *  Estratégia em cascata:
+   *    1. member-history-slim (`mh`) — preferido (tem todos os escalões).
+   *    2. uskids-results.json (`uskRes`) — fallback quando mh ainda não
+   *       cobre o torneio (caso típico: torneio acabou hoje/ontem).
+   *  Devolve null se nenhuma fonte tiver dados. */
   const buildSyntheticTorneio = (tcode: string): FieldTorneio | null => {
-    if (!mh) return null;
-    const meta = mh.torneios[tcode];
-    if (!meta) return null;
-    const byAgeGroup: Record<string, FieldPlayer[]> = {};
-    for (const p of Object.values(mh.jogadores)) {
-      const t = p.torneios[tcode];
-      if (!t) continue;
-      const ag = t.ageGroup || "Geral";
-      if (!byAgeGroup[ag]) byAgeGroup[ag] = [];
-      byAgeGroup[ag].push({ nome: p.name, pais: p.country || "" });
+    // Fonte 1: member-history-slim
+    if (mh) {
+      const meta = mh.torneios[tcode];
+      if (meta) {
+        const byAgeGroup: Record<string, FieldPlayer[]> = {};
+        for (const p of Object.values(mh.jogadores)) {
+          const t = p.torneios[tcode];
+          if (!t) continue;
+          const ag = t.ageGroup || "Geral";
+          if (!byAgeGroup[ag]) byAgeGroup[ag] = [];
+          byAgeGroup[ag].push({ nome: p.name, pais: p.country || "" });
+        }
+        // Se mh já tem jogadores, é a fonte preferida.
+        if (Object.keys(byAgeGroup).length > 0) {
+          const escaloes = Object.entries(byAgeGroup).map(([nome, jogadores]) => ({ nome, jogadores }));
+          return {
+            t: parseInt(tcode, 10),
+            name: meta.name,
+            date_inicio: meta.startDate,
+            escaloes,
+          };
+        }
+      }
     }
-    const escaloes = Object.entries(byAgeGroup).map(([nome, jogadores]) => ({ nome, jogadores }));
-    return {
-      t: parseInt(tcode, 10),
-      name: meta.name,
-      date_inicio: meta.startDate,
-      escaloes,
-    };
+    // Fonte 2: uskids-results.json — usar leaderboard da R1 (jogadores que
+    // saíram a jogar) como field do torneio. Dedup por nome+país dentro
+    // do escalão.
+    if (uskRes) {
+      const tNum = parseInt(tcode, 10);
+      const torn = uskRes.resultados?.find(r => r.t === tNum);
+      if (torn && torn.escaloes && torn.escaloes.length > 0) {
+        const escaloes: FieldEscalao[] = [];
+        for (const esc of torn.escaloes) {
+          if (!esc.nome) continue;
+          const r1 = esc.rondas?.find(r => r.ronda === 1) || esc.rondas?.[0];
+          const lb = r1?.leaderboard || [];
+          const seen = new Set<string>();
+          const jogadores: FieldPlayer[] = [];
+          for (const p of lb) {
+            const nome = (p.nome || "").trim().replace(/\s+/g, " ");
+            if (!nome) continue;
+            const key = nome.toLowerCase() + "|" + (p.pais || "");
+            if (seen.has(key)) continue;
+            seen.add(key);
+            jogadores.push({ nome, pais: p.pais || "", cidade: p.cidade });
+          }
+          if (jogadores.length > 0) escaloes.push({ nome: esc.nome, jogadores });
+        }
+        if (escaloes.length > 0) {
+          // date_inicio em formato M/D/YYYY (compatível com toIso).
+          return {
+            t: tNum,
+            name: torn.name,
+            date_inicio: torn.date_inicio || "",
+            escaloes,
+          };
+        }
+      }
+    }
+    return null;
   };
 
   // Lista de torneios seleccionáveis no dropdown:
@@ -272,7 +337,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
   // Ordenados por data: futuros ascendente (próximo primeiro), passados
   // descendente (mais recente primeiro). Junta-se as duas listas.
   const futureTorneios = useMemo<FieldTorneio[]>(() => {
-    if (!field && !mh) return [];
+    if (!field && !mh && !uskRes) return [];
     const today = new Date().toISOString().slice(0, 10);
     const out: FieldTorneio[] = [];
     const seenTcodes = new Set<string>();
@@ -293,36 +358,59 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
       }
     }
 
-    // 2) Passados — todos os tcodes que Manuel jogou em mh.
-    //    IMPORTANTE: Manuel tem 2 mids (legacy 605933 + actual 630106). Apanhamos
-    //    TODOS os mids cujo nome normalizado bate em qualquer alias e fazemos a
-    //    UNIÃO dos torneios. Sem isto perdíamos Venice/Rome/Marco da conta actual.
-    if (mh) {
-      const manuelAliases = new Set([
-        "manuel medeiros",
-        "manuel francisco medeiros",
-        "manuel goulartt medeiros",
-        "manuel francisco goulartt de medeiros",
-      ]);
-      const manuelTcodes = new Set<string>();
-      for (const p of Object.values(mh.jogadores)) {
-        const k = normName(p.name);
-        if (!manuelAliases.has(k)) continue;
-        for (const tcode of Object.keys(p.torneios)) manuelTcodes.add(tcode);
+    // 2) Passados — candidatos vêm de várias fontes:
+    //    a) tcodes que Manuel jogou (mh.jogadores[*].torneios) — fonte primária.
+    //       Manuel tem 2 mids (legacy 605933 + actual 630106); apanhamos a
+    //       UNIÃO de todos os mids cujo nome normalizado bate em qualquer alias.
+    //    b) tcodes do UP_TORN cuja data já passou — mesmo que Manuel ainda
+    //       não esteja em mh (típico: torneio acabou hoje, member-history
+    //       demora a actualizar). Usa uskids-results.json como fonte.
+    {
+      const candidateTcodes = new Set<string>();
+      // (a) tcodes do Manuel via mh
+      if (mh) {
+        const manuelAliases = new Set([
+          "manuel medeiros",
+          "manuel francisco medeiros",
+          "manuel goulartt medeiros",
+          "manuel francisco goulartt de medeiros",
+        ]);
+        for (const p of Object.values(mh.jogadores)) {
+          const k = normName(p.name);
+          if (!manuelAliases.has(k)) continue;
+          for (const tcode of Object.keys(p.torneios)) candidateTcodes.add(tcode);
+        }
       }
+      // (b) UP_TORN com data passada — descoberta via mh.torneios OU uskRes
+      for (const ut of UP_TORN) {
+        if (!ut.tcode) continue;
+        let startIso = "";
+        if (mh && mh.torneios[ut.tcode]) startIso = toIso(mh.torneios[ut.tcode].startDate);
+        if (!startIso && uskRes) {
+          const r = uskRes.resultados?.find(x => x.t === parseInt(ut.tcode!, 10));
+          if (r?.date_inicio) startIso = toIso(r.date_inicio);
+        }
+        if (startIso && startIso < today) candidateTcodes.add(ut.tcode);
+      }
+
       const pastTcodes: Array<{ tcode: string; iso: string }> = [];
-      for (const tcode of manuelTcodes) {
+      for (const tcode of candidateTcodes) {
         if (seenTcodes.has(tcode)) continue;
         if (HIDDEN_TCODES.has(tcode)) continue; // blacklist (El Prat, Desert)
-        const meta = mh.torneios[tcode];
-        if (!meta) continue;
+        // Resolver iso a partir da melhor fonte disponível
+        let iso = "";
+        if (mh && mh.torneios[tcode]) iso = toIso(mh.torneios[tcode].startDate);
+        if (!iso && uskRes) {
+          const r = uskRes.resultados?.find(x => x.t === parseInt(tcode, 10));
+          if (r?.date_inicio) iso = toIso(r.date_inicio);
+        }
+        if (!iso) continue;
         // Filtro: só incluir torneios que tenham dados no escalão actual (ou
         // num range que inclua o user — ex: Boys 12 dentro de "Boys 11-12").
         const synth = buildSyntheticTorneio(tcode);
         if (!synth) continue;
         const hasEscalao = synth.escaloes.some(e => escalaoMatches(escalaoNome, e.nome) && (e.jogadores?.length ?? 0) > 0);
         if (!hasEscalao) continue;
-        const iso = toIso(meta.startDate);
         pastTcodes.push({ tcode, iso });
       }
       // Ordenar desc (mais recente primeiro)
@@ -446,7 +534,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
     }
 
     return out;
-  }, [field, mh, autoRivals, ffgData, escalaoNome]);
+  }, [field, mh, autoRivals, ffgData, escalaoNome, uskRes]);
 
   // Escalões disponíveis para o torneio escolhido
   const escaloesDisponiveis = useMemo(() => {
