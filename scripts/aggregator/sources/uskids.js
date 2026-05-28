@@ -258,10 +258,33 @@ async function load(opts) {
   //   (b) tcodes JÁ em tournMap mas com flights vazios / sem alguns jogadores
   //       — ex: slim tem meta do torneio (descoberta) mas ninguém ainda lá
   //       jogou no slim porque o scrape do member-history corre semanal.
-  // O matcher por nome resolve os playerSourceKey null cross-source.
   function normNameKey(n) {
     return (n || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
       .replace(/[-'’.·]+/g, " ").replace(/\s+/g, " ").trim();
+  }
+  // Index para resolver memberId via nome+país. Sem isto o identity matcher
+  // (linha 290) descarta os results com playerSourceKey null.
+  // Mapeia "normName|iso2" → memberId; e também "normName|" como fallback.
+  const playersByNameCountry = new Map();
+  for (const p of players) {
+    const nk = normNameKey(p.name);
+    if (!nk) continue;
+    const iso = (p.country || "").toUpperCase();
+    const keyWithCc = `${nk}|${iso}`;
+    if (!playersByNameCountry.has(keyWithCc)) {
+      playersByNameCountry.set(keyWithCc, p.sourceKey);
+    }
+    // Fallback só por nome — só preenche se for único (evita ambiguidade entre jogadores com mesmo nome)
+    const keyNoCc = `${nk}|`;
+    if (playersByNameCountry.has(keyNoCc)) {
+      playersByNameCountry.set(keyNoCc, "__AMBIG__");
+    } else {
+      playersByNameCountry.set(keyNoCc, p.sourceKey);
+    }
+  }
+  // Purgar entradas ambíguas do fallback sem país
+  for (const [k, v] of playersByNameCountry) {
+    if (v === "__AMBIG__") playersByNameCountry.delete(k);
   }
   for (const tres of results.resultados || []) {
     const tcode = String(tres.t || tres.tcode || "");
@@ -315,6 +338,15 @@ async function load(opts) {
       const existingNames = new Set(
         flight.results.map(r => normNameKey(r.playerName))
       );
+      // Recolher também o país por jogador (para resolver memberId via name+country)
+      const perPlayerCountry = new Map();
+      for (const ronda of esc.rondas || []) {
+        for (const lp of ronda.leaderboard || []) {
+          const name = displayName(lp.nome || "");
+          if (!name) continue;
+          if (lp.pais && !perPlayerCountry.has(name)) perPlayerCountry.set(name, lp.pais);
+        }
+      }
       for (const acc of perPlayer.values()) {
         if (existingNames.has(normNameKey(acc.name))) continue;
         acc.rounds.sort((a, b) => a.round - b.round);
@@ -323,8 +355,16 @@ async function load(opts) {
         const toParCalc = parPerRound && acc.rounds.length
           ? grossSum - parPerRound * acc.rounds.length
           : null;
+        // Tentar resolver memberId via playersByNameCountry (do slim).
+        // Sem isto, o identity matcher dropa o result (linha 290 do matcher exige playerSourceKey).
+        const cc = perPlayerCountry.get(acc.name) || null;
+        const iso2 = cc ? countryToIso2(cc) : null;
+        const lookupKey = `${normNameKey(acc.name)}|${(iso2 || "").toUpperCase()}`;
+        const resolvedMemberId =
+          playersByNameCountry.get(lookupKey) ||
+          playersByNameCountry.get(`${normNameKey(acc.name)}|`); // sem país, fallback só pelo nome
         flight.results.push({
-          playerSourceKey: null, // sem memberId — o identity matcher resolve por nome cross-source
+          playerSourceKey: resolvedMemberId || null,
           playerName: acc.name,
           pos: null,
           status: "OK",
