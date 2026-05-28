@@ -299,11 +299,14 @@ async function load(opts) {
       t.seriesLabel = series.label;
     }
     for (const esc of tres.escaloes || []) {
-      const flightInfo = parseFlight(esc.age_group || esc.nome);
+      // esc.nome ("Boys 12") tem prioridade sobre esc.age_group (id numérico tipo "2105")
+      // — parseFlight de "2105" produzia flightKey absurdo "x_2105_2105".
+      const escLabel = esc.nome || esc.age_group;
+      const flightInfo = parseFlight(escLabel);
       let flight = t.flights.get(flightInfo.flightKey);
       if (!flight) {
-        const cm = completosMap.get(`${tcode}|${esc.age_group}`);
-        const fsEntry = fieldSizes[tcode]?.escaloes?.[esc.age_group];
+        const cm = completosMap.get(`${tcode}|${escLabel}`) || completosMap.get(`${tcode}|${esc.age_group}`);
+        const fsEntry = fieldSizes[tcode]?.escaloes?.[escLabel] || fieldSizes[tcode]?.escaloes?.[esc.age_group];
         flight = {
           flightKey: flightInfo.flightKey,
           label: flightInfo.label,
@@ -347,6 +350,8 @@ async function load(opts) {
           if (lp.pais && !perPlayerCountry.has(name)) perPlayerCountry.set(name, lp.pais);
         }
       }
+      // Primeira passagem: construir todos os results (sem pos)
+      const newResults = [];
       for (const acc of perPlayer.values()) {
         if (existingNames.has(normNameKey(acc.name))) continue;
         acc.rounds.sort((a, b) => a.round - b.round);
@@ -363,7 +368,7 @@ async function load(opts) {
         const resolvedMemberId =
           playersByNameCountry.get(lookupKey) ||
           playersByNameCountry.get(`${normNameKey(acc.name)}|`); // sem país, fallback só pelo nome
-        flight.results.push({
+        newResults.push({
           playerSourceKey: resolvedMemberId || null,
           playerName: acc.name,
           pos: null,
@@ -373,6 +378,24 @@ async function load(opts) {
           rounds: acc.rounds,
         });
       }
+      // Segunda passagem: calcular pos por sort de totalGross (asc, null/WD ao fim).
+      // Empate → mesma pos (estilo "T5"). Mantém-se inserção stable depois.
+      const expectedRounds = Math.max(0, ...newResults.map(r => r.rounds.length));
+      const ranked = newResults
+        .map((r, i) => ({ r, i }))
+        .filter(({ r }) => r.totalGross != null && r.rounds.length === expectedRounds);
+      ranked.sort((a, b) => a.r.totalGross - b.r.totalGross);
+      let lastGross = null, lastPos = 0;
+      ranked.forEach(({ r }, idx) => {
+        if (r.totalGross === lastGross) {
+          r.pos = lastPos;
+        } else {
+          r.pos = idx + 1;
+          lastPos = r.pos;
+          lastGross = r.totalGross;
+        }
+      });
+      for (const r of newResults) flight.results.push(r);
     }
   }
 
