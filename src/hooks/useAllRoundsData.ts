@@ -302,17 +302,21 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
   }, [flatRows]);
 
   /* ── Sorting ── */
+  // Regex específica para sort por buraco (h0..h17). Não confundir com "hcp",
+  // que também começa por "h" — daí o \d+ exige pelo menos um dígito.
+  const HOLE_RE = /^h\d+$/;
   const sortedGrouped = useMemo(() => {
     const INF = 9999;
     function cmp(a: PRow, b: PRow) {
-      if (sortKey === "topar" || sortKey === "gross" || sortKey.startsWith("h")) {
+      if (sortKey === "topar" || sortKey === "gross" || HOLE_RE.test(sortKey)) {
         const bestVal = (row: PRow): number => {
           const vals = row.rds
             .filter((rd) => rd != null)
             .map((rd) => {
               if (sortKey === "topar") return rd!.toPar ?? INF;
               if (sortKey === "gross") return rd!.gross ?? INF;
-              return rd!.scores?.[parseInt(sortKey.slice(1))] ?? INF;
+              const v = rd!.scores?.[parseInt(sortKey.slice(1))];
+              return v && v > 0 ? v : INF;
             });
           return vals.length ? Math.min(...vals) : INF;
         };
@@ -332,10 +336,11 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
           return 0;
       }
     }
+    // WD vão sempre ao fundo, mas ENTRE WDs também respeitam o cmp escolhido.
     return [
       ...rankedGrouped.filter((r) => r.total != null && !r.isWD).sort(cmp),
       ...rankedGrouped.filter((r) => r.total == null && !r.isWD).sort(cmp),
-      ...rankedGrouped.filter((r) => r.isWD),
+      ...rankedGrouped.filter((r) => r.isWD).sort(cmp),
     ];
   }, [rankedGrouped, sortKey, sortDir]);
 
@@ -350,9 +355,13 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
         const d = (a.rd.gross ?? INF) - (b.rd.gross ?? INF);
         return sortDir === "asc" ? d : -d;
       }
-      if (sortKey.startsWith("h")) {
+      if (HOLE_RE.test(sortKey)) {
         const h = parseInt(sortKey.slice(1));
-        const d = (a.rd.scores?.[h] ?? INF) - (b.rd.scores?.[h] ?? INF);
+        const va = a.rd.scores?.[h];
+        const vb = b.rd.scores?.[h];
+        const av = va && va > 0 ? va : INF;
+        const bv = vb && vb > 0 ? vb : INF;
+        const d = av - bv;
         return sortDir === "asc" ? d : -d;
       }
       switch (sortKey) {
@@ -368,7 +377,10 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
           return 0;
       }
     }
-    return [...rankedFlat.filter((r) => !r.isWD).sort(cmp), ...rankedFlat.filter((r) => r.isWD)];
+    return [
+      ...rankedFlat.filter((r) => !r.isWD).sort(cmp),
+      ...rankedFlat.filter((r) => r.isWD).sort(cmp),
+    ];
   }, [rankedFlat, sortKey, sortDir]);
 
   /* ── Filtering ── */
