@@ -20,7 +20,7 @@
  * score do companheiro nessa ronda.
  */
 
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "../ui/SortableHdr";
@@ -697,9 +697,8 @@ export default function DrawsPage() {
                 {linhasOrdenadas.map((row) => {
                   const open = expanded.has(row.key);
                   return (
-                    <>
+                    <Fragment key={row.key}>
                       <tr
-                        key={row.key}
                         style={{ cursor: "pointer" }}
                         onClick={() => toggleExpand(row.key)}
                       >
@@ -723,7 +722,7 @@ export default function DrawsPage() {
                         </td>
                       </tr>
                       {open && (
-                        <tr key={`${row.key}-detail`}>
+                        <tr>
                           <td></td>
                           <td colSpan={5} style={{ background: "var(--bg-soft, #f9fafb)", padding: "8px 12px" }}>
                             <table style={{ width: "100%", fontSize: 13 }}>
@@ -761,7 +760,7 @@ export default function DrawsPage() {
                           </td>
                         </tr>
                       )}
-                    </>
+                    </Fragment>
                   );
                 })}
               </tbody>

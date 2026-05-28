@@ -332,8 +332,10 @@ export default function App() {
                 <Route path="/titulos" element={<TitulosPage />} />
                 <Route path="/titulos/:tab" element={<TitulosPage />} />
                 <Route path="/draws" element={<DrawsPage />} />
+                {/* Landing — sem rota explícita, o catch-all entrava em loop com /* → / */}
+                <Route path="/" element={<Navigate to="/jogadores" replace />} />
                 {/* Compat: URLs antigas continuam a funcionar (redirect) */}
-                <Route path="/*" element={<Navigate to="/" replace />} />
+                <Route path="/*" element={<Navigate to="/jogadores" replace />} />
               </Routes>
             </Suspense>
           </main>
