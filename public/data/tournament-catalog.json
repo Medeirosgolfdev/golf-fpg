@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-26T09:48:10.035Z",
+  "generatedAt": "2026-05-28T11:34:36.978Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -8964,7 +8964,7 @@
         "uskids-21131"
       ],
       "firstDate": "2014-05-27",
-      "lastDate": "2025-05-27",
+      "lastDate": "2026-05-26",
       "editionsCount": 11
     },
     {
@@ -42704,6 +42704,18 @@
       "editionsCount": 2
     },
     {
+      "id": "uskids-theodora-golf-club-tour-championship",
+      "label": "Theodora Golf Club (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-20836",
+        "uskids-21928"
+      ],
+      "firstDate": "2025-10-25",
+      "lastDate": "2026-05-16",
+      "editionsCount": 2
+    },
+    {
       "id": "uskids-sandestin-golf-beach-resort-baytown",
       "label": "Sandestin Golf & Beach Resort - Baytown",
       "sourceId": "uskids",
@@ -46625,6 +46637,18 @@
       ],
       "firstDate": "2025-04-14",
       "lastDate": "2026-03-30",
+      "editionsCount": 2
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-jovens-sub-12-h",
+      "label": "Campeonato Nacional de Jovens Sub 12 H",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-988-10254-20250627-sub_12",
+        "fpg-000-10941-20260430-sub_12"
+      ],
+      "firstDate": "2025-06-27",
+      "lastDate": "2026-04-30",
       "editionsCount": 2
     },
     {
@@ -58846,17 +58870,6 @@
       "editionsCount": 1
     },
     {
-      "id": "uskids-theodora-golf-club-tour-championship",
-      "label": "Theodora Golf Club (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-20836"
-      ],
-      "firstDate": "2025-10-25",
-      "lastDate": "2025-10-25",
-      "editionsCount": 1
-    },
-    {
       "id": "uskids-bay-point-resort-gc-the-meadows",
       "label": "Bay Point Resort GC - The Meadows",
       "sourceId": "uskids",
@@ -68647,17 +68660,6 @@
       "editionsCount": 1
     },
     {
-      "id": "fpg-campeonato-nacional-de-jovens-sub-12-h",
-      "label": "Campeonato Nacional de Jovens Sub 12 H",
-      "sourceId": "fpg",
-      "tournamentIds": [
-        "fpg-988-10254-20250627-sub_12"
-      ],
-      "firstDate": "2025-06-27",
-      "lastDate": "2025-06-27",
-      "editionsCount": 1
-    },
-    {
       "id": "fpg-campeonato-nacional-de-clubes-sub-18",
       "label": "Campeonato Nacional de Clubes Sub 18",
       "sourceId": "fpg",
@@ -68666,6 +68668,94 @@
       ],
       "firstDate": "2026-03-30",
       "lastDate": "2026-03-30",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-jovens-sub-18-h",
+      "label": "Campeonato Nacional de Jovens Sub 18 H",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10935-20260430-sub_18"
+      ],
+      "firstDate": "2026-04-30",
+      "lastDate": "2026-04-30",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-jovens-sub-18-s",
+      "label": "Campeonato Nacional de Jovens Sub 18 S",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10936-20260430-sub_18"
+      ],
+      "firstDate": "2026-04-30",
+      "lastDate": "2026-04-30",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-jovens-sub-16-h",
+      "label": "Campeonato Nacional de Jovens Sub 16 H",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10937-20260430-sub_16"
+      ],
+      "firstDate": "2026-04-30",
+      "lastDate": "2026-04-30",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-jovens-sub-16-s",
+      "label": "Campeonato Nacional de Jovens Sub 16 S",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10938-20260430-sub_16"
+      ],
+      "firstDate": "2026-04-30",
+      "lastDate": "2026-04-30",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-jovens-sub-14-h",
+      "label": "Campeonato Nacional de Jovens Sub 14 H",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10939-20260430-sub_14"
+      ],
+      "firstDate": "2026-04-30",
+      "lastDate": "2026-04-30",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-jovens-sub-14-s",
+      "label": "Campeonato Nacional de Jovens Sub 14 S",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10940-20260430-sub_14"
+      ],
+      "firstDate": "2026-04-30",
+      "lastDate": "2026-04-30",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-jovens-sub-12-s",
+      "label": "Campeonato Nacional de Jovens Sub 12 S",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10942-20260430-sub_12"
+      ],
+      "firstDate": "2026-04-30",
+      "lastDate": "2026-04-30",
+      "editionsCount": 1
+    },
+    {
+      "id": "fpg-campeonato-nacional-de-jovens-sub-10-h",
+      "label": "Campeonato Nacional de Jovens Sub 10 H",
+      "sourceId": "fpg",
+      "tournamentIds": [
+        "fpg-000-10943-20260430-sub_10"
+      ],
+      "firstDate": "2026-04-30",
+      "lastDate": "2026-04-30",
       "editionsCount": 1
     },
     {
