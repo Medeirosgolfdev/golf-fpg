@@ -447,7 +447,12 @@ function buildJunior(entities) {
       continue;
     }
     if (sid === "uskids") {
-      sources.uskids = { memberId: e.raw.sourceKey, ageGroupCurrent: e.raw.ageGroupCurrent };
+      sources.uskids = {
+        memberId: e.raw.sourceKey,
+        ageGroupCurrent: e.raw.ageGroupCurrent,
+        // place = cidade ("Lisboa, PT") propagada do uskids.js adapter
+        place: e.raw.place || undefined,
+      };
     } else if (sid === "fpg") {
       sources.fpg = {
         fed: e.raw.sourceKey,

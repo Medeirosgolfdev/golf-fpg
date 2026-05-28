@@ -132,7 +132,7 @@ const SCHEMA_VERSION = 1;
 
 /**
  * @typedef {Object} JuniorSources
- * @property {{memberId:string, lastSeen?:string}} [uskids]
+ * @property {{memberId:string, ageGroupCurrent?:string, place?:string, lastSeen?:string}} [uskids]
  * @property {{fed:string, club?:string, hcpExact?:number, hcpDate?:string, sex?:"M"|"F", tags?:string[]}} [fpg]
  * @property {{lic:string, club?:string, hcp?:number, catEdad?:string, sex?:"M"|"F", historicalLicenses?:string[]}} [rfeg]
  * @property {{lic:string, club?:string, hcp?:number, region?:string, sex?:"M"|"F"}} [ffgolf]

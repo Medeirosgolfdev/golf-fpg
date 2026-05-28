@@ -12,7 +12,11 @@
     "preview": "vite preview",
     "login": "node scripts/login.js",
     "scrape": "node scripts/golf-all.js",
-    "scorecards": "node scripts/make-scorecards-ui.js"
+    "scorecards": "node scripts/make-scorecards-ui.js",
+    "uskids:lookup:build": "node scripts/build-uskids-name-lookup.js",
+    "uskids:lookup:apply": "node scripts/apply-lookup-names.js",
+    "uskids:lookup:add-new": "node scripts/add-new-mids-from-lookup.js",
+    "uskids:refresh": "node scripts/build-uskids-name-lookup.js && node scripts/apply-lookup-names.js && node scripts/add-new-mids-from-lookup.js && echo \"Pronto. Commita uskids-member-history-slim.json e o CI faz o resto.\""
   },
   "dependencies": {
     "html-to-image": "^1.11.13",

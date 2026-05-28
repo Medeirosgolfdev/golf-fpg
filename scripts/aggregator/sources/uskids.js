@@ -181,6 +181,10 @@ async function load(opts) {
       name: displayName(p.name || ""),
       country: iso2 || (p.country || null),
       ageGroupCurrent: p.ageGroup || null,
+      // place = cidade ("Lisboa, PT") — vem do uskids-name-lookup.json via
+      // apply-lookup-names.js. Adicionado 2026-05-28. Promovido para
+      // sources.uskids.place pelo identity-matcher.
+      place: p.place || null,
       dobRange: dobRange,
       extra: {
         slimAgeGroupCurrent: p.ageGroup || null,
