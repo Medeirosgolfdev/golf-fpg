@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-26T09:48:10.010Z",
+  "generatedAt": "2026-05-28T09:34:29.822Z",
   "juniors": [
     {
       "id": "u433800",
@@ -204764,7 +204764,8 @@
         "uskids-16709",
         "uskids-16710",
         "uskids-16711",
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10940-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
@@ -205372,6 +205373,7 @@
         "fpg-935-10296-20260216-all",
         "fpg-962-10081-20251229-all",
         "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10941-20260430-sub_12",
         "ffgolf-2601415551",
         "ffgolf-2501308499",
         "doral-ftm_doral_2022"
@@ -209419,7 +209421,8 @@
         "fpg-017-10189-20251024-all",
         "fpg-935-10295-20260216-all",
         "fpg-962-10079-20251229-all",
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
@@ -235740,7 +235743,8 @@
       "tournamentIds": [
         "uskids-13704",
         "fpg-000-10825-20250414-sub_14",
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10937-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -237633,7 +237637,8 @@
         "uskids-13706",
         "uskids-13707",
         "fpg-000-10825-20250414-sub_14",
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10940-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
@@ -237692,7 +237697,8 @@
         "fpg-017-10189-20251024-all",
         "fpg-935-10295-20260216-all",
         "fpg-962-10079-20251229-all",
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
@@ -238027,7 +238033,8 @@
         "uskids-16710",
         "uskids-16711",
         "fpg-000-10647-20230704-sub_10",
-        "fpg-000-10772-20240624-sub_10"
+        "fpg-000-10772-20240624-sub_10",
+        "fpg-000-10941-20260430-sub_12"
       ],
       "_match": {
         "confidence": "strong",
@@ -238253,7 +238260,8 @@
         "fpg-017-10189-20251024-all",
         "fpg-935-10294-20260215-all",
         "fpg-962-10079-20251229-all",
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10937-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -238310,7 +238318,8 @@
         "fpg-038-10651-20250530-all",
         "fpg-192-10013-20250912-all",
         "fpg-935-10294-20260215-all",
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10937-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -238403,7 +238412,8 @@
         "uskids-13702",
         "fpg-017-10189-20251024-all",
         "fpg-935-10294-20260215-all",
-        "fpg-962-10078-20251229-all"
+        "fpg-962-10078-20251229-all",
+        "fpg-000-10938-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -238447,7 +238457,13 @@
             "PJA"
           ],
           "primary": true
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "fpg-anon",
+            "key": "anon|frederico almeida da silva|"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-13704",
@@ -238455,13 +238471,15 @@
         "fpg-002-11022-20240317-all",
         "fpg-013-10092-20240618-all",
         "fpg-192-10005-20241130-all",
-        "fpg-000-10825-20250414-sub_14"
+        "fpg-000-10825-20250414-sub_14",
+        "fpg-000-10937-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "uskids:591506",
           "fpg:41613",
+          "fpg:anon|frederico almeida da silva|",
           "dob:2011-09-16"
         ],
         "mergedFromSources": [
@@ -238568,7 +238586,8 @@
         "fpg-000-10825-20250414-sub_14",
         "fpg-192-10013-20250912-all",
         "fpg-017-10189-20251024-all",
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10938-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -261059,6 +261078,7 @@
         "fpg-017-10189-20251024-all",
         "fpg-962-10080-20251229-all",
         "fpg-935-10296-20260216-all",
+        "fpg-000-10941-20260430-sub_12",
         "eowagr-eowagr25_contest21",
         "eowagr-eowagr25_scorecards",
         "wjgc-wjgc_2025_b1011",
@@ -286679,6 +286699,7 @@
         "fpg-000-10772-20240624-sub_10",
         "fpg-935-10296-20260216-all",
         "fpg-962-10081-20251229-all",
+        "fpg-000-10941-20260430-sub_12",
         "wjgc-wjgc_2025_b89",
         "wjgc-wjgc_2026_b1011"
       ],
@@ -288176,6 +288197,51 @@
       }
     },
     {
+      "id": "u656154",
+      "canonicalName": "Ayan Andrei Cionca",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "RO",
+      "country": "RO",
+      "region": null,
+      "club": null,
+      "sources": {
+        "uskids": {
+          "memberId": "656154",
+          "ageGroupCurrent": "Boys 11"
+        }
+      },
+      "tournamentIds": [
+        "uskids-12229",
+        "uskids-20832",
+        "uskids-20833",
+        "uskids-20836",
+        "uskids-18045",
+        "uskids-20780",
+        "uskids-20831",
+        "uskids-20834",
+        "uskids-20835",
+        "uskids-21922",
+        "uskids-21923",
+        "uskids-21924",
+        "uskids-21926",
+        "uskids-21927",
+        "uskids-21933",
+        "uskids-21131",
+        "uskids-21928"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "uskids:656154"
+        ],
+        "mergedFromSources": [
+          "uskids"
+        ]
+      }
+    },
+    {
       "id": "f36625",
       "canonicalName": "Tomás Valadão",
       "aliases": [],
@@ -288254,6 +288320,43 @@
       }
     },
     {
+      "id": "f37010",
+      "canonicalName": "Gabriel Sardo",
+      "aliases": [],
+      "dob": "2008-06-08",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Norte",
+      "club": "Quinta do Peru",
+      "sources": {
+        "fpg": {
+          "fed": "37010",
+          "club": "Quinta do Peru",
+          "clubCode": "038",
+          "clubLong": "Quinta do Peru",
+          "hcpExact": -1.2,
+          "hcpDate": "2026-05-17",
+          "sex": "M",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10935-20260430-sub_18"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:37010",
+          "dob:2008-06-08"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
       "id": "f38233",
       "canonicalName": "Amélia Gabin",
       "aliases": [],
@@ -288321,7 +288424,8 @@
         "fpg-038-10651-20250530-all",
         "fpg-192-10013-20250912-all",
         "fpg-935-10294-20260215-all",
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10935-20260430-sub_18"
       ],
       "_match": {
         "confidence": "strong",
@@ -288358,7 +288462,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10937-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -288398,7 +288503,8 @@
       },
       "tournamentIds": [
         "fpg-000-10825-20250414-sub_14",
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
@@ -288435,7 +288541,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10937-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -288472,7 +288579,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10935-20260430-sub_18"
       ],
       "_match": {
         "confidence": "strong",
@@ -288519,7 +288627,8 @@
         "fpg-192-10005-20241130-all",
         "fpg-935-10260-20250302-all",
         "fpg-935-10294-20260215-all",
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10937-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -288531,6 +288640,43 @@
         "mergedFromSources": [
           "fpg",
           "rfeg"
+        ]
+      }
+    },
+    {
+      "id": "f40318",
+      "canonicalName": "Francisco Costa Mendes",
+      "aliases": [],
+      "dob": "2009-12-09",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Norte",
+      "club": "Citynorte",
+      "sources": {
+        "fpg": {
+          "fed": "40318",
+          "club": "Citynorte",
+          "clubCode": "107",
+          "clubLong": "Clube de Golfe Citynorte",
+          "hcpExact": 6,
+          "hcpDate": "2026-05-17",
+          "sex": "M",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10935-20260430-sub_18"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:40318",
+          "dob:2009-12-09"
+        ],
+        "mergedFromSources": [
+          "fpg"
         ]
       }
     },
@@ -288560,7 +288706,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
@@ -288599,13 +288746,51 @@
       "tournamentIds": [
         "fpg-935-10294-20260215-all",
         "fpg-962-10078-20251229-all",
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10937-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "fpg:40534",
           "dob:2010-06-16"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f40645",
+      "canonicalName": "João Santos",
+      "aliases": [],
+      "dob": "2008-01-27",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Madeira",
+      "club": "PXO Clube",
+      "sources": {
+        "fpg": {
+          "fed": "40645",
+          "club": "PXO Clube",
+          "clubCode": "183",
+          "clubLong": "PXO Clube de Golfe",
+          "hcpExact": 4,
+          "hcpDate": "2026-05-02",
+          "sex": "M",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10935-20260430-sub_18"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:40645",
+          "dob:2008-01-27"
         ],
         "mergedFromSources": [
           "fpg"
@@ -288647,7 +288832,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10938-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -288659,6 +288845,80 @@
         "mergedFromSources": [
           "fpg",
           "rfeg"
+        ]
+      }
+    },
+    {
+      "id": "f40990",
+      "canonicalName": "Maria Câmara",
+      "aliases": [],
+      "dob": "2009-12-17",
+      "sex": "F",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Madeira",
+      "club": "Santo da Serra",
+      "sources": {
+        "fpg": {
+          "fed": "40990",
+          "club": "Santo da Serra",
+          "clubCode": "007",
+          "clubLong": "Santo da Serra",
+          "hcpExact": 8.2,
+          "hcpDate": "2026-05-22",
+          "sex": "F",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10936-20260430-sub_18"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:40990",
+          "dob:2009-12-17"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f40992",
+      "canonicalName": "António Maria Cavalinhos",
+      "aliases": [],
+      "dob": "2008-06-16",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Norte",
+      "club": "Miramar",
+      "sources": {
+        "fpg": {
+          "fed": "40992",
+          "club": "Miramar",
+          "clubCode": "003",
+          "clubLong": "Club de Golf de Miramar",
+          "hcpExact": 8.2,
+          "hcpDate": "2026-05-02",
+          "sex": "M",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10935-20260430-sub_18"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:40992",
+          "dob:2008-06-16"
+        ],
+        "mergedFromSources": [
+          "fpg"
         ]
       }
     },
@@ -288686,13 +288946,51 @@
         }
       },
       "tournamentIds": [
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10935-20260430-sub_18"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "fpg:41121",
           "dob:2009-11-27"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f41131",
+      "canonicalName": "Matilde Leal Gouveia",
+      "aliases": [],
+      "dob": "2008-07-17",
+      "sex": "F",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Madeira",
+      "club": "Santo da Serra",
+      "sources": {
+        "fpg": {
+          "fed": "41131",
+          "club": "Santo da Serra",
+          "clubCode": "007",
+          "clubLong": "Clube de Golfe do Santo da Serra",
+          "hcpExact": 3.2,
+          "hcpDate": "2026-05-23",
+          "sex": "F",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10936-20260430-sub_18"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:41131",
+          "dob:2008-07-17"
         ],
         "mergedFromSources": [
           "fpg"
@@ -288727,7 +289025,8 @@
       "tournamentIds": [
         "fpg-935-10260-20250302-all",
         "fpg-935-10294-20260215-all",
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10937-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -288807,7 +289106,8 @@
       },
       "tournamentIds": [
         "fpg-192-10005-20241130-all",
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10935-20260430-sub_18"
       ],
       "_match": {
         "confidence": "strong",
@@ -288852,7 +289152,8 @@
       },
       "tournamentIds": [
         "fpg-935-10294-20260215-all",
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10935-20260430-sub_18"
       ],
       "_match": {
         "confidence": "strong",
@@ -288895,7 +289196,8 @@
       "tournamentIds": [
         "fpg-935-10260-20250302-all",
         "fpg-935-10294-20260215-all",
-        "fpg-962-10079-20251229-all"
+        "fpg-962-10079-20251229-all",
+        "fpg-000-10937-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -288941,7 +289243,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10935-20260430-sub_18"
       ],
       "_match": {
         "confidence": "strong",
@@ -288986,7 +289289,8 @@
         "fpg-000-10825-20250414-sub_14",
         "fpg-017-10189-20251024-all",
         "fpg-935-10294-20260215-all",
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
@@ -289030,7 +289334,8 @@
         "fpg-191-10021-20241004-all",
         "fpg-192-10005-20241130-all",
         "fpg-000-10825-20250414-sub_14",
-        "fpg-038-10651-20250530-all"
+        "fpg-038-10651-20250530-all",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
@@ -289067,13 +289372,53 @@
         }
       },
       "tournamentIds": [
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10935-20260430-sub_18"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "fpg:43053",
           "dob:2009-07-04"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f43359",
+      "canonicalName": "Brooks Barker",
+      "aliases": [],
+      "dob": "2010-01-20",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": "Vilamoura, C. G",
+      "sources": {
+        "fpg": {
+          "fed": "43359",
+          "club": "Vilamoura, C. G",
+          "clubCode": "009",
+          "clubLong": "Clube de Golfe de Vilamoura",
+          "hcpExact": 3.8,
+          "hcpDate": "2026-05-01",
+          "sex": "M",
+          "tags": [
+            "inscrito-nacional"
+          ],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10937-20260430-sub_16"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:43359",
+          "dob:2010-01-20"
         ],
         "mergedFromSources": [
           "fpg"
@@ -289112,7 +289457,8 @@
         "fpg-038-10651-20250530-all",
         "fpg-192-10013-20250912-all",
         "fpg-017-10189-20251024-all",
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10937-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -289149,7 +289495,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10935-20260430-sub_18"
       ],
       "_match": {
         "confidence": "strong",
@@ -289186,7 +289533,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-962-10078-20251229-all"
+        "fpg-962-10078-20251229-all",
+        "fpg-000-10936-20260430-sub_18"
       ],
       "_match": {
         "confidence": "strong",
@@ -289231,7 +289579,8 @@
         "fpg-038-10651-20250530-all",
         "fpg-192-10013-20250912-all",
         "fpg-017-10189-20251024-all",
-        "fpg-935-10295-20260216-all"
+        "fpg-935-10295-20260216-all",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
@@ -289309,7 +289658,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-935-10294-20260215-all"
+        "fpg-935-10294-20260215-all",
+        "fpg-000-10935-20260430-sub_18"
       ],
       "_match": {
         "confidence": "strong",
@@ -289346,7 +289696,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-962-10081-20251229-all"
+        "fpg-962-10081-20251229-all",
+        "fpg-000-10943-20260430-sub_10"
       ],
       "_match": {
         "confidence": "strong",
@@ -289473,7 +289824,8 @@
         "fpg-017-10189-20251024-all",
         "fpg-935-10294-20260215-all",
         "fpg-962-10079-20251229-all",
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10937-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -289510,7 +289862,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-988-10254-20250627-sub_12"
+        "fpg-988-10254-20250627-sub_12",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
@@ -289554,6 +289907,43 @@
         "evidence": [
           "fpg:45366",
           "dob:2012-04-12"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f45393",
+      "canonicalName": "Laura Santos",
+      "aliases": [],
+      "dob": "2012-02-12",
+      "sex": "F",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Madeira",
+      "club": "PXO Clube",
+      "sources": {
+        "fpg": {
+          "fed": "45393",
+          "club": "PXO Clube",
+          "clubCode": "183",
+          "clubLong": "PXO Clube de Golfe",
+          "hcpExact": 1.4,
+          "hcpDate": "2026-05-17",
+          "sex": "F",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10940-20260430-sub_14"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:45393",
+          "dob:2012-02-12"
         ],
         "mergedFromSources": [
           "fpg"
@@ -289652,8 +290042,8 @@
           "club": "Belas",
           "clubCode": "068",
           "clubLong": "Belas",
-          "hcpExact": 7.8,
-          "hcpDate": "2026-05-23",
+          "hcpExact": 7.3,
+          "hcpDate": "2026-05-24",
           "sex": "M",
           "tags": [
             "PJA"
@@ -289704,7 +290094,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10940-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
@@ -289878,7 +290269,8 @@
       },
       "tournamentIds": [
         "fpg-000-10825-20250414-sub_14",
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
@@ -289916,13 +290308,51 @@
       },
       "tournamentIds": [
         "fpg-000-10825-20250414-sub_14",
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10937-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "fpg:46079",
           "dob:2011-12-29"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f46195",
+      "canonicalName": "Sebastião Sardinha Saraiva",
+      "aliases": [],
+      "dob": "2010-08-16",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Norte",
+      "club": "Miramar",
+      "sources": {
+        "fpg": {
+          "fed": "46195",
+          "club": "Miramar",
+          "clubCode": "003",
+          "clubLong": "Miramar",
+          "hcpExact": 7.2,
+          "hcpDate": "2026-05-17",
+          "sex": "M",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10937-20260430-sub_16"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:46195",
+          "dob:2010-08-16"
         ],
         "mergedFromSources": [
           "fpg"
@@ -289954,7 +290384,8 @@
       },
       "tournamentIds": [
         "fpg-000-10647-20230704-sub_10",
-        "fpg-988-10254-20250627-sub_12"
+        "fpg-988-10254-20250627-sub_12",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
@@ -289992,7 +290423,8 @@
       },
       "tournamentIds": [
         "fpg-000-10825-20250414-sub_14",
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10938-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -290030,7 +290462,8 @@
       },
       "tournamentIds": [
         "fpg-000-10825-20250414-sub_14",
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
@@ -290072,7 +290505,8 @@
         "fpg-988-10254-20250627-sub_12",
         "fpg-125-10370-20250823-all",
         "fpg-125-10371-20250824-all",
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
@@ -290115,7 +290549,8 @@
         "fpg-002-11022-20240317-all",
         "fpg-192-10005-20241130-all",
         "fpg-000-10825-20250414-sub_14",
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10937-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -290158,7 +290593,8 @@
         "fpg-002-11022-20240317-all",
         "fpg-192-10005-20241130-all",
         "fpg-000-10825-20250414-sub_14",
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10940-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
@@ -290204,13 +290640,88 @@
         "fpg-000-10825-20250414-sub_14",
         "fpg-125-10371-20250824-all",
         "fpg-935-10295-20260216-all",
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "fpg:46311",
           "dob:2012-10-04"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f46314",
+      "canonicalName": "Carolina Paiva",
+      "aliases": [],
+      "dob": "2014-11-11",
+      "sex": "F",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Norte",
+      "club": "Citynorte",
+      "sources": {
+        "fpg": {
+          "fed": "46314",
+          "club": "Citynorte",
+          "clubCode": "107",
+          "clubLong": "Clube de Golfe Citynorte",
+          "hcpExact": 27.3,
+          "hcpDate": "2026-05-23",
+          "sex": "F",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10942-20260430-sub_12"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:46314",
+          "dob:2014-11-11"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f46395",
+      "canonicalName": "Gonçalo Maia",
+      "aliases": [],
+      "dob": "2010-07-21",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Norte",
+      "club": "Oporto",
+      "sources": {
+        "fpg": {
+          "fed": "46395",
+          "club": "Oporto",
+          "clubCode": "001",
+          "clubLong": "Oporto Golf Clube",
+          "hcpExact": 10.1,
+          "hcpDate": "2026-05-17",
+          "sex": "M",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10937-20260430-sub_16"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:46395",
+          "dob:2010-07-21"
         ],
         "mergedFromSources": [
           "fpg"
@@ -290296,6 +290807,43 @@
       }
     },
     {
+      "id": "f46437",
+      "canonicalName": "Eva Silva",
+      "aliases": [],
+      "dob": "2010-12-21",
+      "sex": "F",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Norte",
+      "club": "Oporto",
+      "sources": {
+        "fpg": {
+          "fed": "46437",
+          "club": "Oporto",
+          "clubCode": "001",
+          "clubLong": "Oporto Golf Clube",
+          "hcpExact": 0.5,
+          "hcpDate": "2026-05-17",
+          "sex": "F",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10938-20260430-sub_16"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:46437",
+          "dob:2010-12-21"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
       "id": "f46480",
       "canonicalName": "Afonso de Sousa Pinto",
       "aliases": [],
@@ -290327,7 +290875,8 @@
         "fpg-125-10371-20250824-all",
         "fpg-962-10080-20251229-all",
         "fpg-935-10295-20260216-all",
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
@@ -290364,7 +290913,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10938-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -290401,7 +290951,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10938-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -290438,7 +290989,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10936-20260430-sub_18"
       ],
       "_match": {
         "confidence": "strong",
@@ -290475,7 +291027,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10938-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -290512,7 +291065,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10936-20260430-sub_18"
       ],
       "_match": {
         "confidence": "strong",
@@ -290551,7 +291105,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
@@ -290590,7 +291145,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10935-20260430-sub_18"
       ],
       "_match": {
         "confidence": "strong",
@@ -290705,7 +291261,8 @@
       },
       "tournamentIds": [
         "fpg-000-10825-20250414-sub_14",
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
@@ -290744,13 +291301,51 @@
         }
       },
       "tournamentIds": [
-        "fpg-962-10078-20251229-all"
+        "fpg-962-10078-20251229-all",
+        "fpg-000-10937-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "fpg:47869",
           "dob:2010-07-06"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f48045",
+      "canonicalName": "Marta Mendes",
+      "aliases": [],
+      "dob": "2014-02-25",
+      "sex": "F",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Norte",
+      "club": "Citynorte",
+      "sources": {
+        "fpg": {
+          "fed": "48045",
+          "club": "Citynorte",
+          "clubCode": "107",
+          "clubLong": "Clube de Golfe Citynorte",
+          "hcpExact": 29.2,
+          "hcpDate": "2026-05-02",
+          "sex": "F",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10942-20260430-sub_12"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:48045",
+          "dob:2014-02-25"
         ],
         "mergedFromSources": [
           "fpg"
@@ -290782,7 +291377,8 @@
       },
       "tournamentIds": [
         "fpg-000-10772-20240624-sub_10",
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10941-20260430-sub_12"
       ],
       "_match": {
         "confidence": "strong",
@@ -290835,6 +291431,43 @@
       }
     },
     {
+      "id": "f48113",
+      "canonicalName": "Maria Luz",
+      "aliases": [],
+      "dob": "2014-04-10",
+      "sex": "F",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Lisboa",
+      "club": "Belas",
+      "sources": {
+        "fpg": {
+          "fed": "48113",
+          "club": "Belas",
+          "clubCode": "068",
+          "clubLong": "Clube de Golfe de Belas",
+          "hcpExact": 27.2,
+          "hcpDate": "2026-05-02",
+          "sex": "F",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10942-20260430-sub_12"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:48113",
+          "dob:2014-04-10"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
       "id": "f48164",
       "canonicalName": "David Stocksreiter Ferreira",
       "aliases": [],
@@ -290867,6 +291500,43 @@
         "evidence": [
           "fpg:48164",
           "dob:2013-01-20"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f48531",
+      "canonicalName": "Duarte Soares Franco",
+      "aliases": [],
+      "dob": "2011-01-26",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Lisboa",
+      "club": "Estoril",
+      "sources": {
+        "fpg": {
+          "fed": "48531",
+          "club": "Estoril",
+          "clubCode": "004",
+          "clubLong": "Clube de Golf do Estoril",
+          "hcpExact": 7,
+          "hcpDate": "2026-05-23",
+          "sex": "M",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10937-20260430-sub_16"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:48531",
+          "dob:2011-01-26"
         ],
         "mergedFromSources": [
           "fpg"
@@ -290975,7 +291645,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10937-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -291013,7 +291684,8 @@
       },
       "tournamentIds": [
         "fpg-152-10368-20240305-all",
-        "fpg-935-10260-20250302-all"
+        "fpg-935-10260-20250302-all",
+        "fpg-000-10937-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -291062,7 +291734,8 @@
         "fpg-935-10260-20250302-all",
         "fpg-000-10825-20250414-sub_14",
         "fpg-935-10295-20260216-all",
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10940-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
@@ -291074,6 +291747,45 @@
         "mergedFromSources": [
           "fpg",
           "rfeg"
+        ]
+      }
+    },
+    {
+      "id": "f48933",
+      "canonicalName": "Ethan Sutherland",
+      "aliases": [],
+      "dob": "2010-07-26",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Algarve",
+      "club": "Vila Sol",
+      "sources": {
+        "fpg": {
+          "fed": "48933",
+          "club": "Vila Sol",
+          "clubCode": "095",
+          "clubLong": "Vila Sol Golfe Clube",
+          "hcpExact": 3.7,
+          "hcpDate": "2026-05-02",
+          "sex": "M",
+          "tags": [
+            "inscrito-nacional"
+          ],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10937-20260430-sub_16"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:48933",
+          "dob:2010-07-26"
+        ],
+        "mergedFromSources": [
+          "fpg"
         ]
       }
     },
@@ -291103,7 +291815,8 @@
       "tournamentIds": [
         "fpg-000-10647-20230704-sub_10",
         "fpg-935-10260-20250302-all",
-        "fpg-935-10296-20260216-all"
+        "fpg-935-10296-20260216-all",
+        "fpg-000-10941-20260430-sub_12"
       ],
       "_match": {
         "confidence": "strong",
@@ -291134,8 +291847,8 @@
           "club": "Vilamoura, C. G",
           "clubCode": "009",
           "clubLong": "Vilamoura, C. G",
-          "hcpExact": 8.8,
-          "hcpDate": "2026-05-16",
+          "hcpExact": 7.9,
+          "hcpDate": "2026-05-23",
           "sex": "F",
           "tags": [
             "PJA"
@@ -291155,7 +291868,8 @@
         "fpg-000-10825-20250414-sub_14",
         "fpg-038-10651-20250530-all",
         "fpg-962-10080-20251229-all",
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10942-20260430-sub_12"
       ],
       "_match": {
         "confidence": "strong",
@@ -291194,7 +291908,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-988-10254-20250627-sub_12"
+        "fpg-988-10254-20250627-sub_12",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
@@ -291231,7 +291946,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-000-10825-20250414-sub_14"
+        "fpg-000-10825-20250414-sub_14",
+        "fpg-000-10937-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -291306,13 +292022,53 @@
         }
       },
       "tournamentIds": [
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10942-20260430-sub_12"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "fpg:49328",
           "dob:2015-09-14"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f49712",
+      "canonicalName": "Miguel Mendes",
+      "aliases": [],
+      "dob": "2017-04-02",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": "Citynorte",
+      "sources": {
+        "fpg": {
+          "fed": "49712",
+          "club": "Citynorte",
+          "clubCode": "107",
+          "clubLong": "Clube de Golfe Citynorte",
+          "hcpExact": 40.6,
+          "hcpDate": "2026-05-02",
+          "sex": "M",
+          "tags": [
+            "inscrito-nacional"
+          ],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10943-20260430-sub_10"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:49712",
+          "dob:2017-04-02"
         ],
         "mergedFromSources": [
           "fpg"
@@ -291344,7 +292100,8 @@
       },
       "tournamentIds": [
         "fpg-000-10772-20240624-sub_10",
-        "fpg-988-10254-20250627-sub_12"
+        "fpg-988-10254-20250627-sub_12",
+        "fpg-000-10941-20260430-sub_12"
       ],
       "_match": {
         "confidence": "strong",
@@ -291382,7 +292139,8 @@
       },
       "tournamentIds": [
         "fpg-000-10825-20250414-sub_14",
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
@@ -291460,7 +292218,8 @@
       "tournamentIds": [
         "fpg-935-10260-20250302-all",
         "fpg-935-10294-20260215-all",
-        "fpg-962-10079-20251229-all"
+        "fpg-962-10079-20251229-all",
+        "fpg-000-10937-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -291504,6 +292263,84 @@
         "evidence": [
           "fpg:50398",
           "dob:2012-01-14"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f50412",
+      "canonicalName": "Vasco Abreu",
+      "aliases": [],
+      "dob": "2015-09-02",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": "UCDR Guardizela",
+      "sources": {
+        "fpg": {
+          "fed": "50412",
+          "club": "UCDR Guardizela",
+          "clubCode": "166",
+          "clubLong": "UCDR Guardizela",
+          "hcpExact": 26.4,
+          "hcpDate": "2026-05-23",
+          "sex": "M",
+          "tags": [
+            "inscrito-nacional"
+          ],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10941-20260430-sub_12"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:50412",
+          "dob:2015-09-02"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f50425",
+      "canonicalName": "Maria Carolina Custodinho",
+      "aliases": [],
+      "dob": "2015-04-27",
+      "sex": "F",
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": "Vilamoura, C. G",
+      "sources": {
+        "fpg": {
+          "fed": "50425",
+          "club": "Vilamoura, C. G",
+          "clubCode": "009",
+          "clubLong": "Clube de Golfe de Vilamoura",
+          "hcpExact": 34.9,
+          "hcpDate": "2026-05-22",
+          "sex": "F",
+          "tags": [
+            "inscrito-nacional"
+          ],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10942-20260430-sub_12"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:50425",
+          "dob:2015-04-27"
         ],
         "mergedFromSources": [
           "fpg"
@@ -291573,13 +292410,51 @@
         }
       },
       "tournamentIds": [
-        "fpg-988-10254-20250627-sub_12"
+        "fpg-988-10254-20250627-sub_12",
+        "fpg-000-10941-20260430-sub_12"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "fpg:50761",
           "dob:2014-01-31"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f50786",
+      "canonicalName": "Maria La Piedad",
+      "aliases": [],
+      "dob": "2014-05-15",
+      "sex": "F",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Algarve",
+      "club": "Vilamoura, C. G",
+      "sources": {
+        "fpg": {
+          "fed": "50786",
+          "club": "Vilamoura, C. G",
+          "clubCode": "009",
+          "clubLong": "Clube de Golfe de Vilamoura",
+          "hcpExact": 24.9,
+          "hcpDate": "2026-05-02",
+          "sex": "F",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10942-20260430-sub_12"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:50786",
+          "dob:2014-05-15"
         ],
         "mergedFromSources": [
           "fpg"
@@ -291613,13 +292488,53 @@
       },
       "tournamentIds": [
         "fpg-935-10260-20250302-all",
-        "fpg-962-10079-20251229-all"
+        "fpg-962-10079-20251229-all",
+        "fpg-000-10937-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "fpg:50919",
           "dob:2011-08-10"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f51176",
+      "canonicalName": "Henrique Monção",
+      "aliases": [],
+      "dob": "2016-02-20",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": "Miramar",
+      "sources": {
+        "fpg": {
+          "fed": "51176",
+          "club": "Miramar",
+          "clubCode": "003",
+          "clubLong": "Club de Golf de Miramar",
+          "hcpExact": 45.6,
+          "hcpDate": "2026-05-02",
+          "sex": "M",
+          "tags": [
+            "inscrito-nacional"
+          ],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10943-20260430-sub_10"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:51176",
+          "dob:2016-02-20"
         ],
         "mergedFromSources": [
           "fpg"
@@ -291651,7 +292566,8 @@
       },
       "tournamentIds": [
         "fpg-000-10772-20240624-sub_10",
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10941-20260430-sub_12"
       ],
       "_match": {
         "confidence": "strong",
@@ -291690,7 +292606,8 @@
       "tournamentIds": [
         "fpg-000-10772-20240624-sub_10",
         "fpg-988-10254-20250627-sub_12",
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10941-20260430-sub_12"
       ],
       "_match": {
         "confidence": "strong",
@@ -291772,7 +292689,8 @@
         "fpg-192-10013-20250912-all",
         "fpg-017-10189-20251024-all",
         "fpg-935-10294-20260215-all",
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10938-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -291815,13 +292733,92 @@
         "fpg-192-10013-20250912-all",
         "fpg-017-10189-20251024-all",
         "fpg-935-10295-20260216-all",
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "fpg:51524",
           "dob:2012-11-14"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f51650",
+      "canonicalName": "William Palmqvist",
+      "aliases": [],
+      "dob": "2015-12-22",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": "Estoril",
+      "sources": {
+        "fpg": {
+          "fed": "51650",
+          "club": "Estoril",
+          "clubCode": "004",
+          "clubLong": "Clube de Golf do Estoril",
+          "hcpExact": 28.4,
+          "hcpDate": "2026-05-23",
+          "sex": "M",
+          "tags": [
+            "inscrito-nacional"
+          ],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10941-20260430-sub_12"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:51650",
+          "dob:2015-12-22"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f51803",
+      "canonicalName": "Thea Jensen",
+      "aliases": [],
+      "dob": "2015-04-04",
+      "sex": "F",
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": "Vila Sol",
+      "sources": {
+        "fpg": {
+          "fed": "51803",
+          "club": "Vila Sol",
+          "clubCode": "095",
+          "clubLong": "Vila Sol",
+          "hcpExact": 30.2,
+          "hcpDate": "2026-05-22",
+          "sex": "F",
+          "tags": [
+            "inscrito-nacional"
+          ],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10942-20260430-sub_12"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:51803",
+          "dob:2015-04-04"
         ],
         "mergedFromSources": [
           "fpg"
@@ -291862,6 +292859,7 @@
       "tournamentIds": [
         "fpg-000-10772-20240624-sub_10",
         "fpg-962-10081-20251229-all",
+        "fpg-000-10943-20260430-sub_10",
         "wjgc-wjgc_2025_b7u"
       ],
       "_match": {
@@ -291908,13 +292906,53 @@
         "fpg-988-10254-20250627-sub_12",
         "fpg-017-10189-20251024-all",
         "fpg-935-10295-20260216-all",
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "fpg:51949",
           "dob:2013-03-02"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f51980",
+      "canonicalName": "Diego Braga",
+      "aliases": [],
+      "dob": "2017-01-11",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": "Miramar",
+      "sources": {
+        "fpg": {
+          "fed": "51980",
+          "club": "Miramar",
+          "clubCode": "003",
+          "clubLong": "Club de Golf de Miramar",
+          "hcpExact": 47.4,
+          "hcpDate": "2026-05-23",
+          "sex": "M",
+          "tags": [
+            "inscrito-nacional"
+          ],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10943-20260430-sub_10"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:51980",
+          "dob:2017-01-11"
         ],
         "mergedFromSources": [
           "fpg"
@@ -291984,7 +293022,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
@@ -292022,7 +293061,8 @@
       },
       "tournamentIds": [
         "fpg-000-10825-20250414-sub_14",
-        "fpg-988-10254-20250627-sub_12"
+        "fpg-988-10254-20250627-sub_12",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
@@ -292073,6 +293113,43 @@
       }
     },
     {
+      "id": "f52713",
+      "canonicalName": "Francisco Lopes",
+      "aliases": [],
+      "dob": "2016-01-12",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Norte",
+      "club": "Vale Pisão",
+      "sources": {
+        "fpg": {
+          "fed": "52713",
+          "club": "Vale Pisão",
+          "clubCode": "125",
+          "clubLong": "Vale Pisão",
+          "hcpExact": 25.4,
+          "hcpDate": "2026-05-23",
+          "sex": "M",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10943-20260430-sub_10"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:52713",
+          "dob:2016-01-12"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
       "id": "f52724",
       "canonicalName": "Guilherme Oliveira Alves",
       "aliases": [],
@@ -292111,6 +293188,43 @@
       }
     },
     {
+      "id": "f52815",
+      "canonicalName": "Manuel Dias",
+      "aliases": [],
+      "dob": "2016-05-26",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Norte",
+      "club": "Braga",
+      "sources": {
+        "fpg": {
+          "fed": "52815",
+          "club": "Braga",
+          "clubCode": "034",
+          "clubLong": "Braga",
+          "hcpExact": 13.4,
+          "hcpDate": "2026-05-23",
+          "sex": "M",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10943-20260430-sub_10"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:52815",
+          "dob:2016-05-26"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
       "id": "f52856",
       "canonicalName": "Francisco Vilardell Carvalho",
       "aliases": [],
@@ -292139,13 +293253,51 @@
         "fpg-125-10370-20250823-all",
         "fpg-125-10371-20250824-all",
         "fpg-192-10013-20250912-all",
-        "fpg-962-10080-20251229-all"
+        "fpg-962-10080-20251229-all",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "fpg:52856",
           "dob:2013-03-20"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f53304",
+      "canonicalName": "Francisca Ribeiro Fragoso",
+      "aliases": [],
+      "dob": "2014-10-16",
+      "sex": "F",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Algarve",
+      "club": "Vilamoura, C. G",
+      "sources": {
+        "fpg": {
+          "fed": "53304",
+          "club": "Vilamoura, C. G",
+          "clubCode": "009",
+          "clubLong": "Clube de Golfe de Vilamoura",
+          "hcpExact": 27,
+          "hcpDate": "2026-05-22",
+          "sex": "F",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10942-20260430-sub_12"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:53304",
+          "dob:2014-10-16"
         ],
         "mergedFromSources": [
           "fpg"
@@ -292177,7 +293329,8 @@
       },
       "tournamentIds": [
         "fpg-988-10254-20250627-sub_12",
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10941-20260430-sub_12"
       ],
       "_match": {
         "confidence": "strong",
@@ -292214,13 +293367,53 @@
         }
       },
       "tournamentIds": [
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "fpg:53646",
           "dob:2012-02-21"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f53685",
+      "canonicalName": "Bruno Neto Lichuck",
+      "aliases": [],
+      "dob": "2018-04-22",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": "Miramar",
+      "sources": {
+        "fpg": {
+          "fed": "53685",
+          "club": "Miramar",
+          "clubCode": "003",
+          "clubLong": "Club de Golf de Miramar",
+          "hcpExact": 42.7,
+          "hcpDate": "2026-05-23",
+          "sex": "M",
+          "tags": [
+            "inscrito-nacional"
+          ],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10943-20260430-sub_10"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:53685",
+          "dob:2018-04-22"
         ],
         "mergedFromSources": [
           "fpg"
@@ -292289,7 +293482,8 @@
       },
       "tournamentIds": [
         "fpg-962-10078-20251229-all",
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10937-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -292328,13 +293522,127 @@
       "tournamentIds": [
         "fpg-935-10260-20250302-all",
         "fpg-935-10296-20260216-all",
-        "fpg-962-10081-20251229-all"
+        "fpg-962-10081-20251229-all",
+        "fpg-000-10941-20260430-sub_12"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "fpg:53838",
           "dob:2015-09-30"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f53847",
+      "canonicalName": "Madalena Miguel Araújo",
+      "aliases": [],
+      "dob": "2013-08-07",
+      "sex": "F",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Norte",
+      "club": "Ponte de Lima",
+      "sources": {
+        "fpg": {
+          "fed": "53847",
+          "club": "Ponte de Lima",
+          "clubCode": "043",
+          "clubLong": "Clube de Golfe de Ponte de Lima",
+          "hcpExact": 9.5,
+          "hcpDate": "2026-05-20",
+          "sex": "F",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10940-20260430-sub_14"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:53847",
+          "dob:2013-08-07"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f54123",
+      "canonicalName": "José Duarte Santana Lopes",
+      "aliases": [],
+      "dob": "2016-12-21",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": "Lisbon SC",
+      "sources": {
+        "fpg": {
+          "fed": "54123",
+          "club": "Lisbon SC",
+          "clubCode": "002",
+          "clubLong": "Lisbon Sports Club",
+          "hcpExact": 48,
+          "hcpDate": "2026-05-02",
+          "sex": "M",
+          "tags": [
+            "inscrito-nacional"
+          ],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10943-20260430-sub_10"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:54123",
+          "dob:2016-12-21"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f54255",
+      "canonicalName": "Francisco Ivo de Carvalho",
+      "aliases": [],
+      "dob": "2016-07-07",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Lisboa",
+      "club": "Belas",
+      "sources": {
+        "fpg": {
+          "fed": "54255",
+          "club": "Belas",
+          "clubCode": "068",
+          "clubLong": "Belas",
+          "hcpExact": 28.5,
+          "hcpDate": "2026-05-23",
+          "sex": "M",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10943-20260430-sub_10"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:54255",
+          "dob:2016-07-07"
         ],
         "mergedFromSources": [
           "fpg"
@@ -292367,7 +293675,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-935-10296-20260216-all"
+        "fpg-935-10296-20260216-all",
+        "fpg-000-10943-20260430-sub_10"
       ],
       "_match": {
         "confidence": "strong",
@@ -292404,7 +293713,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-000-10772-20240624-sub_10"
+        "fpg-000-10772-20240624-sub_10",
+        "fpg-000-10943-20260430-sub_10"
       ],
       "_match": {
         "confidence": "strong",
@@ -292443,7 +293753,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10941-20260430-sub_12"
       ],
       "_match": {
         "confidence": "strong",
@@ -292487,7 +293798,8 @@
         "fpg-192-10005-20241130-all",
         "fpg-038-10651-20250530-all",
         "fpg-192-10013-20250912-all",
-        "fpg-017-10189-20251024-all"
+        "fpg-017-10189-20251024-all",
+        "fpg-000-10937-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -292525,7 +293837,8 @@
       },
       "tournamentIds": [
         "fpg-935-10260-20250302-all",
-        "fpg-935-10295-20260216-all"
+        "fpg-935-10295-20260216-all",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
@@ -292564,7 +293877,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-017-10189-20251024-all"
+        "fpg-017-10189-20251024-all",
+        "fpg-000-10935-20260430-sub_18"
       ],
       "_match": {
         "confidence": "strong",
@@ -292601,7 +293915,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-000-10825-20250414-sub_14"
+        "fpg-000-10825-20250414-sub_14",
+        "fpg-000-10937-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -292682,7 +293997,8 @@
         "fpg-935-10260-20250302-all",
         "fpg-000-10825-20250414-sub_14",
         "fpg-935-10295-20260216-all",
-        "fpg-962-10079-20251229-all"
+        "fpg-962-10079-20251229-all",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
@@ -292722,7 +294038,8 @@
       },
       "tournamentIds": [
         "fpg-935-10260-20250302-all",
-        "fpg-000-10825-20250414-sub_14"
+        "fpg-000-10825-20250414-sub_14",
+        "fpg-000-10938-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -292767,6 +294084,7 @@
         ]
       },
       "tournamentIds": [
+        "fpg-000-10941-20260430-sub_12",
         "wjgc-wjgc_2026_b1011"
       ],
       "_match": {
@@ -292779,6 +294097,154 @@
         "mergedFromSources": [
           "fpg",
           "wjgc"
+        ]
+      }
+    },
+    {
+      "id": "f55539",
+      "canonicalName": "Henrique Santana",
+      "aliases": [],
+      "dob": "2017-10-06",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Madeira",
+      "club": "Santo da Serra",
+      "sources": {
+        "fpg": {
+          "fed": "55539",
+          "club": "Santo da Serra",
+          "clubCode": "007",
+          "clubLong": "Clube de Golfe do Santo da Serra",
+          "hcpExact": 29.2,
+          "hcpDate": "2026-05-23",
+          "sex": "M",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10943-20260430-sub_10"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:55539",
+          "dob:2017-10-06"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f55914",
+      "canonicalName": "João Couto",
+      "aliases": [],
+      "dob": "2015-02-27",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Norte",
+      "club": "Braga",
+      "sources": {
+        "fpg": {
+          "fed": "55914",
+          "club": "Braga",
+          "clubCode": "034",
+          "clubLong": "Braga",
+          "hcpExact": 24.6,
+          "hcpDate": "2026-05-23",
+          "sex": "M",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10941-20260430-sub_12"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:55914",
+          "dob:2015-02-27"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f56026",
+      "canonicalName": "Afonso Aniceto",
+      "aliases": [],
+      "dob": "2016-04-07",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Madeira",
+      "club": "Santo da Serra",
+      "sources": {
+        "fpg": {
+          "fed": "56026",
+          "club": "Santo da Serra",
+          "clubCode": "007",
+          "clubLong": "Santo da Serra",
+          "hcpExact": 36.2,
+          "hcpDate": "2026-05-09",
+          "sex": "M",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10943-20260430-sub_10"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:56026",
+          "dob:2016-04-07"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f56048",
+      "canonicalName": "Gustavo Pinto",
+      "aliases": [],
+      "dob": "2010-02-10",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": "Oporto",
+      "sources": {
+        "fpg": {
+          "fed": "56048",
+          "club": "Oporto",
+          "clubCode": "001",
+          "clubLong": "Oporto",
+          "hcpExact": 10.2,
+          "hcpDate": "2026-05-23",
+          "sex": "M",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10937-20260430-sub_16"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:56048",
+          "dob:2010-02-10"
+        ],
+        "mergedFromSources": [
+          "fpg"
         ]
       }
     },
@@ -292806,7 +294272,8 @@
         }
       },
       "tournamentIds": [
-        "fpg-935-10294-20260215-all"
+        "fpg-935-10294-20260215-all",
+        "fpg-000-10935-20260430-sub_18"
       ],
       "_match": {
         "confidence": "strong",
@@ -292845,13 +294312,51 @@
       "tournamentIds": [
         "fpg-000-10825-20250414-sub_14",
         "fpg-988-10254-20250627-sub_12",
-        "fpg-000-10898-20260330-sub_14"
+        "fpg-000-10898-20260330-sub_14",
+        "fpg-000-10939-20260430-sub_14"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
           "fpg:56632",
           "dob:2013-01-21"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f56641",
+      "canonicalName": "Rafael Paço",
+      "aliases": [],
+      "dob": "2016-11-27",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Norte",
+      "club": "Oporto",
+      "sources": {
+        "fpg": {
+          "fed": "56641",
+          "club": "Oporto",
+          "clubCode": "001",
+          "clubLong": "Oporto Golf Clube",
+          "hcpExact": 28.6,
+          "hcpDate": "2026-05-23",
+          "sex": "M",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10943-20260430-sub_10"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:56641",
+          "dob:2016-11-27"
         ],
         "mergedFromSources": [
           "fpg"
@@ -292888,7 +294393,8 @@
         "fpg-192-10013-20250912-all",
         "fpg-017-10189-20251024-all",
         "fpg-935-10294-20260215-all",
-        "fpg-000-10899-20260330-sub_18"
+        "fpg-000-10899-20260330-sub_18",
+        "fpg-000-10937-20260430-sub_16"
       ],
       "_match": {
         "confidence": "strong",
@@ -293002,7 +294508,8 @@
         "fpg-125-10371-20250824-all",
         "fpg-192-10013-20250912-all",
         "fpg-017-10189-20251024-all",
-        "fpg-935-10296-20260216-all"
+        "fpg-935-10296-20260216-all",
+        "fpg-000-10941-20260430-sub_12"
       ],
       "_match": {
         "confidence": "strong",
@@ -293048,6 +294555,121 @@
         "evidence": [
           "fpg:58051",
           "dob:2011-12-14"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f58549",
+      "canonicalName": "Tom Georges",
+      "aliases": [],
+      "dob": "2017-09-04",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": "Miramar",
+      "sources": {
+        "fpg": {
+          "fed": "58549",
+          "club": "Miramar",
+          "clubCode": "003",
+          "clubLong": "Club de Golf de Miramar",
+          "hcpExact": 45.9,
+          "hcpDate": "2026-05-23",
+          "sex": "M",
+          "tags": [
+            "inscrito-nacional"
+          ],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10943-20260430-sub_10"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:58549",
+          "dob:2017-09-04"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f58984",
+      "canonicalName": "Dominic Kowalczewski",
+      "aliases": [],
+      "dob": "2016-01-31",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Madeira",
+      "club": "Santo da Serra",
+      "sources": {
+        "fpg": {
+          "fed": "58984",
+          "club": "Santo da Serra",
+          "clubCode": "007",
+          "clubLong": "Clube de Golfe do Santo da Serra",
+          "hcpExact": 36,
+          "hcpDate": "2026-05-23",
+          "sex": "M",
+          "tags": [],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10943-20260430-sub_10"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:58984",
+          "dob:2016-01-31"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f59154",
+      "canonicalName": "Vicente Henrique Rocha",
+      "aliases": [],
+      "dob": "2016-10-27",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": "Ilha Terceira",
+      "sources": {
+        "fpg": {
+          "fed": "59154",
+          "club": "Ilha Terceira",
+          "clubCode": "005",
+          "clubLong": "Clube de Golf da Ilha Terceira",
+          "hcpExact": 38,
+          "hcpDate": "2026-05-02",
+          "sex": "M",
+          "tags": [
+            "inscrito-nacional"
+          ],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10943-20260430-sub_10"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:59154",
+          "dob:2016-10-27"
         ],
         "mergedFromSources": [
           "fpg"
@@ -296622,6 +298244,68 @@
         "confidence": "strong",
         "evidence": [
           "fpg:45661"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "xb99dd9e162",
+      "canonicalName": "Ryan Dantas",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": "Belas",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "fpg-anon",
+            "key": "anon|ryan dantas|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "fpg-000-10937-20260430-sub_16"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:anon|ryan dantas|"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "x8416e0fd91",
+      "canonicalName": "Maria Madalena Neves Ferreira",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": "Estoril",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "fpg-anon",
+            "key": "anon|maria madalena neves ferreira|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "fpg-000-10942-20260430-sub_12"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:anon|maria madalena neves ferreira|"
         ],
         "mergedFromSources": [
           "fpg"
@@ -460640,13 +462324,13 @@
     }
   ],
   "stats": {
-    "total": 8515,
-    "droppedNoTourn": 23702,
-    "strong": 8489,
+    "total": 8557,
+    "droppedNoTourn": 23663,
+    "strong": 8531,
     "probable": 26,
     "manual": 0,
     "strongMerges": 7,
-    "probableMerges": 2197,
+    "probableMerges": 2198,
     "manualMerges": 3
   }
 }
