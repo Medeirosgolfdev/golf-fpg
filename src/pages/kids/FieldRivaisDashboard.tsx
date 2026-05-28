@@ -37,8 +37,8 @@ const fullCo = (cc: string): string => CO_FULL[(cc || "").toUpperCase()] || cc |
 // (Sem Sandestin/Desert/MS State/RWB — esses só aparecem se ≥ MIN_PARTICIPANTS.)
 // ─────────────────────────────────────────────────────────────────────
 const CANONICAL_TCODES = new Set([
-  // European Championship — 4 edições mais recentes
-  "8300",  "13568", "15704", "18242",                  // 2022, 2023, 2024, 2025
+  // European Championship — 5 edições mais recentes (2026 acabou de jogar)
+  "8300",  "13568", "15704", "18242", "21131",         // 2022, 2023, 2024, 2025, 2026
   // World Championship — 4 edições mais recentes
   "11604", "14029", "15807", "18124",                  // 2022, 2023, 2024, 2025
   // Venice Open — 4 edições mais recentes
@@ -47,9 +47,18 @@ const CANONICAL_TCODES = new Set([
   "18438", "21080",                                    // 2025, 2026
   // Rome Classic — última edição (estreou 2025)
   "20175",                                             // 2025
-  // Holiday Classic — 3 edições mais recentes
-  "15480", "18000", "20878",                           // 2023, 2024, 2025
+  // (Holiday Classic excluído — raramente há ≥ 5 europeus do escalão a
+  //  jogar, faz mais barulho que sinal na cross-table.)
 ]);
+
+// Prioridade entre séries para a ordenação das colunas da cross-table.
+// WC e EU vêm sempre primeiro (mais comparáveis entre si — são os dois
+// "majors" USKids). Restantes séries caem para o ramo "por edição + antiga"
+// (Venice cedo, Rome depois, etc.). Quanto MENOR o número, mais à esquerda.
+const SERIES_PRIORITY: Record<string, number> = {
+  WC: 1,
+  EU: 2,
+};
 
 // Threshold mínimo: torneios não-canónicos com pelo menos N jogadores do escalão
 const MIN_PARTICIPANTS = 5;
@@ -800,7 +809,11 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
       const ska = seriesOf.get(a.id)!;
       const skb = seriesOf.get(b.id)!;
       if (ska !== skb) {
-        // séries diferentes: ordenar pela sua edição + antiga
+        // séries diferentes: primeiro a prioridade explícita (WC → EU →
+        // restantes); depois fallback à edição mais antiga.
+        const pa = SERIES_PRIORITY[ska] ?? 100;
+        const pb = SERIES_PRIORITY[skb] ?? 100;
+        if (pa !== pb) return pa - pb;
         return (seriesEarliest.get(ska) ?? 0) - (seriesEarliest.get(skb) ?? 0);
       }
       // mesma série: ordenar por data asc (antigo → recente)
@@ -817,27 +830,86 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
       }
     }
 
+    // ── PASSO 3c: índice de fallback a partir de uskids-results.json ──
+    // Quando mh ainda não tem dados de um torneio (típico: torneio acabou
+    // hoje/ontem), recuperamos {rounds, place} directamente do leaderboard.
+    // O place é calculado por escalão (sort por total ascendente, ties iguais).
+    interface UskResEntry { rounds: number[]; place: number | null }
+    const uskResByTcode = new Map<string, Map<string, UskResEntry>>();
+    if (uskRes) {
+      for (const torn of uskRes.resultados ?? []) {
+        const tcode = String(torn.t);
+        const byName = new Map<string, UskResEntry>();
+        for (const esc of torn.escaloes ?? []) {
+          // Recolher por jogador: { rn → score } neste escalão
+          const players = new Map<string, Record<number, number>>();
+          for (const rnd of esc.rondas ?? []) {
+            const rn = rnd.ronda ?? 0;
+            for (const p of (rnd.leaderboard ?? []) as Array<{ nome?: string; score?: number }>) {
+              if (typeof p.score !== "number" || p.score <= 0) continue;
+              const nm = normName(p.nome ?? "");
+              if (!nm) continue;
+              let rec = players.get(nm);
+              if (!rec) { rec = {}; players.set(nm, rec); }
+              rec[rn] = p.score;
+            }
+          }
+          // Calcular rounds[] em ordem e ranking por total dentro do escalão
+          const arr = [...players.entries()].map(([nm, rs]) => {
+            const rounds = Object.keys(rs).sort((a, b) => Number(a) - Number(b)).map(rn => rs[Number(rn)]);
+            return { nm, rounds, total: rounds.reduce((a, b) => a + b, 0) };
+          }).filter(x => x.rounds.length > 0)
+            .sort((a, b) => a.total - b.total);
+          let prevTotal = -1; let prevPlace = 0;
+          for (let i = 0; i < arr.length; i++) {
+            const place = arr[i].total === prevTotal ? prevPlace : i + 1;
+            prevTotal = arr[i].total; prevPlace = place;
+            // Prioridade ao primeiro escalão visto (preferimos o que o jogador
+            // jogou de facto vs aparições duplicadas em age groups vizinhos).
+            if (!byName.has(arr[i].nm)) {
+              byName.set(arr[i].nm, { rounds: arr[i].rounds, place });
+            }
+          }
+        }
+        if (byName.size > 0) uskResByTcode.set(tcode, byName);
+      }
+    }
+
     // ── PASSO 4: construir D[] com results por torneio seleccionado ──
     const D: RivalPlayer[] = [];
     for (const fm of fieldMids) {
       const r: Record<string, { p: number | string; t: number | null; tp: number | null; rd: number[] }> = {};
-      if (fm.mid) {
-        const prof = mh.jogadores[fm.mid];
-        for (const td of T) {
-          if (!td.id.startsWith("usk")) continue; // skip extras here
-          const tcode = td.id.slice(3); // strip "usk" prefix
+      const prof = fm.mid ? mh.jogadores[fm.mid] : null;
+      const playerKeyForUR = normName(fm.p.nome);
+      for (const td of T) {
+        if (!td.id.startsWith("usk")) continue; // skip extras here
+        const tcode = td.id.slice(3); // strip "usk" prefix
+        let rounds: number[] = [];
+        let placeNum = 0;
+        // Fonte 1: member-history-slim
+        if (prof) {
           const tEntry = prof.torneios[tcode];
-          if (!tEntry) continue;
-          const place = tEntry.place ?? 0;
-          const rounds = Object.keys(tEntry.rounds).sort((a, b) => Number(a) - Number(b))
-            .map(rn => tEntry.rounds[rn].gross)
-            .filter(g => g > 0);
-          if (rounds.length === 0) continue;
-          const total = rounds.reduce((a, b) => a + b, 0);
-          // tp já com par per-round correcto (td.par considera só os `holes` primeiros)
-          const tp = td.par > 0 ? total - td.par * rounds.length : null;
-          r[td.id] = { p: place > 0 ? place : "WD", t: total, tp, rd: rounds };
+          if (tEntry) {
+            placeNum = tEntry.place ?? 0;
+            rounds = Object.keys(tEntry.rounds).sort((a, b) => Number(a) - Number(b))
+              .map(rn => tEntry.rounds[rn].gross)
+              .filter(g => g > 0);
+          }
         }
+        // Fonte 2: uskids-results.json (fallback quando mh ainda não cobre)
+        if (rounds.length === 0) {
+          const m = uskResByTcode.get(tcode);
+          const ur = m?.get(playerKeyForUR);
+          if (ur && ur.rounds.length > 0) {
+            rounds = ur.rounds;
+            placeNum = ur.place ?? 0;
+          }
+        }
+        if (rounds.length === 0) continue;
+        const total = rounds.reduce((a, b) => a + b, 0);
+        // tp já com par per-round correcto (td.par considera só os `holes` primeiros)
+        const tp = td.par > 0 ? total - td.par * rounds.length : null;
+        r[td.id] = { p: placeNum > 0 ? placeNum : "WD", t: total, tp, rd: rounds };
       }
       // Preencher tids "extra" a partir do extraData (vindo de autoRivals)
       const playerKey = normName(fm.p.nome);
@@ -908,7 +980,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
 
     const allCountries = [...new Set(D.map(p => p.co))].sort();
     return { D, T, UP: UP_TORN, manuel, AVG_R, T_WEIGHTS, allCountries, seriesBoundaries };
-  }, [field, mh, torneioT, escalaoNome, autoRivals, futureTorneios]);
+  }, [field, mh, torneioT, escalaoNome, autoRivals, futureTorneios, uskRes]);
 
   // Detectar "famílias" de torneios — séries recorrentes que aparecem múltiplas
   // vezes por ano/escalão (Doral, WJGC, EOWAGR). Quando a família tem >1 edição,
@@ -1760,3 +1832,4 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
     </div>
   );
 }
+

@@ -1,0 +1,209 @@
+{
+  "_meta": {
+    "generated": "2026-05-28",
+    "description": "Catalogo de circuitos juvenis do Reino Unido + Irlanda relevantes para o Manuel (nascido 29/04/2014). Eventos 2026 em curso e finais nacionais.",
+    "manuel_age_categories_2026": {
+      "ping_jgt": "Rookies Tour (6-12)",
+      "faldo_futures": "Boys 11-12",
+      "bjgt": "Boys 12-13 (a confirmar — divisoes 2026 mudaram)",
+      "junior_tour_scotland": "Boys U14 (2012-2015 elegivel)",
+      "england_u14_county": "U14"
+    },
+    "manuel_age_categories_2027": {
+      "ping_jgt": "Masters Tour (13-15)",
+      "faldo_futures": "Demasiado velho (cap 12)",
+      "bjgt": "Boys 12-13 (na ultima epoca)",
+      "junior_tour_scotland": "Boys U14",
+      "england_u14_county": "U14"
+    }
+  },
+  "circuits": [
+    {
+      "id": "faldo-futures",
+      "name": "Faldo Futures",
+      "country": "UK + Ireland",
+      "platform": "GolfGenius",
+      "internationals": true,
+      "ageGroups": ["7-8", "9-10", "11-12"],
+      "format": "9H gross, no handicap",
+      "regional_finals_2026": [
+        {"date": "2026-05-24", "venue": "Woodbury Park GC", "region": "South West"},
+        {"date": "2026-05-25", "venue": "Cumberwell Park GC", "region": "South West"},
+        {"date": "2026-05-26", "venue": "Matfen Hall GC", "region": "North East"},
+        {"date": "2026-05-26", "venue": "Mad Swans GC, South Downs", "region": "South"},
+        {"date": "2026-05-27", "venue": "Carus Green GC", "region": "North West"},
+        {"date": "2026-05-27", "venue": "Sunningdale Heath GC", "region": "West London"},
+        {"date": "2026-05-28", "venue": "Oulton Hall GC", "region": "East"},
+        {"date": "2026-05-28", "venue": "Dyrham Park CC", "region": "North London"},
+        {"date": "2026-05-29", "venue": "Macdonald Portal GC", "region": "North West"},
+        {"date": "2026-05-31", "venue": "The Warwickshire GC", "region": "Midlands"},
+        {"date": "2026-06-14", "venue": "Castle Royle GC", "region": "South"},
+        {"date": "2026-06-20", "venue": "Lough Erne GC", "region": "N. Ireland"},
+        {"date": "2026-06-27", "venue": "Crieff GC", "region": "North Scotland"},
+        {"date": "2026-06-28", "venue": "Dalmahoy GC", "region": "Central Scotland"}
+      ],
+      "national_final_2026": {
+        "date": "2026-08-26/27",
+        "venue": "The Belfry GC",
+        "notes": "Decorre na semana do DP World Tour British Masters. Vencedor por escalao ganha invitacao para 2027 IMG Junior World Championship (California)."
+      },
+      "gg_league": "8621276101123018309",
+      "gg_directory": "10943850678417657476",
+      "gg_qualifiers_iframe": "10007206650013847214",
+      "register_page": "https://www.golfgenius.com/pages/11651057926625332975",
+      "homepage": "https://www.faldoseries.com/the-faldo-futures/",
+      "notes": "Qualifiers 2026 ja terminaram (28 Mar-4 Mai). Regional Finals comecaram 24 Mai 2026. Top 2+ties por divisao em cada qualifier passou para Regional. Estrutura 2026 confirmada via website oficial."
+    },
+    {
+      "id": "ping-jgt",
+      "name": "PING Junior Golf Tour",
+      "country": "England + Scotland",
+      "platform": "GolfGenius (eventos individuais) + WordPress (homepage)",
+      "internationals": "Aceita, sem politica explicita. Verificar email info@pingjuniorgolftour.co.uk antes de inscrever",
+      "tours": {
+        "Rookies": "6-12 anos (Manuel 2026)",
+        "Masters": "13-18 (Manuel a partir 2027)"
+      },
+      "majors_2026": [
+        {"date": "2026-05-03", "name": "Scottish Junior Golf Championship", "venue": "Lundin GC", "status": "passed"},
+        {"date": "2026-06-20", "name": "PING Junior Championship", "venue": "Silloth on Solway GC, Cumbria", "status": "Sold Out", "tour": "Masters"},
+        {"date": "2026-08-18", "name": "Southern Cup", "venue": "Essendon Country Club, Hertfordshire", "status": "Open", "gg_page": "12100651239948164187"},
+        {"date": "2026-08-30", "name": "Minchinhampton", "venue": "Minchinhampton GC, Gloucestershire", "status": "Open", "gg_page": "12100688559556533371"}
+      ],
+      "events_2026": [
+        {"date": "2026-05-29", "name": "Brancepeth Castle GC", "venue": "Brancepeth Castle GC, Durham", "status": "Sold Out - Waiting List"},
+        {"date": "2026-05-31", "name": "Louth GC", "venue": "Louth GC, Lincolnshire", "status": "Open", "gg_page": "12100359124525522393"},
+        {"date": "2026-06-07", "name": "Leeds Golf Centre", "venue": "Leeds Golf Centre, Yorkshire", "status": "Sold Out - Waiting List"},
+        {"date": "2026-07-12", "name": "Bradford GC", "venue": "Bradford GC, Yorkshire", "status": "Sold Out - Waiting List"},
+        {"date": "2026-07-22", "name": "Newcastle Under Lyme GC", "venue": "Newcastle-under-Lyme GC, Staffordshire", "status": "Sold Out - Waiting List"},
+        {"date": "2026-07-23", "name": "Wrekin GC", "venue": "Wrekin GC, Shropshire", "status": "Open", "gg_page": "12100482491555519507"},
+        {"date": "2026-07-26", "name": "Faversham GC", "venue": "Faversham GC, Kent", "status": "Open", "gg_page": "12100499121501117467"},
+        {"date": "2026-07-26", "name": "Nelson GC", "venue": "Nelson GC, Lancashire", "status": "Open", "gg_page": "12100509497672342563"},
+        {"date": "2026-07-27", "name": "Wilpshire GC", "venue": "Wilpshire GC, Lancashire", "status": "Open", "gg_page": "12100521538512493611"},
+        {"date": "2026-07-29", "name": "Ramside Hall GC", "venue": "Ramside Hall, Durham", "status": "Sold Out - Waiting List"},
+        {"date": "2026-07-30", "name": "Brokenhurst Manor GC", "venue": "Brokenhurst Manor, Hampshire", "status": "Open", "gg_page": "12100549122772180027"},
+        {"date": "2026-08-14", "name": "Beamish Park GC", "venue": "Beamish Park, Durham", "status": "Open", "gg_page": "12100555939120159811"},
+        {"date": "2026-08-16", "name": "Northumberland GC", "venue": "Northumberland GC, Newcastle", "status": "Sold Out - Waiting List"},
+        {"date": "2026-08-19", "name": "Norwood Park Golf Centre", "venue": "Norwood Park, Nottinghamshire", "status": "Open", "gg_page": "12100668063972596835"},
+        {"date": "2026-08-20", "name": "Horsley Lodge Estate GC", "venue": "Horsley Lodge, Derbyshire", "status": "Open", "gg_page": "12100676486067919979"},
+        {"date": "2026-08-23", "name": "Melton Mowbray GC", "venue": "Melton Mowbray GC, Leicestershire", "status": "Open", "gg_page": "12100682636360424563"}
+      ],
+      "grand_final_2026": {
+        "date": "2026-09-12",
+        "venue": "Thonock Park, Lincolnshire",
+        "access": "Invitation only - top OOM qualifiers"
+      },
+      "order_of_merit_live": "https://www.golfgenius.com/pages/7105263062566837474",
+      "hub_page": "https://www.golfgenius.com/pages/7734283115102739555",
+      "homepage": "https://pingjuniorgolftour.co.uk/",
+      "events_page": "https://pingjuniorgolftour.co.uk/events/",
+      "notes": "27 eventos totais no schedule 2026. Rookies Tour idade 6-12 (Manuel 2026), Masters Tour 13-18 (Manuel 2027+). Entry £29.99 nao-membros. Muitos eventos North England (Durham, Yorkshire, Lancashire, Northumberland) e Midlands."
+    },
+    {
+      "id": "bjgt",
+      "name": "British Junior Golf Tour",
+      "country": "UK + ocasionais eventos na Europa (Spain, Italy)",
+      "platform": "BlueGolf (JS-rendered)",
+      "internationals": true,
+      "divisions_2026": {
+        "_warning": "DIVISOES MUDARAM em 2026 - este array precisa de confirmacao via scrape do site BlueGolf",
+        "candidates": ["7&Under", "8-9", "10-11", "12-13", "14-15", "16-18"],
+        "manuel_2026": "12-13 (a confirmar)",
+        "manuel_2027": "12-13 (a confirmar - ainda nao transita)"
+      },
+      "wagr_majors_2026": [
+        {"name": "Daily Mail WJGC", "date": "2026-02", "venue": "Villa Padierna, Spain"},
+        {"name": "Telford 3-day", "date": "2026-05-26/28", "venue": "Telford Hotel, Spa & Golf"},
+        {"name": "European Open 54H", "date": "2026-07-27/30", "venue": "Bogogno Resort, Italy"},
+        {"name": "Royal Norwich 3-day", "date": "TBC", "venue": "Royal Norwich"},
+        {"name": "Tour Championship", "date": "2026-10", "venue": "The London Club", "access": "invite only"}
+      ],
+      "single_day_events_known": [
+        {"date": "2026-06-07", "venue": "Nazeing GC"},
+        {"date": "2026-07-05", "venue": "Maylands GC"},
+        {"date": "2026-07-19", "venue": "Drift GC"}
+      ],
+      "schedule_url": "https://brjgt.bluegolf.com/bluegolf/brjgt26/schedule/index.htm?display=champ",
+      "order_of_merit_urls": {
+        "_pattern": "https://brjgt.bluegolf.com/bluegolf/brjgt26/poy/{div}oom/index.htm",
+        "manuel_2026": "https://brjgt.bluegolf.com/bluegolf/brjgt26/poy/1213oom/index.htm",
+        "manuel_2027": "https://brjgt.bluegolf.com/bluegolf/brjgt26/poy/1213oom/index.htm",
+        "hub": "https://brjgt.bluegolf.com/bluegolf/brjgt26/poy/index.htm"
+      },
+      "homepage": "https://juniorgolftour.co.uk/",
+      "tour_policy_2026": "https://juniorgolftour.co.uk/bjgt-2026-tour-policy/",
+      "notes": "Total estimado ~25-35 eventos/ano. OOM = best 8 of season (Abr-Out). Tour Championship por invitacao. WHS handicap exigido: 12-13 max 24, 14-15 max 14, 16-18 max 8. PRECISA SCRAPE PLAYWRIGHT para schedule completo (schedule disponivel apenas como imagem PNG + BlueGolf JS-rendered)."
+    },
+    {
+      "id": "junior-tour-scotland",
+      "name": "Junior Tour Scotland",
+      "country": "Scotland (+ 1 evento Ireland)",
+      "platform": "DotGolf (HTML estatico)",
+      "internationals": true,
+      "categories": ["Boys U14", "Boys U16", "Boys U18", "Boys U21", "Girls U18", "Girls U24"],
+      "manuel_2026_eligible": "Sim - U14 = nascidos 2012-2015",
+      "events_2026": [
+        {"date": "2026-04-04/05", "venue": "Royal Dornoch", "format": "36H Struie + 18H Champ", "status": "passed - FULL", "wagr": true},
+        {"date": "2026-05-02/03", "venue": "Portpatrick (Dunskey)", "format": "54H", "status": "passed", "wagr": true},
+        {"date": "2026-05-16/17", "venue": "Alyth", "format": "36H Alyth + 18H Glenisla", "status": "passed - closed early", "wagr": true},
+        {"date": "2026-06-27/28", "venue": "Hayston", "format": "54H", "status": "Open", "wagr": true},
+        {"date": "2026-07-11/12", "venue": "Tain", "format": "54H", "status": "Open", "wagr": true},
+        {"date": "2026-07-23/24", "venue": "Royal Musselburgh", "format": "36H (Thu+Fri PM)", "status": "closed - check ballot", "wagr": false, "egr": true},
+        {"date": "2026-08-01/02", "venue": "Peterculter", "format": "54H", "status": "Open", "wagr": true},
+        {"date": "2026-08-15/16", "venue": "Hilton Park", "format": "54H (Allander/HP/Allander)", "status": "Open", "wagr": true},
+        {"date": "2026-08-22/23", "venue": "Kilspindie", "format": "36H", "status": "Open", "wagr": false, "egr": true},
+        {"date": "2026-09-05/06", "venue": "Fraserburgh (Corbiehill)", "format": "54H - last OOM qualifier", "status": "Open", "wagr": true},
+        {"date": "2026-09-19/20", "venue": "Baberton", "format": "54H", "status": "Open", "wagr": true},
+        {"date": "2026-09-26/27", "venue": "Bruntsfield Links GS", "name": "Match v Madrid Federation", "access": "selection only"},
+        {"date": "2026-10-12/16", "venue": "Enniscrone GC (Ireland)", "name": "OOM Final", "format": "36H stroke gross", "access": "Top 3 Boys per category + Top 9 Girls"}
+      ],
+      "entry": {
+        "method": "Scottish Golf App",
+        "fee": "£40/event (£15 if home club is venue, £25 siblings)",
+        "handicap": "WHS required - any federation accepted",
+        "code_of_conduct": "Online before 1st event"
+      },
+      "oom_rules": {
+        "min_events": 3,
+        "qualifiers_to_final": "3 boys U14/U16/U18 + 9 girls = 18 total",
+        "u21_separate": "OOM separado mas nao qualifica para Final"
+      },
+      "ballot_priority": "Por JT playing history - estreantes internacionais ficam atras em eventos super-subscritos. U14 tem 12 places ring-fenced.",
+      "calendar_url": "https://www.juniortourscotland.com/2026-events",
+      "results_url": "https://www.juniortourscotland.com/2026-results",
+      "oom_url": "https://www.juniortourscotland.com/2026-oom-s",
+      "homepage": "https://www.juniortourscotland.com/",
+      "notes": "11 dos 12 eventos regulares aceitam U14. 9 eventos pontuam WAGR+EGR. Eventos populares ja FULL (Dornoch, Alyth, Musselburgh). Match v Madrid Federation em Set confirma abertura a internacionais."
+    },
+    {
+      "id": "wales-junior",
+      "name": "PING Welsh Junior Tour",
+      "country": "Wales",
+      "platform": "DotGolf (client-rendered - requires Playwright)",
+      "categories": ["Welsh U14", "Welsh U16", "Wales Mini Masters U18"],
+      "events_2026_known": [
+        {"date": "2026-06-21/22", "venue": "Carmarthen", "name": "Welsh U16 & U14 Championship"}
+      ],
+      "calendar_url": "https://www.walesgolf.org/ping-welsh-junior-tour",
+      "homepage": "https://www.walesgolf.org/",
+      "internationals": "Welsh CLOSED Championships = residents only. Welsh OPEN Championships aceitam internacionais. Verificar por evento.",
+      "notes": "PRECISA PLAYWRIGHT - DotGolf templates client-side. Catalogo mais limitado que England/Scotland."
+    },
+    {
+      "id": "golf-ireland",
+      "name": "Golf Ireland (all-island: RoI + NI)",
+      "country": "Ireland + Northern Ireland",
+      "platform": "DotGolf (Golf Ireland) + BlueGolf (PGA Ireland)",
+      "categories": ["Boys U14", "Boys U16", "Boys U18", "Girls equivalents"],
+      "events_2026_known": [
+        {"date": "2026-07-07", "venue": "Banbridge", "name": "Ulster U16 Boys' Amateur Open"},
+        {"date": "2026-07-07/08", "venue": "Lough Erne", "name": "Faldo Junior Tour @ Lough Erne"}
+      ],
+      "calendar_url": "https://www.golfireland.ie/championships-and-other-events-hub",
+      "alt_fixtures_url": "https://www.golferni.com/latest-news/golf-ireland-national-regional-championship-fixtures-2026",
+      "irish_junior_open_tour": "https://irishjunioropen.com/",
+      "internationals": "Open championships sim. Closed restritos a Golf Ireland members.",
+      "notes": "NAO EXISTE 'Ulster Junior Tour' autonomo - tudo sob Golf Ireland desde 2021 (consolidacao RoI+NI). PRECISA PLAYWRIGHT."
+    }
+  ]
+}
