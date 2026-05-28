@@ -1,0 +1,114 @@
+name: USKids Rich Players
+on:
+  schedule:
+    # Segunda-feira às 02:00 UTC (corre depois do uskids-member-history,
+    # que normalmente termina nas primeiras horas da manhã)
+    - cron: '0 2 * * 1'
+  workflow_dispatch:
+    inputs:
+      players:
+        description: 'memberIDs específicos (CSV). Vazio = todos os do slim.'
+        required: false
+        default: ''
+      since_days:
+        description: 'Skip players com ficheiro mais recente que N dias (default 14)'
+        required: false
+        default: '14'
+      concurrency:
+        description: 'Workers paralelos para GetMemberTournamentResults (default 4)'
+        required: false
+        default: '4'
+      force_rebuild:
+        description: 'Ignorar caches e re-fetch tudo (lento)'
+        type: boolean
+        required: false
+        default: false
+      limit:
+        description: 'Máx N players (smoke test). Vazio = sem limite.'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+jobs:
+  rich-players:
+    name: 📊 Rich Players (pivot por jogador)
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: '${{ secrets.GITHUB_TOKEN }}'
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+
+      - name: Build args
+        id: args
+        run: |
+          ARGS="--since-days ${{ github.event.inputs.since_days || '14' }}"
+          ARGS="$ARGS --concurrency ${{ github.event.inputs.concurrency || '4' }}"
+          if [ -n "${{ github.event.inputs.players }}" ]; then
+            ARGS="$ARGS --players ${{ github.event.inputs.players }}"
+          fi
+          if [ "${{ github.event.inputs.force_rebuild }}" = "true" ]; then
+            ARGS="$ARGS --force-rebuild"
+          fi
+          if [ -n "${{ github.event.inputs.limit }}" ]; then
+            ARGS="$ARGS --limit ${{ github.event.inputs.limit }}"
+          fi
+          echo "ARGS=$ARGS" >> $GITHUB_OUTPUT
+          echo "Vou correr com: $ARGS"
+
+      - name: Run scrape
+        id: scrape
+        run: |
+          set +e
+          node scripts/fetch-uskids-rich-players-node.js ${{ steps.args.outputs.ARGS }}
+          EXIT_CODE=$?
+          echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+          if [ "$EXIT_CODE" = "1" ]; then
+            echo "❌ Erro fatal"
+            exit 1
+          fi
+          if [ "$EXIT_CODE" = "2" ]; then
+            echo "📍 Sem novidades — skip commit"
+          fi
+          exit 0
+
+      - name: Commit se houve alterações
+        if: steps.scrape.outputs.exit_code == '0'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Glob entre aspas — sem aspas, o bash expande antes do git ver e
+          # silenciosamente perde deletions (ver uskids-member-history.yml).
+          git add -A 'public/data-archive/uskids-rich-players/'
+          git add public/data-archive/uskids-rich-flight-cache.json || true
+          git add public/data-archive/uskids-rich-run-summary.json || true
+          git diff --cached --quiet && exit 0
+          git fetch origin main
+          git merge origin/main --no-edit --strategy-option=ours || true
+          git add -A 'public/data-archive/uskids-rich-players/'
+          git add public/data-archive/uskids-rich-flight-cache.json || true
+          git add public/data-archive/uskids-rich-run-summary.json || true
+          git commit -m "data: USKids rich players [$(date -u '+%Y-%m-%d %H:%M UTC')]"
+          PUSH_OK=0
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
+              PUSH_OK=1
+              break
+            fi
+            git rebase --abort 2>/dev/null || true
+            echo "Push tentativa $i falhou — retry em $((i * 5))s"
+            sleep $((i * 5))
+          done
+          if [ "$PUSH_OK" != "1" ]; then
+            echo "❌ Push falhou após 5 tentativas"
+            exit 1
+          fi

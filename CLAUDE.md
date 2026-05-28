@@ -225,14 +225,14 @@ Duas páginas públicas são necessárias, em subdomínios diferentes:
 
 ### Scripts FPG detalhados
 
-**golf-all.js** — Pipeline completo: login → download WHS → scorecards → data.json → sync players → enrich stats.
+**scripts/golf-all.js** — Pipeline completo: login → download WHS → scorecards → data.json → sync players → enrich stats.
 ```bash
-node golf-all.js 52884              # primeira vez
-node golf-all.js --refresh 52884    # novos scorecards
-node golf-all.js --login 52884      # forçar login
-node golf-all.js --force 52884      # re-descarregar tudo
-node golf-all.js --skip-download 52884  # só gerar (dados já existem)
-node golf-all.js --all              # todos os jogadores
+node scripts/golf-all.js 52884              # primeira vez
+node scripts/golf-all.js --refresh 52884    # novos scorecards
+node scripts/golf-all.js --login 52884      # forçar login
+node scripts/golf-all.js --force 52884      # re-descarregar tudo
+node scripts/golf-all.js --skip-download 52884  # só gerar (dados já existem)
+node scripts/golf-all.js --all              # todos os jogadores
 ```
 
 **pipeline.js** — Pós-download: import → render → sync → enrich → extract.
@@ -308,6 +308,21 @@ node fetch-uskids-member-history.js         # scrape (só novos)
 node fetch-uskids-member-history.js --clean  # re-match nomes offline (sem browser)
 ```
 Output: `public/data-archive/uskids-member-history.json` (ficheiro único)
+
+**fetch-uskids-rich-players-node.js** — **Node puro** (sem Playwright). Pipeline RICA por jogador (não por torneio). Para cada memberID no slim + novos descobertos: `GetMemberTournamentResults` → cruza para `(tcode, age_group)` → `GetMeta` (cached) → `GetPlayerTeeTimes` (cached) → escreve `public/data-archive/uskids-rich-players/{memberID}.json` com TODOS os campos da API (teeMarkerName, teeMarkerColor, startHole, startTime, groupNumber, playerNumber, status, points, handicap, place, etc.). **Sem filtros TOP-N nem MAX_AGE_TODAY** — carreira completa.
+
+Cache separada do member-history: `uskids-rich-flight-cache.json` (re-fetch só se torneio ≤15d). Skip-existing por `lastUpdated` (default `--since-days 14`). Matching memberID→pid local via fingerprint de strokes (mesmas salvaguardas `MIN_FINGERPRINT_HOLES=6`, `MIN_FINGERPRINT_DISTINCT=3` do member-history). Exit code 2 = sem novidades.
+
+```bash
+node scripts/fetch-uskids-rich-players-node.js                    # default (skip-existing 14d)
+node scripts/fetch-uskids-rich-players-node.js --limit 10         # smoke test
+node scripts/fetch-uskids-rich-players-node.js --players 630106,591440
+node scripts/fetch-uskids-rich-players-node.js --since-days 30 --concurrency 8
+node scripts/fetch-uskids-rich-players-node.js --force-rebuild    # ignora todos os caches
+node scripts/fetch-uskids-rich-players-node.js --discovery-only   # só descobre novos mids
+```
+
+Workflow: `update-uskids-rich-players.yml` (Seg 02:00 UTC, depois do member-history). Sem secrets (signupanytime é público server-side).
 
 **build-member-history-slim.js** — Converte os ficheiros numerados `uskids-member-history-XXX.json` (em `public/data-archive/`) num único `uskids-member-history-slim.json` (em `public/data/`). Remove campos duplicados entre jogadores, mantém apenas gross+strokes por ronda.
 ```bash
@@ -673,6 +688,56 @@ Gerado por `build-member-history-slim.js` a partir dos ficheiros numerados em `p
 ```
 Diferença do formato original: dados do torneio (name, par, yards) são partilhados em `d.torneios` em vez de duplicados por jogador×torneio.
 
+### uskids-rich-players/{memberID}.json (formato rico, 1 por jogador)
+
+Gerado por `fetch-uskids-rich-players-node.js`. Em `public/data-archive/uskids-rich-players/`.
+
+Pivot por jogador (vs por torneio): cada miúdo num só ficheiro com a carreira USKids completa enriquecida com TODOS os campos da API. Permite UI tipo "ficha do jogador" sem ler ficheiros gigantes.
+
+```ts
+{
+  memberID: string,                 // = nome do ficheiro
+  name: string|null,                // resolvido via fingerprint (3 estratégias)
+  country: string|null,             // ISO maiúsculo ("PT", "US", "GB")
+  place: string|null,               // cidade do GetPlayerTeeTimes (ex: "Lisbon, Lisboa")
+  ageGroup: string|null,            // o mais recente em que jogou
+  lastUpdated: string,              // ISO 8601 (usado pelo skip-existing)
+  totalTorneios: number,
+  torneios: Record<tcode, {
+    tcode: string, name: string, type: string,
+    startDate: string, endDate: string,   // "M/D/YYYY"
+    totalRounds: number, holesPerRound: number,
+    par: number[], yards: number[],
+    ageGroup: string,                     // ageGroup específico deste torneio
+    flightId: string|null,                // resolvido via GetMeta + age_group match
+    pid: string|null,                     // pid local do flight (resolvido via fingerprint)
+    place: string,                        // "T5", "1", etc. (do GetMemberTournamentResults)
+    totalStrokes: number, points: number,
+    // ── Enriquecimento via GetPlayerTeeTimes ──
+    status: number|null,                  // 1 = activo, outro = WD/DNS/IE
+    teeMarkerName: string|null,           // "Tee Y"
+    teeMarkerColor: string|null,          // "Yellow"
+    handicap: number|null, driverLength: number|null,
+    pointsAll: string|null, tiebreaker: number|null,
+    isCaptain: number|null, isNewPlayer: string|null,
+    rounds: Record<ronda, {
+      strokes: number[18],                // sempre 18 (9H: zeros nos não jogados)
+      numStrokes: number, numHoles: number,
+      course: string|null,
+      // ── Enriquecimento (do GetPlayerTeeTimes) ──
+      startHole: number|null,             // 1 ou 10 (back nine)
+      startTime: string|null,             // "09:09"
+      groupNumber: number|null,
+      playerNumber: number|null,
+      liveScoringId: string|null,
+      flightRound: string|null,
+    }>,
+  }>,
+}
+```
+
+Schema deliberadamente fala SI/par/yards a partir do `GetMemberTournamentResults` (que devolve `t_pars` / `t_yards` no nível torneio), e os campos ricos (tee marker + ronda detalhada) a partir do `GetPlayerTeeTimes` quando o `pid` consegue ser matched via fingerprint. Quando o fingerprint falha (rondas degeneradas tipo `[0,0,...]`), `pid: null` e os campos ricos ficam `null` — o resto da entrada continua válido.
+
 ### uskids-member-history.json (formato original, usado por KIDSPage H2H)
 
 ```
@@ -754,6 +819,9 @@ Popula `uskTournNames` como fallback (hardcoded em `USKIDS_TCODE_META` tem prior
 | uskids-member-history.json | USKids | fetch-uskids-member-history.js | ✓ (sem par/SI) | **Em `public/data-archive/`** — fonte para build-slim |
 | uskids-member-history-XXX.json | USKids | fetch (legacy) | ✓ (sem par/SI) | **Em `public/data-archive/`** — fonte para build-slim |
 | uskids-member-history-slim.json | USKids | build-member-history-slim.js | ✓ (sem par/SI) | KIDSdataLoader (Fase 2) + KIDSPage (H2H, DOB) |
+| uskids-rich-players/{mid}.json | USKids | fetch-uskids-rich-players-node.js | ✓ (com teeMarker, startTime, groupNumber) | **Em `public/data-archive/`** — 1 ficheiro por jogador, carreira completa rica |
+| uskids-rich-flight-cache.json | USKids | fetch-uskids-rich-players-node.js | ✗ | **Em `public/data-archive/`** — cache (tcode → flights/players) para a pipeline rica |
+| uskids-rich-run-summary.json | USKids | fetch-uskids-rich-players-node.js | ✗ | **Em `public/data-archive/`** — sumário do último run (debug) |
 | uskids-field.json | USKids | fetch-uskids-field.js | ✗ | USKIDSPage |
 | uskids-field-sizes.json | USKids | (automação) | ✗ | KIDSdataLoader (uskFieldSizes) |
 | uskids-discovery-cache.json | USKids | fetch-uskids-discovery.js | ✗ | fetch-uskids-results.js |

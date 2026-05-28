@@ -219,12 +219,12 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
       </div>
 
       <div style={{ background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 8, padding: "10px 6px 6px", minWidth: 0 }}>
-        {/* minWidth: 0 no inner + width/height "100%" explícitos no ResponsiveContainer
-            evita o erro "width(-1) height(-1)" do Recharts quando o chart está dentro
-            de um pai flex/grid que ainda não tem dimensões calculadas (ex: sidebar
-            fechada, container colapsado). */}
+        {/* Evita o erro "width(-1) height(-1)" do Recharts: o ResponsiveContainer
+            recebe height numérica fixa (não "100%") + minWidth/minHeight para que
+            tenha sempre dimensões válidas mesmo antes do pai ter layout calculado
+            (ex: tab escondida, sidebar fechada, mount inicial). */}
         <div style={{ width: "100%", height: 240, minWidth: 0 }}>
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer width="100%" height={240} minWidth={1} minHeight={1}>
             <ComposedChart data={visiblePoints} margin={{ top: 6, right: 12, left: 0, bottom: 16 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border-light)" />
               <XAxis

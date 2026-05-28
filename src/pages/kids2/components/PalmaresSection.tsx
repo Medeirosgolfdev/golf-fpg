@@ -41,7 +41,6 @@ export default function PalmaresSection({ data, junior, filterTids }: Props) {
   const [showAll, setShowAll] = useState(false);
 
   const allWins = useMemo(() => collectAllWins(data, junior, filterTids), [data, junior, filterTids]);
-  if (allWins.length === 0) return null;
 
   // Por default mostra vitórias RECENTES (últimos 24m) OU vitórias marcantes (★★★+)
   // — descarta destaques de 2020 com 2★ que estavam a poluir a secção.
@@ -56,6 +55,10 @@ export default function PalmaresSection({ data, junior, filterTids }: Props) {
       return t > 0 && t >= cutoff;
     });
   }, [allWins]);
+
+  // Early return DEPOIS de todos os hooks (Rules of Hooks).
+  if (allWins.length === 0) return null;
+
   const visible = showAll ? allWins : featured.slice(0, DEFAULT_LIMIT);
   const hiddenCount = allWins.length - visible.length;
 

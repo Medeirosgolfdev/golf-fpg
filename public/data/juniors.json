@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-05-28T11:43:11.742Z",
+  "generatedAt": "2026-05-28T13:01:58.549Z",
   "juniors": [
     {
       "id": "u433800",
@@ -265314,15 +265314,23 @@
       "canonicalName": "René Ismael Jaime Billot",
       "aliases": [],
       "dob": null,
-      "sex": null,
+      "sex": "M",
       "nationality": "MX",
       "country": "MX",
-      "region": null,
-      "club": null,
+      "region": "BOURGOGNE-F.-COMTE",
+      "club": "Val D'Amour",
       "sources": {
         "uskids": {
           "memberId": "607133",
           "ageGroupCurrent": "Boys 12"
+        },
+        "ffgolf": {
+          "lic": "514743398",
+          "club": "Val D'Amour",
+          "hcp": 18.3,
+          "region": "BOURGOGNE-F.-COMTE",
+          "sex": "M",
+          "glfLic": "0224"
         }
       },
       "tournamentIds": [
@@ -265339,15 +265347,18 @@
         "uskids-20342",
         "uskids-20343",
         "uskids-20341",
-        "uskids-17442"
+        "uskids-17442",
+        "ffgolf-2601408553"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:607133"
+          "uskids:607133",
+          "ffgolf:514743398"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "ffgolf"
         ]
       }
     },
@@ -387948,39 +387959,6 @@
       }
     },
     {
-      "id": "g514743398",
-      "canonicalName": "René Ismael Jaime Billot",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "FR",
-      "country": "FR",
-      "region": "BOURGOGNE-F.-COMTE",
-      "club": "Val D'Amour",
-      "sources": {
-        "ffgolf": {
-          "lic": "514743398",
-          "club": "Val D'Amour",
-          "hcp": 18.3,
-          "region": "BOURGOGNE-F.-COMTE",
-          "sex": "M",
-          "glfLic": "0224"
-        }
-      },
-      "tournamentIds": [
-        "ffgolf-2601408553"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "ffgolf:514743398"
-        ],
-        "mergedFromSources": [
-          "ffgolf"
-        ]
-      }
-    },
-    {
       "id": "g526650395",
       "canonicalName": "Chantal Jaime Billot",
       "aliases": [],
@@ -465489,13 +465467,13 @@
     }
   ],
   "stats": {
-    "total": 8562,
+    "total": 8561,
     "droppedNoTourn": 23704,
-    "strong": 8536,
+    "strong": 8535,
     "probable": 26,
     "manual": 0,
     "strongMerges": 7,
     "probableMerges": 2203,
-    "manualMerges": 3
+    "manualMerges": 4
   }
 }
