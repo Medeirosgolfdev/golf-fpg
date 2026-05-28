@@ -59,6 +59,7 @@ const RFEGPage = lazy(() => import("./pages/RFEGPage"));
 const NacionaisJovensPage = lazy(() => import("./pages/NacionaisJovensPage"));
 const TitulosPage = lazy(() => import("./pages/TitulosPage"));
 const JogadoresListPage = lazy(() => import("./pages/JogadoresListPage"));
+const DrawsPage = lazy(() => import("./pages/DrawsPage"));
 
 type Status =
   | { kind: "loading" }
@@ -330,6 +331,7 @@ export default function App() {
                 {/* Página Títulos — tabs Nacional/Regional/Atleta */}
                 <Route path="/titulos" element={<TitulosPage />} />
                 <Route path="/titulos/:tab" element={<TitulosPage />} />
+                <Route path="/draws" element={<DrawsPage />} />
                 {/* Compat: URLs antigas continuam a funcionar (redirect) */}
                 <Route path="/*" element={<Navigate to="/" replace />} />
               </Routes>

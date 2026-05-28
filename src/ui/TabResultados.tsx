@@ -302,6 +302,10 @@ function EscalaoSection({ escalao: e, torneio: t, arMap, drawsData }: {
           // Cruzar com leaderboard da MESMA ronda para popular a coluna Resultado.
           const lbRound = e.rondas.find(r => r.ronda === activeEntry.ronda);
           const roundLeaderboard = lbRound?.leaderboard ?? lbRound?.jogadores ?? undefined;
+          // Par total da ronda — usado como fallback se o leaderboard não tem
+          // `to_par` por jogador (acontece em alguns torneios completos antigos).
+          const parTotal = lbRound?.total_par
+            ?? (lbRound?.par?.length ? lbRound.par.reduce((s, v) => s + (v || 0), 0) : null);
           return (
             <UskidsDrawTab
               draw={activeEntry.drawRonda}
@@ -310,6 +314,7 @@ function EscalaoSection({ escalao: e, torneio: t, arMap, drawsData }: {
               isManuelEscalao={!!e.is_manuel || e.age_group === t.escalao_manuel}
               externalUrl={drawExternalUrl}
               roundLeaderboard={roundLeaderboard}
+              roundParTotal={parTotal}
             />
           );
         }

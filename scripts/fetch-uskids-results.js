@@ -501,3 +501,4 @@ async function main() {
 }
 
 main().catch(err => { console.error('Erro fatal:', err); process.exit(1); });
+// EOF

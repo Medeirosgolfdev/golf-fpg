@@ -64,14 +64,21 @@ interface Props {
    *  ficam vazias (caso típico para draws de torneios futuros que ainda não
    *  jogaram). */
   roundLeaderboard?: RondaJogador[];
+  /** Par total da ronda (soma de RondaResult.par ou RondaResult.total_par).
+   *  Usado como fallback para calcular `to_par` quando o leaderboard tem
+   *  score mas `to_par: null`. Sem isto, casos edge ficam com "–" mesmo
+   *  havendo gross conhecido. */
+  roundParTotal?: number | null;
 }
 
 export default function UskidsDrawTab({
   draw, roundNum, escalaoNome, isManuelEscalao, externalUrl, roundLeaderboard,
+  roundParTotal,
 }: Props) {
   const { sortKey, sortDir, toggleSort } = useSort<SortKey>("pos", "asc");
 
   // Lookup nome → score da ronda (gross + to_par). Matching por nome normalizado.
+  // Fallback: se o leaderboard tem score mas to_par null, calcular via roundParTotal.
   const scoreByName = useMemo(() => {
     const m = new Map<string, { score: number; toPar: number | null }>();
     if (!roundLeaderboard) return m;
@@ -79,10 +86,14 @@ export default function UskidsDrawTab({
       if (!j.nome) continue;
       const sc = j.score || 0;
       if (sc <= 0) continue;
-      m.set(normName(j.nome), { score: sc, toPar: j.to_par ?? null });
+      let tp: number | null = j.to_par ?? null;
+      if (tp == null && roundParTotal && roundParTotal > 0) {
+        tp = sc - roundParTotal;
+      }
+      m.set(normName(j.nome), { score: sc, toPar: tp });
     }
     return m;
-  }, [roundLeaderboard]);
+  }, [roundLeaderboard, roundParTotal]);
 
   // Achatar grupos em linhas (uma linha por jogador)
   const flat = useMemo(() => {

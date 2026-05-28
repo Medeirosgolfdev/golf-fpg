@@ -1827,8 +1827,23 @@ function Content() {
                       isActive={jovensGroupKey === g.key}
                       onClick={() => {
                         setJovensGroupKey(g.key); setJovensEscIdx(0); setJovensShowInscricoes(false); setJovensShowAnalise(false); md.onSelect();
-                        // volta à URL do filtro JOVENS (sem subfiltro inscritosCN)
-                        if (/\/inscritos/i.test(location.pathname)) navigate("/FPG/jovens");
+                        // Navegar imediatamente para a URL do torneio escolhido.
+                        // Sem isto, o state→URL effect skipa pelo guard anti-race
+                        // (params.tkey != curJovens novo) e o user fica preso na URL
+                        // antiga (ex: 007-10551?tab=draw:2). Mesmo padrão usado em
+                        // renderSidebarItem da sidebar principal. Para tcodes sintéticos
+                        // "A+B", parseTournKey aceita o primeiro tcode no URL.
+                        const t0 = g.entries[0];
+                        const firstTcode = (t0?.tcode || "").split("+")[0];
+                        if (t0?.ccode && firstTcode) {
+                          const target = tournamentUrl("FPG", t0.ccode, firstTcode);
+                          if (target && location.pathname !== target) {
+                            navigate(target, { replace: true });
+                          }
+                        } else if (/\/inscritos/i.test(location.pathname)) {
+                          // Fallback: torneio sem ccode/tcode válido → sair de /inscritos
+                          navigate("/FPG/jovens");
+                        }
                       }}
                       accentColor={SIDEBAR_ACCENT.tour}
                       extraPills={

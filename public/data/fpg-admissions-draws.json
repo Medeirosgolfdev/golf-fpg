@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-05-24T20:44:02.878Z",
-  "total": 407,
+  "scrapedAt": "2026-05-27T22:21:24.939Z",
+  "total": 454,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -3729,6 +3729,18 @@
       "draws": {}
     },
     {
+      "ccode": "007",
+      "tcode": "10572",
+      "name": "Grande Final Drive Tour CN Jovens Sub12 H",
+      "date": "2022-11-12",
+      "expectedYear": "2022",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
       "ccode": "051",
       "tcode": "10388",
       "name": "Camp. Regional de Jovens- Sub 18",
@@ -5503,6 +5515,18 @@
       }
     },
     {
+      "ccode": "982",
+      "tcode": "10120",
+      "name": "Camp Norte Jovens 2023 - Sub14",
+      "date": "2023-09-03",
+      "expectedYear": "2023",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
       "ccode": "910",
       "tcode": "10120",
       "name": "Camp Norte Jovens 2023 - Sub14",
@@ -6488,18 +6512,6 @@
           ]
         }
       }
-    },
-    {
-      "ccode": "988",
-      "tcode": "10190",
-      "name": "Final Nacional Drive Challenge 2023 - Sub10",
-      "date": "2023-10-28",
-      "expectedYear": "2023",
-      "admissions": {
-        "error": "param-errors",
-        "players": []
-      },
-      "draws": {}
     },
     {
       "ccode": "988",
@@ -28500,6 +28512,18 @@
       }
     },
     {
+      "ccode": "183",
+      "tcode": "10129",
+      "name": "2º Torneio Drive Challenge Açores–Terceira-Sub 10",
+      "date": "2025-03-22",
+      "expectedYear": "2025",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
       "ccode": "985",
       "tcode": "10199",
       "name": "2 Torneio Drive Tour Tejo – Campo Real",
@@ -29045,6 +29069,18 @@
           ]
         }
       }
+    },
+    {
+      "ccode": "007",
+      "tcode": "10812",
+      "name": "3º Torneio do Circuito Aquapor",
+      "date": "2025-04-04",
+      "expectedYear": "2025",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
     },
     {
       "ccode": "000",
@@ -37726,6 +37762,18 @@
       }
     },
     {
+      "ccode": "183",
+      "tcode": "10135",
+      "name": "3º Torneio Drive Challenge Açores–Terceira-Sub 14",
+      "date": "2025-05-09",
+      "expectedYear": "2025",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
       "ccode": "983",
       "tcode": "10136",
       "name": "3º Torneio Drive Challenge Açores–Terceira-Sub 18",
@@ -46187,6 +46235,18 @@
       }
     },
     {
+      "ccode": "017",
+      "tcode": "10189",
+      "name": "5º Torneio Drive Challenge Tejo - Lisbon - Sub18",
+      "date": "2025-06-07",
+      "expectedYear": "2025",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
       "ccode": "984",
       "tcode": "10126",
       "name": "4º Torn. Drive Challenge Açores - Batalha - Sub 18",
@@ -51178,6 +51238,18 @@
       "tcode": "10301",
       "name": "Campeonato Regional de Jovens 2025 Sub-10",
       "date": "2025-07-10",
+      "expectedYear": "2025",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "988",
+      "tcode": "10190",
+      "name": "Final Nacional Drive Challenge 2023 - Sub10",
+      "date": "2025-07-11",
       "expectedYear": "2025",
       "admissions": {
         "error": "param-errors",
@@ -57806,6 +57878,387 @@
       }
     },
     {
+      "ccode": "003",
+      "tcode": "10564",
+      "name": "Miramar Internacional Open U25",
+      "date": "2025-08-20",
+      "expectedYear": 2025,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": null,
+          "date": "2025-08-20",
+          "totalJogadores": 57,
+          "groups": [
+            {
+              "teeTime": "08:30",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Yago Lopez Alvarez",
+                  "clube": "-"
+                },
+                {
+                  "nome": "Gabriel Sardo",
+                  "clube": "37010"
+                },
+                {
+                  "nome": "Santiago Dias",
+                  "clube": "42908"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:38",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Gonzalo Guillen Carmona",
+                  "clube": "-"
+                },
+                {
+                  "nome": "Guilherme Grabner Moreira",
+                  "clube": "42205"
+                },
+                {
+                  "nome": "Tomás Afonso Araujo",
+                  "clube": "35849"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:46",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Henrique Oliveira Barros",
+                  "clube": "29713"
+                },
+                {
+                  "nome": "Martin Rosende Ben",
+                  "clube": "-"
+                },
+                {
+                  "nome": "Francisca Ferreira da Costa",
+                  "clube": "40981"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:54",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "João Santos",
+                  "clube": "40645"
+                },
+                {
+                  "nome": "João Alvim",
+                  "clube": "45340"
+                },
+                {
+                  "nome": "Pedro Ataíde e Sá",
+                  "clube": "44681"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:02",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Gaspard Maes",
+                  "clube": "51074"
+                },
+                {
+                  "nome": "Rodrigo Faria Constantino",
+                  "clube": "45278"
+                },
+                {
+                  "nome": "Nicólas Rios Lopez",
+                  "clube": "-"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:10",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Gabriel Marques Guerreiro",
+                  "clube": "43053"
+                },
+                {
+                  "nome": "Camila Pazos",
+                  "clube": "46297"
+                },
+                {
+                  "nome": "Maria Francisca Santos",
+                  "clube": "46853"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:18",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Diogo Marques Lopes",
+                  "clube": "35874"
+                },
+                {
+                  "nome": "Sebastiao Sardinha Saraiva",
+                  "clube": "46195"
+                },
+                {
+                  "nome": "Manuel Calvar Fernández",
+                  "clube": "-"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:26",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Goa Barranco Garcia",
+                  "clube": "-"
+                },
+                {
+                  "nome": "Afonso Silva Pinto",
+                  "clube": "46309"
+                },
+                {
+                  "nome": "Martim Sousa de Morais",
+                  "clube": "41609"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:34",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Juan Pablo Calvar Fernández",
+                  "clube": "-"
+                },
+                {
+                  "nome": "Jorge Barbosa",
+                  "clube": "38718"
+                },
+                {
+                  "nome": "Laura Santos",
+                  "clube": "45393"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:42",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Martin Gancedo Fernandez",
+                  "clube": "-"
+                },
+                {
+                  "nome": "Tomás Rente",
+                  "clube": "46311"
+                },
+                {
+                  "nome": "Margarida Silva Pinto",
+                  "clube": "46310"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:50",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Francisco Nunes (jr)",
+                  "clube": "46299"
+                },
+                {
+                  "nome": "Maria Cunha",
+                  "clube": "46482"
+                },
+                {
+                  "nome": "Francisco Carvalho",
+                  "clube": "52856"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:58",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Manuel Goulartt Medeiros",
+                  "clube": "52884"
+                },
+                {
+                  "nome": "Jorge Xavier Graça Silva",
+                  "clube": "48705"
+                },
+                {
+                  "nome": "Guo Ziyang",
+                  "clube": "57904"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:00",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Marc Costa",
+                  "clube": "46308"
+                },
+                {
+                  "nome": "Francisco Costa Mendes",
+                  "clube": "40318"
+                },
+                {
+                  "nome": "Francisco Saraiva",
+                  "clube": "39097"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:08",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Afonso de Sousa Pinto",
+                  "clube": "46480"
+                },
+                {
+                  "nome": "Raul Pazos (jr)",
+                  "clube": "46296"
+                },
+                {
+                  "nome": "António Maria Cavalinhos",
+                  "clube": "40992"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:16",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Gonçalo Maia",
+                  "clube": "46395"
+                },
+                {
+                  "nome": "Valentin Bonnet",
+                  "clube": "-"
+                },
+                {
+                  "nome": "Mateus Penucho",
+                  "clube": "52393"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:24",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Miguel Teles de Menezes",
+                  "clube": "52487"
+                },
+                {
+                  "nome": "Afonso Paiva Gonçalves",
+                  "clube": "47819"
+                },
+                {
+                  "nome": "Nuno Bessa",
+                  "clube": "47003"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:32",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Dinis Seabra",
+                  "clube": "44821"
+                },
+                {
+                  "nome": "Sebastião Soares",
+                  "clube": "47341"
+                },
+                {
+                  "nome": "Eduardo Rocha Ferreira",
+                  "clube": "51182"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:40",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Gustavo Pinto",
+                  "clube": "56048"
+                },
+                {
+                  "nome": "Manuel Rouco Castro",
+                  "clube": "47576"
+                },
+                {
+                  "nome": "José Maria Pereira",
+                  "clube": "53645"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:48",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Henrique Pereira",
+                  "clube": "53646"
+                },
+                {
+                  "nome": "Martim Silva",
+                  "clube": "49714"
+                },
+                {
+                  "nome": "Ricardo Ferreira",
+                  "clube": "45366"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
       "ccode": "988",
       "tcode": "10253",
       "name": "4º Torneio Drive Tour Sul- Quinta do Lago Norte",
@@ -60181,6 +60634,18 @@
       "ccode": "988",
       "tcode": "10258",
       "name": "Final  Drive Challenge Sul-Castro Marim -  Sub 18",
+      "date": "2025-09-06",
+      "expectedYear": "2025",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "935",
+      "tcode": "10260",
+      "name": "Final Drive Challenge Sul - Castro Marim - Sub 12",
       "date": "2025-09-06",
       "expectedYear": "2025",
       "admissions": {
@@ -69031,18 +69496,6 @@
       }
     },
     {
-      "ccode": "007",
-      "tcode": "10983",
-      "name": "Torneio de Inverno CGSS",
-      "date": "2026-01-17",
-      "expectedYear": "2026",
-      "admissions": {
-        "error": "param-errors",
-        "players": []
-      },
-      "draws": {}
-    },
-    {
       "ccode": "983",
       "tcode": "10149",
       "name": "1º Torneio Drive Challenge Açores–Terceira-Sub 18",
@@ -69388,18 +69841,6 @@
           ]
         }
       }
-    },
-    {
-      "ccode": "007",
-      "tcode": "10986",
-      "name": "TORNEIO DA RESTAURAÇÃO CGSS 2026",
-      "date": "2026-01-24",
-      "expectedYear": "2026",
-      "admissions": {
-        "error": "param-errors",
-        "players": []
-      },
-      "draws": {}
     },
     {
       "ccode": "007",
@@ -81173,6 +81614,18 @@
       }
     },
     {
+      "ccode": "982",
+      "tcode": "10155",
+      "name": "1º Torneio Drive Tour Terceira",
+      "date": "2026-03-22",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
       "ccode": "985",
       "tcode": "10204",
       "name": "3º Torneio Drive Tour Tejo – Santo Estêvão",
@@ -89731,18 +90184,6 @@
       }
     },
     {
-      "ccode": "029",
-      "tcode": "10543",
-      "name": "PJA  Aroeira Masters 2026",
-      "date": "2026-04-24",
-      "expectedYear": "2026",
-      "admissions": {
-        "error": "param-errors",
-        "players": []
-      },
-      "draws": {}
-    },
-    {
       "ccode": "985",
       "tcode": "10225",
       "name": "4º Torneio Drive Challenge Tejo-Quinta Peru-Sub 18",
@@ -95398,18 +95839,6 @@
       }
     },
     {
-      "ccode": "007",
-      "tcode": "11020",
-      "name": "Torneio Cidade de Machico 2026",
-      "date": "2026-05-08",
-      "expectedYear": "2026",
-      "admissions": {
-        "error": "param-errors",
-        "players": []
-      },
-      "draws": {}
-    },
-    {
       "ccode": "002",
       "tcode": "11297",
       "name": "109ª Lisbon Cup",
@@ -100314,6 +100743,510 @@
           ]
         }
       }
+    },
+    {
+      "ccode": "029",
+      "tcode": "10543",
+      "name": "PJA  Aroeira Masters 2026",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "10983",
+      "name": "Torneio de Inverno CGSS",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "10986",
+      "name": "TORNEIO DA RESTAURAÇÃO CGSS 2026",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "11020",
+      "name": "Torneio Cidade de Machico 2026",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "003",
+      "tcode": "10551",
+      "name": "Torneio 10551",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "10607",
+      "name": "Torneio 10607",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "10651",
+      "name": "Torneio 10651",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "10658",
+      "name": "Torneio 10658",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "10705",
+      "name": "Torneio 10705",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "10734",
+      "name": "Torneio 10734",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "10741",
+      "name": "Torneio 10741",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "10746",
+      "name": "Torneio 10746",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "10752",
+      "name": "Torneio 10752",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "10777",
+      "name": "Torneio 10777",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "10796",
+      "name": "Torneio 10796",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "10800",
+      "name": "Torneio 10800",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "10809",
+      "name": "Torneio 10809",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "10857",
+      "name": "Torneio 10857",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "10888",
+      "name": "Torneio 10888",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "10921",
+      "name": "Torneio 10921",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "10933",
+      "name": "Torneio 10933",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "10961",
+      "name": "Torneio 10961",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "029",
+      "tcode": "10492",
+      "name": "Torneio 10492",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "029",
+      "tcode": "10523",
+      "name": "Torneio 10523",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "059",
+      "tcode": "10483",
+      "name": "Torneio 10483",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "059",
+      "tcode": "10611",
+      "name": "Torneio 10611",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "125",
+      "tcode": "10370",
+      "name": "Torneio 10370",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "125",
+      "tcode": "10371",
+      "name": "Torneio 10371",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "152",
+      "tcode": "10444",
+      "name": "Torneio 10444",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "179",
+      "tcode": "10514",
+      "name": "Torneio 10514",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "191",
+      "tcode": "10021",
+      "name": "Torneio 10021",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "191",
+      "tcode": "10036",
+      "name": "Torneio 10036",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "192",
+      "tcode": "10013",
+      "name": "Torneio 10013",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "192",
+      "tcode": "10019",
+      "name": "Torneio 10019",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "962",
+      "tcode": "10080",
+      "name": "Torneio 10080",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "982",
+      "tcode": "10116",
+      "name": "Torneio 10116",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "982",
+      "tcode": "10143",
+      "name": "Torneio 10143",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "183",
+      "tcode": "10142",
+      "name": "Torneio 10142",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "920",
+      "tcode": "10062",
+      "name": "Torneio 10062",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "920",
+      "tcode": "10077",
+      "name": "Torneio 10077",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "920",
+      "tcode": "10078",
+      "name": "Torneio 10078",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "992",
+      "tcode": "10455",
+      "name": "Torneio 10455",
+      "date": "2026-05-27",
+      "expectedYear": 2026,
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
     }
   ]
 }

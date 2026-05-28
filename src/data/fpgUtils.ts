@@ -7,6 +7,7 @@
 import type { Player, Tournament, RoundScore, SDResult, PlayerFilter } from "./fpgTypes";
 import type { EscLookup } from "../utils/playerUtils";
 import type { PlayersDB } from "../ui/tournamentPrimitives";
+import type { FpgDraw } from "./nacional2026Loader";
 import { normalizePlayer } from "../utils/playerUtils";
 import { calcAGS, expectedSD9 } from "../utils/whsCalc";
 import { norm, escalaoAtDate } from "../utils/format";
@@ -43,6 +44,87 @@ export function tournamentHasManuel(t: Tournament | undefined | null): boolean {
     }
   }
   return false;
+}
+
+/**
+ * Sintetiza o draw de uma ronda a partir do leaderboard acumulado das rondas
+ * anteriores. Aplicável quando a FPG ainda não publicou (ou não chegou a ser
+ * scraped) o draw oficial dessa ronda mas as rondas anteriores já foram jogadas.
+ *
+ * Regra FPG canónica para emparelhamentos a partir da R2:
+ *   - Ordena os jogadores pelo total acumulado das rondas 1..N-1 (menor = melhor)
+ *   - Agrupa de 3 em 3 mantendo os líderes juntos: 1º+2º+3º num grupo,
+ *     4º+5º+6º no seguinte, e assim sucessivamente
+ *   - O último grupo pode ter 1 ou 2 jogadores se o total não for múltiplo de 3
+ *   - Jogadores que não terminaram alguma das rondas anteriores (WD, scorecard
+ *     vazio ou gross >= 999) são excluídos — não vão a jogar a ronda seguinte
+ *
+ * Não tem tee times nem buracos de saída (a FPG só os define com o draw oficial).
+ * O `note` no draw devolvido sinaliza que é estimado para o DrawTab mostrar aviso.
+ *
+ * @returns FpgDraw com note marcado, ou `null` se não houver dados suficientes
+ *          (round < 2, sem players com rondas anteriores válidas, etc.).
+ */
+export function synthesizeDrawFromCumulative(
+  tournament: Tournament,
+  roundNum: number,
+): FpgDraw | null {
+  if (roundNum < 2) return null;
+  const players = tournament.players || [];
+  if (players.length === 0) return null;
+  const priorRounds = roundNum - 1;
+
+  type Eligible = { name: string; club: string | null; fed: string | null; cum: number };
+  const eligible: Eligible[] = [];
+  for (const p of players) {
+    const rs = p.roundScores || [];
+    if (rs.length < priorRounds) continue;
+    let cum = 0;
+    let ok = true;
+    for (let i = 0; i < priorRounds; i++) {
+      const g = rs[i]?.gross;
+      // gross >= 999 é o sentinela de WD/DNS; <=0 é cartão vazio/não entregue
+      if (typeof g !== "number" || g <= 0 || g >= 999) { ok = false; break; }
+      cum += g;
+    }
+    if (!ok) continue;
+    eligible.push({
+      name: p.name || "",
+      club: p.club || null,
+      fed: (p as any).fed || p.fedCode || null,
+      cum,
+    });
+  }
+
+  if (eligible.length === 0) return null;
+  // Ordenar por acumulado crescente (menor = melhor em stroke play)
+  eligible.sort((a, b) => a.cum - b.cum);
+
+  const groups: NonNullable<FpgDraw["groups"]> = [];
+  for (let i = 0; i < eligible.length; i += 3) {
+    const slice = eligible.slice(i, i + 3);
+    const groupNum = groups.length + 1;
+    groups.push({
+      // Sem tee times reais. Usamos um identificador de grupo único ("G1", "G2"...)
+      // para que o DrawTab mantenha a separação visual entre flights (cor de fundo
+      // e linha de separação dependem do `teeTime` ser distinto entre grupos).
+      teeTime: `G${groupNum}`,
+      startHole: null,
+      tee: null,
+      players: slice.map(p => ({
+        nome: p.name,
+        clube: p.club,
+        fed: p.fed,
+        hcp: null,
+      })),
+    });
+  }
+
+  return {
+    totalJogadores: eligible.length,
+    groups,
+    note: `Draw estimado — emparelhamentos calculados pelo acumulado das rondas 1-${priorRounds} (FPG ainda não publicou o draw oficial)`,
+  };
 }
 
 /** Mapa fed → ano → escalão. Construído a partir de torneios Challenge (t.escalao explícito).

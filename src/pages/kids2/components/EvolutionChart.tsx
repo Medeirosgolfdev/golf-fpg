@@ -14,6 +14,7 @@ import {
   ResponsiveContainer, Line, XAxis, YAxis, Tooltip, CartesianGrid, ReferenceLine, Scatter, ComposedChart,
 } from "recharts";
 import type { CanonicalData, Junior } from "../data";
+import { fmtDate } from "../../../utils/format";
 
 interface Props {
   data: CanonicalData;

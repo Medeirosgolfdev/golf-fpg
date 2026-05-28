@@ -109,18 +109,30 @@ export default function DrawTab({
     return m;
   }, [admissions]);
 
-  const nameToFed = useMemo(() => {
-    const m = new Map<string, string>();
+  // Multi-map: nome normalizado → TODOS os feds com esse nome (numéricos +
+  // virtuais `intl:*` + `kids:*`). Substitui o antigo Map<nome, fed> que só
+  // guardava o último valor → causava dois bugs:
+  //   1. Homónimos numéricos (3 Miguel Nunes em players-nationality.json: o
+  //      Sub-10 fed 48052, o adulto fed 21118, o sénior fed 54075) — o que era
+  //      inserido por último ganhava, mesmo que fosse o errado para o
+  //      escalão do torneio.
+  //   2. Entradas virtuais `kids:*` criadas por kids-tracked-names.json
+  //      (Sabrina, Ricardo, etc. — portugueses que jogam internacionais)
+  //      sobrescreviam o fed numérico real do players.json, deixando a
+  //      coluna FED a mostrar `kids:nome_normalizado` e ESC/Nasc. vazios.
+  //
+  // A escolha do candidato certo passa para `pickBestFed()` no `flat()`,
+  // onde temos o contexto do torneio (escalão + data) para desempatar.
+  const nameToFeds = useMemo(() => {
+    const m = new Map<string, string[]>();
     if (!playersDB) return m;
     for (const [fed, bd] of Object.entries(playersDB)) {
       const nm = (bd as any)?.name as string | undefined;
       if (!nm) continue;
       const k = norm(nm);
-      // Preferir fed real (numérico) sobre virtual `intl:...`. Se já
-      // existe um fed numérico para este nome, não sobrescrever com intl.
-      const existing = m.get(k);
-      if (existing && !existing.startsWith("intl:") && fed.startsWith("intl:")) continue;
-      m.set(k, fed);
+      const arr = m.get(k);
+      if (arr) arr.push(fed);
+      else m.set(k, [fed]);
     }
     return m;
   }, [playersDB]);
@@ -145,6 +157,66 @@ export default function DrawTab({
     // Quando isto acontece: reaproveitar como fed (se fed ainda não tem valor) e limpar clube.
     const looksLikeFed = (s: string | undefined): boolean => !!s && /^\d{4,6}$/.test(s.trim());
 
+    // Contexto do torneio usado para desempatar homónimos em `pickBestFed`.
+    const isVirtual = (f: string) => f.startsWith("intl:") || f.startsWith("kids:");
+    const escCapMatch = (tournamentEscalao || "").match(/Sub\s*(\d+)/i);
+    const escCap = escCapMatch ? parseInt(escCapMatch[1], 10) : null;
+    const tornYear = effDate ? parseInt(String(effDate).slice(0, 4), 10) : null;
+
+    // Escolhe o melhor fed entre candidatos com o mesmo nome.
+    // Ordem de preferência:
+    //   1. Match exacto de escalão histórico (player.dob → escalaoAtDate)
+    //      vs. `tournamentEscalao`. Ex: 3 Miguel Nunes diferentes; só o de
+    //      2014 dá "Sub 10" em 2024.
+    //   2. Elegível por idade (yearNasc >= tornYear - escCap) — apanha
+    //      torneios de cap genérico tipo Sub-24 (player Sub-12 também é
+    //      elegível). Preferir o mais novo (proxy razoável para a fase
+    //      júnior em torneios juvenis).
+    //   3. Numérico > virtual (`kids:*` / `intl:*`) — fix do bug em que
+    //      Sabrina/Ricardo apareciam com `kids:...` em vez do fed real.
+    //   4. Primeiro candidato (preserva ordem de inserção como último
+    //      recurso — comportamento antigo).
+    const pickBestFed = (candidates: string[]): string | null => {
+      if (candidates.length === 0) return null;
+      if (candidates.length === 1) return candidates[0];
+
+      // 1. Match exacto via escalaoAtDate
+      if (tournamentEscalao && effDate) {
+        const target = norm(tournamentEscalao);
+        for (const fed of candidates) {
+          if (isVirtual(fed)) continue;
+          const bd = (playersDB as any)?.[fed];
+          const dob = bd?.dob as string | undefined;
+          if (!dob) continue;
+          const esc = escalaoAtDate(dob, effDate);
+          if (esc && norm(esc) === target) return fed;
+        }
+      }
+
+      // 2. Elegível por cap de idade (preferir mais novo)
+      if (escCap != null && tornYear != null) {
+        let best: { fed: string; year: number } | null = null;
+        for (const fed of candidates) {
+          if (isVirtual(fed)) continue;
+          const bd = (playersDB as any)?.[fed];
+          const dob = bd?.dob as string | undefined;
+          if (!dob) continue;
+          const y = parseInt(dob.slice(0, 4), 10);
+          if (isNaN(y)) continue;
+          if (tornYear - y > escCap) continue; // demasiado velho para o cap
+          if (!best || y > best.year) best = { fed, year: y };
+        }
+        if (best) return best.fed;
+      }
+
+      // 3. Numérico > virtual
+      const numeric = candidates.find(f => !isVirtual(f));
+      if (numeric) return numeric;
+
+      // 4. Fallback
+      return candidates[0];
+    };
+
     for (const g of (draw.groups || [])) {
       for (const p of g.players) {
         idx++;
@@ -163,7 +235,8 @@ export default function DrawTab({
           fed = admFedByName.get(norm(p.nome)) || admFedByName.get(norm(nomeFormatted)) || null;
         }
         if (!fed) {
-          fed = nameToFed.get(norm(p.nome)) || nameToFed.get(norm(nomeFormatted)) || null;
+          const candidates = nameToFeds.get(norm(p.nome)) || nameToFeds.get(norm(nomeFormatted)) || [];
+          fed = pickBestFed(candidates);
         }
         if (!fed && looksLikeFed(clubeRaw)) {
           fed = clubeRaw.trim();
@@ -214,7 +287,7 @@ export default function DrawTab({
       }
     }
     return out;
-  }, [draw, nameToFed, admFedByName, playersDB, fedBirthdates, effDate, admHcpByFed, admHcpByName]);
+  }, [draw, nameToFeds, admFedByName, playersDB, fedBirthdates, effDate, tournamentEscalao, admHcpByFed, admHcpByName]);
 
   // Ordenar por sortKey
   const sorted = useMemo(() => {
@@ -387,18 +460,36 @@ export default function DrawTab({
   );
 
   const total = flat.length;
+  // Draws sintetizados (gerados pelo TournamentDetail a partir do acumulado das
+  // rondas anteriores quando a FPG ainda não publicou o oficial) trazem `note`
+  // mesmo com groups populados. Mostra-se um banner de aviso antes da tabela e
+  // marca-se " (estimado)" no título da toolbar.
+  const isEstimated = !!draw.note && (draw.groups?.length ?? 0) > 0;
   const filterBar = (
-    <div className="detail-toolbar">
-      <span className="fw-700 fs-14">Draw{roundNum ? ` — Ronda ${roundNum}` : ""}</span>
-      <span className="muted fs-12">{(draw.groups || []).length} flights · {total} jogadores</span>
-      {draw.date && <span className="muted fs-12">· {draw.date}</span>}
-      {fpgUrl && (
-        <a href={fpgUrl} target="_blank" rel="noopener noreferrer"
-          className="ml-auto fs-11" style={{ color: "var(--chart-2)" }}>
-          scoring.fpg.pt ↗
-        </a>
+    <>
+      <div className="detail-toolbar">
+        <span className="fw-700 fs-14">Draw{roundNum ? ` — Ronda ${roundNum}` : ""}{isEstimated ? " (estimado)" : ""}</span>
+        <span className="muted fs-12">{(draw.groups || []).length} flights · {total} jogadores</span>
+        {draw.date && <span className="muted fs-12">· {draw.date}</span>}
+        {fpgUrl && (
+          <a href={fpgUrl} target="_blank" rel="noopener noreferrer"
+            className="ml-auto fs-11" style={{ color: "var(--chart-2)" }}>
+            scoring.fpg.pt ↗
+          </a>
+        )}
+      </div>
+      {isEstimated && (
+        <div className="fs-12 fw-600" style={{
+          padding: "8px 14px", margin: "6px 12px",
+          background: "var(--bg-warn-subtle, #fef3c7)",
+          border: "1px solid var(--color-warn, #f59e0b)",
+          borderRadius: 6,
+          color: "var(--text-1, #1f2937)", lineHeight: 1.4,
+        }}>
+          ⚠️ {draw.note}
+        </div>
       )}
-    </div>
+    </>
   );
 
   return (

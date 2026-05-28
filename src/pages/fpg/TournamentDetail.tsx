@@ -14,7 +14,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import type { Tournament } from "../../data/fpgTypes";
 import type { EscLookup } from "../../utils/playerUtils";
 import type { PlayersDB } from "../../ui/tournamentPrimitives";
-import { expandMultiRound } from "../../data/fpgUtils";
+import { expandMultiRound, synthesizeDrawFromCumulative } from "../../data/fpgUtils";
 import { tournamentHasManuel } from "../../data/fpgUtils";
 import { fmtDate, fpgAdmissionsUrl, fpgDrawUrl, fpgScoringUrl, tournamentUrl } from "../../utils/format";
 import {
@@ -44,8 +44,19 @@ function TournamentDetail({ tournament, escLookup, playersDB }: { tournament: To
     if (draws) for (const [k, d] of Object.entries(draws)) {
       if (d && (d.groups?.length ?? 0) > 0) out.set(parseInt(k, 10), d);
     }
+    // Sintetizar draws em falta a partir do leaderboard acumulado.
+    // Quando a FPG ainda não publicou o draw oficial de uma ronda (ou o scraper
+    // não o apanhou), gerar emparelhamentos pelos resultados das rondas anteriores
+    // (regra FPG: 1º+2º+3º acumulado juntos, depois 4º+5º+6º, etc.). O DrawTab
+    // mostra um aviso (note) a indicar que é estimado.
+    const nR = tournament.rounds || 1;
+    for (let r = 2; r <= nR; r++) {
+      if (out.has(r)) continue;
+      const synth = synthesizeDrawFromCumulative(tournament, r);
+      if (synth && (synth.groups?.length ?? 0) > 0) out.set(r, synth);
+    }
     return out;
-  }, [draws]);
+  }, [draws, tournament]);
 
   // Expanded list: R1, R2, ..., Resumo
   const expanded = useMemo(() => expandMultiRound(tournament), [tournament]);
