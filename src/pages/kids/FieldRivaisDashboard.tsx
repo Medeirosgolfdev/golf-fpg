@@ -543,6 +543,32 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
     return t.escaloes.filter(e => (e.jogadores?.length ?? 0) > 0).map(e => e.nome);
   }, [futureTorneios, torneioT]);
 
+  // Auto-normalização: quando `futureTorneios` muda (load async ou re-cálculo),
+  // garantir que `torneioT` e `escalaoNome` apontam para algo válido. Sem
+  // isto, o `defaultT/defaultEscalao` pode ficar bloqueado num torneio que
+  // não tem o escalão pedido (caso real: European 2026 saiu do field; WC
+  // tem Boys 12 mas o escalão fica "" no select se algo falhou antes).
+  useEffect(() => {
+    if (futureTorneios.length === 0) return;
+    // 1) Se o torneio actual não existe, fixar no primeiro disponível
+    const currentTorneio = futureTorneios.find(x => x.t === torneioT);
+    if (!currentTorneio) {
+      const first = futureTorneios[0];
+      setTorneioT(first.t);
+      const firstEsc = first.escaloes.find(e => e.nome === escalaoNome && (e.jogadores?.length ?? 0) > 0)
+        || first.escaloes.find(e => (e.jogadores?.length ?? 0) > 0);
+      if (firstEsc) setEscalaoNome(firstEsc.nome);
+      return;
+    }
+    // 2) Se o escalão actual não existe (ou está vazio) para este torneio,
+    //    escolher o primeiro escalão COM jogadores.
+    const currentEsc = currentTorneio.escaloes.find(e => e.nome === escalaoNome && (e.jogadores?.length ?? 0) > 0);
+    if (!currentEsc) {
+      const firstEsc = currentTorneio.escaloes.find(e => (e.jogadores?.length ?? 0) > 0);
+      if (firstEsc) setEscalaoNome(firstEsc.nome);
+    }
+  }, [futureTorneios, torneioT, escalaoNome]);
+
   // Construir dataset {D, T, UP, manuel, AVG_R, T_WEIGHTS, allCountries}
   const dataset = useMemo(() => {
     if (!field || !mh) return null;
