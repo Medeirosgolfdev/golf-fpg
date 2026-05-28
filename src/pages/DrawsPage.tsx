@@ -52,12 +52,23 @@ interface Round {
   companheiros: Companion[];
 }
 
+interface TorneioEntry {
+  torneioId: string;
+  nome: string;
+  data: string | null;
+  rondas: number;
+}
+
 interface CoverageBlock {
   rondasJogadas: number;
   rondasComDraw: number;
   torneiosJogados: number;
   torneiosComDraw: number;
   torneiosSemDraw?: string[];
+  torneiosComDrawDetalhe?: TorneioEntry[];
+  torneiosSemDrawDetalhe?: TorneioEntry[];
+  torneiosSkippedDetalhe?: TorneioEntry[];
+  skipCcodes?: string[];
 }
 
 interface PairingsFile {
@@ -234,6 +245,121 @@ function CircuitBadge({ circuitos }: { circuitos: Set<"FPG" | "USKids" | "Intl">
 
 // ── Página principal ──────────────────────────────────────────────────
 
+// Para cada torneio FPG agregado, devolvemos uma URL canónica para a página
+// interna `/FPG/torneio/{ccode}-{tcode}` (deep-link já suportado pela FPGPage).
+function linkTorneioFPG(torneioId: string): string {
+  return `/FPG/torneio/${torneioId}`;
+}
+
+// Lista colapsável e ordenada de torneios — usada para "Com draw", "Sem draw"
+// e "Excluídos". Cada item é clicável e abre a página do torneio na FPGPage.
+function TorneiosList({
+  titulo,
+  cor,
+  items,
+  emptyText,
+  defaultOpen = true,
+}: {
+  titulo: string;
+  cor: string;
+  items: TorneioEntry[];
+  emptyText: string;
+  defaultOpen?: boolean;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div style={{
+      border: "1px solid var(--border, #e5e5e5)",
+      borderRadius: 8,
+      background: "var(--bg, #fff)",
+      overflow: "hidden",
+    }}>
+      <button
+        type="button"
+        onClick={() => setOpen(o => !o)}
+        style={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          gap: 8,
+          padding: "8px 12px",
+          background: "var(--bg-soft, #f9fafb)",
+          border: "none",
+          borderBottom: open ? "1px solid var(--border, #e5e5e5)" : "none",
+          cursor: "pointer",
+          textAlign: "left",
+          fontSize: 13,
+          fontWeight: 600,
+        }}
+      >
+        <span style={{ color: "var(--text-muted, #888)", fontSize: 11 }}>
+          {open ? "▾" : "▸"}
+        </span>
+        <span
+          style={{
+            display: "inline-block",
+            width: 8,
+            height: 8,
+            borderRadius: "50%",
+            background: cor,
+          }}
+        />
+        <span>{titulo}</span>
+        <span className="muted fs-12" style={{ marginLeft: "auto", fontWeight: 400 }}>
+          {items.length}
+        </span>
+      </button>
+      {open && (
+        <div style={{ maxHeight: 380, overflowY: "auto" }}>
+          {items.length === 0 ? (
+            <div className="muted fs-12" style={{ padding: "10px 12px" }}>
+              {emptyText}
+            </div>
+          ) : (
+            <ul style={{ margin: 0, padding: "6px 0", listStyle: "none" }}>
+              {items.map((t) => (
+                <li
+                  key={t.torneioId}
+                  style={{
+                    padding: "4px 12px",
+                    display: "flex",
+                    alignItems: "baseline",
+                    gap: 8,
+                    fontSize: 12.5,
+                    borderBottom: "1px solid var(--bg-soft, #f5f5f5)",
+                  }}
+                >
+                  <span
+                    className="muted fs-12"
+                    style={{ width: 78, flexShrink: 0, fontVariantNumeric: "tabular-nums" }}
+                  >
+                    {fmtDateShort(t.data)}
+                  </span>
+                  <Link
+                    to={linkTorneioFPG(t.torneioId)}
+                    className="lk"
+                    style={{ flex: 1, lineHeight: 1.3 }}
+                  >
+                    {t.nome || t.torneioId}
+                  </Link>
+                  {t.rondas > 1 && (
+                    <span
+                      className="muted fs-12"
+                      style={{ flexShrink: 0, fontVariantNumeric: "tabular-nums" }}
+                    >
+                      {t.rondas}r
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function DrawsPage() {
   const [data, setData] = useState<PairingsFile | null>(null);
   const [intlLinks, setIntlLinks] = useState<IntlLink[]>([]);
@@ -306,6 +432,41 @@ export default function DrawsPage() {
       return next;
     });
   };
+
+  // ── Listas de torneios FPG: COM draw (derivada das rondas), SEM draw
+  // (do JSON cobertura), e silenciosamente excluídos (ccode 982 — Drive
+  // Challenge Madeira, reatribuído pela FPG a Açores).
+  const listasFpgTorneios = useMemo(() => {
+    if (!data || !data.cobertura?.fpg) return { com: [], sem: [], skip: [], skipCcodes: [] };
+    const cov = data.cobertura.fpg;
+    // COM draw — derivar de data.rondas se o JSON ainda não trouxer o detalhe
+    let com: TorneioEntry[];
+    if (cov.torneiosComDrawDetalhe?.length) {
+      com = cov.torneiosComDrawDetalhe;
+    } else {
+      const map = new Map<string, TorneioEntry>();
+      for (const r of data.rondas) {
+        if (r.circuito !== "FPG") continue;
+        const e = map.get(r.torneioId);
+        if (!e) {
+          map.set(r.torneioId, {
+            torneioId: r.torneioId,
+            nome: r.torneioNome,
+            data: r.data,
+            rondas: 1,
+          });
+        } else {
+          e.rondas += 1;
+          if (r.data && (!e.data || r.data > e.data)) e.data = r.data;
+        }
+      }
+      com = [...map.values()].sort((a, b) => (b.data || "").localeCompare(a.data || ""));
+    }
+    const sem: TorneioEntry[] = cov.torneiosSemDrawDetalhe || [];
+    const skip: TorneioEntry[] = cov.torneiosSkippedDetalhe || [];
+    const skipCcodes: string[] = cov.skipCcodes || [];
+    return { com, sem, skip, skipCcodes };
+  }, [data]);
 
   // Contagens por tab (FPG + Intl, onde Intl junta USKids+Intl)
   const contagensTab = useMemo(() => {
@@ -506,7 +667,13 @@ export default function DrawsPage() {
         })()}
 
         {data && linhasOrdenadas.length > 0 && (
-          <div style={{ overflowX: "auto" }}>
+          <div style={{
+            display: tab === "FPG" ? "flex" : "block",
+            gap: 16,
+            alignItems: "flex-start",
+            flexWrap: "wrap",
+          }}>
+          <div style={{ overflowX: "auto", flex: "0 1 auto", minWidth: 0 }}>
             <table className="lb" style={{ minWidth: 720 }}>
               <thead>
                 <tr>
@@ -622,6 +789,58 @@ export default function DrawsPage() {
                 </tr>
               </tfoot>
             </table>
+          </div>
+
+          {/* Painel lateral — listas de torneios FPG (Com/Sem/Excluídos) */}
+          {tab === "FPG" && (
+            <aside style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 12,
+              flex: "1 1 280px",
+              minWidth: 280,
+              maxWidth: 380,
+            }}>
+              <div className="muted fs-12" style={{ lineHeight: 1.4 }}>
+                Detalhe dos torneios FPG do Manuel — clica num para abrir a página do torneio.
+              </div>
+              <TorneiosList
+                titulo="Com draw scrapado"
+                cor="var(--score-birdie, #16a34a)"
+                items={listasFpgTorneios.com}
+                emptyText="Nenhum torneio com draw."
+                defaultOpen={false}
+              />
+              <TorneiosList
+                titulo="Sem draw — passíveis de scrapar"
+                cor="#f59e0b"
+                items={listasFpgTorneios.sem}
+                emptyText="Todos os torneios têm draw."
+                defaultOpen={true}
+              />
+              {listasFpgTorneios.skip.length > 0 && (
+                <TorneiosList
+                  titulo={`Excluídos (ccode ${(listasFpgTorneios.skipCcodes || []).join(", ") || "?"})`}
+                  cor="#9ca3af"
+                  items={listasFpgTorneios.skip}
+                  emptyText="Nada excluído."
+                  defaultOpen={false}
+                />
+              )}
+              {listasFpgTorneios.skip.length === 0 && listasFpgTorneios.skipCcodes.length > 0 && (
+                <div className="muted fs-12" style={{
+                  padding: "8px 12px",
+                  background: "var(--bg-soft, #f9fafb)",
+                  border: "1px dashed var(--border, #e5e5e5)",
+                  borderRadius: 8,
+                }}>
+                  ⓘ {listasFpgTorneios.skipCcodes.length === 1 ? "Ccode" : "Ccodes"}{" "}
+                  <code>{listasFpgTorneios.skipCcodes.join(", ")}</code>{" "}
+                  são silenciosamente excluídos do scrape (Drive Challenge Madeira — a FPG reatribuiu o ccode a Açores). Re-correr <code>scripts/pairings-build.js</code> para listar.
+                </div>
+              )}
+            </aside>
+          )}
           </div>
         )}
       </div>

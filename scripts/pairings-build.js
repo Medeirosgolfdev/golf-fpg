@@ -197,7 +197,7 @@ function synthesizeMissingDraws(existingDraws, tScores) {
   return out;
 }
 
-function extractFpgPairings(fpg, scoreIdx, nomeIdx, clubeIdx) {
+function extractFpgPairings(fpg, scoreIdx, nomeIdx, clubeIdx, manuelTournIdx) {
   const out = [];
   for (const t of fpg.tournaments || []) {
     // ccode 982 (Madeira histórico) NÃO é excluído aqui:
@@ -209,9 +209,20 @@ function extractFpgPairings(fpg, scoreIdx, nomeIdx, clubeIdx) {
     //     ignorados — não há perigo de injectar dados errados
     //   - O `SKIP_CCODES` continua a ser usado no cálculo de cobertura para
     //     não listar torneios novos de Açores como "rondas sem draw"
-    const data = normIsoDate(t.date || (t.admissions && t.admissions.date) || null);
     const torneioId = `${t.ccode}-${t.tcode}`;
-    const torneioNome = t.name || (t.admissions && t.admissions.name) || torneioId;
+    // Resolução de nome/data — preferir scorecards.json (autoritativo) quando
+    // o fpg-admissions-draws.json trouxer placeholders (ex: "Torneio 10514"
+    // / data=hoje, resíduo de scrape passado com tcode fora do scope).
+    const m = manuelTournIdx ? manuelTournIdx.get(torneioId) : null;
+    const tNameRaw = t.name || (t.admissions && t.admissions.name) || null;
+    const tNameIsPlaceholder = tNameRaw && /^Torneio\s+\d+$/i.test(String(tNameRaw).trim());
+    const tDateRaw = normIsoDate(t.date || (t.admissions && t.admissions.date) || null);
+    const todayIso = new Date().toISOString().slice(0, 10);
+    const tDateIsPlaceholder = tDateRaw === todayIso && m && m.data && m.data !== todayIso;
+    const data = (tDateIsPlaceholder && m && m.data) ? m.data : tDateRaw;
+    const torneioNome = (tNameIsPlaceholder && m && m.nome)
+      ? m.nome
+      : (tNameRaw || (m && m.nome) || torneioId);
     const tScores = scoreIdx.get(torneioId) || new Map();
     const localNameToFed = buildLocalNameToFed(t);
     // Inclui draws sintetizados para rondas em falta (regra: cumulativo R1..R-1)
@@ -510,7 +521,14 @@ function main() {
   const injectados = applyUskidsOverrides(uskidsDraws, overrides);
   console.log(`  USKids overrides aplicados: ${injectados} grupos`);
 
-  const fpgPairings = extractFpgPairings(fpg, fpgScoreIdx, nomeIdx, clubeIdx);
+  // Pré-construir índice de torneios do Manuel (vindo de scorecards.json) — usado
+  // como fallback autoritativo de nome/data quando fpg-admissions-draws.json
+  // tem placeholders ("Torneio 10514" / data=hoje).
+  const manuelTournamentsList = buildManuelTournamentsList();
+  const manuelTournIdx = new Map();
+  for (const t of manuelTournamentsList) manuelTournIdx.set(t.torneioId, t);
+
+  const fpgPairings = extractFpgPairings(fpg, fpgScoreIdx, nomeIdx, clubeIdx, manuelTournIdx);
   const uskidsPairings = extractUskidsPairings(uskidsDraws, uskScoreIdx);
   const intlPairings = buildIntlPairingsFromOverrides(overrides);
 
@@ -561,8 +579,8 @@ function main() {
     compSet.add(c.fed ? `fed:${c.fed}` : `name:${normName(c.nome)}|${c.pais || ""}`);
   }
 
-  // Cobertura FPG via scorecards.json
-  const manuelTournaments = buildManuelTournamentsList();
+  // Cobertura FPG via scorecards.json (já pré-construído acima)
+  const manuelTournaments = manuelTournamentsList;
   const manuelTorneiosTotal = new Set(manuelTournaments.map(t => t.torneioId));
   const manuelRondasTotal = manuelTournaments.reduce((s, t) => s + t.rondas.length, 0);
   const fpgTorneiosComDraw = new Set(fpgPairings.map(r => r.torneioId));
@@ -573,6 +591,19 @@ function main() {
   const nomesDosTorneiosSemDraw = manuelTournaments
     .filter(t => !fpgTorneiosComDraw.has(t.torneioId))
     .filter(t => !SKIP_CCODES.has(t.ccode))
+    .sort((a, b) => (b.data || "").localeCompare(a.data || ""))
+    .map(t => ({ torneioId: t.torneioId, nome: t.nome, data: t.data, rondas: t.rondas.length }));
+  // Torneios COM draw — detalhe (nome+data+rondas) para mostrar na UI
+  const torneiosComDrawDetalhe = manuelTournaments
+    .filter(t => fpgTorneiosComDraw.has(t.torneioId))
+    .sort((a, b) => (b.data || "").localeCompare(a.data || ""))
+    .map(t => ({ torneioId: t.torneioId, nome: t.nome, data: t.data, rondas: t.rondas.length }));
+  // Torneios silenciosamente excluídos pelo SKIP_CCODES — para diagnóstico
+  // (ccode 982 = Drive Challenge Madeira; FPG reatribuiu ccode a Açores
+  // e os torneios antigos deixaram de ter draws scrapáveis)
+  const torneiosSkippedDetalhe = manuelTournaments
+    .filter(t => SKIP_CCODES.has(t.ccode))
+    .filter(t => !fpgTorneiosComDraw.has(t.torneioId))
     .sort((a, b) => (b.data || "").localeCompare(a.data || ""))
     .map(t => ({ torneioId: t.torneioId, nome: t.nome, data: t.data, rondas: t.rondas.length }));
 
@@ -595,8 +626,10 @@ function main() {
       rondasComDraw: fpgPairings.length,
       torneiosJogados: manuelTorneiosTotal.size,
       torneiosComDraw: fpgTorneiosComDraw.size,
+      torneiosComDrawDetalhe,
       torneiosSemDraw,
       torneiosSemDrawDetalhe: nomesDosTorneiosSemDraw,
+      torneiosSkippedDetalhe,
       skipCcodes: [...SKIP_CCODES],
     },
     uskids: {
