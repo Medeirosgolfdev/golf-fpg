@@ -252,7 +252,91 @@ async function load(opts) {
     }
   }
 
-  // 4) Convert tournMap to array, strip internal _par/_yards
+  // 4) Fold uskids-results.json entries into tournMap.
+  // Cobre dois casos:
+  //   (a) tcodes NOVOS — torneios sem member-history ainda (recém-acabados)
+  //   (b) tcodes JÁ em tournMap mas com flights vazios / sem alguns jogadores
+  //       — ex: slim tem meta do torneio (descoberta) mas ninguém ainda lá
+  //       jogou no slim porque o scrape do member-history corre semanal.
+  // O matcher por nome resolve os playerSourceKey null cross-source.
+  function normNameKey(n) {
+    return (n || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
+      .replace(/[-'’.·]+/g, " ").replace(/\s+/g, " ").trim();
+  }
+  for (const tres of results.resultados || []) {
+    const tcode = String(tres.t || tres.tcode || "");
+    if (!tcode) continue;
+    const isNew = !tournMap.has(tcode);
+    const t = getTourn(tcode);
+    // Se o nome ainda é fallback "t=NNNN", preferir o nome de results
+    if (tres.name && (isNew || t.name === `t=${tcode}` || !t.name)) {
+      t.name = tres.name;
+      const series = seriesFromName(tres.name);
+      t.seriesId = series.id;
+      t.seriesLabel = series.label;
+    }
+    for (const esc of tres.escaloes || []) {
+      const flightInfo = parseFlight(esc.age_group || esc.nome);
+      let flight = t.flights.get(flightInfo.flightKey);
+      if (!flight) {
+        const cm = completosMap.get(`${tcode}|${esc.age_group}`);
+        const fsEntry = fieldSizes[tcode]?.escaloes?.[esc.age_group];
+        flight = {
+          flightKey: flightInfo.flightKey,
+          label: flightInfo.label,
+          ageMin: flightInfo.ageMin,
+          ageMax: flightInfo.ageMax,
+          sex: flightInfo.sex,
+          par: cm?.par || t._par || undefined,
+          yards: cm?.yards || t._yards || undefined,
+          numHoles: cm?.numHoles || t.holesPerRound,
+          totalPar: cm?.totalPar,
+          fieldSize: fsEntry?.inscritos || null,
+          results: [],
+        };
+        t.flights.set(flightInfo.flightKey, flight);
+      }
+      // Colapsar per-player rounds across all rondas
+      const perPlayer = new Map();
+      for (const ronda of esc.rondas || []) {
+        for (const lp of ronda.leaderboard || []) {
+          const name = displayName(lp.nome || "");
+          if (!name) continue;
+          let acc = perPlayer.get(name);
+          if (!acc) { acc = { name, rounds: [] }; perPlayer.set(name, acc); }
+          acc.rounds.push({
+            round: ronda.ronda || acc.rounds.length + 1,
+            gross: typeof lp.score === "number" ? lp.score : null,
+            strokes: Array.isArray(lp.strokes) ? lp.strokes : undefined,
+          });
+        }
+      }
+      // Dedup contra resultados que já vieram do slim (mesmo flight, mesmo nome)
+      const existingNames = new Set(
+        flight.results.map(r => normNameKey(r.playerName))
+      );
+      for (const acc of perPlayer.values()) {
+        if (existingNames.has(normNameKey(acc.name))) continue;
+        acc.rounds.sort((a, b) => a.round - b.round);
+        const grossSum = acc.rounds.reduce((s, r) => s + (r.gross || 0), 0);
+        const parPerRound = flight.totalPar || t.parTotal;
+        const toParCalc = parPerRound && acc.rounds.length
+          ? grossSum - parPerRound * acc.rounds.length
+          : null;
+        flight.results.push({
+          playerSourceKey: null, // sem memberId — o identity matcher resolve por nome cross-source
+          playerName: acc.name,
+          pos: null,
+          status: "OK",
+          totalGross: grossSum || null,
+          toPar: toParCalc,
+          rounds: acc.rounds,
+        });
+      }
+    }
+  }
+
+  // 5) Convert tournMap to array, strip internal _par/_yards
   const tournaments = [];
   for (const [, t] of tournMap) {
     const flights = Array.from(t.flights.values()).map((f) => ({
@@ -279,70 +363,6 @@ async function load(opts) {
       links: [{
         label: "Signupanytime",
         url: `https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&t=${t.sourceKey}`,
-      }],
-    });
-  }
-
-  // 5) Also fold in uskids-results.json entries that aren't in slim
-  // (these tend to be tournaments with results but no member-history yet)
-  for (const tres of results.resultados || []) {
-    const tcode = String(tres.t || tres.tcode || "");
-    if (!tcode || tournMap.has(tcode)) continue;
-    // Build a basic tournament record from results-only data
-    const series = seriesFromName(tres.name);
-    const flights = [];
-    for (const esc of tres.escaloes || []) {
-      const flightInfo = parseFlight(esc.age_group || esc.nome);
-      const flight = {
-        flightKey: flightInfo.flightKey,
-        label: flightInfo.label,
-        ageMin: flightInfo.ageMin,
-        ageMax: flightInfo.ageMax,
-        sex: flightInfo.sex,
-        results: [],
-      };
-      // Each ronda has a leaderboard; we want per-player results, not per-ronda.
-      // We need to collapse: collect per-player rounds across all rondas.
-      const perPlayer = new Map();
-      for (const ronda of esc.rondas || []) {
-        for (const lp of ronda.leaderboard || []) {
-          const name = displayName(lp.nome || "");
-          if (!name) continue;
-          const key = name;
-          let acc = perPlayer.get(key);
-          if (!acc) { acc = { name, pos: lp.score?.includes?.("WD") ? null : null, rounds: [] }; perPlayer.set(key, acc); }
-          acc.rounds.push({
-            round: ronda.ronda || acc.rounds.length + 1,
-            gross: typeof lp.score === "number" ? lp.score : null,
-            strokes: Array.isArray(lp.strokes) ? lp.strokes : undefined,
-          });
-          // Position: usar a última disponível
-          if (typeof lp.score === "number") acc.lastGross = lp.score;
-        }
-      }
-      for (const acc of perPlayer.values()) {
-        flight.results.push({
-          playerSourceKey: null, // sem memberId — não vai casar com slim, mas pode casar por nome cross-source
-          playerName: acc.name,
-          pos: null,
-          status: "OK",
-          totalGross: null,
-          toPar: null,
-          rounds: acc.rounds,
-        });
-      }
-      flights.push(flight);
-    }
-    tournaments.push({
-      sourceKey: tcode,
-      name: tres.name,
-      date: null,
-      seriesId: series.id,
-      seriesLabel: series.label,
-      flights,
-      links: [{
-        label: "Signupanytime",
-        url: `https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&t=${tcode}`,
       }],
     });
   }
