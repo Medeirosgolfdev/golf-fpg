@@ -1,0 +1,374 @@
+{
+  "tourId": 71245,
+  "url": "https://www.nextcaddy.com/tour/71245",
+  "scrapedAt": "2026-06-01T09:30:00.672Z",
+  "meta": {
+    "name": "TORNEO INFANTIL 18 HOYOS",
+    "organizer": null,
+    "course": "Villa Nueva Golf Resort",
+    "courseCode": "AMD5",
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "INFANTIL",
+      "Caballeros",
+      "Señoras",
+      "Alevín",
+      "Benjamín",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ]
+  },
+  "course": null,
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Carlos Arriaga Sanchez",
+          "licencia": "AMD5084300",
+          "hcp": 25.5,
+          "nivel": "A",
+          "rounds": [],
+          "total": 49,
+          "toPar": -13,
+          "inscribedId": 2331749
+        },
+        {
+          "pos": 2,
+          "name": "Carlos Montenegro Arias",
+          "licencia": "AMD5467086",
+          "hcp": 26.4,
+          "nivel": "J",
+          "rounds": [],
+          "total": 42,
+          "toPar": -6,
+          "inscribedId": 2331750
+        },
+        {
+          "pos": 3,
+          "name": "Pedro Pablo Bononato Terry",
+          "licencia": "AM05099558",
+          "hcp": 42.8,
+          "nivel": "A",
+          "rounds": [],
+          "total": 42,
+          "toPar": -6,
+          "inscribedId": 2331754
+        },
+        {
+          "pos": 4,
+          "name": "Alvaro Lechuga Alvarez-Campana",
+          "licencia": "AM05983219",
+          "hcp": 35.4,
+          "nivel": "A",
+          "rounds": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2331751
+        },
+        {
+          "pos": 5,
+          "name": "Mateo Rodriguez Torrente",
+          "licencia": "AMD5084298",
+          "hcp": 41.5,
+          "nivel": "B",
+          "rounds": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2331753
+        },
+        {
+          "pos": 6,
+          "name": "Manuel Luis Arjona Serrano",
+          "licencia": "AMD5984026",
+          "hcp": 16,
+          "nivel": "A",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2331745
+        },
+        {
+          "pos": 7,
+          "name": "Alfonso Mas Gonzalez",
+          "licencia": "AMD5466082",
+          "hcp": 22.6,
+          "nivel": "A",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2331748
+        },
+        {
+          "pos": null,
+          "name": "Nicolas Gomez Brage",
+          "licencia": "AMD5984031",
+          "hcp": 41.4,
+          "nivel": "A",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2331752
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 8
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Manuel Luis Arjona Serrano",
+      "licencia": "AMD5984026",
+      "hcp": 16,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Alfonso Mas Gonzalez",
+      "licencia": "AMD5466082",
+      "hcp": 22.6,
+      "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "Carlos Arriaga Sanchez",
+      "licencia": "AMD5084300",
+      "hcp": 25.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Alvaro Lechuga Alvarez-Campana",
+      "licencia": "AM05983219",
+      "hcp": 35.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 5,
+      "name": "Nicolas Gomez Brage",
+      "licencia": "AMD5984031",
+      "hcp": 41.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 6,
+      "name": "Pedro Pablo Bononato Terry",
+      "licencia": "AM05099558",
+      "hcp": 42.8,
+      "nivel": "A"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Carlos Montenegro Arias",
+      "licencia": "AMD5467086",
+      "hcp": 26.4,
+      "nivel": "J"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Mateo Rodriguez Torrente",
+      "licencia": "AMD5084298",
+      "hcp": 41.5,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Manuel Luis Arjona Serrano",
+      "licencia": "AMD5984026",
+      "hcp": 16,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Alfonso Mas Gonzalez",
+      "licencia": "AMD5466082",
+      "hcp": 22.6,
+      "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "Carlos Arriaga Sanchez",
+      "licencia": "AMD5084300",
+      "hcp": 25.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Carlos Montenegro Arias",
+      "licencia": "AMD5467086",
+      "hcp": 26.4,
+      "nivel": "J"
+    },
+    {
+      "orden": 5,
+      "name": "Alvaro Lechuga Alvarez-Campana",
+      "licencia": "AM05983219",
+      "hcp": 35.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 6,
+      "name": "Nicolas Gomez Brage",
+      "licencia": "AMD5984031",
+      "hcp": 41.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 7,
+      "name": "Mateo Rodriguez Torrente",
+      "licencia": "AMD5084298",
+      "hcp": 41.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "Pedro Pablo Bononato Terry",
+      "licencia": "AM05099558",
+      "hcp": 42.8,
+      "nivel": "A"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Manuel Luis Arjona Serrano",
+          "hcp": 16,
+          "ins": "2331745",
+          "jid": "76295",
+          "nivel": "A"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Alfonso Mas Gonzalez",
+          "hcp": 22.6,
+          "ins": "2331748",
+          "jid": "76295",
+          "nivel": "A"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Carlos Arriaga Sanchez",
+          "hcp": 25.5,
+          "ins": "2331749",
+          "jid": "76295",
+          "nivel": "A"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Carlos Montenegro Arias",
+          "hcp": 26.4,
+          "ins": "2331750",
+          "jid": "76295",
+          "nivel": "J"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Alvaro Lechuga Alvarez-Campana",
+          "hcp": 35.4,
+          "ins": "2331751",
+          "jid": "76295",
+          "nivel": "A"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Nicolas Gomez Brage",
+          "hcp": 41.4,
+          "ins": "2331752",
+          "jid": "76295",
+          "nivel": "A"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Mateo Rodriguez Torrente",
+          "hcp": 41.5,
+          "ins": "2331753",
+          "jid": "76295",
+          "nivel": "B"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Pedro Pablo Bononato Terry",
+          "hcp": 42.8,
+          "ins": "2331754",
+          "jid": "76295",
+          "nivel": "A"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 76295
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/cartel/334525575_71245-torneo-infantil-18-hoyos.pdf"
+  ]
+}
