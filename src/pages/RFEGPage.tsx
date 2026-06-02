@@ -2233,14 +2233,60 @@ const RFEG_CONFIG: CircuitConfig = {
   grouping: "year",
   sourceColors: { rfegolf: "#aa151b", livegolfscoring: "#00aa55", golfdirecto: "#0066cc", nextcaddy: "#f1bf00" },
   sourceLabels: { rfegolf: "RFEGolf", livegolfscoring: "LGS", golfdirecto: "FCG", nextcaddy: "NextCaddy" },
-  filters: { search: true, year: true, escalao: true, sex: true, source: true, toggles: ["manuel", "pt", "top10"] },
+  filters: { search: true, year: true, escalao: true, sex: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos"] },
+  veteranoThreshold: 3,
   loadingMessage: "A carregar dados...",
 };
+
+/* ── veteranIndex pré-calculado (páginas lazy) ──────────────────────────
+ * O CircuitShell só consegue contar presenças (toggle ✦ Veteranos) a partir
+ * das divisões EAGER. A RFEG é lazy (centenas de torneios carregados sob
+ * demanda), por isso fornecemos um índice pré-calculado a partir dos
+ * agregados de rivais (rfegolf-rivals + fcg-rivals), que já trazem a lista
+ * de jogadores por torneio sem precisar de abrir cada ficheiro de detalhe.
+ *
+ * ⚠ As chaves TÊM de bater com `normName(player.name)` do shell: o leaderboard
+ * formata os nomes via formatPlayerName() (reordena "APELIDO, Nome" e
+ * Title-Case), por isso aplicamos a MESMA transformação aqui antes de
+ * normalizar (lowercase + NFD sem diacríticos + espaços únicos). */
+interface RfegRivalsFile {
+  torneios?:
+    | Record<string, { players?: { n?: string }[] }>
+    | { players?: { n?: string }[] }[];
+}
+
+/** Replica EXACTA do normName interno do CircuitShell (manter em sincronia). */
+function normNameVet(s: string): string {
+  return (s || "")
+    .normalize("NFD").replace(/[̀-ͯ]/g, "")
+    .toLowerCase().replace(/\s+/g, " ").trim();
+}
+
+function buildRfegVetIndex(files: (RfegRivalsFile | null | undefined)[]): Map<string, number> {
+  const m = new Map<string, number>();
+  for (const f of files) {
+    if (!f?.torneios) continue;
+    const tors = Array.isArray(f.torneios) ? f.torneios : Object.values(f.torneios);
+    for (const t of tors) {
+      const players = t?.players;
+      if (!Array.isArray(players)) continue;
+      const seen = new Set<string>(); // dedup por torneio (cross-divisão)
+      for (const p of players) {
+        const k = normNameVet(formatPlayerName(String(p?.n ?? "")));
+        if (!k || seen.has(k)) continue;
+        seen.add(k);
+        m.set(k, (m.get(k) ?? 0) + 1);
+      }
+    }
+  }
+  return m;
+}
 
 export default function RFEGPage() {
   const [index, setIndex] = useState<RFEGIndex | null>(null);
   const [dobLookup, setDobLookup] = useState<DobLookup | undefined>(undefined);
   const [hcpLookup, setHcpLookup] = useState<HcpLookup | undefined>(undefined);
+  const [vetIndex, setVetIndex] = useState<Map<string, number>>(() => new Map());
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const params = useParams<{ source?: string; id?: string; compId?: string }>();
@@ -2251,6 +2297,14 @@ export default function RFEGPage() {
       .catch((e) => setError(String(e?.message ?? e)));
     cachedFetchJson<DobLookupFile>("/data/licencia-dob-lookup.json").then((d) => { if (d && d.lookup) setDobLookup(d.lookup); }).catch(() => {});
     cachedFetchJson<HcpLookupFile>("/data/licencia-hcp-lookup.json").then((d) => { if (d && d.lookup) setHcpLookup(d.lookup); }).catch(() => {});
+    // Índice de veteranos (presenças por jogador) — agregados de rivais.
+    Promise.all([
+      cachedFetchJson<RfegRivalsFile>("/data/rfegolf-rivals.json").catch(() => null),
+      cachedFetchJson<RfegRivalsFile>("/data/fcg-rivals.json").catch(() => null),
+    ]).then(([a, b]) => {
+      const m = buildRfegVetIndex([a, b]);
+      if (m.size) setVetIndex(m);
+    });
   }, []);
 
   const entries = useMemo(
@@ -2268,11 +2322,12 @@ export default function RFEGPage() {
   // Config + páginas informativas (menu INFO na toolbar do shell).
   const config = useMemo<CircuitConfig>(() => ({
     ...RFEG_CONFIG,
+    veteranIndex: vetIndex.size ? vetIndex : undefined,
     specialItems: index ? [
       { key: "categorias", label: "📚 Categorías de edad", render: () => <RFEGCategoriesView catCounts={index.byCategory} /> },
       { key: "federaciones", label: "🏛️ Federaciones de España", render: () => <RFEGFederationsView /> },
     ] : [],
-  }), [index]);
+  }), [index, vetIndex]);
 
   if (error) return <EmptyState message={`Erro: ${error}`} />;
   if (!index) return <LoadingState message="A carregar índice RFEGolf..." />;
