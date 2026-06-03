@@ -15,6 +15,7 @@ import { computeDobInfo, escalaoIntl, type DobInfo } from "../dobInfo";
 import { getTournWeight } from "../tournWeight";
 import { flag as flagOf } from "../../../utils/flagUtils";
 import { MANUEL_DOB } from "../../../constants/manuel";
+import HcpSparkline from "./HcpSparkline";
 
 /** Bandeira por federação — mostrada junto ao número de licença. */
 const SOURCE_FLAGS: Record<string, string> = {
@@ -313,7 +314,7 @@ export default function HeroIdentity({ data, junior }: Props) {
         />
       </div>
 
-      {(escIntl || escUskids || escRfeg || escFpgTag || hcps.length > 0 || totalRounds > 0) && (
+      {(escIntl || escUskids || escRfeg || escFpgTag || hcps.length > 0 || (junior.hcpHistory && junior.hcpHistory.length >= 2) || totalRounds > 0) && (
         <div style={{ display: "flex", gap: 6, marginTop: 14, flexWrap: "wrap" }}>
           {escIntl && <EscPill label={escIntl} accent strong />}
           {escUskids && <EscPill label={`${escUskids} · USKids`} />}
@@ -325,10 +326,26 @@ export default function HeroIdentity({ data, junior }: Props) {
               fontSize: 11, padding: "3px 9px", borderRadius: 999,
               fontWeight: 600, color: "var(--text-2)",
               border: "1px solid var(--border-light)",
+              display: "inline-flex", alignItems: "center", gap: 4,
             }}>
               🎯 HCP {h.value?.toFixed(1)} <span style={{ color: "var(--text-3)", marginLeft: 3 }}>· {h.source}</span>
+              {i === hcps.length - 1 && junior.hcpHistory && junior.hcpHistory.length >= 2 && (
+                <HcpSparkline points={junior.hcpHistory} playerName={junior.canonicalName} />
+              )}
             </span>
           ))}
+          {hcps.length === 0 && junior.hcpHistory && junior.hcpHistory.length >= 2 && (
+            <span style={{
+              background: "var(--bg-muted)",
+              fontSize: 11, padding: "3px 9px", borderRadius: 999,
+              fontWeight: 600, color: "var(--text-2)",
+              border: "1px solid var(--border-light)",
+              display: "inline-flex", alignItems: "center", gap: 4,
+            }}>
+              🎯 HCP {junior.hcpHistory[0].hcpExact.toFixed(1)} <span style={{ color: "var(--text-3)", marginLeft: 3 }}>· {junior.hcpHistory[0].source}</span>
+              <HcpSparkline points={junior.hcpHistory} playerName={junior.canonicalName} />
+            </span>
+          )}
           {totalRounds > 0 && (
             <span title="Total de rondas jogadas em todas as fontes (inclui 9H)" style={{
               background: "var(--bg-muted)",

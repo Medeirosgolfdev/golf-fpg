@@ -21,6 +21,15 @@ import type { DataSource } from "../../ui/DataSources";
 // Types canónicos (espelham scripts/aggregator/types.js)
 // ═════════════════════════════════════════════════════════════════════
 
+export interface HcpPoint {
+  date: string;          // "YYYY-MM-DD"
+  hcpExact: number;
+  source: string;        // "fpg" | "ffg" | "fcg" | ...
+  tcode?: string;        // identificador do torneio na fonte
+  ccode?: string;
+  label?: string;        // nome do torneio (para tooltip)
+}
+
 export interface Junior {
   id: string;
   canonicalName: string;
@@ -36,6 +45,8 @@ export interface Junior {
   meta?: Record<string, unknown>;
   computed?: Record<string, unknown>;
   tournamentIds: string[];
+  /** Série temporal de HCP — um snapshot por participação. Ordenada desc por date. */
+  hcpHistory?: HcpPoint[];
   _match: {
     confidence: "strong" | "probable" | "manual";
     evidence: string[];

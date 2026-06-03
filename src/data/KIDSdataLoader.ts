@@ -76,6 +76,17 @@ export interface AutoTournResult {
   nholes?: number;
 }
 
+/** Um snapshot de HCP exacto numa data específica, vindo de uma fonte concreta
+ *  (tipicamente um torneio). Usado para construir sparklines + timeline. */
+export interface HcpPoint {
+  date: string;          // "YYYY-MM-DD"
+  hcpExact: number;
+  source: string;        // "fpg" | "ffg" | "fcg" | ...
+  tcode?: string;        // identificador do torneio na fonte
+  ccode?: string;
+  label?: string;        // nome do torneio (para tooltip)
+}
+
 export interface AutoRivalPlayer {
   n: string;
   co: string;
@@ -86,6 +97,9 @@ export interface AutoRivalPlayer {
   fpgHcpExact?: number;
   /** Data do último update do HCP FPG (YYYY-MM-DD) — para tooltips e UX. */
   fpgHcpDate?: string;
+  /** Série temporal de HCP — um snapshot por participação. Ordenada desc por date.
+   *  Permite renderizar sparkline + timeline no KIDS2Page. */
+  hcpHistory?: HcpPoint[];
   dob?: string;
   memberId?: string;
   esLicencia?: string;
@@ -471,6 +485,10 @@ async function _buildAutoRivalsInternal(
     }
     if (j.sources?.ffgolf?.lic) {
       p.frFed = j.sources.ffgolf.lic;
+    }
+    // hcpHistory (cross-source) — vem directamente do aggregator
+    if (Array.isArray((j as { hcpHistory?: HcpPoint[] }).hcpHistory)) {
+      p.hcpHistory = (j as { hcpHistory?: HcpPoint[] }).hcpHistory;
     }
 
     const results = juniorResults.get(j.id) || [];
