@@ -1339,6 +1339,7 @@ function DriveContent() {
   // Carregar admissions + draws (uma vez) e atachar aos tournaments por ccode-tcode
   const [admDrawsIdx, setAdmDrawsIdx] = useState<Map<string, any>>(new Map());
   const [raw, setRaw] = useState<Tournament[]>([]);
+  const [selectedDriveId, setSelectedDriveId] = useState<string | null>(null);
   const [admissionsMeta, setAdmissionsMeta] = useState<DataSource[]>([]);
   useEffect(() => {
     loadFpgAdmissionsDraws()
@@ -1389,7 +1390,10 @@ function DriveContent() {
     // não destroem o agrupamento por evento): série / ano / região.
     let src = raw as any[];
     if (series !== "all") src = src.filter(t => (t.series || "tour") === series);
-    if (yearFilter) src = src.filter(t => (t.date || "").slice(0, 4) === String(yearFilter));
+    // Ano: por defeito o mais recente disponível (não "todos os anos").
+    const yrs = [...new Set(src.map(t => (t.date || "").slice(0, 4)).filter(Boolean))].sort().reverse();
+    const effYear = yearFilter ?? yrs[0];
+    if (effYear) src = src.filter(t => (t.date || "").slice(0, 4) === effYear);
     if (regionFilter) src = src.filter(t => t.region === regionFilter);
     const ents = buildDriveEntries(src as any);
     // Detalhe IDÊNTICO à FPGPage: cada divisão (escalão) renderiza o TournamentDetail
@@ -1410,6 +1414,17 @@ function DriveContent() {
     if (escFilter.length > 0) out = out.filter(e => (e.divisions ?? []).some(d => escFilter.includes(d.escalao as any)));
     return out;
   }, [raw, admDrawsIdx, series, yearFilter, regionFilter, filterManuel, escFilter, pdb, escLookup]);
+
+  // Auto-seleccionar o torneio mais recente (e re-seleccionar quando a selecção
+  // actual deixa de estar visível depois de mudar filtros).
+  useEffect(() => {
+    if (driveEntries.length === 0) return;
+    const exists = selectedDriveId && driveEntries.some(e => e.id === selectedDriveId);
+    if (!exists) {
+      const latest = [...driveEntries].sort((a, b) => (b.dateStart || "").localeCompare(a.dateStart || ""))[0];
+      setSelectedDriveId(latest?.id ?? null);
+    }
+  }, [driveEntries, selectedDriveId]);
 
   // State para tab especial (Inscrições / Draw RN) ortogonal ao roundIdx
   const [specialTab, setSpecialTab] = useState<string | null>(null);  // "admissions" | "draw:1" | null
@@ -1998,7 +2013,9 @@ function DriveContent() {
           MODO NORMAL (Tour / Challenge / AQUAPOR)
           ══════════════════════════════════════════ */}
       {navMode === "torneios" && (
-        <CircuitShell entries={driveEntries} config={{ ...DRIVE_CONFIG, color: "var(--color-good-dark)", textColor: "#fff", filters: { search: true } }} loading={loading} />
+        <CircuitShell entries={driveEntries} config={{ ...DRIVE_CONFIG, color: "var(--color-good-dark)", textColor: "#fff", filters: { search: true } }} loading={loading}
+          selectedId={selectedDriveId ?? undefined}
+          onSelectEntry={(e) => setSelectedDriveId(e.id)} />
       )}
 
       {false && navMode === "torneios" && (

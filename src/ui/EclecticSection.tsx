@@ -19,26 +19,37 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
     eclético: "asc", vs_par: "asc", melhor_gr: "asc", media_gr: "asc",
   });
 
-  const sortedEcList = useMemo(() => {
-    let sorted = [...ecList];
+  // Agrupar as entradas do ecList por tee — um tee pode ter variante de 18 e de
+  // 9 buracos. Dentro de cada grupo, 18H (maior holeCount) primeiro. Ordem dos
+  // grupos = ordem de aparição (estável) para os blocos do scorecard.
+  const teeGroups = useMemo(() => {
+    const map = new Map<string, EclecticEntry[]>();
+    const order: string[] = [];
+    for (const ec of ecList) {
+      if (!map.has(ec.teeKey)) { map.set(ec.teeKey, []); order.push(ec.teeKey); }
+      map.get(ec.teeKey)!.push(ec);
+    }
+    for (const k of order) map.get(k)!.sort((a, b) => b.holeCount - a.holeCount);
+    return order.map(k => map.get(k)!);
+  }, [ecList]);
+
+  // Tabela-resumo: uma linha por tee, ordenável (métrica da variante principal = 18H).
+  const sortedGroups = useMemo(() => {
     const dir = sortDir === "asc" ? 1 : -1;
-    sorted.sort((a, b) => {
-      let av: number, bv: number;
-      const hsA = holeStats[a.teeKey];
-      const hsB = holeStats[b.teeKey];
+    const metric = (g: EclecticEntry[]) => {
+      const p = g[0]; const hs = holeStats[p.teeKey];
       switch (sortKey) {
-        case "rondas": av = hsA?.nRounds ?? 0; bv = hsB?.nRounds ?? 0; break;
-        case "par": av = a.totalPar ?? 0; bv = b.totalPar ?? 0; break;
-        case "eclético": av = a.totalGross ?? 0; bv = b.totalGross ?? 0; break;
-        case "vs_par": av = (a.toPar ?? 0); bv = (b.toPar ?? 0); break;
-        case "melhor_gr": av = hsA?.bestRound?.gross ?? 999; bv = hsB?.bestRound?.gross ?? 999; break;
-        case "media_gr": av = hsA?.avgGross ?? 0; bv = hsB?.avgGross ?? 0; break;
-        default: av = hsA?.nRounds ?? 0; bv = hsB?.nRounds ?? 0;
+        case "rondas": return hs?.nRounds ?? 0;
+        case "par": return p.totalPar ?? 0;
+        case "eclético": return p.totalGross ?? 0;
+        case "vs_par": return p.toPar ?? 0;
+        case "melhor_gr": return hs?.bestRound?.gross ?? 999;
+        case "media_gr": return hs?.avgGross ?? 0;
+        default: return hs?.nRounds ?? 0;
       }
-      return dir * (av - bv);
-    });
-    return sorted;
-  }, [ecList, holeStats, sortKey, sortDir]);
+    };
+    return [...teeGroups].sort((a, b) => dir * (metric(a) - metric(b)));
+  }, [teeGroups, holeStats, sortKey, sortDir]);
 
   return (
     <div className="mb-16">
@@ -55,19 +66,25 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
               <SortableHdr k="media_gr" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Média Gr.</SortableHdr></tr>
           </thead>
           <tbody>
-            {sortedEcList.map(ex => {
-              const hs = holeStats[ex.teeKey];
-              const tp = ex.toPar;
-              const tpStr = tp == null ? "" : (fmtSign(tp));
-              const tpCol = tp == null ? "" : (tp > 0 ? SC.danger : tp < 0 ? SC.good : SC.muted);
-              const isActive = ex.teeKey === activeTee;
+            {sortedGroups.map(group => {
+              const primary = group[0];
+              const hs = holeStats[primary.teeKey];
+              const isActive = primary.teeKey === activeTee;
               return (
-                <tr key={ex.teeKey} className={`pointer${isActive ? " tee-row-active" : ""}`} onClick={() => onSelectTee(ex.teeKey)}>
-                  <td><TeePill name={ex.teeName} /></td>
+                <tr key={primary.teeKey} className={`pointer${isActive ? " tee-row-active" : ""}`} onClick={() => onSelectTee(primary.teeKey)}>
+                  <td><TeePill name={primary.teeName} /></td>
                   <td className="r fw-600">{hs?.nRounds ?? ""}</td>
-                  <td className="r">{ex.totalPar}</td>
-                  <td className="r c-blue-13">{ex.totalGross}</td>
-                  <td className="r fw-700" style={{ color: tpCol }}>{tpStr}</td>
+                  <td className="r">{group.map(ec => (
+                    <div key={ec.holeCount} className="ec-sum-var"><span className="ec-sum-hc">{ec.holeCount}H</span> {ec.totalPar}</div>
+                  ))}</td>
+                  <td className="r">{group.map(ec => (
+                    <div key={ec.holeCount} className="ec-sum-var fw-600">{ec.totalGross}</div>
+                  ))}</td>
+                  <td className="r">{group.map(ec => {
+                    const tp = ec.toPar;
+                    const col = tp == null ? "" : tp > 0 ? SC.danger : tp < 0 ? SC.good : SC.muted;
+                    return <div key={ec.holeCount} className="ec-sum-var fw-700" style={{ color: col }}>{tp == null ? "" : fmtSign(tp)}</div>;
+                  })}</td>
                   <td className="r fw-600">{hs?.bestRound?.gross ?? "–"}</td>
                   <td className="r">{hs?.avgGross?.toFixed(1) ?? "–"}</td>
                 </tr>
@@ -77,9 +94,21 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
         </table>
       </div>
 
-      {/* Hole-by-hole scorecard per tee */}
-      {ecList.map(ec => {
-        const isActive = ec.teeKey === activeTee;
+      {/* Hole-by-hole scorecard per tee — 18H e 9H do mesmo tee no mesmo bloco */}
+      {teeGroups.map(group => {
+        const first = group[0];
+        const isActive = first.teeKey === activeTee;
+        return (
+          <div key={first.teeKey} className={`ecPillBlock ${isActive ? "ecActive" : ""} overflow-hidden br-lg mt-8`}
+            style={{ border: isActive ? "1px solid var(--border)" : "1px solid var(--border-light)" }}>
+            <div className="pointer fw-600 fs-12 ecPillHeader" style={{ background: "var(--bg-detail)" }}
+              onClick={() => onSelectTee(first.teeKey)}>
+              <TeePill name={first.teeName} />
+              {group.map(ec => (
+                <span key={ec.holeCount} className="ec-tee-variant">{ec.holeCount}H <span className="fw-700">{ec.totalGross}</span> <span className="muted">par {ec.totalPar}</span></span>
+              ))}
+            </div>
+            {group.map(ec => {
         const det = ecDet[ec.teeKey] || ec;
         const parArr = det.holes?.map(h => h.par) || [];
         const hc = ec.holeCount;
@@ -149,22 +178,14 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
         );
 
         return (
-          <div key={ec.teeKey} className={`ecPillBlock ${isActive ? "ecActive" : ""} overflow-hidden br-lg mt-8`}
-            style={{ border: isActive ? "1px solid var(--border)" : "1px solid var(--border-light)" }}>
-            <div className="pointer fw-600 fs-12 ecPillHeader" style={{ background: "var(--bg-detail)" }}
-              onClick={() => onSelectTee(ec.teeKey)}>
-              <TeePill name={ec.teeName} />{" "}
-              <span className="muted ml-6">Eclético</span>{" "}
-              <span className="fw-700">{ec.totalGross}</span>
-              <span className="muted ml-6">par {ec.totalPar}</span>
-              {commonMeters && <span className="muted ml-6">· {commonMeters}m</span>}
-              <span className="muted ml-6">· {hc} buracos</span>
-              <span className="muted ml-6">· {teeRounds.length} rondas</span>
+          <div key={ec.holeCount} className="ec-variant">
+            <div className="ec-variant-sub muted">
+              {hc} buracos · {teeRounds.length} rondas{commonMeters ? ` · ${commonMeters}m` : ""}
             </div>
-            {/* Eclectic hole-by-hole table — tamanho/peso uniformes. Só os totais (OUT/IN/TOT) e
-                 labels de linha ficam em fw-700, tudo o resto herda do .sc-table-ec (12px, peso 400). */}
+            {/* Scorecard sem w-full: largura por conteúdo, células iguais ao 18H —
+                assim a tabela de 9H fica visivelmente mais curta. */}
             <div className="scroll-x">
-              <table className="sc-table-ec w-full" >
+              <table className="sc-table-ec" >
                 <thead>
                   <tr>
                     <th className="row-label col-w60">Buraco</th>
@@ -278,6 +299,9 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
                 </tbody>
               </table>
             </div>
+          </div>
+          );
+        })}
           </div>
         );
       })}

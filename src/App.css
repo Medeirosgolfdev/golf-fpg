@@ -874,10 +874,18 @@ tr.cross-current { background: var(--bg-success); }
 .ec-summary th { text-transform: none; letter-spacing: 0; font-weight: 500; background: transparent; color: var(--text-3); padding: 3px 10px; }
 .ec-summary td { padding: 3px 10px; }
 .ec-summary tbody tr:hover { background: var(--bg-hover-subtle); }
+/* Tabela-resumo: variantes 18H/9H empilhadas na mesma célula (par/eclético/vsPar) */
+.ec-summary .ec-sum-var { line-height: 1.35; }
+.ec-summary .ec-sum-hc { font-size: 9px; color: var(--text-muted); font-weight: 600; margin-right: 2px; }
 
 /* Header de cada bloco de tee (Eclético por tee) */
 .ecPillHeader { padding: 8px 12px; cursor: pointer; display: flex; align-items: center; flex-wrap: wrap; gap: 4px; border-bottom: 1px solid var(--border-light); }
 .ecPillHeader .muted { font-size: 11px; }
+/* Chips de variante (18H / 9H) no cabeçalho do bloco de tee */
+.ec-tee-variant { font-size: 12px; margin-left: 10px; color: var(--text-2); }
+/* Cada variante (18H / 9H) dentro do mesmo bloco de tee */
+.ec-variant + .ec-variant { border-top: 1px solid var(--border); }
+.ec-variant-sub { padding: 6px 12px 2px; font-size: 11px; }
 
 /* ─── Course Performance Analysis ─── */
 /* courseAnalysis → .card (unified) */
