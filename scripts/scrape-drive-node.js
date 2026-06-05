@@ -373,7 +373,7 @@ function writeIfChanged(filepath, newObj) {
   filesWritten++;
   const nT = totalsOf(newObj);
   const oT = oldObj ? totalsOf(oldObj) : { torneios: 0, jogadores: 0, scorecards: 0 };
-  const more = nT.torneios > oT.torneios || nT.scorecards > oT.scorecards;
+  const more = nT.torneios > oT.torneios || nT.jogadores > oT.jogadores || nT.scorecards > oT.scorecards;
   if (more) gainedInfo = true;
   const marker = oldObj ? (more ? `${G}MAIS${X}` : `${Y}MUDOU${X}`) : `${G}NOVO${X}`;
   info(`${marker} ${path.basename(filepath)} — ${nT.torneios}T/${nT.jogadores}J/${nT.scorecards}SC` +
