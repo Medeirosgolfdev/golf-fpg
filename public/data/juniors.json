@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-06-03T13:14:56.000Z",
+  "generatedAt": "2026-06-05T11:36:19.614Z",
   "juniors": [
     {
       "id": "u433800",
@@ -215895,8 +215895,8 @@
           "club": "Estoril",
           "clubCode": "004",
           "clubLong": "Clube de Golf do Estoril",
-          "hcpExact": 5.7,
-          "hcpDate": "2026-05-23",
+          "hcpExact": 5.3,
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [
             "PJA"
@@ -215928,6 +215928,14 @@
         "fpg-000-10939-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 5.7,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-05-22",
           "hcpExact": 5.7,
@@ -230623,6 +230631,130 @@
       }
     },
     {
+      "id": "u583707",
+      "canonicalName": "Russell Childress",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "US",
+      "country": "US",
+      "region": null,
+      "club": null,
+      "sources": {
+        "uskids": {
+          "memberId": "583707",
+          "ageGroupCurrent": "Boys 12"
+        }
+      },
+      "tournamentIds": [
+        "uskids-12538",
+        "uskids-12539",
+        "uskids-12910",
+        "uskids-12911",
+        "uskids-15017",
+        "uskids-15018",
+        "uskids-20195",
+        "uskids-12913",
+        "uskids-14673",
+        "uskids-14674",
+        "uskids-14677",
+        "uskids-15020",
+        "uskids-15833",
+        "uskids-15835",
+        "uskids-15841",
+        "uskids-17177",
+        "uskids-17182",
+        "uskids-17640",
+        "uskids-17643",
+        "uskids-17645",
+        "uskids-18371",
+        "uskids-18374",
+        "uskids-20192",
+        "uskids-21107",
+        "uskids-21108",
+        "uskids-21109",
+        "uskids-21110",
+        "uskids-15036",
+        "uskids-15037",
+        "uskids-15040",
+        "uskids-15041",
+        "uskids-17912",
+        "uskids-18978",
+        "uskids-16316",
+        "uskids-18415",
+        "uskids-17767",
+        "uskids-16318",
+        "uskids-13564",
+        "uskids-13567",
+        "uskids-21848",
+        "uskids-19962",
+        "uskids-19963",
+        "uskids-19966",
+        "uskids-20898",
+        "uskids-20902",
+        "uskids-20903",
+        "uskids-21237",
+        "uskids-13560",
+        "uskids-13563",
+        "uskids-13566",
+        "uskids-19472",
+        "uskids-20899",
+        "uskids-14794",
+        "uskids-15836",
+        "uskids-15838",
+        "uskids-15839",
+        "uskids-15840",
+        "uskids-18369",
+        "uskids-18370",
+        "uskids-18373",
+        "uskids-18375",
+        "uskids-18376",
+        "uskids-20198",
+        "uskids-13561",
+        "uskids-13565",
+        "uskids-14301",
+        "uskids-14675",
+        "uskids-17178",
+        "uskids-12744",
+        "uskids-12746",
+        "uskids-17175",
+        "uskids-17179",
+        "uskids-17181",
+        "uskids-21106",
+        "uskids-12743",
+        "uskids-16039",
+        "uskids-12747",
+        "uskids-12748",
+        "uskids-13819",
+        "uskids-13821",
+        "uskids-13823",
+        "uskids-19964",
+        "uskids-21265",
+        "uskids-20900",
+        "uskids-20901",
+        "uskids-12745",
+        "uskids-17180",
+        "uskids-17644",
+        "uskids-15087",
+        "uskids-21104",
+        "uskids-21105",
+        "uskids-21111",
+        "uskids-21269",
+        "uskids-21263",
+        "uskids-21266",
+        "uskids-21268"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "uskids:583707"
+        ],
+        "mergedFromSources": [
+          "uskids"
+        ]
+      }
+    },
+    {
       "id": "u583732",
       "canonicalName": "Kash Koepp",
       "aliases": [],
@@ -243606,8 +243738,8 @@
           "club": "Miramar",
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
-          "hcpExact": 0.9,
-          "hcpDate": "2026-05-23",
+          "hcpExact": 1.2,
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [
             "inscrito-nacional"
@@ -243623,6 +243755,14 @@
         "fpg-000-10937-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 0.9,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-05-22",
           "hcpExact": 1.5,
@@ -245611,8 +245751,8 @@
           "club": "Estoril",
           "clubCode": "004",
           "clubLong": "Clube de Golf do Estoril",
-          "hcpExact": 3.8,
-          "hcpDate": "2026-05-23",
+          "hcpExact": 3.7,
+          "hcpDate": "2026-06-03",
           "sex": "F",
           "tags": [],
           "primary": true
@@ -245629,6 +245769,14 @@
         "fpg-000-10940-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 3.8,
+          "source": "fpg",
+          "tcode": "10911",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - S"
+        },
         {
           "date": "2026-05-22",
           "hcpExact": 4.3,
@@ -245706,7 +245854,7 @@
           "clubCode": "004",
           "clubLong": "Clube de Golf do Estoril",
           "hcpExact": 2.1,
-          "hcpDate": "2026-05-23",
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [
             "PJA"
@@ -245732,6 +245880,14 @@
         "fpg-000-10939-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 2.1,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-05-22",
           "hcpExact": 2.1,
@@ -246429,8 +246585,8 @@
           "club": "Ilha Terceira",
           "clubCode": "005",
           "clubLong": "Clube de Golf da Ilha Terceira",
-          "hcpExact": 43.1,
-          "hcpDate": "2026-04-09",
+          "hcpExact": 42.9,
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -246473,8 +246629,8 @@
           "club": "Estoril",
           "clubCode": "004",
           "clubLong": "Clube de Golf do Estoril",
-          "hcpExact": 3.2,
-          "hcpDate": "2026-05-23",
+          "hcpExact": 3.7,
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [
             "PJA"
@@ -246503,6 +246659,14 @@
         "fpg-000-10937-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 3.2,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-05-22",
           "hcpExact": 3.6,
@@ -246737,8 +246901,8 @@
           "club": "Belas",
           "clubCode": "068",
           "clubLong": "Clube de Golfe de Belas",
-          "hcpExact": 3.4,
-          "hcpDate": "2026-05-30",
+          "hcpExact": 3.6,
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [
             "PJA"
@@ -246763,6 +246927,14 @@
         "fpg-000-10937-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 3.6,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-05-22",
           "hcpExact": 3.2,
@@ -247019,8 +247191,8 @@
           "club": "Belas",
           "clubCode": "068",
           "clubLong": "Clube de Golfe de Belas",
-          "hcpExact": 6.6,
-          "hcpDate": "2026-05-17",
+          "hcpExact": 6.3,
+          "hcpDate": "2026-06-03",
           "sex": "F",
           "tags": [
             "PJA"
@@ -247037,6 +247209,14 @@
         "fpg-000-10938-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 6.6,
+          "source": "fpg",
+          "tcode": "10911",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - S"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 7.2,
@@ -247279,8 +247459,8 @@
           "club": "Belas",
           "clubCode": "162",
           "clubLong": "Belas",
-          "hcpExact": 7.2,
-          "hcpDate": "2026-05-30",
+          "hcpExact": 7,
+          "hcpDate": "2026-06-03",
           "sex": "F",
           "tags": [
             "PJA"
@@ -247304,6 +247484,14 @@
         "fpg-000-10938-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 7.6,
+          "source": "fpg",
+          "tcode": "10911",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - S"
+        },
         {
           "date": "2026-05-22",
           "hcpExact": 7.8,
@@ -288984,8 +289172,8 @@
         "uskids-19901",
         "uskids-19965",
         "uskids-21013",
-        "uskids-21264",
-        "uskids-21268"
+        "uskids-21268",
+        "uskids-21264"
       ],
       "_match": {
         "confidence": "strong",
@@ -296170,6 +296358,38 @@
       }
     },
     {
+      "id": "u629281",
+      "canonicalName": "Zhicheng  Lin",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "BW",
+      "country": "BW",
+      "region": null,
+      "club": null,
+      "sources": {
+        "uskids": {
+          "memberId": "629281",
+          "ageGroupCurrent": "Boys 11"
+        }
+      },
+      "tournamentIds": [
+        "uskids-18341",
+        "uskids-21206",
+        "uskids-21203",
+        "uskids-19403"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "uskids:629281"
+        ],
+        "mergedFromSources": [
+          "uskids"
+        ]
+      }
+    },
+    {
       "id": "u629299",
       "canonicalName": "Maksymilian Dudarski",
       "aliases": [],
@@ -302568,8 +302788,8 @@
           "club": "Assoc. Qta.Lago",
           "clubCode": "015",
           "clubLong": "Ass. Desp. e Cultural da Qta do Lago",
-          "hcpExact": -1.9,
-          "hcpDate": "2026-03-05",
+          "hcpExact": -1.8,
+          "hcpDate": "2026-06-03",
           "sex": "F",
           "tags": [],
           "primary": true
@@ -302580,6 +302800,14 @@
         "fpg-962-10078-20251229-all"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": -1.9,
+          "source": "fpg",
+          "tcode": "10911",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - S"
+        },
         {
           "date": "2025-12-29",
           "hcpExact": -2.8,
@@ -302625,7 +302853,7 @@
           "clubCode": "004",
           "clubLong": "Estoril",
           "hcpExact": 0.5,
-          "hcpDate": "2026-05-30",
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [
             "PJA"
@@ -302642,6 +302870,14 @@
         "fpg-000-10935-20260430-sub_18"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 0.4,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-05-22",
           "hcpExact": 0,
@@ -302910,8 +303146,8 @@
           "club": "Oporto",
           "clubCode": "001",
           "clubLong": "Oporto Golf Clube",
-          "hcpExact": 7.9,
-          "hcpDate": "2026-05-30",
+          "hcpExact": 8,
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [
             "PJA"
@@ -302925,6 +303161,14 @@
         "fpg-000-10939-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 7.9,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 8.8,
@@ -303170,7 +303414,7 @@
           "clubCode": "001",
           "clubLong": "Oporto Golf Clube",
           "hcpExact": 2,
-          "hcpDate": "2026-05-23",
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -303181,6 +303425,14 @@
         "fpg-000-10935-20260430-sub_18"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 2,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-05-22",
           "hcpExact": 2,
@@ -303241,8 +303493,8 @@
           "club": "Vilamoura, C. G",
           "clubCode": "009",
           "clubLong": "Clube de Golfe de Vilamoura",
-          "hcpExact": 0.6,
-          "hcpDate": "2026-05-17",
+          "hcpExact": 0.7,
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -303263,6 +303515,14 @@
         "fpg-000-10937-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 0.6,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-05-08",
           "hcpExact": 0.3,
@@ -303349,8 +303609,8 @@
           "club": "Citynorte",
           "clubCode": "107",
           "clubLong": "Clube de Golfe Citynorte",
-          "hcpExact": 6,
-          "hcpDate": "2026-05-17",
+          "hcpExact": 6.4,
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -303360,6 +303620,14 @@
         "fpg-000-10935-20260430-sub_18"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 6,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 5.6,
@@ -303471,7 +303739,7 @@
           "clubCode": "009",
           "clubLong": "Clube de Golfe de Vilamoura",
           "hcpExact": 0.4,
-          "hcpDate": "2026-05-23",
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -303484,6 +303752,14 @@
         "fpg-000-10937-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 0.4,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-05-22",
           "hcpExact": 0.1,
@@ -303673,8 +303949,8 @@
           "club": "Miramar",
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
-          "hcpExact": 0.1,
-          "hcpDate": "2026-05-17",
+          "hcpExact": -0.2,
+          "hcpDate": "2026-06-03",
           "sex": "F",
           "tags": [
             "PJA"
@@ -303694,6 +303970,14 @@
         "fpg-000-10938-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 0.1,
+          "source": "fpg",
+          "tcode": "10911",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - S"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": -1.6,
@@ -304962,8 +305246,8 @@
           "club": "Oporto",
           "clubCode": "001",
           "clubLong": "Oporto Golf Clube",
-          "hcpExact": -0.3,
-          "hcpDate": "2026-05-30",
+          "hcpExact": -0.5,
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -304982,6 +305266,14 @@
         "fpg-000-10935-20260430-sub_18"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": -0.2,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 0,
@@ -305155,7 +305447,7 @@
           "clubCode": "001",
           "clubLong": "Oporto Golf Clube",
           "hcpExact": -2.7,
-          "hcpDate": "2026-05-30",
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -305173,6 +305465,14 @@
         "fpg-000-10935-20260430-sub_18"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": -2.7,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": -2.4,
@@ -305235,8 +305535,8 @@
           "club": "Oporto",
           "clubCode": "001",
           "clubLong": "Oporto",
-          "hcpExact": -0.3,
-          "hcpDate": "2026-05-30",
+          "hcpExact": -0.9,
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [
             "PJA"
@@ -305254,6 +305554,14 @@
         "fpg-000-10939-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": -0.8,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": -0.3,
@@ -305506,7 +305814,7 @@
           "clubCode": "022",
           "clubLong": "Estela Golf Club",
           "hcpExact": 5.1,
-          "hcpDate": "2026-05-17",
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -305517,6 +305825,14 @@
         "fpg-000-10935-20260430-sub_18"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 5.1,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 5.3,
@@ -305634,8 +305950,8 @@
           "club": "Quinta do Peru",
           "clubCode": "038",
           "clubLong": "Quinta do Peru",
-          "hcpExact": 0.8,
-          "hcpDate": "2026-05-23",
+          "hcpExact": 0.7,
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [
             "PJA"
@@ -305655,6 +305971,14 @@
         "fpg-000-10937-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 0.8,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-05-22",
           "hcpExact": 0.6,
@@ -305795,8 +306119,8 @@
           "club": "Oporto",
           "clubCode": "001",
           "clubLong": "Oporto Golf Clube",
-          "hcpExact": 2.9,
-          "hcpDate": "2026-05-23",
+          "hcpExact": 2.2,
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -305807,6 +306131,14 @@
         "fpg-000-10935-20260430-sub_18"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 2.9,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-05-22",
           "hcpExact": 2.3,
@@ -305892,7 +306224,7 @@
           "clubCode": "177",
           "clubLong": "Clube de Golfe de Vale de Janelas",
           "hcpExact": 2.2,
-          "hcpDate": "2026-05-17",
+          "hcpDate": "2026-06-03",
           "sex": "F",
           "tags": [],
           "primary": true
@@ -305903,6 +306235,14 @@
         "fpg-000-10936-20260430-sub_18"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 2.2,
+          "source": "fpg",
+          "tcode": "10911",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - S"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 1.1,
@@ -305964,7 +306304,7 @@
           "clubCode": "004",
           "clubLong": "Estoril",
           "hcpExact": 5.3,
-          "hcpDate": "2026-05-30",
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [
             "PJA"
@@ -305983,6 +306323,14 @@
         "fpg-000-10939-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 5.5,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-05-22",
           "hcpExact": 5.5,
@@ -306441,8 +306789,8 @@
           "club": "Vilamoura, C. G",
           "clubCode": "009",
           "clubLong": "Clube de Golfe de Vilamoura",
-          "hcpExact": 4.5,
-          "hcpDate": "2026-05-23",
+          "hcpExact": 4.3,
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [
             "PJA"
@@ -306465,6 +306813,14 @@
         "fpg-000-10937-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 4.5,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-05-22",
           "hcpExact": 4.2,
@@ -306629,8 +306985,8 @@
           "club": "Ilha Terceira",
           "clubCode": "005",
           "clubLong": "Clube de Golf da Ilha Terceira",
-          "hcpExact": 15.7,
-          "hcpDate": "2026-05-29",
+          "hcpExact": 15.5,
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -306756,8 +307112,8 @@
           "club": "PXO Clube",
           "clubCode": "183",
           "clubLong": "PXO Clube de Golfe",
-          "hcpExact": 1.4,
-          "hcpDate": "2026-05-17",
+          "hcpExact": 1.7,
+          "hcpDate": "2026-06-03",
           "sex": "F",
           "tags": [],
           "primary": true
@@ -306768,6 +307124,14 @@
         "fpg-000-10940-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 1.4,
+          "source": "fpg",
+          "tcode": "10911",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - S"
+        },
         {
           "date": "2026-05-08",
           "hcpExact": 2,
@@ -307278,7 +307642,7 @@
           "clubCode": "009",
           "clubLong": "Clube de Golfe de Vilamoura",
           "hcpExact": 9.1,
-          "hcpDate": "2026-04-26",
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [
             "PJA"
@@ -307298,6 +307662,14 @@
         "fpg-000-10898-20260330-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 9.1,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-03-30",
           "hcpExact": 8.9,
@@ -307414,8 +307786,8 @@
           "club": "Miramar",
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
-          "hcpExact": 7.4,
-          "hcpDate": "2026-05-30",
+          "hcpExact": 7.2,
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -307427,6 +307799,14 @@
         "fpg-000-10939-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 7.9,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 8.1,
@@ -307560,8 +307940,8 @@
           "club": "Miramar",
           "clubCode": "003",
           "clubLong": "Miramar",
-          "hcpExact": 7.2,
-          "hcpDate": "2026-05-17",
+          "hcpExact": 7.9,
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -307571,6 +307951,14 @@
         "fpg-000-10937-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 7.2,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 7,
@@ -307632,7 +308020,7 @@
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
           "hcpExact": 7.6,
-          "hcpDate": "2026-05-30",
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -307644,6 +308032,14 @@
         "fpg-000-10939-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 9.1,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 9.9,
@@ -307720,8 +308116,8 @@
           "club": "Miramar",
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
-          "hcpExact": 3.2,
-          "hcpDate": "2026-05-17",
+          "hcpExact": 2.9,
+          "hcpDate": "2026-06-03",
           "sex": "F",
           "tags": [],
           "primary": true
@@ -307734,6 +308130,14 @@
         "fpg-000-10938-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 3.2,
+          "source": "fpg",
+          "tcode": "10911",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - S"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 4.2,
@@ -307818,8 +308222,8 @@
           "club": "Miramar",
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
-          "hcpExact": 3.9,
-          "hcpDate": "2026-05-02",
+          "hcpExact": 3.3,
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -307832,6 +308236,14 @@
         "fpg-000-10939-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 3.9,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 4.2,
@@ -308026,7 +308438,7 @@
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
           "hcpExact": 6.7,
-          "hcpDate": "2026-05-30",
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [
             "PJA"
@@ -308044,6 +308456,14 @@
         "fpg-000-10937-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 6.5,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 6,
@@ -308161,7 +308581,7 @@
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
           "hcpExact": 4.6,
-          "hcpDate": "2026-05-17",
+          "hcpDate": "2026-06-03",
           "sex": "F",
           "tags": [
             "PJA"
@@ -308179,6 +308599,14 @@
         "fpg-000-10940-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 4.6,
+          "source": "fpg",
+          "tcode": "10911",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - S"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 4,
@@ -308296,7 +308724,7 @@
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
           "hcpExact": 8,
-          "hcpDate": "2026-05-23",
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [
             "PJA"
@@ -308317,6 +308745,14 @@
         "fpg-000-10939-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 8,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 7.9,
@@ -308496,8 +308932,8 @@
           "club": "Oporto",
           "clubCode": "001",
           "clubLong": "Oporto Golf Clube",
-          "hcpExact": 10.2,
-          "hcpDate": "2026-05-30",
+          "hcpExact": 10.3,
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -308507,6 +308943,14 @@
         "fpg-000-10937-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 10.1,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 9.6,
@@ -308673,8 +309117,8 @@
           "club": "Oporto",
           "clubCode": "001",
           "clubLong": "Oporto Golf Clube",
-          "hcpExact": 0.9,
-          "hcpDate": "2026-05-30",
+          "hcpExact": 1,
+          "hcpDate": "2026-06-03",
           "sex": "F",
           "tags": [],
           "primary": true
@@ -308684,6 +309128,14 @@
         "fpg-000-10938-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 0.5,
+          "source": "fpg",
+          "tcode": "10911",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - S"
+        },
         {
           "date": "2026-05-08",
           "hcpExact": 1,
@@ -308753,7 +309205,7 @@
           "clubCode": "001",
           "clubLong": "Oporto",
           "hcpExact": 7.9,
-          "hcpDate": "2026-05-30",
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -308772,6 +309224,14 @@
         "fpg-000-10939-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 9,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 9.5,
@@ -308912,8 +309372,8 @@
           "club": "Palheiro",
           "clubCode": "059",
           "clubLong": "Clube Palheiro Golfe",
-          "hcpExact": 6.7,
-          "hcpDate": "2026-05-30",
+          "hcpExact": 7.3,
+          "hcpDate": "2026-06-03",
           "sex": "F",
           "tags": [],
           "primary": true
@@ -308924,6 +309384,14 @@
         "fpg-000-10938-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 6.7,
+          "source": "fpg",
+          "tcode": "10911",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - S"
+        },
         {
           "date": "2026-05-08",
           "hcpExact": 6.7,
@@ -309041,7 +309509,7 @@
           "clubCode": "001",
           "clubLong": "Oporto Golf Clube",
           "hcpExact": 5.2,
-          "hcpDate": "2026-05-30",
+          "hcpDate": "2026-06-03",
           "sex": "F",
           "tags": [],
           "primary": true
@@ -309052,6 +309520,14 @@
         "fpg-000-10938-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 5.3,
+          "source": "fpg",
+          "tcode": "10911",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - S"
+        },
         {
           "date": "2026-05-08",
           "hcpExact": 5.5,
@@ -309129,7 +309605,7 @@
           "clubCode": "001",
           "clubLong": "Oporto Golf Clube",
           "hcpExact": 7.9,
-          "hcpDate": "2026-05-30",
+          "hcpDate": "2026-06-03",
           "sex": "F",
           "tags": [],
           "primary": true
@@ -309140,6 +309616,14 @@
         "fpg-000-10936-20260430-sub_18"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 7.6,
+          "source": "fpg",
+          "tcode": "10911",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - S"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 7.4,
@@ -309209,7 +309693,7 @@
           "clubCode": "001",
           "clubLong": "Oporto Golf Clube",
           "hcpExact": 4.4,
-          "hcpDate": "2026-05-30",
+          "hcpDate": "2026-06-03",
           "sex": "F",
           "tags": [],
           "primary": true
@@ -309221,6 +309705,14 @@
         "fpg-000-10938-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 4.9,
+          "source": "fpg",
+          "tcode": "10911",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - S"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 4.6,
@@ -309361,8 +309853,8 @@
           "club": "Oporto",
           "clubCode": "001",
           "clubLong": "Oporto Golf Clube",
-          "hcpExact": 9.1,
-          "hcpDate": "2026-05-30",
+          "hcpExact": 8.9,
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [
             "no-priority"
@@ -309375,6 +309867,14 @@
         "fpg-000-10939-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 9.8,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 12.4,
@@ -309873,8 +310373,8 @@
           "club": "Ilha Terceira",
           "clubCode": "005",
           "clubLong": "Clube de Golf da Ilha Terceira",
-          "hcpExact": 16,
-          "hcpDate": "2026-05-29",
+          "hcpExact": 15.6,
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -310051,7 +310551,7 @@
           "clubCode": "004",
           "clubLong": "Clube de Golf do Estoril",
           "hcpExact": 7,
-          "hcpDate": "2026-05-23",
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -310061,6 +310561,14 @@
         "fpg-000-10937-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 7.2,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-05-22",
           "hcpExact": 7.2,
@@ -310268,7 +310776,7 @@
           "clubCode": "001",
           "clubLong": "Oporto Golf Clube",
           "hcpExact": 6.9,
-          "hcpDate": "2026-05-30",
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -310279,6 +310787,14 @@
         "fpg-000-10937-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 7.7,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 8.4,
@@ -310422,8 +310938,8 @@
           "club": "Vilamoura, C. G",
           "clubCode": "009",
           "clubLong": "Clube de Golfe de Vilamoura",
-          "hcpExact": 9.4,
-          "hcpDate": "2026-05-17",
+          "hcpExact": 9.2,
+          "hcpDate": "2026-06-03",
           "sex": "F",
           "tags": [],
           "primary": true
@@ -310445,6 +310961,14 @@
         "fpg-000-10940-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 9.4,
+          "source": "fpg",
+          "tcode": "10911",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - S"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 10.1,
@@ -310665,7 +311189,7 @@
           "clubCode": "009",
           "clubLong": "Vilamoura, C. G",
           "hcpExact": 7.9,
-          "hcpDate": "2026-05-23",
+          "hcpDate": "2026-06-03",
           "sex": "F",
           "tags": [
             "PJA"
@@ -310690,6 +311214,14 @@
         "fpg-000-10942-20260430-sub_12"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 7.9,
+          "source": "fpg",
+          "tcode": "10911",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - S"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 10,
@@ -310848,8 +311380,8 @@
           "club": "Citynorte",
           "clubCode": "107",
           "clubLong": "Clube de Golfe Citynorte",
-          "hcpExact": 6.9,
-          "hcpDate": "2026-05-17",
+          "hcpExact": 6.6,
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -310860,6 +311392,14 @@
         "fpg-000-10937-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 6.9,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 7.2,
@@ -312052,8 +312592,8 @@
           "club": "Miramar",
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
-          "hcpExact": 19.8,
-          "hcpDate": "2026-05-30",
+          "hcpExact": 19.3,
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -312200,7 +312740,7 @@
           "clubCode": "038",
           "clubLong": "Clube de Golf da Quinta do Peru",
           "hcpExact": 3.7,
-          "hcpDate": "2026-05-02",
+          "hcpDate": "2026-06-03",
           "sex": "F",
           "tags": [
             "PJA"
@@ -312218,6 +312758,14 @@
         "fpg-000-10938-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 3.7,
+          "source": "fpg",
+          "tcode": "10911",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - S"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 4.2,
@@ -312303,7 +312851,7 @@
           "clubCode": "038",
           "clubLong": "Clube de Golf da Quinta do Peru",
           "hcpExact": 6,
-          "hcpDate": "2026-05-23",
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [
             "PJA"
@@ -312320,6 +312868,14 @@
         "fpg-000-10939-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 6,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-05-22",
           "hcpExact": 6.1,
@@ -313719,7 +314275,7 @@
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
           "hcpExact": 8.7,
-          "hcpDate": "2026-05-30",
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -313730,6 +314286,14 @@
         "fpg-000-10939-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 10.3,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 11,
@@ -314586,8 +315150,8 @@
           "club": "Oitavos",
           "clubCode": "083",
           "clubLong": "Oitavos Dunes Club",
-          "hcpExact": 4,
-          "hcpDate": "2026-05-23",
+          "hcpExact": 4.6,
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [
             "PJA"
@@ -314600,6 +315164,14 @@
         "fpg-000-10935-20260430-sub_18"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 4,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-05-22",
           "hcpExact": 4,
@@ -314781,8 +315353,8 @@
           "club": "Vilamoura, C. G",
           "clubCode": "009",
           "clubLong": "Clube de Golfe de Vilamoura",
-          "hcpExact": 6.7,
-          "hcpDate": "2026-05-17",
+          "hcpExact": 6.5,
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [
             "inscrito-nacional"
@@ -314799,6 +315371,14 @@
         "fpg-000-10939-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 6.7,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 6.9,
@@ -314875,8 +315455,8 @@
           "club": "Vilamoura, C. G",
           "clubCode": "009",
           "clubLong": "Clube de Golfe de Vilamoura",
-          "hcpExact": 2.9,
-          "hcpDate": "2026-05-02",
+          "hcpExact": 3,
+          "hcpDate": "2026-06-03",
           "sex": "F",
           "tags": [
             "inscrito-nacional"
@@ -314890,6 +315470,14 @@
         "fpg-000-10938-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 2.9,
+          "source": "fpg",
+          "tcode": "10911",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - S"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 3.5,
@@ -315964,8 +316552,8 @@
           "club": "Ilha Terceira",
           "clubCode": "005",
           "clubLong": "Clube de Golf da Ilha Terceira",
-          "hcpExact": 36.4,
-          "hcpDate": "2026-05-29",
+          "hcpExact": 36.1,
+          "hcpDate": "2026-06-03",
           "sex": "M",
           "tags": [
             "inscrito-nacional"
@@ -316383,6 +316971,14 @@
       ],
       "hcpHistory": [
         {
+          "date": "2026-06-03",
+          "hcpExact": -1.2,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
+        {
           "date": "2026-05-22",
           "hcpExact": -1.2,
           "source": "fpg",
@@ -316442,6 +317038,14 @@
       ],
       "hcpHistory": [
         {
+          "date": "2026-06-03",
+          "hcpExact": -0.4,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
+        {
           "date": "2026-02-15",
           "hcpExact": -1.3,
           "source": "fpg",
@@ -316498,6 +317102,14 @@
         "fpg-935-10260-20250302-all"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 4.5,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-05-08",
           "hcpExact": 4.5,
@@ -317379,6 +317991,14 @@
       ],
       "hcpHistory": [
         {
+          "date": "2026-06-03",
+          "hcpExact": 4.4,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
+        {
           "date": "2025-05-30",
           "hcpExact": 6.1,
           "source": "fpg",
@@ -317421,6 +318041,14 @@
         "fpg-017-10189-20251024-all"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 3.2,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-05-22",
           "hcpExact": 3.2,
@@ -317954,6 +318582,14 @@
       ],
       "hcpHistory": [
         {
+          "date": "2026-06-03",
+          "hcpExact": -3.6,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
+        {
           "date": "2026-05-08",
           "hcpExact": -2.7,
           "source": "fpg",
@@ -318050,6 +318686,14 @@
       ],
       "hcpHistory": [
         {
+          "date": "2026-06-03",
+          "hcpExact": 3.3,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
+        {
           "date": "2026-05-08",
           "hcpExact": 2.8,
           "source": "fpg",
@@ -318130,6 +318774,14 @@
         "fpg-935-10294-20260215-all"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 9.1,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2026-03-22",
           "hcpExact": 9.5,
@@ -325437,6 +326089,14 @@
       ],
       "hcpHistory": [
         {
+          "date": "2026-06-03",
+          "hcpExact": -0.6,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
+        {
           "date": "2026-05-22",
           "hcpExact": -0.7,
           "source": "fpg",
@@ -325524,6 +326184,14 @@
         "fpg-962-10078-20251229-all"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": -5.4,
+          "source": "fpg",
+          "tcode": "10911",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - S"
+        },
         {
           "date": "2025-12-29",
           "hcpExact": -5.4,
@@ -325772,6 +326440,14 @@
       ],
       "hcpHistory": [
         {
+          "date": "2026-06-03",
+          "hcpExact": -2.4,
+          "source": "fpg",
+          "tcode": "10911",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - S"
+        },
+        {
           "date": "2026-05-22",
           "hcpExact": -2.4,
           "source": "fpg",
@@ -325837,6 +326513,14 @@
       ],
       "hcpHistory": [
         {
+          "date": "2026-06-03",
+          "hcpExact": 0,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
+        {
           "date": "2026-05-22",
           "hcpExact": 0,
           "source": "fpg",
@@ -325901,6 +326585,14 @@
         "fpg-962-10078-20251229-all"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": -2.1,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2025-12-29",
           "hcpExact": -2.4,
@@ -326473,6 +327165,14 @@
         "fpg-962-10078-20251229-all"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": -3.9,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
         {
           "date": "2025-12-29",
           "hcpExact": -4.1,
@@ -549087,9 +549787,9 @@
     }
   ],
   "stats": {
-    "total": 8699,
-    "droppedNoTourn": 23804,
-    "strong": 8675,
+    "total": 8701,
+    "droppedNoTourn": 23810,
+    "strong": 8677,
     "probable": 24,
     "manual": 0,
     "strongMerges": 7,
