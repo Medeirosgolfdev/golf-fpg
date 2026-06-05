@@ -658,35 +658,95 @@ function buildGroups(tournaments: Tournament[]): TournGroup[] {
     return escIdx(a.escalao) - escIdx(b.escalao);
   });
   const groups: TournGroup[] = [];
-  const multiMap   = new Map<string, Tournament[]>();
-  const eventMap   = new Map<string, Tournament[]>(); // Challenge: date+ccode → escalões
+  const multiMap   = new Map<string, Tournament[]>();   // Tour multi-ronda (sem escalão de evento)
+  const eventMap   = new Map<string, Tournament[]>();   // Challenge: date+ccode → TODAS as entries (single/R1/R2/Resumo)
   const singles: Tournament[] = [];
 
+  // ── 1ª passagem: bucketizar ───────────────────────────────────────────
+  // Challenge agrupa SEMPRE por evento (data+campo), juntando escalões — mesmo
+  // quando multi-ronda. As entries R1/R2/Resumo entram aqui e são consolidadas
+  // por escalão na 2ª passagem (antes, a expansão multi-ronda fragmentava o
+  // evento num cartão por escalão).
   for (const t of sorted) {
-    if (t._multiGroup) {
-      if (!multiMap.has(t._multiGroup)) multiMap.set(t._multiGroup, []);
-      multiMap.get(t._multiGroup)!.push(t);
-    } else if (t.series === "challenge" && t.escalao && !t._roundLabel) {
-      // Challenge: agrupar por data + campo (ccode) — vários escalões no mesmo evento
+    if (t.series === "challenge" && t.escalao) {
       const eventKey = "ev-" + t.date + "-" + (t.ccode || t.campo);
       if (!eventMap.has(eventKey)) eventMap.set(eventKey, []);
       eventMap.get(eventKey)!.push(t);
+    } else if (t._multiGroup) {
+      if (!multiMap.has(t._multiGroup)) multiMap.set(t._multiGroup, []);
+      multiMap.get(t._multiGroup)!.push(t);
     } else {
       singles.push(t);
     }
   }
 
+  const roundSort = (a: Tournament, b: Tournament) => {
+    if (a._roundLabel === "Resumo") return 1;
+    if (b._roundLabel === "Resumo") return -1;
+    return (a._roundLabel || "").localeCompare(b._roundLabel || "");
+  };
+
   const seen = new Set<string>();
   for (const t of sorted) {
-    if (t._multiGroup) {
+    if (t.series === "challenge" && t.escalao) {
+      const eventKey = "ev-" + t.date + "-" + (t.ccode || t.campo);
+      if (seen.has(eventKey)) continue;
+      seen.add(eventKey);
+      const bucket = eventMap.get(eventKey) || [];
+
+      // Agrupar por escalão e escolher um representante por escalão:
+      //   multi-ronda → entry "Resumo" (acumulado, renderiza via DriveAccumulatedLB)
+      //   1 ronda     → a própria entry
+      const byEsc = new Map<string, Tournament[]>();
+      for (const e of bucket) {
+        const k = e.escalao || "?";
+        if (!byEsc.has(k)) byEsc.set(k, []);
+        byEsc.get(k)!.push(e);
+      }
+      const reps: { escalao: string; rep: Tournament; rounds: Tournament[]; totalRounds: number }[] = [];
+      for (const [esc, ents] of byEsc) {
+        const resumo = ents.find(e => e._roundLabel === "Resumo");
+        const rdEnts = ents.filter(e => e._roundLabel && e._roundLabel !== "Resumo");
+        if (resumo) {
+          reps.push({ escalao: esc, rep: resumo, rounds: rdEnts, totalRounds: resumo._totalRounds || (rdEnts.length || 2) });
+        } else {
+          reps.push({ escalao: esc, rep: ents[0], rounds: [], totalRounds: 1 });
+        }
+      }
+      reps.sort((a, b) => escIdx(a.escalao) - escIdx(b.escalao));
+
+      if (reps.length === 1) {
+        const r = reps[0];
+        if (r.rounds.length > 0) {
+          // 1 escalão multi-ronda → cartão multi-ronda (tabs R1/R2/Resumo) — preserva drill-down por ronda
+          const entries = [...r.rounds, r.rep].sort(roundSort);
+          groups.push({
+            key: r.rep._multiGroup || eventKey,
+            label: shortCampo(r.rep.campo), campo: r.rep.campo, num: r.rep.num, date: r.rep.date,
+            escalao: r.escalao, isMulti: true, isEvent: false, totalRounds: r.totalRounds, entries,
+          });
+        } else {
+          groups.push({
+            key: eventKey,
+            label: shortCampo(r.rep.campo), campo: r.rep.campo, num: r.rep.num, date: r.rep.date,
+            escalao: r.escalao, isMulti: false, isEvent: false, totalRounds: 1, entries: [r.rep],
+          });
+        }
+      } else {
+        // Vários escalões no mesmo evento → cartão de evento, 1 tab por escalão.
+        const entries = reps.map(r => r.rep);
+        const maxRounds = Math.max(1, ...reps.map(r => r.totalRounds));
+        groups.push({
+          key: eventKey,
+          label: shortCampo(t.campo), campo: t.campo, num: t.num, date: t.date,
+          escalao: null, isMulti: false, isEvent: true, totalRounds: maxRounds, entries,
+        });
+      }
+    } else if (t._multiGroup) {
       if (seen.has(t._multiGroup)) continue;
       seen.add(t._multiGroup);
       const entries = multiMap.get(t._multiGroup)!;
-      entries.sort((a, b) => {
-        if (a._roundLabel === "Resumo") return 1;
-        if (b._roundLabel === "Resumo") return -1;
-        return (a._roundLabel || "").localeCompare(b._roundLabel || "");
-      });
+      entries.sort(roundSort);
       groups.push({
         key: t._multiGroup,
         label: shortCampo(t.campo),
@@ -697,24 +757,6 @@ function buildGroups(tournaments: Tournament[]): TournGroup[] {
         isMulti: true,
         isEvent: false,
         totalRounds: t._totalRounds || 2,
-        entries,
-      });
-    } else if (t.series === "challenge" && t.escalao && !t._roundLabel) {
-      const eventKey = "ev-" + t.date + "-" + (t.ccode || t.campo);
-      if (seen.has(eventKey)) continue;
-      seen.add(eventKey);
-      const entries = (eventMap.get(eventKey) || []).sort((a, b) => escIdx(a.escalao) - escIdx(b.escalao));
-      const nEscs = entries.length;
-      groups.push({
-        key: eventKey,
-        label: shortCampo(t.campo),
-        campo: t.campo,
-        num: t.num,
-        date: t.date,
-        escalao: nEscs === 1 ? entries[0].escalao : null, // null quando tem vários escalões
-        isMulti: false,
-        isEvent: nEscs > 1,
-        totalRounds: 1,
         entries,
       });
     } else {
@@ -1518,12 +1560,21 @@ function DriveContent() {
     if (!parsed) return;
     const { ccode, tcode } = parsed;
     for (const g of filteredGroups) {
-      const entryIdx = g.entries.findIndex(e =>
+      // Match exacto primeiro (preserva ronda/escalão específico no URL).
+      let entryIdx = g.entries.findIndex(e =>
         e.ccode === ccode && (
           e.tcode === tcode ||
           (e.tcode || "").split("+").includes(tcode)
         )
       );
+      // Fallback por tcode base (sem sufixo _R{n}/_Total) — para hrefs canónicos
+      // da sidebar de eventos multi-ronda, onde as entries são "_Total".
+      if (entryIdx < 0) {
+        entryIdx = g.entries.findIndex(e => {
+          const base = (e.tcode || "").replace(/_R\d+$|_Total$/, "");
+          return e.ccode === ccode && (base === tcode || base.split("+").includes(tcode));
+        });
+      }
       if (entryIdx >= 0) {
         if (selectedGroupKey !== g.key) setSelectedGroupKey(g.key);
         if (roundIdx !== entryIdx) setRoundIdx(entryIdx);
@@ -1617,7 +1668,7 @@ function DriveContent() {
       clube:       (t0 as any)?.clube ?? null,
       date:        g.date,
       playerCount: nJog,
-      rounds:      g.isMulti ? g.totalRounds : 1,
+      rounds:      (g.isMulti || g.isEvent) ? g.totalRounds : 1,
       nholes:      (t0 as { nholes?: number; par?: number[] } | undefined)?.nholes || (t0 as { par?: number[] } | undefined)?.par?.length || 18,
       series:      grpSeries,
       escalao:     (!g.isEvent && !g.isMulti) ? g.escalao : null,
@@ -2022,7 +2073,7 @@ function DriveContent() {
                         <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)", border: "1px solid var(--border)" }}>
                           {nJog} jog
                         </span>
-                        {selectedGroup.isMulti && <RoundPill nR={selectedGroup.totalRounds} />}
+                        {(selectedGroup.isMulti || curTournament._roundLabel === "Resumo") && <RoundPill nR={curTournament._totalRounds || selectedGroup.totalRounds} />}
                         {nholes <= 9 && <NineHPill />}
                         {parTotal > 0 && (
                           <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)", border: "1px solid var(--border)" }}>
@@ -2119,7 +2170,7 @@ function DriveContent() {
                                 : <EmptyState size="sm" message="Dados insuficientes" />;
                             })()
                           : curTournament._roundLabel === "Resumo"
-                            ? <DriveAccumulatedLB tournament={curTournament} nRounds={selectedGroup.totalRounds || 2} escLookup={escLookup} playersDB={pdb} sdLookup={sdLookup} temporalEscLookup={temporalEscLookup} fedBirthdates={fedBirthdates} />
+                            ? <DriveAccumulatedLB tournament={curTournament} nRounds={curTournament._totalRounds || selectedGroup.totalRounds || 2} escLookup={escLookup} playersDB={pdb} sdLookup={sdLookup} temporalEscLookup={temporalEscLookup} fedBirthdates={fedBirthdates} />
                             : <ScorecardLB tournament={curTournament} playersDB={pdb} escLookup={escLookup} sdLookup={sdLookup} temporalEscLookup={temporalEscLookup} fedBirthdates={fedBirthdates} />}
                   </div>
                 )}
