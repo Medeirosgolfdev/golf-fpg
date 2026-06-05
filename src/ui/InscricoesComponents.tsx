@@ -812,6 +812,7 @@ function cleanGroupName(raw: string): string {
   return (raw || "")
     .replace(/\s*-?\s*(Rapazes?|Raparigas?|Masculin[oa]s?|Femininos?|Masc|Fem)\s*$/i, "")
     .replace(/\s*Sub[\s-]*\d+\s*[HMSFR]?\s*$/i, "")
+    .replace(/\s*-?\s*\d+\s*buracos?\s*$/i, "")
     .replace(/\s*\bDia\b\s*\d+\s*$/i, "")
     .replace(/\s*\bR\d+\s*$/i, "")
     .replace(/\s+[HMF]$/, "")

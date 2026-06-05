@@ -1621,9 +1621,17 @@ function Content() {
                     borderBottom: "1px solid var(--border-light)", background: "var(--bg-card)" }}>
                     {curGroup!.entries.map((e) => {
                       const active = e.ccode === tShow.ccode && e.tcode === tShow.tcode;
+                      // Quando as entradas do grupo não têm escalão (ex: "3º Torneio
+                      // Academia Junior - 18 buracos" / "- 9 buracos"), derivar o
+                      // label da tab a partir do sufixo que distingue cada entrada do
+                      // nome comum do grupo (curGroup.name já vem sem o sufixo).
+                      const _gNm = curGroup!.name || "";
+                      const _suffix = _gNm && e.name && e.name.toLowerCase().startsWith(_gNm.toLowerCase())
+                        ? e.name.slice(_gNm.length).replace(/^[\s\-–:·]+/, "").trim()
+                        : "";
                       const label = (e as any)._tabLabel
                         ?? e.escalao
-                        ?? (e.name && e.name.length <= 20 ? e.name : "Esc");
+                        ?? (_suffix || (e.name && e.name.length <= 20 ? e.name : "Esc"));
                       const nJog = e.playerCount || e.players.length;
                       const entryIdx = findInDisplayList(e);
                       return (

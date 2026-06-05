@@ -88,16 +88,19 @@ const COOKIE = loadCookies();
 let scope = [];
 if (AUTO_FROM_TRACKING) {
   // Lê public/data/fpg-tournaments-tracking.json e filtra torneios que
-  // precisam de classif/scorecards (status "missing_classif" ou
-  // "missing_scorecards"). Torneios futuros/in_progress ficam de fora —
-  // classif só faz sentido depois do cut do torneio.
+  // precisam de classif/scorecards (status "missing_classif",
+  // "missing_scorecards") OU que estão a decorrer ("in_progress") — para
+  // apanhar resultados parciais no próprio dia/fim-de-semana do torneio.
+  // Só "future" (ainda não começou) fica de fora. O merge é aditivo e
+  // preserva dados antigos contra respostas vazias, por isso scrapar um
+  // torneio a meio é seguro (não apaga nada).
   const trackingFile = path.join(REPO, "public", "data", "fpg-tournaments-tracking.json");
   if (!fs.existsSync(trackingFile)) {
     console.error(`[classif] ERRO: tracking em falta: ${trackingFile}. Corre build-tournaments-tracking.js primeiro.`);
     process.exit(1);
   }
   const tracking = JSON.parse(fs.readFileSync(trackingFile, "utf8"));
-  const wanted = new Set(["missing_classif", "missing_scorecards"]);
+  const wanted = new Set(["missing_classif", "missing_scorecards", "in_progress"]);
   scope = (tracking.tournaments || [])
     .filter(t => wanted.has(t.status))
     .map(t => ({
@@ -109,7 +112,7 @@ if (AUTO_FROM_TRACKING) {
       date: t.date,
       rounds: t.rounds,
     }));
-  console.log(`[classif] Scope auto-from-tracking: ${scope.length} torneios (missing_classif/scorecards)`);
+  console.log(`[classif] Scope auto-from-tracking: ${scope.length} torneios (missing_classif/scorecards/in_progress)`);
   if (scope.length === 0) {
     console.log("[classif] ✓ Nada a processar — todos os torneios elegíveis já têm classif+scorecards");
     process.exit(2);
