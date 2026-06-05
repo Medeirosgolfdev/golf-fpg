@@ -28,6 +28,7 @@ import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import PlayerLink from "../ui/PlayerLink";
 import { useFedBirthdates } from "../ui/InscricoesComponents";
 import EmptyState from "../ui/EmptyState";
+import { DRIVE_POINTS, drivePoints } from "../constants/drivePoints";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import KpiCard from "../ui/KpiCard";
 import LoadingState from "../ui/LoadingState";
@@ -79,6 +80,36 @@ const REGIONS = [
 ];
 const ESCALOES = ["Sub 10", "Sub 12", "Sub 14", "Sub 16", "Sub 18"];
 const regionOf = (id: string) => REGIONS.find((r) => r.id === id);
+
+/* ── Rankings oficiais FPG (scoring.fpg.pt) ──
+   Todos hospedados no "club" universal 988, com ack fixo.
+   • Drive Tour:      RDT{R}{YY}            — por região (R: M/S/T/N/A)
+   • Drive Challenge: DC_{REG}M{NN}G{YY}    — por região+escalão (Gross)
+   Só os códigos de região do Challenge para a Madeira (MAD) estão confirmados;
+   acrescentar os restantes aqui quando se souberem. */
+const FPG_RANKING_CLUB = "988";
+const FPG_RANKING_ACK = "8428ACK987";
+const FPG_DT_REGION_CODE: Record<string, string> = {
+  madeira: "M", sul: "S", tejo: "T", norte: "N", acores: "A",
+};
+const FPG_DC_REGION_CODE: Record<string, string> = {
+  madeira: "MAD",
+};
+/** URL do ranking oficial FPG para a série/região/escalão, ou null se não mapeável. */
+function fpgRankingUrl(series: string, region: string, escalao: string | null, year: string | null): string | null {
+  const yy = (year || String(new Date().getFullYear())).slice(-2);
+  let code: string | null = null;
+  if (series === "tour") {
+    const r = FPG_DT_REGION_CODE[region];
+    if (r) code = `RDT${r}${yy}`;
+  } else if (series === "challenge") {
+    const reg = FPG_DC_REGION_CODE[region];
+    const nn = escalao ? (escalao.match(/\d+/) || [])[0] : null;
+    if (reg && nn) code = `DC_${reg}M${nn}G${yy}`;
+  }
+  if (!code) return null;
+  return `https://scoring.fpg.pt/lists/linkpage.aspx?page=rankingresult&club=${FPG_RANKING_CLUB}&ranking=${code}&ack=${FPG_RANKING_ACK}&minpoints=1`;
+}
 
 /* ── WHS Expected 9h SD table ── */
 
@@ -283,18 +314,7 @@ const shortCampo = (c: string) =>
 const PName = (props: { name: string; fed?: string; playersDB?: PlayersDB; highlight?: boolean }) =>
   <TournPName name={props.name} fed={props.fed} playersDB={props.playersDB} highlight={props.highlight} />;
 
-/* ── Drive Tour Points table ── */
-const DRIVE_POINTS: Record<number, number> = {
-  1: 250, 2: 165, 3: 94, 4: 75, 5: 64, 6: 53, 7: 45,
-  8: 38, 9: 33, 10: 30, 11: 27, 12: 26, 13: 24, 14: 23,
-  15: 22, 16: 21, 17: 20, 18: 19, 19: 18,
-};
-function drivePoints(pos: number | string | null): number {
-  if (pos == null) return 0;
-  const n = Number(pos);
-  if (isNaN(n) || n <= 0) return 0;
-  return DRIVE_POINTS[n] ?? 0;
-}
+/* ── Drive Tour / Challenge Points table — fonte única em constants/drivePoints ── */
 
 /* ═══════════════════════════════════════════════════════
    DRIVE POINTS TABLE (tabela de referência de pontos)
@@ -1384,9 +1404,15 @@ function DriveContent() {
   const filteredT = useMemo(() => {
     let ts = seriesT;
     if (regionFilter) ts = ts.filter(t => t.region === regionFilter);
-    // Para Challenge (isEvent), NÃO filtrar por escalão aqui — o grupo agrupa todos os escalões
-    // O escFilter é aplicado ao nível dos entries do grupo em filteredGroups
-    if (escFilter.length > 0 && series !== "challenge") ts = filterTournByEsc(ts, escFilter, escLookup, pdb, temporalEscLookup, fedBirthdates);
+    // Aplicar escFilter. Challenge: cada tcode é um único escalão (t.escalao
+    // definido), por isso filtra-se ao nível do torneio — caso contrário a
+    // ResumoTable (painel Temporada) mostrava todos os escalões juntos.
+    // Outras séries: filtro por jogador (DOB) com recálculo de posições.
+    if (escFilter.length > 0) {
+      ts = series === "challenge"
+        ? ts.filter(t => t.escalao != null && escFilter.includes(t.escalao))
+        : filterTournByEsc(ts, escFilter, escLookup, pdb, temporalEscLookup, fedBirthdates);
+    }
     if (filterManuel) ts = ts.filter(t => t.players.some((p: Player) => isManuel(p)));
     return ts;
   }, [series, seriesT, regionFilter, escFilter, escLookup, pdb, temporalEscLookup, filterManuel, fedBirthdates]);
@@ -1640,6 +1666,9 @@ function DriveContent() {
           <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
           <ToolbarTitle>🏁 DRIVE</ToolbarTitle>
           <DataSourcesChip sources={allSources} />
+          <a href="https://competicoes.fpg.pt/ranking/" target="_blank" rel="noopener noreferrer"
+            className="p p-sm" style={{ textDecoration: "none", background: "var(--bg-muted)", color: "var(--accent)", border: "1px solid var(--border)" }}
+            title="Rankings oficiais da FPG (competicoes.fpg.pt)">🏆 Rankings FPG</a>
           <ToolbarSep />
           <TabRow
             style={{ marginBottom: 0 }}
@@ -1903,6 +1932,21 @@ function DriveContent() {
                     {filteredGroups.length} torneios · {uniquePCFiltered} jogadores ·{" "}
                     {filteredGroups.reduce((a, g) => a + g.entries.filter(e => !e._roundLabel || e._roundLabel === "Resumo").reduce((s, t) => s + t.players.filter(p => !isDNS(p)).length, 0), 0)} presenças
                   </div>
+                  {regionFilter && (() => {
+                    // Tour: ranking por região. Challenge: precisa de escalão único seleccionado.
+                    const escForLink = series === "challenge" ? (escFilter.length === 1 ? escFilter[0] : null) : null;
+                    if (series === "challenge" && !escForLink) return null;
+                    const rankUrl = fpgRankingUrl(series, regionFilter, escForLink, activeYear);
+                    return rankUrl ? (
+                      <div className="mb-8">
+                        <a href={rankUrl} target="_blank" rel="noopener noreferrer"
+                          className="p p-sm" style={{ textDecoration: "none", background: "var(--bg-muted)", color: "var(--accent)", border: "1px solid var(--border)" }}
+                          title="Abrir o ranking oficial da FPG (scoring.fpg.pt) em nova aba">
+                          🔗 Ranking oficial FPG — {series === "tour" ? "Drive Tour" : "Drive Challenge"} {regionOf(regionFilter)?.label}{escForLink ? " " + escForLink : ""}
+                        </a>
+                      </div>
+                    ) : null;
+                  })()}
                   <ResumoTable tournaments={filteredT} playersDB={pdb} sdLookup={sdLookup} escLookup={escLookup} mergeByEvent={series === "challenge"} />
                 </div>
 

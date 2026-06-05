@@ -8,6 +8,7 @@ import { CrossSeasonTable, SortTh as _CSortTh } from "./CrossSeasonTable";
 import { isManuel, fmtTP, tpColor, TournPName, type PlayersDB } from "./tournamentPrimitives";
 import { useFedBirthdates } from "./InscricoesComponents";
 import { isDNS } from "./driveUtils";
+import { drivePoints } from "../constants/drivePoints";
 
 // Wrapper que aceita style (não incluído nos props originais de SortTh)
 const CSortTh = _CSortTh as React.ComponentType<
@@ -169,34 +170,6 @@ function computeStats(p: Player, sdLookup: SDLookup): TStats | null {
   }
   return { pos: p.pos, gross: g, toPar: tp, sd18, sdSource, nholes: nh, birdies, pars, bogeys };
 }
-
-const drivePoints = (pos: number | string | null): number => {
-  if (pos == null) return 0;
-  const n = Number(pos);
-  if (isNaN(n) || n <= 0) return 0;
-  const map: Record<number, number> = {
-    1: 100,
-    2: 70,
-    3: 53,
-    4: 40,
-    5: 34,
-    6: 30,
-    7: 27,
-    8: 24,
-    9: 22,
-    10: 20,
-    11: 18,
-    12: 17,
-    13: 16,
-    14: 15,
-    15: 14,
-    16: 13,
-    17: 12,
-    18: 11,
-    19: 10,
-  };
-  return n <= 19 ? map[n] : n <= 24 ? 9 : n <= 30 ? 8 : n <= 40 ? 7 : n <= 50 ? 6 : 5;
-};
 
 const shortCampo = (c: string) =>
   c
