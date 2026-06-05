@@ -54,6 +54,31 @@ import AdmissionsTab from "../ui/AdmissionsTab";
 import DrawTab from "../ui/DrawTab";
 import TournamentGrid from "../ui/TournamentGrid";
 import { expandMultiRound, isDNS } from "../ui/driveUtils";
+import CircuitShell from "../ui/circuit/CircuitShell";
+import { buildDriveEntries, DRIVE_CONFIG } from "./drive/driveCircuitData";
+import { TournamentDetail } from "./fpg/TournamentDetail";
+
+/** Secção de Draw ao estilo FPGPage para o CircuitShell: selector de ronda + DrawTab. */
+function DriveDrawSection({ draws, t, esc, pdb, adm }: { draws: Record<string, any>; t: any; esc?: string | null; pdb: any; adm?: any }) {
+  const rounds = Object.keys(draws).filter(r => (draws[r]?.groups?.length ?? 0) > 0).sort();
+  const [rn, setRn] = useState(rounds[0] || "1");
+  const cur = rounds.includes(rn) ? rn : (rounds[0] || "1");
+  const sex = /\bF\b|\bS\b|Feminino/i.test(t.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(t.name || "") ? "M" : undefined;
+  return (
+    <div>
+      {rounds.length > 1 && (
+        <div className="tab-bar" style={{ marginBottom: 8 }}>
+          {rounds.map(r => (
+            <button key={r} className={"tab-under" + (cur === r ? " active" : "")} onClick={() => setRn(r)}>Draw R{r}</button>
+          ))}
+        </div>
+      )}
+      <DrawTab draw={draws[cur] || { groups: [] }} roundNum={parseInt(cur, 10)} playersDB={pdb}
+        tournamentEscalao={esc || undefined} tournamentSex={sex} tournamentDate={t.date} admissions={adm}
+        fpgUrl={t.ccode && t.tcode ? `https://scoring.fpg.pt/lists/linkpage.aspx?page=draw&club=${t.ccode}&tourn=${t.tcode}&round=${cur}&ack=8428ACK987` : undefined} />
+    </div>
+  );
+}
 import type {
   Tournament,
   Player,
@@ -1292,7 +1317,9 @@ function DriveContent() {
       const driveTourns = driveR.tournaments;
       const aqTourns = aqR.tournaments;
       setMonthlyMeta([...driveR.meta, ...aqR.meta]);
-      const allTourns = expandMultiRound([...driveTourns, ...aqTourns]);
+      const rawTournaments = [...driveTourns, ...aqTourns];
+      setRaw(rawTournaments);
+      const allTourns = expandMultiRound(rawTournaments);
       const driveData: DriveData = {
         lastUpdated: "",
         source: "scoring.datagolf.pt",
@@ -1311,6 +1338,7 @@ function DriveContent() {
 
   // Carregar admissions + draws (uma vez) e atachar aos tournaments por ccode-tcode
   const [admDrawsIdx, setAdmDrawsIdx] = useState<Map<string, any>>(new Map());
+  const [raw, setRaw] = useState<Tournament[]>([]);
   const [admissionsMeta, setAdmissionsMeta] = useState<DataSource[]>([]);
   useEffect(() => {
     loadFpgAdmissionsDraws()
@@ -1345,6 +1373,44 @@ function DriveContent() {
     }
   }, [data, admDrawsIdx]);
 
+  // ── CircuitShell: entries a partir da lista CRUA (não-expandida) ─────────
+  // O IntlTournView desenha as tabs de ronda a partir de results.players[].roundScores;
+  // as secções Inscritos/Draw vêm de _admissions/_draws (anexados por tcode base).
+  const escLookup = useMemo(() => buildEscLookup(pdb, (data?.tournaments ?? []) as any /* tipo local diferente do playerUtils */), [pdb, data]);
+  const driveEntries = useMemo(() => {
+    if (raw.length === 0) return [];
+    if (admDrawsIdx.size > 0) {
+      for (const t of raw) {
+        const ad = admDrawsIdx.get(`${t.ccode}-${(t as any).tcode}`);
+        if (ad) { (t as any)._admissions = ad.admissions; (t as any)._draws = ad.draws; }
+      }
+    }
+    // Filtros tournament-level (partilhados por TODOS os escalões do mesmo dia →
+    // não destroem o agrupamento por evento): série / ano / região.
+    let src = raw as any[];
+    if (series !== "all") src = src.filter(t => (t.series || "tour") === series);
+    if (yearFilter) src = src.filter(t => (t.date || "").slice(0, 4) === String(yearFilter));
+    if (regionFilter) src = src.filter(t => t.region === regionFilter);
+    const ents = buildDriveEntries(src as any);
+    // Detalhe IDÊNTICO à FPGPage: cada divisão (escalão) renderiza o TournamentDetail
+    // da FPGPage — tabs flat (Inscrições·Draw·R1·R2·Resumo·Scorecards), que busca
+    // inscrições/draws sozinho por ccode-tcode. Limpamos as secções genéricas do
+    // shell para não aparecerem section-tabs duplicados.
+    for (const e of ents) {
+      for (const d of e.divisions ?? []) {
+        d.inscritos = undefined;
+        d.draw = undefined;
+        const t = d.results as any;
+        d.renderFull = () => <TournamentDetail tournament={t} escLookup={escLookup as any} playersDB={pdb as any} />;
+      }
+    }
+    // Filtros entry-level — preservam TODOS os escalões do evento: Manuel / escalão.
+    let out = ents;
+    if (filterManuel) out = out.filter(e => e.hasManuel);
+    if (escFilter.length > 0) out = out.filter(e => (e.divisions ?? []).some(d => escFilter.includes(d.escalao as any)));
+    return out;
+  }, [raw, admDrawsIdx, series, yearFilter, regionFilter, filterManuel, escFilter, pdb, escLookup]);
+
   // State para tab especial (Inscrições / Draw RN) ortogonal ao roundIdx
   const [specialTab, setSpecialTab] = useState<string | null>(null);  // "admissions" | "draw:1" | null
 
@@ -1368,7 +1434,7 @@ function DriveContent() {
   const allT     = useMemo(() => data?.tournaments.filter(t => inYear(t)) ?? [], [data, activeYear]);
   const challT   = useMemo(() => data?.tournaments.filter(t => t.series === "challenge" && inYear(t)) ?? [], [data, activeYear]);
   const aquaporT = useMemo(() => data?.tournaments.filter(t => t.series === "aquapor"   && inYear(t)) ?? [], [data, activeYear]);
-  const escLookup = useMemo(() => buildEscLookup(pdb, (data?.tournaments ?? []) as any /* tipo local diferente do playerUtils */), [pdb, data]);
+  // escLookup definido acima (antes de driveEntries).
 
   // Lookup temporal: fedCode → Map<year, escalão> — construído dos torneios Challenge históricos
   const temporalEscLookup = useMemo(
@@ -1932,6 +1998,10 @@ function DriveContent() {
           MODO NORMAL (Tour / Challenge / AQUAPOR)
           ══════════════════════════════════════════ */}
       {navMode === "torneios" && (
+        <CircuitShell entries={driveEntries} config={{ ...DRIVE_CONFIG, color: "var(--color-good-dark)", textColor: "#fff", filters: { search: true } }} loading={loading} />
+      )}
+
+      {false && navMode === "torneios" && (
         <div className="master-detail">
 
           {/* Sidebar */}

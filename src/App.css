@@ -762,8 +762,6 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 tr.clickable { cursor: pointer; }
 /* Utility: "year" separator label shown between rows/sections */
 .year-label { padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--text-2); letter-spacing: 0.04em; text-transform: uppercase; }
-/* Tee filter indicator bar in Análise por campo */
-.tee-filter-bar { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; background: var(--bg-hover); border: 1px solid var(--border); border-radius: var(--radius-lg); }
 /* Highlighted active row in Eclético por tee summary table */
 .dtable tr.tee-row-active,
 .dtable-lg tr.tee-row-active { background: var(--color-good-alpha); box-shadow: inset 3px 0 0 var(--color-good); }
@@ -814,8 +812,6 @@ a.dateLink .tee-date { text-decoration: underline; text-underline-offset: 2px; }
 
 tr.cross-current { background: var(--bg-success); }
 .cross-current td:first-child { border-left: 3px solid var(--color-good); }
-
-.ecHint { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
 /* .ec-sum → eclectic summary table */
 .ec-sum th { padding: 6px 10px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); background: var(--bg-header); border-bottom: 2px solid var(--border); white-space: nowrap; }
 .ec-sum th.r, .ec-sum td.r { text-align: right; }
@@ -823,19 +819,65 @@ tr.cross-current { background: var(--bg-success); }
 .ec-sum tr:hover { background: var(--bg-hover); cursor: pointer; }
 
 .sc-table-ec { border-collapse: collapse; font-size: 12px; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.sc-table-ec th, .sc-table-ec td { padding: 5px 5px; text-align: center; border: 1px solid var(--border-light); height: 30px; vertical-align: middle; }
-.sc-table-ec th { font-size: 11px; font-weight: 600; color: var(--text-2); background: var(--bg-header); border-bottom: 1px solid var(--border); }
+/* Sem grelha completa — só linhas horizontais subtis (como na leaderboard .sc-lb),
+   para a tabela respirar e ficar limpa. */
+.sc-table-ec th, .sc-table-ec td { padding: 5px 6px; text-align: center; border: none; height: 30px; vertical-align: middle; }
+.sc-table-ec tbody td { border-bottom: 1px solid var(--border-light); }
+.sc-table-ec tbody tr:last-child td { border-bottom: none; }
+/* Cabeçalho unificado — caixa NORMAL (sem maiúsculas), peso leve e cor discreta.
+   É reconhecível como cabeçalho pelo fundo coeso + separador espesso, não por
+   gritar em CAPS/bold. */
+.sc-table-ec thead th {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-3);
+  background: transparent;
+  text-transform: none;
+  letter-spacing: 0;
+  border-bottom: 2px solid var(--border);
+  height: 30px;
+}
+.sc-table-ec thead th.row-label { text-align: left; color: var(--text-3); }
 .sc-table-ec .row-label { text-align: left; padding-left: 8px; font-weight: 700; color: var(--text); min-width: 70px; }
-.sc-table-ec .col-out, .sc-table-ec .col-in { background: var(--bg-hover); border-left: 1px solid var(--border); font-weight: 600; font-variant-numeric: tabular-nums; }
-.sc-table-ec .col-total { background: var(--accent-light); border-left: 1px solid var(--border); font-weight: 800; font-variant-numeric: tabular-nums; }
+.sc-table-ec .col-out, .sc-table-ec .col-in { border-left: 1px solid var(--border-light); font-weight: 600; font-variant-numeric: tabular-nums; }
+/* "Out" fechado dos dois lados (divisor à direita separa o front 9 do back 9) */
+.sc-table-ec .col-out { border-right: 1px solid var(--border-light); }
+/* Subtotais (Out/In/Total): gross em cima, diferença para o par em pequenino por baixo */
+.sc-table-ec .ec-sum-g { line-height: 1.05; }
+.sc-table-ec .ec-sum-tp { font-size: 9px; font-weight: 600; line-height: 1.05; margin-top: 1px; }
+.sc-table-ec .col-total { border-left: 1px solid var(--border); font-weight: 700; font-variant-numeric: tabular-nums; }
 .sc-table-ec .sep-row td { border-bottom: 2px solid var(--border); }
 .sc-table-ec .meta-row td { color: var(--text-muted); font-size: 10px; }
-/* Colunas extra à direita do TOT (HCP / STB / SD) no scorecard do Eclético */
-.sc-table-ec .ec-extra { border-left: 1px solid var(--border); background: var(--bg-detail); font-variant-numeric: tabular-nums; min-width: 40px; }
-.sc-table-ec th.ec-extra { font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; }
+/* Bloco de referência (Par + Distância) — estilo quieto e UNIFORME, alinhado
+   com o cabeçalho, para não competir com as linhas de dados (Eclético + rondas).
+   Fundo transparente, cor única discreta, peso normal, mesmo tamanho. */
+.sc-table-ec .ec-ref-row td { background: transparent; color: var(--text-3); font-weight: 400; font-size: 11px; font-variant-numeric: tabular-nums; }
+.sc-table-ec .ec-ref-row .row-label { color: var(--text-2); font-weight: 500; }
+.sc-table-ec .ec-ref-row .col-out,
+.sc-table-ec .ec-ref-row .col-in,
+.sc-table-ec .ec-ref-row .col-total { color: var(--text-2); font-weight: 500; }
+/* Destaque da linha do Eclético — fundo subtil para a destacar das rondas */
+.sc-table-ec .ec-eclectic-row { background: var(--accent-light); }
+.sc-table-ec .ec-eclectic-row td { font-weight: 600; }
+/* Linhas de ronda — fundo neutro (sem a tinta da cor do tee), só hover subtil */
+.sc-table-ec .ec-round-row:hover td { background: var(--bg-hover-subtle); }
+/* Colunas de contagem 🐦 / Par / ■ por ronda — mesmas cores das leaderboards (.lb-bird/.lb-par-stat/.lb-bog) */
+.sc-table-ec .ec-bird   { color: var(--color-good); font-weight: 700; min-width: 30px; }
+.sc-table-ec .ec-par-ct { color: var(--text-3); min-width: 30px; }
+.sc-table-ec .ec-bog    { color: var(--color-danger); font-weight: 700; min-width: 30px; }
+/* Colunas extra à direita do TOT (HCP / STB / SD) no scorecard do Eclético —
+   sem fundo tingido, só um divisor a separá-las do scorecard. */
+.sc-table-ec .ec-extra { border-left: 1px solid var(--border-light); font-variant-numeric: tabular-nums; min-width: 40px; }
+
+/* Tabela-resumo do Eclético — cabeçalho harmonizado com o scorecard (caixa
+   normal, leve, transparente) e densidade compacta para ocupar menos espaço. */
+.ec-summary th { text-transform: none; letter-spacing: 0; font-weight: 500; background: transparent; color: var(--text-3); padding: 3px 10px; }
+.ec-summary td { padding: 3px 10px; }
+.ec-summary tbody tr:hover { background: var(--bg-hover-subtle); }
 
 /* Header de cada bloco de tee (Eclético por tee) */
-.ecPillHeader { padding: 6px 10px; cursor: pointer; display: flex; align-items: center; flex-wrap: wrap; gap: 2px; }
+.ecPillHeader { padding: 8px 12px; cursor: pointer; display: flex; align-items: center; flex-wrap: wrap; gap: 4px; border-bottom: 1px solid var(--border-light); }
+.ecPillHeader .muted { font-size: 11px; }
 
 /* ─── Course Performance Analysis ─── */
 /* courseAnalysis → .card (unified) */

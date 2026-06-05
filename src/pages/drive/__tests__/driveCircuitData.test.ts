@@ -9,6 +9,8 @@ import {
   buildDriveGroups,
   buildDriveDivisions,
   buildDriveEntries,
+  admissionsToInscritos,
+  drawsToCircuitDraw,
   shortCampo,
   DRIVE_CONFIG,
 } from "../driveCircuitData";
@@ -119,6 +121,57 @@ describe("buildDriveEntries", () => {
         players: [{ name: "Manuel Medeiros", pos: 1, grossTotal: 70, toPar: -2, scoreId: "x" }] }),
     ]);
     expect(entries[0].hasManuel).toBe(true);
+  });
+});
+
+describe("admissionsToInscritos", () => {
+  it("divide admitidos e reservas em duas listas", () => {
+    const ins = admissionsToInscritos({
+      players: [
+        { pos: 1, fed: "1", nome: "A", clube: "X", hcp: 5, vac: null, dataInscricao: null, status: "confirmed" },
+        { pos: 2, fed: "2", nome: "B", clube: "Y", hcp: 7, vac: null, dataInscricao: null, status: "confirmed" },
+        { pos: 1, fed: "3", nome: "C", clube: "Z", hcp: 9, vac: null, dataInscricao: null, status: "reserva" },
+      ],
+    });
+    expect(ins?.lists.map(l => l.key)).toEqual(["admitidos", "reservas"]);
+    expect(ins?.lists[0].players).toHaveLength(2);
+    expect(ins?.lists[1].players).toHaveLength(1);
+    expect(ins?.lists[0].players[0]).toMatchObject({ name: "A", club: "X", fed: "1", hcp: 5, status: "confirmed" });
+  });
+  it("devolve undefined sem jogadores ou com erro", () => {
+    expect(admissionsToInscritos(undefined)).toBeUndefined();
+    expect(admissionsToInscritos({ players: [] })).toBeUndefined();
+    expect(admissionsToInscritos({ error: "x", players: [{ pos: 1, fed: "1", nome: "A", clube: "X", hcp: 5, vac: null, dataInscricao: null, status: "confirmed" }] })).toBeUndefined();
+  });
+});
+
+describe("drawsToCircuitDraw", () => {
+  it("converte grupos por ronda e mapeia nome/clube", () => {
+    const draw = drawsToCircuitDraw({
+      "1": { groups: [{ teeTime: "08:00", startHole: 10, tee: "Amarelas", players: [{ nome: "A", clube: "X" }, { nome: "B", clube: null }] }] },
+      "2": { groups: [] },
+    });
+    expect(Object.keys(draw?.rounds ?? {})).toEqual(["1"]); // ronda 2 vazia é ignorada
+    expect(draw?.rounds["1"][0]).toMatchObject({ teeTime: "08:00", startHole: 10, tee: "Amarelas" });
+    expect(draw?.rounds["1"][0].players).toEqual([{ name: "A", club: "X" }, { name: "B", club: undefined, fed: undefined }]);
+  });
+  it("devolve undefined sem draws", () => {
+    expect(drawsToCircuitDraw(undefined)).toBeUndefined();
+    expect(drawsToCircuitDraw({ "1": { error: "x" } })).toBeUndefined();
+  });
+});
+
+describe("buildDriveDivisions — inscrições/draws", () => {
+  it("anexa inscritos e draw à divisão a partir de _admissions/_draws", () => {
+    const tt = t({
+      name: "Evt", tcode: "500", series: "challenge", escalao: "Sub 12", ccode: "007", date: "2026-03-01",
+      _admissions: { players: [{ pos: 1, fed: "1", nome: "A", clube: "X", hcp: 5, vac: null, dataInscricao: null, status: "confirmed" }] },
+      _draws: { "1": { groups: [{ teeTime: "09:00", startHole: 1, tee: "Azuis", players: [{ nome: "A", clube: "X" }] }] } },
+    } as any);
+    const [g] = buildDriveGroups([tt]);
+    const [div] = buildDriveDivisions(g);
+    expect(div.inscritos?.lists[0].players[0].name).toBe("A");
+    expect(div.draw?.rounds["1"][0].teeTime).toBe("09:00");
   });
 });
 

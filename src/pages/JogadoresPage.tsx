@@ -529,12 +529,17 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
 
   // Handler de clique manual num tee — muda o filtro E faz scroll suave até à análise.
   const handleSelectTee = useCallback((tk: string) => {
-    setActiveTee(tk);
-    setTimeout(() => {
-      const el = document.getElementById("hole-stats-section");
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }, 80);
-  }, []);
+    // Toggle: clicar no tee já activo limpa o filtro (substitui a antiga barra
+    // "Filtro activo / Limpar filtro" — menos poluição visual).
+    const willClear = activeTee === tk;
+    setActiveTee(willClear ? null : tk);
+    if (!willClear) {
+      setTimeout(() => {
+        const el = document.getElementById("hole-stats-section");
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }, 80);
+    }
+  }, [activeTee]);
 
   return (
     <>
@@ -577,14 +582,6 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
               />
               {isAnalysis && (
                 <>
-                  {activeTee && (
-                    <div className="tee-filter-bar mb-10">
-                      <span className="fs-12 fw-600 c-text-2">Filtro activo:</span>
-                      <TeePill name={course.rounds.find(r => normKey(r.tee || "") === activeTee)?.tee || activeTee} />
-                      <span className="muted fs-11">{roundsView.length} rondas</span>
-                      <button className="btn btnGhost fs-11" onClick={() => setActiveTee(null)}>✕ Limpar filtro</button>
-                    </div>
-                  )}
                   {/* Eclectic */}
                   {ecList.length > 0 && (
                     <EclecticSection ecList={ecList} ecDet={ecDet} holeStats={holeStats}

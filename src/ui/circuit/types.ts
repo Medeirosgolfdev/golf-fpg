@@ -90,6 +90,27 @@ export interface CircuitDivision {
    * leaderboard da ronda e o índice. Tem precedência sobre roundExtra.
    */
   renderRoundSection?: (leaderboard: React.ReactNode, roundIndex: number) => React.ReactNode;
+
+  /**
+   * Substituição total da secção de Inscritos. Quando definido, o shell renderiza
+   * isto em vez do `InscritosView` interno (a DrivePage usa-o para mostrar o
+   * `AdmissionsTab` da FPGPage). A secção continua a aparecer com base em `inscritos`.
+   */
+  renderInscritos?: () => React.ReactNode;
+  /**
+   * Substituição TOTAL do detalhe da divisão (header + section-tabs + conteúdo).
+   * Quando definido, o shell desenha só as tabs de escalão e delega TUDO o resto
+   * neste node — a DrivePage usa-o para montar o `TournamentDetail` da FPGPage
+   * (tabs flat Inscrições·Draw·R1·R2·Resumo·Scorecards). Outras páginas não o
+   * definem e mantêm o render por secções do shell.
+   */
+  renderFull?: () => React.ReactNode;
+  /**
+   * Substituição total da secção de Draw. Quando definido, o shell renderiza isto
+   * em vez do `DrawView` interno (a DrivePage usa-o para mostrar o `DrawTab` da
+   * FPGPage, com selector de ronda próprio). A secção aparece com base em `draw`.
+   */
+  renderDrawSection?: () => React.ReactNode;
 }
 
 /** Lista de inscritos de uma divisão — sub-listas opcionais. */

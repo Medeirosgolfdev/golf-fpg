@@ -23,8 +23,12 @@
  * Este módulo é puro (sem React) e testável isoladamente.
  */
 import type { Tournament as FPGTournament } from "../../data/fpgTypes";
-import type { CircuitEntry, CircuitConfig, CircuitDivision } from "../../ui/circuit/types";
+import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitInscritos, CircuitDraw } from "../../ui/circuit/types";
+import type { FpgAdmissions, FpgDraw } from "../../data/nacional2026Loader";
 import { isManuelByName } from "../../constants/manuel";
+
+/** Campos anexados em runtime (inscrições/draws) ao FPGTournament da DrivePage. */
+type DriveRuntime = { _admissions?: FpgAdmissions; _draws?: Record<string, FpgDraw> };
 
 /** Ordem canónica de escalões do Drive (para ordenar tabs/divisões). */
 export const DRIVE_ESCALOES = ["Sub 10", "Sub 12", "Sub 14", "Sub 16", "Sub 18"];
@@ -166,6 +170,49 @@ function tournamentHasManuel(t: FPGTournament): boolean {
   return (t.players || []).some(p => isManuelByName(p.name));
 }
 
+/** Converte inscrições FPG (admitidos + reservas) → secção `inscritos` do CircuitShell. */
+export function admissionsToInscritos(adm: FpgAdmissions | undefined): CircuitInscritos | undefined {
+  if (!adm || adm.error || !adm.players || adm.players.length === 0) return undefined;
+  const toRow = (p: NonNullable<FpgAdmissions["players"]>[number]): CircuitInscritos["lists"][number]["players"][number] => ({
+    pos: p.pos ?? undefined,
+    name: p.nome,
+    club: p.clube ?? undefined,
+    fed: p.fed ?? undefined,
+    hcp: p.hcp,
+    status: p.status,
+  });
+  const admitidos = adm.players.filter(p => p.status !== "reserva");
+  const reservas  = adm.players.filter(p => p.status === "reserva");
+  const lists: CircuitInscritos["lists"] = [];
+  if (admitidos.length) lists.push({ key: "admitidos", label: `Admitidos (${admitidos.length})`, players: admitidos.map(toRow) });
+  if (reservas.length)  lists.push({ key: "reservas",  label: `Reservas (${reservas.length})`,    players: reservas.map(toRow) });
+  return lists.length ? { lists } : undefined;
+}
+
+/** Converte draws FPG (por ronda) → secção `draw` do CircuitShell. */
+export function drawsToCircuitDraw(draws: Record<string, FpgDraw> | undefined): CircuitDraw | undefined {
+  if (!draws) return undefined;
+  const rounds: CircuitDraw["rounds"] = {};
+  for (const [rn, d] of Object.entries(draws)) {
+    if (!d || d.error || !d.groups || d.groups.length === 0) continue;
+    rounds[rn] = d.groups.map(g => ({
+      teeTime: g.teeTime,
+      startHole: g.startHole ?? undefined,
+      tee: g.tee ?? undefined,
+      players: (g.players || []).map(pl => ({ name: pl.nome, club: pl.clube ?? undefined, fed: pl.fed ?? undefined })),
+    }));
+  }
+  return Object.keys(rounds).length ? { rounds } : undefined;
+}
+
+/** Secções inscritos/draw de um torneio, a partir dos campos anexados em runtime. */
+function runtimeSections(t: FPGTournament): { inscritos?: CircuitInscritos; draw?: CircuitDraw } {
+  const rt = t as FPGTournament & DriveRuntime;
+  const inscritos = admissionsToInscritos(rt._admissions);
+  const draw = drawsToCircuitDraw(rt._draws);
+  return { ...(inscritos ? { inscritos } : {}), ...(draw ? { draw } : {}) };
+}
+
 /** Constrói as divisões (tabs de escalão/ronda) de um grupo. */
 export function buildDriveDivisions(group: DriveGroup): CircuitDivision[] {
   if (group.isEvent) {
@@ -175,6 +222,7 @@ export function buildDriveDivisions(group: DriveGroup): CircuitDivision[] {
       escalao: t.escalao || "—",
       hasManuel: tournamentHasManuel(t),
       results: t,
+      ...runtimeSections(t),
     }));
   }
   if (group.isMulti) {
@@ -188,6 +236,7 @@ export function buildDriveDivisions(group: DriveGroup): CircuitDivision[] {
       hasManuel: tournamentHasManuel(resumo),
       results: resumo,
       roundLabels,
+      ...runtimeSections(resumo),
     }];
   }
   // Single round.
@@ -197,6 +246,7 @@ export function buildDriveDivisions(group: DriveGroup): CircuitDivision[] {
     escalao: group.escalao || "—",
     hasManuel: tournamentHasManuel(t),
     results: t,
+    ...runtimeSections(t),
   }];
 }
 

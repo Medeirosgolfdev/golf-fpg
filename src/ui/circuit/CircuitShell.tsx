@@ -612,6 +612,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
               <LoadingState message={config.loadingMessage ?? "A carregar dados…"} />
             ) : curDiv ? (
               <>
+                {!curDiv.renderFull && (
                 <DetailHeader
                   title={cur.name}
                   actions={headerHasActions ? (
@@ -674,9 +675,10 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
                     </>
                   }
                 />
+                )}
 
                 {/* Tabs de secção (Resultados / Inscritos / Draw) */}
-                {sections.length > 1 && (
+                {sections.length > 1 && !curDiv.renderFull && (
                   <div className="tab-bar" style={{ marginBottom: 8 }}>
                     {sections.map(s => (
                       <button
@@ -719,7 +721,8 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
                 )}
 
                 {/* Conteúdo da secção activa */}
-                {curSection === "results" && (resultsTourn ? (
+                {curDiv.renderFull && curDiv.renderFull()}
+                {!curDiv.renderFull && curSection === "results" && (resultsTourn ? (
                   <IntlTournView
                     tournament={resultsTourn}
                     scOptions={curDiv.scOptions ?? {}}
@@ -735,11 +738,15 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
                 ) : curDiv.customResults ? (
                   curDiv.customResults
                 ) : null)}
-                {curSection === "inscritos" && curDiv.inscritos && (
-                  <InscritosView lists={curDiv.inscritos.lists} />
+                {curSection === "inscritos" && (
+                  curDiv.renderInscritos
+                    ? curDiv.renderInscritos()
+                    : curDiv.inscritos && <InscritosView lists={curDiv.inscritos.lists} />
                 )}
-                {curSection === "draw" && curDiv.draw && (
-                  <DrawView rounds={curDiv.draw.rounds} />
+                {curSection === "draw" && (
+                  curDiv.renderDrawSection
+                    ? curDiv.renderDrawSection()
+                    : curDiv.draw && <DrawView rounds={curDiv.draw.rounds} />
                 )}
               </>
             ) : (
