@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-06-05T21:18:23.988Z",
-  "total": 473,
+  "scrapedAt": "2026-06-06T16:05:09.524Z",
+  "total": 474,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -107130,6 +107130,18 @@
           ]
         }
       }
+    },
+    {
+      "ccode": "007",
+      "tcode": "11031",
+      "name": "MADEIRA GOLF TROPHY 2026",
+      "date": "2026-06-05",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
     },
     {
       "ccode": "059",

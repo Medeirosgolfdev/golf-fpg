@@ -1,12 +1,12 @@
 {
-  "lastUpdated": "2026-06-05T21:18:24.360Z",
+  "lastUpdated": "2026-06-06T16:05:10.001Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
-  "today": "2026-06-05",
+  "today": "2026-06-06",
   "summary": {
-    "total": 1181,
+    "total": 1182,
     "complete": 1161,
-    "in_progress": 2,
-    "future": 2,
+    "in_progress": 5,
+    "future": 0,
     "stale": 12,
     "excluded": 1,
     "missing_admissions": 0,
@@ -34,7 +34,7 @@
       "scorecards_source": "pull-torneios002.json",
       "scorecards_ratio": 0,
       "full_scorecards_ratio": 0,
-      "status": "future"
+      "status": "in_progress"
     },
     {
       "ccode": "059",
@@ -54,7 +54,27 @@
       "scorecards_source": "pull-torneios002.json",
       "scorecards_ratio": 0,
       "full_scorecards_ratio": 0,
-      "status": "future"
+      "status": "in_progress"
+    },
+    {
+      "ccode": "007",
+      "tcode": "11031",
+      "name": "MADEIRA GOLF TROPHY 2026",
+      "date": "2026-06-05",
+      "rounds": 1,
+      "has_admissions": false,
+      "admissions_count": 0,
+      "has_draws": false,
+      "draws_rounds_with_data": 0,
+      "draws_players_total": 0,
+      "has_classif": false,
+      "player_count": 0,
+      "players_with_scorecards": 0,
+      "players_with_full_scorecards": 0,
+      "scorecards_source": null,
+      "scorecards_ratio": 0,
+      "full_scorecards_ratio": 0,
+      "status": "in_progress"
     },
     {
       "ccode": "000",
