@@ -113,4 +113,25 @@ describe("parseDraw", () => {
     expect(parseDraw("")).toEqual({ error: "empty-html" });
     expect(parseDraw(null)).toEqual({ error: "empty-html" });
   });
+
+  it("captura coluna Federado quando presente (Cor + Fed + Clube)", () => {
+    // Layout do draw 059/10615: [Hora, Tee#, Cor, Nome, Fed, Clube]
+    const htmlFed = `
+      <table>
+        <tr><td align="left">3º Torneio Academia Junior</td><td align="right">Federado</td></tr>
+        <tr><td align="right">2026-06-06</td></tr>
+        <tr><td align="right">Jogadores 2</td></tr>
+        <tr><td>Hora</td><td>Tee</td><td>Jogador</td><td>Federado</td><td>Club/Equipa</td></tr>
+        <tr style="border-top:2pt solid gray"><td>11:45</td><td>1</td><td>Vermelhas</td><td>Goulartt Medeiros,Manuel</td><td>52884</td><td>Santo da Serra</td></tr>
+        <tr><td>11:45</td><td>1</td><td>Vermelhas</td><td>Rodrigues,Vicente</td><td>51896</td><td>Palheiro</td></tr>
+      </table>`;
+    const d = parseDraw(htmlFed);
+    expect(d.groups.length).toBe(1);
+    const ps = d.groups[0].players;
+    expect(ps[0].nome).toBe("Goulartt Medeiros,Manuel");
+    expect(ps[0].fed).toBe("52884");
+    expect(ps[0].clube).toBe("Santo da Serra");
+    expect(ps[1].fed).toBe("51896");
+    expect(ps[1].clube).toBe("Palheiro");
+  });
 });

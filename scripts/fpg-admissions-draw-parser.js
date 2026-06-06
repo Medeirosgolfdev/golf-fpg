@@ -238,16 +238,28 @@ function parseDraw(html) {
     }
     if (!/^\d{1,2}:\d{2}$/.test(first)) continue;
 
-    // Detectar estrutura de colunas:
-    //   Padrão A (pré-torneio): [Hora, Tee#, Cor, Nome, Clube, ...]
-    //   Padrão B (pós-torneio): [Hora, Tee#, Nome, Fed, Clube, ...]  (sem cor)
+    // Detectar estrutura de colunas. A coluna de cor de tee e a coluna
+    // Federado são ambas OPCIONAIS e podem coexistir:
+    //   [Hora, Tee#, (Cor?), Nome, (Fed?), Clube, ...]
+    // Casos vistos em produção:
+    //   A: [Hora, Tee#, Cor, Nome, Clube]            (pré-torneio, sem fed)
+    //   B: [Hora, Tee#, Nome, Fed, Clube]            (sem cor)
+    //   C: [Hora, Tee#, Cor, Nome, Fed, Clube]       (cor + fed — ex: 059/10615)
     const maybeColor = (cells[2] || "").trim();
-    let teeVal, nomeIdx, clubeIdx;
+    let teeVal, nomeIdx;
     if (TEE_COLORS_RE.test(maybeColor)) {
-      teeVal = maybeColor; nomeIdx = 3; clubeIdx = 4;
+      teeVal = maybeColor; nomeIdx = 3;
     } else {
       teeVal = null; nomeIdx = 2;
-      clubeIdx = /^\d{4,6}$/.test((cells[3]||"").trim()) ? 4 : 3;
+    }
+    // A célula imediatamente a seguir ao nome é a coluna Federado se for
+    // numérica (4-6 dígitos); caso contrário é já o clube.
+    let fedIdx = -1, clubeIdx;
+    if (/^\d{4,6}$/.test((cells[nomeIdx + 1] || "").trim())) {
+      fedIdx = nomeIdx + 1;
+      clubeIdx = nomeIdx + 2;
+    } else {
+      clubeIdx = nomeIdx + 1;
     }
 
     const startsNewGroup = /border-top:\s*2pt\s+solid/i.test(trAttrs) || isFirstDataRow;
@@ -263,10 +275,12 @@ function parseDraw(html) {
     }
 
     const nome = cells[nomeIdx] || "";
+    const fed = fedIdx >= 0 ? (cells[fedIdx] || "").trim() : "";
     const clube = cells[clubeIdx] || "";
     if (nome) {
       currentGroup.players.push({
         nome,
+        fed: fed || null,
         clube: clube || null,
       });
     }
