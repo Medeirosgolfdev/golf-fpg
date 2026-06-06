@@ -146,15 +146,45 @@ jobs:
           DATE=$(date +'%Y-%m-%d %H:%M')
           git commit -m "data: update FPG admissions+draws ${DATE}"
           # Push robusto: retry com pull --rebase em cada tentativa.
-          # Em runs manuais (sem o cron offset) podemos colidir com outro
-          # workflow a fazer push em paralelo → non-fast-forward.
+          # O fpg-tournaments-tracking.json é REGENERADO por inteiro por mais
+          # do que um workflow → um rebase nunca resolve conflitos nele sozinho.
+          # Estratégia: se o rebase conflitar no tracking, resolver com a nossa
+          # versão e REGENERAR o ficheiro sobre o estado pós-pull (o script é
+          # determinístico: lê public/data/ e reescreve tudo), amendando o commit.
+          TRACKING="public/data/fpg-tournaments-tracking.json"
           PUSH_OK=0
           for i in 1 2 3 4 5; do
-            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
+            if ! git pull --rebase --autostash origin ${GITHUB_REF_NAME}; then
+              # Conflito de rebase. Se for só no tracking, resolver e continuar.
+              if git diff --name-only --diff-filter=U | grep -qx "$TRACKING" \
+                 && [ "$(git diff --name-only --diff-filter=U | wc -l)" = "1" ]; then
+                echo "Conflito no tracking — a resolver com regeneração"
+                git checkout --theirs "$TRACKING"
+                git add "$TRACKING"
+                if ! GIT_EDITOR=true git rebase --continue; then
+                  git rebase --abort 2>/dev/null || true
+                  echo "Rebase não recuperou na tentativa $i — retry em $((i * 5))s"
+                  sleep $((i * 5))
+                  continue
+                fi
+              else
+                git rebase --abort 2>/dev/null || true
+                echo "Conflito fora do tracking na tentativa $i — retry em $((i * 5))s"
+                sleep $((i * 5))
+                continue
+              fi
+            fi
+            # Pós-pull: regenerar o tracking com TODOS os dados (nossos + dos
+            # pushes concorrentes que acabámos de integrar) e amendar se mudou.
+            node scripts/build-tournaments-tracking.js
+            if ! git diff --quiet -- "$TRACKING"; then
+              git add "$TRACKING"
+              git commit --amend --no-edit
+            fi
+            if git push; then
               PUSH_OK=1
               break
             fi
-            git rebase --abort 2>/dev/null || true
             echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
             sleep $((i * 5))
           done
