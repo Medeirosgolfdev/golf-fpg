@@ -1,0 +1,692 @@
+{
+  "tourId": 71210,
+  "url": "https://www.nextcaddy.com/tour/71210",
+  "scrapedAt": "2026-06-01T09:30:02.469Z",
+  "meta": {
+    "name": "AMIGOS MIRAFLROES3005",
+    "organizer": null,
+    "course": "Miraflores Golf",
+    "courseCode": "AM76",
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ]
+  },
+  "course": null,
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Joaquin Alberto Morales Martinez",
+          "licencia": "AM06168882",
+          "hcp": 25.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 42,
+          "toPar": -6,
+          "inscribedId": 2331897
+        },
+        {
+          "pos": 2,
+          "name": "Francisco Quero Zumaquero",
+          "licencia": "AM57138495",
+          "hcp": 19.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2331882
+        },
+        {
+          "pos": 3,
+          "name": "Luis Angel Jaramillo Morillo",
+          "licencia": "AM72059210",
+          "hcp": 19,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2331884
+        },
+        {
+          "pos": 4,
+          "name": "Guy Bisin",
+          "licencia": "AM76071888",
+          "hcp": 16.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2331895
+        },
+        {
+          "pos": 5,
+          "name": "Fernando Cerezo Lorente",
+          "licencia": "AM76799351",
+          "hcp": 21.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2331893
+        },
+        {
+          "pos": 6,
+          "name": "Muriel Martin",
+          "licencia": "AMB5906267",
+          "hcp": 22.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2331879
+        },
+        {
+          "pos": 7,
+          "name": "Alfonso Rosales Mata",
+          "licencia": "AM76601307",
+          "hcp": 12.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2331877
+        },
+        {
+          "pos": 8,
+          "name": "Alfonso Gonzalez Peña",
+          "licencia": "CM52138410",
+          "hcp": 21.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2331878
+        },
+        {
+          "pos": 9,
+          "name": "Gustavo Caspueñas Bello",
+          "licencia": "AM76650304",
+          "hcp": 23.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2331894
+        },
+        {
+          "pos": 10,
+          "name": "Carlos Del Campo Vicente",
+          "licencia": "7724148919",
+          "hcp": 11.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2331883
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 10
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Alfonso Rosales Mata",
+      "licencia": "AM76601307",
+      "hcp": 12.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Alfonso Gonzalez Peña",
+      "licencia": "CM52138410",
+      "hcp": 21.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Francisco Quero Zumaquero",
+      "licencia": "AM57138495",
+      "hcp": 19.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Carlos Del Campo Vicente",
+      "licencia": "7724148919",
+      "hcp": 11.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Luis Angel Jaramillo Morillo",
+      "licencia": "AM72059210",
+      "hcp": 19,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Fernando Cerezo Lorente",
+      "licencia": "AM76799351",
+      "hcp": 21.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Gustavo Caspueñas Bello",
+      "licencia": "AM76650304",
+      "hcp": 23.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Guy Bisin",
+      "licencia": "AM76071888",
+      "hcp": 16.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Joaquin Alberto Morales Martinez",
+      "licencia": "AM06168882",
+      "hcp": 25.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Muriel Martin",
+      "licencia": "AMB5906267",
+      "hcp": 22.9,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Fecha Inscripción",
+      "hcp": null,
+      "nivel": "Licencia"
+    },
+    {
+      "orden": 1,
+      "name": "Alfonso Rosales Mata",
+      "licencia": "30-05-26 12:39",
+      "hcp": 12.9,
+      "nivel": "AM76601307"
+    },
+    {
+      "orden": 2,
+      "name": "Alfonso Gonzalez Peña",
+      "licencia": "30-05-26 12:39",
+      "hcp": 21.9,
+      "nivel": "CM52138410"
+    },
+    {
+      "orden": 3,
+      "name": "Muriel Martin",
+      "licencia": "30-05-26 12:40",
+      "hcp": 22.9,
+      "nivel": "AMB5906267"
+    },
+    {
+      "orden": 4,
+      "name": "Francisco Quero Zumaquero",
+      "licencia": "30-05-26 12:54",
+      "hcp": 19.7,
+      "nivel": "AM57138495"
+    },
+    {
+      "orden": 5,
+      "name": "Carlos Del Campo Vicente",
+      "licencia": "30-05-26 12:54",
+      "hcp": 11.7,
+      "nivel": "7724148919"
+    },
+    {
+      "orden": 6,
+      "name": "Luis Angel Jaramillo Morillo",
+      "licencia": "30-05-26 12:55",
+      "hcp": 19,
+      "nivel": "AM72059210"
+    },
+    {
+      "orden": 7,
+      "name": "Fernando Cerezo Lorente",
+      "licencia": "30-05-26 13:20",
+      "hcp": 21.3,
+      "nivel": "AM76799351"
+    },
+    {
+      "orden": 8,
+      "name": "Gustavo Caspueñas Bello",
+      "licencia": "30-05-26 13:20",
+      "hcp": 23.1,
+      "nivel": "AM76650304"
+    },
+    {
+      "orden": 9,
+      "name": "Guy Bisin",
+      "licencia": "30-05-26 13:21",
+      "hcp": 16.8,
+      "nivel": "AM76071888"
+    },
+    {
+      "orden": 10,
+      "name": "Joaquin Alberto Morales Martinez",
+      "licencia": "30-05-26 13:23",
+      "hcp": 25.4,
+      "nivel": "AM06168882"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 159726,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            48
+          ],
+          [
+            "Birdie",
+            4
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            64
+          ],
+          [
+            "Peor",
+            55
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 159727,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            4
+          ],
+          [
+            "2",
+            7
+          ],
+          [
+            "3",
+            24
+          ],
+          [
+            "4",
+            9
+          ],
+          [
+            "5",
+            10
+          ],
+          [
+            "6",
+            14
+          ],
+          [
+            "7",
+            8
+          ],
+          [
+            "8",
+            11
+          ],
+          [
+            "9",
+            8
+          ],
+          [
+            "10",
+            14
+          ],
+          [
+            "11",
+            6
+          ],
+          [
+            "12",
+            6
+          ],
+          [
+            "13",
+            14
+          ],
+          [
+            "14",
+            9
+          ],
+          [
+            "15",
+            9
+          ],
+          [
+            "16",
+            9
+          ],
+          [
+            "17",
+            8
+          ],
+          [
+            "18",
+            14
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 159728,
+        "datos": [
+          [
+            "Hoyo",
+            "JOAQUIN ALBERO MORALES MARTINEZ",
+            "FRANCISCO QUERO ZUMAQUERO",
+            "LUIS JARAMILLO MORILLO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 3",
+            -2,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 4",
+            -3,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 5",
+            -3,
+            0,
+            -3
+          ],
+          [
+            "Hoyo 6",
+            -4,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 7",
+            -3,
+            0,
+            -3
+          ],
+          [
+            "Hoyo 8",
+            -3,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 9",
+            -4,
+            -2,
+            -2
+          ],
+          [
+            "Hoyo 10",
+            -4,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 11",
+            -4,
+            -2,
+            -3
+          ],
+          [
+            "Hoyo 12",
+            -4,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 13",
+            -4,
+            -2,
+            -2
+          ],
+          [
+            "Hoyo 14",
+            -4,
+            -2,
+            -3
+          ],
+          [
+            "Hoyo 15",
+            -5,
+            -3,
+            -3
+          ],
+          [
+            "Hoyo 16",
+            -5,
+            -3,
+            -2
+          ],
+          [
+            "Hoyo 17",
+            -6,
+            -2,
+            -2
+          ],
+          [
+            "Hoyo 18",
+            -6,
+            -2,
+            0
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 159729,
+        "datos": [
+          [
+            "Hoyo",
+            "JOAQUIN ALBERO MORALES MARTINEZ",
+            "FRANCISCO QUERO ZUMAQUERO",
+            "LUIS JARAMILLO MORILLO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 5",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 7",
+            1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            0,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 10",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 11",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            0,
+            2,
+            2
+          ],
+          [
+            "Hoyo 13",
+            0,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 14",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 15",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 17",
+            -1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            2
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 76252
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [],
+  "horariosScrapedAt": "2026-06-03T13:21:16.451Z"
+}

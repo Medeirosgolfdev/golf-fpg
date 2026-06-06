@@ -28,6 +28,7 @@ import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import PlayerLink from "../ui/PlayerLink";
 import { useFedBirthdates } from "../ui/InscricoesComponents";
 import EmptyState from "../ui/EmptyState";
+import { DRIVE_POINTS, drivePoints } from "../constants/drivePoints";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import KpiCard from "../ui/KpiCard";
 import LoadingState from "../ui/LoadingState";
@@ -53,6 +54,31 @@ import AdmissionsTab from "../ui/AdmissionsTab";
 import DrawTab from "../ui/DrawTab";
 import TournamentGrid from "../ui/TournamentGrid";
 import { expandMultiRound, isDNS } from "../ui/driveUtils";
+import CircuitShell from "../ui/circuit/CircuitShell";
+import { buildDriveEntries, DRIVE_CONFIG } from "./drive/driveCircuitData";
+import { TournamentDetail } from "./fpg/TournamentDetail";
+
+/** Secção de Draw ao estilo FPGPage para o CircuitShell: selector de ronda + DrawTab. */
+function DriveDrawSection({ draws, t, esc, pdb, adm }: { draws: Record<string, any>; t: any; esc?: string | null; pdb: any; adm?: any }) {
+  const rounds = Object.keys(draws).filter(r => (draws[r]?.groups?.length ?? 0) > 0).sort();
+  const [rn, setRn] = useState(rounds[0] || "1");
+  const cur = rounds.includes(rn) ? rn : (rounds[0] || "1");
+  const sex = /\bF\b|\bS\b|Feminino/i.test(t.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(t.name || "") ? "M" : undefined;
+  return (
+    <div>
+      {rounds.length > 1 && (
+        <div className="tab-bar" style={{ marginBottom: 8 }}>
+          {rounds.map(r => (
+            <button key={r} className={"tab-under" + (cur === r ? " active" : "")} onClick={() => setRn(r)}>Draw R{r}</button>
+          ))}
+        </div>
+      )}
+      <DrawTab draw={draws[cur] || { groups: [] }} roundNum={parseInt(cur, 10)} playersDB={pdb}
+        tournamentEscalao={esc || undefined} tournamentSex={sex} tournamentDate={t.date} admissions={adm}
+        fpgUrl={t.ccode && t.tcode ? `https://scoring.fpg.pt/lists/linkpage.aspx?page=draw&club=${t.ccode}&tourn=${t.tcode}&round=${cur}&ack=8428ACK987` : undefined} />
+    </div>
+  );
+}
 import type {
   Tournament,
   Player,
@@ -79,6 +105,36 @@ const REGIONS = [
 ];
 const ESCALOES = ["Sub 10", "Sub 12", "Sub 14", "Sub 16", "Sub 18"];
 const regionOf = (id: string) => REGIONS.find((r) => r.id === id);
+
+/* ── Rankings oficiais FPG (scoring.fpg.pt) ──
+   Todos hospedados no "club" universal 988, com ack fixo.
+   • Drive Tour:      RDT{R}{YY}            — por região (R: M/S/T/N/A)
+   • Drive Challenge: DC_{REG}M{NN}G{YY}    — por região+escalão (Gross)
+   Só os códigos de região do Challenge para a Madeira (MAD) estão confirmados;
+   acrescentar os restantes aqui quando se souberem. */
+const FPG_RANKING_CLUB = "988";
+const FPG_RANKING_ACK = "8428ACK987";
+const FPG_DT_REGION_CODE: Record<string, string> = {
+  madeira: "M", sul: "S", tejo: "T", norte: "N", acores: "A",
+};
+const FPG_DC_REGION_CODE: Record<string, string> = {
+  madeira: "MAD",
+};
+/** URL do ranking oficial FPG para a série/região/escalão, ou null se não mapeável. */
+function fpgRankingUrl(series: string, region: string, escalao: string | null, year: string | null): string | null {
+  const yy = (year || String(new Date().getFullYear())).slice(-2);
+  let code: string | null = null;
+  if (series === "tour") {
+    const r = FPG_DT_REGION_CODE[region];
+    if (r) code = `RDT${r}${yy}`;
+  } else if (series === "challenge") {
+    const reg = FPG_DC_REGION_CODE[region];
+    const nn = escalao ? (escalao.match(/\d+/) || [])[0] : null;
+    if (reg && nn) code = `DC_${reg}M${nn}G${yy}`;
+  }
+  if (!code) return null;
+  return `https://scoring.fpg.pt/lists/linkpage.aspx?page=rankingresult&club=${FPG_RANKING_CLUB}&ranking=${code}&ack=${FPG_RANKING_ACK}&minpoints=1`;
+}
 
 /* ── WHS Expected 9h SD table ── */
 
@@ -283,18 +339,7 @@ const shortCampo = (c: string) =>
 const PName = (props: { name: string; fed?: string; playersDB?: PlayersDB; highlight?: boolean }) =>
   <TournPName name={props.name} fed={props.fed} playersDB={props.playersDB} highlight={props.highlight} />;
 
-/* ── Drive Tour Points table ── */
-const DRIVE_POINTS: Record<number, number> = {
-  1: 250, 2: 165, 3: 94, 4: 75, 5: 64, 6: 53, 7: 45,
-  8: 38, 9: 33, 10: 30, 11: 27, 12: 26, 13: 24, 14: 23,
-  15: 22, 16: 21, 17: 20, 18: 19, 19: 18,
-};
-function drivePoints(pos: number | string | null): number {
-  if (pos == null) return 0;
-  const n = Number(pos);
-  if (isNaN(n) || n <= 0) return 0;
-  return DRIVE_POINTS[n] ?? 0;
-}
+/* ── Drive Tour / Challenge Points table — fonte única em constants/drivePoints ── */
 
 /* ═══════════════════════════════════════════════════════
    DRIVE POINTS TABLE (tabela de referência de pontos)
@@ -638,35 +683,95 @@ function buildGroups(tournaments: Tournament[]): TournGroup[] {
     return escIdx(a.escalao) - escIdx(b.escalao);
   });
   const groups: TournGroup[] = [];
-  const multiMap   = new Map<string, Tournament[]>();
-  const eventMap   = new Map<string, Tournament[]>(); // Challenge: date+ccode → escalões
+  const multiMap   = new Map<string, Tournament[]>();   // Tour multi-ronda (sem escalão de evento)
+  const eventMap   = new Map<string, Tournament[]>();   // Challenge: date+ccode → TODAS as entries (single/R1/R2/Resumo)
   const singles: Tournament[] = [];
 
+  // ── 1ª passagem: bucketizar ───────────────────────────────────────────
+  // Challenge agrupa SEMPRE por evento (data+campo), juntando escalões — mesmo
+  // quando multi-ronda. As entries R1/R2/Resumo entram aqui e são consolidadas
+  // por escalão na 2ª passagem (antes, a expansão multi-ronda fragmentava o
+  // evento num cartão por escalão).
   for (const t of sorted) {
-    if (t._multiGroup) {
-      if (!multiMap.has(t._multiGroup)) multiMap.set(t._multiGroup, []);
-      multiMap.get(t._multiGroup)!.push(t);
-    } else if (t.series === "challenge" && t.escalao && !t._roundLabel) {
-      // Challenge: agrupar por data + campo (ccode) — vários escalões no mesmo evento
+    if (t.series === "challenge" && t.escalao) {
       const eventKey = "ev-" + t.date + "-" + (t.ccode || t.campo);
       if (!eventMap.has(eventKey)) eventMap.set(eventKey, []);
       eventMap.get(eventKey)!.push(t);
+    } else if (t._multiGroup) {
+      if (!multiMap.has(t._multiGroup)) multiMap.set(t._multiGroup, []);
+      multiMap.get(t._multiGroup)!.push(t);
     } else {
       singles.push(t);
     }
   }
 
+  const roundSort = (a: Tournament, b: Tournament) => {
+    if (a._roundLabel === "Resumo") return 1;
+    if (b._roundLabel === "Resumo") return -1;
+    return (a._roundLabel || "").localeCompare(b._roundLabel || "");
+  };
+
   const seen = new Set<string>();
   for (const t of sorted) {
-    if (t._multiGroup) {
+    if (t.series === "challenge" && t.escalao) {
+      const eventKey = "ev-" + t.date + "-" + (t.ccode || t.campo);
+      if (seen.has(eventKey)) continue;
+      seen.add(eventKey);
+      const bucket = eventMap.get(eventKey) || [];
+
+      // Agrupar por escalão e escolher um representante por escalão:
+      //   multi-ronda → entry "Resumo" (acumulado, renderiza via DriveAccumulatedLB)
+      //   1 ronda     → a própria entry
+      const byEsc = new Map<string, Tournament[]>();
+      for (const e of bucket) {
+        const k = e.escalao || "?";
+        if (!byEsc.has(k)) byEsc.set(k, []);
+        byEsc.get(k)!.push(e);
+      }
+      const reps: { escalao: string; rep: Tournament; rounds: Tournament[]; totalRounds: number }[] = [];
+      for (const [esc, ents] of byEsc) {
+        const resumo = ents.find(e => e._roundLabel === "Resumo");
+        const rdEnts = ents.filter(e => e._roundLabel && e._roundLabel !== "Resumo");
+        if (resumo) {
+          reps.push({ escalao: esc, rep: resumo, rounds: rdEnts, totalRounds: resumo._totalRounds || (rdEnts.length || 2) });
+        } else {
+          reps.push({ escalao: esc, rep: ents[0], rounds: [], totalRounds: 1 });
+        }
+      }
+      reps.sort((a, b) => escIdx(a.escalao) - escIdx(b.escalao));
+
+      if (reps.length === 1) {
+        const r = reps[0];
+        if (r.rounds.length > 0) {
+          // 1 escalão multi-ronda → cartão multi-ronda (tabs R1/R2/Resumo) — preserva drill-down por ronda
+          const entries = [...r.rounds, r.rep].sort(roundSort);
+          groups.push({
+            key: r.rep._multiGroup || eventKey,
+            label: shortCampo(r.rep.campo), campo: r.rep.campo, num: r.rep.num, date: r.rep.date,
+            escalao: r.escalao, isMulti: true, isEvent: false, totalRounds: r.totalRounds, entries,
+          });
+        } else {
+          groups.push({
+            key: eventKey,
+            label: shortCampo(r.rep.campo), campo: r.rep.campo, num: r.rep.num, date: r.rep.date,
+            escalao: r.escalao, isMulti: false, isEvent: false, totalRounds: 1, entries: [r.rep],
+          });
+        }
+      } else {
+        // Vários escalões no mesmo evento → cartão de evento, 1 tab por escalão.
+        const entries = reps.map(r => r.rep);
+        const maxRounds = Math.max(1, ...reps.map(r => r.totalRounds));
+        groups.push({
+          key: eventKey,
+          label: shortCampo(t.campo), campo: t.campo, num: t.num, date: t.date,
+          escalao: null, isMulti: false, isEvent: true, totalRounds: maxRounds, entries,
+        });
+      }
+    } else if (t._multiGroup) {
       if (seen.has(t._multiGroup)) continue;
       seen.add(t._multiGroup);
       const entries = multiMap.get(t._multiGroup)!;
-      entries.sort((a, b) => {
-        if (a._roundLabel === "Resumo") return 1;
-        if (b._roundLabel === "Resumo") return -1;
-        return (a._roundLabel || "").localeCompare(b._roundLabel || "");
-      });
+      entries.sort(roundSort);
       groups.push({
         key: t._multiGroup,
         label: shortCampo(t.campo),
@@ -677,24 +782,6 @@ function buildGroups(tournaments: Tournament[]): TournGroup[] {
         isMulti: true,
         isEvent: false,
         totalRounds: t._totalRounds || 2,
-        entries,
-      });
-    } else if (t.series === "challenge" && t.escalao && !t._roundLabel) {
-      const eventKey = "ev-" + t.date + "-" + (t.ccode || t.campo);
-      if (seen.has(eventKey)) continue;
-      seen.add(eventKey);
-      const entries = (eventMap.get(eventKey) || []).sort((a, b) => escIdx(a.escalao) - escIdx(b.escalao));
-      const nEscs = entries.length;
-      groups.push({
-        key: eventKey,
-        label: shortCampo(t.campo),
-        campo: t.campo,
-        num: t.num,
-        date: t.date,
-        escalao: nEscs === 1 ? entries[0].escalao : null, // null quando tem vários escalões
-        isMulti: false,
-        isEvent: nEscs > 1,
-        totalRounds: 1,
         entries,
       });
     } else {
@@ -1230,7 +1317,9 @@ function DriveContent() {
       const driveTourns = driveR.tournaments;
       const aqTourns = aqR.tournaments;
       setMonthlyMeta([...driveR.meta, ...aqR.meta]);
-      const allTourns = expandMultiRound([...driveTourns, ...aqTourns]);
+      const rawTournaments = [...driveTourns, ...aqTourns];
+      setRaw(rawTournaments);
+      const allTourns = expandMultiRound(rawTournaments);
       const driveData: DriveData = {
         lastUpdated: "",
         source: "scoring.datagolf.pt",
@@ -1249,6 +1338,8 @@ function DriveContent() {
 
   // Carregar admissions + draws (uma vez) e atachar aos tournaments por ccode-tcode
   const [admDrawsIdx, setAdmDrawsIdx] = useState<Map<string, any>>(new Map());
+  const [raw, setRaw] = useState<Tournament[]>([]);
+  const [selectedDriveId, setSelectedDriveId] = useState<string | null>(null);
   const [admissionsMeta, setAdmissionsMeta] = useState<DataSource[]>([]);
   useEffect(() => {
     loadFpgAdmissionsDraws()
@@ -1283,6 +1374,58 @@ function DriveContent() {
     }
   }, [data, admDrawsIdx]);
 
+  // ── CircuitShell: entries a partir da lista CRUA (não-expandida) ─────────
+  // O IntlTournView desenha as tabs de ronda a partir de results.players[].roundScores;
+  // as secções Inscritos/Draw vêm de _admissions/_draws (anexados por tcode base).
+  const escLookup = useMemo(() => buildEscLookup(pdb, (data?.tournaments ?? []) as any /* tipo local diferente do playerUtils */), [pdb, data]);
+  const driveEntries = useMemo(() => {
+    if (raw.length === 0) return [];
+    if (admDrawsIdx.size > 0) {
+      for (const t of raw) {
+        const ad = admDrawsIdx.get(`${t.ccode}-${(t as any).tcode}`);
+        if (ad) { (t as any)._admissions = ad.admissions; (t as any)._draws = ad.draws; }
+      }
+    }
+    // Filtros tournament-level (partilhados por TODOS os escalões do mesmo dia →
+    // não destroem o agrupamento por evento): série / ano / região.
+    let src = raw as any[];
+    if (series !== "all") src = src.filter(t => (t.series || "tour") === series);
+    // Ano: por defeito o mais recente disponível (não "todos os anos").
+    const yrs = [...new Set(src.map(t => (t.date || "").slice(0, 4)).filter(Boolean))].sort().reverse();
+    const effYear = yearFilter ?? yrs[0];
+    if (effYear) src = src.filter(t => (t.date || "").slice(0, 4) === effYear);
+    if (regionFilter) src = src.filter(t => t.region === regionFilter);
+    const ents = buildDriveEntries(src as any);
+    // Detalhe IDÊNTICO à FPGPage: cada divisão (escalão) renderiza o TournamentDetail
+    // da FPGPage — tabs flat (Inscrições·Draw·R1·R2·Resumo·Scorecards), que busca
+    // inscrições/draws sozinho por ccode-tcode. Limpamos as secções genéricas do
+    // shell para não aparecerem section-tabs duplicados.
+    for (const e of ents) {
+      for (const d of e.divisions ?? []) {
+        d.inscritos = undefined;
+        d.draw = undefined;
+        const t = d.results as any;
+        d.renderFull = () => <TournamentDetail tournament={t} escLookup={escLookup as any} playersDB={pdb as any} />;
+      }
+    }
+    // Filtros entry-level — preservam TODOS os escalões do evento: Manuel / escalão.
+    let out = ents;
+    if (filterManuel) out = out.filter(e => e.hasManuel);
+    if (escFilter.length > 0) out = out.filter(e => (e.divisions ?? []).some(d => escFilter.includes(d.escalao as any)));
+    return out;
+  }, [raw, admDrawsIdx, series, yearFilter, regionFilter, filterManuel, escFilter, pdb, escLookup]);
+
+  // Auto-seleccionar o torneio mais recente (e re-seleccionar quando a selecção
+  // actual deixa de estar visível depois de mudar filtros).
+  useEffect(() => {
+    if (driveEntries.length === 0) return;
+    const exists = selectedDriveId && driveEntries.some(e => e.id === selectedDriveId);
+    if (!exists) {
+      const latest = [...driveEntries].sort((a, b) => (b.dateStart || "").localeCompare(a.dateStart || ""))[0];
+      setSelectedDriveId(latest?.id ?? null);
+    }
+  }, [driveEntries, selectedDriveId]);
+
   // State para tab especial (Inscrições / Draw RN) ortogonal ao roundIdx
   const [specialTab, setSpecialTab] = useState<string | null>(null);  // "admissions" | "draw:1" | null
 
@@ -1306,7 +1449,7 @@ function DriveContent() {
   const allT     = useMemo(() => data?.tournaments.filter(t => inYear(t)) ?? [], [data, activeYear]);
   const challT   = useMemo(() => data?.tournaments.filter(t => t.series === "challenge" && inYear(t)) ?? [], [data, activeYear]);
   const aquaporT = useMemo(() => data?.tournaments.filter(t => t.series === "aquapor"   && inYear(t)) ?? [], [data, activeYear]);
-  const escLookup = useMemo(() => buildEscLookup(pdb, (data?.tournaments ?? []) as any /* tipo local diferente do playerUtils */), [pdb, data]);
+  // escLookup definido acima (antes de driveEntries).
 
   // Lookup temporal: fedCode → Map<year, escalão> — construído dos torneios Challenge históricos
   const temporalEscLookup = useMemo(
@@ -1384,9 +1527,15 @@ function DriveContent() {
   const filteredT = useMemo(() => {
     let ts = seriesT;
     if (regionFilter) ts = ts.filter(t => t.region === regionFilter);
-    // Para Challenge (isEvent), NÃO filtrar por escalão aqui — o grupo agrupa todos os escalões
-    // O escFilter é aplicado ao nível dos entries do grupo em filteredGroups
-    if (escFilter.length > 0 && series !== "challenge") ts = filterTournByEsc(ts, escFilter, escLookup, pdb, temporalEscLookup, fedBirthdates);
+    // Aplicar escFilter. Challenge: cada tcode é um único escalão (t.escalao
+    // definido), por isso filtra-se ao nível do torneio — caso contrário a
+    // ResumoTable (painel Temporada) mostrava todos os escalões juntos.
+    // Outras séries: filtro por jogador (DOB) com recálculo de posições.
+    if (escFilter.length > 0) {
+      ts = series === "challenge"
+        ? ts.filter(t => t.escalao != null && escFilter.includes(t.escalao))
+        : filterTournByEsc(ts, escFilter, escLookup, pdb, temporalEscLookup, fedBirthdates);
+    }
     if (filterManuel) ts = ts.filter(t => t.players.some((p: Player) => isManuel(p)));
     return ts;
   }, [series, seriesT, regionFilter, escFilter, escLookup, pdb, temporalEscLookup, filterManuel, fedBirthdates]);
@@ -1492,12 +1641,21 @@ function DriveContent() {
     if (!parsed) return;
     const { ccode, tcode } = parsed;
     for (const g of filteredGroups) {
-      const entryIdx = g.entries.findIndex(e =>
+      // Match exacto primeiro (preserva ronda/escalão específico no URL).
+      let entryIdx = g.entries.findIndex(e =>
         e.ccode === ccode && (
           e.tcode === tcode ||
           (e.tcode || "").split("+").includes(tcode)
         )
       );
+      // Fallback por tcode base (sem sufixo _R{n}/_Total) — para hrefs canónicos
+      // da sidebar de eventos multi-ronda, onde as entries são "_Total".
+      if (entryIdx < 0) {
+        entryIdx = g.entries.findIndex(e => {
+          const base = (e.tcode || "").replace(/_R\d+$|_Total$/, "");
+          return e.ccode === ccode && (base === tcode || base.split("+").includes(tcode));
+        });
+      }
       if (entryIdx >= 0) {
         if (selectedGroupKey !== g.key) setSelectedGroupKey(g.key);
         if (roundIdx !== entryIdx) setRoundIdx(entryIdx);
@@ -1591,7 +1749,7 @@ function DriveContent() {
       clube:       (t0 as any)?.clube ?? null,
       date:        g.date,
       playerCount: nJog,
-      rounds:      g.isMulti ? g.totalRounds : 1,
+      rounds:      (g.isMulti || g.isEvent) ? g.totalRounds : 1,
       nholes:      (t0 as { nholes?: number; par?: number[] } | undefined)?.nholes || (t0 as { par?: number[] } | undefined)?.par?.length || 18,
       series:      grpSeries,
       escalao:     (!g.isEvent && !g.isMulti) ? g.escalao : null,
@@ -1640,6 +1798,9 @@ function DriveContent() {
           <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
           <ToolbarTitle>🏁 DRIVE</ToolbarTitle>
           <DataSourcesChip sources={allSources} />
+          <a href="https://competicoes.fpg.pt/ranking/" target="_blank" rel="noopener noreferrer"
+            className="p p-sm" style={{ textDecoration: "none", background: "var(--bg-muted)", color: "var(--accent)", border: "1px solid var(--border)" }}
+            title="Rankings oficiais da FPG (competicoes.fpg.pt)">🏆 Rankings FPG</a>
           <ToolbarSep />
           <TabRow
             style={{ marginBottom: 0 }}
@@ -1852,6 +2013,12 @@ function DriveContent() {
           MODO NORMAL (Tour / Challenge / AQUAPOR)
           ══════════════════════════════════════════ */}
       {navMode === "torneios" && (
+        <CircuitShell entries={driveEntries} config={{ ...DRIVE_CONFIG, color: "var(--color-good-dark)", textColor: "#fff", filters: { search: true } }} loading={loading}
+          selectedId={selectedDriveId ?? undefined}
+          onSelectEntry={(e) => setSelectedDriveId(e.id)} />
+      )}
+
+      {false && navMode === "torneios" && (
         <div className="master-detail">
 
           {/* Sidebar */}
@@ -1903,6 +2070,21 @@ function DriveContent() {
                     {filteredGroups.length} torneios · {uniquePCFiltered} jogadores ·{" "}
                     {filteredGroups.reduce((a, g) => a + g.entries.filter(e => !e._roundLabel || e._roundLabel === "Resumo").reduce((s, t) => s + t.players.filter(p => !isDNS(p)).length, 0), 0)} presenças
                   </div>
+                  {regionFilter && (() => {
+                    // Tour: ranking por região. Challenge: precisa de escalão único seleccionado.
+                    const escForLink = series === "challenge" ? (escFilter.length === 1 ? escFilter[0] : null) : null;
+                    if (series === "challenge" && !escForLink) return null;
+                    const rankUrl = fpgRankingUrl(series, regionFilter, escForLink, activeYear);
+                    return rankUrl ? (
+                      <div className="mb-8">
+                        <a href={rankUrl} target="_blank" rel="noopener noreferrer"
+                          className="p p-sm" style={{ textDecoration: "none", background: "var(--bg-muted)", color: "var(--accent)", border: "1px solid var(--border)" }}
+                          title="Abrir o ranking oficial da FPG (scoring.fpg.pt) em nova aba">
+                          🔗 Ranking oficial FPG — {series === "tour" ? "Drive Tour" : "Drive Challenge"} {regionOf(regionFilter)?.label}{escForLink ? " " + escForLink : ""}
+                        </a>
+                      </div>
+                    ) : null;
+                  })()}
                   <ResumoTable tournaments={filteredT} playersDB={pdb} sdLookup={sdLookup} escLookup={escLookup} mergeByEvent={series === "challenge"} />
                 </div>
 
@@ -1978,7 +2160,7 @@ function DriveContent() {
                         <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)", border: "1px solid var(--border)" }}>
                           {nJog} jog
                         </span>
-                        {selectedGroup.isMulti && <RoundPill nR={selectedGroup.totalRounds} />}
+                        {(selectedGroup.isMulti || curTournament._roundLabel === "Resumo") && <RoundPill nR={curTournament._totalRounds || selectedGroup.totalRounds} />}
                         {nholes <= 9 && <NineHPill />}
                         {parTotal > 0 && (
                           <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)", border: "1px solid var(--border)" }}>
@@ -2075,7 +2257,7 @@ function DriveContent() {
                                 : <EmptyState size="sm" message="Dados insuficientes" />;
                             })()
                           : curTournament._roundLabel === "Resumo"
-                            ? <DriveAccumulatedLB tournament={curTournament} nRounds={selectedGroup.totalRounds || 2} escLookup={escLookup} playersDB={pdb} sdLookup={sdLookup} temporalEscLookup={temporalEscLookup} fedBirthdates={fedBirthdates} />
+                            ? <DriveAccumulatedLB tournament={curTournament} nRounds={curTournament._totalRounds || selectedGroup.totalRounds || 2} escLookup={escLookup} playersDB={pdb} sdLookup={sdLookup} temporalEscLookup={temporalEscLookup} fedBirthdates={fedBirthdates} />
                             : <ScorecardLB tournament={curTournament} playersDB={pdb} escLookup={escLookup} sdLookup={sdLookup} temporalEscLookup={temporalEscLookup} fedBirthdates={fedBirthdates} />}
                   </div>
                 )}

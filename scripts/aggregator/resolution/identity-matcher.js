@@ -507,6 +507,9 @@ function buildJunior(entities) {
   for (const e of entities) evidence.push(`${e.sourceId}:${e.raw.sourceKey}`);
   if (dob) evidence.push(`dob:${dob}`);
 
+  // hcpHistory — merge cross-source, dedup, sort desc por date
+  const hcpHistory = mergeHcpHistory(entities);
+
   return {
     id,
     canonicalName,
@@ -519,8 +522,36 @@ function buildJunior(entities) {
     club,
     sources,
     tournamentIds: [],
+    hcpHistory: hcpHistory.length ? hcpHistory : undefined,
     _match: { confidence, evidence, mergedFromSources: uniqueSourceIds },
   };
+}
+
+/**
+ * Funde arrays hcpHistory de todas as entities do mesmo júnior.
+ * Dedup por (date, hcpExact, source). Ordena por date desc.
+ */
+function mergeHcpHistory(entities) {
+  const all = [];
+  for (const e of entities) {
+    const hist = e.raw && Array.isArray(e.raw.hcpHistory) ? e.raw.hcpHistory : null;
+    if (!hist) continue;
+    for (const h of hist) {
+      if (!h || !h.date || typeof h.hcpExact !== "number") continue;
+      all.push(h);
+    }
+  }
+  if (!all.length) return [];
+  const seen = new Set();
+  const out = [];
+  for (const h of all) {
+    const k = h.date + "|" + h.hcpExact + "|" + (h.source || "");
+    if (seen.has(k)) continue;
+    seen.add(k);
+    out.push(h);
+  }
+  out.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+  return out;
 }
 
 /**

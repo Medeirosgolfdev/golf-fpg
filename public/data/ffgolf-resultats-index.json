@@ -1,8 +1,63 @@
 {
-  "generatedAt": "2026-05-25T06:33:33.612Z",
+  "generatedAt": "2026-06-01T07:02:06.249Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
-  "total": 1611,
+  "total": 1612,
   "tournaments": [
+    {
+      "file": "03-08-2601435216.json",
+      "trnId": "2601435216",
+      "name": "Grand Prix Jeunes",
+      "formule": "Simple",
+      "date": "30/05/2026",
+      "dateIso": "2026-05-30",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "08",
+      "seriesCount": 7,
+      "totalPlayers": 120,
+      "divisions": [
+        {
+          "serieId": "19",
+          "label": "Simple Score maximum",
+          "players": 17
+        },
+        {
+          "serieId": "111",
+          "label": "Simple Score maximum",
+          "players": 33
+        },
+        {
+          "serieId": "113",
+          "label": "Simple Score maximum",
+          "players": 34
+        },
+        {
+          "serieId": "139",
+          "label": "Simple Score maximum",
+          "players": 1
+        },
+        {
+          "serieId": "215",
+          "label": "Simple Score maximum",
+          "players": 10
+        },
+        {
+          "serieId": "217",
+          "label": "Simple Score maximum",
+          "players": 11
+        },
+        {
+          "serieId": "219",
+          "label": "Simple Score maximum",
+          "players": 14
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats/grands-prix-jeunes/2026/grand-prix-jeunes-majeur-garcons-u14/page-scores-tournoi",
+      "ggPage": "12483136787876721193",
+      "ffgolfSlug": "grand-prix-jeunes-majeur-garcons-u14",
+      "ffgolfSection": "grands-prix-jeunes"
+    },
     {
       "file": "01-00-2601436643.json",
       "trnId": "2601436643",

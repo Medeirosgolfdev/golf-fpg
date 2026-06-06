@@ -155,6 +155,7 @@ export default function JogadoresListPage() {
   /* Filtros */
   const [q, setQ] = useState("");
   const [escalao, setEscalao] = useState<string>("ALL");
+  const [clubFilter, setClubFilter] = useState<string>("ALL");
   const [anoMin, setAnoMin] = useState<string>("");  // ano de nascimento mínimo
   const [anoMax, setAnoMax] = useState<string>("");  // ano de nascimento máximo
   const [hcpMin, setHcpMin] = useState<string>("");
@@ -179,7 +180,7 @@ export default function JogadoresListPage() {
   const [page, setPage] = useState(1);
 
   // Reset à página quando muda algum filtro relevante
-  useEffect(() => { setPage(1); }, [q, escalao, anoMin, anoMax, hcpMin, hcpMax, hcpStatus, sex, tipo, fedStatus, activosAnoOnly, jovensOnly, comSDOnly, diffsOnly]);
+  useEffect(() => { setPage(1); }, [q, escalao, clubFilter, anoMin, anoMax, hcpMin, hcpMax, hcpStatus, sex, tipo, fedStatus, activosAnoOnly, jovensOnly, comSDOnly, diffsOnly]);
 
   /* Build merged rows */
   const rows: Row[] = useMemo(() => {
@@ -245,6 +246,7 @@ export default function JogadoresListPage() {
         if (!words.every(w => nameN.includes(w) || fed.includes(w))) return false;
       }
       if (escalao !== "ALL" && r.escalao !== escalao) return false;
+      if (clubFilter !== "ALL" && r.clubCode !== clubFilter) return false;
       // Filtro por ano de nascimento (extrai do DOB "YYYY-MM-DD")
       if (yMin != null || yMax != null) {
         const year = r.dob ? Number(r.dob.slice(0, 4)) : null;
@@ -264,7 +266,7 @@ export default function JogadoresListPage() {
       if (diffsOnly && !r.hasDiffs) return false;
       return true;
     });
-  }, [rows, q, escalao, anoMin, anoMax, hcpMin, hcpMax, hcpStatus, sex, tipo, fedStatus, activosAnoOnly, jovensOnly, comSDOnly, diffsOnly]);
+  }, [rows, q, escalao, clubFilter, anoMin, anoMax, hcpMin, hcpMax, hcpStatus, sex, tipo, fedStatus, activosAnoOnly, jovensOnly, comSDOnly, diffsOnly]);
 
   /* Sort */
   const sorted = useMemo(() => {
@@ -313,6 +315,25 @@ export default function JogadoresListPage() {
     return ESC_ORDER.filter(e => present.has(e));
   }, [rows]);
 
+  /* Clubes presentes — ordenados por nº de jogadores (desc), label "Sigla (N)".
+   * Quando não há acrónimo, cai no nome longo. clubCode "" é ignorado. */
+  const clubOptions = useMemo(() => {
+    const counts = new Map<string, { code: string; label: string; count: number }>();
+    for (const r of rows) {
+      if (!r.clubCode) continue;
+      const existing = counts.get(r.clubCode);
+      if (existing) {
+        existing.count++;
+      } else {
+        const label = r.clubShort || r.clubLong || r.clubCode;
+        counts.set(r.clubCode, { code: r.clubCode, label, count: 1 });
+      }
+    }
+    return [...counts.values()]
+      .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label, "pt"))
+      .map(c => ({ code: c.code, label: `${c.label} (${c.count})` }));
+  }, [rows]);
+
   /* HCP statuses presentes */
   const hcpStatusOptions = useMemo(() => {
     const map = new Map<string, string>();  // id -> label
@@ -325,7 +346,8 @@ export default function JogadoresListPage() {
   }, [rows]);
 
   const resetFilters = () => {
-    setQ(""); setEscalao("ALL"); setAnoMin(""); setAnoMax("");
+    setQ(""); setEscalao("ALL"); setClubFilter("ALL");
+    setAnoMin(""); setAnoMax("");
     setHcpMin(""); setHcpMax(""); setHcpStatus("ALL");
     setSex("ALL"); setTipo("ALL"); setFedStatus("9");
     setActivosAnoOnly(false); setJovensOnly(false);
@@ -387,6 +409,20 @@ export default function JogadoresListPage() {
             <option value="ALL">Todos</option>
             {escaloesPresentes.map(esc => (
               <option key={esc} value={esc}>{esc}</option>
+            ))}
+          </select>
+        </FilterField>
+
+        <FilterField label="CLUBE">
+          <select
+            value={clubFilter}
+            onChange={e => setClubFilter(e.target.value)}
+            className="filter-input"
+            title="Filtrar por clube (ordenado por nº de jogadores)"
+          >
+            <option value="ALL">Todos</option>
+            {clubOptions.map(c => (
+              <option key={c.code} value={c.code}>{c.label}</option>
             ))}
           </select>
         </FilterField>

@@ -117,7 +117,7 @@ async function load(opts) {
   // Inclui: Campeonatos Nacionais de Jovens, PJA, Greatgolf Junior Open,
   // Quinta do Lago Junior Open, Final Drive Tour (Nacional de facto sub-12+).
   // Exclui: Drive Tour/Challenge regionais, Aquapor, torneios de clube.
-  const RELEVANT = /Campeonato Nacional|Portuguese Junior Amateur|\bPJA\b|Greatgolf Junior Open|Quinta do Lago Junior Open|Grande Final Drive Tour|Final Drive Tour/i;
+  const RELEVANT = /Campeonato Nacional|Portuguese Junior Amateur|\bPJA\b|Greatgolf Junior Open|Quinta do Lago Junior Open|Grande Final Drive Tour|Final Drive Tour|Portuguese\s+Int(ernational)?\.?|Int(ernational)?\.?\s*U1[02-9]|Int(ernational)?\.?\s*U2[0-5]|Int(ernational)?\.?\s*Championship/i;
   const EXCLUDE = /Drive\s+(Tour|Challenge)|Aquapor|Cidade de|Clube de Golfe|\bClube\b|Torneio do |Open do |Open Clube/i;
   // Escalões adultos a excluir — só queremos juvenis até Sub-18.
   const ADULT_ESCALAO = /Sub\s*(2[0-9]|3\d|4\d|5\d)|Absoluto|S[eé]nior|Master|Adultos?/i;
@@ -141,6 +141,12 @@ async function load(opts) {
     }
   }
 
+
+  // 2b) hcpHistory — acumular snapshots de HCP por jogador a partir de TODOS
+  // os pull-torneios (incluindo os fora da whitelist). Cada participação dá um
+  // snapshot (date, hcpExact, tcode, label). Alimenta sparkline no KIDS2Page.
+  collectHcpHistory(pullFiles, playerMap);
+
   // 3) Devolver array de jogadores
   const playersArr = Array.from(playerMap.values());
 
@@ -150,6 +156,41 @@ async function load(opts) {
     players: playersArr,
     tournaments,
   };
+}
+
+
+/**
+ * Lê TODOS os pull-torneios e injecta {date, hcpExact, source:'fpg', tcode, label}
+ * em playerMap.get(key).hcpHistory para cada participação com hcpExact. Cria
+ * entrada anónima se o jogador ainda não está no roster.
+ */
+function collectHcpHistory(pullFiles, playerMap) {
+  for (const file of pullFiles) {
+    const data = readJsonSafe(file, { tournaments: [] });
+    const arr = Array.isArray(data && data.tournaments) ? data.tournaments : [];
+    for (const t of arr) {
+      if (!t || !t.tcode || !t.date) continue;
+      const date = String(t.date).slice(0, 10);
+      const tcode = String(t.tcode);
+      const ccode = t.ccode || "000";
+      const label = t.name || ("t=" + tcode);
+      const players = Array.isArray(t.players) ? t.players : [];
+      for (const pl of players) {
+        if (!pl) continue;
+        const hcpExact = typeof pl.hcpExact === "number" ? pl.hcpExact : null;
+        if (hcpExact == null) continue;
+        // Só anexar a entries que JÁ existam no playerMap. Não criar
+        // anónimos aqui — evita duplicação (e.g. Manuel sem fedCode num torneio
+        // de Drive criaria "anon|manuel medeiros" que conflitaria com fed 52884).
+        let key = pl.fedCode ? String(pl.fedCode) : null;
+        if (!key) continue;
+        if (!playerMap.has(key)) continue;
+        const player = playerMap.get(key);
+        if (!player.hcpHistory) player.hcpHistory = [];
+        player.hcpHistory.push({ date, hcpExact, source: "fpg", tcode, ccode, label });
+      }
+    }
+  }
 }
 
 function normalizeTournament(t, kind, playerMap) {

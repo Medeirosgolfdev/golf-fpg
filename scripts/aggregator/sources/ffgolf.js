@@ -54,9 +54,34 @@ function load(opts) {
 
   // 2) Torneios — slim tem array .tournaments com flat players[] (sem flights — todos no mesmo array por torneio)
   const tournaments = [];
+  const playersByLic = new Map(players.map((p) => [p.sourceKey, p]));
   for (const t of slim.tournaments || []) {
     const tt = normalizeFfgTournament(t);
     if (tt) tournaments.push(tt);
+    // 2b) hcpHistory: snapshot por participação (date + hcp)
+    if (t && t.dateIso && Array.isArray(t.players)) {
+      const date = String(t.dateIso).slice(0, 10);
+      const tid = String(t.trnId || "");
+      const label = t.name || ("FFG " + tid);
+      for (const pl of t.players) {
+        if (!pl || typeof pl.hcp !== "number") continue;
+        const lic = pl.license ? String(pl.license) : null;
+        if (!lic) continue;
+        let player = playersByLic.get(lic);
+        if (!player) {
+          const cleanName = displayName(pl.name || "");
+          if (!cleanName) continue;
+          player = {
+            sourceKey: lic, name: cleanName, country: "FR",
+            club: pl.club || null, hcp: pl.hcp, extra: {},
+          };
+          players.push(player);
+          playersByLic.set(lic, player);
+        }
+        if (!player.hcpHistory) player.hcpHistory = [];
+        player.hcpHistory.push({ date, hcpExact: pl.hcp, source: "ffg", tcode: tid, label });
+      }
+    }
   }
 
   return {

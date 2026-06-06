@@ -103,6 +103,15 @@ function TournamentDetail({ tournament, escLookup, playersDB }: { tournament: To
       for (const r of futureDraws) {
         out.push({ key: `draw:${r}`, label: `Draw R${r}` });
       }
+      // Em torneios multi-ronda, mostrar SEMPRE Resumo + 📋 Scorecards, mesmo
+      // que só uma ronda esteja jogada. As rondas ainda não disputadas aparecem
+      // como "–" no Resumo (AccumulatedLB) e são omitidas no combinado
+      // (AllRoundsScorecardLB). Assim a página fica consistente com torneios já
+      // concluídos e o utilizador não precisa de esperar pela última ronda.
+      if (nRounds > 1) {
+        out.push({ key: "resumo", label: "Resumo" });
+        out.push({ key: "scorecards", label: COMBINED_TAB });
+      }
     } else {
       // Sem rondas jogadas — pode ter só draws (torneio prestes a começar)
       const drawKeys = [...drawsByRound.keys()].sort((a, b) => a - b);

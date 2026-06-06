@@ -434,10 +434,14 @@ function recomputeECForAllCourses(
         wins,
       };
       newEntries.push(entry);
-      // Se houver múltiplos buckets no mesmo tee (9H + 18H), o ECDET fica
-      // com o último (maior holeCount preferido — assumimos 18H > 9H por
-      // ordenação implícita das chaves).
-      newDet[b.teeKey] = entry;
+      // Se houver multiplos buckets no mesmo tee (9H + 18H), o ECDET deve
+      // ficar com o de MAIOR holeCount (18H prefere 9H). A ordem de iteracao
+      // do Map e a de insercao (nao ordenada), por isso nao se pode assumir
+      // que o 18H e processado por ultimo: ha que comparar explicitamente.
+      const existingDet = newDet[b.teeKey];
+      if (!existingDet || b.holeCount > existingDet.holeCount) {
+        newDet[b.teeKey] = entry;
+      }
     }
 
     // Ordenar entries: 18H primeiro, depois 9H; dentro de cada, por holeCount desc + tee

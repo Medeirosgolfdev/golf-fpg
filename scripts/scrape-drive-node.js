@@ -373,7 +373,7 @@ function writeIfChanged(filepath, newObj) {
   filesWritten++;
   const nT = totalsOf(newObj);
   const oT = oldObj ? totalsOf(oldObj) : { torneios: 0, jogadores: 0, scorecards: 0 };
-  const more = nT.torneios > oT.torneios || nT.scorecards > oT.scorecards;
+  const more = nT.torneios > oT.torneios || nT.jogadores > oT.jogadores || nT.scorecards > oT.scorecards;
   if (more) gainedInfo = true;
   const marker = oldObj ? (more ? `${G}MAIS${X}` : `${Y}MUDOU${X}`) : `${G}NOVO${X}`;
   info(`${marker} ${path.basename(filepath)} — ${nT.torneios}T/${nT.jogadores}J/${nT.scorecards}SC` +
@@ -521,18 +521,21 @@ function writeIfChanged(filepath, newObj) {
   console.log("");
   log("═══ RESUMO ═══");
   info(`${tournTotal} torneios processados`);
-  info(`Ficheiros escritos: ${G}${filesWritten}${X} (com ${gainedInfo ? G + "mais dados" + X : Y + "mesmos totais" + X})`);
+  info(`Ficheiros escritos: ${G}${filesWritten}${X} (${gainedInfo ? G + "contagens aumentaram" + X : Y + "mesmas contagens, conteúdo alterado" + X})`);
   info(`Ficheiros inalterados: ${filesUnchanged}`);
 
   if (filesWritten === 0) {
     console.log(`${Y}Nada mudou — sem commit${X}`);
     process.exit(2);
   }
-  if (!gainedInfo) {
-    console.log(`${Y}Ficheiros modificados mas sem ganhos de dados — sem commit${X}`);
-    process.exit(2);
-  }
-  console.log(`${G}✓ Há mais dados — seguro fazer commit${X}`);
+  // Qualquer ficheiro escrito = conteúdo REALMENTE diferente do que está commitado.
+  // `writeIfChanged` já ignora o `lastUpdated` no diff, por isso um ficheiro escrito
+  // representa sempre uma mudança de dados real — novos torneios, novas rondas,
+  // inscrições, ou correcções de hcp/posições/scorecards. Mesmo quando as contagens
+  // (torneios/jogadores/scorecards) não aumentam, a mudança deve ser commitada.
+  // (O gate antigo exigia aumento de contagem e engolia estas mudanças → o site
+  // nunca recebia os torneios novos.)
+  console.log(`${G}✓ ${filesWritten} ficheiro(s) com conteúdo novo — commit${X}`);
   process.exit(0);
 })().catch(err => {
   console.error(`${R}ERRO FATAL:${X} ${err.stack || err.message}`);
