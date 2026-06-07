@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-06-07T19:20:45.486Z",
+  "lastUpdated": "2026-06-07T21:01:46.248Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
   "today": "2026-06-07",
   "summary": {
-    "total": 1182,
+    "total": 1183,
     "complete": 1166,
-    "in_progress": 2,
+    "in_progress": 3,
     "future": 0,
     "stale": 12,
     "excluded": 1,
@@ -55,6 +55,26 @@
       "scorecards_ratio": 0.714,
       "full_scorecards_ratio": 0.714,
       "status": "complete"
+    },
+    {
+      "ccode": "007",
+      "tcode": "11032",
+      "name": "III ABERTO CGSS",
+      "date": "2026-06-06",
+      "rounds": 1,
+      "has_admissions": false,
+      "admissions_count": 0,
+      "has_draws": false,
+      "draws_rounds_with_data": 0,
+      "draws_players_total": 0,
+      "has_classif": false,
+      "player_count": 0,
+      "players_with_scorecards": 0,
+      "players_with_full_scorecards": 0,
+      "scorecards_source": null,
+      "scorecards_ratio": 0,
+      "full_scorecards_ratio": 0,
+      "status": "in_progress"
     },
     {
       "ccode": "007",
