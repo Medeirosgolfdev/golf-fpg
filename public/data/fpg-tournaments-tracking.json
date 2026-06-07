@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-06-06T16:45:39.368Z",
+  "lastUpdated": "2026-06-07T19:20:45.486Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
-  "today": "2026-06-06",
+  "today": "2026-06-07",
   "summary": {
     "total": 1182,
-    "complete": 1164,
-    "in_progress": 4,
+    "complete": 1166,
+    "in_progress": 2,
     "future": 0,
     "stale": 12,
     "excluded": 1,
@@ -34,7 +34,7 @@
       "scorecards_source": "pull-torneios002.json",
       "scorecards_ratio": 1,
       "full_scorecards_ratio": 1,
-      "status": "in_progress"
+      "status": "complete"
     },
     {
       "ccode": "059",
@@ -54,7 +54,7 @@
       "scorecards_source": "pull-torneios002.json",
       "scorecards_ratio": 0.714,
       "full_scorecards_ratio": 0.714,
-      "status": "in_progress"
+      "status": "complete"
     },
     {
       "ccode": "007",
@@ -85,15 +85,15 @@
       "has_admissions": true,
       "admissions_count": 72,
       "has_draws": true,
-      "draws_rounds_with_data": 3,
-      "draws_players_total": 211,
+      "draws_rounds_with_data": 4,
+      "draws_players_total": 247,
       "has_classif": true,
       "player_count": 72,
       "players_with_scorecards": 72,
-      "players_with_full_scorecards": 0,
+      "players_with_full_scorecards": 36,
       "scorecards_source": "pull-torneios002.json",
       "scorecards_ratio": 1,
-      "full_scorecards_ratio": 0,
+      "full_scorecards_ratio": 0.5,
       "status": "in_progress"
     },
     {
@@ -105,15 +105,15 @@
       "has_admissions": true,
       "admissions_count": 22,
       "has_draws": true,
-      "draws_rounds_with_data": 3,
-      "draws_players_total": 66,
+      "draws_rounds_with_data": 4,
+      "draws_players_total": 77,
       "has_classif": true,
       "player_count": 22,
       "players_with_scorecards": 22,
-      "players_with_full_scorecards": 0,
+      "players_with_full_scorecards": 11,
       "scorecards_source": "pull-torneios002.json",
       "scorecards_ratio": 1,
-      "full_scorecards_ratio": 0,
+      "full_scorecards_ratio": 0.5,
       "status": "in_progress"
     },
     {
