@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import type { RoundData, EclecticEntry, HoleStatsData, HoleScores } from "../data/playerDataLoader";
 import { getTeeHex, textOnColor, normKey } from "../utils/teeColors";
-import { norm, fmtSign, fmtToPar } from "../utils/format";
+import { fmtSign, fmtToPar } from "../utils/format";
 import { sumArr } from "../utils/mathUtils";
 import { useSort } from "../hooks/useSort";
 import ScoreCircle from "./ScoreCircle";
@@ -9,7 +9,7 @@ import TeePill from "./TeePill";
 import SortableHdr from "./SortableHdr";
 import { SC, fmtStb, fmtSdVal } from "../utils/scoreDisplay";
 
-export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, activeTee, onSelectTee }: {
+export function EclecticSection({ ecList, ecDet, courseRounds, holesData, activeTee, onSelectTee }: {
   ecList: EclecticEntry[]; ecDet: Record<string, EclecticEntry>;
   holeStats: Record<string, HoleStatsData>;
   courseRounds: RoundData[]; holesData: Record<string, HoleScores>;
@@ -33,29 +33,50 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
     return order.map(k => map.get(k)!);
   }, [ecList]);
 
+  // Estatísticas POR VARIANTE (tee + nº de buracos): nº de voltas, melhor gross e
+  // soma para média. Calculadas das voltas reais — assim 18H e 9H têm os seus.
+  const variantStats = useMemo(() => {
+    const m = new Map<string, { n: number; best: number | null; sum: number }>();
+    for (const r of courseRounds) {
+      const tk = normKey(r.tee || "");
+      const h = holesData[r.scoreId];
+      if (!tk || !h?.g) continue;
+      const g = typeof r.gross === "number" ? r.gross : null;
+      if (g == null || g <= 0) continue;
+      const rhc = r.holeCount || (h.g.filter(x => x != null && Number(x) > 0).length <= 9 ? 9 : 18);
+      const key = `${tk}|${rhc}`;
+      const cur = m.get(key) || { n: 0, best: null, sum: 0 };
+      cur.n++; cur.sum += g; cur.best = cur.best == null ? g : Math.min(cur.best, g);
+      m.set(key, cur);
+    }
+    return m;
+  }, [courseRounds, holesData]);
+  const vstat = (ec: EclecticEntry) => variantStats.get(`${ec.teeKey}|${ec.holeCount}`);
+
   // Tabela-resumo: uma linha por tee, ordenável (métrica da variante principal = 18H).
   const sortedGroups = useMemo(() => {
     const dir = sortDir === "asc" ? 1 : -1;
     const metric = (g: EclecticEntry[]) => {
-      const p = g[0]; const hs = holeStats[p.teeKey];
+      const p = g[0]; const vs = variantStats.get(`${p.teeKey}|${p.holeCount}`);
       switch (sortKey) {
-        case "rondas": return hs?.nRounds ?? 0;
+        case "rondas": return vs?.n ?? 0;
         case "par": return p.totalPar ?? 0;
         case "eclético": return p.totalGross ?? 0;
         case "vs_par": return p.toPar ?? 0;
-        case "melhor_gr": return hs?.bestRound?.gross ?? 999;
-        case "media_gr": return hs?.avgGross ?? 0;
-        default: return hs?.nRounds ?? 0;
+        case "melhor_gr": return vs?.best ?? 999;
+        case "media_gr": return vs && vs.n ? vs.sum / vs.n : 0;
+        default: return vs?.n ?? 0;
       }
     };
     return [...teeGroups].sort((a, b) => dir * (metric(a) - metric(b)));
-  }, [teeGroups, holeStats, sortKey, sortDir]);
+  }, [teeGroups, variantStats, sortKey, sortDir]);
 
   return (
     <div className="mb-16">
       {/* Summary table */}
       <div className="mb-10">
-        <table className="dtable ec-summary">
+        <div className="sc-bar-head"><span>Resumo por Tee</span></div>
+        <table className="dtable ec-summary" style={{ marginBottom: 0 }}>
           <thead>
             <tr><th>Tee</th>
               <SortableHdr k="rondas" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Rondas</SortableHdr>
@@ -68,12 +89,13 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
           <tbody>
             {sortedGroups.map(group => {
               const primary = group[0];
-              const hs = holeStats[primary.teeKey];
               const isActive = primary.teeKey === activeTee;
               return (
                 <tr key={primary.teeKey} className={`pointer${isActive ? " tee-row-active" : ""}`} onClick={() => onSelectTee(primary.teeKey)}>
                   <td><TeePill name={primary.teeName} /></td>
-                  <td className="r fw-600">{hs?.nRounds ?? ""}</td>
+                  <td className="r">{group.map(ec => (
+                    <div key={ec.holeCount} className="ec-sum-var fw-600">{vstat(ec)?.n ?? ""}</div>
+                  ))}</td>
                   <td className="r">{group.map(ec => (
                     <div key={ec.holeCount} className="ec-sum-var"><span className="ec-sum-hc">{ec.holeCount}H</span> {ec.totalPar}</div>
                   ))}</td>
@@ -85,8 +107,13 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
                     const col = tp == null ? "" : tp > 0 ? SC.danger : tp < 0 ? SC.good : SC.muted;
                     return <div key={ec.holeCount} className="ec-sum-var fw-700" style={{ color: col }}>{tp == null ? "" : fmtSign(tp)}</div>;
                   })}</td>
-                  <td className="r fw-600">{hs?.bestRound?.gross ?? "–"}</td>
-                  <td className="r">{hs?.avgGross?.toFixed(1) ?? "–"}</td>
+                  <td className="r">{group.map(ec => (
+                    <div key={ec.holeCount} className="ec-sum-var fw-600">{vstat(ec)?.best ?? "–"}</div>
+                  ))}</td>
+                  <td className="r">{group.map(ec => {
+                    const vs = vstat(ec);
+                    return <div key={ec.holeCount} className="ec-sum-var">{vs && vs.n ? (vs.sum / vs.n).toFixed(1) : "–"}</div>;
+                  })}</td>
                 </tr>
               );
             })}
@@ -94,39 +121,27 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
         </table>
       </div>
 
-      {/* Hole-by-hole scorecard per tee — 18H e 9H do mesmo tee no mesmo bloco */}
-      {teeGroups.map(group => {
-        const first = group[0];
-        const isActive = first.teeKey === activeTee;
-        return (
-          <div key={first.teeKey} className={`ecPillBlock ${isActive ? "ecActive" : ""} overflow-hidden br-lg mt-8`}
-            style={{ border: isActive ? "1px solid var(--border)" : "1px solid var(--border-light)" }}>
-            <div className="pointer fw-600 fs-12 ecPillHeader" style={{ background: "var(--bg-detail)" }}
-              onClick={() => onSelectTee(first.teeKey)}>
-              <TeePill name={first.teeName} />
-              {group.map(ec => (
-                <span key={ec.holeCount} className="ec-tee-variant">{ec.holeCount}H <span className="fw-700">{ec.totalGross}</span> <span className="muted">par {ec.totalPar}</span></span>
-              ))}
-            </div>
-            {group.map(ec => {
-        const det = ecDet[ec.teeKey] || ec;
+      {/* Hole-by-hole scorecard per tee — UMA tabela por tee. As voltas de 9 buracos
+          do mesmo tee entram como linhas extra (só o front 9 preenchido). Só os tees
+          que SÓ têm 9 buracos mostram uma tabela de 9 colunas.
+          Usa a MESMA ordem da tabela-resumo (sortedGroups) para os blocos aparecerem
+          na sequência mostrada em cima (ex.: Rondas desc → BRANCAS primeiro). */}
+      {/* Mostra apenas o scorecard do tee seleccionado (activeTee): clicar numa
+          linha do resumo troca o tee; clicar no tee activo limpa-o (esconde). */}
+      {sortedGroups.filter(g => g[0].teeKey === activeTee).map(group => {
+        const primary = group[0]; // maior holeCount (18H se existir, senão 9H)
+        const isActive = primary.teeKey === activeTee;
+        const det = ecDet[primary.teeKey] || primary;
         const parArr = det.holes?.map(h => h.par) || [];
-        const hc = ec.holeCount;
+        const hc = primary.holeCount;
         const is9 = hc === 9;
-        const hx = getTeeHex(ec.teeName), fg = textOnColor(hx);
+        const hx = getTeeHex(primary.teeName), fg = textOnColor(hx);
 
-        // Get individual round scores for this tee — APENAS as rondas com o
-        // mesmo número de buracos que este bloco (9H num bloco 9H, 18H num
-        // bloco 18H). Sem este filtro, as rondas de 9 e 18 buracos misturavam-se
-        // em ambos os blocos (9H apareciam no bloco 18H e vice-versa).
+        // Todas as voltas deste tee (qualquer nº de buracos). As de 9 buracos
+        // aparecem com o front 9 preenchido e o restante vazio — percebe-se que
+        // são de 9 buracos sem ser preciso dizê-lo.
         const teeRounds = courseRounds
-          .filter(r => {
-            if (normKey(r.tee || "") !== ec.teeKey) return false;
-            const h = holesData[r.scoreId];
-            if (!h?.g) return false;
-            const rhc = r.holeCount || (h.g.filter(x => x != null && Number(x) > 0).length <= 9 ? 9 : 18);
-            return rhc === hc;
-          })
+          .filter(r => normKey(r.tee || "") === primary.teeKey && holesData[r.scoreId]?.g)
           .sort((a, b) => b.dateSort - a.dateSort);
 
         // Info comum a todas as rondas deste tee: distância (se todas iguais), buracos
@@ -144,6 +159,20 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
           }
         }
         const hasMeters = metersArr.some(v => v != null);
+
+        // Eclético recalculado a partir de TODAS as voltas mostradas (inclui o
+        // front 9 das voltas de 9 buracos).
+        const ecBest: (number | null)[] = new Array(18).fill(null);
+        for (const r of teeRounds) {
+          const g = holesData[r.scoreId]?.g;
+          if (!g) continue;
+          for (let i = 0; i < 18; i++) {
+            const v = g[i];
+            if (v != null && Number(v) > 0 && parArr[i] != null && (ecBest[i] == null || Number(v) < (ecBest[i] as number))) ecBest[i] = Number(v);
+          }
+        }
+        const ecTotal = ecBest.reduce<number>((s, v) => s + (v ?? 0), 0);
+        const ecTotalPar = parArr.reduce<number>((s, p, i) => s + (p != null && ecBest[i] != null ? Number(p) : 0), 0);
 
         // Contagem de scores (birdie+ / par / bogey+) de uma ronda, comparando o
         // gross de cada buraco com o par do tee. Mesma lógica das leaderboards
@@ -178,12 +207,18 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
         );
 
         return (
-          <div key={ec.holeCount} className="ec-variant">
-            <div className="ec-variant-sub muted">
-              {hc} buracos · {teeRounds.length} rondas{commonMeters ? ` · ${commonMeters}m` : ""}
+          <div key={primary.teeKey} className={`ecPillBlock ${isActive ? "ecActive" : ""} overflow-hidden br-lg mt-8`}>
+            <div className="pointer fw-600 fs-12 ecPillHeader"
+              onClick={() => onSelectTee(primary.teeKey)}>
+              <TeePill name={primary.teeName} />{" "}
+              <span className="muted ml-6">Eclético</span>{" "}
+              <span className="fw-700">{ecTotal}</span>
+              <span className="muted ml-6">par {ecTotalPar}</span>
+              {commonMeters && <span className="muted ml-6">· {commonMeters}m</span>}
+              <span className="muted ml-6">· {teeRounds.length} rondas</span>
             </div>
-            {/* Scorecard sem w-full: largura por conteúdo, células iguais ao 18H —
-                assim a tabela de 9H fica visivelmente mais curta. */}
+            {/* Scorecard sem w-full: largura por conteúdo, células iguais entre tees —
+                a tabela de um tee só com 9 buracos fica visivelmente mais curta. */}
             <div className="scroll-x">
               <table className="sc-table-ec" >
                 <thead>
@@ -236,22 +271,22 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
                     </tr>
                   )}
                   {/* Eclectic row */}
-                  <tr className="bt-heavy ec-eclectic-row">
+                  <tr className="ec-eclectic-row">
                     <td className="row-label fw-700">Eclético</td>
-                    {ec.holes.slice(0, Math.min(hc, 9)).map((h, i) => (
-                      <td key={i}>{h.best != null ? <ScoreCircle gross={h.best} par={parArr[i]} /> : "–"}</td>
+                    {Array.from({ length: Math.min(hc, 9) }, (_, i) => (
+                      <td key={i}>{ecBest[i] != null ? <ScoreCircle gross={ecBest[i]!} par={parArr[i]} /> : "–"}</td>
                     ))}
-                    {sumCell("col-out fw-700", sumArr(ec.holes.map(h => h.best), 0, Math.min(hc, 9)), sumArr(parArr, 0, Math.min(hc, 9)))}
-                    {!is9 && ec.holes.slice(9, 18).map((h, i) => (
-                      <td key={i + 9}>{h.best != null ? <ScoreCircle gross={h.best} par={parArr[i + 9]} /> : "–"}</td>
+                    {sumCell("col-out fw-700", sumArr(ecBest, 0, Math.min(hc, 9)), sumArr(parArr, 0, Math.min(hc, 9)))}
+                    {!is9 && Array.from({ length: 9 }, (_, i) => (
+                      <td key={i + 9}>{ecBest[i + 9] != null ? <ScoreCircle gross={ecBest[i + 9]!} par={parArr[i + 9]} /> : "–"}</td>
                     ))}
-                    {!is9 && sumCell("col-in fw-700", sumArr(ec.holes.map(h => h.best), 9, 18), sumArr(parArr, 9, 18))}
-                    {sumCell("col-total fw-700", ec.totalGross, sumArr(parArr, 0, hc))}
+                    {!is9 && sumCell("col-in fw-700", sumArr(ecBest, 9, 18), sumArr(parArr, 9, 18))}
+                    {sumCell("col-total fw-700", ecTotal, ecTotalPar)}
                     <td className="ec-extra muted">—</td>
                     <td className="ec-extra muted">—</td>
                     <td className="ec-extra muted">—</td>
                     {(() => {
-                      const ecD = distOf(ec.holes.map(h => h.best));
+                      const ecD = distOf(ecBest);
                       return (
                         <>
                           <td className="ec-extra ec-bird">{ecD.birds || ""}</td>
@@ -269,6 +304,13 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
                     const trDate = tr.date ? tr.date.substring(0, 5).replace("-", "/") : "";
                     const sdInfo = fmtSdVal(tr);
                     const trDist = distOf(trG);
+                    // Total e vs-par só sobre os buracos efectivamente jogados — assim
+                    // uma volta de 9 buracos numa tabela de 18 mostra o total certo.
+                    let trTotG = 0, trTotP = 0;
+                    for (let i = 0; i < hc; i++) {
+                      const g = trG[i];
+                      if (g != null && Number(g) > 0 && parArr[i] != null) { trTotG += Number(g); trTotP += Number(parArr[i]); }
+                    }
                     return (
                       <tr key={tr.scoreId} className="ec-round-row">
                         <td className="row-label fw-700">
@@ -282,7 +324,7 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
                           <td key={i + 9}><ScoreCircle gross={trG[i + 9]} par={parArr[i + 9]} /></td>
                         ))}
                         {!is9 && sumCell("col-in fw-700", sumArr(trG, 9, hc), sumArr(parArr, 9, 18))}
-                        {sumCell("col-total fw-700", sumArr(trG, 0, hc), sumArr(parArr, 0, hc))}
+                        {sumCell("col-total fw-700", trTotG, trTotP)}
                         <td className="ec-extra">{tr.hi ?? "—"}</td>
                         <td className="ec-extra">{fmtStb(tr.stb, tr.holeCount) || "—"}</td>
                         <td className="ec-extra">
@@ -302,9 +344,6 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
           </div>
           );
         })}
-          </div>
-        );
-      })}
     </div>
   );
 }

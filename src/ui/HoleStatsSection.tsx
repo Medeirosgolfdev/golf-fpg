@@ -23,7 +23,6 @@ function HoleHeatmap({ holes, hc }: { holes: HoleStatEntry[]; hc: number }) {
 
   return (
     <div className="mt-10">
-      <div className="h-sm">Mapa de calor por buraco <span className="muted fs-11">(verde = forte, vermelho = perdes pancadas)</span></div>
       <div className="heatmap-wrap">
         {rows.map((row, ri) => (
           <div key={ri} className="heatmap-row-container">
@@ -102,7 +101,6 @@ function F9B9Comparison({ stats }: { stats: HoleStatsData }) {
 
   return (
     <div className="mt-10">
-      <div className="h-sm">↔️ Front 9 vs Back 9</div>
       <div className="f9b9-grid">
         <Side side="f9" label="Front 9" />
         <div className="f9b9-diff" title={`Diferença de pancadas perdidas: ${fmtSign(diffSl, 2)}`}>
@@ -132,7 +130,6 @@ function ScoreDistributionChart({ td }: { td: HoleStatsData["totalDist"] }) {
   const maxN = Math.max(...cats.map(c => c.n), 1);
   return (
     <div className="mt-10">
-      <div className="h-sm">📊 Distribuição de scores <span className="muted fs-11">({td.total} buracos)</span></div>
       <div className="score-dist">
         {cats.map(c => {
           const pct = (c.n / td.total) * 100;
@@ -162,9 +159,6 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
   const parOrBetterPct = td?.total ? parOrBetter / td.total * 100 : 0;
   const dblOrWorsePct = td?.total ? dblOrWorse / td.total * 100 : 0;
 
-  const slColor = sc3m(stats.totalStrokesLost, 5, 12);
-  const pobCol = sc3m(parOrBetterPct, 40, 60, "desc");
-  const dowCol = sc3m(dblOrWorsePct, 5, 15);
 
   // By par type
   const parTypes = [3, 4, 5].filter(p => stats.byParType[p]);
@@ -189,43 +183,42 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
 
   return (
     <div className="card">
-      <div className="h-md">📊 Análise de Performance <span className="muted fs-11">({stats.nRounds} rondas)</span></div>
+      <div className="h-md">Análise de Performance <span className="muted fs-11">({stats.nRounds} rondas)</span></div>
 
       {/* Diagnosis cards */}
       <div className="haDiag">
-        <div className="haDiagCard">
-          <div className="haDiagIcon" style={{ background: slColor + "20", color: slColor }}>🎯</div>
-          <div className="min-w-0">
-            <div className="haDiagVal" style={{ color: slColor }}>{fD(stats.totalStrokesLost)}</div>
-            <div className="haDiagLbl">pancadas perdidas p/ volta vs par</div>
-          </div>
+        <div className="kpi-card">
+          <div className="kpi-card-val">{fD(stats.totalStrokesLost)}</div>
+          <div className="kpi-card-label">pancadas perdidas p/ volta vs par</div>
         </div>
-        <div className="haDiagCard">
-          <div className="haDiagIcon" style={{ background: pobCol + "20", color: pobCol }}>⛳</div>
-          <div className="min-w-0">
-            <div className="haDiagVal" style={{ color: pobCol }}>{parOrBetterPct.toFixed(0)}%</div>
-            <div className="haDiagLbl">par ou melhor ({parOrBetter}/{td?.total ?? 0} buracos)</div>
-          </div>
+        <div className="kpi-card">
+          <div className="kpi-card-val">{parOrBetterPct.toFixed(0)}%</div>
+          <div className="kpi-card-label">par ou melhor ({parOrBetter}/{td?.total ?? 0} buracos)</div>
         </div>
-        <div className="haDiagCard">
-          <div className="haDiagIcon" style={{ background: dowCol + "20", color: dowCol }}>💣</div>
-          <div className="min-w-0">
-            <div className="haDiagVal" style={{ color: dowCol }}>{dblOrWorsePct.toFixed(0)}%</div>
-            <div className="haDiagLbl">double bogey ou pior ({dblOrWorse}/{td?.total ?? 0})</div>
-          </div>
+        <div className="kpi-card">
+          <div className="kpi-card-val">{dblOrWorsePct.toFixed(0)}%</div>
+          <div className="kpi-card-label">double bogey ou pior ({dblOrWorse}/{td?.total ?? 0})</div>
         </div>
       </div>
 
-      {/* Heatmap de buracos */}
-      <HoleHeatmap holes={stats.holes} hc={hc} />
+      {/* Heatmap de buracos (colapsado por defeito) */}
+      <details className="details-block mt-10">
+        <summary className="details-summary">Mapa de calor por buraco</summary>
+        <HoleHeatmap holes={stats.holes} hc={hc} />
+      </details>
 
-      {/* Front 9 vs Back 9 (só em 18H) */}
-      <F9B9Comparison stats={stats} />
+      {/* Front 9 vs Back 9 (só em 18H, colapsado) */}
+      {stats.f9b9 && stats.holeCount === 18 && (
+        <details className="details-block mt-10">
+          <summary className="details-summary">Front 9 vs Back 9</summary>
+          <F9B9Comparison stats={stats} />
+        </details>
+      )}
 
       {/* By par type (colapsado por defeito) */}
       {parTypes.length > 1 && (
         <details className="details-block mt-10">
-          <summary className="details-summary">🎯 Desempenho por tipo de buraco <span className="muted fs-11">(vs par · clica para abrir)</span></summary>
+          <summary className="details-summary">Desempenho por tipo de buraco <span className="muted fs-11">(vs par)</span></summary>
           {/* Bar chart horizontal comparativo */}
           <div className="par-type-chart">
             {(() => {
@@ -277,10 +270,10 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
       {/* Strengths & weaknesses (colapsado por defeito) */}
       {ranked.length >= 4 && (
         <details className="details-block mt-10">
-          <summary className="details-summary">💪 Pontos fortes &amp; onde perdes mais <span className="muted fs-11">(clica para ver top 4)</span></summary>
+          <summary className="details-summary">Pontos fortes e onde perde mais</summary>
         <div className="haTopWrap mt-6">
           <div className="haTopCol haTopStrength">
-            <div className="h-sm"><span className="c-par-ok">💪 Pontos Fortes</span></div>
+            <div className="h-sm"><span className="c-par-ok">Pontos Fortes</span></div>
             {strengths.length === 0
               ? <div className="haTopEmpty">Nenhum buraco consistentemente ao par ou melhor.</div>
               : strengths.map(bh => {
@@ -301,7 +294,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
             }
           </div>
           <div className="haTopCol haTopWeakness">
-            <div className="h-sm"><span className="c-birdie">🔻 Onde Perdes Mais Pancadas</span></div>
+            <div className="h-sm"><span className="c-birdie">Onde Perde Mais Pancadas</span></div>
             {weaknesses.length === 0
               ? <div className="haTopEmpty">Sem buracos com perdas significativas.</div>
               : <>
@@ -325,7 +318,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                   {(() => {
                     const totalWeakSL = weaknesses.reduce((a, w) => a + w.strokesLost, 0);
                     return (
-                      <div className="haTopSummary">Estes {weaknesses.length} buracos custam-te <b>{totalWeakSL.toFixed(1)} pancadas por volta</b> ({Math.round(totalWeakSL / stats.totalStrokesLost * 100)}% do total).</div>
+                      <div className="haTopSummary">Estes {weaknesses.length} buracos custam <b>{totalWeakSL.toFixed(1)} pancadas por volta</b> ({Math.round(totalWeakSL / stats.totalStrokesLost * 100)}% do total).</div>
                     );
                   })()}
                 </>
@@ -335,12 +328,17 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
         </details>
       )}
 
-      {/* Scoring distribution chart (bar chart vertical) */}
-      <ScoreDistributionChart td={td} />
+      {/* Distribuição de scores (colapsado por defeito) */}
+      {td && td.total > 0 && (
+        <details className="details-block mt-10">
+          <summary className="details-summary">Distribuição de scores <span className="muted fs-11">({td.total} buracos)</span></summary>
+          <ScoreDistributionChart td={td} />
+        </details>
+      )}
 
       {/* Hole-by-hole table (colapsado por defeito) */}
       <details className="details-block mt-10">
-        <summary className="details-summary">📋 Detalhe buraco a buraco <span className="muted fs-11">(tabela completa · clica para abrir)</span></summary>
+        <summary className="details-summary">Detalhe buraco a buraco <span className="muted fs-11">(tabela completa)</span></summary>
         <div className="scroll-x mt-6">
             <table className="w-full fs-11 bc-collapse hs-uniform">
               <tbody>

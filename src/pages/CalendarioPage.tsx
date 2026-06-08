@@ -96,6 +96,11 @@ const CALENDARS: CalendarSource[] = [
   { id: "viag_roma",      name: "✈ Roma (Mar)",          color: C.cal.viag_roma, group: "VIAGENS" },
   { id: "viag_alg_mar",   name: "✈ Algarve (Mar/Abr)",  color: C.cal.viag_alg_mar, group: "VIAGENS" },
   { id: "viag_edinb",     name: "✈ Edimburgo (Mai)",     color: C.cal.viag_edinb, group: "VIAGENS" },
+  { id: "viag_alg_jul_m",   name: "✈ Algarve Jul · Manuel+2 (prov.)",         color: C.cal.viag_alg_jul_m,   group: "VIAGENS" },
+  { id: "viag_alg_jul_ma",  name: "✈ Algarve Jul · Mariana (prov.)",          color: C.cal.viag_alg_jul_ma,  group: "VIAGENS" },
+  { id: "viag_alg_jul_mf",  name: "✈ Algarve Jul/Ago · M. Francisco (prov.)", color: C.cal.viag_alg_jul_mf,  group: "VIAGENS" },
+  { id: "viag_alg_jul_fam", name: "✈ Algarve Jul/Ago · Família (prov.)",      color: C.cal.viag_alg_jul_fam, group: "VIAGENS" },
+  { id: "viag_vce_ago",     name: "✈ Veneza + Porto Ago (prov.)",             color: C.cal.viag_vce_ago,     group: "VIAGENS" },
 ];
 
 const CAL_MAP = new Map(CALENDARS.map(c => [c.id, c]));
@@ -328,6 +333,40 @@ const EVENTS: CalEvent[] = [
   // ── Edimburgo (Ryanair) ──
   ev("viag_edinb", "✈ FR6673 FNC → EDI 15:00–19:05",             new Date(2026,4,23), "Ryanair", ""),
   ev("viag_edinb", "✈ FR6674 EDI → FNC 19:30–23:40",             new Date(2026,4,30), "Ryanair", ""),
+
+  /* ══════════════════════════════════════
+     ✈ VIAGENS PROVISÓRIAS — Verão 2026 (por confirmar)
+     ══════════════════════════════════════ */
+
+  // ── Algarve Julho · Manuel + Maria Antónia + Gastão (provisório) ──
+  ev("viag_alg_jul_m",  "✈ TP1688 FNC → LIS 12:40–14:25",        new Date(2026,6,6),  "TAP", "Prov. · Manuel, M.ª Antónia, Gastão"),
+  ev("viag_alg_jul_m",  "✈ TP1905 LIS → FAO 16:30–17:20",        new Date(2026,6,6),  "TAP", "Prov. · Manuel, M.ª Antónia, Gastão"),
+  ev("viag_alg_jul_m",  "✈ TP1693 LIS → FNC 19:10–21:05",        new Date(2026,6,18), "TAP", "Prov. · Manuel, M.ª Antónia, Gastão"),
+
+  // ── Algarve Julho · Mariana (provisório) ──
+  ev("viag_alg_jul_ma", "✈ TP1692 FNC → LIS 19:35–21:20",        new Date(2026,6,12), "TAP", "Prov. · Mariana"),
+  ev("viag_alg_jul_ma", "✈ TP1907 LIS → FAO 23:00–23:50",        new Date(2026,6,12), "TAP", "Prov. · Mariana"),
+  ev("viag_alg_jul_ma", "✈ TP1693 LIS → FNC 19:10–21:05",        new Date(2026,6,18), "TAP", "Prov. · Mariana"),
+
+  // ── Algarve Julho/Agosto · Manuel Francisco (provisório) ──
+  ev("viag_alg_jul_mf", "✈ TP1692 FNC → LIS 19:35–21:20",        new Date(2026,6,12), "TAP", "Prov. · Manuel Francisco"),
+  ev("viag_alg_jul_mf", "✈ TP1907 LIS → FAO 23:00–23:50",        new Date(2026,6,12), "TAP", "Prov. · Manuel Francisco"),
+  ev("viag_alg_jul_mf", "✈ TP1906 FAO → LIS 18:10–19:05",        new Date(2026,7,1),  "TAP", "Prov. · Manuel Francisco"),
+  ev("viag_alg_jul_mf", "✈ TP1695 LIS → FNC 22:20–00:10 (+1)",   new Date(2026,7,1),  "TAP", "Prov. · Manuel Francisco"),
+
+  // ── Algarve Julho/Agosto · Família (provisório) ──
+  ev("viag_alg_jul_fam","✈ TP1692 FNC → LIS 19:35–21:20",        new Date(2026,6,25), "TAP", "Prov. · Manuel, Mariana, M.ª Antónia, Gastão"),
+  ev("viag_alg_jul_fam","✈ TP1905 LIS → FAO 16:30–17:20",        new Date(2026,6,26), "TAP", "Prov. · Manuel, Mariana, M. Francisco, M.ª Antónia, Gastão"),
+  ev("viag_alg_jul_fam","✈ TP1906 FAO → LIS 18:10–19:05",        new Date(2026,7,1),  "TAP", "Prov. · Manuel, Mariana, M.ª Antónia, Gastão"),
+  ev("viag_alg_jul_fam","✈ TP1695 LIS → FNC 22:20–00:10 (+1)",   new Date(2026,7,1),  "TAP", "Prov. · Manuel, Mariana, M.ª Antónia, Gastão"),
+
+  // ── Veneza + Porto Agosto · Manuel, Mariana, Manuel Francisco (provisório) ──
+  ev("viag_vce_ago",    "✈ TP1738 PXO → LIS 22:10–23:45",        new Date(2026,7,10), "TAP", "Prov. · Mariana, Manuel, M. Francisco"),
+  ev("viag_vce_ago",    "✈ TP862 LIS → VCE 14:20–18:20",         new Date(2026,7,11), "TAP", "Prov. · Manuel, Mariana, M. Francisco"),
+  ev("viag_vce_ago",    "✈ TP861 VCE → LIS 11:40–13:55",         new Date(2026,7,16), "TAP", "Prov. · Manuel, Mariana, M. Francisco"),
+  ev("viag_vce_ago",    "✈ TP1930 LIS → OPO 16:00–17:00",        new Date(2026,7,16), "TAP", "Prov. · Manuel, Mariana, M. Francisco"),
+  ev("viag_vce_ago",    "✈ TP1933 OPO → LIS 21:15–22:15",        new Date(2026,7,21), "TAP", "Prov. · Mariana, Manuel, M. Francisco"),
+  ev("viag_vce_ago",    "✈ TP1697 LIS → FNC 23:40–01:30 (+1)",   new Date(2026,7,21), "TAP", "Prov. · Mariana, Manuel, M. Francisco"),
 ];
 
 /* ═══ Helpers ═══ */
@@ -607,6 +646,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
     typeof window !== "undefined" && window.innerWidth <= 768 ? "list" : "month"
   );
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [dayPopup, setDayPopup] = useState<Date | null>(null);
   const BDAY_IDS_OFF = ["bday_sub10","bday_sub12","bday_sub14","bday_sub16","bday_sub18","bday_outros"];
   const [enabledCals, setEnabledCals] = useState<Set<string>>(
     () => new Set(CALENDARS.map(c => c.id).filter(id => !BDAY_IDS_OFF.includes(id)))
@@ -710,6 +750,9 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
   );
   const monthDays = useMemo(() => getMonthDays(2026, currentMonth), [currentMonth]);
   const gridRows = monthDays.length / 7;
+  // Máximo de eventos mostrados por célula antes de colapsar em "+N mais".
+  // Meses de 6 semanas têm células mais baixas → limite menor para não cortar.
+  const cellCap = gridRows >= 6 ? 5 : 8;
   const today = new Date();
   const groups: GroupKey[] = ["CGSS", "JUNIOR", "DRIVE", "FPG", "DESTAQUE", "ANIVER", "VIAGENS"];
 
@@ -973,7 +1016,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
  <span className="fw-600 fs-10" style={{ opacity: !d.inMonth ? 0.7 : 0.45 }}>{MONTHS_SHORT[d.date.getMonth()]}</span>
                         {d.date.getDate()}
                       </div>
-                      {dayEvts.slice(0, 3).map(e => {
+                      {dayEvts.slice(0, cellCap).map(e => {
                         const isPast = (e.endDate || e.date) < today;
                         const pos = getEvPos(e, d.date, weekStart, weekEnd);
                         const showTitle = pos === "single" || pos === "start";
@@ -1007,8 +1050,17 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                         </div>
                         );
                       })}
-                      {dayEvts.length > 3 && (
-                        <div className="fs-10 c-text-3 ta-c fw-600">+{dayEvts.length - 3} mais</div>
+                      {dayEvts.length > cellCap && (
+                        <div role="button" tabIndex={0}
+                          onClick={ev => { ev.stopPropagation(); setDayPopup(d.date); }}
+                          onKeyDown={ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); ev.stopPropagation(); setDayPopup(d.date); } }}
+                          title="Ver todos os eventos deste dia"
+                          className="fs-10 c-text-3 ta-c fw-600"
+                          style={{ cursor: "pointer", borderRadius: "var(--radius-xs)", padding: "0 2px" }}
+                          onMouseEnter={ev => (ev.currentTarget.style.background = "var(--bg-hover)")}
+                          onMouseLeave={ev => (ev.currentTarget.style.background = "transparent")}>
+                          +{dayEvts.length - cellCap} mais
+                        </div>
                       )}
                     </div>
                   );
@@ -1022,6 +1074,66 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
       </div>
 
       {selectedEvent && <EventPopup event={selectedEvent} onClose={() => setSelectedEvent(null)} />}
+      {dayPopup && (
+        <DayEventsPopup
+          date={dayPopup}
+          events={sortEventsForGrid(visibleEvents.filter(e => eventOnDay(e, dayPopup)))}
+          onSelect={e => { setDayPopup(null); setSelectedEvent(e); }}
+          onClose={() => setDayPopup(null)}
+        />
+      )}
+    </div>
+  );
+}
+
+function DayEventsPopup({ date, events, onSelect, onClose }: {
+  date: Date; events: CalEvent[]; onSelect: (e: CalEvent) => void; onClose: () => void;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const h = (e: MouseEvent) => { if (ref.current && !ref.current.contains(e.target as Node)) onClose(); };
+    setTimeout(() => document.addEventListener("mousedown", h), 10);
+    return () => document.removeEventListener("mousedown", h);
+  }, [onClose]);
+  const title = `${DAY_NAMES[date.getDay()]}, ${date.toLocaleDateString("pt-PT", { day: "numeric", month: "long" })} 2026`;
+  return (
+    <div className="cal-overlay" style={{ backdropFilter: "blur(3px)" }}>
+      <div ref={ref} style={{ background: "var(--bg-card)", borderRadius: "var(--radius-xl)",
+        boxShadow: "var(--shadow-lg)", width: 380, maxHeight: "80vh", overflow: "hidden",
+        display: "flex", flexDirection: "column", animation: "calPopIn 0.2s ease" }}>
+        <div style={{ background: "var(--accent)", padding: "14px 18px", display: "flex",
+          justifyContent: "space-between", alignItems: "center", flexShrink: 0 }}>
+          <span className="fw-600 fs-13" style={{ color: "#fff" }}>{title}</span>
+          <button onClick={onClose} title="Fechar" aria-label="Fechar" style={{ background: "rgba(255,255,255,0.2)",
+            border: "none", color: "#fff", width: 26, height: 26, borderRadius: "50%", cursor: "pointer",
+            fontSize: 14, display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
+        </div>
+        <div className="cal-sidebar d-flex flex-col gap-4" style={{ overflowY: "auto" }}>
+          {events.map(e => (
+            <button key={e.id} onClick={() => onSelect(e)} style={{
+              display: "flex", alignItems: "center", gap: 10, padding: "8px 10px", width: "100%",
+              border: "none", cursor: "pointer", fontFamily: "inherit", textAlign: "left",
+              background: "transparent", borderRadius: "var(--radius)", transition: "background 0.15s" }}
+              onMouseEnter={ev => (ev.currentTarget.style.background = "var(--bg-hover)")}
+              onMouseLeave={ev => (ev.currentTarget.style.background = "transparent")}>
+              <span style={{ width: 4, alignSelf: "stretch", borderRadius: "var(--radius-xs)",
+                background: calColor(e), flexShrink: 0 }} />
+              <span className="flex-1" style={{ minWidth: 0 }}>
+                <span className="text-ellipsis fs-13 fw-600" style={{ color: "var(--text)", display: "block" }}>{e.title}</span>
+                {(e.modalidade || e.campo) && (
+                  <span className="fs-11 c-text-3" style={{ display: "block" }}>
+                    {e.modalidade}{e.modalidade && e.campo && " · "}{e.campo}
+                  </span>
+                )}
+              </span>
+              <span className="fs-10 fw-600 shrink-0" style={{ padding: "2px 8px", borderRadius: "var(--radius-lg)",
+                background: calColor(e), color: "#fff", whiteSpace: "nowrap" }}>
+                {CAL_MAP.get(e.calId)?.name ?? ""}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

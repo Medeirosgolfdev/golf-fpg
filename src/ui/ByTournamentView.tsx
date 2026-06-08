@@ -71,11 +71,11 @@ function CompRow({ label, hc: _hc, is9, frontEnd, cells, outVal, inVal, totalVal
   style?: React.CSSProperties; sepRow?: boolean; outWeight?: number; inWeight?: number;
   className?: string;
 }) {
-  const cs: React.CSSProperties = { padding: "4px 6px", textAlign: "center", fontSize: 12, borderBottom: "1px solid var(--bg-hover)", ...style };
-  const colLabel: React.CSSProperties = { ...cs, textAlign: "left", paddingLeft: 8, borderRight: "2px solid var(--border-light)" };
-  const colOut: React.CSSProperties = { ...cs, background: "var(--bg-muted)", borderLeft: "1px solid var(--border-light)", borderRight: "1px solid var(--border-light)", fontWeight: outWeight };
+  const cs: React.CSSProperties = { padding: "5px 6px", textAlign: "center", fontSize: 12, borderBottom: "1px solid var(--border-light)", ...style };
+  const colLabel: React.CSSProperties = { ...cs, textAlign: "left", paddingLeft: 8, borderRight: "1px solid var(--border-light)" };
+  const colOut: React.CSSProperties = { ...cs, borderLeft: "1px solid var(--border-light)", borderRight: "1px solid var(--border-light)", fontWeight: outWeight };
   const colIn: React.CSSProperties = { ...colOut, fontWeight: inWeight };
-  const colTot: React.CSSProperties = { ...cs, background: "var(--bg-muted)", borderLeft: "1px solid var(--border-light)", fontWeight: 800 };
+  const colTot: React.CSSProperties = { ...cs, borderLeft: "1px solid var(--border)", fontWeight: 700 };
   if (sepRow) { cs.borderBottom = "2px solid var(--border)"; colLabel.borderBottom = "2px solid var(--border)"; colOut.borderBottom = "2px solid var(--border)"; colIn.borderBottom = "2px solid var(--border)"; colTot.borderBottom = "2px solid var(--border)"; }
   return (
     <tr className={className}>
@@ -98,11 +98,11 @@ function CompScoreRow({ label, labelBg, labelFg, gross, par, hc, is9, frontEnd, 
   gross: (number | null)[]; par: (number | null)[] | null;
   hc: number; is9: boolean; frontEnd: number; backStart: number;
 }) {
-  const cs: React.CSSProperties = { padding: "4px 6px", textAlign: "center", fontSize: 12, borderBottom: "1px solid var(--bg-hover)" };
-  const colLabel: React.CSSProperties = { ...cs, textAlign: "left", paddingLeft: 8, borderRight: "2px solid var(--border-light)" };
-  const colOut: React.CSSProperties = { ...cs, background: "var(--bg-muted)", borderLeft: "1px solid var(--border-light)", borderRight: "1px solid var(--border-light)", fontWeight: 700 };
+  const cs: React.CSSProperties = { padding: "5px 6px", textAlign: "center", fontSize: 12, borderBottom: "1px solid var(--border-light)" };
+  const colLabel: React.CSSProperties = { ...cs, textAlign: "left", paddingLeft: 8, borderRight: "1px solid var(--border-light)" };
+  const colOut: React.CSSProperties = { ...cs, borderLeft: "1px solid var(--border-light)", borderRight: "1px solid var(--border-light)", fontWeight: 700 };
   const colIn: React.CSSProperties = { ...colOut };
-  const colTot: React.CSSProperties = { ...cs, background: "var(--bg-muted)", borderLeft: "1px solid var(--border-light)", fontWeight: 800 };
+  const colTot: React.CSSProperties = { ...cs, borderLeft: "1px solid var(--border)", fontWeight: 700 };
 
   const toParSpan = (g: number, p: number) => {
     const tp = g - p;
@@ -156,11 +156,11 @@ function CompDeltaRow({ first, last, hc, is9, frontEnd, backStart }: {
   first: (number | null)[]; last: (number | null)[];
   hc: number; is9: boolean; frontEnd: number; backStart: number;
 }) {
-  const cs: React.CSSProperties = { padding: "4px 6px", textAlign: "center", fontSize: 11, borderBottom: "1px solid var(--bg-hover)" };
-  const colLabel: React.CSSProperties = { ...cs, textAlign: "left", paddingLeft: 8, borderRight: "2px solid var(--border-light)", fontWeight: 700, color: "var(--text-3)" };
-  const colOut: React.CSSProperties = { ...cs, background: "var(--bg-muted)", borderLeft: "1px solid var(--border-light)", borderRight: "1px solid var(--border-light)" };
+  const cs: React.CSSProperties = { padding: "5px 6px", textAlign: "center", fontSize: 11, borderBottom: "1px solid var(--border-light)" };
+  const colLabel: React.CSSProperties = { ...cs, textAlign: "left", paddingLeft: 8, borderRight: "1px solid var(--border-light)", fontWeight: 700, color: "var(--text-3)" };
+  const colOut: React.CSSProperties = { ...cs, borderLeft: "1px solid var(--border-light)", borderRight: "1px solid var(--border-light)" };
   const colIn: React.CSSProperties = { ...colOut };
-  const colTot: React.CSSProperties = { ...cs, background: "var(--bg-muted)", borderLeft: "1px solid var(--border-light)" };
+  const colTot: React.CSSProperties = { ...cs, borderLeft: "1px solid var(--border)" };
 
   const fmtDelta = (d: number | null) => {
     if (d == null) return { text: "", color: "var(--text-muted)", weight: 400 as const };

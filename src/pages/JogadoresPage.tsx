@@ -348,7 +348,7 @@ function ByDateView({ data, search }: {
               <React.Fragment key={r.scoreId}>
                 {showYearBar && (
                   <tr>
-                    <td colSpan={10} style={{ padding: 0, background: "var(--bg-header)", borderBottom: "2px solid var(--border)" }}>
+                    <td colSpan={10} style={{ padding: 0, background: "transparent", borderBottom: "2px solid var(--border)" }}>
                       <div className="year-label">{year}</div>
                     </td>
                   </tr>
@@ -456,7 +456,7 @@ function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
   return (
     <div className="mb-10">
       <div className="sc-bar-head"><span>Resumo por Tee</span></div>
-      <table className="dtable-lg" style={{ marginBottom: 0 }}>
+      <table className="dtable ec-summary" style={{ marginBottom: 0 }}>
         <thead>
           <tr>
             <th>Tee</th>
@@ -527,19 +527,11 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
     setActiveTee(best);
   }, [open, isAnalysis, activeTee, holeStats]);
 
-  // Handler de clique manual num tee — muda o filtro E faz scroll suave até à análise.
+  // Handler de clique manual num tee — só muda o filtro (sem scroll automático).
+  // Toggle: clicar no tee já activo limpa o filtro.
   const handleSelectTee = useCallback((tk: string) => {
-    // Toggle: clicar no tee já activo limpa o filtro (substitui a antiga barra
-    // "Filtro activo / Limpar filtro" — menos poluição visual).
-    const willClear = activeTee === tk;
-    setActiveTee(willClear ? null : tk);
-    if (!willClear) {
-      setTimeout(() => {
-        const el = document.getElementById("hole-stats-section");
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "nearest" });
-      }, 80);
-    }
-  }, [activeTee]);
+    setActiveTee(prev => (prev === tk ? null : tk));
+  }, []);
 
   return (
     <>
@@ -825,7 +817,7 @@ function RoundsTimeline({ rounds }: { rounds: RoundData[] }) {
   if (pts.length < 3) return null;
 
   // Dimensões SVG
-  const W = 680, H = 170;
+  const W = 1200, H = 170;
   const padL = 32, padR = 12, padT = 14, padB = 26;
   const innerW = W - padL - padR, innerH = H - padT - padB;
 
@@ -857,9 +849,9 @@ function RoundsTimeline({ rounds }: { rounds: RoundData[] }) {
 
   return (
     <div className="mt-10">
-      <div className="h-sm">📈 Evolução dos gross <span className="muted fs-11">({pts.length} rondas de 18 buracos · linha tracejada = par)</span></div>
+      <div className="h-sm">Evolução dos gross <span className="muted fs-11">({pts.length} rondas de 18 buracos · linha tracejada = par)</span></div>
       <div className="scroll-x">
-        <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: W, display: "block" }} role="img" aria-label="Evolução do gross ao longo do tempo">
+        <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: "block" }} role="img" aria-label="Evolução do gross ao longo do tempo">
           {/* Eixo Y: linhas de grelha */}
           {yTicks.map(t => (
             <g key={t}>
@@ -883,9 +875,30 @@ function RoundsTimeline({ rounds }: { rounds: RoundData[] }) {
               </g>
             );
           })}
-          {/* Labels X: primeiro e último */}
-          <text x={padL} y={H - 8} fontSize={10} fill="var(--text-3)" textAnchor="start">{fmtDate(pts[0].date)}</text>
-          <text x={W - padR} y={H - 8} fontSize={10} fill="var(--text-3)" textAnchor="end">{fmtDate(pts[pts.length - 1].date)}</text>
+          {/* Labels X: datas espaçadas — só rende cada etiqueta se distar o suficiente
+              da anterior em x (evita sobreposição quando há rondas em datas próximas). */}
+          {(() => {
+            const lastIdx = pts.length - 1;
+            const minGap = 95;
+            const want = Math.min(8, pts.length);
+            const cand = Array.from(new Set(
+              Array.from({ length: want }, (_, i) => Math.round((i * lastIdx) / (want - 1)))
+            ));
+            const keep: number[] = [];
+            let lastX = -Infinity;
+            for (const idx of cand) {
+              const x = xScale(pts[idx].x);
+              if (x - lastX >= minGap) { keep.push(idx); lastX = x; }
+            }
+            if (keep.length === 0 || keep[keep.length - 1] !== lastIdx) {
+              if (keep.length && xScale(pts[lastIdx].x) - lastX < minGap) keep[keep.length - 1] = lastIdx;
+              else keep.push(lastIdx);
+            }
+            return keep.map(idx => {
+              const anchor = idx === 0 ? "start" : idx === lastIdx ? "end" : "middle";
+              return <text key={idx} x={xScale(pts[idx].x)} y={H - 8} fontSize={10} fill="var(--text-3)" textAnchor={anchor}>{fmtDate(pts[idx].date)}</text>;
+            });
+          })()}
         </svg>
       </div>
     </div>
@@ -944,20 +957,20 @@ function CoursePerformanceSection({ rounds }: { rounds: RoundData[] }) {
       const diff = avgG - avgP;
       const bestG = minArr(grossArr18.map(r => r.gross!))!;
       const bestP = grossArr18.reduce((a, r) => r.gross! < a.gross! ? r : a).par;
-      conclusion.push(<span key="avg">Em média fazes <b>{avgG.toFixed(0)} pancadas</b> neste campo (<b>{fmtSign(diff, 0)} vs par</b>). </span>);
-      conclusion.push(<span key="best">O teu melhor resultado foi <b>{bestG}</b> (par {bestP}). </span>);
+      conclusion.push(<span key="avg">Em média faz <b>{avgG.toFixed(0)} pancadas</b> neste campo (<b>{fmtSign(diff, 0)} vs par</b>). </span>);
+      conclusion.push(<span key="best">O melhor resultado foi <b>{bestG}</b> (par {bestP}). </span>);
     }
     if (stbArr.length >= 2) {
       const avgStb = meanArr(stbArr)!;
-      if (avgStb >= 36) conclusion.push(<span key="stb">A tua média Stableford de <b>{avgStb.toFixed(0)}</b> mostra que jogas <b className="c-par-ok">consistentemente bem</b> aqui. </span>);
-      else if (avgStb >= 30) conclusion.push(<span key="stb">A tua média Stableford de <b>{avgStb.toFixed(0)}</b> mostra desempenho <b>sólido</b>. </span>);
-      else conclusion.push(<span key="stb">A tua média Stableford de <b>{avgStb.toFixed(0)}</b> sugere <b className="c-eagle">espaço para melhorar</b> neste campo. </span>);
+      if (avgStb >= 36) conclusion.push(<span key="stb">A média Stableford de <b>{avgStb.toFixed(0)}</b> mostra que joga <b className="c-par-ok">consistentemente bem</b> aqui. </span>);
+      else if (avgStb >= 30) conclusion.push(<span key="stb">A média Stableford de <b>{avgStb.toFixed(0)}</b> mostra um desempenho <b>sólido</b>. </span>);
+      else conclusion.push(<span key="stb">A média Stableford de <b>{avgStb.toFixed(0)}</b> sugere <b className="c-eagle">espaço para melhorar</b> neste campo. </span>);
     }
-    if (trendCls === "trend-up") conclusion.push(<span key="trend">A tendência é <b className="c-par-ok">positiva</b> — estás a melhorar neste campo. </span>);
+    if (trendCls === "trend-up") conclusion.push(<span key="trend">A tendência é <b className="c-par-ok">positiva</b> — está a melhorar neste campo. </span>);
     else if (trendCls === "trend-down") conclusion.push(<span key="trend">A tendência é <b className="c-birdie">negativa</b> — os resultados recentes pioraram. </span>);
     if (teeArr.length > 1) {
       const bestTee = teeArr.reduce((a, b) => (meanArr(b.stbs) ?? 0) > (meanArr(a.stbs) ?? 0) ? b : a);
-      if (bestTee.stbs.length >= 2) conclusion.push(<span key="tee">Os tees <b>{bestTee.tee}</b> são onde tens melhores resultados (Stb {meanArr(bestTee.stbs)!.toFixed(0)}). </span>);
+      if (bestTee.stbs.length >= 2) conclusion.push(<span key="tee">Os tees <b>{bestTee.tee}</b> são onde tem melhores resultados (Stb {meanArr(bestTee.stbs)!.toFixed(0)}). </span>);
     }
 
     return {
@@ -977,21 +990,21 @@ function CoursePerformanceSection({ rounds }: { rounds: RoundData[] }) {
   // Os KPIs (Média SD, Melhor SD, etc.) deixam de aparecer aqui porque já estão
   // no bloco do Eclético (colunas HCP/Stb/SD por ronda + totais).
   return (
-    <div className="mt-10">
-      <div className="course-evolution-head">
-        <span className="h-sm">Evolução neste campo</span>
+    <details className="details-block mt-10">
+      <summary className="details-summary">
+        Evolução neste campo
         {stats.sdArr.length >= 3 && (
-          <span className={`p p-sm ${stats.trendCls}`} title="Tendência linear da série de SDs">
+          <span className={`p p-sm ml-6 ${stats.trendCls}`} title="Tendência linear da série de SDs">
             {stats.trendLabel}
           </span>
         )}
-        {stats.has9 && <span className="muted fs-10">Stb 9h normalizado +17</span>}
-      </div>
+      </summary>
       {stats.conclusion.length > 0 && (
-        <div className="caConcText fs-12 mt-4">{stats.conclusion}</div>
+        <div className="caConcText fs-12 mt-6">{stats.conclusion}</div>
       )}
+      {stats.has9 && <div className="muted fs-10 mt-4">Stb 9h normalizado +17</div>}
       <RoundsTimeline rounds={rounds} />
-    </div>
+    </details>
   );
 }
 
@@ -1164,20 +1177,19 @@ function KPICard({ title, val, sub, delta, deltaLabel, tip, accent }: {
     : delta > 0.05  ? "var(--color-danger)"
     : "var(--text-3)";
   return (
-    <div style={{ padding: "12px 16px", borderRadius: 10, background: "var(--bg-detail)",
-      display: "flex", flexDirection: "column", gap: 3, minWidth: 120 }}>
-      <div className="uppercase" style={{ fontSize: 10, fontWeight: 700, color: "var(--text-3)", letterSpacing: "0.06em" }}>
+    <div className="kpi-card">
+      <div className="kpi-card-label">
         {title}{tip && <span className="kpi-info ml-4" title={tip}>ℹ</span>}
       </div>
-      <div style={{ fontSize: 26, fontWeight: 800, color: accent ?? "var(--text-1)", lineHeight: 1.1 }}>
+      <div className="kpi-card-val" style={accent ? { color: accent } : undefined}>
         {val ?? <span style={{ color: "var(--text-3)" }}>–</span>}
       </div>
       {delta != null && (
-        <div className="fs-11 fw-700" style={{ color: dColor }}>
+        <div className="kpi-card-delta" style={{ color: dColor }}>
           {delta > 0 ? "+" : ""}{delta.toFixed(1)} {deltaLabel ?? "vs média"}
         </div>
       )}
-      {sub && <div style={{ fontSize: 11, color: "var(--text-3)", marginTop: 2 }}>{sub}</div>}
+      {sub && <div className="kpi-card-sub">{sub}</div>}
     </div>
   );
 }
@@ -2395,7 +2407,7 @@ function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localI
               <React.Fragment key={r.id}>
                 {showYearBar && (
                   <tr>
-                    <td colSpan={COLS} style={{ padding: 0, background: "var(--bg-header)", borderBottom: "2px solid var(--border)" }}>
+                    <td colSpan={COLS} style={{ padding: 0, background: "transparent", borderBottom: "2px solid var(--border)" }}>
                       <div className="year-label">{year}</div>
                     </td>
                   </tr>
@@ -2747,10 +2759,10 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
         const tornRounds = liveRounds.filter(r => /torn/i.test(String(r.score_origin || "")));
         const lastDate = liveRounds[0]?.score_dateStr?.slice(0, 10) || null;
         const kpi = (label: string, value: React.ReactNode, sub?: string) => (
-          <div style={{ padding: "8px 10px", background: "var(--bg, white)", border: "1px solid var(--border)", borderRadius: 6 }}>
-            <div className="muted fs-10">{label}</div>
-            <div className="fw-700" style={{ fontSize: 18 }}>{value}</div>
-            {sub && <div className="muted fs-10">{sub}</div>}
+          <div className="kpi-card">
+            <div className="kpi-card-label">{label}</div>
+            <div className="kpi-card-val">{value}</div>
+            {sub && <div className="kpi-card-sub">{sub}</div>}
           </div>
         );
         return (
