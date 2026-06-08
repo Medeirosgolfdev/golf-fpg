@@ -92,7 +92,12 @@ if (FILTER_SINCE && /^\d+d$/i.test(FILTER_SINCE)) {
 }
 const FILTER_YEAR   = argVal("--year", null);
 const CONCURRENCY   = parseInt(argVal("--concurrency", "3"), 10);
-const MAX_ROUNDS    = parseInt(argVal("--max-rounds", "3"), 10);
+// --max-rounds: override EXPLÍCITO do utilizador. Quando não passado, o script
+// deteta o nº de rondas por torneio (via t.rounds conhecido ou sondagem dinâmica).
+const MAX_ROUNDS_EXPLICIT = process.argv.includes("--max-rounds");
+const MAX_ROUNDS    = parseInt(argVal("--max-rounds", "4"), 10);
+// Tecto de segurança para a sondagem dinâmica (FPG não tem >4 rondas em juvenis/absolutos).
+const HARD_CAP_ROUNDS = 6;
 const DELAY_MS      = parseInt(argVal("--delay", "150"), 10);
 const AUTO_EXTEND   = args.includes("--auto-extend");
 
@@ -185,18 +190,38 @@ async function scrapeAdmissions(t) {
   return markSuspect(parsed, t.date);
 }
 
-/* ── Scrape draw r1/r2/r3 ───────────────────────────────────────────────── */
-async function scrapeDraws(t, maxRounds) {
+/* ── Scrape draws — deteta o nº de rondas ───────────────────────────────────
+   Tecto de rondas a sondar, por ordem de prioridade:
+     1) --max-rounds explícito (override do utilizador)
+     2) t.rounds conhecido (vem do pull-torneios/tracking via auto-extend)
+     3) sondagem dinâmica até HARD_CAP, parando na 1ª ronda "não publicada"
+        (param-error ou grupos vazios) que surja DEPOIS de já termos apanhado
+        rondas — isto é o fim da sequência. Erros HTTP transitórios (5xx/rede)
+        NÃO terminam a sondagem (tenta-se a ronda seguinte).
+   ─────────────────────────────────────────────────────────────────────────── */
+async function scrapeDraws(t) {
   const out = {};
-  for (let round = 1; round <= maxRounds; round++) {
+  const known = Number(t.rounds);
+  const dynamic = !MAX_ROUNDS_EXPLICIT && !(Number.isFinite(known) && known > 0);
+  const ceiling = MAX_ROUNDS_EXPLICIT ? MAX_ROUNDS
+                : (Number.isFinite(known) && known > 0) ? Math.min(known, HARD_CAP_ROUNDS)
+                : HARD_CAP_ROUNDS;
+
+  let got = 0;
+  for (let round = 1; round <= ceiling; round++) {
     const r = await fetchLinkpage(t.ccode, t.tcode, "draw", round);
-    if (!r.ok || r.paramErr) {
-      // round sem dados = não existe publicado (normal para torneios de poucas rondas)
+    // Erro HTTP transitório (não é param-error): saltar esta ronda mas continuar.
+    if (!r.ok && !r.paramErr) continue;
+    const parsed = (!r.paramErr) ? parseDraw(r.html) : { error: "param-errors" };
+    const published = parsed && !parsed.error && parsed.groups && parsed.groups.length > 0;
+    if (!published) {
+      // Ronda não publicada. Em modo dinâmico, se já apanhámos rondas, é o fim
+      // da sequência → parar (evita sondar rondas inexistentes desnecessariamente).
+      if (dynamic && got > 0) break;
       continue;
     }
-    const parsed = parseDraw(r.html);
-    if (parsed.error || (parsed.groups && parsed.groups.length === 0)) continue;
     out[round] = markSuspect(parsed, t.date);
+    got++;
     await sleep(DELAY_MS);
   }
   return out;
@@ -321,6 +346,7 @@ function scanLocalJsons(sinceDate = null) {
         const tcode = String(t.tcode || t.code || "");
         const name  = t.name || t.description || t.nome || "";
         const date  = t.date || t.data || dotNetToIsoDate(t.started_at);
+        const rounds = Number(t.rounds || t.nrounds || t.numRounds) || null;
         if (!ccode || !tcode || !date) continue;
         // Filtro temporal interno — evita carregar histórico irrelevante
         if (sinceDate && date < sinceDate) continue;
@@ -329,6 +355,7 @@ function scanLocalJsons(sinceDate = null) {
         if (!seen.has(key) || (seen.get(key).date || "") < date) {
           seen.set(key, {
             ccode, tcode, name, date,
+            ...(rounds ? { rounds } : {}),
             expectedYear: date.slice(0, 4),
             _src: `json:${f}`,
           });
@@ -505,7 +532,7 @@ async function buildAutoExtendedScope(manual, sinceDate = null) {
 
 /* ── Main ───────────────────────────────────────────────────────────────── */
 (async () => {
-  console.log(`[adm-draws] Concurrency=${CONCURRENCY} MaxRounds=${MAX_ROUNDS} Delay=${DELAY_MS}ms AutoExtend=${AUTO_EXTEND}`);
+  console.log(`[adm-draws] Concurrency=${CONCURRENCY} MaxRounds=${MAX_ROUNDS_EXPLICIT ? MAX_ROUNDS : `auto(≤${HARD_CAP_ROUNDS})`} Delay=${DELAY_MS}ms AutoExtend=${AUTO_EXTEND}`);
 
   // 1) Construir scope base (manual, opcionalmente expandido).
   //    Passa FILTER_SINCE para as fontes auto-descobertas limitarem o que
@@ -569,7 +596,7 @@ async function buildAutoExtendedScope(manual, sinceDate = null) {
   const scraped = await runPool(scope, async (t, i) => {
     const [admissions, draws] = await Promise.all([
       scrapeAdmissions(t),
-      scrapeDraws(t, MAX_ROUNDS),
+      scrapeDraws(t),
     ]);
     const admCount = admissions.players?.length ?? 0;
     const drawCount = Object.values(draws).reduce((s, d) => s + (d.groups?.length ?? 0), 0);
@@ -603,7 +630,11 @@ async function buildAutoExtendedScope(manual, sinceDate = null) {
     const newDraws = cleanSuspectDraws(draws, tournament.date);
     const prevDraws = prev.draws || {};
     const finalDraws = {};
-    for (const r of ["1", "2", "3"]) {
+    // União de todas as rondas presentes (novo OU base). NÃO hardcodar 1-3:
+    // torneios de 4 rondas (ex: Campeonato Nacional Absoluto) perderiam a R4.
+    const roundKeys = [...new Set([...Object.keys(newDraws), ...Object.keys(prevDraws)])]
+      .sort((a, b) => Number(a) - Number(b));
+    for (const r of roundKeys) {
       const nD = newDraws[r];
       const pD = prevDraws[r];
       const nScore = nD?.groups?.length ?? 0;

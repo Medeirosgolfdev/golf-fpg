@@ -223,14 +223,22 @@ export default function DrawTab({
         const nomeFormatted = formatPlayerName(p.nome || "");
         // Obter fed (em ordem de prioridade):
         //   1. Campo `p.fed` — quando a fonte o forneceu (ex: PDFs manuais curados)
-        //   2. Match por nome nas ADMISSÕES (fonte autoritativa para este torneio:
+        //   2. Campo `p.clube` se parecer um fed — a coluna Federado da folha
+        //      oficial do draw lida como Clube pelo parser antigo. Este número é
+        //      AUTORITATIVO para este torneio e tem de ganhar ao match por nome,
+        //      que erra em homónimos (ex: 3 "Vicente Rodrigues" diferentes).
+        //   3. Match por nome nas ADMISSÕES (fonte autoritativa para este torneio:
         //      tem o fed real com que o jogador se inscreveu, mesmo que seja
         //      internacional registado na FPG)
-        //   3. Match por nome no playersDB (players.json) — pode ter `intl:...`
-        //   4. Campo `p.clube` se parecer um fed (erro do scraper datagolf)
+        //   4. Match por nome no playersDB (players.json) — pode ter `intl:...`
         const pFed = (p as any).fed as string | null | undefined;
         let fed: string | null = pFed && String(pFed).trim() ? String(pFed).trim() : null;
         let clubeRaw = p.clube || "";
+        if (!fed && looksLikeFed(clubeRaw)) {
+          // fed vindo da própria folha do draw (autoritativo) → usar e limpar clube
+          fed = clubeRaw.trim();
+          clubeRaw = "";
+        }
         if (!fed) {
           fed = admFedByName.get(norm(p.nome)) || admFedByName.get(norm(nomeFormatted)) || null;
         }
@@ -238,11 +246,8 @@ export default function DrawTab({
           const candidates = nameToFeds.get(norm(p.nome)) || nameToFeds.get(norm(nomeFormatted)) || [];
           fed = pickBestFed(candidates);
         }
-        if (!fed && looksLikeFed(clubeRaw)) {
-          fed = clubeRaw.trim();
-          clubeRaw = "";
-        } else if (looksLikeFed(clubeRaw)) {
-          // fed já conhecido por nome; clube está a conter fed (erro scraper) → limpar
+        if (looksLikeFed(clubeRaw)) {
+          // fed já conhecido por outra via; clube ainda contém um número → limpar
           clubeRaw = "";
         }
         const bd = fed && playersDB ? (playersDB[fed] as any) : undefined;
