@@ -1,8 +1,48 @@
 {
-  "generatedAt": "2026-06-01T07:02:06.249Z",
+  "generatedAt": "2026-06-08T06:52:49.717Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
-  "total": 1612,
+  "total": 1616,
   "tournaments": [
+    {
+      "file": "01-00-2601441621.json",
+      "trnId": "2601441621",
+      "name": "Qualification Régionale Jeunes U12 - Benjamins",
+      "formule": "Simple",
+      "date": "06/06/2026",
+      "dateIso": "2026-06-06",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 4,
+      "totalPlayers": 77,
+      "divisions": [
+        {
+          "serieId": "29",
+          "label": "Simple Score maximum",
+          "players": 7
+        },
+        {
+          "serieId": "111",
+          "label": "Simple Score maximum",
+          "players": 31
+        },
+        {
+          "serieId": "115",
+          "label": "Simple Score maximum",
+          "players": 33
+        },
+        {
+          "serieId": "213",
+          "label": "Simple Score maximum",
+          "players": 6
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
+    },
     {
       "file": "03-08-2601435216.json",
       "trnId": "2601435216",
@@ -57,6 +97,66 @@
       "ggPage": "12483136787876721193",
       "ffgolfSlug": "grand-prix-jeunes-majeur-garcons-u14",
       "ffgolfSection": "grands-prix-jeunes"
+    },
+    {
+      "file": "03-08-2601442078.json",
+      "trnId": "2601442078",
+      "name": "GPN U12 - Strasbourg",
+      "formule": "Simple",
+      "date": "30/05/2026",
+      "dateIso": "2026-05-30",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "08",
+      "seriesCount": 2,
+      "totalPlayers": 72,
+      "divisions": [
+        {
+          "serieId": "11",
+          "label": "Simple Stroke play",
+          "players": 48
+        },
+        {
+          "serieId": "22",
+          "label": "Simple Stroke play",
+          "players": 24
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
+    },
+    {
+      "file": "03-19-2601442078.json",
+      "trnId": "2601442078",
+      "name": "GPN U12 - Strasbourg",
+      "formule": "Simple",
+      "date": "30/05/2026",
+      "dateIso": "2026-05-30",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "19",
+      "seriesCount": 2,
+      "totalPlayers": 72,
+      "divisions": [
+        {
+          "serieId": "11",
+          "label": "Simple Stroke play",
+          "players": 48
+        },
+        {
+          "serieId": "22",
+          "label": "Simple Stroke play",
+          "players": 24
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
     },
     {
       "file": "01-00-2601436643.json",
@@ -372,6 +472,36 @@
       "ggPage": "12483136787876721193",
       "ffgolfSlug": "grand-prix-jeunes-majeur-garcons-u14",
       "ffgolfSection": "grands-prix-jeunes"
+    },
+    {
+      "file": "03-03-2601442104.json",
+      "trnId": "2601442104",
+      "name": "GRAND PRIX JEUNES HP 2026 U12",
+      "formule": "Simple",
+      "date": "09/05/2026",
+      "dateIso": "2026-05-09",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "03",
+      "seriesCount": 2,
+      "totalPlayers": 51,
+      "divisions": [
+        {
+          "serieId": "15",
+          "label": "Simple Score maximum",
+          "players": 40
+        },
+        {
+          "serieId": "28",
+          "label": "Simple Score maximum",
+          "players": 11
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
     },
     {
       "file": "03-07-2601435042.json",
