@@ -12,7 +12,10 @@
  *   - Nossos  → players.json (jogadores curados, com análise detalhada + stats)
  *   - TODOS   → + federados.json (universo FPG completo; sem stats de rondas)
  *
- * Reusa os mesmos componentes/utilitários partilhados do projecto
+ * Filtros incluem selecção de anos de nascimento + opção "Tabela única" para
+ * juntar várias coortes (ex: 2013 + 2014) numa só tabela em vez de separadas.
+ *
+ * Reusa os componentes/utilitários partilhados do projecto
  * (useSort, SortableHdr, Toolbar, SexBadge, EscPill, player-stats).
  */
 import { useEffect, useMemo, useState } from "react";
@@ -56,7 +59,7 @@ interface Row {
 }
 
 type SortKey =
-  | "nome" | "sexo" | "clube" | "escalao" | "hcp" | "delta"
+  | "ano" | "nome" | "sexo" | "clube" | "escalao" | "hcp" | "delta"
   | "best" | "sd5" | "lastsd" | "rondas" | "aces";
 
 const clubName = (c: PlayerClub | string): string =>
@@ -64,6 +67,8 @@ const clubName = (c: PlayerClub | string): string =>
 
 const num = (v: number | null | undefined): number | null =>
   (v == null || !isFinite(v)) ? null : v;
+
+const birthYear = (dob: string): number => parseInt(dob.slice(0, 4), 10);
 
 /* Métrica de "evolução" — Δ HCP a 3 meses. Negativo = melhorou (HCP desceu). */
 function DeltaHcp({ d }: { d: number | null }) {
@@ -76,18 +81,21 @@ function DeltaHcp({ d }: { d: number | null }) {
   );
 }
 
-function FormBadge({ alert }: { alert: PlayerStats["formAlert"] }) {
-  if (!alert) return null;
+/* 🔥/🧊 só faz sentido se o jogador ANDA a jogar — exigimos rondas nos
+ * últimos 3 meses. Sem isso, o formAlert é calculado sobre rondas antigas
+ * e seria enganador (ex: alguém que não joga há meses a aparecer "em forma"). */
+function FormBadge({ ps }: { ps: PlayerStats | undefined }) {
+  if (!ps || !ps.formAlert || !(ps.roundsLast3m > 0)) return null;
   return (
-    <span title={alert === "hot" ? "Em boa forma" : "Em má forma"} style={{ marginLeft: 4 }}>
-      {alert === "hot" ? "🔥" : "🧊"}
+    <span title={ps.formAlert === "hot" ? "Em boa forma (rondas recentes)" : "Em má forma (rondas recentes)"} style={{ marginLeft: 4 }}>
+      {ps.formAlert === "hot" ? "🔥" : "🧊"}
     </span>
   );
 }
 
-function Kpi({ label, value, sub }: { label: string; value: React.ReactNode; sub?: string }) {
+function Kpi({ label, value, sub, title }: { label: string; value: React.ReactNode; sub?: string; title?: string }) {
   return (
-    <div className="card" style={{ margin: 0, padding: "8px 10px", textAlign: "center", minWidth: 86 }}>
+    <div className="card" title={title} style={{ margin: 0, padding: "8px 10px", textAlign: "center", minWidth: 86 }}>
       <div className="muted fs-10">{label}</div>
       <div className="fw-900" style={{ fontSize: 18, lineHeight: 1.1 }}>{value}</div>
       {sub && <div className="muted fs-10">{sub}</div>}
@@ -109,15 +117,17 @@ export default function JogadoresPorAnoPage() {
   const [q, setQ] = useState("");
   const [sexFilter, setSexFilter] = useState<"ALL" | "M" | "F">("ALL");
   const [escSet, setEscSet] = useState<Set<string>>(new Set());
+  const [yearSet, setYearSet] = useState<Set<number>>(new Set());
   const [regionFilter, setRegionFilter] = useState("ALL");
   const [hcpMax, setHcpMax] = useState<string>("");
   const [activeOnly, setActiveOnly] = useState(false);
   const [withStatsOnly, setWithStatsOnly] = useState(false);
   const [order, setOrder] = useState<"asc" | "desc">("asc"); // ordem das coortes (ano)
+  const [combine, setCombine] = useState(false);             // juntar anos numa tabela única
 
   const { sortKey, sortDir, toggleSort } = useSort<SortKey>("hcp", "asc", {
     rondas: "desc", aces: "desc", best: "asc", sd5: "asc", lastsd: "asc",
-    delta: "asc", hcp: "asc", nome: "asc", sexo: "asc", clube: "asc", escalao: "asc",
+    delta: "asc", hcp: "asc", ano: "asc", nome: "asc", sexo: "asc", clube: "asc", escalao: "asc",
   });
 
   useEffect(() => { loadPlayerStats().then(setStatsDb); }, []);
@@ -160,12 +170,37 @@ export default function JogadoresPorAnoPage() {
     return ESC_ORDER.filter(e => present.has(e));
   }, [allRows]);
 
+  const yearsPresent = useMemo(() => {
+    const s = new Set<number>();
+    allRows.forEach(p => { if (p.dob && p.dob.length >= 4) { const y = birthYear(p.dob); if (!isNaN(y)) s.add(y); } });
+    return [...s].sort((a, b) => b - a); // mais novo primeiro nos chips
+  }, [allRows]);
+
+  // Anos recentes (≥2006) ficam individuais; ≤2005 agrupam-se em escalões de
+  // 5 anos para o filtro não ficar gigantesco (há nascidos até aos anos 20).
+  const YEAR_INDIVIDUAL_FROM = 2006;
+  const recentYears = useMemo(() => yearsPresent.filter(y => y >= YEAR_INDIVIDUAL_FROM), [yearsPresent]);
+  const yearBuckets = useMemo(() => {
+    const olds = yearsPresent.filter(y => y < YEAR_INDIVIDUAL_FROM);
+    const map = new Map<number, number[]>(); // high → anos presentes nesse escalão
+    for (const y of olds) {
+      const high = 2005 - Math.floor((2005 - y) / 5) * 5;
+      (map.get(high) || map.set(high, []).get(high)!).push(y);
+    }
+    return [...map.entries()]
+      .sort((a, b) => b[0] - a[0])
+      .map(([high, years]) => ({ high, low: high - 4, years }));
+  }, [yearsPresent]);
+
   /* ── Aplicar filtros ───────────────────────────────────────── */
   const filtered = useMemo(() => {
     const ql = q.trim().toLowerCase();
     const maxH = hcpMax.trim() === "" ? null : parseFloat(hcpMax);
     return allRows.filter(p => {
       if (!p.dob || p.dob.length < 4) return false;            // precisa de ano de nascimento
+      const y = birthYear(p.dob);
+      if (isNaN(y)) return false;
+      if (yearSet.size > 0 && !yearSet.has(y)) return false;
       if (sexFilter !== "ALL" && p.sex !== sexFilter) return false;
       if (escSet.size > 0 && !escSet.has(p.escalao)) return false;
       if (regionFilter !== "ALL" && p.region !== regionFilter) return false;
@@ -179,21 +214,20 @@ export default function JogadoresPorAnoPage() {
       }
       return true;
     });
-  }, [allRows, q, sexFilter, escSet, regionFilter, hcpMax, activeOnly, withStatsOnly, statsDb]);
+  }, [allRows, q, sexFilter, escSet, yearSet, regionFilter, hcpMax, activeOnly, withStatsOnly, statsDb]);
 
   /* ── Agrupar por ano de nascimento ─────────────────────────── */
   const cohorts = useMemo(() => {
     const by = new Map<number, Row[]>();
     for (const p of filtered) {
-      const y = parseInt(p.dob.slice(0, 4), 10);
-      if (isNaN(y)) continue;
+      const y = birthYear(p.dob);
       (by.get(y) || by.set(y, []).get(y)!).push(p);
     }
     const years = [...by.keys()].sort((a, b) => order === "asc" ? a - b : b - a);
     return years.map(year => ({ year, rows: by.get(year)! }));
   }, [filtered, order]);
 
-  /* ── Comparador de ordenação dentro de cada coorte ─────────── */
+  /* ── Comparador de ordenação ───────────────────────────────── */
   const cmp = useMemo(() => {
     const dir = sortDir === "asc" ? 1 : -1;
     const nv = (v: number | null, dirHigh: boolean) =>
@@ -201,6 +235,7 @@ export default function JogadoresPorAnoPage() {
     return (a: Row, b: Row): number => {
       const sa = statsDb[a.fed], sb = statsDb[b.fed];
       switch (sortKey) {
+        case "ano":    return dir * (birthYear(a.dob) - birthYear(b.dob));
         case "nome":   return dir * a.name.localeCompare(b.name, "pt");
         case "sexo":   return dir * (a.sex || "").localeCompare(b.sex || "");
         case "clube":  return dir * clubName(a.club).localeCompare(clubName(b.club), "pt");
@@ -233,15 +268,113 @@ export default function JogadoresPorAnoPage() {
 
   const activeFiltersCount =
     (q.trim() ? 1 : 0) + (sexFilter !== "ALL" ? 1 : 0) + (escSet.size > 0 ? 1 : 0) +
-    (regionFilter !== "ALL" ? 1 : 0) + (hcpMax.trim() ? 1 : 0) +
+    (yearSet.size > 0 ? 1 : 0) + (regionFilter !== "ALL" ? 1 : 0) + (hcpMax.trim() ? 1 : 0) +
     (activeOnly ? 1 : 0) + (withStatsOnly ? 1 : 0);
+
+  // Juntar várias coortes numa só tabela: automático quando 2+ anos estão
+  // seleccionados, ou forçado pela checkbox "Tabela única".
+  const effectiveCombine = combine || yearSet.size > 1;
 
   const toggleEsc = (e: string) =>
     setEscSet(prev => { const n = new Set(prev); n.has(e) ? n.delete(e) : n.add(e); return n; });
+  const toggleYear = (y: number) =>
+    setYearSet(prev => { const n = new Set(prev); n.has(y) ? n.delete(y) : n.add(y); return n; });
+  const toggleBucket = (years: number[]) =>
+    setYearSet(prev => {
+      const n = new Set(prev);
+      const allIn = years.length > 0 && years.every(y => n.has(y));
+      years.forEach(y => allIn ? n.delete(y) : n.add(y));
+      return n;
+    });
+  const bucketActive = (years: number[]) => years.length > 0 && years.every(y => yearSet.has(y));
 
   const clearFilters = () => {
-    setQ(""); setSexFilter("ALL"); setEscSet(new Set()); setRegionFilter("ALL");
-    setHcpMax(""); setActiveOnly(false); setWithStatsOnly(false);
+    setQ(""); setSexFilter("ALL"); setEscSet(new Set()); setYearSet(new Set());
+    setRegionFilter("ALL"); setHcpMax(""); setActiveOnly(false); setWithStatsOnly(false);
+  };
+
+  /* ── Métricas agregadas de um conjunto de rows ─────────────── */
+  const metricsOf = (rows: Row[]) => {
+    const hcps = rows.map(r => num(r.hcp)).filter((h): h is number => h != null && h < HCP_UNESTABLISHED);
+    const avgHcp = hcps.length ? hcps.reduce((s, h) => s + h, 0) / hcps.length : null;
+    const bestHcp = hcps.length ? Math.min(...hcps) : null;
+    const nM = rows.filter(r => r.sex === "M").length;
+    const nF = rows.filter(r => r.sex === "F").length;
+    const r12 = rows.map(r => statsDb[r.fed]?.roundsLast12m).filter((v): v is number => v != null);
+    const avgR12 = r12.length ? r12.reduce((s, v) => s + v, 0) / r12.length : null;
+    const nActive = rows.filter(r => (statsDb[r.fed]?.roundsLast12m ?? 0) > 0).length;
+    return { avgHcp, bestHcp, nM, nF, avgR12, nActive };
+  };
+
+  /* ── Cabeçalho de KPIs (reutilizável) ──────────────────────── */
+  const KpiRow = ({ rows }: { rows: Row[] }) => {
+    const m = metricsOf(rows);
+    return (
+      <span style={{ display: "inline-flex", alignItems: "center", gap: 6, marginLeft: "auto", flexWrap: "wrap" }}>
+        <Kpi label="Sexo" value={<span style={{ display: "inline-flex", gap: 4, fontSize: 14, alignItems: "center" }}><SexBadge sex="M" />{m.nM} <SexBadge sex="F" />{m.nF}</span>} />
+        <Kpi label="HCP médio" value={m.avgHcp == null ? "—" : m.avgHcp.toFixed(1)} />
+        <Kpi label="Melhor HCP" value={m.bestHcp == null ? "—" : m.bestHcp.toFixed(1)} />
+        <Kpi label="Rondas 12m" value={m.avgR12 == null ? "—" : m.avgR12.toFixed(1)} sub="média" />
+        <Kpi label="Activos 12m" value={m.nActive} sub={`de ${rows.length}`}
+          title="Jogadores que fizeram pelo menos 1 ronda nos últimos 12 meses" />
+      </span>
+    );
+  };
+
+  /* ── Tabela de jogadores (reutilizável) ────────────────────── */
+  const PlayerTable = ({ rows, showYear }: { rows: Row[]; showYear?: boolean }) => {
+    const sorted = [...rows].sort(cmp);
+    return (
+      <div style={{ overflowX: "auto", padding: "0 4px 12px" }}>
+        <table className="sc-table-ec" style={{ width: "100%" }}>
+          <thead>
+            <tr>
+              <th style={{ textAlign: "right" }}>#</th>
+              {showYear && <SortableHdr k="ano" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Ano de nascimento">Ano</SortableHdr>}
+              <SortableHdr k="nome" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="row-label">Jogador</SortableHdr>
+              <SortableHdr k="sexo" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Sx</SortableHdr>
+              <SortableHdr k="clube" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Clube</SortableHdr>
+              <SortableHdr k="escalao" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Escalão</SortableHdr>
+              <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Handicap actual">HCP</SortableHdr>
+              <SortableHdr k="delta" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Variação de HCP nos últimos 3 meses (negativo = melhorou)">Δ3m</SortableHdr>
+              <SortableHdr k="best" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Melhor gross registado">Melhor</SortableHdr>
+              <SortableHdr k="sd5" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Média dos 5 score differentials mais recentes">SD5</SortableHdr>
+              <SortableHdr k="lastsd" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Score differential da última ronda">Últ.SD</SortableHdr>
+              <SortableHdr k="rondas" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Rondas nos últimos 12 meses">R12m</SortableHdr>
+              <SortableHdr k="aces" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Holes-in-one">🕳️</SortableHdr>
+            </tr>
+          </thead>
+          <tbody>
+            {sorted.map((p, i) => {
+              const ps = statsDb[p.fed];
+              const hasAnalysis = p._source === "both" || p._source === "players" || (!p._source);
+              return (
+                <tr key={p.fed}>
+                  <td style={{ textAlign: "right", color: "var(--text-3)" }}>{i + 1}</td>
+                  {showYear && <td style={{ fontWeight: 700 }}>{birthYear(p.dob)}</td>}
+                  <td className="row-label" style={{ whiteSpace: "nowrap" }}>
+                    {hasAnalysis
+                      ? <Link to={`/jogadores/${p.fed}`} style={{ color: "var(--accent)", fontWeight: 700 }}>{p.name}</Link>
+                      : <span style={{ fontWeight: 600 }}>{p.name}</span>}
+                    <FormBadge ps={ps} />
+                  </td>
+                  <td><SexBadge sex={p.sex} /></td>
+                  <td style={{ textAlign: "left", maxWidth: 150, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{clubName(p.club) || <span className="muted">—</span>}</td>
+                  <td><EscPill esc={p.escalao} /></td>
+                  <td style={{ fontWeight: 700 }}>{p.hcp == null ? <span className="muted">—</span> : p.hcp.toFixed(1)}</td>
+                  <td><DeltaHcp d={ps?.hcpDelta3m ?? null} /></td>
+                  <td>{ps?.bestGross ?? <span className="muted">—</span>}</td>
+                  <td>{ps?.avgSD5 == null ? <span className="muted">—</span> : ps.avgSD5.toFixed(1)}</td>
+                  <td>{ps?.lastSD == null ? <span className="muted">—</span> : ps.lastSD.toFixed(1)}</td>
+                  <td style={{ fontWeight: 600 }}>{ps?.roundsLast12m ?? <span className="muted">—</span>}</td>
+                  <td>{ps?.aces ? `🕳️${ps.aces > 1 ? "×" + ps.aces : ""}` : <span className="muted">—</span>}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    );
   };
 
   /* ─────────────────────────────────────────────────────────── */
@@ -306,6 +439,12 @@ export default function JogadoresPorAnoPage() {
           Só com estatísticas
         </label>
 
+        <label className="muted fs-10" style={{ display: "inline-flex", alignItems: "center", gap: 4 }}
+          title="Junta todos os anos seleccionados numa só tabela, em vez de uma tabela por ano">
+          <input type="checkbox" checked={combine} onChange={e => setCombine(e.target.checked)} />
+          Tabela única
+        </label>
+
         <button className="p" onClick={() => setOrder(o => o === "asc" ? "desc" : "asc")}
           title="Inverter ordem das coortes (ano)">
           Ano {order === "asc" ? "▲ mais antigo" : "▼ mais novo"}
@@ -327,9 +466,42 @@ export default function JogadoresPorAnoPage() {
         </div>
       )}
 
+      {/* Filtro por ANO de nascimento — anos recentes individuais, antigos em escalões de 5 anos */}
+      {yearsPresent.length > 0 && (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, margin: "8px 0", alignItems: "center" }}>
+          <span className="muted fs-10" style={{ fontWeight: 700 }}>Ano:</span>
+          {recentYears.map(y => (
+            <button
+              key={y}
+              className={`p p-sm ${yearSet.has(y) ? "" : "p-muted"}`}
+              onClick={() => toggleYear(y)}
+              style={yearSet.has(y) ? { background: "var(--accent)", color: "#fff" } : undefined}
+              title={`Nascidos em ${y} (≈ ${CURRENT_YEAR - y} anos)`}
+            >
+              {y}
+            </button>
+          ))}
+          {yearBuckets.map(b => (
+            <button
+              key={b.high}
+              className={`p p-sm ${bucketActive(b.years) ? "" : "p-muted"}`}
+              onClick={() => toggleBucket(b.years)}
+              style={bucketActive(b.years) ? { background: "var(--accent)", color: "#fff" } : undefined}
+              title={`Nascidos entre ${b.low} e ${b.high} (${b.years.length} ${b.years.length === 1 ? "ano" : "anos"} com jogadores)`}
+            >
+              {b.low}–{String(b.high).slice(2)}
+            </button>
+          ))}
+          {yearSet.size > 0 && (
+            <button className="p p-sm p-muted" onClick={() => setYearSet(new Set())} title="Limpar selecção de anos">✕ anos</button>
+          )}
+        </div>
+      )}
+
       {/* Filtro rápido por escalão */}
       {escaloesPresent.length > 0 && (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, margin: "8px 0" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, margin: "8px 0", alignItems: "center" }}>
+          <span className="muted fs-10" style={{ fontWeight: 700 }}>Escalão:</span>
           {escaloesPresent.map(e => (
             <button
               key={e}
@@ -373,89 +545,42 @@ export default function JogadoresPorAnoPage() {
         </div>
       )}
 
-      {/* Coortes */}
+      {/* Sem resultados */}
       {cohorts.length === 0 && (
         <div className="muted" style={{ padding: 24, textAlign: "center" }}>
           Nenhum jogador corresponde aos filtros (ou sem data de nascimento registada).
         </div>
       )}
 
-      {cohorts.map(({ year, rows }) => {
-        const sorted = [...rows].sort(cmp);
-        const hcps = rows.map(r => num(r.hcp)).filter((h): h is number => h != null && h < HCP_UNESTABLISHED);
-        const avgHcp = hcps.length ? hcps.reduce((s, h) => s + h, 0) / hcps.length : null;
-        const bestHcp = hcps.length ? Math.min(...hcps) : null;
-        const nM = rows.filter(r => r.sex === "M").length;
-        const nF = rows.filter(r => r.sex === "F").length;
-        const r12 = rows.map(r => statsDb[r.fed]?.roundsLast12m).filter((v): v is number => v != null);
-        const avgR12 = r12.length ? r12.reduce((s, v) => s + v, 0) / r12.length : null;
-        const nActive = rows.filter(r => (statsDb[r.fed]?.roundsLast12m ?? 0) > 0).length;
+      {/* MODO TABELA ÚNICA — todos os anos filtrados juntos */}
+      {effectiveCombine && cohorts.length > 0 && (
+        <div className="card" style={{ margin: "12px 0", padding: 0 }}>
+          <div style={{ padding: "10px 12px", display: "flex", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
+            <span className="fw-900" style={{ fontSize: 16 }}>
+              {(() => {
+                const ys = cohorts.map(c => c.year).sort((a, b) => a - b);
+                return ys.length === 1 ? `${ys[0]}` : `${ys[0]}–${ys[ys.length - 1]} (${ys.length} anos)`;
+              })()}
+            </span>
+            <Counter>{filtered.length} jog.</Counter>
+            <KpiRow rows={filtered} />
+          </div>
+          <PlayerTable rows={filtered} showYear />
+        </div>
+      )}
 
-        return (
-          <details key={year} open className="card" style={{ margin: "12px 0", padding: 0 }}>
-            <summary style={{ cursor: "pointer", listStyle: "none", padding: "10px 12px", display: "flex", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
-              <span className="fw-900" style={{ fontSize: 18 }}>{year}</span>
-              <span className="muted fs-10">≈ {CURRENT_YEAR - year} anos</span>
-              <Counter>{rows.length} jog.</Counter>
-              <span style={{ display: "inline-flex", alignItems: "center", gap: 6, marginLeft: "auto", flexWrap: "wrap" }}>
-                <Kpi label="♀ / ♂" value={<span style={{ display: "inline-flex", gap: 4, fontSize: 14 }}><SexBadge sex="M" />{nM} <SexBadge sex="F" />{nF}</span>} />
-                <Kpi label="HCP médio" value={avgHcp == null ? "—" : avgHcp.toFixed(1)} />
-                <Kpi label="Melhor HCP" value={bestHcp == null ? "—" : bestHcp.toFixed(1)} />
-                <Kpi label="Rondas 12m" value={avgR12 == null ? "—" : avgR12.toFixed(1)} sub="média" />
-                <Kpi label="Activos" value={nActive} sub={`de ${rows.length}`} />
-              </span>
-            </summary>
-
-            <div style={{ overflowX: "auto", padding: "0 4px 12px" }}>
-              <table className="sc-table-ec" style={{ width: "100%" }}>
-                <thead>
-                  <tr>
-                    <th style={{ textAlign: "right" }}>#</th>
-                    <SortableHdr k="nome" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="row-label">Jogador</SortableHdr>
-                    <SortableHdr k="sexo" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Sx</SortableHdr>
-                    <SortableHdr k="clube" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Clube</SortableHdr>
-                    <SortableHdr k="escalao" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Escalão</SortableHdr>
-                    <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Handicap actual">HCP</SortableHdr>
-                    <SortableHdr k="delta" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Variação de HCP nos últimos 3 meses (negativo = melhorou)">Δ3m</SortableHdr>
-                    <SortableHdr k="best" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Melhor gross registado">Melhor</SortableHdr>
-                    <SortableHdr k="sd5" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Média dos 5 score differentials mais recentes">SD5</SortableHdr>
-                    <SortableHdr k="lastsd" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Score differential da última ronda">Últ.SD</SortableHdr>
-                    <SortableHdr k="rondas" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Rondas nos últimos 12 meses">R12m</SortableHdr>
-                    <SortableHdr k="aces" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Holes-in-one">🕳️</SortableHdr>
-                  </tr>
-                </thead>
-                <tbody>
-                  {sorted.map((p, i) => {
-                    const ps = statsDb[p.fed];
-                    const hasAnalysis = p._source === "both" || p._source === "players" || (!p._source);
-                    return (
-                      <tr key={p.fed}>
-                        <td style={{ textAlign: "right", color: "var(--text-3)" }}>{i + 1}</td>
-                        <td className="row-label" style={{ whiteSpace: "nowrap" }}>
-                          {hasAnalysis
-                            ? <Link to={`/jogadores/${p.fed}`} style={{ color: "var(--accent)", fontWeight: 700 }}>{p.name}</Link>
-                            : <span style={{ fontWeight: 600 }}>{p.name}</span>}
-                          <FormBadge alert={ps?.formAlert ?? null} />
-                        </td>
-                        <td><SexBadge sex={p.sex} /></td>
-                        <td style={{ textAlign: "left", maxWidth: 150, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{clubName(p.club) || <span className="muted">—</span>}</td>
-                        <td><EscPill esc={p.escalao} /></td>
-                        <td style={{ fontWeight: 700 }}>{p.hcp == null ? <span className="muted">—</span> : p.hcp.toFixed(1)}</td>
-                        <td><DeltaHcp d={ps?.hcpDelta3m ?? null} /></td>
-                        <td>{ps?.bestGross ?? <span className="muted">—</span>}</td>
-                        <td>{ps?.avgSD5 == null ? <span className="muted">—</span> : ps.avgSD5.toFixed(1)}</td>
-                        <td>{ps?.lastSD == null ? <span className="muted">—</span> : ps.lastSD.toFixed(1)}</td>
-                        <td style={{ fontWeight: 600 }}>{ps?.roundsLast12m ?? <span className="muted">—</span>}</td>
-                        <td>{ps?.aces ? `🕳️${ps.aces > 1 ? "×" + ps.aces : ""}` : <span className="muted">—</span>}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </details>
-        );
-      })}
+      {/* MODO COORTES — uma tabela por ano */}
+      {!effectiveCombine && cohorts.map(({ year, rows }) => (
+        <details key={year} open className="card" style={{ margin: "12px 0", padding: 0 }}>
+          <summary style={{ cursor: "pointer", listStyle: "none", padding: "10px 12px", display: "flex", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
+            <span className="fw-900" style={{ fontSize: 18 }}>{year}</span>
+            <span className="muted fs-10">≈ {CURRENT_YEAR - year} anos</span>
+            <Counter>{rows.length} jog.</Counter>
+            <KpiRow rows={rows} />
+          </summary>
+          <PlayerTable rows={rows} />
+        </details>
+      ))}
     </div>
   );
 }

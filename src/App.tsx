@@ -59,6 +59,7 @@ const RFEGPage = lazy(() => import("./pages/RFEGPage"));
 const NacionaisJovensPage = lazy(() => import("./pages/NacionaisJovensPage"));
 const TitulosPage = lazy(() => import("./pages/TitulosPage"));
 const JogadoresListPage = lazy(() => import("./pages/JogadoresListPage"));
+const JogadoresPorAnoPage = lazy(() => import("./pages/JogadoresPorAnoPage"));
 const DrawsPage = lazy(() => import("./pages/DrawsPage"));
 
 type Status =
@@ -283,6 +284,8 @@ export default function App() {
                 <Route path="/jogadores/:fed" element={<JogadoresPage />} />
                 {/* Landing page: lista tipo FPG FederatedsList com tabela ordenável + filtros */}
                 <Route path="/jogadores" element={<JogadoresListPage />} />
+                {/* Utilitário (fora da NavBar): jogadores por ano de nascimento */}
+                <Route path="/jogadores-por-ano" element={<JogadoresPorAnoPage />} />
                 <Route path="/simulador" element={<SimuladorPage />} />
                 <Route path="/comparar" element={<CompararPage />} />
                 <Route path="/calendario" element={<CalendarioPage />} />

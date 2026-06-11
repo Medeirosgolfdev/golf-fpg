@@ -196,9 +196,14 @@ export default function JogadoresListPage() {
       // alguns juniores com passaporte errado (ex: David Filip Jr. marcado como
       // US quando é checo). Lista em COUNTRY_OVERRIDE no topo do ficheiro.
       const country = COUNTRY_OVERRIDE[p.nfed] || f?.country || "";
+      // Alguns registos antigos do players.json têm o `name` preenchido com o
+      // próprio nº de federado (placeholder, ex: "27849") em vez do nome real.
+      // Nesses casos preferimos o nome do federados.json (snapshot FPG).
+      const nameIsPlaceholder = !p.name || !p.name.trim() || /^\d+$/.test(p.name.trim());
+      const displayName = (nameIsPlaceholder && f?.name) ? f.name : p.name;
       return {
         fed: p.nfed,
-        name: p.name,
+        name: displayName,
         countryName: country,
         clubCode: f?.club_code || pClub?.code || "",
         clubShort: f?.acronym || pClub?.short || "",
