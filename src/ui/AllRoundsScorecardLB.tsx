@@ -75,7 +75,7 @@ export function AllRoundsScorecardLB({
   });
 
   const {
-    par, si, nh, is9, parF9, parB9, parTot, hasSI, playedRounds,
+    par, si, meters, nh, is9, parF9, parB9, parTot, hasSI, hasMeters, playedRounds,
     gDisplayed, displayed,
     groupMode, setGroupMode, showSC, setShowSC,
     nameQ, setNameQ, clubQ, setClubQ,
@@ -258,6 +258,37 @@ export function AllRoundsScorecardLB({
       <div className="bjgt-chart-scroll">
         <table className={"sc-lb" + (showSC ? " sc-lb-with-sc" : "")} data-sc-table="1">
           <thead>
+            {/* Linha Metros — só aparece quando o ficheiro traz distâncias */}
+            {showSC && hasMeters && (
+              <tr className="lb-si-row">
+                <td className="sticky-col-0" />
+                <td className="lb-par-lbl sticky-col-1" colSpan={headerSpan}>
+                  Metros
+                </td>
+                <td className="lb-topar" />
+                <td className="lb-gross">{meters.slice(0, nh).reduce((a, b) => a + (Number(b) || 0), 0) || ""}</td>
+                {meters.slice(0, 9).map((v, i) => (
+                  <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>
+                    {v || ""}
+                  </td>
+                ))}
+                <td className="lb-halftot">
+                  {meters.slice(0, 9).reduce((a, b) => a + (Number(b) || 0), 0) || ""}
+                </td>
+                {!is9 &&
+                  meters.slice(9, 18).map((v, i) => (
+                    <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>
+                      {v || ""}
+                    </td>
+                  ))}
+                {!is9 && (
+                  <td className="lb-halftot">{meters.slice(9).reduce((a, b) => a + (Number(b) || 0), 0) || ""}</td>
+                )}
+                {Array.from({ length: postCols }, (_, i) => (
+                  <td key={i} />
+                ))}
+              </tr>
+            )}
             {/* Linha S.I. */}
             {showSC && hasSI && (
               <tr className="lb-si-row">
@@ -332,18 +363,18 @@ export function AllRoundsScorecardLB({
                   {Array.from({ length: 9 }, (_, h) => (
                     <SortableHdr key={h} k={`h${h}`} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={"lb-hole" + (h === 0 ? " lb-hole-first" : "") + " fs-10"}>{startHole + h}</SortableHdr>
                   ))}
-                  <th className="lb-halftot">{is9 ? "Tot" : "Out"}</th>
+                  <SortableHdr k="out" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-halftot">{is9 ? "Tot" : "Out"}</SortableHdr>
                   {!is9 &&
                     Array.from({ length: 9 }, (_, h) => (
                       <SortableHdr key={h + 9} k={`h${h + 9}`} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={"lb-hole" + (h === 0 ? " lb-hole-first" : "") + " fs-10"}>{startHole + 9 + h}</SortableHdr>
                     ))}
-                  {!is9 && <th className="lb-halftot">In</th>}
+                  {!is9 && <SortableHdr k="in" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-halftot">In</SortableHdr>}
                 </>
               )}
               {!hideSD && <th className="lb-sd">SD</th>}
-              <th className="lb-bird">🐦</th>
-              <th className="lb-par-stat">Par</th>
-              <th className="lb-bog">■</th>
+              <SortableHdr k="bird" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-bird">🐦</SortableHdr>
+              <SortableHdr k="par" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-par-stat">Par</SortableHdr>
+              <SortableHdr k="bog" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-bog">■</SortableHdr>
             </tr>
           </thead>
           <tbody>

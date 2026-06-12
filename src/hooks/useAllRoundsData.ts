@@ -19,6 +19,14 @@ import { fmtToPar, medal } from "../utils/format";
 import { toggleArr } from "../utils/mathUtils";
 import type { Player, Tournament, RoundScore } from "../data/fpgTypes";
 
+/* ── Helpers de sort (Out/In a partir dos scores da ronda) ── */
+function frontSum(rd: { scores: number[] }): number {
+  return rd.scores.slice(0, 9).reduce((s, v) => s + (v > 0 ? v : 0), 0);
+}
+function backSum(rd: { scores: number[] }): number {
+  return rd.scores.slice(9, 18).reduce((s, v) => s + (v > 0 ? v : 0), 0);
+}
+
 /* ── Types exportados ── */
 
 export interface RdData {
@@ -72,6 +80,7 @@ export interface FlatRow {
 export interface RoundRef {
   pars: number[];
   si: number[];
+  meters?: number[];
   cr?: number;
   slope?: number;
 }
@@ -103,12 +112,14 @@ export interface AllRoundsResult {
   /* Dados de referência */
   par: number[];
   si: number[];
+  meters: number[];
   nh: number;
   is9: boolean;
   parF9: number;
   parB9: number;
   parTot: number;
   hasSI: boolean;
+  hasMeters: boolean;
   playedRounds: number;
   roundRefs: RoundRef[];
 
@@ -174,22 +185,25 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
     // Fallback: usa R1 para todas
     for (const p of tournament.players) {
       const rs = p.roundScores?.find((r) => r.round === 1);
-      if (rs?.pars?.length) return [{ pars: rs.pars, si: rs.si || [] }];
+      if (rs?.pars?.length) return [{ pars: rs.pars, si: rs.si || [], meters: rs.meters || [] }];
     }
     const p0 = tournament.players[0];
-    if (p0?.par?.length) return [{ pars: p0.par, si: p0.si || [] }];
-    return [{ pars: [], si: [] }];
+    if (p0?.par?.length) return [{ pars: p0.par, si: p0.si || [], meters: (p0 as any).meters || [] }];
+    return [{ pars: [], si: [], meters: [] }];
   }, [tournament, opts.roundRefs]);
 
-  const ref0 = roundRefs[0] ?? { pars: [], si: [] };
+  const ref0 = roundRefs[0] ?? { pars: [], si: [], meters: [] };
   const par = ref0.pars;
   const si = ref0.si;
+  const meters = ref0.meters || [];
   const nh = par.length || 18;
   const is9 = nh <= 9;
   const parF9 = par.slice(0, 9).reduce((a, b) => a + b, 0);
   const parB9 = !is9 ? par.slice(9).reduce((a, b) => a + b, 0) : 0;
   const parTot = par.reduce((a, b) => a + b, 0);
   const hasSI = si.length >= nh;
+  // Linha de metros só aparece quando o ficheiro traz distâncias reais (> 0).
+  const hasMeters = meters.slice(0, nh).some((v) => Number(v) > 0);
 
   // Build round data para um jogador + ronda
   function buildRdData(p: Player, rdNum: number): RdData | null {
@@ -323,6 +337,28 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
         const av = bestVal(a), bv = bestVal(b);
         return sortDir === "asc" ? av - bv : bv - av;
       }
+      // Out / In — melhor (menor) volta nas 9 da frente / de trás
+      if (sortKey === "out" || sortKey === "in") {
+        const f = sortKey === "out" ? frontSum : backSum;
+        const best = (row: PRow): number => {
+          const vals = row.rds.filter((rd): rd is RdData => rd != null).map((rd) => { const v = f(rd); return v > 0 ? v : INF; });
+          return vals.length ? Math.min(...vals) : INF;
+        };
+        return sortDir === "asc" ? best(a) - best(b) : best(b) - best(a);
+      }
+      // Birdies / Pares / Bogeys — melhor ronda do jogador no torneio
+      if (sortKey === "bird" || sortKey === "par" || sortKey === "bog") {
+        const pick = (rd: RdData) => sortKey === "bird" ? rd.birds : sortKey === "par" ? rd.pars : rd.bogs;
+        const agg = (row: PRow): number => {
+          const vals = row.rds.filter((rd): rd is RdData => rd != null).map(pick);
+          if (!vals.length) return sortKey === "bog" ? INF : -1;
+          return sortKey === "bog" ? Math.min(...vals) : Math.max(...vals);
+        };
+        const av = agg(a), bv = agg(b);
+        // bird/par: mais primeiro em asc. bog: menos primeiro em asc.
+        if (sortKey === "bog") return sortDir === "asc" ? av - bv : bv - av;
+        return sortDir === "asc" ? bv - av : av - bv;
+      }
       switch (sortKey) {
         case "pos":
           return sortDir === "asc" ? (a.pos ?? INF) - (b.pos ?? INF) : (b.pos ?? INF) - (a.pos ?? INF);
@@ -363,6 +399,17 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
         const bv = vb && vb > 0 ? vb : INF;
         const d = av - bv;
         return sortDir === "asc" ? d : -d;
+      }
+      if (sortKey === "out" || sortKey === "in") {
+        const f = sortKey === "out" ? frontSum : backSum;
+        const av = f(a.rd) || INF, bv = f(b.rd) || INF;
+        return sortDir === "asc" ? av - bv : bv - av;
+      }
+      if (sortKey === "bird" || sortKey === "par" || sortKey === "bog") {
+        const pick = (rd: RdData) => sortKey === "bird" ? rd.birds : sortKey === "par" ? rd.pars : rd.bogs;
+        const av = pick(a.rd), bv = pick(b.rd);
+        if (sortKey === "bog") return sortDir === "asc" ? av - bv : bv - av;
+        return sortDir === "asc" ? bv - av : av - bv;
       }
       switch (sortKey) {
         case "pos":
@@ -425,7 +472,7 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
   }, [sortedGrouped]);
 
   return {
-    par, si, nh, is9, parF9, parB9, parTot, hasSI, playedRounds, roundRefs,
+    par, si, meters, nh, is9, parF9, parB9, parTot, hasSI, hasMeters, playedRounds, roundRefs,
     gDisplayed, displayed,
     groupMode, setGroupMode, showSC, setShowSC,
     nameQ, setNameQ, clubQ, setClubQ,

@@ -200,10 +200,11 @@ function ageAt(dob?: string | null, refDate?: string): number | null {
    TIPOS SORT
    ══════════════════════════════════════════════════════════════ */
 type MRSortKey =
-  | "pos" | "name" | "club" | "esc" | "hcp" | "gross" | "toPar" | "tee"
+  | "pos" | "name" | "club" | "esc" | "hcp" | "gross" | "toPar" | "tee" | "fed"
   | "sd" | "birthYear" | "age"
   | "bird" | "par-stat" | "bog"
   | "acc:bird" | "acc:par" | "acc:bog"
+  | `gross:${number}` | `rtp:${number}`
   | `sd:${number}` | `bird:${number}` | `par:${number}` | `bog:${number}`;
 
 /* ══════════════════════════════════════════════════════════════
@@ -327,6 +328,23 @@ export function MultiRoundLeaderboard({
   /* Sort */
   function cmp(a: RowWithPos, b: RowWithPos): number {
     const INF = 9999;
+    // Gross por ronda específica: "gross:0", "gross:1", ... (índice 0-based)
+    // Menos pancadas primeiro em asc. Rondas não jogadas vão para o fim.
+    if (typeof sortKey === "string" && sortKey.startsWith("gross:")) {
+      const ri = parseInt(sortKey.slice(6), 10);
+      const sa = a.rounds[ri]?.gross ?? INF;
+      const sb = b.rounds[ri]?.gross ?? INF;
+      return sortDir === "asc" ? sa - sb : sb - sa;
+    }
+    // ±par por ronda específica: "rtp:0", "rtp:1", ...
+    if (typeof sortKey === "string" && sortKey.startsWith("rtp:")) {
+      const ri = parseInt(sortKey.slice(4), 10);
+      const ra = a.rounds[ri];
+      const rb = b.rounds[ri];
+      const sa = ra ? (ra.gross ?? INF) - (ra.parPerRound ?? 0) : INF;
+      const sb = rb ? (rb.gross ?? INF) - (rb.parPerRound ?? 0) : INF;
+      return sortDir === "asc" ? sa - sb : sb - sa;
+    }
     // SD por ronda específica: "sd:0", "sd:1", ... (índice 0-based da ronda)
     if (typeof sortKey === "string" && sortKey.startsWith("sd:")) {
       const ri = parseInt(sortKey.slice(3), 10);
@@ -363,6 +381,7 @@ export function MultiRoundLeaderboard({
       case "club":  return sortDir === "asc" ? (a.club||"").localeCompare(b.club||"","pt") : (b.club||"").localeCompare(a.club||"","pt");
       case "esc":   return sortDir === "asc" ? (a.esc||"").localeCompare(b.esc||"") : (b.esc||"").localeCompare(a.esc||"");
       case "tee":   return sortDir === "asc" ? (a.teeName||"").localeCompare(b.teeName||"") : (b.teeName||"").localeCompare(a.teeName||"");
+      case "fed":   return sortDir === "asc" ? (a.fed||"").localeCompare(b.fed||"") : (b.fed||"").localeCompare(a.fed||"");
       case "hcp":   return sortDir === "asc" ? (a.hcp ?? INF) - (b.hcp ?? INF) : (b.hcp ?? INF) - (a.hcp ?? INF);
       case "gross": return sortDir === "asc" ? (a.gross ?? INF) - (b.gross ?? INF) : (b.gross ?? INF) - (a.gross ?? INF);
       case "toPar": return sortDir === "asc" ? ((a.gross ?? INF) - (a.parTotal ?? 0)) - ((b.gross ?? INF) - (b.parTotal ?? 0)) : ((b.gross ?? INF) - (b.parTotal ?? 0)) - ((a.gross ?? INF) - (a.parTotal ?? 0));
@@ -446,10 +465,10 @@ export function MultiRoundLeaderboard({
               {showEsc && <SHdr k="esc" className="lb-esc">ESC.</SHdr>}
               {showBirthYear && <SHdr k="birthYear" className="lb-esc">Nasc.</SHdr>}
               {showAge && <SHdr k="age" className="lb-esc">Idade</SHdr>}
-              {showFed && <th className="lb-fed">FED</th>}
+              {showFed && <SHdr k="fed" className="lb-fed">FED</SHdr>}
               {showClub && <SHdr k="club" className="lb-club">Clube</SHdr>}
               {showHcp && <SHdr k="hcp"  className="lb-hcp">HCP</SHdr>}
-              {showTee && <th className="lb-tee">TEE</th>}
+              {showTee && <SHdr k="tee" className="lb-tee">TEE</SHdr>}
 
               {/* ±Par ANTES de Total */}
               <SHdr k="toPar" className="lb-topar">±Par</SHdr>
@@ -466,11 +485,11 @@ export function MultiRoundLeaderboard({
               {isMulti
                 ? Array.from({ length: nRounds }, (_, r) => (
                     <React.Fragment key={r}>
-                      <th className="lb-rnd">
+                      <SHdr k={`gross:${r}` as MRSortKey} className="lb-rnd">
                         R{r + 1}
                         {roundDates?.[r] && <><br /><span className="th-sub">{roundDates[r]}</span></>}
-                      </th>
-                      {showRoundToPar && <th className="lb-rnd-tp">±</th>}
+                      </SHdr>
+                      {showRoundToPar && <SHdr k={`rtp:${r}` as MRSortKey} className="lb-rnd-tp">±</SHdr>}
                       {showRoundStats && <>
                         <SHdr k={`sd:${r}` as MRSortKey} className="lb-rnd-sd">SD</SHdr>
                         <SHdr k={`bird:${r}` as MRSortKey} className="lb-rnd-bird">🐦</SHdr>
