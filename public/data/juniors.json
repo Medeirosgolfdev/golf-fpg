@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-06-12T12:11:54.223Z",
+  "generatedAt": "2026-06-12T14:04:33.315Z",
   "juniors": [
     {
       "id": "u433800",
@@ -214768,7 +214768,7 @@
       "sources": {
         "uskids": {
           "memberId": "577568",
-          "ageGroupCurrent": "Boys 9"
+          "ageGroupCurrent": "Boys 10"
         },
         "ffgolf": {
           "lic": "046524337",
@@ -272636,6 +272636,175 @@
       }
     },
     {
+      "id": "u606764",
+      "canonicalName": "Guo Ziyang",
+      "aliases": [
+        "Ziyang GUO"
+      ],
+      "dob": "2014-03-27",
+      "sex": "M",
+      "nationality": "CN",
+      "country": "CN",
+      "region": "Lisboa",
+      "club": "Estoril",
+      "sources": {
+        "uskids": {
+          "memberId": "606764",
+          "ageGroupCurrent": "Boys 12"
+        },
+        "fpg": {
+          "fed": "57904",
+          "club": "Estoril",
+          "clubCode": "004",
+          "clubLong": "Clube de Golf do Estoril",
+          "hcpExact": 11.3,
+          "hcpDate": "2026-06-09",
+          "sex": "M",
+          "tags": [
+            "PJA"
+          ],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "uskids-21931",
+        "uskids-21932",
+        "uskids-21952",
+        "uskids-21953",
+        "uskids-16018",
+        "uskids-17843",
+        "uskids-17846",
+        "uskids-17847",
+        "uskids-17824",
+        "uskids-17825",
+        "uskids-17828",
+        "uskids-17829",
+        "uskids-17844",
+        "uskids-17845",
+        "uskids-15653",
+        "uskids-15654",
+        "uskids-15657",
+        "uskids-15658",
+        "fpg-038-10651-20250530-all",
+        "fpg-125-10370-20250823-all",
+        "fpg-125-10371-20250824-all",
+        "fpg-192-10013-20250912-all",
+        "fpg-017-10189-20251024-all",
+        "fpg-935-10296-20260216-all",
+        "fpg-000-10941-20260430-sub_12"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-05-08",
+          "hcpExact": 11.7,
+          "source": "fpg",
+          "tcode": "11297",
+          "ccode": "002",
+          "label": "109ª Lisbon Cup"
+        },
+        {
+          "date": "2026-04-30",
+          "hcpExact": 11.9,
+          "source": "fpg",
+          "tcode": "10941",
+          "ccode": "000",
+          "label": "Campeonato Nacional de Jovens Sub 12 H"
+        },
+        {
+          "date": "2026-03-07",
+          "hcpExact": 11.4,
+          "source": "fpg",
+          "tcode": "10555",
+          "ccode": "004",
+          "label": "Taça MANUEL LEÃO"
+        },
+        {
+          "date": "2026-02-16",
+          "hcpExact": 11.4,
+          "source": "fpg",
+          "tcode": "10296",
+          "ccode": "935",
+          "label": "Greatgolf Junior Open w/ Luis Figo Foundation -U12"
+        },
+        {
+          "date": "2025-11-29",
+          "hcpExact": 11.4,
+          "source": "fpg",
+          "tcode": "10019",
+          "ccode": "192",
+          "label": "Race to Dunas G. Final"
+        },
+        {
+          "date": "2025-11-22",
+          "hcpExact": 11.4,
+          "source": "fpg",
+          "tcode": "10523",
+          "ccode": "029",
+          "label": "PJA Masters by Details - PGA  Aroeira 2"
+        },
+        {
+          "date": "2025-10-24",
+          "hcpExact": 10.9,
+          "source": "fpg",
+          "tcode": "10189",
+          "ccode": "017",
+          "label": "PJA Tour Troia"
+        },
+        {
+          "date": "2025-09-12",
+          "hcpExact": 11.6,
+          "source": "fpg",
+          "tcode": "10013",
+          "ccode": "192",
+          "label": "PJA Race to Dunas"
+        },
+        {
+          "date": "2025-08-24",
+          "hcpExact": 12.7,
+          "source": "fpg",
+          "tcode": "10371",
+          "ccode": "125",
+          "label": "PJA TOUR Vale Pisão - Dia 2"
+        },
+        {
+          "date": "2025-08-23",
+          "hcpExact": 12.7,
+          "source": "fpg",
+          "tcode": "10370",
+          "ccode": "125",
+          "label": "PJA TOUR Vale Pisão - Dia 1"
+        },
+        {
+          "date": "2025-08-19",
+          "hcpExact": 11.7,
+          "source": "fpg",
+          "tcode": "10564",
+          "ccode": "003",
+          "label": "Miramar Internacional Open U25"
+        },
+        {
+          "date": "2025-05-30",
+          "hcpExact": 19,
+          "source": "fpg",
+          "tcode": "10651",
+          "ccode": "038",
+          "label": "PJA  António Dantas Classic 2025"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "uskids:606764",
+          "fpg:57904",
+          "dob:2014-03-27"
+        ],
+        "mergedFromSources": [
+          "uskids",
+          "fpg"
+        ]
+      }
+    },
+    {
       "id": "u606805",
       "canonicalName": "Pierre  Ravot",
       "aliases": [
@@ -285555,6 +285724,69 @@
       }
     },
     {
+      "id": "u615246",
+      "canonicalName": "Christian  Chepishev",
+      "aliases": [
+        "Christian Chepishev"
+      ],
+      "dob": null,
+      "sex": null,
+      "nationality": "BG",
+      "country": "BG",
+      "region": null,
+      "club": null,
+      "sources": {
+        "uskids": {
+          "memberId": "615246",
+          "ageGroupCurrent": "Boys 11",
+          "historicalMemberIds": [
+            {
+              "memberId": "615514",
+              "note": "Conta secundária (nome com espaço duplo 'Christian  Chepishev', 6 torneios) — mesma pessoa que 615246."
+            }
+          ]
+        },
+        "_secondary": [
+          {
+            "sourceId": "wjgc",
+            "key": "christian chepishev|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "uskids-21080",
+        "uskids-16428",
+        "uskids-20653",
+        "uskids-21131",
+        "uskids-20429",
+        "uskids-21929",
+        "uskids-21930",
+        "uskids-21931",
+        "uskids-21932",
+        "uskids-21952",
+        "uskids-21953",
+        "uskids-20780",
+        "uskids-21087",
+        "uskids-21088",
+        "uskids-21094",
+        "uskids-21093",
+        "wjgc-wjgc_2025_b1011",
+        "wjgc-wjgc_2026_b1011"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "uskids:615514",
+          "wjgc:christian chepishev|",
+          "uskids:615246"
+        ],
+        "mergedFromSources": [
+          "uskids",
+          "wjgc"
+        ]
+      }
+    },
+    {
       "id": "u615264",
       "canonicalName": "Tay Han",
       "aliases": [],
@@ -285995,53 +286227,6 @@
         ],
         "mergedFromSources": [
           "uskids"
-        ]
-      }
-    },
-    {
-      "id": "u615514",
-      "canonicalName": "Christian  Chepishev",
-      "aliases": [
-        "Christian Chepishev"
-      ],
-      "dob": null,
-      "sex": null,
-      "nationality": "BG",
-      "country": "BG",
-      "region": null,
-      "club": null,
-      "sources": {
-        "uskids": {
-          "memberId": "615514",
-          "ageGroupCurrent": "Boys 11"
-        },
-        "_secondary": [
-          {
-            "sourceId": "wjgc",
-            "key": "christian chepishev|"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "uskids-21080",
-        "uskids-16428",
-        "uskids-20653",
-        "uskids-21131",
-        "uskids-20429",
-        "uskids-21931",
-        "uskids-20780",
-        "wjgc-wjgc_2025_b1011",
-        "wjgc-wjgc_2026_b1011"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "uskids:615514",
-          "wjgc:christian chepishev|"
-        ],
-        "mergedFromSources": [
-          "uskids",
-          "wjgc"
         ]
       }
     },
@@ -301231,7 +301416,8 @@
         "uskids-20005",
         "uskids-21349",
         "uskids-21288",
-        "uskids-21287"
+        "uskids-21287",
+        "uskids-21388"
       ],
       "_match": {
         "confidence": "strong",
@@ -302028,6 +302214,46 @@
       }
     },
     {
+      "id": "u646723",
+      "canonicalName": "Artjoms Aleksejevs",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "LV",
+      "country": "LV",
+      "region": null,
+      "club": null,
+      "sources": {
+        "uskids": {
+          "memberId": "646723",
+          "ageGroupCurrent": "Boys 13-14"
+        }
+      },
+      "tournamentIds": [
+        "uskids-20429",
+        "uskids-21319",
+        "uskids-21929",
+        "uskids-21930",
+        "uskids-21931",
+        "uskids-21932",
+        "uskids-21952",
+        "uskids-21953",
+        "uskids-21091",
+        "uskids-21092",
+        "uskids-21094",
+        "uskids-21093"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "uskids:646723"
+        ],
+        "mergedFromSources": [
+          "uskids"
+        ]
+      }
+    },
+    {
       "id": "u646944",
       "canonicalName": "Zayn Prince  Mahalingam",
       "aliases": [],
@@ -302118,6 +302344,38 @@
         "mergedFromSources": [
           "uskids",
           "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "u648372",
+      "canonicalName": "Emilio Forche Maboh",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "CM",
+      "country": "CM",
+      "region": null,
+      "club": null,
+      "sources": {
+        "uskids": {
+          "memberId": "648372",
+          "ageGroupCurrent": "Boys 12"
+        }
+      },
+      "tournamentIds": [
+        "uskids-21931",
+        "uskids-21932",
+        "uskids-21952",
+        "uskids-21953"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "uskids:648372"
+        ],
+        "mergedFromSources": [
+          "uskids"
         ]
       }
     },
@@ -302264,6 +302522,41 @@
         "confidence": "strong",
         "evidence": [
           "uskids:650455"
+        ],
+        "mergedFromSources": [
+          "uskids"
+        ]
+      }
+    },
+    {
+      "id": "u650499",
+      "canonicalName": "Lucas Penna",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "ES",
+      "country": "ES",
+      "region": null,
+      "club": null,
+      "sources": {
+        "uskids": {
+          "memberId": "650499",
+          "ageGroupCurrent": "Boys 12"
+        }
+      },
+      "tournamentIds": [
+        "uskids-21929",
+        "uskids-21930",
+        "uskids-21931",
+        "uskids-21932",
+        "uskids-21953",
+        "uskids-21087",
+        "uskids-21091"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "uskids:650499"
         ],
         "mergedFromSources": [
           "uskids"
@@ -302855,6 +303148,79 @@
         "confidence": "strong",
         "evidence": [
           "uskids:656994"
+        ],
+        "mergedFromSources": [
+          "uskids"
+        ]
+      }
+    },
+    {
+      "id": "u658802",
+      "canonicalName": "Terence Qiao",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "ES",
+      "country": "ES",
+      "region": null,
+      "club": null,
+      "sources": {
+        "uskids": {
+          "memberId": "658802",
+          "ageGroupCurrent": "Boys 13-14"
+        },
+        "rfeg": {
+          "lic": "AM11918327",
+          "club": null,
+          "catEdad": "C",
+          "sex": null,
+          "historicalLicenses": []
+        }
+      },
+      "tournamentIds": [
+        "uskids-21929",
+        "uskids-21930",
+        "uskids-21931",
+        "uskids-21932"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "uskids:658802",
+          "rfeg:AM11918327"
+        ],
+        "mergedFromSources": [
+          "uskids",
+          "rfeg"
+        ]
+      }
+    },
+    {
+      "id": "u659091",
+      "canonicalName": "Philip Elias",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "AE",
+      "country": "AE",
+      "region": null,
+      "club": null,
+      "sources": {
+        "uskids": {
+          "memberId": "659091",
+          "ageGroupCurrent": "Boys 13-14"
+        }
+      },
+      "tournamentIds": [
+        "uskids-21929",
+        "uskids-21930",
+        "uskids-21931",
+        "uskids-21932"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "uskids:659091"
         ],
         "mergedFromSources": [
           "uskids"
@@ -316577,149 +316943,6 @@
         "mergedFromSources": [
           "fpg",
           "doral"
-        ]
-      }
-    },
-    {
-      "id": "f57904",
-      "canonicalName": "Guo Ziyang",
-      "aliases": [],
-      "dob": "2014-03-27",
-      "sex": "M",
-      "nationality": "PT",
-      "country": "PT",
-      "region": "Lisboa",
-      "club": "Estoril",
-      "sources": {
-        "fpg": {
-          "fed": "57904",
-          "club": "Estoril",
-          "clubCode": "004",
-          "clubLong": "Clube de Golf do Estoril",
-          "hcpExact": 11.3,
-          "hcpDate": "2026-06-09",
-          "sex": "M",
-          "tags": [
-            "PJA"
-          ],
-          "primary": true
-        }
-      },
-      "tournamentIds": [
-        "fpg-038-10651-20250530-all",
-        "fpg-125-10370-20250823-all",
-        "fpg-125-10371-20250824-all",
-        "fpg-192-10013-20250912-all",
-        "fpg-017-10189-20251024-all",
-        "fpg-935-10296-20260216-all",
-        "fpg-000-10941-20260430-sub_12"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-05-08",
-          "hcpExact": 11.7,
-          "source": "fpg",
-          "tcode": "11297",
-          "ccode": "002",
-          "label": "109ª Lisbon Cup"
-        },
-        {
-          "date": "2026-04-30",
-          "hcpExact": 11.9,
-          "source": "fpg",
-          "tcode": "10941",
-          "ccode": "000",
-          "label": "Campeonato Nacional de Jovens Sub 12 H"
-        },
-        {
-          "date": "2026-03-07",
-          "hcpExact": 11.4,
-          "source": "fpg",
-          "tcode": "10555",
-          "ccode": "004",
-          "label": "Taça MANUEL LEÃO"
-        },
-        {
-          "date": "2026-02-16",
-          "hcpExact": 11.4,
-          "source": "fpg",
-          "tcode": "10296",
-          "ccode": "935",
-          "label": "Greatgolf Junior Open w/ Luis Figo Foundation -U12"
-        },
-        {
-          "date": "2025-11-29",
-          "hcpExact": 11.4,
-          "source": "fpg",
-          "tcode": "10019",
-          "ccode": "192",
-          "label": "Race to Dunas G. Final"
-        },
-        {
-          "date": "2025-11-22",
-          "hcpExact": 11.4,
-          "source": "fpg",
-          "tcode": "10523",
-          "ccode": "029",
-          "label": "PJA Masters by Details - PGA  Aroeira 2"
-        },
-        {
-          "date": "2025-10-24",
-          "hcpExact": 10.9,
-          "source": "fpg",
-          "tcode": "10189",
-          "ccode": "017",
-          "label": "PJA Tour Troia"
-        },
-        {
-          "date": "2025-09-12",
-          "hcpExact": 11.6,
-          "source": "fpg",
-          "tcode": "10013",
-          "ccode": "192",
-          "label": "PJA Race to Dunas"
-        },
-        {
-          "date": "2025-08-24",
-          "hcpExact": 12.7,
-          "source": "fpg",
-          "tcode": "10371",
-          "ccode": "125",
-          "label": "PJA TOUR Vale Pisão - Dia 2"
-        },
-        {
-          "date": "2025-08-23",
-          "hcpExact": 12.7,
-          "source": "fpg",
-          "tcode": "10370",
-          "ccode": "125",
-          "label": "PJA TOUR Vale Pisão - Dia 1"
-        },
-        {
-          "date": "2025-08-19",
-          "hcpExact": 11.7,
-          "source": "fpg",
-          "tcode": "10564",
-          "ccode": "003",
-          "label": "Miramar Internacional Open U25"
-        },
-        {
-          "date": "2025-05-30",
-          "hcpExact": 19,
-          "source": "fpg",
-          "tcode": "10651",
-          "ccode": "038",
-          "label": "PJA  António Dantas Classic 2025"
-        }
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "fpg:57904",
-          "dob:2014-03-27"
-        ],
-        "mergedFromSources": [
-          "fpg"
         ]
       }
     },
@@ -552044,13 +552267,13 @@
     }
   ],
   "stats": {
-    "total": 8717,
-    "droppedNoTourn": 23950,
-    "strong": 8693,
+    "total": 8722,
+    "droppedNoTourn": 23949,
+    "strong": 8698,
     "probable": 24,
     "manual": 0,
     "strongMerges": 7,
-    "probableMerges": 2274,
-    "manualMerges": 3
+    "probableMerges": 2275,
+    "manualMerges": 5
   }
 }
