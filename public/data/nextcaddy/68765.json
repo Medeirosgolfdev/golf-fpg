@@ -1,7 +1,7 @@
 {
   "tourId": 68765,
   "url": "https://www.nextcaddy.com/tour/68765",
-  "scrapedAt": "2026-05-21T16:40:09.799Z",
+  "scrapedAt": "2026-06-12T14:42:11.848Z",
   "meta": {
     "name": "Campeonato de Santa Cruz de Tenerife 9 Hoyos (Benjamín)",
     "organizer": null,
@@ -22,22 +22,288 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Final Indistinta",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Miguel Galindo Aguado",
+          "licencia": "CP05496235",
+          "hcp": 25.5,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 51
+            },
+            {
+              "round": 2,
+              "gross": 47
+            }
+          ],
+          "total": 98,
+          "toPar": 26,
+          "inscribedId": 2321583
+        },
+        {
+          "pos": 2,
+          "name": "Quim Rosales Grau",
+          "licencia": "CP26003513",
+          "hcp": 30.4,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 50
+            },
+            {
+              "round": 2,
+              "gross": 51
+            }
+          ],
+          "total": 101,
+          "toPar": 29,
+          "inscribedId": 2316722
+        },
+        {
+          "pos": 3,
+          "name": "Maximo Cabezas De Herrera Mendez",
+          "licencia": "CP02052226",
+          "hcp": 21.5,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 47
+            },
+            {
+              "round": 2,
+              "gross": 56
+            }
+          ],
+          "total": 103,
+          "toPar": 31,
+          "inscribedId": 2319643
+        },
+        {
+          "pos": 4,
+          "name": "Tomas Diaz De Juan",
+          "licencia": "CP05497242",
+          "hcp": 43.6,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 52
+            },
+            {
+              "round": 2,
+              "gross": 56
+            }
+          ],
+          "total": 108,
+          "toPar": 36,
+          "inscribedId": 2321500
+        },
+        {
+          "pos": 5,
+          "name": "Sara Henningsen Suarez",
+          "licencia": "CP01061295",
+          "hcp": 34.6,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 57
+            },
+            {
+              "round": 2,
+              "gross": 55
+            }
+          ],
+          "total": 112,
+          "toPar": 40,
+          "inscribedId": 2322565
+        },
+        {
+          "pos": 6,
+          "name": "Gaia Bastianoni",
+          "licencia": "CP20491047",
+          "hcp": 42.7,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 57
+            },
+            {
+              "round": 2,
+              "gross": 59
+            }
+          ],
+          "total": 116,
+          "toPar": 44,
+          "inscribedId": 2317670
+        },
+        {
+          "pos": 7,
+          "name": "Aday Amador De Lorenzo",
+          "licencia": "CP09496831",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 67
+            },
+            {
+              "round": 2,
+              "gross": 64
+            }
+          ],
+          "total": 131,
+          "toPar": 59,
+          "inscribedId": 2321307
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Clasificación 1ª Jornada Benjamín Indistinto",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Maximo Cabezas De Herrera Mendez",
+          "licencia": "CP02052226",
+          "hcp": 21.5,
+          "nivel": "B",
+          "rounds": [],
+          "total": 47,
+          "toPar": 11,
+          "inscribedId": 2319643
+        },
+        {
+          "pos": 2,
+          "name": "Quim Rosales Grau",
+          "licencia": "CP26003513",
+          "hcp": 30.4,
+          "nivel": "B",
+          "rounds": [],
+          "total": 50,
+          "toPar": 14,
+          "inscribedId": 2316722
+        },
+        {
+          "pos": 3,
+          "name": "Miguel Galindo Aguado",
+          "licencia": "CP05496235",
+          "hcp": 25.5,
+          "nivel": "B",
+          "rounds": [],
+          "total": 51,
+          "toPar": 15,
+          "inscribedId": 2321583
+        },
+        {
+          "pos": 4,
+          "name": "Tomas Diaz De Juan",
+          "licencia": "CP05497242",
+          "hcp": 43.6,
+          "nivel": "B",
+          "rounds": [],
+          "total": 52,
+          "toPar": 16,
+          "inscribedId": 2321500
+        },
+        {
+          "pos": 5,
+          "name": "Gaia Bastianoni",
+          "licencia": "CP20491047",
+          "hcp": 42.7,
+          "nivel": "B",
+          "rounds": [],
+          "total": 57,
+          "toPar": 21,
+          "inscribedId": 2317670
+        },
+        {
+          "pos": null,
+          "name": "Sara Henningsen Suarez",
+          "licencia": "CP01061295",
+          "hcp": 34.6,
+          "nivel": "B",
+          "rounds": [],
+          "total": 57,
+          "toPar": 21,
+          "inscribedId": 2322565
+        },
+        {
+          "pos": 7,
+          "name": "Aday Amador De Lorenzo",
+          "licencia": "CP09496831",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 67,
+          "toPar": 31,
+          "inscribedId": 2321307
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Final Indistinta",
+      "jugadores": 7
+    },
+    "2": {
+      "name": "Clasificación 1ª Jornada Benjamín Indistinto",
+      "jugadores": 7
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
       "name": "Quim Rosales Grau",
       "licencia": "CP26003513",
-      "hcp": 31.6,
+      "hcp": 30.4,
       "nivel": "B"
     },
     {
       "orden": 2,
       "name": "Maximo Cabezas De Herrera Mendez",
       "licencia": "CP02052226",
-      "hcp": 23.6,
+      "hcp": 21.5,
       "nivel": "B"
     },
     {
@@ -58,7 +324,7 @@
       "orden": 5,
       "name": "Miguel Galindo Aguado",
       "licencia": "CP05496235",
-      "hcp": 25.8,
+      "hcp": 25.5,
       "nivel": "B"
     },
     {
@@ -85,58 +351,58 @@
     {
       "orden": null,
       "name": "Jugador",
-      "licencia": "Fecha Inscripción",
+      "licencia": "Licencia",
       "hcp": null,
-      "nivel": "Licencia"
+      "nivel": "Nivel"
     },
     {
       "orden": 1,
       "name": "Quim Rosales Grau",
-      "licencia": "11-05-26 10:49",
-      "hcp": 31.6,
-      "nivel": "CP26003513"
+      "licencia": "CP26003513",
+      "hcp": 30.4,
+      "nivel": "B"
     },
     {
       "orden": 2,
       "name": "Gaia Bastianoni",
-      "licencia": "12-05-26 13:48",
+      "licencia": "CP20491047",
       "hcp": 42.7,
-      "nivel": "CP20491047"
+      "nivel": "B"
     },
     {
       "orden": 3,
       "name": "Maximo Cabezas De Herrera Mendez",
-      "licencia": "14-05-26 11:45",
-      "hcp": 23.6,
-      "nivel": "CP02052226"
+      "licencia": "CP02052226",
+      "hcp": 21.5,
+      "nivel": "B"
     },
     {
       "orden": 4,
       "name": "Aday Amador De Lorenzo",
-      "licencia": "17-05-26 08:59",
+      "licencia": "CP09496831",
       "hcp": 54,
-      "nivel": "CP09496831"
+      "nivel": "B"
     },
     {
       "orden": 5,
       "name": "Tomas Diaz De Juan",
-      "licencia": "17-05-26 14:14",
+      "licencia": "CP05497242",
       "hcp": 43.6,
-      "nivel": "CP05497242"
+      "nivel": "B"
     },
     {
       "orden": 6,
       "name": "Miguel Galindo Aguado",
-      "licencia": "17-05-26 16:55",
-      "hcp": 25.8,
-      "nivel": "CP05496235"
+      "licencia": "CP05496235",
+      "hcp": 25.5,
+      "nivel": "B"
     },
     {
       "orden": 7,
       "name": "Sara Henningsen Suarez",
-      "licencia": "18-05-26 16:57",
+      "licencia": "CP01061295",
       "hcp": 34.6,
-      "nivel": "CP01061295"
+      "nivel": "B"
     }
   ],
   "horarios": [
@@ -298,5 +564,5 @@
   ],
   "scoreTypes": [],
   "pdfs": [],
-  "horariosScrapedAt": "2026-06-01T09:30:34.948Z"
+  "horariosScrapedAt": "2026-06-12T14:45:43.849Z"
 }

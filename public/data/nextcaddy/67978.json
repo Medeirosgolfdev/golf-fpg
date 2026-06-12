@@ -1,7 +1,7 @@
 {
   "tourId": 67978,
   "url": "https://www.nextcaddy.com/tour/67978",
-  "scrapedAt": "2026-05-21T16:40:12.547Z",
+  "scrapedAt": "2026-06-12T14:42:17.807Z",
   "meta": {
     "name": "Torneo Juvenil Sub18 \"Barberán\"",
     "organizer": "Federacion de Golf de Madrid",
@@ -20,9 +20,429 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificacion Scratch Indistinta",
+      "expectedJugadores": 17,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Pablo Perez Cordero",
+          "licencia": "CMA8936858",
+          "hcp": 0.8,
+          "nivel": "C",
+          "rounds": [],
+          "total": 73,
+          "toPar": 1,
+          "inscribedId": 2321923
+        },
+        {
+          "pos": 2,
+          "name": "Ignacio Martinez Hernandez",
+          "licencia": "CM11921668",
+          "hcp": 3.5,
+          "nivel": "C",
+          "rounds": [],
+          "total": 77,
+          "toPar": 5,
+          "inscribedId": 2323486
+        },
+        {
+          "pos": 3,
+          "name": "Raul Ruiz De Infante Hernandez",
+          "licencia": "CMA8924203",
+          "hcp": 7.1,
+          "nivel": "C",
+          "rounds": [],
+          "total": 79,
+          "toPar": 7,
+          "inscribedId": 2322183
+        },
+        {
+          "pos": 4,
+          "name": "Gonzalo Carrion Herranz",
+          "licencia": "CM02926918",
+          "hcp": 6.6,
+          "nivel": "C",
+          "rounds": [],
+          "total": 79,
+          "toPar": 7,
+          "inscribedId": 2327221
+        },
+        {
+          "pos": 5,
+          "name": "Aitor Montes Ortiz De Pinedo",
+          "licencia": "CM41910849",
+          "hcp": 1.7,
+          "nivel": "C",
+          "rounds": [],
+          "total": 80,
+          "toPar": 8,
+          "inscribedId": 2322176
+        },
+        {
+          "pos": 6,
+          "name": "Hiroshi Tsuchiya Mora",
+          "licencia": "CMA8945947",
+          "hcp": 7.9,
+          "nivel": "C",
+          "rounds": [],
+          "total": 82,
+          "toPar": 10,
+          "inscribedId": 2322211
+        },
+        {
+          "pos": 7,
+          "name": "Daniel Ricardo De Lima De Menezes",
+          "licencia": "CM07088274",
+          "hcp": 7.6,
+          "nivel": "J",
+          "rounds": [],
+          "total": 82,
+          "toPar": 10,
+          "inscribedId": 2322018
+        },
+        {
+          "pos": 8,
+          "name": "Guillermo Ramirez Matos",
+          "licencia": "CM22150143",
+          "hcp": 6.8,
+          "nivel": "C",
+          "rounds": [],
+          "total": 83,
+          "toPar": 11,
+          "inscribedId": 2322481
+        },
+        {
+          "pos": 9,
+          "name": "Pablo Madrigal Isidro",
+          "licencia": "CM61934203",
+          "hcp": 4,
+          "nivel": "C",
+          "rounds": [],
+          "total": 84,
+          "toPar": 12,
+          "inscribedId": 2323522
+        },
+        {
+          "pos": 10,
+          "name": "Han Xiang Wang",
+          "licencia": "CMA5007285",
+          "hcp": 7.6,
+          "nivel": "C",
+          "rounds": [],
+          "total": 86,
+          "toPar": 14,
+          "inscribedId": 2322640
+        },
+        {
+          "pos": 11,
+          "name": "Carlos Manzano Versteeg",
+          "licencia": "CM02071263",
+          "hcp": 10,
+          "nivel": "C",
+          "rounds": [],
+          "total": 87,
+          "toPar": 15,
+          "inscribedId": 2327219
+        },
+        {
+          "pos": 12,
+          "name": "Ruben Alonso Tejon",
+          "licencia": "CM61908101",
+          "hcp": 5,
+          "nivel": "J",
+          "rounds": [],
+          "total": 87,
+          "toPar": 15,
+          "inscribedId": 2322438
+        },
+        {
+          "pos": 13,
+          "name": "Nicolas Fernandez De La Cruz",
+          "licencia": "CM41969603",
+          "hcp": 12.1,
+          "nivel": "C",
+          "rounds": [],
+          "total": 88,
+          "toPar": 16,
+          "inscribedId": 2322399
+        },
+        {
+          "pos": 14,
+          "name": "David Ramirez Herrada",
+          "licencia": "CM60919777",
+          "hcp": 11,
+          "nivel": "C",
+          "rounds": [],
+          "total": 88,
+          "toPar": 16,
+          "inscribedId": 2327241
+        },
+        {
+          "pos": 15,
+          "name": "Alejandra Esteban Gil De Antuñano",
+          "licencia": "CM02958006",
+          "hcp": 14.4,
+          "nivel": "J",
+          "rounds": [],
+          "total": 90,
+          "toPar": 18,
+          "inscribedId": 2325513
+        },
+        {
+          "pos": null,
+          "name": "Alvaro Lopez-Huerta Molina",
+          "licencia": "CMA8959444",
+          "hcp": 9.9,
+          "nivel": "C",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2322122
+        },
+        {
+          "pos": null,
+          "name": "Jaime Rivas Torralvo",
+          "licencia": "CM04938240",
+          "hcp": 6.9,
+          "nivel": "C",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2327359
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Clasificacion Handicap Indistinta",
+      "expectedJugadores": 17,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Raul Ruiz De Infante Hernandez",
+          "licencia": "CMA8924203",
+          "hcp": 7.1,
+          "nivel": "C",
+          "rounds": [],
+          "total": 71,
+          "toPar": -1,
+          "inscribedId": 2322183
+        },
+        {
+          "pos": 2,
+          "name": "Gonzalo Carrion Herranz",
+          "licencia": "CM02926918",
+          "hcp": 6.6,
+          "nivel": "C",
+          "rounds": [],
+          "total": 72,
+          "toPar": null,
+          "inscribedId": 2327221
+        },
+        {
+          "pos": 3,
+          "name": "Pablo Perez Cordero",
+          "licencia": "CMA8936858",
+          "hcp": 0.8,
+          "nivel": "C",
+          "rounds": [],
+          "total": 73,
+          "toPar": 1,
+          "inscribedId": 2321923
+        },
+        {
+          "pos": 4,
+          "name": "Ignacio Martinez Hernandez",
+          "licencia": "CM11921668",
+          "hcp": 3.5,
+          "nivel": "C",
+          "rounds": [],
+          "total": 74,
+          "toPar": 2,
+          "inscribedId": 2323486
+        },
+        {
+          "pos": 5,
+          "name": "Hiroshi Tsuchiya Mora",
+          "licencia": "CMA8945947",
+          "hcp": 7.9,
+          "nivel": "C",
+          "rounds": [],
+          "total": 74,
+          "toPar": 2,
+          "inscribedId": 2322211
+        },
+        {
+          "pos": 6,
+          "name": "Daniel Ricardo De Lima De Menezes",
+          "licencia": "CM07088274",
+          "hcp": 7.6,
+          "nivel": "J",
+          "rounds": [],
+          "total": 74,
+          "toPar": 2,
+          "inscribedId": 2322018
+        },
+        {
+          "pos": 7,
+          "name": "Nicolas Fernandez De La Cruz",
+          "licencia": "CM41969603",
+          "hcp": 12.1,
+          "nivel": "C",
+          "rounds": [],
+          "total": 75,
+          "toPar": 3,
+          "inscribedId": 2322399
+        },
+        {
+          "pos": 8,
+          "name": "Guillermo Ramirez Matos",
+          "licencia": "CM22150143",
+          "hcp": 6.8,
+          "nivel": "C",
+          "rounds": [],
+          "total": 76,
+          "toPar": 4,
+          "inscribedId": 2322481
+        },
+        {
+          "pos": 9,
+          "name": "Carlos Manzano Versteeg",
+          "licencia": "CM02071263",
+          "hcp": 10,
+          "nivel": "C",
+          "rounds": [],
+          "total": 76,
+          "toPar": 4,
+          "inscribedId": 2327219
+        },
+        {
+          "pos": 10,
+          "name": "David Ramirez Herrada",
+          "licencia": "CM60919777",
+          "hcp": 11,
+          "nivel": "C",
+          "rounds": [],
+          "total": 76,
+          "toPar": 4,
+          "inscribedId": 2327241
+        },
+        {
+          "pos": 11,
+          "name": "Han Xiang Wang",
+          "licencia": "CMA5007285",
+          "hcp": 7.6,
+          "nivel": "C",
+          "rounds": [],
+          "total": 78,
+          "toPar": 6,
+          "inscribedId": 2322640
+        },
+        {
+          "pos": 12,
+          "name": "Alejandra Esteban Gil De Antuñano",
+          "licencia": "CM02958006",
+          "hcp": 14.4,
+          "nivel": "J",
+          "rounds": [],
+          "total": 78,
+          "toPar": 6,
+          "inscribedId": 2325513
+        },
+        {
+          "pos": 13,
+          "name": "Aitor Montes Ortiz De Pinedo",
+          "licencia": "CM41910849",
+          "hcp": 1.7,
+          "nivel": "C",
+          "rounds": [],
+          "total": 79,
+          "toPar": 7,
+          "inscribedId": 2322176
+        },
+        {
+          "pos": 14,
+          "name": "Pablo Madrigal Isidro",
+          "licencia": "CM61934203",
+          "hcp": 4,
+          "nivel": "C",
+          "rounds": [],
+          "total": 80,
+          "toPar": 8,
+          "inscribedId": 2323522
+        },
+        {
+          "pos": 15,
+          "name": "Ruben Alonso Tejon",
+          "licencia": "CM61908101",
+          "hcp": 5,
+          "nivel": "J",
+          "rounds": [],
+          "total": 82,
+          "toPar": 10,
+          "inscribedId": 2322438
+        },
+        {
+          "pos": null,
+          "name": "Alvaro Lopez-Huerta Molina",
+          "licencia": "CMA8959444",
+          "hcp": 9.9,
+          "nivel": "C",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2322122
+        },
+        {
+          "pos": null,
+          "name": "Jaime Rivas Torralvo",
+          "licencia": "CM04938240",
+          "hcp": 6.9,
+          "nivel": "C",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2327359
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificacion Scratch Indistinta",
+      "jugadores": 17
+    },
+    "2": {
+      "name": "Clasificacion Handicap Indistinta",
+      "jugadores": 17
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -35,14 +455,14 @@
       "orden": 2,
       "name": "Daniel Ricardo De Lima De Menezes",
       "licencia": "CM07088274",
-      "hcp": 8.4,
+      "hcp": 7.6,
       "nivel": "J"
     },
     {
       "orden": 3,
       "name": "Alvaro Lopez-Huerta Molina",
       "licencia": "CMA8959444",
-      "hcp": 10.4,
+      "hcp": 9.9,
       "nivel": "C"
     },
     {
@@ -56,7 +476,7 @@
       "orden": 5,
       "name": "Raul Ruiz De Infante Hernandez",
       "licencia": "CMA8924203",
-      "hcp": 7.3,
+      "hcp": 7.1,
       "nivel": "C"
     },
     {
@@ -77,7 +497,7 @@
       "orden": 8,
       "name": "Ruben Alonso Tejon",
       "licencia": "CM61908101",
-      "hcp": 5.3,
+      "hcp": 5,
       "nivel": "J"
     },
     {
@@ -107,6 +527,48 @@
       "licencia": "CM61934203",
       "hcp": 4,
       "nivel": "C"
+    },
+    {
+      "orden": 13,
+      "name": "Carlos Manzano Versteeg",
+      "licencia": "CM02071263",
+      "hcp": 10,
+      "nivel": "C"
+    },
+    {
+      "orden": 14,
+      "name": "Gonzalo Carrion Herranz",
+      "licencia": "CM02926918",
+      "hcp": 6.6,
+      "nivel": "C"
+    },
+    {
+      "orden": 15,
+      "name": "David Ramirez Herrada",
+      "licencia": "CM60919777",
+      "hcp": 11,
+      "nivel": "C"
+    },
+    {
+      "orden": 16,
+      "name": "Jaime Rivas Torralvo",
+      "licencia": "CM04938240",
+      "hcp": 6.9,
+      "nivel": "C"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Alejandra Esteban Gil De Antuñano",
+      "licencia": "CM02958006",
+      "hcp": 14.4,
+      "nivel": "J"
     },
     {
       "orden": null,
@@ -126,14 +588,14 @@
       "orden": 2,
       "name": "Daniel Ricardo De Lima De Menezes",
       "licencia": "CM07088274",
-      "hcp": 8.4,
+      "hcp": 7.6,
       "nivel": "J"
     },
     {
       "orden": 3,
       "name": "Alvaro Lopez-Huerta Molina",
       "licencia": "CMA8959444",
-      "hcp": 10.4,
+      "hcp": 9.9,
       "nivel": "C"
     },
     {
@@ -147,7 +609,7 @@
       "orden": 5,
       "name": "Raul Ruiz De Infante Hernandez",
       "licencia": "CMA8924203",
-      "hcp": 7.3,
+      "hcp": 7.1,
       "nivel": "C"
     },
     {
@@ -168,7 +630,7 @@
       "orden": 8,
       "name": "Ruben Alonso Tejon",
       "licencia": "CM61908101",
-      "hcp": 5.3,
+      "hcp": 5,
       "nivel": "J"
     },
     {
@@ -197,6 +659,41 @@
       "name": "Pablo Madrigal Isidro",
       "licencia": "CM61934203",
       "hcp": 4,
+      "nivel": "C"
+    },
+    {
+      "orden": 13,
+      "name": "Alejandra Esteban Gil De Antuñano",
+      "licencia": "CM02958006",
+      "hcp": 14.4,
+      "nivel": "J"
+    },
+    {
+      "orden": 14,
+      "name": "Carlos Manzano Versteeg",
+      "licencia": "CM02071263",
+      "hcp": 10,
+      "nivel": "C"
+    },
+    {
+      "orden": 15,
+      "name": "Gonzalo Carrion Herranz",
+      "licencia": "CM02926918",
+      "hcp": 6.6,
+      "nivel": "C"
+    },
+    {
+      "orden": 16,
+      "name": "David Ramirez Herrada",
+      "licencia": "CM60919777",
+      "hcp": 11,
+      "nivel": "C"
+    },
+    {
+      "orden": 17,
+      "name": "Jaime Rivas Torralvo",
+      "licencia": "CM04938240",
+      "hcp": 6.9,
       "nivel": "C"
     }
   ],
@@ -375,7 +872,9 @@
       "roundId": 72500
     }
   ],
-  "scoreTypes": null,
-  "pdfs": [],
-  "horariosScrapedAt": "2026-06-01T09:30:26.640Z"
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/2989630862_rrll_barberan.pdf"
+  ],
+  "horariosScrapedAt": "2026-06-12T14:45:26.969Z"
 }

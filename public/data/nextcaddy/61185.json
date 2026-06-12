@@ -1,7 +1,7 @@
 {
   "tourId": 61185,
   "url": "https://www.nextcaddy.com/tour/61185",
-  "scrapedAt": "2026-05-21T16:40:27.198Z",
+  "scrapedAt": "2026-06-12T14:43:01.740Z",
   "meta": {
     "name": "Campeonato Andalucía Dobles",
     "organizer": "Real Federacion Andaluza de Golf",
@@ -9,10 +9,10 @@
     "courseCode": "AMC3",
     "dateStart": null,
     "dateEnd": null,
-    "format": "Medal Play (Scratch)  Señoras  Caballero",
+    "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
-      "Señoras",
       "Caballeros",
+      "Señoras",
       "Infantil",
       "Profesional",
       "Senior",
@@ -23,7 +23,176 @@
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Francisco Jose Rodriguez De Pablo",
+      "licencia": "AM15131643",
+      "hcp": 5.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Ignacio Rodriguez Peinado",
+      "licencia": "AM15319740",
+      "hcp": 6.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Benjamin Van Braak Hammer",
+      "licencia": "AM58066441",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 2,
+      "name": "Ivan Diaz Betin",
+      "licencia": "AM67913244",
+      "hcp": 0.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 3,
+      "name": "Gonzalo Baños Ramos",
+      "licencia": "AM11165742",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 3,
+      "name": "Alberto Baños Ramos",
+      "licencia": "AM11793882",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 4,
+      "name": "Adrian Perez Fernandez",
+      "licencia": "AM95064330",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 4,
+      "name": "Gonzalo Guillen Carmona",
+      "licencia": "AM85914437",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 5,
+      "name": "Antonio Cutilla Ferris",
+      "licencia": "AME7926762",
+      "hcp": 12.7,
+      "nivel": "C"
+    },
+    {
+      "orden": 5,
+      "name": "Jose Antonio Cutilla Gutierrez",
+      "licencia": "AME7603506",
+      "hcp": 18.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Javier Fernandez Fernandez",
+      "licencia": "AM02935831",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 6,
+      "name": "Eduardo Gonzalez De Boado Fedriani",
+      "licencia": "AM02310762",
+      "hcp": 0.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 7,
+      "name": "Maria Purroy Galan",
+      "licencia": "AM92906301",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 7,
+      "name": "Manuela Araujo Guerrero",
+      "licencia": "AM92972036",
+      "hcp": 25.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 8,
+      "name": "Abraham Lazaro Giner Varela",
+      "licencia": "AM00474146",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 8,
+      "name": "Manuel Barba Avila",
+      "licencia": "AM25992827",
+      "hcp": 4.9,
+      "nivel": "J"
+    },
+    {
+      "orden": 9,
+      "name": "Javier Rodriguez De Trujillo Santalo",
+      "licencia": "AM85942674",
+      "hcp": 3.6,
+      "nivel": "J"
+    },
+    {
+      "orden": 9,
+      "name": "Bosco Quintanilla Gutierrez",
+      "licencia": "AM85903397",
+      "hcp": 3.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 10,
+      "name": "Javier Villahermosa Espinosa",
+      "licencia": "8804916302",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 10,
+      "name": "Jaime Sanchez De Lamadrid Trujillo",
+      "licencia": "AM95050520",
+      "hcp": 2.6,
+      "nivel": "J"
+    },
+    {
+      "orden": 11,
+      "name": "Oscar Muñoz Tejera",
+      "licencia": "AMD5913692",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 11,
+      "name": "Marcos Ramirez Martin",
+      "licencia": "AM96886252",
+      "hcp": 1.1,
+      "nivel": "J"
+    },
+    {
+      "orden": 12,
+      "name": "Jules De Reu",
+      "licencia": "EXX1911888",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 12,
+      "name": "Angel Soria Casaponsa",
+      "licencia": "8819821152",
+      "hcp": null,
+      "nivel": "M"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -171,6 +340,8 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-06-08T09:00:10.772Z"
+  "pdfs": [
+    "/uploads/circular/2026/06ec4f43ba8b6b6c420b01e2a117a3b2.pdf"
+  ],
+  "horariosScrapedAt": "2026-06-12T14:44:58.735Z"
 }

@@ -1,7 +1,7 @@
 {
   "tourId": 71307,
   "url": "https://www.nextcaddy.com/tour/71307",
-  "scrapedAt": "2026-06-03T13:20:39.717Z",
+  "scrapedAt": "2026-06-12T14:42:24.126Z",
   "meta": {
     "name": "WWW 0306",
     "organizer": null,
@@ -19,19 +19,808 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 16,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Olli-Pekka Vilianen",
+          "licencia": "AM76482058",
+          "hcp": 14.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2334300
+        },
+        {
+          "pos": 2,
+          "name": "Brendan Monaghan",
+          "licencia": "AM76481985",
+          "hcp": 22.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2334293
+        },
+        {
+          "pos": 3,
+          "name": "Paul Barrett",
+          "licencia": "AM76943935",
+          "hcp": 18.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2334299
+        },
+        {
+          "pos": 4,
+          "name": "Philip Van Schaik",
+          "licencia": "AM76769792",
+          "hcp": 23.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2334347
+        },
+        {
+          "pos": 5,
+          "name": "Roberts Coombes",
+          "licencia": "AM76964782",
+          "hcp": 16.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2334348
+        },
+        {
+          "pos": 6,
+          "name": "Michael Partridge",
+          "licencia": "AM76951885",
+          "hcp": 9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2334296
+        },
+        {
+          "pos": 7,
+          "name": "David Leonard Jones",
+          "licencia": "AM76695366",
+          "hcp": 21.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2334431
+        },
+        {
+          "pos": 8,
+          "name": "Marc Antoine Enlart",
+          "licencia": "AM76965471",
+          "hcp": 22.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2334429
+        },
+        {
+          "pos": 9,
+          "name": "David Llewellyn",
+          "licencia": "AM76050517",
+          "hcp": 21.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2334434
+        },
+        {
+          "pos": 10,
+          "name": "Allan Watts",
+          "licencia": "AM76168571",
+          "hcp": 25.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2334430
+        },
+        {
+          "pos": 11,
+          "name": "Robert Richards",
+          "licencia": "AM76959136",
+          "hcp": 17.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2334298
+        },
+        {
+          "pos": 12,
+          "name": "Garry Miller",
+          "licencia": "AM76473524",
+          "hcp": 17.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2334297
+        },
+        {
+          "pos": 13,
+          "name": "Philip Orr",
+          "licencia": "AM76937266",
+          "hcp": 21,
+          "nivel": "S",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2334294
+        },
+        {
+          "pos": 14,
+          "name": "George Clelland",
+          "licencia": "AM76976449",
+          "hcp": 15.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2334295
+        },
+        {
+          "pos": 15,
+          "name": "Isidre Sabate Muzas",
+          "licencia": "AM76624933",
+          "hcp": 30.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2334438
+        },
+        {
+          "pos": 16,
+          "name": "Terry Bunn",
+          "licencia": "AM76249419",
+          "hcp": 14.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2334301
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 16
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Brendan Monaghan",
+      "licencia": "AM76481985",
+      "hcp": 22.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Philip Orr",
+      "licencia": "AM76937266",
+      "hcp": 21,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "George Clelland",
+      "licencia": "AM76976449",
+      "hcp": 15.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Michael Partridge",
+      "licencia": "AM76951885",
+      "hcp": 9,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Garry Miller",
+      "licencia": "AM76473524",
+      "hcp": 17.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Robert Richards",
+      "licencia": "AM76959136",
+      "hcp": 17.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Paul Barrett",
+      "licencia": "AM76943935",
+      "hcp": 18.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Olli-Pekka Vilianen",
+      "licencia": "AM76482058",
+      "hcp": 14.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Terry Bunn",
+      "licencia": "AM76249419",
+      "hcp": 14.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Philip Van Schaik",
+      "licencia": "AM76769792",
+      "hcp": 23.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Roberts Coombes",
+      "licencia": "AM76964782",
+      "hcp": 16.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Marc Antoine Enlart",
+      "licencia": "AM76965471",
+      "hcp": 22.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Allan Watts",
+      "licencia": "AM76168571",
+      "hcp": 25.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "David Leonard Jones",
+      "licencia": "AM76695366",
+      "hcp": 21.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "David Llewellyn",
+      "licencia": "AM76050517",
+      "hcp": 21.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Isidre Sabate Muzas",
+      "licencia": "AM76624933",
+      "hcp": 30.9,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Fecha Inscripción",
+      "hcp": null,
+      "nivel": "Licencia"
+    },
+    {
+      "orden": 1,
+      "name": "Brendan Monaghan",
+      "licencia": "03-06-26 15:30",
+      "hcp": 22.5,
+      "nivel": "AM76481985"
+    },
+    {
+      "orden": 2,
+      "name": "Philip Orr",
+      "licencia": "03-06-26 15:31",
+      "hcp": 21,
+      "nivel": "AM76937266"
+    },
+    {
+      "orden": 3,
+      "name": "George Clelland",
+      "licencia": "03-06-26 15:32",
+      "hcp": 15.2,
+      "nivel": "AM76976449"
+    },
+    {
+      "orden": 4,
+      "name": "Michael Partridge",
+      "licencia": "03-06-26 15:32",
+      "hcp": 9,
+      "nivel": "AM76951885"
+    },
+    {
+      "orden": 5,
+      "name": "Garry Miller",
+      "licencia": "03-06-26 15:33",
+      "hcp": 17.4,
+      "nivel": "AM76473524"
+    },
+    {
+      "orden": 6,
+      "name": "Robert Richards",
+      "licencia": "03-06-26 15:34",
+      "hcp": 17.2,
+      "nivel": "AM76959136"
+    },
+    {
+      "orden": 7,
+      "name": "Paul Barrett",
+      "licencia": "03-06-26 15:34",
+      "hcp": 18.6,
+      "nivel": "AM76943935"
+    },
+    {
+      "orden": 8,
+      "name": "Olli-Pekka Vilianen",
+      "licencia": "03-06-26 15:34",
+      "hcp": 14.2,
+      "nivel": "AM76482058"
+    },
+    {
+      "orden": 9,
+      "name": "Terry Bunn",
+      "licencia": "03-06-26 15:35",
+      "hcp": 14.8,
+      "nivel": "AM76249419"
+    },
+    {
+      "orden": 10,
+      "name": "Philip Van Schaik",
+      "licencia": "03-06-26 16:06",
+      "hcp": 23.4,
+      "nivel": "AM76769792"
+    },
+    {
+      "orden": 11,
+      "name": "Roberts Coombes",
+      "licencia": "03-06-26 16:07",
+      "hcp": 16.2,
+      "nivel": "AM76964782"
+    },
+    {
+      "orden": 12,
+      "name": "Marc Antoine Enlart",
+      "licencia": "03-06-26 16:09",
+      "hcp": 22.5,
+      "nivel": "AM76965471"
+    },
+    {
+      "orden": 13,
+      "name": "Allan Watts",
+      "licencia": "03-06-26 16:10",
+      "hcp": 25.8,
+      "nivel": "AM76168571"
+    },
+    {
+      "orden": 14,
+      "name": "David Leonard Jones",
+      "licencia": "03-06-26 16:12",
+      "hcp": 21.6,
+      "nivel": "AM76695366"
+    },
+    {
+      "orden": 15,
+      "name": "David Llewellyn",
+      "licencia": "03-06-26 16:12",
+      "hcp": 21.8,
+      "nivel": "AM76050517"
+    },
+    {
+      "orden": 16,
+      "name": "Isidre Sabate Muzas",
+      "licencia": "03-06-26 16:13",
+      "hcp": 30.9,
+      "nivel": "AM76624933"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
+    "0": {
+      "p": {
+        "id": 159902,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            53
+          ],
+          [
+            "Birdie",
+            6
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            99
+          ],
+          [
+            "Peor",
+            78
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 159903,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            4
+          ],
+          [
+            "2",
+            20
+          ],
+          [
+            "3",
+            25
+          ],
+          [
+            "4",
+            14
+          ],
+          [
+            "5",
+            13
+          ],
+          [
+            "6",
+            17
+          ],
+          [
+            "7",
+            19
+          ],
+          [
+            "8",
+            22
+          ],
+          [
+            "9",
+            16
+          ],
+          [
+            "10",
+            10
+          ],
+          [
+            "11",
+            13
+          ],
+          [
+            "12",
+            22
+          ],
+          [
+            "13",
+            9
+          ],
+          [
+            "14",
+            14
+          ],
+          [
+            "15",
+            9
+          ],
+          [
+            "16",
+            16
+          ],
+          [
+            "17",
+            12
+          ],
+          [
+            "18",
+            7
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 159904,
+        "datos": [
+          [
+            "Hoyo",
+            "OP. VILJANEN",
+            "BRENDAN MONAGHAN",
+            "PAUL BARRETT"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            2,
+            1,
+            -2
+          ],
+          [
+            "Hoyo 4",
+            1,
+            1,
+            -2
+          ],
+          [
+            "Hoyo 5",
+            1,
+            1,
+            -2
+          ],
+          [
+            "Hoyo 6",
+            2,
+            1,
+            -2
+          ],
+          [
+            "Hoyo 7",
+            2,
+            3,
+            -2
+          ],
+          [
+            "Hoyo 8",
+            2,
+            3,
+            -1
+          ],
+          [
+            "Hoyo 9",
+            1,
+            2,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            2,
+            4,
+            -2
+          ],
+          [
+            "Hoyo 11",
+            3,
+            5,
+            -3
+          ],
+          [
+            "Hoyo 12",
+            3,
+            5,
+            -1
+          ],
+          [
+            "Hoyo 13",
+            4,
+            4,
+            -1
+          ],
+          [
+            "Hoyo 14",
+            3,
+            2,
+            0
+          ],
+          [
+            "Hoyo 15",
+            2,
+            1,
+            1
+          ],
+          [
+            "Hoyo 16",
+            1,
+            2,
+            1
+          ],
+          [
+            "Hoyo 17",
+            1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 18",
+            0,
+            1,
+            2
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 159905,
+        "datos": [
+          [
+            "Hoyo",
+            "OP. VILJANEN",
+            "BRENDAN MONAGHAN",
+            "PAUL BARRETT"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            1,
+            2,
+            0
+          ],
+          [
+            "Hoyo 3",
+            1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 5",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 6",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 7",
+            0,
+            2,
+            0
+          ],
+          [
+            "Hoyo 8",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 10",
+            1,
+            2,
+            -1
+          ],
+          [
+            "Hoyo 11",
+            1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            2
+          ],
+          [
+            "Hoyo 13",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 14",
+            -1,
+            -2,
+            1
+          ],
+          [
+            "Hoyo 15",
+            -1,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 16",
+            -1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 17",
+            0,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 18",
+            -1,
+            0,
+            0
+          ]
+        ]
+      }
+    }
   },
   "roundIds": [
     {
@@ -41,5 +830,5 @@
   ],
   "scoreTypes": [],
   "pdfs": [],
-  "horariosScrapedAt": "2026-06-08T09:00:31.319Z"
+  "horariosScrapedAt": "2026-06-12T14:46:11.361Z"
 }

@@ -1,7 +1,7 @@
 {
   "tourId": 70473,
   "url": "https://www.nextcaddy.com/tour/70473",
-  "scrapedAt": "2026-05-21T16:40:02.983Z",
+  "scrapedAt": "2026-06-12T14:41:58.752Z",
   "meta": {
     "name": "PUNTUABLE ZARAPICOS (9 HOYOS)",
     "organizer": null,
@@ -20,9 +20,187 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Scracth 9 Hoyos Indistinto",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Paula Casas Fernandez",
+          "licencia": "7770474202",
+          "hcp": 20.8,
+          "nivel": "B",
+          "rounds": [],
+          "total": 45,
+          "toPar": 9,
+          "inscribedId": 2316880
+        },
+        {
+          "pos": 2,
+          "name": "Juan Aparicio Gonzalez",
+          "licencia": "7707094609",
+          "hcp": 27.5,
+          "nivel": "B",
+          "rounds": [],
+          "total": 48,
+          "toPar": 12,
+          "inscribedId": 2323492
+        },
+        {
+          "pos": 3,
+          "name": "Mateo Pretel Martin",
+          "licencia": "7744007411",
+          "hcp": 44.7,
+          "nivel": "B",
+          "rounds": [],
+          "total": 55,
+          "toPar": 19,
+          "inscribedId": 2323028
+        },
+        {
+          "pos": 4,
+          "name": "Javier Ovejero Portillo",
+          "licencia": "7706071587",
+          "hcp": 40.3,
+          "nivel": "A",
+          "rounds": [],
+          "total": 55,
+          "toPar": 19,
+          "inscribedId": 2324426
+        },
+        {
+          "pos": 5,
+          "name": "Carlos Alonso Arrimadas",
+          "licencia": "7706083589",
+          "hcp": 36,
+          "nivel": "A",
+          "rounds": [],
+          "total": 55,
+          "toPar": 19,
+          "inscribedId": 2322447
+        },
+        {
+          "pos": 6,
+          "name": "Javier Alonso Arrimadas",
+          "licencia": "7706083592",
+          "hcp": 41.3,
+          "nivel": "B",
+          "rounds": [],
+          "total": 56,
+          "toPar": 20,
+          "inscribedId": 2322448
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Handicap Indistinto",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Paula Casas Fernandez",
+          "licencia": "7770474202",
+          "hcp": 20.8,
+          "nivel": "B",
+          "rounds": [],
+          "total": 34,
+          "toPar": -2,
+          "inscribedId": 2316880
+        },
+        {
+          "pos": 2,
+          "name": "Mateo Pretel Martin",
+          "licencia": "7744007411",
+          "hcp": 44.7,
+          "nivel": "B",
+          "rounds": [],
+          "total": 35,
+          "toPar": -1,
+          "inscribedId": 2323028
+        },
+        {
+          "pos": 3,
+          "name": "Juan Aparicio Gonzalez",
+          "licencia": "7707094609",
+          "hcp": 27.5,
+          "nivel": "B",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2323492
+        },
+        {
+          "pos": 4,
+          "name": "Javier Ovejero Portillo",
+          "licencia": "7706071587",
+          "hcp": 40.3,
+          "nivel": "A",
+          "rounds": [],
+          "total": 37,
+          "toPar": 1,
+          "inscribedId": 2324426
+        },
+        {
+          "pos": 5,
+          "name": "Javier Alonso Arrimadas",
+          "licencia": "7706083592",
+          "hcp": 41.3,
+          "nivel": "B",
+          "rounds": [],
+          "total": 37,
+          "toPar": 1,
+          "inscribedId": 2322448
+        },
+        {
+          "pos": 6,
+          "name": "Carlos Alonso Arrimadas",
+          "licencia": "7706083589",
+          "hcp": 36,
+          "nivel": "A",
+          "rounds": [],
+          "total": 39,
+          "toPar": 3,
+          "inscribedId": 2322447
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scracth 9 Hoyos Indistinto",
+      "jugadores": 6
+    },
+    "2": {
+      "name": "Handicap Indistinto",
+      "jugadores": 6
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -203,5 +381,5 @@
   "pdfs": [
     "/uploads/competiciones/pdf/131587992_puntuable_de_zarapicos_23_de_mayo_2026.pdf"
   ],
-  "horariosScrapedAt": "2026-05-21T16:42:41.217Z"
+  "horariosScrapedAt": "2026-06-12T14:46:01.645Z"
 }

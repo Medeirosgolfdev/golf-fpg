@@ -1,7 +1,7 @@
 {
   "tourId": 71365,
   "url": "https://www.nextcaddy.com/tour/71365",
-  "scrapedAt": "2026-06-03T13:20:42.258Z",
+  "scrapedAt": "2026-06-12T14:42:44.565Z",
   "meta": {
     "name": "GOLFISTAS SEVILLA ( TARDE 15:30)",
     "organizer": null,
@@ -23,8 +23,114 @@
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
-  "horarios": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Antonio Jose Repullo Aranda",
+      "licencia": "AMF7811550",
+      "hcp": 29.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Rafael Fernandez De Cabo",
+      "licencia": "AMG3377308",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Angel Manuel Garcia Rivera",
+      "licencia": "AMG3376860",
+      "hcp": 27.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Jesus Cabello Rangel",
+      "licencia": "AMF7494545",
+      "hcp": 25.9,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Antonio Jose Repullo Aranda",
+      "licencia": "AMF7811550",
+      "hcp": 29.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Rafael Fernandez De Cabo",
+      "licencia": "AMG3377308",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Angel Manuel Garcia Rivera",
+      "licencia": "AMG3376860",
+      "hcp": 27.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Jesus Cabello Rangel",
+      "licencia": "AMF7494545",
+      "hcp": 25.9,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "15:30",
+          "tee": 10,
+          "name": "Jesus Cabello Rangel",
+          "hcp": 25.9,
+          "ins": "2340737",
+          "jid": "76417",
+          "nivel": "S"
+        },
+        {
+          "time": "15:30",
+          "tee": 10,
+          "name": "Angel Manuel Garcia Rivera",
+          "hcp": 27.5,
+          "ins": "2339413",
+          "jid": "76417",
+          "nivel": "S"
+        },
+        {
+          "time": "15:30",
+          "tee": 10,
+          "name": "Antonio Jose Repullo Aranda",
+          "hcp": 29.5,
+          "ins": "2336927",
+          "jid": "76417",
+          "nivel": "S"
+        },
+        {
+          "time": "15:30",
+          "tee": 10,
+          "name": "Rafael Fernandez De Cabo",
+          "hcp": 36,
+          "ins": "2339412",
+          "jid": "76417",
+          "nivel": "M"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -44,5 +150,5 @@
   "pdfs": [
     "/uploads/competiciones/cartel/3047010883_71365-golfistas-sevilla-tarde-15-30.pdf"
   ],
-  "horariosScrapedAt": "2026-06-08T09:00:31.790Z"
+  "horariosScrapedAt": "2026-06-12T14:46:12.026Z"
 }

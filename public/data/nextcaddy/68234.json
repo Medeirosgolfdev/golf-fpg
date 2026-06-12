@@ -1,7 +1,7 @@
 {
   "tourId": 68234,
   "url": "https://www.nextcaddy.com/tour/68234",
-  "scrapedAt": "2026-05-21T16:40:13.354Z",
+  "scrapedAt": "2026-06-12T14:42:19.065Z",
   "meta": {
     "name": "Campeonato de Madrid Dobles Mid-Amateur Mixto",
     "organizer": "Federacion de Golf de Madrid",
@@ -21,8 +21,17 @@
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Pareja Scratch General",
+      "jugadores": 33
+    },
+    "2": {
+      "name": "Pareja Handicap General",
+      "jugadores": 33
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -35,7 +44,7 @@
       "orden": 1,
       "name": "Jesus Cervigon Manso",
       "licencia": "CMC8211881",
-      "hcp": 15,
+      "hcp": 15.5,
       "nivel": "S"
     },
     {
@@ -70,7 +79,7 @@
       "orden": 4,
       "name": "Maria Rodriguez Martin",
       "licencia": "CM68671312",
-      "hcp": 13.4,
+      "hcp": 13,
       "nivel": "Mid"
     },
     {
@@ -84,14 +93,14 @@
       "orden": 5,
       "name": "Pablo Igartua Moreno",
       "licencia": "CM61138198",
-      "hcp": 26.6,
+      "hcp": 26.5,
       "nivel": "S"
     },
     {
       "orden": 5,
       "name": "Ilaria Cereda Tanzi",
       "licencia": "CM00149195",
-      "hcp": 30.4,
+      "hcp": 28.9,
       "nivel": "S"
     },
     {
@@ -112,7 +121,7 @@
       "orden": 7,
       "name": "Ivan Arnaiz Arranz",
       "licencia": "CM09791630",
-      "hcp": 19.8,
+      "hcp": 19,
       "nivel": "S"
     },
     {
@@ -133,14 +142,14 @@
       "orden": 8,
       "name": "Leticia Movilla Contreras",
       "licencia": "CMA8453042",
-      "hcp": 32.4,
+      "hcp": 30.5,
       "nivel": "Mid"
     },
     {
       "orden": 9,
       "name": "Jose Luis Vallarino Maestro",
       "licencia": "CM03111603",
-      "hcp": 5.5,
+      "hcp": 4.7,
       "nivel": "Mid"
     },
     {
@@ -154,7 +163,7 @@
       "orden": 10,
       "name": "Juan Aparicio Munaiz",
       "licencia": "CM03130209",
-      "hcp": 5.4,
+      "hcp": 4.3,
       "nivel": "Mid"
     },
     {
@@ -175,7 +184,7 @@
       "orden": 11,
       "name": "Adelaida Herrero Gutierrez",
       "licencia": "CMD1778774",
-      "hcp": 34.6,
+      "hcp": 35.6,
       "nivel": "S"
     },
     {
@@ -189,14 +198,14 @@
       "orden": 12,
       "name": "Borja Labat Fernandez",
       "licencia": "CM04418013",
-      "hcp": 14.4,
+      "hcp": 12.1,
       "nivel": "Mid"
     },
     {
       "orden": 13,
       "name": "Pedro Manuel Oviedo Jimenez",
       "licencia": "CMA8377241",
-      "hcp": 0,
+      "hcp": null,
       "nivel": "Mid"
     },
     {
@@ -210,7 +219,7 @@
       "orden": 14,
       "name": "Pablo Rivas Virgos",
       "licencia": "CM04200170",
-      "hcp": 4.9,
+      "hcp": 4.7,
       "nivel": "Mid"
     },
     {
@@ -224,7 +233,7 @@
       "orden": 15,
       "name": "Juan Maria Jimenez Acevedo",
       "licencia": "CM02157056",
-      "hcp": 13.9,
+      "hcp": 14,
       "nivel": "S"
     },
     {
@@ -245,21 +254,21 @@
       "orden": 16,
       "name": "Cristina Troncoso Castillo",
       "licencia": "CM01304640",
-      "hcp": 7,
+      "hcp": 6.9,
       "nivel": "Mid"
     },
     {
       "orden": 17,
       "name": "Jose Maria Garcia De Paredes Falla",
       "licencia": "CM04214597",
-      "hcp": 5.8,
+      "hcp": 5.9,
       "nivel": "S"
     },
     {
       "orden": 17,
       "name": "Isabel Chaves Baverstock",
       "licencia": "CM04297545",
-      "hcp": 18.3,
+      "hcp": 17.5,
       "nivel": "S"
     },
     {
@@ -280,14 +289,14 @@
       "orden": 19,
       "name": "Raul Salguero Arauzo",
       "licencia": "CMC2670803",
-      "hcp": 20.2,
+      "hcp": 20.1,
       "nivel": "S"
     },
     {
       "orden": 19,
       "name": "Francis Alcantara Torres",
       "licencia": "CMC2888436",
-      "hcp": 24.7,
+      "hcp": 25.2,
       "nivel": "S"
     },
     {
@@ -308,7 +317,7 @@
       "orden": 21,
       "name": "Raul Escobar Perez",
       "licencia": "CM41796786",
-      "hcp": 32.6,
+      "hcp": 33.1,
       "nivel": "S"
     },
     {
@@ -350,7 +359,7 @@
       "orden": 24,
       "name": "Daniel Oroz Suarez",
       "licencia": "CM00102835",
-      "hcp": 12.5,
+      "hcp": 11.8,
       "nivel": "S"
     },
     {
@@ -358,6 +367,132 @@
       "name": "Yolanda Castro Gonzalez",
       "licencia": "CMA8788692",
       "hcp": 22.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 25,
+      "name": "Angel Letosa Albero",
+      "licencia": "CM60109838",
+      "hcp": 25.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 25,
+      "name": "Cecilia Zabaleta Lopez",
+      "licencia": "CM60109839",
+      "hcp": 32.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 26,
+      "name": "Jacinta Romero Torralbo",
+      "licencia": "CM60257404",
+      "hcp": 20.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 26,
+      "name": "Santiago Bernal Palomo",
+      "licencia": "CM60257394",
+      "hcp": 25.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 27,
+      "name": "Francisco Gomis Barrio",
+      "licencia": "CMC2884698",
+      "hcp": 18.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 27,
+      "name": "Pamela Ortiz Gomez De La Torre",
+      "licencia": "CMC2956933",
+      "hcp": 24.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 28,
+      "name": "Francisco Ignacio Souza Sanchez",
+      "licencia": "CME5472435",
+      "hcp": 34.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 28,
+      "name": "Belen Laiglesia Nieto",
+      "licencia": "CM00019801",
+      "hcp": 34.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 29,
+      "name": "Angel Sierra Lozano",
+      "licencia": "CM41143934",
+      "hcp": 24.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 29,
+      "name": "Elena Sierra Deza",
+      "licencia": "CM41755401",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 30,
+      "name": "Arturo Del Diego Rodriguez",
+      "licencia": "CM11202028",
+      "hcp": 3.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 30,
+      "name": "Cristina Del Diego Rodríguez",
+      "licencia": "CM06514240",
+      "hcp": 5.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 31,
+      "name": "Jose Luis Ramirez Gomez",
+      "licencia": "CM12626341",
+      "hcp": 7.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 31,
+      "name": "Victoria Fernandez Lorenzo-Arroyo",
+      "licencia": "CM41070812",
+      "hcp": 20,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 32,
+      "name": "Carlota Bachiller Marco",
+      "licencia": "CM05307775",
+      "hcp": 1.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 32,
+      "name": "David Jimenez Barahona",
+      "licencia": "CMA8003345",
+      "hcp": 20.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 33,
+      "name": "Emma Mendez Calleja",
+      "licencia": "7721383850",
+      "hcp": 8.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 33,
+      "name": "Ivan Jose Castellanos Daza",
+      "licencia": "CMA8516388",
+      "hcp": 15,
       "nivel": "Mid"
     }
   ],
@@ -1079,6 +1214,9 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-06-01T09:30:30.252Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/4148007909_greensome-2.pdf",
+    "/uploads/competiciones/pdf/2707156433_arb_reg_loc_cma08_2025.docx.pdf"
+  ],
+  "horariosScrapedAt": "2026-06-12T14:45:34.075Z"
 }

@@ -1,7 +1,7 @@
 {
   "tourId": 69632,
   "url": "https://www.nextcaddy.com/tour/69632",
-  "scrapedAt": "2026-05-21T16:40:08.757Z",
+  "scrapedAt": "2026-06-12T14:42:09.596Z",
   "meta": {
     "name": "Torneo Preboda Aura-Tomás (Grupo Privado)",
     "organizer": null,
@@ -20,9 +20,231 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 18,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Daniel Gonzalez Bermejo",
+          "licencia": "AMG3975347",
+          "hcp": 28.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 45,
+          "toPar": -9,
+          "inscribedId": 2323021
+        },
+        {
+          "pos": 2,
+          "name": "Iñigo Fernandez-Figares Conde",
+          "licencia": "AMG3974626",
+          "hcp": 26.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2322467
+        },
+        {
+          "pos": 3,
+          "name": "Juan Ignacio Blasco Ruiz",
+          "licencia": "AM29888006",
+          "hcp": 18.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2322075
+        },
+        {
+          "pos": 4,
+          "name": "Jose Romero Muros",
+          "licencia": "AM02615096",
+          "hcp": 24.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2325506
+        },
+        {
+          "pos": 5,
+          "name": "Luis Herrero Fernandez De Mesa",
+          "licencia": "AM06976975",
+          "hcp": 11.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2322740
+        },
+        {
+          "pos": 6,
+          "name": "Wifredo Ameztoy Muñoz",
+          "licencia": "CM15413872",
+          "hcp": 21.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2323271
+        },
+        {
+          "pos": 7,
+          "name": "Ignacio Ladron De Guevara Ruiz",
+          "licencia": "AM02186942",
+          "hcp": 12.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2323280
+        },
+        {
+          "pos": 8,
+          "name": "Carlos Del Barco Prego De Oliver",
+          "licencia": "AM02346763",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2325548
+        },
+        {
+          "pos": 9,
+          "name": "Ignacio Gonzalez De Boado Fedriani",
+          "licencia": "AM02354226",
+          "hcp": 22.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2321457
+        },
+        {
+          "pos": 10,
+          "name": "Nicolas Fernandez Rebollo",
+          "licencia": "AM02987255",
+          "hcp": 10.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2321433
+        },
+        {
+          "pos": 11,
+          "name": "Carlos Gonzalez De Boado Fedriani",
+          "licencia": "AM02310763",
+          "hcp": 12.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2327756
+        },
+        {
+          "pos": 12,
+          "name": "Tomás Zumarraga Oliva",
+          "licencia": "AMB6001246",
+          "hcp": 33.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2323281
+        },
+        {
+          "pos": 13,
+          "name": "Jesus Muñoz Alpresa",
+          "licencia": "AME7989770",
+          "hcp": 15.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2321477
+        },
+        {
+          "pos": 14,
+          "name": "Jaime Osta Gallego",
+          "licencia": "AM02700525",
+          "hcp": 18.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2323275
+        },
+        {
+          "pos": 15,
+          "name": "Julian Cobo Vega",
+          "licencia": "AMC3987788",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2322460
+        },
+        {
+          "pos": 16,
+          "name": "Jorge Luis Moreno Serrano",
+          "licencia": "AM85803790",
+          "hcp": 8.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2328438
+        },
+        {
+          "pos": 17,
+          "name": "Javier Campos Lopez",
+          "licencia": "AMG3970399",
+          "hcp": 32.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2327868
+        },
+        {
+          "pos": null,
+          "name": "Juan Caceres Gordillo",
+          "licencia": "AMG3957929",
+          "hcp": 31.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2325521
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 18
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -106,6 +328,48 @@
       "name": "Tomás Zumarraga Oliva",
       "licencia": "AMB6001246",
       "hcp": 33.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Jose Romero Muros",
+      "licencia": "AM02615096",
+      "hcp": 24.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Juan Caceres Gordillo",
+      "licencia": "AMG3957929",
+      "hcp": 31.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 15,
+      "name": "Carlos Del Barco Prego De Oliver",
+      "licencia": "AM02346763",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 16,
+      "name": "Carlos Gonzalez De Boado Fedriani",
+      "licencia": "AM02310763",
+      "hcp": 12.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 17,
+      "name": "Javier Campos Lopez",
+      "licencia": "AMG3970399",
+      "hcp": 32.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 18,
+      "name": "Jorge Luis Moreno Serrano",
+      "licencia": "AM85803790",
+      "hcp": 8.8,
       "nivel": "S"
     },
     {
@@ -197,6 +461,48 @@
       "name": "Tomás Zumarraga Oliva",
       "licencia": "AMB6001246",
       "hcp": 33.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Jose Romero Muros",
+      "licencia": "AM02615096",
+      "hcp": 24.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Juan Caceres Gordillo",
+      "licencia": "AMG3957929",
+      "hcp": 31.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 15,
+      "name": "Carlos Del Barco Prego De Oliver",
+      "licencia": "AM02346763",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 16,
+      "name": "Carlos Gonzalez De Boado Fedriani",
+      "licencia": "AM02310763",
+      "hcp": 12.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 17,
+      "name": "Javier Campos Lopez",
+      "licencia": "AMG3970399",
+      "hcp": 32.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 18,
+      "name": "Jorge Luis Moreno Serrano",
+      "licencia": "AM85803790",
+      "hcp": 8.8,
       "nivel": "S"
     }
   ],
@@ -467,5 +773,5 @@
     }
   },
   "pdfs": [],
-  "horariosScrapedAt": "2026-06-01T09:30:37.824Z"
+  "horariosScrapedAt": "2026-06-12T14:45:54.759Z"
 }

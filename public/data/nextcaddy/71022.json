@@ -1,9 +1,9 @@
 {
   "tourId": 71022,
   "url": "https://www.nextcaddy.com/tour/71022",
-  "scrapedAt": "2026-05-21T16:40:38.070Z",
+  "scrapedAt": "2026-06-12T14:43:19.975Z",
   "meta": {
-    "name": "II TORNEO SORIA GOLF DE ALTURA  (VALERA SACE)",
+    "name": "II TORNEO SORIA GOLF DE ALTURA - WARG (VALEDERA SACE)",
     "organizer": null,
     "course": null,
     "courseCode": null,
@@ -13,17 +13,88 @@
     "categories": [
       "Caballeros",
       "Señoras",
+      "Juvenil",
       "Infantil",
       "Profesional",
-      "Senior",
-      "Juvenil"
+      "Senior"
     ]
   },
   "course": null,
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Maria Velilla Caballero",
+      "licencia": "0108887061",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Miguel Lopez Sanz",
+      "licencia": "7753162326",
+      "hcp": 1.5,
+      "nivel": "C"
+    },
+    {
+      "orden": 2,
+      "name": "Ramses Lopez Gutierrez",
+      "licencia": "7753456254",
+      "hcp": 6.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Adrian Torres Maroto",
+      "licencia": "7707995130",
+      "hcp": 1.8,
+      "nivel": "J"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Fecha Inscripción",
+      "hcp": null,
+      "nivel": "Licencia"
+    },
+    {
+      "orden": 1,
+      "name": "Maria Velilla Caballero",
+      "licencia": "06-06-26 15:46",
+      "hcp": null,
+      "nivel": "0108887061"
+    },
+    {
+      "orden": 2,
+      "name": "Miguel Lopez Sanz",
+      "licencia": "10-06-26 12:15",
+      "hcp": 1.5,
+      "nivel": "7753162326"
+    },
+    {
+      "orden": 3,
+      "name": "Ramses Lopez Gutierrez",
+      "licencia": "10-06-26 12:23",
+      "hcp": 6.6,
+      "nivel": "7753456254"
+    },
+    {
+      "orden": 4,
+      "name": "Adrian Torres Maroto",
+      "licencia": "11-06-26 07:08",
+      "hcp": 1.8,
+      "nivel": "7707995130"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -188,5 +259,5 @@
   "pdfs": [
     "/uploads/competiciones/cartel/553961478_71022-ii-torneo-soria-golf-de-altura.pdf"
   ],
-  "horariosScrapedAt": "2026-06-08T09:00:30.361Z"
+  "horariosScrapedAt": "2026-06-12T14:46:08.885Z"
 }

@@ -1,7 +1,7 @@
 {
   "tourId": 61255,
   "url": "https://www.nextcaddy.com/tour/61255",
-  "scrapedAt": "2026-05-21T16:40:28.495Z",
+  "scrapedAt": "2026-06-12T14:43:03.781Z",
   "meta": {
     "name": "Torneo Senior de Verano",
     "organizer": "Real Federacion Andaluza de Golf",
@@ -9,11 +9,11 @@
     "courseCode": "AM81",
     "dateStart": null,
     "dateEnd": null,
-    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Senior",
-      "Señoras",
       "Caballeros",
+      "Señoras",
       "Infantil",
       "Profesional",
       "Juvenil"
@@ -23,7 +23,134 @@
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Alvaro Tellez Garcia",
+      "licencia": "AM15205802",
+      "hcp": 12.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Ignacio Iturbe Escolano",
+      "licencia": "AM58192896",
+      "hcp": 22.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Jeannine Rehlinger",
+      "licencia": "AM76903264",
+      "hcp": 17.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Yann Simonon",
+      "licencia": "AM76903258",
+      "hcp": 23,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Ilaria Cereda Tanzi",
+      "licencia": "CM00149195",
+      "hcp": 26.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Pablo Igartua Moreno",
+      "licencia": "CM61138198",
+      "hcp": 26.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Manuel Enrique Cabezon Caliani",
+      "licencia": "AM01950843",
+      "hcp": 25.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Pedro Jose Caliani Cabezon",
+      "licencia": "AMI5243162",
+      "hcp": 30.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Damien Murphy",
+      "licencia": "AM81514111",
+      "hcp": 17.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Loraine Enriquez Murphy",
+      "licencia": "AM81109662",
+      "hcp": 28.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Salvador Merchan Gutierrez",
+      "licencia": "AM93818763",
+      "hcp": 10.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Antonio Ortiz Ramos",
+      "licencia": "AM93209317",
+      "hcp": 20.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Gerry Rippinger",
+      "licencia": "AM81349663",
+      "hcp": 21.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Isabella Rippinger Muller",
+      "licencia": "AM81349665",
+      "hcp": 27.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Michele Mcnamara",
+      "licencia": "AM81081549",
+      "hcp": 12,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Liam O`brien",
+      "licencia": "AM81073332",
+      "hcp": 14.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Orla Martin Joergensen",
+      "licencia": "AM76914987",
+      "hcp": 23.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Klaudia Luise Ilg",
+      "licencia": "AM76809386",
+      "hcp": 25.6,
+      "nivel": "S"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -40,7 +167,9 @@
       "roundId": 64947
     }
   ],
-  "scoreTypes": null,
-  "pdfs": [],
-  "horariosScrapedAt": "2026-06-08T09:00:12.518Z"
+  "scoreTypes": [],
+  "pdfs": [
+    "/uploads/competiciones/pdf/3466884513_1459090665_61255-torneo-senior-de-verano.pdf"
+  ],
+  "horariosScrapedAt": "2026-06-12T14:45:00.860Z"
 }

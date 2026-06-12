@@ -1,7 +1,7 @@
 {
   "tourId": 68710,
   "url": "https://www.nextcaddy.com/tour/68710",
-  "scrapedAt": "2026-05-21T16:40:15.904Z",
+  "scrapedAt": "2026-06-12T14:42:27.633Z",
   "meta": {
     "name": "III Prueba Circuito Regional Amateur (INSCRIPCIÓN PROFESIONALES)",
     "organizer": null,
@@ -9,21 +9,112 @@
     "courseCode": "CP24",
     "dateStart": null,
     "dateEnd": null,
-    "format": "Medal Play (Scratch)  Profesional  Señor",
+    "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "PROFESIONAL",
-      "Profesional",
+      "Caballeros",
       "Señoras",
       "Juvenil",
       "profesional",
       "Infantil",
+      "Profesional",
       "Senior"
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Final",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Samuel Santana Garcia",
+          "licencia": "CP313008-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "total": 74,
+          "toPar": 3,
+          "inscribedId": 2322649
+        },
+        {
+          "pos": 2,
+          "name": "Ignacio Urriza Fuentes",
+          "licencia": "CP013212-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "total": 76,
+          "toPar": 5,
+          "inscribedId": 2323142
+        },
+        {
+          "pos": 3,
+          "name": "Elliot Thom",
+          "licencia": "CP143640-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "total": 77,
+          "toPar": 6,
+          "inscribedId": 2322341
+        },
+        {
+          "pos": 4,
+          "name": "Jose Luis Gonzalez Courtney",
+          "licencia": "CP143284-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "total": 78,
+          "toPar": 7,
+          "inscribedId": 2328182
+        },
+        {
+          "pos": 5,
+          "name": "Christian Espino Bohm",
+          "licencia": "CP013755-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "total": 80,
+          "toPar": 9,
+          "inscribedId": 2322445
+        },
+        {
+          "pos": 6,
+          "name": "Francisco Javier Amatriain Perallon",
+          "licencia": "CP200493-P",
+          "hcp": 2.7,
+          "nivel": "P+",
+          "rounds": [],
+          "total": 81,
+          "toPar": 10,
+          "inscribedId": 2322071
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Final",
+      "jugadores": 6
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -61,6 +152,13 @@
       "nivel": "P+"
     },
     {
+      "orden": 6,
+      "name": "Jose Luis Gonzalez Courtney",
+      "licencia": "CP143284-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
       "orden": null,
       "name": "Jugador",
       "licencia": "Licencia",
@@ -69,59 +167,45 @@
     },
     {
       "orden": 1,
-      "name": "Alicia Fajardo Monzon",
-      "licencia": "CP033850-P",
+      "name": "Francisco Javier Amatriain Perallon",
+      "licencia": "CP200493-P",
+      "hcp": 2.7,
+      "nivel": "P+"
+    },
+    {
+      "orden": 2,
+      "name": "Elliot Thom",
+      "licencia": "CP143640-P",
       "hcp": 0,
       "nivel": "P+"
     },
     {
-      "orden": null,
-      "name": "Jugador",
-      "licencia": "Fecha Inscripción",
-      "hcp": null,
-      "nivel": "Licencia"
-    },
-    {
-      "orden": 1,
-      "name": "Francisco Javier Amatriain Perallon",
-      "licencia": "18-05-26 10:28",
-      "hcp": 2.7,
-      "nivel": "CP200493-P"
-    },
-    {
-      "orden": 2,
-      "name": "Alicia Fajardo Monzon",
-      "licencia": "18-05-26 11:11",
-      "hcp": 0,
-      "nivel": "CP033850-P"
-    },
-    {
       "orden": 3,
-      "name": "Elliot Thom",
-      "licencia": "18-05-26 12:43",
+      "name": "Christian Espino Bohm",
+      "licencia": "CP013755-P",
       "hcp": 0,
-      "nivel": "CP143640-P"
+      "nivel": "P+"
     },
     {
       "orden": 4,
-      "name": "Christian Espino Bohm",
-      "licencia": "18-05-26 13:19",
+      "name": "Samuel Santana Garcia",
+      "licencia": "CP313008-P",
       "hcp": 0,
-      "nivel": "CP013755-P"
+      "nivel": "P+"
     },
     {
       "orden": 5,
-      "name": "Samuel Santana Garcia",
-      "licencia": "18-05-26 21:56",
+      "name": "Ignacio Urriza Fuentes",
+      "licencia": "CP013212-P",
       "hcp": 0,
-      "nivel": "CP313008-P"
+      "nivel": "P+"
     },
     {
       "orden": 6,
-      "name": "Ignacio Urriza Fuentes",
-      "licencia": "19-05-26 15:07",
+      "name": "Jose Luis Gonzalez Courtney",
+      "licencia": "CP143284-P",
       "hcp": 0,
-      "nivel": "CP013212-P"
+      "nivel": "P+"
     }
   ],
   "horarios": [
@@ -202,5 +286,5 @@
   ],
   "scoreTypes": [],
   "pdfs": [],
-  "horariosScrapedAt": "2026-06-08T09:00:23.891Z"
+  "horariosScrapedAt": "2026-06-12T14:45:42.373Z"
 }

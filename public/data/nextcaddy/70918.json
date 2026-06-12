@@ -1,7 +1,7 @@
 {
   "tourId": 70918,
   "url": "https://www.nextcaddy.com/tour/70918",
-  "scrapedAt": "2026-05-25T08:25:31.720Z",
+  "scrapedAt": "2026-06-12T14:43:18.536Z",
   "meta": {
     "name": "Real Club de Golf de Guadalhorce - Categoria Especial",
     "organizer": null,
@@ -9,9 +9,9 @@
     "courseCode": "MAJC",
     "dateStart": null,
     "dateEnd": null,
-    "format": "Medal Play (Handicap)  Benjamin Masculin",
+    "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
-      "Benjamin Masculino",
+      "Caballeros",
       "Señoras",
       "Alevín Masculino",
       "Benjamin",
@@ -26,7 +26,29 @@
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Daniela Mena Chaparro",
+      "licencia": "AM11092816",
+      "hcp": 46,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Fecha Inscripción",
+      "hcp": null,
+      "nivel": "Licencia"
+    },
+    {
+      "orden": 1,
+      "name": "Daniela Mena Chaparro",
+      "licencia": "09-06-26 09:13",
+      "hcp": 46,
+      "nivel": "AM11092816"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -58,5 +80,5 @@
   "pdfs": [
     "/uploads/competiciones/pdf/2266048887_reglas-locales-2024.pdf"
   ],
-  "horariosScrapedAt": "2026-06-08T09:00:29.969Z"
+  "horariosScrapedAt": "2026-06-12T14:46:07.347Z"
 }

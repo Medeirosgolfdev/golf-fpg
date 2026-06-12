@@ -1,7 +1,7 @@
 {
   "tourId": 67209,
   "url": "https://www.nextcaddy.com/tour/67209",
-  "scrapedAt": "2026-05-21T16:40:02.643Z",
+  "scrapedAt": "2026-06-12T14:41:58.070Z",
   "meta": {
     "name": "II PRUEBA CIRCUITO DE DOBLES DE CASTILLA Y LEON",
     "organizer": null,
@@ -21,8 +21,13 @@
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Pareja",
+      "jugadores": 26
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -897,9 +902,10 @@
     }
   },
   "pdfs": [
+    "/uploads/competiciones/pdf/2852082332_67209_clasificacion.pdf",
     "/uploads/competiciones/pdf/2484765744_procedimiento_suspension.pdf",
     "/uploads/circulares/cirfgcyl1626.pdf",
     "/uploads/competiciones/pdf/4241669248_reglas_locales_riocerezo.pdf"
   ],
-  "horariosScrapedAt": "2026-05-21T16:42:00.909Z"
+  "horariosScrapedAt": "2026-06-12T14:45:08.800Z"
 }

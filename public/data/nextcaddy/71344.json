@@ -1,7 +1,7 @@
 {
   "tourId": 71344,
   "url": "https://www.nextcaddy.com/tour/71344",
-  "scrapedAt": "2026-06-03T13:20:40.468Z",
+  "scrapedAt": "2026-06-12T14:42:24.969Z",
   "meta": {
     "name": "LIGA ISCAPOLLOS JORNADA 10",
     "organizer": null,
@@ -20,9 +20,319 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 12,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Emilio Martin Carrero",
+          "licencia": "AMF7350881",
+          "hcp": 18.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2334111
+        },
+        {
+          "pos": 2,
+          "name": "Camilo Pereyra Da Costa",
+          "licencia": "AMC3099283",
+          "hcp": 16.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2334108
+        },
+        {
+          "pos": 3,
+          "name": "Juan Ramon Burgos Cantos",
+          "licencia": "AMF7475843",
+          "hcp": 22,
+          "nivel": "S",
+          "rounds": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2334105
+        },
+        {
+          "pos": 4,
+          "name": "Rafael Ruiz Romero",
+          "licencia": "AMF7070179",
+          "hcp": 26.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 15,
+          "toPar": 21,
+          "inscribedId": 2334107
+        },
+        {
+          "pos": 5,
+          "name": "Jesus Jimenez Lopez De Lemus",
+          "licencia": "AMF7070167",
+          "hcp": 25.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 15,
+          "toPar": 21,
+          "inscribedId": 2334106
+        },
+        {
+          "pos": 6,
+          "name": "Francisco Javier Garcia Martinez",
+          "licencia": "AMG3987204",
+          "hcp": 28.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 14,
+          "toPar": 22,
+          "inscribedId": 2334110
+        },
+        {
+          "pos": 7,
+          "name": "Manuel Francisco Felipe Perez",
+          "licencia": "AMG3953857",
+          "hcp": 26.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 14,
+          "toPar": 22,
+          "inscribedId": 2334115
+        },
+        {
+          "pos": 8,
+          "name": "Juan Pablo Yepes Babativa",
+          "licencia": "AMF7345803",
+          "hcp": 24.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 13,
+          "toPar": 23,
+          "inscribedId": 2334112
+        },
+        {
+          "pos": 9,
+          "name": "Carlos Acedo Dominguez",
+          "licencia": "AMG3987270",
+          "hcp": 22.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 13,
+          "toPar": 23,
+          "inscribedId": 2334109
+        },
+        {
+          "pos": 10,
+          "name": "Lorenzo Castaño Zulueta",
+          "licencia": "AMG3468278",
+          "hcp": 28.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 11,
+          "toPar": 25,
+          "inscribedId": 2334103
+        },
+        {
+          "pos": 11,
+          "name": "Rafael Repullo Sanchez",
+          "licencia": "AMG3949111",
+          "hcp": 30.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 9,
+          "toPar": 27,
+          "inscribedId": 2334113
+        },
+        {
+          "pos": 12,
+          "name": "Juan Antonio Gomez Soriano",
+          "licencia": "AMG3468285",
+          "hcp": 41.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 6,
+          "toPar": 30,
+          "inscribedId": 2334114
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 12,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Francisco Javier Garcia Martinez",
+          "licencia": "AMG3987204",
+          "hcp": 28.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2334110
+        },
+        {
+          "pos": 2,
+          "name": "Juan Ramon Burgos Cantos",
+          "licencia": "AMF7475843",
+          "hcp": 22,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2334105
+        },
+        {
+          "pos": 3,
+          "name": "Jesus Jimenez Lopez De Lemus",
+          "licencia": "AMF7070167",
+          "hcp": 25.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2334106
+        },
+        {
+          "pos": 4,
+          "name": "Rafael Ruiz Romero",
+          "licencia": "AMF7070179",
+          "hcp": 26.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2334107
+        },
+        {
+          "pos": 5,
+          "name": "Lorenzo Castaño Zulueta",
+          "licencia": "AMG3468278",
+          "hcp": 28.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2334103
+        },
+        {
+          "pos": 6,
+          "name": "Rafael Repullo Sanchez",
+          "licencia": "AMG3949111",
+          "hcp": 30.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2334113
+        },
+        {
+          "pos": 7,
+          "name": "Camilo Pereyra Da Costa",
+          "licencia": "AMC3099283",
+          "hcp": 16.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2334108
+        },
+        {
+          "pos": 8,
+          "name": "Manuel Francisco Felipe Perez",
+          "licencia": "AMG3953857",
+          "hcp": 26.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2334115
+        },
+        {
+          "pos": 9,
+          "name": "Emilio Martin Carrero",
+          "licencia": "AMF7350881",
+          "hcp": 18.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2334111
+        },
+        {
+          "pos": 10,
+          "name": "Carlos Acedo Dominguez",
+          "licencia": "AMG3987270",
+          "hcp": 22.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2334109
+        },
+        {
+          "pos": 11,
+          "name": "Juan Pablo Yepes Babativa",
+          "licencia": "AMF7345803",
+          "hcp": 24.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2334112
+        },
+        {
+          "pos": 12,
+          "name": "Juan Antonio Gomez Soriano",
+          "licencia": "AMG3468285",
+          "hcp": 41.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2334114
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 12
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 12
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -469,5 +779,6 @@
   },
   "pdfs": [
     "/uploads/competiciones/cartel/4111491698_71344-liga-iscapollos-jornada-10.pdf"
-  ]
+  ],
+  "horariosScrapedAt": "2026-06-12T14:46:11.727Z"
 }

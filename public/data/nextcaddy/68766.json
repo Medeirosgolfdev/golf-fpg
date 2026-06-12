@@ -1,9 +1,9 @@
 {
   "tourId": 68766,
   "url": "https://www.nextcaddy.com/tour/68766",
-  "scrapedAt": "2026-05-21T16:40:10.046Z",
+  "scrapedAt": "2026-06-12T14:42:12.288Z",
   "meta": {
-    "name": "Campeonato de Santa Cruz de Tenerife Juvenil 18 Hoyos (Alevín - Sub18)",
+    "name": "Campeonato de Santa Cruz de Tenerife Juvenil 18 Hoyos (Alevín - Infantil)",
     "organizer": null,
     "course": "Buenavista Golf",
     "courseCode": "CP22",
@@ -13,61 +13,634 @@
     "categories": [
       "Juvenil",
       "Alevín",
+      "Infantil",
       "Caballeros",
       "Señoras",
-      "Cadete",
-      "Infantil",
       "Alevin",
       "Profesional",
       "Senior"
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Final Infantil Indistinta",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Diego Crespo Barco",
+          "licencia": "CP02923942",
+          "hcp": 5.6,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 72
+            }
+          ],
+          "total": 153,
+          "toPar": 9,
+          "inscribedId": 2323303
+        },
+        {
+          "pos": 2,
+          "name": "Massimo Amoni Gamardo",
+          "licencia": "CP04942811",
+          "hcp": 7.9,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 79
+            }
+          ],
+          "total": 155,
+          "toPar": 11,
+          "inscribedId": 2317412
+        },
+        {
+          "pos": 3,
+          "name": "Cisco De Bethencourt",
+          "licencia": "CP01952017",
+          "hcp": 8.1,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 86
+            }
+          ],
+          "total": 165,
+          "toPar": 21,
+          "inscribedId": 2317528
+        },
+        {
+          "pos": 4,
+          "name": "Nicolas Kopecky Albertazzi",
+          "licencia": "CP06957898",
+          "hcp": 12.3,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 84
+            },
+            {
+              "round": 2,
+              "gross": 85
+            }
+          ],
+          "total": 169,
+          "toPar": 25,
+          "inscribedId": 2321577
+        },
+        {
+          "pos": 5,
+          "name": "Sebastian Mesa Luis",
+          "licencia": "CP22058249",
+          "hcp": 18.2,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 91
+            },
+            {
+              "round": 2,
+              "gross": 88
+            }
+          ],
+          "total": 179,
+          "toPar": 35,
+          "inscribedId": 2316745
+        },
+        {
+          "pos": 6,
+          "name": "Alvaro Peñafiel Martinez",
+          "licencia": "CP31001002",
+          "hcp": 14.7,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 97
+            },
+            {
+              "round": 2,
+              "gross": 89
+            }
+          ],
+          "total": 186,
+          "toPar": 42,
+          "inscribedId": 2325463
+        },
+        {
+          "pos": 7,
+          "name": "Nevis Molina Spindler",
+          "licencia": "CP01949889",
+          "hcp": 18.7,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 105
+            },
+            {
+              "round": 2,
+              "gross": 103
+            }
+          ],
+          "total": 208,
+          "toPar": 64,
+          "inscribedId": 2325511
+        },
+        {
+          "pos": 8,
+          "name": "Rodrigo Trapaga Cabrera",
+          "licencia": "CP02945484",
+          "hcp": 20.2,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 115
+            },
+            {
+              "round": 2,
+              "gross": 99
+            }
+          ],
+          "total": 214,
+          "toPar": 70,
+          "inscribedId": 2327981
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Clasificación Final Alevín Indistinta",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Isabella Cabezas De Herrera Mendez",
+          "licencia": "CP02962907",
+          "hcp": 6.9,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 83
+            },
+            {
+              "round": 2,
+              "gross": 79
+            }
+          ],
+          "total": 162,
+          "toPar": 18,
+          "inscribedId": 2319644
+        },
+        {
+          "pos": 2,
+          "name": "Valeria Armas Mateo",
+          "licencia": "CP02099929",
+          "hcp": 5.8,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 85
+            },
+            {
+              "round": 2,
+              "gross": 82
+            }
+          ],
+          "total": 167,
+          "toPar": 23,
+          "inscribedId": 2317420
+        },
+        {
+          "pos": 3,
+          "name": "Leo Calasanzio Borsellino",
+          "licencia": "CP05081101",
+          "hcp": 9.5,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 83
+            },
+            {
+              "round": 2,
+              "gross": 85
+            }
+          ],
+          "total": 168,
+          "toPar": 24,
+          "inscribedId": 2321579
+        },
+        {
+          "pos": 4,
+          "name": "Marie-Floor Schipper",
+          "licencia": "CP09002671",
+          "hcp": 11.6,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 84
+            },
+            {
+              "round": 2,
+              "gross": 85
+            }
+          ],
+          "total": 169,
+          "toPar": 25,
+          "inscribedId": 2327431
+        },
+        {
+          "pos": 5,
+          "name": "Lucas Saavedra Fernandez",
+          "licencia": "CP31000819",
+          "hcp": 15,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 90
+            },
+            {
+              "round": 2,
+              "gross": 91
+            }
+          ],
+          "total": 181,
+          "toPar": 37,
+          "inscribedId": 2325302
+        },
+        {
+          "pos": 6,
+          "name": "Mark Kaydo Petrov",
+          "licencia": "CP05993369",
+          "hcp": 13.3,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 93
+            },
+            {
+              "round": 2,
+              "gross": 97
+            }
+          ],
+          "total": 190,
+          "toPar": 46,
+          "inscribedId": 2321301
+        },
+        {
+          "pos": 7,
+          "name": "Lucia Saviron Alayon",
+          "licencia": "CP02053219",
+          "hcp": 15.1,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 100
+            },
+            {
+              "round": 2,
+              "gross": 98
+            }
+          ],
+          "total": 198,
+          "toPar": 54,
+          "inscribedId": 2317612
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Clasificación 1ª Jornada Infantil Y Alevín",
+      "expectedJugadores": 15,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Massimo Amoni Gamardo",
+          "licencia": "CP04942811",
+          "hcp": 7.9,
+          "nivel": "I",
+          "rounds": [],
+          "total": 76,
+          "toPar": 4,
+          "inscribedId": 2317412
+        },
+        {
+          "pos": 2,
+          "name": "Cisco De Bethencourt",
+          "licencia": "CP01952017",
+          "hcp": 8.1,
+          "nivel": "I",
+          "rounds": [],
+          "total": 79,
+          "toPar": 7,
+          "inscribedId": 2317528
+        },
+        {
+          "pos": 3,
+          "name": "Diego Crespo Barco",
+          "licencia": "CP02923942",
+          "hcp": 5.6,
+          "nivel": "I",
+          "rounds": [],
+          "total": 81,
+          "toPar": 9,
+          "inscribedId": 2323303
+        },
+        {
+          "pos": 4,
+          "name": "Isabella Cabezas De Herrera Mendez",
+          "licencia": "CP02962907",
+          "hcp": 6.9,
+          "nivel": "A",
+          "rounds": [],
+          "total": 83,
+          "toPar": 11,
+          "inscribedId": 2319644
+        },
+        {
+          "pos": null,
+          "name": "Leo Calasanzio Borsellino",
+          "licencia": "CP05081101",
+          "hcp": 9.5,
+          "nivel": "A",
+          "rounds": [],
+          "total": 83,
+          "toPar": 11,
+          "inscribedId": 2321579
+        },
+        {
+          "pos": 6,
+          "name": "Marie-Floor Schipper",
+          "licencia": "CP09002671",
+          "hcp": 11.6,
+          "nivel": "A",
+          "rounds": [],
+          "total": 84,
+          "toPar": 12,
+          "inscribedId": 2327431
+        },
+        {
+          "pos": null,
+          "name": "Nicolas Kopecky Albertazzi",
+          "licencia": "CP06957898",
+          "hcp": 12.3,
+          "nivel": "I",
+          "rounds": [],
+          "total": 84,
+          "toPar": 12,
+          "inscribedId": 2321577
+        },
+        {
+          "pos": 8,
+          "name": "Valeria Armas Mateo",
+          "licencia": "CP02099929",
+          "hcp": 5.8,
+          "nivel": "A",
+          "rounds": [],
+          "total": 85,
+          "toPar": 13,
+          "inscribedId": 2317420
+        },
+        {
+          "pos": 9,
+          "name": "Lucas Saavedra Fernandez",
+          "licencia": "CP31000819",
+          "hcp": 15,
+          "nivel": "A",
+          "rounds": [],
+          "total": 90,
+          "toPar": 18,
+          "inscribedId": 2325302
+        },
+        {
+          "pos": 10,
+          "name": "Sebastian Mesa Luis",
+          "licencia": "CP22058249",
+          "hcp": 18.2,
+          "nivel": "I",
+          "rounds": [],
+          "total": 91,
+          "toPar": 19,
+          "inscribedId": 2316745
+        },
+        {
+          "pos": 11,
+          "name": "Mark Kaydo Petrov",
+          "licencia": "CP05993369",
+          "hcp": 13.3,
+          "nivel": "A",
+          "rounds": [],
+          "total": 93,
+          "toPar": 21,
+          "inscribedId": 2321301
+        },
+        {
+          "pos": 12,
+          "name": "Alvaro Peñafiel Martinez",
+          "licencia": "CP31001002",
+          "hcp": 14.7,
+          "nivel": "I",
+          "rounds": [],
+          "total": 97,
+          "toPar": 25,
+          "inscribedId": 2325463
+        },
+        {
+          "pos": 13,
+          "name": "Lucia Saviron Alayon",
+          "licencia": "CP02053219",
+          "hcp": 15.1,
+          "nivel": "A",
+          "rounds": [],
+          "total": 100,
+          "toPar": 28,
+          "inscribedId": 2317612
+        },
+        {
+          "pos": 14,
+          "name": "Nevis Molina Spindler",
+          "licencia": "CP01949889",
+          "hcp": 18.7,
+          "nivel": "I",
+          "rounds": [],
+          "total": 105,
+          "toPar": 33,
+          "inscribedId": 2325511
+        },
+        {
+          "pos": 15,
+          "name": "Rodrigo Trapaga Cabrera",
+          "licencia": "CP02945484",
+          "hcp": 20.2,
+          "nivel": "I",
+          "rounds": [],
+          "total": 115,
+          "toPar": 43,
+          "inscribedId": 2327981
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Final Infantil Indistinta",
+      "jugadores": 8
+    },
+    "2": {
+      "name": "Clasificación Final Alevín Indistinta",
+      "jugadores": 7
+    },
+    "3": {
+      "name": "Clasificación 1ª Jornada Infantil Y Alevín",
+      "jugadores": 15
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
-      "name": "Adela Garcia Luis",
-      "licencia": "CP22927512",
-      "hcp": 10,
-      "nivel": "J"
+      "name": "Sebastian Mesa Luis",
+      "licencia": "CP22058249",
+      "hcp": 18.2,
+      "nivel": "I"
     },
     {
       "orden": 2,
-      "name": "Valeria Armas Mateo",
-      "licencia": "CP02099929",
-      "hcp": 5.8,
-      "nivel": "A"
+      "name": "Massimo Amoni Gamardo",
+      "licencia": "CP04942811",
+      "hcp": 7.9,
+      "nivel": "I"
     },
     {
       "orden": 3,
-      "name": "Maxima De Bethencourt",
-      "licencia": "CP01931459",
-      "hcp": 9.6,
-      "nivel": "C"
+      "name": "Cisco De Bethencourt",
+      "licencia": "CP01952017",
+      "hcp": 8.1,
+      "nivel": "I"
     },
     {
       "orden": 4,
-      "name": "Lucia Saviron Alayon",
-      "licencia": "CP02053219",
-      "hcp": 15.1,
+      "name": "Mark Kaydo Petrov",
+      "licencia": "CP05993369",
+      "hcp": 13.3,
       "nivel": "A"
     },
     {
       "orden": 5,
-      "name": "Isabella Cabezas De Herrera Mendez",
-      "licencia": "CP02962907",
-      "hcp": 6.9,
-      "nivel": "A"
+      "name": "Nicolas Kopecky Albertazzi",
+      "licencia": "CP06957898",
+      "hcp": 12.3,
+      "nivel": "I"
     },
     {
       "orden": 6,
-      "name": "Edurne Lairihoy Gonzalez",
-      "licencia": "CP24944877",
-      "hcp": 5.3,
-      "nivel": "C"
+      "name": "Leo Calasanzio Borsellino",
+      "licencia": "CP05081101",
+      "hcp": 9.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 7,
+      "name": "Diego Crespo Barco",
+      "licencia": "CP02923942",
+      "hcp": 5.6,
+      "nivel": "I"
+    },
+    {
+      "orden": 8,
+      "name": "Lucas Saavedra Fernandez",
+      "licencia": "CP31000819",
+      "hcp": 15,
+      "nivel": "A"
+    },
+    {
+      "orden": 9,
+      "name": "Alvaro Peñafiel Martinez",
+      "licencia": "CP31001002",
+      "hcp": 14.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 10,
+      "name": "Nevis Molina Spindler",
+      "licencia": "CP01949889",
+      "hcp": 18.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 11,
+      "name": "Rodrigo Trapaga Cabrera",
+      "licencia": "CP02945484",
+      "hcp": 20.2,
+      "nivel": "I"
     },
     {
       "orden": null,
@@ -78,332 +651,143 @@
     },
     {
       "orden": 1,
-      "name": "Nicolas Garcia Luis",
-      "licencia": "CP22934968",
-      "hcp": 16.8,
-      "nivel": "I"
+      "name": "Valeria Armas Mateo",
+      "licencia": "CP02099929",
+      "hcp": 5.8,
+      "nivel": "A"
     },
     {
       "orden": 2,
-      "name": "Juan Cabrera Monzon",
-      "licencia": "CP01897445",
-      "hcp": 4.8,
-      "nivel": "C"
+      "name": "Lucia Saviron Alayon",
+      "licencia": "CP02053219",
+      "hcp": 15.1,
+      "nivel": "A"
     },
     {
       "orden": 3,
-      "name": "Alessandro Barbuto",
-      "licencia": "CP06941629",
-      "hcp": 15.2,
-      "nivel": "J"
+      "name": "Isabella Cabezas De Herrera Mendez",
+      "licencia": "CP02962907",
+      "hcp": 6.9,
+      "nivel": "A"
     },
     {
       "orden": 4,
+      "name": "Marie-Floor Schipper",
+      "licencia": "CP09002671",
+      "hcp": 11.6,
+      "nivel": "A"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
       "name": "Sebastian Mesa Luis",
       "licencia": "CP22058249",
       "hcp": 18.2,
       "nivel": "I"
     },
     {
-      "orden": 5,
-      "name": "Raimundo Baroja Hernandez",
-      "licencia": "CP02817962",
-      "hcp": 0.9,
-      "nivel": "J"
-    },
-    {
-      "orden": 6,
+      "orden": 2,
       "name": "Massimo Amoni Gamardo",
       "licencia": "CP04942811",
       "hcp": 7.9,
       "nivel": "I"
     },
     {
-      "orden": 7,
-      "name": "Rodrigo Baroja Hernandez",
-      "licencia": "CP02817964",
-      "hcp": 2.3,
-      "nivel": "C"
+      "orden": 3,
+      "name": "Valeria Armas Mateo",
+      "licencia": "CP02099929",
+      "hcp": 5.8,
+      "nivel": "A"
     },
     {
-      "orden": 8,
-      "name": "Cristian Alvarez Claverie",
-      "licencia": "CP22930343",
-      "hcp": 9.3,
-      "nivel": "J"
-    },
-    {
-      "orden": 9,
+      "orden": 4,
       "name": "Cisco De Bethencourt",
       "licencia": "CP01952017",
-      "hcp": 8.8,
+      "hcp": 8.1,
       "nivel": "I"
     },
     {
-      "orden": 10,
+      "orden": 5,
+      "name": "Lucia Saviron Alayon",
+      "licencia": "CP02053219",
+      "hcp": 15.1,
+      "nivel": "A"
+    },
+    {
+      "orden": 6,
+      "name": "Isabella Cabezas De Herrera Mendez",
+      "licencia": "CP02962907",
+      "hcp": 6.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 7,
       "name": "Mark Kaydo Petrov",
       "licencia": "CP05993369",
       "hcp": 13.3,
       "nivel": "A"
     },
     {
-      "orden": 11,
-      "name": "Alberto Alexis Amador De Lorenzo",
-      "licencia": "CP09496832",
-      "hcp": 19.4,
-      "nivel": "C"
-    },
-    {
-      "orden": 12,
+      "orden": 8,
       "name": "Nicolas Kopecky Albertazzi",
       "licencia": "CP06957898",
       "hcp": 12.3,
       "nivel": "I"
     },
     {
-      "orden": 13,
+      "orden": 9,
       "name": "Leo Calasanzio Borsellino",
       "licencia": "CP05081101",
-      "hcp": 9.8,
+      "hcp": 9.5,
       "nivel": "A"
     },
     {
-      "orden": 14,
-      "name": "Jose Gomez Guerra",
-      "licencia": "CP01932032",
-      "hcp": 8,
-      "nivel": "C"
-    },
-    {
-      "orden": 15,
-      "name": "Fernando Gonzalez Capdepon",
-      "licencia": "CP01920842",
-      "hcp": 6.8,
-      "nivel": "J"
-    },
-    {
-      "orden": 16,
-      "name": "Luis Abeledo Miranda",
-      "licencia": "CP02167542",
-      "hcp": 0.8,
-      "nivel": "C"
-    },
-    {
-      "orden": 17,
-      "name": "David Arzola Hernandez",
-      "licencia": "CP24974220",
-      "hcp": 7.6,
-      "nivel": "C"
-    },
-    {
-      "orden": 18,
+      "orden": 10,
       "name": "Diego Crespo Barco",
       "licencia": "CP02923942",
       "hcp": 5.6,
       "nivel": "I"
     },
     {
-      "orden": 19,
+      "orden": 11,
       "name": "Lucas Saavedra Fernandez",
       "licencia": "CP31000819",
       "hcp": 15,
       "nivel": "A"
     },
     {
-      "orden": 20,
+      "orden": 12,
       "name": "Alvaro Peñafiel Martinez",
       "licencia": "CP31001002",
       "hcp": 14.7,
       "nivel": "I"
     },
     {
-      "orden": null,
-      "name": "Jugador",
-      "licencia": "Fecha Inscripción",
-      "hcp": null,
-      "nivel": "Licencia"
-    },
-    {
-      "orden": 1,
-      "name": "Adela Garcia Luis",
-      "licencia": "11-05-26 10:05",
-      "hcp": 10,
-      "nivel": "CP22927512"
-    },
-    {
-      "orden": 2,
-      "name": "Nicolas Garcia Luis",
-      "licencia": "11-05-26 10:07",
-      "hcp": 16.8,
-      "nivel": "CP22934968"
-    },
-    {
-      "orden": 3,
-      "name": "Juan Cabrera Monzon",
-      "licencia": "11-05-26 10:08",
-      "hcp": 4.8,
-      "nivel": "CP01897445"
-    },
-    {
-      "orden": 4,
-      "name": "Alessandro Barbuto",
-      "licencia": "11-05-26 10:20",
-      "hcp": 15.2,
-      "nivel": "CP06941629"
-    },
-    {
-      "orden": 5,
-      "name": "Sebastian Mesa Luis",
-      "licencia": "11-05-26 10:58",
-      "hcp": 18.2,
-      "nivel": "CP22058249"
-    },
-    {
-      "orden": 6,
-      "name": "Raimundo Baroja Hernandez",
-      "licencia": "11-05-26 19:11",
-      "hcp": 0.9,
-      "nivel": "CP02817962"
-    },
-    {
-      "orden": 7,
-      "name": "Massimo Amoni Gamardo",
-      "licencia": "11-05-26 19:13",
-      "hcp": 7.9,
-      "nivel": "CP04942811"
-    },
-    {
-      "orden": 8,
-      "name": "Rodrigo Baroja Hernandez",
-      "licencia": "11-05-26 19:13",
-      "hcp": 2.3,
-      "nivel": "CP02817964"
-    },
-    {
-      "orden": 9,
-      "name": "Valeria Armas Mateo",
-      "licencia": "11-05-26 19:58",
-      "hcp": 5.8,
-      "nivel": "CP02099929"
-    },
-    {
-      "orden": 10,
-      "name": "Cristian Alvarez Claverie",
-      "licencia": "11-05-26 22:47",
-      "hcp": 9.3,
-      "nivel": "CP22930343"
-    },
-    {
-      "orden": 11,
-      "name": "Cisco De Bethencourt",
-      "licencia": "12-05-26 10:26",
-      "hcp": 8.8,
-      "nivel": "CP01952017"
-    },
-    {
-      "orden": 12,
-      "name": "Maxima De Bethencourt",
-      "licencia": "12-05-26 10:28",
-      "hcp": 9.6,
-      "nivel": "CP01931459"
-    },
-    {
       "orden": 13,
-      "name": "Lucia Saviron Alayon",
-      "licencia": "12-05-26 12:56",
-      "hcp": 15.1,
-      "nivel": "CP02053219"
+      "name": "Nevis Molina Spindler",
+      "licencia": "CP01949889",
+      "hcp": 18.7,
+      "nivel": "I"
     },
     {
       "orden": 14,
-      "name": "Isabella Cabezas De Herrera Mendez",
-      "licencia": "14-05-26 11:47",
-      "hcp": 6.9,
-      "nivel": "CP02962907"
+      "name": "Marie-Floor Schipper",
+      "licencia": "CP09002671",
+      "hcp": 11.6,
+      "nivel": "A"
     },
     {
       "orden": 15,
-      "name": "Mark Kaydo Petrov",
-      "licencia": "17-05-26 08:18",
-      "hcp": 13.3,
-      "nivel": "CP05993369"
-    },
-    {
-      "orden": 16,
-      "name": "Alberto Alexis Amador De Lorenzo",
-      "licencia": "17-05-26 09:12",
-      "hcp": 19.4,
-      "nivel": "CP09496832"
-    },
-    {
-      "orden": 17,
-      "name": "Nicolas Kopecky Albertazzi",
-      "licencia": "17-05-26 16:37",
-      "hcp": 12.3,
-      "nivel": "CP06957898"
-    },
-    {
-      "orden": 18,
-      "name": "Leo Calasanzio Borsellino",
-      "licencia": "17-05-26 16:42",
-      "hcp": 9.8,
-      "nivel": "CP05081101"
-    },
-    {
-      "orden": 19,
-      "name": "Jose Gomez Guerra",
-      "licencia": "17-05-26 19:00",
-      "hcp": 8,
-      "nivel": "CP01932032"
-    },
-    {
-      "orden": 20,
-      "name": "Fernando Gonzalez Capdepon",
-      "licencia": "18-05-26 11:28",
-      "hcp": 6.8,
-      "nivel": "CP01920842"
-    },
-    {
-      "orden": 21,
-      "name": "Luis Abeledo Miranda",
-      "licencia": "18-05-26 11:37",
-      "hcp": 0.8,
-      "nivel": "CP02167542"
-    },
-    {
-      "orden": 22,
-      "name": "David Arzola Hernandez",
-      "licencia": "18-05-26 12:10",
-      "hcp": 7.6,
-      "nivel": "CP24974220"
-    },
-    {
-      "orden": 23,
-      "name": "Diego Crespo Barco",
-      "licencia": "19-05-26 19:27",
-      "hcp": 5.6,
-      "nivel": "CP02923942"
-    },
-    {
-      "orden": 24,
-      "name": "Edurne Lairihoy Gonzalez",
-      "licencia": "20-05-26 21:17",
-      "hcp": 5.3,
-      "nivel": "CP24944877"
-    },
-    {
-      "orden": 25,
-      "name": "Lucas Saavedra Fernandez",
-      "licencia": "21-05-26 13:39",
-      "hcp": 15,
-      "nivel": "CP31000819"
-    },
-    {
-      "orden": 26,
-      "name": "Alvaro Peñafiel Martinez",
-      "licencia": "21-05-26 17:30",
-      "hcp": 14.7,
-      "nivel": "CP31001002"
+      "name": "Rodrigo Trapaga Cabrera",
+      "licencia": "CP02945484",
+      "hcp": 20.2,
+      "nivel": "I"
     }
   ],
   "horarios": [
@@ -709,5 +1093,5 @@
   ],
   "scoreTypes": [],
   "pdfs": [],
-  "horariosScrapedAt": "2026-06-01T09:30:35.011Z"
+  "horariosScrapedAt": "2026-06-12T14:45:44.013Z"
 }

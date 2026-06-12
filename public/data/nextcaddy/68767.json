@@ -1,9 +1,9 @@
 {
   "tourId": 68767,
   "url": "https://www.nextcaddy.com/tour/68767",
-  "scrapedAt": "2026-05-21T16:40:10.182Z",
+  "scrapedAt": "2026-06-12T14:42:12.540Z",
   "meta": {
-    "name": "Campeonato de Santa Cruz de Tenerife Juvenil 18 Hoyos (19 - 25 años)",
+    "name": "Campeonato de Santa Cruz de Tenerife Juvenil 18 Hoyos (Sub18 y Cadete)",
     "organizer": null,
     "course": "Buenavista Golf",
     "courseCode": "CP22",
@@ -12,6 +12,7 @@
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Juvenil",
+      "Cadete",
       "Caballeros",
       "Señoras",
       "Infantil",
@@ -20,10 +21,934 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Final Indistinta Sub18",
+      "expectedJugadores": 15,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Raimundo Baroja Hernandez",
+          "licencia": "CP02817962",
+          "hcp": 0.2,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 71
+            },
+            {
+              "round": 2,
+              "gross": 70
+            }
+          ],
+          "total": 141,
+          "toPar": -3,
+          "inscribedId": 2317409
+        },
+        {
+          "pos": 2,
+          "name": "Luis Abeledo Miranda",
+          "licencia": "CP02167542",
+          "hcp": 0.8,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 73
+            },
+            {
+              "round": 2,
+              "gross": 69
+            }
+          ],
+          "total": 142,
+          "toPar": -2,
+          "inscribedId": 2322175
+        },
+        {
+          "pos": 3,
+          "name": "Rafael Gonzalez Albarracin",
+          "licencia": "CP02817272",
+          "hcp": 0.1,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 77
+            },
+            {
+              "round": 2,
+              "gross": 77
+            }
+          ],
+          "total": 154,
+          "toPar": 10,
+          "inscribedId": 2327444
+        },
+        {
+          "pos": 4,
+          "name": "Rodrigo Baroja Hernandez",
+          "licencia": "CP02817964",
+          "hcp": 2,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 80
+            },
+            {
+              "round": 2,
+              "gross": 78
+            }
+          ],
+          "total": 158,
+          "toPar": 14,
+          "inscribedId": 2317413
+        },
+        {
+          "pos": 5,
+          "name": "Juan Cabrera Monzon",
+          "licencia": "CP01897445",
+          "hcp": 5,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 77
+            },
+            {
+              "round": 2,
+              "gross": 82
+            }
+          ],
+          "total": 159,
+          "toPar": 15,
+          "inscribedId": 2316669
+        },
+        {
+          "pos": 6,
+          "name": "Fernando Gonzalez Capdepon",
+          "licencia": "CP01920842",
+          "hcp": 6.6,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 88
+            },
+            {
+              "round": 2,
+              "gross": 81
+            }
+          ],
+          "total": 169,
+          "toPar": 25,
+          "inscribedId": 2322163
+        },
+        {
+          "pos": 7,
+          "name": "Maxima De Bethencourt",
+          "licencia": "CP01931459",
+          "hcp": 9.2,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 90
+            },
+            {
+              "round": 2,
+              "gross": 80
+            }
+          ],
+          "total": 170,
+          "toPar": 26,
+          "inscribedId": 2317530
+        },
+        {
+          "pos": null,
+          "name": "Adela Garcia Luis",
+          "licencia": "CP22927512",
+          "hcp": 10,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 88
+            },
+            {
+              "round": 2,
+              "gross": 82
+            }
+          ],
+          "total": 170,
+          "toPar": 26,
+          "inscribedId": 2316643
+        },
+        {
+          "pos": 9,
+          "name": "David Arzola Hernandez",
+          "licencia": "CP24974220",
+          "hcp": 7.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 89
+            },
+            {
+              "round": 2,
+              "gross": 83
+            }
+          ],
+          "total": 172,
+          "toPar": 28,
+          "inscribedId": 2322215
+        },
+        {
+          "pos": 10,
+          "name": "Edurne Lairihoy Gonzalez",
+          "licencia": "CP24944877",
+          "hcp": 5.3,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 89
+            },
+            {
+              "round": 2,
+              "gross": 84
+            }
+          ],
+          "total": 173,
+          "toPar": 29,
+          "inscribedId": 2324465
+        },
+        {
+          "pos": 11,
+          "name": "Alessandro Barbuto",
+          "licencia": "CP06941629",
+          "hcp": 15.2,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 89
+            },
+            {
+              "round": 2,
+              "gross": 90
+            }
+          ],
+          "total": 179,
+          "toPar": 35,
+          "inscribedId": 2316696
+        },
+        {
+          "pos": 12,
+          "name": "Jose Gomez Guerra",
+          "licencia": "CP01932032",
+          "hcp": 8,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 98
+            },
+            {
+              "round": 2,
+              "gross": 86
+            }
+          ],
+          "total": 184,
+          "toPar": 40,
+          "inscribedId": 2321600
+        },
+        {
+          "pos": 13,
+          "name": "Cristian Alvarez Claverie",
+          "licencia": "CP22930343",
+          "hcp": 9.5,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 98
+            },
+            {
+              "round": 2,
+              "gross": 87
+            }
+          ],
+          "total": 185,
+          "toPar": 41,
+          "inscribedId": 2317460
+        },
+        {
+          "pos": 14,
+          "name": "Alberto Alexis Amador De Lorenzo",
+          "licencia": "CP09496832",
+          "hcp": 19.4,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 96
+            },
+            {
+              "round": 2,
+              "gross": 109
+            }
+          ],
+          "total": 205,
+          "toPar": 61,
+          "inscribedId": 2321310
+        },
+        {
+          "pos": 15,
+          "name": "Pelayo Tosal Tosal",
+          "licencia": "CP06476335",
+          "hcp": 27,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 104
+            },
+            {
+              "round": 2,
+              "gross": 107
+            }
+          ],
+          "total": 211,
+          "toPar": 67,
+          "inscribedId": 2327229
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Clasificación Final Cadete Indistinta",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Luis Abeledo Miranda",
+          "licencia": "CP02167542",
+          "hcp": 0.8,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 73
+            },
+            {
+              "round": 2,
+              "gross": 69
+            }
+          ],
+          "total": 142,
+          "toPar": -2,
+          "inscribedId": 2322175
+        },
+        {
+          "pos": 2,
+          "name": "Rodrigo Baroja Hernandez",
+          "licencia": "CP02817964",
+          "hcp": 2,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 80
+            },
+            {
+              "round": 2,
+              "gross": 78
+            }
+          ],
+          "total": 158,
+          "toPar": 14,
+          "inscribedId": 2317413
+        },
+        {
+          "pos": 3,
+          "name": "Juan Cabrera Monzon",
+          "licencia": "CP01897445",
+          "hcp": 5,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 77
+            },
+            {
+              "round": 2,
+              "gross": 82
+            }
+          ],
+          "total": 159,
+          "toPar": 15,
+          "inscribedId": 2316669
+        },
+        {
+          "pos": 4,
+          "name": "Maxima De Bethencourt",
+          "licencia": "CP01931459",
+          "hcp": 9.2,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 90
+            },
+            {
+              "round": 2,
+              "gross": 80
+            }
+          ],
+          "total": 170,
+          "toPar": 26,
+          "inscribedId": 2317530
+        },
+        {
+          "pos": 5,
+          "name": "David Arzola Hernandez",
+          "licencia": "CP24974220",
+          "hcp": 7.6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 89
+            },
+            {
+              "round": 2,
+              "gross": 83
+            }
+          ],
+          "total": 172,
+          "toPar": 28,
+          "inscribedId": 2322215
+        },
+        {
+          "pos": 6,
+          "name": "Edurne Lairihoy Gonzalez",
+          "licencia": "CP24944877",
+          "hcp": 5.3,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 89
+            },
+            {
+              "round": 2,
+              "gross": 84
+            }
+          ],
+          "total": 173,
+          "toPar": 29,
+          "inscribedId": 2324465
+        },
+        {
+          "pos": 7,
+          "name": "Jose Gomez Guerra",
+          "licencia": "CP01932032",
+          "hcp": 8,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 98
+            },
+            {
+              "round": 2,
+              "gross": 86
+            }
+          ],
+          "total": 184,
+          "toPar": 40,
+          "inscribedId": 2321600
+        },
+        {
+          "pos": 8,
+          "name": "Alberto Alexis Amador De Lorenzo",
+          "licencia": "CP09496832",
+          "hcp": 19.4,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 96
+            },
+            {
+              "round": 2,
+              "gross": 109
+            }
+          ],
+          "total": 205,
+          "toPar": 61,
+          "inscribedId": 2321310
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Clasificación 1ª Jornada Indistinta",
+      "expectedJugadores": 15,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Raimundo Baroja Hernandez",
+          "licencia": "CP02817962",
+          "hcp": 0.2,
+          "nivel": "J",
+          "rounds": [],
+          "total": 71,
+          "toPar": -1,
+          "inscribedId": 2317409
+        },
+        {
+          "pos": 2,
+          "name": "Luis Abeledo Miranda",
+          "licencia": "CP02167542",
+          "hcp": 0.8,
+          "nivel": "C",
+          "rounds": [],
+          "total": 73,
+          "toPar": 1,
+          "inscribedId": 2322175
+        },
+        {
+          "pos": 3,
+          "name": "Juan Cabrera Monzon",
+          "licencia": "CP01897445",
+          "hcp": 5,
+          "nivel": "C",
+          "rounds": [],
+          "total": 77,
+          "toPar": 5,
+          "inscribedId": 2316669
+        },
+        {
+          "pos": null,
+          "name": "Rafael Gonzalez Albarracin",
+          "licencia": "CP02817272",
+          "hcp": 0.1,
+          "nivel": "J",
+          "rounds": [],
+          "total": 77,
+          "toPar": 5,
+          "inscribedId": 2327444
+        },
+        {
+          "pos": 5,
+          "name": "Rodrigo Baroja Hernandez",
+          "licencia": "CP02817964",
+          "hcp": 2,
+          "nivel": "C",
+          "rounds": [],
+          "total": 80,
+          "toPar": 8,
+          "inscribedId": 2317413
+        },
+        {
+          "pos": 6,
+          "name": "Fernando Gonzalez Capdepon",
+          "licencia": "CP01920842",
+          "hcp": 6.6,
+          "nivel": "J",
+          "rounds": [],
+          "total": 88,
+          "toPar": 16,
+          "inscribedId": 2322163
+        },
+        {
+          "pos": null,
+          "name": "Adela Garcia Luis",
+          "licencia": "CP22927512",
+          "hcp": 10,
+          "nivel": "J",
+          "rounds": [],
+          "total": 88,
+          "toPar": 16,
+          "inscribedId": 2316643
+        },
+        {
+          "pos": 8,
+          "name": "David Arzola Hernandez",
+          "licencia": "CP24974220",
+          "hcp": 7.6,
+          "nivel": "C",
+          "rounds": [],
+          "total": 89,
+          "toPar": 17,
+          "inscribedId": 2322215
+        },
+        {
+          "pos": null,
+          "name": "Alessandro Barbuto",
+          "licencia": "CP06941629",
+          "hcp": 15.2,
+          "nivel": "J",
+          "rounds": [],
+          "total": 89,
+          "toPar": 17,
+          "inscribedId": 2316696
+        },
+        {
+          "pos": null,
+          "name": "Edurne Lairihoy Gonzalez",
+          "licencia": "CP24944877",
+          "hcp": 5.3,
+          "nivel": "C",
+          "rounds": [],
+          "total": 89,
+          "toPar": 17,
+          "inscribedId": 2324465
+        },
+        {
+          "pos": 11,
+          "name": "Maxima De Bethencourt",
+          "licencia": "CP01931459",
+          "hcp": 9.2,
+          "nivel": "C",
+          "rounds": [],
+          "total": 90,
+          "toPar": 18,
+          "inscribedId": 2317530
+        },
+        {
+          "pos": 12,
+          "name": "Alberto Alexis Amador De Lorenzo",
+          "licencia": "CP09496832",
+          "hcp": 19.4,
+          "nivel": "C",
+          "rounds": [],
+          "total": 96,
+          "toPar": 24,
+          "inscribedId": 2321310
+        },
+        {
+          "pos": 13,
+          "name": "Cristian Alvarez Claverie",
+          "licencia": "CP22930343",
+          "hcp": 9.5,
+          "nivel": "J",
+          "rounds": [],
+          "total": 98,
+          "toPar": 26,
+          "inscribedId": 2317460
+        },
+        {
+          "pos": null,
+          "name": "Jose Gomez Guerra",
+          "licencia": "CP01932032",
+          "hcp": 8,
+          "nivel": "C",
+          "rounds": [],
+          "total": 98,
+          "toPar": 26,
+          "inscribedId": 2321600
+        },
+        {
+          "pos": 15,
+          "name": "Pelayo Tosal Tosal",
+          "licencia": "CP06476335",
+          "hcp": 27,
+          "nivel": "J",
+          "rounds": [],
+          "total": 104,
+          "toPar": 32,
+          "inscribedId": 2327229
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Final Indistinta Sub18",
+      "jugadores": 15
+    },
+    "2": {
+      "name": "Clasificación Final Cadete Indistinta",
+      "jugadores": 8
+    },
+    "3": {
+      "name": "Clasificación 1ª Jornada Indistinta",
+      "jugadores": 15
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Adela Garcia Luis",
+      "licencia": "CP22927512",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 2,
+      "name": "Maxima De Bethencourt",
+      "licencia": "CP01931459",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 3,
+      "name": "Edurne Lairihoy Gonzalez",
+      "licencia": "CP24944877",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Juan Cabrera Monzon",
+      "licencia": "CP01897445",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 2,
+      "name": "Alessandro Barbuto",
+      "licencia": "CP06941629",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 3,
+      "name": "Raimundo Baroja Hernandez",
+      "licencia": "CP02817962",
+      "hcp": 0.2,
+      "nivel": "J"
+    },
+    {
+      "orden": 4,
+      "name": "Rodrigo Baroja Hernandez",
+      "licencia": "CP02817964",
+      "hcp": 2,
+      "nivel": "C"
+    },
+    {
+      "orden": 5,
+      "name": "Cristian Alvarez Claverie",
+      "licencia": "CP22930343",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 6,
+      "name": "Alberto Alexis Amador De Lorenzo",
+      "licencia": "CP09496832",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 7,
+      "name": "Jose Gomez Guerra",
+      "licencia": "CP01932032",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 8,
+      "name": "Fernando Gonzalez Capdepon",
+      "licencia": "CP01920842",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 9,
+      "name": "Luis Abeledo Miranda",
+      "licencia": "CP02167542",
+      "hcp": 0.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 10,
+      "name": "David Arzola Hernandez",
+      "licencia": "CP24974220",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 11,
+      "name": "Pelayo Tosal Tosal",
+      "licencia": "CP06476335",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 12,
+      "name": "Rafael Gonzalez Albarracin",
+      "licencia": "CP02817272",
+      "hcp": 0.1,
+      "nivel": "J"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Adela Garcia Luis",
+      "licencia": "CP22927512",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 2,
+      "name": "Juan Cabrera Monzon",
+      "licencia": "CP01897445",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 3,
+      "name": "Alessandro Barbuto",
+      "licencia": "CP06941629",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 4,
+      "name": "Raimundo Baroja Hernandez",
+      "licencia": "CP02817962",
+      "hcp": 0.2,
+      "nivel": "J"
+    },
+    {
+      "orden": 5,
+      "name": "Rodrigo Baroja Hernandez",
+      "licencia": "CP02817964",
+      "hcp": 2,
+      "nivel": "C"
+    },
+    {
+      "orden": 6,
+      "name": "Cristian Alvarez Claverie",
+      "licencia": "CP22930343",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 7,
+      "name": "Maxima De Bethencourt",
+      "licencia": "CP01931459",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 8,
+      "name": "Alberto Alexis Amador De Lorenzo",
+      "licencia": "CP09496832",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 9,
+      "name": "Jose Gomez Guerra",
+      "licencia": "CP01932032",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 10,
+      "name": "Fernando Gonzalez Capdepon",
+      "licencia": "CP01920842",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 11,
+      "name": "Luis Abeledo Miranda",
+      "licencia": "CP02167542",
+      "hcp": 0.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 12,
+      "name": "David Arzola Hernandez",
+      "licencia": "CP24974220",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 13,
+      "name": "Edurne Lairihoy Gonzalez",
+      "licencia": "CP24944877",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 14,
+      "name": "Pelayo Tosal Tosal",
+      "licencia": "CP06476335",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 15,
+      "name": "Rafael Gonzalez Albarracin",
+      "licencia": "CP02817272",
+      "hcp": 0.1,
+      "nivel": "J"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -326,6 +1251,9 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-06-01T09:30:35.005Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/816715329_banderas_domingo_.pdf",
+    "/uploads/competiciones/pdf/1135079272_reglas_locales_cº_juvenil_tenerife.pdf"
+  ],
+  "horariosScrapedAt": "2026-06-12T14:45:44.230Z"
 }

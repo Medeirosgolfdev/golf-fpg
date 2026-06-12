@@ -1,7 +1,7 @@
 {
   "tourId": 71275,
   "url": "https://www.nextcaddy.com/tour/71275",
-  "scrapedAt": "2026-06-01T09:30:05.150Z",
+  "scrapedAt": "2026-06-12T14:42:23.567Z",
   "meta": {
     "name": "POOL DE SENIORS  DE PRIMAVERA (03/06/2026).",
     "organizer": null,
@@ -20,9 +20,187 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Pool Seniors",
+      "expectedJugadores": 14,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Miguel Angel Saenz Garcia",
+          "licencia": "VB14734386",
+          "hcp": 27.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2332332
+        },
+        {
+          "pos": 2,
+          "name": "Jose Maria Bariain Satrustegui",
+          "licencia": "4401188006",
+          "hcp": 18,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2333907
+        },
+        {
+          "pos": 3,
+          "name": "Javier Roncal Azanza",
+          "licencia": "4401397618",
+          "hcp": 26.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2332448
+        },
+        {
+          "pos": 4,
+          "name": "Santiago Iglesias Gines",
+          "licencia": "4401244035",
+          "hcp": 23.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2332361
+        },
+        {
+          "pos": 5,
+          "name": "Miguel Torrea Larralde",
+          "licencia": "4401696255",
+          "hcp": 24.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2332358
+        },
+        {
+          "pos": 6,
+          "name": "Schuyler Glidden",
+          "licencia": "4401907785",
+          "hcp": 17.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2332491
+        },
+        {
+          "pos": 7,
+          "name": "Jose Manuel Echevarria Salaverria",
+          "licencia": "4401262357",
+          "hcp": 15.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2333101
+        },
+        {
+          "pos": 8,
+          "name": "Jose Antonio Beloqui Arrondo",
+          "licencia": "4402240696",
+          "hcp": 8.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2332410
+        },
+        {
+          "pos": 9,
+          "name": "Jose Maria Mateo Fuertes",
+          "licencia": "4401013872",
+          "hcp": 26,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2332400
+        },
+        {
+          "pos": 10,
+          "name": "Alberto Guinaldo Iglesias",
+          "licencia": "4401726220",
+          "hcp": 18.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2333134
+        },
+        {
+          "pos": 11,
+          "name": "Jesús Antonio Munilla Martinez",
+          "licencia": "4401789557",
+          "hcp": 17.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2332225
+        },
+        {
+          "pos": 12,
+          "name": "Agustin Perez-Seoane Garrido",
+          "licencia": "4401072726",
+          "hcp": 25.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2333136
+        },
+        {
+          "pos": 13,
+          "name": "Javier Inchausti Estomba",
+          "licencia": "4401722753",
+          "hcp": 23.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2332341
+        },
+        {
+          "pos": 14,
+          "name": "Tomas Oficialdegui Recarte",
+          "licencia": "4401074583",
+          "hcp": 27.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2332747
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Pool Seniors",
+      "jugadores": 14
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -88,6 +266,27 @@
       "nivel": "S"
     },
     {
+      "orden": 10,
+      "name": "Jose Manuel Echevarria Salaverria",
+      "licencia": "4401262357",
+      "hcp": 15.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Alberto Guinaldo Iglesias",
+      "licencia": "4401726220",
+      "hcp": 18.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Jose Maria Bariain Satrustegui",
+      "licencia": "4401188006",
+      "hcp": 18,
+      "nivel": "S"
+    },
+    {
       "orden": null,
       "name": "Jugador",
       "licencia": "Licencia",
@@ -99,6 +298,13 @@
       "name": "Jose Maria Mateo Fuertes",
       "licencia": "4401013872",
       "hcp": 26,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Agustin Perez-Seoane Garrido",
+      "licencia": "4401072726",
+      "hcp": 25.1,
       "nivel": "S"
     },
     {
@@ -177,6 +383,34 @@
       "licencia": "01-06-26 10:11",
       "hcp": null,
       "nivel": "4401074583"
+    },
+    {
+      "orden": 11,
+      "name": "Jose Manuel Echevarria Salaverria",
+      "licencia": "01-06-26 14:04",
+      "hcp": 15.3,
+      "nivel": "4401262357"
+    },
+    {
+      "orden": 12,
+      "name": "Alberto Guinaldo Iglesias",
+      "licencia": "01-06-26 14:35",
+      "hcp": 18.6,
+      "nivel": "4401726220"
+    },
+    {
+      "orden": 13,
+      "name": "Agustin Perez-Seoane Garrido",
+      "licencia": "01-06-26 14:46",
+      "hcp": 25.1,
+      "nivel": "4401072726"
+    },
+    {
+      "orden": 14,
+      "name": "Jose Maria Bariain Satrustegui",
+      "licencia": "03-06-26 08:53",
+      "hcp": 18,
+      "nivel": "4401188006"
     }
   ],
   "horarios": [],
@@ -238,5 +472,5 @@
     }
   },
   "pdfs": [],
-  "horariosScrapedAt": "2026-06-08T09:00:31.100Z"
+  "horariosScrapedAt": "2026-06-12T14:46:10.976Z"
 }

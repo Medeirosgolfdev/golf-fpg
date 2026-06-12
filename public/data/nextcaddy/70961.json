@@ -1,7 +1,7 @@
 {
   "tourId": 70961,
   "url": "https://www.nextcaddy.com/tour/70961",
-  "scrapedAt": "2026-05-21T16:39:59.382Z",
+  "scrapedAt": "2026-06-12T14:41:53.290Z",
   "meta": {
     "name": "TORNEO PREBODA",
     "organizer": null,
@@ -20,9 +20,220 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 17,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Francisco Miranda Sanchez-Gijon",
+          "licencia": "CP02320585",
+          "hcp": 26.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2323067
+        },
+        {
+          "pos": 2,
+          "name": "Guillermo Cabrera Hormiga",
+          "licencia": "CP09984194",
+          "hcp": 14.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2323051
+        },
+        {
+          "pos": 3,
+          "name": "Roberto Gimeno Casañas",
+          "licencia": "CP09952167",
+          "hcp": 19,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2323050
+        },
+        {
+          "pos": 4,
+          "name": "Oliver Abad Conradel",
+          "licencia": "AM05249035",
+          "hcp": 7.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2323062
+        },
+        {
+          "pos": 5,
+          "name": "Manuel Laviña Richi",
+          "licencia": "AM17094533",
+          "hcp": 18.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2323061
+        },
+        {
+          "pos": 6,
+          "name": "Alfonso Martin Hernandez",
+          "licencia": "CP09985495",
+          "hcp": 12.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2323052
+        },
+        {
+          "pos": 7,
+          "name": "Antonio Jesus Marin Larrea",
+          "licencia": "AMF7353837",
+          "hcp": 18,
+          "nivel": "S",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2323047
+        },
+        {
+          "pos": 8,
+          "name": "Gonzalo Lasso De La Vega Borja",
+          "licencia": "CM05012724",
+          "hcp": 4.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2323059
+        },
+        {
+          "pos": 9,
+          "name": "Fernando Belda De Zarate",
+          "licencia": "CP02409179",
+          "hcp": 8,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2323053
+        },
+        {
+          "pos": 10,
+          "name": "Ricardo Guillermo Miranda Palomino",
+          "licencia": "CP02018095",
+          "hcp": 12.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2323066
+        },
+        {
+          "pos": 11,
+          "name": "Rodrigo Lasso De La Vega Romero",
+          "licencia": "CM02259160",
+          "hcp": 6.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2323063
+        },
+        {
+          "pos": 12,
+          "name": "Javier Cabrera Raya",
+          "licencia": "CP09989952",
+          "hcp": 12,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2323049
+        },
+        {
+          "pos": 13,
+          "name": "Antonio Cruz-Conde Suarez De Tangil",
+          "licencia": "AM06914128",
+          "hcp": 18.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2324510
+        },
+        {
+          "pos": 14,
+          "name": "Jose Antonio Toro Calderon",
+          "licencia": "AM02746439",
+          "hcp": 24.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2323045
+        },
+        {
+          "pos": 15,
+          "name": "Jose Rgez-Etcheverria De La Muela",
+          "licencia": "GC02126543",
+          "hcp": 20,
+          "nivel": "S",
+          "rounds": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2323044
+        },
+        {
+          "pos": 16,
+          "name": "Ricardo Miranda Sanchez-Gijon",
+          "licencia": "CP02280180",
+          "hcp": 6.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2323055
+        },
+        {
+          "pos": 17,
+          "name": "Manuel Miranda Sanchez-Gijon",
+          "licencia": "CP02320586",
+          "hcp": 8.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2323056
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 17
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -470,5 +681,5 @@
   "pdfs": [
     "/uploads/competiciones/cartel/734167974_70961-torneo-preboda.pdf"
   ],
-  "horariosScrapedAt": "2026-05-21T16:42:45.588Z"
+  "horariosScrapedAt": "2026-06-12T14:46:07.963Z"
 }

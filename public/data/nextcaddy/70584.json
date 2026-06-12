@@ -1,7 +1,7 @@
 {
   "tourId": 70584,
   "url": "https://www.nextcaddy.com/tour/70584",
-  "scrapedAt": "2026-05-21T16:40:08.940Z",
+  "scrapedAt": "2026-06-12T14:42:09.866Z",
   "meta": {
     "name": "Prueba Infantil y Alevín Ctos de España",
     "organizer": null,
@@ -18,16 +18,258 @@
       "Alevin Masculino",
       "Alevin Femenino",
       "Juvenil",
-      "INFANTIL",
-      "ALEVIN",
       "Profesional",
       "Senior"
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Individual Scratch General",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Enzo Jimenez Puerta",
+          "licencia": "7753983104",
+          "hcp": 4.6,
+          "nivel": "I",
+          "rounds": [],
+          "total": 75,
+          "toPar": 5,
+          "inscribedId": 2328035
+        },
+        {
+          "pos": 2,
+          "name": "Manuel Cano De Manuel",
+          "licencia": "7707906552",
+          "hcp": 0.5,
+          "nivel": "I",
+          "rounds": [],
+          "total": 76,
+          "toPar": 6,
+          "inscribedId": 2326967
+        },
+        {
+          "pos": 3,
+          "name": "Pablo Rodriguez Molina",
+          "licencia": "7706966959",
+          "hcp": 11.2,
+          "nivel": "A",
+          "rounds": [],
+          "total": 80,
+          "toPar": 10,
+          "inscribedId": 2315590
+        },
+        {
+          "pos": 4,
+          "name": "Marco Rojas Alonso",
+          "licencia": "7776372629",
+          "hcp": 16.3,
+          "nivel": "A",
+          "rounds": [],
+          "total": 82,
+          "toPar": 12,
+          "inscribedId": 2325923
+        },
+        {
+          "pos": 5,
+          "name": "Jaime Pardo Gonzalez",
+          "licencia": "7706966957",
+          "hcp": 11.1,
+          "nivel": "A",
+          "rounds": [],
+          "total": 82,
+          "toPar": 12,
+          "inscribedId": 2314602
+        },
+        {
+          "pos": 6,
+          "name": "Cayetano Casado Villarreal",
+          "licencia": "7712191196",
+          "hcp": 14.9,
+          "nivel": "A",
+          "rounds": [],
+          "total": 83,
+          "toPar": 13,
+          "inscribedId": 2320737
+        },
+        {
+          "pos": 7,
+          "name": "Beltran Diez Sillero",
+          "licencia": "7706962379",
+          "hcp": 7.4,
+          "nivel": "I",
+          "rounds": [],
+          "total": 83,
+          "toPar": 13,
+          "inscribedId": 2313468
+        },
+        {
+          "pos": 8,
+          "name": "Diego San Sebastian Alonso",
+          "licencia": "7760993876",
+          "hcp": 10.7,
+          "nivel": "A",
+          "rounds": [],
+          "total": 83,
+          "toPar": 13,
+          "inscribedId": 2327242
+        },
+        {
+          "pos": 9,
+          "name": "Ariel Pradanos Martin",
+          "licencia": "7760487665",
+          "hcp": 14.1,
+          "nivel": "I",
+          "rounds": [],
+          "total": 91,
+          "toPar": 21,
+          "inscribedId": 2327847
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Individual Handicap General",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Marco Rojas Alonso",
+          "licencia": "7776372629",
+          "hcp": 16.3,
+          "nivel": "A",
+          "rounds": [],
+          "total": 69,
+          "toPar": -1,
+          "inscribedId": 2325923
+        },
+        {
+          "pos": 2,
+          "name": "Enzo Jimenez Puerta",
+          "licencia": "7753983104",
+          "hcp": 4.6,
+          "nivel": "I",
+          "rounds": [],
+          "total": 71,
+          "toPar": 1,
+          "inscribedId": 2328035
+        },
+        {
+          "pos": 3,
+          "name": "Cayetano Casado Villarreal",
+          "licencia": "7712191196",
+          "hcp": 14.9,
+          "nivel": "A",
+          "rounds": [],
+          "total": 71,
+          "toPar": 1,
+          "inscribedId": 2320737
+        },
+        {
+          "pos": 4,
+          "name": "Pablo Rodriguez Molina",
+          "licencia": "7706966959",
+          "hcp": 11.2,
+          "nivel": "A",
+          "rounds": [],
+          "total": 72,
+          "toPar": 2,
+          "inscribedId": 2315590
+        },
+        {
+          "pos": 5,
+          "name": "Jaime Pardo Gonzalez",
+          "licencia": "7706966957",
+          "hcp": 11.1,
+          "nivel": "A",
+          "rounds": [],
+          "total": 74,
+          "toPar": 4,
+          "inscribedId": 2314602
+        },
+        {
+          "pos": 6,
+          "name": "Beltran Diez Sillero",
+          "licencia": "7706962379",
+          "hcp": 7.4,
+          "nivel": "I",
+          "rounds": [],
+          "total": 76,
+          "toPar": 6,
+          "inscribedId": 2313468
+        },
+        {
+          "pos": 7,
+          "name": "Diego San Sebastian Alonso",
+          "licencia": "7760993876",
+          "hcp": 10.7,
+          "nivel": "A",
+          "rounds": [],
+          "total": 76,
+          "toPar": 6,
+          "inscribedId": 2327242
+        },
+        {
+          "pos": 8,
+          "name": "Manuel Cano De Manuel",
+          "licencia": "7707906552",
+          "hcp": 0.5,
+          "nivel": "I",
+          "rounds": [],
+          "total": 77,
+          "toPar": 7,
+          "inscribedId": 2326967
+        },
+        {
+          "pos": 9,
+          "name": "Ariel Pradanos Martin",
+          "licencia": "7760487665",
+          "hcp": 14.1,
+          "nivel": "I",
+          "rounds": [],
+          "total": 77,
+          "toPar": 7,
+          "inscribedId": 2327847
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Scratch General",
+      "jugadores": 9
+    },
+    "2": {
+      "name": "Individual Handicap General",
+      "jugadores": 9
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -38,16 +280,23 @@
     },
     {
       "orden": 2,
-      "name": "Mateo Fernandez Arteaga",
-      "licencia": "7760479307",
-      "hcp": 7.4,
+      "name": "Manuel Cano De Manuel",
+      "licencia": "7707906552",
+      "hcp": 0.5,
       "nivel": "I"
     },
     {
       "orden": 3,
+      "name": "Ariel Pradanos Martin",
+      "licencia": "7760487665",
+      "hcp": 14.1,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
       "name": "Enzo Jimenez Puerta",
       "licencia": "7753983104",
-      "hcp": 4.5,
+      "hcp": 4.6,
       "nivel": "I"
     },
     {
@@ -61,21 +310,35 @@
       "orden": 1,
       "name": "Jaime Pardo Gonzalez",
       "licencia": "7706966957",
-      "hcp": 11.4,
+      "hcp": 11.1,
       "nivel": "A"
     },
     {
       "orden": 2,
       "name": "Pablo Rodriguez Molina",
       "licencia": "7706966959",
-      "hcp": 11.5,
+      "hcp": 11.2,
       "nivel": "A"
     },
     {
       "orden": 3,
       "name": "Cayetano Casado Villarreal",
       "licencia": "7712191196",
-      "hcp": 16.4,
+      "hcp": 14.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Marco Rojas Alonso",
+      "licencia": "7776372629",
+      "hcp": 16.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 5,
+      "name": "Diego San Sebastian Alonso",
+      "licencia": "7760993876",
+      "hcp": 10.7,
       "nivel": "A"
     },
     {
@@ -96,36 +359,57 @@
       "orden": 2,
       "name": "Jaime Pardo Gonzalez",
       "licencia": "07-05-26 11:38",
-      "hcp": 11.4,
+      "hcp": 11.1,
       "nivel": "7706966957"
     },
     {
       "orden": 3,
       "name": "Pablo Rodriguez Molina",
       "licencia": "09-05-26 12:02",
-      "hcp": 11.5,
+      "hcp": 11.2,
       "nivel": "7706966959"
     },
     {
       "orden": 4,
-      "name": "Mateo Fernandez Arteaga",
-      "licencia": "11-05-26 07:36",
-      "hcp": 7.4,
-      "nivel": "7760479307"
+      "name": "Cayetano Casado Villarreal",
+      "licencia": "15-05-26 13:47",
+      "hcp": 14.9,
+      "nivel": "7712191196"
     },
     {
       "orden": 5,
-      "name": "Enzo Jimenez Puerta",
-      "licencia": "13-05-26 10:35",
-      "hcp": 4.5,
-      "nivel": "7753983104"
+      "name": "Marco Rojas Alonso",
+      "licencia": "22-05-26 14:05",
+      "hcp": 16.3,
+      "nivel": "7776372629"
     },
     {
       "orden": 6,
-      "name": "Cayetano Casado Villarreal",
-      "licencia": "15-05-26 13:47",
-      "hcp": 16.4,
-      "nivel": "7712191196"
+      "name": "Manuel Cano De Manuel",
+      "licencia": "24-05-26 11:51",
+      "hcp": 0.5,
+      "nivel": "7707906552"
+    },
+    {
+      "orden": 7,
+      "name": "Diego San Sebastian Alonso",
+      "licencia": "25-05-26 07:25",
+      "hcp": 10.7,
+      "nivel": "7760993876"
+    },
+    {
+      "orden": 8,
+      "name": "Ariel Pradanos Martin",
+      "licencia": "25-05-26 18:36",
+      "hcp": 14.1,
+      "nivel": "7760487665"
+    },
+    {
+      "orden": 9,
+      "name": "Enzo Jimenez Puerta",
+      "licencia": "26-05-26 10:35",
+      "hcp": 4.6,
+      "nivel": "7753983104"
     }
   ],
   "horarios": [
@@ -232,6 +516,9 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-06-01T09:30:39.946Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/3372279004_suspension_villamayor.pdf",
+    "/uploads/competiciones/pdf/329147728_reglas_locales_villamayor.pdf"
+  ],
+  "horariosScrapedAt": "2026-06-12T14:46:03.071Z"
 }

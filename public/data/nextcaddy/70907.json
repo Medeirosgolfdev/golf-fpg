@@ -1,7 +1,7 @@
 {
   "tourId": 70907,
   "url": "https://www.nextcaddy.com/tour/70907",
-  "scrapedAt": "2026-05-21T16:40:02.032Z",
+  "scrapedAt": "2026-06-12T14:41:57.401Z",
   "meta": {
     "name": "VI Torneo ZOF - Sábado 23 Mayo 2026 (Grupo privado)",
     "organizer": null,
@@ -20,9 +20,220 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 17,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Agustin Garcia Villaescusa",
+          "licencia": "AMC3193767",
+          "hcp": 20.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2322610
+        },
+        {
+          "pos": 2,
+          "name": "Francisco Javier De La Villa Ruiz",
+          "licencia": "AMC3972557",
+          "hcp": 19.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2321482
+        },
+        {
+          "pos": 3,
+          "name": "Fernando Leon Fernandez",
+          "licencia": "AM32700249",
+          "hcp": 21.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2321599
+        },
+        {
+          "pos": 4,
+          "name": "Antonio Rios Rey",
+          "licencia": "AMC3913652",
+          "hcp": 13.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2323784
+        },
+        {
+          "pos": 5,
+          "name": "Juan Manuel Maraver Delgado",
+          "licencia": "AM00204419",
+          "hcp": 13.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2321319
+        },
+        {
+          "pos": 6,
+          "name": "Jose Luis Oviedo Granados",
+          "licencia": "AM32358980",
+          "hcp": 13.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2321315
+        },
+        {
+          "pos": 7,
+          "name": "Jesus Cantos Ruiz",
+          "licencia": "AMC3921569",
+          "hcp": 15.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2321596
+        },
+        {
+          "pos": 8,
+          "name": "Javier Sanchez De Medina Pacheco",
+          "licencia": "AMC3970951",
+          "hcp": 15.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2322613
+        },
+        {
+          "pos": 9,
+          "name": "Francisco Cantero Gonzalez",
+          "licencia": "AMC3978373",
+          "hcp": 23.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2324289
+        },
+        {
+          "pos": 10,
+          "name": "Sergio Tamayo Gonzalez",
+          "licencia": "AM00758057",
+          "hcp": 15.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2321812
+        },
+        {
+          "pos": 11,
+          "name": "Fernando Garcia Ramos-Catalina",
+          "licencia": "AM32241517",
+          "hcp": 14.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2324538
+        },
+        {
+          "pos": 12,
+          "name": "Jaime Fe Ripalda",
+          "licencia": "AM32357954",
+          "hcp": 22.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2321332
+        },
+        {
+          "pos": 13,
+          "name": "Ildefonso Garcia Muñoz",
+          "licencia": "AM32349837",
+          "hcp": 23.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2321626
+        },
+        {
+          "pos": 14,
+          "name": "Jose Luis Perez Gonzalez",
+          "licencia": "AM00788329",
+          "hcp": 27.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2324072
+        },
+        {
+          "pos": 15,
+          "name": "Cayetano Del Pino Iñiguez",
+          "licencia": "AM32356806",
+          "hcp": 18.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2322463
+        },
+        {
+          "pos": 16,
+          "name": "Jose Manuel Rodriguez Laguno",
+          "licencia": "AM00127132",
+          "hcp": 13.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2322622
+        },
+        {
+          "pos": null,
+          "name": "Diego Perez Blanco",
+          "licencia": "AMC3794696",
+          "hcp": 24.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2321710
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 17
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -35,7 +246,7 @@
       "orden": 2,
       "name": "Juan Manuel Maraver Delgado",
       "licencia": "AM00204419",
-      "hcp": 13.4,
+      "hcp": 13.1,
       "nivel": "S"
     },
     {
@@ -56,7 +267,7 @@
       "orden": 5,
       "name": "Jesus Cantos Ruiz",
       "licencia": "AMC3921569",
-      "hcp": 15.2,
+      "hcp": 15.7,
       "nivel": "S"
     },
     {
@@ -161,7 +372,7 @@
       "orden": 2,
       "name": "Juan Manuel Maraver Delgado",
       "licencia": "17-05-26 09:53",
-      "hcp": 13.4,
+      "hcp": 13.1,
       "nivel": "AM00204419"
     },
     {
@@ -182,7 +393,7 @@
       "orden": 5,
       "name": "Jesus Cantos Ruiz",
       "licencia": "17-05-26 18:40",
-      "hcp": 15.2,
+      "hcp": 15.7,
       "nivel": "AMC3921569"
     },
     {
@@ -377,7 +588,7 @@
           "time": "09:00",
           "tee": 10,
           "name": "Jesus Cantos Ruiz",
-          "hcp": 15.2,
+          "hcp": 15.7,
           "ins": "2321596",
           "jid": "75909",
           "nivel": "S"
@@ -422,7 +633,7 @@
           "time": "09:10",
           "tee": 10,
           "name": "Juan Manuel Maraver Delgado",
-          "hcp": 13.4,
+          "hcp": 13.1,
           "ins": "2321319",
           "jid": "75909",
           "nivel": "S"
@@ -447,5 +658,5 @@
   ],
   "scoreTypes": [],
   "pdfs": [],
-  "horariosScrapedAt": "2026-05-21T16:42:45.148Z"
+  "horariosScrapedAt": "2026-06-12T14:46:07.240Z"
 }

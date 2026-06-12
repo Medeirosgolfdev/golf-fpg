@@ -1,7 +1,7 @@
 {
   "tourId": 67971,
   "url": "https://www.nextcaddy.com/tour/67971",
-  "scrapedAt": "2026-05-21T16:40:33.954Z",
+  "scrapedAt": "2026-06-12T14:43:13.602Z",
   "meta": {
     "name": "Campeonato de Madrid Dobles de Profesionales",
     "organizer": "Federacion de Golf de Madrid",
@@ -23,7 +23,36 @@
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Vanessa Andreina Chavez Ferrer",
+      "licencia": "CM003807-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 1,
+      "name": "Alberto Diaz Bravo",
+      "licencia": "77700037-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 2,
+      "name": "Javier Cobiella Lajo",
+      "licencia": "CM11815461",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 2,
+      "name": "Carlos Gonzalez Bueno",
+      "licencia": "CM11888795",
+      "hcp": null,
+      "nivel": "J"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -72,5 +101,5 @@
     }
   },
   "pdfs": [],
-  "horariosScrapedAt": "2026-06-08T09:00:17.572Z"
+  "horariosScrapedAt": "2026-06-12T14:45:26.611Z"
 }

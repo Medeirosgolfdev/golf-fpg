@@ -1,7 +1,7 @@
 {
   "tourId": 71019,
   "url": "https://www.nextcaddy.com/tour/71019",
-  "scrapedAt": "2026-05-21T16:40:02.265Z",
+  "scrapedAt": "2026-06-12T14:41:57.779Z",
   "meta": {
     "name": "LOS GALLOS 23/05",
     "organizer": null,
@@ -20,9 +20,253 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "1ª Categoria",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Frank Scheelings",
+          "licencia": "AME2930861",
+          "hcp": 12.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2325231
+        },
+        {
+          "pos": 2,
+          "name": "Pedro Martin Plaza",
+          "licencia": "AM22607158",
+          "hcp": 19,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2325239
+        },
+        {
+          "pos": 3,
+          "name": "Xavier Sierra Lacam",
+          "licencia": "AM00374568",
+          "hcp": 16.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2325188
+        },
+        {
+          "pos": 4,
+          "name": "Francisco Miguel Garcia Bravo",
+          "licencia": "AM22941675",
+          "hcp": 17.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2325192
+        },
+        {
+          "pos": 5,
+          "name": "Francisco Farfan Rueda",
+          "licencia": "AMD7606274",
+          "hcp": 8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2325183
+        },
+        {
+          "pos": 6,
+          "name": "John Sprajc",
+          "licencia": "AM22350763",
+          "hcp": 9.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2325185
+        },
+        {
+          "pos": 7,
+          "name": "Maria Elena Zea Martin",
+          "licencia": "AM22619238",
+          "hcp": 17.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2325235
+        },
+        {
+          "pos": 8,
+          "name": "Simon Tait",
+          "licencia": "AM22884316",
+          "hcp": 9.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2325193
+        },
+        {
+          "pos": null,
+          "name": "Salvador Cardenas Jimenez",
+          "licencia": "AM22617828",
+          "hcp": 11.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2325240
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "2ª Categoria",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Juan Garcia Gallego",
+          "licencia": "AM22344746",
+          "hcp": 21,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2325234
+        },
+        {
+          "pos": 2,
+          "name": "Juan Jesus Cardenas Jimenez",
+          "licencia": "AM22700962",
+          "hcp": 20.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2325190
+        },
+        {
+          "pos": 3,
+          "name": "Kees De Cock",
+          "licencia": "AM22237045",
+          "hcp": 21.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2325230
+        },
+        {
+          "pos": 4,
+          "name": "Kairi Kahn Kahn",
+          "licencia": "AM22374569",
+          "hcp": 21.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2325236
+        },
+        {
+          "pos": 5,
+          "name": "Jose Angel Yañez Poyatos",
+          "licencia": "AMD7775833",
+          "hcp": 22.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2325191
+        },
+        {
+          "pos": 6,
+          "name": "Fernando Fernandez Tapia-Ruano",
+          "licencia": "AM22195256",
+          "hcp": 29,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2325238
+        },
+        {
+          "pos": 7,
+          "name": "Maria Jose Vazquez Presencio",
+          "licencia": "AM22982047",
+          "hcp": 35.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2325237
+        },
+        {
+          "pos": 8,
+          "name": "Jaime Quilis Jimenez",
+          "licencia": "AM22900039",
+          "hcp": 22.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2325241
+        },
+        {
+          "pos": 9,
+          "name": "Manuel Justo Luque",
+          "licencia": "AMD7773268",
+          "hcp": 31.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2325189
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "1ª Categoria",
+      "jugadores": 9
+    },
+    "2": {
+      "name": "2ª Categoria",
+      "jugadores": 9
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -47,83 +291,76 @@
     },
     {
       "orden": 4,
-      "name": "Manuel Justo Luque",
-      "licencia": "AMD7773268",
-      "hcp": null,
-      "nivel": "S"
-    },
-    {
-      "orden": 5,
       "name": "Juan Jesus Cardenas Jimenez",
       "licencia": "AM22700962",
       "hcp": 20.3,
       "nivel": "S"
     },
     {
-      "orden": 6,
+      "orden": 5,
       "name": "Jose Angel Yañez Poyatos",
       "licencia": "AMD7775833",
       "hcp": 22.9,
       "nivel": "S"
     },
     {
-      "orden": 7,
+      "orden": 6,
       "name": "Francisco Miguel Garcia Bravo",
       "licencia": "AM22941675",
       "hcp": 17.9,
       "nivel": "Mid"
     },
     {
-      "orden": 8,
+      "orden": 7,
       "name": "Simon Tait",
       "licencia": "AM22884316",
       "hcp": 9.3,
       "nivel": "S"
     },
     {
-      "orden": 9,
+      "orden": 8,
       "name": "Kees De Cock",
       "licencia": "AM22237045",
       "hcp": 21.5,
       "nivel": "S"
     },
     {
-      "orden": 10,
+      "orden": 9,
       "name": "Frank Scheelings",
       "licencia": "AME2930861",
       "hcp": 12.3,
       "nivel": "S"
     },
     {
-      "orden": 11,
+      "orden": 10,
       "name": "Juan Garcia Gallego",
       "licencia": "AM22344746",
       "hcp": 21,
       "nivel": "S"
     },
     {
-      "orden": 12,
+      "orden": 11,
       "name": "Fernando Fernandez Tapia-Ruano",
       "licencia": "AM22195256",
       "hcp": null,
       "nivel": "S"
     },
     {
-      "orden": 13,
+      "orden": 12,
       "name": "Pedro Martin Plaza",
       "licencia": "AM22607158",
       "hcp": 19,
       "nivel": "S"
     },
     {
-      "orden": 14,
+      "orden": 13,
       "name": "Salvador Cardenas Jimenez",
       "licencia": "AM22617828",
       "hcp": 11.9,
       "nivel": "S"
     },
     {
-      "orden": 15,
+      "orden": 14,
       "name": "Jaime Quilis Jimenez",
       "licencia": "AM22900039",
       "hcp": 22.3,
@@ -138,9 +375,9 @@
     },
     {
       "orden": 1,
-      "name": "Pierre De Laville",
-      "licencia": "AM83615345",
-      "hcp": 17.4,
+      "name": "Manuel Justo Luque",
+      "licencia": "AMD7773268",
+      "hcp": null,
       "nivel": "S"
     },
     {
@@ -187,125 +424,118 @@
     },
     {
       "orden": 2,
-      "name": "Pierre De Laville",
-      "licencia": "AM83615345",
-      "hcp": 17.4,
-      "nivel": "S"
-    },
-    {
-      "orden": 3,
       "name": "John Sprajc",
       "licencia": "AM22350763",
       "hcp": 9.7,
       "nivel": "S"
     },
     {
-      "orden": 4,
+      "orden": 3,
       "name": "Xavier Sierra Lacam",
       "licencia": "AM00374568",
       "hcp": 16.6,
       "nivel": "S"
     },
     {
-      "orden": 5,
+      "orden": 4,
       "name": "Manuel Justo Luque",
       "licencia": "AMD7773268",
       "hcp": null,
       "nivel": "S"
     },
     {
-      "orden": 6,
+      "orden": 5,
       "name": "Juan Jesus Cardenas Jimenez",
       "licencia": "AM22700962",
       "hcp": 20.3,
       "nivel": "S"
     },
     {
-      "orden": 7,
+      "orden": 6,
       "name": "Jose Angel Yañez Poyatos",
       "licencia": "AMD7775833",
       "hcp": 22.9,
       "nivel": "S"
     },
     {
-      "orden": 8,
+      "orden": 7,
       "name": "Francisco Miguel Garcia Bravo",
       "licencia": "AM22941675",
       "hcp": 17.9,
       "nivel": "Mid"
     },
     {
-      "orden": 9,
+      "orden": 8,
       "name": "Simon Tait",
       "licencia": "AM22884316",
       "hcp": 9.3,
       "nivel": "S"
     },
     {
-      "orden": 10,
+      "orden": 9,
       "name": "Kees De Cock",
       "licencia": "AM22237045",
       "hcp": 21.5,
       "nivel": "S"
     },
     {
-      "orden": 11,
+      "orden": 10,
       "name": "Frank Scheelings",
       "licencia": "AME2930861",
       "hcp": 12.3,
       "nivel": "S"
     },
     {
-      "orden": 12,
+      "orden": 11,
       "name": "Juan Garcia Gallego",
       "licencia": "AM22344746",
       "hcp": 21,
       "nivel": "S"
     },
     {
-      "orden": 13,
+      "orden": 12,
       "name": "Maria Elena Zea Martin",
       "licencia": "AM22619238",
       "hcp": 17.5,
       "nivel": "Mid"
     },
     {
-      "orden": 14,
+      "orden": 13,
       "name": "Kairi Kahn Kahn",
       "licencia": "AM22374569",
       "hcp": 21.4,
       "nivel": "Mid"
     },
     {
-      "orden": 15,
+      "orden": 14,
       "name": "Maria Jose Vazquez Presencio",
       "licencia": "AM22982047",
       "hcp": null,
       "nivel": "S"
     },
     {
-      "orden": 16,
+      "orden": 15,
       "name": "Fernando Fernandez Tapia-Ruano",
       "licencia": "AM22195256",
       "hcp": null,
       "nivel": "S"
     },
     {
-      "orden": 17,
+      "orden": 16,
       "name": "Pedro Martin Plaza",
       "licencia": "AM22607158",
       "hcp": 19,
       "nivel": "S"
     },
     {
-      "orden": 18,
+      "orden": 17,
       "name": "Salvador Cardenas Jimenez",
       "licencia": "AM22617828",
       "hcp": 11.9,
       "nivel": "S"
     },
     {
-      "orden": 19,
+      "orden": 18,
       "name": "Jaime Quilis Jimenez",
       "licencia": "AM22900039",
       "hcp": 22.3,
@@ -322,15 +552,6 @@
           "name": "Francisco Farfan Rueda",
           "hcp": 8,
           "ins": "2325183",
-          "jid": "76048",
-          "nivel": "S"
-        },
-        {
-          "time": "09:00",
-          "tee": 1,
-          "name": "Pierre De Laville",
-          "hcp": 17.4,
-          "ins": "2325184",
           "jid": "76048",
           "nivel": "S"
         },
@@ -715,5 +936,5 @@
   "pdfs": [
     "/uploads/competiciones/cartel/1962539945_71019-los-gallos-23-05.pdf"
   ],
-  "horariosScrapedAt": "2026-05-21T16:42:46.246Z"
+  "horariosScrapedAt": "2026-06-12T14:46:08.929Z"
 }

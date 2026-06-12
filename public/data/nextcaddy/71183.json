@@ -1,7 +1,7 @@
 {
   "tourId": 71183,
   "url": "https://www.nextcaddy.com/tour/71183",
-  "scrapedAt": "2026-06-01T09:30:05.400Z",
+  "scrapedAt": "2026-06-12T14:42:24.595Z",
   "meta": {
     "name": "Sherry International Golf Group (SIGG) - Jueves 4 Junio 2026 (Grupo privado)",
     "organizer": null,
@@ -20,10 +20,806 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 30,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jorge Alberto Yunes Peiretti",
+          "licencia": "AM00909904",
+          "hcp": 19.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2333834
+        },
+        {
+          "pos": 2,
+          "name": "Tomas Romero Abad",
+          "licencia": "AM32611302",
+          "hcp": 22.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2333830
+        },
+        {
+          "pos": 3,
+          "name": "Florence Louisa Laruelle",
+          "licencia": "AMC9981836",
+          "hcp": 32.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2333815
+        },
+        {
+          "pos": 4,
+          "name": "Antonio Diaz Rivera",
+          "licencia": "AM00898678",
+          "hcp": 19,
+          "nivel": "S",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2333814
+        },
+        {
+          "pos": 5,
+          "name": "Tord Erling Bengtsson",
+          "licencia": "AMC3070245",
+          "hcp": 23.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2333818
+        },
+        {
+          "pos": 6,
+          "name": "Miguel Angel Becerra Moya",
+          "licencia": "AMC3810193",
+          "hcp": 13.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2333829
+        },
+        {
+          "pos": 7,
+          "name": "Antonio Corrochano Reviriego",
+          "licencia": "AMC3612205",
+          "hcp": 19.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2333840
+        },
+        {
+          "pos": 8,
+          "name": "Amaro De La Calle Moya",
+          "licencia": "AMC3792985",
+          "hcp": 24.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2333822
+        },
+        {
+          "pos": 9,
+          "name": "Antonio Jose Montabes Calatayud",
+          "licencia": "AMC3958827",
+          "hcp": 28.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2333832
+        },
+        {
+          "pos": 10,
+          "name": "Antonio Manuel Ureña Serrano",
+          "licencia": "AM32612444",
+          "hcp": 9.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2333825
+        },
+        {
+          "pos": 11,
+          "name": "Jose Romero Abad",
+          "licencia": "AM32197606",
+          "hcp": 21.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2333828
+        },
+        {
+          "pos": 12,
+          "name": "Dean Jannone",
+          "licencia": "AM25818745",
+          "hcp": 21.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2333813
+        },
+        {
+          "pos": 13,
+          "name": "Juan Carlos Monge Martinez",
+          "licencia": "AM00388228",
+          "hcp": 20.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2333833
+        },
+        {
+          "pos": 14,
+          "name": "Gustavo Adolfo Ernesto Contepomi",
+          "licencia": "AMC3959008",
+          "hcp": 28.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2333816
+        },
+        {
+          "pos": 15,
+          "name": "Peter Green",
+          "licencia": "AMC3904584",
+          "hcp": 17.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2333810
+        },
+        {
+          "pos": 16,
+          "name": "Carmen Medina Alvarez",
+          "licencia": "AMC3958829",
+          "hcp": 26.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2333831
+        },
+        {
+          "pos": 17,
+          "name": "James Major",
+          "licencia": "AMC9820109",
+          "hcp": 8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2333821
+        },
+        {
+          "pos": 18,
+          "name": "Jose Manuel Salido Hedrera",
+          "licencia": "AMC3899113",
+          "hcp": 28.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2333827
+        },
+        {
+          "pos": 19,
+          "name": "Christopher J. Jameson",
+          "licencia": "AMC3605717",
+          "hcp": 24.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2333808
+        },
+        {
+          "pos": 20,
+          "name": "Axel Junkerman",
+          "licencia": "EXX1465618",
+          "hcp": 7.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2333910
+        },
+        {
+          "pos": 21,
+          "name": "Susanne Junkerman",
+          "licencia": "EXX1465619",
+          "hcp": 14,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2333909
+        },
+        {
+          "pos": 22,
+          "name": "Mark Glading",
+          "licencia": "AMC3029818",
+          "hcp": 19.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2333820
+        },
+        {
+          "pos": 23,
+          "name": "Lucia Mendicuti Rodriguez",
+          "licencia": "AMC3204420",
+          "hcp": 33.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2333837
+        },
+        {
+          "pos": 24,
+          "name": "Elias Alvarez Fernandez",
+          "licencia": "AME7097565",
+          "hcp": 9.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2333839
+        },
+        {
+          "pos": 25,
+          "name": "Edward James",
+          "licencia": "AMC3343313",
+          "hcp": 14.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2333811
+        },
+        {
+          "pos": 26,
+          "name": "Juan Manuel Maraver Delgado",
+          "licencia": "AM00204419",
+          "hcp": 13.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2333838
+        },
+        {
+          "pos": 27,
+          "name": "Manuel Peña Perez",
+          "licencia": "AM32317125",
+          "hcp": 16.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2333836
+        },
+        {
+          "pos": 28,
+          "name": "Jesus Cantos Ruiz",
+          "licencia": "AMC3921569",
+          "hcp": 15.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2333809
+        },
+        {
+          "pos": 29,
+          "name": "Matias Galindo Doblas",
+          "licencia": "AME7246000",
+          "hcp": 17.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2333817
+        },
+        {
+          "pos": 30,
+          "name": "Christopher Davies",
+          "licencia": "AMC3965899",
+          "hcp": 12.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2333812
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 30
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Christopher J. Jameson",
+      "licencia": "AMC3605717",
+      "hcp": 24.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Jesus Cantos Ruiz",
+      "licencia": "AMC3921569",
+      "hcp": 15.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Peter Green",
+      "licencia": "AMC3904584",
+      "hcp": 17.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Edward James",
+      "licencia": "AMC3343313",
+      "hcp": 14.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Christopher Davies",
+      "licencia": "AMC3965899",
+      "hcp": 12.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Dean Jannone",
+      "licencia": "AM25818745",
+      "hcp": 21.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Antonio Diaz Rivera",
+      "licencia": "AM00898678",
+      "hcp": 19,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Matias Galindo Doblas",
+      "licencia": "AME7246000",
+      "hcp": 17.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Tord Erling Bengtsson",
+      "licencia": "AMC3070245",
+      "hcp": 23.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Mark Glading",
+      "licencia": "AMC3029818",
+      "hcp": 19.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "James Major",
+      "licencia": "AMC9820109",
+      "hcp": 8,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Amaro De La Calle Moya",
+      "licencia": "AMC3792985",
+      "hcp": 24.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Antonio Manuel Ureña Serrano",
+      "licencia": "AM32612444",
+      "hcp": 9.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Miguel Angel Becerra Moya",
+      "licencia": "AMC3810193",
+      "hcp": 13.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Antonio Jose Montabes Calatayud",
+      "licencia": "AMC3958827",
+      "hcp": 28.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Jorge Alberto Yunes Peiretti",
+      "licencia": "AM00909904",
+      "hcp": 19.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Manuel Peña Perez",
+      "licencia": "AM32317125",
+      "hcp": 16.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Juan Manuel Maraver Delgado",
+      "licencia": "AM00204419",
+      "hcp": 13.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Elias Alvarez Fernandez",
+      "licencia": "AME7097565",
+      "hcp": 9.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Antonio Corrochano Reviriego",
+      "licencia": "AMC3612205",
+      "hcp": 19.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Axel Junkerman",
+      "licencia": "EXX1465618",
+      "hcp": 7.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Florence Louisa Laruelle",
+      "licencia": "AMC9981836",
+      "hcp": 32.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Carmen Medina Alvarez",
+      "licencia": "AMC3958829",
+      "hcp": 26.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Lucia Mendicuti Rodriguez",
+      "licencia": "AMC3204420",
+      "hcp": 33.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Susanne Junkerman",
+      "licencia": "EXX1465619",
+      "hcp": 14,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Gustavo Adolfo Ernesto Contepomi",
+      "licencia": "AMC3959008",
+      "hcp": 28.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Jose Manuel Salido Hedrera",
+      "licencia": "AMC3899113",
+      "hcp": 28.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Jose Romero Abad",
+      "licencia": "AM32197606",
+      "hcp": 21.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Tomas Romero Abad",
+      "licencia": "AM32611302",
+      "hcp": 22.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Juan Carlos Monge Martinez",
+      "licencia": "AM00388228",
+      "hcp": 20.3,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Fecha Inscripción",
+      "hcp": null,
+      "nivel": "Licencia"
+    },
+    {
+      "orden": 1,
+      "name": "Christopher J. Jameson",
+      "licencia": "02-06-26 20:44",
+      "hcp": 24.7,
+      "nivel": "AMC3605717"
+    },
+    {
+      "orden": 2,
+      "name": "Jesus Cantos Ruiz",
+      "licencia": "02-06-26 20:45",
+      "hcp": 15.7,
+      "nivel": "AMC3921569"
+    },
+    {
+      "orden": 3,
+      "name": "Peter Green",
+      "licencia": "02-06-26 20:46",
+      "hcp": 17.3,
+      "nivel": "AMC3904584"
+    },
+    {
+      "orden": 4,
+      "name": "Edward James",
+      "licencia": "02-06-26 20:46",
+      "hcp": 14.8,
+      "nivel": "AMC3343313"
+    },
+    {
+      "orden": 5,
+      "name": "Christopher Davies",
+      "licencia": "02-06-26 20:47",
+      "hcp": 12.4,
+      "nivel": "AMC3965899"
+    },
+    {
+      "orden": 6,
+      "name": "Dean Jannone",
+      "licencia": "02-06-26 20:47",
+      "hcp": 21.3,
+      "nivel": "AM25818745"
+    },
+    {
+      "orden": 7,
+      "name": "Antonio Diaz Rivera",
+      "licencia": "02-06-26 20:48",
+      "hcp": 19,
+      "nivel": "AM00898678"
+    },
+    {
+      "orden": 8,
+      "name": "Florence Louisa Laruelle",
+      "licencia": "02-06-26 20:48",
+      "hcp": 32.3,
+      "nivel": "AMC9981836"
+    },
+    {
+      "orden": 9,
+      "name": "Gustavo Adolfo Ernesto Contepomi",
+      "licencia": "02-06-26 20:49",
+      "hcp": 28.4,
+      "nivel": "AMC3959008"
+    },
+    {
+      "orden": 10,
+      "name": "Matias Galindo Doblas",
+      "licencia": "02-06-26 20:49",
+      "hcp": 17.6,
+      "nivel": "AME7246000"
+    },
+    {
+      "orden": 11,
+      "name": "Tord Erling Bengtsson",
+      "licencia": "02-06-26 20:50",
+      "hcp": 23.2,
+      "nivel": "AMC3070245"
+    },
+    {
+      "orden": 12,
+      "name": "Mark Glading",
+      "licencia": "02-06-26 20:51",
+      "hcp": 19.2,
+      "nivel": "AMC3029818"
+    },
+    {
+      "orden": 13,
+      "name": "James Major",
+      "licencia": "02-06-26 20:51",
+      "hcp": 8,
+      "nivel": "AMC9820109"
+    },
+    {
+      "orden": 14,
+      "name": "Amaro De La Calle Moya",
+      "licencia": "02-06-26 20:52",
+      "hcp": 24.7,
+      "nivel": "AMC3792985"
+    },
+    {
+      "orden": 15,
+      "name": "Antonio Manuel Ureña Serrano",
+      "licencia": "02-06-26 20:52",
+      "hcp": 9.1,
+      "nivel": "AM32612444"
+    },
+    {
+      "orden": 16,
+      "name": "Jose Manuel Salido Hedrera",
+      "licencia": "02-06-26 20:53",
+      "hcp": 28.6,
+      "nivel": "AMC3899113"
+    },
+    {
+      "orden": 17,
+      "name": "Jose Romero Abad",
+      "licencia": "02-06-26 20:53",
+      "hcp": 21.5,
+      "nivel": "AM32197606"
+    },
+    {
+      "orden": 18,
+      "name": "Miguel Angel Becerra Moya",
+      "licencia": "02-06-26 20:54",
+      "hcp": 13.1,
+      "nivel": "AMC3810193"
+    },
+    {
+      "orden": 19,
+      "name": "Tomas Romero Abad",
+      "licencia": "02-06-26 20:54",
+      "hcp": 22.2,
+      "nivel": "AM32611302"
+    },
+    {
+      "orden": 20,
+      "name": "Carmen Medina Alvarez",
+      "licencia": "02-06-26 20:55",
+      "hcp": 26.6,
+      "nivel": "AMC3958829"
+    },
+    {
+      "orden": 21,
+      "name": "Antonio Jose Montabes Calatayud",
+      "licencia": "02-06-26 20:56",
+      "hcp": 28.3,
+      "nivel": "AMC3958827"
+    },
+    {
+      "orden": 22,
+      "name": "Juan Carlos Monge Martinez",
+      "licencia": "02-06-26 20:56",
+      "hcp": 20.3,
+      "nivel": "AM00388228"
+    },
+    {
+      "orden": 23,
+      "name": "Jorge Alberto Yunes Peiretti",
+      "licencia": "02-06-26 20:57",
+      "hcp": 19.7,
+      "nivel": "AM00909904"
+    },
+    {
+      "orden": 24,
+      "name": "Manuel Peña Perez",
+      "licencia": "02-06-26 20:58",
+      "hcp": 16.3,
+      "nivel": "AM32317125"
+    },
+    {
+      "orden": 25,
+      "name": "Lucia Mendicuti Rodriguez",
+      "licencia": "02-06-26 20:58",
+      "hcp": 33.9,
+      "nivel": "AMC3204420"
+    },
+    {
+      "orden": 26,
+      "name": "Juan Manuel Maraver Delgado",
+      "licencia": "02-06-26 20:59",
+      "hcp": 13.1,
+      "nivel": "AM00204419"
+    },
+    {
+      "orden": 27,
+      "name": "Elias Alvarez Fernandez",
+      "licencia": "02-06-26 20:59",
+      "hcp": 9.8,
+      "nivel": "AME7097565"
+    },
+    {
+      "orden": 28,
+      "name": "Antonio Corrochano Reviriego",
+      "licencia": "02-06-26 21:00",
+      "hcp": 19.9,
+      "nivel": "AMC3612205"
+    },
+    {
+      "orden": 29,
+      "name": "Susanne Junkerman",
+      "licencia": "03-06-26 08:58",
+      "hcp": 14,
+      "nivel": "EXX1465619"
+    },
+    {
+      "orden": 30,
+      "name": "Axel Junkerman",
+      "licencia": "03-06-26 08:59",
+      "hcp": 7.9,
+      "nivel": "EXX1465618"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -284,7 +1080,7 @@
           "time": "09:40",
           "tee": 10,
           "name": "Susanne Junkerman",
-          "hcp": 36,
+          "hcp": 14,
           "ins": "2333909",
           "jid": "76218",
           "nivel": "M"
@@ -293,7 +1089,7 @@
           "time": "09:40",
           "tee": 10,
           "name": "Axel Junkerman",
-          "hcp": 36,
+          "hcp": 7.9,
           "ins": "2333910",
           "jid": "76218",
           "nivel": "M"
@@ -318,5 +1114,5 @@
   ],
   "scoreTypes": [],
   "pdfs": [],
-  "horariosScrapedAt": "2026-06-03T13:21:16.880Z"
+  "horariosScrapedAt": "2026-06-12T14:46:10.133Z"
 }

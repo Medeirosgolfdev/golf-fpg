@@ -1,7 +1,7 @@
 {
   "tourId": 70561,
   "url": "https://www.nextcaddy.com/tour/70561",
-  "scrapedAt": "2026-05-21T16:40:01.770Z",
+  "scrapedAt": "2026-06-12T14:41:57.023Z",
   "meta": {
     "name": "5ª Prueba Ranking y Series Roll Up Sherry Golf 2026 (Alternativa Sábado)",
     "organizer": null,
@@ -101,6 +101,13 @@
       "name": "Salvador Mora Gragera",
       "licencia": "AMC3891209",
       "hcp": 27.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Miguel Lozano Cintado",
+      "licencia": "AMC3981690",
+      "hcp": 14,
       "nivel": "S"
     },
     {
@@ -221,6 +228,13 @@
       "licencia": "21-05-26 10:57",
       "hcp": 27.9,
       "nivel": "AMC3891209"
+    },
+    {
+      "orden": 14,
+      "name": "Miguel Lozano Cintado",
+      "licencia": "22-05-26 10:18",
+      "hcp": 14,
+      "nivel": "AMC3981690"
     }
   ],
   "horarios": [
@@ -320,6 +334,15 @@
         {
           "time": "09:10",
           "tee": 1,
+          "name": "Miguel Lozano Cintado",
+          "hcp": 14,
+          "ins": "2325706",
+          "jid": "75515",
+          "nivel": "S"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
           "name": "Carmen Medina Alvarez",
           "hcp": 26.9,
           "ins": "2315625",
@@ -367,5 +390,5 @@
     "/uploads/competiciones/pdf/1200571955_5_ª_prueba_ranking_2026.pdf",
     "/uploads/REGLAMENTO-RANKING-SHERRY-GOLF-2026.pdf"
   ],
-  "horariosScrapedAt": "2026-05-21T16:42:42.045Z"
+  "horariosScrapedAt": "2026-06-12T14:46:02.619Z"
 }

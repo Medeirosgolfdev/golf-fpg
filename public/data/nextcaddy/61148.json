@@ -1,7 +1,7 @@
 {
   "tourId": 61148,
   "url": "https://www.nextcaddy.com/tour/61148",
-  "scrapedAt": "2026-05-21T16:40:04.310Z",
+  "scrapedAt": "2026-06-12T14:42:00.992Z",
   "meta": {
     "name": "Pequecircuito Zona E",
     "organizer": "Real Federacion Andaluza de Golf",
@@ -20,9 +20,374 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Categoria 1 Masculina",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Mario Dos Santos Vicente",
+          "licencia": "AM62474265",
+          "hcp": 41.8,
+          "nivel": "B",
+          "rounds": [],
+          "total": 37,
+          "toPar": 10,
+          "inscribedId": 2317807
+        },
+        {
+          "pos": 2,
+          "name": "Fabio Utrera Carracao",
+          "licencia": "AM11012935",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 43,
+          "toPar": 16,
+          "inscribedId": 2306126
+        },
+        {
+          "pos": 3,
+          "name": "Francisco Rodriguez Torrente",
+          "licencia": "AMD5031155",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 49,
+          "toPar": 22,
+          "inscribedId": 2314891
+        },
+        {
+          "pos": 4,
+          "name": "Lucas Checa Bravo",
+          "licencia": "AM15488143",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 52,
+          "toPar": 25,
+          "inscribedId": 2317828
+        },
+        {
+          "pos": 5,
+          "name": "Lucas Lope De Lima",
+          "licencia": "AMA2345518",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 60,
+          "toPar": 33,
+          "inscribedId": 2321293
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Categoria 2 Masculina",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Juan Alberto Muñoz Del Pozo Salinas",
+          "licencia": "AMC7099154",
+          "hcp": 40.1,
+          "nivel": "B",
+          "rounds": [],
+          "total": 33,
+          "toPar": 6,
+          "inscribedId": 2317543
+        },
+        {
+          "pos": 2,
+          "name": "Mateo Rodriguez Torrente",
+          "licencia": "AMD5084298",
+          "hcp": 41.8,
+          "nivel": "B",
+          "rounds": [],
+          "total": 37,
+          "toPar": 10,
+          "inscribedId": 2314890
+        },
+        {
+          "pos": 3,
+          "name": "Juan Jimenez Garcia",
+          "licencia": "AM59192746",
+          "hcp": 52.3,
+          "nivel": "B",
+          "rounds": [],
+          "total": 38,
+          "toPar": 11,
+          "inscribedId": 2321703
+        },
+        {
+          "pos": 4,
+          "name": "Carlos Checa Bravo",
+          "licencia": "AM15488144",
+          "hcp": 45.8,
+          "nivel": "B",
+          "rounds": [],
+          "total": 41,
+          "toPar": 14,
+          "inscribedId": 2317825
+        },
+        {
+          "pos": 5,
+          "name": "Carlos Villegas Martinez",
+          "licencia": "AM23472184",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 62,
+          "toPar": 35,
+          "inscribedId": 2321473
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Categoria 2 Femenina",
+      "expectedJugadores": 2,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Maria Jimenez Garcia",
+          "licencia": "AM59192805",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 42,
+          "toPar": 15,
+          "inscribedId": 2321704
+        },
+        {
+          "pos": 2,
+          "name": "Cloe Arambuena Vela",
+          "licencia": "AM58498744",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 66,
+          "toPar": 39,
+          "inscribedId": 2320110
+        }
+      ]
+    },
+    {
+      "category": 4,
+      "categoryName": "Categoria 3 Masculina (Rectificada)",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Ignacio Rubio Cerezo",
+          "licencia": "AM15067145",
+          "hcp": 46,
+          "nivel": "A",
+          "rounds": [],
+          "total": 36,
+          "toPar": 9,
+          "inscribedId": 2321656
+        },
+        {
+          "pos": 2,
+          "name": "Beltran Leria Sanchez-Osorio",
+          "licencia": "AM85962702",
+          "hcp": 45.3,
+          "nivel": "A",
+          "rounds": [],
+          "total": 38,
+          "toPar": 11,
+          "inscribedId": 2321483
+        },
+        {
+          "pos": 3,
+          "name": "Martin Soriano Perez",
+          "licencia": "AM67410649",
+          "hcp": 38,
+          "nivel": "A",
+          "rounds": [],
+          "total": 42,
+          "toPar": 15,
+          "inscribedId": 2321277
+        },
+        {
+          "pos": 4,
+          "name": "Cristobal Vizcaino Pinart",
+          "licencia": "AM62088495",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "total": 51,
+          "toPar": 24,
+          "inscribedId": 2321842
+        },
+        {
+          "pos": 5,
+          "name": "Ignacio García Zazo",
+          "licencia": "AMC7519025",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "total": 62,
+          "toPar": 35,
+          "inscribedId": 2316322
+        },
+        {
+          "pos": 6,
+          "name": "Jesus Villegas Martinez",
+          "licencia": "AM23075843",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "total": 63,
+          "toPar": 36,
+          "inscribedId": 2321469
+        }
+      ]
+    },
+    {
+      "category": 5,
+      "categoryName": "Categoria 3 Femenina",
+      "expectedJugadores": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Maria Martin Sabiote",
+          "licencia": "AMA2518374",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "total": 71,
+          "toPar": 44,
+          "inscribedId": 2320067
+        }
+      ]
+    },
+    {
+      "category": 6,
+      "categoryName": "Categoria Especial Masculina",
+      "expectedJugadores": 2,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Rodrigo Rubio Cerezo",
+          "licencia": "AM15067148",
+          "hcp": 30,
+          "nivel": "A",
+          "rounds": [],
+          "total": 31,
+          "toPar": 4,
+          "inscribedId": 2321657
+        },
+        {
+          "pos": 2,
+          "name": "Tiago Dos Santos Vicente",
+          "licencia": "AM62352030",
+          "hcp": 36,
+          "nivel": "B",
+          "rounds": [],
+          "total": 35,
+          "toPar": 8,
+          "inscribedId": 2317806
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Categoria 1 Masculina",
+      "jugadores": 5
+    },
+    "2": {
+      "name": "Categoria 2 Masculina",
+      "jugadores": 5
+    },
+    "3": {
+      "name": "Categoria 2 Femenina",
+      "jugadores": 2
+    },
+    "4": {
+      "name": "Categoria 3 Masculina (Rectificada)",
+      "jugadores": 6
+    },
+    "5": {
+      "name": "Categoria 3 Femenina",
+      "jugadores": 1
+    },
+    "6": {
+      "name": "Categoria Especial Masculina",
+      "jugadores": 2
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -376,18 +741,18 @@
         {
           "time": "16:40",
           "tee": 1,
-          "name": "Mario Dos Santos Vicente",
+          "name": "Mateo Rodriguez Torrente",
           "hcp": 41.8,
-          "ins": "2317807",
+          "ins": "2314890",
           "jid": "64786",
           "nivel": "B"
         },
         {
           "time": "16:40",
           "tee": 1,
-          "name": "Mateo Rodriguez Torrente",
+          "name": "Mario Dos Santos Vicente",
           "hcp": 41.8,
-          "ins": "2314890",
+          "ins": "2317807",
           "jid": "64786",
           "nivel": "B"
         },
@@ -430,15 +795,6 @@
         {
           "time": "16:50",
           "tee": 1,
-          "name": "Ignacio García Zazo",
-          "hcp": 54,
-          "ins": "2316322",
-          "jid": "64786",
-          "nivel": "A"
-        },
-        {
-          "time": "16:50",
-          "tee": 1,
           "name": "Lucas Checa Bravo",
           "hcp": 54,
           "ins": "2317828",
@@ -446,13 +802,13 @@
           "nivel": "B"
         },
         {
-          "time": "17:00",
+          "time": "16:50",
           "tee": 1,
-          "name": "Lucas Lope De Lima",
+          "name": "Ignacio García Zazo",
           "hcp": 54,
-          "ins": "2321293",
+          "ins": "2316322",
           "jid": "64786",
-          "nivel": "B"
+          "nivel": "A"
         },
         {
           "time": "17:00",
@@ -469,6 +825,15 @@
           "name": "Francisco Rodriguez Torrente",
           "hcp": 54,
           "ins": "2314891",
+          "jid": "64786",
+          "nivel": "B"
+        },
+        {
+          "time": "17:00",
+          "tee": 1,
+          "name": "Lucas Lope De Lima",
+          "hcp": 54,
+          "ins": "2321293",
           "jid": "64786",
           "nivel": "B"
         },
@@ -502,6 +867,15 @@
         {
           "time": "17:20",
           "tee": 1,
+          "name": "Cloe Arambuena Vela",
+          "hcp": 54,
+          "ins": "2320110",
+          "jid": "64786",
+          "nivel": "B"
+        },
+        {
+          "time": "17:20",
+          "tee": 1,
           "name": "Maria Martin Sabiote",
           "hcp": 54,
           "ins": "2320067",
@@ -514,15 +888,6 @@
           "name": "Maria Jimenez Garcia",
           "hcp": 54,
           "ins": "2321704",
-          "jid": "64786",
-          "nivel": "B"
-        },
-        {
-          "time": "17:20",
-          "tee": 1,
-          "name": "Cloe Arambuena Vela",
-          "hcp": 54,
-          "ins": "2320110",
           "jid": "64786",
           "nivel": "B"
         }
@@ -544,9 +909,9 @@
       "roundId": 64786
     }
   ],
-  "scoreTypes": null,
+  "scoreTypes": [],
   "pdfs": [
     "/uploads/circular/2026/60646390603b16b04fdebb02436999ef.pdf"
   ],
-  "horariosScrapedAt": "2026-05-21T16:41:52.022Z"
+  "horariosScrapedAt": "2026-06-12T14:44:57.087Z"
 }

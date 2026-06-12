@@ -1,7 +1,7 @@
 {
   "tourId": 71346,
   "url": "https://www.nextcaddy.com/tour/71346",
-  "scrapedAt": "2026-06-03T13:20:40.745Z",
+  "scrapedAt": "2026-06-12T14:42:25.818Z",
   "meta": {
     "name": "TORNEO CASA MIGUEL",
     "organizer": null,
@@ -20,10 +20,317 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 11,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Juan Jose Hernandez Gonzalez-Meneses",
+          "licencia": "AM07024778",
+          "hcp": 9.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2334563
+        },
+        {
+          "pos": 2,
+          "name": "Miguel Garcia Pacios",
+          "licencia": "AM07245975",
+          "hcp": 12.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2334565
+        },
+        {
+          "pos": 3,
+          "name": "Jose Lui Gonzalez Gonzalez-Meneses",
+          "licencia": "AM07244841",
+          "hcp": 9.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2334570
+        },
+        {
+          "pos": 4,
+          "name": "Antonio Medina Calero",
+          "licencia": "AM07955616",
+          "hcp": 22.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2334567
+        },
+        {
+          "pos": 5,
+          "name": "Francisco Jose Gil Cañete",
+          "licencia": "AM07204053",
+          "hcp": 10.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2334566
+        },
+        {
+          "pos": 6,
+          "name": "Daniel Arne",
+          "licencia": "AM96320387",
+          "hcp": 8.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2334559
+        },
+        {
+          "pos": 7,
+          "name": "Joaquin Rodriguez Rovira",
+          "licencia": "AM96016636",
+          "hcp": 3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2334560
+        },
+        {
+          "pos": 8,
+          "name": "Jose Enrique Fernandez Perez",
+          "licencia": "AM07320657",
+          "hcp": 4.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2334562
+        },
+        {
+          "pos": 9,
+          "name": "Amadeo Batanero Fleming",
+          "licencia": "AMG8327473",
+          "hcp": 7.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2334561
+        },
+        {
+          "pos": 10,
+          "name": "Javier Martinez Cano",
+          "licencia": "AMG8018631",
+          "hcp": 6.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2334574
+        },
+        {
+          "pos": 11,
+          "name": "Manuel Gonzalez Prieto",
+          "licencia": "AM91163904",
+          "hcp": 20.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2335387
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 11
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Daniel Arne",
+      "licencia": "AM96320387",
+      "hcp": 8.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Joaquin Rodriguez Rovira",
+      "licencia": "AM96016636",
+      "hcp": 3,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Amadeo Batanero Fleming",
+      "licencia": "AMG8327473",
+      "hcp": 7.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Jose Enrique Fernandez Perez",
+      "licencia": "AM07320657",
+      "hcp": 4.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Juan Jose Hernandez Gonzalez-Meneses",
+      "licencia": "AM07024778",
+      "hcp": 9.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Miguel Garcia Pacios",
+      "licencia": "AM07245975",
+      "hcp": 12.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Francisco Jose Gil Cañete",
+      "licencia": "AM07204053",
+      "hcp": 10.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Antonio Medina Calero",
+      "licencia": "AM07955616",
+      "hcp": 22.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Jose Lui Gonzalez Gonzalez-Meneses",
+      "licencia": "AM07244841",
+      "hcp": 9.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Javier Martinez Cano",
+      "licencia": "AMG8018631",
+      "hcp": 6.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Manuel Gonzalez Prieto",
+      "licencia": "AM91163904",
+      "hcp": 20.8,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Daniel Arne",
+      "licencia": "AM96320387",
+      "hcp": 8.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Joaquin Rodriguez Rovira",
+      "licencia": "AM96016636",
+      "hcp": 3,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Amadeo Batanero Fleming",
+      "licencia": "AMG8327473",
+      "hcp": 7.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Jose Enrique Fernandez Perez",
+      "licencia": "AM07320657",
+      "hcp": 4.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Juan Jose Hernandez Gonzalez-Meneses",
+      "licencia": "AM07024778",
+      "hcp": 9.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Miguel Garcia Pacios",
+      "licencia": "AM07245975",
+      "hcp": 12.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Francisco Jose Gil Cañete",
+      "licencia": "AM07204053",
+      "hcp": 10.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Antonio Medina Calero",
+      "licencia": "AM07955616",
+      "hcp": 22.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Jose Lui Gonzalez Gonzalez-Meneses",
+      "licencia": "AM07244841",
+      "hcp": 9.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Javier Martinez Cano",
+      "licencia": "AMG8018631",
+      "hcp": 6.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Manuel Gonzalez Prieto",
+      "licencia": "AM91163904",
+      "hcp": 20.8,
+      "nivel": "S"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -55,5 +362,5 @@
   "pdfs": [
     "/uploads/competiciones/cartel/1822648925_71346-torneo-casa-miguel.pdf"
   ],
-  "horariosScrapedAt": "2026-06-08T09:00:31.544Z"
+  "horariosScrapedAt": "2026-06-12T14:46:11.685Z"
 }

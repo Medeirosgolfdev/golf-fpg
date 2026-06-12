@@ -1,7 +1,7 @@
 {
   "tourId": 71018,
   "url": "https://www.nextcaddy.com/tour/71018",
-  "scrapedAt": "2026-05-21T16:40:06.143Z",
+  "scrapedAt": "2026-06-12T14:42:04.039Z",
   "meta": {
     "name": "POOL INFANTIL VH ",
     "organizer": null,
@@ -21,9 +21,143 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Gonzalo Filgueiras Enriquez",
+          "licencia": "AM05471946",
+          "hcp": 50.6,
+          "nivel": "A",
+          "rounds": [],
+          "total": 46,
+          "toPar": -10,
+          "inscribedId": 2325180
+        },
+        {
+          "pos": 2,
+          "name": "Roberto Terry Andrades",
+          "licencia": "AM05483825",
+          "hcp": 14.2,
+          "nivel": "C",
+          "rounds": [],
+          "total": 43,
+          "toPar": -7,
+          "inscribedId": 2325179
+        },
+        {
+          "pos": 3,
+          "name": "Nicolas Prieto Segura",
+          "licencia": "AM05896207",
+          "hcp": 38.1,
+          "nivel": "A",
+          "rounds": [],
+          "total": 42,
+          "toPar": -6,
+          "inscribedId": 2325171
+        },
+        {
+          "pos": 4,
+          "name": "Alfonso Moreno Quintero",
+          "licencia": "AM05896240",
+          "hcp": 37.8,
+          "nivel": "A",
+          "rounds": [],
+          "total": 41,
+          "toPar": -5,
+          "inscribedId": 2325173
+        },
+        {
+          "pos": 5,
+          "name": "Alfonso Mas Gonzalez",
+          "licencia": "AMD5466082",
+          "hcp": 23.6,
+          "nivel": "A",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2325178
+        },
+        {
+          "pos": 6,
+          "name": "Gadea Geldinovski Ruiz",
+          "licencia": "AM05322815",
+          "hcp": 39,
+          "nivel": "B",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2325172
+        },
+        {
+          "pos": 7,
+          "name": "Alfonso Arriaga Perez-Ojeda",
+          "licencia": "AM05970731",
+          "hcp": 20.1,
+          "nivel": "A",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2325174
+        },
+        {
+          "pos": 8,
+          "name": "Nicolas Auriol Ruiz",
+          "licencia": "AM05322812",
+          "hcp": 41.5,
+          "nivel": "B",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2325176
+        },
+        {
+          "pos": 9,
+          "name": "Pedro Pablo Bononato Terry",
+          "licencia": "AM05099558",
+          "hcp": 42.9,
+          "nivel": "A",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2325177
+        },
+        {
+          "pos": 10,
+          "name": "Alvaro Toledano Martinez Del Cerro",
+          "licencia": "AM05910369",
+          "hcp": 17.5,
+          "nivel": "C",
+          "rounds": [],
+          "total": 10,
+          "toPar": 26,
+          "inscribedId": 2325181
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 10
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -48,58 +182,44 @@
     },
     {
       "orden": 4,
-      "name": "Ricardo Araque Bedoya",
-      "licencia": "AM05931376",
-      "hcp": 36.3,
-      "nivel": "C"
-    },
-    {
-      "orden": 5,
       "name": "Nicolas Auriol Ruiz",
       "licencia": "AM05322812",
       "hcp": 41.5,
       "nivel": "B"
     },
     {
-      "orden": 6,
+      "orden": 5,
       "name": "Pedro Pablo Bononato Terry",
       "licencia": "AM05099558",
       "hcp": 42.9,
       "nivel": "A"
     },
     {
-      "orden": 7,
+      "orden": 6,
       "name": "Alfonso Mas Gonzalez",
       "licencia": "AMD5466082",
       "hcp": 23.6,
       "nivel": "A"
     },
     {
-      "orden": 8,
+      "orden": 7,
       "name": "Roberto Terry Andrades",
       "licencia": "AM05483825",
       "hcp": 14.2,
       "nivel": "C"
     },
     {
-      "orden": 9,
+      "orden": 8,
       "name": "Gonzalo Filgueiras Enriquez",
       "licencia": "AM05471946",
       "hcp": 50.6,
       "nivel": "A"
     },
     {
-      "orden": 10,
+      "orden": 9,
       "name": "Alvaro Toledano Martinez Del Cerro",
       "licencia": "AM05910369",
       "hcp": 17.5,
-      "nivel": "C"
-    },
-    {
-      "orden": 11,
-      "name": "Ignacio Rodriguez Velazquez",
-      "licencia": "AM05969244",
-      "hcp": 24,
       "nivel": "C"
     },
     {
@@ -153,59 +273,45 @@
     },
     {
       "orden": 5,
-      "name": "Ricardo Araque Bedoya",
-      "licencia": "21-05-26 11:54",
-      "hcp": 36.3,
-      "nivel": "AM05931376"
-    },
-    {
-      "orden": 6,
       "name": "Nicolas Auriol Ruiz",
       "licencia": "21-05-26 11:55",
       "hcp": 41.5,
       "nivel": "AM05322812"
     },
     {
-      "orden": 7,
+      "orden": 6,
       "name": "Pedro Pablo Bononato Terry",
       "licencia": "21-05-26 11:55",
       "hcp": 42.9,
       "nivel": "AM05099558"
     },
     {
-      "orden": 8,
+      "orden": 7,
       "name": "Alfonso Mas Gonzalez",
       "licencia": "21-05-26 11:56",
       "hcp": 23.6,
       "nivel": "AMD5466082"
     },
     {
-      "orden": 9,
+      "orden": 8,
       "name": "Roberto Terry Andrades",
       "licencia": "21-05-26 11:56",
       "hcp": 14.2,
       "nivel": "AM05483825"
     },
     {
-      "orden": 10,
+      "orden": 9,
       "name": "Gonzalo Filgueiras Enriquez",
       "licencia": "21-05-26 11:56",
       "hcp": 50.6,
       "nivel": "AM05471946"
     },
     {
-      "orden": 11,
+      "orden": 10,
       "name": "Alvaro Toledano Martinez Del Cerro",
       "licencia": "21-05-26 11:56",
       "hcp": 17.5,
       "nivel": "AM05910369"
-    },
-    {
-      "orden": 12,
-      "name": "Ignacio Rodriguez Velazquez",
-      "licencia": "21-05-26 11:57",
-      "hcp": 24,
-      "nivel": "AM05969244"
     }
   ],
   "horarios": [],
@@ -379,7 +485,7 @@
           "createdAt": "12/01/26 14:54:41"
         },
         {
-          "playerName": "Gutierrez  Diaz, Fernando Felix",
+          "playerName": "Gutierrez Diaz, Fernando Felix",
           "holeNumber": 4,
           "createdAt": "12/01/26 15:06:27"
         },
@@ -447,5 +553,5 @@
     }
   },
   "pdfs": [],
-  "horariosScrapedAt": "2026-06-08T09:00:30.265Z"
+  "horariosScrapedAt": "2026-06-12T14:46:08.815Z"
 }

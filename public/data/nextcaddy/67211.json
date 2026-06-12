@@ -1,7 +1,7 @@
 {
   "tourId": 67211,
   "url": "https://www.nextcaddy.com/tour/67211",
-  "scrapedAt": "2026-05-21T16:40:13.395Z",
+  "scrapedAt": "2026-06-12T14:42:19.163Z",
   "meta": {
     "name": "IV Prueba del Campeonato Regional de Castilla y León (Valedera Sace)",
     "organizer": null,
@@ -21,15 +21,721 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Scratch Masculino Por Categorías Hasta 11.4 Hcp",
+      "expectedJugadores": 12,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Miguel Gonzalez Sanchez",
+          "licencia": "7707691593",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [],
+          "total": 68,
+          "toPar": -4,
+          "inscribedId": 2329593
+        },
+        {
+          "pos": 2,
+          "name": "Miguel Lopez Sanz",
+          "licencia": "7753162326",
+          "hcp": 2.3,
+          "nivel": "C",
+          "rounds": [],
+          "total": 71,
+          "toPar": -1,
+          "inscribedId": 2325494
+        },
+        {
+          "pos": 3,
+          "name": "Pablo Rebolleda Diez",
+          "licencia": "7709449777",
+          "hcp": null,
+          "nivel": "M",
+          "rounds": [],
+          "total": 71,
+          "toPar": -1,
+          "inscribedId": 2327887
+        },
+        {
+          "pos": 4,
+          "name": "Jose Luis Pascual Oliva",
+          "licencia": "7753112592",
+          "hcp": 5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 79,
+          "toPar": 7,
+          "inscribedId": 2327758
+        },
+        {
+          "pos": 5,
+          "name": "Antonio De Pablo Tabernero",
+          "licencia": "7740367119",
+          "hcp": 1.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 81,
+          "toPar": 9,
+          "inscribedId": 2327876
+        },
+        {
+          "pos": 6,
+          "name": "Javier Huerta Regaño",
+          "licencia": "7740277485",
+          "hcp": 11,
+          "nivel": "S",
+          "rounds": [],
+          "total": 86,
+          "toPar": 14,
+          "inscribedId": 2327993
+        },
+        {
+          "pos": 7,
+          "name": "Jose Angel Sanz Martin",
+          "licencia": "7773101168",
+          "hcp": 9.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 87,
+          "toPar": 15,
+          "inscribedId": 2328221
+        },
+        {
+          "pos": 8,
+          "name": "Andre Nilsson",
+          "licencia": "7707363836",
+          "hcp": 9.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 87,
+          "toPar": 15,
+          "inscribedId": 2323298
+        },
+        {
+          "pos": 9,
+          "name": "Alfonso De Miguel Anton",
+          "licencia": "7740278049",
+          "hcp": 4.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 87,
+          "toPar": 15,
+          "inscribedId": 2327368
+        },
+        {
+          "pos": 10,
+          "name": "Jose Luis Marfil Gutierrez",
+          "licencia": "7707804461",
+          "hcp": 6.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 89,
+          "toPar": 17,
+          "inscribedId": 2323301
+        },
+        {
+          "pos": 11,
+          "name": "Domingo Berna Perez",
+          "licencia": "7753101032",
+          "hcp": 9.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 93,
+          "toPar": 21,
+          "inscribedId": 2327936
+        },
+        {
+          "pos": 12,
+          "name": "Ramses Lopez Gutierrez",
+          "licencia": "7753456254",
+          "hcp": 6.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 93,
+          "toPar": 21,
+          "inscribedId": 2325496
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Scratch Masculino Por Categorías Desde 18.5 Hcp",
+      "expectedJugadores": 3,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Juan Ramon Garcia Casado",
+          "licencia": "7706897192",
+          "hcp": 25.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 103,
+          "toPar": 31,
+          "inscribedId": 2327357
+        },
+        {
+          "pos": 2,
+          "name": "Luis Alberto De Fuentes Gallego",
+          "licencia": "7753809402",
+          "hcp": 27.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 114,
+          "toPar": 42,
+          "inscribedId": 2328191
+        },
+        {
+          "pos": 3,
+          "name": "Gregorio Gonzalo Aragon",
+          "licencia": "7753202846",
+          "hcp": 24.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 118,
+          "toPar": 46,
+          "inscribedId": 2328229
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Scratch Masculino Por Categorías Entre 11.5 Y 18.5 Hcp",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Manuel Angulo Moreno",
+          "licencia": "7740367729",
+          "hcp": 13.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 93,
+          "toPar": 21,
+          "inscribedId": 2327797
+        },
+        {
+          "pos": 2,
+          "name": "Manuel Hernandez Gajate",
+          "licencia": "7709283725",
+          "hcp": 13.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 93,
+          "toPar": 21,
+          "inscribedId": 2324522
+        },
+        {
+          "pos": 3,
+          "name": "Juan Carlos Garcia Ramirez",
+          "licencia": "7753277484",
+          "hcp": 14.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 96,
+          "toPar": 24,
+          "inscribedId": 2327355
+        },
+        {
+          "pos": 4,
+          "name": "Saul Fernandez Andres",
+          "licencia": "7753351014",
+          "hcp": 14.1,
+          "nivel": "C",
+          "rounds": [],
+          "total": 96,
+          "toPar": 24,
+          "inscribedId": 2327845
+        },
+        {
+          "pos": 5,
+          "name": "Ricardo De La Orden Mozo",
+          "licencia": "7753188586",
+          "hcp": 15.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 100,
+          "toPar": 28,
+          "inscribedId": 2327877
+        },
+        {
+          "pos": 6,
+          "name": "Jose Nuñez Carballo",
+          "licencia": "7735980962",
+          "hcp": 12.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 103,
+          "toPar": 31,
+          "inscribedId": 2323085
+        },
+        {
+          "pos": 7,
+          "name": "Juan Jesus Cacho Ruiz",
+          "licencia": "7753379798",
+          "hcp": 18.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 106,
+          "toPar": 34,
+          "inscribedId": 2327955
+        },
+        {
+          "pos": 8,
+          "name": "Miguel Soria Garcia",
+          "licencia": "7740638246",
+          "hcp": 17.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 108,
+          "toPar": 36,
+          "inscribedId": 2328902
+        }
+      ]
+    },
+    {
+      "category": 4,
+      "categoryName": "Scratch Femenino Por Categorias Hasta 18.4 Hcp",
+      "expectedJugadores": 2,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Maria Yolanda Valbuena Rodrigo",
+          "licencia": "7709283726",
+          "hcp": 7.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 82,
+          "toPar": 10,
+          "inscribedId": 2324523
+        },
+        {
+          "pos": 2,
+          "name": "Sonia Carrisque Sanchez",
+          "licencia": "7758450549",
+          "hcp": 9.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 93,
+          "toPar": 21,
+          "inscribedId": 2325956
+        }
+      ]
+    },
+    {
+      "category": 5,
+      "categoryName": "Scratch Femenino Por Categorias Desde 18.5 Hcp",
+      "expectedJugadores": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Esther Garces Alonso",
+          "licencia": "7753188575",
+          "hcp": 32.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 134,
+          "toPar": 62,
+          "inscribedId": 2327878
+        }
+      ]
+    },
+    {
+      "category": 6,
+      "categoryName": "Handicap Absoluto Indistinto - Detalle Del Club",
+      "expectedJugadores": 26,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Miguel Lopez Sanz",
+          "licencia": "7753162326",
+          "hcp": 2.3,
+          "nivel": "C",
+          "rounds": [],
+          "total": 67,
+          "toPar": -5,
+          "inscribedId": 2325494
+        },
+        {
+          "pos": 2,
+          "name": "Miguel Gonzalez Sanchez",
+          "licencia": "7707691593",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [],
+          "total": 68,
+          "toPar": -4,
+          "inscribedId": 2329593
+        },
+        {
+          "pos": 3,
+          "name": "Maria Yolanda Valbuena Rodrigo",
+          "licencia": "7709283726",
+          "hcp": 7.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 71,
+          "toPar": -1,
+          "inscribedId": 2324523
+        },
+        {
+          "pos": 4,
+          "name": "Juan Ramon Garcia Casado",
+          "licencia": "7706897192",
+          "hcp": 25.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 71,
+          "toPar": -1,
+          "inscribedId": 2327357
+        },
+        {
+          "pos": 5,
+          "name": "Pablo Rebolleda Diez",
+          "licencia": "7709449777",
+          "hcp": null,
+          "nivel": "M",
+          "rounds": [],
+          "total": 72,
+          "toPar": null,
+          "inscribedId": 2327887
+        },
+        {
+          "pos": 6,
+          "name": "Jose Luis Pascual Oliva",
+          "licencia": "7753112592",
+          "hcp": 5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 72,
+          "toPar": null,
+          "inscribedId": 2327758
+        },
+        {
+          "pos": 7,
+          "name": "Javier Huerta Regaño",
+          "licencia": "7740277485",
+          "hcp": 11,
+          "nivel": "S",
+          "rounds": [],
+          "total": 72,
+          "toPar": null,
+          "inscribedId": 2327993
+        },
+        {
+          "pos": 8,
+          "name": "Jose Angel Sanz Martin",
+          "licencia": "7773101168",
+          "hcp": 9.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 75,
+          "toPar": 3,
+          "inscribedId": 2328221
+        },
+        {
+          "pos": 9,
+          "name": "Andre Nilsson",
+          "licencia": "7707363836",
+          "hcp": 9.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 75,
+          "toPar": 3,
+          "inscribedId": 2323298
+        },
+        {
+          "pos": 10,
+          "name": "Manuel Angulo Moreno",
+          "licencia": "7740367729",
+          "hcp": 13.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 75,
+          "toPar": 3,
+          "inscribedId": 2327797
+        },
+        {
+          "pos": 11,
+          "name": "Manuel Hernandez Gajate",
+          "licencia": "7709283725",
+          "hcp": 13.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 75,
+          "toPar": 3,
+          "inscribedId": 2324522
+        },
+        {
+          "pos": 12,
+          "name": "Juan Carlos Garcia Ramirez",
+          "licencia": "7753277484",
+          "hcp": 14.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 77,
+          "toPar": 5,
+          "inscribedId": 2327355
+        },
+        {
+          "pos": 13,
+          "name": "Saul Fernandez Andres",
+          "licencia": "7753351014",
+          "hcp": 14.1,
+          "nivel": "C",
+          "rounds": [],
+          "total": 78,
+          "toPar": 6,
+          "inscribedId": 2327845
+        },
+        {
+          "pos": 14,
+          "name": "Antonio De Pablo Tabernero",
+          "licencia": "7740367119",
+          "hcp": 1.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 79,
+          "toPar": 7,
+          "inscribedId": 2327876
+        },
+        {
+          "pos": 15,
+          "name": "Sonia Carrisque Sanchez",
+          "licencia": "7758450549",
+          "hcp": 9.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 79,
+          "toPar": 7,
+          "inscribedId": 2325956
+        },
+        {
+          "pos": 16,
+          "name": "Alfonso De Miguel Anton",
+          "licencia": "7740278049",
+          "hcp": 4.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 80,
+          "toPar": 8,
+          "inscribedId": 2327368
+        },
+        {
+          "pos": 17,
+          "name": "Jose Luis Marfil Gutierrez",
+          "licencia": "7707804461",
+          "hcp": 6.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 80,
+          "toPar": 8,
+          "inscribedId": 2323301
+        },
+        {
+          "pos": 18,
+          "name": "Ricardo De La Orden Mozo",
+          "licencia": "7753188586",
+          "hcp": 15.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 80,
+          "toPar": 8,
+          "inscribedId": 2327877
+        },
+        {
+          "pos": 19,
+          "name": "Domingo Berna Perez",
+          "licencia": "7753101032",
+          "hcp": 9.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 81,
+          "toPar": 9,
+          "inscribedId": 2327936
+        },
+        {
+          "pos": 20,
+          "name": "Luis Alberto De Fuentes Gallego",
+          "licencia": "7753809402",
+          "hcp": 27.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 81,
+          "toPar": 9,
+          "inscribedId": 2328191
+        },
+        {
+          "pos": 21,
+          "name": "Juan Jesus Cacho Ruiz",
+          "licencia": "7753379798",
+          "hcp": 18.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 83,
+          "toPar": 11,
+          "inscribedId": 2327955
+        },
+        {
+          "pos": 22,
+          "name": "Ramses Lopez Gutierrez",
+          "licencia": "7753456254",
+          "hcp": 6.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 84,
+          "toPar": 12,
+          "inscribedId": 2325496
+        },
+        {
+          "pos": 23,
+          "name": "Miguel Soria Garcia",
+          "licencia": "7740638246",
+          "hcp": 17.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 85,
+          "toPar": 13,
+          "inscribedId": 2328902
+        },
+        {
+          "pos": 24,
+          "name": "Jose Nuñez Carballo",
+          "licencia": "7735980962",
+          "hcp": 12.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 87,
+          "toPar": 15,
+          "inscribedId": 2323085
+        },
+        {
+          "pos": 25,
+          "name": "Gregorio Gonzalo Aragon",
+          "licencia": "7753202846",
+          "hcp": 24.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 87,
+          "toPar": 15,
+          "inscribedId": 2328229
+        },
+        {
+          "pos": 26,
+          "name": "Esther Garces Alonso",
+          "licencia": "7753188575",
+          "hcp": 32.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 95,
+          "toPar": 23,
+          "inscribedId": 2327878
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Masculino Por Categorías Hasta 11.4 Hcp",
+      "jugadores": 12
+    },
+    "2": {
+      "name": "Scratch Masculino Por Categorías Desde 18.5 Hcp",
+      "jugadores": 3
+    },
+    "3": {
+      "name": "Scratch Masculino Por Categorías Entre 11.5 Y 18.5 Hcp",
+      "jugadores": 8
+    },
+    "4": {
+      "name": "Scratch Femenino Por Categorias Hasta 18.4 Hcp",
+      "jugadores": 2
+    },
+    "5": {
+      "name": "Scratch Femenino Por Categorias Desde 18.5 Hcp",
+      "jugadores": 1
+    },
+    "6": {
+      "name": "Handicap Absoluto Indistinto - Detalle Del Club",
+      "jugadores": 26
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
       "name": "Jose Nuñez Carballo",
       "licencia": "7735980962",
-      "hcp": 12.3,
+      "hcp": 12.2,
       "nivel": "S"
     },
     {
@@ -43,7 +749,7 @@
       "orden": 3,
       "name": "Jose Luis Marfil Gutierrez",
       "licencia": "7707804461",
-      "hcp": 7.5,
+      "hcp": 6.9,
       "nivel": "S"
     },
     {
@@ -54,6 +760,139 @@
       "nivel": "S"
     },
     {
+      "orden": 5,
+      "name": "Miguel Lopez Sanz",
+      "licencia": "7753162326",
+      "hcp": 2.3,
+      "nivel": "C"
+    },
+    {
+      "orden": 6,
+      "name": "Ramses Lopez Gutierrez",
+      "licencia": "7753456254",
+      "hcp": 6.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 7,
+      "name": "Juan Carlos Garcia Ramirez",
+      "licencia": "7753277484",
+      "hcp": 14.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Juan Ramon Garcia Casado",
+      "licencia": "7706897192",
+      "hcp": 25.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Alfonso De Miguel Anton",
+      "licencia": "7740278049",
+      "hcp": 4.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Jose Luis Pascual Oliva",
+      "licencia": "7753112592",
+      "hcp": 5,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Manuel Angulo Moreno",
+      "licencia": "7740367729",
+      "hcp": 13.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Saul Fernandez Andres",
+      "licencia": "7753351014",
+      "hcp": 14.1,
+      "nivel": "C"
+    },
+    {
+      "orden": 13,
+      "name": "Antonio De Pablo Tabernero",
+      "licencia": "7740367119",
+      "hcp": 1.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 14,
+      "name": "Ricardo De La Orden Mozo",
+      "licencia": "7753188586",
+      "hcp": 15.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Pablo Rebolleda Diez",
+      "licencia": "7709449777",
+      "hcp": null,
+      "nivel": "M"
+    },
+    {
+      "orden": 16,
+      "name": "Domingo Berna Perez",
+      "licencia": "7753101032",
+      "hcp": 9.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Juan Jesus Cacho Ruiz",
+      "licencia": "7753379798",
+      "hcp": 18.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Javier Huerta Regaño",
+      "licencia": "7740277485",
+      "hcp": 11,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Luis Alberto De Fuentes Gallego",
+      "licencia": "7753809402",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Jose Angel Sanz Martin",
+      "licencia": "7773101168",
+      "hcp": 9.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Gregorio Gonzalo Aragon",
+      "licencia": "7753202846",
+      "hcp": 24.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Miguel Soria Garcia",
+      "licencia": "7740638246",
+      "hcp": 17.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 23,
+      "name": "Miguel Gonzalez Sanchez",
+      "licencia": "7707691593",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
       "orden": null,
       "name": "Jugador",
       "licencia": "Licencia",
@@ -62,16 +901,23 @@
     },
     {
       "orden": 1,
-      "name": "Pilar Elosua De Juan",
-      "licencia": "7770149280",
-      "hcp": 10.8,
+      "name": "Maria Yolanda Valbuena Rodrigo",
+      "licencia": "7709283726",
+      "hcp": 7.4,
       "nivel": "S"
     },
     {
       "orden": 2,
-      "name": "Maria Yolanda Valbuena Rodrigo",
-      "licencia": "7709283726",
-      "hcp": 7.4,
+      "name": "Sonia Carrisque Sanchez",
+      "licencia": "7758450549",
+      "hcp": 9.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Esther Garces Alonso",
+      "licencia": "7753188575",
+      "hcp": null,
       "nivel": "S"
     },
     {
@@ -85,7 +931,7 @@
       "orden": 1,
       "name": "Jose Nuñez Carballo",
       "licencia": "19-05-26 13:44",
-      "hcp": 12.3,
+      "hcp": 12.2,
       "nivel": "7735980962"
     },
     {
@@ -99,29 +945,169 @@
       "orden": 3,
       "name": "Jose Luis Marfil Gutierrez",
       "licencia": "19-05-26 19:05",
-      "hcp": 7.5,
+      "hcp": 6.9,
       "nivel": "7707804461"
     },
     {
       "orden": 4,
-      "name": "Pilar Elosua De Juan",
-      "licencia": "20-05-26 20:02",
-      "hcp": 10.8,
-      "nivel": "7770149280"
-    },
-    {
-      "orden": 5,
       "name": "Manuel Hernandez Gajate",
       "licencia": "21-05-26 09:06",
       "hcp": 13.6,
       "nivel": "7709283725"
     },
     {
-      "orden": 6,
+      "orden": 5,
       "name": "Maria Yolanda Valbuena Rodrigo",
       "licencia": "21-05-26 09:08",
       "hcp": 7.4,
       "nivel": "7709283726"
+    },
+    {
+      "orden": 6,
+      "name": "Miguel Lopez Sanz",
+      "licencia": "21-05-26 19:57",
+      "hcp": 2.3,
+      "nivel": "7753162326"
+    },
+    {
+      "orden": 7,
+      "name": "Ramses Lopez Gutierrez",
+      "licencia": "21-05-26 20:01",
+      "hcp": 6.6,
+      "nivel": "7753456254"
+    },
+    {
+      "orden": 8,
+      "name": "Sonia Carrisque Sanchez",
+      "licencia": "22-05-26 14:45",
+      "hcp": 9.8,
+      "nivel": "7758450549"
+    },
+    {
+      "orden": 9,
+      "name": "Juan Carlos Garcia Ramirez",
+      "licencia": "25-05-26 09:20",
+      "hcp": 14.3,
+      "nivel": "7753277484"
+    },
+    {
+      "orden": 10,
+      "name": "Juan Ramon Garcia Casado",
+      "licencia": "25-05-26 09:23",
+      "hcp": 25.1,
+      "nivel": "7706897192"
+    },
+    {
+      "orden": 11,
+      "name": "Alfonso De Miguel Anton",
+      "licencia": "25-05-26 09:57",
+      "hcp": 4.9,
+      "nivel": "7740278049"
+    },
+    {
+      "orden": 12,
+      "name": "Jose Luis Pascual Oliva",
+      "licencia": "25-05-26 15:12",
+      "hcp": 5,
+      "nivel": "7753112592"
+    },
+    {
+      "orden": 13,
+      "name": "Manuel Angulo Moreno",
+      "licencia": "25-05-26 15:53",
+      "hcp": 13.7,
+      "nivel": "7740367729"
+    },
+    {
+      "orden": 14,
+      "name": "Saul Fernandez Andres",
+      "licencia": "25-05-26 18:17",
+      "hcp": 14.1,
+      "nivel": "7753351014"
+    },
+    {
+      "orden": 15,
+      "name": "Antonio De Pablo Tabernero",
+      "licencia": "25-05-26 19:53",
+      "hcp": 1.3,
+      "nivel": "7740367119"
+    },
+    {
+      "orden": 16,
+      "name": "Ricardo De La Orden Mozo",
+      "licencia": "25-05-26 19:55",
+      "hcp": 15.2,
+      "nivel": "7753188586"
+    },
+    {
+      "orden": 17,
+      "name": "Esther Garces Alonso",
+      "licencia": "25-05-26 19:57",
+      "hcp": null,
+      "nivel": "7753188575"
+    },
+    {
+      "orden": 18,
+      "name": "Pablo Rebolleda Diez",
+      "licencia": "25-05-26 20:38",
+      "hcp": null,
+      "nivel": "7709449777"
+    },
+    {
+      "orden": 19,
+      "name": "Domingo Berna Perez",
+      "licencia": "25-05-26 22:31",
+      "hcp": 9.1,
+      "nivel": "7753101032"
+    },
+    {
+      "orden": 20,
+      "name": "Juan Jesus Cacho Ruiz",
+      "licencia": "26-05-26 00:24",
+      "hcp": 18.3,
+      "nivel": "7753379798"
+    },
+    {
+      "orden": 21,
+      "name": "Javier Huerta Regaño",
+      "licencia": "26-05-26 09:27",
+      "hcp": 11,
+      "nivel": "7740277485"
+    },
+    {
+      "orden": 22,
+      "name": "Luis Alberto De Fuentes Gallego",
+      "licencia": "26-05-26 11:55",
+      "hcp": null,
+      "nivel": "7753809402"
+    },
+    {
+      "orden": 23,
+      "name": "Jose Angel Sanz Martin",
+      "licencia": "26-05-26 12:29",
+      "hcp": 9.1,
+      "nivel": "7773101168"
+    },
+    {
+      "orden": 24,
+      "name": "Gregorio Gonzalo Aragon",
+      "licencia": "26-05-26 12:48",
+      "hcp": 24.3,
+      "nivel": "7753202846"
+    },
+    {
+      "orden": 25,
+      "name": "Miguel Soria Garcia",
+      "licencia": "27-05-26 09:56",
+      "hcp": 17.8,
+      "nivel": "7740638246"
+    },
+    {
+      "orden": 26,
+      "name": "Miguel Gonzalez Sanchez",
+      "licencia": "27-05-26 21:27",
+      "hcp": null,
+      "nivel": "7707691593"
     }
   ],
   "horarios": [
@@ -398,7 +1384,9 @@
     }
   },
   "pdfs": [
-    "/uploads/circulares/cirfgcyl1226.pdf"
+    "/uploads/competiciones/pdf/3216686601_cuadro_honor.pdf",
+    "/uploads/circulares/cirfgcyl1226.pdf",
+    "/uploads/competiciones/pdf/1895982329_1761572276_merged_2.pdf"
   ],
-  "horariosScrapedAt": "2026-06-01T09:30:22.109Z"
+  "horariosScrapedAt": "2026-06-12T14:45:08.815Z"
 }

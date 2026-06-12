@@ -1,7 +1,7 @@
 {
   "tourId": 68796,
   "url": "https://www.nextcaddy.com/tour/68796",
-  "scrapedAt": "2026-05-21T16:40:32.441Z",
+  "scrapedAt": "2026-06-12T14:43:11.647Z",
   "meta": {
     "name": "VI Torneo Memorial Capitán de Campo \"Paco del Rosal\"",
     "organizer": null,
@@ -23,7 +23,29 @@
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Nicolas Miguel Montoya Rodriguez",
+      "licencia": "AM32245177",
+      "hcp": 16.8,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Fecha Inscripción",
+      "hcp": null,
+      "nivel": "Licencia"
+    },
+    {
+      "orden": 1,
+      "name": "Nicolas Miguel Montoya Rodriguez",
+      "licencia": "05-06-26 21:11",
+      "hcp": 16.8,
+      "nivel": "AM32245177"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -165,5 +187,5 @@
   "pdfs": [
     "/uploads/competiciones/pdf/3711159365_memorial_paco_del_rosal_.pdf"
   ],
-  "horariosScrapedAt": "2026-06-08T09:00:24.511Z"
+  "horariosScrapedAt": "2026-06-12T14:45:44.494Z"
 }

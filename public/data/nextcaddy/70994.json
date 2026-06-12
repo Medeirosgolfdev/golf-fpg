@@ -1,7 +1,7 @@
 {
   "tourId": 70994,
   "url": "https://www.nextcaddy.com/tour/70994",
-  "scrapedAt": "2026-05-21T16:40:03.112Z",
+  "scrapedAt": "2026-06-12T14:41:58.928Z",
   "meta": {
     "name": "JORNADA FINAL LIGA MARATÓN (PRIVADO)",
     "organizer": null,
@@ -20,9 +20,187 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 14,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jose Joaquin Ostos Muñoz",
+          "licencia": "AM00207773",
+          "hcp": 13.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2324163
+        },
+        {
+          "pos": 2,
+          "name": "Jose Luis Castro Alvarez",
+          "licencia": "AME7357051",
+          "hcp": 18.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2324172
+        },
+        {
+          "pos": 3,
+          "name": "Pablo Gomez Fernandez",
+          "licencia": "AM25361935",
+          "hcp": 14,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2324164
+        },
+        {
+          "pos": 4,
+          "name": "Carlos Aguilar Hidalgo",
+          "licencia": "AM25342508",
+          "hcp": 15,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2324170
+        },
+        {
+          "pos": 5,
+          "name": "Guillermo Aguilar Hidalgo",
+          "licencia": "AM25607367",
+          "hcp": 27,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2324156
+        },
+        {
+          "pos": 6,
+          "name": "Enrique Paves Sanz",
+          "licencia": "AM32263697",
+          "hcp": 27.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2324162
+        },
+        {
+          "pos": 7,
+          "name": "Juan Antonio Noguerol Olmo",
+          "licencia": "AM25351220",
+          "hcp": 15.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2324161
+        },
+        {
+          "pos": 8,
+          "name": "Antonio Alcon Perez",
+          "licencia": "AM25502884",
+          "hcp": 21.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2324154
+        },
+        {
+          "pos": 9,
+          "name": "Manuel Revuelta Marchena",
+          "licencia": "AMC9745101",
+          "hcp": 16.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2324171
+        },
+        {
+          "pos": 10,
+          "name": "Francisco Gines Romero",
+          "licencia": "AM25613705",
+          "hcp": 20.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2324166
+        },
+        {
+          "pos": 11,
+          "name": "Saturnino Cintas Ferres",
+          "licencia": "AM25763616",
+          "hcp": 28.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2324167
+        },
+        {
+          "pos": 12,
+          "name": "Jose Carbajo Masero",
+          "licencia": "AM25779897",
+          "hcp": 9.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2324168
+        },
+        {
+          "pos": 13,
+          "name": "Antonio Nuñez Alvarez",
+          "licencia": "AMC9267032",
+          "hcp": 10.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2324158
+        },
+        {
+          "pos": 14,
+          "name": "Jose Dominguez Ballestero",
+          "licencia": "AMG3902221",
+          "hcp": 28.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2324157
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 14
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -380,5 +558,5 @@
   "pdfs": [
     "/uploads/competiciones/cartel/367060452_70994-jornada-final-liga-maraton-privado.pdf"
   ],
-  "horariosScrapedAt": "2026-05-21T16:42:45.864Z"
+  "horariosScrapedAt": "2026-06-12T14:46:08.479Z"
 }

@@ -1,6 +1,6 @@
 {
   "gameId": "680a4a31523b9365e346a9b8",
-  "fetchedAt": "2026-05-21T16:45:37.888Z",
+  "fetchedAt": "2026-06-12T14:49:19.834Z",
   "game": {
     "_id": "680a4a31523b9365e346a9b8",
     "name": "Jornada 1",
@@ -32,15 +32,6 @@
       "isPitchAndPutt": false
     },
     "teesMale": [
-      {
-        "gender": "M",
-        "color": "red",
-        "lap": "lap9b",
-        "rating": 31.5,
-        "slope": 110,
-        "par": 35,
-        "_id": "680a4a31523b9365e346aa77"
-      },
       {
         "gender": "M",
         "color": "white",
@@ -76,18 +67,18 @@
         "slope": 119,
         "par": 35,
         "_id": "680a4a31523b9365e346aad1"
+      },
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap9b",
+        "rating": 31.5,
+        "slope": 110,
+        "par": 35,
+        "_id": "680a4a31523b9365e346aa77"
       }
     ],
     "teesFemale": [
-      {
-        "gender": "F",
-        "color": "orange",
-        "lap": "lap9b",
-        "rating": 35.7,
-        "slope": 124,
-        "par": 35,
-        "_id": "680a4a31523b9365e346aa89"
-      },
       {
         "gender": "F",
         "color": "blue",
@@ -96,6 +87,24 @@
         "slope": 118,
         "par": 35,
         "_id": "680a4a31523b9365e346aabf"
+      },
+      {
+        "gender": "F",
+        "color": "white",
+        "lap": "lap9b",
+        "rating": 38.2,
+        "slope": 137,
+        "par": 35,
+        "_id": "680a4a31523b9365e346ab07"
+      },
+      {
+        "gender": "F",
+        "color": "orange",
+        "lap": "lap9b",
+        "rating": 35.7,
+        "slope": 124,
+        "par": 35,
+        "_id": "680a4a31523b9365e346aa89"
       },
       {
         "gender": "F",
@@ -114,15 +123,6 @@
         "slope": 116,
         "par": 35,
         "_id": "680a4a31523b9365e346aae3"
-      },
-      {
-        "gender": "F",
-        "color": "white",
-        "lap": "lap9b",
-        "rating": 38.2,
-        "slope": 137,
-        "par": 35,
-        "_id": "680a4a31523b9365e346ab07"
       }
     ]
   },
@@ -149,7 +149,7 @@
           "gameTeeColor": "red",
           "isCardFinished": true,
           "isCardClosed": false,
-          "teeTimeHour": "14:00",
+          "teeTimeHour": "12:00",
           "teeTime": "2025-05-24T12:00:46.892Z",
           "teeNumber": 10,
           "view": {
@@ -301,7 +301,7 @@
           "gameTeeColor": "red",
           "isCardFinished": true,
           "isCardClosed": false,
-          "teeTimeHour": "14:10",
+          "teeTimeHour": "12:10",
           "teeTime": "2025-05-24T12:10:46.892Z",
           "teeNumber": 10,
           "view": {
@@ -453,7 +453,7 @@
           "gameTeeColor": "red",
           "isCardFinished": true,
           "isCardClosed": false,
-          "teeTimeHour": "14:10",
+          "teeTimeHour": "12:10",
           "teeTime": "2025-05-24T12:10:46.892Z",
           "teeNumber": 10,
           "view": {
@@ -605,7 +605,7 @@
           "gameTeeColor": "red",
           "isCardFinished": true,
           "isCardClosed": false,
-          "teeTimeHour": "14:00",
+          "teeTimeHour": "12:00",
           "teeTime": "2025-05-24T12:00:46.892Z",
           "teeNumber": 10,
           "view": {
@@ -757,7 +757,7 @@
           "gameTeeColor": "red",
           "isCardFinished": true,
           "isCardClosed": false,
-          "teeTimeHour": "14:30",
+          "teeTimeHour": "12:30",
           "teeTime": "2025-05-24T12:30:46.892Z",
           "teeNumber": 10,
           "view": {
@@ -909,7 +909,7 @@
           "gameTeeColor": "red",
           "isCardFinished": true,
           "isCardClosed": false,
-          "teeTimeHour": "14:20",
+          "teeTimeHour": "12:20",
           "teeTime": "2025-05-24T12:20:46.892Z",
           "teeNumber": 10,
           "view": {
@@ -1061,7 +1061,7 @@
           "gameTeeColor": "red",
           "isCardFinished": true,
           "isCardClosed": false,
-          "teeTimeHour": "14:10",
+          "teeTimeHour": "12:10",
           "teeTime": "2025-05-24T12:10:46.892Z",
           "teeNumber": 10,
           "view": {
@@ -1213,7 +1213,7 @@
           "gameTeeColor": "red",
           "isCardFinished": true,
           "isCardClosed": false,
-          "teeTimeHour": "14:00",
+          "teeTimeHour": "12:00",
           "teeTime": "2025-05-24T12:00:46.892Z",
           "teeNumber": 10,
           "view": {
@@ -1365,7 +1365,7 @@
           "gameTeeColor": "red",
           "isCardFinished": true,
           "isCardClosed": false,
-          "teeTimeHour": "14:40",
+          "teeTimeHour": "12:40",
           "teeTime": "2025-05-24T12:40:46.892Z",
           "teeNumber": 10,
           "view": {
@@ -1517,7 +1517,7 @@
           "gameTeeColor": "red",
           "isCardFinished": true,
           "isCardClosed": false,
-          "teeTimeHour": "14:30",
+          "teeTimeHour": "12:30",
           "teeTime": "2025-05-24T12:30:46.892Z",
           "teeNumber": 10,
           "view": {
@@ -1669,7 +1669,7 @@
           "gameTeeColor": "red",
           "isCardFinished": true,
           "isCardClosed": false,
-          "teeTimeHour": "14:30",
+          "teeTimeHour": "12:30",
           "teeTime": "2025-05-24T12:30:46.892Z",
           "teeNumber": 10,
           "view": {
@@ -1821,7 +1821,7 @@
           "gameTeeColor": "red",
           "isCardFinished": true,
           "isCardClosed": false,
-          "teeTimeHour": "14:50",
+          "teeTimeHour": "12:50",
           "teeTime": "2025-05-24T12:50:46.892Z",
           "teeNumber": 10,
           "view": {
@@ -1973,7 +1973,7 @@
           "gameTeeColor": "red",
           "isCardFinished": true,
           "isCardClosed": false,
-          "teeTimeHour": "14:20",
+          "teeTimeHour": "12:20",
           "teeTime": "2025-05-24T12:20:46.892Z",
           "teeNumber": 10,
           "view": {
@@ -2125,7 +2125,7 @@
           "gameTeeColor": "red",
           "isCardFinished": true,
           "isCardClosed": false,
-          "teeTimeHour": "14:20",
+          "teeTimeHour": "12:20",
           "teeTime": "2025-05-24T12:20:46.892Z",
           "teeNumber": 10,
           "view": {
@@ -2277,7 +2277,7 @@
           "gameTeeColor": "red",
           "isCardFinished": true,
           "isCardClosed": false,
-          "teeTimeHour": "14:50",
+          "teeTimeHour": "12:50",
           "teeTime": "2025-05-24T12:50:46.892Z",
           "teeNumber": 10,
           "view": {
@@ -2429,7 +2429,7 @@
           "gameTeeColor": "red",
           "isCardFinished": true,
           "isCardClosed": false,
-          "teeTimeHour": "14:40",
+          "teeTimeHour": "12:40",
           "teeTime": "2025-05-24T12:40:46.892Z",
           "teeNumber": 10,
           "view": {
@@ -2595,7 +2595,7 @@
           "gameTeeColor": "red",
           "isCardFinished": true,
           "isCardClosed": false,
-          "teeTimeHour": "15:00",
+          "teeTimeHour": "13:00",
           "teeTime": "2025-05-24T13:00:46.892Z",
           "teeNumber": 10,
           "view": {
@@ -2747,7 +2747,7 @@
           "gameTeeColor": "red",
           "isCardFinished": true,
           "isCardClosed": false,
-          "teeTimeHour": "15:00",
+          "teeTimeHour": "13:00",
           "teeTime": "2025-05-24T13:00:46.892Z",
           "teeNumber": 10,
           "view": {
@@ -2899,7 +2899,7 @@
           "gameTeeColor": "red",
           "isCardFinished": true,
           "isCardClosed": false,
-          "teeTimeHour": "15:00",
+          "teeTimeHour": "13:00",
           "teeTime": "2025-05-24T13:00:46.892Z",
           "teeNumber": 10,
           "view": {
@@ -3051,7 +3051,7 @@
           "gameTeeColor": "red",
           "isCardFinished": true,
           "isCardClosed": false,
-          "teeTimeHour": "15:10",
+          "teeTimeHour": "13:10",
           "teeTime": "2025-05-24T13:10:46.892Z",
           "teeNumber": 10,
           "view": {
@@ -3203,7 +3203,7 @@
           "gameTeeColor": "red",
           "isCardFinished": true,
           "isCardClosed": false,
-          "teeTimeHour": "15:10",
+          "teeTimeHour": "13:10",
           "teeTime": "2025-05-24T13:10:46.892Z",
           "teeNumber": 10,
           "view": {
@@ -3355,7 +3355,7 @@
           "gameTeeColor": "red",
           "isCardFinished": true,
           "isCardClosed": false,
-          "teeTimeHour": "15:20",
+          "teeTimeHour": "13:20",
           "teeTime": "2025-05-24T13:20:46.892Z",
           "teeNumber": 10,
           "view": {
@@ -3507,7 +3507,7 @@
           "gameTeeColor": "red",
           "isCardFinished": true,
           "isCardClosed": false,
-          "teeTimeHour": "15:20",
+          "teeTimeHour": "13:20",
           "teeTime": "2025-05-24T13:20:46.892Z",
           "teeNumber": 10,
           "view": {
@@ -3659,7 +3659,7 @@
           "gameTeeColor": "red",
           "isCardFinished": true,
           "isCardClosed": false,
-          "teeTimeHour": "15:10",
+          "teeTimeHour": "13:10",
           "teeTime": "2025-05-24T13:10:46.892Z",
           "teeNumber": 10,
           "view": {

@@ -1,9 +1,9 @@
 {
   "tourId": 70657,
   "url": "https://www.nextcaddy.com/tour/70657",
-  "scrapedAt": "2026-05-21T16:40:11.647Z",
+  "scrapedAt": "2026-06-12T14:42:14.691Z",
   "meta": {
-    "name": "JOVENES PROMESA - ZONAL ALEVINES Y BENJAMINES CON HCP NO NACIONAL",
+    "name": "JOVENES PROMESA - ZONAL ALEVINES Y BENJAMINES 9 HOYOS",
     "organizer": null,
     "course": null,
     "courseCode": null,
@@ -22,10 +22,854 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual Benjamín",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Miguel Gomez Banda",
+          "licencia": "9908415300",
+          "hcp": 39.6,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 34
+            },
+            {
+              "round": 2,
+              "gross": 32
+            }
+          ],
+          "total": 66,
+          "toPar": -6,
+          "inscribedId": 2328423
+        },
+        {
+          "pos": 2,
+          "name": "David Cerezal Criado",
+          "licencia": "7759968499",
+          "hcp": 37.5,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 37
+            },
+            {
+              "round": 2,
+              "gross": 35
+            }
+          ],
+          "total": 72,
+          "toPar": null,
+          "inscribedId": 2327230
+        },
+        {
+          "pos": 3,
+          "name": "Mark Bautista Musina",
+          "licencia": "1101354373",
+          "hcp": 46.4,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 36
+            },
+            {
+              "round": 2,
+              "gross": 39
+            }
+          ],
+          "total": 75,
+          "toPar": 3,
+          "inscribedId": 2327564
+        },
+        {
+          "pos": 4,
+          "name": "Angela Basconcillos Rodriguez",
+          "licencia": "7712416189",
+          "hcp": 38.4,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 37
+            },
+            {
+              "round": 2,
+              "gross": 45
+            }
+          ],
+          "total": 82,
+          "toPar": 10,
+          "inscribedId": 2328285
+        },
+        {
+          "pos": 5,
+          "name": "Erik Bautista Musina",
+          "licencia": "7700354371",
+          "hcp": 25.1,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 44
+            },
+            {
+              "round": 2,
+              "gross": 47
+            }
+          ],
+          "total": 91,
+          "toPar": 19,
+          "inscribedId": 2328890
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Individual Scratch General",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Miguel Gomez Banda",
+          "licencia": "9908415300",
+          "hcp": 39.6,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 50
+            },
+            {
+              "round": 2,
+              "gross": 48
+            }
+          ],
+          "total": 98,
+          "toPar": 26,
+          "inscribedId": 2328423
+        },
+        {
+          "pos": 2,
+          "name": "Manuel Basconcillos Rodriguez",
+          "licencia": "7712092248",
+          "hcp": 41.9,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 53
+            },
+            {
+              "round": 2,
+              "gross": 47
+            }
+          ],
+          "total": 100,
+          "toPar": 28,
+          "inscribedId": 2328341
+        },
+        {
+          "pos": 3,
+          "name": "David Cerezal Criado",
+          "licencia": "7759968499",
+          "hcp": 37.5,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 52
+            },
+            {
+              "round": 2,
+              "gross": 50
+            }
+          ],
+          "total": 102,
+          "toPar": 30,
+          "inscribedId": 2327230
+        },
+        {
+          "pos": 4,
+          "name": "Matias Martin Martin",
+          "licencia": "7759097829",
+          "hcp": 40.1,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 53
+            },
+            {
+              "round": 2,
+              "gross": 56
+            }
+          ],
+          "total": 109,
+          "toPar": 37,
+          "inscribedId": 2327228
+        },
+        {
+          "pos": 5,
+          "name": "Erik Bautista Musina",
+          "licencia": "7700354371",
+          "hcp": 25.1,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 53
+            },
+            {
+              "round": 2,
+              "gross": 56
+            }
+          ],
+          "total": 109,
+          "toPar": 37,
+          "inscribedId": 2328890
+        },
+        {
+          "pos": 6,
+          "name": "Antonio Garcia Pique",
+          "licencia": "7706077911",
+          "hcp": 38.3,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 54
+            },
+            {
+              "round": 2,
+              "gross": 56
+            }
+          ],
+          "total": 110,
+          "toPar": 38,
+          "inscribedId": 2327904
+        },
+        {
+          "pos": 7,
+          "name": "Mark Bautista Musina",
+          "licencia": "1101354373",
+          "hcp": 46.4,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 55
+            },
+            {
+              "round": 2,
+              "gross": 58
+            }
+          ],
+          "total": 113,
+          "toPar": 41,
+          "inscribedId": 2327564
+        },
+        {
+          "pos": 8,
+          "name": "Angela Basconcillos Rodriguez",
+          "licencia": "7712416189",
+          "hcp": 38.4,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 55
+            },
+            {
+              "round": 2,
+              "gross": 63
+            }
+          ],
+          "total": 118,
+          "toPar": 46,
+          "inscribedId": 2328285
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Individual Handicap General",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Miguel Gomez Banda",
+          "licencia": "9908415300",
+          "hcp": 39.6,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 34
+            },
+            {
+              "round": 2,
+              "gross": 32
+            }
+          ],
+          "total": 66,
+          "toPar": -6,
+          "inscribedId": 2328423
+        },
+        {
+          "pos": 2,
+          "name": "Manuel Basconcillos Rodriguez",
+          "licencia": "7712092248",
+          "hcp": 41.9,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 36
+            },
+            {
+              "round": 2,
+              "gross": 30
+            }
+          ],
+          "total": 66,
+          "toPar": -6,
+          "inscribedId": 2328341
+        },
+        {
+          "pos": 3,
+          "name": "David Cerezal Criado",
+          "licencia": "7759968499",
+          "hcp": 37.5,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 37
+            },
+            {
+              "round": 2,
+              "gross": 35
+            }
+          ],
+          "total": 72,
+          "toPar": null,
+          "inscribedId": 2327230
+        },
+        {
+          "pos": 4,
+          "name": "Mark Bautista Musina",
+          "licencia": "1101354373",
+          "hcp": 46.4,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 36
+            },
+            {
+              "round": 2,
+              "gross": 39
+            }
+          ],
+          "total": 75,
+          "toPar": 3,
+          "inscribedId": 2327564
+        },
+        {
+          "pos": 5,
+          "name": "Matias Martin Martin",
+          "licencia": "7759097829",
+          "hcp": 40.1,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 37
+            },
+            {
+              "round": 2,
+              "gross": 40
+            }
+          ],
+          "total": 77,
+          "toPar": 5,
+          "inscribedId": 2327228
+        },
+        {
+          "pos": 6,
+          "name": "Antonio Garcia Pique",
+          "licencia": "7706077911",
+          "hcp": 38.3,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 38
+            },
+            {
+              "round": 2,
+              "gross": 40
+            }
+          ],
+          "total": 78,
+          "toPar": 6,
+          "inscribedId": 2327904
+        },
+        {
+          "pos": 7,
+          "name": "Angela Basconcillos Rodriguez",
+          "licencia": "7712416189",
+          "hcp": 38.4,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 37
+            },
+            {
+              "round": 2,
+              "gross": 45
+            }
+          ],
+          "total": 82,
+          "toPar": 10,
+          "inscribedId": 2328285
+        },
+        {
+          "pos": 8,
+          "name": "Erik Bautista Musina",
+          "licencia": "7700354371",
+          "hcp": 25.1,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 44
+            },
+            {
+              "round": 2,
+              "gross": 47
+            }
+          ],
+          "total": 91,
+          "toPar": 19,
+          "inscribedId": 2328890
+        }
+      ]
+    },
+    {
+      "category": 4,
+      "categoryName": "Individual Scratch General",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Miguel Gomez Banda",
+          "licencia": "9908415300",
+          "hcp": 39.6,
+          "nivel": "B",
+          "rounds": [],
+          "total": 50,
+          "toPar": 14,
+          "inscribedId": 2328423
+        },
+        {
+          "pos": 2,
+          "name": "David Cerezal Criado",
+          "licencia": "7759968499",
+          "hcp": 37.5,
+          "nivel": "B",
+          "rounds": [],
+          "total": 52,
+          "toPar": 16,
+          "inscribedId": 2327230
+        },
+        {
+          "pos": 3,
+          "name": "Manuel Basconcillos Rodriguez",
+          "licencia": "7712092248",
+          "hcp": 41.9,
+          "nivel": "A",
+          "rounds": [],
+          "total": 53,
+          "toPar": 17,
+          "inscribedId": 2328341
+        },
+        {
+          "pos": 4,
+          "name": "Matias Martin Martin",
+          "licencia": "7759097829",
+          "hcp": 40.1,
+          "nivel": "A",
+          "rounds": [],
+          "total": 53,
+          "toPar": 17,
+          "inscribedId": 2327228
+        },
+        {
+          "pos": 5,
+          "name": "Erik Bautista Musina",
+          "licencia": "7700354371",
+          "hcp": 25.1,
+          "nivel": "B",
+          "rounds": [],
+          "total": 53,
+          "toPar": 17,
+          "inscribedId": 2328890
+        },
+        {
+          "pos": 6,
+          "name": "Antonio Garcia Pique",
+          "licencia": "7706077911",
+          "hcp": 38.3,
+          "nivel": "A",
+          "rounds": [],
+          "total": 54,
+          "toPar": 18,
+          "inscribedId": 2327904
+        },
+        {
+          "pos": 7,
+          "name": "Mark Bautista Musina",
+          "licencia": "1101354373",
+          "hcp": 46.4,
+          "nivel": "B",
+          "rounds": [],
+          "total": 55,
+          "toPar": 19,
+          "inscribedId": 2327564
+        },
+        {
+          "pos": 8,
+          "name": "Angela Basconcillos Rodriguez",
+          "licencia": "7712416189",
+          "hcp": 38.4,
+          "nivel": "B",
+          "rounds": [],
+          "total": 55,
+          "toPar": 19,
+          "inscribedId": 2328285
+        }
+      ]
+    },
+    {
+      "category": 5,
+      "categoryName": "Individual Handicap General",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Miguel Gomez Banda",
+          "licencia": "9908415300",
+          "hcp": 39.6,
+          "nivel": "B",
+          "rounds": [],
+          "total": 34,
+          "toPar": -2,
+          "inscribedId": 2328423
+        },
+        {
+          "pos": 2,
+          "name": "Manuel Basconcillos Rodriguez",
+          "licencia": "7712092248",
+          "hcp": 41.9,
+          "nivel": "A",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2328341
+        },
+        {
+          "pos": 3,
+          "name": "Mark Bautista Musina",
+          "licencia": "1101354373",
+          "hcp": 46.4,
+          "nivel": "B",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2327564
+        },
+        {
+          "pos": 4,
+          "name": "David Cerezal Criado",
+          "licencia": "7759968499",
+          "hcp": 37.5,
+          "nivel": "B",
+          "rounds": [],
+          "total": 37,
+          "toPar": 1,
+          "inscribedId": 2327230
+        },
+        {
+          "pos": 5,
+          "name": "Matias Martin Martin",
+          "licencia": "7759097829",
+          "hcp": 40.1,
+          "nivel": "A",
+          "rounds": [],
+          "total": 37,
+          "toPar": 1,
+          "inscribedId": 2327228
+        },
+        {
+          "pos": 6,
+          "name": "Angela Basconcillos Rodriguez",
+          "licencia": "7712416189",
+          "hcp": 38.4,
+          "nivel": "B",
+          "rounds": [],
+          "total": 37,
+          "toPar": 1,
+          "inscribedId": 2328285
+        },
+        {
+          "pos": 7,
+          "name": "Antonio Garcia Pique",
+          "licencia": "7706077911",
+          "hcp": 38.3,
+          "nivel": "A",
+          "rounds": [],
+          "total": 38,
+          "toPar": 2,
+          "inscribedId": 2327904
+        },
+        {
+          "pos": 8,
+          "name": "Erik Bautista Musina",
+          "licencia": "7700354371",
+          "hcp": 25.1,
+          "nivel": "B",
+          "rounds": [],
+          "total": 44,
+          "toPar": 8,
+          "inscribedId": 2328890
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Benjamín",
+      "jugadores": 5
+    },
+    "2": {
+      "name": "Individual Scratch General",
+      "jugadores": 8
+    },
+    "3": {
+      "name": "Individual Handicap General",
+      "jugadores": 8
+    },
+    "4": {
+      "name": "Individual Scratch General",
+      "jugadores": 8
+    },
+    "5": {
+      "name": "Individual Handicap General",
+      "jugadores": 8
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Matias Martin Martin",
+      "licencia": "7759097829",
+      "hcp": 40.1,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "David Cerezal Criado",
+      "licencia": "7759968499",
+      "hcp": 37.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Mark Bautista Musina",
+      "licencia": "1101354373",
+      "hcp": 46.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Antonio Garcia Pique",
+      "licencia": "7706077911",
+      "hcp": 38.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 5,
+      "name": "Manuel Basconcillos Rodriguez",
+      "licencia": "7712092248",
+      "hcp": 41.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 6,
+      "name": "Miguel Gomez Banda",
+      "licencia": "9908415300",
+      "hcp": 39.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Erik Bautista Musina",
+      "licencia": "7700354371",
+      "hcp": 25.1,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Angela Basconcillos Rodriguez",
+      "licencia": "7712416189",
+      "hcp": 38.4,
+      "nivel": "B"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Fecha Inscripción",
+      "hcp": null,
+      "nivel": "Licencia"
+    },
+    {
+      "orden": 1,
+      "name": "Matias Martin Martin",
+      "licencia": "24-05-26 22:55",
+      "hcp": 40.1,
+      "nivel": "7759097829"
+    },
+    {
+      "orden": 2,
+      "name": "David Cerezal Criado",
+      "licencia": "24-05-26 23:07",
+      "hcp": 37.5,
+      "nivel": "7759968499"
+    },
+    {
+      "orden": 3,
+      "name": "Mark Bautista Musina",
+      "licencia": "25-05-26 12:59",
+      "hcp": 46.4,
+      "nivel": "1101354373"
+    },
+    {
+      "orden": 4,
+      "name": "Antonio Garcia Pique",
+      "licencia": "25-05-26 21:45",
+      "hcp": 38.3,
+      "nivel": "7706077911"
+    },
+    {
+      "orden": 5,
+      "name": "Angela Basconcillos Rodriguez",
+      "licencia": "26-05-26 13:34",
+      "hcp": 38.4,
+      "nivel": "7712416189"
+    },
+    {
+      "orden": 6,
+      "name": "Manuel Basconcillos Rodriguez",
+      "licencia": "26-05-26 14:00",
+      "hcp": 41.9,
+      "nivel": "7712092248"
+    },
+    {
+      "orden": 7,
+      "name": "Miguel Gomez Banda",
+      "licencia": "26-05-26 15:57",
+      "hcp": 39.6,
+      "nivel": "9908415300"
+    },
+    {
+      "orden": 8,
+      "name": "Erik Bautista Musina",
+      "licencia": "27-05-26 09:28",
+      "hcp": 25.1,
+      "nivel": "7700354371"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -202,6 +1046,9 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-06-01T09:30:40.566Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/1941734484_cuadro_de_honor_zonal_villamayor_2026.pdf",
+    "/uploads/competiciones/pdf/788189455_reglas_locales_villamayor.pdf"
+  ],
+  "horariosScrapedAt": "2026-06-12T14:46:04.594Z"
 }

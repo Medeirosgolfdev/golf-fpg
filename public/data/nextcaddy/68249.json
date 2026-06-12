@@ -1,7 +1,7 @@
 {
   "tourId": 68249,
   "url": "https://www.nextcaddy.com/tour/68249",
-  "scrapedAt": "2026-05-21T16:40:26.833Z",
+  "scrapedAt": "2026-06-12T14:42:59.604Z",
   "meta": {
     "name": "Torneo por Equipos Amateur",
     "organizer": "Federacion de Golf de Madrid",
@@ -9,7 +9,7 @@
     "courseCode": "CMA8",
     "dateStart": null,
     "dateEnd": null,
-    "format": "Medal Play (Scratch)  Caballeros  Señora",
+    "format": "Stableford (Scratch)  Caballeros  Señora",
     "categories": [
       "Caballeros",
       "Señoras",
@@ -23,7 +23,183 @@
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": null,
+      "name": "Los Rebujitos",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Pablo Lloret Carrillo",
+      "licencia": "CM00099656",
+      "hcp": 25.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Ricardo Santiago Cuenca",
+      "licencia": "CM33469802",
+      "hcp": 25.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Antonio Alejandro Mata Amador",
+      "licencia": "CM00984821",
+      "hcp": 9.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Angel Linares Gomez",
+      "licencia": "AM04306218",
+      "hcp": 20.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Las elegidas",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Maria Elena Delgado Palomar",
+      "licencia": "CMD3933144",
+      "hcp": 15.2,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Francis Alcantara Torres",
+      "licencia": "CMC2888436",
+      "hcp": 24.4,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Maria Jesus Rodriguez Ortiz",
+      "licencia": "CM41308179",
+      "hcp": 14.5,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Maria Raquel Sanchez Cantarino",
+      "licencia": "CM41932709",
+      "hcp": 22.5,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Golfos",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "David Jimenez Barahona",
+      "licencia": "CMA8003345",
+      "hcp": 20.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Iker Barrondo Martin",
+      "licencia": "CM15490413",
+      "hcp": 24.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Eduardo Lafuente Perez",
+      "licencia": "CM41951107",
+      "hcp": 9.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Cesar Augusto Rodriguez Izquierdo",
+      "licencia": "CM41380729",
+      "hcp": 14.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "LOS GONZALOS",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "David Ramos Perez",
+      "licencia": "CM00958717",
+      "hcp": 23.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Octavio Blanquer Lopez",
+      "licencia": "CM41472305",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Francisco Javier Dezcallar Saez",
+      "licencia": "CMA8949499",
+      "hcp": 18.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "David Mendoza Figueras",
+      "licencia": "CM41306142",
+      "hcp": 23.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "LOS LEONES",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Luis Fau Varea",
+      "licencia": "CM00211727",
+      "hcp": 14,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Juan Carlos Arredondo Merino",
+      "licencia": "AMG9377202",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Adrian Tapia Fernandez",
+      "licencia": "CM06322131",
+      "hcp": 20.8,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Fernando Arnal Rubio",
+      "licencia": "CM00056887",
+      "hcp": 24.5,
+      "nivel": "S"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -357,6 +533,8 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-06-08T09:00:20.467Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/290459881_condiciones_competicion_torneos_por_equipos_2026.pdf"
+  ],
+  "horariosScrapedAt": "2026-06-12T14:45:34.497Z"
 }

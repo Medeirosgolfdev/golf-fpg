@@ -1,7 +1,7 @@
 {
   "tourId": 61058,
   "url": "https://www.nextcaddy.com/tour/61058",
-  "scrapedAt": "2026-05-21T16:36:54.059Z",
+  "scrapedAt": "2026-06-12T14:37:59.472Z",
   "meta": {
     "name": "Pequecircuito Zona C",
     "organizer": "Real Federacion Andaluza de Golf",
@@ -1799,20 +1799,20 @@
         {
           "time": "09:50",
           "tee": 1,
-          "name": "Julen Gregorio Paton Hany",
-          "hcp": 48,
-          "ins": "2249159",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
           "name": "Javier Naranjo Luna",
           "hcp": 48,
           "ins": "2254875",
           "jid": "64659",
           "nivel": "B"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Julen Gregorio Paton Hany",
+          "hcp": 48,
+          "ins": "2249159",
+          "jid": "64659",
+          "nivel": "A"
         },
         {
           "time": "10:00",
@@ -1997,11 +1997,11 @@
         {
           "time": "11:00",
           "tee": 1,
-          "name": "Mauro Cid Galvez",
+          "name": "Nico Cadenas Vallejo",
           "hcp": 54,
-          "ins": "2254883",
+          "ins": "2249209",
           "jid": "64659",
-          "nivel": "A"
+          "nivel": "B"
         },
         {
           "time": "11:00",
@@ -2015,20 +2015,11 @@
         {
           "time": "11:00",
           "tee": 1,
-          "name": "Nico Cadenas Vallejo",
+          "name": "Mauro Cid Galvez",
           "hcp": 54,
-          "ins": "2249209",
+          "ins": "2254883",
           "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "11:10",
-          "tee": 1,
-          "name": "Lucia Holgado Requena",
-          "hcp": 54,
-          "ins": "2246883",
-          "jid": "64659",
-          "nivel": "B"
+          "nivel": "A"
         },
         {
           "time": "11:10",
@@ -2045,6 +2036,33 @@
           "name": "Julieta Perez Pozo",
           "hcp": 54,
           "ins": "2254468",
+          "jid": "64659",
+          "nivel": "A"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Lucia Holgado Requena",
+          "hcp": 54,
+          "ins": "2246883",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "Alberto Gomez-Salas Cortes",
+          "hcp": 54,
+          "ins": "2246319",
+          "jid": "64659",
+          "nivel": "B"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "Dario Gil Cabeza",
+          "hcp": 54,
+          "ins": "2251626",
           "jid": "64659",
           "nivel": "A"
         },
@@ -2067,22 +2085,13 @@
           "nivel": "A"
         },
         {
-          "time": "11:20",
+          "time": "11:30",
           "tee": 1,
-          "name": "Alberto Gomez-Salas Cortes",
+          "name": "Alvaro Holgado Horcajo",
           "hcp": 54,
-          "ins": "2246319",
+          "ins": "2246473",
           "jid": "64659",
           "nivel": "B"
-        },
-        {
-          "time": "11:20",
-          "tee": 1,
-          "name": "Dario Gil Cabeza",
-          "hcp": 54,
-          "ins": "2251626",
-          "jid": "64659",
-          "nivel": "A"
         },
         {
           "time": "11:30",
@@ -2099,15 +2108,6 @@
           "name": "Daniel Jimenez Pachon",
           "hcp": 54,
           "ins": "2248570",
-          "jid": "64659",
-          "nivel": "B"
-        },
-        {
-          "time": "11:30",
-          "tee": 1,
-          "name": "Alvaro Holgado Horcajo",
-          "hcp": 54,
-          "ins": "2246473",
           "jid": "64659",
           "nivel": "B"
         },
@@ -2168,20 +2168,20 @@
         {
           "time": "12:00",
           "tee": 1,
-          "name": "Malena Viera Villalba",
-          "hcp": 54,
-          "ins": "2246905",
-          "jid": "64659",
-          "nivel": "A"
-        },
-        {
-          "time": "12:00",
-          "tee": 1,
           "name": "Victoria Wezowski",
           "hcp": 54,
           "ins": "2248280",
           "jid": "64659",
           "nivel": "B"
+        },
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Malena Viera Villalba",
+          "hcp": 54,
+          "ins": "2246905",
+          "jid": "64659",
+          "nivel": "A"
         }
       ]
     }
@@ -2522,9 +2522,9 @@
       "roundId": 64659
     }
   ],
-  "scoreTypes": null,
+  "scoreTypes": [],
   "pdfs": [
     "/uploads/circular/2026/60646390603b16b04fdebb02436999ef.pdf"
   ],
-  "horariosScrapedAt": "2026-05-21T16:41:48.556Z"
+  "horariosScrapedAt": "2026-06-12T14:44:52.809Z"
 }

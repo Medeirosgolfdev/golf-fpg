@@ -1,7 +1,7 @@
 {
   "tourId": 68193,
   "url": "https://www.nextcaddy.com/tour/68193",
-  "scrapedAt": "2026-05-21T16:40:12.758Z",
+  "scrapedAt": "2026-06-12T14:42:18.089Z",
   "meta": {
     "name": "Liga Femenina (hcp igual o menor de 42.0)",
     "organizer": "Federacion de Golf de Madrid",
@@ -13,15 +13,161 @@
     "categories": [
       "Señoras",
       "Juvenil",
+      "profesional",
       "Infantil",
       "Profesional",
       "Senior"
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Hándicap",
+      "expectedJugadores": 11,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Candela Guerra Vera",
+          "licencia": "CM41998364",
+          "hcp": 36.9,
+          "nivel": "A",
+          "rounds": [],
+          "total": 23,
+          "toPar": -5,
+          "inscribedId": 2321924
+        },
+        {
+          "pos": 2,
+          "name": "Sofia Sendagorta Rojo",
+          "licencia": "CM60066758",
+          "hcp": 36.9,
+          "nivel": "I",
+          "rounds": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2322095
+        },
+        {
+          "pos": 3,
+          "name": "Cristina Aparicio Vallarino",
+          "licencia": "CM41305716",
+          "hcp": 16.2,
+          "nivel": "A",
+          "rounds": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2323036
+        },
+        {
+          "pos": 4,
+          "name": "Carlota Moser-Rothschild Morales",
+          "licencia": "CM06354307",
+          "hcp": 32.5,
+          "nivel": "A",
+          "rounds": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2322014
+        },
+        {
+          "pos": 5,
+          "name": "Barbara Osaba Rohleder",
+          "licencia": "CM04376811",
+          "hcp": 34,
+          "nivel": "I",
+          "rounds": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2322185
+        },
+        {
+          "pos": 6,
+          "name": "Alejandra Sevillano Sanchez",
+          "licencia": "CM22475563",
+          "hcp": 34,
+          "nivel": "B",
+          "rounds": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2322195
+        },
+        {
+          "pos": 7,
+          "name": "Lucia Rodriguez Luna",
+          "licencia": "CM02977313",
+          "hcp": 37,
+          "nivel": "A",
+          "rounds": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2321857
+        },
+        {
+          "pos": 8,
+          "name": "Manuela Triguero Fernandez",
+          "licencia": "CM41373590",
+          "hcp": 36,
+          "nivel": "B",
+          "rounds": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2323687
+        },
+        {
+          "pos": 9,
+          "name": "Carlotta Casas Velez-Osorio",
+          "licencia": "CM06355871",
+          "hcp": 32.7,
+          "nivel": "B",
+          "rounds": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2326449
+        },
+        {
+          "pos": 10,
+          "name": "Clara Triguero Fernandez",
+          "licencia": "CM41986467",
+          "hcp": 9.3,
+          "nivel": "A",
+          "rounds": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2327330
+        },
+        {
+          "pos": null,
+          "name": "Sira Martin-Pozuelo Medina",
+          "licencia": "CM02199385",
+          "hcp": 22.6,
+          "nivel": "A",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2322124
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Hándicap",
+      "jugadores": 11
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -32,66 +178,73 @@
     },
     {
       "orden": 2,
-      "name": "Irene Salgado Rodriguez",
-      "licencia": "CM06416641",
-      "hcp": 16.9,
-      "nivel": "I"
-    },
-    {
-      "orden": 3,
       "name": "Candela Guerra Vera",
       "licencia": "CM41998364",
       "hcp": 36.9,
       "nivel": "A"
     },
     {
-      "orden": 4,
+      "orden": 3,
       "name": "Carlota Moser-Rothschild Morales",
       "licencia": "CM06354307",
-      "hcp": 32.6,
+      "hcp": 32.5,
       "nivel": "A"
     },
     {
-      "orden": 5,
+      "orden": 4,
       "name": "Sofia Sendagorta Rojo",
       "licencia": "CM60066758",
       "hcp": 36.9,
       "nivel": "I"
     },
     {
-      "orden": 6,
+      "orden": 5,
       "name": "Sira Martin-Pozuelo Medina",
       "licencia": "CM02199385",
-      "hcp": 23.8,
+      "hcp": 22.6,
       "nivel": "A"
     },
     {
-      "orden": 7,
+      "orden": 6,
       "name": "Barbara Osaba Rohleder",
       "licencia": "CM04376811",
-      "hcp": 34.3,
+      "hcp": 34,
       "nivel": "I"
     },
     {
-      "orden": 8,
+      "orden": 7,
       "name": "Alejandra Sevillano Sanchez",
       "licencia": "CM22475563",
-      "hcp": 35.2,
+      "hcp": 34,
       "nivel": "B"
     },
     {
-      "orden": 9,
+      "orden": 8,
       "name": "Cristina Aparicio Vallarino",
       "licencia": "CM41305716",
-      "hcp": 16.8,
+      "hcp": 16.2,
       "nivel": "A"
     },
     {
-      "orden": 10,
+      "orden": 9,
       "name": "Manuela Triguero Fernandez",
       "licencia": "CM41373590",
       "hcp": 36,
       "nivel": "B"
+    },
+    {
+      "orden": 10,
+      "name": "Carlotta Casas Velez-Osorio",
+      "licencia": "CM06355871",
+      "hcp": 32.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 11,
+      "name": "Clara Triguero Fernandez",
+      "licencia": "CM41986467",
+      "hcp": 9.3,
+      "nivel": "A"
     },
     {
       "orden": null,
@@ -109,66 +262,73 @@
     },
     {
       "orden": 2,
-      "name": "Irene Salgado Rodriguez",
-      "licencia": "CM06416641",
-      "hcp": 16.9,
-      "nivel": "I"
-    },
-    {
-      "orden": 3,
       "name": "Candela Guerra Vera",
       "licencia": "CM41998364",
       "hcp": 36.9,
       "nivel": "A"
     },
     {
-      "orden": 4,
+      "orden": 3,
       "name": "Carlota Moser-Rothschild Morales",
       "licencia": "CM06354307",
-      "hcp": 32.6,
+      "hcp": 32.5,
       "nivel": "A"
     },
     {
-      "orden": 5,
+      "orden": 4,
       "name": "Sofia Sendagorta Rojo",
       "licencia": "CM60066758",
       "hcp": 36.9,
       "nivel": "I"
     },
     {
-      "orden": 6,
+      "orden": 5,
       "name": "Sira Martin-Pozuelo Medina",
       "licencia": "CM02199385",
-      "hcp": 23.8,
+      "hcp": 22.6,
       "nivel": "A"
     },
     {
-      "orden": 7,
+      "orden": 6,
       "name": "Barbara Osaba Rohleder",
       "licencia": "CM04376811",
-      "hcp": 34.3,
+      "hcp": 34,
       "nivel": "I"
     },
     {
-      "orden": 8,
+      "orden": 7,
       "name": "Alejandra Sevillano Sanchez",
       "licencia": "CM22475563",
-      "hcp": 35.2,
+      "hcp": 34,
       "nivel": "B"
     },
     {
-      "orden": 9,
+      "orden": 8,
       "name": "Cristina Aparicio Vallarino",
       "licencia": "CM41305716",
-      "hcp": 16.8,
+      "hcp": 16.2,
       "nivel": "A"
     },
     {
-      "orden": 10,
+      "orden": 9,
       "name": "Manuela Triguero Fernandez",
       "licencia": "CM41373590",
       "hcp": 36,
       "nivel": "B"
+    },
+    {
+      "orden": 10,
+      "name": "Carlotta Casas Velez-Osorio",
+      "licencia": "CM06355871",
+      "hcp": 32.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 11,
+      "name": "Clara Triguero Fernandez",
+      "licencia": "CM41986467",
+      "hcp": 9.3,
+      "nivel": "A"
     }
   ],
   "horarios": [
@@ -292,7 +452,7 @@
       "roundId": 72740
     }
   ],
-  "scoreTypes": null,
+  "scoreTypes": [],
   "pdfs": [],
-  "horariosScrapedAt": "2026-06-01T09:30:29.130Z"
+  "horariosScrapedAt": "2026-06-12T14:45:32.064Z"
 }
