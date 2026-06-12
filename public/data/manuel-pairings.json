@@ -1,18 +1,18 @@
 {
-  "geradoEm": "2026-06-12T18:29:35.031Z",
+  "geradoEm": "2026-06-12T18:48:29.746Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 104,
-  "totalCompanheirosUnicos": 128,
+  "totalRondas": 109,
+  "totalCompanheirosUnicos": 129,
   "cobertura": {
     "fpg": {
       "rondasJogadas": 120,
-      "rondasComDraw": 82,
+      "rondasComDraw": 87,
       "torneiosJogados": 90,
-      "torneiosComDraw": 68,
+      "torneiosComDraw": 69,
       "torneiosComDrawDetalhe": [
         {
           "torneioId": "059-10615",
@@ -31,6 +31,12 @@
           "nome": "Campeonato Nacional de Jovens Sub 12 H",
           "data": "2026-04-30",
           "rondas": 4
+        },
+        {
+          "torneioId": "029-10543",
+          "nome": "PJA  Aroeira Masters 2026",
+          "data": "2026-04-24",
+          "rondas": 5
         },
         {
           "torneioId": "007-11010",
@@ -405,7 +411,6 @@
         "007-10809",
         "007-10812",
         "007-10857",
-        "029-10543",
         "125-10370",
         "125-10371",
         "152-10444",
@@ -418,12 +423,6 @@
         "988-10190"
       ],
       "torneiosSemDrawDetalhe": [
-        {
-          "torneioId": "029-10543",
-          "nome": "PJA  Aroeira Masters 2026",
-          "data": "2026-04-24",
-          "rondas": 5
-        },
         {
           "torneioId": "125-10371",
           "nome": "PJA TOUR Vale Pisão - Dia 2",
@@ -714,42 +713,6 @@
     },
     {
       "circuito": "FPG",
-      "torneioId": "029-10492",
-      "torneioNome": "Aroeira Master by Details",
-      "data": "2026-05-27",
-      "ronda": 2,
-      "teeTime": "G5",
-      "startHole": null,
-      "campo": null,
-      "manuelScore": {
-        "gross": 98,
-        "toPar": 26
-      },
-      "companheiros": [
-        {
-          "nome": "Salvador Ivo de Carvalho",
-          "fed": "43968",
-          "clube": "Vilamoura, C. G",
-          "pais": null,
-          "score": {
-            "gross": 85,
-            "toPar": 13
-          }
-        },
-        {
-          "nome": "Martim Sousa de Morais",
-          "fed": "41609",
-          "clube": "Belas",
-          "pais": null,
-          "score": {
-            "gross": 80,
-            "toPar": 8
-          }
-        }
-      ]
-    },
-    {
-      "circuito": "FPG",
       "torneioId": "029-10523",
       "torneioNome": "PJA Masters by Details - PGA  Aroeira 2",
       "data": "2026-05-27",
@@ -884,78 +847,6 @@
     },
     {
       "circuito": "FPG",
-      "torneioId": "191-10036",
-      "torneioNome": "Ribagolfe Oaks Masters 2025",
-      "data": "2026-05-27",
-      "ronda": 2,
-      "teeTime": "G4",
-      "startHole": null,
-      "campo": null,
-      "manuelScore": {
-        "gross": 88,
-        "toPar": 16
-      },
-      "companheiros": [
-        {
-          "nome": "Salvador Ivo de Carvalho",
-          "fed": "43968",
-          "clube": "Vilamoura, C. G",
-          "pais": null,
-          "score": {
-            "gross": 86,
-            "toPar": 14
-          }
-        },
-        {
-          "nome": "Martim Sousa de Morais",
-          "fed": "41609",
-          "clube": "Belas",
-          "pais": null,
-          "score": {
-            "gross": 79,
-            "toPar": 7
-          }
-        }
-      ]
-    },
-    {
-      "circuito": "FPG",
-      "torneioId": "192-10013",
-      "torneioNome": "PJA Race to Dunas",
-      "data": "2026-05-27",
-      "ronda": 2,
-      "teeTime": "G6",
-      "startHole": null,
-      "campo": null,
-      "manuelScore": {
-        "gross": 80,
-        "toPar": 8
-      },
-      "companheiros": [
-        {
-          "nome": "Diogo Sequeira",
-          "fed": "56654",
-          "clube": "Quinta do Peru",
-          "pais": null,
-          "score": {
-            "gross": 83,
-            "toPar": 11
-          }
-        },
-        {
-          "nome": "William Gao",
-          "fed": "51524",
-          "clube": "Quinta do Peru",
-          "pais": null,
-          "score": {
-            "gross": 84,
-            "toPar": 12
-          }
-        }
-      ]
-    },
-    {
-      "circuito": "FPG",
       "torneioId": "192-10019",
       "torneioNome": "Race to Dunas G. Final",
       "data": "2026-05-27",
@@ -1035,30 +926,21 @@
       "teeTime": "09:18",
       "startHole": 1,
       "campo": "Longniddry Golf Club, The Musselburgh Golf Club , Craigielaw Golf Club, Glen Golf Club, Royal Musselburgh Golf Club",
-      "manuelScore": {
-        "gross": 81,
-        "toPar": 9
-      },
+      "manuelScore": null,
       "companheiros": [
         {
           "nome": "Maximilian Oberlin",
           "fed": null,
           "clube": null,
           "pais": "DE",
-          "score": {
-            "gross": 85,
-            "toPar": 13
-          }
+          "score": null
         },
         {
           "nome": "Mylo  Mulvaney",
           "fed": null,
           "clube": null,
           "pais": "GB",
-          "score": {
-            "gross": 84,
-            "toPar": 12
-          }
+          "score": null
         }
       ]
     },
@@ -1071,30 +953,21 @@
       "teeTime": "10:08",
       "startHole": 1,
       "campo": "Longniddry Golf Club, The Musselburgh Golf Club , Craigielaw Golf Club, Glen Golf Club, Royal Musselburgh Golf Club",
-      "manuelScore": {
-        "gross": 83,
-        "toPar": 11
-      },
+      "manuelScore": null,
       "companheiros": [
         {
           "nome": "Rosario  Becker",
           "fed": null,
           "clube": null,
           "pais": "DE",
-          "score": {
-            "gross": 79,
-            "toPar": 7
-          }
+          "score": null
         },
         {
           "nome": "Seth Lund",
           "fed": null,
           "clube": null,
           "pais": "US",
-          "score": {
-            "gross": 89,
-            "toPar": 17
-          }
+          "score": null
         }
       ]
     },
@@ -1107,30 +980,21 @@
       "teeTime": "10:08",
       "startHole": 1,
       "campo": "Longniddry Golf Club, The Musselburgh Golf Club , Craigielaw Golf Club, Glen Golf Club, Royal Musselburgh Golf Club",
-      "manuelScore": {
-        "gross": 78,
-        "toPar": 6
-      },
+      "manuelScore": null,
       "companheiros": [
         {
           "nome": "Mylo  Mulvaney",
           "fed": null,
           "clube": null,
           "pais": "GB",
-          "score": {
-            "gross": 87,
-            "toPar": 15
-          }
+          "score": null
         },
         {
           "nome": "Thomas Gervin",
           "fed": null,
           "clube": null,
           "pais": "IE",
-          "score": {
-            "gross": 83,
-            "toPar": 11
-          }
+          "score": null
         }
       ]
     },
@@ -1290,6 +1154,60 @@
     },
     {
       "circuito": "FPG",
+      "torneioId": "029-10543",
+      "torneioNome": "PJA Aroeira Masters 2026",
+      "data": "2026-04-24",
+      "ronda": 1,
+      "teeTime": "12:25",
+      "startHole": 1,
+      "campo": "PGA Aroeira",
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "Ricardo Castro Ferreira",
+          "fed": "49085",
+          "clube": "Estoril",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Guo Ziyang",
+          "fed": "57904",
+          "clube": "Estoril",
+          "pais": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "029-10543",
+      "torneioNome": "PJA Aroeira Masters 2026",
+      "data": "2026-04-24",
+      "ronda": 2,
+      "teeTime": "11:10",
+      "startHole": 1,
+      "campo": "PGA Aroeira",
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "Rafael Gonçales Benesi",
+          "fed": "54774",
+          "clube": "Estoril",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Angelina Gao",
+          "fed": "51523",
+          "clube": "Quinta do Peru",
+          "pais": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
       "torneioId": "007-11010",
       "torneioNome": "Campeonato Regional de Jovens Sub 10&12 2026",
       "data": "2026-04-17",
@@ -1430,20 +1348,14 @@
           "fed": null,
           "clube": null,
           "pais": "IT",
-          "score": {
-            "gross": 76,
-            "toPar": 4
-          }
+          "score": null
         },
         {
           "nome": "Zachary  Blayney",
           "fed": null,
           "clube": null,
           "pais": "GB",
-          "score": {
-            "gross": 70,
-            "toPar": -2
-          }
+          "score": null
         }
       ]
     },
@@ -1463,20 +1375,14 @@
           "fed": null,
           "clube": null,
           "pais": "US",
-          "score": {
-            "gross": 100,
-            "toPar": 28
-          }
+          "score": null
         },
         {
           "nome": "Noah Lobelius",
           "fed": null,
           "clube": null,
           "pais": "SE",
-          "score": {
-            "gross": 85,
-            "toPar": 13
-          }
+          "score": null
         }
       ]
     },
@@ -2145,6 +2051,78 @@
       ]
     },
     {
+      "circuito": "FPG",
+      "torneioId": "017-10189",
+      "torneioNome": "PJA Tour Troia",
+      "data": "2025-10-24",
+      "ronda": 1,
+      "teeTime": "11:50",
+      "startHole": 1,
+      "campo": "Troia",
+      "manuelScore": {
+        "gross": 83,
+        "toPar": 11
+      },
+      "companheiros": [
+        {
+          "nome": "David Filip",
+          "fed": "51949",
+          "clube": "Lisbon Sports Club",
+          "pais": null,
+          "score": {
+            "gross": 85,
+            "toPar": 13
+          }
+        },
+        {
+          "nome": "Guo Ziyang",
+          "fed": "57904",
+          "clube": "Estoril",
+          "pais": null,
+          "score": {
+            "gross": 79,
+            "toPar": 7
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "017-10189",
+      "torneioNome": "PJA Tour Troia",
+      "data": "2025-10-24",
+      "ronda": 2,
+      "teeTime": "G3",
+      "startHole": null,
+      "campo": "Troia",
+      "manuelScore": {
+        "gross": 84,
+        "toPar": 12
+      },
+      "companheiros": [
+        {
+          "nome": "Guo Ziyang",
+          "fed": "57904",
+          "clube": "Estoril",
+          "pais": null,
+          "score": {
+            "gross": 89,
+            "toPar": 17
+          }
+        },
+        {
+          "nome": "João Rocha",
+          "fed": "48297",
+          "clube": "Estoril",
+          "pais": null,
+          "score": {
+            "gross": 82,
+            "toPar": 10
+          }
+        }
+      ]
+    },
+    {
       "circuito": "USKids",
       "torneioId": "usk-20175",
       "torneioNome": "Rome Classic 2025",
@@ -2153,30 +2131,21 @@
       "teeTime": "09:57",
       "startHole": 1,
       "campo": "Terre Dei Consoli Golf Club",
-      "manuelScore": {
-        "gross": 89,
-        "toPar": 17
-      },
+      "manuelScore": null,
       "companheiros": [
         {
           "nome": "Andrea Capotosti",
           "fed": null,
           "clube": null,
           "pais": "IT",
-          "score": {
-            "gross": 80,
-            "toPar": 8
-          }
+          "score": null
         },
         {
           "nome": "LEONARDO LOPEZ",
           "fed": null,
           "clube": null,
           "pais": "IT",
-          "score": {
-            "gross": 88,
-            "toPar": 16
-          }
+          "score": null
         }
       ]
     },
@@ -2189,20 +2158,14 @@
       "teeTime": "09:48",
       "startHole": 1,
       "campo": "Terre Dei Consoli Golf Club",
-      "manuelScore": {
-        "gross": 77,
-        "toPar": 5
-      },
+      "manuelScore": null,
       "companheiros": [
         {
           "nome": "LEONARDO LOPEZ",
           "fed": null,
           "clube": null,
           "pais": "IT",
-          "score": {
-            "gross": 83,
-            "toPar": 11
-          }
+          "score": null
         }
       ]
     },
@@ -2240,6 +2203,68 @@
           "clube": "Norte",
           "pais": null,
           "score": null
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "192-10013",
+      "torneioNome": "PJA Race to Dunas",
+      "data": "2025-09-12",
+      "ronda": 1,
+      "teeTime": "11:00",
+      "startHole": null,
+      "campo": "Terras da Comporta - Torre",
+      "manuelScore": {
+        "gross": 84,
+        "toPar": 12
+      },
+      "companheiros": [
+        {
+          "nome": "Ricardo Castro Ferreira",
+          "fed": "49085",
+          "clube": "Estoril",
+          "pais": null,
+          "score": {
+            "gross": 74,
+            "toPar": 2
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "192-10013",
+      "torneioNome": "PJA Race to Dunas",
+      "data": "2025-09-12",
+      "ronda": 2,
+      "teeTime": "G6",
+      "startHole": null,
+      "campo": "Terras da Comporta - Torre",
+      "manuelScore": {
+        "gross": 80,
+        "toPar": 8
+      },
+      "companheiros": [
+        {
+          "nome": "Diogo Sequeira",
+          "fed": "56654",
+          "clube": "Quinta do Peru",
+          "pais": null,
+          "score": {
+            "gross": 83,
+            "toPar": 11
+          }
+        },
+        {
+          "nome": "William Gao",
+          "fed": "51524",
+          "clube": "Quinta do Peru",
+          "pais": null,
+          "score": {
+            "gross": 84,
+            "toPar": 12
+          }
         }
       ]
     },
@@ -2442,30 +2467,21 @@
       "teeTime": "13:29",
       "startHole": 1,
       "campo": "Galzignano Terme Spa & Golf Resort, Golf Club Della Montecchia - Green/White, Golf Club Della Montecchia - Red/Green, Golf Club Della Montecchia - White/Red, Golf Club Frassanelle",
-      "manuelScore": {
-        "gross": 78,
-        "toPar": 6
-      },
+      "manuelScore": null,
       "companheiros": [
         {
           "nome": "Francesco Bellentani",
           "fed": null,
           "clube": null,
           "pais": "IT",
-          "score": {
-            "gross": 79,
-            "toPar": 7
-          }
+          "score": null
         },
         {
           "nome": "Maximilien  Demole",
           "fed": null,
           "clube": null,
           "pais": "CH",
-          "score": {
-            "gross": 69,
-            "toPar": -3
-          }
+          "score": null
         }
       ]
     },
@@ -2478,30 +2494,21 @@
       "teeTime": "12:26",
       "startHole": 1,
       "campo": "Galzignano Terme Spa & Golf Resort, Golf Club Della Montecchia - Green/White, Golf Club Della Montecchia - Red/Green, Golf Club Della Montecchia - White/Red, Golf Club Frassanelle",
-      "manuelScore": {
-        "gross": 76,
-        "toPar": 4
-      },
+      "manuelScore": null,
       "companheiros": [
         {
           "nome": "Noah Birk Andersen",
           "fed": null,
           "clube": null,
           "pais": "DK",
-          "score": {
-            "gross": 74,
-            "toPar": 2
-          }
+          "score": null
         },
         {
           "nome": "Raphael Gozzo",
           "fed": null,
           "clube": null,
           "pais": "IT",
-          "score": {
-            "gross": 79,
-            "toPar": 7
-          }
+          "score": null
         }
       ]
     },
@@ -2514,30 +2521,21 @@
       "teeTime": "12:35",
       "startHole": 1,
       "campo": "Galzignano Terme Spa & Golf Resort, Golf Club Della Montecchia - Green/White, Golf Club Della Montecchia - Red/Green, Golf Club Della Montecchia - White/Red, Golf Club Frassanelle",
-      "manuelScore": {
-        "gross": 83,
-        "toPar": 11
-      },
+      "manuelScore": null,
       "companheiros": [
         {
           "nome": "Amiel Meisler",
           "fed": null,
           "clube": null,
           "pais": "FR",
-          "score": {
-            "gross": 75,
-            "toPar": 3
-          }
+          "score": null
         },
         {
           "nome": "Constantin Fritz",
           "fed": null,
           "clube": null,
           "pais": "DE",
-          "score": {
-            "gross": 73,
-            "toPar": 1
-          }
+          "score": null
         }
       ]
     },
@@ -2856,42 +2854,6 @@
     },
     {
       "circuito": "FPG",
-      "torneioId": "017-10189",
-      "torneioNome": "5º Torneio Drive Challenge Tejo - Lisbon - Sub18",
-      "data": "2025-06-07",
-      "ronda": 2,
-      "teeTime": "G3",
-      "startHole": null,
-      "campo": null,
-      "manuelScore": {
-        "gross": 84,
-        "toPar": 12
-      },
-      "companheiros": [
-        {
-          "nome": "Guo Ziyang",
-          "fed": "57904",
-          "clube": "Estoril",
-          "pais": null,
-          "score": {
-            "gross": 89,
-            "toPar": 17
-          }
-        },
-        {
-          "nome": "João Rocha",
-          "fed": "48297",
-          "clube": "Estoril",
-          "pais": null,
-          "score": {
-            "gross": 82,
-            "toPar": 10
-          }
-        }
-      ]
-    },
-    {
-      "circuito": "FPG",
       "torneioId": "982-10187",
       "torneioNome": "5ºTorn.Drive Challenge Madeira-Stº da Serra-Sub12",
       "data": "2025-06-01",
@@ -2956,40 +2918,6 @@
             "gross": 94,
             "toPar": 20
           }
-        }
-      ]
-    },
-    {
-      "circuito": "FPG",
-      "torneioId": "992-10455",
-      "torneioNome": "5º Torneio Circuito Fim de Semana 2025",
-      "data": "2025-05-18",
-      "ronda": 1,
-      "teeTime": "10:40",
-      "startHole": 1,
-      "campo": null,
-      "manuelScore": null,
-      "companheiros": [
-        {
-          "nome": "Nuno Palmares Jr.",
-          "fed": "49124",
-          "clube": "Estoril",
-          "pais": null,
-          "score": null
-        },
-        {
-          "nome": "Diogo Diogo",
-          "fed": "53782",
-          "clube": null,
-          "pais": null,
-          "score": null
-        },
-        {
-          "nome": "Ricardo Amaral Marques",
-          "fed": "56082",
-          "clube": null,
-          "pais": null,
-          "score": null
         }
       ]
     },
@@ -3296,6 +3224,78 @@
       ]
     },
     {
+      "circuito": "FPG",
+      "torneioId": "191-10036",
+      "torneioNome": "Ribagolfe Oaks Masters 2025",
+      "data": "2025-02-22",
+      "ronda": 1,
+      "teeTime": "12:10",
+      "startHole": null,
+      "campo": "Ribagolfe Oaks",
+      "manuelScore": {
+        "gross": 96,
+        "toPar": 24
+      },
+      "companheiros": [
+        {
+          "nome": "Martim Sousa de Morais",
+          "fed": "41609",
+          "clube": "Belas",
+          "pais": null,
+          "score": {
+            "gross": 91,
+            "toPar": 19
+          }
+        },
+        {
+          "nome": "Salvador Ivo de Carvalho",
+          "fed": "43968",
+          "clube": "C.G. Vilamoura A",
+          "pais": null,
+          "score": {
+            "gross": 88,
+            "toPar": 16
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "191-10036",
+      "torneioNome": "Ribagolfe Oaks Masters 2025",
+      "data": "2025-02-22",
+      "ronda": 2,
+      "teeTime": "G4",
+      "startHole": null,
+      "campo": "Ribagolfe Oaks",
+      "manuelScore": {
+        "gross": 88,
+        "toPar": 16
+      },
+      "companheiros": [
+        {
+          "nome": "Salvador Ivo de Carvalho",
+          "fed": "43968",
+          "clube": "Vilamoura, C. G",
+          "pais": null,
+          "score": {
+            "gross": 86,
+            "toPar": 14
+          }
+        },
+        {
+          "nome": "Martim Sousa de Morais",
+          "fed": "41609",
+          "clube": "Belas",
+          "pais": null,
+          "score": {
+            "gross": 79,
+            "toPar": 7
+          }
+        }
+      ]
+    },
+    {
       "circuito": "Intl",
       "torneioId": "wjgc25",
       "torneioNome": "Daily Mail World Junior Golf Championship 2025",
@@ -3402,6 +3402,78 @@
           "score": {
             "gross": 97,
             "toPar": null
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "029-10492",
+      "torneioNome": "Aroeira Master by Details",
+      "data": "2025-02-15",
+      "ronda": 1,
+      "teeTime": "12:50",
+      "startHole": null,
+      "campo": "PGA Aroeira",
+      "manuelScore": {
+        "gross": 99,
+        "toPar": 27
+      },
+      "companheiros": [
+        {
+          "nome": "Nuno Palmares Jr.",
+          "fed": "49124",
+          "clube": "Estoril",
+          "pais": null,
+          "score": {
+            "gross": 87,
+            "toPar": 15
+          }
+        },
+        {
+          "nome": "Rafaela Pinto",
+          "fed": "40390",
+          "clube": "Arquitectos",
+          "pais": null,
+          "score": {
+            "gross": 71,
+            "toPar": -1
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "029-10492",
+      "torneioNome": "Aroeira Master by Details",
+      "data": "2025-02-15",
+      "ronda": 2,
+      "teeTime": "G5",
+      "startHole": null,
+      "campo": "PGA Aroeira",
+      "manuelScore": {
+        "gross": 98,
+        "toPar": 26
+      },
+      "companheiros": [
+        {
+          "nome": "Salvador Ivo de Carvalho",
+          "fed": "43968",
+          "clube": "Vilamoura, C. G",
+          "pais": null,
+          "score": {
+            "gross": 85,
+            "toPar": 13
+          }
+        },
+        {
+          "nome": "Martim Sousa de Morais",
+          "fed": "41609",
+          "clube": "Belas",
+          "pais": null,
+          "score": {
+            "gross": 80,
+            "toPar": 8
           }
         }
       ]
@@ -3894,20 +3966,14 @@
       "teeTime": "14:40",
       "startHole": 1,
       "campo": "Real Club de Golf El Prat",
-      "manuelScore": {
-        "gross": 44,
-        "toPar": 8
-      },
+      "manuelScore": null,
       "companheiros": [
         {
           "nome": "Marc Garcia Pannon",
           "fed": null,
           "clube": null,
           "pais": "ES",
-          "score": {
-            "gross": 53,
-            "toPar": 17
-          }
+          "score": null
         }
       ]
     },

@@ -234,9 +234,17 @@ function extractFpgPairings(fpg, scoreIdx, nomeIdx, clubeIdx, manuelTournIdx) {
       const rondaNum = Number(rn);
       for (const grp of ronda.groups) {
         const players = grp.players || [];
-        const manuelIdx = players.findIndex(p =>
-          (isFedCode(p.clube) && String(p.clube).trim() === MANUEL_FED) ? true : isManuel(p.nome)
-        );
+        // Detecção do Manuel por LICENÇA primeiro: quando um jogador traz fed
+        // (campo `fed` ou `clube` com aparência de fed), a licença decide — assim
+        // o homónimo "Manuel Medeiros" (fed 54907) NUNCA é confundido com o júnior
+        // (fed 52884) em draws completos onde ambos aparecem. Só sem fed é que se
+        // recorre à heurística por nome.
+        const manuelIdx = players.findIndex(p => {
+          const pf = (p.fed && String(p.fed).trim())
+            || (isFedCode(p.clube) ? String(p.clube).trim() : null);
+          if (pf) return pf === MANUEL_FED;
+          return isManuel(p.nome);
+        });
         if (manuelIdx === -1) continue;
 
         const companheiros = players.map((p, i) => {
@@ -507,31 +515,39 @@ function buildManuelTournamentsList() {
 // ─── main ──────────────────────────────────────────────────────────
 
 function mergeCgssDraws(fpg) {
-  // Funde os draws curados do CGSS (Santo da Serra), extraídos de PDFs oficiais
-  // por scripts/extract-cgss-draws.js. Os torneios sociais do CGSS não têm draw
-  // publicado na FPG (o scraper deixa `draws` vazio); estes PDFs preenchem a
-  // lacuna. Preenche o `draws` vazio das entradas ccode-007 existentes e injecta
-  // torneios draw-only (ex: futuros) que ainda não existam no scrape.
-  const cgss = readJSON(path.join(DATA, "cgss-draws-manual.json"));
-  if (!cgss || !Array.isArray(cgss.tournaments)) return;
+  // Funde draws curados manuais nos torneios FPG antes de extrair os pairings.
+  // Dois ficheiros:
+  //   - cgss-draws-manual.json : sociais CGSS (PDFs). fixMeta!=false -> nome/data
+  //     do PDF sao autoritativos (scraper deixava placeholder "Torneio NNNN").
+  //   - pja-draws-manual.json  : PJA Tour (imagens/Excel). fixMeta:false -> nome/
+  //     data do scrape sao reais; so preenche os draws.
   if (!Array.isArray(fpg.tournaments)) fpg.tournaments = [];
   const hasDraws = (t) => t && t.draws && Object.keys(t.draws).length > 0;
   const byKey = new Map(fpg.tournaments.map((t) => [`${t.ccode}-${t.tcode}`, t]));
   let preenchidos = 0, injectados = 0;
-  for (const c of cgss.tournaments) {
-    const ex = byKey.get(`${c.ccode}-${c.tcode}`);
-    if (ex) {
-      if (!hasDraws(ex)) { ex.draws = c.draws; preenchidos++; }
-      if (c.name) ex.name = c.name;   // PDF autoritativo (scraper tinha placeholder)
-      if (c.date) ex.date = c.date;
-      if (c.campo) ex.campo = c.campo;
-    } else {
-      fpg.tournaments.push({ ccode: c.ccode, tcode: c.tcode, name: c.name,
-        date: c.date, campo: c.campo, draws: c.draws });
-      injectados++;
+  for (const file of ["cgss-draws-manual.json", "pja-draws-manual.json"]) {
+    const cur = readJSON(path.join(DATA, file));
+    if (!cur || !Array.isArray(cur.tournaments)) continue;
+    for (const c of cur.tournaments) {
+      const fixMeta = c.fixMeta !== false;
+      const ex = byKey.get(`${c.ccode}-${c.tcode}`);
+      if (ex) {
+        if (!hasDraws(ex)) { ex.draws = c.draws; preenchidos++; }
+        if (fixMeta) {
+          if (c.name) ex.name = c.name;
+          if (c.date) ex.date = c.date;
+          if (c.campo) ex.campo = c.campo;
+        }
+      } else {
+        const pushed = { ccode: c.ccode, tcode: c.tcode, name: c.name,
+          date: c.date, campo: c.campo, draws: c.draws };
+        fpg.tournaments.push(pushed);
+        byKey.set(`${c.ccode}-${c.tcode}`, pushed);
+        injectados++;
+      }
     }
   }
-  console.log(`  CGSS draws manuais: ${preenchidos} preenchidos, ${injectados} injectados`);
+  console.log(`  draws manuais (CGSS+PJA): ${preenchidos} preenchidos, ${injectados} injectados`);
 }
 
 function main() {

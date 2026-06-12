@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Extrai draws do Manuel jr (Goulartt Medeiros) dos PDFs CGSS -> cgss-draws-manual.json"""
+"""Extrai draws COMPLETOS (todos os grupos) dos PDFs CGSS -> cgss-draws-manual.json.
+Manuel jr = fed 52884 (nome "Goulartt Medeiros"); homonimo "Manuel Medeiros" = fed 54907."""
 import os, re, json, subprocess, unicodedata, glob, argparse
 from datetime import date
 
 MANUEL_FED = "52884"
+HUSBAND_FED = "54907"
 TEE_COLORS = {"brancas", "amarelas", "vermelhas", "douradas", "azuis", "azues", "pretas"}
 TIME_RE = re.compile(r"^\s*(\d{1,2}:\d{2})\s+(\d{1,2})(?:\s+([A-Za-z])(?=\s))?")
 
@@ -105,7 +107,7 @@ def parse_player_line(seg):
     if not s.strip():
         return None
     low = s.strip().lower()
-    if low.startswith(("saida", "saída", "torneio", "campo", "modal", "clube de golf", "nota", "draw", "hcp:", "nº", "no.")):
+    if low.startswith(("saida", "saída", "torneio", "campo", "modal", "clube de golf", "nota", "draw", "hcp:", "nº", "no.", "jogador")):
         return None
     if "datagolf" in low or "pág" in low or "pag." in low:
         return None
@@ -134,9 +136,11 @@ def parse_player_line(seg):
     return None
 
 
-def extract_manuel_group(txt):
+def extract_all_groups(txt):
+    """Devolve TODOS os grupos do draw (todas as colunas), por ordem, dedup."""
+    all_groups, seen = [], set()
     for (cs, ce) in detect_columns(txt):
-        cur, groups = None, []
+        cur = None
         for ln in txt.splitlines():
             seg = ln[cs:ce]
             if not seg.strip():
@@ -144,27 +148,39 @@ def extract_manuel_group(txt):
             mt = TIME_RE.match(seg)
             if mt:
                 cur = {"time": mt.group(1), "hole": int(mt.group(2)), "letter": mt.group(3), "players": []}
-                groups.append(cur)
                 p = parse_player_line(seg[mt.end():])
                 if p:
                     cur["players"].append(p)
+                # chave de dedup: hora+buraco+1º jogador
+                key = None
+                all_groups.append(cur)
             elif cur is not None:
                 p = parse_player_line(seg)
                 if p:
                     cur["players"].append(p)
-        for g in groups:
-            for p in g["players"]:
-                if "goulartt" in norm(p.get("name", "") + " " + p.get("raw", "")):
-                    return g
-    return None
+    # dedup por (time, hole, nomes)
+    out = []
+    for g in all_groups:
+        if not g["players"]:
+            continue
+        names = tuple(norm(p.get("name", "") + p.get("raw", "")) for p in g["players"])
+        key = (g["time"], g["hole"], names)
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(g)
+    return out
 
 
 def _add_individual(out, name, club_pdf, hcp, tee, rmatch):
-    is_m = "goulartt" in norm(name)
+    nn = norm(name)
+    is_m = "goulartt" in nn
     fed, cn, club = resolve_fed(name, rmatch)
     if is_m:
         fed = MANUEL_FED
         cn = cn or "Manuel Goulartt Medeiros"
+    elif nn == "manuel medeiros":
+        fed = HUSBAND_FED  # homonimo (marido) — fixa a licenca para nunca colidir
     pull_club = club if (club and "&" not in club and "/" not in club) else None
     clube = club_pdf or pull_club or "Santo da Serra"
     out.append({"nome": (cn or name).strip(), "clube": clube, "fed": fed,
@@ -175,8 +191,6 @@ def build_players(group, rmatch):
     out = []
     for p in group["players"]:
         if p.get("is_pair"):
-            # Formatos de pares (Greensomes/Foursomes/CC Pares): cada membro do par
-            # e uma pessoa que jogou a ronda com o Manuel -> dividir em individuos.
             for member in [x.strip() for x in p["raw"].split("/") if x.strip()]:
                 _add_individual(out, member, None, None, p.get("tee"), rmatch)
         else:
@@ -205,7 +219,7 @@ if __name__ == "__main__":
             continue
         h = parse_header(txt)
         rm = best_result_match(h, results)
-        g = extract_manuel_group(txt)
+        groups = extract_all_groups(txt)
         base = os.path.basename(pdf)
         if rm:
             ccode, tcode = rm["ccode"], rm["tcode"]
@@ -215,22 +229,25 @@ if __name__ == "__main__":
         if key in seen:
             print("  (dup) " + base + " -> " + key)
             continue
-        print("\n" + "=" * 68 + "\n" + base + "\n  " + str(h["name"]) + " | " + str(h["date"]) + " | " + str(h["modal"]))
-        print("  -> " + ("c" + ccode + " t" + tcode if rm else "DRAW-ONLY " + key))
-        if not g:
-            print("  !! grupo NAO encontrado")
-            continue
-        players = build_players(g, rm)
-        print("  grupo " + g["time"] + " buraco " + str(g["hole"]) + ((" " + g["letter"]) if g.get("letter") else "") + " - " + str(len(players)) + " jog.")
-        for pl in players:
-            star = " <-- MANUEL" if pl.get("fed") == MANUEL_FED else ""
-            print("     %-34s %-16s hcp=%s fed=%s%s" % (pl["nome"], str(pl.get("clube") or ""), pl.get("hcp"), pl.get("fed"), star))
+        out_groups = []
+        total = 0
+        manuel_grp = None
+        for g in groups:
+            players = build_players(g, rm)
+            if not players:
+                continue
+            total += len(players)
+            if any(pl.get("fed") == MANUEL_FED for pl in players):
+                manuel_grp = g["time"]
+            out_groups.append({"teeTime": g["time"], "startHole": g["hole"], "tee": None, "players": players})
+        print("\n" + "=" * 68 + "\n" + base + "\n  " + str(h["name"]) + " | " + str(h["date"]))
+        print("  -> " + ("c" + ccode + " t" + tcode if rm else "DRAW-ONLY " + key) +
+              " | %d grupos, %d jog. | Manuel @ %s" % (len(out_groups), total, manuel_grp))
         seen.add(key)
         tournaments.append({"ccode": ccode, "tcode": tcode, "name": h["name"], "date": h["date"],
                             "campo": h["campo"], "modal": h["modal"], "source": base, "drawOnly": rm is None,
-                            "draws": {"1": {"totalJogadores": len(players),
-                                            "groups": [{"teeTime": g["time"], "startHole": g["hole"], "tee": None, "players": players}]}}})
-    out = {"_doc": "Draws curados CGSS (Santo da Serra) de PDFs oficiais. Preenchem draws vazios ccode-007. Manuel jr fed 52884 em players[0].",
+                            "draws": {"1": {"totalJogadores": total, "groups": out_groups}}})
+    out = {"_doc": "Draws COMPLETOS curados CGSS (Santo da Serra) de PDFs oficiais. Preenchem draws vazios ccode-007 (nome/data do PDF autoritativos). Manuel jr fed 52884; homonimo Manuel Medeiros fed 54907.",
            "gerado_em": date.today().isoformat(), "source": "extract-cgss-draws.py", "total": len(tournaments), "tournaments": tournaments}
     if not args.print_only:
         json.dump(out, open(args.out, "w", encoding="utf-8"), ensure_ascii=False, indent=2)

@@ -162,33 +162,42 @@ export async function loadFpgAdmissionsDraws(opts: { force?: boolean } = {}): Pr
  *  admissions/draws: preenche o `draws` vazio das entradas existentes por
  *  `${ccode}-${tcode}` e injecta torneios draw-only que ainda não existam. */
 async function mergeCgssManualDraws(raw: FpgAdmissionsDrawsFile): Promise<void> {
-  try {
-    const cgss = await cachedFetchJson<{ tournaments?: FpgTournamentData[] }>(
-      "/data/cgss-draws-manual.json",
-    );
-    if (!cgss || !Array.isArray(cgss.tournaments) || !Array.isArray(raw.tournaments)) return;
-    const hasDraws = (t: FpgTournamentData | undefined): boolean =>
-      !!t && !!t.draws && Object.keys(t.draws).length > 0;
-    const byKey = new Map<string, FpgTournamentData>();
-    for (const t of raw.tournaments) byKey.set(`${t.ccode}-${t.tcode}`, t);
-    for (const c of cgss.tournaments) {
+  if (!Array.isArray(raw.tournaments)) return;
+  const hasDraws = (t: FpgTournamentData | undefined): boolean =>
+    !!t && !!t.draws && Object.keys(t.draws).length > 0;
+  const byKey = new Map<string, FpgTournamentData>();
+  for (const t of raw.tournaments) byKey.set(`${t.ccode}-${t.tcode}`, t);
+  // Ficheiros curados de draws manuais. `fixMeta !== false` => nome/data do PDF
+  // sao autoritativos (sociais CGSS, que o scraper deixava com placeholder);
+  // `fixMeta: false` => preserva nome/data do scrape (PJA Tour, metadados reais)
+  // e apenas preenche os draws.
+  for (const url of ["/data/cgss-draws-manual.json", "/data/pja-draws-manual.json"]) {
+    let file: { tournaments?: FpgTournamentData[] } | null = null;
+    try {
+      file = await cachedFetchJson<{ tournaments?: FpgTournamentData[] }>(url);
+    } catch {
+      continue;
+    }
+    if (!file || !Array.isArray(file.tournaments)) continue;
+    for (const c of file.tournaments) {
+      const fixMeta = (c as { fixMeta?: boolean }).fixMeta !== false;
       const ex = byKey.get(`${c.ccode}-${c.tcode}`);
       if (ex) {
-        // O PDF oficial é autoritativo para estes torneios sociais CGSS: o
-        // scraper deixava nome/data placeholder ("Torneio 10961" / 2026-05-27).
         if (!hasDraws(ex)) ex.draws = c.draws;
-        if (c.name) ex.name = c.name;
-        if (c.date) ex.date = c.date;
-        if (c.campo) ex.campo = c.campo;
+        if (fixMeta) {
+          if (c.name) ex.name = c.name;
+          if (c.date) ex.date = c.date;
+          if (c.campo) ex.campo = c.campo;
+        }
       } else {
-        raw.tournaments.push({
+        const pushed = {
           ccode: c.ccode, tcode: c.tcode, name: c.name, date: c.date, draws: c.draws,
           ...(c.campo ? { campo: c.campo } : {}),
-        } as FpgTournamentData);
+        } as FpgTournamentData;
+        raw.tournaments.push(pushed);
+        byKey.set(`${c.ccode}-${c.tcode}`, pushed);
       }
     }
-  } catch {
-    /* ficheiro curado ausente — ignora silenciosamente */
   }
 }
 
