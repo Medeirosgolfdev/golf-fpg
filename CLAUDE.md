@@ -582,6 +582,7 @@ Em Playwright: intercettar `GetMeta` via `page.on('response')` é mais fiável d
 | 21004 | Desert Shootout 2026 | Fev 2026 | USA |
 | 21080 | Marco Simone Invitational 2026 | Mar 2026 | EURO |
 | 21239 | Mississippi State Inv. 2026 | Mar 2026 | USA |
+| 21131 | European Championship 2026 | 26 Mai 2026 | EURO |
 
 ### Em USKIDS_ID (torneios sem completos, processados via uskids-results.json)
 
@@ -597,9 +598,11 @@ Em Playwright: intercettar `GetMeta` via `page.on('response')` é mais fiável d
 
 | t= | Nome | Data |
 |----|------|------|
-| 21131 | European Championship 2026 | Ago 2026 |
 | 21573 | Marco Simone Local Tour 2026 | 2026 |
-| 21610 | World Championship 2026 | Set 2026 |
+| 21610 | World Championship 2026 | Set 2026 (a ocorrer) |
+| 22243 | Venice Open 2026 | Ago 2026 (a ocorrer) |
+
+> **Nota (2026-06-12):** European Championship 2026 (`21131`) já ocorreu a **26 Mai 2026** — movido para a tabela de conhecidos acima (estava erradamente marcado "Ago 2026"). O World 2026 (`21610`) e o Venice 2026 (`22243`) ainda estão por ocorrer — ver `FULL_FIELD_TCODES` abaixo para correr o campo completo quando acontecerem.
 
 ### Regionais USA (em LINKS_EXTRA / REGIONAL_CHAMPIONSHIPS)
 

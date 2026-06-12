@@ -78,7 +78,7 @@ const TORNEIOS_ALL_AGE_GROUPS = new Set([
   // Marco Simone (Invitational + Local Tour)
   18438, 21080, 21573,
   // Venice Open
-  12229, 14302, 16428, 19418,
+  12229, 14302, 16428, 19418, 22243,
 ]);
 
 const DELAY_MS   = 400;

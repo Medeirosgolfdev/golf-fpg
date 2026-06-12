@@ -53,6 +53,31 @@
         "ffgolf:514743398"
       ],
       "reason": "René Ismael Jaime Billot — mesma pessoa, franco-mexicano. USKids regista nacionalidade MX (Boys 12, 14 torneios) e FFG regista licença francesa 514743398 no clube Val D'Amour (Bourgogne-F.-Comté), hcp 18.3, sex M. Nome 4-token exacto bate em ambos. Mãe Chantal Jaime Billot está no mesmo clube FFG, o que confirma a ligação familiar à FR. Matcher automático rejeita porque países diferentes (MX vs FR) e ninguém tem DOB."
+    },
+    {
+      "sourceKeys": [
+        "uskids:606764",
+        "fpg:57904"
+      ],
+      "reason": "Guo Ziyang — USKids regista o nome em ordem ocidental 'Ziyang Guo' (mid 606764) + país CN e sem DOB; FPG tem 'Guo Ziyang' (fed 57904). Matcher automático não funde porque o nome invertido cai em bucket primeiro|último diferente e não há DOB no lado USKids."
+    },
+    {
+      "sourceKeys": [
+        "uskids:615246",
+        "uskids:615514"
+      ],
+      "preferStrongKey": {
+        "uskids": "615246"
+      },
+      "manualHistoricalIds": {
+        "uskids": [
+          {
+            "memberId": "615514",
+            "note": "Conta secundária (nome com espaço duplo 'Christian  Chepishev', 6 torneios) — mesma pessoa que 615246."
+          }
+        ]
+      },
+      "reason": "Christian Chepishev (BG) — duas contas USKids: 615246 (11 torneios, jogou o Azata 21931) e 615514 (6 torneios). Mesma pessoa fragmentada por variante do nome (espaço duplo). Funde as duas como uma só carreira."
     }
   ],
   "forceSplit": [],

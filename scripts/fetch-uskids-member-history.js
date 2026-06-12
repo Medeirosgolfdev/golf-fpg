@@ -48,38 +48,17 @@ const FLIGHT_CACHE_FRESH_DAYS = 15; // re-obter da net se o torneio terminou há
 // Para torneios com flights conhecidos, especifica-os manualmente.
 // Para os restantes (sem entrada aqui), os flights são auto-descobertos
 // via GetMeta filtrando escalões Boys 9-13.
-const FLIGHTS_MANUAL = {
-  18242: [
-    { fid: 234338, ag: 'Boys 9' },
-    { fid: 234339, ag: 'Boys 10' },
-    { fid: 234340, ag: 'Boys 11' },
-    { fid: 234341, ag: 'Boys 12' },
-  ],
-  19418: [
-    { fid: 250227, ag: 'Boys 9' },
-    { fid: 250228, ag: 'Boys 10' },
-    { fid: 250229, ag: 'Boys 11' },
-    { fid: 250230, ag: 'Boys 12' },
-  ],
-  20175: [
-    { fid: 260328, ag: 'Boys 9' },
-    { fid: 260329, ag: 'Boys 10' },
-    { fid: 260330, ag: 'Boys 11' },
-    { fid: 260331, ag: 'Boys 12' },
-  ],
-  21080: [
-    { fid: 272798, ag: 'Boys 9' },
-    { fid: 272799, ag: 'Boys 10' },
-    { fid: 272800, ag: 'Boys 11' },
-    { fid: 272801, ag: 'Boys 12' },
-  ],
-  21131: [
-    { fid: 273490, ag: 'Boys 9' },
-    { fid: 273491, ag: 'Boys 10' },
-    { fid: 273492, ag: 'Boys 11' },
-    { fid: 273493, ag: 'Boys 12' },
-  ],
-};
+// ⚠ FLIGHTS_MANUAL DESACTIVADO (2026-06-12). Estas listas fixavam Boys 9-12 e
+// sobrepunham-se à auto-descoberta — o que impedia apanhar Boys 13 e forçava
+// Boys 9. Com a nova janela 10-13 (ver ESCALOES_BOYS) preferimos a auto-
+// descoberta via GetMeta para TODOS os torneios, que respeita o filtro de
+// escalões automaticamente. Fids antigos preservados aqui só para referência:
+//   18242 (EC2025):  234338/9/40/41 = Boys 9/10/11/12
+//   19418 (Venice25):250227/8/9/30  = Boys 9/10/11/12
+//   20175 (Rome25):  260328/9/30/31 = Boys 9/10/11/12
+//   21080 (Marco26): 272798/9/800/801 = Boys 9/10/11/12
+//   21131 (EC2026):  273490/1/2/3   = Boys 9/10/11/12
+const FLIGHTS_MANUAL = {};
 
 // Todos os torneios a processar. Para cada tcode, os flights Boys 9-13 são
 // auto-descobertos via GetMeta — então adicionar uma linha basta.
@@ -125,8 +104,10 @@ const ALL_TCODES = [
   21004, // Desert Shootout 2026
 ];
 
-// Prefixos de escalão a incluir na auto-descoberta
-const ESCALOES_BOYS = ['boys 9', 'boys 10', 'boys 11', 'boys 12', 'boys 13'];
+// Prefixos de escalão a incluir na auto-descoberta.
+// Política 2026-06-12: Manuel (n. 2014) já tem 12 anos → deixámos de seguir
+// Boys 9 (demasiado novo) e passámos a incluir Boys 13. Janela = 10-13.
+const ESCALOES_BOYS = ['boys 10', 'boys 11', 'boys 12', 'boys 13'];
 const escalaoValido = (nome) =>
   ESCALOES_BOYS.some(p => (nome || '').toLowerCase().startsWith(p));
 
@@ -149,12 +130,28 @@ const CURRENT_YEAR       = new Date().getFullYear();
 const MAX_AGE_TODAY      = 18; // ignorar flights com crianças hoje ≥ 18 anos
 const TOP_N_PER_FLIGHT   = 5; // guardar só top-5 de cada escalão (0 = sem limite)
 
+// Torneios "FULL FIELD" — guardar a carreira de TODOS os jogadores, não só o
+// top-5. Para os torneios onde o Manuel jogou, queremos a ficha completa de
+// todos os adversários (não apenas o pódio). Quando um membro novo é
+// descoberto num destes tcodes, o filtro TOP_N é ignorado para ele.
+// Adicionar aqui o tcode de cada torneio relevante (ver tabela no CLAUDE.md).
+const FULL_FIELD_TCODES = new Set([
+  21080, // Marco Simone Invitational 2026
+  18438, // Marco Simone Invitational 2025
+  18242, // European Championship 2025
+  21131, // European Championship 2026 (26 Mai 2026)
+  19418, // Venice Open 2025
+  // ── Preparados para correr DEPOIS de ocorrerem ──
+  21610, // World Championship 2026 (Set 2026)
+  22243, // Venice Open 2026 (Ago 2026)
+]);
+
 // Restrição de escalões por torneio: quando um tcode está aqui, só os
 // escalões listados são processados (em vez de todos os Boys 9-13 da
 // auto-descoberta). Útil para torneios grandes onde só interessam alguns
 // escalões. Prefixos em minúsculas (startsWith).
 const ESCALOES_POR_TORNEIO = {
-  21004: ['boys 10', 'boys 11', 'boys 12'], // Desert Shootout 2026 — só 10/11/12
+  21004: ['boys 10', 'boys 11', 'boys 12', 'boys 13'], // Desert Shootout 2026 — 10-13
 };
 
 // Manuel nunca é filtrado (2 contas USKids — ver MANUEL_PLAYER_IDS em
@@ -527,9 +524,18 @@ async function main() {
 
   if (process.argv.includes('--clean')) { cleanAndRematch(); return; }
 
+  // --tcode N[,M,...] — processar SÓ estes torneios (em vez de ALL_TCODES).
+  // Útil para apanhar um jogador novo num torneio específico sem re-scrapar
+  // toda a lista (ex: --tcode 21931 para o Azata Golf). Flights auto-
+  // descobertos via GetMeta (Boys 9-13). Não toca na rede dos restantes.
+  const tcodeArgIdx = process.argv.indexOf('--tcode');
+  const onlyTcodes = (tcodeArgIdx !== -1 && process.argv[tcodeArgIdx + 1])
+    ? process.argv[tcodeArgIdx + 1].split(',').map(s => parseInt(s.trim(), 10)).filter(Boolean)
+    : null;
+
   // Em modo --refresh-all não precisamos de descobrir memberIDs novos —
   // iteramos sobre todos os já em cache. Saltamos completamente a Fase 1.
-  const tcodes = refreshAll ? [] : [...ALL_TCODES];
+  const tcodes = refreshAll ? [] : (onlyTcodes || [...ALL_TCODES]);
 
   console.log('══════════════════════════════════════');
   console.log('📊  USKids Member History');
@@ -585,8 +591,10 @@ async function main() {
 
     for (const tcode of tcodes) {
       // ── Reaproveitar da flight-cache (sem rede) se o torneio já fechou ──
+      // Excepção: em modo --tcode forçamos re-descoberta (ignora cache) para
+      // a política de escalões actual (10-13) ser aplicada de imediato.
       const cachedT = flightCache.torneios[String(tcode)];
-      if (cachedT && !flightNeedsRefetch(cachedT.date)) {
+      if (cachedT && !flightNeedsRefetch(cachedT.date) && !onlyTcodes) {
         if (!cache.torneios[tcode] || !cache.torneios[tcode].name) {
           cache.torneios[tcode] = { name: cachedT.name || `t=${tcode}` };
         }
@@ -596,6 +604,8 @@ async function main() {
         for (const [fidStr, fl] of Object.entries(cFlights)) {
           const fid = parseInt(fidStr, 10);
           const ag  = fl.ag || '';
+          // Re-aplicar o filtro de escalões global (exclui Boys 9, inclui 13).
+          if (!escalaoValido(ag)) continue;
           // Re-aplicar filtro de idade (CURRENT_YEAR muda entre runs).
           if (cYear) {
             const ageNum = parseAgeNum(ag);
@@ -846,28 +856,9 @@ async function main() {
 
         if (tids.length === 0) { continue; }
 
-        // Verificar ageGroup — saltar Girls
-        const latestT = Object.values(data).sort((a, b) =>
-          parseDate(b.t_start_date).localeCompare(parseDate(a.t_start_date)))[0];
-        const ag = latestT?.p_age_group || '';
-        if (ag.startsWith('Girls') || ag.includes('Girl')) { skipped++; continue; }
-
-        // ── Filtro TOP-N: só guardar quem ficou no top-N de pelo menos um
-        // dos torneios onde foi descoberto. Aplica-se apenas a membros NOVOS
-        // em modo default (cache existente e --refresh-all já são curados).
-        // Manuel nunca é filtrado.
-        if (!refreshAll && isNew && TOP_N_PER_FLIGHT > 0 && !MANUEL_MIDS.has(midStr)) {
-          const discoverTcodes = new Set((memberFlights.get(mid) || []).map(f => String(f.tcode)));
-          let bestPlace = Infinity;
-          for (const tid of tids) {
-            if (!discoverTcodes.has(String(tid))) continue;
-            const pl = parsePlace(data[tid]?.p_place);
-            if (pl != null && pl < bestPlace) bestPlace = pl;
-          }
-          if (bestPlace > TOP_N_PER_FLIGHT) { skippedTopN++; continue; }
-        }
-
-        // ── Matching de nome (3 estratégias) ──────────────────────
+        // ── Matching de nome (3 estratégias) — RESOLVIDO ANTES dos filtros
+        // para podermos escrever o nome de TODOS os jogadores descobertos,
+        // mesmo os que vão ser ignorados (Girls / fora do top-N). ──
 
         // 1. Mapa directo por node_id (funciona mesmo sem scores)
         let playerMatch = memberNameMap.get(midStr) || null;
@@ -889,7 +880,39 @@ async function main() {
         const playerName    = playerMatch?.name    || '?';
         const playerCountry = playerMatch?.country || '';
         const playerPlace   = playerMatch?.place   || '';
-        if (playerMatch && playerName !== '?') matched++; else unmatched++;
+
+        // Verificar ageGroup — saltar Girls (escreve o nome para visibilidade)
+        const latestT = Object.values(data).sort((a, b) =>
+          parseDate(b.t_start_date).localeCompare(parseDate(a.t_start_date)))[0];
+        const ag = latestT?.p_age_group || '';
+        if (ag.startsWith('Girls') || ag.includes('Girl')) {
+          console.log(`  🚺 [${processed}/${toProcess.length}] ${playerName} | ${ag} — Girls, ignorado`);
+          skipped++; continue;
+        }
+
+        // ── Filtro TOP-N: só guardar quem ficou no top-N de pelo menos um
+        // dos torneios onde foi descoberto. Aplica-se apenas a membros NOVOS
+        // em modo default (cache existente e --refresh-all já são curados).
+        // Manuel nunca é filtrado.
+        if (!refreshAll && isNew && TOP_N_PER_FLIGHT > 0 && !MANUEL_MIDS.has(midStr)) {
+          const discoverTcodes = new Set((memberFlights.get(mid) || []).map(f => String(f.tcode)));
+          // Se foi descoberto num torneio FULL FIELD, guardar sempre (sem top-N).
+          const isFullField = [...discoverTcodes].some(tc => FULL_FIELD_TCODES.has(parseInt(tc, 10)));
+          if (!isFullField) {
+            let bestPlace = Infinity;
+            for (const tid of tids) {
+              if (!discoverTcodes.has(String(tid))) continue;
+              const pl = parsePlace(data[tid]?.p_place);
+              if (pl != null && pl < bestPlace) bestPlace = pl;
+            }
+            if (bestPlace > TOP_N_PER_FLIGHT) {
+              console.log(`  🚫 [${processed}/${toProcess.length}] ${playerName} | ${ag} — fora do top-${TOP_N_PER_FLIGHT} (melhor: ${bestPlace})`);
+              skippedTopN++; continue;
+            }
+          }
+        }
+
+        if (playerName !== '?') matched++; else unmatched++;
 
         // ── Construir entrada do jogador ──────────────────────────
         // Se já existia em cache, partir dela para preservar torneios anteriores
