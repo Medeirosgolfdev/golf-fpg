@@ -633,6 +633,268 @@ const glenGolfClub: Course = {
   },
 };
 
+/* ─────────────────────────────────────────────────────────────────────────
+   USKids Venice Open 2025 — 3 campos (Itália)
+   Fonte: PDFs oficiais do torneio (em public/data/):
+     - "Venice Open 2025 Tournament Distances - Meters"
+     - "Venice Open 2025 - Course Slope and Rating"
+
+   Campos por escalão (cada escalão joga um percurso diferente):
+     Frassanelle Golf      — Boys/Girls 13-18
+     Golf Della Montecchia — Boys/Girls 9-12. A Montecchia tem 3 campos de
+                             9 buracos (White, Red, Green) que se combinam
+                             em percursos de 18 DIFERENTES: White+Red,
+                             Red+Green e Green+White → 3 entradas Course
+                             separadas (não são tees do mesmo campo).
+     Galzignano Golf       — Boys/Girls ≤9 (9 buracos)
+
+   Cores = Longleaf Tee System do PDF (6 preto, 5 branco, 4 vermelho,
+   3 laranja, 2 amarelo, 1 azul-escuro).
+
+   O courseKey do White/Red mantém "away-golf-della-montecchia-white-red"
+   para preservar o URL existente (vinha do melhorias.json, que esta
+   entrada substitui — o melhorias só tinha o tee Boys 11).
+   SI: só conhecido para o tee Amarelas do Frassanelle (scorecard WHS);
+   os PDFs USKids não publicam stroke index.
+   ────────────────────────────────────────────────────────────────────── */
+
+const VENICE_PDF_LINKS = [
+  {
+    label: "US Kids Venice Open 2025 - Distances (Meters)",
+    url: "/data/venice_open_2025_distances_meters.pdf",
+  },
+  {
+    label: "US Kids Venice Open 2025 - Course Rating & Slope",
+    url: "/data/venice_open_2025_course_rating_slope.pdf",
+  },
+];
+
+function vHoles(par: number[], dist: number[], si?: number[]): Hole[] {
+  return dist.map((d, i) => ({ hole: i + 1, par: par[i], si: si?.[i] ?? null, distance: d }));
+}
+
+function vDist(dist: number[]): { total: number; front9: number; back9: number | null; holesCount: number; complete18: boolean } {
+  const front9 = dist.slice(0, 9).reduce((a, b) => a + b, 0);
+  const back9 = dist.length > 9 ? dist.slice(9).reduce((a, b) => a + b, 0) : null;
+  return { total: front9 + (back9 ?? 0), front9, back9, holesCount: dist.length, complete18: dist.length === 18 };
+}
+
+// ── Golf Della Montecchia — pares por combinação de nines ──
+const montWRPar = [5,3,4,4,4,4,3,4,5, 4,3,5,4,4,4,4,3,5]; // White+Red, 72
+const montRGPar = [4,3,5,4,4,4,4,3,5, 4,5,4,3,4,3,4,5,4]; // Red+Green, 72
+const montGWPar = [4,5,4,3,4,3,4,5,4, 5,3,4,4,4,4,3,4,5]; // Green+White, 72
+
+// Distâncias em metros (PDF oficial)
+const montWRBoys12 = [401,145,300,310,280,330,128,290,390, 305,150,410,280,283,310,310,145,410]; // 5177m
+const montWRBoys11 = [389,145,262,266,280,289,128,290,350, 255,122,330,230,265,284,290,115,325]; // 4615m
+const montRG       = [255,122,330,230,265,284,290,115,325, 263,350,287,120,250,103,244,340,250]; // 4423m (Boys 10, Girls 11/12)
+const montGW       = [220,300,240,100,210,90,210,300,230, 300,110,225,230,210,230,95,215,290];   // 3805m (Boys 9, Girls 10)
+
+// 3 percursos de 18 = 3 campos distintos (combinações dos nines White/Red/Green)
+
+const montecchiaWhiteRed: Course = {
+  courseKey: "away-golf-della-montecchia-white-red",
+  master: {
+    courseId: "away-golf-della-montecchia-white-red",
+    name: "Golf Della Montecchia - White/Red",
+    country: "Itália",
+    links: {
+      fpg: null,
+      scorecards: null,
+      extra: VENICE_PDF_LINKS,
+    },
+    tees: [
+      {
+        teeId: "mont-wr-uk-boys12",
+        sex: "M",
+        teeName: "USKids Boys 12",
+        scorecardMeta: { teeColor: "#ffffff" }, // Longleaf Tee 5
+        ratings: { holes18: { par: 72, courseRating: 67.6, slopeRating: 118 } },
+        holes: vHoles(montWRPar, montWRBoys12),
+        distances: vDist(montWRBoys12),
+      },
+      {
+        teeId: "mont-wr-uk-boys11",
+        sex: "M",
+        teeName: "USKids Boys 11",
+        scorecardMeta: { teeColor: "#ef4444" }, // Longleaf Tee 4
+        ratings: { holes18: { par: 72, courseRating: 64.8, slopeRating: 111 } },
+        holes: vHoles(montWRPar, montWRBoys11),
+        distances: vDist(montWRBoys11),
+      },
+    ],
+  },
+};
+
+const montecchiaRedGreen: Course = {
+  courseKey: "away-golf-della-montecchia-red-green",
+  master: {
+    courseId: "away-golf-della-montecchia-red-green",
+    name: "Golf Della Montecchia - Red/Green",
+    country: "Itália",
+    links: {
+      fpg: null,
+      scorecards: null,
+      extra: VENICE_PDF_LINKS,
+    },
+    tees: [
+      {
+        teeId: "mont-rg-uk-boys10",
+        sex: "M",
+        teeName: "USKids Boys 10",
+        scorecardMeta: { teeColor: "#ef4444" }, // Longleaf Tee 4
+        ratings: { holes18: { par: 72, courseRating: 63.3, slopeRating: 106 } },
+        holes: vHoles(montRGPar, montRG),
+        distances: vDist(montRG),
+      },
+      {
+        teeId: "mont-rg-uk-girls12",
+        sex: "F",
+        teeName: "USKids Girls 12",
+        scorecardMeta: { teeColor: "#ef4444" }, // Longleaf Tee 4
+        ratings: { holes18: { par: 72, courseRating: 68.0, slopeRating: 111 } },
+        holes: vHoles(montRGPar, montRG),
+        distances: vDist(montRG),
+      },
+      {
+        teeId: "mont-rg-uk-girls11",
+        sex: "F",
+        teeName: "USKids Girls 11",
+        scorecardMeta: { teeColor: "#ef4444" }, // Longleaf Tee 4
+        ratings: { holes18: { par: 72, courseRating: 68.0, slopeRating: 112 } },
+        holes: vHoles(montRGPar, montRG),
+        distances: vDist(montRG),
+      },
+    ],
+  },
+};
+
+const montecchiaGreenWhite: Course = {
+  courseKey: "away-golf-della-montecchia-green-white",
+  master: {
+    courseId: "away-golf-della-montecchia-green-white",
+    name: "Golf Della Montecchia - Green/White",
+    country: "Itália",
+    links: {
+      fpg: null,
+      scorecards: null,
+      extra: VENICE_PDF_LINKS,
+    },
+    tees: [
+      {
+        teeId: "mont-gw-uk-boys9",
+        sex: "M",
+        teeName: "USKids Boys 9",
+        scorecardMeta: { teeColor: "#f97316" }, // Longleaf Tee 3
+        ratings: { holes18: { par: 72, courseRating: 60.5, slopeRating: 100 } },
+        holes: vHoles(montGWPar, montGW),
+        distances: vDist(montGW),
+      },
+      {
+        teeId: "mont-gw-uk-girls10",
+        sex: "F",
+        teeName: "USKids Girls 10",
+        scorecardMeta: { teeColor: "#f97316" }, // Longleaf Tee 3
+        ratings: { holes18: { par: 72, courseRating: 64.5, slopeRating: 104 } },
+        holes: vHoles(montGWPar, montGW),
+        distances: vDist(montGW),
+      },
+    ],
+  },
+};
+
+// ── Frassanelle Golf — Boys/Girls 13-18 + tee Amarelas oficial ──
+// Amarelas: recuperado do away-courses.backup-20260521.json (scorecard WHS
+// do Venice Open 2025, com SI real). O tee "Vermelhas" do backup era na
+// verdade a Montecchia Red+Green (CR 63.3/106) — não pertence aqui.
+const frasPar = [4,5,4,4,3,5,4,3,4, 5,3,4,4,4,3,4,4,5]; // 72
+const frasSI  = [16,4,10,2,6,8,12,14,18, 5,15,17,7,9,13,11,3,1];
+const frasBoys1318  = [320,490,298,350,160,470,325,169,283, 479,150,255,385,357,146,310,327,479]; // 5753m
+const frasGirls1318 = [287,399,269,302,146,410,300,133,250, 427,126,234,333,315,105,257,277,395]; // 4965m
+const frasAmarelas  = [323,501,311,380,174,493,331,161,286, 477,145,258,380,356,125,301,355,522]; // 5879m
+
+const frassanelle: Course = {
+  courseKey: "away-frassanelle-golf",
+  master: {
+    courseId: "away-frassanelle-golf",
+    name: "Frassanelle Golf",
+    country: "Itália",
+    links: {
+      fpg: null,
+      scorecards: null,
+      extra: VENICE_PDF_LINKS,
+    },
+    tees: [
+      {
+        teeId: "fras-amarelas",
+        sex: "U",
+        teeName: "Amarelas",
+        scorecardMeta: { teeColor: "#fbbf24" },
+        ratings: { holes18: { par: 72, courseRating: 71.5, slopeRating: 131 } },
+        holes: vHoles(frasPar, frasAmarelas, frasSI),
+        distances: vDist(frasAmarelas),
+      },
+      {
+        teeId: "fras-uk-boys1318",
+        sex: "M",
+        teeName: "USKids Boys 13-18",
+        scorecardMeta: { teeColor: "#111827" }, // Longleaf Tee 6
+        ratings: { holes18: { par: 72, courseRating: 70.7, slopeRating: 129 } },
+        holes: vHoles(frasPar, frasBoys1318),
+        distances: vDist(frasBoys1318),
+      },
+      {
+        teeId: "fras-uk-girls1318",
+        sex: "F",
+        teeName: "USKids Girls 13-18",
+        scorecardMeta: { teeColor: "#ffffff" }, // Longleaf Tee 5
+        ratings: { holes18: { par: 72, courseRating: 71.7, slopeRating: 126 } },
+        holes: vHoles(frasPar, frasGirls1318),
+        distances: vDist(frasGirls1318),
+      },
+    ],
+  },
+};
+
+// ── Galzignano Golf — 9 buracos (escalões ≤9 anos) ──
+const galzPar = [4,4,5,3,5,4,5,3,3]; // 36
+const galzTee2 = [167,164,242,91,304,156,292,100,98]; // 1614m — Boys 8 / Girls 9
+const galzTee1 = [140,145,212,91,253,136,219,89,92];  // 1377m — Boys 7&U / Girls 8&U
+
+const galzignano: Course = {
+  courseKey: "away-galzignano-golf",
+  master: {
+    courseId: "away-galzignano-golf",
+    name: "Galzignano Golf",
+    country: "Itália",
+    links: {
+      fpg: null,
+      scorecards: null,
+      extra: VENICE_PDF_LINKS,
+    },
+    tees: [
+      {
+        teeId: "galz-uk-tee2",
+        sex: "U",
+        teeName: "USKids Boys 8 / Girls 9",
+        scorecardMeta: { teeColor: "#fbbf24" }, // Longleaf Tee 2
+        ratings: { holes9Front: { par: 36, courseRating: null, slopeRating: null } },
+        holes: vHoles(galzPar, galzTee2),
+        distances: vDist(galzTee2),
+      },
+      {
+        teeId: "galz-uk-tee1",
+        sex: "U",
+        teeName: "USKids Boys 7&U / Girls 8&U",
+        scorecardMeta: { teeColor: "#1e3a8a" }, // Longleaf Tee 1
+        ratings: { holes9Front: { par: 36, courseRating: null, slopeRating: null } },
+        holes: vHoles(galzPar, galzTee1),
+        distances: vDist(galzTee1),
+      },
+    ],
+  },
+};
+
 /* Exportacao */
 
 /** Campos extra adicionados manualmente (ainda sem rondas no melhorias.json) */
@@ -646,5 +908,10 @@ export function getExtraCourses(): Course[] {
     leToquet_LaForet,
     leToquet_LaMer,
     glenGolfClub,
+    montecchiaWhiteRed,
+    montecchiaRedGreen,
+    montecchiaGreenWhite,
+    frassanelle,
+    galzignano,
   ];
 }

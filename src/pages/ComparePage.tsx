@@ -22,6 +22,7 @@ import type { Course, Tee } from "../data/types";
 import CourseHeroCard, { getParTotal } from "../ui/CourseHeroCard";
 
 const CompararPlayersView = lazy(() => import("./CompararPage"));
+const TeeAdvisorView = lazy(() => import("./comparar/TeeAdvisorView"));
 
 const MANUEL_FED = "52884";
 
@@ -382,14 +383,14 @@ function CourseComparisonView({ simCourses }: { simCourses: Course[] }) {
 
 // ═══════════════════ Página principal ═══════════════════
 
-type Tab = "campos" | "jogadores";
+type Tab = "campos" | "tees" | "jogadores";
 
 export default function ComparePage() {
   const ctx = useAppContext();
   const [activeTab, setActiveTab] = useState<Tab>("campos");
 
   return (
-    <div className="page-full">
+    <div className="page-full" style={activeTab === "tees" ? { maxWidth: 1200 } : undefined}>
       <Toolbar>
         <ToolbarTitle>⚔️ Comparar</ToolbarTitle>
         <ToolbarMeta>
@@ -407,6 +408,13 @@ export default function ComparePage() {
         </button>
         <button
           type="button"
+          className={"tab-under" + (activeTab === "tees" ? " active" : "")}
+          onClick={() => setActiveTab("tees")}
+        >
+          🟡 Vantagem de Tee
+        </button>
+        <button
+          type="button"
           className={"tab-under" + (activeTab === "jogadores" ? " active" : "")}
           onClick={() => setActiveTab("jogadores")}
         >
@@ -417,6 +425,8 @@ export default function ComparePage() {
       <Suspense fallback={<EmptyState icon="⏳" message="A carregar…" />}>
         {activeTab === "campos" ? (
           <CourseComparisonView simCourses={ctx.simCourses} />
+        ) : activeTab === "tees" ? (
+          <TeeAdvisorView simCourses={ctx.simCourses} />
         ) : (
           <CompararPlayersView players={ctx.players} />
         )}
