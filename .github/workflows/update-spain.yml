@@ -115,17 +115,20 @@ jobs:
 
       # ── Descoberta de scopes (regenera scripts/{fcg,nextcaddy}-scope*.json) ──
       - name: Discovery FCG (catgolf.com → fcg-scope.json)
+        id: disc_fcg
         if: env.DO_DISCOVERY == 'true'
         continue-on-error: true
         run: node scripts/discover-fcg-scope.js --years "$FCG_YEARS"
 
       - name: Discovery NextCaddy (→ nextcaddy-scope-all.json)
+        id: disc_nc
         if: env.DO_DISCOVERY == 'true'
         continue-on-error: true
         run: node scripts/scrape-nextcaddy.js --discover --out scripts/nextcaddy-scope-all.json
 
       # ── Scrapers (paralelos seriam ideais mas mantemos sequencial pelo git push) ──
       - name: Scrape RFEGolf (Campeonatos Nacionais)
+        id: rfegolf
         continue-on-error: true
         run: |
           if [ "$RFEGOLF_MODE" = "range" ]; then
@@ -142,10 +145,12 @@ jobs:
           fi
 
       - name: Scrape livegolfscoring (scorecards hbh)
+        id: lgs
         continue-on-error: true
         run: node scripts/scrape-livegolfscoring.js --range "$LGS_RANGE" --concurrency 10 $SKIP_FLAG
 
       - name: Scrape NextCaddy (leaderboards)
+        id: nextcaddy
         continue-on-error: true
         run: |
           SCOPE_FILE="scripts/nextcaddy-scope-all.json"
@@ -156,10 +161,12 @@ jobs:
           node scripts/scrape-nextcaddy.js --scope "$SCOPE_FILE" --concurrency 8 $SKIP_FLAG
 
       - name: Scrape NextCaddy horários (tee times)
+        id: nc_horarios
         continue-on-error: true
         run: node scripts/scrape-nextcaddy-horarios.js --all --concurrency 8 $SKIP_FLAG
 
       - name: Scrape FCG (golfdirecto.com)
+        id: fcg
         continue-on-error: true
         run: |
           if [ ! -f scripts/fcg-scope.json ]; then
@@ -170,10 +177,12 @@ jobs:
 
       # ── Enrichment + index + lookups (rápidos, não usam rede excepto enrich-lgs-dates) ──
       - name: Enrich LGS dates
+        id: enrich_lgs
         continue-on-error: true
         run: node scripts/enrich-lgs-dates.js
 
       - name: Inferir par NextCaddy (fallback)
+        id: infer_par
         continue-on-error: true
         run: node scripts/infer-nextcaddy-par.js
 
@@ -240,3 +249,29 @@ jobs:
             exit 1
           fi
           echo "✓ Commit feito"
+
+      # ── Verificação final: falhar ALTO se algum scraper falhou ──
+      # Os scrapers correm com continue-on-error para que a falha de um portal
+      # não impeça os outros de correr nem o commit dos dados bons. Mas sem
+      # este passo, o workflow ficava verde e ninguém recebia email. Corre
+      # DEPOIS do commit (dados bons já preservados) e falha se houve falhas.
+      - name: Verificar falhas dos scrapers
+        if: always()
+        run: |
+          FAILED=""
+          [ "${{ steps.disc_fcg.outcome }}"    = "failure" ] && FAILED="$FAILED discovery-FCG"
+          [ "${{ steps.disc_nc.outcome }}"     = "failure" ] && FAILED="$FAILED discovery-NextCaddy"
+          [ "${{ steps.rfegolf.outcome }}"     = "failure" ] && FAILED="$FAILED RFEGolf"
+          [ "${{ steps.lgs.outcome }}"         = "failure" ] && FAILED="$FAILED livegolfscoring"
+          [ "${{ steps.nextcaddy.outcome }}"   = "failure" ] && FAILED="$FAILED NextCaddy"
+          [ "${{ steps.nc_horarios.outcome }}" = "failure" ] && FAILED="$FAILED NextCaddy-horarios"
+          [ "${{ steps.fcg.outcome }}"         = "failure" ] && FAILED="$FAILED FCG"
+          [ "${{ steps.enrich_lgs.outcome }}"  = "failure" ] && FAILED="$FAILED enrich-LGS"
+          [ "${{ steps.infer_par.outcome }}"   = "failure" ] && FAILED="$FAILED infer-par-NC"
+          if [ -n "$FAILED" ]; then
+            echo "❌ Scrapers falhados:$FAILED"
+            echo "Os dados dos scrapers que correram bem JÁ foram commitados."
+            echo "Ver os logs dos passos falhados acima para diagnosticar."
+            exit 1
+          fi
+          echo "✓ Todos os scrapers correram sem falhas"

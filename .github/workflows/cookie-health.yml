@@ -1,0 +1,75 @@
+name: Cookie health — validar cookies FPG antes do fim-de-semana
+
+# Valida os 3 conjuntos de cookies (secrets) ANTES da janela de scrapes de
+# Sex/Sáb/Dom. Se algum estiver expirado, o workflow falha → email do GitHub
+# com tempo para refrescar (Chrome 90 → DevTools → actualizar secrets).
+#
+# Playbook de refresh: CLAUDE.md "Cenário 1: Os cookies expiraram".
+#
+# Corre:
+#   - Quinta-feira 09:00 UTC (≈09/10h Lisboa) — margem de 1 dia útil
+#   - A pedido (Run workflow)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 9 * * 4'   # Quinta 09:00 UTC
+
+permissions:
+  contents: read
+
+jobs:
+  cookie-health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Cada teste corre mesmo que o anterior falhe — queremos saber TODOS
+      # os cookies mortos de uma vez, não só o primeiro.
+      - name: "my.fpg.pt (FPG_COOKIES — WHS/scorecards, update-data)"
+        id: fpg
+        continue-on-error: true
+        env:
+          FPG_COOKIES: ${{ secrets.FPG_COOKIES }}
+        run: node scripts/test-fpg-auth.js
+
+      - name: "scoring.datagolf.pt (DATAGOLF_SCORING_COOKIES — drive/classif/jovens)"
+        id: datagolf
+        continue-on-error: true
+        env:
+          DATAGOLF_SCORING_COOKIES: ${{ secrets.DATAGOLF_SCORING_COOKIES }}
+        run: node scripts/test-datagolf-node.js
+
+      - name: "scoring.fpg.pt/lists (FPG_ADMISSIONS_COOKIES — admissions/draws)"
+        id: admissions
+        continue-on-error: true
+        env:
+          FPG_ADMISSIONS_COOKIES: ${{ secrets.FPG_ADMISSIONS_COOKIES }}
+        run: node scripts/test-fpg-admissions-auth.js
+
+      - name: Resumo
+        if: always()
+        run: |
+          FAILED=""
+          [ "${{ steps.fpg.outcome }}"        = "failure" ] && FAILED="$FAILED FPG_COOKIES(my.fpg.pt)"
+          [ "${{ steps.datagolf.outcome }}"   = "failure" ] && FAILED="$FAILED DATAGOLF_SCORING_COOKIES(scoring.datagolf.pt)"
+          [ "${{ steps.admissions.outcome }}" = "failure" ] && FAILED="$FAILED FPG_ADMISSIONS_COOKIES(scoring.fpg.pt)"
+          if [ -n "$FAILED" ]; then
+            echo "❌ Cookies expirados/inválidos:$FAILED"
+            echo ""
+            echo "Refrescar antes de Sexta à noite (janela de scrapes):"
+            echo "  1. Chrome 90 → login/navegar nos sites afectados"
+            echo "  2. F12 → Application → Cookies → copiar"
+            echo "  3. Actualizar os GitHub Secrets correspondentes"
+            echo "  (Playbook completo: CLAUDE.md — 'Cenário 1: cookies expiraram')"
+            exit 1
+          fi
+          echo "✓ Os 3 conjuntos de cookies estão válidos"

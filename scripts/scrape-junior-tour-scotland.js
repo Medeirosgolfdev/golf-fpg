@@ -21,14 +21,14 @@
  *   public/data/scotland-jts-{year}-events.json
  *   public/data/scotland-jts-{year}-results.json   (links + PDFs)
  *   public/data/scotland-jts-{year}-oom.json       (links + PDFs)
- *   public/data-archive/jts-pdfs/{year}/*.pdf      (se --download-pdfs)
+ *   data-archive/jts-pdfs/{year}/*.pdf      (se --download-pdfs)
  */
 
 const fs = require("fs");
 const path = require("path");
 
 const OUT_DIR = path.resolve(__dirname, "../public/data");
-const PDF_DIR_BASE = path.resolve(__dirname, "../public/data-archive/jts-pdfs");
+const PDF_DIR_BASE = path.resolve(__dirname, "../data-archive/jts-pdfs");
 if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
 
 const BASE = "https://www.juniortourscotland.com";

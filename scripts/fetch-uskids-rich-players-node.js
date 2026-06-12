@@ -10,7 +10,7 @@
  *      (teeMarkerName, teeMarkerColor, startTime, startHole, groupNumber,
  *       playerNumber, status, points, place(cidade), handicap, driverLength,
  *       liveScoringId, flightRound)
- *   4. Escrever public/data-archive/uskids-rich-players/{memberID}.json
+ *   4. Escrever data-archive/uskids-rich-players/{memberID}.json
  *
  * Lista de jogadores alvo (por defeito): uniao de
  *   - public/data/uskids-member-history-slim.json (jogadores actualmente tracked)
@@ -47,10 +47,10 @@ const path = require('path');
 // ── Paths ────────────────────────────────────
 const ROOT          = path.join(__dirname, '..');
 const SLIM_PATH     = path.join(ROOT, 'public', 'data', 'uskids-member-history-slim.json');
-const OUT_DIR       = path.join(ROOT, 'public', 'data-archive', 'uskids-rich-players');
-const FLIGHT_CACHE  = path.join(ROOT, 'public', 'data-archive', 'uskids-rich-flight-cache.json');
+const OUT_DIR       = path.join(ROOT, 'data-archive', 'uskids-rich-players');
+const FLIGHT_CACHE  = path.join(ROOT, 'data-archive', 'uskids-rich-flight-cache.json');
 const RESULTS_PATH  = path.join(ROOT, 'public', 'data', 'uskids-results.json');
-const RUN_SUMMARY   = path.join(ROOT, 'public', 'data-archive', 'uskids-rich-run-summary.json');
+const RUN_SUMMARY   = path.join(ROOT, 'data-archive', 'uskids-rich-run-summary.json');
 
 // ── Config ───────────────────────────────────
 const API         = 'https://www.signupanytime.com/plugins/links/admin/LinksAJAX.aspx';
@@ -827,7 +827,7 @@ async function main() {
     const novos = await discoverNewMids(ALL_TCODES_DISCOVERY, knownMids);
     console.log(`  ${novos.size} novos memberIDs`);
     if (novos.size) {
-      const debugFile = path.join(ROOT, 'public', 'data-archive', 'uskids-rich-newmids.json');
+      const debugFile = path.join(ROOT, 'data-archive', 'uskids-rich-newmids.json');
       fs.writeFileSync(debugFile, JSON.stringify([...novos], null, 2));
       console.log(`  💾 ${debugFile}`);
     }
@@ -933,8 +933,8 @@ async function main() {
 
   console.log('\n══════════════════════════════════════');
   console.log(`✅  ${written} ficheiros escritos (${unchanged} sem alterações)`);
-  console.log(`    Output: public/data-archive/uskids-rich-players/`);
-  console.log(`    Cache:  public/data-archive/uskids-rich-flight-cache.json`);
+  console.log(`    Output: data-archive/uskids-rich-players/`);
+  console.log(`    Cache:  data-archive/uskids-rich-flight-cache.json`);
   console.log('══════════════════════════════════════');
 
   process.exit(written === 0 ? 2 : 0);

@@ -22,7 +22,7 @@ const ROOT = path.join(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "public", "data");
 const HISTORICO_PATH = path.join(DATA_DIR, "fpg-nacionais-historico.json");
 const FEDERADOS_PATH = path.join(DATA_DIR, "federados.json");
-const FEDERADOS_INATIVOS_PATH = path.join(DATA_DIR, "federados-inativos.json");
+const FEDERADOS_INATIVOS_PATH = path.join(ROOT, "data-archive", "federados-inativos.json");
 const STATE_PATH = path.join(DATA_DIR, ".rebuild-nacionais-state.json");
 const COOKIES_PATH = path.join(ROOT, "api", ".scoring-datagolf-cookies.json");
 

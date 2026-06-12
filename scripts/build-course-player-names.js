@@ -27,7 +27,14 @@ const fs = require("fs");
 const path = require("path");
 
 const DATA = path.join(__dirname, "..", "public", "data");
-const readJson = (f) => JSON.parse(fs.readFileSync(path.join(DATA, f), "utf8"));
+const ARCHIVE = path.join(__dirname, "..", "data-archive");
+// Lê de public/data, com fallback para data-archive (ficheiros pesados arquivados)
+const readJson = (f) => {
+  const primary = path.join(DATA, f);
+  const fallback = path.join(ARCHIVE, f);
+  const fp = fs.existsSync(primary) ? primary : fallback;
+  return JSON.parse(fs.readFileSync(fp, "utf8"));
+};
 
 /** Recolhe todos os fed codes presentes em _players de um ficheiro de campos. */
 function collectFedCodes(fileName) {

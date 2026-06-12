@@ -27,7 +27,7 @@ const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.join(__dirname, "..");
-const INPUT       = path.join(ROOT, "public/data/federados-inativos.json");
+const INPUT       = path.join(ROOT, "data-archive/federados-inativos.json");
 const OUT_STATS   = path.join(ROOT, "public/data/federados-inativos-stats.json");
 const OUT_JOVENS  = path.join(ROOT, "public/data/federados-inativos-jovens.json");
 

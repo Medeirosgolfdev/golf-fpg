@@ -59,30 +59,12 @@ const DELAY_MS = parseInt(argVal("--delay", "150"), 10);
 const PAGE_SIZE = parseInt(argVal("--page-size", "150"), 10);
 
 /* ── Cookies (scoring.datagolf.pt) ──────────────────────────────────────── */
-function loadCookies() {
-  if (process.env.DATAGOLF_SCORING_COOKIES) {
-    console.log("[classif] cookies de env DATAGOLF_SCORING_COOKIES");
-    return process.env.DATAGOLF_SCORING_COOKIES;
-  }
-  if (process.env.DATAGOLF_COOKIES) {
-    // Compatibilidade com secret legacy
-    console.log("[classif] cookies de env DATAGOLF_COOKIES (legacy)");
-    return process.env.DATAGOLF_COOKIES;
-  }
-  const fp = path.join(REPO, "api", ".scoring-datagolf-cookies.json");
-  if (fs.existsSync(fp)) {
-    try {
-      const j = JSON.parse(fs.readFileSync(fp, "utf8"));
-      if (j.cookieHeader) {
-        console.log("[classif] cookies de api/.scoring-datagolf-cookies.json");
-        return j.cookieHeader;
-      }
-    } catch {}
-  }
-  console.error("[classif] ERRO: sem cookies. Define DATAGOLF_SCORING_COOKIES ou cria api/.scoring-datagolf-cookies.json via refresh-all-cookies.js");
-  process.exit(1);
-}
-const COOKIE = loadCookies();
+const { loadCookieHeader } = require("./lib/cookies");
+const COOKIE = loadCookieHeader({
+  envVars: ["DATAGOLF_SCORING_COOKIES", "DATAGOLF_COOKIES"],
+  file: path.join(REPO, "api", ".scoring-datagolf-cookies.json"),
+  label: "[classif]",
+});
 
 /* ── Scope ──────────────────────────────────────────────────────────────── */
 let scope = [];

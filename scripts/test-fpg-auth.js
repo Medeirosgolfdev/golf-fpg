@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /**
- * test-fpg-auth.js — Testa se os cookies em api/.datagolf-cookies.json
- * autenticam server-side no my.fpg.pt.
+ * test-fpg-auth.js — Testa se os cookies autenticam server-side no my.fpg.pt.
  *
- * Lê o cookieHeader do ficheiro (já não é hardcoded) — assim basta atualizar
- * o ficheiro de cookies e re-correr este teste.
+ * Fonte dos cookies (por ordem):
+ *   1. env FPG_COOKIES ou DATAGOLF_COOKIES (producao/Actions)
+ *   2. ficheiro api/.datagolf-cookies.json (dev local)
  *
  * Corre: node scripts/test-fpg-auth.js
  */
@@ -15,8 +15,12 @@ const path = require("path");
 const COOKIES_FILE = path.join(__dirname, "..", "api", ".datagolf-cookies.json");
 
 function loadCookies() {
+  // 1. env (producao/Actions) — mesma convencao do fpg-scrape-node.js
+  if (process.env.FPG_COOKIES) return { cookie: process.env.FPG_COOKIES, src: "env FPG_COOKIES" };
+  if (process.env.DATAGOLF_COOKIES) return { cookie: process.env.DATAGOLF_COOKIES, src: "env DATAGOLF_COOKIES" };
+  // 2. ficheiro local (dev)
   if (!fs.existsSync(COOKIES_FILE)) {
-    console.error("[ERRO] Ficheiro nao encontrado:", COOKIES_FILE);
+    console.error("[ERRO] Sem env FPG_COOKIES e ficheiro nao encontrado:", COOKIES_FILE);
     process.exit(1);
   }
   const j = JSON.parse(fs.readFileSync(COOKIES_FILE, "utf8"));
@@ -24,12 +28,12 @@ function loadCookies() {
     console.error("[ERRO] cookieHeader vazio em", COOKIES_FILE);
     process.exit(1);
   }
-  return j.cookieHeader;
+  return { cookie: j.cookieHeader, src: COOKIES_FILE.replace(process.cwd(), ".") };
 }
 
 async function main() {
-  const COOKIE = loadCookies();
-  console.log("-> Cookies lidos de", COOKIES_FILE.replace(process.cwd(), "."));
+  const { cookie: COOKIE, src } = loadCookies();
+  console.log("-> Cookies lidos de", src);
   console.log("  (" + COOKIE.length + " chars, " + (COOKIE.match(/=/g) || []).length + " cookies)");
 
   const url = "https://my.fpg.pt/Home/PlayerWHS.aspx/HCPWhsFederLST?fed_code=52884&pp=N&jtStartIndex=0&jtPageSize=100";

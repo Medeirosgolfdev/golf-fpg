@@ -15,7 +15,7 @@ const path = require('path');
 const glob = require('glob');
 
 const ROOT = path.join(__dirname, '..');
-const DIR_ARCHIVE = path.join(ROOT, 'public', 'data-archive');
+const DIR_ARCHIVE = path.join(ROOT, 'data-archive');
 const REPORT = path.join(DIR_ARCHIVE, 'check-names-report.json');
 
 const home = process.env.USERPROFILE || process.env.HOME || '';

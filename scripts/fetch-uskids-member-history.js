@@ -11,7 +11,7 @@
  *   2. Fingerprint de strokes via GetPlayerTeeTimes
  *   3. Fingerprint de strokes via uskids-results.json
  *
- * Output: chunks numerados public/data-archive/uskids-member-history-NNN.json
+ * Output: chunks numerados data-archive/uskids-member-history-NNN.json
  *   (escritos directamente, sem monolítico — ver writeSharded(); o monolítico
  *    passava o limite de string do V8 com 11k+ jogadores).
  *
@@ -35,7 +35,7 @@ const path = require('path');
 const { chromium } = require('playwright');
 
 // ── Config ───────────────────────────────────
-const DIR    = path.join(__dirname, '..', 'public', 'data-archive');
+const DIR    = path.join(__dirname, '..', 'data-archive');
 const OUTPUT = path.join(DIR, 'uskids-member-history.json');
 const RESULTS_PATH = path.join(__dirname, '..', 'public', 'data', 'uskids-results.json');
 // Cache da Fase 1 (flights + member IDs + fingerprints). Para torneios FECHADOS

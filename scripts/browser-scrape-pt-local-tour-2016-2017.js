@@ -26,7 +26,7 @@
  *  2) F12 → consola
  *  3) Cola este ficheiro inteiro
  *  4) Aguarda ~3 min; descarrega `pt-local-tour-2016-2017.json` para Downloads
- *  5) Move para `C:\golf-fpg\public\data-archive\pt-local-tour-2016-2017.json`
+ *  5) Move para `C:\golf-fpg\data-archive\pt-local-tour-2016-2017.json`
  *  6) Corre `node scripts/integrate-pt-local-tour-2016-2017.js --apply`
  */
 

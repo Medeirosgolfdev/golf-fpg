@@ -19,7 +19,7 @@ Se conflitos no `git pull` em ficheiros JSON gerados (workflow USKids actualiza
 `uskids-member-history-*.json` e `uskids-member-history-slim.json`):
 
 ```powershell
-git checkout --ours public/data-archive/uskids-member-history-001.json
+git checkout --ours data-archive/uskids-member-history-001.json
 git checkout --ours public/data/uskids-member-history-slim.json
 git add .
 git rebase --continue
@@ -55,7 +55,7 @@ Distribuição:
 
 ### Member-history cache: 48 ficheiros chunkados <85 MB
 
-`public/data-archive/uskids-member-history-001..048.json`:
+`data-archive/uskids-member-history-001..048.json`:
 - (001-046): histórico curado dos flagship + scrapes anteriores
 - (047): 27 jogadores PT Local Tour 2023 (sessão 2026-05-12)
 - (048): KIKO Matos Coelho (mid 471043, 14 torneios USKids — sessão 2026-05-13)
@@ -126,7 +126,7 @@ para `t=0` por compatibilidade).
 
 1. **Identificar tcode** via signupanytime
 2. **Scrape browser:** abrir `https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t={tcode}` → F12 → cola um adaptador do `scripts/browser-scrape-pt-local-tour-completos.js` ou `scripts/browser-scrape-elprat-2023.js`
-3. **Mover** o JSON descarregado para `public/data-archive/`
+3. **Mover** o JSON descarregado para `data-archive/`
 4. **Integrar:** correr `scripts/integrate-{nome}.js --apply` (criar baseado em `scripts/integrate-elprat-2023.js` se for novo)
 5. **Regenerar slim:** `node scripts/build-member-history-slim.js`
 6. **Testar:** `npm test && npm run build`
@@ -208,7 +208,7 @@ e executa em F12 do signupanytime.
 - **26 ficheiros temporários apagados:**
   - Raiz: `preview.txt`, `removidos-preview.txt`, `dbg-out.txt`, `build.log`
   - `scripts/`: `_test-sync.txt`, `_tmp-check.js`
-  - `public/data-archive/`: 7 snippets `_mids-*.txt`, 13 reports verify/check/apply/integrate/resolve/verified, 2 backups `BD_*.json`
+  - `data-archive/`: 7 snippets `_mids-*.txt`, 13 reports verify/check/apply/integrate/resolve/verified, 2 backups `BD_*.json`
 - **7 scripts ad-hoc do trabalho "verify names" arquivados** em `scripts/_archive/verify-names-2026-05/`: `browser-verify-2/3/A/A2/B/rest.js` + `apply-corrections.py`.
 - **`.gitignore` reforçado:** `*.log`, `**/_*.txt`, `**/_tmp-*`, `verify-*.json`, `check-*-report.json`, `apply-*-report.json`, `integrate-*-report.json`, `resolve-*.json`, `verified-*.json`, `BD_*.json`, `output/cross-stats-cache.json`.
 
@@ -258,7 +258,7 @@ E **modificações** nos existentes:
          ↓ (POST + t=1)
 [fetch-uskids-member-history.js / browser-scrape-*.js]
          ↓
-[public/data-archive/uskids-member-history-*.json (chunks <85 MB)]
+[data-archive/uskids-member-history-*.json (chunks <85 MB)]
          ↓ (build-member-history-slim.js)
 [public/data/uskids-member-history-slim.json]
          ↓

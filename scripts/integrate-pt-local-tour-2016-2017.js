@@ -20,7 +20,7 @@ const path = require('path');
 
 const APPLY = process.argv.includes('--apply');
 const ROOT = path.join(__dirname, '..');
-const SOURCE = path.join(ROOT, 'public', 'data-archive', 'pt-local-tour-2016-2017.json');
+const SOURCE = path.join(ROOT, 'data-archive', 'pt-local-tour-2016-2017.json');
 const OUTDIR = path.join(ROOT, 'public', 'data');
 const USKIDS_PAGE = path.join(ROOT, 'src', 'pages', 'USKIDSPage.tsx');
 const LOADER = path.join(ROOT, 'src', 'data', 'KIDSdataLoader.ts');

@@ -25,7 +25,7 @@ const fs   = require('fs');
 const path = require('path');
 
 // ── Configuração ──────────────────────────────────────────────────
-const ARCHIVE_DIR = path.join(__dirname, '..', 'public', 'data-archive');
+const ARCHIVE_DIR = path.join(__dirname, '..', 'data-archive');
 const OUTPUT      = path.join(__dirname, '..', 'public', 'data', 'uskids-member-history-slim.json');
 const MAX_FILES = parseInt(
   (process.argv.find(a => a.startsWith('--max-files=')) || '').split('=')[1] || '999'

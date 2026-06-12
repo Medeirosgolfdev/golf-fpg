@@ -49,12 +49,12 @@ jobs:
           # existem no disco — as deletions de chunks antigos (003-046, etc.)
           # são silenciosamente ignoradas. Com aspas, é o git a fazer o
           # pathspec matching, que inclui o índice e apanha as deletions.
-          git add -A 'public/data-archive/uskids-member-history-*.json'
+          git add -A 'data-archive/uskids-member-history-*.json'
           git add public/data/uskids-member-history-slim.json
           git diff --cached --quiet && exit 0
           git fetch origin main
           git merge origin/main --no-edit --strategy-option=ours
-          git add -A 'public/data-archive/uskids-member-history-*.json'
+          git add -A 'data-archive/uskids-member-history-*.json'
           git add public/data/uskids-member-history-slim.json
           git commit -m "data: refresh-all USKids histórico [$(date -u '+%Y-%m-%d %H:%M UTC')]"
           # Push robusto: retry com pull --rebase em cada tentativa.

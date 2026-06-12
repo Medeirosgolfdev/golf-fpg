@@ -5,19 +5,19 @@
  * integrate-resolved-names.js
  *
  * Aplica os nomes resolvidos pelo `browser-resolve-missing-names.js` de volta
- * aos ficheiros `public/data-archive/uskids-member-history-*.json`.
+ * aos ficheiros `data-archive/uskids-member-history-*.json`.
  *
  * Para cada mid em `resolved-missing-names.json` com `resolved: true`:
  *   - Procura o mid em todos os ficheiros member-history
  *   - Actualiza `name` e `country` SE estavam vazios/"?"
  *   - Não sobrescreve nomes já válidos (defensive)
  *
- * Input: public/data-archive/resolved-missing-names.json
+ * Input: data-archive/resolved-missing-names.json
  *        (auto-detecta em Downloads e move automaticamente)
  *
  * Output:
  *   - N ficheiros uskids-member-history-XXX.json modificados in-place
- *   - public/data-archive/integrate-resolved-names-report.json com sumário
+ *   - data-archive/integrate-resolved-names-report.json com sumário
  *
  * Uso:
  *   node scripts/integrate-resolved-names.js          (dry-run)
@@ -35,7 +35,7 @@ const APPLY = process.argv.includes('--apply');
 const FORCE = process.argv.includes('--force');
 
 const ROOT = path.join(__dirname, '..');
-const DIR_ARCHIVE = path.join(ROOT, 'public', 'data-archive');
+const DIR_ARCHIVE = path.join(ROOT, 'data-archive');
 const SOURCE = path.join(DIR_ARCHIVE, 'resolved-missing-names.json');
 const REPORT = path.join(DIR_ARCHIVE, 'integrate-resolved-names-report.json');
 const SOURCE_FILENAME = 'resolved-missing-names.json';

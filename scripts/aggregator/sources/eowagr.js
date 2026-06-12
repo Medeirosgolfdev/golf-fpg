@@ -21,9 +21,14 @@ function load(opts) {
   const playerMap = new Map();
 
   for (const file of files) {
+    const base = path.basename(file);
+    // eowagrNN_scorecards.json é um agregado que duplica o(s) contest(s) reais
+    // (mesma `data.tournament`, mesmos jogadores, mas `category` vazio → vira
+    // "Geral" e aparece como entrada paralela na timeline). Skip.
+    if (/_scorecards\.json$/i.test(base)) continue;
     const data = readJsonSafe(file, null);
     if (!data) continue;
-    const tt = normalize(data, path.basename(file), playerMap);
+    const tt = normalize(data, base, playerMap);
     if (tt) tournaments.push(tt);
   }
 

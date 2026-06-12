@@ -16,7 +16,7 @@
  *  2) F12 → consola
  *  3) Cola este ficheiro inteiro
  *  4) Aguarda 1-2 min; descarrega `pt-local-tour-completos.json` para Downloads
- *  5) Move para `C:\golf-fpg\public\data-archive\pt-local-tour-completos.json`
+ *  5) Move para `C:\golf-fpg\data-archive\pt-local-tour-completos.json`
  *  6) Corre `node scripts/split-pt-local-tour-completos.js --apply`
  */
 

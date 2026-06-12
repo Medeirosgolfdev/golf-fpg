@@ -88,15 +88,15 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # Glob entre aspas — sem aspas, o bash expande antes do git ver e
           # silenciosamente perde deletions (ver uskids-member-history.yml).
-          git add -A 'public/data-archive/uskids-rich-players/'
-          git add public/data-archive/uskids-rich-flight-cache.json || true
-          git add public/data-archive/uskids-rich-run-summary.json || true
+          git add -A 'data-archive/uskids-rich-players/'
+          git add data-archive/uskids-rich-flight-cache.json || true
+          git add data-archive/uskids-rich-run-summary.json || true
           git diff --cached --quiet && exit 0
           git fetch origin main
           git merge origin/main --no-edit --strategy-option=ours || true
-          git add -A 'public/data-archive/uskids-rich-players/'
-          git add public/data-archive/uskids-rich-flight-cache.json || true
-          git add public/data-archive/uskids-rich-run-summary.json || true
+          git add -A 'data-archive/uskids-rich-players/'
+          git add data-archive/uskids-rich-flight-cache.json || true
+          git add data-archive/uskids-rich-run-summary.json || true
           git commit -m "data: USKids rich players [$(date -u '+%Y-%m-%d %H:%M UTC')]"
           PUSH_OK=0
           for i in 1 2 3 4 5; do

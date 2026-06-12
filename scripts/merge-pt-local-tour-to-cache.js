@@ -9,9 +9,9 @@
  * alimenta o KIDSdataLoader → KIDSPage).
  *
  * Inputs:
- *   public/data-archive/uskids-pt-local-tour-history.json  (34 jogadores, histórico USKids completo)
- *   public/data-archive/uskids-pt-local-tour-final.json    (mid → nome canónico)
- *   public/data-archive/uskids-member-history-*.json       (46 ficheiros existentes)
+ *   data-archive/uskids-pt-local-tour-history.json  (34 jogadores, histórico USKids completo)
+ *   data-archive/uskids-pt-local-tour-final.json    (mid → nome canónico)
+ *   data-archive/uskids-member-history-*.json       (46 ficheiros existentes)
  *
  * Acções:
  *   - Para mids JÁ existentes nos 46 ficheiros: actualizar nome + country se estavam "?" ou vazios.
@@ -31,7 +31,7 @@ const glob = require('glob');
 
 const APPLY = process.argv.includes('--apply');
 
-const DIR_ARCHIVE = path.join(__dirname, '..', 'public', 'data-archive');
+const DIR_ARCHIVE = path.join(__dirname, '..', 'data-archive');
 const PT_HIST  = path.join(DIR_ARCHIVE, 'uskids-pt-local-tour-history.json');
 const PT_FINAL = path.join(DIR_ARCHIVE, 'uskids-pt-local-tour-final.json');
 

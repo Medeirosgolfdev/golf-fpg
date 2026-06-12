@@ -75,18 +75,12 @@ const ok  = m => console.log(`${G}[fpg-scrape] ✓${X} ${m}`);
 const warn = m => console.log(`${Y}[fpg-scrape] ⚠${X} ${m}`);
 
 // ─── Cookies ──────────────────────────────────────────────
-function loadCookies() {
-  const env = process.env.FPG_COOKIES || process.env.DATAGOLF_COOKIES;
-  if (env) { log("cookies de env"); return env; }
-  const fp = path.join(REPO_ROOT, "api", ".datagolf-cookies.json");
-  if (fs.existsSync(fp)) {
-    const j = JSON.parse(fs.readFileSync(fp, "utf8"));
-    if (j.cookieHeader) { log(`cookies de ${path.relative(REPO_ROOT, fp)}`); return j.cookieHeader; }
-  }
-  console.error(`${R}ERRO: sem cookies — define FPG_COOKIES ou cria api/.datagolf-cookies.json${X}`);
-  process.exit(1);
-}
-const COOKIE = loadCookies();
+const { loadCookieHeader } = require("./lib/cookies");
+const COOKIE = loadCookieHeader({
+  envVars: ["FPG_COOKIES", "DATAGOLF_COOKIES"],
+  file: path.join(REPO_ROOT, "api", ".datagolf-cookies.json"),
+  label: "[fpg]",
+});
 
 // ─── FPG fetch helpers ────────────────────────────────────
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0";

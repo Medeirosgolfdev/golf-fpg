@@ -1,0 +1,236 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""Extrai draws do Manuel jr (Goulartt Medeiros) dos PDFs CGSS -> cgss-draws-manual.json"""
+import os, re, json, subprocess, unicodedata, glob, argparse
+from datetime import date
+
+MANUEL_FED = "52884"
+TEE_COLORS = {"brancas", "amarelas", "vermelhas", "douradas", "azuis", "azues", "pretas"}
+# letra da vaga só capturada se for token isolado (1 letra + espaco) -> nao engole "B" de Brancas
+TIME_RE = re.compile(r"^\s*(\d{1,2}:\d{2})\s+(\d{1,2})(?:\s+([A-Za-z])(?=\s))?")
+
+
+def norm(s):
+    if not s:
+        return ""
+    s = unicodedata.normalize("NFD", str(s))
+    s = "".join(c for c in s if unicodedata.category(c) != "Mn")
+    return re.sub(r"\s+", " ", s).strip().lower()
+
+
+def pdftext(path):
+    return subprocess.run(["pdftotext", "-layout", path, "-"], capture_output=True, text=True).stdout
+
+
+def load_results_index(data_dir):
+    idx = []
+    for fn in sorted(glob.glob(os.path.join(data_dir, "pull-torneios*.json"))):
+        try:
+            d = json.load(open(fn, encoding="utf-8"))
+        except Exception:
+            continue
+        for t in d.get("tournaments", []):
+            players = {}
+            for p in t.get("players", []):
+                nm = norm(p.get("name", ""))
+                if nm and nm not in players:
+                    players[nm] = {"fed": str(p.get("fedCode")) if p.get("fedCode") else None,
+                                   "club": p.get("club"), "name": p.get("name"), "hcp": p.get("hcpExact")}
+            idx.append({"name": t.get("name", ""), "date": t.get("date", ""),
+                        "ccode": str(t.get("ccode")), "tcode": str(t.get("tcode")),
+                        "players": players, "src": os.path.basename(fn)})
+    return idx
+
+
+def parse_header(txt):
+    def grab(label):
+        m = re.search(label + r"\s*:?\s*(.+)", txt)
+        return m.group(1).strip() if m else None
+    name = grab(r"Torneio")
+    if name:
+        name = re.split(r"\s{2,}(?:Data|N[ºo])", name)[0].strip()
+    dt = None
+    m = re.search(r"Data\s*:?\s*(\d{4}-\d{2}-\d{2})", txt)
+    if m:
+        dt = m.group(1)
+    campo = grab(r"Campo")
+    if campo:
+        campo = re.split(r"\s{2,}(?:N[ºo]|Modal)", campo)[0].strip()
+    modal = grab(r"Modal\.")
+    if modal:
+        modal = re.split(r"\s{2,}HCP", modal)[0].strip()
+    return {"name": name, "date": dt, "campo": campo, "modal": modal}
+
+
+def best_result_match(header, results):
+    cands = [r for r in results if r["ccode"] == "007"]
+    hdate = header["date"]
+    ta = set(w for w in re.findall(r"\w+", norm(header["name"])) if len(w) > 3 and not w.isdigit())
+    best, bestscore = None, -1
+    for r in cands:
+        dscore = -999
+        if hdate and r["date"]:
+            try:
+                dd = abs((date.fromisoformat(hdate) - date.fromisoformat(r["date"])).days)
+                dscore = 100 if dd == 0 else 60 if dd <= 3 else 10 if dd <= 10 else -200
+            except Exception:
+                dscore = 0
+        tb = set(w for w in re.findall(r"\w+", norm(r["name"])) if len(w) > 3 and not w.isdigit())
+        inter = len(ta & tb)
+        if inter < 1 or dscore < 0:
+            continue
+        nscore = 40 * inter / max(1, len(ta | tb)) if (ta and tb) else 0
+        score = dscore + nscore
+        if score > bestscore:
+            bestscore, best = score, r
+    return best if bestscore >= 50 else None
+
+
+def resolve_fed(name, rmatch):
+    if not rmatch:
+        return None, None, None
+    rec = rmatch["players"].get(norm(name))
+    return (rec["fed"], rec["name"], rec["club"]) if rec else (None, None, None)
+
+
+def detect_columns(txt):
+    for ln in txt.splitlines():
+        cols = [m.start() for m in re.finditer(r"Sa[íi]da\s+Tee", ln)]
+        if len(cols) >= 2:
+            return [(c, (cols[i + 1] if i + 1 < len(cols) else 10000)) for i, c in enumerate(cols)]
+    return [(0, 10000)]
+
+
+def parse_player_line(seg):
+    s = seg.rstrip()
+    if not s.strip():
+        return None
+    low = s.strip().lower()
+    if low.startswith(("saida", "saída", "torneio", "campo", "modal", "clube de golf", "nota", "draw", "hcp:", "nº", "no.")):
+        return None
+    if "datagolf" in low or "pág" in low or "pag." in low:
+        return None
+    tokens = s.strip()
+    tee = None
+    parts = tokens.split()
+    if parts and parts[0].lower() in TEE_COLORS:
+        tee = parts[0]
+        sp = tokens.split(None, 1)
+        tokens = sp[1] if len(sp) > 1 else ""
+    mpair = re.match(r"^(.+?/.+?)\s+(\d+)\s*$", tokens)
+    if mpair and "/" in mpair.group(1):
+        return {"raw": mpair.group(1).strip(), "tee": tee, "is_pair": True, "jogo": int(mpair.group(2))}
+    m = re.match(r"^(.+?)\s{2,}([A-Za-zÇç].+?)\s+(\d{1,2},\d)\s+(\d+)\s*$", tokens)
+    if m:
+        return {"name": m.group(1).strip(), "club": m.group(2).strip(), "hcp": float(m.group(3).replace(",", ".")), "tee": tee, "jogo": int(m.group(4))}
+    m = re.match(r"^(.+?)\s+(\d{1,2},\d)\s+(\d+)\s*$", tokens)
+    if m:
+        return {"name": m.group(1).strip(), "club": None, "hcp": float(m.group(2).replace(",", ".")), "tee": tee, "jogo": int(m.group(3))}
+    m = re.match(r"^(.+?)\s{2,}([A-Za-zÇç].+?)\s+(\d+)\s*$", tokens)
+    if m:
+        return {"name": m.group(1).strip(), "club": m.group(2).strip(), "hcp": None, "tee": tee, "jogo": int(m.group(3))}
+    m = re.match(r"^(.+?)\s+(\d+)\s*$", tokens)
+    if m and len(m.group(1).strip()) > 2:
+        return {"name": m.group(1).strip(), "club": None, "hcp": None, "tee": tee, "jogo": int(m.group(2))}
+    return None
+
+
+def extract_manuel_group(txt):
+    for (cs, ce) in detect_columns(txt):
+        cur, groups = None, []
+        for ln in txt.splitlines():
+            seg = ln[cs:ce]
+            if not seg.strip():
+                continue
+            mt = TIME_RE.match(seg)
+            if mt:
+                cur = {"time": mt.group(1), "hole": int(mt.group(2)), "letter": mt.group(3), "players": []}
+                groups.append(cur)
+                p = parse_player_line(seg[mt.end():])
+                if p:
+                    cur["players"].append(p)
+            elif cur is not None:
+                p = parse_player_line(seg)
+                if p:
+                    cur["players"].append(p)
+        for g in groups:
+            for p in g["players"]:
+                if "goulartt" in norm(p.get("name", "") + " " + p.get("raw", "")):
+                    return g
+    return None
+
+
+def _add_individual(out, name, club_pdf, hcp, tee, rmatch):
+    is_m = "goulartt" in norm(name)
+    fed, cn, club = resolve_fed(name, rmatch)
+    if is_m:
+        fed = MANUEL_FED
+        cn = cn or "Manuel Goulartt Medeiros"
+    pull_club = club if (club and "&" not in club and "/" not in club) else None
+    clube = club_pdf or pull_club or "Santo da Serra"
+    out.append({"nome": (cn or name).strip(), "clube": clube, "fed": fed,
+                "hcp": hcp, "tee": tee, "_isM": is_m})
+
+
+def build_players(group, rmatch):
+    out = []
+    for p in group["players"]:
+        if p.get("is_pair"):
+            # Formatos de pares (Greensomes/Foursomes/CC Pares): cada membro do
+            # par é uma pessoa que jogou a ronda com o Manuel -> dividir em
+            # indivíduos. "H.Cunha/M.Goulartt Medeiros" -> 2 jogadores.
+            for member in [x.strip() for x in p["raw"].split("/") if x.strip()]:
+                _add_individual(out, member, None, None, p.get("tee"), rmatch)
+        else:
+            _add_individual(out, p["name"], p.get("club"), p.get("hcp"), p.get("tee"), rmatch)
+    out.sort(key=lambda x: 0 if x.get("_isM") else 1)
+    for x in out:
+        x.pop("_isM", None)
+        if x.get("tee") is None:
+            x.pop("tee", None)
+    return out
+
+
+if __name__ == "__main__":
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--pdf-dir", required=True)
+    ap.add_argument("--data-dir", required=True)
+    ap.add_argument("--out", required=True)
+    ap.add_argument("--print-only", action="store_true")
+    args = ap.parse_args()
+
+    results = load_results_index(args.data_dir)
+    tournaments, seen = [], set()
+    for pdf in sorted(glob.glob(os.path.join(args.pdf_dir, "*.pdf"))):
+        txt = pdftext(pdf)
+        if "goulartt" not in txt.lower():
+            continue
+        h = parse_header(txt)
+        rm = best_result_match(h, results)
+        g = extract_manuel_group(txt)
+        base = os.path.basename(pdf)
+        if rm:
+            ccode, tcode = rm["ccode"], rm["tcode"]
+        else:
+            ccode, tcode = "007", "cgss-" + re.sub(r"[^a-z0-9]+", "", norm(h["name"]))[:24]
+        key = ccode + "-" + tcode
+        if key in seen:
+            print("  (dup) " + base + " -> " + key)
+            continue
+        print("\n" + "=" * 68 + "\n" + base + "\n  " + str(h["name"]) + " | " + str(h["date"]) + " | " + str(h["modal"]))
+        print("  -> " + ("c" + ccode + " t" + tcode if rm else "DRAW-ONLY " + key))
+        if not g:
+            print("  !! grupo NAO encontrado")
+            continue
+        players = build_players(g, rm)
+        print("  grupo " + g["time"] + " buraco " + str(g["hole"]) + ((" " + g["letter"]) if g.get("letter") else "") + " - " + str(len(players)) + " jog.")
+        for pl in players:
+            star = " <-- MANUEL" if pl.get("fed") == MANUEL_FED else ""
+            print("     %-34s %-16s hcp=%s fed=%s%s" % (pl["nome"], str(pl.get("clube") or ""), pl.get("hcp"), pl.get("fed"), star))
+        seen.add(key)
+        tournaments.append({"ccode": ccode, "tcode": tcode, "name": h["name"], "date": h["date"],
+                            "campo": h["campo"], "modal": h["modal"], "source": base, "drawOnly": rm is None,
+                            "draws": {"1": {"totalJogadores": len(players),
+                                            "groups": [{"teeTime": g["time"], "startHole": g["hole"], "tee": None, "players": players}]}}})
+    out = {"_doc": "Draws curados CGSS (Santo da Serra) de PDFs oficiais. Preenchem draws vazios ccode-007. Manuel jr fed 52884 em players[0].",
+           "gerado_em": date.today().isoformat(), "source": "extract-cgss-

@@ -1,7 +1,7 @@
 'use strict';
 // gen-overrides.js
 // Le resolved-missing-names.json (output do browser-resolve-829.js MODE: RESOLVE)
-// e produz public/data-archive/resolved-names-overrides.json — um mapping
+// e produz data-archive/resolved-names-overrides.json — um mapping
 // pequeno (~30KB) {mid: {name, country, via}} que o build-slim-with-overrides
 // usa para preencher nomes "?" sem precisar de tocar nos chunks de 89 MB.
 //
@@ -15,7 +15,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const DIR_ARCHIVE = path.join(ROOT, 'public', 'data-archive');
+const DIR_ARCHIVE = path.join(ROOT, 'data-archive');
 const OUT = path.join(DIR_ARCHIVE, 'resolved-names-overrides.json');
 
 const home = process.env.USERPROFILE || process.env.HOME || '';

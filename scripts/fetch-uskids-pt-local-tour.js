@@ -19,8 +19,8 @@
  *     { [tcode]: { t_name, t_start_date, p_age_group, p_rounds:{...}, ... } })
  *
  * Outputs:
- *   public/data-archive/uskids-pt-local-tour-participants.json
- *   public/data-archive/uskids-pt-local-tour-history.json   (com --with-history)
+ *   data-archive/uskids-pt-local-tour-participants.json
+ *   data-archive/uskids-pt-local-tour-history.json   (com --with-history)
  *
  * Uso:
  *   node scripts/fetch-uskids-pt-local-tour.js
@@ -35,7 +35,7 @@ const { chromium } = require('playwright');
 // ── Config ───────────────────────────────────
 const TARGET_TCODES = [13702, 13703, 13704, 13705, 13706, 13707];
 
-const DIR = path.join(__dirname, '..', 'public', 'data-archive');
+const DIR = path.join(__dirname, '..', 'data-archive');
 const OUT_PARTICIPANTS = path.join(DIR, 'uskids-pt-local-tour-participants.json');
 const OUT_HISTORY      = path.join(DIR, 'uskids-pt-local-tour-history.json');
 

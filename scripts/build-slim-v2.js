@@ -23,7 +23,7 @@
 const fs   = require('fs');
 const path = require('path');
 
-const ARCHIVE_DIR  = path.join(__dirname, '..', 'public', 'data-archive');
+const ARCHIVE_DIR  = path.join(__dirname, '..', 'data-archive');
 const RESOLVED     = path.join(ARCHIVE_DIR, 'resolved-names-overrides.json');
 const CORRECTIONS  = path.join(ARCHIVE_DIR, 'verify-corrections-overrides.json');
 const OUTPUT       = path.join(__dirname, '..', 'public', 'data', 'uskids-member-history-slim.json');

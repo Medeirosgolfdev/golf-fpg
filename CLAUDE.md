@@ -39,7 +39,7 @@ src/
 
 scripts/          # ~20 scripts Node.js para pipeline de dados
 public/data/      # ficheiros JSON servidos ao runtime
-public/data-archive/ # ficheiros pesados (uskids-member-history-XXX.json) — não servidos ao browser
+data-archive/ (raiz, fora de public/) # ficheiros pesados — NÃO copiados para o build/deploy (movido de public/data-archive em 2026-06-12)
 
 tokens.css        # FICHEIRO ÚNICO de design tokens
 App.css           # Classes de componentes (~110KB)
@@ -147,6 +147,22 @@ Array que injeta manualmente scores do Manuel quando ele foi excluído pelo scra
 `buildAutoRivals()` tem cache interna (`_autoRivalsCache`). Chamar com `opts.force: true` ou `invalidateAutoRivalsCache()` para forçar reload.
 
 ---
+
+## Scripts — lib partilhada (`scripts/lib/`)
+
+Criada 2026-06-12 para eliminar duplicação entre scrapers. **Scripts novos devem usar a lib em vez de copiar funções.**
+
+| Módulo | Exporta | Substitui |
+|---|---|---|
+| `lib/cookies.js` | `loadCookieHeader({envVars, file, label})` | as cópias de `loadCookies()` (env primeiro, ficheiro local depois) |
+| `lib/fpg-http.js` | `makeFpgPost({baseUrl, cookie, ua, origin, referer, extraHeaders, retries})`, `FpgHttpError`, `sleep` | as cópias de `dgPost()`/`fpgPost()` — retry em HTTP 500 + detecção `Result:"ERROR"` |
+| `lib/atomic-write.js` | `writeJsonAtomic(filePath, data)` | escritas directas com `writeFileSync` (tmp+rename, nunca deixa JSON truncado) |
+
+Migrados: scrape-drive-node, scrape-jovens-node, scrape-classif-node, scrape-fpg-admissions-draws-node, fpg-scrape-node, scrape-nacionais-feds-node.
+
+**Validação de dados:** `scripts/validate-data.js` valida estrutura mínima dos JSON (contagens, campos obrigatórios) — corre nos workflows antes do commit. `node scripts/validate-data.js <ficheiro...>` ou `--glob "public/data/drive-data-*.json"`.
+
+**Cookie health:** workflow `cookie-health.yml` (Quinta 09:00 UTC) valida os 3 secrets de cookies via test-fpg-auth.js + test-datagolf-node.js + test-fpg-admissions-auth.js — falha (= email) se expirados, antes da janela de scrapes do fim-de-semana.
 
 ## Scripts — FPG Pipeline
 
@@ -307,9 +323,9 @@ Output: `public/data/uskids-results.json`
 node fetch-uskids-member-history.js         # scrape (só novos)
 node fetch-uskids-member-history.js --clean  # re-match nomes offline (sem browser)
 ```
-Output: `public/data-archive/uskids-member-history.json` (ficheiro único)
+Output: `data-archive/uskids-member-history.json` (ficheiro único)
 
-**fetch-uskids-rich-players-node.js** — **Node puro** (sem Playwright). Pipeline RICA por jogador (não por torneio). Para cada memberID no slim + novos descobertos: `GetMemberTournamentResults` → cruza para `(tcode, age_group)` → `GetMeta` (cached) → `GetPlayerTeeTimes` (cached) → escreve `public/data-archive/uskids-rich-players/{memberID}.json` com TODOS os campos da API (teeMarkerName, teeMarkerColor, startHole, startTime, groupNumber, playerNumber, status, points, handicap, place, etc.). **Sem filtros TOP-N nem MAX_AGE_TODAY** — carreira completa.
+**fetch-uskids-rich-players-node.js** — **Node puro** (sem Playwright). Pipeline RICA por jogador (não por torneio). Para cada memberID no slim + novos descobertos: `GetMemberTournamentResults` → cruza para `(tcode, age_group)` → `GetMeta` (cached) → `GetPlayerTeeTimes` (cached) → escreve `data-archive/uskids-rich-players/{memberID}.json` com TODOS os campos da API (teeMarkerName, teeMarkerColor, startHole, startTime, groupNumber, playerNumber, status, points, handicap, place, etc.). **Sem filtros TOP-N nem MAX_AGE_TODAY** — carreira completa.
 
 Cache separada do member-history: `uskids-rich-flight-cache.json` (re-fetch só se torneio ≤15d). Skip-existing por `lastUpdated` (default `--since-days 14`). Matching memberID→pid local via fingerprint de strokes (mesmas salvaguardas `MIN_FINGERPRINT_HOLES=6`, `MIN_FINGERPRINT_DISTINCT=3` do member-history). Exit code 2 = sem novidades.
 
@@ -324,7 +340,7 @@ node scripts/fetch-uskids-rich-players-node.js --discovery-only   # só descobre
 
 Workflow: `update-uskids-rich-players.yml` (Seg 02:00 UTC, depois do member-history). Sem secrets (signupanytime é público server-side).
 
-**build-member-history-slim.js** — Converte os ficheiros numerados `uskids-member-history-XXX.json` (em `public/data-archive/`) num único `uskids-member-history-slim.json` (em `public/data/`). Remove campos duplicados entre jogadores, mantém apenas gross+strokes por ronda.
+**build-member-history-slim.js** — Converte os ficheiros numerados `uskids-member-history-XXX.json` (em `data-archive/`) num único `uskids-member-history-slim.json` (em `public/data/`). Remove campos duplicados entre jogadores, mantém apenas gross+strokes por ronda.
 ```bash
 node scripts/build-member-history-slim.js
 ```
@@ -675,7 +691,7 @@ Detectado automaticamente por presença de `signupanytime_t`. Par extraído de `
 
 ### uskids-member-history-slim.json (formato slim para KIDSdataLoader)
 
-Gerado por `build-member-history-slim.js` a partir dos ficheiros numerados em `public/data-archive/`. Escrito em `public/data/`.
+Gerado por `build-member-history-slim.js` a partir dos ficheiros numerados em `data-archive/`. Escrito em `public/data/`.
 
 ```
 { gerado_em,
@@ -693,7 +709,7 @@ Diferença do formato original: dados do torneio (name, par, yards) são partilh
 
 ### uskids-rich-players/{memberID}.json (formato rico, 1 por jogador)
 
-Gerado por `fetch-uskids-rich-players-node.js`. Em `public/data-archive/uskids-rich-players/`.
+Gerado por `fetch-uskids-rich-players-node.js`. Em `data-archive/uskids-rich-players/`.
 
 Pivot por jogador (vs por torneio): cada miúdo num só ficheiro com a carreira USKids completa enriquecida com TODOS os campos da API. Permite UI tipo "ficha do jogador" sem ler ficheiros gigantes.
 
@@ -819,12 +835,12 @@ Popula `uskTournNames` como fallback (hardcoded em `USKIDS_TCODE_META` tem prior
 | {fed}/analysis/data.json | FPG | make-scorecards-ui.js | ✓ | JogadoresPage, BJGTAnalysisPage, DrivePage |
 | uskids-results.json | USKids | fetch-uskids-results.js | ✓ | USKIDSPage, KIDSdataLoader |
 | uskids_torneios_completos(1-22).json | USKids | browser script | ✓ | USKIDSPage, KIDSdataLoader |
-| uskids-member-history.json | USKids | fetch-uskids-member-history.js | ✓ (sem par/SI) | **Em `public/data-archive/`** — fonte para build-slim |
-| uskids-member-history-XXX.json | USKids | fetch (legacy) | ✓ (sem par/SI) | **Em `public/data-archive/`** — fonte para build-slim |
+| uskids-member-history.json | USKids | fetch-uskids-member-history.js | ✓ (sem par/SI) | **Em `data-archive/`** — fonte para build-slim |
+| uskids-member-history-XXX.json | USKids | fetch (legacy) | ✓ (sem par/SI) | **Em `data-archive/`** — fonte para build-slim |
 | uskids-member-history-slim.json | USKids | build-member-history-slim.js | ✓ (sem par/SI) | KIDSdataLoader (Fase 2) + KIDSPage (H2H, DOB) |
-| uskids-rich-players/{mid}.json | USKids | fetch-uskids-rich-players-node.js | ✓ (com teeMarker, startTime, groupNumber) | **Em `public/data-archive/`** — 1 ficheiro por jogador, carreira completa rica |
-| uskids-rich-flight-cache.json | USKids | fetch-uskids-rich-players-node.js | ✗ | **Em `public/data-archive/`** — cache (tcode → flights/players) para a pipeline rica |
-| uskids-rich-run-summary.json | USKids | fetch-uskids-rich-players-node.js | ✗ | **Em `public/data-archive/`** — sumário do último run (debug) |
+| uskids-rich-players/{mid}.json | USKids | fetch-uskids-rich-players-node.js | ✓ (com teeMarker, startTime, groupNumber) | **Em `data-archive/`** — 1 ficheiro por jogador, carreira completa rica |
+| uskids-rich-flight-cache.json | USKids | fetch-uskids-rich-players-node.js | ✗ | **Em `data-archive/`** — cache (tcode → flights/players) para a pipeline rica |
+| uskids-rich-run-summary.json | USKids | fetch-uskids-rich-players-node.js | ✗ | **Em `data-archive/`** — sumário do último run (debug) |
 | uskids-field.json | USKids | fetch-uskids-field.js | ✗ | USKIDSPage |
 | uskids-field-sizes.json | USKids | (automação) | ✗ | KIDSdataLoader (uskFieldSizes) |
 | uskids-discovery-cache.json | USKids | fetch-uskids-discovery.js | ✗ | fetch-uskids-results.js |
@@ -2098,12 +2114,4 @@ jogadores na última linha. Fix: `paddingBottom: 14px` na div wrapper.
 - 2021: 10458-10464
 - 2022: 10572-10579
 - 2023: 10682-10689
-- 2024: 10802-10808 (sem Sub-12; só Sub-14/16/18 H+S + Sub-25)
-
-**Sub-10 NÃO existiu como Nacional individual em 2007-2011** — gap real, não há
-nada para scrapar.
-
-**2025 Sub-10/12 foram organizados pela FPG Sul (ccode=988), não pela FPG
-central (ccode=000)** — tabela TournamentsLST com filtro `ClubCode='000'`
-deixa-os de fora. É preciso pesquisar com `ClubCode='0'` (todos) ou
-explicitamente `ClubCode='988'` para os apanhar.
+- 2024: 10802-10808 (sem Sub-12; s

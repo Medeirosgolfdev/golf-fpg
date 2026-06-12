@@ -32,17 +32,12 @@ const HISTORICO_PATH = path.join(DATA_DIR, "fpg-nacionais-historico.json");
 
 const COOKIES_PATH = path.join(ROOT, "api", ".scoring-datagolf-cookies.json");
 
-function loadCookies() {
-  if (!fs.existsSync(COOKIES_PATH)) {
-    console.error("[ERR] cookies não encontrados em " + COOKIES_PATH);
-    console.error("Captura do Chrome 90 → DevTools → Application → Cookies");
-    process.exit(1);
-  }
-  const c = JSON.parse(fs.readFileSync(COOKIES_PATH, "utf8"));
-  return c.cookieHeader;
-}
-
-const COOKIES = loadCookies();
+const { loadCookieHeader } = require("./lib/cookies");
+const COOKIES = loadCookieHeader({
+  envVars: ["DATAGOLF_SCORING_COOKIES"],
+  file: COOKIES_PATH,
+  label: "[nacionais-feds]",
+});
 const BASE = "https://scoring.datagolf.pt";
 
 const HEADERS = {

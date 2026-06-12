@@ -506,9 +506,36 @@ function buildManuelTournamentsList() {
 
 // ─── main ──────────────────────────────────────────────────────────
 
+function mergeCgssDraws(fpg) {
+  // Funde os draws curados do CGSS (Santo da Serra), extraídos de PDFs oficiais
+  // por scripts/extract-cgss-draws.js. Os torneios sociais do CGSS não têm draw
+  // publicado na FPG (o scraper deixa `draws` vazio); estes PDFs preenchem a
+  // lacuna. Preenche o `draws` vazio das entradas ccode-007 existentes e injecta
+  // torneios draw-only (ex: futuros) que ainda não existam no scrape.
+  const cgss = readJSON(path.join(DATA, "cgss-draws-manual.json"));
+  if (!cgss || !Array.isArray(cgss.tournaments)) return;
+  if (!Array.isArray(fpg.tournaments)) fpg.tournaments = [];
+  const hasDraws = (t) => t && t.draws && Object.keys(t.draws).length > 0;
+  const byKey = new Map(fpg.tournaments.map((t) => [`${t.ccode}-${t.tcode}`, t]));
+  let preenchidos = 0, injectados = 0;
+  for (const c of cgss.tournaments) {
+    const ex = byKey.get(`${c.ccode}-${c.tcode}`);
+    if (ex) {
+      if (!hasDraws(ex)) { ex.draws = c.draws; preenchidos++; }
+      if (!ex.campo && c.campo) ex.campo = c.campo;
+    } else {
+      fpg.tournaments.push({ ccode: c.ccode, tcode: c.tcode, name: c.name,
+        date: c.date, campo: c.campo, draws: c.draws });
+      injectados++;
+    }
+  }
+  console.log(`  CGSS draws manuais: ${preenchidos} preenchidos, ${injectados} injectados`);
+}
+
 function main() {
   console.log("[pairings-build] a ler…");
   const fpg = readJSON(path.join(DATA, "fpg-admissions-draws.json")) || { tournaments: [] };
+  mergeCgssDraws(fpg);  // injecta draws curados CGSS (PDFs) antes de extrair pairings
   const uskidsDraws = readJSON(path.join(DATA, "uskids-draws.json")) || { torneios: [] };
   const uskidsResults = readJSON(path.join(DATA, "uskids-results.json")) || { resultados: [] };
   const overrides = readJSON(path.join(DATA, "manuel-draws-overrides.json"));

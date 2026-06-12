@@ -24,7 +24,7 @@ const path = require('path');
 const glob = require('glob');
 
 const ROOT = path.join(__dirname, '..');
-const ARCHIVE = path.join(ROOT, 'public', 'data-archive');
+const ARCHIVE = path.join(ROOT, 'data-archive');
 
 const argTop = (process.argv.find(a => a.startsWith('--top=')) || '').split('=')[1];
 const TOP = argTop ? parseInt(argTop, 10) : 20;

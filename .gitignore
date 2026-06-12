@@ -31,21 +31,21 @@ build.log
 **/_*.txt
 **/_tmp-*
 **/_tmp.*
-public/data-archive/_*.txt
-public/data-archive/verify-*.json
-public/data-archive/check-*-report.json
-public/data-archive/apply-*-report.json
-public/data-archive/integrate-*-report.json
-public/data-archive/resolve-*.json
-public/data-archive/resolved-*.json
-public/data-archive/verified-*.json
-public/data-archive/BD_*.json
+data-archive/_*.txt
+data-archive/verify-*.json
+data-archive/check-*-report.json
+data-archive/apply-*-report.json
+data-archive/integrate-*-report.json
+data-archive/resolve-*.json
+data-archive/resolved-*.json
+data-archive/verified-*.json
+data-archive/BD_*.json
 
 # Monolítico USKids member-history (~392 MB) — excede o limite 100MB do GitHub.
 # É a fonte para `build-member-history-slim.js`, que produz o slim servido ao
 # browser (public/data/uskids-member-history-slim.json, ~33 MB, tracked).
 # Os irmãos numerados (-001.json, -002.json) também são tracked, são partes.
-public/data-archive/uskids-member-history.json
+data-archive/uskids-member-history.json
 
 # Backups locais de scripts (atomic-write, sync, merge, etc.) — não commitar
 **/*.pre-*.json

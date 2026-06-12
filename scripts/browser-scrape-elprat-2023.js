@@ -14,7 +14,7 @@
  *  2) F12 → consola
  *  3) Cola este ficheiro inteiro
  *  4) Aguarda ~30s; descarrega `elprat-2023.json` para Downloads
- *  5) Move para `C:\golf-fpg\public\data-archive\elprat-2023.json`
+ *  5) Move para `C:\golf-fpg\data-archive\elprat-2023.json`
  *  6) Corre `node scripts/integrate-elprat-2023.js --apply`
  */
 

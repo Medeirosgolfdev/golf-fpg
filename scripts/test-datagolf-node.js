@@ -1,17 +1,18 @@
 #!/usr/bin/env node
 /**
- * test-datagolf-node.js — Valida que os cookies em api/.scoring-datagolf-cookies.json
- * autenticam server-side no scoring.datagolf.pt.
+ * test-datagolf-node.js — Valida que os cookies autenticam server-side no
+ * scoring.datagolf.pt.
  *
- * Lê o cookieHeader do ficheiro (não hardcoded). Assim basta actualizar o
- * ficheiro (via refresh-all-cookies.js) e re-correr este teste.
+ * Fonte dos cookies (por ordem):
+ *   1. env DATAGOLF_SCORING_COOKIES (producao/Actions)
+ *   2. ficheiro api/.scoring-datagolf-cookies.json (dev local)
  *
  * Corre: node scripts/test-datagolf-node.js
  *
  * Exit codes:
  *   0 = sucesso (Result:OK)
- *   1 = erro geral (rede, JSON inválido)
- *   2 = cookies inválidos (Param_Errors / Erro 999 / HTTP 500)
+ *   1 = erro geral (rede, JSON invalido)
+ *   2 = cookies invalidos (Param_Errors / Erro 999 / HTTP 500)
  */
 
 const fs = require("fs");
@@ -29,8 +30,13 @@ const POST_BODY = {
 const UA = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36";
 
 function loadCookies() {
+  // 1. env (producao/Actions) — mesma convencao do scrape-drive-node.js
+  if (process.env.DATAGOLF_SCORING_COOKIES) {
+    return { cookie: process.env.DATAGOLF_SCORING_COOKIES, src: "env DATAGOLF_SCORING_COOKIES" };
+  }
+  // 2. ficheiro local (dev)
   if (!fs.existsSync(COOKIES_FILE)) {
-    console.error("[ERRO] Ficheiro nao encontrado:", COOKIES_FILE);
+    console.error("[ERRO] Sem env DATAGOLF_SCORING_COOKIES e ficheiro nao encontrado:", COOKIES_FILE);
     console.error("   Corre primeiro: node scripts/refresh-all-cookies.js");
     process.exit(1);
   }
@@ -39,12 +45,12 @@ function loadCookies() {
     console.error("[ERRO] cookieHeader vazio em", COOKIES_FILE);
     process.exit(1);
   }
-  return j.cookieHeader;
+  return { cookie: j.cookieHeader, src: COOKIES_FILE.replace(process.cwd(), ".") };
 }
 
 async function main() {
-  const COOKIE = loadCookies();
-  console.log("-> Cookies lidos de", COOKIES_FILE.replace(process.cwd(), "."));
+  const { cookie: COOKIE, src } = loadCookies();
+  console.log("-> Cookies lidos de", src);
   console.log("  (" + COOKIE.length + " chars, " + (COOKIE.match(/=/g) || []).length + " cookies)");
 
   console.log("-> POST", POST_URL);

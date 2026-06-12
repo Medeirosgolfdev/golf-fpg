@@ -10,7 +10,7 @@
 //
 // Output:
 //   - N ficheiros uskids-member-history-XXX.json modificados
-//   - public/data-archive/integrate-names-report.json com sumario
+//   - data-archive/integrate-names-report.json com sumario
 
 const fs = require('fs');
 const path = require('path');
@@ -20,7 +20,7 @@ const APPLY = process.argv.includes('--apply');
 const FORCE = process.argv.includes('--force');
 
 const ROOT = path.join(__dirname, '..');
-const DIR_ARCHIVE = path.join(ROOT, 'public', 'data-archive');
+const DIR_ARCHIVE = path.join(ROOT, 'data-archive');
 const SOURCE = path.join(DIR_ARCHIVE, 'resolved-missing-names.json');
 const REPORT = path.join(DIR_ARCHIVE, 'integrate-names-report.json');
 

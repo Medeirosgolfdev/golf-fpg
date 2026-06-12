@@ -96,6 +96,10 @@ jobs:
         env:
           DATAGOLF_SCORING_COOKIES: ${{ secrets.DATAGOLF_SCORING_COOKIES }}
 
+      - name: Validar dados scrapados
+        if: steps.scrape.outputs.exit_code == '0' || github.event.inputs.force_commit == 'true'
+        run: node scripts/validate-data.js --glob "public/data/jovens_*.json"
+
       - name: Commit e push (se houver novos dados)
         if: steps.scrape.outputs.exit_code == '0' || github.event.inputs.force_commit == 'true'
         run: |

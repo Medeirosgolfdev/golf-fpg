@@ -37,11 +37,11 @@ export default function HcpSparkline({ points, width = 80, height = 20, playerNa
   const xStep = (width - 4) / (sorted.length - 1);
   const padding = 2;
 
-  // No golfe, HCP menor é melhor — invertemos Y para que "para baixo" = melhor (subir = pior)
-  // Visualmente: linha que desce = melhoria
+  // HCP alto em cima, HCP baixo em baixo (orientação natural do valor numérico).
+  // Como no golfe HCP menor = melhor, uma linha a descer visualmente = melhoria.
   const points2d = sorted.map((p, i) => {
     const x = padding + i * xStep;
-    const y = padding + ((p.hcpExact - minV) / range) * (height - 2 * padding);
+    const y = padding + ((maxV - p.hcpExact) / range) * (height - 2 * padding);
     return { x, y, p };
   });
 

@@ -19,7 +19,7 @@
 const fs   = require('fs');
 const path = require('path');
 
-const ARCHIVE_DIR  = path.join(__dirname, '..', 'public', 'data-archive');
+const ARCHIVE_DIR  = path.join(__dirname, '..', 'data-archive');
 const OVERRIDES    = path.join(ARCHIVE_DIR, 'resolved-names-overrides.json');
 const OUTPUT       = path.join(__dirname, '..', 'public', 'data', 'uskids-member-history-slim.json');
 const MAX_FILES = parseInt(

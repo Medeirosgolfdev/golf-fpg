@@ -54,7 +54,7 @@ const { parseAdmissions, parseDraw } = require("./fpg-admissions-draw-parser.js"
 const REPO = path.resolve(__dirname, "..");
 const SCOPE_FILE  = path.join(__dirname, "fpg-admissions-scope.json");
 const OUT_FILE    = path.join(REPO, "public", "data", "fpg-admissions-draws.json");
-const BACKUP_FILE = path.join(REPO, "public", "data", "fpg-admissions-draws.backup.json");
+const BACKUP_FILE = path.join(REPO, "data-archive", "fpg-admissions-draws.backup.json");
 
 /* ── CLI ────────────────────────────────────────────────────────────────── */
 const args = process.argv.slice(2);
@@ -106,25 +106,12 @@ const ACK_DRAW       = "8428ACK987";
 const ACK_TOURNLIST  = "XH256YF45T";  // entry-gate scoring-pt.datagolf.pt
 
 /* ── Cookies ────────────────────────────────────────────────────────────── */
-function loadCookies() {
-  if (process.env.FPG_ADMISSIONS_COOKIES) {
-    console.log("[adm-draws] cookies de env FPG_ADMISSIONS_COOKIES");
-    return process.env.FPG_ADMISSIONS_COOKIES;
-  }
-  const fp = path.join(REPO, "api", ".fpg-admissions-cookies.json");
-  if (fs.existsSync(fp)) {
-    try {
-      const j = JSON.parse(fs.readFileSync(fp, "utf8"));
-      if (j.cookieHeader) {
-        console.log("[adm-draws] cookies de api/.fpg-admissions-cookies.json");
-        return j.cookieHeader;
-      }
-    } catch (e) { /* ignora */ }
-  }
-  console.error("[adm-draws] ERRO: sem cookies. Define FPG_ADMISSIONS_COOKIES ou cria api/.fpg-admissions-cookies.json via refresh-all-cookies.js");
-  process.exit(1);
-}
-const COOKIE = loadCookies();
+const { loadCookieHeader } = require("./lib/cookies");
+const COOKIE = loadCookieHeader({
+  envVars: ["FPG_ADMISSIONS_COOKIES"],
+  file: path.join(REPO, "api", ".fpg-admissions-cookies.json"),
+  label: "[adm-draws]",
+});
 
 /* ── Scope (construído em main para suportar --auto-extend async) ───────── */
 if (!fs.existsSync(SCOPE_FILE)) {

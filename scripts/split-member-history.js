@@ -3,7 +3,7 @@
 /**
  * split-member-history.js
  *
- * Lê o ficheiro monolítico `public/data-archive/uskids-member-history.json`
+ * Lê o ficheiro monolítico `data-archive/uskids-member-history.json`
  * produzido por `fetch-uskids-member-history.js` e parte-o em chunks
  * numerados (`uskids-member-history-001.json`, `-002.json`, ...) com
  * tamanho ≤ ~85 MB cada.
@@ -14,7 +14,7 @@
  *
  * Fluxo dentro do script:
  *   1. Ler o monolítico.
- *   2. Apagar todos os chunks numerados antigos em `public/data-archive/`
+ *   2. Apagar todos os chunks numerados antigos em `data-archive/`
  *      (o número de chunks pode variar de corrida para corrida).
  *   3. Distribuir jogadores em chunks ≤ TARGET_CHUNK_SIZE.
  *   4. Escrever cada chunk com `{ gerado_em, torneios, jogadores: {...} }`.
@@ -39,7 +39,7 @@ const path = require('path');
 const argArchiveDir = (process.argv.find(a => a.startsWith('--archive-dir=')) || '').split('=')[1];
 const ARCHIVE_DIR   = argArchiveDir
   ? path.resolve(argArchiveDir)
-  : path.join(__dirname, '..', 'public', 'data-archive');
+  : path.join(__dirname, '..', 'data-archive');
 
 const argTargetMb = (process.argv.find(a => a.startsWith('--target-mb=')) || '').split('=')[1];
 const TARGET_MB   = argTargetMb ? parseInt(argTargetMb, 10) : 85;   // default 85 MB (margem contra 100 MB)

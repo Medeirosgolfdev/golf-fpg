@@ -116,23 +116,12 @@ const info = m => console.log(`  ${m}`);
 // ═══════════════════════════════════════════════════════════
 // COOKIES
 // ═══════════════════════════════════════════════════════════
-function loadCookies() {
-  if (process.env.DATAGOLF_SCORING_COOKIES) {
-    log("cookies de env DATAGOLF_SCORING_COOKIES");
-    return process.env.DATAGOLF_SCORING_COOKIES;
-  }
-  const fp = path.join(REPO_ROOT, "api", ".scoring-datagolf-cookies.json");
-  if (fs.existsSync(fp)) {
-    const j = JSON.parse(fs.readFileSync(fp, "utf8"));
-    if (j.cookieHeader) {
-      log(`cookies de ${fp.replace(REPO_ROOT, ".")}`);
-      return j.cookieHeader;
-    }
-  }
-  console.error(`${R}ERRO: nenhum cookie configurado. Define DATAGOLF_SCORING_COOKIES ou cria api/.scoring-datagolf-cookies.json${X}`);
-  process.exit(1);
-}
-const COOKIE = loadCookies();
+const { loadCookieHeader } = require("./lib/cookies");
+const COOKIE = loadCookieHeader({
+  envVars: ["DATAGOLF_SCORING_COOKIES"],
+  file: path.join(REPO_ROOT, "api", ".scoring-datagolf-cookies.json"),
+  label: "[jovens]",
+});
 
 // ═══════════════════════════════════════════════════════════
 // WARMUP — entry-gate cross-domain (copiado de scrape-fpg-admissions-draws-node.js
@@ -162,54 +151,16 @@ async function warmupEntryGate() {
 // ═══════════════════════════════════════════════════════════
 // FETCH WRAPPER
 // ═══════════════════════════════════════════════════════════
-// Erro estruturado do FPG — distingue 401/403/500 (auth/cookies) de outros.
-class FpgHttpError extends Error {
-  constructor(status, pathname, body) {
-    super(`HTTP ${status} em ${pathname}`);
-    this.status = status; this.pathname = pathname; this.body = body;
-  }
-}
+// Erro estruturado do FPG — agora na lib partilhada (scripts/lib/fpg-http.js)
+const { makeFpgPost, FpgHttpError } = require("./lib/fpg-http");
 
-async function dgPost(pathname, bodyObj, queryString = "", { retries = 2 } = {}) {
-  const url = `${BASE_URL}/${pathname}${queryString ? "?" + queryString : ""}`;
-  let lastErr = null;
-  for (let attempt = 0; attempt <= retries; attempt++) {
-    try {
-      const res = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8",
-          "X-Requested-With": "XMLHttpRequest",
-          "Accept": "application/json, text/javascript, */*; q=0.01",
-          "Origin": "https://scoring.datagolf.pt",
-          "Referer": `${BASE_URL}/tournaments.aspx`,
-          "User-Agent": UA,
-          "Cookie": COOKIE,
-        },
-        body: JSON.stringify(bodyObj),
-      });
-      if (!res.ok) {
-        const txt = await res.text().catch(() => "");
-        // HTTP 500 no FPG é o sinal canónico de cookies expirados (servidor
-        // explode em vez de devolver 401). Retry uma vez por causa de
-        // transients — se persistir, é cookie morto.
-        if (res.status === 500 && attempt < retries) {
-          await sleep(500 * (attempt + 1));
-          continue;
-        }
-        throw new FpgHttpError(res.status, pathname, txt.slice(0, 500));
-      }
-      const json = await res.json();
-      const d = json.d || json;
-      if (d.Result === "ERROR") throw new Error(`FPG erro: ${d.Message || "unknown"}`);
-      return d;
-    } catch (e) {
-      lastErr = e;
-      if (!(e instanceof FpgHttpError) || e.status !== 500 || attempt >= retries) throw e;
-    }
-  }
-  throw lastErr;
-}
+const dgPost = makeFpgPost({
+  baseUrl: BASE_URL,
+  cookie: COOKIE,
+  ua: UA,
+  origin: "https://scoring.datagolf.pt",
+  referer: `${BASE_URL}/tournaments.aspx`,
+});
 
 // ═══════════════════════════════════════════════════════════
 // FASE 1 — DESCOBERTA

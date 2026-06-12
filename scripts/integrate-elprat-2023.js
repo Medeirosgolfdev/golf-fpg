@@ -21,9 +21,9 @@ const glob = require('glob');
 
 const APPLY = process.argv.includes('--apply');
 const ROOT = path.join(__dirname, '..');
-const SOURCE = path.join(ROOT, 'public', 'data-archive', 'elprat-2023.json');
+const SOURCE = path.join(ROOT, 'data-archive', 'elprat-2023.json');
 const OUTDIR_PUBLIC = path.join(ROOT, 'public', 'data');
-const OUTDIR_ARCHIVE = path.join(ROOT, 'public', 'data-archive');
+const OUTDIR_ARCHIVE = path.join(ROOT, 'data-archive');
 const USKIDS_PAGE = path.join(ROOT, 'src', 'pages', 'USKIDSPage.tsx');
 const LOADER = path.join(ROOT, 'src', 'data', 'KIDSdataLoader.ts');
 

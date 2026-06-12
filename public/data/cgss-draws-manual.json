@@ -1,0 +1,571 @@
+{
+  "_doc": "Draws curados CGSS (Santo da Serra) de PDFs oficiais. Preenchem draws vazios ccode-007. Manuel jr fed 52884 em players[0].",
+  "gerado_em": "2026-06-12",
+  "source": "extract-cgss-draws.py",
+  "total": 12,
+  "tournaments": [
+    {
+      "ccode": "007",
+      "tcode": "10983",
+      "name": "Torneio de Inverno CGSS",
+      "date": "2026-01-17",
+      "campo": "Santo da Serra - Machico-Desertas",
+      "modal": "Stableford Net",
+      "source": "DRAWINVERNO-ATUALIZADO.pdf",
+      "drawOnly": false,
+      "draws": {
+        "1": {
+          "totalJogadores": 4,
+          "groups": [
+            {
+              "teeTime": "09:25",
+              "startHole": 10,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Manuel Goulartt Medeiros",
+                  "clube": "Santo da Serra",
+                  "fed": "52884",
+                  "hcp": 12.2,
+                  "tee": "Vermelhas"
+                },
+                {
+                  "nome": "Joao Abel Freitas Jr",
+                  "clube": "Santo da Serra",
+                  "fed": null,
+                  "hcp": 5.4,
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Nuno Paulino",
+                  "clube": "Palheiro",
+                  "fed": null,
+                  "hcp": 19.9,
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Manuel Medeiros",
+                  "clube": "Santo da Serra",
+                  "fed": "54907",
+                  "hcp": 27.2,
+                  "tee": "Amarelas"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "007",
+      "tcode": "10989",
+      "name": "T1 CAMP. CGSS de PAres - Powered by C. Santos VP",
+      "date": "2026-01-31",
+      "campo": "Santo da Serra - Machico-Desertas",
+      "modal": "Stableford Net",
+      "source": "DRAW_T1_GREENSOMES_vf.pdf",
+      "drawOnly": false,
+      "draws": {
+        "1": {
+          "totalJogadores": 2,
+          "groups": [
+            {
+              "teeTime": "10:12",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "H.Cunha/M.Goulartt Medeiros",
+                  "clube": "Santo da Serra",
+                  "fed": "52884",
+                  "hcp": null
+                },
+                {
+                  "nome": "J.Sabino/A.Stoldt",
+                  "clube": "Santo da Serra",
+                  "fed": null,
+                  "hcp": null
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "007",
+      "tcode": "10888",
+      "name": "I ABERTO CGSS 2025",
+      "date": "2025-05-04",
+      "campo": "Santo da Serra - Machico-Desertas",
+      "modal": "Stroke Play",
+      "source": "Draw I ABERTO CGSS 2025.pdf",
+      "drawOnly": false,
+      "draws": {
+        "1": {
+          "totalJogadores": 3,
+          "groups": [
+            {
+              "teeTime": "08:09",
+              "startHole": 10,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Manuel Goulartt Medeiros",
+                  "clube": "Santo da Serra",
+                  "fed": "52884",
+                  "hcp": null,
+                  "tee": "Vermelhas"
+                },
+                {
+                  "nome": "Rafael Reis Alves",
+                  "clube": "Santo da Serra",
+                  "fed": "40492",
+                  "hcp": null,
+                  "tee": "Douradas"
+                },
+                {
+                  "nome": "Mateus Penucho",
+                  "clube": "Santo da Serra",
+                  "fed": "52393",
+                  "hcp": null,
+                  "tee": "Vermelhas"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "007",
+      "tcode": "cgss-iiiabertocgss2025",
+      "name": "III ABERTO CGSS 2025",
+      "date": "2025-07-06",
+      "campo": "Santo da Serra - Machico-Desertas",
+      "modal": "Stroke Play",
+      "source": "Draw III ABERTO.pdf",
+      "drawOnly": true,
+      "draws": {
+        "1": {
+          "totalJogadores": 3,
+          "groups": [
+            {
+              "teeTime": "08:50",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Manuel Goulartt Medeiros",
+                  "clube": "Santo da Serra",
+                  "fed": "52884",
+                  "hcp": null,
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "António Araújo",
+                  "clube": "Internacional",
+                  "fed": null,
+                  "hcp": null,
+                  "tee": "Douradas"
+                },
+                {
+                  "nome": "Pedro Henriques",
+                  "clube": "Santo da Serra",
+                  "fed": null,
+                  "hcp": null,
+                  "tee": "Brancas"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "007",
+      "tcode": "cgss-torneiodiariodenoticiasd",
+      "name": "Torneio Diário de Notícias da Madeira 2026",
+      "date": "2026-06-13",
+      "campo": "Santo da Serra - Desertas-Serras",
+      "modal": "Stableford Net",
+      "source": "Draw-DN26-Extenso.pdf",
+      "drawOnly": true,
+      "draws": {
+        "1": {
+          "totalJogadores": 4,
+          "groups": [
+            {
+              "teeTime": "09:00",
+              "startHole": 16,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Manuel Goulartt Medeiros",
+                  "clube": "Santo da Serra",
+                  "fed": "52884",
+                  "hcp": 9.6,
+                  "tee": "Vermelhas"
+                },
+                {
+                  "nome": "Gonçalo Gouveia",
+                  "clube": "Santo da Serra",
+                  "fed": null,
+                  "hcp": 20.2,
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Manuel Medeiros",
+                  "clube": "Santo da Serra",
+                  "fed": null,
+                  "hcp": 23.7,
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Lucas Costa Cubbin",
+                  "clube": "Santo da Serra",
+                  "fed": null,
+                  "hcp": 23.9,
+                  "tee": "Amarelas"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "007",
+      "tcode": "10921",
+      "name": "Torneio CGSS RALI Madeira 2025",
+      "date": "2025-08-02",
+      "campo": "Santo da Serra - Desertas-Serras",
+      "modal": "Stableford Net",
+      "source": "Draw_CGSS_RALI.pdf",
+      "drawOnly": false,
+      "draws": {
+        "1": {
+          "totalJogadores": 4,
+          "groups": [
+            {
+              "teeTime": "09:00",
+              "startHole": 10,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Manuel Goulartt Medeiros",
+                  "clube": "Santo da Serra",
+                  "fed": "52884",
+                  "hcp": 16.0,
+                  "tee": "Vermelhas"
+                },
+                {
+                  "nome": "Rafael Reis Alves",
+                  "clube": "Santo da Serra",
+                  "fed": "40492",
+                  "hcp": 2.0,
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Gonçalo Gouveia",
+                  "clube": "Santo da Serra",
+                  "fed": "50398",
+                  "hcp": 25.5,
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Manuel Medeiros",
+                  "clube": "Santo da Serra",
+                  "fed": "54907",
+                  "hcp": 26.5,
+                  "tee": "Amarelas"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "007",
+      "tcode": "10933",
+      "name": "Torneio Quinta de São João 2025",
+      "date": "2025-09-06",
+      "campo": "Santo da Serra - Desertas-Serras",
+      "modal": "Stableford Net",
+      "source": "Draw_Qta-Sao-Joao.pdf",
+      "drawOnly": false,
+      "draws": {
+        "1": {
+          "totalJogadores": 4,
+          "groups": [
+            {
+              "teeTime": "14:00",
+              "startHole": 18,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Manuel Goulartt Medeiros",
+                  "clube": "Santo da Serra",
+                  "fed": "52884",
+                  "hcp": 9.9,
+                  "tee": "Vermelhas"
+                },
+                {
+                  "nome": "Rafael Reis Alves",
+                  "clube": "Santo da Serra",
+                  "fed": "40492",
+                  "hcp": 2.0,
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Ricardo Camacho",
+                  "clube": "Santo da Serra",
+                  "fed": "41799",
+                  "hcp": 6.8,
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Santiago Nicolau",
+                  "clube": "Santo da Serra",
+                  "fed": "41102",
+                  "hcp": 34.2,
+                  "tee": "Amarelas"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "007",
+      "tcode": "10961",
+      "name": "Torneio CGSS São Martinho",
+      "date": "2025-11-08",
+      "campo": "Santo da Serra - Desertas-Serras",
+      "modal": "Stableford Net",
+      "source": "Draw_Sao_Martinho_CGSS-1.pdf",
+      "drawOnly": false,
+      "draws": {
+        "1": {
+          "totalJogadores": 3,
+          "groups": [
+            {
+              "teeTime": "09:30",
+              "startHole": 10,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Manuel Goulartt Medeiros",
+                  "clube": "Santo da Serra",
+                  "fed": "52884",
+                  "hcp": 9.3,
+                  "tee": "Vermelhas"
+                },
+                {
+                  "nome": "Matilde Leal Gouveia",
+                  "clube": "Santo da Serra",
+                  "fed": "41131",
+                  "hcp": 4.9,
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Gonçalo Gouveia",
+                  "clube": "Santo da Serra",
+                  "fed": null,
+                  "hcp": 24.2,
+                  "tee": "Amarelas"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "007",
+      "tcode": "10868",
+      "name": "T2 -Camp. CGSS de Pares - Powered by C. Santos VP",
+      "date": "2025-03-08",
+      "campo": "Santo da Serra - Machico-Desertas",
+      "modal": "Stableford Net",
+      "source": "Draw_T2Foursomes.pdf",
+      "drawOnly": false,
+      "draws": {
+        "1": {
+          "totalJogadores": 2,
+          "groups": [
+            {
+              "teeTime": "09:50",
+              "startHole": 10,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "M.Goulartt Medeiros/M.Medeiros",
+                  "clube": "Santo da Serra",
+                  "fed": "52884",
+                  "hcp": null
+                },
+                {
+                  "nome": "T.Gouveia/A.Fernandes",
+                  "clube": "Santo da Serra",
+                  "fed": null,
+                  "hcp": null
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "007",
+      "tcode": "11020",
+      "name": "Torneio Cidade de Machico 2026",
+      "date": "2026-05-09",
+      "campo": "Santo da Serra - Machico-Desertas",
+      "modal": "Stableford Net",
+      "source": "Draw_TCMachico_extenso-2026-1.pdf",
+      "drawOnly": false,
+      "draws": {
+        "1": {
+          "totalJogadores": 4,
+          "groups": [
+            {
+              "teeTime": "13:40",
+              "startHole": 18,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Manuel Goulartt Medeiros",
+                  "clube": "Santo da Serra",
+                  "fed": "52884",
+                  "hcp": 9.5
+                },
+                {
+                  "nome": "Ricardo Camacho",
+                  "clube": "Santo da Serra",
+                  "fed": "41799",
+                  "hcp": 4.8
+                },
+                {
+                  "nome": "Joao Abel Freitas Jr",
+                  "clube": "Santo da Serra",
+                  "fed": "2195",
+                  "hcp": 6.4
+                },
+                {
+                  "nome": "André Rodrigues",
+                  "clube": "Santo da Serra",
+                  "fed": "47855",
+                  "hcp": 11.3
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "007",
+      "tcode": "10986",
+      "name": "TORNEIO DA RESTAURAÇÃO CGSS 2026",
+      "date": "2026-01-24",
+      "campo": "Santo da Serra - Machico-Desertas",
+      "modal": "Stableford Net",
+      "source": "Draw_TRestauracao26_ext-2.pdf",
+      "drawOnly": false,
+      "draws": {
+        "1": {
+          "totalJogadores": 4,
+          "groups": [
+            {
+              "teeTime": "10:07",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Manuel Goulartt Medeiros",
+                  "clube": "Santo da Serra",
+                  "fed": "52884",
+                  "hcp": 12.2,
+                  "tee": "Vermelhas"
+                },
+                {
+                  "nome": "José Xavier Moniz",
+                  "clube": "Santo da Serra",
+                  "fed": null,
+                  "hcp": 2.1,
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Mika Isoniemi",
+                  "clube": "Santo da Serra",
+                  "fed": "45900",
+                  "hcp": 11.2,
+                  "tee": "Brancas"
+                },
+                {
+                  "nome": "Gilda Sousa",
+                  "clube": "Santo da Serra",
+                  "fed": "2121",
+                  "hcp": 23.2,
+                  "tee": "Vermelhas"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "007",
+      "tcode": "10886",
+      "name": "T3 -Camp. CGSS de Pares - Powered by C. Santos VP",
+      "date": "2025-04-26",
+      "campo": "Santo da Serra - Machico-Desertas",
+      "modal": "Stableford Net",
+      "source": "T3_Draw_CC Pares.pdf",
+      "drawOnly": false,
+      "draws": {
+        "1": {
+          "totalJogadores": 4,
+          "groups": [
+            {
+              "teeTime": "10:20",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "Manuel Goulartt Medeiros",
+                  "clube": "Santo da Serra",
+                  "fed": "52884",
+                  "hcp": 18.0
+                },
+                {
+                  "nome": "João Goes",
+                  "clube": "Santo da Serra",
+                  "fed": "2196",
+                  "hcp": 3.8
+                },
+                {
+                  "nome": "Domingos S. Marques",
+                  "clube": "Santo da Serra",
+                  "fed": "2209",
+                  "hcp": 6.6
+                },
+                {
+                  "nome": "Manuel Medeiros",
+                  "clube": "Santo da Serra",
+                  "fed": null,
+                  "hcp": 28.8
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

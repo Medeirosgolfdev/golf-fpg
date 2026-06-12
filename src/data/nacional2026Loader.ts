@@ -60,6 +60,7 @@ export interface FpgTournamentData {
   tcode: string;
   name: string | null;
   date: string | null;
+  campo?: string | null;
   admissions?: FpgAdmissions;
   draws?: Record<string, FpgDraw>;
 }
@@ -142,12 +143,49 @@ export async function loadFpgAdmissionsDraws(opts: { force?: boolean } = {}): Pr
           t.admissions.players = t.admissions.players.map(normalizePlayer);
         }
       }
+      // Merge dos draws curados do CGSS (Santo da Serra) — extraídos de PDFs
+      // oficiais por scripts/extract-cgss-draws.js. Os torneios sociais do CGSS
+      // não têm draw publicado na FPG (o scraper deixa `draws` vazio); estes
+      // PDFs preenchem essa lacuna. Aplicado aqui (no carregamento) para que
+      // TODOS os consumidores (FPGPage, DrawsPage, índices) os vejam, sem tocar
+      // no fpg-admissions-draws.json (que o scraper regenera).
+      await mergeCgssManualDraws(raw);
     }
     _cache = raw || { scrapedAt: null, total: 0, tournaments: [] };
   } catch {
     _cache = { scrapedAt: null, total: 0, tournaments: [] };
   }
   return _cache;
+}
+
+/** Funde os draws curados do CGSS (cgss-draws-manual.json) no ficheiro de
+ *  admissions/draws: preenche o `draws` vazio das entradas existentes por
+ *  `${ccode}-${tcode}` e injecta torneios draw-only que ainda não existam. */
+async function mergeCgssManualDraws(raw: FpgAdmissionsDrawsFile): Promise<void> {
+  try {
+    const cgss = await cachedFetchJson<{ tournaments?: FpgTournamentData[] }>(
+      "/data/cgss-draws-manual.json",
+    );
+    if (!cgss || !Array.isArray(cgss.tournaments) || !Array.isArray(raw.tournaments)) return;
+    const hasDraws = (t: FpgTournamentData | undefined): boolean =>
+      !!t && !!t.draws && Object.keys(t.draws).length > 0;
+    const byKey = new Map<string, FpgTournamentData>();
+    for (const t of raw.tournaments) byKey.set(`${t.ccode}-${t.tcode}`, t);
+    for (const c of cgss.tournaments) {
+      const ex = byKey.get(`${c.ccode}-${c.tcode}`);
+      if (ex) {
+        if (!hasDraws(ex)) ex.draws = c.draws;
+        if (!ex.campo && c.campo) ex.campo = c.campo;
+      } else {
+        raw.tournaments.push({
+          ccode: c.ccode, tcode: c.tcode, name: c.name, date: c.date, draws: c.draws,
+          ...(c.campo ? { campo: c.campo } : {}),
+        } as FpgTournamentData);
+      }
+    }
+  } catch {
+    /* ficheiro curado ausente — ignora silenciosamente */
+  }
 }
 
 /** Indexa os torneios por `${ccode}-${tcode}`. */

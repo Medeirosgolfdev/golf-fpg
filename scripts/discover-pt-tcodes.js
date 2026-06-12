@@ -12,14 +12,14 @@
  *   3. Filtra torneios cujo curso bate com nomes de campos PT
  *   4. Agrega tcodes por ano + curso
  *
- * Output: public/data-archive/pt-tcodes-discovered.json
+ * Output: data-archive/pt-tcodes-discovered.json
  */
 
 const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 
-const DIR_ARCHIVE = path.join(__dirname, '..', 'public', 'data-archive');
+const DIR_ARCHIVE = path.join(__dirname, '..', 'data-archive');
 const DIR_DATA    = path.join(__dirname, '..', 'public', 'data');
 const OUT_PATH    = path.join(DIR_ARCHIVE, 'pt-tcodes-discovered.json');
 const FINAL_PATH  = path.join(DIR_ARCHIVE, 'uskids-pt-local-tour-final.json');

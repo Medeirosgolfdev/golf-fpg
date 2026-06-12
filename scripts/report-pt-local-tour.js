@@ -8,12 +8,12 @@
  * (quando resolvido via 46 ficheiros existentes).
  *
  * Inputs:
- *   public/data-archive/uskids-pt-local-tour-history.json
- *   public/data-archive/uskids-member-history-*.json  (para nomes)
+ *   data-archive/uskids-pt-local-tour-history.json
+ *   data-archive/uskids-member-history-*.json  (para nomes)
  *
  * Outputs:
- *   public/data-archive/uskids-pt-local-tour-report.json
- *   public/data-archive/uskids-pt-local-tour-report.md
+ *   data-archive/uskids-pt-local-tour-report.json
+ *   data-archive/uskids-pt-local-tour-report.md
  *
  * Uso:  node scripts/report-pt-local-tour.js
  */
@@ -22,7 +22,7 @@ const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 
-const DIR_ARCHIVE = path.join(__dirname, '..', 'public', 'data-archive');
+const DIR_ARCHIVE = path.join(__dirname, '..', 'data-archive');
 const HIST_PATH     = path.join(DIR_ARCHIVE, 'uskids-pt-local-tour-history.json');
 const RESOLVED_PATH = path.join(DIR_ARCHIVE, 'uskids-pt-local-tour-resolved.json');
 const OUT_JSON      = path.join(DIR_ARCHIVE, 'uskids-pt-local-tour-report.json');

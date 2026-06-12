@@ -130,6 +130,10 @@ jobs:
         if: steps.scrape.outputs.exit_code != '1'
         run: node scripts/build-tournaments-tracking.js
 
+      - name: Validar dados scrapados
+        if: steps.scrape.outputs.exit_code != '1'
+        run: node scripts/validate-data.js public/data/fpg-admissions-draws.json
+
       - name: Commit e push (se houver novos dados)
         if: steps.scrape.outputs.exit_code == '0' || github.event.inputs.force_commit == 'true'
         run: |

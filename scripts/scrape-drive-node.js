@@ -83,49 +83,24 @@ const info = m => console.log(`  ${m}`);
 // ═══════════════════════════════════════════════════════════
 // COOKIES
 // ═══════════════════════════════════════════════════════════
-function loadCookies() {
-  if (process.env.DATAGOLF_SCORING_COOKIES) {
-    log("cookies de env DATAGOLF_SCORING_COOKIES");
-    return process.env.DATAGOLF_SCORING_COOKIES;
-  }
-  const fp = path.join(REPO_ROOT, "api", ".scoring-datagolf-cookies.json");
-  if (fs.existsSync(fp)) {
-    const j = JSON.parse(fs.readFileSync(fp, "utf8"));
-    if (j.cookieHeader) {
-      log(`cookies de ${fp.replace(REPO_ROOT, ".")}`);
-      return j.cookieHeader;
-    }
-  }
-  console.error(`${R}ERRO: nenhum cookie configurado. Define DATAGOLF_SCORING_COOKIES ou cria api/.scoring-datagolf-cookies.json${X}`);
-  process.exit(1);
-}
-
-const COOKIE = loadCookies();
+const { loadCookieHeader } = require("./lib/cookies");
+const COOKIE = loadCookieHeader({
+  envVars: ["DATAGOLF_SCORING_COOKIES"],
+  file: path.join(REPO_ROOT, "api", ".scoring-datagolf-cookies.json"),
+  label: "[drive]",
+});
 
 // ═══════════════════════════════════════════════════════════
 // FETCH WRAPPER
 // ═══════════════════════════════════════════════════════════
-async function dgPost(pathname, bodyObj, queryString = "") {
-  const url = `${BASE_URL}/${pathname}${queryString ? "?" + queryString : ""}`;
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json; charset=UTF-8",
-      "X-Requested-With": "XMLHttpRequest",
-      "Accept": "application/json, text/javascript, */*; q=0.01",
-      "Origin": "https://scoring.datagolf.pt",
-      "Referer": `${BASE_URL}/tournaments.aspx`,
-      "User-Agent": UA,
-      "Cookie": COOKIE,
-    },
-    body: JSON.stringify(bodyObj),
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status} em ${pathname}`);
-  const json = await res.json();
-  const d = json.d || json;
-  if (d.Result === "ERROR") throw new Error(`FPG erro: ${d.Message || "unknown"}`);
-  return d;
-}
+const { makeFpgPost } = require("./lib/fpg-http");
+const dgPost = makeFpgPost({
+  baseUrl: BASE_URL,
+  cookie: COOKIE,
+  ua: UA,
+  origin: "https://scoring.datagolf.pt",
+  referer: `${BASE_URL}/tournaments.aspx`,
+});
 
 // ═══════════════════════════════════════════════════════════
 // FASE 1 — DESCOBRIR TORNEIOS (drive + aquapor)

@@ -7,7 +7,7 @@
  * Integra o histórico do KIKO Matos Coelho (mid USKids 471043) na cache
  * `uskids-member-history-*.json` para ele aparecer na KIDSpage.
  *
- * Input:  public/data-archive/kiko-matos-coelho-471043-history.json
+ * Input:  data-archive/kiko-matos-coelho-471043-history.json
  *           (descarregado via Chrome scrape do GetMemberTournamentResults)
  *
  * Acções:
@@ -27,8 +27,8 @@ const glob = require('glob');
 
 const APPLY = process.argv.includes('--apply');
 const ROOT = path.join(__dirname, '..');
-const SOURCE = path.join(ROOT, 'public', 'data-archive', 'kiko-matos-coelho-471043-history.json');
-const DIR_ARCHIVE = path.join(ROOT, 'public', 'data-archive');
+const SOURCE = path.join(ROOT, 'data-archive', 'kiko-matos-coelho-471043-history.json');
+const DIR_ARCHIVE = path.join(ROOT, 'data-archive');
 const KIKO_FILENAME = 'kiko-matos-coelho-471043-history.json';
 
 const KIKO_MID = '471043';

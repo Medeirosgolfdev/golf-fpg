@@ -7,7 +7,7 @@
  * com o history.json dos 34 mids descobertos. Resolve mid → nome definitivamente
  * via match por (tcode, ageGroup, gross).
  *
- * Output: public/data-archive/uskids-pt-local-tour-final.json
+ * Output: data-archive/uskids-pt-local-tour-final.json
  *   {
  *     gerado_em, total, jogadores: [{ memberID, name, country, ptTorneios:[...] }]
  *   }
@@ -18,7 +18,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const DIR = path.join(__dirname, '..', 'public', 'data-archive');
+const DIR = path.join(__dirname, '..', 'data-archive');
 const CANONICAL = path.join(DIR, 'uskids-pt-local-tour-2023-canonical.json');
 const HISTORY   = path.join(DIR, 'uskids-pt-local-tour-history.json');
 const OUT       = path.join(DIR, 'uskids-pt-local-tour-final.json');

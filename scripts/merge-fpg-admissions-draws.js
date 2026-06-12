@@ -24,7 +24,7 @@ const BASE_FILE = path.join(DATA_DIR, "fpg-admissions-draws.json");
 const NEW_ADM   = path.join(DATA_DIR, "fpg-admissions-new.json");
 const NEW_DRAWS = path.join(DATA_DIR, "fpg-draws-new.json");
 const LEGACY_UNIFIED = path.join(DATA_DIR, "fpg-admissions-draws-new.json");
-const BACKUP  = path.join(DATA_DIR, "fpg-admissions-draws.backup.json");
+const BACKUP  = path.resolve(__dirname, "..", "data-archive", "fpg-admissions-draws.backup.json");
 
 function readJSafe(p) {
   if (!fs.existsSync(p)) return null;

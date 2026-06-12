@@ -13,7 +13,7 @@
  *                 fazer match contra uskids-results.json + uskids_torneios_completos*.json
  *                 onde os nomes estão (mas os mids não)
  *
- * Output: public/data-archive/uskids-pt-local-tour-resolved.json
+ * Output: data-archive/uskids-pt-local-tour-resolved.json
  *   {
  *     gerado_em, total: 34, resolvidos: N, pendentes: 34-N,
  *     jogadores: [{ memberID, name, country, totalTorneiosUSKids, ptTorneios:[tids],
@@ -27,7 +27,7 @@ const fs   = require('fs');
 const path = require('path');
 const glob = require('glob');
 
-const DIR_ARCHIVE = path.join(__dirname, '..', 'public', 'data-archive');
+const DIR_ARCHIVE = path.join(__dirname, '..', 'data-archive');
 const DIR_DATA    = path.join(__dirname, '..', 'public', 'data');
 const HIST_PATH   = path.join(DIR_ARCHIVE, 'uskids-pt-local-tour-history.json');
 const RESULTS_PATH = path.join(DIR_DATA, 'uskids-results.json');

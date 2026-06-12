@@ -29,7 +29,7 @@ const path = require('path');
 const APPLY = process.argv.includes('--apply');
 
 const ROOT = path.join(__dirname, '..');
-const SOURCE = path.join(ROOT, 'public', 'data-archive', 'pt-local-tour-completos.json');
+const SOURCE = path.join(ROOT, 'data-archive', 'pt-local-tour-completos.json');
 const OUTDIR = path.join(ROOT, 'public', 'data');
 const USKIDS_PAGE = path.join(ROOT, 'src', 'pages', 'USKIDSPage.tsx');
 const LOADER = path.join(ROOT, 'src', 'data', 'KIDSdataLoader.ts');
@@ -40,7 +40,7 @@ const NEW_COUNT = 28;
 
 if (!fs.existsSync(SOURCE)) {
   console.error(`ERRO: ${SOURCE} não existe.`);
-  console.error('Antes, corre o browser-scrape-pt-local-tour-completos.js na consola F12 do signupanytime e move o ficheiro descarregado para public/data-archive/');
+  console.error('Antes, corre o browser-scrape-pt-local-tour-completos.js na consola F12 do signupanytime e move o ficheiro descarregado para data-archive/');
   process.exit(1);
 }
 

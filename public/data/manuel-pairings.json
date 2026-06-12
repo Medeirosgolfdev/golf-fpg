@@ -1,23 +1,29 @@
 {
-  "geradoEm": "2026-06-12T16:56:28.748Z",
+  "geradoEm": "2026-06-12T18:24:10.558Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 92,
-  "totalCompanheirosUnicos": 105,
+  "totalRondas": 104,
+  "totalCompanheirosUnicos": 124,
   "cobertura": {
     "fpg": {
       "rondasJogadas": 120,
-      "rondasComDraw": 70,
+      "rondasComDraw": 82,
       "torneiosJogados": 90,
-      "torneiosComDraw": 56,
+      "torneiosComDraw": 68,
       "torneiosComDrawDetalhe": [
         {
           "torneioId": "059-10615",
           "nome": "3º Torneio Academia Junior - 18 buracos",
           "data": "2026-06-05",
+          "rondas": 1
+        },
+        {
+          "torneioId": "007-11020",
+          "nome": "Torneio Cidade de Machico 2026",
+          "data": "2026-05-08",
           "rondas": 1
         },
         {
@@ -75,6 +81,18 @@
           "rondas": 1
         },
         {
+          "torneioId": "007-10986",
+          "nome": "TORNEIO DA RESTAURAÇÃO CGSS 2026",
+          "data": "2026-01-24",
+          "rondas": 1
+        },
+        {
+          "torneioId": "007-10983",
+          "nome": "Torneio de Inverno CGSS",
+          "data": "2026-01-17",
+          "rondas": 1
+        },
+        {
           "torneioId": "982-10203",
           "nome": "1º Torneio Drive Challenge Madeira-Palheiro-Sub 12",
           "data": "2026-01-04",
@@ -111,6 +129,12 @@
           "rondas": 2
         },
         {
+          "torneioId": "007-10961",
+          "nome": "Torneio CGSS São Martinho",
+          "data": "2025-11-08",
+          "rondas": 1
+        },
+        {
           "torneioId": "017-10189",
           "nome": "PJA Tour Troia",
           "data": "2025-10-24",
@@ -129,10 +153,22 @@
           "rondas": 2
         },
         {
+          "torneioId": "007-10933",
+          "nome": "Torneio Quinta de São João 2025",
+          "data": "2025-09-05",
+          "rondas": 1
+        },
+        {
           "torneioId": "003-10564",
           "nome": "Miramar Internacional Open U25",
           "data": "2025-08-19",
           "rondas": 3
+        },
+        {
+          "torneioId": "007-10921",
+          "nome": "Torneio CGSS RALI 2025",
+          "data": "2025-08-03",
+          "rondas": 1
         },
         {
           "torneioId": "982-10195",
@@ -186,6 +222,12 @@
           "torneioId": "982-10183",
           "nome": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 12",
           "data": "2025-05-10",
+          "rondas": 1
+        },
+        {
+          "torneioId": "007-10888",
+          "nome": "I ABERTO CGSS 2025",
+          "data": "2025-05-03",
           "rondas": 1
         },
         {
@@ -363,13 +405,6 @@
         "007-10809",
         "007-10812",
         "007-10857",
-        "007-10888",
-        "007-10921",
-        "007-10933",
-        "007-10961",
-        "007-10983",
-        "007-10986",
-        "007-11020",
         "029-10543",
         "125-10370",
         "125-10371",
@@ -384,40 +419,10 @@
       ],
       "torneiosSemDrawDetalhe": [
         {
-          "torneioId": "007-11020",
-          "nome": "Torneio Cidade de Machico 2026",
-          "data": "2026-05-08",
-          "rondas": 1
-        },
-        {
           "torneioId": "029-10543",
           "nome": "PJA  Aroeira Masters 2026",
           "data": "2026-04-24",
           "rondas": 5
-        },
-        {
-          "torneioId": "007-10986",
-          "nome": "TORNEIO DA RESTAURAÇÃO CGSS 2026",
-          "data": "2026-01-24",
-          "rondas": 1
-        },
-        {
-          "torneioId": "007-10983",
-          "nome": "Torneio de Inverno CGSS",
-          "data": "2026-01-17",
-          "rondas": 1
-        },
-        {
-          "torneioId": "007-10961",
-          "nome": "Torneio CGSS São Martinho",
-          "data": "2025-11-08",
-          "rondas": 1
-        },
-        {
-          "torneioId": "007-10933",
-          "nome": "Torneio Quinta de São João 2025",
-          "data": "2025-09-05",
-          "rondas": 1
         },
         {
           "torneioId": "125-10371",
@@ -438,21 +443,9 @@
           "rondas": 1
         },
         {
-          "torneioId": "007-10921",
-          "nome": "Torneio CGSS RALI 2025",
-          "data": "2025-08-03",
-          "rondas": 1
-        },
-        {
           "torneioId": "183-10135",
           "nome": "Torneio de São João",
           "data": "2025-06-20",
-          "rondas": 1
-        },
-        {
-          "torneioId": "007-10888",
-          "nome": "I ABERTO CGSS 2025",
-          "data": "2025-05-03",
           "rondas": 1
         },
         {
@@ -615,6 +608,40 @@
   "rondas": [
     {
       "circuito": "FPG",
+      "torneioId": "007-cgss-torneiodiariodenoticiasd",
+      "torneioNome": "Torneio Diário de Notícias da Madeira 2026",
+      "data": "2026-06-13",
+      "ronda": 1,
+      "teeTime": "09:00",
+      "startHole": 16,
+      "campo": "Santo da Serra - Desertas-Serras",
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "Gonçalo Gouveia",
+          "fed": "50398",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Manuel Medeiros",
+          "fed": "54907",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Lucas Costa Cubbin",
+          "fed": null,
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
       "torneioId": "059-10615",
       "torneioNome": "3º Torneio Academia Junior - 18 buracos",
       "data": "2026-06-06",
@@ -646,6 +673,296 @@
             "gross": 82,
             "toPar": 10
           }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "007-10983",
+      "torneioNome": "Torneio de Inverno CGSS",
+      "data": "2026-05-27",
+      "ronda": 1,
+      "teeTime": "09:25",
+      "startHole": 10,
+      "campo": "Santo da Serra - Machico-Desertas",
+      "manuelScore": {
+        "gross": 92,
+        "toPar": 20
+      },
+      "companheiros": [
+        {
+          "nome": "Joao Abel Freitas Jr",
+          "fed": "2195",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Nuno Paulino",
+          "fed": null,
+          "clube": "Palheiro",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Manuel Medeiros",
+          "fed": "54907",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 117,
+            "toPar": 45
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "007-10986",
+      "torneioNome": "TORNEIO DA RESTAURAÇÃO CGSS 2026",
+      "data": "2026-05-27",
+      "ronda": 1,
+      "teeTime": "10:07",
+      "startHole": 1,
+      "campo": "Santo da Serra - Machico-Desertas",
+      "manuelScore": {
+        "gross": 82,
+        "toPar": 10
+      },
+      "companheiros": [
+        {
+          "nome": "José Xavier Moniz",
+          "fed": null,
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Mika Isoniemi",
+          "fed": "45900",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 94,
+            "toPar": 22
+          }
+        },
+        {
+          "nome": "Gilda Sousa",
+          "fed": "2121",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 103,
+            "toPar": 31
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "007-11020",
+      "torneioNome": "Torneio Cidade de Machico 2026",
+      "data": "2026-05-27",
+      "ronda": 1,
+      "teeTime": "13:40",
+      "startHole": 18,
+      "campo": "Santo da Serra - Machico-Desertas",
+      "manuelScore": {
+        "gross": 79,
+        "toPar": 7
+      },
+      "companheiros": [
+        {
+          "nome": "Ricardo Camacho",
+          "fed": "41799",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 71,
+            "toPar": -1
+          }
+        },
+        {
+          "nome": "Joao Abel Freitas Jr",
+          "fed": "2195",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 80,
+            "toPar": 8
+          }
+        },
+        {
+          "nome": "André Rodrigues",
+          "fed": "47855",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 87,
+            "toPar": 15
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "007-10888",
+      "torneioNome": "I ABERTO CGSS 2025",
+      "data": "2026-05-27",
+      "ronda": 1,
+      "teeTime": "08:09",
+      "startHole": 10,
+      "campo": "Santo da Serra - Machico-Desertas",
+      "manuelScore": {
+        "gross": 85,
+        "toPar": 13
+      },
+      "companheiros": [
+        {
+          "nome": "Rafael Reis Alves",
+          "fed": "40492",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 83,
+            "toPar": 11
+          }
+        },
+        {
+          "nome": "Mateus Penucho",
+          "fed": "52393",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 86,
+            "toPar": 14
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "007-10921",
+      "torneioNome": "Torneio CGSS RALI 2025",
+      "data": "2026-05-27",
+      "ronda": 1,
+      "teeTime": "09:00",
+      "startHole": 10,
+      "campo": "Santo da Serra - Desertas-Serras",
+      "manuelScore": {
+        "gross": 84,
+        "toPar": 12
+      },
+      "companheiros": [
+        {
+          "nome": "Rafael Reis Alves",
+          "fed": "40492",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 83,
+            "toPar": 11
+          }
+        },
+        {
+          "nome": "Gonçalo Gouveia",
+          "fed": "50398",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 92,
+            "toPar": 20
+          }
+        },
+        {
+          "nome": "Manuel Medeiros",
+          "fed": "54907",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 101,
+            "toPar": 29
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "007-10933",
+      "torneioNome": "Torneio Quinta de São João 2025",
+      "data": "2026-05-27",
+      "ronda": 1,
+      "teeTime": "14:00",
+      "startHole": 18,
+      "campo": "Santo da Serra - Desertas-Serras",
+      "manuelScore": {
+        "gross": 85,
+        "toPar": 13
+      },
+      "companheiros": [
+        {
+          "nome": "Rafael Reis Alves",
+          "fed": "40492",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 74,
+            "toPar": 2
+          }
+        },
+        {
+          "nome": "Ricardo Camacho",
+          "fed": "41799",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 78,
+            "toPar": 6
+          }
+        },
+        {
+          "nome": "Santiago Nicolau",
+          "fed": "41102",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 113,
+            "toPar": 41
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "007-10961",
+      "torneioNome": "Torneio CGSS São Martinho",
+      "data": "2026-05-27",
+      "ronda": 1,
+      "teeTime": "09:30",
+      "startHole": 10,
+      "campo": "Santo da Serra - Desertas-Serras",
+      "manuelScore": {
+        "gross": 80,
+        "toPar": 8
+      },
+      "companheiros": [
+        {
+          "nome": "Matilde Leal Gouveia",
+          "fed": "41131",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 85,
+            "toPar": 13
+          }
+        },
+        {
+          "nome": "Gonçalo Gouveia",
+          "fed": "50398",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
         }
       ]
     },
@@ -1697,6 +2014,26 @@
     },
     {
       "circuito": "FPG",
+      "torneioId": "007-10989",
+      "torneioNome": "T1 CAMP. CGSS de PAres - Powered by C. Santos VP",
+      "data": "2026-01-31",
+      "ronda": 1,
+      "teeTime": "10:12",
+      "startHole": 1,
+      "campo": "Santo da Serra - Machico-Desertas",
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "J.Sabino/A.Stoldt",
+          "fed": null,
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
       "torneioId": "982-10203",
       "torneioNome": "1º Torneio Drive Challenge Madeira-Palheiro-Sub 12",
       "data": "2026-01-04",
@@ -2448,6 +2785,33 @@
     },
     {
       "circuito": "FPG",
+      "torneioId": "007-cgss-iiiabertocgss2025",
+      "torneioNome": "III ABERTO CGSS 2025",
+      "data": "2025-07-06",
+      "ronda": 1,
+      "teeTime": "08:50",
+      "startHole": 1,
+      "campo": "Santo da Serra - Machico-Desertas",
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "António Araújo",
+          "fed": null,
+          "clube": "Internacional",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Pedro Henriques",
+          "fed": null,
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
       "torneioId": "988-10254",
       "torneioNome": "Campeonato Nacional de Jovens Sub 12 H  Dia 2",
       "data": "2025-06-29",
@@ -2723,6 +3087,46 @@
     },
     {
       "circuito": "FPG",
+      "torneioId": "007-10886",
+      "torneioNome": "T3 -Camp. CGSS de Pares - Powered by C. Santos VP",
+      "data": "2025-04-26",
+      "ronda": 1,
+      "teeTime": "10:20",
+      "startHole": 1,
+      "campo": "Santo da Serra - Machico-Desertas",
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "João Goes",
+          "fed": "2196",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 998,
+            "toPar": 926
+          }
+        },
+        {
+          "nome": "Domingos S. Marques",
+          "fed": "2209",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 998,
+            "toPar": 926
+          }
+        },
+        {
+          "nome": "Manuel Medeiros",
+          "fed": "54907",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
       "torneioId": "000-10825",
       "torneioNome": "Campeonato Nacional de Clubes Sub 14",
       "data": "2025-04-15",
@@ -2846,6 +3250,26 @@
             "gross": 43,
             "toPar": 7
           }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "007-10868",
+      "torneioNome": "T2 -Camp. CGSS de Pares - Powered by C. Santos VP",
+      "data": "2025-03-08",
+      "ronda": 1,
+      "teeTime": "09:50",
+      "startHole": 10,
+      "campo": "Santo da Serra - Machico-Desertas",
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "T.Gouveia/A.Fernandes",
+          "fed": null,
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
         }
       ]
     },
