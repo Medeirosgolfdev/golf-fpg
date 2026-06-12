@@ -3796,6 +3796,10 @@ export default function JogadoresPage() {
   const [statsDb, setStatsDb] = useState<PlayerStatsDb>({});
   const [newFilter, setNewFilter] = useState(false);
   const NEW_DAYS = 7; // threshold: "novo" = última ronda há ≤7 dias
+  // Fixar os nossos jovens relevantes (curados, escalão Sub-*) no topo da lista
+  // alfabética. Ligado por defeito; o botão "✕ Limpar" desliga-o → ordem
+  // alfabética pura. Re-activável pelo toggle ⭐ na toolbar.
+  const [prioritizeJuniors, setPrioritizeJuniors] = useState(true);
 
   /* ── Modo TODOS (federados.json) ──────────────────────────────── */
   // Default "todos" — garante que qualquer link externo para um federado (ex. do
@@ -4154,7 +4158,23 @@ export default function JogadoresPage() {
 
     // Ordenação com direcção (asc/desc) e ordem semântica para escalão
     const dir = sortDir === "asc" ? 1 : -1;
+    // "Jovens relevantes" = nossos curados (players.json) num escalão Sub-*.
+    // Quando o pin está activo e estamos em ordem alfabética, flutuam para o
+    // topo (sempre, independentemente de asc/desc); dentro de cada grupo
+    // mantém-se a ordem alfabética normal.
+    const JUNIOR_ESC = new Set(["Sub-10", "Sub-12", "Sub-14", "Sub-16", "Sub-18", "Sub-21"]);
+    const isRelevantJunior = (p: { escalao: string; _source?: unknown }): boolean => {
+      const src = p._source;
+      const curated = src === "both" || src === "players" || !src;
+      return curated && JUNIOR_ESC.has(p.escalao);
+    };
+    const pinActive = prioritizeJuniors && sortKey === "name";
     return [...list].sort((a, b) => {
+      if (pinActive) {
+        const ra = isRelevantJunior(a) ? 0 : 1;
+        const rb = isRelevantJunior(b) ? 0 : 1;
+        if (ra !== rb) return ra - rb;
+      }
       switch (sortKey) {
         case "name": return dir * a.name.localeCompare(b.name, "pt");
         case "hcp": return dir * ((a.hcp ?? 999) - (b.hcp ?? 999));
@@ -4192,7 +4212,7 @@ export default function JogadoresPage() {
         default: return 0;
       }
     });
-  }, [allPlayers, q, sexFilter, escalaoFilter, regionFilter, natFilter, clubFilter, viewMode, sortKey, sortDir, newFilter, statsDb, hcpMin, hcpMax, activeOnlyFilter, sourceFilter, includeSeniors]);
+  }, [allPlayers, q, sexFilter, escalaoFilter, regionFilter, natFilter, clubFilter, viewMode, sortKey, sortDir, newFilter, statsDb, hcpMin, hcpMax, activeOnlyFilter, sourceFilter, includeSeniors, prioritizeJuniors]);
 
   // Contagem de filtros activos — partilhada entre o badge da Toolbar
   // (botão "✕ Limpar N") e o FilteredStatsCard no detail pane.
@@ -4409,6 +4429,16 @@ export default function JogadoresPage() {
         >
           <span className="p-icon-big" aria-hidden="true">👴</span>
         </button>
+        <button
+          className={`p p-icon-only ${prioritizeJuniors ? "active" : ""}`}
+          onClick={() => { clearSelection(); setPrioritizeJuniors(v => !v); }}
+          title={prioritizeJuniors
+            ? "Nossos jovens relevantes no topo da lista (clicar para ordem alfabética pura)"
+            : "Fixar os nossos jovens relevantes no topo da lista alfabética"}
+          style={prioritizeJuniors ? { background: "var(--accent)", color: "#fff" } : undefined}
+        >
+          <span className="p-icon-big" aria-hidden="true">⭐</span>
+        </button>
         {viewMode === "todos" && (
           <button
             className={`p ${showStats ? "active" : ""}`}
@@ -4523,6 +4553,7 @@ export default function JogadoresPage() {
               setRegionFilter("ALL"); setNatFilter("ALL"); setClubFilter("ALL");
               setHcpMin(""); setHcpMax("");
               setActiveOnlyFilter(false); setSourceFilter("ALL"); setNewFilter(false);
+              setPrioritizeJuniors(false); // volta à ordem alfabética pura
             }}
             title="Limpar todos os filtros activos"
             style={{ background: "var(--color-warn-vivid)", color: "#fff", gap: 4 }}
@@ -4531,6 +4562,27 @@ export default function JogadoresPage() {
           </button>
         )}
         <Counter ml="auto">{filtered.length} jogadores</Counter>
+        <span style={{ display: "inline-flex", gap: 6, fontSize: 10, opacity: 0.6, whiteSpace: "nowrap" }}>
+          <a
+            href="/analise-percurso-juniores.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Análise de percurso de juniores"
+            style={{ color: "var(--text-muted, inherit)", textDecoration: "none" }}
+          >
+            ↗ percurso
+          </a>
+          <span aria-hidden>·</span>
+          <a
+            href="/jogadores-por-ano"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Jogadores por ano"
+            style={{ color: "var(--text-muted, inherit)", textDecoration: "none" }}
+          >
+            ↗ por ano
+          </a>
+        </span>
       </Toolbar>
 
       <div className="master-detail">

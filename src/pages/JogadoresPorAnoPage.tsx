@@ -60,7 +60,7 @@ interface Row {
 
 type SortKey =
   | "ano" | "nome" | "sexo" | "clube" | "escalao" | "hcp" | "delta"
-  | "best" | "sd5" | "lastsd" | "rondas" | "aces";
+  | "best" | "sd5" | "lastsd" | "rondas3" | "rondas" | "aces";
 
 const clubName = (c: PlayerClub | string): string =>
   typeof c === "object" ? (c?.short || c?.long || "") : (c || "");
@@ -126,7 +126,7 @@ export default function JogadoresPorAnoPage() {
   const [combine, setCombine] = useState(false);             // juntar anos numa tabela única
 
   const { sortKey, sortDir, toggleSort } = useSort<SortKey>("hcp", "asc", {
-    rondas: "desc", aces: "desc", best: "asc", sd5: "asc", lastsd: "asc",
+    rondas3: "desc", rondas: "desc", aces: "desc", best: "asc", sd5: "asc", lastsd: "asc",
     delta: "asc", hcp: "asc", ano: "asc", nome: "asc", sexo: "asc", clube: "asc", escalao: "asc",
   });
 
@@ -245,6 +245,7 @@ export default function JogadoresPorAnoPage() {
         case "best":   return dir * (nv(num(sa?.bestGross ?? null), dir < 0) - nv(num(sb?.bestGross ?? null), dir < 0));
         case "sd5":    return dir * (nv(num(sa?.avgSD5 ?? null), dir < 0) - nv(num(sb?.avgSD5 ?? null), dir < 0));
         case "lastsd": return dir * (nv(num(sa?.lastSD ?? null), dir < 0) - nv(num(sb?.lastSD ?? null), dir < 0));
+        case "rondas3": return dir * ((sa?.roundsLast3m ?? -1) - (sb?.roundsLast3m ?? -1));
         case "rondas": return dir * ((sa?.roundsLast12m ?? -1) - (sb?.roundsLast12m ?? -1));
         case "aces":   return dir * ((sa?.aces ?? -1) - (sb?.aces ?? -1));
         default:       return 0;
@@ -340,6 +341,7 @@ export default function JogadoresPorAnoPage() {
               <SortableHdr k="best" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Melhor gross registado">Melhor</SortableHdr>
               <SortableHdr k="sd5" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Média dos 5 score differentials mais recentes">SD5</SortableHdr>
               <SortableHdr k="lastsd" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Score differential da última ronda">Últ.SD</SortableHdr>
+              <SortableHdr k="rondas3" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Rondas nos últimos 3 meses">R3m</SortableHdr>
               <SortableHdr k="rondas" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Rondas nos últimos 12 meses">R12m</SortableHdr>
               <SortableHdr k="aces" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Holes-in-one">🕳️</SortableHdr>
             </tr>
@@ -366,6 +368,7 @@ export default function JogadoresPorAnoPage() {
                   <td>{ps?.bestGross ?? <span className="muted">—</span>}</td>
                   <td>{ps?.avgSD5 == null ? <span className="muted">—</span> : ps.avgSD5.toFixed(1)}</td>
                   <td>{ps?.lastSD == null ? <span className="muted">—</span> : ps.lastSD.toFixed(1)}</td>
+                  <td style={{ fontWeight: 600 }}>{ps?.roundsLast3m ?? <span className="muted">—</span>}</td>
                   <td style={{ fontWeight: 600 }}>{ps?.roundsLast12m ?? <span className="muted">—</span>}</td>
                   <td>{ps?.aces ? `🕳️${ps.aces > 1 ? "×" + ps.aces : ""}` : <span className="muted">—</span>}</td>
                 </tr>
