@@ -1,19 +1,25 @@
 {
-  "geradoEm": "2026-05-28T09:16:58.322Z",
+  "geradoEm": "2026-06-12T16:56:28.748Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 91,
+  "totalRondas": 92,
   "totalCompanheirosUnicos": 105,
   "cobertura": {
     "fpg": {
-      "rondasJogadas": 119,
-      "rondasComDraw": 69,
-      "torneiosJogados": 89,
-      "torneiosComDraw": 55,
+      "rondasJogadas": 120,
+      "rondasComDraw": 70,
+      "torneiosJogados": 90,
+      "torneiosComDraw": 56,
       "torneiosComDrawDetalhe": [
+        {
+          "torneioId": "059-10615",
+          "nome": "3º Torneio Academia Junior - 18 buracos",
+          "data": "2026-06-05",
+          "rondas": 1
+        },
         {
           "torneioId": "000-10941",
           "nome": "Campeonato Nacional de Jovens Sub 12 H",
@@ -609,6 +615,42 @@
   "rondas": [
     {
       "circuito": "FPG",
+      "torneioId": "059-10615",
+      "torneioNome": "3º Torneio Academia Junior - 18 buracos",
+      "data": "2026-06-06",
+      "ronda": 1,
+      "teeTime": "11:45",
+      "startHole": 1,
+      "campo": null,
+      "manuelScore": {
+        "gross": 75,
+        "toPar": 3
+      },
+      "companheiros": [
+        {
+          "nome": "Mateus Penucho",
+          "fed": "52393",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 81,
+            "toPar": 9
+          }
+        },
+        {
+          "nome": "Vicente Rodrigues",
+          "fed": "51896",
+          "clube": "Palheiro",
+          "pais": null,
+          "score": {
+            "gross": 82,
+            "toPar": 10
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
       "torneioId": "003-10551",
       "torneioNome": "Taça R.S. Yeatman",
       "data": "2026-05-27",
@@ -1039,8 +1081,8 @@
       "startHole": 1,
       "campo": "Longniddry Golf Club, The Musselburgh Golf Club , Craigielaw Golf Club, Glen Golf Club, Royal Musselburgh Golf Club",
       "manuelScore": {
-        "gross": 164,
-        "toPar": 92
+        "gross": 78,
+        "toPar": 6
       },
       "companheiros": [
         {
@@ -1049,8 +1091,8 @@
           "clube": null,
           "pais": "GB",
           "score": {
-            "gross": 162,
-            "toPar": 90
+            "gross": 87,
+            "toPar": 15
           }
         },
         {
@@ -1059,8 +1101,8 @@
           "clube": null,
           "pais": "IE",
           "score": {
-            "gross": 162,
-            "toPar": 90
+            "gross": 83,
+            "toPar": 11
           }
         }
       ]
@@ -1574,13 +1616,10 @@
         },
         {
           "nome": "Marek Pejas",
-          "fed": "52069",
+          "fed": null,
           "clube": "Vilamoura, C. G",
           "pais": null,
-          "score": {
-            "gross": 97,
-            "toPar": 25
-          }
+          "score": null
         }
       ]
     },
