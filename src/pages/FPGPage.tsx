@@ -375,6 +375,34 @@ function Content() {
           if (hitStop) break;
         }
 
+        // ── Ficheiros de torneio standalone (fora da numeração pull-torneios) ──
+        // Cada ficheiro traz o seu próprio ccode/tcode, por isso o deep-link
+        // /FPG/torneio/{ccode}-{tcode} resolve naturalmente (sem reescrita).
+        const EXTRA_TOURN_FILES: string[] = [
+          // Camp. Nacional de Profissionais 2026 (ccode 912 / tcode 10225) —
+          // scraped à parte porque não veio na numeração pull-torneios.
+          "/data/torneio-912-10225.json",
+        ];
+        await Promise.all(EXTRA_TOURN_FILES.map(async (url) => {
+          try {
+            const resp = await fetch(url);
+            if (!resp.ok) return;
+            const d = await resp.json() as DriveData;
+            const normalised = (d.tournaments || []).map(t => {
+              const extLinks = externalLinks[String(t.tcode)];
+              return { ...t,
+                _sourceFile: url, _sourceIndex: -1,
+                players: t.players.map(normalizePlayer),
+                ...(extLinks ? { links: { ...(t.links || {}), ...extLinks } } : {}) };
+            });
+            allT.push(...normalised);
+            meta.push({ file: url, index: -1, lastUpdated: d.lastUpdated, source: d.source, count: normalised.length });
+          } catch (e) {
+            console.warn(`[FPGPage] Falhou a carregar ${url}: ${String(e).slice(0, 120)}`);
+          }
+        }));
+        if (alive) { setTournaments([...allT]); setFileMeta([...meta]); }
+
         if (alive) {
           if (allT.length === 0) {
             setError(`Ficheiro não encontrado: ${dataUrl(0)}`);
