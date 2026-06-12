@@ -6,7 +6,6 @@ from datetime import date
 
 MANUEL_FED = "52884"
 TEE_COLORS = {"brancas", "amarelas", "vermelhas", "douradas", "azuis", "azues", "pretas"}
-# letra da vaga só capturada se for token isolado (1 letra + espaco) -> nao engole "B" de Brancas
 TIME_RE = re.compile(r"^\s*(\d{1,2}:\d{2})\s+(\d{1,2})(?:\s+([A-Za-z])(?=\s))?")
 
 
@@ -176,9 +175,8 @@ def build_players(group, rmatch):
     out = []
     for p in group["players"]:
         if p.get("is_pair"):
-            # Formatos de pares (Greensomes/Foursomes/CC Pares): cada membro do
-            # par é uma pessoa que jogou a ronda com o Manuel -> dividir em
-            # indivíduos. "H.Cunha/M.Goulartt Medeiros" -> 2 jogadores.
+            # Formatos de pares (Greensomes/Foursomes/CC Pares): cada membro do par
+            # e uma pessoa que jogou a ronda com o Manuel -> dividir em individuos.
             for member in [x.strip() for x in p["raw"].split("/") if x.strip()]:
                 _add_individual(out, member, None, None, p.get("tee"), rmatch)
         else:
@@ -233,4 +231,7 @@ if __name__ == "__main__":
                             "draws": {"1": {"totalJogadores": len(players),
                                             "groups": [{"teeTime": g["time"], "startHole": g["hole"], "tee": None, "players": players}]}}})
     out = {"_doc": "Draws curados CGSS (Santo da Serra) de PDFs oficiais. Preenchem draws vazios ccode-007. Manuel jr fed 52884 em players[0].",
-           "gerado_em": date.today().isoformat(), "source": "extract-cgss-
+           "gerado_em": date.today().isoformat(), "source": "extract-cgss-draws.py", "total": len(tournaments), "tournaments": tournaments}
+    if not args.print_only:
+        json.dump(out, open(args.out, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+        print("\n[ok] " + str(len(tournaments)) + " torneios -> " + args.out)

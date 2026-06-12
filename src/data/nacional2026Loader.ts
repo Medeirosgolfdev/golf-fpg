@@ -174,8 +174,12 @@ async function mergeCgssManualDraws(raw: FpgAdmissionsDrawsFile): Promise<void> 
     for (const c of cgss.tournaments) {
       const ex = byKey.get(`${c.ccode}-${c.tcode}`);
       if (ex) {
+        // O PDF oficial é autoritativo para estes torneios sociais CGSS: o
+        // scraper deixava nome/data placeholder ("Torneio 10961" / 2026-05-27).
         if (!hasDraws(ex)) ex.draws = c.draws;
-        if (!ex.campo && c.campo) ex.campo = c.campo;
+        if (c.name) ex.name = c.name;
+        if (c.date) ex.date = c.date;
+        if (c.campo) ex.campo = c.campo;
       } else {
         raw.tournaments.push({
           ccode: c.ccode, tcode: c.tcode, name: c.name, date: c.date, draws: c.draws,

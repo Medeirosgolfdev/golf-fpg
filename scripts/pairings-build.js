@@ -255,7 +255,7 @@ function extractFpgPairings(fpg, scoreIdx, nomeIdx, clubeIdx, manuelTournIdx) {
           return {
             nome: (nomeIdx.get(fed) || p.nome || "").trim(),
             fed, clube: clubeTexto, pais: null,
-            score: rs && rs.gross != null ? { gross: Number(rs.gross), toPar } : null,
+            score: rs && rs.gross != null && Number(rs.gross) < 200 ? { gross: Number(rs.gross), toPar } : null,
           };
         }).filter(Boolean);
 
@@ -271,7 +271,7 @@ function extractFpgPairings(fpg, scoreIdx, nomeIdx, clubeIdx, manuelTournIdx) {
           teeTime: grp.teeTime || null,
           startHole: grp.startHole != null ? Number(grp.startHole) : null,
           campo: t.campo || null,
-          manuelScore: mrs && mrs.gross != null ? { gross: Number(mrs.gross), toPar: mToPar } : null,
+          manuelScore: mrs && mrs.gross != null && Number(mrs.gross) < 200 ? { gross: Number(mrs.gross), toPar: mToPar } : null,
           companheiros,
         });
       }
@@ -522,7 +522,9 @@ function mergeCgssDraws(fpg) {
     const ex = byKey.get(`${c.ccode}-${c.tcode}`);
     if (ex) {
       if (!hasDraws(ex)) { ex.draws = c.draws; preenchidos++; }
-      if (!ex.campo && c.campo) ex.campo = c.campo;
+      if (c.name) ex.name = c.name;   // PDF autoritativo (scraper tinha placeholder)
+      if (c.date) ex.date = c.date;
+      if (c.campo) ex.campo = c.campo;
     } else {
       fpg.tournaments.push({ ccode: c.ccode, tcode: c.tcode, name: c.name,
         date: c.date, campo: c.campo, draws: c.draws });
