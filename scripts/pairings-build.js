@@ -57,7 +57,8 @@ function normIsoDate(s) {
 
 function buildFpgScoreIndex() {
   const idx = new Map();
-  for (const f of [...listFiles("pull-torneios"), ...listFiles("drive-data-"), ...listFiles("aquapor-data-")]) {
+  for (const f of [...listFiles("pull-torneios"), ...listFiles("drive-data-"), ...listFiles("aquapor-data-"),
+                   ...listFiles("jovens_"), ...listFiles("clubes_")]) {
     const j = readJSON(f);
     if (!j || !Array.isArray(j.tournaments)) continue;
     for (const t of j.tournaments) {
@@ -85,7 +86,8 @@ function buildFpgClubeIndex(fpg) {
       if (fed && !idx.has(fed) && p.clube) idx.set(fed, String(p.clube).trim());
     }
   }
-  for (const f of [...listFiles("pull-torneios"), ...listFiles("drive-data-"), ...listFiles("aquapor-data-")]) {
+  for (const f of [...listFiles("pull-torneios"), ...listFiles("drive-data-"), ...listFiles("aquapor-data-"),
+                   ...listFiles("jovens_"), ...listFiles("clubes_")]) {
     const j = readJSON(f);
     if (!j || !Array.isArray(j.tournaments)) continue;
     for (const t of j.tournaments) for (const p of t.players || []) {
@@ -217,9 +219,11 @@ function extractFpgPairings(fpg, scoreIdx, nomeIdx, clubeIdx, manuelTournIdx) {
     const tNameRaw = t.name || (t.admissions && t.admissions.name) || null;
     const tNameIsPlaceholder = tNameRaw && /^Torneio\s+\d+$/i.test(String(tNameRaw).trim());
     const tDateRaw = normIsoDate(t.date || (t.admissions && t.admissions.date) || null);
-    const todayIso = new Date().toISOString().slice(0, 10);
-    const tDateIsPlaceholder = tDateRaw === todayIso && m && m.data && m.data !== todayIso;
-    const data = (tDateIsPlaceholder && m && m.data) ? m.data : tDateRaw;
+    // A data das admissions é muitas vezes um placeholder do scraper (data do
+    // scrape, ex 2026-05-27, ou "hoje"). A data autoritativa vem dos scorecards
+    // do Manuel (manuelTournIdx) — preferir SEMPRE m.data quando existe. Corrige
+    // torneios antigos (ex "World Kids 2024") que apareciam com 27/05/2026.
+    const data = (m && m.data) ? m.data : tDateRaw;
     const torneioNome = (tNameIsPlaceholder && m && m.nome)
       ? m.nome
       : (tNameRaw || (m && m.nome) || torneioId);
