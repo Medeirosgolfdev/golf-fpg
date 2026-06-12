@@ -37,6 +37,7 @@ import {
   type PlayerStatsDb,
 } from "../data/playerStatsTypes";
 import { MANUEL_FED } from "../constants/manuel";
+import { PIN_RANK } from "../constants/pinnedPlayers";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "../ui/SortableHdr";
 import SexBadge from "../ui/SexBadge";
@@ -168,6 +169,13 @@ export default function JogadoresListPage() {
   const [jovensOnly, setJovensOnly] = useState(false);
   const [comSDOnly, setComSDOnly] = useState(false);
   const [diffsOnly, setDiffsOnly] = useState(false);
+  // Nacionalidade: ALL (todos) · FOREIGN (só estrangeiros) · PT (sem estrangeiros)
+  const [natFilter, setNatFilter] = useState<"ALL" | "FOREIGN" | "PT">("ALL");
+  // Fixar no topo (ordenação por Nome) o Manuel, o Gastão e o top 5 de cada
+  // escalão do Campeonato Nacional de Jovens — ver constants/pinnedPlayers.ts.
+  // Ligado por defeito; "Limpar filtros" desliga-o → ordem alfabética pura.
+  // Re-activável pelo chip ⭐.
+  const [prioritizeDestaques, setPrioritizeDestaques] = useState(true);
 
   /* Selecção (highlight) — clicar uma linha selecciona-a; duplo-clique abre nova janela */
   const [selectedFed, setSelectedFed] = useState<string | null>(null);
@@ -180,7 +188,7 @@ export default function JogadoresListPage() {
   const [page, setPage] = useState(1);
 
   // Reset à página quando muda algum filtro relevante
-  useEffect(() => { setPage(1); }, [q, escalao, clubFilter, anoMin, anoMax, hcpMin, hcpMax, hcpStatus, sex, tipo, fedStatus, activosAnoOnly, jovensOnly, comSDOnly, diffsOnly]);
+  useEffect(() => { setPage(1); }, [q, escalao, clubFilter, anoMin, anoMax, hcpMin, hcpMax, hcpStatus, sex, tipo, fedStatus, activosAnoOnly, jovensOnly, comSDOnly, diffsOnly, prioritizeDestaques, natFilter]);
 
   /* Build merged rows */
   const rows: Row[] = useMemo(() => {
@@ -269,9 +277,14 @@ export default function JogadoresListPage() {
       if (jovensOnly && !/^Sub-/.test(r.escalao)) return false;
       if (comSDOnly && !r.hasAnalysis) return false;
       if (diffsOnly && !r.hasDiffs) return false;
+      if (natFilter !== "ALL") {
+        const isForeign = !!r.countryName && r.countryName !== "Portugal";
+        if (natFilter === "FOREIGN" && !isForeign) return false;
+        if (natFilter === "PT" && isForeign) return false;
+      }
       return true;
     });
-  }, [rows, q, escalao, clubFilter, anoMin, anoMax, hcpMin, hcpMax, hcpStatus, sex, tipo, fedStatus, activosAnoOnly, jovensOnly, comSDOnly, diffsOnly]);
+  }, [rows, q, escalao, clubFilter, anoMin, anoMax, hcpMin, hcpMax, hcpStatus, sex, tipo, fedStatus, activosAnoOnly, jovensOnly, comSDOnly, diffsOnly, natFilter]);
 
   /* Sort */
   const sorted = useMemo(() => {
@@ -281,7 +294,21 @@ export default function JogadoresListPage() {
       v == null || isNaN(v as number) ? Number.POSITIVE_INFINITY : (v as number);
     const str = (v: string | null | undefined) => (v || "").toLocaleLowerCase("pt-PT");
 
+    // Pin: Manuel, Gastão e o top 5 de cada escalão do Nacional de Jovens
+    // flutuam para o topo (na ordem de PIN_RANK) quando ordenamos por Nome.
+    // Os restantes mantêm a ordenação alfabética normal.
+    const pinActive = prioritizeDestaques && sortKey === "name";
+
     arr.sort((a, b) => {
+      if (pinActive) {
+        const ra = PIN_RANK.get(a.fed);
+        const rb = PIN_RANK.get(b.fed);
+        if (ra != null || rb != null) {
+          if (ra == null) return 1;
+          if (rb == null) return -1;
+          if (ra !== rb) return ra - rb;
+        }
+      }
       switch (sortKey) {
         case "nfed":         return (Number(a.fed) - Number(b.fed)) * dir;
         case "name":         return str(a.name).localeCompare(str(b.name), "pt") * dir;
@@ -304,7 +331,7 @@ export default function JogadoresListPage() {
       }
     });
     return arr;
-  }, [filtered, sortKey, sortDir]);
+  }, [filtered, sortKey, sortDir, prioritizeDestaques]);
 
   /* Paginação */
   const totalPages = Math.max(1, Math.ceil(sorted.length / PAGE_SIZE));
@@ -356,7 +383,8 @@ export default function JogadoresListPage() {
     setHcpMin(""); setHcpMax(""); setHcpStatus("ALL");
     setSex("ALL"); setTipo("ALL"); setFedStatus("9");
     setActivosAnoOnly(false); setJovensOnly(false);
-    setComSDOnly(false); setDiffsOnly(false);
+    setComSDOnly(false); setDiffsOnly(false); setNatFilter("ALL");
+    setPrioritizeDestaques(false); // volta à ordem alfabética pura
   };
 
   /* ── Render ──────────────────────────────────────────────── */
@@ -502,6 +530,9 @@ export default function JogadoresListPage() {
         <ToggleChip checked={jovensOnly} onChange={setJovensOnly} label="🧒 Só Jovens (Sub-X)" />
         <ToggleChip checked={comSDOnly} onChange={setComSDOnly} label="📊 Só com SD calculado" />
         <ToggleChip checked={diffsOnly} onChange={setDiffsOnly} label="⚠ Diferenças vs FPG" />
+        <ToggleChip checked={natFilter === "FOREIGN"} onChange={v => setNatFilter(v ? "FOREIGN" : "ALL")} label="🌍 Só estrangeiros" />
+        <ToggleChip checked={natFilter === "PT"} onChange={v => setNatFilter(v ? "PT" : "ALL")} label="🇵🇹 Sem estrangeiros" />
+        <ToggleChip checked={prioritizeDestaques} onChange={setPrioritizeDestaques} label="⭐ Manuel, Gastão e top Nacional Jovens no topo" />
       </div>
 
       {/* ── Tabela ───────────────────────────────────────────── */}

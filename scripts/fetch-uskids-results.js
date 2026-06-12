@@ -29,6 +29,12 @@ const HISTORICOS = [
     escalao_manuel: 7, age_groups: [4, 5, 6, 7],
     url_uskids: 'https://tournaments.uskidsgolf.com/tournaments/regional/find-tournament/516958/desert-shootout-2026',
     url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=21004' },
+  // Azata Golf 2026 (Espanha, 1 ronda). Sem age_groups → apanha Boys 9-12 (Guo Ziyang jogou Boys 12).
+  // ⚠ Se "GetMeta falhou" no log, o ax 1129 (intl) não tem acesso — trocar para ax 2760 (mesmo de El Prat/Espanha).
+  { t: 21931, name: 'Azata Golf 2026',
+    date_inicio: '5/16/2026', date_fim: '5/16/2026', rondas: 1, ax: 1129,
+    escalao_manuel: null,
+    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=21931' },
   { t: 18438, name: 'Marco Simone Invitational 2025',
     date_inicio: '3/15/2025', date_fim: '3/16/2025', rondas: 2, ax: 2739,
     escalao_manuel: null, age_groups: [2102, 2103, 2104, 2105],

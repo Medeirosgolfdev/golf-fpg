@@ -41,6 +41,7 @@ import { Last20Table } from "../ui/Last20Table";
 import { CrossAnalysis } from "../ui/CrossAnalysis";
 import { ByTournamentView } from "../ui/ByTournamentView";
 import { buildCourseKeyMap, setCourseKeyMap, findCourseKey, CourseLink } from "../ui/jogadoresHelpers";
+import { PIN_RANK } from "../constants/pinnedPlayers";
 
 /* ────────────────────────────────────────────────────────────────────────────────────
    Utility functions (port from client JS)
@@ -3796,9 +3797,9 @@ export default function JogadoresPage() {
   const [statsDb, setStatsDb] = useState<PlayerStatsDb>({});
   const [newFilter, setNewFilter] = useState(false);
   const NEW_DAYS = 7; // threshold: "novo" = última ronda há ≤7 dias
-  // Fixar os nossos jovens relevantes (curados, escalão Sub-*) no topo da lista
-  // alfabética. Ligado por defeito; o botão "✕ Limpar" desliga-o → ordem
-  // alfabética pura. Re-activável pelo toggle ⭐ na toolbar.
+  // Fixar Manuel, Gastão e o top 5 de cada escalão do Nacional de Jovens no
+  // topo da lista alfabética (ver constants/pinnedPlayers.ts). Ligado por
+  // defeito; "✕ Limpar" desliga-o → ordem alfabética pura. Re-activável pelo ⭐.
   const [prioritizeJuniors, setPrioritizeJuniors] = useState(true);
 
   /* ── Modo TODOS (federados.json) ──────────────────────────────── */
@@ -4158,22 +4159,19 @@ export default function JogadoresPage() {
 
     // Ordenação com direcção (asc/desc) e ordem semântica para escalão
     const dir = sortDir === "asc" ? 1 : -1;
-    // "Jovens relevantes" = nossos curados (players.json) num escalão Sub-*.
-    // Quando o pin está activo e estamos em ordem alfabética, flutuam para o
-    // topo (sempre, independentemente de asc/desc); dentro de cada grupo
-    // mantém-se a ordem alfabética normal.
-    const JUNIOR_ESC = new Set(["Sub-10", "Sub-12", "Sub-14", "Sub-16", "Sub-18", "Sub-21"]);
-    const isRelevantJunior = (p: { escalao: string; _source?: unknown }): boolean => {
-      const src = p._source;
-      const curated = src === "both" || src === "players" || !src;
-      return curated && JUNIOR_ESC.has(p.escalao);
-    };
+    // Pin: Manuel, Gastão e o top 5 de cada escalão do Campeonato Nacional de
+    // Jovens (ver constants/pinnedPlayers.ts) flutuam para o topo, na ordem de
+    // PIN_RANK, quando ordenamos por Nome. Os restantes seguem a ordem normal.
     const pinActive = prioritizeJuniors && sortKey === "name";
     return [...list].sort((a, b) => {
       if (pinActive) {
-        const ra = isRelevantJunior(a) ? 0 : 1;
-        const rb = isRelevantJunior(b) ? 0 : 1;
-        if (ra !== rb) return ra - rb;
+        const ra = PIN_RANK.get(a.fed);
+        const rb = PIN_RANK.get(b.fed);
+        if (ra != null || rb != null) {
+          if (ra == null) return 1;
+          if (rb == null) return -1;
+          if (ra !== rb) return ra - rb;
+        }
       }
       switch (sortKey) {
         case "name": return dir * a.name.localeCompare(b.name, "pt");
@@ -4433,8 +4431,8 @@ export default function JogadoresPage() {
           className={`p p-icon-only ${prioritizeJuniors ? "active" : ""}`}
           onClick={() => { clearSelection(); setPrioritizeJuniors(v => !v); }}
           title={prioritizeJuniors
-            ? "Nossos jovens relevantes no topo da lista (clicar para ordem alfabética pura)"
-            : "Fixar os nossos jovens relevantes no topo da lista alfabética"}
+            ? "Manuel, Gastão e top 5 de cada escalão do Nacional de Jovens no topo (clicar para ordem alfabética pura)"
+            : "Fixar Manuel, Gastão e top 5 do Nacional de Jovens no topo da lista"}
           style={prioritizeJuniors ? { background: "var(--accent)", color: "#fff" } : undefined}
         >
           <span className="p-icon-big" aria-hidden="true">⭐</span>
