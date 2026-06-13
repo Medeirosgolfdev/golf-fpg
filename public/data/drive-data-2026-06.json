@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "12/06/2026",
+  "lastUpdated": "13/06/2026",
   "source": "scoring.datagolf.pt",
   "circuit": "drive",
   "month": "2026-06",
-  "totalTournaments": 7,
-  "totalPlayers": 57,
-  "totalScorecards": 51,
+  "totalTournaments": 12,
+  "totalPlayers": 67,
+  "totalScorecards": 61,
   "tournaments": [
     {
       "name": "5º Torneio Drive Challenge Açores–Terceira-Sub 18",
@@ -5414,6 +5414,806 @@
           "nholes": null,
           "course": null,
           "roundScores": []
+        }
+      ]
+    },
+    {
+      "name": "6º Torneio Drive Challenge Açores–Terceira-Sub 18",
+      "ccode": "983",
+      "tcode": "10178",
+      "date": "2026-06-12",
+      "campo": "Terceira",
+      "clube": "983",
+      "series": "challenge",
+      "region": "acores",
+      "escalao": "Sub 18",
+      "num": 6,
+      "rounds": 1,
+      "playerCount": 4,
+      "players": [
+        {
+          "scoreId": "647",
+          "pos": 1,
+          "name": "Madalena Alexandra Van Zeller",
+          "club": "Ilha Terceira",
+          "grossTotal": 40,
+          "toPar": 3,
+          "hcpExact": 8.8,
+          "hcpPlay": 4,
+          "fedCode": "47078",
+          "courseRating": 36.3,
+          "slope": 133,
+          "teeName": "VERMELHAS",
+          "teeColorId": 60,
+          "parTotal": 37,
+          "nholes": 9,
+          "course": "Terceira",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 40,
+              "scores": [
+                5,
+                3,
+                5,
+                4,
+                5,
+                4,
+                5,
+                4,
+                5
+              ],
+              "pars": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                5,
+                4,
+                4
+              ],
+              "si": [
+                7,
+                4,
+                9,
+                6,
+                1,
+                3,
+                8,
+                5,
+                2
+              ],
+              "meters": [
+                257,
+                124,
+                394,
+                227,
+                272,
+                251,
+                367,
+                274,
+                315
+              ],
+              "courseRating": 36.3,
+              "slope": 133,
+              "teeName": "VERMELHAS",
+              "teeColorId": 60
+            }
+          ]
+        },
+        {
+          "scoreId": "648",
+          "pos": 2,
+          "name": "Tomás Valadão",
+          "club": "Ilha Terceira",
+          "grossTotal": 48,
+          "toPar": 11,
+          "hcpExact": 12.7,
+          "hcpPlay": 6,
+          "fedCode": "36625",
+          "courseRating": 35.9,
+          "slope": 137,
+          "teeName": "AMARELAS",
+          "teeColorId": 40,
+          "parTotal": 37,
+          "nholes": 9,
+          "course": "Terceira",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 48,
+              "scores": [
+                4,
+                5,
+                6,
+                7,
+                5,
+                6,
+                5,
+                5,
+                5
+              ],
+              "pars": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                5,
+                4,
+                4
+              ],
+              "si": [
+                7,
+                4,
+                9,
+                6,
+                1,
+                3,
+                8,
+                5,
+                2
+              ],
+              "meters": [
+                265,
+                144,
+                459,
+                278,
+                336,
+                308,
+                437,
+                312,
+                367
+              ],
+              "courseRating": 35.9,
+              "slope": 137,
+              "teeName": "AMARELAS",
+              "teeColorId": 40
+            }
+          ]
+        },
+        {
+          "scoreId": "649",
+          "pos": 3,
+          "name": "João Lucas Fagundes",
+          "club": "Ilha Terceira",
+          "grossTotal": 54,
+          "toPar": 17,
+          "hcpExact": 15.8,
+          "hcpPlay": 8,
+          "fedCode": "44677",
+          "courseRating": 35.9,
+          "slope": 137,
+          "teeName": "AMARELAS",
+          "teeColorId": 40,
+          "parTotal": 37,
+          "nholes": 9,
+          "course": "Terceira",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 54,
+              "scores": [
+                4,
+                5,
+                10,
+                4,
+                6,
+                5,
+                10,
+                5,
+                5
+              ],
+              "pars": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                5,
+                4,
+                4
+              ],
+              "si": [
+                7,
+                4,
+                9,
+                6,
+                1,
+                3,
+                8,
+                5,
+                2
+              ],
+              "meters": [
+                265,
+                144,
+                459,
+                278,
+                336,
+                308,
+                437,
+                312,
+                367
+              ],
+              "courseRating": 35.9,
+              "slope": 137,
+              "teeName": "AMARELAS",
+              "teeColorId": 40
+            }
+          ]
+        },
+        {
+          "scoreId": "650",
+          "pos": 4,
+          "name": "Neandro Oliveira",
+          "club": "Verdegolf",
+          "grossTotal": 66,
+          "toPar": 29,
+          "hcpExact": 22.5,
+          "hcpPlay": 12,
+          "fedCode": "49615",
+          "courseRating": 35.9,
+          "slope": 137,
+          "teeName": "AMARELAS",
+          "teeColorId": 40,
+          "parTotal": 37,
+          "nholes": 9,
+          "course": "Terceira",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 66,
+              "scores": [
+                4,
+                4,
+                6,
+                5,
+                10,
+                7,
+                10,
+                10,
+                10
+              ],
+              "pars": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                5,
+                4,
+                4
+              ],
+              "si": [
+                7,
+                4,
+                9,
+                6,
+                1,
+                3,
+                8,
+                5,
+                2
+              ],
+              "meters": [
+                265,
+                144,
+                459,
+                278,
+                336,
+                308,
+                437,
+                312,
+                367
+              ],
+              "courseRating": 35.9,
+              "slope": 137,
+              "teeName": "AMARELAS",
+              "teeColorId": 40
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "6º Torneio Drive Challenge Açores–Terceira-Sub 16",
+      "ccode": "983",
+      "tcode": "10177",
+      "date": "2026-06-12",
+      "campo": "Terceira",
+      "clube": "983",
+      "series": "challenge",
+      "region": "acores",
+      "escalao": "Sub 16",
+      "num": 6,
+      "rounds": 1,
+      "playerCount": 1,
+      "players": [
+        {
+          "scoreId": "651",
+          "pos": 1,
+          "name": "Martim Duarte",
+          "club": "Ilha Terceira",
+          "grossTotal": 54,
+          "toPar": 17,
+          "hcpExact": 19.6,
+          "hcpPlay": 10,
+          "fedCode": "53696",
+          "courseRating": 35.9,
+          "slope": 137,
+          "teeName": "AMARELAS",
+          "teeColorId": 40,
+          "parTotal": 37,
+          "nholes": 9,
+          "course": "Terceira",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 54,
+              "scores": [
+                10,
+                4,
+                5,
+                5,
+                8,
+                6,
+                6,
+                5,
+                5
+              ],
+              "pars": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                5,
+                4,
+                4
+              ],
+              "si": [
+                7,
+                4,
+                9,
+                6,
+                1,
+                3,
+                8,
+                5,
+                2
+              ],
+              "meters": [
+                265,
+                144,
+                459,
+                278,
+                336,
+                308,
+                437,
+                312,
+                367
+              ],
+              "courseRating": 35.9,
+              "slope": 137,
+              "teeName": "AMARELAS",
+              "teeColorId": 40
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "6º Torneio Drive Challenge Açores–Terceira-Sub 14",
+      "ccode": "983",
+      "tcode": "10176",
+      "date": "2026-06-12",
+      "campo": "Terceira",
+      "clube": "983",
+      "series": "challenge",
+      "region": "acores",
+      "escalao": "Sub 14",
+      "num": 6,
+      "rounds": 1,
+      "playerCount": 2,
+      "players": [
+        {
+          "scoreId": "659",
+          "pos": 1,
+          "name": "Clara Almeida",
+          "club": "Verdegolf",
+          "grossTotal": 56,
+          "toPar": 19,
+          "hcpExact": 42.4,
+          "hcpPlay": 17,
+          "fedCode": "41983",
+          "courseRating": 33,
+          "slope": 119,
+          "teeName": "VERDES",
+          "teeColorId": 80,
+          "parTotal": 37,
+          "nholes": 9,
+          "course": "Terceira",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 56,
+              "scores": [
+                6,
+                7,
+                10,
+                5,
+                5,
+                7,
+                6,
+                4,
+                6
+              ],
+              "pars": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                5,
+                4,
+                4
+              ],
+              "si": [
+                7,
+                4,
+                9,
+                6,
+                1,
+                3,
+                8,
+                5,
+                2
+              ],
+              "meters": [
+                200,
+                100,
+                300,
+                220,
+                210,
+                200,
+                300,
+                200,
+                200
+              ],
+              "courseRating": 33,
+              "slope": 119,
+              "teeName": "VERDES",
+              "teeColorId": 80
+            }
+          ]
+        },
+        {
+          "scoreId": "658",
+          "pos": 2,
+          "name": "Guilherme Matos",
+          "club": "Verdegolf",
+          "grossTotal": 65,
+          "toPar": 28,
+          "hcpExact": 38.4,
+          "hcpPlay": 18,
+          "fedCode": "57454",
+          "courseRating": 33.8,
+          "slope": 128,
+          "teeName": "VERMELHAS",
+          "teeColorId": 60,
+          "parTotal": 37,
+          "nholes": 9,
+          "course": "Terceira",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 65,
+              "scores": [
+                8,
+                4,
+                6,
+                6,
+                7,
+                8,
+                8,
+                9,
+                9
+              ],
+              "pars": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                5,
+                4,
+                4
+              ],
+              "si": [
+                7,
+                4,
+                9,
+                6,
+                1,
+                3,
+                8,
+                5,
+                2
+              ],
+              "meters": [
+                257,
+                124,
+                394,
+                227,
+                272,
+                251,
+                367,
+                274,
+                315
+              ],
+              "courseRating": 33.8,
+              "slope": 128,
+              "teeName": "VERMELHAS",
+              "teeColorId": 60
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "6º Torneio Drive Challenge Açores–Terceira-Sub 12",
+      "ccode": "983",
+      "tcode": "10175",
+      "date": "2026-06-12",
+      "campo": "Terceira",
+      "clube": "983",
+      "series": "challenge",
+      "region": "acores",
+      "escalao": "Sub 12",
+      "num": 6,
+      "rounds": 1,
+      "playerCount": 1,
+      "players": [
+        {
+          "scoreId": "654",
+          "pos": 1,
+          "name": "Miguel Nunes",
+          "club": "Ilha Terceira",
+          "grossTotal": 43,
+          "toPar": 6,
+          "hcpExact": 15.7,
+          "hcpPlay": 2,
+          "fedCode": "48052",
+          "courseRating": 31.5,
+          "slope": 117,
+          "teeName": "VERDES",
+          "teeColorId": 80,
+          "parTotal": 37,
+          "nholes": 9,
+          "course": "Terceira",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 43,
+              "scores": [
+                6,
+                5,
+                4,
+                6,
+                5,
+                4,
+                5,
+                4,
+                4
+              ],
+              "pars": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                5,
+                4,
+                4
+              ],
+              "si": [
+                7,
+                4,
+                9,
+                6,
+                1,
+                3,
+                8,
+                5,
+                2
+              ],
+              "meters": [
+                200,
+                100,
+                300,
+                220,
+                210,
+                200,
+                300,
+                200,
+                200
+              ],
+              "courseRating": 31.5,
+              "slope": 117,
+              "teeName": "VERDES",
+              "teeColorId": 80
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "6º Torneio Drive Challenge Açores–Terceira-Sub 10",
+      "ccode": "983",
+      "tcode": "10174",
+      "date": "2026-06-12",
+      "campo": "Terceira",
+      "clube": "983",
+      "series": "challenge",
+      "region": "acores",
+      "escalao": "Sub 10",
+      "num": 6,
+      "rounds": 1,
+      "playerCount": 2,
+      "players": [
+        {
+          "scoreId": "655",
+          "pos": 1,
+          "name": "Vicente Henrique Rocha",
+          "club": "Ilha Terceira",
+          "grossTotal": 43,
+          "toPar": 6,
+          "hcpExact": 34.9,
+          "hcpPlay": 9,
+          "fedCode": "59154",
+          "courseRating": 29.6,
+          "slope": 109,
+          "teeName": "ROXAS",
+          "teeColorId": 90,
+          "parTotal": 37,
+          "nholes": 9,
+          "course": "Terceira",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 43,
+              "scores": [
+                6,
+                3,
+                5,
+                7,
+                4,
+                4,
+                5,
+                4,
+                5
+              ],
+              "pars": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                5,
+                4,
+                4
+              ],
+              "si": [
+                7,
+                4,
+                9,
+                6,
+                1,
+                3,
+                8,
+                5,
+                2
+              ],
+              "meters": [
+                150,
+                50,
+                240,
+                160,
+                160,
+                160,
+                240,
+                150,
+                150
+              ],
+              "courseRating": 29.6,
+              "slope": 109,
+              "teeName": "ROXAS",
+              "teeColorId": 90
+            }
+          ]
+        },
+        {
+          "scoreId": "656",
+          "pos": 2,
+          "name": "Miguel Freitas",
+          "club": "Ilha Terceira",
+          "grossTotal": 55,
+          "toPar": 18,
+          "hcpExact": 42.9,
+          "hcpPlay": 13,
+          "fedCode": "56604",
+          "courseRating": 29.6,
+          "slope": 109,
+          "teeName": "ROXAS",
+          "teeColorId": 90,
+          "parTotal": 37,
+          "nholes": 9,
+          "course": "Terceira",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 55,
+              "scores": [
+                10,
+                4,
+                6,
+                5,
+                9,
+                4,
+                6,
+                6,
+                5
+              ],
+              "pars": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                5,
+                4,
+                4
+              ],
+              "si": [
+                7,
+                4,
+                9,
+                6,
+                1,
+                3,
+                8,
+                5,
+                2
+              ],
+              "meters": [
+                150,
+                50,
+                240,
+                160,
+                160,
+                160,
+                240,
+                150,
+                150
+              ],
+              "courseRating": 29.6,
+              "slope": 109,
+              "teeName": "ROXAS",
+              "teeColorId": 90
+            }
+          ]
         }
       ]
     }
