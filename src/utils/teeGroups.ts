@@ -25,9 +25,29 @@ export interface PhysTeeGroup {
   teeBySex: Partial<Record<SexKey, Tee>>;
 }
 
-/** Chave do tee FÍSICO (cor + distância total). Estável entre componentes. */
+/** Nome do tee sem o marcador de sexo, para distinguir tees genuinamente
+ *  diferentes (USKids) de meras variantes M/F do mesmo tee.
+ *  "Yellow" / "Yellow (F)" → "yellow"  (juntam-se na mesma linha)
+ *  "USKids Boys 14"        → "uskids boys 14"  (linha própria) */
+function teeNameBase(name: string): string {
+  return String(name ?? "")
+    .toLowerCase()
+    .normalize("NFKD").replace(/[̀-ͯ]/g, "")
+    .replace(/\s*\(\s*(?:f|m|fem\w*|masc\w*|senh\w*|ladies|women|men|hom\w*|h|s)\s*\)\s*$/i, "")
+    .replace(/\s+(?:senhoras?|ladies|women|femininas?|fem|homens|men|masculinas?|masc)\s*$/i, "")
+    .trim();
+}
+
+/** Chave do tee FÍSICO. Estável entre componentes.
+ *  Junta variantes M/F do MESMO tee (mesma cor + distância + nome-base) numa
+ *  só linha, com CR/Slope por sexo. NÃO junta tees distintos que por acaso
+ *  partilham marcas físicas mas têm setup próprio — ex.: as marcas Red do Glen
+ *  são jogadas como "Red" (campo, par 69) E como "USKids Boys 12" (par 72) no
+ *  Europeu; nomes-base diferentes ⇒ linhas separadas. Usa-se o nome-base (e não
+ *  o par) porque o par feminino difere legitimamente do masculino no mesmo tee,
+ *  e isso não deve criar uma linha nova. */
 export function physicalTeeKey(t: Tee): string {
-  return `${teeGroupHex(t.teeName, t.scorecardMeta?.teeColor)}|${Math.round(t.distances?.total ?? 0)}`;
+  return `${teeGroupHex(t.teeName, t.scorecardMeta?.teeColor)}|${Math.round(t.distances?.total ?? 0)}|${teeNameBase(t.teeName)}`;
 }
 
 export function physicalTeeGroups(tees: Tee[]): PhysTeeGroup[] {

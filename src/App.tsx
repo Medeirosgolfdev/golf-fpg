@@ -2,7 +2,7 @@ import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import "./App.css";
 import { loadMasterData, loadPlayers, loadAwayCourses } from "./data/loader";
-import { initCourseColorCache } from "./utils/teeColors";
+import { initCourseColorCache, teeGroupHex } from "./utils/teeColors";
 import { extractAwayCourses } from "./data/melhoriasLoader";
 import { getExtraCourses } from "./data/extraCourses";
 import type { Course, MasterData, PlayersDb, CoursePlayerRound } from "./data/types";
@@ -146,12 +146,30 @@ export default function App() {
         // Guardar o tee com mais dados; rejeitar tees completamente vazios
         if (!prev || teeScore(t) > teeScore(prev)) seen.set(k, t);
       }
-      // Filtrar tees sem dados úteis (sem buracos, sem distância, sem CR)
-      return [...seen.values()].filter(t =>
-        (t.distances?.holesCount ?? 0) > 0 ||
-        (t.distances?.total ?? 0) > 0 ||
-        (t.ratings?.holes18?.courseRating ?? 0) > 0
-      );
+      // Filtragem de tees:
+      //  1) fora os completamente vazios (sem buracos, sem distância, sem CR);
+      //  2) fora os que NÃO têm geometria (metros) MAS apenas duplicam uma marca
+      //     (cor) que JÁ está representada no campo por um tee COM metros.
+      //     É o caso do Glen: a FPG registou a ronda do Manuel pela cor
+      //     "Vermelhas" (só CR/Slope, sem metros), mas essas marcas já existem
+      //     como "Red" com distâncias — logo o "Vermelhas" é ruído redundante.
+      //  Tees sem metros que são o ÚNICO registo da sua marca mantêm-se sempre
+      //  (campos away em que o clube não preencheu os metros não perdem nada).
+      const vals = [...seen.values()];
+      const hasGeom = (t: Course["master"]["tees"][number]) =>
+        (t.distances?.total ?? 0) > 0 || (t.holes ?? []).some((h) => (h.distance ?? 0) > 0);
+      const grp = (t: Course["master"]["tees"][number]) =>
+        teeGroupHex(t.teeName, t.scorecardMeta?.teeColor);
+      const geomGroups = new Set(vals.filter(hasGeom).map(grp));
+      return vals.filter((t) => {
+        const empty =
+          (t.distances?.holesCount ?? 0) === 0 &&
+          (t.distances?.total ?? 0) === 0 &&
+          (t.ratings?.holes18?.courseRating ?? 0) === 0;
+        if (empty) return false;
+        if (!hasGeom(t) && geomGroups.has(grp(t))) return false;
+        return true;
+      });
     }
 
     /** Merge de dois campos: mantém o melhor de cada um.
