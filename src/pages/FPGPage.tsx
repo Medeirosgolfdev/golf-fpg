@@ -33,6 +33,7 @@ import {
 } from "../ui/tournamentPrimitives";
 import { PJARankingView } from "../ui/PJARankingView";
 import ClubesGruposView from "../ui/ClubesGruposView";
+import ClubesCategoriasView, { type CategoriaCfg } from "../ui/ClubesCategoriasView";
 import TournExtLinks from "../ui/TournExtLinks";
 // Tipos e utilitários FPG — fonte canónica em ../data/fpgTypes.ts e ../data/fpgUtils.ts
 import type { Tournament, GrupoEntry } from "../data/fpgTypes";
@@ -103,6 +104,56 @@ function autoGruposByClub(t: Tournament | null): GrupoEntry[] {
     .map((g, i) => ({ grupo: letterMap?.[g.clube] ?? letra(i), clube: g.clube, jogadores: g.jogadores }))
     .sort((a, b) => a.grupo.localeCompare(b.grupo));
 }
+
+/**
+ * Formato de pontuação por equipa para torneios de clubes NÃO-juvenis, keyed
+ * por `${ccode}-${tcode}`. Vive em código (e não no JSON) para sobreviver a
+ * re-scrapes dos ficheiros CLUBES{ano}.json. `bestNByRound` = nº de resultados
+ * contados em cada ronda; `note` = descrição mostrada no topo da vista Grupos.
+ * Default para midam sem entrada: 5 melhores em todas as rondas (Absoluto).
+ */
+const CLUBES_TEAM_FORMAT: Record<string, {
+  bestNByRound?: number[];
+  defaultBestN?: number;
+  note: string;
+  /** Se presente, cada clube é dividido em sub-grupos por categoria
+   *  (ClubesCategoriasView) em vez de uma única equipa. */
+  categories?: CategoriaCfg[];
+  /** Torneio em MATCH PLAY (pontos por equipa), não strokeplay. As vistas de
+   *  Grupos por pancadas não se aplicam — mostra-se placeholder até existir a
+   *  vista de match play e os dados reais. */
+  matchPlay?: boolean;
+}> = {
+  // Campeonato Nacional de Clubes Mid-Amateur BPI 2026 — R1 individual (5
+  // melhores), R2 foursomes (2 melhores).
+  "000-10912": { bestNByRound: [5, 2], note: "R1: 5 melhores (individual) · R2: 2 melhores (foursomes)" },
+  // Campeonato Regional de Clubes Absoluto 2024 — 2 dias individual, com 3
+  // categorias por clube: Homens >18 (5 melhores), Senhoras >18 (2), Juniores
+  // ≤Sub-18 (3). Sub-grupos dentro de cada card de clube.
+  "059-10483": {
+    bestNByRound: [5, 5],
+    note: "Cada dia: 5 melhores resultados (Absoluto masculino)",
+    categories: [
+      { key: "H", label: "Homens", bestN: 5 },
+      { key: "S", label: "Senhoras", bestN: 2 },
+      { key: "J", label: "Juniores", bestN: 3 },
+    ],
+  },
+  // Campeonato Regional de Clubes 2026 (059/10685, Palheiro, 20-21 Jun 2026).
+  // ⚠ FORMATO NOVO: 36 buracos de 3-Way Match Play (pontos: V=1, E=0.5, D=0).
+  // 3 campeonatos: Homens (6+1), Senhoras (3+1), Jovens (4+1, ≤18). NÃO é
+  // strokeplay — a classificação é por pontos, por isso usa-se placeholder até
+  // existir a vista de match play (construir com os dados reais do fim-de-semana).
+  "059-10685": {
+    note: "36 buracos · 3-Way Match Play (pontos: V=1 · E=0.5 · D=0)",
+    matchPlay: true,
+    categories: [
+      { key: "H", label: "Homens", bestN: 6 },
+      { key: "S", label: "Senhoras", bestN: 3 },
+      { key: "J", label: "Juniores", bestN: 4 },
+    ],
+  },
+};
 
 function Content() {
   const location = useLocation();
@@ -445,26 +496,30 @@ function Content() {
           }
 
           // Carregar os ficheiros de Clubes em paralelo com o loader principal
-          const CLUBES_FILES_MAIN = [
-            { url: "/data/clubes_sub_14&18_2026.json", year: "2026" },
-            { url: "/data/clubes_sub_14&18_2025.json", year: "2025" },
-            { url: "/data/clubes_sub_14&18_2024.json", year: "2024" },
+          const CLUBES_FILES_MAIN: { url: string; year: string; escFallback: string | null }[] = [
+            { url: "/data/clubes_sub_14&18_2026.json", year: "2026", escFallback: null },
+            { url: "/data/clubes_sub_14&18_2025.json", year: "2025", escFallback: null },
+            { url: "/data/clubes_sub_14&18_2024.json", year: "2024", escFallback: null },
             // Clubes não-juvenis (ex: Nacional de Clubes Mid-Amateur, Regional
-            // de Clubes Absoluto) — escalão "midam"; a vista Grupos auto-constrói
-            // as equipas por clube.
-            { url: "/data/CLUBES2026.json", year: "2026" },
-            { url: "/data/CLUBES2024.json", year: "2024" },
+            // de Clubes Absoluto) — escFallback "midam"; a vista Grupos auto-constrói
+            // as equipas por clube. Garantir "midam" mesmo que o JSON não traga
+            // `escalao` (ex: gerado por scrape-classif-node).
+            { url: "/data/CLUBES2026.json", year: "2026", escFallback: "midam" },
+            { url: "/data/CLUBES2024.json", year: "2024", escFallback: "midam" },
           ];
-          const resolveEscKeyMain = (escalao: string | null | undefined): string => {
+          const resolveEscKeyMain = (escalao: string | null | undefined, fallback: string | null): string => {
             if (escalao && /14/i.test(escalao)) return "sub14";
             if (escalao && /18/i.test(escalao)) return "sub18";
             if (escalao && /mid|amateur|absolut|s[eé]nior/i.test(escalao)) return "midam";
-            return "sub14";
+            return fallback ?? "sub14";
           };
           const clubesMetaLocal: DataSource[] = [];
-          const clubesResults = await Promise.all(CLUBES_FILES_MAIN.map(async ({ url, year }) => {
+          const clubesResults = await Promise.all(CLUBES_FILES_MAIN.map(async ({ url, year, escFallback }) => {
             try {
-              const r = await fetch(url);
+              // cache:"no-store" — os ficheiros CLUBES{ano}.json são scrapados/
+              // actualizados com frequência (draws, novos torneios). Sem isto, o
+              // browser servia a versão antiga em cache e os draws não apareciam.
+              const r = await fetch(url, { cache: "no-store" });
               if (!r.ok) {
                 clubesMetaLocal.push({ path: url, status: "error", error: `HTTP ${r.status}`, group: "clubes" });
                 return [];
@@ -473,7 +528,7 @@ function Content() {
               const rows = (d.tournaments || []).map(t => ({
                 ...t,
                 series: "clubes" as const,
-                _clubesEsc: resolveEscKeyMain((t as any).escalao),
+                _clubesEsc: resolveEscKeyMain((t as any).escalao, escFallback),
                 _clubesYear: year,
                 _sourceFile: url,
                 players: t.players.map(normalizePlayer),
@@ -492,29 +547,32 @@ function Content() {
           for (const t of clubesFlat) seen.set(String(t.tcode), t as Tournament);
           if (alive) {
             const uniqueClubes = [...seen.values()];
-            setClubesTournaments(uniqueClubes);
-            setClubesLoaded(true);
             // Carregar admissions+draws UMA vez e enriquecer TODOS os torneios
             // (pull-torneios + clubes) para aparecerem com draws/pairings nos
             // tabs STO, PJA, Clubes e Todos. Os tabs Jovens e Clubes detalhe
             // fazem o mesmo enrichment nos seus loaders próprios.
             const admFile = await loadFpgAdmissionsDraws().catch(() => null);
             const admIdx = admFile ? indexFpgAdmissionsDraws(admFile) : new Map<string, FpgTournamentData>();
+            const hasKeys = (o: any) => o && typeof o === "object" && Object.keys(o).length > 0;
             const enrich = (t: Tournament): Tournament => {
               const ad = admIdx.get(`${t.ccode}-${t.tcode}`);
-              if (ad) {
-                (t as any)._admissions = ad.admissions;
-                (t as any)._draws = ad.draws;
-              }
-              // Fallback: draws/admissions embebidos no próprio CLUBES{ano}.json
-              // (ex: scrapados por scripts/scrape-clube-draws.js). Só usados
-              // quando o fpg-admissions-draws.json não cobre este torneio.
-              if (!(t as any)._draws && (t as any).draws) (t as any)._draws = (t as any).draws;
-              if (!(t as any)._admissions && (t as any).admissions) (t as any)._admissions = (t as any).admissions;
+              // DRAWS: preferir os embebidos no CLUBES{ano}.json (scrapados por
+              // scripts/scrape-clube-draws.js, completos), senão os do
+              // fpg-admissions-draws.json. ⚠ Este ficheiro pode ter o torneio com
+              // `draws: {}` vazio (só admissions) — nesse caso NÃO sobrepor os
+              // embebidos (era este o bug do regional 2024).
+              if (hasKeys((t as any).draws)) (t as any)._draws = (t as any).draws;
+              else if (hasKeys(ad?.draws)) (t as any)._draws = ad!.draws;
+              // ADMISSIONS: preferir as do FPG (mais completas), senão embebidas.
+              (t as any)._admissions = ad?.admissions ?? (t as any).admissions;
               return t;
             };
             const enrichedAllT = allT.map(enrich);
             const enrichedClubes = uniqueClubes.map(enrich);
+            // Só agora (depois de enriquecidos com _draws/_admissions) é que se
+            // publica o estado dos clubes — evita renderizar primeiro sem draws.
+            setClubesTournaments(enrichedClubes);
+            setClubesLoaded(true);
             setTournaments([...enrichedAllT, ...enrichedClubes]);
           }
 
@@ -686,15 +744,12 @@ function Content() {
           // Enriquecer com admissions/draws do fpg-admissions-draws.json se houver match
           const idxKey = `${t.ccode}-${(t as any).tcode}`;
           const ad = admDrawsIdx.get(idxKey);
-          if (ad) {
-            (t as any)._admissions = ad.admissions;
-            (t as any)._draws = ad.draws;
-          }
-          // Fallback: draws/admissions embebidos no próprio CLUBES{ano}.json
-          // (ex: draws scrapados por scripts/scrape-clube-draws.js). Só usados
-          // quando o fpg-admissions-draws.json não cobre este torneio.
-          if (!(t as any)._draws && (t as any).draws) (t as any)._draws = (t as any).draws;
-          if (!(t as any)._admissions && (t as any).admissions) (t as any)._admissions = (t as any).admissions;
+          const hasKeys = (o: any) => o && typeof o === "object" && Object.keys(o).length > 0;
+          // DRAWS: preferir embebidos no CLUBES{ano}.json; senão os do
+          // fpg-admissions-draws.json (que pode ter `draws: {}` vazio).
+          if (hasKeys((t as any).draws)) (t as any)._draws = (t as any).draws;
+          else if (hasKeys(ad?.draws)) (t as any)._draws = ad!.draws;
+          (t as any)._admissions = ad?.admissions ?? (t as any).admissions;
           seen.set(key, t as Tournament);
         }
       }
@@ -900,6 +955,18 @@ function Content() {
   const clubesYears = useMemo(() => Object.keys(clubesByYear).sort().reverse(), [clubesByYear]);
   const curClubes = clubesList[clubesSelected] ?? null;
   const curClubesYear: string = (curClubes as any)?._clubesYear ?? curClubes?.date?.substring(0, 4) ?? "";
+
+  // Deep-link de Clubes: URL `?ct=ccode-tcode` → selecciona o torneio. Corre no
+  // arranque (quando a lista carrega) e em navegação back/forward. `clubesSelected`
+  // de propósito FORA das deps para não competir com os cliques na sidebar.
+  useEffect(() => {
+    if (seriesFilter !== "clubes" || !clubesLoaded) return;
+    const ct = searchParams.get("ct");
+    if (!ct) return;
+    const idx = clubesList.findIndex(t => `${t.ccode}-${t.tcode}` === ct);
+    if (idx >= 0) setClubesSelected(idx);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [seriesFilter, clubesLoaded, clubesList, searchParams]);
 
   const jovensGroups = useMemo(() => {
     // Input do tab JOVENS:
@@ -1782,7 +1849,14 @@ function Content() {
                       key={t.tcode + "_" + t.date}
                       t={tWithProgress}
                       isActive={clubesSelected === idx}
-                      onClick={() => { setClubesSelected(idx); md.onSelect(); }}
+                      onClick={() => {
+                        setClubesSelected(idx);
+                        // URL partilhável por torneio: /FPG/clubes?ct=ccode-tcode
+                        const sp = new URLSearchParams(searchParams);
+                        sp.set("ct", `${t.ccode}-${t.tcode}`);
+                        setSearchParams(sp, { replace: true });
+                        md.onSelect();
+                      }}
                       accentColor={SIDEBAR_ACCENT.clubes}
                     />
                   );
@@ -1855,20 +1929,42 @@ function Content() {
                     ? (gruposData?.[esc] ?? null)
                     : null;
                   const grupos = (curated && curated.length) ? curated : autoGruposByClub(curClubes);
-                  // Mid-Amateur (e clubes não-juvenis): formato diferente dos
-                  // juvenis — R1 individual conta 5 melhores, R2 foursomes conta
-                  // 2 melhores, sem cap de pancadas por buraco.
+                  // Clubes não-juvenis (midam): formato de pontuação por torneio
+                  // (CLUBES_TEAM_FORMAT). Default = 5 melhores em todas as rondas
+                  // (Absoluto), sem cap de pancadas por buraco.
                   const isMidam = esc === "midam";
+                  const fmt = CLUBES_TEAM_FORMAT[`${curClubes.ccode}-${curClubes.tcode}`];
+                  // Match Play (ex: Regional 2026) — a classificação é por pontos,
+                  // não por pancadas. As vistas de Grupos por strokeplay não se
+                  // aplicam; mostra-se nota e remete para Individual / Draw.
+                  if (fmt?.matchPlay) {
+                    return (
+                      <div className="fs-13 c-muted" style={{ padding: "32px 24px", textAlign: "center" }}>
+                        <div className="mb-12" style={{ fontSize: 32 }}>🆚</div>
+                        <div className="fw-600 mb-6">Match Play — classificação por pontos</div>
+                        <div className="fs-12">{fmt.note}<br/>A classificação por equipa (pontos) será apresentada quando os resultados forem publicados.<br/>Vê o tab <strong>Individual</strong> e o <strong>Draw</strong> para os emparelhamentos 3-way.</div>
+                      </div>
+                    );
+                  }
+                  // Torneios com categorias (ex: Regional Absoluto — Homens/
+                  // Senhoras/Juniores) → sub-grupos por categoria dentro do clube.
+                  if (fmt?.categories && grupos.length) {
+                    return <ClubesCategoriasView
+                      tournament={curClubes}
+                      grupos={grupos}
+                      playersDB={playersDB}
+                      categories={fmt.categories}
+                    />;
+                  }
                   if (grupos.length) {
                     return <ClubesGruposView
                       grupos={grupos}
                       tournament={curClubes}
                       escKey={(esc === "sub18" ? "sub18" : "sub14")}
-                      bestNByRound={isMidam ? [5, 2] : undefined}
+                      bestNByRound={isMidam ? fmt?.bestNByRound : undefined}
+                      defaultBestN={isMidam ? (fmt?.defaultBestN ?? 5) : undefined}
                       maxHoleScore={isMidam ? Infinity : undefined}
-                      formatNote={isMidam
-                        ? <>R1: contam os 5 melhores (individual) · R2: contam os 2 melhores (foursomes)</>
-                        : undefined}
+                      formatNote={isMidam ? (fmt?.note ?? "Cada dia: 5 melhores resultados por equipa") : undefined}
                     />;
                   }
                   return (

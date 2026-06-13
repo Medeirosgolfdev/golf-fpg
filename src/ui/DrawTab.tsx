@@ -40,9 +40,83 @@ interface Props {
   /** Link para o draw oficial no scoring.fpg.pt. Renderiza-se na toolbar
    *  como atalho "scoring.fpg.pt ↗" (mesmo padrão do AdmissionsTab). */
   fpgUrl?: string;
+  /** Resultados da MESMA ronda do draw, para cruzar com os emparelhamentos e
+   *  preencher as colunas ± (toPar) e Tot (gross). Map indexado por chave
+   *  `fed` (string numérica) E por nome normalizado (`norm(nome)`) — ambos
+   *  apontam para o mesmo registo, para o lookup funcionar quer o draw resolva
+   *  o fed quer só tenha nome. Quando ausente (ronda ainda não jogada), as
+   *  colunas mostram "–". */
+  results?: Map<string, { gross: number; toPar: number | null }>;
 }
 
-type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "tee" | "nasc" | "hora" | "buraco";
+type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "tee" | "nasc" | "hora" | "buraco" | "toPar" | "gross";
+
+/** Registo de resultado de uma ronda usado para cruzar com o draw. */
+export type DrawResult = { gross: number; toPar: number | null };
+
+/** Forma mínima de jogador aceite por `buildDrawResults`. */
+type ResultPlayer = {
+  name?: string;
+  fed?: string | null;
+  fedCode?: string;
+  grossTotal?: number | string | null;
+  toPar?: number | null;
+  parTotal?: number;
+  roundScores?: Array<{ round: number; gross: number; pars: number[] }>;
+};
+
+/**
+ * Constrói o mapa de resultados de uma ronda para alimentar a prop `results`
+ * da DrawTab. Indexa cada registo por `fed`/`fedCode` (autoritativo) E por
+ * `norm(nome)`, para o lookup funcionar quer o draw resolva o fed quer só
+ * tenha nome.
+ *
+ * Dois modos:
+ *  - `perRoundEntry: true` — `players` já é a lista de UMA ronda (cada jogador
+ *    tem `grossTotal`/`toPar` dessa ronda). Usa-os directamente. (DrivePage,
+ *    RFEGPage — entradas já expandidas por ronda.)
+ *  - default — `players` é o torneio completo multi-ronda; extrai a ronda via
+ *    `roundScores.find(r => r.round === roundNum)`. Só cai em `grossTotal`
+ *    quando é torneio de ronda única (senão `grossTotal` é o acumulado de
+ *    todas as rondas e estaria errado como resultado de uma ronda só).
+ *
+ * Devolve `undefined` quando não há nenhuma ronda jogada (mapa vazio) — assim
+ * a DrawTab mostra "–" em todas as linhas.
+ */
+export function buildDrawResults(
+  players: ResultPlayer[] | undefined,
+  roundNum: number,
+  opts?: { perRoundEntry?: boolean },
+): Map<string, DrawResult> | undefined {
+  if (!players || roundNum < 1) return undefined;
+  const perRound = !!opts?.perRoundEntry;
+  const m = new Map<string, DrawResult>();
+  const numOf = (v: number | string | null | undefined): number => {
+    if (typeof v === "number") return isNaN(v) ? 0 : v;
+    if (typeof v === "string") { const n = parseInt(v, 10); return isNaN(n) ? 0 : n; }
+    return 0;
+  };
+  for (const p of players) {
+    let gross = 0;
+    let toPar: number | null = null;
+    const rs = p.roundScores?.find(r => r.round === roundNum);
+    if (rs) {
+      gross = rs.gross;
+      const parT = p.parTotal || rs.pars.reduce((a, b) => a + b, 0);
+      toPar = gross > 0 && parT > 0 ? gross - parT : null;
+    } else if (perRound || (roundNum === 1 && !(p.roundScores?.length))) {
+      // Entrada já-por-ronda (perRound) OU torneio de ronda única.
+      gross = numOf(p.grossTotal);
+      toPar = typeof p.toPar === "number" ? p.toPar : null;
+    }
+    if (gross <= 0) continue; // ronda não jogada por este jogador
+    const rec: DrawResult = { gross, toPar };
+    const fed = (p.fed || p.fedCode || "").toString().trim();
+    if (fed) m.set(fed, rec);
+    if (p.name) m.set(norm(p.name), rec);
+  }
+  return m.size ? m : undefined;
+}
 
 // Paleta de fundo para distinguir horas de saída (grupos de flight).
 // Cores pastel translúcidas — funcionam em tema claro e escuro.
@@ -68,7 +142,7 @@ function teeNameFor(escalao?: string, sex?: "M" | "F"): string | undefined {
 export default function DrawTab({
   draw, roundNum, playersDB,
   tournamentEscalao, tournamentSex, tournamentDate,
-  admissions, fpgUrl,
+  admissions, fpgUrl, results,
 }: Props) {
   const effDate = tournamentDate || draw.date || null;
   const fedBirthdates = useFedBirthdates();
@@ -151,6 +225,8 @@ export default function DrawTab({
       dob?: string;
       dobYear: number | null;
       escHist: string | null;
+      gross: number;
+      toPar: number | null;
     }> = [];
     let idx = 0;
     // Heurística: o scraper do draw às vezes mete o fed no campo `clube` (só dígitos 4-6 chars).
@@ -278,6 +354,14 @@ export default function DrawTab({
         // `tournamentEscalao` porque torneios combinados (Regional Sub 14-24,
         // Sub 10+12) têm múltiplos escalões em disputa — o genérico engana.
         const escHist = escalaoAtDate(dob, effDate || undefined) || null;
+        // Cruzar com os resultados da ronda (quando disponíveis): tentar por
+        // fed primeiro (autoritativo), depois por nome normalizado. Sem match
+        // → gross 0 / toPar null (a tabela mostra "–").
+        const res = results
+          ? (fed ? results.get(fed) : undefined)
+            ?? results.get(norm(p.nome))
+            ?? results.get(norm(nomeFormatted))
+          : undefined;
         out.push({
           pos: idx,
           groupIdx,
@@ -291,11 +375,13 @@ export default function DrawTab({
           dob,
           dobYear,
           escHist,
+          gross: res?.gross ?? 0,
+          toPar: res?.toPar ?? null,
         });
       }
     }
     return out;
-  }, [draw, nameToFeds, admFedByName, playersDB, fedBirthdates, effDate, tournamentEscalao, admHcpByFed, admHcpByName]);
+  }, [draw, nameToFeds, admFedByName, playersDB, fedBirthdates, effDate, tournamentEscalao, admHcpByFed, admHcpByName, results]);
 
   // Ordenar por sortKey
   const sorted = useMemo(() => {
@@ -314,6 +400,8 @@ export default function DrawTab({
         case "nasc":   v = (a.dobYear ?? INF) - (b.dobYear ?? INF); break;
         case "hora":   v = a.teeTime.localeCompare(b.teeTime); break;
         case "buraco": v = (a.startHole ?? INF) - (b.startHole ?? INF); break;
+        case "toPar":  v = (a.toPar ?? INF) - (b.toPar ?? INF); break;
+        case "gross":  v = (a.gross || INF) - (b.gross || INF); break;
       }
       return mult * v;
     });
@@ -357,8 +445,8 @@ export default function DrawTab({
       return {
         key: `${p.pos}-${p.fed ?? p.nome}`,
         pos: p.pos,
-        gross: 0,
-        toPar: null,
+        gross: p.gross,
+        toPar: p.toPar,
         scores: [],
         isManuel: manuel,
         sortPos: p.pos,
@@ -497,6 +585,8 @@ export default function DrawTab({
       // Sorting da pos e nome: delegamos a useSort externo
       onSortPos={() => toggleSort("pos")}
       onSortName={() => toggleSort("nome")}
+      onSortToPar={() => toggleSort("toPar")}
+      onSortGross={() => toggleSort("gross")}
       activeSortKey={sortKey}
       activeSortDir={sortDir}
     />

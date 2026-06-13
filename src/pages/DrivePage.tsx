@@ -51,7 +51,7 @@ import { ResumoTable } from "../ui/ResumoTable";
 import DriveAllRoundsScorecardLB from "../ui/DriveAllRoundsScorecardLB";
 import { loadFpgAdmissionsDraws, indexFpgAdmissionsDraws } from "../data/nacional2026Loader";
 import AdmissionsTab from "../ui/AdmissionsTab";
-import DrawTab from "../ui/DrawTab";
+import DrawTab, { buildDrawResults } from "../ui/DrawTab";
 import TournamentGrid from "../ui/TournamentGrid";
 import { expandMultiRound, isDNS } from "../ui/driveUtils";
 import CircuitShell from "../ui/circuit/CircuitShell";
@@ -75,6 +75,7 @@ function DriveDrawSection({ draws, t, esc, pdb, adm }: { draws: Record<string, a
       )}
       <DrawTab draw={draws[cur] || { groups: [] }} roundNum={parseInt(cur, 10)} playersDB={pdb}
         tournamentEscalao={esc || undefined} tournamentSex={sex} tournamentDate={t.date} admissions={adm}
+        results={buildDrawResults(t.players, parseInt(cur, 10))}
         fpgUrl={t.ccode && t.tcode ? `https://scoring.fpg.pt/lists/linkpage.aspx?page=draw&club=${t.ccode}&tourn=${t.tcode}&round=${cur}&ack=8428ACK987` : undefined} />
     </div>
   );
@@ -2240,15 +2241,24 @@ function DriveContent() {
                           tournamentSex={/\bF\b|\bS\b|Feminino/i.test(curTournament.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(curTournament.name || "") ? "M" : undefined}
                         />
                       : specialTab && specialTab.startsWith("draw:")
-                        ? <DrawTab
-                            draw={draws[specialTab.slice(5)] || { groups: [] }}
-                            roundNum={parseInt(specialTab.slice(5), 10)}
-                            playersDB={pdb}
-                            tournamentEscalao={curTournament.escalao || undefined}
-                            tournamentSex={/\bF\b|\bS\b|Feminino/i.test(curTournament.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(curTournament.name || "") ? "M" : undefined}
-                            tournamentDate={curTournament.date}
-                            admissions={adm}
-                          />
+                        ? (() => {
+                            const dRound = parseInt(specialTab.slice(5), 10);
+                            // Resultados dessa ronda: entrada já-por-ronda do grupo
+                            // (R{n}); cada jogador tem grossTotal/toPar da ronda.
+                            const rEntry = selectedGroup.entries.find(e => (e._roundLabel || "").toUpperCase() === "R" + dRound)
+                              || selectedGroup.entries[dRound - 1]
+                              || selectedGroup.entries[0];
+                            return <DrawTab
+                              draw={draws[specialTab.slice(5)] || { groups: [] }}
+                              roundNum={dRound}
+                              playersDB={pdb}
+                              tournamentEscalao={curTournament.escalao || undefined}
+                              tournamentSex={/\bF\b|\bS\b|Feminino/i.test(curTournament.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(curTournament.name || "") ? "M" : undefined}
+                              tournamentDate={curTournament.date}
+                              admissions={adm}
+                              results={buildDrawResults(rEntry?.players, dRound, { perRoundEntry: true })}
+                            />;
+                          })()
                         : roundIdx === selectedGroup.entries.length
                           ? (() => {
                               const totalT = selectedGroup.entries.find(e => e._roundLabel === "Resumo");

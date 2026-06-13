@@ -26,7 +26,7 @@ import { LinksBar } from "../../ui/LinksBar";
 import { ScorecardLB, AccumulatedLB, AllRoundsScorecardLB } from "../../ui/LeaderboardComponents";
 import Aroeira2AnaliseView from "../../ui/Aroeira2AnaliseView";
 import AdmissionsTab from "../../ui/AdmissionsTab";
-import DrawTab from "../../ui/DrawTab";
+import DrawTab, { buildDrawResults } from "../../ui/DrawTab";
 import { TOURNAMENT_EXTRA_LINKS } from "./constants";
 import PrintButton from "../../ui/PrintButton";
 import PrintPJAButton from "../../ui/PrintPJAButton";
@@ -154,6 +154,16 @@ function TournamentDetail({ tournament, escLookup, playersDB }: { tournament: To
   const isAnaliseAroeiraTab = activeKey === "analise-aroeira2";
   const isRoundTab = activeKey.startsWith("round:");
   const roundIdx = isRoundTab ? parseInt(activeKey.slice(6), 10) : 0;
+
+  // Resultados da ronda do draw activo — cruzados com os emparelhamentos no
+  // DrawTab para preencher as colunas ± (toPar) e Tot (gross). Indexado por
+  // `fed` (autoritativo) E por nome normalizado, para o lookup funcionar quer o
+  // draw resolva o fed quer só tenha nome. Só entram rondas já jogadas (gross
+  // numérico > 0); rondas futuras ficam de fora → DrawTab mostra "–".
+  const drawResults = useMemo(
+    () => (isDrawTab ? buildDrawResults(tournament.players, drawRoundNum) : undefined),
+    [isDrawTab, drawRoundNum, tournament],
+  );
 
   // curT só é relevante para round/resumo tabs (lógica existente)
   const expandedIdxForCurT = isResumoTab
@@ -367,6 +377,7 @@ function TournamentDetail({ tournament, escLookup, playersDB }: { tournament: To
               tournamentSex={/\bF\b|\bS\b|Feminino/i.test(tournament.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(tournament.name || "") ? "M" : undefined}
               tournamentDate={tournament.date}
               admissions={admissions}
+              results={drawResults}
               fpgUrl={tournament.ccode && tournament.tcode ? `https://scoring.fpg.pt/lists/linkpage.aspx?page=draw&club=${tournament.ccode}&tourn=${tournament.tcode}&round=${drawRoundNum}&ack=8428ACK987` : undefined}
             />
           : isCombined

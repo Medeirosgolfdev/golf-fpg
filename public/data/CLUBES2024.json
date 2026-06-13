@@ -1,12 +1,12 @@
 {
-  "lastUpdated": "2026-06-13T19:50:08.522974+00:00",
-  "source": "scoring.datagolf.pt",
+  "lastUpdated": "13/06/2026",
+  "source": "scrape-classif-node.js (Node puro, linkpage + classif.aspx/ClassifLST)",
   "totalTournaments": 1,
   "totalPlayers": 33,
   "totalScorecards": 33,
   "tournaments": [
     {
-      "name": "Campeonato Regional de Clubes Absoluto",
+      "name": " Campeonato Regional de Clubes Absoluto",
       "ccode": "059",
       "tcode": "10483",
       "date": "2024-11-30",
@@ -15,7 +15,7 @@
       "circuit": "tour",
       "series": "tour",
       "region": "outro",
-      "escalao": "Absoluto",
+      "escalao": null,
       "num": 1,
       "rounds": 2,
       "playerCount": 33,
@@ -6500,15 +6500,18 @@
               "players": [
                 {
                   "nome": "Araújo,Pedro",
-                  "clube": "31745"
+                  "clube": "Santo da Serra",
+                  "fed": "31745"
                 },
                 {
                   "nome": "Paixão,João",
-                  "clube": "37678"
+                  "clube": "PXO Clube",
+                  "fed": "37678"
                 },
                 {
                   "nome": "Rodrigues,José Duarte",
-                  "clube": "35256"
+                  "clube": "Palheiro",
+                  "fed": "35256"
                 }
               ]
             },
@@ -6519,15 +6522,18 @@
               "players": [
                 {
                   "nome": "Hobley,Brandon",
-                  "clube": "20292"
+                  "clube": "Santo da Serra",
+                  "fed": "20292"
                 },
                 {
                   "nome": "Pereira,Miguel",
-                  "clube": "25098"
+                  "clube": "PXO Clube",
+                  "fed": "25098"
                 },
                 {
                   "nome": "Petim,André",
-                  "clube": "52647"
+                  "clube": "Palheiro",
+                  "fed": "52647"
                 }
               ]
             },
@@ -6538,15 +6544,18 @@
               "players": [
                 {
                   "nome": "Bento,Afonso",
-                  "clube": "20877"
+                  "clube": "Santo da Serra",
+                  "fed": "20877"
                 },
                 {
                   "nome": "Braz,Robbie",
-                  "clube": "23240"
+                  "clube": "Palheiro",
+                  "fed": "23240"
                 },
                 {
                   "nome": "de Brito,Rui Escórcio",
-                  "clube": "50483"
+                  "clube": "PXO Clube",
+                  "fed": "50483"
                 }
               ]
             },
@@ -6557,15 +6566,18 @@
               "players": [
                 {
                   "nome": "Henriques,Alexandre",
-                  "clube": "2178"
+                  "clube": "Santo da Serra",
+                  "fed": "2178"
                 },
                 {
                   "nome": "Fletcher,Jonathan",
-                  "clube": "8334"
+                  "clube": "Palheiro",
+                  "fed": "8334"
                 },
                 {
                   "nome": "Silva,Paulo",
-                  "clube": "25101"
+                  "clube": "PXO Clube",
+                  "fed": "25101"
                 }
               ]
             },
@@ -6576,15 +6588,18 @@
               "players": [
                 {
                   "nome": "Reis Alves,Rafael",
-                  "clube": "40492"
+                  "clube": "Santo da Serra",
+                  "fed": "40492"
                 },
                 {
                   "nome": "Teixeira,Rodrigo",
-                  "clube": "35233"
+                  "clube": "Palheiro",
+                  "fed": "35233"
                 },
                 {
                   "nome": "Sousa,Bruno",
-                  "clube": "25102"
+                  "clube": "PXO Clube",
+                  "fed": "25102"
                 }
               ]
             },
@@ -6595,15 +6610,18 @@
               "players": [
                 {
                   "nome": "Camacho,Ricardo",
-                  "clube": "41799"
+                  "clube": "Santo da Serra",
+                  "fed": "41799"
                 },
                 {
                   "nome": "Camacho,Cecilio",
-                  "clube": "42849"
+                  "clube": "Palheiro",
+                  "fed": "42849"
                 },
                 {
                   "nome": "Guazzoni,Christian",
-                  "clube": "46828"
+                  "clube": "PXO Clube",
+                  "fed": "46828"
                 }
               ]
             },
@@ -6614,15 +6632,18 @@
               "players": [
                 {
                   "nome": "Handa,Élia",
-                  "clube": "10404"
+                  "clube": "Palheiro",
+                  "fed": "10404"
                 },
                 {
                   "nome": "Volkner,Alef",
-                  "clube": "48701"
+                  "clube": "Palheiro",
+                  "fed": "48701"
                 },
                 {
                   "nome": "Cuckney,Fernanda",
-                  "clube": "8332"
+                  "clube": "Palheiro",
+                  "fed": "8332"
                 }
               ]
             },
@@ -6633,15 +6654,18 @@
               "players": [
                 {
                   "nome": "Leal Gouveia,Matilde",
-                  "clube": "41131"
+                  "clube": "Santo da Serra",
+                  "fed": "41131"
                 },
                 {
                   "nome": "Gonçalves,André",
-                  "clube": "41121"
+                  "clube": "Palheiro",
+                  "fed": "41121"
                 },
                 {
                   "nome": "Santos,João",
-                  "clube": "40645"
+                  "clube": "PXO Clube",
+                  "fed": "40645"
                 }
               ]
             },
@@ -6652,15 +6676,18 @@
               "players": [
                 {
                   "nome": "Gaspar,Marcelo",
-                  "clube": "38006"
+                  "clube": "Santo da Serra",
+                  "fed": "38006"
                 },
                 {
                   "nome": "Cunha,Maria",
-                  "clube": "46482"
+                  "clube": "Palheiro",
+                  "fed": "46482"
                 },
                 {
                   "nome": "Santos,Laura",
-                  "clube": "45393"
+                  "clube": "PXO Clube",
+                  "fed": "45393"
                 }
               ]
             },
@@ -6671,15 +6698,18 @@
               "players": [
                 {
                   "nome": "Miranda,José Pedro",
-                  "clube": "38976"
+                  "clube": "Palheiro",
+                  "fed": "38976"
                 },
                 {
                   "nome": "Braz Gil,Carlota",
-                  "clube": "47374"
+                  "clube": "Santo da Serra",
+                  "fed": "47374"
                 },
                 {
                   "nome": "Câmara,Tomás",
-                  "clube": "53548"
+                  "clube": "PXO Clube",
+                  "fed": "53548"
                 }
               ]
             },
@@ -6690,15 +6720,18 @@
               "players": [
                 {
                   "nome": "Rodrigues,Salvador",
-                  "clube": "39465"
+                  "clube": "Palheiro",
+                  "fed": "39465"
                 },
                 {
                   "nome": "Goulartt Medeiros,Manuel",
-                  "clube": "52884"
+                  "clube": "Santo da Serra",
+                  "fed": "52884"
                 },
                 {
                   "nome": "Dias,Bernardo",
-                  "clube": "39023"
+                  "clube": "PXO Clube",
+                  "fed": "39023"
                 }
               ]
             }
@@ -6714,15 +6747,18 @@
               "players": [
                 {
                   "nome": "Hobley,Brandon",
-                  "clube": "20292"
+                  "clube": "Santo da Serra",
+                  "fed": "20292"
                 },
                 {
                   "nome": "Braz,Robbie",
-                  "clube": "23240"
+                  "clube": "Palheiro",
+                  "fed": "23240"
                 },
                 {
                   "nome": "Paixão,João",
-                  "clube": "37678"
+                  "clube": "PXO Clube",
+                  "fed": "37678"
                 }
               ]
             },
@@ -6733,15 +6769,18 @@
               "players": [
                 {
                   "nome": "Bento,Afonso",
-                  "clube": "20877"
+                  "clube": "Santo da Serra",
+                  "fed": "20877"
                 },
                 {
                   "nome": "Fletcher,Jonathan",
-                  "clube": "8334"
+                  "clube": "Palheiro",
+                  "fed": "8334"
                 },
                 {
                   "nome": "Pereira,Miguel",
-                  "clube": "25098"
+                  "clube": "PXO Clube",
+                  "fed": "25098"
                 }
               ]
             },
@@ -6752,15 +6791,18 @@
               "players": [
                 {
                   "nome": "Camacho,Ricardo",
-                  "clube": "41799"
+                  "clube": "Santo da Serra",
+                  "fed": "41799"
                 },
                 {
                   "nome": "Rodrigues,José Duarte",
-                  "clube": "35256"
+                  "clube": "Palheiro",
+                  "fed": "35256"
                 },
                 {
                   "nome": "Silva,Paulo",
-                  "clube": "25101"
+                  "clube": "PXO Clube",
+                  "fed": "25101"
                 }
               ]
             },
@@ -6771,15 +6813,18 @@
               "players": [
                 {
                   "nome": "Araújo,Pedro",
-                  "clube": "31745"
+                  "clube": "Santo da Serra",
+                  "fed": "31745"
                 },
                 {
                   "nome": "Camacho,Cecilio",
-                  "clube": "42849"
+                  "clube": "Palheiro",
+                  "fed": "42849"
                 },
                 {
                   "nome": "de Brito,Rui Escórcio",
-                  "clube": "50483"
+                  "clube": "PXO Clube",
+                  "fed": "50483"
                 }
               ]
             },
@@ -6790,15 +6835,18 @@
               "players": [
                 {
                   "nome": "Henriques,Alexandre",
-                  "clube": "2178"
+                  "clube": "Santo da Serra",
+                  "fed": "2178"
                 },
                 {
                   "nome": "Petim,André",
-                  "clube": "52647"
+                  "clube": "Palheiro",
+                  "fed": "52647"
                 },
                 {
                   "nome": "Sousa,Bruno",
-                  "clube": "25102"
+                  "clube": "PXO Clube",
+                  "fed": "25102"
                 }
               ]
             },
@@ -6809,15 +6857,18 @@
               "players": [
                 {
                   "nome": "Reis Alves,Rafael",
-                  "clube": "40492"
+                  "clube": "Santo da Serra",
+                  "fed": "40492"
                 },
                 {
                   "nome": "Teixeira,Rodrigo",
-                  "clube": "35233"
+                  "clube": "Palheiro",
+                  "fed": "35233"
                 },
                 {
                   "nome": "Guazzoni,Christian",
-                  "clube": "46828"
+                  "clube": "PXO Clube",
+                  "fed": "46828"
                 }
               ]
             },
@@ -6828,15 +6879,18 @@
               "players": [
                 {
                   "nome": "Volkner,Alef",
-                  "clube": "48701"
+                  "clube": "Palheiro",
+                  "fed": "48701"
                 },
                 {
                   "nome": "Cuckney,Fernanda",
-                  "clube": "8332"
+                  "clube": "Palheiro",
+                  "fed": "8332"
                 },
                 {
                   "nome": "Handa,Élia",
-                  "clube": "10404"
+                  "clube": "Palheiro",
+                  "fed": "10404"
                 }
               ]
             },
@@ -6847,15 +6901,18 @@
               "players": [
                 {
                   "nome": "Gonçalves,André",
-                  "clube": "41121"
+                  "clube": "Palheiro",
+                  "fed": "41121"
                 },
                 {
                   "nome": "Leal Gouveia,Matilde",
-                  "clube": "41131"
+                  "clube": "Santo da Serra",
+                  "fed": "41131"
                 },
                 {
                   "nome": "Santos,João",
-                  "clube": "40645"
+                  "clube": "PXO Clube",
+                  "fed": "40645"
                 }
               ]
             },
@@ -6866,15 +6923,18 @@
               "players": [
                 {
                   "nome": "Miranda,José Pedro",
-                  "clube": "38976"
+                  "clube": "Palheiro",
+                  "fed": "38976"
                 },
                 {
                   "nome": "Gaspar,Marcelo",
-                  "clube": "38006"
+                  "clube": "Santo da Serra",
+                  "fed": "38006"
                 },
                 {
                   "nome": "Santos,Laura",
-                  "clube": "45393"
+                  "clube": "PXO Clube",
+                  "fed": "45393"
                 }
               ]
             },
@@ -6885,15 +6945,18 @@
               "players": [
                 {
                   "nome": "Rodrigues,Salvador",
-                  "clube": "39465"
+                  "clube": "Palheiro",
+                  "fed": "39465"
                 },
                 {
                   "nome": "Goulartt Medeiros,Manuel",
-                  "clube": "52884"
+                  "clube": "Santo da Serra",
+                  "fed": "52884"
                 },
                 {
                   "nome": "Câmara,Tomás",
-                  "clube": "53548"
+                  "clube": "PXO Clube",
+                  "fed": "53548"
                 }
               ]
             },
@@ -6904,15 +6967,18 @@
               "players": [
                 {
                   "nome": "Cunha,Maria",
-                  "clube": "46482"
+                  "clube": "Palheiro",
+                  "fed": "46482"
                 },
                 {
                   "nome": "Braz Gil,Carlota",
-                  "clube": "47374"
+                  "clube": "Santo da Serra",
+                  "fed": "47374"
                 },
                 {
                   "nome": "Dias,Bernardo",
-                  "clube": "39023"
+                  "clube": "PXO Clube",
+                  "fed": "39023"
                 }
               ]
             }
