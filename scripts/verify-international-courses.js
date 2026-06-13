@@ -45,12 +45,19 @@ const warns = [];
 const E = (course, tee, msg) => errors.push({ course, tee, msg });
 const W = (course, tee, msg) => warns.push({ course, tee, msg });
 
-function checkTee(courseName, t) {
+function checkTee(courseName, t, players) {
   const holes = t.holes || [];
   const n = holes.length;
   const tag = t.teeName || t.teeId;
   // Tee vazio = AVISO (a App filtra-o no dedupTees; é ruído da FPG, não bug).
-  if (n !== 9 && n !== 18) { W(courseName, tag, `tee vazio (${n} buracos) — filtrado em runtime`); return; }
+  // Os jogadores que jogaram este tee NÃO se perdem — ficam em _players (ao
+  // nível do campo, com o tee da ronda registado). Só falta o scorecard
+  // buraco-a-buraco deste tee (a FPG só trouxe o score, não as jardas).
+  if (n !== 9 && n !== 18) {
+    const np = players ? Object.keys(players).length : 0;
+    W(courseName, tag, `tee vazio (${n} buracos) — filtrado em runtime · ${np} jogador(es) do campo preservados`);
+    return;
+  }
 
   // SI
   const si = holes.map(h => h && typeof h.si === "number" ? h.si : null);
@@ -106,7 +113,7 @@ function run() {
   for (const c of all) {
     const m = c.master;
     const name = m.name;
-    for (const t of (m.tees || [])) checkTee(name, t);
+    for (const t of (m.tees || [])) checkTee(name, t, m._players);
     if (c._src === "away" && !m.country) W(name, "", "sem país");
 
     const nn = norm(name);

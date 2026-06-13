@@ -1,8 +1,10 @@
 # Draws manuais — estado, arquitectura e como continuar
 
-> Última actualização: 2026-06-12
+> Última actualização: 2026-06-13
 > Âmbito: pairings/draws do Manuel (fed **52884**) que a FPG **não publica** e que
-> são curados à mão a partir de PDFs / imagens / Excel / texto.
+> são curados à mão a partir de PDFs / imagens / Excel / texto. Desde 2026-06-13
+> o extractor CGSS também incorpora draws de torneios que o Manuel **não** jogou
+> (para o campo completo no `/FPG`), não só os dele.
 
 ---
 
@@ -113,11 +115,13 @@ Gross sentinela `>= 200` (ex. 998 nos stableford de pares) é tratado como nulo.
 
 ---
 
-## 4. Estado actual (2026-06-12)
+## 4. Estado actual (2026-06-13)
 
-**Cobertura /draws (FPG):** 87/120 rondas com draw (73%), 69/90 torneios.
+**Cobertura /draws (FPG):** 87/120 rondas com draw (73%), 69/90 torneios (não
+conta os +21 CGSS de §4.4 nem os +3 de §4.3, que são para o campo completo do
+`/FPG`, não para o `/draws` do Manuel).
 
-### 4.1 CGSS — `cgss-draws-manual.json` (12 torneios, draws COMPLETOS)
+### 4.1 CGSS — `cgss-draws-manual.json` (12 torneios "base"; +21 em §4.4)
 
 | tcode | Data | Torneio | Grupos |
 |---|---|---|---|
@@ -178,6 +182,27 @@ homónimo marido (54907) jogam **no mesmo grupo** — distintos pela licença.
 renderizado em `TournamentDetail.tsx` a seguir aos links Draw/Scoring. Para
 acrescentar regulamentos a outros torneios: pôr o PDF em `public/docs/` e juntar
 uma entrada ao mapa.
+
+### 4.4 CGSS 2025/2026 do site do clube — `cgss-draws-manual.json` (+21) — 2026-06-13
+
+Descarregados de `santodaserragolf.com/tournaments` (login de membro → botão "Draw"
+= `/download/{id}/`) e incorporados pelo `extract-cgss-draws.py`. **São torneios
+que o Manuel não jogou** — entram para o campo completo do `/FPG` (DrawTab), não
+para o `/draws`. Todos casaram com o tcode real (`drive-data`/`pull`); o extractor
+resolve federação+clube de cada jogador por nome contra os resultados.
+
+21 draws: V Torneio OM (t10877), C.Santos/Mercedes (t10894), T4 Betterball (t10897),
+Troféu João Sousa (t10903), T5 Texas Scramble (t10908), Calheta Viva (t10919),
+Summer (t10922), Barbeito (t10937), Diário de Notícias 2025 (t10942), Taça do Clube
+(t10945), Taça Presidente (t10950), NOS Empresas 2025 (t10954), Taça 1937 (t10964),
+Famílias & Amigos (t10978), Carnaval 2026 (t10994), T2 Foursomes 2026 (t10999),
+Primavera 2026 (t11001), Golf & Clássicos 2026 (t11004), NOS Empresas 2026 (t11025),
+MADEIRA GOLF TROPHY 2026 (t11031), e II ABERTO 2026 (draw-only — não scrapeado).
+
+**Não estão no site (logo sem draw):** III ABERTO 2026 (t11032 — o site só tem
+resultados+regulamento), I ABERTO 2026 (t11005 — o site reutilizou o mesmo id de
+download do II ABERTO). O site só recua a **29/03/2025** (reconstruído em 2024) —
+2023/2024 não existem lá; para esses a fonte é o draw do scoring FPG/DataGolf.
 
 ---
 
@@ -249,6 +274,18 @@ muitos têm o mesmo nome de edições já incorporadas mas **ano diferente**.
 > - **Match alargado:** indexa `pull-torneios* + drive-data-* + aquapor-data-* +
 >   clubes* + jovens*` (antes só pull-torneios) — os sociais CGSS sem Manuel
 >   vivem tipicamente no drive-data.
+> - **Fallback sem poppler (`pdfplumber`):** se o `pdftotext` não existir (Windows
+>   sem poppler), o `pdftext()` usa `pdfplumber`. Estes draws DataGolf são em
+>   **DUAS colunas** — recorta a página no x da 2ª "Saída" e usa `extract_text()`
+>   NATIVO em cada metade (preserva os espaços). ⚠ NÃO usar `extract_text(layout=True)`
+>   nem reconstrução palavra-a-palavra: colam nomes ("PauloJorgeSousa"), baralham
+>   colunas (nome↔clube) e metem o "A" do `10 A` como nome. Instalar: `python -m pip install pdfplumber`.
+> - **`parse_header` corta rótulos colados:** com `extract_text` os espaços
+>   colapsam, por isso corta `Data:` / `Nº.Jog` / `Modal.` também com 1 espaço
+>   (senão o nome saía "...Summer 2025 Data:2025-08-16" e o `fixMeta` empurrava-o para a UI).
+> - **Auto-limpeza:** remove sintéticas (`cgss-...`) órfãs de runs com parsing mau
+>   — quando já há tcode real na mesma data ou o nome ficou com "Data:" colado.
+>   Imprime `... lixo removido` no fim.
 >
 > **Fonte dos draws CGSS:** o site do clube (`santodaserragolf.com/tournaments`,
 > login de membro → links "Draw" = `/download/{id}/`) só lista **2025 e 2026**
@@ -257,11 +294,7 @@ muitos têm o mesmo nome de edições já incorporadas mas **ano diferente**.
 > para esses a fonte é o endpoint de draw do scoring FPG/DataGolf
 > (`linkpage.aspx?page=draw&club=007&tourn={tcode}`).
 >
-> **Descarregados 2026-06-13 (17, pendentes de incorporar):** Primavera 2026,
-> T2 Foursomes 2026, Carnaval 2026, Famílias & Amigos 2025, Taça 1937, NOS
-> Empresas 2025, Taça Presidente 2025, Taça do Clube 2025, Diário de Notícias
-> 2025, Barbeito 2025, Summer 2025, Calheta Viva 2025, T5 Texas Scramble,
-> Troféu João Sousa, T4 Betterball, C. Santos/Mercedes, V Torneio OM.
+> **Incorporados 2026-06-13:** os 21 draws de 2025/2026 do site — ver §4.4.
 
 ### Caso B — imagem / Excel / texto (PJA ou outro)
 1. Transcrever os grupos (tee time, buraco, jogadores).
@@ -277,7 +310,17 @@ node scripts/pairings-build.js     # regenera public/data/manuel-pairings.json (
 npx vitest run                     # 174 testes devem passar
 ```
 O FPGPage (DrawTab) não precisa de build — lê os ficheiros curados em runtime via
-`loadFpgAdmissionsDraws`.
+`loadFpgAdmissionsDraws` (Ctrl+Shift+R no browser chega).
+
+### Correções no `DrawTab.tsx` (2026-06-13)
+- **Separador de grupos em shotgun:** as linhas entre grupos passaram a usar um
+  `groupIdx` (ordem em `draw.groups`) em vez do `teeTime`. Em shotguns todos os
+  grupos saem à mesma hora → o `teeTime` nunca mudava e não se desenhava linha
+  nenhuma. A cor de fundo da coluna Hora também cicla por grupo. O sort por
+  "Buraco" passou a contar como agrupador válido (útil no shotgun).
+- **Bandeira a dobrar nos estrangeiros:** removida a `<CountryFlag>` que o DrawTab
+  punha ANTES do `<TournPName>` — o `TournPName` já desenha a bandeira (via
+  country no playersDB). Tinha-se duas. Agora só o `TournPName` a desenha.
 
 ---
 
@@ -309,3 +352,17 @@ O FPGPage (DrawTab) não precisa de build — lê os ficheiros curados em runtim
   gross individual não existe nestes formatos stableford.
 - **Editar dois sítios em sintonia:** qualquer mudança ao formato dos ficheiros
   curados tem de ser reflectida nos DOIS merges (loader TS + pairings-build JS).
+- **PDFs descarregados pelo browser não aparecem no mount do sandbox** (foram
+  criados pelo PowerShell). As ferramentas de ficheiro (`Read`) conseguem lê-los
+  em `C:\golf-fpg\...` mas o `bash` do sandbox não → o `pdftotext` do sandbox não
+  serve para estes; corre o extractor no PC do utilizador.
+- **Download via extensão do Chrome:** transferências múltiplas programáticas são
+  bloqueadas pelo aviso "transferir vários ficheiros". Disparar 1 primeiro, o
+  utilizador clica "Permitir", e só depois o lote. Cuidado com duplicados
+  (Chrome acrescenta " (1)") e com `Move-Item` para pasta inexistente (renomeia o
+  1º ficheiro com o nome da pasta).
+- **`extract-cgss-draws.py` é regenerável MAS aditivo:** correr com uma pasta só
+  de PDFs novos não apaga os antigos (merge por `ccode-tcode`). Pôr na `--pdf-dir`
+  só draws CGSS — qualquer PDF processado sem match cai em `cgss-...` sintético.
+- **Site do CGSS (`santodaserragolf.com`)** só tem draws de 2025/2026 (login de
+  membro). Draws 2023/2024 não existem lá; tirar do scoring FPG/DataGolf.
