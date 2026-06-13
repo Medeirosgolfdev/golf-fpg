@@ -111,6 +111,8 @@ const COURSE_NAME_ALIASES: Record<string, string> = {
   "glen golf course": "Glen Golf Club",
   "chantilly vineuil new": "Golf de Chantilly Parcours de Vineul",
   "vierumakki": "vierumaki golf club",
+  "454golf du médoc": "Golf du Médoc",
+  "pga catalunya resort, spain": "PGA Catalunya Resort",
 };
 
 /* ── Resolução por par[] para nomes ambíguos ──────────────────────────── */
