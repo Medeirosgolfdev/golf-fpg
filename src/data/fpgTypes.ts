@@ -50,6 +50,10 @@ export interface Tournament extends BaseTournament {
   region?: string;
   escalao?: string | null;
   num?: number;
+  /** Mapa clube → letra de equipa do sorteio oficial (torneios de clubes).
+   *  Usado por autoGruposByClub para mostrar as letras oficiais (A/B/C…) em
+   *  vez de uma atribuição alfabética automática. */
+  teamLetters?: Record<string, string>;
   links?: Record<string, string>;
   /** Links extra do torneio (regulamento, página do evento, etc.) — aparecem
    *  na toolbar do detalhe ao lado de Inscrições/Draw/Scoring. */

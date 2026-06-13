@@ -33,8 +33,9 @@ import {
 } from "../ui/tournamentPrimitives";
 import { PJARankingView } from "../ui/PJARankingView";
 import ClubesGruposView from "../ui/ClubesGruposView";
+import TournExtLinks from "../ui/TournExtLinks";
 // Tipos e utilitários FPG — fonte canónica em ../data/fpgTypes.ts e ../data/fpgUtils.ts
-import type { Tournament } from "../data/fpgTypes";
+import type { Tournament, GrupoEntry } from "../data/fpgTypes";
 import { buildDisplayList, tournamentHasManuel } from "../data/fpgUtils";
 import { isDNS } from "../ui/driveUtils";
 // Leaderboard components — extraídos para fpg/LeaderboardComponents.tsx
@@ -66,6 +67,42 @@ import { TournamentDetail } from "./fpg/TournamentDetail";
 
 
 /* InscricoesPanel, buildJovensGroups, TERMOS_COMPETICAO, JovensGroup — importados de fpg/InscricoesComponents */
+
+/**
+ * Auto-constrói a composição de equipas (GrupoEntry[]) de um torneio de clubes
+ * a partir dos próprios jogadores, agrupados pelo campo `club`. Usado para
+ * torneios de clubes sem composição curada em CLUBES_GRUPOS_BY_YEAR (ex:
+ * Campeonato Nacional de Clubes Mid-Amateur). A ClubesGruposView cruza por
+ * `fed` e calcula o best-N por equipa, exactamente como nos juvenis.
+ */
+function autoGruposByClub(t: Tournament | null): GrupoEntry[] {
+  if (!t) return [];
+  // Agrupar jogadores por clube (a chave do grupo — letra — é atribuída só
+  // depois, por ordem alfabética de clube, para o cartão mostrar "A/B/C…" na
+  // caixa e o nome do clube ao lado — igual aos juvenis curados).
+  const byClub = new Map<string, { clube: string; jogadores: GrupoEntry["jogadores"] }>();
+  for (const p of t.players) {
+    const clube = (p.club || "Sem clube").trim();
+    if (!byClub.has(clube)) byClub.set(clube, { clube, jogadores: [] });
+    const hcpRaw = (p as any).hcpExact ?? (p as any).hcpPlay;
+    byClub.get(clube)!.jogadores.push({
+      nome: p.name,
+      fed: p.fedCode ?? null,
+      hcp: hcpRaw != null && hcpRaw !== "" ? hcpRaw : 0,
+    });
+  }
+  const letra = (i: number) =>
+    i < 26 ? String.fromCharCode(65 + i)
+           : String.fromCharCode(65 + Math.floor(i / 26) - 1) + String.fromCharCode(65 + (i % 26));
+  // Letras oficiais por clube (do sorteio FPG), se o torneio as trouxer
+  // (campo `teamLetters` em CLUBES{ano}.json). Caso contrário, letras
+  // alfabéticas por ordem de clube como fallback.
+  const letterMap = (t as any).teamLetters as Record<string, string> | undefined;
+  return [...byClub.values()]
+    .sort((a, b) => a.clube.localeCompare(b.clube, "pt"))
+    .map((g, i) => ({ grupo: letterMap?.[g.clube] ?? letra(i), clube: g.clube, jogadores: g.jogadores }))
+    .sort((a, b) => a.grupo.localeCompare(b.grupo));
+}
 
 function Content() {
   const location = useLocation();
@@ -131,7 +168,6 @@ function Content() {
   const [clubesLoading, setClubesLoading]         = useState(false);
   const [clubesLoaded, setClubesLoaded]           = useState(false);
   const [clubesSelected, setClubesSelected]       = useState<number>(0);
-  const [clubesEsc] = useState<string>("sub14"); // "sub14" | "sub18"
   const [clubesView, setClubesView]               = useState<"individual" | "grupos">("grupos");
 
   // ── Estado PJA (drive/aquapor mensais, para o Ranking PJA 2026+) ─────────
@@ -408,15 +444,21 @@ function Content() {
             setError(`Ficheiro não encontrado: ${dataUrl(0)}`);
           }
 
-          // Carregar os 3 ficheiros de Clubes em paralelo com o loader principal
+          // Carregar os ficheiros de Clubes em paralelo com o loader principal
           const CLUBES_FILES_MAIN = [
             { url: "/data/clubes_sub_14&18_2026.json", year: "2026" },
             { url: "/data/clubes_sub_14&18_2025.json", year: "2025" },
             { url: "/data/clubes_sub_14&18_2024.json", year: "2024" },
+            // Clubes não-juvenis (ex: Nacional de Clubes Mid-Amateur, Regional
+            // de Clubes Absoluto) — escalão "midam"; a vista Grupos auto-constrói
+            // as equipas por clube.
+            { url: "/data/CLUBES2026.json", year: "2026" },
+            { url: "/data/CLUBES2024.json", year: "2024" },
           ];
           const resolveEscKeyMain = (escalao: string | null | undefined): string => {
             if (escalao && /14/i.test(escalao)) return "sub14";
             if (escalao && /18/i.test(escalao)) return "sub18";
+            if (escalao && /mid|amateur|absolut|s[eé]nior/i.test(escalao)) return "midam";
             return "sub14";
           };
           const clubesMetaLocal: DataSource[] = [];
@@ -464,6 +506,11 @@ function Content() {
                 (t as any)._admissions = ad.admissions;
                 (t as any)._draws = ad.draws;
               }
+              // Fallback: draws/admissions embebidos no próprio CLUBES{ano}.json
+              // (ex: scrapados por scripts/scrape-clube-draws.js). Só usados
+              // quando o fpg-admissions-draws.json não cobre este torneio.
+              if (!(t as any)._draws && (t as any).draws) (t as any)._draws = (t as any).draws;
+              if (!(t as any)._admissions && (t as any).admissions) (t as any)._admissions = (t as any).admissions;
               return t;
             };
             const enrichedAllT = allT.map(enrich);
@@ -591,11 +638,17 @@ function Content() {
       { url: "/data/clubes_sub_14&18_2026.json", escFallback: null,  year: "2026" },
       { url: "/data/clubes_sub_14&18_2025.json", escFallback: null,  year: "2025" },
       { url: "/data/clubes_sub_14&18_2024.json", escFallback: null,  year: "2024" },
+      // Clubes não-juvenis (ex: Nacional de Clubes Mid-Amateur, Regional de
+      // Clubes Absoluto) — escFallback "midam"; a vista Grupos auto-constrói
+      // as equipas por clube.
+      { url: "/data/CLUBES2026.json", escFallback: "midam", year: "2026" },
+      { url: "/data/CLUBES2024.json", escFallback: "midam", year: "2024" },
     ];
 
     function resolveEscKey(escalao: string | undefined | null, fallback: string | null): string {
       if (escalao && /14/i.test(escalao)) return "sub14";
       if (escalao && /18/i.test(escalao)) return "sub18";
+      if (escalao && /mid|amateur|absolut|s[eé]nior/i.test(escalao)) return "midam";
       return fallback ?? "sub14";
     }
 
@@ -637,6 +690,11 @@ function Content() {
             (t as any)._admissions = ad.admissions;
             (t as any)._draws = ad.draws;
           }
+          // Fallback: draws/admissions embebidos no próprio CLUBES{ano}.json
+          // (ex: draws scrapados por scripts/scrape-clube-draws.js). Só usados
+          // quando o fpg-admissions-draws.json não cobre este torneio.
+          if (!(t as any)._draws && (t as any).draws) (t as any)._draws = (t as any).draws;
+          if (!(t as any)._admissions && (t as any).admissions) (t as any)._admissions = (t as any).admissions;
           seen.set(key, t as Tournament);
         }
       }
@@ -1755,6 +1813,25 @@ function Content() {
               })}
             </div>
 
+            {/* Links directos FPG (Inscritos · Draw · Resultados) — visíveis em
+                ambos os tabs (Grupos e Individual) para TODOS os torneios de
+                clubes. O TournamentDetail já mostra estes links no cabeçalho,
+                mas o tab Grupos não os tinha. */}
+            {curClubes?.ccode && curClubes?.tcode && (
+              <div className="flex-wrap" style={{
+                display: "flex", alignItems: "center", gap: 8,
+                padding: "8px 16px", borderBottom: "1px solid var(--border)",
+                background: "var(--bg-muted,#f7f7f7)", fontSize: 12,
+              }}>
+                <span className="fw-600" style={{ color: "var(--text-muted)" }}>FPG:</span>
+                <TournExtLinks
+                  ccode={curClubes.ccode}
+                  tcode={curClubes.tcode}
+                  round={1}
+                />
+              </div>
+            )}
+
             {clubesView === "individual"
               ? curClubes
                   ? <TournamentDetail tournament={curClubes} escLookup={escLookup} playersDB={playersDB} />
@@ -1764,16 +1841,35 @@ function Content() {
                       </div>
                     )
               : (() => {
-                  const gruposData = curClubesYear ? CLUBES_GRUPOS_BY_YEAR[curClubesYear] : null;
-                  if (gruposData) {
-                    return <ClubesGruposView
-                      grupos={gruposData[(curClubes as any)?._clubesEsc as "sub14" | "sub18"] ?? gruposData[clubesEsc as "sub14" | "sub18"] ?? []}
-                      tournament={curClubes}
-                      escKey={((curClubes as any)?._clubesEsc ?? clubesEsc) as "sub14" | "sub18"}
-                    />;
+                  if (!curClubes) {
+                    return !clubesLoading
+                      ? <div className="center-msg muted">Selecciona um torneio</div>
+                      : null;
                   }
-                  if (!curClubes && !clubesLoading) {
-                    return <div className="center-msg muted">Selecciona um torneio</div>;
+                  // Composição curada (juvenis sub14/sub18) tem prioridade; para
+                  // clubes não-juvenis (ex: Mid-Amateur, esc "midam") ou edições
+                  // sem composição carregada, auto-constrói as equipas por clube.
+                  const esc = (curClubes as any)?._clubesEsc as string | undefined;
+                  const gruposData = curClubesYear ? CLUBES_GRUPOS_BY_YEAR[curClubesYear] : null;
+                  const curated = (esc === "sub14" || esc === "sub18")
+                    ? (gruposData?.[esc] ?? null)
+                    : null;
+                  const grupos = (curated && curated.length) ? curated : autoGruposByClub(curClubes);
+                  // Mid-Amateur (e clubes não-juvenis): formato diferente dos
+                  // juvenis — R1 individual conta 5 melhores, R2 foursomes conta
+                  // 2 melhores, sem cap de pancadas por buraco.
+                  const isMidam = esc === "midam";
+                  if (grupos.length) {
+                    return <ClubesGruposView
+                      grupos={grupos}
+                      tournament={curClubes}
+                      escKey={(esc === "sub18" ? "sub18" : "sub14")}
+                      bestNByRound={isMidam ? [5, 2] : undefined}
+                      maxHoleScore={isMidam ? Infinity : undefined}
+                      formatNote={isMidam
+                        ? <>R1: contam os 5 melhores (individual) · R2: contam os 2 melhores (foursomes)</>
+                        : undefined}
+                    />;
                   }
                   return (
                     <div className="fs-13 c-muted" style={{ padding: "32px 24px", textAlign: "center" }}>

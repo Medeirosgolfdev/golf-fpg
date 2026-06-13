@@ -19,13 +19,13 @@ type SortCol = "grupo" | "total" | number;
    ───────────────────────────────────────────── */
 
 
-function grossForRound(p: Player, rd: number): number | null {
+function grossForRound(p: Player, rd: number, maxHole: number = MAX_HOLE_SCORE): number | null {
   const rs = p.roundScores?.find(r => r.round === rd);
   if (rs) {
     if (rs.gross >= 999) return null;
     if (rs.scores?.length) {
       if (rs.scores.every(s => s === 0)) return null;
-      return rs.scores.reduce((sum, s) => sum + Math.min(s, MAX_HOLE_SCORE), 0);
+      return rs.scores.reduce((sum, s) => sum + Math.min(s, maxHole), 0);
     }
     return rs.gross;
   }
@@ -53,12 +53,29 @@ interface ClubesGruposViewProps {
   grupos: GrupoEntry[];
   tournament: Tournament | null;
   escKey: "sub14" | "sub18";
+  /** Nº de resultados contados por ronda (índice 0 = R1). Quando ausente, usa
+   *  `defaultBestN` em todas as rondas. Ex Mid-Amateur: [5, 2] (R1 individual
+   *  conta 5 melhores; R2 foursomes conta 2 melhores). */
+  bestNByRound?: number[];
+  /** Best-N por defeito (juvenis = 3 de 4). */
+  defaultBestN?: number;
+  /** Máximo de pancadas por buraco aplicado ao recompor o gross. Default 10
+   *  (juvenis). Passar Infinity para desligar (Mid-Amateur — sem cap). */
+  maxHoleScore?: number;
+  /** Nota de formato no topo. `undefined` → texto default ("Melhores N de 4 ·
+   *  Máximo M…"); `null` → escondida; ReactNode → texto custom. */
+  formatNote?: React.ReactNode | null;
 }
 
 export default function ClubesGruposView({
   grupos,
   tournament,
+  bestNByRound,
+  defaultBestN = CLUBES_BEST_N,
+  maxHoleScore = MAX_HOLE_SCORE,
+  formatNote,
 }: ClubesGruposViewProps) {
+  const bestNFor = (rd: number): number => bestNByRound?.[rd - 1] ?? defaultBestN;
   const { sortKey: sortCol, sortDir, toggleSort: toggleSortCol } = useSort<SortCol>("total");
   const [playerSort, setPlayerSort] = useState<"nome" | "hcp" | number>("nome");
   const [playerSortDir, setPlayerSortDir] = useState<"asc" | "desc">("asc");
@@ -98,7 +115,7 @@ export default function ClubesGruposView({
     if (!rs?.scores?.length || !rs?.pars?.length) return null;
     let bir = 0, par = 0, bog = 0;
     rs.scores.forEach((s, h) => {
-      const diff = Math.min(s, MAX_HOLE_SCORE) - (rs.pars[h] || 0);
+      const diff = Math.min(s, maxHoleScore) - (rs.pars[h] || 0);
       if (diff <= -1) bir++; else if (diff === 0) par++; else bog++;
     });
     return { bir, par, bog };
@@ -139,14 +156,14 @@ export default function ClubesGruposView({
 
     const jRows: JRow[] = g.jogadores.map(j => {
       const p = j.fed ? byFed.get(j.fed) : undefined;
-      const rds = rdCols.map(rd => p ? grossForRound(p, rd) : null);
+      const rds = rdCols.map(rd => p ? grossForRound(p, rd, maxHoleScore) : null);
       const played = rds.filter(v => v != null) as number[];
       return { j, p, rds, total: played.length ? played.reduce((s, v) => s + v, 0) : null };
     });
 
-    const rdTeam = rdCols.map((_, ri) => {
+    const rdTeam = rdCols.map((rd, ri) => {
       const scores = jRows.map(r => r.rds[ri]).filter(v => v != null) as number[];
-      return scores.length ? bestN(scores, CLUBES_BEST_N) : null;
+      return scores.length ? bestN(scores, bestNFor(rd)) : null;
     });
     const playedTeamRds = rdTeam.filter(v => v != null) as number[];
     const teamTotal = playedTeamRds.length ? playedTeamRds.reduce((s, v) => s + v, 0) : null;
@@ -208,7 +225,9 @@ export default function ClubesGruposView({
         {rdCols.map(rd => <SortBtn key={rd} label={`R${rd}`} col={rd} />)}
         <SortBtn label="Total" col="total" />
         <span style={{ marginLeft: "auto", fontSize: 14, color: "var(--text-muted)", marginTop: 4 }}>
-          Melhores {CLUBES_BEST_N} de 4 · Máximo {MAX_HOLE_SCORE} pancadas por buraco
+          {formatNote === undefined
+            ? <>Melhores {defaultBestN} de 4 · Máximo {maxHoleScore} pancadas por buraco</>
+            : formatNote}
           {nRounds > 1 && (
             <span style={{ marginLeft: 8, fontWeight: 600,
               color: playedRounds >= nRounds ? "var(--color-good)" : "var(--color-warn)" }}>
@@ -244,7 +263,8 @@ export default function ClubesGruposView({
         {sorted.map(({ g, color, isMulti, teamIdx, jRows, rdTeam, teamTotal }) => {
           const pos = rankMap.get(g.grupo);
           const mdl = medal(pos ?? 0);
-          const teamPar = parTotal > 0 && playedRounds > 0 ? parTotal * CLUBES_BEST_N * playedRounds : 0;
+          const teamPar = parTotal > 0 && playedRounds > 0
+            ? parTotal * rdCols.reduce((s, rd) => s + bestNFor(rd), 0) : 0;
           const teamTP = teamTotal != null && teamPar > 0 ? teamTotal - teamPar : null;
 
           return (
@@ -275,7 +295,7 @@ export default function ClubesGruposView({
                 {pos != null && (viewRd != null ? rdTeam[viewRd - 1] != null : teamTotal != null) && (() => {
                   const dispScore = viewRd != null ? rdTeam[viewRd - 1]! : teamTotal!;
                   const dispTP = viewRd != null
-                    ? (parTotal > 0 ? dispScore - parTotal * CLUBES_BEST_N : null)
+                    ? (parTotal > 0 ? dispScore - parTotal * bestNFor(viewRd) : null)
                     : teamTP;
                   return (
                     <div className="shrink-0 ta-right">
@@ -350,7 +370,7 @@ export default function ClubesGruposView({
                       const counts = viewCols.map((rd) => {
                         const ri = rdCols.indexOf(rd);
                         const allS = jRows.map(r => r.rds[ri]).filter(v => v != null) as number[];
-                        const threshold = [...allS].sort((a, b) => a - b)[CLUBES_BEST_N - 1];
+                        const threshold = [...allS].sort((a, b) => a - b)[bestNFor(rd) - 1];
                         const mine = rds[ri];
                         return mine != null && threshold != null && mine <= threshold;
                       });
