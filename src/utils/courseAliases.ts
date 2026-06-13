@@ -57,6 +57,41 @@ const COURSE_NAME_ALIASES: Record<string, string> = {
   // (2004-2024) com par idêntico ao No.1 actual (41 rondas Nov-2024+).
   "aroeira pines classic": "PGA  Aroeira No.1",
   "aroeira i": "PGA  Aroeira No.1",
+
+  // ── Nomes legados / genéricos de campos PT (2026-06-13) ────────────────
+  // Estes nomes apareciam como campos duplicados na CamposPage/Simulador,
+  // separados dos combos canónicos do master-courses. Cada destino foi
+  // confirmado por par[] idêntico (e, no caso do Pinheiros Altos, pela
+  // nomenclatura oficial PT↔EN: Oliveiras=Olives, Pinheiros=Pines, Sobreiros=Corks).
+
+  // Oceânico O'Connor (Amendoeira) → nome actual O'Connor Jnr Course (par exacto).
+  "oceânico o'connor": "O'Connor Jnr Course",
+  "oceanico o'connor": "O'Connor Jnr Course",
+
+  // Morgado do Reguengo Golfe → Morgado Golf (par exacto).
+  "morgado do reguengo golfe": "Morgado Golf",
+
+  // Montebelo: nome genérico / "A-B" → combo Caramulo (1-18) (par exacto).
+  "montebelo": "Montebelo Caramulo (1-18)",
+  "montebelo a-b": "Montebelo Caramulo (1-18)",
+
+  // Vila Sol: nomenclatura antiga sem o sufixo (10-27/19-9/1-18) → combos master.
+  "vila sol (challenge / prestige)": "Vila Sol - Challenge / Prestige (10-27)",
+  "vila sol (prestige / prime)": "Vila Sol - Prestige / Prime (19-9)",
+  "vila sol (prime / challenge)": "Vila Sol - Prime / Challenge (1-18)",
+  "vila sol 1 (prime / challenge)": "Vila Sol - Prime / Challenge (1-18)",
+
+  // Pinheiros Altos: nomes PT dos nines → combos master (EN). Par exacto.
+  "pinheiros altos": "Pinheiros Altos-Corks/Olives",
+  "pinheiros altos-oliveiras/pinheiros": "Pinheiros Altos-Olives/Pines",
+  "pinheiros altos-pinheiros/sobreiros": "Pinheiros Altos-Pines/Corks",
+
+  // Penha Longa - Atlântico (combo North+South) → Atlantic Championship (par exacto).
+  "penha longa - atlântico": "Penha Longa Atlantic Championship",
+  "penha longa - atlantico": "Penha Longa Atlantic Championship",
+
+  // Palmares: nome genérico → combo Lagos-Praia (o mais jogado).
+  "palmares golf": "Palmares Golf Lagos - Praia",
 };
 
 /* ── Resolução por par[] para nomes ambíguos ──────────────────────────── */
