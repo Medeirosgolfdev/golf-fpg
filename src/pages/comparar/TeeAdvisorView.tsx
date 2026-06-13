@@ -33,6 +33,77 @@ import { MANUEL_FED } from "../../constants/manuel";
 
 const MONO = "'JetBrains Mono', monospace";
 
+/* ═══════════════════ Escala de distâncias do saco ═══════════════════ */
+/**
+ * Distância de cada taco como percentagem CONSTANTE do drive — a base do
+ * princípio 24-28× (medições Trackman da US Kids Golf Foundation + ASGCA).
+ * Os valores respeitam as âncoras citadas no bloco explicativo: ferro 7 ≈
+ * 65-70% do drive, wedges ≈ 40-50%. Monotónicas decrescentes.
+ */
+const CLUB_SCALE: { club: string; abbr: string; pct: number }[] = [
+  { club: "Driver", abbr: "D", pct: 100 },
+  { club: "Madeira 3", abbr: "M3", pct: 93 },
+  { club: "Madeira 5", abbr: "M5", pct: 87 },
+  { club: "Híbrido", abbr: "Hb", pct: 81 },
+  { club: "Ferro 4", abbr: "F4", pct: 77 },
+  { club: "Ferro 5", abbr: "F5", pct: 73 },
+  { club: "Ferro 6", abbr: "F6", pct: 69 },
+  { club: "Ferro 7", abbr: "F7", pct: 65 },
+  { club: "Ferro 8", abbr: "F8", pct: 60 },
+  { club: "Ferro 9", abbr: "F9", pct: 55 },
+  { club: "Pitching wedge", abbr: "PW", pct: 50 },
+  { club: "Gap wedge", abbr: "GW", pct: 45 },
+  { club: "Sand wedge", abbr: "SW", pct: 40 },
+  { club: "Lob wedge", abbr: "LW", pct: 35 },
+];
+
+type ClubSortKey = "club" | "pct" | "dist";
+
+/**
+ * Tabela de distâncias estimadas do saco para um dado drive. Reage em tempo
+ * real ao input "Drive (m)" do topo da página (recebe `driveM` por prop).
+ * Ordenável por cabeçalho — regra absoluta do projecto.
+ */
+function ClubDistanceTable({ driveM }: { driveM: number }) {
+  const { sortKey, sortDir, toggleSort } = useSort<ClubSortKey>("pct", "desc", { club: "asc" });
+  const rows = useMemo(
+    () => CLUB_SCALE.map(c => ({ ...c, dist: Math.round((driveM * c.pct) / 100) })),
+    [driveM]
+  );
+  const sorted = useMemo(() => {
+    const dir = sortDir === "asc" ? 1 : -1;
+    return [...rows].sort((a, b) => {
+      if (sortKey === "club") return a.club.localeCompare(b.club, "pt") * dir;
+      const av = sortKey === "pct" ? a.pct : a.dist;
+      const bv = sortKey === "pct" ? b.pct : b.dist;
+      return (av - bv) * dir;
+    });
+  }, [rows, sortKey, sortDir]);
+
+  return (
+    <div style={{ overflowX: "auto", paddingBottom: 6 }}>
+      <table className="dtable" style={{ minWidth: 320 }}>
+        <thead>
+          <tr>
+            <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Taco</SortableHdr>
+            <SortableHdr k="pct" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Percentagem constante do drive">% drive</SortableHdr>
+            <SortableHdr k="dist" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Distância estimada para o drive configurado no topo">Dist (m)</SortableHdr>
+          </tr>
+        </thead>
+        <tbody>
+          {sorted.map(c => (
+            <tr key={c.abbr} style={c.abbr === "D" ? { fontWeight: 800 } : undefined}>
+              <td>{c.club} <span className="muted" style={{ fontSize: 11 }}>({c.abbr})</span></td>
+              <td className="r" style={{ fontFamily: MONO }}>{c.pct}%</td>
+              <td className="r" style={{ fontFamily: MONO, fontWeight: 700 }}>{c.dist}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 /* ═══════════════════ Modelos de cálculo ═══════════════════ */
 
 /** Playing handicap WHS (não arredondado). */
@@ -399,6 +470,9 @@ interface HoleDiffRow {
   delta: number | null;
   appA: { m: number; reachable: boolean } | null;
   appB: { m: number; reachable: boolean } | null;
+  /** Distância que sobra depois da 2ª pancada grande (só par 4/5) */
+  app2A: { m: number; reachable: boolean } | null;
+  app2B: { m: number; reachable: boolean } | null;
 }
 
 function buildDiffRows(a: TeeMetrics, b: TeeMetrics, driveM: number, secondM: number): HoleDiffRow[] {
@@ -408,8 +482,21 @@ function buildDiffRows(a: TeeMetrics, b: TeeMetrics, driveM: number, secondM: nu
   // "Após drive": o que falta para o green depois do drive (par 3 = a própria pancada do tee)
   const mk = (par: number | null | undefined, d: number | null | undefined) => {
     if (par == null || d == null || par < 3) return null;
+    // Metros que sobram para o green depois da pancada do tee — vale para todos
+    // os pares: num par 3 a pancada do tee é a pancada para o green, logo se
+    // o alcança sobra 0; se fica curto, sobra a diferença.
     return {
-      m: par <= 3 ? d : Math.max(0, d - driveM),
+      m: Math.max(0, d - driveM),
+      reachable: d <= reachBudget(par, driveM, secondM),
+    };
+  };
+  // "Após 2ª pancada grande": só faz sentido no par 4 e par 5 (drive + madeira).
+  // Num par 4 sobra 0 se chegou ao green em regulação; num par 5 é o approach
+  // que entra no green (a 3ª pancada).
+  const mk2 = (par: number | null | undefined, d: number | null | undefined) => {
+    if (par == null || d == null || par < 4) return null;
+    return {
+      m: Math.max(0, d - driveM - secondM),
       reachable: d <= reachBudget(par, driveM, secondM),
     };
   };
@@ -424,6 +511,8 @@ function buildDiffRows(a: TeeMetrics, b: TeeMetrics, driveM: number, secondM: nu
       delta: dA != null && dB != null ? dA - dB : null,
       appA: mk(ha?.par, dA),
       appB: mk(hb?.par, dB),
+      app2A: mk2(ha?.par, dA),
+      app2B: mk2(hb?.par, dB),
     };
   });
 }
@@ -447,7 +536,7 @@ function HoleDiffTable({ a, b, driveM, secondM }: {
     <span
       style={{ fontFamily: MONO, color: app.reachable ? "var(--color-good-dark)" : "var(--color-warn-dark)", fontWeight: app.reachable ? 400 : 800 }}
       title={app.reachable
-        ? "Metros que faltam para o green depois do drive — alcançável em regulação"
+        ? "Metros que sobram para o green — alcançável em regulação"
         : "Green NÃO alcançável em regulação com o alcance configurado"}
     >
       {app.m.toFixed(0)}{app.reachable ? "" : "✗"}
@@ -495,14 +584,28 @@ function HoleDiffTable({ a, b, driveM, secondM }: {
               {totA && totB ? (totA - totB > 0 ? "+" : "") + (totA - totB) : "–"}
             </td>
           </tr>
+          {/* Bloco do tee A — as duas análises juntas */}
           <tr style={{ background: tintA, borderTop: "2px solid var(--border)" }}>
             <td style={lblStyle}><TeePill tee={a.tee} /> <span style={{ fontWeight: 600 }}>· após drive faltam (m)</span></td>
             {rows.map(r => <td key={r.h} className="r">{appCell(r.appA)}</td>)}
             <td />
           </tr>
+          <tr style={{ background: tintA }}>
+            <td style={lblStyle}><TeePill tee={a.tee} /> <span style={{ fontWeight: 600 }}>· após 2ª pancada faltam (m)</span></td>
+            {rows.map(r => <td key={r.h} className="r">{appCell(r.app2A)}</td>)}
+            <td />
+          </tr>
+          {/* Espaço entre as duas análises */}
+          <tr aria-hidden="true"><td colSpan={rows.length + 2} style={{ height: 12, padding: 0, border: "none", background: "transparent" }} /></tr>
+          {/* Bloco do tee B — as duas análises juntas */}
           <tr style={{ background: tintB }}>
             <td style={lblStyle}><TeePill tee={b.tee} /> <span style={{ fontWeight: 600 }}>· após drive faltam (m)</span></td>
             {rows.map(r => <td key={r.h} className="r">{appCell(r.appB)}</td>)}
+            <td />
+          </tr>
+          <tr style={{ background: tintB }}>
+            <td style={lblStyle}><TeePill tee={b.tee} /> <span style={{ fontWeight: 600 }}>· após 2ª pancada faltam (m)</span></td>
+            {rows.map(r => <td key={r.h} className="r">{appCell(r.app2B)}</td>)}
             <td />
           </tr>
         </tbody>
@@ -528,7 +631,7 @@ export default function TeeAdvisorView({ simCourses }: { simCourses: Course[] })
   const [sexFilter, setSexFilter] = useState<"M" | "F">("M");
   const [hcp, setHcp] = useState<number>(10);
   const [hcpTouched, setHcpTouched] = useState(false);
-  const [driveM, setDriveM] = useState(190);
+  const [driveM, setDriveM] = useState(185);
   const [secondM, setSecondM] = useState(160);
   const [habOverride, setHabOverride] = useState<number | null>(null);
   const [teeAId, setTeeAId] = useState("");
@@ -722,7 +825,7 @@ export default function TeeAdvisorView({ simCourses }: { simCourses: Course[] })
                   📋 Diferença buraco a buraco — {teeA.tee.teeName} vs {teeB.tee.teeName}
                 </div>
                 <div className="muted" style={{ fontSize: 12, marginBottom: 8 }}>
-                  Linhas "após drive" = metros que faltam para o green depois do drive (no par 3 é a própria pancada do tee) · ✗ = green fora de alcance em regulação
+                  Linhas "após drive" = metros que faltam para o green depois da pancada do tee (0 = green alcançado; no par 3 a própria pancada do tee é a do green). Linhas "após 2ª pancada" = o que sobra depois da 2ª pancada grande (madeira/híbrido), só nos par 4/5 — num par 5 é o approach que entra no green. · ✗ = green fora de alcance em regulação
                 </div>
                 <HoleDiffTable a={teeA} b={teeB} driveM={driveM} secondM={secondM} />
               </div>
@@ -796,6 +899,19 @@ export default function TeeAdvisorView({ simCourses }: { simCourses: Course[] })
                 tour ao júnior: o ferro 7 anda nos ~65–70% do drive, o wedge nos ~40–50%. Conhecendo
                 o drive de um jogador, conhece-se o alcance do jogo todo.
               </p>
+              <div style={{
+                margin: "0 0 12px", padding: "10px 12px", borderRadius: "var(--radius)",
+                background: "var(--bg-muted)", border: "1px solid var(--border-light)",
+              }}>
+                <div style={{ fontWeight: 700, fontSize: 12.5, marginBottom: 2 }}>
+                  Distâncias estimadas do saco — drive de {driveM} m
+                </div>
+                <div className="muted" style={{ fontSize: 11.5, marginBottom: 8 }}>
+                  Cada taco como percentagem constante do drive. Atualiza automaticamente
+                  quando mudas o <b>Drive (m)</b> no topo da página.
+                </div>
+                <ClubDistanceTable driveM={driveM} />
+              </div>
               <p style={{ margin: "0 0 8px" }}>
                 <b>2 — O multiplicador é a "conta de tacos" de uma volta.</b> Num par 72 medido em
                 unidades de drive (D): 10 par 4 ≈ drive + ferro médio ≈ 1,65 D cada; 4 par 5 ≈ drive
