@@ -49,7 +49,8 @@ function checkTee(courseName, t) {
   const holes = t.holes || [];
   const n = holes.length;
   const tag = t.teeName || t.teeId;
-  if (n !== 9 && n !== 18) { E(courseName, tag, `nº buracos invulgar: ${n}`); return; }
+  // Tee vazio = AVISO (a App filtra-o no dedupTees; é ruído da FPG, não bug).
+  if (n !== 9 && n !== 18) { W(courseName, tag, `tee vazio (${n} buracos) — filtrado em runtime`); return; }
 
   // SI
   const si = holes.map(h => h && typeof h.si === "number" ? h.si : null);
@@ -72,11 +73,14 @@ function checkTee(courseName, t) {
   const pars = holes.map(h => h && typeof h.par === "number" ? h.par : null);
   const parSum = pars.reduce((a, v) => a + (v || 0), 0);
   const declared = t.ratings?.holes18?.par ?? t.ratings?.holes9Front?.par ?? null;
-  if (n === 18 && declared != null && parSum !== declared) {
-    E(courseName, tag, `par soma ${parSum} ≠ par declarado ${declared}`);
-  }
+  // Par buraco-a-buraco partido = ERRO real (afecta scoring).
   if (n === 18 && pars.some(v => v == null || v === 0)) {
     E(courseName, tag, "buracos com par 0/null num tee 18H");
+  } else if (n === 18 && declared != null && parSum !== declared) {
+    // Par declarado ≠ soma dos buracos = AVISO. Os pares dos buracos são a
+    // fonte de verdade (e estão consistentes); o campo "par" das ratings da FPG
+    // está por vezes errado/inconsistente entre tees. Cosmético.
+    W(courseName, tag, `par declarado ${declared} ≠ soma dos buracos ${parSum} (campo cosmético FPG)`);
   }
 
   // distância

@@ -20,12 +20,48 @@ def norm(s):
 
 
 def pdftext(path):
-    return subprocess.run(["pdftotext", "-layout", path, "-"], capture_output=True, text=True).stdout
+    # Preferir pdftotext -layout (poppler). Se não estiver instalado (típico em
+    # Windows sem poppler), cair para pdfplumber (pip install pdfplumber), que
+    # também preserva o layout em colunas via espaços.
+    try:
+        return subprocess.run(["pdftotext", "-layout", path, "-"], capture_output=True, text=True).stdout
+    except FileNotFoundError:
+        # Fallback sem poppler: pdfplumber. Estes draws DataGolf têm DUAS colunas
+        # (metade esquerda + metade direita). Recortamos a página nas duas metades
+        # e usamos extract_text() NATIVO em cada uma — extract_text preserva os
+        # espaços reais do PDF (ao contrário de uma reconstrução manual, que colava
+        # nomes e baralhava colunas). O ponto de corte é o x da 2ª ocorrência de
+        # "Saída" (início da coluna direita); se só houver uma, trata a página como
+        # coluna única.
+        import pdfplumber
+        out = []
+        with pdfplumber.open(path) as pdf:
+            for pg in pdf.pages:
+                try:
+                    saidas = sorted(w["x0"] for w in pg.extract_words() if w.get("text") == "Saída")
+                except Exception:
+                    saidas = []
+                if len(saidas) >= 2:
+                    mid = saidas[1] - 5
+                    out.append(pg.crop((0, 0, mid, pg.height)).extract_text() or "")
+                    out.append(pg.crop((mid, 0, pg.width, pg.height)).extract_text() or "")
+                else:
+                    out.append(pg.extract_text() or "")
+        return "\n".join(out)
 
 
 def load_results_index(data_dir):
     idx = []
-    for fn in sorted(glob.glob(os.path.join(data_dir, "pull-torneios*.json"))):
+    # Inclui TODAS as fontes de resultados no formato "fpg-pull" (não só
+    # pull-torneios): os torneios sociais do CGSS que o Manuel NÃO jogou vivem
+    # tipicamente em drive-data*/clubes*/jovens*, não em pull-torneios. Sem isto
+    # o match falhava e o torneio caía em drawOnly com chave sintética.
+    patterns = ["pull-torneios*.json", "drive-data-*.json", "aquapor-data-*.json",
+                "clubes*.json", "jovens*.json"]
+    files = []
+    for pat in patterns:
+        files += glob.glob(os.path.join(data_dir, pat))
+    for fn in sorted(set(files)):
         try:
             d = json.load(open(fn, encoding="utf-8"))
         except Exception:
@@ -49,7 +85,11 @@ def parse_header(txt):
         return m.group(1).strip() if m else None
     name = grab(r"Torneio")
     if name:
-        name = re.split(r"\s{2,}(?:Data|N[ºo])", name)[0].strip()
+        # Cortar rótulos do cabeçalho colados ao nome. Com pdftotext -layout vêm
+        # separados por 2+ espaços; com o fallback pdfplumber (extract_text) os
+        # espaços colapsam, por isso também cortamos com 1 espaço antes de
+        # "Data:" / "Nº.Jog" / "Modal." (ex.: "...Summer 2025 Data:2025-08-16").
+        name = re.split(r"\s{2,}(?:Data|N[ºo])|\s+Data\s*:|\s+N[ºo]\.?\s*Jog|\s+Modal\.", name)[0].strip()
     dt = None
     m = re.search(r"Data\s*:?\s*(\d{4}-\d{2}-\d{2})", txt)
     if m:
@@ -215,8 +255,11 @@ if __name__ == "__main__":
     tournaments, seen = [], set()
     for pdf in sorted(glob.glob(os.path.join(args.pdf_dir, "*.pdf"))):
         txt = pdftext(pdf)
-        if "goulartt" not in txt.lower():
-            continue
+        # Antes saltava PDFs sem "goulartt" (só processava torneios do Manuel).
+        # Agora processa TODOS os draws CGSS (mesmo os que o Manuel não jogou) —
+        # a detecção do Manuel por jogador continua via `is_m` em _add_individual.
+        # PDFs que não sejam draws (ex.: regulamentos) não têm linhas hora/buraco
+        # → groups vazio → ignorados mais abaixo.
         h = parse_header(txt)
         rm = best_result_match(h, results)
         groups = extract_all_groups(txt)
@@ -240,6 +283,9 @@ if __name__ == "__main__":
             if any(pl.get("fed") == MANUEL_FED for pl in players):
                 manuel_grp = g["time"]
             out_groups.append({"teeTime": g["time"], "startHole": g["hole"], "tee": None, "players": players})
+        if not out_groups:
+            print("  (sem grupos — não é draw, ignorado) " + base)
+            continue
         print("\n" + "=" * 68 + "\n" + base + "\n  " + str(h["name"]) + " | " + str(h["date"]))
         print("  -> " + ("c" + ccode + " t" + tcode if rm else "DRAW-ONLY " + key) +
               " | %d grupos, %d jog. | Manuel @ %s" % (len(out_groups), total, manuel_grp))
@@ -247,8 +293,51 @@ if __name__ == "__main__":
         tournaments.append({"ccode": ccode, "tcode": tcode, "name": h["name"], "date": h["date"],
                             "campo": h["campo"], "modal": h["modal"], "source": base, "drawOnly": rm is None,
                             "draws": {"1": {"totalJogadores": total, "groups": out_groups}}})
-    out = {"_doc": "Draws COMPLETOS curados CGSS (Santo da Serra) de PDFs oficiais. Preenchem draws vazios ccode-007 (nome/data do PDF autoritativos). Manuel jr fed 52884; homonimo Manuel Medeiros fed 54907.",
+    out = {"_doc": "Draws COMPLETOS curados CGSS (Santo da Serra) de PDFs oficiais — inclui torneios que o Manuel NAO jogou. Preenchem draws vazios ccode-007 (nome/data do PDF autoritativos). Match contra pull-torneios/drive-data/clubes/jovens. Manuel jr fed 52884; homonimo Manuel Medeiros fed 54907.",
            "gerado_em": date.today().isoformat(), "source": "extract-cgss-draws.py", "total": len(tournaments), "tournaments": tournaments}
     if not args.print_only:
+        # Merge ADITIVO com o --out existente: o extractor deriva os torneios só
+        # dos PDFs na --pdf-dir, por isso correr com uma pasta só de PDFs novos
+        # apagaria os draws já curados. Preservamos os existentes e fazemos
+        # upsert (por ccode-tcode) dos deste run.
+        existing = []
+        if os.path.exists(args.out):
+            try:
+                existing = (json.load(open(args.out, encoding="utf-8")) or {}).get("tournaments", [])
+            except Exception:
+                existing = []
+        by_key = {}
+        for t in existing:
+            by_key[str(t.get("ccode")) + "-" + str(t.get("tcode"))] = t
+        n_new = n_upd = 0
+        for t in tournaments:
+            k = t["ccode"] + "-" + t["tcode"]
+            if k in by_key:
+                n_upd += 1
+            else:
+                n_new += 1
+            by_key[k] = t
+        # Limpeza do lixo de corridas com parsing mau: entradas sintéticas
+        # (tcode "cgss-...", drawOnly) ficam órfãs quando uma corrida posterior
+        # passa a casar o mesmo torneio com um tcode REAL. Remove a sintética se
+        # existir um tcode numérico para o mesmo (ccode, data). As draw-only
+        # legítimas (sem equivalente scrapado, ex. III ABERTO 2025, Diário de
+        # Notícias) não têm numérico na mesma data → ficam.
+        real_dates = {(t.get("ccode"), t.get("date")) for t in by_key.values() if str(t.get("tcode")).isdigit()}
+        n_clean = 0
+        for k in list(by_key.keys()):
+            t = by_key[k]
+            if str(t.get("tcode")).isdigit():
+                continue
+            nm = str(t.get("name") or "")
+            # Remove sintética se (a) já há tcode real na mesma data, ou (b) o nome
+            # ficou estragado com o rótulo "Data:" colado (órfão de run antigo).
+            if (t.get("ccode"), t.get("date")) in real_dates or re.search(r"\bData\s*:", nm):
+                del by_key[k]
+                n_clean += 1
+        merged = sorted(by_key.values(), key=lambda t: (t.get("date") or ""))
+        out["tournaments"] = merged
+        out["total"] = len(merged)
         json.dump(out, open(args.out, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
-        print("\n[ok] " + str(len(tournaments)) + " torneios -> " + args.out)
+        print("\n[ok] %d deste run (%d novos, %d actualizados, %d lixo removido) · %d total -> %s"
+              % (len(tournaments), n_new, n_upd, n_clean, len(merged), args.out))

@@ -42,6 +42,9 @@ export interface RoundSimulatorProps {
   playerData: PlayerPageData;
   bare?: boolean;
   courseLookupFn?: (courseName: string) => string | null;
+  /** Override do localStorage key. Usado em páginas sem `:fedId` no URL
+   *  (ex: /simulador) para que as rondas simuladas persistam na mesma. */
+  storageKey?: string;
 }
 
 export function RoundSimulator({
@@ -49,7 +52,8 @@ export function RoundSimulator({
   whs20,
   playerData,
   bare,
-  courseLookupFn,
+  courseLookupFn: _courseLookupFn,
+  storageKey: storageKeyProp,
 }: RoundSimulatorProps) {
   type HolesMode = "18" | "front9" | "back9";
   type SimRound = {
@@ -108,7 +112,7 @@ export function RoundSimulator({
   const currentHI = hcp.current;
   const nextIdRef = useRef(1);
   const newId = () => `sr_${nextIdRef.current++}`;
-  const storageKey = urlFedId ? `sim_rounds_v2_${urlFedId}` : null;
+  const storageKey = storageKeyProp ?? (urlFedId ? `sim_rounds_v2_${urlFedId}` : null);
   const [savedTs, setSavedTs] = useState<number | null>(null);
 
   // ── Sexo do jogador (para filtrar tees M/F) ──

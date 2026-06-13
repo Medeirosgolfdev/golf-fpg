@@ -1,4 +1,5 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar } from "../ui/Toolbar";
 import DetailHeader from "../ui/DetailHeader";
@@ -17,6 +18,10 @@ import type { OverlayData } from "../ui/OverlayExport";
 import { getNextCalendarEvent } from "../utils/calendarData";
 import { isTournamentCourse } from "../constants/tournamentCourses";
 import ExtLink from "../ui/ExternalLink";
+import { RoundSimulator } from "../ui/RoundSimulator";
+import { loadPlayerData } from "../data/playerDataLoader";
+import type { PlayerPageData, RoundData } from "../data/playerDataLoader";
+import { MANUEL_FED } from "../constants/manuel";
 
 
 
@@ -1090,17 +1095,121 @@ function AgsSection({
   );
 }
 
+/* ─── Persistência de estado (URL + localStorage) ───
+ * O simulador deixa de perder as escolhas ao refrescar: o estado é espelhado
+ * nos query params do URL (partilhável) e em localStorage (memória entre
+ * sessões). O URL tem prioridade sobre o localStorage no arranque. */
+const SIM_LS_KEY = "simulador_state_v1";
+
+type SimPersistState = {
+  course: string;   // courseKey ou MANUAL_KEY
+  tee: string;      // índice do tee (string) ou ""
+  holes: HolesMode;
+  sex: SexFilter;
+  hi: string;
+  pcc: string;
+  allow: string;
+  player: string;   // fed do jogador seleccionado ou ""
+};
+
+function readInitialSimState(): SimPersistState {
+  const def: SimPersistState = {
+    course: "", tee: "", holes: "18", sex: "ALL", hi: "", pcc: "0", allow: "100", player: MANUEL_FED,
+  };
+  if (typeof window === "undefined") return def;
+  let ls: Partial<SimPersistState> = {};
+  try {
+    const raw = localStorage.getItem(SIM_LS_KEY);
+    if (raw) ls = JSON.parse(raw) as Partial<SimPersistState>;
+  } catch { /* ignore */ }
+  const sp = new URLSearchParams(window.location.search);
+  const pick = (k: keyof SimPersistState): string | undefined => {
+    const v = sp.get(k);
+    if (v != null) return v;
+    const lv = ls[k];
+    return lv != null ? String(lv) : undefined;
+  };
+  const holes = pick("holes");
+  const sex = pick("sex");
+  return {
+    course: pick("course") ?? def.course,
+    tee: pick("tee") ?? def.tee,
+    holes: holes === "front9" || holes === "back9" || holes === "18" ? holes : def.holes,
+    sex: sex === "M" || sex === "F" || sex === "ALL" ? sex : def.sex,
+    hi: pick("hi") ?? def.hi,
+    pcc: pick("pcc") ?? def.pcc,
+    allow: pick("allow") ?? def.allow,
+    player: pick("player") ?? def.player,
+  };
+}
+
 export default function SimuladorPage() {
-  const { simCourses: courses } = useAppContext();
+  const { simCourses: courses, players } = useAppContext();
+  const [, setSearchParams] = useSearchParams();
+  const init = useMemo(readInitialSimState, []);
   const [q, setQ] = useState("");
-  const [sexFilter, setSexFilter] = useState<SexFilter>("ALL");
-  const [holesMode, setHolesMode] = useState<HolesMode>("18");
-  const [selectedKey, setSelectedKey] = useState<string | null>(null);
-  const [selectedTeeIdx, setSelectedTeeIdx] = useState<number | null>(null);
+  const [sexFilter, setSexFilter] = useState<SexFilter>(init.sex);
+  const [holesMode, setHolesMode] = useState<HolesMode>(init.holes);
+  const [selectedKey, setSelectedKey] = useState<string | null>(init.course || null);
+  const [selectedTeeIdx, setSelectedTeeIdx] = useState<number | null>(
+    init.tee !== "" && !isNaN(parseInt(init.tee, 10)) ? parseInt(init.tee, 10) : null
+  );
   const md = useMasterDetail();
-  const [pcc, setPcc] = useState(0);
-  const [hiInput, setHiInput] = useState("");
-  const [allowance, setAllowance] = useState(100);
+  const [pcc, setPcc] = useState(() => { const v = parseInt(init.pcc, 10); return isNaN(v) ? 0 : v; });
+  const [hiInput, setHiInput] = useState(init.hi);
+  const [allowance, setAllowance] = useState(() => { const v = parseInt(init.allow, 10); return isNaN(v) ? 100 : v; });
+
+  /* Jogador seleccionado — preenche o HI e alimenta o simulador "E se?" */
+  const [playerFed, setPlayerFed] = useState<string>(init.player || "");
+  const [playerData, setPlayerData] = useState<PlayerPageData | null>(null);
+
+  /* Lista de jogadores com handicap, ordenada (Manuel primeiro) */
+  const playerOptions = useMemo(() => {
+    const list = Object.values(players)
+      .filter((p) => p.nfed && p.hcp != null)
+      .sort((a, b) => {
+        if (a.nfed === MANUEL_FED) return -1;
+        if (b.nfed === MANUEL_FED) return 1;
+        return a.name.localeCompare(b.name, "pt");
+      });
+    return list;
+  }, [players]);
+
+  /* Carregar dados do jogador seleccionado (para o simulador de rondas) */
+  useEffect(() => {
+    if (!playerFed) { setPlayerData(null); return; }
+    let alive = true;
+    loadPlayerData(playerFed)
+      .then((d) => { if (alive) setPlayerData(d); })
+      .catch(() => { if (alive) setPlayerData(null); });
+    return () => { alive = false; };
+  }, [playerFed]);
+
+  /* Quando muda o jogador, pré-preencher o HI com o HI real (se o utilizador
+   * não tiver escrito um valor manual diferente). */
+  const selectPlayer = useCallback((fed: string) => {
+    setPlayerFed(fed);
+    const p = players[fed];
+    if (p?.hcp != null) setHiInput(String(p.hcp).replace(".", ","));
+  }, [players]);
+
+  /* Pré-preencher o HI da toolbar com o HI do jogador por defeito quando o
+   * campo está vazio (não sobrepõe um valor escrito manualmente). */
+  useEffect(() => {
+    if (!playerFed || hiInput.trim() !== "") return;
+    const p = players[playerFed];
+    if (p?.hcp != null) setHiInput(String(p.hcp).replace(".", ","));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playerFed, players]);
+
+  /* whs20 do jogador — últimas 20 rondas com SD válido (janela WHS real) */
+  const whs20 = useMemo(() => {
+    if (!playerData) return [];
+    const arr: (RoundData & { course: string })[] = [];
+    playerData.DATA.forEach((c) => c.rounds.forEach((r) => arr.push({ ...r, course: c.course })));
+    arr.sort((a, b) => (b.dateSort || 0) - (a.dateSort || 0));
+    return arr.filter((r) => r.sd != null && !isNaN(Number(r.sd))).slice(0, 20);
+  }, [playerData]);
 
   /* Manual ratings state */
   const [manual18, setManual18] = useState<ManualRatings>(emptyManual());
@@ -1121,6 +1230,33 @@ export default function SimuladorPage() {
   }, [hiInput]);
 
   const is9h = holesMode === "front9" || holesMode === "back9";
+
+  /* Sincronizar estado → URL (replace, sem entradas extra no histórico) +
+   * localStorage. Só escreve os campos não-default para manter o URL limpo. */
+  useEffect(() => {
+    const state: SimPersistState = {
+      course: selectedKey ?? "",
+      tee: selectedTeeIdx != null ? String(selectedTeeIdx) : "",
+      holes: holesMode,
+      sex: sexFilter,
+      hi: hiInput,
+      pcc: String(pcc),
+      allow: String(allowance),
+      player: playerFed,
+    };
+    try { localStorage.setItem(SIM_LS_KEY, JSON.stringify(state)); } catch { /* ignore */ }
+    const next = new URLSearchParams();
+    if (state.course) next.set("course", state.course);
+    if (state.tee) next.set("tee", state.tee);
+    if (state.holes !== "18") next.set("holes", state.holes);
+    if (state.sex !== "ALL") next.set("sex", state.sex);
+    if (state.hi) next.set("hi", state.hi);
+    if (state.pcc !== "0") next.set("pcc", state.pcc);
+    if (state.allow !== "100") next.set("allow", state.allow);
+    if (state.player && state.player !== MANUEL_FED) next.set("player", state.player);
+    setSearchParams(next, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedKey, selectedTeeIdx, holesMode, sexFilter, hiInput, pcc, allowance, playerFed]);
 
   /* Filtrar campos — excluir entradas que são torneios/organizações (não campos) */
   const filtered = useMemo(() => {
@@ -1272,6 +1408,19 @@ export default function SimuladorPage() {
           <option value="ALL">Sexo</option>
           <option value="M">Masculino</option>
           <option value="F">Feminino</option>
+        </select>
+        <select
+          className="select"
+          value={playerFed}
+          onChange={(e) => selectPlayer(e.target.value)}
+          title="Escolhe um jogador para usar o HI real e simular o impacto de uma volta no handicap"
+        >
+          <option value="">Jogador (HI manual)</option>
+          {playerOptions.map((p) => (
+            <option key={p.nfed} value={p.nfed}>
+              {p.name}{p.hcp != null ? ` (${String(p.hcp).replace(".", ",")})` : ""}
+            </option>
+          ))}
         </select>
         <input
           className="input col-w100"
@@ -1534,6 +1683,39 @@ export default function SimuladorPage() {
             </div>
           ) : (
             <div className="muted p-24">Seleciona um campo</div>
+          )}
+
+          {/* ── Simulador "E se?" — impacto no Handicap Index ──
+           * Usa os Score Differentials reais do jogador (best-N de 20, tabela
+           * 5.2a + regra Exceptional Score) para projectar o HI após uma volta
+           * simulada. Visível quando há jogador seleccionado com janela WHS. */}
+          {playerData && playerData.HCP_INFO?.current != null && whs20.length > 0 && (
+            <details className="mt-14" open>
+              <summary className="sim-section-toggle">
+                Simulador "E se?" — impacto no Handicap Index de {players[playerFed]?.name ?? "jogador"}
+              </summary>
+              <div className="mt-8">
+                <div className="muted fs-12 mb-8">
+                  HI actual <strong>{playerData.HCP_INFO.current.toFixed(1)}</strong> ·
+                  janela WHS de {whs20.length} resultado{whs20.length !== 1 ? "s" : ""}.
+                  Simula uma volta (SD directo ou Campo+Tee+Gross) e vê o HI projectado,
+                  se entra nos melhores e que resultado sai da janela.
+                </div>
+                <RoundSimulator
+                  hcp={playerData.HCP_INFO}
+                  whs20={whs20}
+                  playerData={playerData}
+                  bare
+                  storageKey={`sim_rounds_simpage_${playerFed}`}
+                />
+              </div>
+            </details>
+          )}
+          {playerFed && playerData && whs20.length === 0 && (
+            <div className="notice notice-info mt-14">
+              {players[playerFed]?.name ?? "Este jogador"} ainda não tem resultados com
+              Score Differential suficientes para o simulador de impacto no handicap.
+            </div>
           )}
         </div>
       </div>

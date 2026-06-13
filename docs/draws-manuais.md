@@ -148,6 +148,37 @@ Gross sentinela `>= 200` (ex. 998 nos stableford de pares) é tratado como nulo.
 | 017-10189 | 2025-10-24 | PJA Tour Troia | 1 | Excel |
 | 029-10543 | 2026-04-24 | PJA Aroeira Masters 2026 ("PJA Aroeira 2") | 1+2 | texto (D1) + screenshots (D2) |
 
+### 4.3 Porto Santo / LPCC — PDFs oficiais (não-CGSS, não-PJA) — 2026-06-13
+
+PDFs DataGolf de torneios sociais que o extractor CGSS **não** apanha (filtra só
+`ccode=="007"`). Adicionados à mão ao `pja-draws-manual.json` com o ccode-tcode
+real (já existiam no `fpg-admissions-draws.json` com `draws` vazio → o merge
+preenche e corrige nome/data placeholder). Em todos, Manuel jr (52884) e o
+homónimo marido (54907) jogam **no mesmo grupo** — distintos pela licença.
+
+| tcode | Data | Torneio | Grupos | Jog. |
+|---|---|---|---|---|
+| 183-10142 | 2025-08-09 | Torneio José Rosado (Porto Santo, shotgun) | 9 | 36 |
+| 183-10135 | 2025-06-21 | Torneio de São João (Porto Santo, tee-times) | 10 | 35 |
+| 920-10078 | 2024-08-17 | Liga Portuguesa Contra o Cancro (shotgun) | 9 | 33 |
+
+> Datas = data real do evento (o PDF "Data"); as do TODO eram a data de geração
+> do draw (−1 dia). **Nenhum dos três está scrapeado** (nem pull000/001/002, nem
+> drive/jovens/clubes) — só existem no `fpg-admissions-draws.json` como entradas
+> vazias (0 jog., placeholder; o 183-10135 vinha mal etiquetado como "Drive
+> Challenge Açores"). Os tcodes 10078/10135/10142 que aparecem nos pull/drive são
+> **outros** torneios (Drive Challenge regionais, ccode ≠) — colisão de tcode.
+> ⇒ O draw mostra o campo completo, mas os scores do Manuel ficam "—" nos três
+> até esses resultados serem scrapados (ccode 183/920 = Porto Santo SDPS, podem
+> nem estar no scope actual do scraper).
+
+**Regulamento na página do torneio:** o PDF do regulamento do José Rosado está em
+`public/docs/regulamento-torneio-jose-rosado-2025.pdf` e é linkado via o novo mapa
+`TOURNAMENT_EXTRA_LINKS` (chave `ccode-tcode`) em `src/pages/fpg/constants.ts`,
+renderizado em `TournamentDetail.tsx` a seguir aos links Draw/Scoring. Para
+acrescentar regulamentos a outros torneios: pôr o PDF em `public/docs/` e juntar
+uma entrada ao mapa.
+
 ---
 
 ## 5. O que falta / TODO
@@ -159,8 +190,6 @@ muitos têm o mesmo nome de edições já incorporadas mas **ano diferente**.
 ```
 2025-08-24  125-10371  PJA TOUR Vale Pisão - Dia 2
 2025-08-23  125-10370  PJA TOUR Vale Pisão - Dia 1
-2025-08-08  183-10142  Torneio José Rosado
-2025-06-20  183-10135  Torneio de São João
 2025-04-18  183-10129  Torneio da Páscoa
 2025-02-08  007-10857  TORNEIO da RESTAURAÇÃO CGSS         (edição 2025; já temos a 2026)
 2025-02-01  152-10444  AT&T PEBBLE BEACH PRO-AM BY TITLEIST
@@ -168,7 +197,6 @@ muitos têm o mesmo nome de edições já incorporadas mas **ano diferente**.
 2024-10-18  007-10809  TAÇA PRESIDENTE CGSS
 2024-09-27  007-10800  TORNEIO C. SANTOS VP
 2024-09-20  007-10796  XI Torneio Vinhos Barbeito Madeira
-2024-08-16  920-10078  Liga Portuguesa Contra o Cancro
 2024-08-09  920-10077  Torneio José Rosado
 2024-08-02  007-10777  Torneio CGSS RALI                  (edição 2024; já temos a 2025)
 2024-06-07  007-10752  MADEIRA GOLF TROPHY [DS] 2024
@@ -200,7 +228,9 @@ muitos têm o mesmo nome de edições já incorporadas mas **ano diferente**.
 ## 6. Como incorporar um novo draw (passo-a-passo)
 
 ### Caso A — PDF oficial do CGSS
-1. Pôr o(s) PDF(s) numa pasta.
+1. Pôr o(s) PDF(s) numa pasta **só com draws CGSS** (o extractor desde 2026-06-13
+   processa TODOS os PDFs da pasta, não só os do Manuel — um PDF não-CGSS ou de
+   outro clube cairia em drawOnly c007 sintético).
 2. Correr:
    ```bash
    python3 scripts/extract-cgss-draws.py \
@@ -210,6 +240,28 @@ muitos têm o mesmo nome de edições já incorporadas mas **ano diferente**.
    ```
    (usar `--print-only` primeiro para inspeccionar sem escrever)
 3. Confirmar o match (`-> c007 tNNNNN`) e a contagem de grupos vs. "Nº.Jog." do PDF.
+
+> **Extractor — mudanças 2026-06-13:**
+> - **Aditivo:** faz merge com o `--out` existente (upsert por `ccode-tcode`) —
+>   correr só com PDFs novos já NÃO apaga os draws curados anteriormente.
+> - **Inclui torneios que o Manuel não jogou** (removido o filtro "goulartt");
+>   a detecção do Manuel por jogador mantém-se para atribuir a licença 52884.
+> - **Match alargado:** indexa `pull-torneios* + drive-data-* + aquapor-data-* +
+>   clubes* + jovens*` (antes só pull-torneios) — os sociais CGSS sem Manuel
+>   vivem tipicamente no drive-data.
+>
+> **Fonte dos draws CGSS:** o site do clube (`santodaserragolf.com/tournaments`,
+> login de membro → links "Draw" = `/download/{id}/`) só lista **2025 e 2026**
+> (recua a 29/03/2025; o site foi reconstruído em 2024). *Club Documents* e
+> *Member News* não têm arquivo de draws. **Não há draws de 2023/2024 no site** —
+> para esses a fonte é o endpoint de draw do scoring FPG/DataGolf
+> (`linkpage.aspx?page=draw&club=007&tourn={tcode}`).
+>
+> **Descarregados 2026-06-13 (17, pendentes de incorporar):** Primavera 2026,
+> T2 Foursomes 2026, Carnaval 2026, Famílias & Amigos 2025, Taça 1937, NOS
+> Empresas 2025, Taça Presidente 2025, Taça do Clube 2025, Diário de Notícias
+> 2025, Barbeito 2025, Summer 2025, Calheta Viva 2025, T5 Texas Scramble,
+> Troféu João Sousa, T4 Betterball, C. Santos/Mercedes, V Torneio OM.
 
 ### Caso B — imagem / Excel / texto (PJA ou outro)
 1. Transcrever os grupos (tee time, buraco, jogadores).

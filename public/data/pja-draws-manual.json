@@ -1,8 +1,8 @@
 {
-  "_doc": "Draws COMPLETOS curados PJA Tour (imagens/Excel/texto). Manuel jr = licenca 52884. Meta autoritativa (corrige datas placeholder do scrape). Fundido por nacional2026Loader + pairings-build.",
-  "gerado_em": "2026-06-12",
-  "source": "manual (PJA imagens/Excel/texto)",
-  "total": 5,
+  "_doc": "Draws COMPLETOS curados (imagens/Excel/texto/PDF) que o extractor CGSS (so c007) nao cobre. Manuel jr = licenca 52884; homonimo (marido) Manuel Medeiros = licenca 54907. Meta autoritativa (corrige datas placeholder do scrape). Fundido por nacional2026Loader + pairings-build.",
+  "gerado_em": "2026-06-13",
+  "source": "manual (PJA imagens/Excel/texto + PDFs Porto Santo/LPCC)",
+  "total": 8,
   "tournaments": [
     {
       "ccode": "192",
@@ -1114,6 +1114,354 @@
                   "hcp": null,
                   "tee": "Vermelhas"
                 }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "183",
+      "tcode": "10142",
+      "name": "Torneio José Rosado",
+      "date": "2025-08-09",
+      "campo": "Porto Santo Golfe",
+      "modal": "Stableford Net",
+      "source": "Draw Torneio José Rosado (PDF oficial PSG)",
+      "draws": {
+        "1": {
+          "totalJogadores": 36,
+          "groups": [
+            {
+              "teeTime": "08:30",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                { "nome": "Manuel Sousa", "clube": null, "fed": null, "hcp": 12.3 },
+                { "nome": "António Vargas", "clube": null, "fed": null, "hcp": 18.2 },
+                { "nome": "João Lopes", "clube": null, "fed": null, "hcp": 19.3 },
+                { "nome": "Pedro Freitas Rodrigues", "clube": null, "fed": null, "hcp": 19.8 }
+              ]
+            },
+            {
+              "teeTime": "08:30",
+              "startHole": 2,
+              "tee": null,
+              "players": [
+                { "nome": "Matilde Leal Gouveia", "clube": null, "fed": null, "hcp": 5.8 },
+                { "nome": "André Rodrigues", "clube": null, "fed": null, "hcp": 10.4 },
+                { "nome": "Magno Velosa", "clube": null, "fed": null, "hcp": 10.8 },
+                { "nome": "Carlos Rodrigues", "clube": null, "fed": null, "hcp": 21.0 }
+              ]
+            },
+            {
+              "teeTime": "08:30",
+              "startHole": 9,
+              "tee": null,
+              "players": [
+                { "nome": "Marcelo Mendonça", "clube": null, "fed": null, "hcp": 12.2 },
+                { "nome": "Colin Offland", "clube": null, "fed": null, "hcp": 14.3 },
+                { "nome": "Rui Freitas", "clube": null, "fed": null, "hcp": 16.9 },
+                { "nome": "Claude Vernon", "clube": null, "fed": null, "hcp": 19.5 }
+              ]
+            },
+            {
+              "teeTime": "08:30",
+              "startHole": 10,
+              "tee": null,
+              "players": [
+                { "nome": "Bento Louro", "clube": null, "fed": null, "hcp": 6.1 },
+                { "nome": "Paulo Silva", "clube": null, "fed": null, "hcp": 9.1 },
+                { "nome": "Mario Evangelista Rodrigues", "clube": null, "fed": null, "hcp": 8.9 },
+                { "nome": "Duarte Fernandes", "clube": null, "fed": null, "hcp": 20.3 }
+              ]
+            },
+            {
+              "teeTime": "08:30",
+              "startHole": 12,
+              "tee": null,
+              "players": [
+                { "nome": "Miguel Pereira", "clube": null, "fed": null, "hcp": 7.3 },
+                { "nome": "Abel Ramos Almeida", "clube": null, "fed": null, "hcp": 14.0 },
+                { "nome": "António Miranda de Sousa", "clube": null, "fed": null, "hcp": 26.9 },
+                { "nome": "João Lourenço", "clube": null, "fed": null, "hcp": 36.0 }
+              ]
+            },
+            {
+              "teeTime": "08:30",
+              "startHole": 15,
+              "tee": null,
+              "players": [
+                { "nome": "Fátima Pereira", "clube": null, "fed": null, "hcp": 10.9 },
+                { "nome": "Jorge Duarte Chaskelmann", "clube": null, "fed": null, "hcp": 29.1 },
+                { "nome": "John Young", "clube": null, "fed": null, "hcp": 25.3 },
+                { "nome": "Christian Guazzoni", "clube": null, "fed": null, "hcp": 25.9 }
+              ]
+            },
+            {
+              "teeTime": "08:30",
+              "startHole": 16,
+              "tee": null,
+              "players": [
+                { "nome": "Américo Mendes", "clube": null, "fed": null, "hcp": 21.1 },
+                { "nome": "Filipe Rodrigues", "clube": null, "fed": null, "hcp": 20.6 },
+                { "nome": "Mário Rodrigues", "clube": null, "fed": null, "hcp": 35.9 },
+                { "nome": "Paulo Silva Soares", "clube": null, "fed": null, "hcp": 29.4 }
+              ]
+            },
+            {
+              "teeTime": "08:30",
+              "startHole": 17,
+              "tee": null,
+              "players": [
+                { "nome": "Manuel Goulartt Medeiros", "clube": "Santo da Serra", "fed": "52884", "hcp": 16.0 },
+                { "nome": "Vasco Leal Gouveia", "clube": null, "fed": null, "hcp": 18.3 },
+                { "nome": "Joana Sousa", "clube": null, "fed": null, "hcp": 20.0 },
+                { "nome": "Manuel Medeiros", "clube": "Santo da Serra", "fed": "54907", "hcp": 26.9 }
+              ]
+            },
+            {
+              "teeTime": "08:30",
+              "startHole": 18,
+              "tee": null,
+              "players": [
+                { "nome": "Joao Abel Freitas Jr", "clube": null, "fed": null, "hcp": 4.2 },
+                { "nome": "Simon Sillier", "clube": null, "fed": null, "hcp": 17.4 },
+                { "nome": "Roberto Sousa", "clube": null, "fed": null, "hcp": 20.6 },
+                { "nome": "Joao Abel Freitas", "clube": null, "fed": null, "hcp": 23.4 }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "183",
+      "tcode": "10135",
+      "name": "Torneio de São João",
+      "date": "2025-06-21",
+      "campo": "Porto Santo Golfe",
+      "modal": "Stableford Net",
+      "source": "Draw Torn. S. João (PDF oficial PSG)",
+      "draws": {
+        "1": {
+          "totalJogadores": 35,
+          "groups": [
+            {
+              "teeTime": "08:00",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                { "nome": "João Santos", "clube": "PXO Clube", "fed": null, "hcp": 4.5, "tee": "Amarelas" },
+                { "nome": "Laura Santos", "clube": "PXO Clube", "fed": null, "hcp": 6.4, "tee": "Vermelhas" },
+                { "nome": "Tomás Câmara", "clube": "PXO Clube", "fed": null, "hcp": 12.9, "tee": "Amarelas" }
+              ]
+            },
+            {
+              "teeTime": "08:24",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                { "nome": "Wolfgang Leifken", "clube": "PXO Clube", "fed": null, "hcp": 23.0, "tee": "Vermelhas" },
+                { "nome": "Roberto Sousa", "clube": "PXO Clube", "fed": null, "hcp": 20.1, "tee": "Amarelas" },
+                { "nome": "Christian Guazzoni", "clube": "PXO Clube", "fed": null, "hcp": 25.1, "tee": "Amarelas" }
+              ]
+            },
+            {
+              "teeTime": "08:32",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                { "nome": "Marcelo Mendonça", "clube": "PXO Clube", "fed": null, "hcp": 11.0, "tee": "Amarelas" },
+                { "nome": "Fernando Paulino", "clube": "Santo da Serra", "fed": null, "hcp": 15.7, "tee": "Amarelas" },
+                { "nome": "Victor Amaro", "clube": "PXO Clube", "fed": null, "hcp": 16.5, "tee": "Amarelas" },
+                { "nome": "Bruno Sousa", "clube": "PXO Clube", "fed": null, "hcp": 16.3, "tee": "Amarelas" }
+              ]
+            },
+            {
+              "teeTime": "08:40",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                { "nome": "José Duarte Rodrigues", "clube": "Palheiro", "fed": null, "hcp": 6.8, "tee": "Amarelas" },
+                { "nome": "Salvador Rodrigues", "clube": "Palheiro", "fed": null, "hcp": 6.6, "tee": "Amarelas" },
+                { "nome": "Miguel Pereira", "clube": "PXO Clube", "fed": null, "hcp": 6.5, "tee": "Amarelas" },
+                { "nome": "Cecilio Camacho", "clube": "Palheiro", "fed": null, "hcp": 7.9, "tee": "Amarelas" }
+              ]
+            },
+            {
+              "teeTime": "08:48",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                { "nome": "Pedro Santiago Câmara", "clube": "PXO Clube", "fed": null, "hcp": 11.4, "tee": "Amarelas" },
+                { "nome": "Fátima Pereira", "clube": "PXO Clube", "fed": null, "hcp": 11.7, "tee": "Vermelhas" },
+                { "nome": "Alexandre Drumond", "clube": "PXO Clube", "fed": null, "hcp": 16.8, "tee": "Amarelas" },
+                { "nome": "Claude Vernon", "clube": "PXO Clube", "fed": null, "hcp": 19.2, "tee": "Amarelas" }
+              ]
+            },
+            {
+              "teeTime": "08:56",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                { "nome": "Andrew Ramsden", "clube": "PXO Clube", "fed": null, "hcp": 7.7, "tee": "Amarelas" },
+                { "nome": "Paulo Silva", "clube": "PXO Clube", "fed": null, "hcp": 9.1, "tee": "Amarelas" },
+                { "nome": "Colin Offland", "clube": "PXO Clube", "fed": null, "hcp": 13.0, "tee": "Amarelas" },
+                { "nome": "John Young", "clube": "PXO Clube", "fed": null, "hcp": 24.3, "tee": "Amarelas" }
+              ]
+            },
+            {
+              "teeTime": "09:04",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                { "nome": "Manuel Goulartt Medeiros", "clube": "Santo da Serra", "fed": "52884", "hcp": 17.3, "tee": "Vermelhas" },
+                { "nome": "Magno Velosa", "clube": "PXO Clube", "fed": null, "hcp": 11.5, "tee": "Amarelas" },
+                { "nome": "Ricardo Mendonça", "clube": "PXO Clube", "fed": null, "hcp": 18.8, "tee": "Amarelas" },
+                { "nome": "Manuel Medeiros", "clube": "Santo da Serra", "fed": "54907", "hcp": 28.9, "tee": "Amarelas" }
+              ]
+            },
+            {
+              "teeTime": "09:12",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                { "nome": "Rui Escórcio de Brito", "clube": "PXO Clube", "fed": null, "hcp": 10.0, "tee": "Amarelas" },
+                { "nome": "António Vargas", "clube": "Santo da Serra", "fed": null, "hcp": 18.9, "tee": "Amarelas" },
+                { "nome": "Leonel Freitas", "clube": "Santo da Serra", "fed": null, "hcp": 23.8, "tee": "Amarelas" },
+                { "nome": "Bernardo Freitas", "clube": "Santo da Serra", "fed": null, "hcp": 24.3, "tee": "Amarelas" }
+              ]
+            },
+            {
+              "teeTime": "09:20",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                { "nome": "João Vasconcelos", "clube": "PXO Clube", "fed": null, "hcp": 39.1, "tee": "Amarelas" },
+                { "nome": "Santiago Couto", "clube": "PXO Clube", "fed": null, "hcp": 48.0, "tee": "Vermelhas" }
+              ]
+            },
+            {
+              "teeTime": "09:28",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                { "nome": "Bernardo Dias", "clube": "PXO Clube", "fed": null, "hcp": 24.0, "tee": "Amarelas" },
+                { "nome": "Rafael Brito", "clube": "PXO Clube", "fed": null, "hcp": 31.3, "tee": "Amarelas" },
+                { "nome": "Santiago Santos", "clube": "PXO Clube", "fed": null, "hcp": 40.1, "tee": "Amarelas" }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "920",
+      "tcode": "10078",
+      "name": "Liga Portuguesa Contra o Cancro",
+      "date": "2024-08-17",
+      "campo": "Porto Santo Golfe",
+      "modal": "Stableford Net",
+      "source": "Draw alterado (PDF oficial SDPS)",
+      "draws": {
+        "1": {
+          "totalJogadores": 33,
+          "groups": [
+            {
+              "teeTime": "09:00",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                { "nome": "Manuel Goulartt Medeiros", "clube": "Santo da Serra", "fed": "52884", "hcp": 21.1, "tee": "Vermelhas" },
+                { "nome": "Roberto Sousa", "clube": "PXO Clube", "fed": null, "hcp": 21.9, "tee": "Amarelas" },
+                { "nome": "Manuel Medeiros", "clube": "Santo da Serra", "fed": "54907", "hcp": 29.8, "tee": "Amarelas" },
+                { "nome": "Fátima Pereira", "clube": "PXO Clube", "fed": null, "hcp": 12.3, "tee": "Vermelhas" }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 6,
+              "tee": null,
+              "players": [
+                { "nome": "João Miguel Rodrigues", "clube": "Santo da Serra", "fed": null, "hcp": 16.1, "tee": "Amarelas" },
+                { "nome": "António Sales Vieira", "clube": "Palheiro", "fed": null, "hcp": 17.9, "tee": "Amarelas" },
+                { "nome": "Estanislau Barros", "clube": "Internacional", "fed": null, "hcp": 24.0, "tee": "Amarelas" },
+                { "nome": "Jorge Duarte Chaskelmann", "clube": "PXO Clube", "fed": null, "hcp": 31.7, "tee": "Amarelas" }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 8,
+              "tee": null,
+              "players": [
+                { "nome": "Abel Ramos Almeida", "clube": "Aroeira", "fed": null, "hcp": 13.8, "tee": "Amarelas" },
+                { "nome": "Américo Mendes", "clube": "Santo da Serra", "fed": null, "hcp": 19.6, "tee": "Amarelas" },
+                { "nome": "António Miranda de Sousa", "clube": "Aroeira", "fed": null, "hcp": 26.8, "tee": "Amarelas" },
+                { "nome": "Hélio Neves", "clube": "Palheiro", "fed": null, "hcp": 25.6, "tee": "Amarelas" }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 9,
+              "tee": null,
+              "players": [
+                { "nome": "Marcelo Gaspar", "clube": "Santo da Serra", "fed": null, "hcp": 6.6, "tee": "Amarelas" },
+                { "nome": "Paulo Silva", "clube": "PXO Clube", "fed": null, "hcp": 7.6, "tee": "Amarelas" },
+                { "nome": "José Francisco Carreira", "clube": "Santo da Serra", "fed": null, "hcp": 19.8, "tee": "Amarelas" },
+                { "nome": "Jorge Pessoa", "clube": "Internacional", "fed": null, "hcp": 36.0, "tee": "Amarelas" }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 10,
+              "tee": null,
+              "players": [
+                { "nome": "Roberto Passos", "clube": "Palheiro", "fed": null, "hcp": 14.5, "tee": "Amarelas" },
+                { "nome": "João Lopes", "clube": "Santo da Serra", "fed": null, "hcp": 17.2, "tee": "Amarelas" },
+                { "nome": "John Young", "clube": "PXO Clube", "fed": null, "hcp": 22.9, "tee": "Amarelas" },
+                { "nome": "José Ornelas Camacho", "clube": "Palheiro", "fed": null, "hcp": 26.0, "tee": "Amarelas" }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 12,
+              "tee": null,
+              "players": [
+                { "nome": "Rui Freitas", "clube": "Santo da Serra", "fed": null, "hcp": 15.8, "tee": "Amarelas" },
+                { "nome": "Leonel Freitas", "clube": "Santo da Serra", "fed": null, "hcp": 21.7, "tee": "Amarelas" },
+                { "nome": "Christian Guazzoni", "clube": "PXO Clube", "fed": null, "hcp": 23.9, "tee": "Amarelas" }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 16,
+              "tee": null,
+              "players": [
+                { "nome": "João Paixão", "clube": "PXO Clube", "fed": null, "hcp": 0.2, "tee": "Amarelas" },
+                { "nome": "Claude Vernon", "clube": "ACP Golfe", "fed": null, "hcp": 18.8, "tee": "Amarelas" },
+                { "nome": "Idalino Vasconcelos", "clube": "PXO Clube", "fed": null, "hcp": 37.6, "tee": "Amarelas" },
+                { "nome": "Lino Menezes", "clube": "Internacional", "fed": null, "hcp": 36.0, "tee": "Amarelas" }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 17,
+              "tee": null,
+              "players": [
+                { "nome": "Alexandre Henriques", "clube": "Santo da Serra", "fed": null, "hcp": 2.6, "tee": "Amarelas" },
+                { "nome": "Pedro Santiago Câmara", "clube": "PXO Clube", "fed": null, "hcp": 11.3, "tee": "Amarelas" },
+                { "nome": "Colin Offland", "clube": "PXO Clube", "fed": null, "hcp": 11.0, "tee": "Amarelas" }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 18,
+              "tee": null,
+              "players": [
+                { "nome": "Miguel Pereira", "clube": "PXO Clube", "fed": null, "hcp": 7.9, "tee": "Amarelas" },
+                { "nome": "Marcelo Mendonça", "clube": "PXO Clube", "fed": null, "hcp": 10.5, "tee": "Amarelas" },
+                { "nome": "Aurélio Rodrigues", "clube": "Santo da Serra", "fed": null, "hcp": 33.9, "tee": "Amarelas" }
               ]
             }
           ]

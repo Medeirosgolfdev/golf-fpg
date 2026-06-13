@@ -17,7 +17,7 @@ import { MANUEL_FED } from "../constants/manuel";
 import { TournPName, TeeDot } from "./tournamentPrimitives";
 import type { PlayersDB } from "./tournamentPrimitives";
 import { EscPill, YearPill } from "./PillBadge";
-import { useFedCountries, useFedBirthdates, CountryFlag } from "./InscricoesComponents";
+import { useFedBirthdates } from "./InscricoesComponents";
 import { norm, fmtHcp, ageAtDate, escalaoAtDate } from "../utils/format";
 import { formatPlayerName } from "../utils/playerUtils";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
@@ -71,7 +71,6 @@ export default function DrawTab({
   admissions, fpgUrl,
 }: Props) {
   const effDate = tournamentDate || draw.date || null;
-  const fedCountries = useFedCountries();
   const fedBirthdates = useFedBirthdates();
   const teeName = teeNameFor(tournamentEscalao, tournamentSex);
   const { sortKey, sortDir, toggleSort } = useSort<SortKey>("pos", "asc");
@@ -141,6 +140,7 @@ export default function DrawTab({
   const flat = useMemo(() => {
     const out: Array<{
       pos: number;
+      groupIdx: number;
       teeTime: string;
       startHole: number | null;
       tee: string | null;
@@ -217,7 +217,9 @@ export default function DrawTab({
       return candidates[0];
     };
 
+    let groupIdx = -1;
     for (const g of (draw.groups || [])) {
+      groupIdx++;
       for (const p of g.players) {
         idx++;
         const nomeFormatted = formatPlayerName(p.nome || "");
@@ -278,6 +280,7 @@ export default function DrawTab({
         const escHist = escalaoAtDate(dob, effDate || undefined) || null;
         out.push({
           pos: idx,
+          groupIdx,
           teeTime: g.teeTime,
           startHole: g.startHole,
           tee: g.tee,
@@ -316,12 +319,14 @@ export default function DrawTab({
     });
   }, [flat, sortKey, sortDir]);
 
-  // Mapa de cor de fundo por teeTime (cicla uma paleta pastel pela ordem das horas).
-  // Permite identificar visualmente os grupos de flight mesmo quando a tabela é
-  // reordenada por outra coluna.
-  const teeTimeBg = useMemo(() => {
-    const m = new Map<string, string>();
-    const unique = [...new Set(flat.map(p => p.teeTime))].sort();
+  // Mapa de cor de fundo por GRUPO (cicla uma paleta pastel pela ordem dos
+  // flights em `draw.groups`). Identifica visualmente cada grupo mesmo quando
+  // (a) é um shotgun — todos os grupos à mesma hora, distintos só pelo buraco —
+  // ou (b) a tabela é reordenada por outra coluna. Antes era keyed por teeTime,
+  // o que colapsava todos os grupos de um shotgun numa cor só.
+  const groupBg = useMemo(() => {
+    const m = new Map<number, string>();
+    const unique = [...new Set(flat.map(p => p.groupIdx))];
     for (let i = 0; i < unique.length; i++) {
       m.set(unique[i], TEE_TIME_PALETTE[i % TEE_TIME_PALETTE.length]);
     }
@@ -330,20 +335,23 @@ export default function DrawTab({
 
   const rows: ScorecardRow[] = useMemo(() => {
     // Separador de grupos: linha mais grossa entre flights quando a ordenação
-    // respeita o agrupamento natural (sort por `pos` ou `hora` — rows do mesmo
-    // teeTime ficam consecutivas). Com outros sorts os flights quebram-se e a
-    // linha deixaria de marcar grupos coerentes, por isso só aparece nestes dois.
+    // respeita o agrupamento natural (sort por `pos`, `hora` ou `buraco` — rows
+    // do mesmo grupo ficam consecutivas). Com outros sorts (nome/hcp/...) os
+    // flights quebram-se e a linha deixaria de marcar grupos coerentes, por isso
+    // só aparece nestes. O grupo é identificado por `groupIdx` (ordem em
+    // `draw.groups`), NÃO por `teeTime` — senão num shotgun (todos à mesma hora)
+    // nunca havia mudança de grupo e não se desenhava nenhuma linha.
     //
     // 3px + `var(--text-3)` (#7a8a6e) dá uma linha claramente visível. A
     // `ScorecardLeaderboard` aplica o `borderTop` nos <td> que controla
     // (pos/nome/±Tot/buracos); aqui propagamos-o também aos <td> custom em
     // `prefixCells`/`postScorecardCells` para o traço atravessar a linha toda.
-    const groupingActive = sortKey === "pos" || sortKey === "hora";
+    const groupingActive = sortKey === "pos" || sortKey === "hora" || sortKey === "buraco";
     const GROUP_BORDER = "3px solid var(--text-3)";
     return sorted.map((p, i) => {
       const manuel = p.fed === MANUEL_FED;
       const age = ageAtDate(p.dob, effDate || undefined);
-      const isFirstOfGroup = groupingActive && i > 0 && sorted[i - 1].teeTime !== p.teeTime;
+      const isFirstOfGroup = groupingActive && i > 0 && sorted[i - 1].groupIdx !== p.groupIdx;
       const borderTop = isFirstOfGroup ? GROUP_BORDER : undefined;
       const bStyle = borderTop ? { borderTop } : undefined;
       return {
@@ -356,37 +364,17 @@ export default function DrawTab({
         sortPos: p.pos,
         sortName: p.nome,
         borderTop,
-        nameContent: (() => {
-          // Para internacionais: se o fed começa com "intl:" (resolvido via
-          // kids-links.json) OU se não há fed, procurar country no playersDB.
-          // Entries virtuais "intl:..." têm `country` directo.
-          let intlCountry: string | null = null;
-          if (playersDB) {
-            if (p.fed && p.fed.startsWith("intl:")) {
-              intlCountry = (playersDB[p.fed] as any)?.country || null;
-            } else if (!p.fed) {
-              const nrm = norm(p.nome);
-              for (const [k, bd] of Object.entries(playersDB)) {
-                if (!k.startsWith("intl:")) continue;
-                if (norm((bd as any)?.name || "") === nrm) {
-                  intlCountry = (bd as any)?.country || null;
-                  break;
-                }
-              }
-            }
-          }
-          return (
-            <>
-              <CountryFlag fed={p.fed} fedCountries={fedCountries} country={intlCountry} />
-              <TournPName
-                name={p.nome}
-                fed={p.fed || undefined}
-                playersDB={playersDB}
-                highlight={manuel}
-              />
-            </>
-          );
-        })(),
+        // A bandeira é desenhada pelo próprio TournPName (resolve country por
+        // fed/nome no playersDB). NÃO adicionar aqui uma CountryFlag por cima —
+        // senão os estrangeiros ficam com a bandeira a dobrar.
+        nameContent: (
+          <TournPName
+            name={p.nome}
+            fed={p.fed || undefined}
+            playersDB={playersDB}
+            highlight={manuel}
+          />
+        ),
         prefixCells: (
           <>
             <td className="lb-esc" style={bStyle}>
@@ -410,7 +398,7 @@ export default function DrawTab({
           <>
             <td className="fs-12 fw-700 mono" style={{
               padding: "6px 8px", whiteSpace: "nowrap", textAlign: "center",
-              background: teeTimeBg.get(p.teeTime),
+              background: groupBg.get(p.groupIdx),
               ...bStyle,
             }}>
               {p.teeTime}
@@ -422,7 +410,7 @@ export default function DrawTab({
         ),
       };
     });
-  }, [sorted, playersDB, fedCountries, teeName, effDate, teeTimeBg, sortKey]);
+  }, [sorted, playersDB, teeName, effDate, groupBg, sortKey]);
 
   if (draw.error) {
     return <div className="detail-toolbar" style={{ padding: 16 }}>

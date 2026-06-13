@@ -1,18 +1,18 @@
 {
-  "geradoEm": "2026-06-12T18:58:59.908Z",
+  "geradoEm": "2026-06-13T13:11:29.388Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 109,
-  "totalCompanheirosUnicos": 129,
+  "totalRondas": 112,
+  "totalCompanheirosUnicos": 134,
   "cobertura": {
     "fpg": {
       "rondasJogadas": 120,
-      "rondasComDraw": 87,
+      "rondasComDraw": 90,
       "torneiosJogados": 90,
-      "torneiosComDraw": 69,
+      "torneiosComDraw": 72,
       "torneiosComDrawDetalhe": [
         {
           "torneioId": "059-10615",
@@ -171,6 +171,12 @@
           "rondas": 3
         },
         {
+          "torneioId": "183-10142",
+          "nome": "Torneio José Rosado",
+          "data": "2025-08-08",
+          "rondas": 1
+        },
+        {
           "torneioId": "007-10921",
           "nome": "Torneio CGSS RALI 2025",
           "data": "2025-08-03",
@@ -198,6 +204,12 @@
           "torneioId": "982-10175",
           "nome": "2º Torn.Drive Challenge Madeira-Porto Santo-Sub 12",
           "data": "2025-06-21",
+          "rondas": 1
+        },
+        {
+          "torneioId": "183-10135",
+          "nome": "Torneio de São João",
+          "data": "2025-06-20",
           "rondas": 1
         },
         {
@@ -309,6 +321,12 @@
           "rondas": 3
         },
         {
+          "torneioId": "920-10078",
+          "nome": "Liga Portuguesa Contra o Cancro",
+          "data": "2024-08-16",
+          "rondas": 1
+        },
+        {
           "torneioId": "982-10159",
           "nome": "6º Torn.Drive Challenge Madeira-Palheiro-Sub10",
           "data": "2024-07-27",
@@ -415,11 +433,8 @@
         "125-10371",
         "152-10444",
         "183-10129",
-        "183-10135",
-        "183-10142",
         "920-10062",
         "920-10077",
-        "920-10078",
         "988-10190"
       ],
       "torneiosSemDrawDetalhe": [
@@ -433,18 +448,6 @@
           "torneioId": "125-10370",
           "nome": "PJA TOUR Vale Pisão - Dia 1",
           "data": "2025-08-23",
-          "rondas": 1
-        },
-        {
-          "torneioId": "183-10142",
-          "nome": "Torneio José Rosado",
-          "data": "2025-08-08",
-          "rondas": 1
-        },
-        {
-          "torneioId": "183-10135",
-          "nome": "Torneio de São João",
-          "data": "2025-06-20",
           "rondas": 1
         },
         {
@@ -487,12 +490,6 @@
           "torneioId": "007-10796",
           "nome": "XI Torneio Vinhos Barbeito Madeira",
           "data": "2024-09-20",
-          "rondas": 1
-        },
-        {
-          "torneioId": "920-10078",
-          "nome": "Liga Portuguesa Contra o Cancro",
-          "data": "2024-08-16",
           "rondas": 1
         },
         {
@@ -684,21 +681,30 @@
       "teeTime": "09:18",
       "startHole": 1,
       "campo": "Longniddry Golf Club, The Musselburgh Golf Club , Craigielaw Golf Club, Glen Golf Club, Royal Musselburgh Golf Club",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 81,
+        "toPar": 9
+      },
       "companheiros": [
         {
           "nome": "Maximilian Oberlin",
           "fed": null,
           "clube": null,
           "pais": "DE",
-          "score": null
+          "score": {
+            "gross": 85,
+            "toPar": 13
+          }
         },
         {
           "nome": "Mylo  Mulvaney",
           "fed": null,
           "clube": null,
           "pais": "GB",
-          "score": null
+          "score": {
+            "gross": 84,
+            "toPar": 12
+          }
         }
       ]
     },
@@ -711,21 +717,30 @@
       "teeTime": "10:08",
       "startHole": 1,
       "campo": "Longniddry Golf Club, The Musselburgh Golf Club , Craigielaw Golf Club, Glen Golf Club, Royal Musselburgh Golf Club",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 83,
+        "toPar": 11
+      },
       "companheiros": [
         {
           "nome": "Rosario  Becker",
           "fed": null,
           "clube": null,
           "pais": "DE",
-          "score": null
+          "score": {
+            "gross": 79,
+            "toPar": 7
+          }
         },
         {
           "nome": "Seth Lund",
           "fed": null,
           "clube": null,
           "pais": "US",
-          "score": null
+          "score": {
+            "gross": 89,
+            "toPar": 17
+          }
         }
       ]
     },
@@ -738,21 +753,30 @@
       "teeTime": "10:08",
       "startHole": 1,
       "campo": "Longniddry Golf Club, The Musselburgh Golf Club , Craigielaw Golf Club, Glen Golf Club, Royal Musselburgh Golf Club",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 78,
+        "toPar": 6
+      },
       "companheiros": [
         {
           "nome": "Mylo  Mulvaney",
           "fed": null,
           "clube": null,
           "pais": "GB",
-          "score": null
+          "score": {
+            "gross": 87,
+            "toPar": 15
+          }
         },
         {
           "nome": "Thomas Gervin",
           "fed": null,
           "clube": null,
           "pais": "IE",
-          "score": null
+          "score": {
+            "gross": 83,
+            "toPar": 11
+          }
         }
       ]
     },
@@ -1133,14 +1157,20 @@
           "fed": null,
           "clube": null,
           "pais": "IT",
-          "score": null
+          "score": {
+            "gross": 76,
+            "toPar": 4
+          }
         },
         {
           "nome": "Zachary  Blayney",
           "fed": null,
           "clube": null,
           "pais": "GB",
-          "score": null
+          "score": {
+            "gross": 70,
+            "toPar": -2
+          }
         }
       ]
     },
@@ -1160,14 +1190,20 @@
           "fed": null,
           "clube": null,
           "pais": "US",
-          "score": null
+          "score": {
+            "gross": 100,
+            "toPar": 28
+          }
         },
         {
           "nome": "Noah Lobelius",
           "fed": null,
           "clube": null,
           "pais": "SE",
-          "score": null
+          "score": {
+            "gross": 85,
+            "toPar": 13
+          }
         }
       ]
     },
@@ -1988,21 +2024,30 @@
       "teeTime": "09:57",
       "startHole": 1,
       "campo": "Terre Dei Consoli Golf Club",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 89,
+        "toPar": 17
+      },
       "companheiros": [
         {
           "nome": "Andrea Capotosti",
           "fed": null,
           "clube": null,
           "pais": "IT",
-          "score": null
+          "score": {
+            "gross": 80,
+            "toPar": 8
+          }
         },
         {
           "nome": "LEONARDO LOPEZ",
           "fed": null,
           "clube": null,
           "pais": "IT",
-          "score": null
+          "score": {
+            "gross": 88,
+            "toPar": 16
+          }
         }
       ]
     },
@@ -2015,14 +2060,20 @@
       "teeTime": "09:48",
       "startHole": 1,
       "campo": "Terre Dei Consoli Golf Club",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 77,
+        "toPar": 5
+      },
       "companheiros": [
         {
           "nome": "LEONARDO LOPEZ",
           "fed": null,
           "clube": null,
           "pais": "IT",
-          "score": null
+          "score": {
+            "gross": 83,
+            "toPar": 11
+          }
         }
       ]
     },
@@ -2288,21 +2339,30 @@
       "teeTime": "13:29",
       "startHole": 1,
       "campo": "Galzignano Terme Spa & Golf Resort, Golf Club Della Montecchia - Green/White, Golf Club Della Montecchia - Red/Green, Golf Club Della Montecchia - White/Red, Golf Club Frassanelle",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 78,
+        "toPar": 6
+      },
       "companheiros": [
         {
           "nome": "Francesco Bellentani",
           "fed": null,
           "clube": null,
           "pais": "IT",
-          "score": null
+          "score": {
+            "gross": 79,
+            "toPar": 7
+          }
         },
         {
           "nome": "Maximilien  Demole",
           "fed": null,
           "clube": null,
           "pais": "CH",
-          "score": null
+          "score": {
+            "gross": 69,
+            "toPar": -3
+          }
         }
       ]
     },
@@ -2315,21 +2375,30 @@
       "teeTime": "12:26",
       "startHole": 1,
       "campo": "Galzignano Terme Spa & Golf Resort, Golf Club Della Montecchia - Green/White, Golf Club Della Montecchia - Red/Green, Golf Club Della Montecchia - White/Red, Golf Club Frassanelle",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 76,
+        "toPar": 4
+      },
       "companheiros": [
         {
           "nome": "Noah Birk Andersen",
           "fed": null,
           "clube": null,
           "pais": "DK",
-          "score": null
+          "score": {
+            "gross": 74,
+            "toPar": 2
+          }
         },
         {
           "nome": "Raphael Gozzo",
           "fed": null,
           "clube": null,
           "pais": "IT",
-          "score": null
+          "score": {
+            "gross": 79,
+            "toPar": 7
+          }
         }
       ]
     },
@@ -2342,21 +2411,30 @@
       "teeTime": "12:35",
       "startHole": 1,
       "campo": "Galzignano Terme Spa & Golf Resort, Golf Club Della Montecchia - Green/White, Golf Club Della Montecchia - Red/Green, Golf Club Della Montecchia - White/Red, Golf Club Frassanelle",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 83,
+        "toPar": 11
+      },
       "companheiros": [
         {
           "nome": "Amiel Meisler",
           "fed": null,
           "clube": null,
           "pais": "FR",
-          "score": null
+          "score": {
+            "gross": 75,
+            "toPar": 3
+          }
         },
         {
           "nome": "Constantin Fritz",
           "fed": null,
           "clube": null,
           "pais": "DE",
-          "score": null
+          "score": {
+            "gross": 73,
+            "toPar": 1
+          }
         }
       ]
     },
@@ -2458,6 +2536,46 @@
           "score": {
             "gross": 73,
             "toPar": null
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "183-10142",
+      "torneioNome": "Torneio José Rosado",
+      "data": "2025-08-08",
+      "ronda": 1,
+      "teeTime": "08:30",
+      "startHole": 17,
+      "campo": "Porto Santo Golfe",
+      "manuelScore": {
+        "gross": 84,
+        "toPar": 12
+      },
+      "companheiros": [
+        {
+          "nome": "Vasco Leal Gouveia",
+          "fed": null,
+          "clube": null,
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Joana Sousa",
+          "fed": null,
+          "clube": null,
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Manuel Medeiros",
+          "fed": "54907",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 106,
+            "toPar": 34
           }
         }
       ]
@@ -2669,6 +2787,46 @@
           "score": {
             "gross": 60,
             "toPar": 24
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "183-10135",
+      "torneioNome": "Torneio de São João",
+      "data": "2025-06-20",
+      "ronda": 1,
+      "teeTime": "09:04",
+      "startHole": 1,
+      "campo": "Porto Santo Golfe",
+      "manuelScore": {
+        "gross": 89,
+        "toPar": 17
+      },
+      "companheiros": [
+        {
+          "nome": "Magno Velosa",
+          "fed": null,
+          "clube": "PXO Clube",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Ricardo Mendonça",
+          "fed": null,
+          "clube": "PXO Clube",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Manuel Medeiros",
+          "fed": "54907",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 115,
+            "toPar": 43
           }
         }
       ]
@@ -3659,6 +3817,46 @@
     },
     {
       "circuito": "FPG",
+      "torneioId": "920-10078",
+      "torneioNome": "Liga Portuguesa Contra o Cancro",
+      "data": "2024-08-16",
+      "ronda": 1,
+      "teeTime": "09:00",
+      "startHole": 1,
+      "campo": "Porto Santo Golfe",
+      "manuelScore": {
+        "gross": 93,
+        "toPar": 21
+      },
+      "companheiros": [
+        {
+          "nome": "Roberto Sousa",
+          "fed": null,
+          "clube": "PXO Clube",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Manuel Medeiros",
+          "fed": "54907",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 112,
+            "toPar": 40
+          }
+        },
+        {
+          "nome": "Fátima Pereira",
+          "fed": null,
+          "clube": "PXO Clube",
+          "pais": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
       "torneioId": "982-10159",
       "torneioNome": "6º Torn.Drive Challenge Madeira-Palheiro-Sub10",
       "data": "2024-07-27",
@@ -3993,14 +4191,20 @@
       "teeTime": "14:40",
       "startHole": 1,
       "campo": "Real Club de Golf El Prat",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 44,
+        "toPar": 8
+      },
       "companheiros": [
         {
           "nome": "Marc Garcia Pannon",
           "fed": null,
           "clube": null,
           "pais": "ES",
-          "score": null
+          "score": {
+            "gross": 53,
+            "toPar": 17
+          }
         }
       ]
     },

@@ -27,6 +27,7 @@ import { ScorecardLB, AccumulatedLB, AllRoundsScorecardLB } from "../../ui/Leade
 import Aroeira2AnaliseView from "../../ui/Aroeira2AnaliseView";
 import AdmissionsTab from "../../ui/AdmissionsTab";
 import DrawTab from "../../ui/DrawTab";
+import { TOURNAMENT_EXTRA_LINKS } from "./constants";
 import PrintButton from "../../ui/PrintButton";
 import PrintPJAButton from "../../ui/PrintPJAButton";
 
@@ -265,7 +266,7 @@ function TournamentDetail({ tournament, escLookup, playersDB }: { tournament: To
             }
             {/* Links extra específicos do torneio — regulamento, página do
                 clube/evento, etc. Carregados de Tournament.extraLinks. */}
-            {(tournament.extraLinks || []).map((lnk) => (
+            {[...(tournament.extraLinks || []), ...(TOURNAMENT_EXTRA_LINKS[`${tournament.ccode}-${tournament.tcode}`] || [])].map((lnk) => (
               <a key={lnk.url} href={lnk.url}
                 target="_blank" rel="noopener noreferrer"
                 title={lnk.label}
