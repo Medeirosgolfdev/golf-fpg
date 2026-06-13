@@ -129,7 +129,7 @@ conta os +21 CGSS de §4.4 nem os +3 de §4.3, que são para o campo completo do
 | t10989 | 2026-01-31 | T1 Camp. CGSS de Pares (Greensomes) | 15 |
 | t10888 | 2025-05-04 | I ABERTO CGSS 2025 | 4 |
 | *draw-only* | 2025-07-06 | III ABERTO CGSS 2025 | 7 |
-| *draw-only* | 2026-06-13 | Torneio Diário de Notícias da Madeira 2026 | 18 |
+| t11034 | 2026-06-13 | Torneio Diário de Notícias da Madeira 2026 | 18 | ← era draw-only; re-chaveado em 2026-06-13 após scrape dos resultados (67 jog.) |
 | t10921 | 2025-08-02 | Torneio CGSS RALI Madeira 2025 | 14 |
 | t10933 | 2025-09-06 | Torneio Quinta de São João 2025 | 25 |
 | t10961 | 2025-11-08 | Torneio CGSS São Martinho | 14 |
@@ -203,6 +203,24 @@ MADEIRA GOLF TROPHY 2026 (t11031), e II ABERTO 2026 (draw-only — não scrapead
 resultados+regulamento), I ABERTO 2026 (t11005 — o site reutilizou o mesmo id de
 download do II ABERTO). O site só recua a **29/03/2025** (reconstruído em 2024) —
 2023/2024 não existem lá; para esses a fonte é o draw do scoring FPG/DataGolf.
+
+### 4.5 Re-chavear um draw-only quando saem os resultados — 2026-06-13
+
+Quando um draw existe como sintético draw-only (`cgss-...`) e a FPG publica
+finalmente os resultados, faz-se: (1) scrape dos resultados para um pull, (2)
+troca da chave sintética pelo `ccode-tcode` real (e `drawOnly:false`), para
+resultados + draw aparecerem juntos e desaparecer a entrada duplicada na sidebar.
+
+Exemplo feito hoje — **Torneio Diário de Notícias da Madeira 2026 (`007-11034`)**:
+```bash
+# 1) resultados → pull002 (merge aditivo)
+node scripts/scrape-classif-node.js --tclub 007 --tcode 11034 --out public/data/pull-torneios002.json
+# 2) re-chavear o draw (estava cgss-...torneiodiariodenoticias..., data 2026-06-13)
+python -c "import json; p='public/data/cgss-draws-manual.json'; d=json.load(open(p,encoding='utf-8')); n=sum((t.__setitem__('tcode','11034') or t.__setitem__('drawOnly',False) or 1) for t in d['tournaments'] if (not str(t.get('tcode')).isdigit()) and str(t.get('date'))=='2026-06-13'); json.dump(d,open(p,'w',encoding='utf-8'),ensure_ascii=False,indent=2); print('re-chaveados:',n)"
+```
+Como o PDF do Diário **não** está em `draws-cgss-2025/`, re-correr o extractor não
+desfaz o re-key. (Se algum dia o PDF for para essa pasta, o extractor passa a
+casá-lo sozinho com o `11034` e o re-key manual deixa de ser preciso.)
 
 ---
 

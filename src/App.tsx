@@ -5,7 +5,10 @@ import { loadMasterData, loadPlayers, loadAwayCourses } from "./data/loader";
 import { initCourseColorCache } from "./utils/teeColors";
 import { extractAwayCourses } from "./data/melhoriasLoader";
 import { getExtraCourses } from "./data/extraCourses";
-import type { Course, MasterData, PlayersDb } from "./data/types";
+import type { Course, MasterData, PlayersDb, CoursePlayerRound } from "./data/types";
+
+/** course-players.json — _players dos campos PT do master (quem jogou + scores). */
+type CoursePlayersMap = Record<string, Record<string, CoursePlayerRound[]>>;
 import { deepFixMojibake } from "./utils/fixEncoding";
 import { isCalUnlocked, CAL_UNLOCK_EVENT } from "./utils/authConstants";
 import { norm } from "./utils/format";
@@ -67,14 +70,16 @@ const DrawsPage = lazy(() => import("./pages/DrawsPage"));
 type Status =
   | { kind: "loading" }
   | { kind: "error"; message: string }
-  | { kind: "ready"; data: MasterData; players: PlayersDb; awayCourses: Course[]; melhorias: MelhoriasJson };
+  | { kind: "ready"; data: MasterData; players: PlayersDb; awayCourses: Course[]; melhorias: MelhoriasJson; coursePlayers: CoursePlayersMap };
 
 /* ── Start fetching data at module level (before React mounts) ── */
 const _earlyData = Promise.all([
   loadMasterData(),
   loadPlayers(),
   loadAwayCourses(),
-import("../melhorias.json").then(m => m.default as unknown as MelhoriasJson).catch(() => ({} as MelhoriasJson)),]);
+  import("../melhorias.json").then(m => m.default as unknown as MelhoriasJson).catch(() => ({} as MelhoriasJson)),
+  fetch("/data/course-players.json").then(r => r.ok ? r.json() : null).then(j => (j?.players ?? {}) as CoursePlayersMap).catch(() => ({} as CoursePlayersMap)),
+]);
 
 export default function App() {
   const [status, setStatus] = useState<Status>({ kind: "loading" });
@@ -91,11 +96,11 @@ export default function App() {
   useEffect(() => {
     let alive = true;
     _earlyData
-      .then(([data, players, awayCourses, melhorias]) => {
+      .then(([data, players, awayCourses, melhorias, coursePlayers]) => {
         if (!alive) return;
         deepFixMojibake(players);
         initCourseColorCache([...data.courses, ...awayCourses]);
-        setStatus({ kind: "ready", data, players, awayCourses, melhorias });
+        setStatus({ kind: "ready", data, players, awayCourses, melhorias, coursePlayers });
       })
       .catch((e) => alive && setStatus({ kind: "error", message: e?.message ?? String(e) }));
     return () => { alive = false; };
@@ -113,16 +118,23 @@ export default function App() {
 
     // ── helpers ──────────────────────────────────────────────────────────
 
-    /** Chave de deduplicação de tee: nome + CR + slope */
+    /** Chave de deduplicação de tee: nome + sexo + DISTÂNCIA.
+     *  Colapsa as variantes de CR/Slope do MESMO tee físico (o pipeline cria um
+     *  tee por cada rating histórico de scorecard, o que inflacionava campos
+     *  muito jogados — Aroeira, Ribagolfe… — para dezenas de tees iguais). */
     function teeKey(t: Course["master"]["tees"][0]): string {
-      const cr = t.ratings?.holes18?.courseRating ?? "";
-      const sl = t.ratings?.holes18?.slopeRating ?? "";
-      return `${t.teeName.trim().toLowerCase()}|${cr}|${sl}`;
+      const sex = t.sex ?? "";
+      const dist = t.distances?.total ?? "";
+      return `${t.teeName.trim().toLowerCase()}|${sex}|${dist}`;
     }
 
-    /** Qualidade de um tee: mais buracos e mais distância = melhor */
+    /** Qualidade de um tee: mais buracos e distância; em empate, preferir o que
+     *  TEM rating (CR), para o tee colapsado manter o rating oficial. */
     function teeScore(t: Course["master"]["tees"][0]): number {
-      return (t.distances?.holesCount ?? 0) * 10000 + (t.distances?.total ?? 0);
+      const holes = t.distances?.holesCount ?? 0;
+      const total = t.distances?.total ?? 0;
+      const hasCR = t.ratings?.holes18?.courseRating != null ? 1 : 0;
+      return holes * 100000 + total * 10 + hasCR;
     }
 
     /** Remove tees duplicados e em branco de uma lista */
@@ -192,6 +204,20 @@ export default function App() {
       }
     }
 
+    // ── _players dos campos PT (course-players.json) ──────────────────────
+    // O pipeline só constrói _players para campos away; os campos PT do master
+    // ficam sem "quem jogou". Aqui anexamos o course-players.json (gerado por
+    // scripts/build-course-players.js) por courseKey. Feito ANTES do merge para
+    // que se combine com o que já exista.
+    const coursePlayers = status.coursePlayers ?? {};
+    for (const [key, c] of map) {
+      const pp = coursePlayers[key];
+      if (pp && Object.keys(pp).length > 0) {
+        const merged = { ...(c.master._players ?? {}), ...pp };
+        map.set(key, { ...c, master: { ...c.master, _players: merged } });
+      }
+    }
+
     // ── dedup tees por campo ──────────────────────────────────────────────
     for (const [key, c] of map) {
       const clean = dedupTees(c.master.tees);
@@ -204,8 +230,19 @@ export default function App() {
     const byName = new Map<string, string>(); // norm → courseKey canónico
     const finalMap = new Map<string, Course>();
 
-    // Ordenar: campos com mais tees ganham — iterar por ordem de inserção
-    const ordered = [...map.values()].sort((a, b) => b.master.tees.length - a.master.tees.length);
+    // Ordenar para escolher o campo CANÓNICO de cada nome:
+    //  1) Campos FPG (master, courseKey sem "away-") primeiro — assim os seus
+    //     tees OFICIAIS prevalecem sobre os tees-ruído das entradas away (o
+    //     pipeline cria um tee por cada CR/Slope histórico de scorecard, o que
+    //     inflacionava campos registados como o Aroeira para dezenas de tees).
+    //     O mergeCourses já descarta os tees away quando a base é FPG.
+    //  2) Entre campos da mesma origem, o que tiver mais tees ganha.
+    const ordered = [...map.values()].sort((a, b) => {
+      const aAway = a.courseKey.startsWith("away-") ? 1 : 0;
+      const bAway = b.courseKey.startsWith("away-") ? 1 : 0;
+      if (aAway !== bAway) return aAway - bAway;
+      return b.master.tees.length - a.master.tees.length;
+    });
 
     for (const c of ordered) {
       // Comparar pelo nome CANÓNICO (resolve aliases tipo "Golden Palm" →

@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, Fragment } from "react";
 import SidebarToggle from "../ui/SidebarToggle";
 import EmptyState from "../ui/EmptyState";
 import Counter from "../ui/Counter";
@@ -18,7 +18,6 @@ import { useSort } from "../hooks/useSort";
 import SortableHdr from "../ui/SortableHdr";
 import { cachedFetchJson } from "../data/fetchCache";
 import { isTournamentCourse } from "../constants/tournamentCourses";
-import KpiCard from "../ui/KpiCard";
 import { loadPlayerData } from "../data/playerDataLoader";
 import type { PlayerPageData } from "../data/playerDataLoader";
 import { MANUEL_FED } from "../constants/manuel";
@@ -96,6 +95,9 @@ function normalizeCountryKey(raw: string): string {
 }
 
 function resolveFlag(c: Course): string {
+  // Só campos ESTRANGEIROS mostram bandeira — campos PT ("casa") não.
+  const _ck = c.master.country ? normalizeCountryKey(c.master.country) : "";
+  if (!c.courseKey.startsWith("away-") || _ck === "portugal") return "";
   // 1) Tentar pelo country dos dados
   if (c.master.country) {
     const key = normalizeCountryKey(c.master.country);
@@ -105,28 +107,32 @@ function resolveFlag(c: Course): string {
   // 2) Fallback: mapa de campos conhecidos
   const known = KNOWN_AWAY[c.courseKey];
   if (known) return known.flag;
-  // 3) Campo away desconhecido — bandeira generica
+  // Campo away estrangeiro desconhecido — bandeira genérica
   if (c.courseKey.startsWith("away-")) return "\ud83c\udff3\ufe0f";
   return "";
 }
 
 function resolveCountryName(c: Course): string {
+  // Só campos estrangeiros mostram país — PT não.
+  if (!c.courseKey.startsWith("away-")) return "";
   if (c.master.country) {
-    return fixMojibake(c.master.country).trim();
+    const n = fixMojibake(c.master.country).trim();
+    return normalizeCountryKey(n) === "portugal" ? "" : n;
   }
   return KNOWN_AWAY[c.courseKey]?.country || "";
+}
+
+/** Referência do campo para mostrar por baixo do nome: o nº FPG (ncourse-XXX-Y)
+ *  quando existe; senão o courseKey (combos e campos away não têm nº). */
+function courseRef(c: Course): string {
+  const sc = (c.master.numbers as { scorecards?: string } | undefined)?.scorecards;
+  return sc ? `ncourse-${sc}` : c.courseKey;
 }
 
 function isAway(c: Course): boolean {
   return c.courseKey.startsWith("away-");
 }
 
-function teeSuffix(t: Tee): string | null {
-  const cr = t.ratings?.holes18?.courseRating;
-  const sl = t.ratings?.holes18?.slopeRating;
-  if (cr && sl) return `${fmtCR(cr)}/${sl}`;
-  return null;
-}
 
 /* ——— Componente: Grelha Scorecard Multi-Tee ——— */
 
@@ -303,9 +309,53 @@ function RatingsTable({ tees }: { tees: Tee[] }) {
 }
 /* ——— Componente: Quem jogou neste campo ——— */
 
+/** Cor de TEXTO (subtil) para o to-par de uma volta. Sem fundos berrantes. */
+function tpTextColor(tp: number | null): string {
+  if (tp == null) return "var(--text-muted)";
+  if (tp <= 0) return "var(--color-good-dark)";
+  if (tp <= 6) return "var(--color-warn-dark)";
+  return "var(--color-danger-dark)";
+}
+
+/** "2026-02-27" → "27/02"; "" se a data não for ISO. */
+function fmtDM(d: string | null): string {
+  const m = d && d.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  return m ? `${m[3]}/${m[2]}` : "";
+}
+/** "2026-02-27" → "27/02/2026"; "" se a data não for ISO. */
+function fmtDMYfull(d: string | null): string {
+  const m = d && d.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  return m ? `${m[3]}/${m[2]}/${m[1]}` : "";
+}
+/** Número com vírgula decimal (pt). */
+function dec1(n: number): string {
+  return n.toFixed(1).replace(".", ",");
+}
+
+type PlayerSummary = {
+  nfed: string;
+  name: string;
+  isM: boolean;
+  rounds: CoursePlayerRound[];
+  nRounds: number;
+  bestGross: number | null;
+  bestToPar: number | null;
+  avgGross: number | null;
+  avgToPar: number | null;
+  latest: string | null;
+};
+
+type CPSortKey = "name" | "n" | "best" | "avg" | "last";
+
 function CoursePlayersSection({ course, onSelectPlayer }: { course: Course; onSelectPlayer?: (fed: string) => void }) {
   const { players } = useAppContext();
   const [nameMap, setNameMap] = useState<Record<string, string>>(_coursePlayerNames ?? {});
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  // Default: mais voltas primeiro. Por coluna: melhor/média ascendente (menor = melhor),
+  // última descendente (mais recente primeiro), nome ascendente.
+  const { sortKey, sortDir, toggleSort } = useSort<CPSortKey>("n", "desc", {
+    name: "asc", best: "asc", avg: "asc",
+  });
 
   useEffect(() => {
     let alive = true;
@@ -313,87 +363,163 @@ function CoursePlayersSection({ course, onSelectPlayer }: { course: Course; onSe
     return () => { alive = false; };
   }, []);
 
-  const entries = useMemo(() => {
+  const entries = useMemo<PlayerSummary[]>(() => {
     const raw = course.master._players;
     if (!raw || Object.keys(raw).length === 0) return [];
-    return Object.entries(raw)
-      .map(([nfed, val]) => {
-        const p = players[nfed];
-        // Nome SEMPRE: players.json → mapa de federados → (último recurso) número.
-        // Ignorar "nomes" placeholder iguais ao próprio nº federado (entradas
-        // por preencher em players.json / course-player-names.json).
-        const realName = p?.name && p.name !== nfed ? p.name : null;
-        const fromMap = nameMap[nfed] && nameMap[nfed] !== nfed ? nameMap[nfed] : null;
-        const name = realName ?? fromMap ?? nfed;
-        // Retro-compat: formato antigo = string (só data); novo = array de rondas
-        const rounds: CoursePlayerRound[] = Array.isArray(val)
-          ? val
-          : typeof val === "string"
-            ? [{ date: val, gross: null, toPar: null, tee: null, event: null, sd: null }]
-            : [];
-        const latest = rounds.find((r) => r.date)?.date ?? null;
-        return { nfed, name, rounds, latest };
-      })
-      .sort((a, b) => {
-        if (a.latest !== b.latest) return (b.latest ?? "").localeCompare(a.latest ?? "");
-        return a.name.localeCompare(b.name, "pt");
-      });
+    return Object.entries(raw).map(([nfed, val]) => {
+      const p = players[nfed];
+      // Nome SEMPRE: players.json → mapa de federados → (último recurso) número.
+      const realName = p?.name && p.name !== nfed ? p.name : null;
+      const fromMap = nameMap[nfed] && nameMap[nfed] !== nfed ? nameMap[nfed] : null;
+      const name = realName ?? fromMap ?? nfed;
+      // Retro-compat: formato antigo = string (só data); novo = array de rondas
+      const rounds: CoursePlayerRound[] = Array.isArray(val)
+        ? val
+        : typeof val === "string"
+          ? [{ date: val, gross: null, toPar: null, tee: null, event: null, sd: null }]
+          : [];
+      const sortedRounds = [...rounds].sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));
+      const scored = sortedRounds.filter((r) => r.gross != null);
+      let bestGross: number | null = null, bestToPar: number | null = null;
+      for (const r of scored) {
+        if (bestGross == null || (r.gross as number) < bestGross) {
+          bestGross = r.gross as number;
+          bestToPar = r.toPar ?? null;
+        }
+      }
+      const avgGross = scored.length ? scored.reduce((s, r) => s + (r.gross as number), 0) / scored.length : null;
+      const tps = scored.filter((r) => r.toPar != null);
+      const avgToPar = tps.length ? tps.reduce((s, r) => s + (r.toPar as number), 0) / tps.length : null;
+      return {
+        nfed, name, isM: nfed === MANUEL_FED,
+        rounds: sortedRounds, nRounds: rounds.length,
+        bestGross, bestToPar, avgGross, avgToPar,
+        latest: sortedRounds.find((r) => r.date)?.date ?? null,
+      };
+    });
   }, [course, players, nameMap]);
+
+  const sorted = useMemo(() => {
+    const dir = sortDir === "asc" ? 1 : -1;
+    const cmp = (a: PlayerSummary, b: PlayerSummary): number => {
+      switch (sortKey) {
+        case "name": return a.name.localeCompare(b.name, "pt") * dir;
+        case "best": return ((a.bestGross ?? Infinity) - (b.bestGross ?? Infinity)) * dir;
+        case "avg":  return ((a.avgGross ?? Infinity) - (b.avgGross ?? Infinity)) * dir;
+        case "last": return (a.latest ?? "").localeCompare(b.latest ?? "") * dir;
+        case "n":
+        default:     return ((a.nRounds - b.nRounds) || 0) * dir;
+      }
+    };
+    const rest = entries.filter((e) => !e.isM).sort(cmp);
+    const manuel = entries.filter((e) => e.isM); // fixo no topo, fora do sort
+    return [...manuel, ...rest];
+  }, [entries, sortKey, sortDir]);
 
   if (entries.length === 0) return null;
 
-  /** "2026-02-27" → "27/02/2026"; devolve "" se a data não for ISO. */
-  const fmtDMY = (d: string | null) => {
-    const m = d && d.match(/^(\d{4})-(\d{2})-(\d{2})/);
-    return m ? `${m[3]}/${m[2]}/${m[1]}` : "";
-  };
+  const toggle = (nfed: string) =>
+    setExpanded((prev) => {
+      const next = new Set(prev);
+      next.has(nfed) ? next.delete(nfed) : next.add(nfed);
+      return next;
+    });
+
+  const nameCell = (s: PlayerSummary) =>
+    onSelectPlayer ? (
+      <button type="button" onClick={() => onSelectPlayer(s.nfed)} className="tourn-pname tourn-pname-link cp-name">
+        {s.name}
+      </button>
+    ) : (
+      <a href={`/jogadores/${s.nfed}`} target="_blank" rel="noopener noreferrer" className="tourn-pname tourn-pname-link cp-name">
+        {s.name}
+      </a>
+    );
 
   return (
     <div className="course-players-section">
       <h4 className="course-players-title">Jogadores ({entries.length})</h4>
-      <div className="course-players-list">
-        {entries.map(({ nfed, name, rounds }) => (
-          <div key={nfed} className="course-player-row">
-            {onSelectPlayer ? (
-              <button
-                type="button"
-                onClick={() => onSelectPlayer(nfed)}
-                className="tourn-pname tourn-pname-link"
-              >
-                {name}
-              </button>
-            ) : (
-              <a
-                href={`/jogadores/${nfed}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="tourn-pname tourn-pname-link"
-              >
-                {name}
-              </a>
-            )}
-            <span className="course-player-results muted">
-              {rounds.map((r, i) => {
-                const dia = fmtDMY(r.date);
-                const score =
-                  r.gross != null
-                    ? `${r.gross}${r.toPar != null ? ` (${fmtToPar(r.toPar)})` : ""}`
-                    : "";
-                const label = [dia, score].filter(Boolean).join(": ");
-                if (!label) return null;
-                return (
-                  <span
-                    key={i}
-                    className="course-player-result"
-                    title={[r.event, r.tee, r.sd != null ? `SD ${r.sd}` : null].filter(Boolean).join(" · ")}
+      <div className="sc-wrap">
+        <table className="cp-table">
+          <thead>
+            <tr>
+              <th className="cp-th-exp" />
+              <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Jogador</SortableHdr>
+              <SortableHdr k="n"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="cp-num">Voltas</SortableHdr>
+              <SortableHdr k="best" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="cp-num">Melhor</SortableHdr>
+              <SortableHdr k="avg"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="cp-num">Média</SortableHdr>
+              <SortableHdr k="last" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="cp-num">Última</SortableHdr>
+            </tr>
+          </thead>
+          <tbody>
+            {sorted.map((s) => {
+              const isOpen = expanded.has(s.nfed);
+              return (
+                <Fragment key={s.nfed}>
+                  <tr
+                    className={`cp-row${s.isM ? " cp-row-manuel" : ""}${isOpen ? " cp-row-open" : ""}`}
+                    onClick={() => toggle(s.nfed)}
                   >
-                    {label}
-                  </span>
-                );
-              })}
-            </span>
-          </div>
-        ))}
+                    <td className="cp-exp">
+                      <span className={`cp-chev${isOpen ? " cp-chev-open" : ""}`} aria-hidden>›</span>
+                    </td>
+                    <td className="cp-name-cell" onClick={(e) => e.stopPropagation()}>{nameCell(s)}</td>
+                    <td className="cp-num cp-strong">{s.nRounds}</td>
+                    <td className="cp-num">
+                      {s.bestGross != null ? (
+                        <>
+                          <span className="cp-strong">{s.bestGross}</span>
+                          {s.bestToPar != null && (
+                            <span className="cp-tp" style={{ color: tpTextColor(s.bestToPar) }}> {fmtToPar(s.bestToPar)}</span>
+                          )}
+                        </>
+                      ) : <span className="muted">–</span>}
+                    </td>
+                    <td className="cp-num">
+                      {s.avgGross != null ? (
+                        <>
+                          {dec1(s.avgGross)}
+                          {s.avgToPar != null && (
+                            <span className="cp-tp" style={{ color: tpTextColor(Math.round(s.avgToPar)) }}> ({s.avgToPar >= 0 ? "+" : ""}{dec1(s.avgToPar)})</span>
+                          )}
+                        </>
+                      ) : <span className="muted">–</span>}
+                    </td>
+                    <td className="cp-num cp-muted">{fmtDM(s.latest) || "–"}</td>
+                  </tr>
+                  {isOpen && (
+                    <tr className="cp-detail-row">
+                      <td />
+                      <td colSpan={5}>
+                        <div className="cp-rounds">
+                          {s.rounds.map((r, i) => {
+                            const dia = fmtDM(r.date);
+                            if (r.gross == null && !dia) return null;
+                            const title = [fmtDMYfull(r.date), r.event, r.tee, r.sd != null ? `SD ${r.sd}` : null]
+                              .filter(Boolean).join(" · ");
+                            return (
+                              <span key={i} className="cp-round" title={title || undefined}>
+                                {dia && <span className="cp-round-date">{dia}</span>}
+                                {r.gross != null && (
+                                  <span className="cp-round-score">
+                                    {r.gross}
+                                    {r.toPar != null && (
+                                      <span style={{ color: tpTextColor(r.toPar) }}> {fmtToPar(r.toPar)}</span>
+                                    )}
+                                  </span>
+                                )}
+                              </span>
+                            );
+                          })}
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </Fragment>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     </div>
   );
@@ -840,8 +966,8 @@ export default function CamposPage() {
                     {isAway(selected) && <PillBadge pill="INTL" />}
                   </h2>
                   <div className="detail-sub">
-                    <span className="muted" title={selected.courseKey}>
-                      {isAway(selected) ? "Campo internacional" : isTournamentCourse(selected.courseKey) ? "Torneio" : "Campo de Portugal"}
+                    <span className="muted" title={isAway(selected) ? "Campo internacional" : isTournamentCourse(selected.courseKey) ? "Torneio" : "Campo de Portugal"}>
+                      {courseRef(selected)}
                     </span>
                     {scorecardLink && (
                       <>
@@ -887,36 +1013,54 @@ export default function CamposPage() {
 
               {/* KPIs do campo */}
               {heroStats && (
-                <div className="kpi-row" style={{ display: "flex", flexWrap: "wrap", gap: 10, margin: "12px 0" }}>
-                  <KpiCard label="Par" value={heroStats.par ?? "–"} />
-                  <KpiCard
-                    label="Distância"
-                    value={heroStats.minD != null && heroStats.maxD != null
-                      ? (heroStats.minD === heroStats.maxD ? fmt(heroStats.maxD) : `${fmt(heroStats.minD)}–${fmt(heroStats.maxD)}`)
-                      : "–"}
-                    sub="metros"
-                  />
-                  <KpiCard label="CR / Slope" value={heroStats.cr != null ? `${fmtCR(heroStats.cr)}/${heroStats.slope ?? "–"}` : "–"} sub={heroStats.refName ? titleCase(heroStats.refName) : undefined} />
-                  <KpiCard label="Tees" value={heroStats.nTees} />
-                  {heroStats.nPlayers > 0 && <KpiCard label="Jogadores" value={heroStats.nPlayers} sub="já jogaram" />}
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 10, margin: "12px 0" }}>
+                  <div className="kpi-card">
+                    <div className="kpi-card-label">Par</div>
+                    <div className="kpi-card-val">{heroStats.par ?? "–"}</div>
+                  </div>
+                  <div className="kpi-card">
+                    <div className="kpi-card-label">Tees</div>
+                    <div className="kpi-card-val">{heroStats.nTees}</div>
+                  </div>
+                  {heroStats.nPlayers > 0 && (
+                    <div className="kpi-card">
+                      <div className="kpi-card-label">Jogadores</div>
+                      <div className="kpi-card-val">{heroStats.nPlayers}</div>
+                      <div className="kpi-card-sub">já jogaram</div>
+                    </div>
+                  )}
                 </div>
               )}
 
               {/* Tee badges resumo (não na vista "Como jogou") */}
               {detailView !== "manuel" && (
                 <div className="tee-badges-row">
-                  {selectedTees.map((t, idx) => (
-                    <span key={`${t.teeId}-${idx}`} className="tee-badge-card">
-                      <TeeBadge
-                        label={titleCase(t.teeName)}
-                        colorHex={teeHexFromTee(t)}
-                        suffix={teeSuffix(t)}
-                      />
-                      <span className="muted fs-11" >
-                        {t.sex} · {fmt(t.distances?.total)} m
+                  {selectedTees.map((t, idx) => {
+                    const cr = t.ratings?.holes18?.courseRating;
+                    const sl = t.ratings?.holes18?.slopeRating;
+                    const dist = t.distances?.total ?? null;
+                    return (
+                      <span
+                        key={`${t.teeId}-${idx}`}
+                        className="tee-badge-card"
+                        style={{ flexDirection: "row", alignItems: "center", gap: 10, padding: "8px 12px" }}
+                      >
+                        <TeeBadge
+                          label={titleCase(t.teeName)}
+                          colorHex={teeHexFromTee(t)}
+                          suffix={t.sex !== "U" ? t.sex : null}
+                        />
+                        <span style={{ fontSize: 15, fontWeight: 700, color: "var(--text-1)", whiteSpace: "nowrap" }}>
+                          {dist != null && dist > 0 ? `${fmt(dist)} m` : "– m"}
+                        </span>
+                        {cr != null && sl != null && (
+                          <span className="muted fs-12" style={{ whiteSpace: "nowrap" }}>
+                            CR {fmtCR(cr)} · Slope {sl}
+                          </span>
+                        )}
                       </span>
-                    </span>
-                  ))}
+                    );
+                  })}
                   {selectedTees.length === 0 && (
                     <span className="muted">Sem tees para este filtro</span>
                   )}

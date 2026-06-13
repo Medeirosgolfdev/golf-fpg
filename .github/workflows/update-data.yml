@@ -87,6 +87,18 @@ jobs:
         env:
           FPG_COOKIES: ${{ secrets.FPG_COOKIES }}
 
+      # Reconstruir os índices que dependem das rondas dos jogadores:
+      #  - away-courses.json        (campos internacionais + _players)  ← extract-courses
+      #  - course-player-names.json (nº federado → nome real)           ← build-course-player-names
+      #  - course-players.json      (quem jogou cada campo PT do master)← build-course-players
+      # Corre sempre (mesmo sem scorecards novos) porque players.json /
+      # federados podem ter mudado. Falhas individuais não abortam o run.
+      - name: Reconstruir índices de campos e jogadores
+        run: |
+          node scripts/extract-courses.js --force || echo "extract-courses: sem novidades ou aviso"
+          node scripts/build-course-player-names.js || echo "build-course-player-names: aviso"
+          node scripts/build-course-players.js || echo "build-course-players: aviso"
+
       # Nota: o `fpg-scrape-node.js` já dispara `pipeline.js --skip-import <feds_com_novidades>`
       # automaticamente no fim quando há scorecards novos. Não é preciso passo extra aqui.
       # Para reprocessar TODOS os jogadores (caso muito raro): correr manualmente
@@ -121,6 +133,8 @@ jobs:
                   public/player-stats.json \
                   public/data/away-courses.json \
                   public/data/master-courses.json \
+                  public/data/course-player-names.json \
+                  public/data/course-players.json \
                   players.json 2>/dev/null || true
 
           if git diff --staged --quiet; then

@@ -2848,40 +2848,84 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
   color: var(--text-muted);
   margin: 0 0 10px 0;
 }
-.course-players-list {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.course-player-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 4px 0;
+/* ——— Tabela resumo de jogadores do campo ——— */
+.cp-table {
+  width: 100%;
+  border-collapse: collapse;
   font-size: 13px;
+}
+.cp-table thead th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  padding: 4px 10px 8px;
+  border-bottom: 1px solid var(--border-light);
+  white-space: nowrap;
+}
+.cp-table th.cp-num,
+.cp-table td.cp-num {
+  text-align: right;
+  white-space: nowrap;
+}
+.cp-th-exp { width: 26px; padding: 0; }
+.cp-row {
+  cursor: pointer;
   border-bottom: 1px solid var(--border-light);
 }
-.course-player-row:last-child {
-  border-bottom: none;
+.cp-row:hover { background: var(--bg-subtle, rgba(0,0,0,0.025)); }
+.cp-row td {
+  padding: 7px 10px;
+  vertical-align: baseline;
 }
-.course-player-date {
-  font-size: 11px;
-  margin-left: auto;
-  white-space: nowrap;
+.cp-row-manuel {
+  background: var(--bg-subtle, rgba(0,0,0,0.04));
 }
-.course-player-results {
-  margin-left: auto;
-  display: inline-flex;
+.cp-row-manuel:hover { background: var(--bg-subtle, rgba(0,0,0,0.06)); }
+.cp-row-manuel .cp-name { font-weight: 700; }
+.cp-row-open { background: var(--bg-subtle, rgba(0,0,0,0.03)); }
+/* Chevron de expansão */
+.cp-exp { width: 26px; padding-right: 0 !important; text-align: center; }
+.cp-chev {
+  display: inline-block;
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1;
+  transition: transform 0.15s ease;
+}
+.cp-chev-open { transform: rotate(90deg); }
+.cp-name { text-align: left; }
+.cp-name-cell { max-width: 320px; }
+.cp-strong { font-weight: 700; color: var(--text); }
+.cp-tp { font-weight: 600; font-size: 12px; }
+.cp-muted { color: var(--text-muted); font-size: 12px; }
+/* Linha de detalhe — voltas, calmo e sem cor de fundo */
+.cp-detail-row td { padding: 2px 10px 12px; }
+.cp-rounds {
+  display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 4px 6px;
-  font-size: 11px;
+  gap: 6px 8px;
+}
+.cp-round {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: var(--bg-subtle, rgba(0,0,0,0.04));
+  cursor: default;
   white-space: nowrap;
 }
-.course-player-result {
-  padding: 1px 6px;
-  border-radius: 999px;
-  background: var(--bg-subtle, rgba(0,0,0,0.05));
+.cp-round-date {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.cp-round-score {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
 }
 .tee-badge {
  display: inline-flex;

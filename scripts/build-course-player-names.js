@@ -3,8 +3,13 @@
  * build-course-player-names.js
  *
  * Resolve TODOS os fed codes que aparecem em `_players` dos campos
- * (away-courses.json + master-courses.json) para o nome do jogador, e
- * escreve um mapa compacto em `public/data/course-player-names.json`.
+ * (away-courses.json + master-courses.json + course-players.json) para o
+ * nome do jogador, e escreve um mapa compacto em
+ * `public/data/course-player-names.json`.
+ *
+ * ⚠ Os campos PORTUGUESES guardam o `_players` em course-players.json (o
+ * master-courses.json tem _players vazio para eles). Sem ler esse ficheiro,
+ * todos os jogadores de campos PT apareciam como NÚMERO de federado.
  *
  * Motivo: o `_players` de cada campo é apenas `{ nfed: data }` — não guarda
  * o nome. Em runtime, a CamposPage resolvia o nome via players.json, mas os
@@ -55,10 +60,32 @@ function collectFedCodes(fileName) {
   return codes;
 }
 
+/** Recolhe fed codes de course-players.json — `_players` dos campos PT.
+ *  Formato: { players: { [courseKey]: { [fed]: rounds } } }. É AQUI que vivem
+ *  os jogadores dos campos portugueses do master (o master-courses.json tem
+ *  _players vazio para esses), por isso sem este passo apareciam como número. */
+function collectFromCoursePlayers(fileName) {
+  let doc;
+  try {
+    doc = readJson(fileName);
+  } catch {
+    return new Set();
+  }
+  const byCourse = doc?.players ?? {};
+  const codes = new Set();
+  for (const perCourse of Object.values(byCourse)) {
+    if (perCourse && typeof perCourse === "object") {
+      for (const k of Object.keys(perCourse)) codes.add(k);
+    }
+  }
+  return codes;
+}
+
 function main() {
   const codes = new Set([
     ...collectFedCodes("away-courses.json"),
     ...collectFedCodes("master-courses.json"),
+    ...collectFromCoursePlayers("course-players.json"),
   ]);
 
   // ── construir índices de nome ──────────────────────────────────────────
