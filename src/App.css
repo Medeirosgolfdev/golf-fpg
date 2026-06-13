@@ -564,9 +564,9 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 
 .sc-table {
  border-collapse: collapse;
- font-family: 'JetBrains Mono', monospace;
  font-size: 12px;
  white-space: nowrap;
+ font-variant-numeric: tabular-nums;
 }
 
 .sc-table th {
@@ -581,6 +581,9 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
  background: var(--bg-header);
  z-index: 1;
 }
+/* Hover de linha — consistente com .ratings-table / .sc-table-ec */
+.sc-table .sc-tee-row:hover td { background: var(--bg-hover); }
+.sc-table .sc-tee-row:hover td.sc-sticky { background: var(--bg-hover); }
 
 .sc-h { min-width: 38px; }
 
@@ -601,20 +604,21 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
  font-size: 12px;
 }
 
+/* Linhas PAR / SI — estilo limpo (sem bandas de cor), como os scorecards de
+   análise (.sc-table-ec). Ficam no topo; um separador a fechar por baixo do SI. */
 .sc-par-row td {
- background: var(--sc-par-bg);
- color: var(--accent-text);
- border-bottom-color: var(--sc-par-border);
+ background: transparent;
+ color: var(--text-2);
 }
 
 .sc-hcp-row td {
- background: var(--sc-hcp-bg);
- color: var(--color-hcp);
- border-bottom-color: var(--sc-hcp-border);
+ background: transparent;
+ color: var(--text-3);
+ border-bottom: 2px solid var(--border);
 }
 
-.sc-par-row .sc-meta-label { color: var(--accent-text); }
-.sc-hcp-row .sc-meta-label { color: var(--color-hcp); }
+.sc-par-row .sc-meta-label { color: var(--text-2); }
+.sc-hcp-row .sc-meta-label { color: var(--text-3); }
 .ratings-table th {
  padding: 8px 8px;
  font-size: 11px;
@@ -2897,8 +2901,31 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 }
 .cp-chev-open { transform: rotate(90deg); }
 .cp-name { text-align: left; }
-.cp-name-cell { max-width: 320px; }
+.cp-name-cell { max-width: 320px; vertical-align: baseline; }
 .cp-strong { font-weight: 700; color: var(--text); }
+/* Tag 18b/9b na coluna Voltas */
+.cp-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: var(--bg-subtle, rgba(0,0,0,0.06));
+  border-radius: 4px;
+  padding: 0 4px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+/* Segunda linha de estatística (9 buracos) — sem borda própria, ligada à de cima */
+.cp-row-paired { border-bottom: none; }
+.cp-row-sub {
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-light);
+}
+.cp-row-sub td { padding: 0 10px 7px; vertical-align: baseline; }
+.cp-row-paired:hover, .cp-row-sub:hover { background: var(--bg-subtle, rgba(0,0,0,0.025)); }
+.cp-row-sub.cp-row-manuel { background: var(--bg-subtle, rgba(0,0,0,0.04)); }
+.cp-round-9 { font-size: 10px; font-weight: 600; color: var(--text-muted); }
+.cp-round-nc { font-size: 11px; font-style: italic; color: var(--text-muted); }
 .cp-tp { font-weight: 600; font-size: 12px; }
 .cp-muted { color: var(--text-muted); font-size: 12px; }
 /* Linha de detalhe — voltas, calmo e sem cor de fundo */
@@ -2955,6 +2982,10 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
  border-radius: var(--radius-lg);
  background: var(--bg-card);
  box-shadow: var(--shadow);
+ /* O contentor abraça a largura da tabela (o fundo acaba onde a tabela acaba);
+    em ecrãs estreitos limita-se à viewport e permite scroll horizontal. */
+ width: fit-content;
+ max-width: 100%;
 }
 .sc-sticky {
  position: sticky;
@@ -2968,7 +2999,11 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .sc-table .sc-tot {
  background: var(--accent-light);
  font-weight: 700;
+ border-left: 1px solid var(--border);
 }
+/* OUT e IN fechados dos dois lados (divisores a delimitar os subtotais) */
+.sc-table .sc-col-out { border-right: 1px solid var(--border); }
+.sc-table .sc-col-in { border-right: 1px solid var(--border); }
 .sc-table .sc-tee-cell {
  padding-left: 10px;
  
@@ -2977,6 +3012,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
  font-weight: 600;
  color: var(--text);
  background: var(--accent-light-alpha);
+ border-left: 1px solid var(--border);
 }
 .sc-meta-label {
  

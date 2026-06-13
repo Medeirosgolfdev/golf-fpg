@@ -18,27 +18,51 @@
  */
 const fs = require("fs");
 const path = require("path");
+const ALIAS = require("./lib/course-aliases.cjs");
 
 const ROOT = path.join(__dirname, "..");
 const DATA = path.join(ROOT, "public", "data");
 const OUTPUT = path.join(ROOT, "output");
 
-function norm(s) {
-  return String(s || "").trim().normalize("NFKD")
-    .replace(/[̀-ͯ]/g, "").toLowerCase()
-    .replace(/[^a-z0-9]+/g, " ").trim();
-}
+const norm = ALIAS.norm;
 function toIso(d) {
   const m = String(d || "").match(/^(\d{2})-(\d{2})-(\d{4})$/);
   return m ? `${m[3]}-${m[2]}-${m[1]}` : null;
 }
 const numOr = (v) => (Number.isFinite(v) ? v : null);
 
+/** Resolve o courseKey do master para uma ronda, usando a MESMA canonização
+ *  da app (courseAliases). Ordem:
+ *   1) Santo da Serra por par[] (combos/loops) e Ribagolfe I/II por par[]
+ *   2) fallback Santo da Serra só por nome (sem par)
+ *   3) canonicalCourseName (sufixos + aliases) + Aroeira II por par → masterByNorm
+ *  Devolve null se nenhum campo PT do master corresponder. */
+function resolveCourseKey(rawName, pars18or9, masterByNorm, masterKeys) {
+  if (!rawName) return null;
+  let key =
+    // 1) Resolução por par[] (mais fiável): combos multi-loop + Ribagolfe.
+    ALIAS.resolveSantoDaSerraKeyByPar(rawName, pars18or9) ||
+    ALIAS.resolveMultiloopKeyByPar(rawName, pars18or9) ||
+    ALIAS.resolveRibagolfeKeyByPar(rawName, pars18or9) ||
+    // 2) Fallbacks por nome (voltas sem scorecard / par em falta).
+    ALIAS.resolveSantoDaSerraKeyByName(rawName) ||
+    ALIAS.resolveMultiloopKeyByName(rawName) ||
+    ALIAS.resolveRibagolfeKeyByName(rawName);
+  if (!key) {
+    let canon = ALIAS.canonicalCourseName(rawName);
+    canon = ALIAS.resolveAroeiraIIByPar(canon, pars18or9);
+    key = masterByNorm[norm(canon)] || null;
+  }
+  return key && masterKeys.has(key) ? key : null;
+}
+
 function main() {
   const master = JSON.parse(fs.readFileSync(path.join(DATA, "master-courses.json"), "utf8")).courses || [];
   // norm(nome do campo) → courseKey do master
   const masterByNorm = {};
+  const masterKeys = new Set();
   for (const c of master) {
+    masterKeys.add(c.courseKey);
     const k = norm(c.master.name);
     if (k && !(k in masterByNorm)) masterByNorm[k] = c.courseKey;
   }
@@ -46,6 +70,7 @@ function main() {
   // courseKey → { nfed → [rondas] }
   const players = {};
   let scanned = 0;
+  const unmatched = {}; // nome cru → contagem (diagnóstico)
   if (fs.existsSync(OUTPUT)) {
     for (const dir of fs.readdirSync(OUTPUT)) {
       if (!/^\d+$/.test(dir)) continue;
@@ -54,18 +79,25 @@ function main() {
       let data;
       try { data = JSON.parse(fs.readFileSync(fp, "utf8")); } catch { continue; }
       const nfed = String(data.CURRENT_FED || dir);
+      const HOLES = data.HOLES || {};
       scanned++;
       for (const c of (data.DATA || [])) {
         for (const r of (c.rounds || [])) {
           const name = (r.course || c.course || "").trim();
-          const key = masterByNorm[norm(name)];
-          if (!key) continue; // só campos PT do master
-          const gross = numOr(r.gross);
+          if (!name) continue;
+          // par[] por buraco (do scorecard) — necessário p/ resolver SdS/Ribagolfe/Aroeira
+          const pars = Array.isArray(HOLES[r.scoreId]?.p) ? HOLES[r.scoreId].p : null;
+          const key = resolveCourseKey(name, pars, masterByNorm, masterKeys);
+          if (!key) { unmatched[name] = (unmatched[name] || 0) + 1; continue; }
+          // Sentinelas: gross 0 / 998 / 999 ("sem cartão") → null (não contam p/ stats)
+          let gross = numOr(r.gross);
+          if (gross != null && (gross <= 0 || gross >= 200)) gross = null;
           const par = numOr(r.par);
           const round = {
             date: toIso(r.date),
             gross,
             toPar: gross != null && par != null ? gross - par : null,
+            holes: numOr(r.holeCount),  // 9 ou 18 (separa meias-voltas na UI)
             tee: typeof r.tee === "string" ? r.tee : null,
             event: typeof r.eventName === "string" ? r.eventName : null,
             sd: numOr(r.sd),
@@ -84,7 +116,7 @@ function main() {
       const seen = new Set();
       const uniq = [];
       for (const r of players[key][nfed]) {
-        const k = `${r.date || ""}|${r.gross ?? ""}`;
+        const k = `${r.date || ""}|${r.gross ?? ""}|${r.holes ?? ""}`;
         if (seen.has(k)) continue;
         seen.add(k); uniq.push(r);
       }
@@ -106,6 +138,14 @@ function main() {
   console.log(`Campos PT com jogadores: ${Object.keys(players).length}`);
   console.log(`Ligações jogador↔campo: ${totalLinks}`);
   console.log("Escrito: public/data/course-players.json");
+
+  // Diagnóstico: nomes que NÃO casaram com nenhum campo PT do master.
+  // (Inclui campos internacionais — esses são esperados, vêm do pipeline away —
+  //  mas se um campo PT aparecer aqui com muitas voltas, falta um alias.)
+  const top = Object.entries(unmatched).sort((a, b) => b[1] - a[1]).slice(0, 30);
+  const totalU = Object.values(unmatched).reduce((s, n) => s + n, 0);
+  console.log(`\nVoltas sem campo correspondente: ${totalU} (top 30 nomes):`);
+  for (const [nm, n] of top) console.log(`  ${String(n).padStart(4)}×  ${nm}`);
 }
 
 main();

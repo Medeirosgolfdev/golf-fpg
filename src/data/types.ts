@@ -81,6 +81,9 @@ export type CoursePlayerRound = {
   date: string | null;
   gross: number | null;
   toPar: number | null;
+  /** Nº de buracos jogados (9 ou 18) — separa meias-voltas das voltas completas
+   *  na CamposPage. Pode faltar em dados antigos (derivado então do par). */
+  holes?: number | null;
   tee: string | null;
   event: string | null;
   sd: number | null;

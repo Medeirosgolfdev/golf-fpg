@@ -51,7 +51,7 @@ design-system.html # Referência visual de todos os componentes CSS
 | Rota | Página | Dados |
 |------|--------|-------|
 | `/jogadores/:fed` | JogadoresPage | data.json por jogador, player-stats.json |
-| `/campos/:courseKey?` | CamposPage | master-courses.json, away-courses.json, extraCourses.ts |
+| `/campos/:courseKey?` | CamposPage | master-courses.json, away-courses.json, extraCourses.ts, course-players.json, {MANUEL}/analysis/data.json (tab "Como jogou") |
 | `/uskids` | USKIDSPage | uskids-results.json, uskids_torneios_completos(1-22).json, uskids-field.json |
 | `/kids` | KIDSPage | KIDSdataLoader (todos os JSON internacionais) |
 | `/diversos` | FPGPage | pull-torneiosNNN.json |
@@ -59,7 +59,7 @@ design-system.html # Referência visual de todos os componentes CSS
 | `/bjgt/:fed?` | BJGTPage | bjgt_*.json, wjgc_*.json |
 | `/bjgt-analysis/:fed?` | BJGTAnalysisPage | data.json por jogador |
 | `/comparar` | CompararPage | — |
-| `/simulador` | SimuladorPage | — |
+| `/simulador` | SimuladorPage | simCourses (master), players.json, {fed}/analysis/data.json (selector de jogador + "E se?") |
 | `/calendario` | CalendarioPage | — |
 | `/doral` | DORALPage | ftm_doral_*.json |
 
@@ -825,7 +825,9 @@ Popula `uskTournNames` como fallback (hardcoded em `USKIDS_TCODE_META` tem prior
 | pull-torneiosNNN.json (000-NNN) | FPG | scrape-classif-node.js (novos) ou pull-torneios.js browser (legacy) | ✓ | FPGPage, KIDSdataLoader (pull-torneios000 autoritativo) |
 | fpg-admissions-draws.json | FPG | scrape-fpg-admissions-draws-node.js (novo) | ✗ | AdmissionsTab, DrawTab (inscrições + pairings pré-jogo) |
 | players.json | FPG | pipeline.js | ✗ | JogadoresPage, FPGPage, KIDSdataLoader (enriquecimento) |
-| master-courses.json | FPG | pipeline.js | ✓ | CamposPage |
+| master-courses.json | FPG | pipeline.js (+ add-paco-do-lumiar.js p/ campos manuais) | ✓ | CamposPage |
+| course-players.json | FPG | build-course-players.js | ✓ | CamposPage (`_players` dos campos PT — quem jogou + scores por volta) |
+| course-player-names.json | FPG | build-course-player-names.js | ✗ | CamposPage (mapa fed→nome p/ os jogadores dos campos) |
 | drive-data.json | FPG | scrape-drive-aquapor-v7.js | ✓ | DrivePage |
 | aquapor-data.json | FPG | scrape-drive-aquapor-v7.js | ✓ | DrivePage |
 | melhorias.json | FPG | manual | ✓ | JogadoresPage, CamposPage |
@@ -853,6 +855,158 @@ Popula `uskTournNames` como fallback (hardcoded em `USKIDS_TCODE_META` tem prior
 | torneio-greatgolf.json | Greatgolf | scrape-drive-aquapor-v7.js | ✓ | KIDSdataLoader |
 | rivals-intl.json | — | — | ✗ | (registado em dataRegistry) |
 | tournament-links.json | — | — | ✗ | (registado em dataRegistry) |
+
+---
+
+## Redesign /campos + /simulador (2026-06-13)
+
+Sessão grande de melhorias visuais e funcionais às páginas `/campos` e
+`/simulador`. **Sem gráficos** (decisão da utilizadora). Doc de pesquisa/ideias
+em `docs/melhorias-campos-simulador.md`.
+
+### Módulos partilhados novos
+
+| Ficheiro | Exporta | Papel |
+|---|---|---|
+| `src/utils/teeGroups.ts` | `physicalTeeGroups(tees)`, `physicalTeeKey(tee)`, `sexesIn(groups, pick)`, tipos `SexKey`/`TeeRating`/`PhysTeeGroup` | Agrupa tees por **tee FÍSICO** (cor + distância total). O mesmo tee aparece como entradas M e F separadas (CR/Slope diferentes) — aqui junta-se tudo: `h18`/`f9`/`b9` (ratings por sexo) + `teeBySex` (objecto Tee por sexo, para selecção). Chave = `teeGroupHex(name, scorecardMeta.teeColor)|round(distances.total)`. |
+| `src/ui/TeeBars.tsx` | `TeeBars` (default) | Barras de tees partilhadas entre Campos e Simulador. Uma barra por tee físico: **só a bolinha colorida** (`.tee-dot`, sem nome) + distância (bold, tamanho normal) + CR/Slope por sexo. Dois modos: **display** (Campos, M/F como texto), **selector por sexo** (`onSelectTee`+`selectedTeeId`, Simulador — M/F viram botões), **selector de grupo** (`onSelectGroup`+`selectedGroupKey`, Campos — barra inteira clicável). |
+
+⚠ **Regra do tee físico:** um campo tem N tees físicos (cor/distância); o CR e o
+Slope é que diferem entre M e F — é o MESMO tee. Nunca listar "Amarelas M" e
+"Amarelas F" como tees distintos (inflaciona a contagem). Usar `physicalTeeGroups`
+/`physicalTeeKey` em todo o lado que conte ou liste tees.
+
+### SimuladorPage
+
+- **Persistência URL + localStorage** (`SIM_LS_KEY = "simulador_state_v1"`):
+  campo, tee, modo de buracos, sexo, HI, PCC, allowance e jogador. URL tem
+  prioridade no arranque (`readInitialSimState`); efeito espelha estado →
+  query params (replace) + localStorage. Refrescar já não perde nada.
+- **Selector de jogador** na toolbar (de `players.json`, default Manuel via
+  `MANUEL_FED`): escolher um jogador pré-preenche o HI (se vazio) e carrega o
+  `PlayerPageData` via `loadPlayerData(fed)`.
+- **Simulador "E se?"** — reutiliza o `RoundSimulator` (que já existia na
+  JogadoresPage). Projecta o HI após uma volta simulada (best-N de 20 via
+  `whsQtyCalc`/tabela 5.2a + regra Exceptional Score), top-N, rondas
+  deslocadas, tabela gross→HCP. Recebe `hcp=playerData.HCP_INFO`, `whs20`
+  (últimas 20 com SD válido), `playerData` e `storageKey` (prop nova:
+  persiste em páginas sem `:fedId` no URL).
+- Selector de tees passou a usar o `TeeBars` partilhado (modo selector por
+  sexo) — clicar num botão M/F continua a fixar o tee+rating do cálculo.
+
+### CamposPage
+
+- **Hero KPI cards** (`.kpi-card*`): Par, Tees (FÍSICOS), Jogadores. Distância
+  e CR/Slope NÃO vão aqui (são por tee → vivem nas barras/tabela).
+- **Header legível**: deixou de expor a `courseKey` crua; mostra tipo de campo
+  (PT/Internacional/Torneio).
+- **Barras de tees** (`TeeBars`, modo grupo): clicáveis — seleccionar um tee
+  realça a linha na tabela e abre a coluna **Δm** (diferença de metros total
+  para o tee seleccionado; sinal +/− = mais longo/curto; clicar de novo
+  desactiva).
+- **Tabela unificada (Scorecard + Ratings 18h)** — `ScorecardGrid`. Eliminou-se
+  o split de tabs Scorecard/Ratings. Estrutura: **PAR e SI no topo, ACIMA da
+  linha de cabeçalho** (para o cabeçalho colar aos tees), cabeçalho com colunas
+  **CR/Slope por sexo** (cada M/F é uma CAIXA sem linhas internas), depois
+  buracos 1-18 + OUT/IN/TOT. OUT e IN fechados dos dois lados (`.sc-col-out`/
+  `.sc-col-in`). PAR/SI: rótulo com merge da coluna Tee+ratings, alinhado à
+  direita; CR/Slope em branco (sem "–"). CR/Slope dos tees sem M ou F → célula
+  vazia (sem "–").
+- **Bloco F9/B9** — `CourseNineRatings`, **colapsável** (`<details>`), agrupado
+  Front9/Back9 → sexo (caixa) → CR/Slope.
+- **Tab "Como jogou"** — `CourseHoleAverages`: média por buraco do Manuel neste
+  campo (formato scorecard, buracos em colunas), cruzando `loadPlayerData(MANUEL_FED)`
+  com o campo por `canonicalCourseName`.
+- **Sidebar + contadores** usam tees FÍSICOS (`physicalTeeKey` dedup).
+
+### CSS (`.sc-table`, local à CamposPage — usado também em CourseNineRatings/CourseHoleAverages)
+
+- `.sc-wrap`: `width: fit-content; max-width: 100%` — o fundo (cartão) acaba
+  onde a tabela acaba; em ecrãs estreitos limita à viewport + scroll-x.
+- Fonte: **sans normal + `tabular-nums`** (não monoespaçada) — alinhar com os
+  scorecards de análise da casa.
+- OUT/IN/TOT mantêm a banda verde (`accent-light`) + divisores (`.sc-col-out`/
+  `.sc-col-in`). PAR/SI sem bandas de cor (estilo limpo), separador 2px sob SI.
+
+### ⚠ Sandbox Cowork não compila este repo
+
+`npx tsc --noEmit` / `npm run build` / `npm test` dão erros FALSOS no sandbox
+(o mount lê os .tsx com bytes NUL + encoding misto pelos emojis/acentos). A
+validação corre SEMPRE no PC da utilizadora. Ver memória `cowork-sandbox-build-scripts`.
+
+---
+
+## CamposPage — "Quem jogou neste campo" (cruzamento jogador↔campo) — 2026-06-13
+
+A secção `CoursePlayersSection` da `CamposPage` mostra, por campo, quem lá jogou
+e os resultados. Os dados vêm de **dois ficheiros gerados** que cruzam as voltas
+dos jogadores (`output/<nfed>/analysis/data.json`) com os campos do master.
+
+### Pipeline (correr por esta ordem no PC — NÃO no sandbox Cowork, que trunca os JSON)
+
+```bash
+node scripts/add-paco-do-lumiar.js        # (1×) adiciona campos manuais ao master
+node scripts/build-course-players.js      # → public/data/course-players.json
+node scripts/build-course-player-names.js # → public/data/course-player-names.json
+```
+
+`App.tsx` anexa o `course-players.json` aos campos PT do master por `courseKey`
+em runtime (os campos *away* já trazem `_players` do pipeline). O formato de cada
+volta: `{ date, gross, toPar, holes, tee, event, sd }` (`holes` = 9 ou 18).
+
+### `scripts/lib/course-aliases.cjs` — ESPELHO Node de `src/utils/courseAliases.ts`
+
+O Node não importa `.ts`, mas o cruzamento precisa da MESMA canonização de nomes
+que a app usa em runtime — senão perde ~16% das voltas (nomes FPG curtos/variantes
+que não batem com o master). **Manter sincronizado** com `courseAliases.ts`
+(precedente: `colors.ts` espelha `tokens.css`).
+
+Resolução de courseKey por volta (`resolveCourseKey` em `build-course-players.js`),
+por ordem:
+1. **Por par[]** (mais fiável; par vem de `HOLES[scoreId].p`):
+   - Santo da Serra → combos/loops (par dos nines; a FPG troca etiquetas, o par manda)
+   - Multi-loop (Vila Sol, Pinheiros Altos, Castro Marim) → combo pelos 2 nines; **nine
+     isolado (9h) → combo onde é o front-nine** (aparece na linha "9b" na UI)
+   - Ribagolfe I/II → Lakes/Oaks (VERIFICADO por par: I→Lakes, II→Oaks, 100%)
+   - Aroeira II → No.1/No.2 (só por par; sem par fica por casar — ambíguo de propósito)
+2. **Fallbacks por nome** (voltas sem scorecard): Santo da Serra, multi-loop, Ribagolfe.
+3. **`canonicalCourseName`** (sufixos CNJ/CN + `COURSE_NAME_ALIASES`) → `masterByNorm`.
+
+Aliases novos (2026-06-13): `Tróia→Troia Golf`, `Porto Santo→Porto Santo Golfe`,
+`Santo Estevão→Santo Estevão Golf`, `Oceânico Faldo→Faldo Course`.
+
+**Sentinelas filtradas:** gross `0`/`998`/`999` (toPar absurdo = "sem cartão") → `gross:null`
+(continuam a contar como volta mas não entram em Melhor/Média).
+
+O script imprime no fim o diagnóstico "Voltas sem campo correspondente" (top 30). O que
+resta aí é esperado: nomes-lixo (`NONE`/`INTERNACIONAL`/`Campo desconhecido`), campos
+**internacionais** (geridos pelo pipeline *away*) e `Aroeira II` sem par.
+
+### `scripts/build-course-player-names.js`
+
+Resolve fed→nome contra `players.json` + `federados.json` + `federados-inativos.json`.
+**Lê os 3 ficheiros de campos:** `away-courses.json`, `master-courses.json` E
+`course-players.json` (este último era ignorado, fazendo os jogadores dos campos PT
+aparecerem como NÚMERO de federado).
+
+### `scripts/add-paco-do-lumiar.js`
+
+Adiciona o **Paço do Lumiar** (campo público de 9 buracos par-3, par 29) ao
+`master-courses.json`. Reconstruído dos scorecards reais; representado como 18 buracos
+(9 jogados 2× = par 58), 3 tees (Brancas/Amarelas/Vermelhas, +F nas da frente).
+CR/Slope `null` (par-3 sem rating publicado). Idempotente, escrita atómica. ~900 voltas
+órfãs recuperadas. Padrão a reusar para outros campos PT em falta no master.
+
+### UI da `CoursePlayersSection` (tabela ordenável)
+
+- Tabela ordenável por cabeçalho (Voltas/Melhor/Média/Última); **Manuel fixo no topo**,
+  fora da ordenação. Default: mais voltas primeiro.
+- **Duas linhas de estatística por jogador: `18b` e `9b`** (nunca misturadas — uma volta
+  de 9 buracos não é comparável com uma de 18). `roundHoles()` usa `r.holes`; se faltar,
+  deriva do par (`gross − toPar`).
+- Cor só no TEXTO do to-par (`tpTextColor`), nunca fundos berrantes.
+- Clicar na linha expande as voltas individuais (data + resultado, info completa no hover);
+  sentinelas mostradas como "s/ cartão".
 
 ---
 
@@ -1943,6 +2097,9 @@ Na barra de distribuição de scores, o segmento de par usa branco/transparente,
 | `players.json` | Base de dados de jogadores portugueses |
 | `OverlayExport.tsx` | Exportação de imagens (cores hardcoded — excepção documentada) |
 | `fetchCache.ts` | Cache global de fetches entre páginas |
+| `teeGroups.ts` | Agrupamento por tee físico (`physicalTeeGroups`/`physicalTeeKey`/`sexesIn`) — partilhado Campos+Simulador (2026-06-13) |
+| `TeeBars.tsx` | Barras de tees partilhadas (bolinha + distância + CR/Slope por sexo); modos display / selector-por-sexo / selector-de-grupo (2026-06-13) |
+| `RoundSimulator.tsx` | Simulador "E se?" de impacto no HI (best-N/5.2a + Exceptional Score); usado em JogadoresPage e SimuladorPage (prop `storageKey`) |
 | `scoreDisplay.ts` | Funções de formatação e coloração de scores |
 | `mathUtils.ts` | Funções matemáticas (z-score, trend, slope, arrays) |
 | `flagUtils.ts` | `FL` — mapeamento de países para emojis de bandeira |

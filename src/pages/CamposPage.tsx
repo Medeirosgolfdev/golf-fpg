@@ -8,10 +8,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import type { Course, Tee, SexFilter, CoursePlayerRound } from "../data/types";
 import { useAppContext } from "../context/AppContext";
 import TeeBadge from "../ui/TeeBadge";
+import SexBadge from "../ui/SexBadge";
 import { teeCanonicalLabel, teeGroupHex } from "../utils/teeColors";
 import { fmt, fmtCR, norm, titleCase, sumRange, fmtToPar } from "../utils/format";
 import { fixMojibake } from "../utils/fixEncoding";
-import { sortTees, filterTees, teeHexFromTee } from "../utils/teeUtils";
+import { sortTees, filterTees } from "../utils/teeUtils";
 import { PillBadge } from "../ui/PillBadge";
 import ExtLink from "../ui/ExternalLink";
 import { useSort } from "../hooks/useSort";
@@ -23,6 +24,8 @@ import type { PlayerPageData } from "../data/playerDataLoader";
 import { MANUEL_FED } from "../constants/manuel";
 import { canonicalCourseName } from "../utils/courseAliases";
 import { SC } from "../utils/scoreDisplay";
+import { physicalTeeGroups, physicalTeeKey, sexesIn, type SexKey, type PhysTeeGroup } from "../utils/teeGroups";
+import TeeBars from "../ui/TeeBars";
 
 /* Mapa fed-code → nome para jogadores que não estão em players.json.
    Gerado por scripts/build-course-player-names.js a partir de federados.json.
@@ -136,175 +139,216 @@ function isAway(c: Course): boolean {
 
 /* ——— Componente: Grelha Scorecard Multi-Tee ——— */
 
-function ScorecardGrid({ tees }: { tees: Tee[] }) {
-  const sorted = useMemo(() => sortTees(tees), [tees]);
+function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }) {
+  const groups = useMemo(() => physicalTeeGroups(tees), [tees]);
+  const sexes = useMemo<SexKey[]>(() => sexesIn(groups, (g) => g.h18), [groups]);
 
-  const refTee = sorted.find((t) => t.holes?.length >= 18) ?? sorted[0];
+  // Tee seleccionado para comparação de distâncias (coluna Δm no fim)
+  const selGroup = selKey ? groups.find((g) => g.key === selKey) : null;
+  const selTot = selGroup?.teeHoles.distances?.total ?? null;
+  const showDelta = !!selGroup && selTot != null;
+
+  const refTee = useMemo(
+    () => groups.map((g) => g.teeHoles).find((t) => (t.holes?.length ?? 0) >= 18) ?? groups[0]?.teeHoles,
+    [groups]
+  );
   const refByHole = useMemo(() => {
-    const m = new Map<number, (typeof refTee)["holes"][0]>();
+    const m = new Map<number, NonNullable<Tee["holes"]>[0]>();
     for (const h of refTee?.holes ?? []) {
       if (h.hole >= 1 && h.hole <= 18) m.set(h.hole, h);
     }
     return m;
   }, [refTee]);
 
-  if (!sorted.length) return <div className="muted">Sem tees disponíveis</div>;
+  if (!groups.length) return <div className="muted">Sem tees disponíveis</div>;
+
+  const sepL = "1px solid var(--border)";        // separa cada par de tee
+  const sepThin = "1px solid var(--border-light)"; // separa CR de Slope
+  // PAR/SI não têm CR/Slope: o rótulo abrange (merge) a coluna Tee + as colunas
+  // de rating, alinhado à direita, junto ao início dos dados (sem riscos).
+  const labelSpan = 1 + sexes.length * 2;
 
   return (
     <div className="sc-wrap">
       <table className="sc-table">
         <thead>
+          {/* PAR e SI — acima da linha de cabeçalho, para o cabeçalho ficar
+              colado aos tees (sem interrupção). */}
+          <tr className="sc-meta-row sc-par-row">
+            <td className="sc-sticky sc-meta-label" colSpan={labelSpan} style={{ textAlign: "right", paddingRight: 12 }}>PAR</td>
+            {Array.from({ length: 9 }, (_, i) => (
+              <td key={i + 1} className="ta-c" style={i === 0 ? { borderLeft: sepL } : undefined}>{refByHole.get(i + 1)?.par ?? "–"}</td>
+            ))}
+            <td className="ta-c sc-tot-val sc-col-out">{fmt(sumRange(1, 9, (i) => refByHole.get(i)?.par ?? null))}</td>
+            {Array.from({ length: 9 }, (_, i) => (
+              <td key={i + 10} className="ta-c">{refByHole.get(i + 10)?.par ?? "–"}</td>
+            ))}
+            <td className="ta-c sc-tot-val sc-col-in">{fmt(sumRange(10, 18, (i) => refByHole.get(i)?.par ?? null))}</td>
+            <td className="ta-c sc-tot-val">{fmt(sumRange(1, 18, (i) => refByHole.get(i)?.par ?? null))}</td>
+            {showDelta && <td className="ta-c sc-tot-val" style={{ borderLeft: sepL }} />}
+          </tr>
+          <tr className="sc-meta-row sc-hcp-row">
+            <td className="sc-sticky sc-meta-label" colSpan={labelSpan} style={{ textAlign: "right", paddingRight: 12 }}>SI</td>
+            {Array.from({ length: 9 }, (_, i) => (
+              <td key={i + 1} className="ta-c" style={i === 0 ? { borderLeft: sepL } : undefined}>{refByHole.get(i + 1)?.si ?? "–"}</td>
+            ))}
+            <td className="ta-c sc-tot-val sc-col-out" />
+            {Array.from({ length: 9 }, (_, i) => (
+              <td key={i + 10} className="ta-c">{refByHole.get(i + 10)?.si ?? "–"}</td>
+            ))}
+            <td className="ta-c sc-tot-val" colSpan={2} />
+            {showDelta && <td className="ta-c sc-tot-val" style={{ borderLeft: sepL }} />}
+          </tr>
+          {/* Linha 1: Tee + grupos M/F (cada um abrange CR+Slope) + buracos */}
           <tr>
-            <th className="sc-sticky">Tee</th>
-            {Array.from({ length: 9 }, (_, i) => (
-              <th key={i + 1} className="sc-h">{i + 1}</th>
+            <th className="sc-sticky" rowSpan={2}>Tee</th>
+            {sexes.map((s) => (
+              <th key={`g-${s}`} colSpan={2} className="sc-h" style={{ borderLeft: sepL, borderBottom: "none", textAlign: "center", padding: "1px 6px" }}>
+                {(s === "M" || s === "F") ? <SexBadge sex={s} /> : "—"}
+              </th>
             ))}
-            <th className="sc-h sc-tot">OUT</th>
             {Array.from({ length: 9 }, (_, i) => (
-              <th key={i + 10} className="sc-h">{i + 10}</th>
+              <th key={i + 1} rowSpan={2} className="sc-h" style={i === 0 ? { borderLeft: sepL } : undefined}>{i + 1}</th>
             ))}
-            <th className="sc-h sc-tot">IN</th>
-            <th className="sc-h sc-tot">TOT</th>
+            <th className="sc-h sc-tot sc-col-out" rowSpan={2}>OUT</th>
+            {Array.from({ length: 9 }, (_, i) => (
+              <th key={i + 10} rowSpan={2} className="sc-h">{i + 10}</th>
+            ))}
+            <th className="sc-h sc-tot sc-col-in" rowSpan={2}>IN</th>
+            <th className="sc-h sc-tot" rowSpan={2}>TOT</th>
+            {showDelta && (
+              <th className="sc-h sc-tot" rowSpan={2} style={{ borderLeft: sepL }} title={`Diferença de metros para ${selGroup!.label}`}>
+                Δm
+              </th>
+            )}
+          </tr>
+          {/* Linha 2: sub-cabeçalhos CR / Slope por sexo */}
+          <tr>
+            {sexes.flatMap((s) => [
+              <th key={`h-${s}-cr`} className="sc-h" style={{ borderLeft: sepL, padding: "2px 6px", fontWeight: 400, color: "var(--text-3)" }}>CR</th>,
+              <th key={`h-${s}-sl`} className="sc-h" style={{ padding: "2px 6px", fontWeight: 400, color: "var(--text-3)" }}>Slope</th>,
+            ])}
           </tr>
         </thead>
         <tbody>
-          {/* Linhas de distância por tee */}
-          {sorted.map((t, idx) => {
-            const byHole = new Map<number, (typeof t)["holes"][0]>();
-            for (const h of t.holes ?? []) byHole.set(h.hole, h);
+          {/* Linhas por tee físico: CR/Slope (por sexo) + distâncias por buraco */}
+          {groups.map((g) => {
+            const byHole = new Map<number, NonNullable<Tee["holes"]>[0]>();
+            for (const h of g.teeHoles.holes ?? []) byHole.set(h.hole, h);
 
             const out = sumRange(1, 9, (i) => byHole.get(i)?.distance ?? null);
             const inn = sumRange(10, 18, (i) => byHole.get(i)?.distance ?? null);
             const tot = (out ?? 0) + (inn ?? 0);
+            const isSel = showDelta && g.key === selKey;
+            const myTot = g.teeHoles.distances?.total ?? null;
+            const deltaM = showDelta && myTot != null && selTot != null ? myTot - selTot : null;
 
             return (
-              <tr key={`${t.teeId}-${idx}`} className="sc-tee-row">
-                <td className="sc-sticky sc-tee-cell">
-                  <TeeBadge
-                    label={titleCase(t.teeName)}
-                    colorHex={teeHexFromTee(t)}
-                    suffix={t.sex !== "U" ? t.sex : null}
-                  />
+              <tr key={g.key} className="sc-tee-row" style={isSel ? { background: "var(--accent-light)" } : undefined}>
+                <td className="sc-sticky sc-tee-cell" style={isSel ? { background: "var(--accent-light)" } : undefined}>
+                  <TeeBadge label={g.label} colorHex={g.colorHex} />
                 </td>
+                {sexes.flatMap((s) => {
+                  const r = g.h18[s];
+                  return [
+                    <td key={`r-${s}-cr`} className="ta-c" style={{ fontSize: 12, borderLeft: sepL }}>
+                      {r ? fmtCR(r.cr) : ""}
+                    </td>,
+                    <td key={`r-${s}-sl`} className="ta-c" style={{ fontSize: 12, borderLeft: sepThin }}>
+                      {r ? r.sl : ""}
+                    </td>,
+                  ];
+                })}
                 {Array.from({ length: 9 }, (_, i) => (
-                  <td key={i + 1} className="ta-c">{fmt(byHole.get(i + 1)?.distance ?? null)}</td>
+                  <td key={i + 1} className="ta-c" style={i === 0 ? { borderLeft: sepL } : undefined}>{fmt(byHole.get(i + 1)?.distance ?? null)}</td>
                 ))}
-                <td className="ta-c sc-tot-val">{fmt(out)}</td>
+                <td className="ta-c sc-tot-val sc-col-out">{fmt(out)}</td>
                 {Array.from({ length: 9 }, (_, i) => (
                   <td key={i + 10} className="ta-c">{fmt(byHole.get(i + 10)?.distance ?? null)}</td>
                 ))}
-                <td className="ta-c sc-tot-val">{fmt(inn)}</td>
+                <td className="ta-c sc-tot-val sc-col-in">{fmt(inn)}</td>
                 <td className="ta-c sc-tot-val">{fmt(tot || null)}</td>
+                {showDelta && (
+                  <td
+                    className="ta-c sc-tot-val"
+                    style={{ borderLeft: sepL, fontWeight: 700, color: "var(--text-2)" }}
+                  >
+                    {isSel ? "—" : deltaM == null ? "–" : `${deltaM > 0 ? "+" : ""}${deltaM}`}
+                  </td>
+                )}
               </tr>
             );
           })}
-
-          {/* PAR */}
-          <tr className="sc-meta-row sc-par-row">
-            <td className="sc-sticky sc-meta-label">PAR</td>
-            {Array.from({ length: 9 }, (_, i) => (
-              <td key={i + 1} className="ta-c">{refByHole.get(i + 1)?.par ?? "–"}</td>
-            ))}
-            <td className="ta-c sc-tot-val">{fmt(sumRange(1, 9, (i) => refByHole.get(i)?.par ?? null))}</td>
-            {Array.from({ length: 9 }, (_, i) => (
-              <td key={i + 10} className="ta-c">{refByHole.get(i + 10)?.par ?? "–"}</td>
-            ))}
-            <td className="ta-c sc-tot-val">{fmt(sumRange(10, 18, (i) => refByHole.get(i)?.par ?? null))}</td>
-            <td className="ta-c sc-tot-val">{fmt(sumRange(1, 18, (i) => refByHole.get(i)?.par ?? null))}</td>
-          </tr>
-
-          {/* SI / HCP */}
-          <tr className="sc-meta-row sc-hcp-row">
-            <td className="sc-sticky sc-meta-label">SI</td>
-            {Array.from({ length: 9 }, (_, i) => (
-              <td key={i + 1} className="ta-c">{refByHole.get(i + 1)?.si ?? "–"}</td>
-            ))}
-            <td className="ta-c">–</td>
-            {Array.from({ length: 9 }, (_, i) => (
-              <td key={i + 10} className="ta-c">{refByHole.get(i + 10)?.si ?? "–"}</td>
-            ))}
-            <td className="ta-c">–</td>
-            <td className="ta-c">–</td>
-          </tr>
         </tbody>
       </table>
     </div>
   );
 }
 
-/* ——— Componente: Tabela de Ratings por Tee ——— */
+/* ——— Componente: Ratings de 9 buracos (F9 / B9) — bloco à parte ———
+ * Mesma grelha limpa do scorecard. Por tee físico, agrupa F9 e B9; dentro de
+ * cada um, CR/Slope por sexo. O CR/Slope de 18 buracos vive na tabela principal. */
+function CourseNineRatings({ tees }: { tees: Tee[] }) {
+  const groups = useMemo(() => physicalTeeGroups(tees), [tees]);
+  const nines = useMemo(
+    () => ([
+      { id: "f9" as const, label: "Front 9 (1–9)", sexes: sexesIn(groups, (g) => g.f9), get: (g: PhysTeeGroup) => g.f9 },
+      { id: "b9" as const, label: "Back 9 (10–18)", sexes: sexesIn(groups, (g) => g.b9), get: (g: PhysTeeGroup) => g.b9 },
+    ].filter((n) => n.sexes.length > 0)),
+    [groups]
+  );
+  if (!groups.length || nines.length === 0) return null;
 
-type RatingsSortKey = "tee" | "sex" | "dist" | "par" | "cr" | "slope" | "crF9" | "slF9" | "crB9" | "slB9";
-
-function RatingsTable({ tees }: { tees: Tee[] }) {
-  const defaultSorted = sortTees(tees);
-  const { sortKey, sortDir, toggleSort } = useSort<RatingsSortKey>("tee");
-
-  const sorted = useMemo(() => {
-    if (sortKey === "tee") {
-      // "tee" = ordem canónica (branca, amarela, azul, ...) ou inversa
-      return sortDir === "asc" ? defaultSorted : [...defaultSorted].reverse();
-    }
-    const getVal = (t: Tee): number | string => {
-      switch (sortKey) {
-        case "sex":   return t.sex ?? "";
-        case "dist":  return t.distances?.total ?? -Infinity;
-        case "par":   return t.ratings?.holes18?.par ?? -Infinity;
-        case "cr":    return t.ratings?.holes18?.courseRating ?? -Infinity;
-        case "slope": return t.ratings?.holes18?.slopeRating ?? -Infinity;
-        case "crF9":  return t.ratings?.holes9Front?.courseRating ?? -Infinity;
-        case "slF9":  return t.ratings?.holes9Front?.slopeRating ?? -Infinity;
-        case "crB9":  return t.ratings?.holes9Back?.courseRating ?? -Infinity;
-        case "slB9":  return t.ratings?.holes9Back?.slopeRating ?? -Infinity;
-        default:      return 0;
-      }
-    };
-    return [...defaultSorted].sort((a, b) => {
-      const va = getVal(a), vb = getVal(b);
-      let cmp: number;
-      if (typeof va === "string" && typeof vb === "string") cmp = va.localeCompare(vb, "pt");
-      else cmp = (va as number) - (vb as number);
-      return sortDir === "asc" ? cmp : -cmp;
-    });
-  }, [defaultSorted, sortKey, sortDir]);
+  const sepL = "1px solid var(--border)";
+  const sepThin = "1px solid var(--border-light)";
+  const sexBadge = (s: SexKey) => (s === "M" || s === "F") ? <SexBadge sex={s} /> : "—";
 
   return (
-    <div className="sc-wrap">
-      <table className="ratings-table">
-        <thead>
-          <tr>
-            <SortableHdr k="tee"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Tee</SortableHdr>
-            <SortableHdr k="sex"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Sexo</SortableHdr>
-            <SortableHdr k="dist"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">Dist (m)</SortableHdr>
-            <SortableHdr k="par"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">Par</SortableHdr>
-            <SortableHdr k="cr"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">CR</SortableHdr>
-            <SortableHdr k="slope" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">Slope</SortableHdr>
-            <SortableHdr k="crF9"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">CR F9</SortableHdr>
-            <SortableHdr k="slF9"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">Sl F9</SortableHdr>
-            <SortableHdr k="crB9"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">CR B9</SortableHdr>
-            <SortableHdr k="slB9"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">Sl B9</SortableHdr>
-          </tr>
-        </thead>
-        <tbody>
-          {sorted.map((t, idx) => (
-            <tr key={`${t.teeId}-${idx}`}>
-              <td>
-                <TeeBadge label={titleCase(t.teeName)} colorHex={teeHexFromTee(t)} />
-              </td>
-              <td className="r-sex">{t.sex}</td>
-              <td className="r-num">{fmt(t.distances?.total)}</td>
-              <td className="r-num">{t.ratings?.holes18?.par ?? "–"}</td>
-              <td className="r-num">{fmtCR(t.ratings?.holes18?.courseRating)}</td>
-              <td className="r-num">{t.ratings?.holes18?.slopeRating ?? "–"}</td>
-              <td className="r-num">{fmtCR(t.ratings?.holes9Front?.courseRating)}</td>
-              <td className="r-num">{t.ratings?.holes9Front?.slopeRating ?? "–"}</td>
-              <td className="r-num">{fmtCR(t.ratings?.holes9Back?.courseRating)}</td>
-              <td className="r-num">{t.ratings?.holes9Back?.slopeRating ?? "–"}</td>
+    <details className="m-14-0" open>
+      <summary className="h-xs" style={{ margin: "0 0 8px", cursor: "pointer" }}>Ratings por 9 buracos</summary>
+      <div className="sc-wrap">
+        <table className="sc-table">
+          <thead>
+            {/* Linha 1: Front 9 / Back 9 */}
+            <tr>
+              <th className="sc-sticky" rowSpan={3}>Tee</th>
+              {nines.map((n) => (
+                <th key={n.id} className="sc-h" colSpan={n.sexes.length * 2} style={{ borderLeft: sepL, textAlign: "center", padding: "2px 6px" }}>{n.label}</th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+            {/* Linha 2: sexo (abrange CR+Slope) — caixa sem linhas internas */}
+            <tr>
+              {nines.flatMap((n) => n.sexes.map((s, i) => (
+                <th key={`${n.id}-${s}`} className="sc-h" colSpan={2} style={{ borderLeft: i === 0 ? sepL : sepThin, borderBottom: "none", textAlign: "center", padding: "1px 6px" }}>
+                  {sexBadge(s)}
+                </th>
+              )))}
+            </tr>
+            {/* Linha 3: CR / Slope (sem linha interna entre eles) */}
+            <tr>
+              {nines.flatMap((n) => n.sexes.flatMap((s, i) => [
+                <th key={`${n.id}-${s}-cr`} className="sc-h" style={{ borderLeft: i === 0 ? sepL : sepThin, padding: "2px 6px", fontWeight: 400, color: "var(--text-3)" }}>CR</th>,
+                <th key={`${n.id}-${s}-sl`} className="sc-h" style={{ padding: "2px 6px", fontWeight: 400, color: "var(--text-3)" }}>Slope</th>,
+              ]))}
+            </tr>
+          </thead>
+          <tbody>
+            {groups.map((g) => (
+              <tr key={g.key} className="sc-tee-row">
+                <td className="sc-sticky sc-tee-cell"><TeeBadge label={g.label} colorHex={g.colorHex} /></td>
+                {nines.flatMap((n) => n.sexes.flatMap((s, i) => {
+                  const r = n.get(g)[s];
+                  return [
+                    <td key={`${n.id}-${s}-cr`} className="ta-c" style={{ fontSize: 12, borderLeft: i === 0 ? sepL : sepThin }}>{r ? fmtCR(r.cr) : ""}</td>,
+                    <td key={`${n.id}-${s}-sl`} className="ta-c" style={{ fontSize: 12, borderLeft: sepThin }}>{r ? r.sl : ""}</td>,
+                  ];
+                }))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </details>
   );
 }
 /* ——— Componente: Quem jogou neste campo ——— */
@@ -332,20 +376,64 @@ function dec1(n: number): string {
   return n.toFixed(1).replace(".", ",");
 }
 
+type CPBucket = {
+  n: number;
+  bestGross: number | null;
+  bestToPar: number | null;
+  avgGross: number | null;
+  avgToPar: number | null;
+  last: string | null;
+};
 type PlayerSummary = {
   nfed: string;
   name: string;
   isM: boolean;
   rounds: CoursePlayerRound[];
-  nRounds: number;
-  bestGross: number | null;
-  bestToPar: number | null;
-  avgGross: number | null;
-  avgToPar: number | null;
-  latest: string | null;
+  total: number;
+  b18: CPBucket;
+  b9: CPBucket;
 };
 
 type CPSortKey = "name" | "n" | "best" | "avg" | "last";
+
+const EMPTY_BUCKET: CPBucket = { n: 0, bestGross: null, bestToPar: null, avgGross: null, avgToPar: null, last: null };
+
+/** Score válido para estatística? Exclui sentinelas: gross 0/negativo e os
+ *  placeholders 998/999 ("não entregou cartão / WD") que inflavam as médias. */
+function validGross(g: number | null | undefined): g is number {
+  return g != null && g > 0 && g < 200;
+}
+/** Buracos da volta: 18 ou 9 (derivado do par = gross − toPar), ou null se
+ *  inválida. Permite separar meias-voltas (incomparáveis) das voltas completas. */
+function roundHoles(r: CoursePlayerRound): 18 | 9 | null {
+  if (!validGross(r.gross)) return null;
+  // Preferir o nº de buracos guardado (course-players.json novo); senão derivar.
+  if (r.holes === 18 || r.holes === 9) return r.holes;
+  if (r.toPar != null) {
+    const par = r.gross - r.toPar;
+    if (par < 26 || par > 120) return null; // par implausível → sentinela
+    return par >= 50 ? 18 : 9;
+  }
+  return r.gross >= 55 ? 18 : 9;
+}
+/** Estatística de um conjunto de voltas (já filtradas como válidas). */
+function buildBucket(rounds: CoursePlayerRound[]): CPBucket {
+  if (rounds.length === 0) return EMPTY_BUCKET;
+  let bestGross: number | null = null, bestToPar: number | null = null;
+  let sumG = 0, sumTp = 0, nTp = 0, last: string | null = null;
+  for (const r of rounds) {
+    const g = r.gross as number;
+    if (bestGross == null || g < bestGross) { bestGross = g; bestToPar = r.toPar ?? null; }
+    sumG += g;
+    if (r.toPar != null) { sumTp += r.toPar; nTp++; }
+    if (r.date && (last == null || r.date > last)) last = r.date;
+  }
+  return { n: rounds.length, bestGross, bestToPar, avgGross: sumG / rounds.length, avgToPar: nTp ? sumTp / nTp : null, last };
+}
+/** Bucket principal (linha de cima): prefere 18 buracos. */
+function headline(s: PlayerSummary): CPBucket {
+  return s.b18.n > 0 ? s.b18 : s.b9;
+}
 
 function CoursePlayersSection({ course, onSelectPlayer }: { course: Course; onSelectPlayer?: (fed: string) => void }) {
   const { players } = useAppContext();
@@ -379,22 +467,17 @@ function CoursePlayersSection({ course, onSelectPlayer }: { course: Course; onSe
           ? [{ date: val, gross: null, toPar: null, tee: null, event: null, sd: null }]
           : [];
       const sortedRounds = [...rounds].sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));
-      const scored = sortedRounds.filter((r) => r.gross != null);
-      let bestGross: number | null = null, bestToPar: number | null = null;
-      for (const r of scored) {
-        if (bestGross == null || (r.gross as number) < bestGross) {
-          bestGross = r.gross as number;
-          bestToPar = r.toPar ?? null;
-        }
+      const r18: CoursePlayerRound[] = [];
+      const r9: CoursePlayerRound[] = [];
+      for (const r of sortedRounds) {
+        const h = roundHoles(r);
+        if (h === 18) r18.push(r);
+        else if (h === 9) r9.push(r);
       }
-      const avgGross = scored.length ? scored.reduce((s, r) => s + (r.gross as number), 0) / scored.length : null;
-      const tps = scored.filter((r) => r.toPar != null);
-      const avgToPar = tps.length ? tps.reduce((s, r) => s + (r.toPar as number), 0) / tps.length : null;
       return {
         nfed, name, isM: nfed === MANUEL_FED,
-        rounds: sortedRounds, nRounds: rounds.length,
-        bestGross, bestToPar, avgGross, avgToPar,
-        latest: sortedRounds.find((r) => r.date)?.date ?? null,
+        rounds: sortedRounds, total: rounds.length,
+        b18: buildBucket(r18), b9: buildBucket(r9),
       };
     });
   }, [course, players, nameMap]);
@@ -404,11 +487,11 @@ function CoursePlayersSection({ course, onSelectPlayer }: { course: Course; onSe
     const cmp = (a: PlayerSummary, b: PlayerSummary): number => {
       switch (sortKey) {
         case "name": return a.name.localeCompare(b.name, "pt") * dir;
-        case "best": return ((a.bestGross ?? Infinity) - (b.bestGross ?? Infinity)) * dir;
-        case "avg":  return ((a.avgGross ?? Infinity) - (b.avgGross ?? Infinity)) * dir;
-        case "last": return (a.latest ?? "").localeCompare(b.latest ?? "") * dir;
+        case "best": return ((headline(a).bestGross ?? Infinity) - (headline(b).bestGross ?? Infinity)) * dir;
+        case "avg":  return ((headline(a).avgGross ?? Infinity) - (headline(b).avgGross ?? Infinity)) * dir;
+        case "last": return ((a.b18.last ?? a.b9.last ?? "").localeCompare(b.b18.last ?? b.b9.last ?? "")) * dir;
         case "n":
-        default:     return ((a.nRounds - b.nRounds) || 0) * dir;
+        default:     return ((a.total - b.total) || 0) * dir;
       }
     };
     const rest = entries.filter((e) => !e.isM).sort(cmp);
@@ -436,6 +519,37 @@ function CoursePlayersSection({ course, onSelectPlayer }: { course: Course; onSe
       </a>
     );
 
+  /** Células de estatística (Voltas/Melhor/Média/Última) de um bucket. */
+  const statCells = (b: CPBucket, tag: string | null) => (
+    <>
+      <td className="cp-num cp-strong">
+        {tag && <span className="cp-tag">{tag}</span>}
+        {b.n}
+      </td>
+      <td className="cp-num">
+        {b.bestGross != null ? (
+          <>
+            <span className="cp-strong">{b.bestGross}</span>
+            {b.bestToPar != null && (
+              <span className="cp-tp" style={{ color: tpTextColor(b.bestToPar) }}> {fmtToPar(b.bestToPar)}</span>
+            )}
+          </>
+        ) : <span className="muted">–</span>}
+      </td>
+      <td className="cp-num">
+        {b.avgGross != null ? (
+          <>
+            {dec1(b.avgGross)}
+            {b.avgToPar != null && (
+              <span className="cp-tp" style={{ color: tpTextColor(Math.round(b.avgToPar)) }}> ({b.avgToPar >= 0 ? "+" : ""}{dec1(b.avgToPar)})</span>
+            )}
+          </>
+        ) : <span className="muted">–</span>}
+      </td>
+      <td className="cp-num cp-muted">{fmtDM(b.last) || "–"}</td>
+    </>
+  );
+
   return (
     <div className="course-players-section">
       <h4 className="course-players-title">Jogadores ({entries.length})</h4>
@@ -454,39 +568,32 @@ function CoursePlayersSection({ course, onSelectPlayer }: { course: Course; onSe
           <tbody>
             {sorted.map((s) => {
               const isOpen = expanded.has(s.nfed);
+              const both = s.b18.n > 0 && s.b9.n > 0;
+              const primary = s.b18.n > 0 ? s.b18 : s.b9;
+              // Só rotular quando há ambíguidade: 18b+9b (linha de cima = 18b),
+              // ou só-9b (marcar "9b" para não confundir com volta completa).
+              const primaryTag = both ? "18b" : (s.b18.n > 0 ? null : (s.b9.n > 0 ? "9b" : null));
+              const secondary = both ? s.b9 : null;
+              const rowCls = `${s.isM ? " cp-row-manuel" : ""}${isOpen ? " cp-row-open" : ""}`;
               return (
                 <Fragment key={s.nfed}>
                   <tr
-                    className={`cp-row${s.isM ? " cp-row-manuel" : ""}${isOpen ? " cp-row-open" : ""}`}
+                    className={`cp-row${rowCls}${secondary ? " cp-row-paired" : ""}`}
                     onClick={() => toggle(s.nfed)}
                   >
-                    <td className="cp-exp">
+                    <td className="cp-exp" rowSpan={secondary ? 2 : 1}>
                       <span className={`cp-chev${isOpen ? " cp-chev-open" : ""}`} aria-hidden>›</span>
                     </td>
-                    <td className="cp-name-cell" onClick={(e) => e.stopPropagation()}>{nameCell(s)}</td>
-                    <td className="cp-num cp-strong">{s.nRounds}</td>
-                    <td className="cp-num">
-                      {s.bestGross != null ? (
-                        <>
-                          <span className="cp-strong">{s.bestGross}</span>
-                          {s.bestToPar != null && (
-                            <span className="cp-tp" style={{ color: tpTextColor(s.bestToPar) }}> {fmtToPar(s.bestToPar)}</span>
-                          )}
-                        </>
-                      ) : <span className="muted">–</span>}
+                    <td className="cp-name-cell" rowSpan={secondary ? 2 : 1} onClick={(e) => e.stopPropagation()}>
+                      {nameCell(s)}
                     </td>
-                    <td className="cp-num">
-                      {s.avgGross != null ? (
-                        <>
-                          {dec1(s.avgGross)}
-                          {s.avgToPar != null && (
-                            <span className="cp-tp" style={{ color: tpTextColor(Math.round(s.avgToPar)) }}> ({s.avgToPar >= 0 ? "+" : ""}{dec1(s.avgToPar)})</span>
-                          )}
-                        </>
-                      ) : <span className="muted">–</span>}
-                    </td>
-                    <td className="cp-num cp-muted">{fmtDM(s.latest) || "–"}</td>
+                    {statCells(primary, primaryTag)}
                   </tr>
+                  {secondary && (
+                    <tr className={`cp-row-sub${rowCls}`} onClick={() => toggle(s.nfed)}>
+                      {statCells(secondary, "9b")}
+                    </tr>
+                  )}
                   {isOpen && (
                     <tr className="cp-detail-row">
                       <td />
@@ -494,20 +601,26 @@ function CoursePlayersSection({ course, onSelectPlayer }: { course: Course; onSe
                         <div className="cp-rounds">
                           {s.rounds.map((r, i) => {
                             const dia = fmtDM(r.date);
-                            if (r.gross == null && !dia) return null;
-                            const title = [fmtDMYfull(r.date), r.event, r.tee, r.sd != null ? `SD ${r.sd}` : null]
-                              .filter(Boolean).join(" · ");
+                            const ok = validGross(r.gross);
+                            if (!ok && !dia) return null;
+                            const h = roundHoles(r);
+                            const title = [
+                              fmtDMYfull(r.date),
+                              h ? `${h} buracos` : (r.gross != null && !ok ? "sem cartão" : null),
+                              r.event, r.tee, r.sd != null ? `SD ${r.sd}` : null,
+                            ].filter(Boolean).join(" · ");
                             return (
                               <span key={i} className="cp-round" title={title || undefined}>
                                 {dia && <span className="cp-round-date">{dia}</span>}
-                                {r.gross != null && (
+                                {ok ? (
                                   <span className="cp-round-score">
                                     {r.gross}
                                     {r.toPar != null && (
                                       <span style={{ color: tpTextColor(r.toPar) }}> {fmtToPar(r.toPar)}</span>
                                     )}
+                                    {h === 9 && <span className="cp-round-9"> 9b</span>}
                                   </span>
-                                )}
+                                ) : (r.gross != null && <span className="cp-round-nc">s/ cartão</span>)}
                               </span>
                             );
                           })}
@@ -694,7 +807,9 @@ export default function CamposPage() {
   const [originFilter, setOriginFilter] = useState<OriginFilter>("ALL");
   const [countryFilter, setCountryFilter] = useState<string>("ALL");
   const [selectedKey, setSelectedKey] = useState<string | null>(urlCourseKey ?? null);
-  const [detailView, setDetailView] = useState<"scorecard" | "ratings" | "manuel">("scorecard");
+  const [detailView, setDetailView] = useState<"scorecard" | "manuel">("scorecard");
+  /* Tee seleccionado para comparação de distâncias na tabela (Campos) */
+  const [selTeeKey, setSelTeeKey] = useState<string | null>(null);
     const isMobileInit = typeof window !== "undefined" && window.innerWidth <= 768;
   const md = useMasterDetail(!(isMobileInit && urlCourseKey));
   /* Sync URL param → selectedKey */
@@ -839,23 +954,22 @@ export default function CamposPage() {
   const heroStats = useMemo(() => {
     if (!selected) return null;
     const tees = selected.master.tees;
+    // Tees FÍSICOS distintos: o mesmo tee (cor + distância) aparece como
+    // entradas separadas para M e F (CR/Slope diferentes). Contar só uma vez.
+    const physKey = (t: Tee) => `${teeGroupHex(t.teeName, t.scorecardMeta?.teeColor)}|${Math.round(t.distances?.total ?? 0)}`;
+    const nTees = new Set(tees.map(physKey)).size;
     // Tee de referência: o mais longo com 18 buracos (ou o mais longo)
     const ref = [...tees]
       .filter((t) => (t.ratings?.holes18?.courseRating ?? 0) > 0)
       .sort((a, b) => (b.distances?.total ?? 0) - (a.distances?.total ?? 0))[0]
       ?? [...tees].sort((a, b) => (b.distances?.total ?? 0) - (a.distances?.total ?? 0))[0];
-    const dists = tees.map((t) => t.distances?.total ?? 0).filter((d) => d > 0);
-    const minD = dists.length ? Math.min(...dists) : null;
-    const maxD = dists.length ? Math.max(...dists) : null;
     const par = ref?.ratings?.holes18?.par ?? null;
-    const cr = ref?.ratings?.holes18?.courseRating ?? null;
-    const slope = ref?.ratings?.holes18?.slopeRating ?? null;
     const nPlayers = selected.master._players ? Object.keys(selected.master._players).length : 0;
-    return { par, cr, slope, minD, maxD, nTees: tees.length, nPlayers, refName: ref?.teeName ?? null };
+    return { par, nTees, nPlayers };
   }, [selected]);
 
   /* Stats globais */
-  const totalTees = useMemo(() => courses.reduce((n, c) => n + c.master.tees.length, 0), [courses]);
+  const totalTees = useMemo(() => courses.reduce((n, c) => n + new Set(c.master.tees.map(physicalTeeKey)).size, 0), [courses]);
   const intlCount = useMemo(() => courses.filter(c => c.courseKey.startsWith("away-")).length, [courses]);
 
   return (
@@ -924,7 +1038,7 @@ export default function CamposPage() {
         <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
           {filtered.map((c) => {
             const active = selected?.courseKey === c.courseKey;
-            const tees = filterTees(c.master.tees, sexFilter);
+            const nTees = new Set(filterTees(c.master.tees, sexFilter).map(physicalTeeKey)).size;
             const flag = resolveFlag(c);
             return (
               <a
@@ -939,7 +1053,7 @@ export default function CamposPage() {
                   {c.courseKey.startsWith("away-") && <PillBadge pill="INTL" />}
                 </div>
                 <div className="course-item-meta">
-                  {tees.length} tee{tees.length !== 1 ? "s" : ""}
+                  {nTees} tee{nTees !== 1 ? "s" : ""}
                 </div>
               </a>
             );
@@ -995,12 +1109,6 @@ export default function CamposPage() {
                     Scorecard
                   </button>
                   <button
-                    className={`tourn-tab tourn-tab-sm ${detailView === "ratings" ? "active" : ""}`}
-                    onClick={() => setDetailView("ratings")}
-                  >
-                    Ratings
-                  </button>
-                  <button
                     className={`tourn-tab tourn-tab-sm ${detailView === "manuel" ? "active" : ""}`}
                     onClick={() => setDetailView("manuel")}
                     title="Média por buraco do Manuel neste campo"
@@ -1032,46 +1140,17 @@ export default function CamposPage() {
                 </div>
               )}
 
-              {/* Tee badges resumo (não na vista "Como jogou") */}
-              {detailView !== "manuel" && (
-                <div className="tee-badges-row">
-                  {selectedTees.map((t, idx) => {
-                    const cr = t.ratings?.holes18?.courseRating;
-                    const sl = t.ratings?.holes18?.slopeRating;
-                    const dist = t.distances?.total ?? null;
-                    return (
-                      <span
-                        key={`${t.teeId}-${idx}`}
-                        className="tee-badge-card"
-                        style={{ flexDirection: "row", alignItems: "center", gap: 10, padding: "8px 12px" }}
-                      >
-                        <TeeBadge
-                          label={titleCase(t.teeName)}
-                          colorHex={teeHexFromTee(t)}
-                          suffix={t.sex !== "U" ? t.sex : null}
-                        />
-                        <span style={{ fontSize: 15, fontWeight: 700, color: "var(--text-1)", whiteSpace: "nowrap" }}>
-                          {dist != null && dist > 0 ? `${fmt(dist)} m` : "– m"}
-                        </span>
-                        {cr != null && sl != null && (
-                          <span className="muted fs-12" style={{ whiteSpace: "nowrap" }}>
-                            CR {fmtCR(cr)} · Slope {sl}
-                          </span>
-                        )}
-                      </span>
-                    );
-                  })}
-                  {selectedTees.length === 0 && (
-                    <span className="muted">Sem tees para este filtro</span>
-                  )}
-                </div>
-              )}
-
               {/* Vista */}
               {detailView === "scorecard" ? (
-                <ScorecardGrid tees={selectedTees} />
-              ) : detailView === "ratings" ? (
-                <RatingsTable tees={selectedTees} />
+                <>
+                  <TeeBars
+                    tees={selectedTees}
+                    selectedGroupKey={selTeeKey}
+                    onSelectGroup={(key) => setSelTeeKey((prev) => (prev === key ? null : key))}
+                  />
+                  <ScorecardGrid tees={selectedTees} selKey={selTeeKey} />
+                  <CourseNineRatings tees={selectedTees} />
+                </>
               ) : (
                 <CourseHoleAverages course={selected} />
               )}

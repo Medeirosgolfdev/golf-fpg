@@ -7,7 +7,6 @@ import EmptyState from "../ui/EmptyState";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import type { Tee, Hole, SexFilter } from "../data/types";
 import { useAppContext } from "../context/AppContext";
-import TeeBadge from "../ui/TeeBadge";
 import { textOnColor } from "../utils/teeColors";
 import { sortTees, filterTees, teeHexFromTee as teeHex } from "../utils/teeUtils";
 import { fmt, fmtCR, fmtSD, norm, titleCase } from "../utils/format";
@@ -19,6 +18,7 @@ import { getNextCalendarEvent } from "../utils/calendarData";
 import { isTournamentCourse } from "../constants/tournamentCourses";
 import ExtLink from "../ui/ExternalLink";
 import { RoundSimulator } from "../ui/RoundSimulator";
+import TeeBars from "../ui/TeeBars";
 import { loadPlayerData } from "../data/playerDataLoader";
 import type { PlayerPageData, RoundData } from "../data/playerDataLoader";
 import { MANUEL_FED } from "../constants/manuel";
@@ -1301,6 +1301,7 @@ export default function SimuladorPage() {
     return availableTees[0];
   }, [availableTees, selectedTeeIdx]);
 
+
   /* Dados do tee para cálculos (18h ou 9h) — campo selecionado OU manual */
   const teeData = useMemo(() => {
     if (isManual) {
@@ -1575,43 +1576,18 @@ export default function SimuladorPage() {
                 sub={<><span className="muted">{selected.courseKey}</span>{is9h && <span className="muted"> · {holesLabel}</span>}</>}
               />
 
-              {/* Seletor de Tee */}
-              <div className="sim-tee-selector">
-                {availableTees.map((t, idx) => {
-                  const isActive = (selectedTeeIdx !== null ? idx === selectedTeeIdx : idx === 0);
-                  let crDisp: number | undefined, slDisp: number | undefined;
-                  let distDisp: number | null = null;
-                  if (is9h) {
-                    const r9 = get9hRatings(t, holesMode as "front9" | "back9");
-                    crDisp = r9?.cr;
-                    slDisp = r9?.slope;
-                    distDisp = (holesMode === "front9" ? t.distances?.front9 : t.distances?.back9) ?? null;
-                  } else {
-                    crDisp = t.ratings?.holes18?.courseRating ?? undefined;
-                    slDisp = t.ratings?.holes18?.slopeRating ?? undefined;
-                    distDisp = t.distances?.total ?? null;
-                  }
-                  return (
-                    <button
-                      key={`${t.teeId}-${idx}`}
-                      className={`sim-tee-btn ${isActive ? "sim-tee-active" : ""}`}
-                      onClick={() => setSelectedTeeIdx(idx)}
-                    >
-                      <TeeBadge
-                        label={titleCase(t.teeName)}
-                        colorHex={teeHex(t)}
-                        suffix={t.sex !== "U" ? t.sex : null}
-                      />
-                      <span className="toolbar-meta">
-                        CR {fmtCR(crDisp)} · Sl {slDisp}{distDisp != null ? ` · ${fmt(distDisp)}m` : ""}
-                      </span>
-                    </button>
-                  );
-                })}
-                {availableTees.length === 0 && (
-                  <span className="muted">Sem tees com ratings para este filtro</span>
-                )}
-              </div>
+              {/* Seletor de Tee — barras partilhadas (M/F por tee, clicável) */}
+              <TeeBars
+                tees={availableTees}
+                selectedTeeId={selectedTee?.teeId ?? null}
+                onSelectTee={(tee) => {
+                  const idx = availableTees.findIndex((t) => t.teeId === tee.teeId);
+                  if (idx >= 0) setSelectedTeeIdx(idx);
+                }}
+              />
+              {availableTees.length === 0 && (
+                <span className="muted">Sem tees com ratings para este filtro</span>
+              )}
 
               {/* HCP strip + ratings */}
               <HcpStrip hi={hi} courseHcp={courseHcp} playingHcp={playingHcp} allowance={allowance}
