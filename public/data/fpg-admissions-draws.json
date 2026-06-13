@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-06-12T21:25:38.249Z",
-  "total": 477,
+  "scrapedAt": "2026-06-13T21:03:34.586Z",
+  "total": 484,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -110225,6 +110225,1288 @@
                   "nome": "Francisca Ribeiro Fragoso",
                   "fed": null,
                   "clube": "Vilamoura, C. G"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "007",
+      "tcode": "11034",
+      "name": "Torneio Diário de Notícias da Madeira 2026",
+      "date": "2026-06-12",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "000",
+      "tcode": "10912",
+      "name": "Campeonato Nacional de Clubes Mid-Amateur  BPI",
+      "date": "2026-06-13",
+      "expectedYear": "2026",
+      "admissions": {
+        "name": "Campeonato Nacional de Clubes Mid-Amateur  BPI",
+        "date": "2026-06-13",
+        "totalInscritos": 108,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "tcode": "10912",
+        "ccode": "000",
+        "players": [],
+        "_warning": "counts mismatch: header=108+0, parsed=0+0"
+      },
+      "draws": {
+        "1": {
+          "name": "Campeonato Nacional de Clubes Mid-Amateur  BPI",
+          "date": "2026-06-13",
+          "totalJogadores": 90,
+          "groups": [
+            {
+              "teeTime": "08:30",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "José Luis Cabral",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "Rui Mário M. de Meireles",
+                  "fed": null,
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Carlos Costa",
+                  "fed": null,
+                  "clube": "JuveGolfe"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:30",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Gonçalo Xavier",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Luís Filipe Pinheiro",
+                  "fed": null,
+                  "clube": "ACP Golfe"
+                },
+                {
+                  "nome": "Manuel Alexandre Couto Violas",
+                  "fed": null,
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:40",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Filipe Salazar L.t. Sousa",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "Luis Alberto Martins",
+                  "fed": null,
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Rui Paulo Pereira",
+                  "fed": null,
+                  "clube": "JuveGolfe"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:40",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "David Vieira Perrolas",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Miguel Lourenço",
+                  "fed": null,
+                  "clube": "ACP Golfe"
+                },
+                {
+                  "nome": "Maxence de Craecker",
+                  "fed": null,
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:50",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Dave Aarons",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "José Carlos Sousa",
+                  "fed": null,
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Bruno Neto",
+                  "fed": null,
+                  "clube": "JuveGolfe"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:50",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Matthew Smith",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Tiago Figueiredo",
+                  "fed": null,
+                  "clube": "ACP Golfe"
+                },
+                {
+                  "nome": "Gonçalo Mata",
+                  "fed": null,
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Diogo Roriz",
+                  "fed": null,
+                  "clube": "Atlantico"
+                },
+                {
+                  "nome": "Christophe Becker",
+                  "fed": null,
+                  "clube": "Aroeira"
+                },
+                {
+                  "nome": "Domingos N. Roque de Pinho",
+                  "fed": null,
+                  "clube": "Estoril"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "José Henrique F. Cardoso",
+                  "fed": null,
+                  "clube": "Ilha Terceira"
+                },
+                {
+                  "nome": "António Onofre Soares",
+                  "fed": null,
+                  "clube": "Verdegolf"
+                },
+                {
+                  "nome": "Leonel Neto",
+                  "fed": null,
+                  "clube": "Barmen"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:10",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Joaquim Policarpo Gonçalves",
+                  "fed": null,
+                  "clube": "Atlantico"
+                },
+                {
+                  "nome": "Marcelo Guedes",
+                  "fed": null,
+                  "clube": "Aroeira"
+                },
+                {
+                  "nome": "Bernardo Frere",
+                  "fed": null,
+                  "clube": "Estoril"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:10",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "José Carlos Vitória",
+                  "fed": null,
+                  "clube": "Ilha Terceira"
+                },
+                {
+                  "nome": "Antonio Alves",
+                  "fed": null,
+                  "clube": "Verdegolf"
+                },
+                {
+                  "nome": "João Baptista Vieira",
+                  "fed": null,
+                  "clube": "Barmen"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:20",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "José Pedro Patacão",
+                  "fed": null,
+                  "clube": "Atlantico"
+                },
+                {
+                  "nome": "Bruno Rosendo",
+                  "fed": null,
+                  "clube": "Aroeira"
+                },
+                {
+                  "nome": "Diogo Soares Franco",
+                  "fed": null,
+                  "clube": "Estoril"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:20",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Adelino Manuel Nunes Andrade",
+                  "fed": null,
+                  "clube": "Ilha Terceira"
+                },
+                {
+                  "nome": "Roberto Rico",
+                  "fed": null,
+                  "clube": "Verdegolf"
+                },
+                {
+                  "nome": "Abílio Gonçalves",
+                  "fed": null,
+                  "clube": "Barmen"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:30",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Gonçalo Costa",
+                  "fed": null,
+                  "clube": "Vale de Janelas"
+                },
+                {
+                  "nome": "Vitor Nóbrega",
+                  "fed": null,
+                  "clube": "Xira Golfe"
+                },
+                {
+                  "nome": "Brandon Hobley",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:30",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Jeffrey Valade",
+                  "fed": null,
+                  "clube": "Vale de Janelas"
+                },
+                {
+                  "nome": "Valter Carvalho",
+                  "fed": null,
+                  "clube": "Xira Golfe"
+                },
+                {
+                  "nome": "Pedro Araújo",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:40",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Patrick Maccann",
+                  "fed": null,
+                  "clube": "Vale de Janelas"
+                },
+                {
+                  "nome": "António Gravelho",
+                  "fed": null,
+                  "clube": "Xira Golfe"
+                },
+                {
+                  "nome": "Miguel Tavares",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:40",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Johan Kilger",
+                  "fed": null,
+                  "clube": "Vale de Janelas"
+                },
+                {
+                  "nome": "Rodrigo da Fonseca",
+                  "fed": null,
+                  "clube": "Xira Golfe"
+                },
+                {
+                  "nome": "Lara Vieira",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:50",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "John Williams",
+                  "fed": null,
+                  "clube": "Vale de Janelas"
+                },
+                {
+                  "nome": "Carlos Costa e Silva",
+                  "fed": null,
+                  "clube": "Xira Golfe"
+                },
+                {
+                  "nome": "João Goes",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:50",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Gonçalo Mota Carmo",
+                  "fed": null,
+                  "clube": "Vale de Janelas"
+                },
+                {
+                  "nome": "Afonso Almeida",
+                  "fed": null,
+                  "clube": "Xira Golfe"
+                },
+                {
+                  "nome": "Alexandre Henriques",
+                  "fed": null,
+                  "clube": "Santo da Serra"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:00",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Paulo J. B. Barcelos",
+                  "fed": null,
+                  "clube": "Ilha Terceira"
+                },
+                {
+                  "nome": "Pedro Valério",
+                  "fed": null,
+                  "clube": "Verdegolf"
+                },
+                {
+                  "nome": "Joao Roquete",
+                  "fed": null,
+                  "clube": "Barmen"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:00",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Bernardo Roriz",
+                  "fed": null,
+                  "clube": "Atlantico"
+                },
+                {
+                  "nome": "Tiago Costa",
+                  "fed": null,
+                  "clube": "Aroeira"
+                },
+                {
+                  "nome": "Sofia M. de Paiva",
+                  "fed": null,
+                  "clube": "Estoril"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:10",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Dario A. F. Andrade",
+                  "fed": null,
+                  "clube": "Ilha Terceira"
+                },
+                {
+                  "nome": "Paulo Teixeira Silva",
+                  "fed": null,
+                  "clube": "Verdegolf"
+                },
+                {
+                  "nome": "Craig Blakemore",
+                  "fed": null,
+                  "clube": "Barmen"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:10",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Pedro Sampaio Sa Lima",
+                  "fed": null,
+                  "clube": "Atlantico"
+                },
+                {
+                  "nome": "Sérgio Pereira",
+                  "fed": null,
+                  "clube": "Aroeira"
+                },
+                {
+                  "nome": "Dhruba Thapa",
+                  "fed": null,
+                  "clube": "Estoril"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:20",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Hildeberto M. V. Rocha",
+                  "fed": null,
+                  "clube": "Ilha Terceira"
+                },
+                {
+                  "nome": "Alberto Mendonça Machado",
+                  "fed": null,
+                  "clube": "Verdegolf"
+                },
+                {
+                  "nome": "Rui Palácios da Silva",
+                  "fed": null,
+                  "clube": "Barmen"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:20",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Pedro Castro",
+                  "fed": null,
+                  "clube": "Atlantico"
+                },
+                {
+                  "nome": "Joao Henrique Almeida",
+                  "fed": null,
+                  "clube": "Aroeira"
+                },
+                {
+                  "nome": "Manuel Agrellos Jr.",
+                  "fed": null,
+                  "clube": "Estoril"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:30",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Tiago Machado Mendes",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Fernando Furtado Coelho",
+                  "fed": null,
+                  "clube": "ACP Golfe"
+                },
+                {
+                  "nome": "Martim Andresen Guedes",
+                  "fed": null,
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:30",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "André Nunes",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "Albino Mendes Timoteo",
+                  "fed": null,
+                  "clube": "JuveGolfe"
+                },
+                {
+                  "nome": "Madalena Costa Macedo",
+                  "fed": null,
+                  "clube": "Belas"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:40",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Fernando Jorge Vaz",
+                  "fed": null,
+                  "clube": "ACP Golfe"
+                },
+                {
+                  "nome": "Paulo Castelo",
+                  "fed": null,
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Patrícia Nunes Pedro",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:40",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Daniel Envall",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "Benjamin Robertson",
+                  "fed": null,
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "António Manuel Caro",
+                  "fed": null,
+                  "clube": "JuveGolfe"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:50",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Andre Nunes Pedro",
+                  "fed": null,
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "André Resende",
+                  "fed": null,
+                  "clube": "ACP Golfe"
+                },
+                {
+                  "nome": "César Manuel Pinho Campos",
+                  "fed": null,
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:50",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "André Holtreman Roquette",
+                  "fed": null,
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "João Alexandre",
+                  "fed": null,
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Joaquim Simas",
+                  "fed": null,
+                  "clube": "JuveGolfe"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "name": "Campeonato Nacional de Clubes Mid-Amateur  BPI - H",
+          "date": "2026-06-14",
+          "totalJogadores": 45,
+          "groups": [
+            {
+              "teeTime": "08:30",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "D.Perrolas/T.Mendes",
+                  "fed": null,
+                  "clube": "Lisbon"
+                },
+                {
+                  "nome": "J.Goes/L.Vieira",
+                  "fed": null,
+                  "clube": "Santo Serra"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:30",
+              "startHole": 10,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "P.Maccann/J.Williams",
+                  "fed": null,
+                  "clube": "Vale de Janelas"
+                },
+                {
+                  "nome": "M.Lourenço/L.Pinheiro",
+                  "fed": null,
+                  "clube": "ACP Golfe"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:39",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "M.Smith/P.Nunes Pedro",
+                  "fed": null,
+                  "clube": "Lisbon"
+                },
+                {
+                  "nome": "P.Araújo/B.Hobley",
+                  "fed": null,
+                  "clube": "Santo Serra"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:39",
+              "startHole": 10,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "J.Valade/J.Kilger",
+                  "fed": null,
+                  "clube": "Vale de Janelas"
+                },
+                {
+                  "nome": "T.Figueiredo/F.Vaz",
+                  "fed": null,
+                  "clube": "ACP Golfe"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:48",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "A.Nunes Pedro/B.Nunes Pedro Jr.",
+                  "fed": null,
+                  "clube": "Lisbon"
+                },
+                {
+                  "nome": "A.Henriques/M.Tavares",
+                  "fed": null,
+                  "clube": "Santo Serra"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:48",
+              "startHole": 10,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "G.Costa/G.Carmo",
+                  "fed": null,
+                  "clube": "Vale de Janelas"
+                },
+                {
+                  "nome": "F.Furtado Coelho/A.Resende",
+                  "fed": null,
+                  "clube": "ACP Golfe"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:57",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "J.Sousa/R.Meireles",
+                  "fed": null,
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "A.Nunes/D.Envall",
+                  "fed": null,
+                  "clube": "Q. Peru"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:57",
+              "startHole": 10,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "A.Gonçalves/C.Blakemore",
+                  "fed": null,
+                  "clube": "Barmen"
+                },
+                {
+                  "nome": "P.Barcelos/J.Vitória",
+                  "fed": null,
+                  "clube": "Ilha Terceira"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:06",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "B.Robertson/L.Martins",
+                  "fed": null,
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "D.Aarons/A.Roquette",
+                  "fed": null,
+                  "clube": "Q. Peru"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:06",
+              "startHole": 10,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "L.Neto/R.Silva",
+                  "fed": null,
+                  "clube": "Barmen"
+                },
+                {
+                  "nome": "D.Andrade/J.Cardoso",
+                  "fed": null,
+                  "clube": "Ilha Terceira"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:15",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "A.Benvegnu/M.Costa Macedo",
+                  "fed": null,
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "F.L.t. Sousa/J.Cabral",
+                  "fed": null,
+                  "clube": "Q. Peru"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:15",
+              "startHole": 10,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "J.Roquete/J.Vieira",
+                  "fed": null,
+                  "clube": "Barmen"
+                },
+                {
+                  "nome": "H.Rocha/A.Andrade",
+                  "fed": null,
+                  "clube": "Ilha Terceira"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:24",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "M.Violas/C.Campos",
+                  "fed": null,
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "J.Gonçalves/B.Roriz",
+                  "fed": null,
+                  "clube": "Atlantico"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:24",
+              "startHole": 10,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "C.Costa/R.Pereira",
+                  "fed": null,
+                  "clube": "Juvegolfe"
+                },
+                {
+                  "nome": "V.Nóbrega/C.Costa e Silva",
+                  "fed": null,
+                  "clube": "Xira Golfe"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:33",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "M.de Craecker/M.Guedes",
+                  "fed": null,
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "J.Patacão/P.Castro",
+                  "fed": null,
+                  "clube": "Atlantico"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:33",
+              "startHole": 10,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "A.Timoteo/B.Neto",
+                  "fed": null,
+                  "clube": "Juvegolfe"
+                },
+                {
+                  "nome": "P.Valério/A.Alves",
+                  "fed": null,
+                  "clube": "Verdegolf"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:42",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "G.Mata/P.Castelo",
+                  "fed": null,
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "P.Sa Lima/D.Roriz",
+                  "fed": null,
+                  "clube": "Atlantico"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:42",
+              "startHole": 10,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "R.Fonseca/A.Almeida",
+                  "fed": null,
+                  "clube": "Xira Golfe"
+                },
+                {
+                  "nome": "A.Machado/P.Silva",
+                  "fed": null,
+                  "clube": "Verdegolf"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:51",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "J.Almeida/C.Becker",
+                  "fed": null,
+                  "clube": "Aroeira"
+                },
+                {
+                  "nome": "B.Frere/D.Pinho",
+                  "fed": null,
+                  "clube": "Estoril"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:51",
+              "startHole": 10,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "A.Caro/J.Simas",
+                  "fed": null,
+                  "clube": "Juvegolfe"
+                },
+                {
+                  "nome": "A.Gravelho/V.Carvalho",
+                  "fed": null,
+                  "clube": "Xira Golfe"
+                },
+                {
+                  "nome": "A.Soares/R.Rico",
+                  "fed": null,
+                  "clube": "Verdegolf"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:00",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "S.Pereira/M.Guedes",
+                  "fed": null,
+                  "clube": "Aroeira"
+                },
+                {
+                  "nome": "D.Franco/D.Thapa",
+                  "fed": null,
+                  "clube": "Estoril"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:09",
+              "startHole": 1,
+              "tee": null,
+              "players": [
+                {
+                  "nome": "T.Costa/B.Rosendo",
+                  "fed": null,
+                  "clube": "Aroeira"
+                },
+                {
+                  "nome": "M.Agrellos Jr./S.Paiva",
+                  "fed": null,
+                  "clube": "Estoril"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "983",
+      "tcode": "10178",
+      "name": "6º Torneio Drive Challenge Açores–Terceira-Sub 18",
+      "date": "2026-06-13",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": "6º Torneio Drive Challenge Açores–Terceira-Sub 18",
+          "date": "2026-06-13",
+          "totalJogadores": 4,
+          "groups": [
+            {
+              "teeTime": "10:00",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Tomás Valadão",
+                  "fed": null,
+                  "clube": "Ilha Terceira"
+                },
+                {
+                  "nome": "Madalena Alexandra Van Zeller",
+                  "fed": null,
+                  "clube": "Ilha Terceira"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:10",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "João Lucas Fagundes",
+                  "fed": null,
+                  "clube": "Ilha Terceira"
+                },
+                {
+                  "nome": "Neandro Oliveira",
+                  "fed": null,
+                  "clube": "Verdegolf"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "983",
+      "tcode": "10177",
+      "name": "6º Torneio Drive Challenge Açores–Terceira-Sub 16",
+      "date": "2026-06-13",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": "6º Torneio Drive Challenge Açores–Terceira-Sub 16",
+          "date": "2026-06-13",
+          "totalJogadores": 1,
+          "groups": [
+            {
+              "teeTime": "10:20",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Martim Duarte",
+                  "fed": null,
+                  "clube": "Ilha Terceira"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "983",
+      "tcode": "10176",
+      "name": "6º Torneio Drive Challenge Açores–Terceira-Sub 14",
+      "date": "2026-06-13",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": "6º Torneio Drive Challenge Açores–Terceira-Sub 14",
+          "date": "2026-06-13",
+          "totalJogadores": 3,
+          "groups": [
+            {
+              "teeTime": "10:20",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Guilherme Matos",
+                  "fed": null,
+                  "clube": "Verdegolf"
+                },
+                {
+                  "nome": "Isabel Melo",
+                  "fed": null,
+                  "clube": "Verdegolf"
+                },
+                {
+                  "nome": "Clara Almeida",
+                  "fed": null,
+                  "clube": "Verdegolf"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "983",
+      "tcode": "10175",
+      "name": "6º Torneio Drive Challenge Açores–Terceira-Sub 12",
+      "date": "2026-06-13",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": "6º Torneio Drive Challenge Açores–Terceira-Sub 12",
+          "date": "2026-06-13",
+          "totalJogadores": 1,
+          "groups": [
+            {
+              "teeTime": "10:30",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Miguel Nunes",
+                  "fed": null,
+                  "clube": "Ilha Terceira"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "983",
+      "tcode": "10174",
+      "name": "6º Torneio Drive Challenge Açores–Terceira-Sub 10",
+      "date": "2026-06-13",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": "6º Torneio Drive Challenge Açores–Terceira-Sub 10",
+          "date": "2026-06-13",
+          "totalJogadores": 2,
+          "groups": [
+            {
+              "teeTime": "10:30",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Vicente Henrique Rocha",
+                  "fed": null,
+                  "clube": "Ilha Terceira"
+                },
+                {
+                  "nome": "Miguel Freitas",
+                  "fed": null,
+                  "clube": "Ilha Terceira"
                 }
               ]
             }
