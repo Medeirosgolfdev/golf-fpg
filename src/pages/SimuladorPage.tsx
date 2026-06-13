@@ -15,6 +15,7 @@ import { SC } from "../utils/scoreDisplay";
 import OverlayExport from "../ui/OverlayExport";
 import type { OverlayData } from "../ui/OverlayExport";
 import { getNextCalendarEvent } from "../utils/calendarData";
+import { isTournamentCourse } from "../constants/tournamentCourses";
 import ExtLink from "../ui/ExternalLink";
 
 
@@ -1121,12 +1122,12 @@ export default function SimuladorPage() {
 
   const is9h = holesMode === "front9" || holesMode === "back9";
 
-  /* Filtrar campos */
+  /* Filtrar campos — excluir entradas que são torneios/organizações (não campos) */
   const filtered = useMemo(() => {
     const qq = norm(q);
-    let list = courses;
+    let list = courses.filter((c) => !isTournamentCourse(c.courseKey));
     if (qq) {
-      list = courses.filter((c) => {
+      list = list.filter((c) => {
         const name = norm(c.master.name);
         const key = norm(c.courseKey);
         return name.includes(qq) || key.includes(qq);

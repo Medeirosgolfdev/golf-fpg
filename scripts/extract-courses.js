@@ -438,8 +438,14 @@ if (fs.existsSync(outputRoot)) {
 
       for (const entry of entries) {
         for (const r of (entry.rounds || [])) {
-          // Apenas rounds internacionais
-          if (r.scoreOrigin !== "Intern" && r.scoreOrigin !== "Extra") continue;
+          // NÃO filtrar por scoreOrigin: o campo já foi confirmado como
+          // internacional (campos PT são excluídos por shouldExclude mais
+          // abaixo), por isso QUALQUER ronda aqui é de um jogador que jogou
+          // este campo. O filtro antigo (só "Intern"/"Extra") deixava de fora
+          // a maioria das rondas internacionais — torneios no estrangeiro vêm
+          // marcados "Torn", muitas outras com origem vazia — e fazia com que
+          // dezenas de campos aparecessem sem jogadores. ("Extra" nem existe
+          // nos dados.) Corrigido 2026-06-13.
 
           const courseName = (r.course || entry.course || "").trim();
           if (!courseName) continue;
@@ -487,6 +493,29 @@ function sumHoles(holes, start, end, field) {
 const courses = [];
 let coursesWithPlayers = 0;
 
+/* ── Modo acumulativo ──────────────────────────────────────────────────
+ * Lê o away-courses.json ANTERIOR (se existir) para não perder informação
+ * curada/derivada que esta corrida não conseguiu reconstruir — sobretudo o
+ * `country`, que depende de fontes (melhorias.json) que nem sempre cobrem
+ * todos os campos. A regra é conservadora: o valor NOVO ganha sempre; só se
+ * herda o antigo quando o novo está em falta. Match por courseKey e, em
+ * fallback, por nome normalizado (cobre courseKeys que mudaram de spelling).
+ */
+const prevCountryByKey  = {};
+const prevCountryByName = {};
+if (fs.existsSync(outPath)) {
+  try {
+    const prev = readJSON(outPath);
+    for (const c of (prev.courses || [])) {
+      const co = c.master && c.master.country;
+      if (!co) continue;
+      prevCountryByKey[c.courseKey] = co;
+      prevCountryByName[norm(c.master.name)] = co;
+    }
+    console.log(`  Acumulativo: ${Object.keys(prevCountryByKey).length} países preservados do ficheiro anterior`);
+  } catch { /* ignorar — sem ficheiro anterior válido */ }
+}
+
 for (const [courseKey, { name, country, tees }] of courseMap) {
   const teeArr = [];
   let idx = 0;
@@ -528,12 +557,15 @@ for (const [courseKey, { name, country, tees }] of courseMap) {
   const _players = pm && pm.size > 0 ? Object.fromEntries(pm) : undefined;
   if (_players) coursesWithPlayers++;
 
+  // País: novo > courseKey anterior > nome anterior (modo acumulativo)
+  const finalCountry = country || prevCountryByKey[courseKey] || prevCountryByName[norm(name)] || "";
+
   courses.push({
     courseKey,
     master: {
       courseId: courseKey,
       name,
-      ...(country  ? { country }  : {}),
+      ...(finalCountry ? { country: finalCountry } : {}),
       links: {
         fpg: null,
         scorecards: null,

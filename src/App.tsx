@@ -10,6 +10,7 @@ import { deepFixMojibake } from "./utils/fixEncoding";
 import { isCalUnlocked, CAL_UNLOCK_EVENT } from "./utils/authConstants";
 import { norm } from "./utils/format";
 import { MANUEL_FED } from "./constants/manuel";
+import { isTournamentCourse } from "./constants/tournamentCourses";
 import type { MelhoriasJson } from "./data/melhoriasTypes";
 import { AppContext } from "./context/AppContext";
 import NavBar from "./ui/NavBar";
@@ -102,7 +103,7 @@ export default function App() {
   const playerCount = status.kind === "ready" ? Object.keys(status.players).length : 0;
 
   /* Campos FPG + Away (pipeline + melhorias + manuais) */
-  const simCourses: Course[] = useMemo(() => {
+  const allCourses: Course[] = useMemo(() => {
     if (status.kind !== "ready") return [];
     const fpg = status.data.courses;
     const pipelineAway = status.awayCourses;
@@ -221,6 +222,19 @@ export default function App() {
     return [...finalMap.values()];
   }, [status]);
 
+  /* Torneios/organizações que não são campos reais: ficam FORA de `simCourses`
+     (a lista usada em todo o lado — Simulador, Comparar, Jogadores), e são
+     expostos à parte. A CamposPage volta a juntá-los para os mostrar só sob o
+     separador de origem "Torneios". */
+  const tournamentCourses: Course[] = useMemo(
+    () => allCourses.filter((c) => isTournamentCourse(c.courseKey)),
+    [allCourses]
+  );
+  const simCourses: Course[] = useMemo(
+    () => allCourses.filter((c) => !isTournamentCourse(c.courseKey)),
+    [allCourses]
+  );
+
   /* Valor do contexto — só fornecido quando os dados estão prontos.
      MEMOIZADO: sem useMemo, ctxValue era um novo objecto a cada render do
      App, fazendo qualquer useEffect com `players`/`simCourses`/`melhorias`
@@ -230,6 +244,7 @@ export default function App() {
       masterData: status.data,
       players: status.players,
       simCourses,
+      tournamentCourses,
       melhorias: status.melhorias,
       stats: {
         courses: status.data.meta.stats.courses,
@@ -238,7 +253,7 @@ export default function App() {
       },
       calUnlocked,
     } : null,
-    [status, simCourses, playerCount, calUnlocked]
+    [status, simCourses, tournamentCourses, playerCount, calUnlocked]
   );
 
   return (

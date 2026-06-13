@@ -25,8 +25,12 @@ export interface AppContextValue {
   masterData: MasterData;
   /** Base de dados de jogadores (players.json) */
   players: PlayersDb;
-  /** Todos os campos disponíveis: FPG + away + extra (com dedup por courseKey) */
+  /** Campos reais: FPG + away + extra (com dedup por courseKey), SEM torneios.
+      Esta é a lista usada em todo o lado (Simulador, Comparar, Jogadores). */
   simCourses: Course[];
+  /** Entradas que são nomes de torneio/organização (não campos). Usadas só na
+      CamposPage sob o separador de origem "Torneios". */
+  tournamentCourses: Course[];
   /** Dados de melhorias dos jogadores */
   melhorias: MelhoriasJson;
   /** Estatísticas de topo (campos, tees, jogadores) */

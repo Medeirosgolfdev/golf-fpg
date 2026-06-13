@@ -17,6 +17,7 @@ import ExtLink from "../ui/ExternalLink";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "../ui/SortableHdr";
 import { cachedFetchJson } from "../data/fetchCache";
+import { isTournamentCourse } from "../constants/tournamentCourses";
 
 /* Mapa fed-code → nome para jogadores que não estão em players.json.
    Gerado por scripts/build-course-player-names.js a partir de federados.json.
@@ -43,7 +44,7 @@ function loadCoursePlayerNames(): Promise<Record<string, string>> {
 
 
 
-type OriginFilter = "ALL" | "PT" | "INTL";
+type OriginFilter = "ALL" | "PT" | "INTL" | "TOURN";
 
 /* ——— Helpers ——— */
 
@@ -360,7 +361,13 @@ function CoursePlayersSection({ course, onSelectPlayer }: { course: Course; onSe
 }
 
 export default function CamposPage() {
-  const { simCourses: courses, players } = useAppContext();
+  const { simCourses, tournamentCourses, players } = useAppContext();
+  // Base = campos reais + torneios. O filtro de origem decide o que mostrar:
+  // por defeito (ALL/PT/INTL) os torneios ficam escondidos; só aparecem em "Torneios".
+  const courses = useMemo(
+    () => [...simCourses, ...tournamentCourses],
+    [simCourses, tournamentCourses]
+  );
   const { courseKey: urlCourseKey } = useParams<{ courseKey?: string }>();
   const navigate = useNavigate();
   const [q, setQ] = useState("");
@@ -449,7 +456,13 @@ export default function CamposPage() {
     if (originFilter === "PT") {
       list = list.filter((c) => !c.courseKey.startsWith("away-"));
     } else if (originFilter === "INTL") {
-      list = list.filter((c) => c.courseKey.startsWith("away-"));
+      // Internacional = campos away que NÃO são torneios/organizações
+      list = list.filter((c) => c.courseKey.startsWith("away-") && !isTournamentCourse(c.courseKey));
+    } else if (originFilter === "TOURN") {
+      list = list.filter((c) => isTournamentCourse(c.courseKey));
+    } else {
+      // ALL: esconde os torneios (só visíveis no separador "Torneios")
+      list = list.filter((c) => !isTournamentCourse(c.courseKey));
     }
     if (countryFilter !== "ALL") {
       list = list.filter((c) => {
@@ -535,8 +548,9 @@ export default function CamposPage() {
           <option value="ALL">Origem</option>
           <option value="PT">{"\ud83c\uddf5\ud83c\uddf9"} Portugal</option>
           <option value="INTL">{"\ud83c\udf0d"} Internacional</option>
+          <option value="TOURN">{"\ud83c\udfc6"} Torneios</option>
         </select>
-        {(originFilter === "INTL" || originFilter === "ALL") && (
+        {(originFilter === "INTL" || originFilter === "ALL" || originFilter === "TOURN") && (
           <select
             className="select"
             value={countryFilter}
