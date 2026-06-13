@@ -92,6 +92,25 @@ const COURSE_NAME_ALIASES: Record<string, string> = {
 
   // Palmares: nome genérico → combo Lagos-Praia (o mais jogado).
   "palmares golf": "Palmares Golf Lagos - Praia",
+
+  // ── Duplicados pipeline (nome cru da ronda) vs extraCourses (nome curado) ──
+  // O nome cru com que a ronda chega (ex: "Golden Palm") é fundido com a
+  // entrada rica do extraCourses ("Trump Doral - Golden Palm"). 2026-06-13.
+  "golden palm": "Trump Doral - Golden Palm",
+  "red tiger": "Trump Doral - Red Tiger",
+  "silver fox": "Trump Doral - Silver Fox",
+  "blue monster": "Trump Doral - Blue Monster",
+  "golf du touquet la foret": "Le Touquet Golf Club - La Forêt",
+  "golf du touquet - la mer": "Golf Du Touquet - La Mer",
+  "golf du touquet la mer": "Golf Du Touquet - La Mer",
+
+  // ── Variantes de nome do MESMO campo (typos / sufixos) ──
+  "toya golf & country wroclaw": "Toya Golf & Country Club Wroclaw",
+  "real club de golf el prat. barcelona": "Real Club de Golf El Prat",
+  "sedgefleld country club - donald ross course": "Sedgefield Country Club",
+  "glen golf course": "Glen Golf Club",
+  "chantilly vineuil new": "Golf de Chantilly Parcours de Vineul",
+  "vierumakki": "vierumaki golf club",
 };
 
 /* ── Resolução por par[] para nomes ambíguos ──────────────────────────── */

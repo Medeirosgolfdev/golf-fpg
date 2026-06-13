@@ -9,6 +9,7 @@ import type { Course, MasterData, PlayersDb } from "./data/types";
 import { deepFixMojibake } from "./utils/fixEncoding";
 import { isCalUnlocked, CAL_UNLOCK_EVENT } from "./utils/authConstants";
 import { norm } from "./utils/format";
+import { canonicalCourseName } from "./utils/courseAliases";
 import { MANUEL_FED } from "./constants/manuel";
 import { isTournamentCourse } from "./constants/tournamentCourses";
 import type { MelhoriasJson } from "./data/melhoriasTypes";
@@ -207,7 +208,10 @@ export default function App() {
     const ordered = [...map.values()].sort((a, b) => b.master.tees.length - a.master.tees.length);
 
     for (const c of ordered) {
-      const nn = norm(c.master.name);
+      // Comparar pelo nome CANÓNICO (resolve aliases tipo "Golden Palm" →
+      // "Trump Doral - Golden Palm"), para fundir entradas do mesmo campo
+      // físico que vêm com nomes diferentes (pipeline vs extraCourses).
+      const nn = norm(canonicalCourseName(c.master.name) || c.master.name);
       const canonical = byName.get(nn);
       if (canonical) {
         // Já existe um campo com este nome — fazer merge
@@ -217,6 +221,35 @@ export default function App() {
         byName.set(nn, c.courseKey);
         finalMap.set(c.courseKey, c);
       }
+    }
+
+    // ── Enriquecimento de SI (stroke index) ───────────────────────────────
+    // O SI é uma propriedade do LAYOUT do campo — igual em todos os tees do
+    // mesmo combo. Alguns tees (curados de PDFs USKids) vêm sem SI mas outros
+    // do mesmo campo têm-no (via scorecards FPG). Copiar o SI dos que têm para
+    // os que não têm (casando por nº de buracos), para o scorecard do campo
+    // ficar tão rico como o do jogador.
+    for (const [key, c] of finalMap) {
+      const tees = c.master.tees;
+      if (tees.length < 2) continue;
+      // SI de referência por nº de buracos
+      const refByN = new Map<number, (number | null)[]>();
+      for (const t of tees) {
+        const n = t.holes?.length ?? 0;
+        if (n && !refByN.has(n) && t.holes!.some(h => h.si != null && h.si > 0)) {
+          refByN.set(n, t.holes!.map(h => h.si ?? null));
+        }
+      }
+      if (refByN.size === 0) continue;
+      let changed = false;
+      const newTees = tees.map(t => {
+        const ref = refByN.get(t.holes?.length ?? 0);
+        if (!ref || !t.holes) return t;
+        if (t.holes.every(h => h.si != null && h.si > 0)) return t;
+        changed = true;
+        return { ...t, holes: t.holes.map((h, i) => (h.si != null && h.si > 0) ? h : { ...h, si: ref[i] ?? h.si }) };
+      });
+      if (changed) finalMap.set(key, { ...c, master: { ...c.master, tees: newTees } });
     }
 
     return [...finalMap.values()];

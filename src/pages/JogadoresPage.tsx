@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import type { Player, SexFilter } from "../data/types";
 import { useAppContext } from "../context/AppContext";
+import { resolvePlayedTee, resolvePlayedSI, isFakeSI } from "../utils/playedDistance";
 import { norm, shortDate, fmtSign, fmtToPar, fpgScoringUrl } from "../utils/format";
 import { getTeeHex, textOnColor, normKey, teeBorder } from "../utils/teeColors";
 import { clubShort, clubLong, hcpDisplay, escCls } from "../utils/playerUtils";
@@ -1523,7 +1524,50 @@ function syntheticFederadoFromPlayer(p: { fed: string } & Player): FederadoRaw {
 }
 
 function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; selected: { fed: string } & Player; onMetaLoaded?: (meta: PlayerPageData["META"]) => void }) {
-  const { data, loading, error } = usePlayerData(fedId);
+  const { data: rawData, loading, error } = usePlayerData(fedId);
+  const { simCourses } = useAppContext();
+  // Ligar dados JOGADOS ao tee do campo quando a ronda não os traz (típico de
+  // torneios internacionais — a FPG tem o score mas não as jardas, e o SI vem
+  // sequencial/falso). Liga ao tee real do campo em simCourses e preenche:
+  //   • meters (distância)   • si (stroke index) no scorecard (data.HOLES)
+  // Clona só o que é afectado. ⚠ `meters` vem às vezes "" ou 0 (não null).
+  const data = useMemo(() => {
+    if (!rawData?.DATA) return rawData;
+    let any = false;
+    let HOLES = rawData.HOLES;
+    let holesCloned = false;
+    const DATA = rawData.DATA.map((c) => {
+      const rounds = c.rounds.map((r) => {
+        const tee = resolvePlayedTee(c.course, r.tee ?? null, simCourses, fedId);
+        let nr = r;
+        // distância
+        if (!r.meters && tee?.distances) {
+          const d = tee.distances;
+          const m = (r.holeCount === 9 && d.holesCount === 18 && d.front9) ? d.front9 : d.total;
+          if (m != null) { nr = { ...nr, meters: m }; any = true; }
+        }
+        // SI no scorecard (data.HOLES[scoreId].si) — só 18 buracos. Usa o SI de
+        // REFERÊNCIA do campo (igual ao da CamposPage), não o do tee específico.
+        const sid = String(r.scoreId);
+        const hd = HOLES?.[sid];
+        if (hd && isFakeSI(hd.si)) {
+          const courseSI = r.holeCount === 18 ? resolvePlayedSI(c.course, simCourses) : null;
+          const real = courseSI && courseSI.length === (hd.si?.length ?? 18) ? courseSI : null;
+          const hasFakeNumbers = (hd.si ?? []).some((v) => v != null && v > 0);
+          // SI sequencial nunca é real → substituir pelo SI do campo, ou OCULTAR
+          // (tudo null) se não houver fonte. Não tocar se já está vazio.
+          if (real || hasFakeNumbers) {
+            if (!holesCloned) { HOLES = { ...rawData.HOLES }; holesCloned = true; }
+            HOLES[sid] = { ...hd, si: real ?? (hd.si ?? []).map(() => null) };
+            any = true;
+          }
+        }
+        return nr;
+      });
+      return { ...c, rounds };
+    });
+    return any ? { ...rawData, DATA, HOLES } : rawData;
+  }, [rawData, simCourses, fedId]);
   const [searchParams, setSearchParams] = useSearchParams();
   // Toggle: ver este jogador como se fosse só um federado (sem análise rica).
   // Persiste no URL via ?view=federado para sobreviver a refresh / share.

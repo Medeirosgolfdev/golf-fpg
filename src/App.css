@@ -2869,6 +2869,20 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
   margin-left: auto;
   white-space: nowrap;
 }
+.course-player-results {
+  margin-left: auto;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 4px 6px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.course-player-result {
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--bg-subtle, rgba(0,0,0,0.05));
+}
 .tee-badge {
  display: inline-flex;
  align-items: center;

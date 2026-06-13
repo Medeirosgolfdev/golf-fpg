@@ -681,6 +681,9 @@ function vDist(dist: number[]): { total: number; front9: number; back9: number |
 
 // ── Golf Della Montecchia — pares por combinação de nines ──
 const montWRPar = [5,3,4,4,4,4,3,4,5, 4,3,5,4,4,4,4,3,5]; // White+Red, 72
+// SI (stroke index) do layout White/Red — da ronda WHS do Manuel (Venice Open
+// 2025). Igual para todos os tees deste combo. 2026-06-13.
+const montWRSI = [7,5,3,9,15,1,13,17,11, 12,10,16,8,18,4,2,6,14];
 const montRGPar = [4,3,5,4,4,4,4,3,5, 4,5,4,3,4,3,4,5,4]; // Red+Green, 72
 const montGWPar = [4,5,4,3,4,3,4,5,4, 5,3,4,4,4,4,3,4,5]; // Green+White, 72
 
@@ -710,7 +713,7 @@ const montecchiaWhiteRed: Course = {
         teeName: "USKids Boys 12",
         scorecardMeta: { teeColor: "#ffffff" }, // Longleaf Tee 5
         ratings: { holes18: { par: 72, courseRating: 67.6, slopeRating: 118 } },
-        holes: vHoles(montWRPar, montWRBoys12),
+        holes: vHoles(montWRPar, montWRBoys12, montWRSI),
         distances: vDist(montWRBoys12),
       },
       {
@@ -719,7 +722,7 @@ const montecchiaWhiteRed: Course = {
         teeName: "USKids Boys 11",
         scorecardMeta: { teeColor: "#ef4444" }, // Longleaf Tee 4
         ratings: { holes18: { par: 72, courseRating: 64.8, slopeRating: 111 } },
-        holes: vHoles(montWRPar, montWRBoys11),
+        holes: vHoles(montWRPar, montWRBoys11, montWRSI),
         distances: vDist(montWRBoys11),
       },
     ],
@@ -895,11 +898,83 @@ const galzignano: Course = {
   },
 };
 
+/* ─────────────────────────────────────────────────────────────────────────
+   Villa Padierna — Flamingos (Espanha)
+   Manuel jogou aqui em 2025 e no WJGC 2026 (Boys, 25-27 Fev 2026). Esta entrada
+   RECUPERA o enriquecimento e ELIMINA os duplicados que apareciam (3 tees
+   redundantes: "Vermelhas", "Vermelho" e um "WJGC 2026" com distâncias erradas).
+
+   Tee VERMELHAS — mesmas marcações nos dois anos (5295 m, CR 66.4 / Sl 132).
+   A ÚNICA diferença em 2026 foi o PAR: o buraco 10 passou de par 4 a par 5,
+   logo par total 72 (vs 71 em 2025). Distâncias e CR/Slope idênticos — por isso
+   os dois tees partilham metros e rating, mudando só o par (confirmado pelo
+   jogador; o valor 4842 m da rivalData estava errado — era jardas).
+
+   Para deixar UM único campo, esta definição cobre as DUAS chaves de origem:
+     - away-villa-padierna-flamingos-espanha  (entrada do pipeline, nome "…, Espanha")
+     - away-villa-padierna-flamingos          (entrada derivada do melhorias)
+   Ambas passam a ter o nome limpo "Villa Padierna - Flamingos" e tees idênticos,
+   sendo fundidas (dedup por nome) numa só na CamposPage. _players preservados.
+   ────────────────────────────────────────────────────────────────────── */
+
+const vpFlamSI   = [4,10,6,18,16,8,14,12,2, 1,7,9,15,11,5,13,17,3];
+const vpFlamDist = [468,157,342,128,293,459,317,137,287, 352,456,130,278,340,420,102,259,370]; // 5295m
+const vpPar2025  = [5,3,4,3,4,5,4,3,4, 4,5,3,4,4,5,3,4,4]; // par 71
+const vpPar2026  = [5,3,4,3,4,5,4,3,4, 5,5,3,4,4,5,3,4,4]; // par 72 (buraco 10: par 5)
+
+function vpHoles(par: number[], si: number[], dist: number[]): Hole[] {
+  return dist.map((d, i) => ({ hole: i + 1, par: par[i], si: si[i], distance: d }));
+}
+function vpDist(dist: number[]): { total: number; front9: number; back9: number; holesCount: 18; complete18: true } {
+  const front9 = dist.slice(0, 9).reduce((a, b) => a + b, 0);
+  const back9 = dist.slice(9).reduce((a, b) => a + b, 0);
+  return { total: front9 + back9, front9, back9, holesCount: 18, complete18: true };
+}
+
+const vpFlamingosTees: Tee[] = [
+  {
+    teeId: "vp-flam-vermelhas",
+    sex: "U",
+    teeName: "Vermelhas",
+    scorecardMeta: { teeColor: "#ef4444" },
+    ratings: { holes18: { par: 71, courseRating: 66.4, slopeRating: 132 } },
+    holes: vpHoles(vpPar2025, vpFlamSI, vpFlamDist),
+    distances: vpDist(vpFlamDist),
+  },
+  {
+    teeId: "vp-flam-wjgc26",
+    sex: "U",
+    teeName: "Vermelhas (WJGC 2026)",
+    scorecardMeta: { teeColor: "#ef4444" },
+    ratings: { holes18: { par: 72, courseRating: 66.4, slopeRating: 132 } },
+    holes: vpHoles(vpPar2026, vpFlamSI, vpFlamDist),
+    distances: vpDist(vpFlamDist),
+  },
+];
+
+function vpFlamingosCourse(courseKey: string): Course {
+  return {
+    courseKey,
+    master: {
+      courseId: courseKey,
+      name: "Villa Padierna - Flamingos",
+      country: "Espanha",
+      links: { fpg: null, scorecards: "https://www.villapadiernagolfclub.es" },
+      tees: vpFlamingosTees,
+    },
+  };
+}
+
+const villaPadiernaFlamingos  = vpFlamingosCourse("away-villa-padierna-flamingos-espanha");
+const villaPadiernaFlamingos2 = vpFlamingosCourse("away-villa-padierna-flamingos");
+
 /* Exportacao */
 
 /** Campos extra adicionados manualmente (ainda sem rondas no melhorias.json) */
 export function getExtraCourses(): Course[] {
   return [
+    villaPadiernaFlamingos,
+    villaPadiernaFlamingos2,
     marcoSimone,
     doralRedTiger,
     doralGoldenPalm,

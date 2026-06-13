@@ -89,7 +89,10 @@ function main() {
   const map = {};
   const unresolved = [];
   for (const code of codes) {
-    const name = playerNames[code] || fedNames[code];
+    // Ignorar "nomes" placeholder iguais ao próprio código (entradas por
+    // preencher em players.json) — preferir o nome real dos federados.
+    const fromPlayers = playerNames[code] && playerNames[code] !== code ? playerNames[code] : null;
+    const name = fromPlayers || fedNames[code];
     if (name) map[code] = name;
     else unresolved.push(code);
   }

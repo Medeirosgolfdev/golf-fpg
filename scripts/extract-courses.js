@@ -459,13 +459,23 @@ if (fs.existsSync(outputRoot)) {
           const courseKey = `away-${canonicalNorm.replace(/\s+/g, "-")}`;
           const isoDate   = toIsoDate(r.date);
 
+          // Guardar TODAS as rondas do jogador neste campo (não só a mais
+          // recente), com o resultado, para a CamposPage poder mostrar os
+          // scores de cada ano que lá jogou.
+          const gross = Number.isFinite(r.gross) ? r.gross : null;
+          const par   = Number.isFinite(r.par)   ? r.par   : null;
+          const round = {
+            date:  isoDate,
+            gross,
+            toPar: (gross != null && par != null) ? gross - par : null,
+            tee:   typeof r.tee === "string" ? r.tee : null,
+            event: typeof r.eventName === "string" ? r.eventName : null,
+            sd:    Number.isFinite(r.sd) ? r.sd : null,
+          };
           if (!playersMap.has(courseKey)) playersMap.set(courseKey, new Map());
-          const pm       = playersMap.get(courseKey);
-          const existing = pm.get(nfed);
-          // Guardar apenas a data mais recente por jogador
-          if (!existing || (isoDate && isoDate > existing)) {
-            pm.set(nfed, isoDate);
-          }
+          const pm = playersMap.get(courseKey);
+          if (!pm.has(nfed)) pm.set(nfed, []);
+          pm.get(nfed).push(round);
         }
       }
     } catch {}
@@ -552,10 +562,27 @@ for (const [courseKey, { name, country, tees }] of courseMap) {
 
   if (teeArr.length === 0) continue;
 
-  // _players: nfed → data mais recente ISO em que jogou aqui
-  const pm       = playersMap.get(courseKey);
-  const _players = pm && pm.size > 0 ? Object.fromEntries(pm) : undefined;
-  if (_players) coursesWithPlayers++;
+  // _players: nfed → [{ date, gross, toPar, tee, event, sd }] (rondas ordenadas
+  // por data desc, deduplicadas por data+gross). Mantém TODAS as rondas para a
+  // CamposPage poder mostrar os resultados de cada ano em que o jogador jogou.
+  const pm = playersMap.get(courseKey);
+  let _players;
+  if (pm && pm.size > 0) {
+    _players = {};
+    for (const [nfed, rounds] of pm) {
+      const seen = new Set();
+      const uniq = [];
+      for (const r of rounds) {
+        const k = `${r.date || ""}|${r.gross ?? ""}`;
+        if (seen.has(k)) continue;
+        seen.add(k);
+        uniq.push(r);
+      }
+      uniq.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+      _players[nfed] = uniq;
+    }
+    coursesWithPlayers++;
+  }
 
   // País: novo > courseKey anterior > nome anterior (modo acumulativo)
   const finalCountry = country || prevCountryByKey[courseKey] || prevCountryByName[norm(name)] || "";

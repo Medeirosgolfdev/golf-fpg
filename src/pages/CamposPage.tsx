@@ -5,11 +5,11 @@ import Counter from "../ui/Counter";
 import { Toolbar } from "../ui/Toolbar";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { useParams, useNavigate } from "react-router-dom";
-import type { Course, Tee, SexFilter } from "../data/types";
+import type { Course, Tee, SexFilter, CoursePlayerRound } from "../data/types";
 import { useAppContext } from "../context/AppContext";
 import TeeBadge from "../ui/TeeBadge";
 import { teeCanonicalLabel, teeGroupHex } from "../utils/teeColors";
-import { fmt, fmtCR, norm, titleCase, sumRange } from "../utils/format";
+import { fmt, fmtCR, norm, titleCase, sumRange, fmtToPar } from "../utils/format";
 import { fixMojibake } from "../utils/fixEncoding";
 import { sortTees, filterTees, teeHexFromTee } from "../utils/teeUtils";
 import { PillBadge } from "../ui/PillBadge";
@@ -203,7 +203,7 @@ function ScorecardGrid({ tees }: { tees: Tee[] }) {
 
           {/* SI / HCP */}
           <tr className="sc-meta-row sc-hcp-row">
-            <td className="sc-sticky sc-meta-label">HCP</td>
+            <td className="sc-sticky sc-meta-label">SI</td>
             {Array.from({ length: 9 }, (_, i) => (
               <td key={i + 1} className="ta-c">{refByHole.get(i + 1)?.si ?? "–"}</td>
             ))}
@@ -311,28 +311,42 @@ function CoursePlayersSection({ course, onSelectPlayer }: { course: Course; onSe
     const raw = course.master._players;
     if (!raw || Object.keys(raw).length === 0) return [];
     return Object.entries(raw)
-      .map(([nfed, d]) => {
+      .map(([nfed, val]) => {
         const p = players[nfed];
-        const date: string | null = (d as string | null) ?? null;
-        // Nome SEMPRE: players.json → mapa de federados → (último recurso) número
-        const name = p?.name ?? nameMap[nfed] ?? nfed;
-        return { nfed, name, date };
+        // Nome SEMPRE: players.json → mapa de federados → (último recurso) número.
+        // Ignorar "nomes" placeholder iguais ao próprio nº federado (entradas
+        // por preencher em players.json / course-player-names.json).
+        const realName = p?.name && p.name !== nfed ? p.name : null;
+        const fromMap = nameMap[nfed] && nameMap[nfed] !== nfed ? nameMap[nfed] : null;
+        const name = realName ?? fromMap ?? nfed;
+        // Retro-compat: formato antigo = string (só data); novo = array de rondas
+        const rounds: CoursePlayerRound[] = Array.isArray(val)
+          ? val
+          : typeof val === "string"
+            ? [{ date: val, gross: null, toPar: null, tee: null, event: null, sd: null }]
+            : [];
+        const latest = rounds.find((r) => r.date)?.date ?? null;
+        return { nfed, name, rounds, latest };
       })
       .sort((a, b) => {
-        const da = a.date ? a.date.split("-").reverse().join("") : "0";
-        const db = b.date ? b.date.split("-").reverse().join("") : "0";
-        if (db !== da) return db.localeCompare(da);
+        if (a.latest !== b.latest) return (b.latest ?? "").localeCompare(a.latest ?? "");
         return a.name.localeCompare(b.name, "pt");
       });
   }, [course, players, nameMap]);
 
   if (entries.length === 0) return null;
 
+  /** "2026-02-27" → "27/02/2026"; devolve "" se a data não for ISO. */
+  const fmtDMY = (d: string | null) => {
+    const m = d && d.match(/^(\d{4})-(\d{2})-(\d{2})/);
+    return m ? `${m[3]}/${m[2]}/${m[1]}` : "";
+  };
+
   return (
     <div className="course-players-section">
       <h4 className="course-players-title">Jogadores ({entries.length})</h4>
       <div className="course-players-list">
-        {entries.map(({ nfed, name, date }) => (
+        {entries.map(({ nfed, name, rounds }) => (
           <div key={nfed} className="course-player-row">
             {onSelectPlayer ? (
               <button
@@ -352,7 +366,26 @@ function CoursePlayersSection({ course, onSelectPlayer }: { course: Course; onSe
                 {name}
               </a>
             )}
-            {date && <span className="course-player-date muted">{date}</span>}
+            <span className="course-player-results muted">
+              {rounds.map((r, i) => {
+                const dia = fmtDMY(r.date);
+                const score =
+                  r.gross != null
+                    ? `${r.gross}${r.toPar != null ? ` (${fmtToPar(r.toPar)})` : ""}`
+                    : "";
+                const label = [dia, score].filter(Boolean).join(": ");
+                if (!label) return null;
+                return (
+                  <span
+                    key={i}
+                    className="course-player-result"
+                    title={[r.event, r.tee, r.sd != null ? `SD ${r.sd}` : null].filter(Boolean).join(" · ")}
+                  >
+                    {label}
+                  </span>
+                );
+              })}
+            </span>
           </div>
         ))}
       </div>

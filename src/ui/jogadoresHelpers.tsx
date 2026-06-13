@@ -1,19 +1,27 @@
 import { norm } from "../utils/format";
+import { canonicalCourseName } from "../utils/courseAliases";
 
 /* —— Course key lookup: course display name → courseKey for /campos/:courseKey —— */
 let _courseKeyMap: Map<string, string> = new Map();
 
+/** Normalização robusta: nome canónico (resolve aliases) + sem pontuação, para
+ *  "Villa Padierna Flamingos" (ronda) casar com "Villa Padierna - Flamingos"
+ *  (campo) e "Golden Palm" com "Trump Doral - Golden Palm". */
+function ckNorm(s: string): string {
+  return norm(canonicalCourseName(s) || s).replace(/[^a-z0-9]+/g, " ").trim();
+}
+
 export function buildCourseKeyMap(courses: any[]): Map<string, string> {
   const m = new Map<string, string>();
   for (const c of courses) {
-    m.set(norm(c.master.name), c.courseKey);
-    m.set(norm(c.courseKey), c.courseKey);
+    m.set(ckNorm(c.master.name), c.courseKey);
+    m.set(ckNorm(c.courseKey), c.courseKey);
   }
   return m;
 }
 
 export function findCourseKey(courseName: string): string | null {
-  return _courseKeyMap.get(norm(courseName)) ?? null;
+  return _courseKeyMap.get(ckNorm(courseName)) ?? null;
 }
 
 export function setCourseKeyMap(map: Map<string, string>) {

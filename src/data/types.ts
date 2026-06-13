@@ -70,8 +70,20 @@ export type CourseMaster = {
   numbers?: Record<string, unknown>;
   links: CourseLinks;
   tees: Tee[];
-  /** Quem jogou e data mais recente — só nos away-courses gerados pelo pipeline */
-  _players?: Record<string, string | null>;
+  /** Quem jogou este campo — só nos away-courses gerados pelo pipeline.
+   *  Valor por federado: lista de rondas com o resultado (formato novo) OU,
+   *  retro-compatível, a string da data mais recente (formato antigo). */
+  _players?: Record<string, CoursePlayerRound[] | string | null>;
+};
+
+/** Uma ronda de um jogador num campo away (para mostrar resultados na CamposPage). */
+export type CoursePlayerRound = {
+  date: string | null;
+  gross: number | null;
+  toPar: number | null;
+  tee: string | null;
+  event: string | null;
+  sd: number | null;
 };
 
 export type Course = {

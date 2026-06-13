@@ -247,7 +247,7 @@ export function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, 
           {/* S.I. row */}
           {si && si.some(v => v != null && v > 0) && (
             <tr className="meta-row">
-              <td className="row-label c-muted fw-400">S.I.</td>
+              <td className="row-label c-muted fw-400">SI</td>
               {Array.from({ length: totalHoles }, (_, h) => (
                 <React.Fragment key={h}>
                   <td>{si[h] != null && si[h]! > 0 ? si[h] : ""}</td>
