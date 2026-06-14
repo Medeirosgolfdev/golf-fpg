@@ -58,7 +58,7 @@ design-system.html # Referência visual de todos os componentes CSS
 | `/drive` | DrivePage | drive-data.json, aquapor-data.json |
 | `/bjgt/:fed?` | BJGTPage | bjgt_*.json, wjgc_*.json |
 | `/bjgt-analysis/:fed?` | BJGTAnalysisPage | data.json por jogador |
-| `/comparar` | CompararPage | — |
+| `/comparar` | ComparePage (3 tabs: Campos, Vantagem de Tee, Jogadores) | master-courses, players.json, {MANUEL}/analysis/data.json |
 | `/simulador` | SimuladorPage | simCourses (master), players.json, {fed}/analysis/data.json (selector de jogador + "E se?") |
 | `/calendario` | CalendarioPage | — |
 | `/doral` | DORALPage | ftm_doral_*.json |
@@ -307,6 +307,30 @@ node scripts/scrape-classif-node.js --scope scripts/batch-aroeira.json --concurr
 - `node merge-courses.js` — consolida campos duplicados
 - `node find-tcodes.js` — varre ccode/tcode, imprime torneios
 - `node validate-encoding.js` — valida encoding dos JSON
+
+### Refresh de federados (`scrape-federados-node.js`)
+
+Refresh COMPLETO de `public/data/federados.json` (~15.600 activos, `FedStat=9`)
+via Node puro. Substitui o antigo `scrape-federados.js` (browser console).
+Endpoint `POST /pt/FederatedsList_V2.aspx/HandicapsLST`, paginado a 100
+(200+ → HTTP 500), ~156 páginas / ~30s. Apanha fotos novas (paths antigos →
+404), novos federados e mudanças de clube/HCP.
+
+```bash
+node scripts/scrape-federados-node.js                 # full refresh, grava só se mudou
+node scripts/scrape-federados-node.js --check-only    # compara sem gravar
+node scripts/scrape-federados-node.js --force         # grava mesmo sem alterações / parcial
+node scripts/scrape-federados-node.js --max-pages 5   # debug (parcial — exige --force p/ gravar)
+node scripts/scrape-federados-inativos.js             # script separado: federados-inativos.json (FedStat=7)
+```
+
+Cookies: env `DATAGOLF_SCORING_COOKIES` (Actions) ou ficheiro
+`api/.scoring-datagolf-cookies.json` (dev) — os mesmos do `scoring.datagolf.pt`.
+Compara byte-a-byte (ignorando timestamps) e tem guardas anti-overwrite (recusa
+gravar 0 registos, run incompleto, ou perda >10% sem `--force`). Exit codes:
+**0** = actualizado, **2** = sem alterações (não é erro), **1** = erro.
+Validar cookies antes: `node scripts/test-datagolf-node.js` (deve dar `Result:"OK"`).
+Workflow: `update-federados.yml` (Quarta 05:00 UTC). Secret: `DATAGOLF_SCORING_COOKIES`.
 
 ---
 
@@ -1010,6 +1034,77 @@ CR/Slope `null` (par-3 sem rating publicado). Idempotente, escrita atómica. ~90
 
 ---
 
+## Tab "Vantagem de Tee" (`/comparar`) — conselho de tee para júnior (2026-06-14)
+
+`src/pages/comparar/TeeAdvisorView.tsx`, 3ª tab da `ComparePage`. Compara dois tees
+de um campo e dá um **conselho fundamentado** sobre se o Manuel deve subir de tee.
+Sessão grande de 2026-06-14 transformou-o de heurística mecânica em conselho
+ancorado em **evidência real** e em **literacia WHS**. Sem gráficos.
+
+### Toolbar / inputs
+Campo, sexo dos tees, **HCP** (default = índice actual do Manuel), **Drive (m)**
+default **185**, **2ª panc. (m)** default 160. A barra "📏 Distância habitual" é
+editável (override) e mostra o valor automático.
+
+### Distância de competição (P70, não mediana)
+`habitualDistance()` = **percentil 70** dos metros das últimas 20 voltas 18B — a
+distância que ele **já joga a sério**, não a típica (a mediana caía no aglomerado
+dos tees curtos de treino). As voltas internacionais sem metros no `data.json`
+(Marco Simone, Villa Padierna, Glen, La Forêt…) são recuperadas via
+`resolvePlayedMeters` (mesmo util da JogadoresPage, com override `MANUEL_AWAY_TEE`)
+— senão eram excluídas em silêncio e o valor vinha baixo demais.
+
+### Conclusões pontuadas (veredicto A vs B)
+1. **⚖️ Saldo: perdão vs perigos** — pancadas de perdão que o tee longo dá (playing
+   handicap WHS) MENOS nº de perigos que cria (buracos fora de alcance em regulação).
+   **Banda morta ±1 = empate** (uma pancada de margem para um perigo não é vantagem —
+   se o dia corre mal não há folga); só saldo ≥2 favorece o tee longo, ≤−2 o curto.
+2. **📏 Ajuste à distância de competição** — premia jogar PERTO da distância de
+   competição; penaliza tanto jogar muito ACIMA (estica o jogo) como muito ABAIXO
+   (tira o desafio — um júnior não cresce a recuar de tee).
+3. **⚠️ Buracos de alerta** — informativo (não pontua); lista buracos fora de alcance
+   e a estratégia.
+4. **📊 Histórico real neste campo** — **por tee**, mostra mesmo quando só há voltas
+   de UM tee (é a transição em análise). Usa o **resultado típico recente = mediana
+   das últimas ≤4 voltas** (a mesma janela em todo o lado: tabela, conclusão,
+   recomendação — não divergir). Só pontua quando há ≥2 voltas em AMBOS.
+
+### Recomendação — modos (não há "arrisca sempre")
+Computa um `mode` por prioridade: **go** 🚀 (avança), **suit** 🎯 (o tee curto não
+premia o jogo dele — tira o driver da mão, distâncias *tweener* — o longo pode
+encaixar melhor), **caution** 🤔 (tem distância mas o **saldo é negativo** ou **não
+conhece o campo** → o tee curto/conhecido é a escolha sensata), **master** 🛡️ (ainda
+não domina nem o tee curto deste campo → consolida primeiro), **hold** 🛡️ (longo
+ainda é grande demais). Âncoras: distância de competição + forma recente no campo
+(mediana) + desempenho em campos longos + jogar ao handicap no curto (= superou-o).
+A janela 24-28× do drive é **referência secundária**.
+
+### Desempenho em campos longos — métrica WHS-correcta
+`longTeePerformance()` **NÃO usa a média** de score differential. Razão: o índice
+WHS é a **média das 8 MELHORES de 20** voltas (potencial num bom dia) e só se joga
+ao índice **~1 em cada 5 voltas** → a média de differential fica sempre vários pontos
+acima do índice e seria enganadora (um índice ~10 tem médias 14-15). Em vez disso
+conta as voltas jogadas **ao nível do índice ou melhor** (`sd ≤ index`) e guarda o
+**melhor differential**. Só os **últimos 12 meses** (um júnior cresce depressa — não
+comparar com o que era capaz há 15 meses).
+
+### Correspondência robusta campo↔volta (teeHistory)
+Usa `courseKeyName` (ignora travessão vs hífen, pontuação) + `teeKey` (ignora o
+prefixo "USKids": "Boys 11" ↔ "USKids Boys 11") + fallback a `resolvePlayedTee`
+(override/cor curados). Sem isto perdiam-se voltas inteiras (ex: 3 voltas em
+Montecchia não apareciam).
+
+### Helpers e detalhes
+- `toNum` (sd às vezes vem string), `median`, `teeKey`, `ClubDistanceTable` (tabela
+  de distâncias do saco reactiva ao Drive — % constantes do drive).
+- `HoleDiffTable` tem linhas "após drive faltam" E "após 2ª pancada faltam" (par 4/5),
+  agrupadas por tee (amarelas juntas, vermelhas juntas, com espaço entre).
+- Dois colapsáveis didácticos: **📐 Porquê 24–28× a distância de drive?** e
+  **📊 Porquê contamos voltas ao nível do índice — e não a média?**
+- `playedDistance.ts` passou a **exportar `courseKeyName`**.
+
+---
+
 ## Sites e links de dados
 
 | Site | URL | Para quê | Auth |
@@ -1330,6 +1425,7 @@ validado server-side. **Não replicável de Node puro.**
 | **`update-ffgolf-resultats.yml`** | ✅ Novo 2026-05-08 | `scripts/scrape-ffgolf-all-jeunes.js` + `build-ffgolf-resultats-index.js` + `build-ffgolf-juniors-slim.js` | Seg 02:00 UTC (1×/semana, madrugada Lisboa) | **Sem secrets** — portal `pages.ffgolf.org/resultats/` é público (bootstrap GET apanha PHPSESSID). Default do cron: `--types 01,03 --since 2025 --skip-existing` (Compétitions Fédérales filtradas por keyword juvenil + GP Jeunes regionais nas 22 ligas, anos 2025-2026, só novos). Output: `public/data/ffgolf-resultats/{type}-{ligue}-{trnId}.json` + `ffgolf-resultats-index.json` + `ffgolf-juniors-slim.json`. workflow_dispatch tem inputs `types`/`since`/`ligues`/`force_rebuild`. |
 | **`update-ffgolf-golfgenius.yml`** | ✅ Novo 2026-05-08 | `scripts/scrape-ffgolf.js` | Seg 03:00 UTC (1×/semana, 1h depois do anterior) | **Playwright headless** — torneios juvenis FFG hospedados em GolfGenius (Championnats de France, Internationaux U14/U18). Default do cron: `--year <ano corrente>` (varre `public/data/ffgolf-catalog.json` filtrado por ano). Output: `public/data/ffgolf/{year}_{slug}.json`. workflow_dispatch tem inputs `year`/`slug`/`gg_page` (ad-hoc). Sem secrets. |
 | **`update-spain.yml`** | ✅ Novo 2026-05-17 | `scripts/discover-fcg-scope.js` + `scrape-rfegolf-node.js` + `scrape-livegolfscoring.js` + `scrape-nextcaddy.js` (+ horarios) + `scrape-fcg.js` + 7 builds (enrich-lgs-dates, infer-nextcaddy-par, build-rfegolf-index, build-licencia-{dob,hcp}-lookup, build-spain-players-export, build-rfegolf-rivals, build-fcg-rivals) | Seg 04:00 UTC (1×/semana, 1h depois do GolfGenius) | **Node puro, sem secrets** — pipeline única que cobre RFEG (microsite + livegolfscoring), NextCaddy (RFGA Andaluzia + FGM Madrid) e FCG (Federació Catalana via golfdirecto.com). Default do cron: discovery + `--skip-existing` em todos os scrapers + builds. workflow_dispatch tem inputs `force_rebuild`/`skip_discovery`/`lgs_range`/`rfegolf_range`/`fcg_years`. Timeout 240 min. Outputs em `public/data/{rfegolf-resultats,rfegolf-livegolfscoring,nextcaddy,fcg}/` + agregados. |
+| **`update-federados.yml`** | ✅ Novo 2026-06-14 | `scripts/scrape-federados-node.js` | Quarta 05:00 UTC (1×/semana, off-peak) | Refresh completo de `public/data/federados.json` (~15.600 activos). Exit code 2 = sem alterações. workflow_dispatch tem inputs `check_only`/`force_commit`. Secret: `DATAGOLF_SCORING_COOKIES`. |
 
 **IP-binding em Actions:** `scoring.datagolf.pt` CONFIRMADO não IP-bound
 (teste via hotspot 4G). `my.fpg.pt` CONFIRMADO não IP-bound (teste cross-IP

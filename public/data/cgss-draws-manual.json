@@ -1,8 +1,8 @@
 {
   "_doc": "Draws COMPLETOS curados CGSS (Santo da Serra) de PDFs oficiais — inclui torneios que o Manuel NAO jogou. Preenchem draws vazios ccode-007 (nome/data do PDF autoritativos). Match contra pull-torneios/drive-data/clubes/jovens. Manuel jr fed 52884; homonimo Manuel Medeiros fed 54907.",
-  "gerado_em": "2026-06-13",
+  "gerado_em": "2026-06-14",
   "source": "extract-cgss-draws.py",
-  "total": 34,
+  "total": 33,
   "tournaments": [
     {
       "ccode": "007",
@@ -17265,128 +17265,6 @@
     },
     {
       "ccode": "007",
-      "tcode": "cgss-iiabertocgss2026data2026",
-      "name": "II ABERTO CGSS 2026 Data:2026-05-10",
-      "date": "2026-05-10",
-      "campo": "Santo da Serra - Machico-Desertas Nº.Jog.:13",
-      "modal": "Stroke Play",
-      "source": "cgss-draw-2026-04-04-8538-i-aberto-2026.pdf",
-      "drawOnly": true,
-      "draws": {
-        "1": {
-          "totalJogadores": 10,
-          "groups": [
-            {
-              "teeTime": "09:00",
-              "startHole": 10,
-              "tee": null,
-              "players": [
-                {
-                  "nome": "José Xavier Moniz Santo da Serra",
-                  "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 1.6,
-                  "tee": "Brancas"
-                },
-                {
-                  "nome": "Manuel João Sousa Santo da Serra",
-                  "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 5.2,
-                  "tee": "Brancas"
-                }
-              ]
-            },
-            {
-              "teeTime": "09:09",
-              "startHole": 10,
-              "tee": null,
-              "players": [
-                {
-                  "nome": "Afonso Bento Santo da Serra",
-                  "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 1.9,
-                  "tee": "Brancas"
-                }
-              ]
-            },
-            {
-              "teeTime": "09:18",
-              "startHole": 10,
-              "tee": null,
-              "players": [
-                {
-                  "nome": "Henrique Cunha Santo da Serra",
-                  "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 4.5,
-                  "tee": "Brancas"
-                },
-                {
-                  "nome": "Joao Abel Freitas Jr Santo da Serra",
-                  "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 6.4,
-                  "tee": "Brancas"
-                },
-                {
-                  "nome": "Lino Bento Santo da Serra",
-                  "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 7.6,
-                  "tee": "Brancas"
-                }
-              ]
-            },
-            {
-              "teeTime": "09:27",
-              "startHole": 10,
-              "tee": null,
-              "players": [
-                {
-                  "nome": "João Goes Santo da Serra",
-                  "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 3.0,
-                  "tee": "Brancas"
-                },
-                {
-                  "nome": "Mika Isoniemi Santo da Serra",
-                  "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 11.2,
-                  "tee": "Brancas"
-                },
-                {
-                  "nome": "Miguel de Freitas Santo da Serra",
-                  "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 20.0,
-                  "tee": "Amarelas"
-                }
-              ]
-            },
-            {
-              "teeTime": "09:36",
-              "startHole": 10,
-              "tee": null,
-              "players": [
-                {
-                  "nome": "Alexandre Henriques Santo da Serra",
-                  "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 3.3,
-                  "tee": "Brancas"
-                }
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "ccode": "007",
       "tcode": "11025",
       "name": "Torneio NOS EMPRESAS CGSS 2026",
       "date": "2026-05-23",
@@ -19281,11 +19159,11 @@
       "date": "2026-06-13",
       "campo": "Santo da Serra - Desertas-Serras",
       "modal": "Stableford Net",
-      "source": "Draw-DN26-Extenso.pdf",
+      "source": "Draw_Torneio_DN_2026.pdf",
       "drawOnly": false,
       "draws": {
         "1": {
-          "totalJogadores": 72,
+          "totalJogadores": 69,
           "groups": [
             {
               "teeTime": "09:00",
@@ -19295,30 +19173,26 @@
                 {
                   "nome": "Carlos Bruno Alexandre",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 8.3,
-                  "tee": "Brancas"
+                  "fed": "44121",
+                  "hcp": 8.3
                 },
                 {
                   "nome": "Vítor Rodrigues",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 11.1,
-                  "tee": "Brancas"
+                  "fed": "36592",
+                  "hcp": 11.1
                 },
                 {
                   "nome": "Márcio Gouveia",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 14.4,
-                  "tee": "Amarelas"
+                  "fed": "39557",
+                  "hcp": 14.4
                 },
                 {
                   "nome": "July Franco",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 18.0,
-                  "tee": "Vermelhas"
+                  "fed": "39869",
+                  "hcp": 18.0
                 }
               ]
             },
@@ -19330,30 +19204,26 @@
                 {
                   "nome": "António Spínola",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 5.9,
-                  "tee": "Brancas"
+                  "fed": "20871",
+                  "hcp": 5.9
                 },
                 {
                   "nome": "José Luís Ferreira",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 16.4,
-                  "tee": "Amarelas"
+                  "fed": "2251",
+                  "hcp": 16.4
                 },
                 {
                   "nome": "António Vargas",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 18.3,
-                  "tee": "Amarelas"
+                  "fed": "39393",
+                  "hcp": 18.3
                 },
                 {
                   "nome": "Nélia Ferreira",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 28.0,
-                  "tee": "Vermelhas"
+                  "fed": "55313",
+                  "hcp": 28.0
                 }
               ]
             },
@@ -19365,30 +19235,26 @@
                 {
                   "nome": "Rui Freitas",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 15.1,
-                  "tee": "Amarelas"
+                  "fed": "12318",
+                  "hcp": 14.9
                 },
                 {
                   "nome": "Alcino Camacho",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 19.6,
-                  "tee": "Amarelas"
+                  "fed": "12291",
+                  "hcp": 19.6
                 },
                 {
                   "nome": "Leonel Freitas",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 25.1,
-                  "tee": "Amarelas"
+                  "fed": "35574",
+                  "hcp": 25.1
                 },
                 {
                   "nome": "Crisóstomo Luís",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 26.4,
-                  "tee": "Amarelas"
+                  "fed": "2232",
+                  "hcp": 26.4
                 }
               ]
             },
@@ -19400,30 +19266,26 @@
                 {
                   "nome": "Ricardo Antão",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 6.7,
-                  "tee": "Brancas"
+                  "fed": "24371",
+                  "hcp": 6.7
                 },
                 {
                   "nome": "Fernando Vieira",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 14.8,
-                  "tee": "Amarelas"
+                  "fed": "2235",
+                  "hcp": 14.8
                 },
                 {
                   "nome": "Paulo Rosalino",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 16.4,
-                  "tee": "Amarelas"
+                  "fed": "2317",
+                  "hcp": 16.4
                 },
                 {
                   "nome": "Rui Verissimo",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 27.5,
-                  "tee": "Amarelas"
+                  "fed": "33814",
+                  "hcp": 27.5
                 }
               ]
             },
@@ -19435,30 +19297,26 @@
                 {
                   "nome": "Joaquim Gouveia",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 9.3,
-                  "tee": "Brancas"
+                  "fed": "41656",
+                  "hcp": 9.3
                 },
                 {
                   "nome": "João Lopes",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 16.6,
-                  "tee": "Amarelas"
+                  "fed": "12299",
+                  "hcp": 16.6
                 },
                 {
                   "nome": "Paulo Jorge Sousa",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 20.6,
-                  "tee": "Amarelas"
+                  "fed": "12314",
+                  "hcp": 20.6
                 },
                 {
                   "nome": "Bernardo Freitas",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 22.0,
-                  "tee": "Amarelas"
+                  "fed": "32961",
+                  "hcp": 22.0
                 }
               ]
             },
@@ -19470,30 +19328,26 @@
                 {
                   "nome": "Duarte Franco",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 14.9,
-                  "tee": "Amarelas"
+                  "fed": "39874",
+                  "hcp": 14.9
                 },
                 {
                   "nome": "Roberto Passos",
                   "clube": "Palheiro",
-                  "fed": null,
-                  "hcp": 15.3,
-                  "tee": "Amarelas"
+                  "fed": "41385",
+                  "hcp": 15.3
                 },
                 {
                   "nome": "José Camara",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 21.5,
-                  "tee": "Amarelas"
+                  "fed": "2173",
+                  "hcp": 21.5
                 },
                 {
                   "nome": "Tiago Câmara",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 27.1,
-                  "tee": "Amarelas"
+                  "fed": "49404",
+                  "hcp": 27.1
                 }
               ]
             },
@@ -19505,30 +19359,26 @@
                 {
                   "nome": "Fernando Neves",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 20.1,
-                  "tee": "Amarelas"
+                  "fed": "2236",
+                  "hcp": 20.1
                 },
                 {
                   "nome": "Nuno Rebolo",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 23.8,
-                  "tee": "Amarelas"
+                  "fed": "29982",
+                  "hcp": 23.8
                 },
                 {
                   "nome": "Carlos A. Fernandes",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 25.7,
-                  "tee": "Amarelas"
+                  "fed": "33946",
+                  "hcp": 25.7
                 },
                 {
                   "nome": "Jaime Freitas",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 28.3,
-                  "tee": "Amarelas"
+                  "fed": "39140",
+                  "hcp": 28.3
                 }
               ]
             },
@@ -19540,30 +19390,20 @@
                 {
                   "nome": "Paulo Gonçalves Fernandes",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 8.3,
-                  "tee": "Brancas"
+                  "fed": "39875",
+                  "hcp": 8.3
                 },
                 {
                   "nome": "Carlos Gouveia",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 12.9,
-                  "tee": "Amarelas"
+                  "fed": "2390",
+                  "hcp": 12.9
                 },
                 {
                   "nome": "João Miguel Rodrigues",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 16.2,
-                  "tee": "Amarelas"
-                },
-                {
-                  "nome": "Vasco Leal Gouveia",
-                  "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 18.1,
-                  "tee": "Amarelas"
+                  "fed": "26987",
+                  "hcp": 16.2
                 }
               ]
             },
@@ -19575,30 +19415,26 @@
                 {
                   "nome": "Manuel Teixeira Brazão",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 16.1,
-                  "tee": "Amarelas"
+                  "fed": "12311",
+                  "hcp": 16.1
                 },
                 {
                   "nome": "José António Silva",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 16.6,
-                  "tee": "Amarelas"
+                  "fed": "33529",
+                  "hcp": 16.6
                 },
                 {
                   "nome": "Marcelo Abreu de Freitas",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 20.6,
-                  "tee": "Amarelas"
+                  "fed": "43406",
+                  "hcp": 20.6
                 },
                 {
                   "nome": "Ana Bento",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 22.7,
-                  "tee": "Vermelhas"
+                  "fed": "22201",
+                  "hcp": 22.7
                 }
               ]
             },
@@ -19610,30 +19446,26 @@
                 {
                   "nome": "Manuel Dinis",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 20.3,
-                  "tee": "Amarelas"
+                  "fed": "42309",
+                  "hcp": 20.3
                 },
                 {
                   "nome": "Dário Reis",
                   "clube": "Santo da Serra",
                   "fed": null,
-                  "hcp": 22.0,
-                  "tee": "Amarelas"
+                  "hcp": 22.0
                 },
                 {
                   "nome": "Joaquim Sabino",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 21.6,
-                  "tee": "Vermelhas"
+                  "fed": "38901",
+                  "hcp": 21.4
                 },
                 {
                   "nome": "Gilda Sousa",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 22.0,
-                  "tee": "Vermelhas"
+                  "fed": "2121",
+                  "hcp": 22.0
                 }
               ]
             },
@@ -19643,32 +19475,22 @@
               "tee": null,
               "players": [
                 {
-                  "nome": "Henrique Cunha",
-                  "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 4.3,
-                  "tee": "Brancas"
-                },
-                {
                   "nome": "Marcelo Gaspar",
                   "clube": "Santo da Serra",
                   "fed": null,
-                  "hcp": 7.7,
-                  "tee": "Brancas"
+                  "hcp": 7.7
                 },
                 {
                   "nome": "Willy Poulain",
                   "clube": "Internacional",
                   "fed": null,
-                  "hcp": 24.0,
-                  "tee": "Amarelas"
+                  "hcp": 24.0
                 },
                 {
-                  "nome": "Robert Gardner",
+                  "nome": "Manuel de Freitas",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 28.3,
-                  "tee": "Amarelas"
+                  "fed": "48879",
+                  "hcp": 18.3
                 }
               ]
             },
@@ -19680,30 +19502,26 @@
                 {
                   "nome": "Francisco Renato Silva",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 24.2,
-                  "tee": "Amarelas"
+                  "fed": "36615",
+                  "hcp": 24.2
                 },
                 {
                   "nome": "Blass Rodrigues",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 26.9,
-                  "tee": "Amarelas"
+                  "fed": "34797",
+                  "hcp": 26.9
                 },
                 {
                   "nome": "João Andrade",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 27.7,
-                  "tee": "Amarelas"
+                  "fed": "2242",
+                  "hcp": 27.7
                 },
                 {
                   "nome": "José Manuel Abreu",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 33.7,
-                  "tee": "Amarelas"
+                  "fed": "44482",
+                  "hcp": 33.7
                 }
               ]
             },
@@ -19715,30 +19533,26 @@
                 {
                   "nome": "Andrew Millington",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 19.0,
-                  "tee": "Amarelas"
+                  "fed": "43364",
+                  "hcp": 19.0
                 },
                 {
                   "nome": "Carlos Amaro",
                   "clube": "Estoril",
-                  "fed": null,
-                  "hcp": 18.6,
-                  "tee": "Amarelas"
+                  "fed": "5689",
+                  "hcp": 18.6
                 },
                 {
                   "nome": "Roberto Wittlin",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 21.9,
-                  "tee": "Amarelas"
+                  "fed": "54744",
+                  "hcp": 21.9
                 },
                 {
                   "nome": "Maria Stangl",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 33.7,
-                  "tee": "Vermelhas"
+                  "fed": "31672",
+                  "hcp": 33.7
                 }
               ]
             },
@@ -19750,30 +19564,26 @@
                 {
                   "nome": "Miguel de Freitas",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 19.7,
-                  "tee": "Amarelas"
+                  "fed": "42373",
+                  "hcp": 19.7
                 },
                 {
                   "nome": "José António Camacho",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 20.5,
-                  "tee": "Amarelas"
+                  "fed": "2412",
+                  "hcp": 20.5
                 },
                 {
                   "nome": "Carlos Santos Rodrigues",
                   "clube": "Santo da Serra",
                   "fed": null,
-                  "hcp": 28.2,
-                  "tee": "Amarelas"
+                  "hcp": 28.2
                 },
                 {
                   "nome": "Ana Bela Camacho",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 20.8,
-                  "tee": "Vermelhas"
+                  "fed": "2432",
+                  "hcp": 20.8
                 }
               ]
             },
@@ -19786,29 +19596,25 @@
                   "nome": "Charles Vidal",
                   "clube": "Internacional",
                   "fed": null,
-                  "hcp": 18.0,
-                  "tee": "Amarelas"
+                  "hcp": 18.0
                 },
                 {
                   "nome": "José Brazáo Machado",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 20.9,
-                  "tee": "Amarelas"
+                  "fed": "2389",
+                  "hcp": 20.9
                 },
                 {
                   "nome": "Fernando Ramos",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 25.2,
-                  "tee": "Amarelas"
+                  "fed": "2406",
+                  "hcp": 25.2
                 },
                 {
                   "nome": "Joe Teixeira Mendes",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 34.6,
-                  "tee": "Vermelhas"
+                  "fed": "2252",
+                  "hcp": 34.6
                 }
               ]
             },
@@ -19821,29 +19627,25 @@
                   "nome": "Manuel Goulartt Medeiros",
                   "clube": "Santo da Serra",
                   "fed": "52884",
-                  "hcp": 9.6,
-                  "tee": "Vermelhas"
+                  "hcp": 9.6
                 },
                 {
                   "nome": "Gonçalo Gouveia",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 20.2,
-                  "tee": "Amarelas"
+                  "fed": "50398",
+                  "hcp": 20.2
                 },
                 {
                   "nome": "Manuel Medeiros",
                   "clube": "Santo da Serra",
                   "fed": "54907",
-                  "hcp": 23.7,
-                  "tee": "Amarelas"
+                  "hcp": 23.7
                 },
                 {
                   "nome": "Lucas Costa Cubbin",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 23.9,
-                  "tee": "Amarelas"
+                  "fed": "50671",
+                  "hcp": 23.9
                 }
               ]
             },
@@ -19855,30 +19657,26 @@
                 {
                   "nome": "Bernardino Lopes",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 13.3,
-                  "tee": "Amarelas"
+                  "fed": "2278",
+                  "hcp": 13.3
                 },
                 {
                   "nome": "Mário Aguiar",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 13.6,
-                  "tee": "Amarelas"
+                  "fed": "2337",
+                  "hcp": 13.6
                 },
                 {
                   "nome": "Teresa São Marcos",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 22.5,
-                  "tee": "Vermelhas"
+                  "fed": "43656",
+                  "hcp": 22.5
                 },
                 {
                   "nome": "Carla Gonçalves Fernandes",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 31.7,
-                  "tee": "Vermelhas"
+                  "fed": "39873",
+                  "hcp": 31.7
                 }
               ]
             },
@@ -19888,32 +19686,22 @@
               "tee": null,
               "players": [
                 {
-                  "nome": "Ricardo Camacho",
-                  "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 3.0,
-                  "tee": "Brancas"
-                },
-                {
                   "nome": "Rui Pedro Cunha",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 11.3,
-                  "tee": "Brancas"
-                },
-                {
-                  "nome": "Matilde Leal Gouveia",
-                  "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 3.2,
-                  "tee": "Amarelas"
+                  "fed": "2420",
+                  "hcp": 11.3
                 },
                 {
                   "nome": "Yolanda Sixto",
                   "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 36.3,
-                  "tee": "Vermelhas"
+                  "fed": "55957",
+                  "hcp": 36.3
+                },
+                {
+                  "nome": "Robert Gardner",
+                  "clube": "Santo da Serra",
+                  "fed": "39000",
+                  "hcp": 28.5
                 }
               ]
             }

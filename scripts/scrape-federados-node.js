@@ -4,8 +4,9 @@
  *                            via Node puro (sem browser console).
  *
  * Versão Node-puro do antigo `scripts/scrape-federados.js` (browser console
- * em scoring.datagolf.pt). Usa os cookies já capturados em
- * `api/.scoring-datagolf-cookies.json` (ASP.NET_SessionId + DG_Lists_URL).
+ * em scoring.datagolf.pt). Cookies (ASP.NET_SessionId + DG_Lists_URL) via
+ * env DATAGOLF_SCORING_COOKIES (Actions) ou ficheiro local
+ * `api/.scoring-datagolf-cookies.json` (dev).
  *
  * Útil quando:
  *   - A FPG actualiza fotos de jogadores (paths antigos passam a 404)
@@ -34,6 +35,7 @@
 
 const fs   = require("fs");
 const path = require("path");
+const { loadCookieHeader } = require("./lib/cookies");
 
 const ROOT = path.resolve(__dirname, "..");
 const COOKIES_PATH   = path.join(ROOT, "api", ".scoring-datagolf-cookies.json");
@@ -64,25 +66,14 @@ if (Number.isNaN(maxPages)) {
 }
 
 // ── Cookies ──────────────────────────────────────────────────────
+// Fonte (por ordem): env DATAGOLF_SCORING_COOKIES (Actions) → ficheiro
+// api/.scoring-datagolf-cookies.json (dev local). Via lib partilhada.
 function loadCookies() {
-  if (!fs.existsSync(COOKIES_PATH)) {
-    console.error(`✗ Cookies não encontrados: ${COOKIES_PATH}`);
-    console.error(`  Capturar via Chrome 90 (ver CLAUDE.md "Cenário 1") e gravar.`);
-    process.exit(1);
-  }
-  const j = JSON.parse(fs.readFileSync(COOKIES_PATH, "utf8"));
-  if (!j.cookieHeader) {
-    console.error(`✗ Cookies inválidos (falta cookieHeader): ${COOKIES_PATH}`);
-    process.exit(1);
-  }
-  // Aviso se cookies forem velhos (>10 dias) — DG_Lists_URL pode expirar
-  if (j.generated) {
-    const ageDays = (Date.now() - new Date(j.generated).getTime()) / 86400000;
-    if (ageDays > 10) {
-      console.warn(`⚠ Cookies têm ${ageDays.toFixed(1)} dias — refresh recomendado se HTTP 500.`);
-    }
-  }
-  return j.cookieHeader;
+  return loadCookieHeader({
+    envVars: ["DATAGOLF_SCORING_COOKIES"],
+    file: COOKIES_PATH,
+    label: "[federados]",
+  });
 }
 
 // ── .NET /Date(ms)/ → ISO YYYY-MM-DD ──────────────────────────────

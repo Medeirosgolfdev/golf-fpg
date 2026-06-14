@@ -18,7 +18,7 @@ import { teeGroupHex } from "./teeColors";
 import { MANUEL_FED } from "../constants/manuel";
 import { MANUEL_AWAY_TEE } from "../constants/manuelAwayTees";
 
-function courseKeyName(name: string): string {
+export function courseKeyName(name: string): string {
   // Normalização robusta: além do norm (lowercase + sem diacríticos), remover
   // TODA a pontuação para que "Villa Padierna - Flamingos" (campo) case com
   // "Villa Padierna Flamingos" (etiqueta da ronda), "Marco Simone Golf &

@@ -31,7 +31,7 @@ import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../../ui/Toolbar
 import { norm, fmtToPar } from "../../utils/format";
 import { getTeeHex, textOnColor, teeBorder } from "../../utils/teeColors";
 import { MANUEL_FED } from "../../constants/manuel";
-import { resolvePlayedMeters } from "../../utils/playedDistance";
+import { resolvePlayedMeters, resolvePlayedTee, courseKeyName } from "../../utils/playedDistance";
 
 const MONO = "'JetBrains Mono', monospace";
 
@@ -158,19 +158,36 @@ interface TeeHist {
   recentN: number; recentTypVsPar: number | null;
 }
 
+/** Chave de tee robusta: ignora o prefixo "USKids" e a pontuação, para que
+ *  "Boys 11" (etiqueta da volta) case com "USKids Boys 11" (tee do master). */
+function teeKey(s: string): string {
+  return norm(s).replace(/\buskids\b/g, "").replace(/[^a-z0-9]+/g, " ").trim();
+}
+
 /** Histórico real do Manuel num campo+tee (voltas 18B com par conhecido).
- *  Devolve agregado (todas as voltas) e forma recente (últimas até 4, por data). */
-function teeHistory(data: PlayerPageData | null, courseName: string, teeName: string): TeeHist {
+ *  Devolve agregado (todas as voltas) e forma recente (últimas até 4, por data).
+ *  A correspondência campo↔volta usa a mesma normalização robusta das distâncias
+ *  (courseKeyName + resolvePlayedTee, com o override curado MANUEL_AWAY_TEE), para
+ *  não perder voltas por travessão vs hífen ou "Boys 11" vs "USKids Boys 11". */
+function teeHistory(
+  data: PlayerPageData | null, courseName: string, tee: Tee,
+  simCourses: Course[], fedId: string,
+): TeeHist {
   const empty: TeeHist = { n: 0, typVsPar: null, best: null, recentN: 0, recentTypVsPar: null };
   if (!data) return empty;
-  const ck = norm(courseName);
-  const tk = norm(teeName);
+  const ck = courseKeyName(courseName);
+  const tk = teeKey(tee.teeName);
   const rs: { vsPar: number; gross: number; d: number }[] = [];
   for (const c of data.DATA) {
-    if (norm(c.course) !== ck) continue;
+    if (courseKeyName(c.course) !== ck) continue;
     for (const r of c.rounds) {
-      if (r.holeCount !== 18 || norm(r.tee) !== tk) continue;
+      if (r.holeCount !== 18) continue;
       if (r.gross == null || r.par == null || r.gross <= 0) continue;
+      // Esta volta foi jogada no tee em análise? Tenta a chave de tee (ignora
+      // "USKids"); só se falhar recorre a resolvePlayedTee (override/cor curados).
+      const sameTee = teeKey(r.tee) === tk
+        || resolvePlayedTee(c.course, r.tee, simCourses, fedId)?.teeId === tee.teeId;
+      if (!sameTee) continue;
       rs.push({ vsPar: r.gross - r.par, gross: r.gross, d: r.dateSort });
     }
   }
@@ -219,27 +236,30 @@ function habitualDistance(
 }
 
 interface LongPerf {
-  thresholdM: number;
+  thresholdM: number; index: number;
   nLong: number; nShort: number;
-  longAvgSd: number | null; shortAvgSd: number | null;
+  /** Voltas com score differential ≤ índice (jogadas ao nível do índice ou melhor). */
+  nLongGood: number; nShortGood: number;
   /** Melhor (menor) score differential em campos longos, com campo e metros. */
   bestLong: { sd: number; course: string; meters: number } | null;
 }
 
-/** Desempenho do jogador em campos LONGOS vs curtos, medido por score
- *  differential (já normaliza CR/Slope, por isso é comparável entre campos).
- *  `thresholdM` separa "longo" de "curto" (tipicamente o comprimento do tee que
- *  se está a ponderar). Usa o mesmo fallback de metros que a distância habitual,
- *  para incluir os torneios internacionais. */
+/** Desempenho do jogador em campos LONGOS vs curtos (últimos 12 meses), medido
+ *  por score differential. NÃO usa a média: o índice WHS é a média das 8 MELHORES
+ *  de 20 voltas (o potencial num bom dia), e um jogador só joga ao índice ~1 em
+ *  cada 5 voltas — por isso a média de differential fica sempre acima do índice e
+ *  seria enganadora. Em vez disso conta as voltas jogadas AO NÍVEL DO ÍNDICE ou
+ *  melhor (as que formam o handicap) e guarda o melhor differential. Usa o mesmo
+ *  fallback de metros que a distância habitual, para incluir os torneios intl. */
 function longTeePerformance(
-  data: PlayerPageData | null, simCourses: Course[], thresholdM: number,
+  data: PlayerPageData | null, simCourses: Course[], thresholdM: number, index: number,
 ): LongPerf {
-  const empty: LongPerf = { thresholdM, nLong: 0, nShort: 0, longAvgSd: null, shortAvgSd: null, bestLong: null };
+  const empty: LongPerf = { thresholdM, index, nLong: 0, nShort: 0, nLongGood: 0, nShortGood: 0, bestLong: null };
   if (!data) return empty;
   // Só os últimos 12 meses: um júnior cresce depressa — o que era capaz há mais
   // de um ano não representa o jogo de hoje.
   const cutoff = Date.now() - 365 * 24 * 60 * 60 * 1000;
-  let longSum = 0, longN = 0, shortSum = 0, shortN = 0;
+  let longN = 0, shortN = 0, nLongGood = 0, nShortGood = 0;
   let bestLong: { sd: number; course: string; meters: number } | null = null;
   for (const c of data.DATA) for (const r of c.rounds) {
     if (r.holeCount !== 18 || r.dateSort < cutoff) continue;
@@ -249,19 +269,15 @@ function longTeePerformance(
       ? r.meters
       : resolvePlayedMeters(c.course, r.tee, r.holeCount, simCourses, MANUEL_FED);
     if (m == null || m <= 3000) continue;
+    const good = sd <= index;
     if (m >= thresholdM) {
-      longSum += sd; longN++;
+      longN++; if (good) nLongGood++;
       if (bestLong == null || sd < bestLong.sd) bestLong = { sd, course: c.course, meters: m };
     } else {
-      shortSum += sd; shortN++;
+      shortN++; if (good) nShortGood++;
     }
   }
-  return {
-    thresholdM, nLong: longN, nShort: shortN,
-    longAvgSd: longN ? longSum / longN : null,
-    shortAvgSd: shortN ? shortSum / shortN : null,
-    bestLong,
-  };
+  return { thresholdM, index, nLong: longN, nShort: shortN, nLongGood, nShortGood, bestLong };
 }
 
 /* ═══════════════════ Métricas por tee ═══════════════════ */
@@ -285,6 +301,7 @@ interface TeeMetrics {
 function buildMetrics(
   tee: Tee, hi: number, driveM: number, secondM: number,
   habitual: number | null, data: PlayerPageData | null, courseName: string,
+  simCourses: Course[], fedId: string,
 ): TeeMetrics {
   const par = getParTotal(tee);
   const cr = tee.ratings?.holes18?.courseRating ?? null;
@@ -297,7 +314,7 @@ function buildMetrics(
     grossAlvo: ph != null ? par + ph : null,
     deltaHab: dist != null && habitual != null ? dist - habitual : null,
     gir: reachableHoles(tee, driveM, secondM),
-    hist: teeHistory(data, courseName, tee.teeName),
+    hist: teeHistory(data, courseName, tee, simCourses, fedId),
   };
 }
 
@@ -426,30 +443,36 @@ function buildConclusions(a: TeeMetrics, b: TeeMetrics): Conclusion[] {
     cs.push({ icon: "⚠️", title: "Buracos de alerta", text: "Sem distâncias por buraco num dos tees.", pts: 0, available: false, informational: true });
   }
 
-  // 4 — Histórico real
-  if (a.hist.n >= 2 && b.hist.n >= 2 && a.hist.typVsPar != null && b.hist.typVsPar != null) {
-    const diff = b.hist.typVsPar - a.hist.typVsPar; // positivo → A teve scores típicos melhores vs par
+  // 4 — Histórico real (por tee). Mostra o que existe MESMO que só haja um tee
+  // jogado — é normal jogar sempre o mesmo tee, e é precisamente essa transição
+  // que se está a analisar. Só pontua quando há ≥2 voltas em AMBOS (comparável).
+  if (a.hist.n === 0 && b.hist.n === 0) {
+    cs.push({ icon: "📊", title: "Histórico real neste campo", short: "Histórico", text: "Sem voltas registadas neste campo.", pts: 0, available: false });
+  } else {
+    // Usa o típico RECENTE (mesma janela que a recomendação) para serem coerentes;
+    // mostra o total de voltas entre parênteses.
+    const desc = (m: TeeMetrics) => {
+      if (m.hist.n === 0) return <><TeeNameSpan tee={m.tee} />: ainda sem voltas</>;
+      const v = m.hist.recentTypVsPar ?? m.hist.typVsPar;
+      if (m.hist.n >= 2 && v != null)
+        return <><TeeNameSpan tee={m.tee} />: típico {fmtToPar(Math.round(v))} vs par (últimas {m.hist.recentN}{m.hist.n > m.hist.recentN ? <> de {m.hist.n}</> : null} voltas)</>;
+      return <><TeeNameSpan tee={m.tee} />: {m.hist.n} volta{m.hist.n === 1 ? "" : "s"}{v != null ? <> ({fmtToPar(Math.round(v))} vs par)</> : null}</>;
+    };
+    const comparable = a.hist.n >= 2 && b.hist.n >= 2 && a.hist.recentTypVsPar != null && b.hist.recentTypVsPar != null;
+    const diff = comparable ? (b.hist.recentTypVsPar! - a.hist.recentTypVsPar!) : 0;
     cs.push({
       icon: "📊", title: "Histórico real neste campo", short: "Histórico",
       text: (
         <>
-          {A}: resultado típico {fmtToPar(Math.round(a.hist.typVsPar))} vs par em {a.hist.n} voltas · {B}: {fmtToPar(Math.round(b.hist.typVsPar))} em {b.hist.n} <span className="muted">(mediana — ignora voltas atípicas)</span>.{" "}
-          {Math.abs(diff) < 1 ? "Rendimento equivalente." : <>Scores típicos melhores de <TeeNameSpan tee={(diff > 0 ? a : b).tee} />.</>}
+          {desc(a)} · {desc(b)} <span className="muted">(mediana — ignora voltas atípicas)</span>.{" "}
+          {comparable
+            ? (Math.abs(diff) < 1 ? "Rendimento equivalente." : <>Scores típicos melhores de <TeeNameSpan tee={(diff > 0 ? a : b).tee} />.</>)
+            : "Só há histórico num dos tees — é exactamente a mudança de tee que estás a ponderar."}
         </>
       ),
-      pts: Math.max(-3, Math.min(3, diff)),
+      pts: comparable ? Math.max(-3, Math.min(3, diff)) : 0,
       available: true,
-    });
-  } else {
-    const parts: string[] = [];
-    if (a.hist.n > 0) parts.push(`${a.tee.teeName}: ${a.hist.n} volta${a.hist.n === 1 ? "" : "s"}`);
-    if (b.hist.n > 0) parts.push(`${b.tee.teeName}: ${b.hist.n} volta${b.hist.n === 1 ? "" : "s"}`);
-    cs.push({
-      icon: "📊", title: "Histórico real neste campo", short: "Histórico",
-      text: parts.length > 0
-        ? `Histórico insuficiente para comparar (${parts.join(" · ")} — mínimo 2 em cada tee).`
-        : "Sem voltas registadas neste campo.",
-      pts: 0, available: false,
+      informational: !comparable,
     });
   }
 
@@ -510,7 +533,7 @@ const TEE_SORT_VAL: Record<TeeSortKey, (m: TeeMetrics) => number | string> = {
   alvo: m => m.grossAlvo ?? -1,
   gir: m => m.gir.total > 0 ? m.gir.reach.length : -1,
   nh: m => m.hist.n,
-  avg: m => m.hist.typVsPar ?? Number.MAX_SAFE_INTEGER,
+  avg: m => m.hist.recentTypVsPar ?? Number.MAX_SAFE_INTEGER,
 };
 
 function TeeTable({ rows, habitual }: { rows: TeeMetrics[]; habitual: number | null }) {
@@ -542,7 +565,7 @@ function TeeTable({ rows, habitual }: { rows: TeeMetrics[]; habitual: number | n
             <SortableHdr k="alvo"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Gross que joga ao handicap (SD = HI)">Gross alvo</SortableHdr>
             <SortableHdr k="gir"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Buracos alcançáveis em regulação com o alcance configurado">Alcanç.</SortableHdr>
             <SortableHdr k="nh"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Voltas 18B do Manuel neste tee">Voltas</SortableHdr>
-            <SortableHdr k="avg"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Resultado típico (mediana) vs par — ignora voltas atípicas">Típico vs Par</SortableHdr>
+            <SortableHdr k="avg"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Resultado típico recente (mediana das últimas voltas) vs par — ignora voltas atípicas">Típico vs Par</SortableHdr>
           </tr>
         </thead>
         <tbody>
@@ -560,7 +583,7 @@ function TeeTable({ rows, habitual }: { rows: TeeMetrics[]; habitual: number | n
               <td className="r" style={{ fontFamily: MONO }}>{m.grossAlvo ?? "–"}</td>
               <td className="r" style={{ fontFamily: MONO }}>{m.gir.total > 0 ? `${m.gir.reach.length}/${m.gir.total}` : "–"}</td>
               <td className="r" style={{ fontFamily: MONO }}>{m.hist.n || "–"}</td>
-              <td className="r" style={{ fontFamily: MONO }}>{m.hist.typVsPar != null ? fmtToPar(Math.round(m.hist.typVsPar)) : "–"}</td>
+              <td className="r" style={{ fontFamily: MONO }}>{m.hist.recentTypVsPar != null ? fmtToPar(Math.round(m.hist.recentTypVsPar)) : "–"}</td>
             </tr>
           ))}
         </tbody>
@@ -785,8 +808,8 @@ export default function TeeAdvisorView({ simCourses }: { simCourses: Course[] })
   const habEff = habOverride ?? hab.value;
 
   const metrics = useMemo(
-    () => tees.map(t => buildMetrics(t, hcp, driveM, secondM, habEff, manuelData, course?.master.name ?? "")),
-    [tees, hcp, driveM, secondM, habEff, manuelData, course]
+    () => tees.map(t => buildMetrics(t, hcp, driveM, secondM, habEff, manuelData, course?.master.name ?? "", simCourses, MANUEL_FED)),
+    [tees, hcp, driveM, secondM, habEff, manuelData, course, simCourses]
   );
 
   // Par A/B default: amarelas vs vermelhas; fallback mais longo vs mais curto
@@ -844,7 +867,7 @@ export default function TeeAdvisorView({ simCourses }: { simCourses: Course[] })
     const beyondWindow = habEff != null && habEff > high;
     // Desempenho real em campos do comprimento do tee longo (ou acima), 12 meses.
     const perfThreshold = Math.round(((longer.dist ?? 0) - 150) / 50) * 50;
-    const longPerf = longTeePerformance(manuelData, simCourses, perfThreshold);
+    const longPerf = longTeePerformance(manuelData, simCourses, perfThreshold, hcp);
     // Saldo: pancadas extra ganhas vs perigos criados ao subir de tee.
     const saldo = perdao != null ? perdao - alerts : null;
     const goodDeal = saldo != null && saldo >= 2;          // cobre os perigos com folga
@@ -880,27 +903,28 @@ export default function TeeAdvisorView({ simCourses }: { simCourses: Course[] })
       shortRecentN: shorter.hist.recentN, longRecentN: longer.hist.recentN,
       longPerf,
     };
-  }, [teeA, teeB, driveM, habEff, manuelData, simCourses]);
+  }, [teeA, teeB, driveM, habEff, manuelData, simCourses, hcp]);
 
   // Frase de evidência (dados reais) sobre o desempenho dele em campos longos —
   // partilhada pelas mensagens de recomendação que mandam subir de tee.
   const perfLine = useMemo(() => {
     const lp = recommendation?.longPerf;
-    if (!lp || lp.nLong < 3 || lp.longAvgSd == null) return null;
-    const better = lp.shortAvgSd != null && lp.longAvgSd <= lp.shortAvgSd + 0.5;
+    if (!lp || lp.nLong < 3) return null;
+    // O índice WHS é o potencial num bom dia (média das 8 melhores de 20); só se
+    // joga ao índice ~1 em cada 5 voltas. Por isso conta-se as voltas jogadas AO
+    // NÍVEL DO ÍNDICE ou melhor, não a média (que é sempre mais alta).
+    const pLong = lp.nLong ? lp.nLongGood / lp.nLong : 0;
+    const pShort = lp.nShort ? lp.nShortGood / lp.nShort : 0;
+    const asGoodAsShort = lp.nShort >= 3 && pLong >= pShort - 0.01;
     return (
       <>
-        {" "}Os dados confirmam-no: nos <b>últimos 12 meses</b>, nas tuas <b>{lp.nLong} voltas em campos de {lp.thresholdM} m ou mais</b>, a
-        média de <i>score differential</i> é <b>{lp.longAvgSd.toFixed(1)}</b>
-        {better && lp.shortAvgSd != null
-          ? <> — tão boa ou melhor que os {lp.shortAvgSd.toFixed(1)} dos campos curtos</>
-          : null}
+        {" "}Os dados dão-te confiança: nos <b>últimos 12 meses</b> jogaste <b>{lp.nLong} voltas em campos de {lp.thresholdM} m ou mais</b> e
+        em <b>{lp.nLongGood}</b> delas jogaste ao nível do teu índice ({lp.index.toFixed(1)}) ou melhor
+        {asGoodAsShort ? <> — tão frequente como nos campos curtos</> : null}.
         {lp.bestLong
-          ? <>, e o teu melhor diferencial deste período ({lp.bestLong.sd.toFixed(1)}) foi em {lp.bestLong.course} ({lp.bestLong.meters} m)</>
-          : null}.
-        {" "}{better
-          ? "Não perdes qualidade com o comprimento — é aí que mostras o teu melhor golfe."
-          : "Aguentas bem o comprimento."}
+          ? <> O teu melhor differential deste período (<b>{lp.bestLong.sd.toFixed(1)}</b>, abaixo do teu índice) foi em {lp.bestLong.course} ({lp.bestLong.meters} m).</>
+          : null}
+        {" "}Jogar longo não te tira qualidade — é aí que mostras o teu melhor golfe.
       </>
     );
   }, [recommendation]);
@@ -1107,7 +1131,10 @@ export default function TeeAdvisorView({ simCourses }: { simCourses: Course[] })
             drive + 2ª pancada configurados acima (par 3 ≤ drive · par 4 ≤ drive+2ª · par 5 ≤ drive+2×2ª).
             A <b>forma no campo</b> usa a <b>mediana</b> ("resultado típico"), não a média — uma
             volta catastrófica não distorce o retrato — e dá prioridade às últimas voltas; o
-            desempenho em campos longos usa só os <b>últimos 12 meses</b> (um júnior cresce depressa).
+            desempenho em campos longos usa só os <b>últimos 12 meses</b> (um júnior cresce depressa)
+            e mede-se pelas voltas jogadas <b>ao nível do índice ou melhor</b>, não pela média: o índice
+            WHS é a média das 8 MELHORES de 20 voltas (o potencial num bom dia) e só ~1 em cada 5 voltas
+            se joga ao índice, por isso a média de differential fica sempre acima dele e seria enganadora.
             A recomendação NÃO empurra sempre para o tee longo: a distância abre a porta, mas se o
             <b> saldo for negativo</b> (mais perigos que perdão) ou ele <b>ainda não conhecer o campo</b>,
             aconselha cautela — o tee mais curto e conhecido é a escolha sensata. Se ainda não faz
@@ -1170,6 +1197,45 @@ export default function TeeAdvisorView({ simCourses }: { simCourses: Course[] })
                 <a href="https://www.usga.org/content/usga/home-page/course-care/green-section-record/61/issue-06/forward-tees-for-the-future.html" target="_blank" rel="noopener noreferrer">↗ USGA — Forward Tees for the Future</a>
                 <a href="https://www.usga.org/content/usga/home-page/course-care/green-section-record/61/issue-11/helping-golfers-choose-their--best-tees--.html" target="_blank" rel="noopener noreferrer">↗ USGA — Helping Golfers Choose Their "Best Tees"</a>
                 <a href="https://pdf.pgalinks.com/p-g-a/Tee_It_Forward_Guidelines.pdf" target="_blank" rel="noopener noreferrer">↗ PGA/USGA — Tee It Forward Guidelines (PDF)</a>
+              </div>
+            </div>
+          </details>
+
+          <details className="card" style={{ marginTop: 8 }}>
+            <summary style={{ cursor: "pointer", fontWeight: 700, fontSize: 13 }}>
+              📊 Porquê contamos voltas ao nível do índice — e não a média?
+            </summary>
+            <div style={{ fontSize: 13, lineHeight: 1.7, marginTop: 10 }}>
+              <p style={{ margin: "0 0 8px" }}>
+                <b>1 — O índice de handicap é potencial, não média.</b> No World Handicap System, o
+                índice é a <b>média das 8 melhores</b> de entre as últimas 20 voltas (cada uma
+                ajustada à dificuldade do campo). Mede o que o jogador é capaz de fazer <i>num bom
+                dia</i> — de propósito, não o que faz em média. Um jogador "irregular" carrega um
+                índice mais baixo do que o seu score médio sugeriria.
+              </p>
+              <p style={{ margin: "0 0 8px" }}>
+                <b>2 — Por isso só se joga ao índice ~1 em cada 5 voltas.</b> O WHS assume que um
+                jogador iguala ou bate o seu índice cerca de <b>20% das vezes</b>. As outras 4 em 5
+                voltas ficam acima — é o esperado, não um sinal de mau jogo. Consequência: a
+                <b> média</b> de score differential de um jogador anda sempre vários pontos
+                <i> acima</i> do índice (um índice ~10 tem médias na casa dos 14–15).
+              </p>
+              <p style={{ margin: "0 0 8px" }}>
+                <b>3 — Logo, comparamos as voltas certas.</b> Para saber se ele aguenta um
+                comprimento, citar a "média de differential" seria enganador — pareceria mau quando
+                é perfeitamente normal. Em vez disso contamos as voltas jogadas <b>ao nível do índice
+                ou melhor</b> (as que efetivamente formam o handicap) e o <b>melhor differential</b>
+                do período. Se essas voltas de qualidade aparecem tanto — ou mais — nos campos
+                longos, é prova de que o comprimento não lhe tira nível.
+              </p>
+              <p style={{ margin: 0 }} className="muted">
+                Nota: tudo isto é medido nos <b>últimos 12 meses</b>, porque um júnior cresce
+                depressa e o que fazia há mais de um ano já não representa o jogo de hoje.
+              </p>
+              <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 4, fontSize: 12 }}>
+                <a href="https://www.usga.org/content/usga/home-page/handicapping/world-handicap-system/topics/handicap-index-calculation.html" target="_blank" rel="noopener noreferrer">↗ USGA — The Handicap Index Calculation (8 melhores de 20)</a>
+                <a href="https://www.randa.org/en/roh/the-rules-of-handicapping/rule-5" target="_blank" rel="noopener noreferrer">↗ R&A — Rules of Handicapping, Rule 5</a>
+                <a href="https://www.nationalclubgolfer.com/whs/odds-of-beating-your-handicap/" target="_blank" rel="noopener noreferrer">↗ National Club Golfer — odds de bater o teu handicap (~1 em 5)</a>
               </div>
             </div>
           </details>

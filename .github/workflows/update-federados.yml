@@ -1,0 +1,117 @@
+name: Actualizar Federados
+
+# Refresh COMPLETO de public/data/federados.json (~15.600 activos, FedStat=9)
+# via scripts/scrape-federados-node.js (Node puro, sem browser).
+#
+# Corre:
+#  - Automaticamente à Quarta às 05:00 UTC (1×/semana, off-peak, longe dos
+#    scrapers de fim-de-semana para evitar non-fast-forward no git push)
+#  - A pedido (botão "Run workflow" no GitHub)
+#
+# Útil para apanhar: novas fotos de jogadores (paths antigos passam a 404),
+# novos federados, mudanças de clube/HCP.
+#
+# Requer GitHub Secret:
+#   DATAGOLF_SCORING_COOKIES — cookie header capturado de scoring.datagolf.pt
+#                              formato: "ASP.NET_SessionId=XXX; DG_Lists_URL=YYY"
+#   (o mesmo secret usado por update-drive / update-jovens / update-classif)
+on:
+  workflow_dispatch:
+    inputs:
+      check_only:
+        description: 'Só comparar, sem gravar (--check-only)'
+        required: false
+        default: 'false'
+        type: choice
+        options: ['false', 'true']
+      force_commit:
+        description: 'Fazer commit mesmo se nada mudou?'
+        required: false
+        default: 'false'
+        type: choice
+        options: ['false', 'true']
+
+  schedule:
+    # Minuto Hora Dia Mês DiaSemana (UTC) — 05:00 UTC à Quarta (3)
+    - cron: '0 5 * * 3'
+
+permissions:
+  contents: write
+
+jobs:
+  update-federados:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Correr scrape-federados-node.js
+        id: scrape
+        run: |
+          set +e
+          CHECK_ONLY=""
+          if [ "${{ github.event.inputs.check_only }}" = "true" ]; then
+            CHECK_ONLY="--check-only"
+          fi
+          node scripts/scrape-federados-node.js $CHECK_ONLY
+          EXIT_CODE=$?
+          echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+          # 0 = ficheiro actualizado → commit
+          # 2 = sem alterações → não commit (NÃO é erro)
+          # 1 = erro real (cookies expirados, run parcial, etc.)
+          if [ "$EXIT_CODE" = "1" ]; then
+            echo "❌ Scraper falhou — ver logs acima (provável cookies expirados)"
+            exit 1
+          fi
+          if [ "$EXIT_CODE" = "2" ]; then
+            echo "ℹ️  Sem alterações reais — a saltar o commit"
+          fi
+          exit 0
+        env:
+          DATAGOLF_SCORING_COOKIES: ${{ secrets.DATAGOLF_SCORING_COOKIES }}
+
+      - name: Commit e push (se houve alterações)
+        if: steps.scrape.outputs.exit_code == '0' && github.event.inputs.check_only != 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add public/data/federados.json
+
+          # Dupla verificação: só commitar se o git diff mostra alterações
+          if git diff --staged --quiet; then
+            echo "Nenhuma alteração em staging — sem commit."
+            exit 0
+          fi
+
+          DATE=$(date +'%Y-%m-%d %H:%M')
+          git commit -m "data: refresh federados.json ${DATE}"
+          # Push robusto: retry com pull --rebase em cada tentativa.
+          PUSH_OK=0
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
+              PUSH_OK=1
+              break
+            fi
+            git rebase --abort 2>/dev/null || true
+            echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
+            sleep $((i * 5))
+          done
+          if [ "$PUSH_OK" != "1" ]; then
+            echo "❌ Push falhou após 5 tentativas"
+            exit 1
+          fi
+          echo "✓ federados.json actualizado"
