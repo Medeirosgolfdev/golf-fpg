@@ -1,18 +1,18 @@
 {
-  "geradoEm": "2026-06-14T12:05:36.626Z",
+  "geradoEm": "2026-06-14T18:06:21.939Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 115,
-  "totalCompanheirosUnicos": 136,
+  "totalRondas": 126,
+  "totalCompanheirosUnicos": 153,
   "cobertura": {
     "fpg": {
       "rondasJogadas": 121,
-      "rondasComDraw": 93,
+      "rondasComDraw": 104,
       "torneiosJogados": 91,
-      "torneiosComDraw": 74,
+      "torneiosComDraw": 85,
       "torneiosComDrawDetalhe": [
         {
           "torneioId": "007-11034",
@@ -309,6 +309,18 @@
           "rondas": 2
         },
         {
+          "torneioId": "007-10812",
+          "nome": "XIII Torneio CGSS OM NOS",
+          "data": "2024-10-25",
+          "rondas": 1
+        },
+        {
+          "torneioId": "007-10809",
+          "nome": "TAÇA PRESIDENTE CGSS",
+          "data": "2024-10-18",
+          "rondas": 1
+        },
+        {
           "torneioId": "988-10225",
           "nome": "Final Nacional Drive Challenge",
           "data": "2024-10-12",
@@ -319,6 +331,12 @@
           "nome": "PJA  Alfred Dunhill Links Championship",
           "data": "2024-10-04",
           "rondas": 2
+        },
+        {
+          "torneioId": "007-10800",
+          "nome": "TORNEIO C. SANTOS VP",
+          "data": "2024-09-27",
+          "rondas": 1
         },
         {
           "torneioId": "982-10166",
@@ -342,6 +360,12 @@
           "torneioId": "920-10078",
           "nome": "Liga Portuguesa Contra o Cancro",
           "data": "2024-08-16",
+          "rondas": 1
+        },
+        {
+          "torneioId": "007-10777",
+          "nome": "Torneio CGSS RALI",
+          "data": "2024-08-02",
           "rondas": 1
         },
         {
@@ -369,9 +393,33 @@
           "rondas": 1
         },
         {
+          "torneioId": "007-10752",
+          "nome": "MADEIRA GOLF TROPHY [DS] 2024",
+          "data": "2024-06-07",
+          "rondas": 1
+        },
+        {
+          "torneioId": "007-10746",
+          "nome": "Torneio NOS Empresas",
+          "data": "2024-05-25",
+          "rondas": 1
+        },
+        {
+          "torneioId": "007-10741",
+          "nome": "Torneio Cidade de Machico",
+          "data": "2024-05-10",
+          "rondas": 1
+        },
+        {
           "torneioId": "982-10147",
           "nome": "3º Torn.Drive Challenge Madeira-Porto Santo-Sub10",
           "data": "2024-04-20",
+          "rondas": 1
+        },
+        {
+          "torneioId": "007-10734",
+          "nome": "Torneio Golf & Clássicos 2024",
+          "data": "2024-04-19",
           "rondas": 1
         },
         {
@@ -390,6 +438,24 @@
           "torneioId": "982-10139",
           "nome": "1º Torn.Drive Challenge Madeira-Sto.da Serra-Sub10",
           "data": "2024-02-04",
+          "rondas": 1
+        },
+        {
+          "torneioId": "007-10676",
+          "nome": "Campeonato Regional de Jovens Sub10&12 Dia 2",
+          "data": "2023-11-19",
+          "rondas": 1
+        },
+        {
+          "torneioId": "007-10674",
+          "nome": "Campeonato Regional de Jovens Sub10&12 Dia1",
+          "data": "2023-11-18",
+          "rondas": 1
+        },
+        {
+          "torneioId": "007-10658",
+          "nome": "Torneio SVR Lazartigue",
+          "data": "2023-10-14",
           "rondas": 1
         },
         {
@@ -433,19 +499,8 @@
         "007-10572",
         "007-10607",
         "007-10651",
-        "007-10658",
-        "007-10674",
-        "007-10676",
         "007-10705",
-        "007-10734",
-        "007-10741",
-        "007-10746",
-        "007-10752",
-        "007-10777",
         "007-10796",
-        "007-10800",
-        "007-10809",
-        "007-10812",
         "007-10857",
         "125-10371",
         "183-10129",
@@ -473,24 +528,6 @@
           "rondas": 1
         },
         {
-          "torneioId": "007-10812",
-          "nome": "XIII Torneio CGSS OM NOS",
-          "data": "2024-10-25",
-          "rondas": 1
-        },
-        {
-          "torneioId": "007-10809",
-          "nome": "TAÇA PRESIDENTE CGSS",
-          "data": "2024-10-18",
-          "rondas": 1
-        },
-        {
-          "torneioId": "007-10800",
-          "nome": "TORNEIO C. SANTOS VP",
-          "data": "2024-09-27",
-          "rondas": 1
-        },
-        {
           "torneioId": "007-10796",
           "nome": "XI Torneio Vinhos Barbeito Madeira",
           "data": "2024-09-20",
@@ -503,63 +540,15 @@
           "rondas": 1
         },
         {
-          "torneioId": "007-10777",
-          "nome": "Torneio CGSS RALI",
-          "data": "2024-08-02",
-          "rondas": 1
-        },
-        {
-          "torneioId": "007-10752",
-          "nome": "MADEIRA GOLF TROPHY [DS] 2024",
-          "data": "2024-06-07",
-          "rondas": 1
-        },
-        {
-          "torneioId": "007-10746",
-          "nome": "Torneio NOS Empresas",
-          "data": "2024-05-25",
-          "rondas": 1
-        },
-        {
-          "torneioId": "007-10741",
-          "nome": "Torneio Cidade de Machico",
-          "data": "2024-05-10",
-          "rondas": 1
-        },
-        {
-          "torneioId": "007-10734",
-          "nome": "Torneio Golf & Clássicos 2024",
-          "data": "2024-04-19",
-          "rondas": 1
-        },
-        {
           "torneioId": "007-10705",
           "nome": "Torneio de Carnaval 2024",
           "data": "2024-02-10",
           "rondas": 1
         },
         {
-          "torneioId": "007-10676",
-          "nome": "Campeonato Regional de Jovens Sub10&12 Dia 2",
-          "data": "2023-11-19",
-          "rondas": 1
-        },
-        {
-          "torneioId": "007-10674",
-          "nome": "Campeonato Regional de Jovens Sub10&12 Dia1",
-          "data": "2023-11-18",
-          "rondas": 1
-        },
-        {
           "torneioId": "988-10190",
           "nome": "Final Nacional Drive Challenge 2023 - Sub10",
           "data": "2023-10-28",
-          "rondas": 1
-        },
-        {
-          "torneioId": "007-10658",
-          "nome": "Torneio SVR Lazartigue",
-          "data": "2023-10-14",
           "rondas": 1
         },
         {
@@ -3792,6 +3781,85 @@
     },
     {
       "circuito": "FPG",
+      "torneioId": "007-10812",
+      "torneioNome": "XIII Torneio CGSS OM NOS",
+      "data": "2024-10-25",
+      "ronda": 1,
+      "teeTime": "10:21",
+      "startHole": 1,
+      "campo": "Santo da Serra - Desertas-Serras",
+      "manuelScore": {
+        "gross": 93,
+        "toPar": 21
+      },
+      "companheiros": [
+        {
+          "nome": "Henriques,Alexandre",
+          "fed": "2178",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 79,
+            "toPar": 7
+          }
+        },
+        {
+          "nome": "André Rodrigues",
+          "fed": "47855",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "007-10809",
+      "torneioNome": "TAÇA PRESIDENTE CGSS",
+      "data": "2024-10-18",
+      "ronda": 1,
+      "teeTime": "09:00",
+      "startHole": 4,
+      "campo": "Santo da Serra - Machico-Desertas",
+      "manuelScore": {
+        "gross": 98,
+        "toPar": 26
+      },
+      "companheiros": [
+        {
+          "nome": "Franz Kohl",
+          "fed": "51909",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 96,
+            "toPar": 24
+          }
+        },
+        {
+          "nome": "Martim Macedo",
+          "fed": "2199",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 85,
+            "toPar": 13
+          }
+        },
+        {
+          "nome": "Nuno Rebolo",
+          "fed": "29982",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 104,
+            "toPar": 32
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
       "torneioId": "988-10225",
       "torneioNome": "Final Nacional Drive Challenge",
       "data": "2024-10-12",
@@ -3854,6 +3922,52 @@
     },
     {
       "circuito": "FPG",
+      "torneioId": "007-10800",
+      "torneioNome": "TORNEIO C. SANTOS VP",
+      "data": "2024-09-27",
+      "ronda": 1,
+      "teeTime": "13:40",
+      "startHole": 12,
+      "campo": "Santo da Serra - Desertas-Serras",
+      "manuelScore": {
+        "gross": 99,
+        "toPar": 27
+      },
+      "companheiros": [
+        {
+          "nome": "Blass Rodrigues",
+          "fed": "34797",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 113,
+            "toPar": 41
+          }
+        },
+        {
+          "nome": "Eugenio Matos",
+          "fed": "2405",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 117,
+            "toPar": 45
+          }
+        },
+        {
+          "nome": "Manuel Medeiros",
+          "fed": "54907",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 97,
+            "toPar": 25
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
       "torneioId": "982-10166",
       "torneioNome": "Final Drive Challenge Madeira Porto Santo -Sub 10",
       "data": "2024-09-14",
@@ -3868,7 +3982,7 @@
       "companheiros": [
         {
           "nome": "Qais Khayali",
-          "fed": null,
+          "fed": "50450",
           "clube": "Palheiro",
           "pais": null,
           "score": {
@@ -4056,6 +4170,49 @@
           "clube": "PXO Clube",
           "pais": null,
           "score": null
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "007-10777",
+      "torneioNome": "Torneio CGSS RALI",
+      "data": "2024-08-02",
+      "ronda": 1,
+      "teeTime": "09:55",
+      "startHole": 1,
+      "campo": "Santo da Serra - Desertas-Serras",
+      "manuelScore": {
+        "gross": 90,
+        "toPar": 18
+      },
+      "companheiros": [
+        {
+          "nome": "Rafael Reis Alves",
+          "fed": "40492",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Marcelo Gaspar",
+          "fed": "38006",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 83,
+            "toPar": 11
+          }
+        },
+        {
+          "nome": "Manuel Medeiros",
+          "fed": "54907",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 103,
+            "toPar": 31
+          }
         }
       ]
     },
@@ -4267,6 +4424,141 @@
     },
     {
       "circuito": "FPG",
+      "torneioId": "007-10752",
+      "torneioNome": "MADEIRA GOLF TROPHY [DS] 2024",
+      "data": "2024-06-07",
+      "ronda": 1,
+      "teeTime": "09:00",
+      "startHole": 8,
+      "campo": "Santo da Serra - Desertas-Serras",
+      "manuelScore": {
+        "gross": 96,
+        "toPar": 24
+      },
+      "companheiros": [
+        {
+          "nome": "Miguel Tavares Jr",
+          "fed": "2188",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 70,
+            "toPar": -2
+          }
+        },
+        {
+          "nome": "Paul Saunders",
+          "fed": "38143",
+          "clube": "Palheiro",
+          "pais": null,
+          "score": {
+            "gross": 75,
+            "toPar": 3
+          }
+        },
+        {
+          "nome": "Hugo Luís Rocha da Fonseca",
+          "fed": "31692",
+          "clube": "Oporto",
+          "pais": null,
+          "score": {
+            "gross": 84,
+            "toPar": 12
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "007-10746",
+      "torneioNome": "Torneio NOS Empresas",
+      "data": "2024-05-25",
+      "ronda": 1,
+      "teeTime": "09:10",
+      "startHole": 9,
+      "campo": "Santo da Serra - Machico-Desertas",
+      "manuelScore": {
+        "gross": 92,
+        "toPar": 20
+      },
+      "companheiros": [
+        {
+          "nome": "Francisco Carvalho Gouveia",
+          "fed": "47396",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 77,
+            "toPar": 5
+          }
+        },
+        {
+          "nome": "Elia Campus",
+          "fed": "36676",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 86,
+            "toPar": 14
+          }
+        },
+        {
+          "nome": "Gonçalo Gouveia",
+          "fed": "50398",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 98,
+            "toPar": 26
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "007-10741",
+      "torneioNome": "Torneio Cidade de Machico",
+      "data": "2024-05-10",
+      "ronda": 1,
+      "teeTime": "09:00",
+      "startHole": 13,
+      "campo": "Santo da Serra - Machico-Desertas",
+      "manuelScore": {
+        "gross": 95,
+        "toPar": 23
+      },
+      "companheiros": [
+        {
+          "nome": "Christopher Leitão",
+          "fed": "54280",
+          "clube": "Internacional",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Bruce de Gouveia",
+          "fed": "51541",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 111,
+            "toPar": 39
+          }
+        },
+        {
+          "nome": "Manuel Medeiros",
+          "fed": "54907",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 108,
+            "toPar": 36
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
       "torneioId": "982-10147",
       "torneioNome": "3º Torn.Drive Challenge Madeira-Porto Santo-Sub10",
       "data": "2024-04-20",
@@ -4291,12 +4583,58 @@
         },
         {
           "nome": "Qais Khayali",
-          "fed": null,
+          "fed": "50450",
           "clube": "Palheiro",
           "pais": null,
           "score": {
             "gross": 49,
             "toPar": 13
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "007-10734",
+      "torneioNome": "Torneio Golf & Clássicos 2024",
+      "data": "2024-04-19",
+      "ronda": 1,
+      "teeTime": "09:00",
+      "startHole": 17,
+      "campo": "Santo da Serra - Machico-Desertas",
+      "manuelScore": {
+        "gross": 99,
+        "toPar": 27
+      },
+      "companheiros": [
+        {
+          "nome": "Henriques,Alexandre",
+          "fed": "2178",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 79,
+            "toPar": 7
+          }
+        },
+        {
+          "nome": "André Rodrigues",
+          "fed": "47855",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 73,
+            "toPar": 1
+          }
+        },
+        {
+          "nome": "Manuel Medeiros",
+          "fed": "54907",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 105,
+            "toPar": 33
           }
         }
       ]
@@ -4373,13 +4711,72 @@
         },
         {
           "nome": "Qais Khayali",
-          "fed": null,
+          "fed": "50450",
           "clube": "Palheiro",
           "pais": null,
           "score": {
             "gross": 53,
             "toPar": 17
           }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "007-10676",
+      "torneioNome": "Campeonato Regional de Jovens Sub10&12 Dia 2",
+      "data": "2023-11-19",
+      "ronda": 1,
+      "teeTime": "11:30",
+      "startHole": 1,
+      "campo": "Santo da Serra - Serras-Machico",
+      "manuelScore": {
+        "gross": 50,
+        "toPar": 14
+      },
+      "companheiros": [
+        {
+          "nome": "Qais Khayali",
+          "fed": "50450",
+          "clube": "Palheiro",
+          "pais": null,
+          "score": {
+            "gross": 67,
+            "toPar": 31
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "007-10674",
+      "torneioNome": "Campeonato Regional de Jovens Sub10&12 Dia1",
+      "data": "2023-11-18",
+      "ronda": 1,
+      "teeTime": "13:22",
+      "startHole": 1,
+      "campo": "Santo da Serra - Serras-Machico",
+      "manuelScore": {
+        "gross": 54,
+        "toPar": 18
+      },
+      "companheiros": [
+        {
+          "nome": "Francisco Silva",
+          "fed": "48649",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 51,
+            "toPar": 15
+          }
+        },
+        {
+          "nome": "Gonçalo Gouveia",
+          "fed": "50398",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
         }
       ]
     },
@@ -4432,6 +4829,52 @@
           "score": {
             "gross": 53,
             "toPar": 17
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "007-10658",
+      "torneioNome": "Torneio SVR Lazartigue",
+      "data": "2023-10-14",
+      "ronda": 1,
+      "teeTime": "09:00",
+      "startHole": 9,
+      "campo": "Santo da Serra - Machico-Desertas",
+      "manuelScore": {
+        "gross": 106,
+        "toPar": 34
+      },
+      "companheiros": [
+        {
+          "nome": "Araújo,Pedro",
+          "fed": "31745",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 73,
+            "toPar": 1
+          }
+        },
+        {
+          "nome": "Henrique São Marcos dos Reis",
+          "fed": "40407",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 80,
+            "toPar": 8
+          }
+        },
+        {
+          "nome": "Carlota Braz Gil",
+          "fed": "47374",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": {
+            "gross": 95,
+            "toPar": 23
           }
         }
       ]
