@@ -3615,6 +3615,15 @@ table td.lb-col-divider {
   white-space: nowrap;
   vertical-align: middle;
 }
+/* Colunas numéricas (TOT, ANO, SDs, HCP, P&P, idade): título E valor à direita,
+   e largura encolhida ao conteúdo (1% + nowrap) para não ficarem largas demais —
+   o espaço sobrante vai para Nome/Clube. */
+.player-list-table th.num,
+.player-list-table td.num { text-align: right; }
+.player-list-table th.num { width: 1%; }
+/* Colunas estreitas (Nº Fed, DOB, Sexo, Escalão, país): encolher ao conteúdo
+   para que toda a folga da tabela vá para Nome/Clube, não para estas. */
+.player-list-table th.tight { width: 1%; white-space: nowrap; }
 .player-list-row:hover {
   background: var(--bg-hover, rgba(0, 0, 0, 0.03));
 }

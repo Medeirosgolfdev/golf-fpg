@@ -30,6 +30,8 @@ import { useMasterDetail } from "../hooks/useMasterDetail";
 import { useSort } from "../hooks/useSort";
 import { loadPlayerStats, daysSince, type PlayerStatsDb } from "../data/playerStatsTypes";
 import { loadFederados, federadoToPlayer, mergePlayersWithFederados, loadInativosStats, normalizeAgeLevel, type FederadoRaw, type MergedPlayer, type InativosStats } from "../data/federadosLoader";
+import { loadFederadosPP, ppForFed, getPPByFed, hasRealPPHcp, ppPlayerUrl, type FederadoPP } from "../data/federadosPPLoader";
+import PPHistoryView from "./jogadores/PPHistoryView";
 import { getPlayerHistory, getScorecard, type WhsRound, type Scorecard } from "../data/datagolfClient";
 import { gf } from "../utils/flagUtils";
 import SortableHdr from "../ui/SortableHdr";
@@ -1599,6 +1601,27 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
     return () => { cancelled = true; };
   }, [federadoView, fedId]);
 
+  // ── Pitch & Putt (mundo paralelo: scoring.fpg.pt/listspp) ──
+  // Cruza por fed com federados-pp.json (se existir). `pp` alimenta o pill de
+  // HCP P&P + actividade; `ppView` abre a vista de histórico P&P (descarregado).
+  const [pp, setPp] = useState<FederadoPP | null>(null);
+  // ppView no URL (?view=pp) — persiste em refresh/share e muda o URL, como o
+  // federadoView. As duas são "vistas especiais" fora do ViewKey normal.
+  const ppView = searchParams.get("view") === "pp";
+  const setPpView = (on: boolean) => {
+    setSearchParams(prev => {
+      const n = new URLSearchParams(prev);
+      if (on) n.set("view", "pp"); else n.set("view", "by_date");
+      return n;
+    }, { replace: true });
+  };
+  useEffect(() => {
+    setPp(null);
+    let cancelled = false;
+    loadFederadosPP().then(() => { if (!cancelled) setPp(ppForFed(fedId)); }).catch(() => { /* sem P&P → sem pill */ });
+    return () => { cancelled = true; };
+  }, [fedId]);
+
   const VALID_VIEWS: ViewKey[] = ["by_course", "by_course_analysis", "by_date", "by_tournament", "analysis"];
   const paramView = searchParams.get("view") as ViewKey | null;
 
@@ -1617,8 +1640,9 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
   useEffect(() => {
     setCourseSearch("");
     const pv = searchParams.get("view") as string | null;
-    // "federado" é uma vista válida (não-ViewKey) — ignorar aqui, é tratada noutro código
-    if (pv === "federado") {
+    // "federado" e "pp" são vistas válidas (não-ViewKey) — ignorar aqui, são
+    // tratadas por early-returns próprios (federadoView / ppView).
+    if (pv === "federado" || pv === "pp") {
       if (data?.META) onMetaLoaded?.(data.META);
       return;
     }
@@ -1680,6 +1704,24 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
     );
   }
 
+  // Vista de histórico Pitch & Putt (mundo paralelo). Mesmo padrão da vista
+  // federado: barra de voltar + conteúdo scrollável.
+  if (ppView) {
+    return (
+      <div className="pa-page">
+        <div style={{ padding: "8px 12px", display: "flex", gap: 8, alignItems: "center", borderBottom: "1px solid var(--border)", flexShrink: 0 }}>
+          <button className="p p-outline" style={{ cursor: "pointer" }} onClick={() => setPpView(false)} title="Voltar à vista completa">
+            ← Vista completa
+          </button>
+          <span className="muted fs-12">Histórico Pitch &amp; Putt (cartões P&amp;P, par-3 × 18)</span>
+        </div>
+        <div className="pa-content" style={{ padding: 0 }}>
+          <PPHistoryView fed={selected.fed} name={selected.name} />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="pa-page">
       {/* Header: name + controls on same row, pills below */}
@@ -1708,6 +1750,14 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
               style={{ marginLeft: 4, fontSize: 14, color: "var(--chart-2)", textDecoration: "none", verticalAlign: "middle" }}
               onClick={e => e.stopPropagation()}
             >🔗</a>
+            <a
+              href={ppPlayerUrl(selected.fed)}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Ver ficha Pitch & Putt no FPG Scoring (mundo paralelo)"
+              style={{ marginLeft: 4, fontSize: 14, textDecoration: "none", verticalAlign: "middle" }}
+              onClick={e => e.stopPropagation()}
+            >🏑</a>
             <button
               onClick={() => setFederadoView(true)}
               title="Ver como federado: cadastro FPG + rondas WHS live (sem análise nossa)"
@@ -1718,6 +1768,18 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
                 verticalAlign: "middle",
               }}
             >👤 Vista federado</button>
+            {pp && (
+              <button
+                onClick={() => setPpView(true)}
+                title="Ver histórico Pitch & Putt (cartões P&P descarregados)"
+                style={{
+                  marginLeft: 6, padding: "2px 8px", fontSize: 11, fontWeight: 600,
+                  background: "transparent", border: "1px solid var(--border)",
+                  borderRadius: 10, cursor: "pointer", color: "var(--text-2)",
+                  verticalAlign: "middle",
+                }}
+              >🏑 P&amp;P</button>
+            )}
           </h2>
           {data && (
             <div className="pa-controls-left">
@@ -1745,6 +1807,14 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
         <div className="jog-pills">
           <span className="p p-fed">#{selected.fed}</span>
           {latestHcp != null && <span className="p p-muted">HCP {hcpDisplay(latestHcp)}</span>}
+          {pp && hasRealPPHcp(pp) && (
+            <span
+              className="p"
+              onClick={() => setPpView(true)}
+              title={`Handicap Pitch & Putt: ${pp.hcp} (${pp.hcpStatus}). Clica para ver histórico P&P.`}
+              style={{ cursor: "pointer", background: "var(--badge-pp, #0e7490)", color: "#fff", border: "1px solid var(--badge-pp, #0e7490)" }}
+            >🏑 P&amp;P {pp.hcp}</span>
+          )}
           <SexBadge sex={selected.sex} size="md" />
           {selected.dob && <span className="p p-birth">{selected.dob.slice(0, 4)}</span>}
           {selected.escalao && <span className={`p p-${escCls(meta?.escalao || selected.escalao)}`}>{meta?.escalao || selected.escalao}</span>}
@@ -1755,6 +1825,11 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
           {totalCourses > 0 && <span className="p p-outline">{totalCourses} campos</span>}
           {totalRounds > 0 && <span className="p p-outline">{totalRounds} voltas</span>}
           {roundsThisYear > 0 && <span className="p p-outline" title={`Rondas em ${curYear}`}>{roundsThisYear} em {curYear}</span>}
+          {pp && (pp.roundsYear || 0) > 0 && (
+            <span className="p p-outline" title={`Cartões P&P em ${curYear} (actividade no mundo Pitch & Putt)`}>
+              P&amp;P: {pp.roundsYear} em {curYear}
+            </span>
+          )}
           {aces.length > 0 && (
             <span
               className="p"
@@ -2663,6 +2738,13 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
                   style={{ marginLeft: 4, fontSize: 14, color: "var(--chart-2)", textDecoration: "none", verticalAlign: "middle" }}
                   onClick={e => e.stopPropagation()}
                 >🔗</a>
+                <a
+                  href={ppPlayerUrl(f.federation_code)}
+                  target="_blank" rel="noopener noreferrer"
+                  title="Ver ficha Pitch & Putt no FPG Scoring (mundo paralelo)"
+                  style={{ marginLeft: 4, fontSize: 14, textDecoration: "none", verticalAlign: "middle" }}
+                  onClick={e => e.stopPropagation()}
+                >🏑</a>
               </>
             }
             sub={<span className="muted">#{f.federation_code} · Só cadastro FPG (sem scorecards detalhados)</span>}
@@ -3698,12 +3780,14 @@ type PlayerSidebarItemProps = {
   roundsTotal?: number | null;
   /** Rondas no ano civil corrente — mesma fonte que o detalhe ("N em {ano}"). */
   roundsCurrentYear?: number | null;
+  /** Handicap Pitch & Putt (mundo paralelo) — null se não tiver. */
+  ppHcp?: number | null;
   onClick: (e: React.MouseEvent) => void;
 };
 
 function PlayerSidebarItem({
   p, isActive, displayClub, displayEscalao, displayHcp, rank, rankingMode, isNewRound,
-  escHcps, roundsTotal, roundsCurrentYear, onClick,
+  escHcps, roundsTotal, roundsCurrentYear, ppHcp, onClick,
 }: PlayerSidebarItemProps) {
   const pm = p;
   const isFedsOnly = pm._source === "feds";
@@ -3784,6 +3868,12 @@ function PlayerSidebarItem({
           <span className="p p-sm p-club" title={clubText}>{clubText}</span>
         )}
         <HcpPill hcp={displayHcp} escHcps={escHcps} />
+        {ppHcp != null && (
+          <span className="p p-sm" title={`Handicap Pitch & Putt: ${ppHcp}`}
+            style={{ background: "var(--badge-pp, #0e7490)", color: "#fff", border: "1px solid var(--badge-pp, #0e7490)" }}>
+            🏑 {ppHcp}
+          </span>
+        )}
         {tags.map(t => <TagPill key={t} tag={t} />)}
       </div>
 
@@ -3855,6 +3945,9 @@ export default function JogadoresPage() {
   const [loadingFeds, setLoadingFeds] = useState(false);
   const [natFilter, setNatFilter] = useState<"ALL" | "PT" | "FOREIGN">("ALL");
   const [clubFilter, setClubFilter] = useState<string>("ALL");
+  // Pitch & Putt: mapa fed → registo P&P (federados-pp.json) + filtro "só P&P".
+  const [ppMap, setPpMap] = useState<Map<string, FederadoPP>>(new Map());
+  const [onlyPP, setOnlyPP] = useState(false);
   const [showStats, setShowStats] = useState(false);
   const [drillDown, setDrillDown] = useState<{ type: "club" | "age"; key: string } | null>(null);
   const [hcpBinDrill, setHcpBinDrill] = useState<string | null>(null);
@@ -3895,6 +3988,8 @@ export default function JogadoresPage() {
   }, [viewMode, federados, loadingFeds, federadosError]);
 
   useEffect(() => { loadPlayerStats().then(setStatsDb); }, []);
+  // Carregar o mundo Pitch & Putt (degrada a Map vazio se o ficheiro não existir).
+  useEffect(() => { loadFederadosPP().then(() => setPpMap(getPPByFed())).catch(() => { /* sem P&P */ }); }, []);
 
 
   /* Ref para distinguir navegação interna (selectPlayer) de externa (URL directo) */
@@ -4200,6 +4295,8 @@ export default function JogadoresPage() {
     }
     list = list.filter(p => !p.tags?.includes("hidden"));
     if (newFilter) list = list.filter(p => { const d = daysSince(statsDb[p.fed]); return d != null && d <= NEW_DAYS; });
+    // Filtro "só P&P" — jogadores com handicap Pitch & Putt estabelecido.
+    if (onlyPP) list = list.filter(p => hasRealPPHcp(ppMap.get(p.fed)));
 
     // Ordenação com direcção (asc/desc) e ordem semântica para escalão
     const dir = sortDir === "asc" ? 1 : -1;
@@ -4254,7 +4351,7 @@ export default function JogadoresPage() {
         default: return 0;
       }
     });
-  }, [allPlayers, q, sexFilter, escalaoFilter, regionFilter, natFilter, clubFilter, viewMode, sortKey, sortDir, newFilter, statsDb, hcpMin, hcpMax, activeOnlyFilter, sourceFilter, includeSeniors, prioritizeJuniors]);
+  }, [allPlayers, q, sexFilter, escalaoFilter, regionFilter, natFilter, clubFilter, viewMode, sortKey, sortDir, newFilter, statsDb, hcpMin, hcpMax, activeOnlyFilter, sourceFilter, includeSeniors, prioritizeJuniors, onlyPP, ppMap]);
 
   // Contagem de filtros activos — partilhada entre o badge da Toolbar
   // (botão "✕ Limpar N") e o FilteredStatsCard no detail pane.
@@ -4271,8 +4368,9 @@ export default function JogadoresPage() {
       activeOnlyFilter,
       sourceFilter !== "ALL",
       newFilter,
+      onlyPP,
     ].filter(Boolean).length;
-  }, [q, sexFilter, escalaoFilter, regionFilter, natFilter, clubFilter, hcpMin, hcpMax, activeOnlyFilter, sourceFilter, newFilter]);
+  }, [q, sexFilter, escalaoFilter, regionFilter, natFilter, clubFilter, hcpMin, hcpMax, activeOnlyFilter, sourceFilter, newFilter, onlyPP]);
 
   // Ranking positions based on HCP (global, not filtered)
   const rankings = useMemo(() => {
@@ -4482,6 +4580,22 @@ export default function JogadoresPage() {
         >
           <span className="p-icon-big" aria-hidden="true">⭐</span>
         </button>
+        {ppMap.size > 0 && (() => {
+          const ppCount = allPlayers.filter(p => hasRealPPHcp(ppMap.get(p.fed))).length;
+          return (
+            <button
+              className={`p p-icon-only ${onlyPP ? " active" : ""}`}
+              onClick={() => { clearSelection(); setOnlyPP(v => !v); }}
+              title={onlyPP
+                ? `A mostrar só jogadores com HCP de Pitch & Putt — clicar para limpar`
+                : `Mostrar só os ${ppCount} jogadores com HCP de Pitch & Putt`}
+              style={onlyPP ? { background: "var(--badge-pp, #0e7490)", color: "#fff", borderColor: "var(--badge-pp, #0e7490)" } : undefined}
+            >
+              <span className="p-icon-big" aria-hidden="true">🏑</span>
+              <span className="p-filter-count">{ppCount}</span>
+            </button>
+          );
+        })()}
         {viewMode === "todos" && (
           <button
             className={`p ${showStats ? "active" : ""}`}
@@ -4596,6 +4710,7 @@ export default function JogadoresPage() {
               setRegionFilter("ALL"); setNatFilter("ALL"); setClubFilter("ALL");
               setHcpMin(""); setHcpMax("");
               setActiveOnlyFilter(false); setSourceFilter("ALL"); setNewFilter(false);
+              setOnlyPP(false);
               setPrioritizeJuniors(false); // volta à ordem alfabética pura
             }}
             title="Limpar todos os filtros activos"
@@ -4716,6 +4831,7 @@ export default function JogadoresPage() {
                 escHcps={escHcps}
                 roundsTotal={roundsTotal}
                 roundsCurrentYear={roundsCurrentYear}
+                ppHcp={(() => { const r = ppMap.get(p.fed); return hasRealPPHcp(r) ? r!.hcp : null; })()}
                 onClick={e => {
                   if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
                     e.preventDefault();

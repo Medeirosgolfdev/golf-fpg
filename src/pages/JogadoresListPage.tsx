@@ -29,8 +29,10 @@ import { hcpDisplay } from "../utils/playerUtils";
 import {
   loadFederados,
   mergePlayersWithFederados,
+  normalizeAgeLevel,
   type FederadoRaw,
 } from "../data/federadosLoader";
+import { loadFederadosPP, getPPByFed, hasRealPPHcp, type FederadoPP } from "../data/federadosPPLoader";
 import {
   loadPlayerStats,
   type PlayerStats,
@@ -70,7 +72,7 @@ const PAGE_SIZE = 100;
 
 type SortKey =
   | "nfed" | "name" | "club" | "country" | "dob" | "age"
-  | "hcp" | "sex" | "escalao"
+  | "hcp" | "ppHcp" | "sex" | "escalao"
   | "roundsTotal" | "roundsYear" | "lastSD" | "avgSD5" | "lastHcpDate";
 
 type Row = {
@@ -100,6 +102,11 @@ type Row = {
   hasDiffs: boolean;
   /** Texto descritivo das diferenças (HCP X→Y, Clube A→B). Vazio se hasDiffs=false. */
   diffsText: string;
+  // Pitch & Putt (mundo paralelo — federados-pp.json)
+  ppHcp: number | null;        // hcp_index P&P (null se sem registo/sem HCP)
+  ppReal: boolean;             // tem HCP P&P estabelecido (não sentinela 99)
+  ppRoundsYear: number | null; // cartões P&P no ano (actividade)
+  ppOnly: boolean;             // só existe no mundo P&P (não está na lista de golfe)
 };
 
 function calcAge(dob: string | null): number | null {
@@ -145,12 +152,15 @@ export default function JogadoresListPage() {
   const [federados, setFederados] = useState<FederadoRaw[] | null>(null);
   const [statsDb, setStatsDb] = useState<PlayerStatsDb>({});
   const [loadError, setLoadError] = useState<string | null>(null);
+  // Pitch & Putt: mapa fed → registo P&P (federados-pp.json). Vazio se ausente.
+  const [ppMap, setPpMap] = useState<Map<string, FederadoPP>>(new Map());
 
   useEffect(() => {
     loadFederados()
       .then(f => setFederados(f.players))
       .catch(err => setLoadError(String(err?.message || err)));
     loadPlayerStats().then(setStatsDb).catch(() => setStatsDb({}));
+    loadFederadosPP().then(() => setPpMap(getPPByFed())).catch(() => { /* sem P&P → coluna vazia */ });
   }, []);
 
   /* Filtros */
@@ -169,6 +179,7 @@ export default function JogadoresListPage() {
   const [jovensOnly, setJovensOnly] = useState(false);
   const [comSDOnly, setComSDOnly] = useState(false);
   const [diffsOnly, setDiffsOnly] = useState(false);
+  const [onlyPP, setOnlyPP] = useState(false);  // só jogadores com HCP P&P estabelecido
   // Nacionalidade: ALL (todos) · FOREIGN (só estrangeiros) · PT (sem estrangeiros)
   const [natFilter, setNatFilter] = useState<"ALL" | "FOREIGN" | "PT">("ALL");
   // Fixar no topo (ordenação por Nome) o Manuel, o Gastão e o top 5 de cada
@@ -182,20 +193,24 @@ export default function JogadoresListPage() {
 
   /* Sort + paginação */
   const { sortKey, sortDir, toggleSort } = useSort<SortKey>("name", "asc", {
-    hcp: "asc", age: "asc", dob: "desc", roundsTotal: "desc", roundsYear: "desc",
+    hcp: "asc", ppHcp: "asc", age: "asc", dob: "desc", roundsTotal: "desc", roundsYear: "desc",
     lastSD: "asc", avgSD5: "asc", lastHcpDate: "desc",
   });
   const [page, setPage] = useState(1);
 
   // Reset à página quando muda algum filtro relevante
-  useEffect(() => { setPage(1); }, [q, escalao, clubFilter, anoMin, anoMax, hcpMin, hcpMax, hcpStatus, sex, tipo, fedStatus, activosAnoOnly, jovensOnly, comSDOnly, diffsOnly, prioritizeDestaques, natFilter]);
+  useEffect(() => { setPage(1); }, [q, escalao, clubFilter, anoMin, anoMax, hcpMin, hcpMax, hcpStatus, sex, tipo, fedStatus, activosAnoOnly, jovensOnly, comSDOnly, diffsOnly, onlyPP, prioritizeDestaques, natFilter]);
 
   /* Build merged rows */
   const rows: Row[] = useMemo(() => {
     if (!federados) return [];
     const merged = mergePlayersWithFederados(players, federados);
+    const seen = new Set<string>();
 
-    return merged.map(p => {
+    const out: Row[] = merged.map(p => {
+      seen.add(String(p.nfed));
+      const ppr = ppMap.get(String(p.nfed));
+      const ppReal = hasRealPPHcp(ppr);
       const f = p._federadoRaw;
       const ps: PlayerStats | undefined = statsDb[p.nfed];
       const dob = f?.birthdate || p.dob || null;
@@ -233,9 +248,52 @@ export default function JogadoresListPage() {
         hasAnalysis: !!ps,
         hasDiffs: !!p._fpgDiffs,
         diffsText: buildDiffsText(p._fpgDiffs),
+        ppHcp: ppReal ? ppr!.hcp : null,
+        ppReal,
+        ppRoundsYear: ppr?.roundsYear ?? null,
+        ppOnly: false,
       } as Row;
     });
-  }, [federados, players, statsDb]);
+
+    // Federados que SÓ existem no mundo P&P (não estão na lista de golfe) —
+    // injectados a pedido (mostrar o universo P&P completo). Têm dados P&P mas
+    // sem handicap/análise de golfe.
+    for (const [fed, ppr] of ppMap) {
+      if (seen.has(String(fed))) continue;
+      const ppReal = hasRealPPHcp(ppr);
+      out.push({
+        fed: String(fed),
+        name: ppr.name,
+        countryName: ppr.country === "PT" ? "Portugal" : (ppr.country || ""),
+        clubCode: ppr.clubCode || "",
+        clubShort: ppr.acronym || "",
+        clubLong: ppr.club || "",
+        dob: ppr.dob || null,
+        age: calcAge(ppr.dob || null),
+        hcp: null,
+        hcpStatus: "",
+        hcpStatusId: 0,
+        typeId: 1,
+        sex: ppr.sex === "F" ? "F" : "M",
+        escalao: normalizeAgeLevel(ppr.age),
+        fedStatusId: 9,
+        lastHcpDate: null,
+        roundsTotal: null,
+        roundsYear: null,
+        lastSD: null,
+        avgSD5: null,
+        hasAnalysis: false,
+        hasDiffs: false,
+        diffsText: "",
+        ppHcp: ppReal ? ppr.hcp : null,
+        ppReal,
+        ppRoundsYear: ppr.roundsYear ?? null,
+        ppOnly: true,
+      } as Row);
+    }
+
+    return out;
+  }, [federados, players, statsDb, ppMap]);
 
   /* Filter */
   const filtered = useMemo(() => {
@@ -277,6 +335,7 @@ export default function JogadoresListPage() {
       if (jovensOnly && !/^Sub-/.test(r.escalao)) return false;
       if (comSDOnly && !r.hasAnalysis) return false;
       if (diffsOnly && !r.hasDiffs) return false;
+      if (onlyPP && !r.ppReal) return false;
       if (natFilter !== "ALL") {
         const isForeign = !!r.countryName && r.countryName !== "Portugal";
         if (natFilter === "FOREIGN" && !isForeign) return false;
@@ -284,7 +343,7 @@ export default function JogadoresListPage() {
       }
       return true;
     });
-  }, [rows, q, escalao, clubFilter, anoMin, anoMax, hcpMin, hcpMax, hcpStatus, sex, tipo, fedStatus, activosAnoOnly, jovensOnly, comSDOnly, diffsOnly, natFilter]);
+  }, [rows, q, escalao, clubFilter, anoMin, anoMax, hcpMin, hcpMax, hcpStatus, sex, tipo, fedStatus, activosAnoOnly, jovensOnly, comSDOnly, diffsOnly, onlyPP, natFilter]);
 
   /* Sort */
   const sorted = useMemo(() => {
@@ -317,6 +376,7 @@ export default function JogadoresListPage() {
         case "dob":          return ((a.dob || "") < (b.dob || "") ? -1 : (a.dob || "") > (b.dob || "") ? 1 : 0) * dir;
         case "age":          return (num(a.age) - num(b.age)) * dir;
         case "hcp":          return (num(a.hcp) - num(b.hcp)) * dir;
+        case "ppHcp":        return (num(a.ppHcp) - num(b.ppHcp)) * dir;
         case "sex":          return str(a.sex).localeCompare(str(b.sex), "pt") * dir;
         case "escalao": {
           const ai = ESC_ORDER.indexOf(a.escalao); const bi = ESC_ORDER.indexOf(b.escalao);
@@ -530,6 +590,7 @@ export default function JogadoresListPage() {
         <ToggleChip checked={jovensOnly} onChange={setJovensOnly} label="🧒 Só Jovens (Sub-X)" />
         <ToggleChip checked={comSDOnly} onChange={setComSDOnly} label="📊 Só com SD calculado" />
         <ToggleChip checked={diffsOnly} onChange={setDiffsOnly} label="⚠ Diferenças vs FPG" />
+        {ppMap.size > 0 && <ToggleChip checked={onlyPP} onChange={setOnlyPP} label="🏑 Só com HCP P&P" />}
         <ToggleChip checked={natFilter === "FOREIGN"} onChange={v => setNatFilter(v ? "FOREIGN" : "ALL")} label="🌍 Só estrangeiros" />
         <ToggleChip checked={natFilter === "PT"} onChange={v => setNatFilter(v ? "PT" : "ALL")} label="🇵🇹 Sem estrangeiros" />
         <ToggleChip checked={prioritizeDestaques} onChange={setPrioritizeDestaques} label="⭐ Manuel, Gastão e top Nacional Jovens no topo" />
@@ -544,20 +605,21 @@ export default function JogadoresListPage() {
             <table className="player-list-table" style={{ width: "100%", fontSize: 12 }}>
               <thead>
                 <tr>
-                  <SortableHdr k="nfed" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Nº Fed</SortableHdr>
+                  <SortableHdr k="nfed" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Nº Fed</SortableHdr>
                   <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Nome</SortableHdr>
-                  <SortableHdr k="country" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="País (só estrangeiros)">🌐</SortableHdr>
+                  <SortableHdr k="country" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight" title="País (só estrangeiros)">🌐</SortableHdr>
                   <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Clube</SortableHdr>
-                  <SortableHdr k="dob" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>DOB</SortableHdr>
-                  <SortableHdr k="age" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Idade</SortableHdr>
-                  <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>HCP</SortableHdr>
-                  <SortableHdr k="sex" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Sexo</SortableHdr>
-                  <SortableHdr k="escalao" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Escalão</SortableHdr>
-                  <SortableHdr k="roundsTotal" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Total de rondas (player-stats.json)">📊 Tot</SortableHdr>
-                  <SortableHdr k="roundsYear" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Rondas no ano corrente">🗓 Ano</SortableHdr>
-                  <SortableHdr k="lastSD" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Último Score Differential">Últ. SD</SortableHdr>
-                  <SortableHdr k="avgSD5" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Média dos últimos 5 SDs">Méd. 5 SD</SortableHdr>
-                  <SortableHdr k="lastHcpDate" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Última actualização HCP (FPG)">Últ. HCP</SortableHdr>
+                  <SortableHdr k="dob" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">DOB</SortableHdr>
+                  <SortableHdr k="age" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num">Idade</SortableHdr>
+                  <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num">HCP</SortableHdr>
+                  <SortableHdr k="ppHcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Handicap Pitch & Putt (mundo paralelo)">🏑 P&P</SortableHdr>
+                  <SortableHdr k="sex" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Sexo</SortableHdr>
+                  <SortableHdr k="escalao" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Escalão</SortableHdr>
+                  <SortableHdr k="roundsTotal" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Total de rondas (player-stats.json)">📊 Tot</SortableHdr>
+                  <SortableHdr k="roundsYear" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Rondas no ano corrente">🗓 Ano</SortableHdr>
+                  <SortableHdr k="lastSD" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Último Score Differential">Últ. SD</SortableHdr>
+                  <SortableHdr k="avgSD5" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Média dos últimos 5 SDs">Méd. 5 SD</SortableHdr>
+                  <SortableHdr k="lastHcpDate" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Última actualização HCP (FPG)">Últ. HCP</SortableHdr>
                 </tr>
               </thead>
               <tbody>
@@ -592,6 +654,7 @@ export default function JogadoresListPage() {
                         {r.name}
                       </a>
                       {r.hasAnalysis && <span title="Análise local disponível" style={{ marginLeft: 4, opacity: 0.6 }}>★</span>}
+                      {r.ppOnly && <span title="Só federado de Pitch & Putt (sem registo no golfe)" style={{ marginLeft: 4, opacity: 0.7 }}>🏑</span>}
                       {r.hasDiffs && (
                         <span
                           title={r.diffsText}
@@ -606,6 +669,14 @@ export default function JogadoresListPage() {
                     <td>{r.dob ? shortDate(r.dob) : "—"}</td>
                     <td style={{ textAlign: "right" }}>{r.age != null ? r.age : "—"}</td>
                     <td style={{ textAlign: "right", fontWeight: 600 }}>{r.hcp != null ? hcpDisplay(r.hcp) : "—"}</td>
+                    <td style={{ textAlign: "right" }}>
+                      {r.ppReal ? (
+                        <span className="p p-sm" title={`Handicap Pitch & Putt: ${r.ppHcp}${r.ppRoundsYear ? ` · ${r.ppRoundsYear} cartões este ano` : ""}`}
+                          style={{ background: "var(--badge-pp, #0e7490)", color: "#fff", border: "1px solid var(--badge-pp, #0e7490)" }}>
+                          🏑 {hcpDisplay(r.ppHcp!)}
+                        </span>
+                      ) : <span style={{ color: "var(--text-muted)" }}>—</span>}
+                    </td>
                     <td><SexBadge sex={r.sex as "M" | "F"} /></td>
                     <td><EscPill esc={r.escalao} /></td>
                     <td style={{ textAlign: "right", color: r.roundsTotal ? undefined : "var(--text-muted)" }}>
@@ -614,9 +685,9 @@ export default function JogadoresListPage() {
                     <td style={{ textAlign: "right", color: r.roundsYear && r.roundsYear > 0 ? "var(--color-good-dark, #166534)" : "var(--text-muted)", fontWeight: r.roundsYear ? 600 : undefined }}>
                       {r.roundsYear ?? "—"}
                     </td>
-                    <td style={{ textAlign: "right" }}>{fmtSD(r.lastSD)}</td>
-                    <td style={{ textAlign: "right" }}>{fmtSD(r.avgSD5)}</td>
-                    <td>{r.lastHcpDate ? shortDate(r.lastHcpDate) : "—"}</td>
+                    <td className="num">{fmtSD(r.lastSD)}</td>
+                    <td className="num">{fmtSD(r.avgSD5)}</td>
+                    <td className="num">{r.lastHcpDate ? shortDate(r.lastHcpDate) : "—"}</td>
                   </tr>
                   );
                 })}
