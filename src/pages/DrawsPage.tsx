@@ -219,6 +219,12 @@ function companionKey(c: Companion): string {
   return `name:${norm(c.nome)}|${c.pais || ""}`;
 }
 
+// Escalão manual para jogadores sem licença/dob para resolver automaticamente
+// (ex: emigrantes que jogam no verão). Chave = nome normalizado.
+const MANUAL_ESCALAO: Record<string, string> = {
+  "valentin bonnet": "Sub 12",
+};
+
 // Ordem dos escalões (para ordenação da coluna)
 const ESC_ORDER = ["Sub 10", "Sub 12", "Sub 14", "Sub 16", "Sub 18", "Sub 21", "Sub 24", "Absoluto", "Sénior", "Super Sénior"];
 function escRank(esc: string | null): number {
@@ -253,6 +259,19 @@ function h2hDot(manuel: Score, comp: Score): { color: string; title: string } | 
   if (a < b) return { color: "var(--color-good)", title: "Manuel melhor nesta ronda" };
   if (a > b) return { color: "var(--color-danger)", title: "Companheiro melhor nesta ronda" };
   return { color: "var(--text-muted)", title: "Empate nesta ronda" };
+}
+
+// Registo do Manuel face a um companheiro (só rondas com ambos os scores)
+function h2hRecord(rondas: CompanionRow["rondas"]): { w: number; d: number; l: number; played: number } {
+  let w = 0, d = 0, l = 0;
+  for (const r of rondas) {
+    const dot = h2hDot(r.manuelScore, r.companheiroScore);
+    if (!dot) continue;
+    if (dot.color === "var(--color-good)") w++;
+    else if (dot.color === "var(--color-danger)") l++;
+    else d++;
+  }
+  return { w, d, l, played: w + d + l };
 }
 
 // Agregação: percorre as rondas e produz 1 linha por companheiro único.
@@ -313,7 +332,7 @@ function aggregateCompanions(rondas: Round[], lk: Lookups): CompanionRow[] {
       if (da !== db) return db.localeCompare(da);
       return a.ronda - b.ronda;
     });
-    row.escalao = escalaoAtDate(row.dob, row.ultimaData);
+    row.escalao = escalaoAtDate(row.dob, row.ultimaData) || MANUAL_ESCALAO[norm(row.nome)] || null;
   }
   return [...map.values()];
 }
@@ -346,7 +365,7 @@ const CIRCUIT_PILL: Record<string, { emoji: string; label: string; title: string
 function CircuitBadge({ circuitos }: { circuitos: Set<"FPG" | "USKids" | "Intl"> }) {
   const order: Array<"FPG" | "USKids" | "Intl"> = ["FPG", "USKids", "Intl"];
   return (
-    <span style={{ display: "inline-flex", gap: 4, justifyContent: "center", flexWrap: "wrap" }}>
+    <span style={{ display: "inline-flex", gap: 4, justifyContent: "center", flexWrap: "nowrap", whiteSpace: "nowrap" }}>
       {order.filter(c => circuitos.has(c)).map(c => {
         const p = CIRCUIT_PILL[c];
         return (
@@ -807,64 +826,6 @@ export default function DrawsPage() {
           <div className="muted">A carregar pairings…</div>
         )}
 
-        {/* Bloco de torneios USKids do Manuel (signupanytime) — só na tab Intl */}
-        {data && tab === "Intl" && (() => {
-          // Agregar torneios USKids únicos a partir das rondas
-          const uskTorneios = new Map<string, { nome: string; data: string | null; rondas: number; t: string }>();
-          for (const r of data.rondas) {
-            if (r.circuito !== "USKids") continue;
-            const t = r.torneioId.replace(/^usk-/, "");
-            const e = uskTorneios.get(r.torneioId);
-            if (!e) uskTorneios.set(r.torneioId, { nome: r.torneioNome, data: r.data, rondas: 1, t });
-            else {
-              e.rondas += 1;
-              if (r.data && (!e.data || r.data < e.data)) e.data = r.data;
-            }
-          }
-          if (uskTorneios.size === 0) return null;
-          const lista = [...uskTorneios.values()].sort((a, b) => (b.data || "").localeCompare(a.data || ""));
-          return (
-            <div className="notice notice-info">
-              <div className="h-xs" style={{ marginBottom: 6 }}>
-                🇺🇸 Torneios USKids do Manuel (pairings via signupanytime)
-              </div>
-              <ul style={{ margin: 0, paddingLeft: 18 }}>
-                {lista.map((tn, i) => (
-                  <li key={i} style={{ marginBottom: 2 }}>
-                    <a href={`https://www.signupanytime.com/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${tn.t}`} target="_blank" rel="noopener" className="courseLink">
-                      {tn.nome}
-                    </a>
-                    <span className="muted">
-                      {" "}— signupanytime · {tn.rondas} {tn.rondas === 1 ? "ronda" : "rondas"}{tn.data ? ` · ${fmtDateShort(tn.data)}` : ""}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          );
-        })()}
-
-        {/* Bloco de links externos para tee times (Bluegolf/GolfGenius) */}
-        {data && tab === "Intl" && intlLinks.length > 0 && (
-          <div className="notice notice-info">
-            <div className="h-xs" style={{ marginBottom: 6 }}>
-              🔗 Tee times noutros sites externos (Bluegolf / GolfGenius)
-            </div>
-            <ul style={{ margin: 0, paddingLeft: 18 }}>
-              {intlLinks.map((lnk, i) => (
-                <li key={i} style={{ marginBottom: 2 }}>
-                  <a href={lnk.url} target="_blank" rel="noopener" className="courseLink">
-                    {lnk.nome}
-                  </a>
-                  <span className="muted">
-                    {" "}— {lnk.fonte}{lnk.ronda !== "all" ? ` R${lnk.ronda}` : ""}{lnk.notas ? ` · ${lnk.notas}` : ""}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
         {data && linhasOrdenadas.length === 0 && (
           <div className="muted">Sem dados para {tab}.</div>
         )}
@@ -945,7 +906,7 @@ export default function DrawsPage() {
                   <SortableHdr k="ultima" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>
                     Último encontro
                   </SortableHdr>
-                  <th style={{ width: 60, textAlign: "center" }}>Circ.</th>
+                  <th style={{ width: 140, minWidth: 140, textAlign: "center" }}>Circ.</th>
                 </tr>
               </thead>
               <tbody>
@@ -978,7 +939,7 @@ export default function DrawsPage() {
                           {medal ? <span style={{ marginRight: 3 }}>{medal}</span> : null}{row.vezes}
                         </td>
                         <td>{fmtDateShort(row.ultimaData)}</td>
-                        <td style={{ textAlign: "center" }}>
+                        <td style={{ textAlign: "center", whiteSpace: "nowrap" }}>
                           <CircuitBadge circuitos={row.circuitos} />
                         </td>
                       </tr>
@@ -995,6 +956,32 @@ export default function DrawsPage() {
                                 <span className="legend-item"><span className="legend-dot" style={{ background: "var(--color-danger)", borderRadius: "50%" }} /> companheiro melhor</span>
                               </span>
                             </div>
+                            {(() => {
+                              const rec = h2hRecord(row.rondas);
+                              if (rec.played === 0) return null;
+                              const seg = (n: number, color: string, label: string) =>
+                                n > 0 ? <span title={`${n} ${label}`} style={{ flex: n, background: color }} /> : null;
+                              return (
+                                <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 10 }}>
+                                  <span style={{ display: "flex", height: 8, width: 160, borderRadius: 4, overflow: "hidden", background: "var(--bg-hover)" }}>
+                                    {seg(rec.w, "var(--color-good)", "vitórias do Manuel")}
+                                    {seg(rec.d, "var(--text-muted)", "empates")}
+                                    {seg(rec.l, "var(--color-danger)", "vitórias do companheiro")}
+                                  </span>
+                                  <span style={{ fontSize: 12, fontWeight: 700, fontVariantNumeric: "tabular-nums" }}>
+                                    <span style={{ color: "var(--color-good)" }}>{rec.w}V</span>
+                                    <span className="muted" style={{ fontWeight: 400 }}> · </span>
+                                    <span style={{ color: "var(--text-2)" }}>{rec.d}E</span>
+                                    <span className="muted" style={{ fontWeight: 400 }}> · </span>
+                                    <span style={{ color: "var(--color-danger)" }}>{rec.l}D</span>
+                                  </span>
+                                  <span className="muted" style={{ fontSize: 11 }}>
+                                    {rec.w > rec.l ? "Manuel leva vantagem" : rec.l > rec.w ? `${row.nome.split(" ")[0]} leva vantagem` : "equilibrado"}
+                                    {" "}({rec.played} {rec.played === 1 ? "ronda comparável" : "rondas comparáveis"})
+                                  </span>
+                                </div>
+                              );
+                            })()}
                             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                               {row.rondas.map((r, i) => {
                                 const dot = h2hDot(r.manuelScore, r.companheiroScore);
@@ -1117,6 +1104,69 @@ export default function DrawsPage() {
           )}
           </div>
         )}
+
+        {/* Fontes internacionais (USKids signupanytime + Bluegolf/GolfGenius) —
+            depois da tabela e colapsadas: só interessam para confirmar tee times. */}
+        {data && tab === "Intl" && (() => {
+          const uskTorneios = new Map<string, { nome: string; data: string | null; rondas: number; t: string }>();
+          for (const r of data.rondas) {
+            if (r.circuito !== "USKids") continue;
+            const t = r.torneioId.replace(/^usk-/, "");
+            const e = uskTorneios.get(r.torneioId);
+            if (!e) uskTorneios.set(r.torneioId, { nome: r.torneioNome, data: r.data, rondas: 1, t });
+            else {
+              e.rondas += 1;
+              if (r.data && (!e.data || r.data < e.data)) e.data = r.data;
+            }
+          }
+          const lista = [...uskTorneios.values()].sort((a, b) => (b.data || "").localeCompare(a.data || ""));
+          if (lista.length === 0 && intlLinks.length === 0) return null;
+          return (
+            <details className="details-block" style={{ marginTop: 16 }}>
+              <summary>Fontes & tee times internacionais (USKids · Bluegolf · GolfGenius)</summary>
+              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                {lista.length > 0 && (
+                  <div>
+                    <div className="h-xs" style={{ marginBottom: 6 }}>
+                      🇺🇸 Torneios USKids do Manuel (pairings via signupanytime)
+                    </div>
+                    <ul style={{ margin: 0, paddingLeft: 18 }}>
+                      {lista.map((tn, i) => (
+                        <li key={i} style={{ marginBottom: 2 }}>
+                          <a href={`https://www.signupanytime.com/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${tn.t}`} target="_blank" rel="noopener" className="courseLink">
+                            {tn.nome}
+                          </a>
+                          <span className="muted">
+                            {" "}— signupanytime · {tn.rondas} {tn.rondas === 1 ? "ronda" : "rondas"}{tn.data ? ` · ${fmtDateShort(tn.data)}` : ""}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {intlLinks.length > 0 && (
+                  <div>
+                    <div className="h-xs" style={{ marginBottom: 6 }}>
+                      🔗 Tee times noutros sites externos (Bluegolf / GolfGenius)
+                    </div>
+                    <ul style={{ margin: 0, paddingLeft: 18 }}>
+                      {intlLinks.map((lnk, i) => (
+                        <li key={i} style={{ marginBottom: 2 }}>
+                          <a href={lnk.url} target="_blank" rel="noopener" className="courseLink">
+                            {lnk.nome}
+                          </a>
+                          <span className="muted">
+                            {" "}— {lnk.fonte}{lnk.ronda !== "all" ? ` R${lnk.ronda}` : ""}{lnk.notas ? ` · ${lnk.notas}` : ""}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </details>
+          );
+        })()}
       </div>
     </main>
   );

@@ -76,6 +76,36 @@ function buildFpgScoreIndex() {
   }
   return idx;
 }
+// Índice de scores por NOME (normalizado) e por torneio — inclui jogadores
+// SEM fed (ex: emigrantes/convidados como o Valentin Bonnet, que jogam mas não
+// têm licença FPG). Usado como fallback quando o cruzamento por fed falha. O
+// match é sempre DENTRO do mesmo torneio (ccode-tcode), por isso é seguro mesmo
+// sem fed/dob para confirmar identidade.
+function buildFpgScoreIndexByName() {
+  const idx = new Map();
+  for (const f of [...listFiles("pull-torneios"), ...listFiles("drive-data-"), ...listFiles("aquapor-data-"),
+                   ...listFiles("jovens_"), ...listFiles("clubes_")]) {
+    const j = readJSON(f);
+    if (!j || !Array.isArray(j.tournaments)) continue;
+    for (const t of j.tournaments) {
+      const key = `${t.ccode}-${t.tcode}`;
+      let m = idx.get(key);
+      if (!m) { m = new Map(); idx.set(key, m); }
+      for (const p of t.players || []) {
+        const nm = normName(p.name || "");
+        if (!nm) continue;
+        const novo = { name: p.name || "", club: p.club || "", roundScores: p.roundScores || [] };
+        const prev = m.get(nm);
+        // Homónimos no mesmo torneio com rondas diferentes → ambíguo (não cruzar).
+        if (prev === null) continue;
+        if (prev && (prev.roundScores || []).length && novo.roundScores.length
+            && (prev.name || "") !== (novo.name || "")) { m.set(nm, null); continue; }
+        if (!prev || novo.roundScores.length > (prev.roundScores || []).length) m.set(nm, novo);
+      }
+    }
+  }
+  return idx;
+}
 function buildFpgClubeIndex(fpg) {
   const idx = new Map();
   for (const t of fpg.tournaments || []) {
@@ -199,7 +229,19 @@ function synthesizeMissingDraws(existingDraws, tScores) {
   return out;
 }
 
-function extractFpgPairings(fpg, scoreIdx, nomeIdx, clubeIdx, manuelTournIdx) {
+// Encontra o score de uma ronda, com fallback para eventos de ronda única:
+// alguns draws manuais (ex: PJA Vale Pisão Dia 1, tcode 10370) estão sob a
+// ronda "2" mas a classificação só tem a ronda 1. Se o torneio tem UMA só
+// ronda de scores, usa-a independentemente do nº de ronda do draw.
+function findRoundScore(roundScores, rondaNum) {
+  if (!Array.isArray(roundScores) || roundScores.length === 0) return null;
+  const exact = roundScores.find(x => Number(x.round) === rondaNum);
+  if (exact) return exact;
+  if (roundScores.length === 1) return roundScores[0];
+  return null;
+}
+
+function extractFpgPairings(fpg, scoreIdx, scoreByNameIdx, nomeIdx, clubeIdx, manuelTournIdx) {
   const out = [];
   for (const t of fpg.tournaments || []) {
     // ccode 982 (Madeira histórico) NÃO é excluído aqui:
@@ -228,6 +270,7 @@ function extractFpgPairings(fpg, scoreIdx, nomeIdx, clubeIdx, manuelTournIdx) {
       ? m.nome
       : (tNameRaw || (m && m.nome) || torneioId);
     const tScores = scoreIdx.get(torneioId) || new Map();
+    const tScoresByName = (scoreByNameIdx && scoreByNameIdx.get(torneioId)) || new Map();
     const localNameToFed = buildLocalNameToFed(t);
     // Inclui draws sintetizados para rondas em falta (regra: cumulativo R1..R-1)
     const draws = synthesizeMissingDraws(t.draws || {}, tScores);
@@ -260,8 +303,10 @@ function extractFpgPairings(fpg, scoreIdx, nomeIdx, clubeIdx, manuelTournIdx) {
           const isNumericFed = isFedCode(rawClube);
           const fed = pFed || (isNumericFed ? rawClube : localNameToFed.get(normName(p.nome)) || null);
           const clubeTexto = (!isNumericFed && rawClube) ? rawClube : (fed && clubeIdx.get(fed)) || null;
-          const scInfo = fed ? tScores.get(fed) : null;
-          const rs = scInfo && scInfo.roundScores ? scInfo.roundScores.find(x => Number(x.round) === rondaNum) : null;
+          // Score: cruzar por fed; se falhar (ou sem fed, ex: emigrante), tentar
+          // por NOME dentro do mesmo torneio (seguro — mesmo evento).
+          const scInfo = (fed ? tScores.get(fed) : null) || tScoresByName.get(normName(p.nome)) || null;
+          const rs = scInfo ? findRoundScore(scInfo.roundScores, rondaNum) : null;
           const parTot = rs && Array.isArray(rs.pars) ? rs.pars.reduce((a, b) => a + (Number(b) || 0), 0) : null;
           const toPar = rs && rs.gross != null && parTot != null ? Number(rs.gross) - parTot : null;
           return {
@@ -271,8 +316,8 @@ function extractFpgPairings(fpg, scoreIdx, nomeIdx, clubeIdx, manuelTournIdx) {
           };
         }).filter(Boolean);
 
-        const mInfo = tScores.get(MANUEL_FED);
-        const mrs = mInfo && mInfo.roundScores ? mInfo.roundScores.find(x => Number(x.round) === rondaNum) : null;
+        const mInfo = tScores.get(MANUEL_FED) || tScoresByName.get(normName("Manuel Goulartt Medeiros"));
+        const mrs = mInfo ? findRoundScore(mInfo.roundScores, rondaNum) : null;
         const mParTot = mrs && Array.isArray(mrs.pars) ? mrs.pars.reduce((a, b) => a + (Number(b) || 0), 0) : null;
         const mToPar = mrs && mrs.gross != null && mParTot != null ? Number(mrs.gross) - mParTot : null;
 
@@ -394,26 +439,29 @@ function loadIntlScoreSource(filename) {
   const p = path.join(DATA, filename);
   if (!fs.existsSync(p)) { _scoreSourceCache.set(filename, null); return null; }
   const j = readJSON(p);
-  // Construir { normName(player) → { gross_por_ronda: {1: 90, 2: 85, ...}, total } }
+  const sumPar = (arr) => Array.isArray(arr) ? arr.reduce((a, b) => a + (Number(b) || 0), 0) || null : null;
+  // Construir { normName(player) → { rondas:{1:90,...}, total, parTotal } }
   const byName = new Map();
   if (j && Array.isArray(j.players)) {
     // formato bluegolf (wjgc_*.json, eowagr*.json)
+    const parTotal = j.parTotal != null ? Number(j.parTotal) : sumPar(j.par);
     for (const p of j.players) {
       const map = {};
       for (const r of (p.rounds || [])) {
         if (r.gross != null) map[Number(r.day)] = Number(r.gross);
       }
-      byName.set(normName(p.name), { rondas: map, total: p.total != null ? Number(p.total) : null });
+      byName.set(normName(p.name), { rondas: map, total: p.total != null ? Number(p.total) : null, parTotal });
     }
   } else if (j && Array.isArray(j.divisions)) {
     // formato ftm-doral
     for (const div of j.divisions) {
+      const parTotal = div.parTotal != null ? Number(div.parTotal) : sumPar(div.par);
       for (const p of (div.players || [])) {
         const map = {};
         if (p.r1Gross != null) map[1] = Number(p.r1Gross);
         if (p.r2Gross != null) map[2] = Number(p.r2Gross);
         if (p.r3Gross != null) map[3] = Number(p.r3Gross);
-        byName.set(normName(p.name), { rondas: map, total: p.total != null ? Number(p.total) : null });
+        byName.set(normName(p.name), { rondas: map, total: p.total != null ? Number(p.total) : null, parTotal });
       }
     }
   }
@@ -422,23 +470,28 @@ function loadIntlScoreSource(filename) {
 }
 function lookupIntlScore(byName, nome, ronda) {
   if (!byName) return null;
+  const mk = (v) => {
+    const gross = v.rondas[ronda];
+    if (gross == null) return null;
+    return { gross, toPar: v.parTotal != null ? gross - v.parTotal : null };
+  };
   const exact = byName.get(normName(nome));
-  if (exact && exact.rondas[ronda] != null) return { gross: exact.rondas[ronda], toPar: null };
+  if (exact) { const s = mk(exact); if (s) return s; }
   // tentar last-name match (Bluegolf usa "Maier, Luis" vs override "Luis Maier")
   const partes = nome.split(/\s+/);
   if (partes.length >= 2) {
     const inverso = `${partes[partes.length-1]}, ${partes.slice(0, -1).join(" ")}`;
     const e2 = byName.get(normName(inverso));
-    if (e2 && e2.rondas[ronda] != null) return { gross: e2.rondas[ronda], toPar: null };
+    if (e2) { const s = mk(e2); if (s) return s; }
     // tentar "Apelido, Nome" → procurar "Nome Apelido"
     const inverso2 = `${partes.slice(0, -1).join(" ")} ${partes[partes.length-1]}`;
     const e3 = byName.get(normName(inverso2));
-    if (e3 && e3.rondas[ronda] != null) return { gross: e3.rondas[ronda], toPar: null };
+    if (e3) { const s = mk(e3); if (s) return s; }
   }
   // tentar match parcial: contains
   for (const [k, v] of byName) {
     if (k.includes(normName(nome)) || normName(nome).includes(k)) {
-      if (v.rondas[ronda] != null) return { gross: v.rondas[ronda], toPar: null };
+      const s = mk(v); if (s) return s;
     }
   }
   return null;
@@ -563,6 +616,7 @@ function main() {
   const overrides = readJSON(path.join(DATA, "manuel-draws-overrides.json"));
 
   const fpgScoreIdx = buildFpgScoreIndex();
+  const fpgScoreByNameIdx = buildFpgScoreIndexByName();
   const clubeIdx = buildFpgClubeIndex(fpg);
   const nomeIdx = buildFpgNomeIndex(fpg, fpgScoreIdx);
   const uskScoreIdx = buildUskidsScoreIndex(uskidsResults);
@@ -577,7 +631,7 @@ function main() {
   const manuelTournIdx = new Map();
   for (const t of manuelTournamentsList) manuelTournIdx.set(t.torneioId, t);
 
-  const fpgPairings = extractFpgPairings(fpg, fpgScoreIdx, nomeIdx, clubeIdx, manuelTournIdx);
+  const fpgPairings = extractFpgPairings(fpg, fpgScoreIdx, fpgScoreByNameIdx, nomeIdx, clubeIdx, manuelTournIdx);
   const uskidsPairings = extractUskidsPairings(uskidsDraws, uskScoreIdx);
   const intlPairings = buildIntlPairingsFromOverrides(overrides);
 

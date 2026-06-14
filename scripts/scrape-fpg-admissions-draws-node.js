@@ -266,6 +266,37 @@ function cleanSuspectDraws(draws, tournDate) {
   return out;
 }
 
+/* ── Congelamento de draws de eventos passados ──────────────────────────────
+   Os draws de um torneio NÃO mudam depois de o evento ocorrer (o jogo já foi
+   jogado). Passados >2 dias do fim do evento, congelamos: não voltamos a
+   scrapeá-lo. Isto poupa requests E elimina o risco de sobrescrever um draw bom
+   quando a FPG reutiliza o tcode num torneio novo.
+   O fim do evento é estimado a partir do nº de rondas já capturadas
+   (date + (maxRound-1)). Só congela quando JÁ existem draws na base — assim um
+   evento passado que NUNCA teve draw capturado ainda pode ser backfilled. */
+const DRAW_FREEZE_BUFFER_DAYS = 2;
+function addDaysISO(iso, n) {
+  const d = new Date(String(iso) + "T00:00:00Z");
+  if (isNaN(d.getTime())) return null;
+  d.setUTCDate(d.getUTCDate() + n);
+  return d.toISOString().slice(0, 10);
+}
+function drawsAreFrozen(prevEntry, scopeDate) {
+  if (!prevEntry || !prevEntry.draws) return false;
+  if (prevEntry._manual) return true;  // curado à mão → sempre congelado
+  const roundNums = Object.entries(prevEntry.draws)
+    .filter(([, d]) => (d?.groups?.length ?? 0) > 0)
+    .map(([r]) => Number(r))
+    .filter(Number.isFinite);
+  if (roundNums.length === 0) return false;  // sem draws → permite backfill
+  const startDate = prevEntry.date || scopeDate;
+  const endDate = addDaysISO(startDate, Math.max(...roundNums) - 1);
+  if (!endDate) return false;
+  const cutoff = addDaysISO(endDate, DRAW_FREEZE_BUFFER_DAYS);
+  const today = new Date().toISOString().slice(0, 10);
+  return today > cutoff;
+}
+
 /* ═════════════════════════════════════════════════════════════════════════
    AUTO-EXTEND — expande scope manual com 2 fontes extra:
      Fonte 2 (passiva): JSONs locais gerados por outros workflows
@@ -528,6 +559,15 @@ async function buildAutoExtendedScope(manual, sinceDate = null) {
     ? await buildAutoExtendedScope(manualScope, FILTER_SINCE)
     : manualScope.slice();
 
+  // Ler base actual cedo — necessária para a trava de congelamento (saltar
+  // eventos passados) e, mais abaixo, para o merge aditivo.
+  const base = fs.existsSync(OUT_FILE)
+    ? (() => { try { return JSON.parse(fs.readFileSync(OUT_FILE, "utf8")); } catch { return { tournaments: [] }; } })()
+    : { tournaments: [] };
+  const baseIdx = new Map();
+  for (const t of (base.tournaments || [])) baseIdx.set(`${t.ccode}-${t.tcode}`, t);
+  console.log(`[adm-draws] Base actual: ${base.tournaments?.length ?? 0} torneios`);
+
   // 2) Aplicar filtros CLI sobre o scope.
   //    --tcodes é terminal: quando indicado, --since/--year são ignorados
   //    (o utilizador nomeou explicitamente os torneios que quer).
@@ -562,6 +602,16 @@ async function buildAutoExtendedScope(manual, sinceDate = null) {
       scope = scope.filter(t => String(t.expectedYear) === String(FILTER_YEAR));
       console.log(`[adm-draws] Filtro --year ${FILTER_YEAR}: ${scope.length} torneios`);
     }
+    // TRAVA DE CONGELAMENTO — eventos terminados há >2 dias têm draws FINAIS
+    // (o jogo já foi jogado; os draws não mudam). Não os voltar a scrapear: evita
+    // gastar requests e elimina o risco de sobrescrever um draw bom quando a FPG
+    // reutiliza o tcode. Backfill continua permitido para eventos passados que
+    // NUNCA tiveram draw capturado. `--tcodes` (escolha explícita) ignora a trava.
+    const beforeFreeze = scope.length;
+    scope = scope.filter(t => !drawsAreFrozen(baseIdx.get(`${t.ccode}-${t.tcode}`), t.date));
+    if (scope.length < beforeFreeze) {
+      console.log(`[adm-draws] Trava de congelamento: ${beforeFreeze - scope.length} eventos passados (draws finais) saltados`);
+    }
   }
   if (scope.length === 0) {
     console.error("[adm-draws] Scope vazio após filtros — nada para scrapar");
@@ -570,13 +620,7 @@ async function buildAutoExtendedScope(manual, sinceDate = null) {
 
   console.log(`[adm-draws] A começar scrape de ${scope.length} torneios...`);
 
-  // Ler base actual (para merge)
-  const base = fs.existsSync(OUT_FILE)
-    ? (() => { try { return JSON.parse(fs.readFileSync(OUT_FILE, "utf8")); } catch { return { tournaments: [] }; } })()
-    : { tournaments: [] };
-  const baseIdx = new Map();
-  for (const t of (base.tournaments || [])) baseIdx.set(`${t.ccode}-${t.tcode}`, t);
-  console.log(`[adm-draws] Base actual: ${base.tournaments?.length ?? 0} torneios`);
+  // (base + baseIdx já carregados acima — usados pela trava de congelamento e o merge)
 
   // Scrape tudo em paralelo
   const t0 = Date.now();
@@ -604,6 +648,17 @@ async function buildAutoExtendedScope(manual, sinceDate = null) {
     const { tournament, admissions, draws } = s;
     const key = `${tournament.ccode}-${tournament.tcode}`;
     const prev = baseIdx.get(key) || { ...tournament, admissions: null, draws: {} };
+
+    // TRAVA MANUAL — entradas curadas à mão (`_manual: true`) nunca são tocadas
+    // pelo scraper. Protege draws/admissions inseridos manualmente contra a
+    // reutilização de tcodes pela FPG: um tcode antigo reaproveitado num torneio
+    // novo traz um draw "legítimo" (nScore > 0) que de outra forma ganharia ao
+    // nosso (linha do merge `if (nScore > 0) finalDraws[r] = nD`). Mantém-se prev
+    // tal e qual (já está em baseIdx) e salta-se este torneio.
+    if (prev && prev._manual) {
+      kept++;
+      continue;
+    }
 
     // ADMISSIONS: comparar scores; novo wins se >= anterior E não é suspect
     const newAdm = cleanSuspectAdm(admissions, tournament.date);

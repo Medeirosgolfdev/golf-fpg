@@ -134,13 +134,29 @@ jobs:
         if: steps.scrape.outputs.exit_code != '1'
         run: node scripts/validate-data.js public/data/fpg-admissions-draws.json
 
+      - name: Regenerar manuel-pairings.json
+        id: pairings
+        # A página /draws (companheiros do Manuel) lê public/data/manuel-pairings.json,
+        # que o pairings-build.js gera a partir do fpg-admissions-draws.json (entre
+        # outras fontes já commitadas). Corre SEMPRE (excepto erro do scraper) e marca
+        # pairings_changed=true para o commit acontecer mesmo quando o scraper não
+        # trouxe nada novo mas os draws mudaram (ex: draws adicionados manualmente).
+        if: steps.scrape.outputs.exit_code != '1'
+        run: |
+          node scripts/pairings-build.js
+          if git diff --quiet -- public/data/manuel-pairings.json; then
+            echo "pairings_changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "pairings_changed=true" >> $GITHUB_OUTPUT
+          fi
+
       - name: Commit e push (se houver novos dados)
-        if: steps.scrape.outputs.exit_code == '0' || github.event.inputs.force_commit == 'true'
+        if: steps.scrape.outputs.exit_code == '0' || steps.pairings.outputs.pairings_changed == 'true' || github.event.inputs.force_commit == 'true'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add public/data/fpg-admissions-draws.json public/data/fpg-tournaments-tracking.json
+          git add public/data/fpg-admissions-draws.json public/data/fpg-tournaments-tracking.json public/data/manuel-pairings.json
 
           if git diff --staged --quiet; then
             echo "Nenhuma alteração em staging — sem commit."
