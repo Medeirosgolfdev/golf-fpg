@@ -5,8 +5,9 @@
  *   1. Pancadas de perdão — playing handicap WHS por tee
  *      (PH = HI × Slope/113 + CR − Par). Tee mais longo costuma ter CR
  *      mais alto → mais pancadas recebidas → mais perdão.
- *   2. Distância habitual — mediana dos metros das últimas voltas 18B
- *      do Manuel (data.json). Quanto mais perto, mais "em casa".
+ *   2. Distância habitual — percentil 70 dos metros das últimas voltas 18B
+ *      do Manuel (a distância que já joga em competição). Quanto mais perto,
+ *      mais "em casa".
  *   3. Perfil dos buracos — buracos alcançáveis em regulação dado o
  *      alcance de drive/2ª pancada do júnior. Lista os buracos que
  *      mudam de alcançável↔inalcançável entre tees.
@@ -30,8 +31,24 @@ import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../../ui/Toolbar
 import { norm, fmtToPar } from "../../utils/format";
 import { getTeeHex, textOnColor, teeBorder } from "../../utils/teeColors";
 import { MANUEL_FED } from "../../constants/manuel";
+import { resolvePlayedMeters } from "../../utils/playedDistance";
 
 const MONO = "'JetBrains Mono', monospace";
+
+/** Coerção segura para número — alguns campos do JSON vêm como string (ex: sd "14"). */
+const toNum = (v: unknown): number | null => {
+  const n = typeof v === "number" ? v : parseFloat(String(v));
+  return Number.isFinite(n) ? n : null;
+};
+
+/** Mediana de uma lista de números (null se vazia). Robusta a voltas atípicas:
+ *  uma ronda catastrófica não distorce o resultado típico, ao contrário da média. */
+const median = (nums: number[]): number | null => {
+  if (nums.length === 0) return null;
+  const s = [...nums].sort((a, b) => a - b);
+  const m = Math.floor(s.length / 2);
+  return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+};
 
 /* ═══════════════════ Escala de distâncias do saco ═══════════════════ */
 /**
@@ -135,45 +152,116 @@ function reachableHoles(tee: Tee, driveM: number, secondM: number): ReachOutcome
   return { reach, total, detail };
 }
 
-interface TeeHist { n: number; avgVsPar: number | null; best: number | null; avgSd: number | null }
+interface TeeHist {
+  n: number; typVsPar: number | null; best: number | null;
+  /** Forma recente: nº de voltas consideradas e resultado típico (mediana) vs par das últimas (máx. 4). */
+  recentN: number; recentTypVsPar: number | null;
+}
 
-/** Histórico real do Manuel num campo+tee (voltas 18B com par conhecido). */
+/** Histórico real do Manuel num campo+tee (voltas 18B com par conhecido).
+ *  Devolve agregado (todas as voltas) e forma recente (últimas até 4, por data). */
 function teeHistory(data: PlayerPageData | null, courseName: string, teeName: string): TeeHist {
-  const empty: TeeHist = { n: 0, avgVsPar: null, best: null, avgSd: null };
+  const empty: TeeHist = { n: 0, typVsPar: null, best: null, recentN: 0, recentTypVsPar: null };
   if (!data) return empty;
   const ck = norm(courseName);
   const tk = norm(teeName);
-  let n = 0, sumVsPar = 0, best: number | null = null, sdSum = 0, sdN = 0;
+  const rs: { vsPar: number; gross: number; d: number }[] = [];
   for (const c of data.DATA) {
     if (norm(c.course) !== ck) continue;
     for (const r of c.rounds) {
       if (r.holeCount !== 18 || norm(r.tee) !== tk) continue;
       if (r.gross == null || r.par == null || r.gross <= 0) continue;
-      n++;
-      sumVsPar += r.gross - r.par;
-      if (best === null || r.gross < best) best = r.gross;
-      if (r.sd != null) { sdSum += r.sd; sdN++; }
+      rs.push({ vsPar: r.gross - r.par, gross: r.gross, d: r.dateSort });
     }
   }
-  if (n === 0) return empty;
-  return { n, avgVsPar: sumVsPar / n, best, avgSd: sdN > 0 ? sdSum / sdN : null };
+  if (rs.length === 0) return empty;
+  rs.sort((a, b) => b.d - a.d); // mais recente primeiro
+  const n = rs.length;
+  // Mediana (não média): uma volta catastrófica não distorce o resultado típico.
+  const typVsPar = median(rs.map(x => x.vsPar));
+  const best = Math.min(...rs.map(x => x.gross));
+  const recentN = Math.min(4, n);
+  const recentTypVsPar = median(rs.slice(0, recentN).map(x => x.vsPar));
+  return { n, typVsPar, best, recentN, recentTypVsPar };
 }
 
-/** Mediana dos metros das últimas `cap` voltas 18B — distância habitual. */
-function habitualDistance(data: PlayerPageData | null, cap = 20): { median: number | null; n: number } {
-  if (!data) return { median: null, n: 0 };
+/** Distância habitual = percentil 70 dos metros das últimas `cap` voltas 18B.
+ *  O P70 inclina para o lado mais longo: representa a distância que o Manuel já
+ *  joga com à-vontade em competição (Glen, Villa Padierna, Porto Santo…), sem
+ *  ser puxada para baixo pelas voltas curtas de treino em casa — ao contrário
+ *  da mediana, que caía no aglomerado dos tees curtos.
+ *  A distância de cada volta vem do registo (`r.meters`) quando válido; quando
+ *  vem vazio — típico dos torneios internacionais que a FPG regista sem jardas
+ *  (Marco Simone, Villa Padierna, Glen, La Forêt…) — liga-se ao tee real do
+ *  campo via `resolvePlayedMeters` (o MESMO que a JogadoresPage usa, incluindo
+ *  o override curado `MANUEL_AWAY_TEE`). Assim as voltas longas internacionais
+ *  deixam de ser excluídas em silêncio. */
+function habitualDistance(
+  data: PlayerPageData | null,
+  simCourses: Course[],
+  cap = 20,
+): { value: number | null; n: number } {
+  if (!data) return { value: null, n: 0 };
   const rounds: { m: number; d: number }[] = [];
   for (const c of data.DATA) for (const r of c.rounds) {
-    if (r.holeCount === 18 && r.meters != null && r.meters > 3000) {
-      rounds.push({ m: r.meters, d: r.dateSort });
-    }
+    if (r.holeCount !== 18) continue;
+    const m = (r.meters != null && r.meters > 3000)
+      ? r.meters
+      : resolvePlayedMeters(c.course, r.tee, r.holeCount, simCourses, MANUEL_FED);
+    if (m != null && m > 3000) rounds.push({ m, d: r.dateSort });
   }
-  if (rounds.length === 0) return { median: null, n: 0 };
+  if (rounds.length === 0) return { value: null, n: 0 };
   rounds.sort((a, b) => b.d - a.d);
   const recent = rounds.slice(0, cap).map(r => r.m).sort((a, b) => a - b);
-  const mid = Math.floor(recent.length / 2);
-  const median = recent.length % 2 ? recent[mid] : (recent[mid - 1] + recent[mid]) / 2;
-  return { median, n: recent.length };
+  // Percentil 70 por nearest-rank sobre as voltas mais recentes (ascendentes).
+  const idx = Math.min(recent.length - 1, Math.max(0, Math.ceil(0.7 * recent.length) - 1));
+  return { value: recent[idx], n: recent.length };
+}
+
+interface LongPerf {
+  thresholdM: number;
+  nLong: number; nShort: number;
+  longAvgSd: number | null; shortAvgSd: number | null;
+  /** Melhor (menor) score differential em campos longos, com campo e metros. */
+  bestLong: { sd: number; course: string; meters: number } | null;
+}
+
+/** Desempenho do jogador em campos LONGOS vs curtos, medido por score
+ *  differential (já normaliza CR/Slope, por isso é comparável entre campos).
+ *  `thresholdM` separa "longo" de "curto" (tipicamente o comprimento do tee que
+ *  se está a ponderar). Usa o mesmo fallback de metros que a distância habitual,
+ *  para incluir os torneios internacionais. */
+function longTeePerformance(
+  data: PlayerPageData | null, simCourses: Course[], thresholdM: number,
+): LongPerf {
+  const empty: LongPerf = { thresholdM, nLong: 0, nShort: 0, longAvgSd: null, shortAvgSd: null, bestLong: null };
+  if (!data) return empty;
+  // Só os últimos 12 meses: um júnior cresce depressa — o que era capaz há mais
+  // de um ano não representa o jogo de hoje.
+  const cutoff = Date.now() - 365 * 24 * 60 * 60 * 1000;
+  let longSum = 0, longN = 0, shortSum = 0, shortN = 0;
+  let bestLong: { sd: number; course: string; meters: number } | null = null;
+  for (const c of data.DATA) for (const r of c.rounds) {
+    if (r.holeCount !== 18 || r.dateSort < cutoff) continue;
+    const sd = toNum(r.sd);
+    if (sd == null) continue;
+    const m = (r.meters != null && r.meters > 3000)
+      ? r.meters
+      : resolvePlayedMeters(c.course, r.tee, r.holeCount, simCourses, MANUEL_FED);
+    if (m == null || m <= 3000) continue;
+    if (m >= thresholdM) {
+      longSum += sd; longN++;
+      if (bestLong == null || sd < bestLong.sd) bestLong = { sd, course: c.course, meters: m };
+    } else {
+      shortSum += sd; shortN++;
+    }
+  }
+  return {
+    thresholdM, nLong: longN, nShort: shortN,
+    longAvgSd: longN ? longSum / longN : null,
+    shortAvgSd: shortN ? shortSum / shortN : null,
+    bestLong,
+  };
 }
 
 /* ═══════════════════ Métricas por tee ═══════════════════ */
@@ -235,56 +323,78 @@ function buildConclusions(a: TeeMetrics, b: TeeMetrics): Conclusion[] {
   const A = <TeeNameSpan tee={a.tee} />;
   const B = <TeeNameSpan tee={b.tee} />;
 
-  // 1 — Pancadas de perdão (informativo: no mesmo campo o tee longo recebe
-  // SEMPRE mais pancadas — a pergunta certa é se a compensação chega)
+  // 1 — Saldo do tee longo: pancadas de perdão GANHAS vs nº de perigos CRIADOS.
+  // A pergunta central: +7 pancadas para cobrir só 2 buracos difíceis é um bom
+  // negócio; +2 pancadas para 3 perigos não é. O tee mais longo dá SEMPRE mais
+  // perdão — o que decide é se essa compensação cobre os perigos que cria.
   if (a.ph != null && b.ph != null) {
-    const diff = a.ph - b.ph;
-    const dDist = a.dist != null && b.dist != null ? a.dist - b.dist : null;
-    const mPerStroke = diff !== 0 && dDist != null ? Math.abs(dDist / diff) : null;
+    const longer = (a.dist ?? 0) >= (b.dist ?? 0) ? a : b;
+    const shorter = longer === a ? b : a;
+    const perdao = (longer.ph ?? 0) - (shorter.ph ?? 0);
+    const haveGir = longer.gir.total > 0;
+    const perigos = haveGir ? longer.gir.detail.filter(d => !d.reachable).length : 0;
+    const saldo = perdao - perigos;
+    // Banda morta: ±1 de saldo = empate (uma pancada de margem para um perigo
+    // não é vantagem — se o dia corre mal não há folga). Só ≥2 ("com folga")
+    // favorece mesmo o tee longo; ≤−2 favorece o curto.
+    const ptsLonger = Math.abs(saldo) <= 1 ? 0 : Math.max(-3, Math.min(3, saldo > 0 ? saldo - 1 : saldo + 1));
     cs.push({
-      icon: "🛡️", title: "Pancadas de perdão", short: "Perdão",
-      text: diff === 0 ? (
-        <>Recebe {a.ph} pancadas em ambos os tees — sem diferença de perdão.</>
-      ) : (
-        <>
-          {A}: {a.ph} pancadas recebidas (gross alvo {a.grossAlvo}) · {B}: {b.ph} (gross alvo {b.grossAlvo}).
-          {" "}O tee mais longo recebe sempre mais perdão — aqui são +{Math.abs(diff)} pancada{Math.abs(diff) === 1 ? "" : "s"}
-          {dDist != null && <> por {Math.abs(dDist)} m extra{mPerStroke != null && <> (≈{mPerStroke.toFixed(0)} m por pancada)</>}</>}.
-          {" "}É a compensação calculada para o jogador médio deste handicap — justa, mas não generosa, para um júnior cujo comprimento ainda depende do drive.
-        </>
-      ),
-      pts: 0, available: true, informational: true,
-    });
-  } else {
-    cs.push({ icon: "🛡️", title: "Pancadas de perdão", short: "Perdão", text: "Sem CR/Slope num dos tees — impossível calcular.", pts: 0, available: false });
-  }
-
-  // 2 — Distância habitual (assimétrico: jogar MAIS longo que o habitual é que
-  // custa a um júnior com distância ainda em desenvolvimento; encurtar não penaliza)
-  if (a.deltaHab != null && b.deltaHab != null) {
-    const excessA = Math.max(0, a.deltaHab), excessB = Math.max(0, b.deltaHab);
-    const diff = excessB - excessA; // positivo → A exige menos distância extra
-    const meaningful = Math.abs(diff) >= 150;
-    const fmt = (m: TeeMetrics) => m.deltaHab! > 0
-      ? `+${m.deltaHab!.toFixed(0)} m acima da distância habitual`
-      : `${Math.abs(m.deltaHab!).toFixed(0)} m abaixo da distância habitual`;
-    cs.push({
-      icon: "📏", title: "Distância habitual", short: "Distância",
+      icon: "⚖️", title: "Saldo: perdão vs perigos", short: "Saldo",
       text: (
         <>
-          {A}: {fmt(a)} · {B}: {fmt(b)}.{" "}
-          {excessA === 0 && excessB === 0
-            ? "Nenhum dos tees exige mais distância do que o habitual — confortável em ambos."
-            : meaningful
-              ? <>Jogar bastante acima do habitual obriga a esticar um jogo que ainda está em desenvolvimento — <TeeNameSpan tee={(diff > 0 ? a : b).tee} /> é menos exigente fisicamente.</>
-              : "O excesso face ao habitual é pequeno — nenhum dos tees obriga a esticar o jogo."}
+          <TeeNameSpan tee={longer.tee} /> dá +{perdao} pancada{perdao === 1 ? "" : "s"} de perdão (gross alvo {longer.grossAlvo} vs {shorter.grossAlvo})
+          {haveGir
+            ? <> e cria {perigos} {perigos === 1 ? "perigo" : "perigos"} — buraco{perigos === 1 ? "" : "s"} fora de alcance em regulação. Saldo {saldo > 0 ? "+" : ""}{saldo}: {
+                saldo >= 2 ? <>a compensação cobre os perigos <b>com folga</b> — o tee longo compensa.</>
+                : saldo === 1 ? <>cobre os perigos <b>à justa</b>, sem margem — se algo correr mal não há folga. Na prática, <b>empate</b>.</>
+                : saldo === 0 ? <>iguala exatamente os perigos — <b>empate</b>.</>
+                : saldo === -1 ? <>fica a uma pancada de cobrir os perigos — sem margem; quase <b>empate</b>, ligeiramente desfavorável.</>
+                : <>os perigos superam a compensação — o tee longo cobra mais do que dá.</>
+              }</>
+            : <>; sem distâncias por buraco para contar os perigos neste campo.</>}
+        </>
+      ),
+      pts: haveGir ? (longer === a ? ptsLonger : -ptsLonger) : 0,
+      available: true,
+      informational: !haveGir,
+    });
+  } else {
+    cs.push({ icon: "⚖️", title: "Saldo: perdão vs perigos", short: "Saldo", text: "Sem CR/Slope num dos tees — impossível calcular o perdão.", pts: 0, available: false });
+  }
+
+  // 2 — Ajuste à distância de competição (a distância que ele JÁ joga a sério).
+  // O ideal é jogar PERTO dela: muito acima estica o jogo longo; muito ABAIXO
+  // tira o desafio e trava o desenvolvimento — um júnior não cresce a recuar de
+  // tee. Por isso penaliza os dois lados, não só o excesso.
+  if (a.deltaHab != null && b.deltaHab != null) {
+    const fitA = Math.abs(a.deltaHab), fitB = Math.abs(b.deltaHab);
+    const diff = fitB - fitA; // positivo → A ajusta-se melhor (mais perto do habitual)
+    const meaningful = Math.abs(diff) >= 150;
+    const best = fitA <= fitB ? a : b;
+    const other = best === a ? b : a;
+    const desc = (m: TeeMetrics) => {
+      const g = Math.round(m.deltaHab!);
+      if (g > 200) return `${g} m acima do que joga em competição`;
+      if (g < -200) return `${Math.abs(g)} m abaixo do que joga em competição`;
+      return `à distância que já joga em competição (${g >= 0 ? "+" : ""}${g} m)`;
+    };
+    cs.push({
+      icon: "📏", title: "Ajuste à distância de competição", short: "Distância",
+      text: (
+        <>
+          {A}: {desc(a)} · {B}: {desc(b)}.{" "}
+          {!meaningful
+            ? "Ambos perto da distância que já enfrenta — sem diferença relevante."
+            : other.deltaHab! < -200
+              ? <><TeeNameSpan tee={best.tee} /> está à distância que já joga a sério; <TeeNameSpan tee={other.tee} /> fica {Math.abs(Math.round(other.deltaHab!))} m abaixo disso — oferece menos desafio.</>
+              : <><TeeNameSpan tee={other.tee} /> obriga a esticar o jogo para além do habitual; <TeeNameSpan tee={best.tee} /> está mais perto da sua distância de competição.</>}
         </>
       ),
       pts: meaningful ? Math.sign(diff) * Math.min(2, Math.abs(diff) / 400) : 0,
       available: true,
     });
   } else {
-    cs.push({ icon: "📏", title: "Distância habitual", short: "Distância", text: "Sem distância do tee ou sem histórico de voltas para estimar o habitual.", pts: 0, available: false });
+    cs.push({ icon: "📏", title: "Ajuste à distância de competição", short: "Distância", text: "Sem distância do tee ou sem histórico para estimar a distância de competição.", pts: 0, available: false });
   }
 
   // 3 — Buracos de alerta (informativo, não pontua: um buraco fora de alcance
@@ -317,14 +427,14 @@ function buildConclusions(a: TeeMetrics, b: TeeMetrics): Conclusion[] {
   }
 
   // 4 — Histórico real
-  if (a.hist.n >= 2 && b.hist.n >= 2 && a.hist.avgVsPar != null && b.hist.avgVsPar != null) {
-    const diff = b.hist.avgVsPar - a.hist.avgVsPar; // positivo → A teve scores melhores vs par
+  if (a.hist.n >= 2 && b.hist.n >= 2 && a.hist.typVsPar != null && b.hist.typVsPar != null) {
+    const diff = b.hist.typVsPar - a.hist.typVsPar; // positivo → A teve scores típicos melhores vs par
     cs.push({
       icon: "📊", title: "Histórico real neste campo", short: "Histórico",
       text: (
         <>
-          {A}: média {fmtToPar(Math.round(a.hist.avgVsPar))} vs par em {a.hist.n} voltas · {B}: {fmtToPar(Math.round(b.hist.avgVsPar))} em {b.hist.n}.{" "}
-          {Math.abs(diff) < 1 ? "Rendimento equivalente." : <>Scores reais melhores de <TeeNameSpan tee={(diff > 0 ? a : b).tee} />.</>}
+          {A}: resultado típico {fmtToPar(Math.round(a.hist.typVsPar))} vs par em {a.hist.n} voltas · {B}: {fmtToPar(Math.round(b.hist.typVsPar))} em {b.hist.n} <span className="muted">(mediana — ignora voltas atípicas)</span>.{" "}
+          {Math.abs(diff) < 1 ? "Rendimento equivalente." : <>Scores típicos melhores de <TeeNameSpan tee={(diff > 0 ? a : b).tee} />.</>}
         </>
       ),
       pts: Math.max(-3, Math.min(3, diff)),
@@ -400,7 +510,7 @@ const TEE_SORT_VAL: Record<TeeSortKey, (m: TeeMetrics) => number | string> = {
   alvo: m => m.grossAlvo ?? -1,
   gir: m => m.gir.total > 0 ? m.gir.reach.length : -1,
   nh: m => m.hist.n,
-  avg: m => m.hist.avgVsPar ?? Number.MAX_SAFE_INTEGER,
+  avg: m => m.hist.typVsPar ?? Number.MAX_SAFE_INTEGER,
 };
 
 function TeeTable({ rows, habitual }: { rows: TeeMetrics[]; habitual: number | null }) {
@@ -432,7 +542,7 @@ function TeeTable({ rows, habitual }: { rows: TeeMetrics[]; habitual: number | n
             <SortableHdr k="alvo"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Gross que joga ao handicap (SD = HI)">Gross alvo</SortableHdr>
             <SortableHdr k="gir"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Buracos alcançáveis em regulação com o alcance configurado">Alcanç.</SortableHdr>
             <SortableHdr k="nh"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Voltas 18B do Manuel neste tee">Voltas</SortableHdr>
-            <SortableHdr k="avg"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Média real vs par">Média vs Par</SortableHdr>
+            <SortableHdr k="avg"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Resultado típico (mediana) vs par — ignora voltas atípicas">Típico vs Par</SortableHdr>
           </tr>
         </thead>
         <tbody>
@@ -450,7 +560,7 @@ function TeeTable({ rows, habitual }: { rows: TeeMetrics[]; habitual: number | n
               <td className="r" style={{ fontFamily: MONO }}>{m.grossAlvo ?? "–"}</td>
               <td className="r" style={{ fontFamily: MONO }}>{m.gir.total > 0 ? `${m.gir.reach.length}/${m.gir.total}` : "–"}</td>
               <td className="r" style={{ fontFamily: MONO }}>{m.hist.n || "–"}</td>
-              <td className="r" style={{ fontFamily: MONO }}>{m.hist.avgVsPar != null ? fmtToPar(Math.round(m.hist.avgVsPar)) : "–"}</td>
+              <td className="r" style={{ fontFamily: MONO }}>{m.hist.typVsPar != null ? fmtToPar(Math.round(m.hist.typVsPar)) : "–"}</td>
             </tr>
           ))}
         </tbody>
@@ -671,8 +781,8 @@ export default function TeeAdvisorView({ simCourses }: { simCourses: Course[] })
     });
   }, [course, sexFilter]);
 
-  const hab = useMemo(() => habitualDistance(manuelData), [manuelData]);
-  const habEff = habOverride ?? hab.median;
+  const hab = useMemo(() => habitualDistance(manuelData, simCourses), [manuelData, simCourses]);
+  const habEff = habOverride ?? hab.value;
 
   const metrics = useMemo(
     () => tees.map(t => buildMetrics(t, hcp, driveM, secondM, habEff, manuelData, course?.master.name ?? "")),
@@ -703,9 +813,10 @@ export default function TeeAdvisorView({ simCourses }: { simCourses: Course[] })
     [teeA, teeB]
   );
 
-  // Recomendação: janela Longleaf/USGA (comprimento adequado ≈ 24-28× o drive),
-  // dificuldades documentadas no tee longo e perdão extra. Em vez de um "vencedor"
-  // mecânico, dá um conselho condicional (confiança vs. defesa de score).
+  // Recomendação ancorada na EVIDÊNCIA: a distância que o Manuel já joga em
+  // competição (habEff) e se já joga ao handicap no tee curto (= superou-o). A
+  // janela 24-28× do drive é só referência secundária — quando o que ele joga a
+  // sério a ultrapassa, é sinal de que o alcance real é maior do que o drive configurado.
   const recommendation = useMemo(() => {
     if (!teeA || !teeB || teeA.dist == null || teeB.dist == null) return null;
     const longer = teeA.dist >= teeB.dist ? teeA : teeB;
@@ -713,11 +824,86 @@ export default function TeeAdvisorView({ simCourses }: { simCourses: Course[] })
     const low = Math.round(24 * driveM), high = Math.round(28 * driveM);
     const alerts = longer.gir.detail.filter(d => !d.reachable).length;
     const perdao = longer.ph != null && shorter.ph != null ? longer.ph - shorter.ph : null;
-    const longerInWindow = longer.dist! <= high;
-    const shorterTooShort = shorter.dist! < low;
-    const go = longerInWindow && alerts <= 2;
-    return { longer, shorter, low, high, alerts, perdao, longerInWindow, shorterTooShort, go };
-  }, [teeA, teeB, driveM]);
+    // Já joga o tee longo? (cabe na distância de competição demonstrada)
+    const longerWithinPlayed = habEff != null && longer.dist! <= habEff + 150;
+    // Quanto é que o tee curto fica abaixo da distância de competição (para a msg).
+    const shorterBelowPlayed = habEff != null ? Math.round(habEff - shorter.dist!) : null;
+    // Já joga ao handicap no tee curto? (melhor gross ≈ gross alvo) → superou-o
+    const outgrewShorter = shorter.hist.n >= 1 && shorter.hist.best != null && shorter.grossAlvo != null
+      && shorter.hist.best <= shorter.grossAlvo + 1;
+    // Forma NESTE campo (a média vs par já desconta a dificuldade, porque o
+    // playing handicap do tee sobe com o CR/Slope). Usa a forma recente quando há.
+    const sForm = shorter.hist.recentTypVsPar ?? shorter.hist.typVsPar;
+    const lForm = longer.hist.recentTypVsPar ?? longer.hist.typVsPar;
+    // Ainda não faz bons resultados nem no tee CURTO deste campo (bem acima do
+    // que o handicap aponta) → subir de tee aqui é prematuro.
+    const strugglesShorterHere = shorter.hist.n >= 2 && sForm != null && shorter.ph != null && sForm > shorter.ph + 4;
+    // Já joga BEM o tee longo NESTE campo → sinal forte para subir.
+    const longGoodHere = longer.hist.n >= 2 && lForm != null && longer.ph != null && lForm <= longer.ph + 2;
+    const readyByDistance = habEff != null && (longerWithinPlayed || outgrewShorter);
+    const beyondWindow = habEff != null && habEff > high;
+    // Desempenho real em campos do comprimento do tee longo (ou acima), 12 meses.
+    const perfThreshold = Math.round(((longer.dist ?? 0) - 150) / 50) * 50;
+    const longPerf = longTeePerformance(manuelData, simCourses, perfThreshold);
+    // Saldo: pancadas extra ganhas vs perigos criados ao subir de tee.
+    const saldo = perdao != null ? perdao - alerts : null;
+    const goodDeal = saldo != null && saldo >= 2;          // cobre os perigos com folga
+    const badDeal = saldo != null && saldo <= -2;          // perigos superam o perdão
+    const neverPlayedHere = shorter.hist.n === 0 && longer.hist.n === 0;
+
+    // Modo da recomendação (por prioridade). Não há "arrisca sempre": a distância
+    // abre a porta, mas um saldo negativo (mais perigos que perdão) ou não conhecer
+    // o campo podem desaconselhar subir já.
+    type RecMode = "go" | "suit" | "caution" | "master" | "hold";
+    let mode: RecMode;
+    if (habEff == null) {
+      mode = (longer.dist! <= high && alerts <= 2) ? "go" : "hold";
+    } else if (longGoodHere) {
+      mode = "go";                                 // já joga BEM o tee longo aqui
+    } else if (!readyByDistance) {
+      mode = strugglesShorterHere ? "master" : "hold";
+    } else if (badDeal) {
+      mode = "caution";                            // tem distância, mas mau negócio aqui
+    } else if (strugglesShorterHere) {
+      mode = "suit";                               // curto não lhe assenta; longo pode encaixar
+    } else {
+      mode = "go";
+    }
+    const stepUp = mode === "go" || mode === "suit";
+
+    return {
+      longer, shorter, low, high, alerts, perdao, saldo, goodDeal,
+      mode, neverPlayedHere,
+      longerWithinPlayed, shorterBelowPlayed, stepUp, beyondWindow,
+      habitual: habEff, strugglesShorterHere, longGoodHere, sForm, lForm,
+      shorterPh: shorter.ph,
+      shortRecentN: shorter.hist.recentN, longRecentN: longer.hist.recentN,
+      longPerf,
+    };
+  }, [teeA, teeB, driveM, habEff, manuelData, simCourses]);
+
+  // Frase de evidência (dados reais) sobre o desempenho dele em campos longos —
+  // partilhada pelas mensagens de recomendação que mandam subir de tee.
+  const perfLine = useMemo(() => {
+    const lp = recommendation?.longPerf;
+    if (!lp || lp.nLong < 3 || lp.longAvgSd == null) return null;
+    const better = lp.shortAvgSd != null && lp.longAvgSd <= lp.shortAvgSd + 0.5;
+    return (
+      <>
+        {" "}Os dados confirmam-no: nos <b>últimos 12 meses</b>, nas tuas <b>{lp.nLong} voltas em campos de {lp.thresholdM} m ou mais</b>, a
+        média de <i>score differential</i> é <b>{lp.longAvgSd.toFixed(1)}</b>
+        {better && lp.shortAvgSd != null
+          ? <> — tão boa ou melhor que os {lp.shortAvgSd.toFixed(1)} dos campos curtos</>
+          : null}
+        {lp.bestLong
+          ? <>, e o teu melhor diferencial deste período ({lp.bestLong.sd.toFixed(1)}) foi em {lp.bestLong.course} ({lp.bestLong.meters} m)</>
+          : null}.
+        {" "}{better
+          ? "Não perdes qualidade com o comprimento — é aí que mostras o teu melhor golfe."
+          : "Aguentas bem o comprimento."}
+      </>
+    );
+  }, [recommendation]);
 
   if (sortedCourses.length === 0) {
     return <EmptyState icon="🏌️" message="Sem campos disponíveis." />;
@@ -763,11 +949,11 @@ export default function TeeAdvisorView({ simCourses }: { simCourses: Course[] })
             onClick={() => setHabOverride(null)}
             style={{ padding: "4px 10px", fontSize: 12, fontWeight: 600, background: "var(--bg-muted)", border: "1px solid var(--border)", borderRadius: 6, cursor: "pointer", color: "var(--text-2)" }}
           >
-            ↺ Repor automático{hab.median != null ? ` (${hab.median.toFixed(0)} m)` : ""}
+            ↺ Repor automático{hab.value != null ? ` (${hab.value.toFixed(0)} m)` : ""}
           </button>
         ) : (
           <span className="muted" style={{ fontSize: 13 }}>
-            {hab.median != null ? `mediana das últimas ${hab.n} voltas 18B do Manuel` : "sem histórico — introduz um valor"}
+            {hab.value != null ? `percentil 70 das últimas ${hab.n} voltas 18B do Manuel — a distância que já joga em competição` : "sem histórico — introduz um valor"}
           </span>
         )}
       </div>
@@ -836,55 +1022,100 @@ export default function TeeAdvisorView({ simCourses }: { simCourses: Course[] })
                   background: "var(--accent-light)", border: "1px solid var(--accent)",
                   display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap",
                 }}>
-                  <span style={{ fontSize: 24 }}>{recommendation.go ? "🚀" : "🛡️"}</span>
+                  <span style={{ fontSize: 24 }}>{
+                    recommendation.mode === "go" ? "🚀"
+                    : recommendation.mode === "suit" ? "🎯"
+                    : recommendation.mode === "caution" ? "🤔"
+                    : "🛡️"
+                  }</span>
                   <div style={{ flex: 1, minWidth: 220 }}>
                     <div style={{ fontWeight: 800, fontSize: 14, lineHeight: 1.5 }}>
-                      {recommendation.go
-                        ? <>Se estás confiante no teu jogo, arrisca as <TeeNameSpan tee={recommendation.longer.tee} /></>
-                        : <>Consolida nas <TeeNameSpan tee={recommendation.shorter.tee} /> — o tee longo ainda é cedo</>}
+                      {recommendation.mode === "go"
+                        ? <>Avança para as <TeeNameSpan tee={recommendation.longer.tee} /> — já jogas esta distância em competição</>
+                        : recommendation.mode === "suit"
+                          ? <>As <TeeNameSpan tee={recommendation.longer.tee} /> talvez sejam mais adequadas ao teu jogo</>
+                          : recommendation.mode === "caution"
+                            ? <>Aqui, as <TeeNameSpan tee={recommendation.shorter.tee} /> são a escolha sensata</>
+                            : recommendation.mode === "master"
+                              ? <>Primeiro, domina as <TeeNameSpan tee={recommendation.shorter.tee} /> neste campo</>
+                              : <>Por agora, fica nas <TeeNameSpan tee={recommendation.shorter.tee} /> — o salto ainda é grande</>}
                     </div>
                     <div style={{ fontSize: 13, marginTop: 4, lineHeight: 1.6 }}>
-                      {recommendation.go ? (
+                      {recommendation.mode === "suit" ? (
                         <>
-                          <TeeNameSpan tee={recommendation.longer.tee} /> ({recommendation.longer.dist} m) está dentro do comprimento adequado
-                          ao teu drive de {driveM} m (24–28× o drive ≈ {recommendation.low}–{recommendation.high} m)
-                          {recommendation.perdao != null && recommendation.perdao > 0 && <>, recebes +{recommendation.perdao} pancada{recommendation.perdao === 1 ? "" : "s"} de perdão</>}
-                          {" "}e {recommendation.alerts === 0
-                            ? "não há dificuldades documentadas"
-                            : recommendation.alerts === 1
-                              ? "só existe 1 dificuldade documentada"
-                              : `existem ${recommendation.alerts} dificuldades documentadas`}.
-                          {recommendation.shorterTooShort && <> Aliás, <TeeNameSpan tee={recommendation.shorter.tee} /> ({recommendation.shorter.dist} m) já está abaixo dessa janela — deixa de ser desafio.</>}
-                          {" "}Num torneio a contar para ranking ou num dia menos confiante, <TeeNameSpan tee={recommendation.shorter.tee} /> protege o score e a confiança.
+                          Ainda não bateste as <TeeNameSpan tee={recommendation.shorter.tee} /> deste campo{recommendation.sForm != null && <> (resultado típico {fmtToPar(Math.round(recommendation.sForm))} vs par {recommendation.shortRecentN === recommendation.shorter.hist.n ? "" : "nas últimas "}{recommendation.shortRecentN} volta{recommendation.shortRecentN === 1 ? "" : "s"}, quando o handicap aqui aponta para ~{fmtToPar(recommendation.shorterPh ?? 0)})</>} — mas isso pode não ser falta de jogo. Um campo curto demais <b>tira-te o driver da mão</b>, deixa-te distâncias <i>tweener</i> (nem wedge cheio, nem ferro confortável) e não premia o teu comprimento. As <TeeNameSpan tee={recommendation.longer.tee} /> ({recommendation.longer.dist} m) estão dentro da distância que já jogas a sério{recommendation.habitual != null ? <> ({Math.round(recommendation.habitual)} m)</> : null} e devolvem-te o driver, pancadas cheias e <b>variedade de tacos</b> no approach — podem encaixar melhor no teu jogo.{perfLine}{recommendation.perdao != null && recommendation.perdao > 0 && <> Ainda recebes +{recommendation.perdao} pancada{recommendation.perdao === 1 ? "" : "s"} de perdão{recommendation.alerts > 0 ? <> (saldo {recommendation.saldo! > 0 ? "+" : ""}{recommendation.saldo})</> : null}.</>} Vale a pena experimentá-las e comparar os resultados.{recommendation.neverPlayedHere && <> Como é a tua estreia no campo, ganha-lhe a medida nas primeiras voltas.</>}
+                        </>
+                      ) : recommendation.mode === "go" ? (
+                        <>
+                          <b>Estás pronto para as <TeeNameSpan tee={recommendation.longer.tee} /></b> ({recommendation.longer.dist} m):
+                          {recommendation.habitual != null
+                            ? <> é uma distância que já enfrentas a sério em competição ({Math.round(recommendation.habitual)} m).</>
+                            : <> está dentro do comprimento adequado ao teu drive de {driveM} m (24–28× ≈ {recommendation.low}–{recommendation.high} m).</>}
+                          {perfLine}
+                          {recommendation.longGoodHere && recommendation.lForm != null && (
+                            <> E neste campo em concreto já lá jogas bem — resultado típico {fmtToPar(Math.round(recommendation.lForm))} {recommendation.longRecentN === recommendation.longer.hist.n ? "" : "nas últimas "}{recommendation.longRecentN} volta{recommendation.longRecentN === 1 ? "" : "s"}.</>
+                          )}
+                          {recommendation.perdao != null && recommendation.perdao > 0 && (
+                            <> Ainda por cima recebes +{recommendation.perdao} pancada{recommendation.perdao === 1 ? "" : "s"} de perdão{recommendation.alerts > 0
+                              ? <> para {recommendation.alerts} perigo{recommendation.alerts === 1 ? "" : "s"} (saldo {recommendation.saldo! > 0 ? "+" : ""}{recommendation.saldo}{recommendation.goodDeal ? ", cobre-os com folga" : ""})</>
+                              : <> e nenhum buraco fica fora de alcance</>}.</>
+                          )}
+                          {recommendation.beyondWindow && (
+                            <> O teu alcance real já vai além da janela de {driveM} m de drive — não te limites a ela.</>
+                          )}
+                          {recommendation.neverPlayedHere
+                            ? <> Como é a tua estreia neste campo, entra com plano de jogo e ganha-lhe a medida — a distância, essa, não é problema.</>
+                            : <> Atira-te com confiança; as <TeeNameSpan tee={recommendation.shorter.tee} /> ficam como rede de segurança num dia mais difícil.</>}
+                        </>
+                      ) : recommendation.mode === "caution" ? (
+                        <>
+                          Tens distância para as <TeeNameSpan tee={recommendation.longer.tee} /> ({recommendation.longer.dist} m){recommendation.habitual != null && <> — já jogas {Math.round(recommendation.habitual)} m em competição</>}. Mas <b>neste campo</b> elas criam {recommendation.alerts} buraco{recommendation.alerts === 1 ? "" : "s"} fora de alcance em regulação e só dão +{recommendation.perdao} de perdão (<b>saldo {recommendation.saldo}</b>): mais castigo do que recompensa.{recommendation.neverPlayedHere && <> E ainda não o conheces.</>} As <TeeNameSpan tee={recommendation.shorter.tee} /> ({recommendation.shorter.dist} m) já são um teste a sério{recommendation.shorterBelowPlayed != null && recommendation.shorterBelowPlayed <= 400 ? " (perto da tua distância de competição)" : ""} e alcanças {recommendation.shorter.gir.reach.length}/{recommendation.shorter.gir.total} greens em regulação. {recommendation.neverPlayedHere ? "Conhece o campo primeiro" : "Fica nelas por agora"} e guarda as <TeeNameSpan tee={recommendation.longer.tee} /> para quando o saldo jogar a teu favor.
+                        </>
+                      ) : recommendation.mode === "master" ? (
+                        <>
+                          {recommendation.longerWithinPlayed
+                            ? <>Já jogas esta distância noutros campos, mas <b>aqui</b> ainda não tens bons resultados nem das <TeeNameSpan tee={recommendation.shorter.tee} /></>
+                            : <>Ainda não tens bons resultados nas <TeeNameSpan tee={recommendation.shorter.tee} /> deste campo</>}
+                          {recommendation.sForm != null && <> — resultado típico {fmtToPar(Math.round(recommendation.sForm))} {recommendation.shortRecentN === recommendation.shorter.hist.n ? "" : "nas últimas "}{recommendation.shortRecentN} volta{recommendation.shortRecentN === 1 ? "" : "s"}, quando o teu handicap aqui aponta para ~{fmtToPar(recommendation.shorterPh ?? 0)}</>}.
+                          {" "}Consolida primeiro o teu campo nas <TeeNameSpan tee={recommendation.shorter.tee} /> e sobe de tee aqui quando os resultados acompanharem o que já fazes noutros campos longos.
                         </>
                       ) : (
                         <>
-                          <TeeNameSpan tee={recommendation.longer.tee} /> ({recommendation.longer.dist} m)
-                          {recommendation.longerInWindow
-                            ? <> tem {recommendation.alerts} buracos fora de alcance em regulação</>
-                            : <> excede o comprimento adequado ao teu drive de {driveM} m (24–28× ≈ {recommendation.low}–{recommendation.high} m){recommendation.alerts > 0 && <> e tem {recommendation.alerts} buraco{recommendation.alerts === 1 ? "" : "s"} fora de alcance em regulação</>}</>}.
-                          {" "}Tees longos demais pressionam o jogo longo e custam confiança — usa-o como treino pontual e muda quando o drive crescer.
+                          <TeeNameSpan tee={recommendation.longer.tee} /> ({recommendation.longer.dist} m) está
+                          {recommendation.habitual != null
+                            ? <> acima da distância que já jogas a sério ({Math.round(recommendation.habitual)} m){recommendation.perdao != null && recommendation.alerts > 0 && <>, e a troca só te dá +{recommendation.perdao} pancada{recommendation.perdao === 1 ? "" : "s"} para {recommendation.alerts} perigo{recommendation.alerts === 1 ? "" : "s"} (saldo {recommendation.saldo! > 0 ? "+" : ""}{recommendation.saldo})</>}</>
+                            : <> acima do comprimento adequado ao teu drive de {driveM} m (24–28× ≈ {recommendation.low}–{recommendation.high} m)</>}.
+                          {" "}Consolida primeiro nas <TeeNameSpan tee={recommendation.shorter.tee} /> e sobe quando jogares esta distância com regularidade.
                         </>
                       )}
                     </div>
                   </div>
-                  <TeePill tee={(recommendation.go ? recommendation.longer : recommendation.shorter).tee} />
+                  <TeePill tee={(recommendation.stepUp ? recommendation.longer : recommendation.shorter).tee} />
                 </div>
               )}
             </div>
           )}
 
           <div className="muted" style={{ fontSize: 11, lineHeight: 1.6, marginTop: 4 }}>
-            Metodologia: o perdão usa a fórmula WHS de playing handicap — um tee mais longo tem
-            Course Rating mais alto e por isso dá mais pancadas recebidas, ou seja, o gross que
-            equivale a "jogar ao handicap" é mais alto. A distância habitual vem do histórico real
-            de voltas 18B — só penaliza jogar ACIMA do habitual (encurtar não é desvantagem para um júnior). Os buracos de alerta assumem drive + 2ª pancada configurados acima
-            (par 3 ≤ drive · par 4 ≤ drive+2ª · par 5 ≤ drive+2×2ª) e são informativos — não pontuam no veredicto. O histórico só compara tees
-            com ≥2 voltas de 18 buracos cada. A recomendação final usa a janela Longleaf/USGA
-            (comprimento adequado ≈ 24-28× a distância de drive — validada com dados Trackman
-            pela US Kids Golf Foundation e ASGCA): dentro da janela e com poucas dificuldades
-            documentadas, o tee longo é um desafio saudável; fora dela, pressiona o jogo longo
-            e custa confiança.
+            Metodologia: o <b>saldo</b> compara as pancadas de perdão que o tee mais longo dá
+            (fórmula WHS de playing handicap — mais Course Rating = mais pancadas recebidas) com o
+            número de perigos que cria (buracos fora de alcance em regulação). Saldo positivo = a
+            compensação cobre os perigos com folga. A <b>distância de competição</b> é o percentil 70
+            das últimas 20 voltas de 18 buracos (a distância que ele já joga a sério, com os torneios
+            internacionais ligados ao tee real do campo); o ajuste premia jogar PERTO dela — muito
+            acima estica o jogo longo, muito abaixo tira o desafio. Os buracos de alerta assumem
+            drive + 2ª pancada configurados acima (par 3 ≤ drive · par 4 ≤ drive+2ª · par 5 ≤ drive+2×2ª).
+            A <b>forma no campo</b> usa a <b>mediana</b> ("resultado típico"), não a média — uma
+            volta catastrófica não distorce o retrato — e dá prioridade às últimas voltas; o
+            desempenho em campos longos usa só os <b>últimos 12 meses</b> (um júnior cresce depressa).
+            A recomendação NÃO empurra sempre para o tee longo: a distância abre a porta, mas se o
+            <b> saldo for negativo</b> (mais perigos que perdão) ou ele <b>ainda não conhecer o campo</b>,
+            aconselha cautela — o tee mais curto e conhecido é a escolha sensata. Se ainda não faz
+            bons resultados nem no tee curto deste campo, manda dominá-lo primeiro; se já joga bem o
+            tee longo aqui (ou se o tee curto não premia o seu jogo), manda subir. A janela
+            Longleaf/USGA (24-28× o drive, dados Trackman da US Kids Golf Foundation + ASGCA) é só
+            referência secundária — quando o que ele já joga a ultrapassa, é sinal de que o alcance
+            real é maior do que o drive configurado.
           </div>
 
           <details className="card" style={{ marginTop: 8 }}>

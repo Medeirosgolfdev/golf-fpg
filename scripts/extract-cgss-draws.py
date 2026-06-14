@@ -245,15 +245,21 @@ def build_players(group, rmatch):
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--pdf-dir", required=True)
+    ap.add_argument("--pdf-dir", help="pasta com PDFs a processar (todos os *.pdf)")
+    ap.add_argument("--pdf", help="processar APENAS este PDF (merge aditivo)")
     ap.add_argument("--data-dir", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--print-only", action="store_true")
     args = ap.parse_args()
 
+    if not args.pdf and not args.pdf_dir:
+        ap.error("indica --pdf <ficheiro> ou --pdf-dir <pasta>")
+
+    pdf_list = [args.pdf] if args.pdf else sorted(glob.glob(os.path.join(args.pdf_dir, "*.pdf")))
+
     results = load_results_index(args.data_dir)
     tournaments, seen = [], set()
-    for pdf in sorted(glob.glob(os.path.join(args.pdf_dir, "*.pdf"))):
+    for pdf in pdf_list:
         txt = pdftext(pdf)
         # Antes saltava PDFs sem "goulartt" (só processava torneios do Manuel).
         # Agora processa TODOS os draws CGSS (mesmo os que o Manuel não jogou) —
