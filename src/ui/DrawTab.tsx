@@ -367,7 +367,8 @@ export default function DrawTab({
           groupIdx,
           teeTime: g.teeTime,
           startHole: g.startHole,
-          tee: g.tee,
+          // Tee por jogador (flights com tees mistos M/F) tem prioridade sobre o tee do grupo.
+          tee: ((p as any).tee as string | null | undefined) ?? g.tee,
           nome: nomeFormatted,
           clube,
           fed,

@@ -33,6 +33,8 @@ export interface FpgDrawFlight {
     clube: string | null;
     fed?: string | null;
     hcp?: number | null;
+    /** Tee específico do jogador (override do `tee` do grupo, p/ flights com tees mistos M/F). */
+    tee?: string | null;
   }>;
 }
 

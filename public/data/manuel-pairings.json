@@ -1,19 +1,25 @@
 {
-  "geradoEm": "2026-06-13T13:11:29.388Z",
+  "geradoEm": "2026-06-14T11:31:46.338Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 112,
-  "totalCompanheirosUnicos": 134,
+  "totalRondas": 115,
+  "totalCompanheirosUnicos": 136,
   "cobertura": {
     "fpg": {
-      "rondasJogadas": 120,
-      "rondasComDraw": 90,
-      "torneiosJogados": 90,
-      "torneiosComDraw": 72,
+      "rondasJogadas": 121,
+      "rondasComDraw": 93,
+      "torneiosJogados": 91,
+      "torneiosComDraw": 74,
       "torneiosComDrawDetalhe": [
+        {
+          "torneioId": "007-11034",
+          "nome": "Torneio Diário de Notícias da Madeira 2026",
+          "data": "2026-06-12",
+          "rondas": 1
+        },
         {
           "torneioId": "059-10615",
           "nome": "3º Torneio Academia Junior - 18 buracos",
@@ -165,6 +171,12 @@
           "rondas": 1
         },
         {
+          "torneioId": "125-10370",
+          "nome": "PJA TOUR Vale Pisão - Dia 1",
+          "data": "2025-08-23",
+          "rondas": 1
+        },
+        {
           "torneioId": "003-10564",
           "nome": "Miramar Internacional Open U25",
           "data": "2025-08-19",
@@ -282,6 +294,12 @@
           "torneioId": "982-10171",
           "nome": "1º Torneio Drive Challenge Madeira-Palheiro-Sub 12",
           "data": "2025-02-09",
+          "rondas": 1
+        },
+        {
+          "torneioId": "152-10444",
+          "nome": "AT&T PEBBLE BEACH PRO-AM BY TITLEIST",
+          "data": "2025-02-01",
           "rondas": 1
         },
         {
@@ -429,9 +447,7 @@
         "007-10809",
         "007-10812",
         "007-10857",
-        "125-10370",
         "125-10371",
-        "152-10444",
         "183-10129",
         "920-10062",
         "920-10077",
@@ -445,12 +461,6 @@
           "rondas": 1
         },
         {
-          "torneioId": "125-10370",
-          "nome": "PJA TOUR Vale Pisão - Dia 1",
-          "data": "2025-08-23",
-          "rondas": 1
-        },
-        {
           "torneioId": "183-10129",
           "nome": "Torneio da Páscoa",
           "data": "2025-04-18",
@@ -460,12 +470,6 @@
           "torneioId": "007-10857",
           "nome": "TORNEIO da RESTAURAÇÃO CGSS",
           "data": "2025-02-08",
-          "rondas": 1
-        },
-        {
-          "torneioId": "152-10444",
-          "nome": "AT&T PEBBLE BEACH PRO-AM BY TITLEIST",
-          "data": "2025-02-01",
           "rondas": 1
         },
         {
@@ -604,35 +608,47 @@
   "rondas": [
     {
       "circuito": "FPG",
-      "torneioId": "007-cgss-torneiodiariodenoticiasd",
+      "torneioId": "007-11034",
       "torneioNome": "Torneio Diário de Notícias da Madeira 2026",
-      "data": "2026-06-13",
+      "data": "2026-06-12",
       "ronda": 1,
       "teeTime": "09:00",
       "startHole": 16,
       "campo": "Santo da Serra - Desertas-Serras",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 82,
+        "toPar": 10
+      },
       "companheiros": [
         {
           "nome": "Gonçalo Gouveia",
           "fed": "50398",
           "clube": "Santo da Serra",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 93,
+            "toPar": 21
+          }
         },
         {
           "nome": "Manuel Medeiros",
           "fed": "54907",
           "clube": "Santo da Serra",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 99,
+            "toPar": 27
+          }
         },
         {
           "nome": "Lucas Costa Cubbin",
-          "fed": null,
+          "fed": "50671",
           "clube": "Santo da Serra",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 90,
+            "toPar": 18
+          }
         }
       ]
     },
@@ -2224,6 +2240,33 @@
     },
     {
       "circuito": "FPG",
+      "torneioId": "125-10370",
+      "torneioNome": "PJA TOUR Vale Pisão - Dia 1",
+      "data": "2025-08-23",
+      "ronda": 2,
+      "teeTime": "08:40",
+      "startHole": 1,
+      "campo": null,
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "Afonso Pinto",
+          "fed": "46480",
+          "clube": "Oporto",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Valentin Bonnet",
+          "fed": null,
+          "clube": null,
+          "pais": null,
+          "score": null
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
       "torneioId": "003-10564",
       "torneioNome": "Miramar Internacional Open U25",
       "data": "2025-08-19",
@@ -3562,6 +3605,62 @@
             "gross": 47,
             "toPar": 13
           }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "152-10444",
+      "torneioNome": "AT&T PEBBLE BEACH PRO-AM BY TITLEIST",
+      "data": "2025-02-01",
+      "ronda": 1,
+      "teeTime": "12:20",
+      "startHole": 1,
+      "campo": null,
+      "manuelScore": {
+        "gross": 104,
+        "toPar": 32
+      },
+      "companheiros": [
+        {
+          "nome": "Luís Pinheiro Jr.",
+          "fed": "46590",
+          "clube": "Belas",
+          "pais": null,
+          "score": {
+            "gross": 106,
+            "toPar": 34
+          }
+        },
+        {
+          "nome": "Salvador Ivo de Carvalho",
+          "fed": "43968",
+          "clube": "C.G. Vilamoura A",
+          "pais": null,
+          "score": {
+            "gross": 88,
+            "toPar": 16
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "FPG",
+      "torneioId": "152-10444",
+      "torneioNome": "AT&T PEBBLE BEACH PRO-AM BY TITLEIST",
+      "data": "2025-02-01",
+      "ronda": 2,
+      "teeTime": "09:00",
+      "startHole": 1,
+      "campo": null,
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "Luís Pinheiro Jr.",
+          "fed": "46590",
+          "clube": "Belas",
+          "pais": null,
+          "score": null
         }
       ]
     },
