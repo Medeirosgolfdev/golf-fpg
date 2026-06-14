@@ -16,6 +16,7 @@
 import { useState, useMemo, lazy, Suspense } from "react";
 import { useAppContext } from "../context/AppContext";
 import EmptyState from "../ui/EmptyState";
+import LoadingState from "../ui/LoadingState";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import SortableHdr from "../ui/SortableHdr";
 import type { Course, Tee } from "../data/types";
@@ -390,7 +391,7 @@ export default function ComparePage() {
   const [activeTab, setActiveTab] = useState<Tab>("campos");
 
   return (
-    <div className="page-full" style={activeTab === "tees" ? { maxWidth: 1200 } : undefined}>
+    <div className="page-full page-full--wide">
       <Toolbar>
         <ToolbarTitle>⚔️ Comparar</ToolbarTitle>
         <ToolbarMeta>
@@ -398,9 +399,11 @@ export default function ComparePage() {
         </ToolbarMeta>
       </Toolbar>
 
-      <div style={{ display: "flex", gap: 4, borderBottom: "1px solid var(--border)", marginBottom: 16, flexWrap: "wrap" }}>
+      <div className="tabbar-under" role="tablist" aria-label="Modo de comparação">
         <button
           type="button"
+          role="tab"
+          aria-selected={activeTab === "campos"}
           className={"tab-under" + (activeTab === "campos" ? " active" : "")}
           onClick={() => setActiveTab("campos")}
         >
@@ -408,6 +411,8 @@ export default function ComparePage() {
         </button>
         <button
           type="button"
+          role="tab"
+          aria-selected={activeTab === "tees"}
           className={"tab-under" + (activeTab === "tees" ? " active" : "")}
           onClick={() => setActiveTab("tees")}
         >
@@ -415,6 +420,8 @@ export default function ComparePage() {
         </button>
         <button
           type="button"
+          role="tab"
+          aria-selected={activeTab === "jogadores"}
           className={"tab-under" + (activeTab === "jogadores" ? " active" : "")}
           onClick={() => setActiveTab("jogadores")}
         >
@@ -422,7 +429,7 @@ export default function ComparePage() {
         </button>
       </div>
 
-      <Suspense fallback={<EmptyState icon="⏳" message="A carregar…" />}>
+      <Suspense fallback={<LoadingState message="A carregar…" />}>
         {activeTab === "campos" ? (
           <CourseComparisonView simCourses={ctx.simCourses} />
         ) : activeTab === "tees" ? (

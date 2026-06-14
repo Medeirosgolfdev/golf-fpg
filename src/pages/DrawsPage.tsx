@@ -25,6 +25,7 @@ import { Link } from "react-router-dom";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "../ui/SortableHdr";
 import { Toolbar, ToolbarTitle, ToolbarMeta } from "../ui/Toolbar";
+import LoadingState from "../ui/LoadingState";
 import { EscPill, PILL_ROUND } from "../ui/PillBadge";
 import { FLAG } from "../utils/flagUtils";
 import { norm, escalaoAtDate, displayName } from "../utils/format";
@@ -752,7 +753,7 @@ export default function DrawsPage() {
     : covPct >= 80 ? "var(--color-good)" : covPct >= 50 ? "var(--color-warn)" : "var(--color-danger)";
 
   return (
-    <main className="page-full" style={{ maxWidth: 1200 }}>
+    <div className="page-full page-full--wide">
       <Toolbar>
         <ToolbarTitle>🏌️ Draws — Manuel</ToolbarTitle>
         <ToolbarMeta>Companheiros de jogo do Manuel em torneios</ToolbarMeta>
@@ -765,7 +766,7 @@ export default function DrawsPage() {
 
       {/* KPI cards — actualizam com o tab seleccionado */}
       {data && (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, margin: "12px 0" }}>
+        <div className="kpi-row">
           <div className="kpi-card">
             <div className="kpi-card-label">Rondas em conjunto</div>
             <div className="kpi-card-val">{contagensTab[tab]}</div>
@@ -798,11 +799,13 @@ export default function DrawsPage() {
       )}
 
       {/* Tabs — só FPG e Internacional (Intl junta USKids + Bluegolf/GolfGenius) */}
-      <div style={{ display: "flex", gap: 2, borderBottom: "1px solid var(--border-light)" }}>
+      <div className="tabbar-under" role="tablist" aria-label="Circuito">
         {(["FPG", "Intl"] as Tab[]).map((t) => (
           <button
             key={t}
             type="button"
+            role="tab"
+            aria-selected={tab === t}
             className={`tab-under${tab === t ? " active" : ""}`}
             onClick={() => setTab(t)}
           >
@@ -815,7 +818,7 @@ export default function DrawsPage() {
       </div>
 
       {/* Conteúdo */}
-      <div style={{ marginTop: 16 }}>
+      <div>
         {erro && (
           <div className="notice notice-error">
             Erro ao carregar pairings: {erro}
@@ -823,7 +826,7 @@ export default function DrawsPage() {
         )}
 
         {!erro && !data && (
-          <div className="muted">A carregar pairings…</div>
+          <LoadingState size="sm" message="A carregar pairings…" />
         )}
 
         {data && linhasOrdenadas.length === 0 && (
@@ -1168,6 +1171,6 @@ export default function DrawsPage() {
           );
         })()}
       </div>
-    </main>
+    </div>
   );
 }

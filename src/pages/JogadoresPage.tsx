@@ -24,7 +24,7 @@ import LoadingState from "../ui/LoadingState";
 import EmptyState from "../ui/EmptyState";
 import DetailHeader from "../ui/DetailHeader";
 import SidebarToggle from "../ui/SidebarToggle";
-import { Toolbar } from "../ui/Toolbar";
+import { Toolbar, ToolbarTitle } from "../ui/Toolbar";
 import Counter from "../ui/Counter";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { useSort } from "../hooks/useSort";
@@ -4347,6 +4347,7 @@ export default function JogadoresPage() {
     <div className="jogadores-page">
       <Toolbar>
                 <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Jogadores" />
+        <ToolbarTitle>🏌️ Jogadores</ToolbarTitle>
         {/* Toggle Nossos / TODOS (lazy-load federados.json) */}
         {(() => {
           // Contagens reactivas ao filtro de seniores. Quando seniores estão

@@ -1,8 +1,9 @@
 import { useMemo, useState, useEffect, Fragment } from "react";
 import SidebarToggle from "../ui/SidebarToggle";
 import EmptyState from "../ui/EmptyState";
+import LoadingState from "../ui/LoadingState";
 import Counter from "../ui/Counter";
-import { Toolbar } from "../ui/Toolbar";
+import { Toolbar, ToolbarTitle } from "../ui/Toolbar";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { useParams, useNavigate } from "react-router-dom";
 import type { Course, Tee, SexFilter, CoursePlayerRound } from "../data/types";
@@ -702,7 +703,7 @@ function CourseHoleAverages({ course }: { course: Course }) {
     return { nRounds: scoreIds.length, holes };
   }, [data, course]);
 
-  if (loading) return <div className="muted" style={{ padding: 16 }}>A carregar voltas do Manuel…</div>;
+  if (loading) return <LoadingState size="sm" message="A carregar voltas do Manuel…" />;
   if (!stats || stats.nRounds === 0) {
     return (
       <div className="notice notice-info" style={{ marginTop: 14 }}>
@@ -977,6 +978,7 @@ export default function CamposPage() {
       {/* Toolbar */}
       <Toolbar>
                 <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Campos" />
+        <ToolbarTitle>⛳ Campos</ToolbarTitle>
         <input
           className="input"
           value={q}
@@ -1121,7 +1123,7 @@ export default function CamposPage() {
 
               {/* KPIs do campo */}
               {heroStats && (
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 10, margin: "12px 0" }}>
+                <div className="kpi-row">
                   <div className="kpi-card">
                     <div className="kpi-card-label">Par</div>
                     <div className="kpi-card-val">{heroStats.par ?? "–"}</div>
@@ -1162,7 +1164,7 @@ export default function CamposPage() {
               />
             </>
           ) : (
-            <div className="muted" style={{ padding: 24 }}>Seleciona um campo</div>
+            <EmptyState icon="⛳" message="Selecciona um campo" />
           )}
         </div>
       </div>

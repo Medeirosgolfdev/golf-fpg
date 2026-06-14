@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import SidebarToggle from "../ui/SidebarToggle";
-import { Toolbar } from "../ui/Toolbar";
+import { Toolbar, ToolbarTitle } from "../ui/Toolbar";
 import DetailHeader from "../ui/DetailHeader";
 import EmptyState from "../ui/EmptyState";
+import Counter from "../ui/Counter";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import type { Tee, Hole, SexFilter } from "../data/types";
 import { useAppContext } from "../context/AppContext";
@@ -1393,7 +1394,8 @@ export default function SimuladorPage() {
     <div className="campos-page">
       {/* Toolbar */}
       <Toolbar>
-                <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Campos" />
+                <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Simulador" />
+        <ToolbarTitle>🎯 Simulador</ToolbarTitle>
         <input
           className="input"
           value={q}
@@ -1442,8 +1444,8 @@ export default function SimuladorPage() {
           <option value={75}>75%</option>
           <option value={50}>50%</option>
         </select>
-        <div className="chip ml-auto" >{filtered.length} campos</div>
-        {is9h && <div className="chip">{holesLabel}</div>}
+        <Counter ml="auto">{filtered.length} campos</Counter>
+        {is9h && <Counter>{holesLabel}</Counter>}
       </Toolbar>
 
       {/* Banner: preencher HI */}

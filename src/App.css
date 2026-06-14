@@ -2809,6 +2809,27 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .tab-under.active { font-weight: 700; color: var(--text);
   border-bottom-color: var(--accent); background: var(--bg-card,#fff); }
 
+/* Contentor de tabs uniforme (páginas full-width: Comparar, Draws).
+   Substitui os <div style> inline ad-hoc — mesma forma em todo o lado. */
+.tabbar-under {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: 16px;
+}
+.tabbar-under::-webkit-scrollbar { display: none; }
+
+/* Modifier de largura para páginas full-width centradas (Comparar, Draws).
+   Largura uniforme entre elas — substitui maxWidth inline. */
+.page-full--wide { max-width: 1200px; }
+
+/* Linha de KPI cards (hero de Campos, topo de Draws) — substitui o
+   style inline repetido `display:flex; flex-wrap:wrap; gap:10; margin:12px 0`. */
+.kpi-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0; }
+
 /* .tab-btn → alias de .tourn-tab (usado em CamposPage) */
 .tab-btn:hover:not(.active) { background: var(--bg-hover); color: var(--text-2); }
 .tab-btn.active { background: var(--text-dark); color: #fff; border-color: var(--text-dark); }
