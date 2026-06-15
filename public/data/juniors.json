@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-06-13T19:47:15.479Z",
+  "generatedAt": "2026-06-14T22:43:19.110Z",
   "juniors": [
     {
       "id": "u433800",
@@ -33504,10 +33504,8 @@
     },
     {
       "id": "u512450",
-      "canonicalName": "Flynn  Lewis",
-      "aliases": [
-        "Flynn Lewis"
-      ],
+      "canonicalName": "Flynn Lewis",
+      "aliases": [],
       "dob": null,
       "sex": null,
       "nationality": "US",
@@ -49093,16 +49091,29 @@
       "id": "u521022",
       "canonicalName": "Martim Shipitsyn Moreira",
       "aliases": [],
-      "dob": null,
-      "sex": null,
+      "dob": "2012-02-16",
+      "sex": "M",
       "nationality": "PT",
       "country": "PT",
-      "region": null,
-      "club": null,
+      "region": "Lisboa",
+      "club": "Belas",
       "sources": {
         "uskids": {
           "memberId": "521022",
           "ageGroupCurrent": "Boys 12"
+        },
+        "fpg": {
+          "fed": "42985",
+          "club": "Belas",
+          "clubCode": "068",
+          "clubLong": "Clube de Golfe de Belas",
+          "hcpExact": 10.9,
+          "hcpDate": "2026-06-09",
+          "sex": "M",
+          "tags": [
+            "PJA"
+          ],
+          "primary": true
         }
       },
       "tournamentIds": [
@@ -49130,15 +49141,99 @@
         "uskids-11683",
         "uskids-11684",
         "uskids-11685",
-        "uskids-13702"
+        "uskids-13702",
+        "fpg-152-10368-20240305-all",
+        "fpg-013-10092-20240618-all",
+        "fpg-191-10021-20241004-all",
+        "fpg-192-10005-20241130-all",
+        "fpg-000-10825-20250414-sub_14",
+        "fpg-038-10651-20250530-all",
+        "fpg-000-10939-20260430-sub_14"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-04-30",
+          "hcpExact": 8.6,
+          "source": "fpg",
+          "tcode": "10939",
+          "ccode": "000",
+          "label": "Campeonato Nacional de Jovens Sub 14 H"
+        },
+        {
+          "date": "2025-05-30",
+          "hcpExact": 8.3,
+          "source": "fpg",
+          "tcode": "10651",
+          "ccode": "038",
+          "label": "PJA  António Dantas Classic 2025"
+        },
+        {
+          "date": "2025-04-14",
+          "hcpExact": 8.5,
+          "source": "fpg",
+          "tcode": "10825",
+          "ccode": "000",
+          "label": "Campeonato Nacional de Clubes Sub 14"
+        },
+        {
+          "date": "2024-11-30",
+          "hcpExact": 5.6,
+          "source": "fpg",
+          "tcode": "10005",
+          "ccode": "192",
+          "label": "PJA TOUR Grand Final"
+        },
+        {
+          "date": "2024-10-04",
+          "hcpExact": 6.6,
+          "source": "fpg",
+          "tcode": "10021",
+          "ccode": "191",
+          "label": "PJA  Alfred Dunhill Links Championship"
+        },
+        {
+          "date": "2024-09-14",
+          "hcpExact": 7,
+          "source": "fpg",
+          "tcode": "10584",
+          "ccode": "038",
+          "label": "PJA European Masters Quinta do Peru"
+        },
+        {
+          "date": "2024-06-18",
+          "hcpExact": 6.6,
+          "source": "fpg",
+          "tcode": "10092",
+          "ccode": "013",
+          "label": "PJA TOUR US OPEN"
+        },
+        {
+          "date": "2024-04-12",
+          "hcpExact": 10.6,
+          "source": "fpg",
+          "tcode": "10097",
+          "ccode": "189",
+          "label": "PJA Masters 2024 - Montado"
+        },
+        {
+          "date": "2024-03-05",
+          "hcpExact": 10.9,
+          "source": "fpg",
+          "tcode": "10368",
+          "ccode": "152",
+          "label": "PJA - Portuguese Championship 2024"
+        }
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:521022"
+          "uskids:521022",
+          "fpg:42985",
+          "dob:2012-02-16"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "fpg"
         ]
       }
     },
@@ -82547,7 +82642,8 @@
         "uskids-21272",
         "uskids-21888",
         "uskids-21891",
-        "uskids-21892"
+        "uskids-21892",
+        "uskids-22090"
       ],
       "_match": {
         "confidence": "strong",
@@ -84693,7 +84789,8 @@
         "uskids-21334",
         "uskids-21335",
         "uskids-21336",
-        "uskids-21337"
+        "uskids-21337",
+        "uskids-21338"
       ],
       "_match": {
         "confidence": "strong",
@@ -87411,7 +87508,7 @@
     },
     {
       "id": "u534940",
-      "canonicalName": "Ricardo Lillo",
+      "canonicalName": "Ricardo Eduardo Lillo",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -87423,7 +87520,13 @@
         "uskids": {
           "memberId": "534940",
           "ageGroupCurrent": "Boys 13-14"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "doral",
+            "key": "doral-1594941724"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-7315",
@@ -87458,15 +87561,18 @@
         "uskids-7549",
         "uskids-7550",
         "uskids-14371",
-        "uskids-18486"
+        "uskids-18486",
+        "doral-ftm_doral_2023"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:534940"
+          "uskids:534940",
+          "doral:doral-1594941724"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "doral"
         ]
       }
     },
@@ -95791,10 +95897,8 @@
     },
     {
       "id": "u537061",
-      "canonicalName": "Rafael  Devic Frugier",
-      "aliases": [
-        "Rafael Devic Frugier"
-      ],
+      "canonicalName": "Rafael Devic Frugier",
+      "aliases": [],
       "dob": null,
       "sex": "M",
       "nationality": "FR",
@@ -101434,10 +101538,8 @@
     },
     {
       "id": "u538608",
-      "canonicalName": "Octavio  Bailly",
-      "aliases": [
-        "Octavio Bailly"
-      ],
+      "canonicalName": "Octavio Bailly",
+      "aliases": [],
       "dob": null,
       "sex": "M",
       "nationality": "FR",
@@ -111293,6 +111395,7 @@
         "uskids-19377",
         "uskids-18661",
         "uskids-21645",
+        "uskids-22090",
         "uskids-8499",
         "uskids-8500",
         "uskids-16079",
@@ -111302,7 +111405,7 @@
         "uskids-21643",
         "uskids-21646",
         "uskids-14080",
-        "uskids-22090"
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -112005,7 +112108,7 @@
     },
     {
       "id": "u543057",
-      "canonicalName": "Mattia  Rovelli",
+      "canonicalName": "Mattia Rovelli",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -114266,6 +114369,7 @@
         "uskids-7883",
         "uskids-10546",
         "uskids-10979",
+        "uskids-22090",
         "uskids-12880",
         "uskids-12881",
         "uskids-12883",
@@ -114296,8 +114400,7 @@
         "uskids-9060",
         "uskids-14454",
         "uskids-16827",
-        "uskids-19553",
-        "uskids-22090"
+        "uskids-19553"
       ],
       "_match": {
         "confidence": "strong",
@@ -115978,12 +116081,12 @@
         "uskids-21972",
         "uskids-13868",
         "uskids-13872",
+        "uskids-22090",
         "uskids-17738",
         "uskids-20362",
         "uskids-14697",
         "uskids-21967",
-        "uskids-21968",
-        "uskids-22090"
+        "uskids-21968"
       ],
       "_match": {
         "confidence": "strong",
@@ -123166,7 +123269,8 @@
         "uskids-14521",
         "uskids-19440",
         "uskids-16808",
-        "uskids-19442"
+        "uskids-19442",
+        "uskids-22246"
       ],
       "_match": {
         "confidence": "strong",
@@ -123289,6 +123393,7 @@
         "uskids-21335",
         "uskids-21336",
         "uskids-21337",
+        "uskids-21338",
         "uskids-18844",
         "uskids-20780",
         "uskids-14225",
@@ -127758,7 +127863,8 @@
         "uskids-18665",
         "uskids-20404",
         "uskids-21643",
-        "uskids-21646"
+        "uskids-21646",
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -130108,6 +130214,7 @@
         "uskids-21366",
         "uskids-21368",
         "uskids-21369",
+        "uskids-22080",
         "doral-ftm_doral_2022"
       ],
       "_match": {
@@ -140689,7 +140796,8 @@
         "uskids-14286",
         "uskids-14287",
         "uskids-12863",
-        "uskids-14288"
+        "uskids-14288",
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -142699,7 +142807,7 @@
       "sources": {
         "uskids": {
           "memberId": "554420",
-          "ageGroupCurrent": "Boys 10"
+          "ageGroupCurrent": "Boys 11"
         }
       },
       "tournamentIds": [
@@ -144779,7 +144887,8 @@
         "uskids-18665",
         "uskids-20404",
         "uskids-21643",
-        "uskids-21646"
+        "uskids-21646",
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -145620,6 +145729,7 @@
         "uskids-18461",
         "uskids-10546",
         "uskids-10979",
+        "uskids-22090",
         "uskids-12880",
         "uskids-12881",
         "uskids-12884",
@@ -145641,8 +145751,7 @@
         "uskids-14454",
         "uskids-16827",
         "uskids-19553",
-        "uskids-19556",
-        "uskids-22090"
+        "uskids-19556"
       ],
       "_match": {
         "confidence": "strong",
@@ -145792,7 +145901,8 @@
         "uskids-17260",
         "uskids-17497",
         "uskids-17551",
-        "uskids-17112"
+        "uskids-17112",
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -151434,7 +151544,8 @@
         "uskids-21427",
         "uskids-21428",
         "uskids-21430",
-        "uskids-21431"
+        "uskids-21431",
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -151790,7 +151901,7 @@
     },
     {
       "id": "u557125",
-      "canonicalName": "Nicholas  Nowak",
+      "canonicalName": "Nicholas Nowak",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -154576,7 +154687,7 @@
     },
     {
       "id": "u558053",
-      "canonicalName": "Nikita  Perini",
+      "canonicalName": "Nikita Perini",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -157636,7 +157747,7 @@
     },
     {
       "id": "u558953",
-      "canonicalName": "Aodhán  Fitzgerald",
+      "canonicalName": "Aodhán Fitzgerald",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -162277,7 +162388,8 @@
         "uskids-19978",
         "uskids-18849",
         "uskids-21372",
-        "uskids-21373"
+        "uskids-21373",
+        "uskids-21370"
       ],
       "_match": {
         "confidence": "strong",
@@ -162492,7 +162604,8 @@
         "uskids-20179",
         "uskids-20180",
         "uskids-20181",
-        "uskids-20182"
+        "uskids-20182",
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -162978,10 +163091,8 @@
     },
     {
       "id": "u560522",
-      "canonicalName": "Hudson  Kohout",
-      "aliases": [
-        "Hudson Kohout"
-      ],
+      "canonicalName": "Hudson Kohout",
+      "aliases": [],
       "dob": null,
       "sex": null,
       "nationality": "US",
@@ -162991,7 +163102,7 @@
       "sources": {
         "uskids": {
           "memberId": "560522",
-          "ageGroupCurrent": "Boys 13"
+          "ageGroupCurrent": "Boys 13-14"
         },
         "_secondary": [
           {
@@ -164986,7 +165097,8 @@
         "uskids-17562",
         "uskids-18665",
         "uskids-20404",
-        "uskids-21646"
+        "uskids-21646",
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -165154,11 +165266,11 @@
         "uskids-21969",
         "uskids-21970",
         "uskids-21972",
+        "uskids-22090",
         "uskids-17738",
         "uskids-20362",
         "uskids-21967",
-        "uskids-21968",
-        "uskids-22090"
+        "uskids-21968"
       ],
       "_match": {
         "confidence": "strong",
@@ -171857,6 +171969,7 @@
         "uskids-16166",
         "uskids-16167",
         "uskids-16169",
+        "uskids-22090",
         "uskids-15164",
         "uskids-15165",
         "uskids-15166",
@@ -171881,8 +171994,7 @@
         "uskids-21330",
         "uskids-21331",
         "uskids-21332",
-        "uskids-22037",
-        "uskids-22090"
+        "uskids-22037"
       ],
       "_match": {
         "confidence": "strong",
@@ -174424,10 +174536,8 @@
     },
     {
       "id": "u564372",
-      "canonicalName": "Mauricio  Mijares",
-      "aliases": [
-        "Mauricio Mijares"
-      ],
+      "canonicalName": "Mauricio Mijares",
+      "aliases": [],
       "dob": null,
       "sex": null,
       "nationality": "MX",
@@ -175574,10 +175684,8 @@
     },
     {
       "id": "u564633",
-      "canonicalName": "Maximilien  Demole",
-      "aliases": [
-        "Maximilien Demole"
-      ],
+      "canonicalName": "Maximilien Demole",
+      "aliases": [],
       "dob": null,
       "sex": null,
       "nationality": "CH",
@@ -175587,7 +175695,7 @@
       "sources": {
         "uskids": {
           "memberId": "564633",
-          "ageGroupCurrent": "Boys 12-14"
+          "ageGroupCurrent": "Boys 12"
         },
         "_secondary": [
           {
@@ -175857,6 +175965,7 @@
         "uskids-21384",
         "uskids-21385",
         "uskids-21386",
+        "uskids-21388",
         "ffgolf-2601423981",
         "ffgolf-2601403800",
         "ffgolf-2501365354",
@@ -178341,6 +178450,7 @@
         "uskids-15226",
         "uskids-19519",
         "uskids-19520",
+        "uskids-22080",
         "doral-ftm_doral_2023",
         "doral-ftm_doral_2025"
       ],
@@ -179666,6 +179776,7 @@
         "uskids-21335",
         "uskids-21336",
         "uskids-21337",
+        "uskids-21338",
         "uskids-18844",
         "uskids-21333"
       ],
@@ -180154,6 +180265,7 @@
         "uskids-16531",
         "uskids-21528",
         "uskids-21023",
+        "uskids-21530",
         "doral-ftm_doral_2023",
         "doral-ftm_doral_2024"
       ],
@@ -182991,7 +183103,7 @@
     },
     {
       "id": "u567036",
-      "canonicalName": "Jake  Smith",
+      "canonicalName": "Jake Smith",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -184188,7 +184300,9 @@
         "uskids-16345",
         "uskids-20966",
         "uskids-18946",
-        "uskids-17129"
+        "uskids-17129",
+        "uskids-21432",
+        "uskids-21433"
       ],
       "_match": {
         "confidence": "strong",
@@ -185243,7 +185357,8 @@
         "uskids-19471",
         "uskids-19468",
         "uskids-21239",
-        "uskids-16861"
+        "uskids-16861",
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -187496,12 +187611,12 @@
         "uskids-21969",
         "uskids-21970",
         "uskids-21972",
+        "uskids-22090",
         "uskids-17738",
         "uskids-20362",
         "uskids-21967",
         "uskids-21968",
-        "uskids-21966",
-        "uskids-22090"
+        "uskids-21966"
       ],
       "_match": {
         "confidence": "strong",
@@ -191906,7 +192021,8 @@
         "uskids-20473",
         "uskids-21512",
         "uskids-21513",
-        "uskids-21514"
+        "uskids-21514",
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -193730,12 +193846,12 @@
         "uskids-21489",
         "uskids-21492",
         "uskids-21493",
+        "uskids-22090",
         "uskids-16425",
         "uskids-18755",
         "uskids-20415",
         "uskids-17763",
-        "uskids-21491",
-        "uskids-22090"
+        "uskids-21491"
       ],
       "_match": {
         "confidence": "strong",
@@ -194894,12 +195010,13 @@
         "uskids-18664",
         "uskids-18661",
         "uskids-21645",
+        "uskids-22090",
         "uskids-16079",
         "uskids-17562",
         "uskids-18665",
         "uskids-21643",
         "uskids-21646",
-        "uskids-22090"
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -195370,7 +195487,8 @@
         "uskids-11356",
         "uskids-15964",
         "uskids-15965",
-        "uskids-15966"
+        "uskids-15966",
+        "uskids-22613"
       ],
       "_match": {
         "confidence": "strong",
@@ -195494,7 +195612,7 @@
     },
     {
       "id": "u571313",
-      "canonicalName": "Oliver  Mcnamara",
+      "canonicalName": "Oliver Mcnamara",
       "aliases": [
         "Oliver McNamara"
       ],
@@ -198151,6 +198269,7 @@
         "uskids-17938",
         "uskids-17940",
         "uskids-17941",
+        "uskids-22090",
         "uskids-13284",
         "uskids-20377",
         "uskids-20378",
@@ -198168,7 +198287,6 @@
         "uskids-12688",
         "uskids-17019",
         "uskids-17022",
-        "uskids-22090",
         "doral-ftm_doral_2025"
       ],
       "_match": {
@@ -202363,7 +202481,8 @@
         "uskids-18665",
         "uskids-20404",
         "uskids-21643",
-        "uskids-21646"
+        "uskids-21646",
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -202658,7 +202777,8 @@
         "uskids-17164",
         "uskids-18041",
         "uskids-20284",
-        "uskids-21697"
+        "uskids-21697",
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -207343,6 +207463,7 @@
         "uskids-21334",
         "uskids-21336",
         "uskids-21337",
+        "uskids-21338",
         "uskids-21333"
       ],
       "_match": {
@@ -207357,7 +207478,7 @@
     },
     {
       "id": "u575328",
-      "canonicalName": "Mikey  Hannath",
+      "canonicalName": "Mikey Hannath",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -207389,6 +207510,7 @@
         "uskids-21335",
         "uskids-21336",
         "uskids-21337",
+        "uskids-21338",
         "uskids-21333",
         "uskids-17025"
       ],
@@ -210459,10 +210581,8 @@
     },
     {
       "id": "u575934",
-      "canonicalName": "Zachary  Blayney",
-      "aliases": [
-        "Zachary Blayney"
-      ],
+      "canonicalName": "Zachary Blayney",
+      "aliases": [],
       "dob": null,
       "sex": null,
       "nationality": "GB",
@@ -211123,6 +211243,7 @@
         "uskids-21969",
         "uskids-21970",
         "uskids-21972",
+        "uskids-22090",
         "uskids-17477",
         "uskids-18737",
         "uskids-21967",
@@ -211131,8 +211252,7 @@
         "uskids-18735",
         "uskids-18736",
         "uskids-21327",
-        "uskids-21328",
-        "uskids-22090"
+        "uskids-21328"
       ],
       "_match": {
         "confidence": "strong",
@@ -213861,7 +213981,8 @@
         "uskids-21900",
         "uskids-21901",
         "uskids-21899",
-        "uskids-13731"
+        "uskids-13731",
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -214553,11 +214674,11 @@
         "uskids-21270",
         "uskids-21271",
         "uskids-21272",
+        "uskids-22090",
         "uskids-21273",
         "uskids-21275",
         "uskids-21277",
-        "uskids-19448",
-        "uskids-22090"
+        "uskids-19448"
       ],
       "_match": {
         "confidence": "strong",
@@ -218972,7 +219093,8 @@
         "uskids-20404",
         "uskids-21643",
         "uskids-21646",
-        "uskids-19520"
+        "uskids-19520",
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -219099,7 +219221,7 @@
     },
     {
       "id": "u579053",
-      "canonicalName": "Victor  Bernardini",
+      "canonicalName": "Victor Bernardini",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -219819,7 +219941,7 @@
     },
     {
       "id": "u579319",
-      "canonicalName": "Oscar  Ross",
+      "canonicalName": "Oscar Ross",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -222466,7 +222588,7 @@
     },
     {
       "id": "u580455",
-      "canonicalName": "Alessandro  Spada",
+      "canonicalName": "Alessandro Spada",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -222912,6 +223034,7 @@
         "uskids-15337",
         "uskids-13187",
         "uskids-16682",
+        "uskids-22090",
         "uskids-13284",
         "uskids-19684",
         "uskids-19683",
@@ -222927,8 +223050,7 @@
         "uskids-15619",
         "uskids-17022",
         "uskids-19686",
-        "uskids-19688",
-        "uskids-22090"
+        "uskids-19688"
       ],
       "_match": {
         "confidence": "strong",
@@ -225515,7 +225637,7 @@
     },
     {
       "id": "u581424",
-      "canonicalName": "Flynn  Kennard",
+      "canonicalName": "Flynn Kennard",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -226171,6 +226293,7 @@
         "uskids-21326",
         "uskids-16319",
         "uskids-21321",
+        "uskids-22080",
         "doral-ftm_doral_2025"
       ],
       "_match": {
@@ -228112,10 +228235,8 @@
     },
     {
       "id": "u582753",
-      "canonicalName": "Benji  Botham",
-      "aliases": [
-        "Benji Botham"
-      ],
+      "canonicalName": "Benji Botham",
+      "aliases": [],
       "dob": "2015-07-22",
       "sex": "M",
       "nationality": "GB",
@@ -228133,7 +228254,7 @@
           "clubCode": "991",
           "clubLong": "Registo Individual Online",
           "hcpExact": 13.3,
-          "hcpDate": null,
+          "hcpDate": "2026-04-11",
           "sex": "M",
           "tags": [
             "auto-junior"
@@ -228300,6 +228421,7 @@
         "uskids-21335",
         "uskids-21336",
         "uskids-21337",
+        "uskids-21338",
         "uskids-18844",
         "uskids-21333",
         "fpg-935-10296-20260216-all",
@@ -229974,7 +230096,7 @@
     },
     {
       "id": "u583510",
-      "canonicalName": "Ethan  Meyers",
+      "canonicalName": "Ethan Meyers",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -231545,7 +231667,7 @@
     },
     {
       "id": "u584140",
-      "canonicalName": "Mylo  Mulvaney",
+      "canonicalName": "Mylo Mulvaney",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -232186,6 +232308,7 @@
         "uskids-20667",
         "uskids-18661",
         "uskids-21645",
+        "uskids-22090",
         "uskids-16079",
         "uskids-17562",
         "uskids-18665",
@@ -232216,7 +232339,7 @@
         "uskids-17751",
         "uskids-17749",
         "uskids-21364",
-        "uskids-22090"
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -236487,10 +236610,10 @@
         "uskids-21965",
         "uskids-21970",
         "uskids-21972",
+        "uskids-22090",
         "uskids-17738",
         "uskids-20362",
-        "uskids-21966",
-        "uskids-22090"
+        "uskids-21966"
       ],
       "_match": {
         "confidence": "strong",
@@ -236814,7 +236937,7 @@
     },
     {
       "id": "u586602",
-      "canonicalName": "Urban  Haugaard",
+      "canonicalName": "Urban Haugaard",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -237523,7 +237646,7 @@
     },
     {
       "id": "u586893",
-      "canonicalName": "William  Clarke",
+      "canonicalName": "William Clarke",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -237549,7 +237672,8 @@
         "uskids-20598",
         "uskids-20599",
         "uskids-20601",
-        "uskids-21404"
+        "uskids-21404",
+        "uskids-22367"
       ],
       "_match": {
         "confidence": "strong",
@@ -238396,7 +238520,8 @@
         "uskids-14145",
         "uskids-21582",
         "uskids-21584",
-        "uskids-14721"
+        "uskids-14721",
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -240955,7 +241080,7 @@
     },
     {
       "id": "u588309",
-      "canonicalName": "Wannes  Van Bos",
+      "canonicalName": "Wannes Van Bos",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -241343,7 +241468,9 @@
         "uskids-19203",
         "uskids-19204",
         "uskids-19205",
-        "uskids-18473"
+        "uskids-18473",
+        "uskids-21716",
+        "uskids-21719"
       ],
       "_match": {
         "confidence": "strong",
@@ -241909,7 +242036,8 @@
         "uskids-19672",
         "uskids-19673",
         "uskids-19675",
-        "uskids-20965"
+        "uskids-20965",
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -242888,7 +243016,8 @@
         "uskids-20951",
         "uskids-20507",
         "uskids-21914",
-        "uskids-22037"
+        "uskids-22037",
+        "uskids-22466"
       ],
       "_match": {
         "confidence": "strong",
@@ -246489,32 +246618,17 @@
     {
       "id": "u591400",
       "canonicalName": "Baltasar Costa",
-      "aliases": [
-        "Baltasar Gomes Da Costa"
-      ],
-      "dob": "2006-03-06",
-      "sex": "M",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
       "nationality": "PT",
       "country": "PT",
       "region": null,
-      "club": "ACP Golfe",
+      "club": null,
       "sources": {
         "uskids": {
           "memberId": "591400",
           "ageGroupCurrent": "Boys 15-18"
-        },
-        "fpg": {
-          "fed": "44161",
-          "club": "ACP Golfe",
-          "clubCode": "103",
-          "clubLong": "ACP Golfe",
-          "hcpExact": 11.8,
-          "hcpDate": null,
-          "sex": "M",
-          "tags": [
-            "auto-junior"
-          ],
-          "primary": true
         }
       },
       "tournamentIds": [
@@ -246528,13 +246642,10 @@
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:591400",
-          "fpg:44161",
-          "dob:2006-03-06"
+          "uskids:591400"
         ],
         "mergedFromSources": [
-          "uskids",
-          "fpg"
+          "uskids"
         ]
       }
     },
@@ -246793,7 +246904,7 @@
           "clubCode": "005",
           "clubLong": "Clube de Golf da Ilha Terceira",
           "hcpExact": 42.9,
-          "hcpDate": "2026-06-03",
+          "hcpDate": "2026-06-12",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -246802,6 +246913,16 @@
       "tournamentIds": [
         "uskids-13704",
         "uskids-13707"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-12",
+          "hcpExact": 42.9,
+          "source": "fpg",
+          "tcode": "10174",
+          "ccode": "983",
+          "label": "6º Torneio Drive Challenge Açores–Terceira-Sub 10"
+        }
       ],
       "_match": {
         "confidence": "strong",
@@ -247315,7 +247436,7 @@
           "clubCode": "068",
           "clubLong": "Clube de Golfe de Belas",
           "hcpExact": 14.3,
-          "hcpDate": null,
+          "hcpDate": "2026-05-31",
           "sex": "M",
           "tags": [
             "auto-junior"
@@ -250332,7 +250453,8 @@
         "uskids-21031",
         "uskids-21032",
         "uskids-21033",
-        "uskids-21034"
+        "uskids-21034",
+        "uskids-22555"
       ],
       "_match": {
         "confidence": "strong",
@@ -250599,7 +250721,8 @@
         "uskids-21365",
         "uskids-21364",
         "uskids-20383",
-        "uskids-20387"
+        "uskids-20387",
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -250914,7 +251037,8 @@
         "uskids-18449",
         "uskids-20553",
         "uskids-19789",
-        "uskids-19793"
+        "uskids-19793",
+        "uskids-22578"
       ],
       "_match": {
         "confidence": "strong",
@@ -254758,7 +254882,7 @@
     },
     {
       "id": "u594401",
-      "canonicalName": "Josh  Kabukala",
+      "canonicalName": "Josh Kabukala",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -254792,7 +254916,7 @@
       "id": "u594459",
       "canonicalName": "Leo Mendelewitsch",
       "aliases": [
-        "Léo  Mendelewitsch"
+        "Léo Mendelewitsch"
       ],
       "dob": null,
       "sex": "M",
@@ -255679,6 +255803,7 @@
         "uskids-21384",
         "uskids-21385",
         "uskids-21386",
+        "uskids-21388",
         "ffgolf-2601423981",
         "ffgolf-2501391907",
         "ffgolf-2601403797",
@@ -257982,10 +258107,8 @@
     },
     {
       "id": "u596604",
-      "canonicalName": "Ritchie  Riley",
-      "aliases": [
-        "Ritchie Riley"
-      ],
+      "canonicalName": "Ritchie Riley",
+      "aliases": [],
       "dob": null,
       "sex": null,
       "nationality": "GB",
@@ -258360,6 +258483,7 @@
         "uskids-16823",
         "uskids-16480",
         "uskids-21629",
+        "uskids-22090",
         "uskids-14558",
         "uskids-14559",
         "uskids-15352",
@@ -258394,8 +258518,7 @@
         "uskids-17388",
         "uskids-20704",
         "uskids-20705",
-        "uskids-22525",
-        "uskids-22090"
+        "uskids-22525"
       ],
       "_match": {
         "confidence": "strong",
@@ -258543,8 +258666,8 @@
         "uskids-15427",
         "uskids-16952",
         "uskids-18192",
-        "uskids-14499",
-        "uskids-22037"
+        "uskids-22037",
+        "uskids-14499"
       ],
       "_match": {
         "confidence": "strong",
@@ -258951,6 +259074,7 @@
         "uskids-21410",
         "uskids-21411",
         "uskids-21412",
+        "uskids-21413",
         "doral-ftm_doral_2025"
       ],
       "_match": {
@@ -259256,6 +259380,7 @@
         "uskids-20051",
         "uskids-20052",
         "uskids-20054",
+        "uskids-22090",
         "uskids-15435",
         "uskids-16158",
         "uskids-21308",
@@ -259271,7 +259396,7 @@
         "uskids-21316",
         "uskids-21318",
         "uskids-20965",
-        "uskids-22090"
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -262184,7 +262309,8 @@
         "uskids-18665",
         "uskids-20404",
         "uskids-21643",
-        "uskids-21646"
+        "uskids-21646",
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -263364,8 +263490,8 @@
         "uskids-15251",
         "uskids-16768",
         "uskids-19082",
-        "uskids-17637",
-        "uskids-22037"
+        "uskids-22037",
+        "uskids-17637"
       ],
       "_match": {
         "confidence": "strong",
@@ -265519,7 +265645,7 @@
     },
     {
       "id": "u601283",
-      "canonicalName": "Rosario  Becker",
+      "canonicalName": "Rosario Becker",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -265890,7 +266016,8 @@
         "uskids-21972",
         "uskids-17738",
         "uskids-21967",
-        "uskids-21966"
+        "uskids-21966",
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -266548,7 +266675,7 @@
     },
     {
       "id": "u601945",
-      "canonicalName": "Darcy  Eaton",
+      "canonicalName": "Darcy Eaton",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -267007,8 +267134,8 @@
         "uskids-20813",
         "uskids-15464",
         "uskids-20814",
-        "uskids-16498",
-        "uskids-22037"
+        "uskids-22037",
+        "uskids-16498"
       ],
       "_match": {
         "confidence": "strong",
@@ -267245,7 +267372,8 @@
         "uskids-19523",
         "uskids-19524",
         "uskids-21316",
-        "uskids-21318"
+        "uskids-21318",
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -267746,6 +267874,7 @@
         "uskids-15552",
         "uskids-21471",
         "uskids-15682",
+        "uskids-22090",
         "uskids-19974",
         "uskids-16432",
         "uskids-16435",
@@ -267783,8 +267912,7 @@
         "uskids-21898",
         "uskids-21900",
         "uskids-21901",
-        "uskids-21899",
-        "uskids-22090"
+        "uskids-21899"
       ],
       "_match": {
         "confidence": "strong",
@@ -268300,7 +268428,8 @@
         "uskids-19204",
         "uskids-18473",
         "uskids-20539",
-        "uskids-21407"
+        "uskids-21407",
+        "uskids-21413"
       ],
       "_match": {
         "confidence": "strong",
@@ -268471,8 +268600,8 @@
         "uskids-16766",
         "uskids-19666",
         "uskids-19669",
-        "uskids-19711",
-        "uskids-22037"
+        "uskids-22037",
+        "uskids-19711"
       ],
       "_match": {
         "confidence": "strong",
@@ -268741,7 +268870,7 @@
           "clubCode": "132",
           "clubLong": "Clube de Golfe de Cantanhede",
           "hcpExact": 19,
-          "hcpDate": null,
+          "hcpDate": "2026-05-25",
           "sex": "M",
           "tags": [
             "auto-junior"
@@ -269248,7 +269377,8 @@
         "uskids-17323",
         "uskids-15781",
         "uskids-15782",
-        "uskids-14824"
+        "uskids-14824",
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -269898,6 +270028,7 @@
         "uskids-21335",
         "uskids-21336",
         "uskids-21337",
+        "uskids-21338",
         "uskids-18844",
         "uskids-21333",
         "uskids-19488",
@@ -270168,7 +270299,7 @@
     },
     {
       "id": "u604628",
-      "canonicalName": "William  Fairgrieve",
+      "canonicalName": "William Fairgrieve",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -271741,8 +271872,8 @@
           "club": "Santo da Serra",
           "clubCode": "007",
           "clubLong": "Santo da Serra",
-          "hcpExact": 9.6,
-          "hcpDate": "2026-06-05",
+          "hcpExact": 9.7,
+          "hcpDate": "2026-06-12",
           "sex": "M",
           "tags": [
             "PJA"
@@ -275055,6 +275186,7 @@
         "uskids-21430",
         "uskids-20746",
         "uskids-20965",
+        "uskids-22080",
         "doral-ftm_doral_2025"
       ],
       "_match": {
@@ -277587,10 +277719,8 @@
     },
     {
       "id": "u609197",
-      "canonicalName": "Kostadin  Kaloyanov",
-      "aliases": [
-        "Kostadin Kaloyanov"
-      ],
+      "canonicalName": "Kostadin Kaloyanov",
+      "aliases": [],
       "dob": null,
       "sex": null,
       "nationality": "BG",
@@ -277721,6 +277851,7 @@
         "uskids-17950",
         "uskids-19528",
         "uskids-17135",
+        "uskids-22080",
         "doral-ftm_doral_2025"
       ],
       "_match": {
@@ -278324,10 +278455,8 @@
     },
     {
       "id": "u609585",
-      "canonicalName": "Valentin  Nogier",
-      "aliases": [
-        "Valentin Nogier"
-      ],
+      "canonicalName": "Valentin Nogier",
+      "aliases": [],
       "dob": null,
       "sex": "M",
       "nationality": "FR",
@@ -279628,7 +279757,7 @@
     },
     {
       "id": "u610289",
-      "canonicalName": "Cristian  Minervini",
+      "canonicalName": "Cristian Minervini",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -280645,7 +280774,8 @@
         "uskids-21529",
         "uskids-21185",
         "uskids-19461",
-        "uskids-17644"
+        "uskids-17644",
+        "uskids-21530"
       ],
       "_match": {
         "confidence": "strong",
@@ -281437,7 +281567,7 @@
     },
     {
       "id": "u611189",
-      "canonicalName": "Rory  Shaw",
+      "canonicalName": "Rory Shaw",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -282115,7 +282245,8 @@
         "uskids-16439",
         "uskids-21681",
         "uskids-21682",
-        "uskids-20678"
+        "uskids-20678",
+        "uskids-22555"
       ],
       "_match": {
         "confidence": "strong",
@@ -282313,7 +282444,7 @@
     },
     {
       "id": "u611721",
-      "canonicalName": "Roberto  Lulli",
+      "canonicalName": "Roberto Lulli",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -282433,7 +282564,7 @@
       "sources": {
         "uskids": {
           "memberId": "611784",
-          "ageGroupCurrent": "Boys 7"
+          "ageGroupCurrent": "Boys 7 & Under"
         }
       },
       "tournamentIds": [
@@ -282466,6 +282597,8 @@
         "uskids-21410",
         "uskids-21411",
         "uskids-21412",
+        "uskids-21413",
+        "uskids-21391",
         "uskids-21440",
         "uskids-21443",
         "uskids-21445"
@@ -282980,7 +283113,8 @@
         "uskids-21635",
         "uskids-19304",
         "uskids-20559",
-        "uskids-20560"
+        "uskids-20560",
+        "uskids-21639"
       ],
       "_match": {
         "confidence": "strong",
@@ -283225,7 +283359,8 @@
         "uskids-19280",
         "uskids-19283",
         "uskids-21316",
-        "uskids-21318"
+        "uskids-21318",
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -284784,7 +284919,7 @@
     },
     {
       "id": "u613923",
-      "canonicalName": "Isaac  Timso",
+      "canonicalName": "Isaac Timso",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -285105,7 +285240,7 @@
     },
     {
       "id": "u614492",
-      "canonicalName": "Pius Maximilian  Melber",
+      "canonicalName": "Pius Maximilian Melber",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -285883,10 +286018,8 @@
     },
     {
       "id": "u615246",
-      "canonicalName": "Christian  Chepishev",
-      "aliases": [
-        "Christian Chepishev"
-      ],
+      "canonicalName": "Christian Chepishev",
+      "aliases": [],
       "dob": null,
       "sex": null,
       "nationality": "BG",
@@ -286043,7 +286176,7 @@
       "sources": {
         "uskids": {
           "memberId": "615362",
-          "ageGroupCurrent": "Boys 8"
+          "ageGroupCurrent": "Boys 9"
         },
         "_secondary": [
           {
@@ -287104,7 +287237,9 @@
         "uskids-19179",
         "uskids-21570",
         "uskids-21571",
-        "uskids-21572"
+        "uskids-21572",
+        "uskids-21398",
+        "uskids-21399"
       ],
       "_match": {
         "confidence": "strong",
@@ -287151,7 +287286,8 @@
         "uskids-19978",
         "uskids-18849",
         "uskids-21372",
-        "uskids-21373"
+        "uskids-21373",
+        "uskids-21370"
       ],
       "_match": {
         "confidence": "strong",
@@ -287606,7 +287742,7 @@
       "sources": {
         "uskids": {
           "memberId": "616852",
-          "ageGroupCurrent": "Boys 7 & Under"
+          "ageGroupCurrent": "Boys 7"
         },
         "_secondary": [
           {
@@ -287924,8 +288060,8 @@
         "uskids-18884",
         "uskids-20150",
         "uskids-20151",
-        "uskids-17228",
-        "uskids-22037"
+        "uskids-22037",
+        "uskids-17228"
       ],
       "_match": {
         "confidence": "strong",
@@ -288638,7 +288774,8 @@
         "uskids-17274",
         "uskids-17270",
         "uskids-21136",
-        "uskids-17272"
+        "uskids-17272",
+        "uskids-22578"
       ],
       "_match": {
         "confidence": "strong",
@@ -289063,6 +289200,7 @@
         "uskids-21335",
         "uskids-21336",
         "uskids-21337",
+        "uskids-21338",
         "uskids-18844",
         "uskids-21333"
       ],
@@ -290026,7 +290164,8 @@
         "uskids-17795",
         "uskids-21372",
         "uskids-21373",
-        "uskids-17798"
+        "uskids-17798",
+        "uskids-21370"
       ],
       "_match": {
         "confidence": "strong",
@@ -290181,10 +290320,8 @@
     },
     {
       "id": "u619468",
-      "canonicalName": "Isaac  Chin",
-      "aliases": [
-        "Isaac Chin"
-      ],
+      "canonicalName": "Isaac Chin",
+      "aliases": [],
       "dob": "2011-12-16",
       "sex": "M",
       "nationality": "GB",
@@ -290743,7 +290880,8 @@
         "uskids-18797",
         "uskids-21761",
         "uskids-21762",
-        "uskids-21535"
+        "uskids-21535",
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -290757,7 +290895,7 @@
     },
     {
       "id": "u619901",
-      "canonicalName": "Rocco  Di Ciacca",
+      "canonicalName": "Rocco Di Ciacca",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -291912,6 +292050,7 @@
         "uskids-17939",
         "uskids-17940",
         "uskids-17941",
+        "uskids-22090",
         "uskids-19684",
         "uskids-20377",
         "uskids-20378",
@@ -291921,8 +292060,7 @@
         "uskids-19687",
         "uskids-19689",
         "uskids-20382",
-        "uskids-19686",
-        "uskids-22090"
+        "uskids-19686"
       ],
       "_match": {
         "confidence": "strong",
@@ -292421,6 +292559,7 @@
         "uskids-21335",
         "uskids-21336",
         "uskids-21337",
+        "uskids-21338",
         "uskids-19486",
         "uskids-18844",
         "uskids-21333",
@@ -292476,6 +292615,7 @@
         "uskids-21335",
         "uskids-21336",
         "uskids-21337",
+        "uskids-21338",
         "uskids-19486",
         "uskids-18844",
         "uskids-21333",
@@ -292794,6 +292934,7 @@
         "uskids-18712",
         "uskids-18711",
         "uskids-20341",
+        "uskids-21388",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
         "ffgolf-2501391907",
@@ -293400,7 +293541,8 @@
         "uskids-18133",
         "uskids-20043",
         "uskids-21316",
-        "uskids-21318"
+        "uskids-21318",
+        "uskids-22080"
       ],
       "_match": {
         "confidence": "strong",
@@ -293924,7 +294066,8 @@
         "uskids-21686",
         "uskids-21031",
         "uskids-21032",
-        "uskids-21033"
+        "uskids-21033",
+        "uskids-22555"
       ],
       "_match": {
         "confidence": "strong",
@@ -294390,6 +294533,7 @@
         "uskids-21351",
         "uskids-20537",
         "uskids-20539",
+        "uskids-21719",
         "uskids-20534"
       ],
       "_match": {
@@ -294834,7 +294978,8 @@
         "uskids-21030",
         "uskids-21031",
         "uskids-21032",
-        "uskids-21033"
+        "uskids-21033",
+        "uskids-22555"
       ],
       "_match": {
         "confidence": "strong",
@@ -294880,7 +295025,7 @@
     },
     {
       "id": "u626886",
-      "canonicalName": "Daniel  Forster",
+      "canonicalName": "Daniel Forster",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -294973,7 +295118,8 @@
         "uskids-21030",
         "uskids-21032",
         "uskids-21033",
-        "uskids-21034"
+        "uskids-21034",
+        "uskids-22555"
       ],
       "_match": {
         "confidence": "strong",
@@ -295321,7 +295467,7 @@
       "sources": {
         "uskids": {
           "memberId": "627611",
-          "ageGroupCurrent": "Boys 13"
+          "ageGroupCurrent": "Boys 13-14"
         }
       },
       "tournamentIds": [
@@ -296184,6 +296330,8 @@
         "uskids-20175",
         "uskids-19179",
         "uskids-21400",
+        "uskids-21398",
+        "uskids-21399",
         "uskids-21393",
         "uskids-21395",
         "uskids-21396",
@@ -296656,7 +296804,8 @@
         "uskids-21030",
         "uskids-21031",
         "uskids-21032",
-        "uskids-21033"
+        "uskids-21033",
+        "uskids-22555"
       ],
       "_match": {
         "confidence": "strong",
@@ -297091,7 +297240,7 @@
     },
     {
       "id": "u629300",
-      "canonicalName": "Charlie  Davis Argue",
+      "canonicalName": "Charlie Davis Argue",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -297304,10 +297453,8 @@
     },
     {
       "id": "u629752",
-      "canonicalName": "Zachary  Behcet",
-      "aliases": [
-        "Zachary Behcet"
-      ],
+      "canonicalName": "Zachary Behcet",
+      "aliases": [],
       "dob": null,
       "sex": null,
       "nationality": "GB",
@@ -297528,6 +297675,7 @@
         "uskids-21405",
         "uskids-21406",
         "uskids-21404",
+        "uskids-22367",
         "uskids-19017",
         "uskids-21403",
         "eowagr-eowagr25_contest17"
@@ -297827,6 +297975,7 @@
         "uskids-21031",
         "uskids-21032",
         "uskids-21034",
+        "uskids-22555",
         "uskids-19584",
         "uskids-19585",
         "uskids-19586"
@@ -298129,7 +298278,7 @@
       "sources": {
         "uskids": {
           "memberId": "631547",
-          "ageGroupCurrent": "Boys 8"
+          "ageGroupCurrent": "Boys 9"
         }
       },
       "tournamentIds": [
@@ -299279,6 +299428,7 @@
         "uskids-21335",
         "uskids-21336",
         "uskids-21337",
+        "uskids-21338",
         "uskids-19486",
         "uskids-21510",
         "uskids-21333",
@@ -299500,6 +299650,7 @@
         "uskids-21335",
         "uskids-21336",
         "uskids-21337",
+        "uskids-21338",
         "uskids-19486",
         "uskids-21333",
         "uskids-19485",
@@ -299545,6 +299696,7 @@
         "uskids-21335",
         "uskids-21336",
         "uskids-21337",
+        "uskids-21338",
         "uskids-19486",
         "uskids-21333",
         "uskids-19485",
@@ -300124,6 +300276,7 @@
         "uskids-21335",
         "uskids-21336",
         "uskids-21337",
+        "uskids-21338",
         "uskids-21510",
         "uskids-21333",
         "uskids-19487",
@@ -300384,7 +300537,8 @@
         }
       },
       "tournamentIds": [
-        "uskids-21131"
+        "uskids-21131",
+        "uskids-22367"
       ],
       "_match": {
         "confidence": "strong",
@@ -300465,6 +300619,8 @@
         "uskids-19418",
         "uskids-20175",
         "uskids-19509",
+        "uskids-21398",
+        "uskids-21399",
         "uskids-21393"
       ],
       "_match": {
@@ -300596,7 +300752,7 @@
     },
     {
       "id": "u638342",
-      "canonicalName": "Darragh  Horan",
+      "canonicalName": "Darragh Horan",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -301521,6 +301677,7 @@
         "uskids-21401",
         "uskids-21406",
         "uskids-20601",
+        "uskids-22367",
         "uskids-20602"
       ],
       "_match": {
@@ -301599,12 +301756,12 @@
         "uskids-21382",
         "uskids-21387",
         "uskids-21386",
+        "uskids-21388",
         "uskids-22142",
         "uskids-20005",
         "uskids-21349",
         "uskids-21288",
-        "uskids-21287",
-        "uskids-21388"
+        "uskids-21287"
       ],
       "_match": {
         "confidence": "strong",
@@ -301683,10 +301840,8 @@
     },
     {
       "id": "u643611",
-      "canonicalName": "Lucas  Saavedra Fernandez",
-      "aliases": [
-        "Lucas Saavedra Fernandez"
-      ],
+      "canonicalName": "Lucas Saavedra Fernandez",
+      "aliases": [],
       "dob": "2014-08-08",
       "sex": "M",
       "nationality": "ES",
@@ -301832,6 +301987,7 @@
         "uskids-20599",
         "uskids-20601",
         "uskids-21404",
+        "uskids-22367",
         "uskids-21403",
         "uskids-20600",
         "uskids-20602"
@@ -301917,7 +302073,8 @@
         "uskids-21031",
         "uskids-21032",
         "uskids-21033",
-        "uskids-21034"
+        "uskids-21034",
+        "uskids-22555"
       ],
       "_match": {
         "confidence": "strong",
@@ -302927,7 +303084,7 @@
     },
     {
       "id": "u651146",
-      "canonicalName": "Oliver  Carlton",
+      "canonicalName": "Oliver Carlton",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -302956,7 +303113,7 @@
     },
     {
       "id": "u651147",
-      "canonicalName": "Freddie  Carlton",
+      "canonicalName": "Freddie Carlton",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -303211,7 +303368,7 @@
     },
     {
       "id": "u655287",
-      "canonicalName": "Callum  Torrance",
+      "canonicalName": "Callum Torrance",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -303416,7 +303573,7 @@
     },
     {
       "id": "u659708",
-      "canonicalName": "Mohammad  Abdulla",
+      "canonicalName": "Mohammad Abdulla",
       "aliases": [],
       "dob": null,
       "sex": null,
@@ -303469,616 +303626,6 @@
         ],
         "mergedFromSources": [
           "uskids"
-        ]
-      }
-    },
-    {
-      "id": "f20292",
-      "canonicalName": "Brandon Hobley",
-      "aliases": [],
-      "dob": "1996-12-21",
-      "sex": "M",
-      "nationality": "PT",
-      "country": "PT",
-      "region": null,
-      "club": "Santo da Serra",
-      "sources": {
-        "fpg": {
-          "fed": "20292",
-          "club": "Santo da Serra",
-          "clubCode": "007",
-          "clubLong": "Clube de Golfe do Santo da Serra",
-          "hcpExact": 0.1,
-          "hcpDate": null,
-          "sex": "M",
-          "tags": [
-            "orfao-readd"
-          ],
-          "primary": true
-        }
-      },
-      "tournamentIds": [
-        "fpg-000-10912-20260612-all"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-06-12",
-          "hcpExact": 0.1,
-          "source": "fpg",
-          "tcode": "10912",
-          "ccode": "000",
-          "label": "Campeonato Nacional de Clubes Mid-Amateur  BPI"
-        },
-        {
-          "date": "2026-06-06",
-          "hcpExact": 0,
-          "source": "fpg",
-          "tcode": "11032",
-          "ccode": "007",
-          "label": "III ABERTO CGSS"
-        },
-        {
-          "date": "2026-04-03",
-          "hcpExact": 0.2,
-          "source": "fpg",
-          "tcode": "11005",
-          "ccode": "007",
-          "label": "I ABERTO CGSS 2026"
-        },
-        {
-          "date": "2026-03-14",
-          "hcpExact": 0.5,
-          "source": "fpg",
-          "tcode": "11001",
-          "ccode": "007",
-          "label": "Torneio de Primavera CGSS 2026"
-        },
-        {
-          "date": "2026-01-24",
-          "hcpExact": 0.4,
-          "source": "fpg",
-          "tcode": "10986",
-          "ccode": "007",
-          "label": "TORNEIO DA RESTAURAÇÃO CGSS 2026"
-        },
-        {
-          "date": "2026-01-17",
-          "hcpExact": 0.4,
-          "source": "fpg",
-          "tcode": "10983",
-          "ccode": "007",
-          "label": "Torneio de Inverno CGSS"
-        },
-        {
-          "date": "2025-01-25",
-          "hcpExact": 0.5,
-          "source": "fpg",
-          "tcode": "10851",
-          "ccode": "007",
-          "label": "Torneio de Inverno CGSS"
-        },
-        {
-          "date": "2025-01-11",
-          "hcpExact": 0.5,
-          "source": "fpg",
-          "tcode": "10845",
-          "ccode": "007",
-          "label": "Torneio dos Reis CGSS"
-        },
-        {
-          "date": "2024-11-30",
-          "hcpExact": 1,
-          "source": "fpg",
-          "tcode": "10483",
-          "ccode": "059",
-          "label": " Campeonato Regional de Clubes Absoluto"
-        },
-        {
-          "date": "2024-11-17",
-          "hcpExact": 1.1,
-          "source": "fpg",
-          "tcode": "10825",
-          "ccode": "007",
-          "label": "XII ABERTO CGSS"
-        },
-        {
-          "date": "2024-11-09",
-          "hcpExact": 1.5,
-          "source": "fpg",
-          "tcode": "10821",
-          "ccode": "007",
-          "label": "Torneio AGONPHARMA CGSS"
-        },
-        {
-          "date": "2022-01-08",
-          "hcpExact": 2.8,
-          "source": "fpg",
-          "tcode": "10428",
-          "ccode": "007",
-          "label": "Torneio Ano Novo"
-        }
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "fpg:20292",
-          "dob:1996-12-21"
-        ],
-        "mergedFromSources": [
-          "fpg"
-        ]
-      }
-    },
-    {
-      "id": "f31745",
-      "canonicalName": "Pedro Araújo",
-      "aliases": [],
-      "dob": "1998-03-28",
-      "sex": "M",
-      "nationality": "PT",
-      "country": "PT",
-      "region": null,
-      "club": "Santo da Serra",
-      "sources": {
-        "fpg": {
-          "fed": "31745",
-          "club": "Santo da Serra",
-          "clubCode": "007",
-          "clubLong": "Clube de Golfe do Santo da Serra",
-          "hcpExact": -1.3,
-          "hcpDate": null,
-          "sex": "M",
-          "tags": [
-            "orfao-readd"
-          ],
-          "primary": true
-        }
-      },
-      "tournamentIds": [
-        "fpg-000-10912-20260612-all"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-06-12",
-          "hcpExact": -1.3,
-          "source": "fpg",
-          "tcode": "10912",
-          "ccode": "000",
-          "label": "Campeonato Nacional de Clubes Mid-Amateur  BPI"
-        },
-        {
-          "date": "2026-06-06",
-          "hcpExact": -1.5,
-          "source": "fpg",
-          "tcode": "11032",
-          "ccode": "007",
-          "label": "III ABERTO CGSS"
-        },
-        {
-          "date": "2026-04-03",
-          "hcpExact": -0.5,
-          "source": "fpg",
-          "tcode": "11005",
-          "ccode": "007",
-          "label": "I ABERTO CGSS 2026"
-        },
-        {
-          "date": "2026-01-24",
-          "hcpExact": -0.5,
-          "source": "fpg",
-          "tcode": "10986",
-          "ccode": "007",
-          "label": "TORNEIO DA RESTAURAÇÃO CGSS 2026"
-        },
-        {
-          "date": "2025-10-03",
-          "hcpExact": -0.6,
-          "source": "fpg",
-          "tcode": "10945",
-          "ccode": "007",
-          "label": "TAÇA do CLUBE CGSS 2025"
-        },
-        {
-          "date": "2024-11-30",
-          "hcpExact": -0.6,
-          "source": "fpg",
-          "tcode": "10483",
-          "ccode": "059",
-          "label": " Campeonato Regional de Clubes Absoluto"
-        },
-        {
-          "date": "2024-11-23",
-          "hcpExact": -0.9,
-          "source": "fpg",
-          "tcode": "10828",
-          "ccode": "007",
-          "label": "TORNEIO 1937 CUP"
-        },
-        {
-          "date": "2024-11-17",
-          "hcpExact": -0.3,
-          "source": "fpg",
-          "tcode": "10825",
-          "ccode": "007",
-          "label": "XII ABERTO CGSS"
-        },
-        {
-          "date": "2024-11-10",
-          "hcpExact": -0.3,
-          "source": "fpg",
-          "tcode": "10822",
-          "ccode": "007",
-          "label": "XI ABERTO CGSS"
-        },
-        {
-          "date": "2024-10-05",
-          "hcpExact": -0.5,
-          "source": "fpg",
-          "tcode": "10803",
-          "ccode": "007",
-          "label": "X ABERTO CGSS"
-        },
-        {
-          "date": "2024-09-27",
-          "hcpExact": -0.2,
-          "source": "fpg",
-          "tcode": "10800",
-          "ccode": "007",
-          "label": "TORNEIO C. SANTOS VP"
-        },
-        {
-          "date": "2024-09-21",
-          "hcpExact": -0.2,
-          "source": "fpg",
-          "tcode": "10797",
-          "ccode": "007",
-          "label": "IX ABERTO CGSS"
-        },
-        {
-          "date": "2024-09-20",
-          "hcpExact": 0,
-          "source": "fpg",
-          "tcode": "10796",
-          "ccode": "007",
-          "label": "XI Torneio Vinhos Barbeito Madeira"
-        },
-        {
-          "date": "2024-08-31",
-          "hcpExact": 0,
-          "source": "fpg",
-          "tcode": "10788",
-          "ccode": "007",
-          "label": "VIII ABERTO CGSS"
-        },
-        {
-          "date": "2024-07-27",
-          "hcpExact": 0,
-          "source": "fpg",
-          "tcode": "10774",
-          "ccode": "007",
-          "label": "VII ABERTO CGSS"
-        },
-        {
-          "date": "2024-07-26",
-          "hcpExact": 0,
-          "source": "fpg",
-          "tcode": "10773",
-          "ccode": "007",
-          "label": "TAÇA DO CLUBE 2024"
-        },
-        {
-          "date": "2024-06-08",
-          "hcpExact": 0.1,
-          "source": "fpg",
-          "tcode": "10754",
-          "ccode": "007",
-          "label": "VI ABERTO CGSS"
-        },
-        {
-          "date": "2024-05-25",
-          "hcpExact": -0.1,
-          "source": "fpg",
-          "tcode": "10746",
-          "ccode": "007",
-          "label": "Torneio NOS Empresas"
-        },
-        {
-          "date": "2024-04-27",
-          "hcpExact": -0.4,
-          "source": "fpg",
-          "tcode": "10737",
-          "ccode": "007",
-          "label": "V ABERTO CGSS"
-        },
-        {
-          "date": "2024-04-06",
-          "hcpExact": -0.2,
-          "source": "fpg",
-          "tcode": "10729",
-          "ccode": "007",
-          "label": "IV ABERTO CGSS"
-        },
-        {
-          "date": "2024-04-05",
-          "hcpExact": -0.2,
-          "source": "fpg",
-          "tcode": "10728",
-          "ccode": "007",
-          "label": "T3 -Camp. CGSS de Pares - Powered by C. Santos VP"
-        },
-        {
-          "date": "2024-02-25",
-          "hcpExact": -0.4,
-          "source": "fpg",
-          "tcode": "10712",
-          "ccode": "007",
-          "label": "III ABERTO CGSS"
-        },
-        {
-          "date": "2024-01-21",
-          "hcpExact": -0.4,
-          "source": "fpg",
-          "tcode": "10696",
-          "ccode": "007",
-          "label": "II ABERTO CGSS"
-        },
-        {
-          "date": "2023-12-17",
-          "hcpExact": -0.4,
-          "source": "fpg",
-          "tcode": "10684",
-          "ccode": "007",
-          "label": "I ABERTO CGSS"
-        },
-        {
-          "date": "2023-12-16",
-          "hcpExact": -0.4,
-          "source": "fpg",
-          "tcode": "10683",
-          "ccode": "007",
-          "label": "Torneio de Natal Solidário"
-        },
-        {
-          "date": "2023-11-18",
-          "hcpExact": -0.4,
-          "source": "fpg",
-          "tcode": "10673",
-          "ccode": "007",
-          "label": "Torneio de São Martinho"
-        },
-        {
-          "date": "2023-10-27",
-          "hcpExact": -0.1,
-          "source": "fpg",
-          "tcode": "10663",
-          "ccode": "007",
-          "label": "TORNEIO DA RESTAURAÇÃO"
-        },
-        {
-          "date": "2023-10-14",
-          "hcpExact": -0.1,
-          "source": "fpg",
-          "tcode": "10658",
-          "ccode": "007",
-          "label": "Torneio SVR Lazartigue"
-        },
-        {
-          "date": "2023-10-07",
-          "hcpExact": -0.1,
-          "source": "fpg",
-          "tcode": "10645",
-          "ccode": "007",
-          "label": "X Torneio Barbeito Madeira"
-        },
-        {
-          "date": "2023-10-06",
-          "hcpExact": -0.1,
-          "source": "fpg",
-          "tcode": "10654",
-          "ccode": "007",
-          "label": "8ª Etapa Circuito de Golfe Abreu CGSS 2023"
-        },
-        {
-          "date": "2023-09-29",
-          "hcpExact": 0.1,
-          "source": "fpg",
-          "tcode": "10650",
-          "ccode": "007",
-          "label": "TAÇA PRESIDENTE"
-        },
-        {
-          "date": "2023-08-25",
-          "hcpExact": -0.3,
-          "source": "fpg",
-          "tcode": "10637",
-          "ccode": "007",
-          "label": "Torneio de Quinta São João (SM)"
-        },
-        {
-          "date": "2023-08-11",
-          "hcpExact": -0.5,
-          "source": "fpg",
-          "tcode": "10628",
-          "ccode": "007",
-          "label": "Torneio CGSS Summer Cup"
-        },
-        {
-          "date": "2023-06-30",
-          "hcpExact": -0.8,
-          "source": "fpg",
-          "tcode": "10612",
-          "ccode": "007",
-          "label": "Torneio Diário de Notícias"
-        },
-        {
-          "date": "2023-06-02",
-          "hcpExact": -0.6,
-          "source": "fpg",
-          "tcode": "10599",
-          "ccode": "007",
-          "label": "Campeonato Regional Individual Absoluto - CGSS"
-        },
-        {
-          "date": "2023-05-19",
-          "hcpExact": -0.3,
-          "source": "fpg",
-          "tcode": "10594",
-          "ccode": "007",
-          "label": "Torneio NOS Empresas"
-        },
-        {
-          "date": "2023-05-05",
-          "hcpExact": -0.2,
-          "source": "fpg",
-          "tcode": "10590",
-          "ccode": "007",
-          "label": "TROFÉU JOÃO SOUSA 2023"
-        },
-        {
-          "date": "2023-03-11",
-          "hcpExact": -0.4,
-          "source": "fpg",
-          "tcode": "10566",
-          "ccode": "007",
-          "label": "Torneio CGSS / Fundação 1967"
-        },
-        {
-          "date": "2023-02-25",
-          "hcpExact": -0.6,
-          "source": "fpg",
-          "tcode": "10559",
-          "ccode": "007",
-          "label": "Torneio CGSS / FAVELAS"
-        },
-        {
-          "date": "2022-10-28",
-          "hcpExact": -0.2,
-          "source": "fpg",
-          "tcode": "10520",
-          "ccode": "007",
-          "label": "Torneio da Restauração"
-        },
-        {
-          "date": "2022-10-14",
-          "hcpExact": -0.2,
-          "source": "fpg",
-          "tcode": "10514",
-          "ccode": "007",
-          "label": "7ªetapa Circuito de Golfe Abreu 2022"
-        },
-        {
-          "date": "2022-09-23",
-          "hcpExact": 0,
-          "source": "fpg",
-          "tcode": "10509",
-          "ccode": "007",
-          "label": "IX Torneio Barbeito Madeira"
-        },
-        {
-          "date": "2022-09-09",
-          "hcpExact": -0.5,
-          "source": "fpg",
-          "tcode": "10503",
-          "ccode": "007",
-          "label": "TAÇA PRESIDENTE"
-        },
-        {
-          "date": "2022-07-08",
-          "hcpExact": -1.1,
-          "source": "fpg",
-          "tcode": "10487",
-          "ccode": "007",
-          "label": "XII Torneio CGSS / Sunset"
-        },
-        {
-          "date": "2022-06-17",
-          "hcpExact": -1.1,
-          "source": "fpg",
-          "tcode": "10480",
-          "ccode": "007",
-          "label": "Torneio NOS Empresas 2022"
-        },
-        {
-          "date": "2022-05-27",
-          "hcpExact": -1.1,
-          "source": "fpg",
-          "tcode": "10471",
-          "ccode": "007",
-          "label": "TROFÉU JOÃO SOUSA"
-        },
-        {
-          "date": "2022-05-21",
-          "hcpExact": -1.1,
-          "source": "fpg",
-          "tcode": "10468",
-          "ccode": "007",
-          "label": "Campeonato da Madeira de Golfe (dia2)"
-        },
-        {
-          "date": "2022-05-20",
-          "hcpExact": -0.9,
-          "source": "fpg",
-          "tcode": "10467",
-          "ccode": "007",
-          "label": "Campeonato da Madeira de Golfe 2022 (dia1)"
-        },
-        {
-          "date": "2022-03-19",
-          "hcpExact": -1.4,
-          "source": "fpg",
-          "tcode": "10449",
-          "ccode": "007",
-          "label": "TAÇA DO CLUBE"
-        },
-        {
-          "date": "2022-03-12",
-          "hcpExact": -1.3,
-          "source": "fpg",
-          "tcode": "10446",
-          "ccode": "007",
-          "label": "Torneio Aniversário CGSS"
-        },
-        {
-          "date": "2022-02-12",
-          "hcpExact": -1.3,
-          "source": "fpg",
-          "tcode": "10438",
-          "ccode": "007",
-          "label": "4º Torneio CGSS OM NOS"
-        },
-        {
-          "date": "2022-01-29",
-          "hcpExact": -0.9,
-          "source": "fpg",
-          "tcode": "10434",
-          "ccode": "007",
-          "label": "Torneio de Inverno"
-        },
-        {
-          "date": "2022-01-15",
-          "hcpExact": -1.5,
-          "source": "fpg",
-          "tcode": "10431",
-          "ccode": "007",
-          "label": "2º Torneio CGSS OM NOS"
-        },
-        {
-          "date": "2022-01-08",
-          "hcpExact": -1.6,
-          "source": "fpg",
-          "tcode": "10428",
-          "ccode": "007",
-          "label": "Torneio Ano Novo"
-        }
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "fpg:31745",
-          "dob:1998-03-28"
-        ],
-        "mergedFromSources": [
-          "fpg"
         ]
       }
     },
@@ -304140,71 +303687,6 @@
       }
     },
     {
-      "id": "f35404",
-      "canonicalName": "Miguel Silveira",
-      "aliases": [],
-      "dob": "2006-10-04",
-      "sex": "M",
-      "nationality": "PT",
-      "country": "PT",
-      "region": null,
-      "club": "Miramar",
-      "sources": {
-        "fpg": {
-          "fed": "35404",
-          "club": "Miramar",
-          "clubCode": "003",
-          "clubLong": "Club de Golf de Miramar",
-          "hcpExact": -2.9,
-          "hcpDate": null,
-          "sex": "M",
-          "tags": [
-            "auto-junior"
-          ],
-          "primary": true
-        }
-      },
-      "tournamentIds": [
-        "fpg-962-10078-20251229-all"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-06-03",
-          "hcpExact": -3.9,
-          "source": "fpg",
-          "tcode": "10910",
-          "ccode": "000",
-          "label": "Campeonato Nacional Absoluto - H"
-        },
-        {
-          "date": "2025-12-29",
-          "hcpExact": -4.1,
-          "source": "fpg",
-          "tcode": "10078",
-          "ccode": "962",
-          "label": "Quinta do Lago Junior Open 2025 - U21 & U16"
-        },
-        {
-          "date": "2025-06-13",
-          "hcpExact": -2.2,
-          "source": "fpg",
-          "tcode": "10551",
-          "ccode": "003",
-          "label": "Taça R.S. Yeatman"
-        }
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "fpg:35404",
-          "dob:2006-10-04"
-        ],
-        "mergedFromSources": [
-          "fpg"
-        ]
-      }
-    },
-    {
       "id": "f36625",
       "canonicalName": "Tomás Valadão",
       "aliases": [],
@@ -304233,6 +303715,14 @@
         "fpg-000-10899-20260330-sub_18"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-12",
+          "hcpExact": 12.7,
+          "source": "fpg",
+          "tcode": "10178",
+          "ccode": "983",
+          "label": "6º Torneio Drive Challenge Açores–Terceira-Sub 18"
+        },
         {
           "date": "2026-03-30",
           "hcpExact": 17.7,
@@ -304319,7 +303809,7 @@
           "clubCode": "002",
           "clubLong": "Lisbon Sports Club",
           "hcpExact": 14.6,
-          "hcpDate": null,
+          "hcpDate": "2026-04-12",
           "sex": "F",
           "tags": [
             "auto-junior"
@@ -304367,8 +303857,8 @@
           "club": "Quinta do Peru",
           "clubCode": "038",
           "clubLong": "Quinta do Peru",
-          "hcpExact": -1.3,
-          "hcpDate": "2026-05-28",
+          "hcpExact": -1.8,
+          "hcpDate": "2026-06-12",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -304400,80 +303890,6 @@
         "evidence": [
           "fpg:37010",
           "dob:2008-06-08"
-        ],
-        "mergedFromSources": [
-          "fpg"
-        ]
-      }
-    },
-    {
-      "id": "f37152",
-      "canonicalName": "Rodrigo Marques Santos",
-      "aliases": [],
-      "dob": "2007-09-17",
-      "sex": "M",
-      "nationality": "PT",
-      "country": "PT",
-      "region": null,
-      "club": "Vilamoura, C. G",
-      "sources": {
-        "fpg": {
-          "fed": "37152",
-          "club": "Vilamoura, C. G",
-          "clubCode": "009",
-          "clubLong": "Clube de Golfe de Vilamoura",
-          "hcpExact": -1,
-          "hcpDate": null,
-          "sex": "M",
-          "tags": [
-            "auto-junior"
-          ],
-          "primary": true
-        }
-      },
-      "tournamentIds": [
-        "fpg-935-10260-20250302-all",
-        "fpg-962-10078-20251229-all"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-06-03",
-          "hcpExact": -1.2,
-          "source": "fpg",
-          "tcode": "10910",
-          "ccode": "000",
-          "label": "Campeonato Nacional Absoluto - H"
-        },
-        {
-          "date": "2026-05-22",
-          "hcpExact": -1.2,
-          "source": "fpg",
-          "tcode": "10576",
-          "ccode": "004",
-          "label": "Torneio ABERTO DO ESTORIL"
-        },
-        {
-          "date": "2025-12-29",
-          "hcpExact": -1.7,
-          "source": "fpg",
-          "tcode": "10078",
-          "ccode": "962",
-          "label": "Quinta do Lago Junior Open 2025 - U21 & U16"
-        },
-        {
-          "date": "2025-03-02",
-          "hcpExact": 0.4,
-          "source": "fpg",
-          "tcode": "10260",
-          "ccode": "935",
-          "label": "Greatgolf Junior Open with Luis Figo Foundation"
-        }
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "fpg:37152",
-          "dob:2007-09-17"
         ],
         "mergedFromSources": [
           "fpg"
@@ -304776,82 +304192,6 @@
       }
     },
     {
-      "id": "f38375",
-      "canonicalName": "João Iglésias",
-      "aliases": [
-        "Joao Ceia Pereira Iglesias"
-      ],
-      "dob": "2005-01-05",
-      "sex": "M",
-      "nationality": "PT",
-      "country": "PT",
-      "region": null,
-      "club": "Oporto",
-      "sources": {
-        "fpg": {
-          "fed": "38375",
-          "club": "Oporto",
-          "clubCode": "001",
-          "clubLong": "Oporto Golf Clube",
-          "hcpExact": -1.7,
-          "hcpDate": null,
-          "sex": "M",
-          "tags": [
-            "auto-junior"
-          ],
-          "primary": true
-        },
-        "rfeg": {
-          "lic": "CMA8989869",
-          "club": "CENTRO NACIONAL DE GOLF",
-          "catEdad": "Cadete",
-          "sex": "M",
-          "historicalLicenses": []
-        }
-      },
-      "tournamentIds": [
-        "fpg-962-10078-20251229-all"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-06-03",
-          "hcpExact": -2.1,
-          "source": "fpg",
-          "tcode": "10910",
-          "ccode": "000",
-          "label": "Campeonato Nacional Absoluto - H"
-        },
-        {
-          "date": "2025-12-29",
-          "hcpExact": -2.4,
-          "source": "fpg",
-          "tcode": "10078",
-          "ccode": "962",
-          "label": "Quinta do Lago Junior Open 2025 - U21 & U16"
-        },
-        {
-          "date": "2025-06-13",
-          "hcpExact": -4.1,
-          "source": "fpg",
-          "tcode": "10551",
-          "ccode": "003",
-          "label": "Taça R.S. Yeatman"
-        }
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "fpg:38375",
-          "rfeg:CMA8989869",
-          "dob:2005-01-05"
-        ],
-        "mergedFromSources": [
-          "fpg",
-          "rfeg"
-        ]
-      }
-    },
-    {
       "id": "f38976",
       "canonicalName": "José Pedro Miranda",
       "aliases": [],
@@ -304867,8 +304207,8 @@
           "club": "Palheiro",
           "clubCode": "059",
           "clubLong": "Clube Palheiro Golfe",
-          "hcpExact": 8.3,
-          "hcpDate": "2026-06-05",
+          "hcpExact": 7.4,
+          "hcpDate": "2026-06-12",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -305119,7 +304459,7 @@
           "clubCode": "059",
           "clubLong": "Clube Palheiro Golfe",
           "hcpExact": 7.7,
-          "hcpDate": "2026-06-05",
+          "hcpDate": "2026-06-12",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -305351,81 +304691,6 @@
       }
     },
     {
-      "id": "f39701",
-      "canonicalName": "João Crasi Alves",
-      "aliases": [],
-      "dob": "2007-08-22",
-      "sex": "M",
-      "nationality": "PT",
-      "country": "PT",
-      "region": null,
-      "club": "Vilamoura, C. G",
-      "sources": {
-        "fpg": {
-          "fed": "39701",
-          "club": "Vilamoura, C. G",
-          "clubCode": "009",
-          "clubLong": "Clube de Golfe de Vilamoura",
-          "hcpExact": -0.4,
-          "hcpDate": null,
-          "sex": "M",
-          "tags": [
-            "auto-junior"
-          ],
-          "primary": true
-        }
-      },
-      "tournamentIds": [
-        "fpg-935-10260-20250302-all",
-        "fpg-935-10294-20260215-all",
-        "fpg-962-10078-20251229-all"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-06-03",
-          "hcpExact": -0.4,
-          "source": "fpg",
-          "tcode": "10910",
-          "ccode": "000",
-          "label": "Campeonato Nacional Absoluto - H"
-        },
-        {
-          "date": "2026-02-15",
-          "hcpExact": -1.3,
-          "source": "fpg",
-          "tcode": "10294",
-          "ccode": "935",
-          "label": "Greatgolf Junior Open with Luis Figo Foundation"
-        },
-        {
-          "date": "2025-12-29",
-          "hcpExact": -3,
-          "source": "fpg",
-          "tcode": "10078",
-          "ccode": "962",
-          "label": "Quinta do Lago Junior Open 2025 - U21 & U16"
-        },
-        {
-          "date": "2025-03-02",
-          "hcpExact": -1,
-          "source": "fpg",
-          "tcode": "10260",
-          "ccode": "935",
-          "label": "Greatgolf Junior Open with Luis Figo Foundation"
-        }
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "fpg:39701",
-          "dob:2007-08-22"
-        ],
-        "mergedFromSources": [
-          "fpg"
-        ]
-      }
-    },
-    {
       "id": "f40115",
       "canonicalName": "Martim Pinto Johansen",
       "aliases": [],
@@ -305542,87 +304807,6 @@
       }
     },
     {
-      "id": "f40196",
-      "canonicalName": "Luciana Reis",
-      "aliases": [],
-      "dob": "2005-05-29",
-      "sex": "F",
-      "nationality": "PT",
-      "country": "PT",
-      "region": null,
-      "club": "Arquitectos",
-      "sources": {
-        "fpg": {
-          "fed": "40196",
-          "club": "Arquitectos",
-          "clubCode": "091",
-          "clubLong": "Clube de Golf dos Arquitectos",
-          "hcpExact": -1.7,
-          "hcpDate": null,
-          "sex": "F",
-          "tags": [
-            "auto-junior"
-          ],
-          "primary": true
-        }
-      },
-      "tournamentIds": [
-        "fpg-962-10078-20251229-all"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-06-03",
-          "hcpExact": -2.4,
-          "source": "fpg",
-          "tcode": "10911",
-          "ccode": "000",
-          "label": "Campeonato Nacional Absoluto - S"
-        },
-        {
-          "date": "2026-05-22",
-          "hcpExact": -2.4,
-          "source": "fpg",
-          "tcode": "10576",
-          "ccode": "004",
-          "label": "Torneio ABERTO DO ESTORIL"
-        },
-        {
-          "date": "2026-05-08",
-          "hcpExact": -1.8,
-          "source": "fpg",
-          "tcode": "11297",
-          "ccode": "002",
-          "label": "109ª Lisbon Cup"
-        },
-        {
-          "date": "2025-12-29",
-          "hcpExact": -1.6,
-          "source": "fpg",
-          "tcode": "10078",
-          "ccode": "962",
-          "label": "Quinta do Lago Junior Open 2025 - U21 & U16"
-        },
-        {
-          "date": "2025-06-13",
-          "hcpExact": 0.3,
-          "source": "fpg",
-          "tcode": "10551",
-          "ccode": "003",
-          "label": "Taça R.S. Yeatman"
-        }
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "fpg:40196",
-          "dob:2005-05-29"
-        ],
-        "mergedFromSources": [
-          "fpg"
-        ]
-      }
-    },
-    {
       "id": "f40318",
       "canonicalName": "Francisco Costa Mendes",
       "aliases": [],
@@ -305694,79 +304878,6 @@
       }
     },
     {
-      "id": "f40452",
-      "canonicalName": "Afonso Rui Oliveira",
-      "aliases": [],
-      "dob": "2007-03-29",
-      "sex": "M",
-      "nationality": "PT",
-      "country": "PT",
-      "region": null,
-      "club": "Aroeira",
-      "sources": {
-        "fpg": {
-          "fed": "40452",
-          "club": "Aroeira",
-          "clubCode": "029",
-          "clubLong": "Clube de Campo da Aroeira",
-          "hcpExact": -1.8,
-          "hcpDate": null,
-          "sex": "M",
-          "tags": [
-            "auto-junior"
-          ],
-          "primary": true
-        }
-      },
-      "tournamentIds": [
-        "fpg-962-10078-20251229-all"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-06-03",
-          "hcpExact": -0.6,
-          "source": "fpg",
-          "tcode": "10910",
-          "ccode": "000",
-          "label": "Campeonato Nacional Absoluto - H"
-        },
-        {
-          "date": "2026-05-22",
-          "hcpExact": -0.7,
-          "source": "fpg",
-          "tcode": "10576",
-          "ccode": "004",
-          "label": "Torneio ABERTO DO ESTORIL"
-        },
-        {
-          "date": "2026-05-08",
-          "hcpExact": -0.6,
-          "source": "fpg",
-          "tcode": "11297",
-          "ccode": "002",
-          "label": "109ª Lisbon Cup"
-        },
-        {
-          "date": "2025-12-29",
-          "hcpExact": -2.4,
-          "source": "fpg",
-          "tcode": "10078",
-          "ccode": "962",
-          "label": "Quinta do Lago Junior Open 2025 - U21 & U16"
-        }
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "fpg:40452",
-          "dob:2007-03-29"
-        ],
-        "mergedFromSources": [
-          "fpg"
-        ]
-      }
-    },
-    {
       "id": "f40473",
       "canonicalName": "André Von Hafe",
       "aliases": [],
@@ -305783,7 +304894,7 @@
           "clubCode": "022",
           "clubLong": "Estela Golf Club",
           "hcpExact": 12.2,
-          "hcpDate": "2026-06-06",
+          "hcpDate": "2026-06-12",
           "sex": "M",
           "tags": [
             "no-priority"
@@ -305840,8 +304951,8 @@
           "club": "Vilamoura, C. G",
           "clubCode": "009",
           "clubLong": "Clube de Golfe de Vilamoura",
-          "hcpExact": 0.7,
-          "hcpDate": "2026-06-06",
+          "hcpExact": 0.1,
+          "hcpDate": "2026-06-12",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -306042,103 +305153,6 @@
       }
     },
     {
-      "id": "f40910",
-      "canonicalName": "Dinis Silva",
-      "aliases": [],
-      "dob": "2006-02-18",
-      "sex": "M",
-      "nationality": "PT",
-      "country": "PT",
-      "region": null,
-      "club": "Oporto",
-      "sources": {
-        "fpg": {
-          "fed": "40910",
-          "club": "Oporto",
-          "clubCode": "001",
-          "clubLong": "Oporto Golf Clube",
-          "hcpExact": 3.7,
-          "hcpDate": null,
-          "sex": "M",
-          "tags": [
-            "auto-junior"
-          ],
-          "primary": true
-        }
-      },
-      "tournamentIds": [
-        "fpg-935-10294-20260215-all"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-06-03",
-          "hcpExact": 3.3,
-          "source": "fpg",
-          "tcode": "10910",
-          "ccode": "000",
-          "label": "Campeonato Nacional Absoluto - H"
-        },
-        {
-          "date": "2026-05-08",
-          "hcpExact": 2.8,
-          "source": "fpg",
-          "tcode": "11297",
-          "ccode": "002",
-          "label": "109ª Lisbon Cup"
-        },
-        {
-          "date": "2026-03-22",
-          "hcpExact": 3.8,
-          "source": "fpg",
-          "tcode": "10550",
-          "ccode": "001",
-          "label": "Taça Yeatman Júnior"
-        },
-        {
-          "date": "2026-02-15",
-          "hcpExact": 3.3,
-          "source": "fpg",
-          "tcode": "10294",
-          "ccode": "935",
-          "label": "Greatgolf Junior Open with Luis Figo Foundation"
-        },
-        {
-          "date": "2025-08-19",
-          "hcpExact": 3.6,
-          "source": "fpg",
-          "tcode": "10564",
-          "ccode": "003",
-          "label": "Miramar Internacional Open U25"
-        },
-        {
-          "date": "2025-06-13",
-          "hcpExact": 3.9,
-          "source": "fpg",
-          "tcode": "10551",
-          "ccode": "003",
-          "label": "Taça R.S. Yeatman"
-        },
-        {
-          "date": "2024-08-26",
-          "hcpExact": 3.9,
-          "source": "fpg",
-          "tcode": "10477",
-          "ccode": "003",
-          "label": "Miramar Internacional Open U25"
-        }
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "fpg:40910",
-          "dob:2006-02-18"
-        ],
-        "mergedFromSources": [
-          "fpg"
-        ]
-      }
-    },
-    {
       "id": "f40981",
       "canonicalName": "Francisca Ferreira da Costa",
       "aliases": [
@@ -306255,8 +305269,8 @@
           "club": "Santo da Serra",
           "clubCode": "007",
           "clubLong": "Santo da Serra",
-          "hcpExact": 8.6,
-          "hcpDate": "2026-05-29",
+          "hcpExact": 9.3,
+          "hcpDate": "2026-06-12",
           "sex": "F",
           "tags": [],
           "primary": true
@@ -306525,8 +305539,8 @@
           "club": "Palheiro",
           "clubCode": "059",
           "clubLong": "Clube Palheiro Golfe",
-          "hcpExact": 7,
-          "hcpDate": "2026-06-05",
+          "hcpExact": 7.3,
+          "hcpDate": "2026-06-12",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -307173,7 +306187,7 @@
           "clubCode": "009",
           "clubLong": "Clube de Golfe de Vilamoura",
           "hcpExact": 7,
-          "hcpDate": "2026-05-22",
+          "hcpDate": "2026-06-12",
           "sex": "M",
           "tags": [
             "inscrito-nacional"
@@ -307902,125 +306916,6 @@
       }
     },
     {
-      "id": "f42985",
-      "canonicalName": "Martim Moreira",
-      "aliases": [],
-      "dob": "2012-02-16",
-      "sex": "M",
-      "nationality": "PT",
-      "country": "PT",
-      "region": "Lisboa",
-      "club": "Belas",
-      "sources": {
-        "fpg": {
-          "fed": "42985",
-          "club": "Belas",
-          "clubCode": "068",
-          "clubLong": "Clube de Golfe de Belas",
-          "hcpExact": 10.9,
-          "hcpDate": "2026-06-09",
-          "sex": "M",
-          "tags": [
-            "PJA"
-          ],
-          "primary": true
-        }
-      },
-      "tournamentIds": [
-        "fpg-152-10368-20240305-all",
-        "fpg-013-10092-20240618-all",
-        "fpg-191-10021-20241004-all",
-        "fpg-192-10005-20241130-all",
-        "fpg-000-10825-20250414-sub_14",
-        "fpg-038-10651-20250530-all",
-        "fpg-000-10939-20260430-sub_14"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-04-30",
-          "hcpExact": 8.6,
-          "source": "fpg",
-          "tcode": "10939",
-          "ccode": "000",
-          "label": "Campeonato Nacional de Jovens Sub 14 H"
-        },
-        {
-          "date": "2025-05-30",
-          "hcpExact": 8.3,
-          "source": "fpg",
-          "tcode": "10651",
-          "ccode": "038",
-          "label": "PJA  António Dantas Classic 2025"
-        },
-        {
-          "date": "2025-04-14",
-          "hcpExact": 8.5,
-          "source": "fpg",
-          "tcode": "10825",
-          "ccode": "000",
-          "label": "Campeonato Nacional de Clubes Sub 14"
-        },
-        {
-          "date": "2024-11-30",
-          "hcpExact": 5.6,
-          "source": "fpg",
-          "tcode": "10005",
-          "ccode": "192",
-          "label": "PJA TOUR Grand Final"
-        },
-        {
-          "date": "2024-10-04",
-          "hcpExact": 6.6,
-          "source": "fpg",
-          "tcode": "10021",
-          "ccode": "191",
-          "label": "PJA  Alfred Dunhill Links Championship"
-        },
-        {
-          "date": "2024-09-14",
-          "hcpExact": 7,
-          "source": "fpg",
-          "tcode": "10584",
-          "ccode": "038",
-          "label": "PJA European Masters Quinta do Peru"
-        },
-        {
-          "date": "2024-06-18",
-          "hcpExact": 6.6,
-          "source": "fpg",
-          "tcode": "10092",
-          "ccode": "013",
-          "label": "PJA TOUR US OPEN"
-        },
-        {
-          "date": "2024-04-12",
-          "hcpExact": 10.6,
-          "source": "fpg",
-          "tcode": "10097",
-          "ccode": "189",
-          "label": "PJA Masters 2024 - Montado"
-        },
-        {
-          "date": "2024-03-05",
-          "hcpExact": 10.9,
-          "source": "fpg",
-          "tcode": "10368",
-          "ccode": "152",
-          "label": "PJA - Portuguese Championship 2024"
-        }
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "fpg:42985",
-          "dob:2012-02-16"
-        ],
-        "mergedFromSources": [
-          "fpg"
-        ]
-      }
-    },
-    {
       "id": "f43053",
       "canonicalName": "Gabriel Marques Guerreiro",
       "aliases": [],
@@ -308446,8 +307341,8 @@
           "club": "Vale de Janelas",
           "clubCode": "177",
           "clubLong": "Clube de Golfe de Vale de Janelas",
-          "hcpExact": 2.6,
-          "hcpDate": "2026-06-06",
+          "hcpExact": 2.7,
+          "hcpDate": "2026-06-12",
           "sex": "F",
           "tags": [],
           "primary": true
@@ -308903,6 +307798,14 @@
       ],
       "hcpHistory": [
         {
+          "date": "2026-06-12",
+          "hcpExact": 15.8,
+          "source": "fpg",
+          "tcode": "10178",
+          "ccode": "983",
+          "label": "6º Torneio Drive Challenge Açores–Terceira-Sub 18"
+        },
+        {
           "date": "2026-03-30",
           "hcpExact": 17.8,
           "source": "fpg",
@@ -309013,7 +307916,7 @@
           "clubCode": "005",
           "clubLong": "Clube de Golf da Ilha Terceira",
           "hcpExact": 35.8,
-          "hcpDate": null,
+          "hcpDate": "2025-07-12",
           "sex": "M",
           "tags": [
             "auto-junior"
@@ -310156,7 +309059,7 @@
           "clubCode": "022",
           "clubLong": "Estela",
           "hcpExact": 10.7,
-          "hcpDate": "2026-05-30",
+          "hcpDate": "2026-06-12",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -311652,8 +310555,8 @@
           "club": "Palheiro",
           "clubCode": "059",
           "clubLong": "Clube Palheiro Golfe",
-          "hcpExact": 6.5,
-          "hcpDate": "2026-06-08",
+          "hcpExact": 6,
+          "hcpDate": "2026-06-12",
           "sex": "F",
           "tags": [],
           "primary": true
@@ -312077,8 +310980,8 @@
           "club": "Ilha Terceira",
           "clubCode": "005",
           "clubLong": "Clube de Golf da Ilha Terceira",
-          "hcpExact": 8.8,
-          "hcpDate": "2026-06-05",
+          "hcpExact": 8.6,
+          "hcpDate": "2026-06-12",
           "sex": "F",
           "tags": [],
           "primary": true
@@ -312089,6 +310992,14 @@
         "fpg-000-10936-20260430-sub_18"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-12",
+          "hcpExact": 8.8,
+          "source": "fpg",
+          "tcode": "10178",
+          "ccode": "983",
+          "label": "6º Torneio Drive Challenge Açores–Terceira-Sub 18"
+        },
         {
           "date": "2026-06-05",
           "hcpExact": 8.8,
@@ -312475,8 +311386,8 @@
           "club": "Vilamoura, C. G",
           "clubCode": "009",
           "clubLong": "Clube de Golfe de Vilamoura",
-          "hcpExact": 4.3,
-          "hcpDate": "2026-06-09",
+          "hcpExact": 4,
+          "hcpDate": "2026-06-12",
           "sex": "M",
           "tags": [
             "inscrito-nacional"
@@ -312661,8 +311572,8 @@
           "club": "Ilha Terceira",
           "clubCode": "005",
           "clubLong": "Clube de Golf da Ilha Terceira",
-          "hcpExact": 15.7,
-          "hcpDate": "2026-06-09",
+          "hcpExact": 15.8,
+          "hcpDate": "2026-06-12",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -312674,6 +311585,14 @@
         "fpg-988-10254-20250627-sub_12"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-12",
+          "hcpExact": 15.7,
+          "source": "fpg",
+          "tcode": "10175",
+          "ccode": "983",
+          "label": "6º Torneio Drive Challenge Açores–Terceira-Sub 12"
+        },
         {
           "date": "2025-06-27",
           "hcpExact": 18.7,
@@ -312918,7 +311837,7 @@
           "clubCode": "009",
           "clubLong": "Clube de Golfe de Vilamoura",
           "hcpExact": 15.1,
-          "hcpDate": null,
+          "hcpDate": "2026-05-23",
           "sex": "M",
           "tags": [
             "auto-junior"
@@ -313671,7 +312590,7 @@
           "clubCode": "009",
           "clubLong": "Clube de Golfe de Vilamoura",
           "hcpExact": 10.4,
-          "hcpDate": null,
+          "hcpDate": "2026-05-23",
           "sex": "M",
           "tags": [
             "auto-junior"
@@ -313904,7 +312823,7 @@
           "clubCode": "050",
           "clubLong": "P.G.C. - Paredes Golfe Clube",
           "hcpExact": 29.4,
-          "hcpDate": null,
+          "hcpDate": "2025-07-14",
           "sex": "M",
           "tags": [
             "auto-junior"
@@ -314228,7 +313147,7 @@
           "clubCode": "001",
           "clubLong": "Oporto Golf Clube",
           "hcpExact": 49.1,
-          "hcpDate": null,
+          "hcpDate": "2026-05-10",
           "sex": "M",
           "tags": [
             "auto-junior"
@@ -314277,7 +313196,7 @@
           "clubCode": "004",
           "clubLong": "Clube de Golf do Estoril",
           "hcpExact": 5,
-          "hcpDate": null,
+          "hcpDate": "2026-06-10",
           "sex": "M",
           "tags": [
             "auto-junior"
@@ -314341,8 +313260,8 @@
           "club": "Vilamoura, C. G",
           "clubCode": "009",
           "clubLong": "Clube de Golfe de Vilamoura",
-          "hcpExact": 30.8,
-          "hcpDate": null,
+          "hcpExact": 30.3,
+          "hcpDate": "2026-06-12",
           "sex": "M",
           "tags": [
             "auto-junior"
@@ -314546,8 +313465,8 @@
           "club": "Santo da Serra",
           "clubCode": "007",
           "clubLong": "Santo da Serra",
-          "hcpExact": 20.2,
-          "hcpDate": "2026-05-23",
+          "hcpExact": 20.1,
+          "hcpDate": "2026-06-12",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -314868,7 +313787,7 @@
           "clubCode": "022",
           "clubLong": "Estela Golf Club",
           "hcpExact": 27,
-          "hcpDate": "2026-05-30",
+          "hcpDate": "2026-06-12",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -314915,7 +313834,7 @@
           "clubCode": "012",
           "clubLong": "Clube de Golfe da Quinta do Lago",
           "hcpExact": 4.5,
-          "hcpDate": null,
+          "hcpDate": "2025-12-29",
           "sex": "M",
           "tags": [
             "auto-junior"
@@ -315053,55 +313972,6 @@
       }
     },
     {
-      "id": "f50831",
-      "canonicalName": "Rodrigo Horta",
-      "aliases": [],
-      "dob": "2007-12-17",
-      "sex": "M",
-      "nationality": "PT",
-      "country": "PT",
-      "region": null,
-      "club": "Assoc. Qta.Lago",
-      "sources": {
-        "fpg": {
-          "fed": "50831",
-          "club": "Assoc. Qta.Lago",
-          "clubCode": "015",
-          "clubLong": "Ass. Desp. e Cultural da Qta do Lago",
-          "hcpExact": 10.8,
-          "hcpDate": null,
-          "sex": "M",
-          "tags": [
-            "auto-junior"
-          ],
-          "primary": true
-        }
-      },
-      "tournamentIds": [
-        "fpg-962-10078-20251229-all"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2025-12-29",
-          "hcpExact": 12.3,
-          "source": "fpg",
-          "tcode": "10078",
-          "ccode": "962",
-          "label": "Quinta do Lago Junior Open 2025 - U21 & U16"
-        }
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "fpg:50831",
-          "dob:2007-12-17"
-        ],
-        "mergedFromSources": [
-          "fpg"
-        ]
-      }
-    },
-    {
       "id": "f50885",
       "canonicalName": "Vicente Poeira",
       "aliases": [],
@@ -315118,7 +313988,7 @@
           "clubCode": "079",
           "clubLong": "Quinta das Lágrimas Clube de Golfe",
           "hcpExact": 31.5,
-          "hcpDate": null,
+          "hcpDate": "2026-05-31",
           "sex": "M",
           "tags": [
             "auto-junior"
@@ -315234,7 +314104,7 @@
           "clubCode": "015",
           "clubLong": "Ass. Desp. e Cultural da Qta do Lago",
           "hcpExact": 30.3,
-          "hcpDate": null,
+          "hcpDate": "2026-06-10",
           "sex": "M",
           "tags": [
             "auto-junior"
@@ -315575,8 +314445,8 @@
           "club": "Quinta do Peru",
           "clubCode": "038",
           "clubLong": "Clube de Golf da Quinta do Peru",
-          "hcpExact": 3.7,
-          "hcpDate": "2026-06-09",
+          "hcpExact": 4.6,
+          "hcpDate": "2026-06-12",
           "sex": "F",
           "tags": [
             "PJA"
@@ -315797,7 +314667,7 @@
           "clubCode": "095",
           "clubLong": "Vila Sol Golfe Clube",
           "hcpExact": 6.1,
-          "hcpDate": null,
+          "hcpDate": "2025-12-29",
           "sex": "M",
           "tags": [
             "auto-junior"
@@ -316244,7 +315114,7 @@
           "clubCode": "002",
           "clubLong": "Lisbon Sports Club",
           "hcpExact": 25.8,
-          "hcpDate": null,
+          "hcpDate": "2026-04-25",
           "sex": "M",
           "tags": [
             "auto-junior"
@@ -316342,7 +315212,7 @@
           "clubCode": "009",
           "clubLong": "Clube de Golfe de Vilamoura",
           "hcpExact": 20.4,
-          "hcpDate": null,
+          "hcpDate": "2026-03-22",
           "sex": "M",
           "tags": [
             "auto-junior"
@@ -316385,55 +315255,6 @@
         "evidence": [
           "fpg:52069",
           "dob:2014-08-02"
-        ],
-        "mergedFromSources": [
-          "fpg"
-        ]
-      }
-    },
-    {
-      "id": "f52088",
-      "canonicalName": "Archie Storey",
-      "aliases": [],
-      "dob": "2006-04-09",
-      "sex": "M",
-      "nationality": "PT",
-      "country": "PT",
-      "region": null,
-      "club": "Assoc. Qta.Lago",
-      "sources": {
-        "fpg": {
-          "fed": "52088",
-          "club": "Assoc. Qta.Lago",
-          "clubCode": "015",
-          "clubLong": "Ass. Desp. e Cultural da Qta do Lago",
-          "hcpExact": 10.7,
-          "hcpDate": null,
-          "sex": "M",
-          "tags": [
-            "auto-junior"
-          ],
-          "primary": true
-        }
-      },
-      "tournamentIds": [
-        "fpg-962-10078-20251229-all"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2025-12-29",
-          "hcpExact": 11.3,
-          "source": "fpg",
-          "tcode": "10078",
-          "ccode": "962",
-          "label": "Quinta do Lago Junior Open 2025 - U21 & U16"
-        }
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "fpg:52088",
-          "dob:2006-04-09"
         ],
         "mergedFromSources": [
           "fpg"
@@ -316874,87 +315695,6 @@
         "evidence": [
           "fpg:52431",
           "dob:2014-02-10"
-        ],
-        "mergedFromSources": [
-          "fpg"
-        ]
-      }
-    },
-    {
-      "id": "f52487",
-      "canonicalName": "Miguel Teles de Menezes",
-      "aliases": [],
-      "dob": "2007-01-10",
-      "sex": "M",
-      "nationality": "PT",
-      "country": "PT",
-      "region": null,
-      "club": "Oporto",
-      "sources": {
-        "fpg": {
-          "fed": "52487",
-          "club": "Oporto",
-          "clubCode": "001",
-          "clubLong": "Oporto Golf Clube",
-          "hcpExact": 6.2,
-          "hcpDate": null,
-          "sex": "M",
-          "tags": [
-            "auto-junior"
-          ],
-          "primary": true
-        }
-      },
-      "tournamentIds": [
-        "fpg-935-10294-20260215-all"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-06-03",
-          "hcpExact": 9.1,
-          "source": "fpg",
-          "tcode": "10910",
-          "ccode": "000",
-          "label": "Campeonato Nacional Absoluto - H"
-        },
-        {
-          "date": "2026-03-22",
-          "hcpExact": 9.5,
-          "source": "fpg",
-          "tcode": "10550",
-          "ccode": "001",
-          "label": "Taça Yeatman Júnior"
-        },
-        {
-          "date": "2026-02-15",
-          "hcpExact": 9.5,
-          "source": "fpg",
-          "tcode": "10294",
-          "ccode": "935",
-          "label": "Greatgolf Junior Open with Luis Figo Foundation"
-        },
-        {
-          "date": "2025-08-19",
-          "hcpExact": 14.4,
-          "source": "fpg",
-          "tcode": "10564",
-          "ccode": "003",
-          "label": "Miramar Internacional Open U25"
-        },
-        {
-          "date": "2024-08-26",
-          "hcpExact": 21.9,
-          "source": "fpg",
-          "tcode": "10477",
-          "ccode": "003",
-          "label": "Miramar Internacional Open U25"
-        }
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "fpg:52487",
-          "dob:2007-01-10"
         ],
         "mergedFromSources": [
           "fpg"
@@ -318057,7 +316797,7 @@
           "clubCode": "001",
           "clubLong": "Oporto Golf Clube",
           "hcpExact": 28.8,
-          "hcpDate": null,
+          "hcpDate": "2025-09-05",
           "sex": "M",
           "tags": [
             "auto-junior"
@@ -318871,7 +317611,7 @@
           "clubCode": "015",
           "clubLong": "Ass. Desp. e Cultural da Qta do Lago",
           "hcpExact": 44.9,
-          "hcpDate": null,
+          "hcpDate": "2026-05-23",
           "sex": "M",
           "tags": [
             "auto-junior"
@@ -319501,7 +318241,7 @@
           "clubCode": "095",
           "clubLong": "Vila Sol Golfe Clube",
           "hcpExact": 16.3,
-          "hcpDate": null,
+          "hcpDate": "2026-06-10",
           "sex": "M",
           "tags": [
             "auto-junior"
@@ -319566,7 +318306,7 @@
           "clubCode": "009",
           "clubLong": "Clube de Golfe de Vilamoura",
           "hcpExact": 5.7,
-          "hcpDate": null,
+          "hcpDate": "2026-04-03",
           "sex": "M",
           "tags": [
             "auto-junior"
@@ -319624,7 +318364,7 @@
           "clubCode": "015",
           "clubLong": "Ass. Desp. e Cultural da Qta do Lago",
           "hcpExact": 10.2,
-          "hcpDate": null,
+          "hcpDate": "2026-05-31",
           "sex": "M",
           "tags": [
             "auto-junior"
@@ -319665,15 +318405,15 @@
       "nationality": "PT",
       "country": "PT",
       "region": null,
-      "club": "Qta. Marinha",
+      "club": "Belas",
       "sources": {
         "fpg": {
           "fed": "58043",
-          "club": "Qta. Marinha",
-          "clubCode": "013",
-          "clubLong": "Clube de Golfe da Quinta da Marinha",
+          "club": "Belas",
+          "clubCode": "068",
+          "clubLong": "Belas",
           "hcpExact": 19.1,
-          "hcpDate": null,
+          "hcpDate": "2026-06-10",
           "sex": "M",
           "tags": [
             "auto-junior"
@@ -319882,8 +318622,8 @@
           "club": "Ilha Terceira",
           "clubCode": "005",
           "clubLong": "Clube de Golf da Ilha Terceira",
-          "hcpExact": 34.9,
-          "hcpDate": "2026-06-09",
+          "hcpExact": 33.8,
+          "hcpDate": "2026-06-12",
           "sex": "M",
           "tags": [
             "inscrito-nacional"
@@ -319895,6 +318635,14 @@
         "fpg-000-10943-20260430-sub_10"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-12",
+          "hcpExact": 34.9,
+          "source": "fpg",
+          "tcode": "10174",
+          "ccode": "983",
+          "label": "6º Torneio Drive Challenge Açores–Terceira-Sub 10"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 38,
@@ -320091,6 +318839,139 @@
         "confidence": "strong",
         "evidence": [
           "fpg:50299"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f37152",
+      "canonicalName": "Rodrigo Marques Santos",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": "Aroeira",
+      "sources": {
+        "fpg": {
+          "fed": "37152",
+          "club": "Aroeira",
+          "hcpExact": 0.4,
+          "primary": false
+        }
+      },
+      "tournamentIds": [
+        "fpg-935-10260-20250302-all",
+        "fpg-962-10078-20251229-all"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": -1.2,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
+        {
+          "date": "2026-05-22",
+          "hcpExact": -1.2,
+          "source": "fpg",
+          "tcode": "10576",
+          "ccode": "004",
+          "label": "Torneio ABERTO DO ESTORIL"
+        },
+        {
+          "date": "2025-12-29",
+          "hcpExact": -1.7,
+          "source": "fpg",
+          "tcode": "10078",
+          "ccode": "962",
+          "label": "Quinta do Lago Junior Open 2025 - U21 & U16"
+        },
+        {
+          "date": "2025-03-02",
+          "hcpExact": 0.4,
+          "source": "fpg",
+          "tcode": "10260",
+          "ccode": "935",
+          "label": "Greatgolf Junior Open with Luis Figo Foundation"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:37152"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f39701",
+      "canonicalName": "João Crasi Alves",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": "Vilamoura, C. G",
+      "sources": {
+        "fpg": {
+          "fed": "39701",
+          "club": "Vilamoura, C. G",
+          "hcpExact": -1,
+          "primary": false
+        }
+      },
+      "tournamentIds": [
+        "fpg-935-10260-20250302-all",
+        "fpg-935-10294-20260215-all",
+        "fpg-962-10078-20251229-all"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": -0.4,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
+        {
+          "date": "2026-02-15",
+          "hcpExact": -1.3,
+          "source": "fpg",
+          "tcode": "10294",
+          "ccode": "935",
+          "label": "Greatgolf Junior Open with Luis Figo Foundation"
+        },
+        {
+          "date": "2025-12-29",
+          "hcpExact": -3,
+          "source": "fpg",
+          "tcode": "10078",
+          "ccode": "962",
+          "label": "Quinta do Lago Junior Open 2025 - U21 & U16"
+        },
+        {
+          "date": "2025-03-02",
+          "hcpExact": -1,
+          "source": "fpg",
+          "tcode": "10260",
+          "ccode": "935",
+          "label": "Greatgolf Junior Open with Luis Figo Foundation"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:39701"
         ],
         "mergedFromSources": [
           "fpg"
@@ -321400,6 +320281,168 @@
         "confidence": "strong",
         "evidence": [
           "fpg:anon|doyeon kim|"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f40910",
+      "canonicalName": "Dinis Silva",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": "Oporto",
+      "sources": {
+        "fpg": {
+          "fed": "40910",
+          "club": "Oporto",
+          "hcpExact": 3.3,
+          "primary": false
+        }
+      },
+      "tournamentIds": [
+        "fpg-935-10294-20260215-all"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 3.3,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
+        {
+          "date": "2026-05-08",
+          "hcpExact": 2.8,
+          "source": "fpg",
+          "tcode": "11297",
+          "ccode": "002",
+          "label": "109ª Lisbon Cup"
+        },
+        {
+          "date": "2026-03-22",
+          "hcpExact": 3.8,
+          "source": "fpg",
+          "tcode": "10550",
+          "ccode": "001",
+          "label": "Taça Yeatman Júnior"
+        },
+        {
+          "date": "2026-02-15",
+          "hcpExact": 3.3,
+          "source": "fpg",
+          "tcode": "10294",
+          "ccode": "935",
+          "label": "Greatgolf Junior Open with Luis Figo Foundation"
+        },
+        {
+          "date": "2025-08-19",
+          "hcpExact": 3.6,
+          "source": "fpg",
+          "tcode": "10564",
+          "ccode": "003",
+          "label": "Miramar Internacional Open U25"
+        },
+        {
+          "date": "2025-06-13",
+          "hcpExact": 3.9,
+          "source": "fpg",
+          "tcode": "10551",
+          "ccode": "003",
+          "label": "Taça R.S. Yeatman"
+        },
+        {
+          "date": "2024-08-26",
+          "hcpExact": 3.9,
+          "source": "fpg",
+          "tcode": "10477",
+          "ccode": "003",
+          "label": "Miramar Internacional Open U25"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:40910"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f52487",
+      "canonicalName": "Miguel Teles de Menezes",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": "Oporto",
+      "sources": {
+        "fpg": {
+          "fed": "52487",
+          "club": "Oporto",
+          "hcpExact": 9.5,
+          "primary": false
+        }
+      },
+      "tournamentIds": [
+        "fpg-935-10294-20260215-all"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": 9.1,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
+        {
+          "date": "2026-03-22",
+          "hcpExact": 9.5,
+          "source": "fpg",
+          "tcode": "10550",
+          "ccode": "001",
+          "label": "Taça Yeatman Júnior"
+        },
+        {
+          "date": "2026-02-15",
+          "hcpExact": 9.5,
+          "source": "fpg",
+          "tcode": "10294",
+          "ccode": "935",
+          "label": "Greatgolf Junior Open with Luis Figo Foundation"
+        },
+        {
+          "date": "2025-08-19",
+          "hcpExact": 14.4,
+          "source": "fpg",
+          "tcode": "10564",
+          "ccode": "003",
+          "label": "Miramar Internacional Open U25"
+        },
+        {
+          "date": "2024-08-26",
+          "hcpExact": 21.9,
+          "source": "fpg",
+          "tcode": "10477",
+          "ccode": "003",
+          "label": "Miramar Internacional Open U25"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:52487"
         ],
         "mergedFromSources": [
           "fpg"
@@ -328451,6 +327494,71 @@
       }
     },
     {
+      "id": "f40452",
+      "canonicalName": "Afonso Rui Oliveira",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": "POR",
+      "sources": {
+        "fpg": {
+          "fed": "40452",
+          "club": "POR",
+          "hcpExact": -2.4,
+          "primary": false
+        }
+      },
+      "tournamentIds": [
+        "fpg-962-10078-20251229-all"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": -0.6,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
+        {
+          "date": "2026-05-22",
+          "hcpExact": -0.7,
+          "source": "fpg",
+          "tcode": "10576",
+          "ccode": "004",
+          "label": "Torneio ABERTO DO ESTORIL"
+        },
+        {
+          "date": "2026-05-08",
+          "hcpExact": -0.6,
+          "source": "fpg",
+          "tcode": "11297",
+          "ccode": "002",
+          "label": "109ª Lisbon Cup"
+        },
+        {
+          "date": "2025-12-29",
+          "hcpExact": -2.4,
+          "source": "fpg",
+          "tcode": "10078",
+          "ccode": "962",
+          "label": "Quinta do Lago Junior Open 2025 - U21 & U16"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:40452"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
       "id": "xb5c1cf182c",
       "canonicalName": "Jack Galway",
       "aliases": [],
@@ -328688,6 +327796,79 @@
       }
     },
     {
+      "id": "f40196",
+      "canonicalName": "Luciana Reis",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": "POR",
+      "sources": {
+        "fpg": {
+          "fed": "40196",
+          "club": "POR",
+          "hcpExact": -1.6,
+          "primary": false
+        }
+      },
+      "tournamentIds": [
+        "fpg-962-10078-20251229-all"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": -2.4,
+          "source": "fpg",
+          "tcode": "10911",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - S"
+        },
+        {
+          "date": "2026-05-22",
+          "hcpExact": -2.4,
+          "source": "fpg",
+          "tcode": "10576",
+          "ccode": "004",
+          "label": "Torneio ABERTO DO ESTORIL"
+        },
+        {
+          "date": "2026-05-08",
+          "hcpExact": -1.8,
+          "source": "fpg",
+          "tcode": "11297",
+          "ccode": "002",
+          "label": "109ª Lisbon Cup"
+        },
+        {
+          "date": "2025-12-29",
+          "hcpExact": -1.6,
+          "source": "fpg",
+          "tcode": "10078",
+          "ccode": "962",
+          "label": "Quinta do Lago Junior Open 2025 - U21 & U16"
+        },
+        {
+          "date": "2025-06-13",
+          "hcpExact": 0.3,
+          "source": "fpg",
+          "tcode": "10551",
+          "ccode": "003",
+          "label": "Taça R.S. Yeatman"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:40196"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
       "id": "f40112",
       "canonicalName": "José Miguel Franco de Sousa",
       "aliases": [],
@@ -328754,6 +327935,63 @@
         "confidence": "strong",
         "evidence": [
           "fpg:40112"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f38375",
+      "canonicalName": "João Iglésias",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": "POR",
+      "sources": {
+        "fpg": {
+          "fed": "38375",
+          "club": "POR",
+          "hcpExact": -2.4,
+          "primary": false
+        }
+      },
+      "tournamentIds": [
+        "fpg-962-10078-20251229-all"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": -2.1,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
+        {
+          "date": "2025-12-29",
+          "hcpExact": -2.4,
+          "source": "fpg",
+          "tcode": "10078",
+          "ccode": "962",
+          "label": "Quinta do Lago Junior Open 2025 - U21 & U16"
+        },
+        {
+          "date": "2025-06-13",
+          "hcpExact": -4.1,
+          "source": "fpg",
+          "tcode": "10551",
+          "ccode": "003",
+          "label": "Taça R.S. Yeatman"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:38375"
         ],
         "mergedFromSources": [
           "fpg"
@@ -329284,6 +328522,63 @@
       }
     },
     {
+      "id": "f35404",
+      "canonicalName": "Miguel Silveira",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": "POR",
+      "sources": {
+        "fpg": {
+          "fed": "35404",
+          "club": "POR",
+          "hcpExact": -4.1,
+          "primary": false
+        }
+      },
+      "tournamentIds": [
+        "fpg-962-10078-20251229-all"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-03",
+          "hcpExact": -3.9,
+          "source": "fpg",
+          "tcode": "10910",
+          "ccode": "000",
+          "label": "Campeonato Nacional Absoluto - H"
+        },
+        {
+          "date": "2025-12-29",
+          "hcpExact": -4.1,
+          "source": "fpg",
+          "tcode": "10078",
+          "ccode": "962",
+          "label": "Quinta do Lago Junior Open 2025 - U21 & U16"
+        },
+        {
+          "date": "2025-06-13",
+          "hcpExact": -2.2,
+          "source": "fpg",
+          "tcode": "10551",
+          "ccode": "003",
+          "label": "Taça R.S. Yeatman"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:35404"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
       "id": "rMM22088611",
       "canonicalName": "Amy Elizabeth Gay",
       "aliases": [],
@@ -329580,6 +328875,47 @@
       }
     },
     {
+      "id": "f50831",
+      "canonicalName": "Rodrigo Horta",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": "POR",
+      "sources": {
+        "fpg": {
+          "fed": "50831",
+          "club": "POR",
+          "hcpExact": 12.3,
+          "primary": false
+        }
+      },
+      "tournamentIds": [
+        "fpg-962-10078-20251229-all"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2025-12-29",
+          "hcpExact": 12.3,
+          "source": "fpg",
+          "tcode": "10078",
+          "ccode": "962",
+          "label": "Quinta do Lago Junior Open 2025 - U21 & U16"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:50831"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
       "id": "x45dad70cd3",
       "canonicalName": "Patriks Pazars",
       "aliases": [],
@@ -329635,6 +328971,47 @@
         "confidence": "strong",
         "evidence": [
           "fpg:anon|arran armstrong|IE"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f52088",
+      "canonicalName": "Archie Storey",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": "UK",
+      "sources": {
+        "fpg": {
+          "fed": "52088",
+          "club": "UK",
+          "hcpExact": 11.3,
+          "primary": false
+        }
+      },
+      "tournamentIds": [
+        "fpg-962-10078-20251229-all"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2025-12-29",
+          "hcpExact": 11.3,
+          "source": "fpg",
+          "tcode": "10078",
+          "ccode": "962",
+          "label": "Quinta do Lago Junior Open 2025 - U21 & U16"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:52088"
         ],
         "mergedFromSources": [
           "fpg"
@@ -330526,6 +329903,471 @@
         "confidence": "strong",
         "evidence": [
           "fpg:55015"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f31745",
+      "canonicalName": "Pedro Araújo",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": "Santo Serra",
+      "sources": {
+        "fpg": {
+          "fed": "31745",
+          "club": "Santo Serra",
+          "hcpExact": -1.3,
+          "primary": false
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10912-20260612-all"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-12",
+          "hcpExact": -1.3,
+          "source": "fpg",
+          "tcode": "10912",
+          "ccode": "000",
+          "label": "Campeonato Nacional de Clubes Mid-Amateur  BPI"
+        },
+        {
+          "date": "2026-06-06",
+          "hcpExact": -1.5,
+          "source": "fpg",
+          "tcode": "11032",
+          "ccode": "007",
+          "label": "III ABERTO CGSS"
+        },
+        {
+          "date": "2026-04-03",
+          "hcpExact": -0.5,
+          "source": "fpg",
+          "tcode": "11005",
+          "ccode": "007",
+          "label": "I ABERTO CGSS 2026"
+        },
+        {
+          "date": "2026-01-24",
+          "hcpExact": -0.5,
+          "source": "fpg",
+          "tcode": "10986",
+          "ccode": "007",
+          "label": "TORNEIO DA RESTAURAÇÃO CGSS 2026"
+        },
+        {
+          "date": "2025-10-03",
+          "hcpExact": -0.6,
+          "source": "fpg",
+          "tcode": "10945",
+          "ccode": "007",
+          "label": "TAÇA do CLUBE CGSS 2025"
+        },
+        {
+          "date": "2024-11-30",
+          "hcpExact": -0.6,
+          "source": "fpg",
+          "tcode": "10483",
+          "ccode": "059",
+          "label": " Campeonato Regional de Clubes Absoluto"
+        },
+        {
+          "date": "2024-11-23",
+          "hcpExact": -0.9,
+          "source": "fpg",
+          "tcode": "10828",
+          "ccode": "007",
+          "label": "TORNEIO 1937 CUP"
+        },
+        {
+          "date": "2024-11-17",
+          "hcpExact": -0.3,
+          "source": "fpg",
+          "tcode": "10825",
+          "ccode": "007",
+          "label": "XII ABERTO CGSS"
+        },
+        {
+          "date": "2024-11-10",
+          "hcpExact": -0.3,
+          "source": "fpg",
+          "tcode": "10822",
+          "ccode": "007",
+          "label": "XI ABERTO CGSS"
+        },
+        {
+          "date": "2024-10-05",
+          "hcpExact": -0.5,
+          "source": "fpg",
+          "tcode": "10803",
+          "ccode": "007",
+          "label": "X ABERTO CGSS"
+        },
+        {
+          "date": "2024-09-27",
+          "hcpExact": -0.2,
+          "source": "fpg",
+          "tcode": "10800",
+          "ccode": "007",
+          "label": "TORNEIO C. SANTOS VP"
+        },
+        {
+          "date": "2024-09-21",
+          "hcpExact": -0.2,
+          "source": "fpg",
+          "tcode": "10797",
+          "ccode": "007",
+          "label": "IX ABERTO CGSS"
+        },
+        {
+          "date": "2024-09-20",
+          "hcpExact": 0,
+          "source": "fpg",
+          "tcode": "10796",
+          "ccode": "007",
+          "label": "XI Torneio Vinhos Barbeito Madeira"
+        },
+        {
+          "date": "2024-08-31",
+          "hcpExact": 0,
+          "source": "fpg",
+          "tcode": "10788",
+          "ccode": "007",
+          "label": "VIII ABERTO CGSS"
+        },
+        {
+          "date": "2024-07-27",
+          "hcpExact": 0,
+          "source": "fpg",
+          "tcode": "10774",
+          "ccode": "007",
+          "label": "VII ABERTO CGSS"
+        },
+        {
+          "date": "2024-07-26",
+          "hcpExact": 0,
+          "source": "fpg",
+          "tcode": "10773",
+          "ccode": "007",
+          "label": "TAÇA DO CLUBE 2024"
+        },
+        {
+          "date": "2024-06-08",
+          "hcpExact": 0.1,
+          "source": "fpg",
+          "tcode": "10754",
+          "ccode": "007",
+          "label": "VI ABERTO CGSS"
+        },
+        {
+          "date": "2024-05-25",
+          "hcpExact": -0.1,
+          "source": "fpg",
+          "tcode": "10746",
+          "ccode": "007",
+          "label": "Torneio NOS Empresas"
+        },
+        {
+          "date": "2024-04-27",
+          "hcpExact": -0.4,
+          "source": "fpg",
+          "tcode": "10737",
+          "ccode": "007",
+          "label": "V ABERTO CGSS"
+        },
+        {
+          "date": "2024-04-06",
+          "hcpExact": -0.2,
+          "source": "fpg",
+          "tcode": "10729",
+          "ccode": "007",
+          "label": "IV ABERTO CGSS"
+        },
+        {
+          "date": "2024-04-05",
+          "hcpExact": -0.2,
+          "source": "fpg",
+          "tcode": "10728",
+          "ccode": "007",
+          "label": "T3 -Camp. CGSS de Pares - Powered by C. Santos VP"
+        },
+        {
+          "date": "2024-02-25",
+          "hcpExact": -0.4,
+          "source": "fpg",
+          "tcode": "10712",
+          "ccode": "007",
+          "label": "III ABERTO CGSS"
+        },
+        {
+          "date": "2024-01-21",
+          "hcpExact": -0.4,
+          "source": "fpg",
+          "tcode": "10696",
+          "ccode": "007",
+          "label": "II ABERTO CGSS"
+        },
+        {
+          "date": "2023-12-17",
+          "hcpExact": -0.4,
+          "source": "fpg",
+          "tcode": "10684",
+          "ccode": "007",
+          "label": "I ABERTO CGSS"
+        },
+        {
+          "date": "2023-12-16",
+          "hcpExact": -0.4,
+          "source": "fpg",
+          "tcode": "10683",
+          "ccode": "007",
+          "label": "Torneio de Natal Solidário"
+        },
+        {
+          "date": "2023-11-18",
+          "hcpExact": -0.4,
+          "source": "fpg",
+          "tcode": "10673",
+          "ccode": "007",
+          "label": "Torneio de São Martinho"
+        },
+        {
+          "date": "2023-10-27",
+          "hcpExact": -0.1,
+          "source": "fpg",
+          "tcode": "10663",
+          "ccode": "007",
+          "label": "TORNEIO DA RESTAURAÇÃO"
+        },
+        {
+          "date": "2023-10-14",
+          "hcpExact": -0.1,
+          "source": "fpg",
+          "tcode": "10658",
+          "ccode": "007",
+          "label": "Torneio SVR Lazartigue"
+        },
+        {
+          "date": "2023-10-07",
+          "hcpExact": -0.1,
+          "source": "fpg",
+          "tcode": "10645",
+          "ccode": "007",
+          "label": "X Torneio Barbeito Madeira"
+        },
+        {
+          "date": "2023-10-06",
+          "hcpExact": -0.1,
+          "source": "fpg",
+          "tcode": "10654",
+          "ccode": "007",
+          "label": "8ª Etapa Circuito de Golfe Abreu CGSS 2023"
+        },
+        {
+          "date": "2023-09-29",
+          "hcpExact": 0.1,
+          "source": "fpg",
+          "tcode": "10650",
+          "ccode": "007",
+          "label": "TAÇA PRESIDENTE"
+        },
+        {
+          "date": "2023-08-25",
+          "hcpExact": -0.3,
+          "source": "fpg",
+          "tcode": "10637",
+          "ccode": "007",
+          "label": "Torneio de Quinta São João (SM)"
+        },
+        {
+          "date": "2023-08-11",
+          "hcpExact": -0.5,
+          "source": "fpg",
+          "tcode": "10628",
+          "ccode": "007",
+          "label": "Torneio CGSS Summer Cup"
+        },
+        {
+          "date": "2023-06-30",
+          "hcpExact": -0.8,
+          "source": "fpg",
+          "tcode": "10612",
+          "ccode": "007",
+          "label": "Torneio Diário de Notícias"
+        },
+        {
+          "date": "2023-06-02",
+          "hcpExact": -0.6,
+          "source": "fpg",
+          "tcode": "10599",
+          "ccode": "007",
+          "label": "Campeonato Regional Individual Absoluto - CGSS"
+        },
+        {
+          "date": "2023-05-19",
+          "hcpExact": -0.3,
+          "source": "fpg",
+          "tcode": "10594",
+          "ccode": "007",
+          "label": "Torneio NOS Empresas"
+        },
+        {
+          "date": "2023-05-05",
+          "hcpExact": -0.2,
+          "source": "fpg",
+          "tcode": "10590",
+          "ccode": "007",
+          "label": "TROFÉU JOÃO SOUSA 2023"
+        },
+        {
+          "date": "2023-03-11",
+          "hcpExact": -0.4,
+          "source": "fpg",
+          "tcode": "10566",
+          "ccode": "007",
+          "label": "Torneio CGSS / Fundação 1967"
+        },
+        {
+          "date": "2023-02-25",
+          "hcpExact": -0.6,
+          "source": "fpg",
+          "tcode": "10559",
+          "ccode": "007",
+          "label": "Torneio CGSS / FAVELAS"
+        },
+        {
+          "date": "2022-10-28",
+          "hcpExact": -0.2,
+          "source": "fpg",
+          "tcode": "10520",
+          "ccode": "007",
+          "label": "Torneio da Restauração"
+        },
+        {
+          "date": "2022-10-14",
+          "hcpExact": -0.2,
+          "source": "fpg",
+          "tcode": "10514",
+          "ccode": "007",
+          "label": "7ªetapa Circuito de Golfe Abreu 2022"
+        },
+        {
+          "date": "2022-09-23",
+          "hcpExact": 0,
+          "source": "fpg",
+          "tcode": "10509",
+          "ccode": "007",
+          "label": "IX Torneio Barbeito Madeira"
+        },
+        {
+          "date": "2022-09-09",
+          "hcpExact": -0.5,
+          "source": "fpg",
+          "tcode": "10503",
+          "ccode": "007",
+          "label": "TAÇA PRESIDENTE"
+        },
+        {
+          "date": "2022-07-08",
+          "hcpExact": -1.1,
+          "source": "fpg",
+          "tcode": "10487",
+          "ccode": "007",
+          "label": "XII Torneio CGSS / Sunset"
+        },
+        {
+          "date": "2022-06-17",
+          "hcpExact": -1.1,
+          "source": "fpg",
+          "tcode": "10480",
+          "ccode": "007",
+          "label": "Torneio NOS Empresas 2022"
+        },
+        {
+          "date": "2022-05-27",
+          "hcpExact": -1.1,
+          "source": "fpg",
+          "tcode": "10471",
+          "ccode": "007",
+          "label": "TROFÉU JOÃO SOUSA"
+        },
+        {
+          "date": "2022-05-21",
+          "hcpExact": -1.1,
+          "source": "fpg",
+          "tcode": "10468",
+          "ccode": "007",
+          "label": "Campeonato da Madeira de Golfe (dia2)"
+        },
+        {
+          "date": "2022-05-20",
+          "hcpExact": -0.9,
+          "source": "fpg",
+          "tcode": "10467",
+          "ccode": "007",
+          "label": "Campeonato da Madeira de Golfe 2022 (dia1)"
+        },
+        {
+          "date": "2022-03-19",
+          "hcpExact": -1.4,
+          "source": "fpg",
+          "tcode": "10449",
+          "ccode": "007",
+          "label": "TAÇA DO CLUBE"
+        },
+        {
+          "date": "2022-03-12",
+          "hcpExact": -1.3,
+          "source": "fpg",
+          "tcode": "10446",
+          "ccode": "007",
+          "label": "Torneio Aniversário CGSS"
+        },
+        {
+          "date": "2022-02-12",
+          "hcpExact": -1.3,
+          "source": "fpg",
+          "tcode": "10438",
+          "ccode": "007",
+          "label": "4º Torneio CGSS OM NOS"
+        },
+        {
+          "date": "2022-01-29",
+          "hcpExact": -0.9,
+          "source": "fpg",
+          "tcode": "10434",
+          "ccode": "007",
+          "label": "Torneio de Inverno"
+        },
+        {
+          "date": "2022-01-15",
+          "hcpExact": -1.5,
+          "source": "fpg",
+          "tcode": "10431",
+          "ccode": "007",
+          "label": "2º Torneio CGSS OM NOS"
+        },
+        {
+          "date": "2022-01-08",
+          "hcpExact": -1.6,
+          "source": "fpg",
+          "tcode": "10428",
+          "ccode": "007",
+          "label": "Torneio Ano Novo"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:31745"
         ],
         "mergedFromSources": [
           "fpg"
@@ -334101,6 +333943,135 @@
         "confidence": "strong",
         "evidence": [
           "fpg:31292"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
+      "id": "f20292",
+      "canonicalName": "Brandon Hobley",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "PT",
+      "country": "PT",
+      "region": null,
+      "club": "Santo Serra",
+      "sources": {
+        "fpg": {
+          "fed": "20292",
+          "club": "Santo Serra",
+          "hcpExact": 0.1,
+          "primary": false
+        }
+      },
+      "tournamentIds": [
+        "fpg-000-10912-20260612-all"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-12",
+          "hcpExact": 0.1,
+          "source": "fpg",
+          "tcode": "10912",
+          "ccode": "000",
+          "label": "Campeonato Nacional de Clubes Mid-Amateur  BPI"
+        },
+        {
+          "date": "2026-06-06",
+          "hcpExact": 0,
+          "source": "fpg",
+          "tcode": "11032",
+          "ccode": "007",
+          "label": "III ABERTO CGSS"
+        },
+        {
+          "date": "2026-04-03",
+          "hcpExact": 0.2,
+          "source": "fpg",
+          "tcode": "11005",
+          "ccode": "007",
+          "label": "I ABERTO CGSS 2026"
+        },
+        {
+          "date": "2026-03-14",
+          "hcpExact": 0.5,
+          "source": "fpg",
+          "tcode": "11001",
+          "ccode": "007",
+          "label": "Torneio de Primavera CGSS 2026"
+        },
+        {
+          "date": "2026-01-24",
+          "hcpExact": 0.4,
+          "source": "fpg",
+          "tcode": "10986",
+          "ccode": "007",
+          "label": "TORNEIO DA RESTAURAÇÃO CGSS 2026"
+        },
+        {
+          "date": "2026-01-17",
+          "hcpExact": 0.4,
+          "source": "fpg",
+          "tcode": "10983",
+          "ccode": "007",
+          "label": "Torneio de Inverno CGSS"
+        },
+        {
+          "date": "2025-01-25",
+          "hcpExact": 0.5,
+          "source": "fpg",
+          "tcode": "10851",
+          "ccode": "007",
+          "label": "Torneio de Inverno CGSS"
+        },
+        {
+          "date": "2025-01-11",
+          "hcpExact": 0.5,
+          "source": "fpg",
+          "tcode": "10845",
+          "ccode": "007",
+          "label": "Torneio dos Reis CGSS"
+        },
+        {
+          "date": "2024-11-30",
+          "hcpExact": 1,
+          "source": "fpg",
+          "tcode": "10483",
+          "ccode": "059",
+          "label": " Campeonato Regional de Clubes Absoluto"
+        },
+        {
+          "date": "2024-11-17",
+          "hcpExact": 1.1,
+          "source": "fpg",
+          "tcode": "10825",
+          "ccode": "007",
+          "label": "XII ABERTO CGSS"
+        },
+        {
+          "date": "2024-11-09",
+          "hcpExact": 1.5,
+          "source": "fpg",
+          "tcode": "10821",
+          "ccode": "007",
+          "label": "Torneio AGONPHARMA CGSS"
+        },
+        {
+          "date": "2022-01-08",
+          "hcpExact": 2.8,
+          "source": "fpg",
+          "tcode": "10428",
+          "ccode": "007",
+          "label": "Torneio Ano Novo"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:20292"
         ],
         "mergedFromSources": [
           "fpg"
@@ -539263,38 +539234,6 @@
       }
     },
     {
-      "id": "x8ab4cae537",
-      "canonicalName": "Ricardo Eduardo Lillo",
-      "aliases": [],
-      "dob": null,
-      "sex": null,
-      "nationality": "CL",
-      "country": "CL",
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "doral",
-            "key": "doral-1594941724"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "doral-ftm_doral_2023",
-        "doral-ftm_doral_2024"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "doral:doral-1594941724"
-        ],
-        "mergedFromSources": [
-          "doral"
-        ]
-      }
-    },
-    {
       "id": "x046b97700b",
       "canonicalName": "Jackson Mclear",
       "aliases": [
@@ -547515,7 +547454,6 @@
         ]
       },
       "tournamentIds": [
-        "doral-ftm_doral_2023",
         "doral-ftm_doral_2024"
       ],
       "_match": {
@@ -558412,13 +558350,13 @@
     }
   ],
   "stats": {
-    "total": 8811,
-    "droppedNoTourn": 25158,
-    "strong": 8787,
+    "total": 8809,
+    "droppedNoTourn": 25072,
+    "strong": 8785,
     "probable": 24,
     "manual": 0,
-    "strongMerges": 8,
-    "probableMerges": 2282,
+    "strongMerges": 7,
+    "probableMerges": 2283,
     "manualMerges": 5
   }
 }
