@@ -1103,19 +1103,23 @@ export default function CamposPage() {
                     ))}
                   </div>
                 </div>
-                <div className="detail-actions">
+                <div className="segmented-toggle" role="tablist" aria-label="Vista do campo">
                   <button
-                    className={`tourn-tab tourn-tab-sm ${detailView === "scorecard" ? "active" : ""}`}
+                    role="tab"
+                    aria-selected={detailView === "scorecard"}
+                    className={`seg-btn${detailView === "scorecard" ? " active" : ""}`}
                     onClick={() => setDetailView("scorecard")}
                   >
-                    Scorecard
+                    <span className="seg-label">Scorecard</span>
                   </button>
                   <button
-                    className={`tourn-tab tourn-tab-sm ${detailView === "manuel" ? "active" : ""}`}
+                    role="tab"
+                    aria-selected={detailView === "manuel"}
+                    className={`seg-btn${detailView === "manuel" ? " active" : ""}`}
                     onClick={() => setDetailView("manuel")}
                     title="Média por buraco do Manuel neste campo"
                   >
-                    Como jogou
+                    <span className="seg-label">Como jogou</span>
                   </button>
                 </div>
                 </div>

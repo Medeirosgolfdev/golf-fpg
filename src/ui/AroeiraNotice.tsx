@@ -79,19 +79,8 @@ export default function AroeiraNotice({ courseName, rotatedCount, totalRounds, c
   }
 
   return (
-    <div
-      style={{
-        margin: "8px 0 12px",
-        padding: "10px 14px",
-        background: "var(--bg-soft, rgba(99, 156, 245, 0.06))",
-        borderLeft: "4px solid var(--color-accent, #5b8ff9)",
-        borderRadius: 4,
-        fontSize: 12,
-        lineHeight: 1.55,
-        color: "var(--text-1)",
-      }}
-    >
-      <div style={{ fontWeight: 600, marginBottom: 4 }}>
+    <div className="notice notice-info">
+      <div style={{ fontWeight: 700, marginBottom: 4, color: "var(--text-1)" }}>
         ⓘ {title} — bucket unificado
       </div>
       <div style={{ color: "var(--text-2)" }}>
@@ -105,7 +94,7 @@ export default function AroeiraNotice({ courseName, rotatedCount, totalRounds, c
         {". "}A unificação é feita por par[] verificado em todas as rondas — zero rondas perdidas.
       </div>
       {showRotation && (
-        <div style={{ marginTop: 8, paddingTop: 8, borderTop: "1px solid var(--border-soft, rgba(0,0,0,0.08))", color: "var(--text-2)" }}>
+        <div style={{ marginTop: 8, paddingTop: 8, borderTop: "1px solid var(--border-light)", color: "var(--text-2)" }}>
           <b>Renumeração de buracos.</b>{" "}
           {rotatedCount}
           {totalRounds ? ` de ${totalRounds}` : ""} ronda{rotatedCount! > 1 ? "s" : ""}{" "}

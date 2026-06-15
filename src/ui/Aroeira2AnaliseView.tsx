@@ -16,6 +16,7 @@ import {
   type Sub12Performance, type HoleDial,
 } from "../data/aroeira2AnaliseData";
 import EmptyState from "./EmptyState";
+import UiKpiCard from "./KpiCard";
 import { fmtToPar, fmtHcp } from "../utils/format";
 import { scClass } from "../utils/scoreDisplay";
 import PlayerLink from "./PlayerLink";
@@ -36,14 +37,18 @@ const LABEL_INFO = {
 const TONE_COLOR = { good: "var(--color-good, #16a34a)", warn: "#ea580c", danger: "var(--color-danger, #dc2626)", neutral: "var(--text-muted)" } as const;
 
 /* ── KPI card — aspecto consistente ─────────────────── */
+/* Adaptador fino → delega na definição única UiKpiCard (realce por tom). */
 function KpiCard({ label, value, hint, tone = "neutral" }: { label: string; value: string; hint?: string; tone?: "good" | "warn" | "danger" | "neutral" }) {
   const c = TONE_COLOR[tone];
   return (
-    <div className="kpi-card" style={{ flex: "1 1 200px", minWidth: 200, padding: 12, borderRadius: 8, background: "var(--bg-card)", border: "1px solid var(--border)", borderLeft: `4px solid ${c}` }}>
-      <div className="muted fs-11 fw-600">{label}</div>
-      <div className="fs-22 fw-700" style={{ color: c, lineHeight: 1.2, marginTop: 2 }}>{value}</div>
-      {hint && <div className="muted fs-11" style={{ marginTop: 4, lineHeight: 1.4 }}>{hint}</div>}
-    </div>
+    <UiKpiCard
+      label={label}
+      value={value}
+      sub={hint}
+      color={tone === "neutral" ? undefined : c}
+      accentBorder={c}
+      style={{ flex: "1 1 200px", minWidth: 200 }}
+    />
   );
 }
 

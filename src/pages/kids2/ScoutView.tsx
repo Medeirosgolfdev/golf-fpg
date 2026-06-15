@@ -33,6 +33,7 @@ import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import LoadingState from "../../ui/LoadingState";
 import EmptyState from "../../ui/EmptyState";
+import UiKpiCard from "../../ui/KpiCard";
 import { usePasswordGate } from "../../hooks/usePasswordGate";
 import PasswordGate from "../../ui/PasswordGate";
 import { cachedFetchJson } from "../../data/fetchCache";
@@ -706,22 +707,18 @@ function ScoutContent({ data, tournament, onSelect }: {
 //   Sub-componentes
 // ═══════════════════════════════════════════════════════════════════
 
+/* Adaptador fino → delega na definição única UiKpiCard (realce por ênfase). */
 function KpiBox({ label, value, sub, emphasis }: {
   label: string; value: string; sub?: string;
   emphasis?: "good" | "warn";
 }) {
-  const palette = emphasis === "good"
-    ? { bg: "var(--bg-success-subtle, #ecfdf5)", fg: "var(--color-good-dark)", border: "var(--border-success, #97c459)" }
-    : emphasis === "warn"
-    ? { bg: "var(--bg-warn-subtle, #fffbeb)", fg: "var(--color-warn-dark, #92400e)", border: "var(--color-amber, #f59e0b)" }
-    : { bg: "var(--bg)", fg: "var(--text)", border: "var(--border)" };
-  return (
-    <div style={{ background: palette.bg, border: "1px solid " + palette.border, borderRadius: 8, padding: "10px 12px" }}>
-      <div style={{ fontSize: 11, color: "var(--text-3)", textTransform: "uppercase", letterSpacing: 0.4, fontWeight: 600 }}>{label}</div>
-      <div style={{ fontSize: 22, fontWeight: 700, color: palette.fg, lineHeight: 1.1, marginTop: 2 }}>{value}</div>
-      {sub && <div style={{ fontSize: 11, color: "var(--text-2)", marginTop: 3 }}>{sub}</div>}
-    </div>
-  );
+  const color = emphasis === "good" ? "var(--color-good-dark)"
+    : emphasis === "warn" ? "var(--color-warn-dark, #92400e)"
+    : undefined;
+  const border = emphasis === "good" ? "var(--color-good)"
+    : emphasis === "warn" ? "var(--color-amber, #f59e0b)"
+    : undefined;
+  return <UiKpiCard label={label} value={value} sub={sub} color={color} accentBorder={border} />;
 }
 
 function FlightHeader({ flight, isManuelFlight, count }: {

@@ -325,6 +325,21 @@ function TournamentComparison({ rounds, holesData }: {
   );
 }
 
+/* Melhor resultado do evento (relativo ao par) — usado na coluna "Melhor" da
+   tabela de torneios e na sua ordenação. Escolhe a ronda com menor (gross−par)
+   para ser justo entre campos/escalões diferentes. */
+function eventBest(rounds: RoundExt[]): { gross: number; toPar: number } | null {
+  let best: { gross: number; toPar: number } | null = null;
+  for (const r of rounds) {
+    const g = Number(r.gross), p = Number(r.par);
+    if (isFinite(g) && isFinite(p) && g > 0 && p > 0) {
+      const tp = g - p;
+      if (best == null || tp < best.toPar) best = { gross: g, toPar: tp };
+    }
+  }
+  return best;
+}
+
 export function ByTournamentView({ data, search }: { data: PlayerPageData; search: string }) {
   const items = useMemo(() => {
     const term = norm(search);
@@ -462,8 +477,8 @@ export function ByTournamentView({ data, search }: { data: PlayerPageData; searc
   }, [data, search]);
 
   const [openIdx, setOpenIdx] = useState<number | null>(null);
-  const { sortKey, sortDir, toggleSort } = useSort<"torneio" | "campo" | "rondas" | "datas">("datas", "desc", {
-    rondas: "desc",
+  const { sortKey, sortDir, toggleSort } = useSort<"torneio" | "campo" | "rondas" | "melhor" | "datas">("datas", "desc", {
+    rondas: "desc", melhor: "asc",
   });
 
   const sortedItems = useMemo(() => {
@@ -477,6 +492,10 @@ export function ByTournamentView({ data, search }: { data: PlayerPageData; searc
         case "torneio": return dir * a.name.localeCompare(b.name, "pt");
         case "campo": return dir * a.course.localeCompare(b.course, "pt");
         case "rondas": av = a.rounds.length; bv = b.rounds.length; break;
+        case "melhor": {
+          const ab = eventBest(a.rounds), bb = eventBest(b.rounds);
+          av = ab ? ab.toPar : 9999; bv = bb ? bb.toPar : 9999; break;
+        }
         case "datas": av = al; bv = bl; break;
         default: av = al; bv = bl;
       }
@@ -490,14 +509,15 @@ export function ByTournamentView({ data, search }: { data: PlayerPageData; searc
       <div className="scroll-x">
         <table className="dtable-lg">
           <colgroup>
-            <col className="col-p46" /><col className="col-p34" />
-            <col className="col-p10" /><col className="col-p10" />
+            <col className="col-p34" /><col className="col-p26" />
+            <col className="col-p9" /><col className="col-p14" /><col className="col-p17" />
           </colgroup>
           <thead>
             <tr>
               <SortableHdr k="torneio" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Torneio</SortableHdr>
               <SortableHdr k="campo" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Campo</SortableHdr>
               <SortableHdr k="rondas" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Rondas</SortableHdr>
+              <SortableHdr k="melhor" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Melhor</SortableHdr>
               <SortableHdr k="datas" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Datas</SortableHdr>
             </tr>
           </thead>
@@ -507,6 +527,7 @@ export function ByTournamentView({ data, search }: { data: PlayerPageData; searc
               const end = it.rounds[it.rounds.length - 1]?.date || "";
               const dateStr = start && end && start !== end ? `${start} → ${end}` : (end || start);
               const isOpen = openIdx === idx;
+              const best = eventBest(it.rounds);
               const sortedRounds = isOpen ? it.rounds.slice().sort((a, b) => a.dateSort - b.dateSort) : [];
               return (
                 <React.Fragment key={idx}>
@@ -516,11 +537,16 @@ export function ByTournamentView({ data, search }: { data: PlayerPageData; searc
                     </td>
                     <td><b><CourseLink name={it.course} /></b></td>
                     <td className="r"><b>{it.rounds.length}</b></td>
-                    <td className="muted">{dateStr}</td>
+                    <td className="r">
+                      {best
+                        ? <><b>{best.gross}</b><span className={`score-delta ${best.toPar > 0 ? "pos" : best.toPar < 0 ? "neg" : ""}`}>{best.toPar > 0 ? "+" : ""}{best.toPar}</span></>
+                        : <span className="muted">—</span>}
+                    </td>
+                    <td style={{ color: "var(--text-2)", whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>{dateStr}</td>
                   </tr>
                   {isOpen && (
                     <tr className="details open">
-                      <td className="inner" colSpan={4}>
+                      <td className="inner" colSpan={5}>
                         <div className="innerWrap">
                           <table className="dt-compact">
                             <thead>

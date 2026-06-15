@@ -799,20 +799,18 @@ export default function DrawsPage() {
       )}
 
       {/* Tabs — só FPG e Internacional (Intl junta USKids + Bluegolf/GolfGenius) */}
-      <div className="tabbar-under" role="tablist" aria-label="Circuito">
+      <div className="segmented-toggle mb-16" role="tablist" aria-label="Circuito">
         {(["FPG", "Intl"] as Tab[]).map((t) => (
           <button
             key={t}
             type="button"
             role="tab"
             aria-selected={tab === t}
-            className={`tab-under${tab === t ? " active" : ""}`}
+            className={`seg-btn${tab === t ? " active" : ""}`}
             onClick={() => setTab(t)}
           >
-            {t === "FPG" ? "🇵🇹 FPG" : "🌍 Internacional"}
-            <span className="muted" style={{ marginLeft: 6, fontWeight: 600 }}>
-              {contagensTab[t]}
-            </span>
+            <span className="seg-label">{t === "FPG" ? "🇵🇹 FPG" : "🌍 Internacional"}</span>
+            <span className="seg-count">{contagensTab[t]}</span>
           </button>
         ))}
       </div>

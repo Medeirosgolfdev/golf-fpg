@@ -15,6 +15,7 @@ import {
 } from "../data/playerDataLoader";
 import { usePlayerData } from "../data/usePlayerData";
 import SexBadge from "../ui/SexBadge";
+import UiKpiCard from "../ui/KpiCard";
 import RotatedNotice from "../ui/RotatedNotice";
 import AroeiraNotice, { countRotatedRounds } from "../ui/AroeiraNotice";
 import { canonicalCourseName } from "../utils/courseAliases";
@@ -1016,6 +1017,45 @@ function CoursePerformanceSection({ rounds }: { rounds: RoundData[] }) {
    Analysis View — KPIs, Histogram, Trajectory, Records, WHS, Last 20, Cross
    ──────────────────────────────────────────────────────────────────────────────────────── */
 
+/* Faixa de KPIs partilhada — abre TODAS as vistas em tabela (Por data, Por
+   campo, Por torneio) com o mesmo ritmo rico das vistas Análises/Federado.
+   Usa os mesmos .kpi-card globais. */
+function PlayerKpiStrip({ data, currentHcp, roundsThisYear }: {
+  data: PlayerPageData; currentHcp: number | null; roundsThisYear: number;
+}) {
+  const k = useMemo(() => {
+    const arr: (RoundData & { course: string })[] = [];
+    data.DATA.forEach(c => c.rounds.forEach(r => arr.push({ ...r, course: c.course })));
+    arr.sort((a, b) => (b.dateSort || 0) - (a.dateSort || 0));
+    const sdRounds = arr.filter(r => numSafe(r.sd) != null);
+    const avgSD20 = meanArr(sdRounds.slice(0, 20).map(r => Number(r.sd)));
+    const bestSD = sdRounds.length ? Math.min(...sdRounds.map(r => Number(r.sd))) : null;
+    // Evolução do índice ~12 meses: índice actual vs hi pré-ronda de há ~1 ano.
+    const cutoff = Date.now() - 365 * 24 * 3600 * 1000;
+    const withHi = arr.filter(r => numSafe(r.hi) != null);
+    const old = withHi.find(r => (r.dateSort || 0) <= cutoff);
+    const idxThen = old ? Number(old.hi) : null;
+    const idxDelta = (currentHcp != null && idxThen != null) ? currentHcp - idxThen : null;
+    // Rondas do ano anterior (mesma lógica de r.date que roundsThisYear).
+    const prevY = String(new Date().getFullYear() - 1);
+    let roundsPrevYear = 0;
+    arr.forEach(r => { if (r.date && r.date.slice(-4) === prevY) roundsPrevYear++; });
+    return { totalRounds: arr.length, totalCourses: data.DATA.length, avgSD20, bestSD, idxDelta, roundsPrevYear };
+  }, [data, currentHcp]);
+  const curY = new Date().getFullYear();
+  return (
+    <div className="jog-kpi-strip">
+      <UiKpiCard size="sm" label="Índice" value={currentHcp != null ? currentHcp.toFixed(1) : "—"}
+        delta={k.idxDelta} deltaLabel="em 12m" />
+      <UiKpiCard size="sm" label="Voltas" value={k.totalRounds} sub={`${k.totalCourses} campos`} />
+      <UiKpiCard size="sm" label={`Rondas ${curY}`} value={roundsThisYear}
+        sub={k.roundsPrevYear > 0 ? `vs ${k.roundsPrevYear} em ${curY - 1}` : undefined} />
+      <UiKpiCard size="sm" label="SD médio" value={k.avgSD20 != null ? k.avgSD20.toFixed(1) : "—"} sub="janela WHS" />
+      <UiKpiCard size="sm" label="Melhor SD" value={k.bestSD != null ? k.bestSD.toFixed(1) : "—"} color="var(--color-good)" sub="carreira" />
+    </div>
+  );
+}
+
 function AnalysisView({ data }: { data: PlayerPageData }) {
   const [histPeriod, setHistPeriod] = useState(12);
   const [recPeriod, setRecPeriod] = useState(12);
@@ -1102,7 +1142,7 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
     <div className="an-wrap">
 
       {/* ── KPIs ── */}
-      <CollapseCard title="Indicadores" icon="📊" defaultOpen={false}>
+      <CollapseCard title="Indicadores" icon="📊" defaultOpen={true}>
         <div className="flex-wrap" style={{ display: "flex", gap: 10 }}>
           <KPICard title="SD Médio · Últ. 5" val={sdLast5?.toFixed(1) ?? null}
             delta={sdLast5 != null && sdLast20 != null ? sdLast5 - sdLast20 : null}
@@ -1136,7 +1176,7 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
       </CollapseCard>
 
       {/* ── Histogram + Trajectory + Records ── */}
-      <CollapseCard title="Distribuição · Trajectória · Recordes" icon="📈" defaultOpen={false}>
+      <CollapseCard title="Distribuição · Trajectória · Recordes" icon="📈" defaultOpen={true}>
         <div className="an-grid3" style={{ marginBottom: 0 }}>
           <HistogramCard rounds={filterByPeriod(histPeriod)} period={histPeriod} setPeriod={setHistPeriod} />
           <TrajectoryCard rounds={filterByPeriod(trajPeriod)} period={trajPeriod} setPeriod={setTrajPeriod} />
@@ -1171,30 +1211,23 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
 /* ─── KPI Card — variante local: suporta delta numérico + accent color + tip icon.
    NÃO é o mesmo que src/ui/KpiCard.tsx (que é genérico label/value/sub).
    Manter local até convergir as props. ─── */
+/* Adaptador fino → delega na definição única ui/KpiCard (UiKpiCard).
+   Mantém a assinatura title/val/accent usada na AnalysisView. */
 function KPICard({ title, val, sub, delta, deltaLabel, tip, accent }: {
   title: string; val: string | null; sub?: string;
   delta?: number | null; deltaLabel?: string;
   tip?: string; accent?: string;
 }) {
-  const dColor = delta == null ? undefined
-    : delta < -0.05 ? "var(--color-good)"
-    : delta > 0.05  ? "var(--color-danger)"
-    : "var(--text-3)";
   return (
-    <div className="kpi-card">
-      <div className="kpi-card-label">
-        {title}{tip && <span className="kpi-info ml-4" title={tip}>ℹ</span>}
-      </div>
-      <div className="kpi-card-val" style={accent ? { color: accent } : undefined}>
-        {val ?? <span style={{ color: "var(--text-3)" }}>–</span>}
-      </div>
-      {delta != null && (
-        <div className="kpi-card-delta" style={{ color: dColor }}>
-          {delta > 0 ? "+" : ""}{delta.toFixed(1)} {deltaLabel ?? "vs média"}
-        </div>
-      )}
-      {sub && <div className="kpi-card-sub">{sub}</div>}
-    </div>
+    <UiKpiCard
+      label={title}
+      value={val ?? <span style={{ color: "var(--text-3)" }}>–</span>}
+      sub={sub}
+      delta={delta}
+      deltaLabel={deltaLabel}
+      tip={tip}
+      color={accent}
+    />
   );
 }
 
@@ -1653,9 +1686,7 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
     if (data?.META) onMetaLoaded?.(data.META);
   }, [data]);
 
-  // Stats (safe even when data is null)
-  const totalCourses = data?.DATA.length ?? 0;
-  const totalRounds = data?.DATA.reduce((a, c) => a + c.count, 0) ?? 0;
+  // Stats (safe even when data is null) — "campos"/"voltas" agora vêm dos KPI.
   const curYear = String(new Date().getFullYear());
   const roundsThisYear = useMemo(() => {
     if (!data) return 0;
@@ -1726,122 +1757,92 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
     <div className="pa-page">
       {/* Header: name + controls on same row, pills below */}
       <div className="detail-header">
-        <div className="detail-header-top">
-          <h2 className="detail-title" style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            {(selected as unknown as MergedPlayer)._federadoRaw?.photo && (
-              <img src={`https://hcp-portugal.datagolf.pt/photos/${(selected as unknown as MergedPlayer)._federadoRaw!.photo}`}
-                alt="" style={{ width: 44, height: 56, borderRadius: 4, objectFit: "cover", flexShrink: 0 }}
-                onError={e => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
-            )}
-            <span>{selected.name}</span>
-            <a
-              href={`https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${selected.fed}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Ver ficha WHS no FPG Scoring"
-              style={{ marginLeft: 8, fontSize: 14, color: "var(--chart-2)", textDecoration: "none", verticalAlign: "middle" }}
-              onClick={e => e.stopPropagation()}
-            >🔗</a>
-            <a
-              href={`https://my.fpg.pt/Home/PlayerWHS.aspx?no=${selected.fed}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Ver ficha WHS no My FPG"
-              style={{ marginLeft: 4, fontSize: 14, color: "var(--chart-2)", textDecoration: "none", verticalAlign: "middle" }}
-              onClick={e => e.stopPropagation()}
-            >🔗</a>
-            <a
-              href={ppPlayerUrl(selected.fed)}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Ver ficha Pitch & Putt no FPG Scoring (mundo paralelo)"
-              style={{ marginLeft: 4, fontSize: 14, textDecoration: "none", verticalAlign: "middle" }}
-              onClick={e => e.stopPropagation()}
-            >🏑</a>
-            <button
-              onClick={() => setFederadoView(true)}
-              title="Ver como federado: cadastro FPG + rondas WHS live (sem análise nossa)"
-              style={{
-                marginLeft: 8, padding: "2px 8px", fontSize: 11, fontWeight: 600,
-                background: "transparent", border: "1px solid var(--border)",
-                borderRadius: 10, cursor: "pointer", color: "var(--text-2)",
-                verticalAlign: "middle",
-              }}
-            >👤 Vista federado</button>
-            {pp && (
-              <button
-                onClick={() => setPpView(true)}
-                title="Ver histórico Pitch & Putt (cartões P&P descarregados)"
-                style={{
-                  marginLeft: 6, padding: "2px 8px", fontSize: 11, fontWeight: 600,
-                  background: "transparent", border: "1px solid var(--border)",
-                  borderRadius: 10, cursor: "pointer", color: "var(--text-2)",
-                  verticalAlign: "middle",
-                }}
-              >🏑 P&amp;P</button>
-            )}
-          </h2>
-          {data && (
-            <div className="pa-controls-left">
-              <input className="input" placeholder="Pesquisar campo…" value={courseSearch}
-                onChange={e => setCourseSearch(e.target.value)} />
-              <select className="select" value={view}
-                onChange={e => setView(e.target.value as ViewKey)}>
-                <option value="by_course">Por campo</option>
-                <option value="by_course_analysis">Análise por campo</option>
-                <option value="by_date">Por data</option>
-                <option value="by_tournament">Por torneio</option>
-                <option value="analysis">Análises</option>
-              </select>
-              {(view === "by_course" || view === "by_course_analysis") && (
-                <select className="select" value={courseSort}
-                  onChange={e => setCourseSort(e.target.value as CourseSort)}>
-                  <option value="last_desc">Mais recente</option>
-                  <option value="count_desc">Mais jogados</option>
-                  <option value="name_asc">Nome A–Z</option>
-                </select>
+        <div className="dh-top">
+          {(selected as unknown as MergedPlayer)._federadoRaw?.photo && (
+            <img className="dh-photo"
+              src={`https://hcp-portugal.datagolf.pt/photos/${(selected as unknown as MergedPlayer)._federadoRaw!.photo}`}
+              alt=""
+              onError={e => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
+          )}
+          <div className="dh-iconcol">
+            <a href={`https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${selected.fed}`} target="_blank" rel="noopener noreferrer" title="Ver ficha WHS no FPG Scoring" onClick={e => e.stopPropagation()}>🔗</a>
+            <a href={`https://my.fpg.pt/Home/PlayerWHS.aspx?no=${selected.fed}`} target="_blank" rel="noopener noreferrer" title="Ver ficha WHS no My FPG" onClick={e => e.stopPropagation()}>🔗</a>
+            <a href={ppPlayerUrl(selected.fed)} target="_blank" rel="noopener noreferrer" title="Ver ficha Pitch & Putt no FPG Scoring (mundo paralelo)" onClick={e => e.stopPropagation()}>🏑</a>
+          </div>
+          <div className="dh-idblock">
+            <div className="dh-nameline">
+              <h2 className="detail-title">{selected.name}</h2>
+              <button className="dh-mode-btn" onClick={() => setFederadoView(true)}
+                title="Ver como federado: cadastro FPG + rondas WHS live (sem análise nossa)">👤 Vista federado</button>
+              {pp && (
+                <button className="dh-mode-btn" onClick={() => setPpView(true)}
+                  title="Ver histórico Pitch & Putt (cartões P&P descarregados)">🏑 P&amp;P</button>
               )}
             </div>
-          )}
-        </div>
-        <div className="jog-pills">
-          <span className="p p-fed">#{selected.fed}</span>
-          {latestHcp != null && <span className="p p-muted">HCP {hcpDisplay(latestHcp)}</span>}
-          {pp && hasRealPPHcp(pp) && (
-            <span
-              className="p"
-              onClick={() => setPpView(true)}
-              title={`Handicap Pitch & Putt: ${pp.hcp} (${pp.hcpStatus}). Clica para ver histórico P&P.`}
-              style={{ cursor: "pointer", background: "var(--badge-pp, #0e7490)", color: "#fff", border: "1px solid var(--badge-pp, #0e7490)" }}
-            >🏑 P&amp;P {pp.hcp}</span>
-          )}
-          <SexBadge sex={selected.sex} size="md" />
-          {selected.dob && <span className="p p-birth">{selected.dob.slice(0, 4)}</span>}
-          {selected.escalao && <span className={`p p-${escCls(meta?.escalao || selected.escalao)}`}>{meta?.escalao || selected.escalao}</span>}
-          {(meta?.club || clubLong(selected)) && <span className="p p-club">{meta?.club || clubLong(selected)}</span>}
-          {selected.tags?.filter(t => t !== "no-priority").map(t => (
-            <span key={t} className="p p-outline">{t}</span>
-          ))}
-          {totalCourses > 0 && <span className="p p-outline">{totalCourses} campos</span>}
-          {totalRounds > 0 && <span className="p p-outline">{totalRounds} voltas</span>}
-          {roundsThisYear > 0 && <span className="p p-outline" title={`Rondas em ${curYear}`}>{roundsThisYear} em {curYear}</span>}
-          {pp && (pp.roundsYear || 0) > 0 && (
-            <span className="p p-outline" title={`Cartões P&P em ${curYear} (actividade no mundo Pitch & Putt)`}>
-              P&amp;P: {pp.roundsYear} em {curYear}
-            </span>
-          )}
-          {aces.length > 0 && (
-            <span
-              className="p"
-              style={{ background: "var(--score-eagle, #f59e0b)", color: "#fff", border: "1px solid var(--score-eagle, #f59e0b)" }}
-              title={aces
-                .map(a => `Buraco ${a.hole} (par ${a.par})${a.course ? ` · ${a.course}` : ""}${a.date ? ` · ${a.date}` : ""}`)
-                .join("\n")}
-            >
-              🕳️ {aces.length} hole-in-one
-            </span>
-          )}
-          {meta?.lastUpdate && <span className="muted fs-11">Últ. act.: {meta.lastUpdate}</span>}
+            <div className="dh-statline">
+            <div className="jog-pills">
+              <span className="p p-fed">#{selected.fed}</span>
+              {pp && hasRealPPHcp(pp) && (
+                <span
+                  className="p"
+                  onClick={() => setPpView(true)}
+                  title={`Handicap Pitch & Putt: ${pp.hcp} (${pp.hcpStatus}). Clica para ver histórico P&P.`}
+                  style={{ cursor: "pointer", background: "var(--badge-pp, #0e7490)", color: "#fff", border: "1px solid var(--badge-pp, #0e7490)" }}
+                >🏑 P&amp;P {pp.hcp}</span>
+              )}
+              <SexBadge sex={selected.sex} size="md" />
+              {selected.dob && <span className="p p-birth" title={`Data de nascimento: ${selected.dob.split("-").reverse().join("/")}`}>{selected.dob.slice(0, 4)}</span>}
+              {selected.escalao && <span className={`p p-${escCls(meta?.escalao || selected.escalao)}`}>{meta?.escalao || selected.escalao}</span>}
+              {(meta?.club || clubLong(selected)) && <span className="p p-club">{meta?.club || clubLong(selected)}</span>}
+              {selected.tags?.filter(t => t !== "no-priority").map(t => (
+                <span key={t} className="p p-outline">{t}</span>
+              ))}
+              {/* HCP, campos, voltas e rondas do ano saíram dos pills — agora são KPI. */}
+              {pp && (pp.roundsYear || 0) > 0 && (
+                <span className="p p-outline" title={`Cartões P&P em ${curYear} (actividade no mundo Pitch & Putt)`}>
+                  P&amp;P: {pp.roundsYear} em {curYear}
+                </span>
+              )}
+              {aces.length > 0 && (
+                <span
+                  className="p"
+                  style={{ background: "var(--score-eagle, #f59e0b)", color: "#fff", border: "1px solid var(--score-eagle, #f59e0b)" }}
+                  title={aces
+                    .map(a => `Buraco ${a.hole} (par ${a.par})${a.course ? ` · ${a.course}` : ""}${a.date ? ` · ${a.date}` : ""}`)
+                    .join("\n")}
+                >
+                  🕳️ {aces.length} hole-in-one
+                </span>
+              )}
+            </div>
+            {data && <PlayerKpiStrip data={data} currentHcp={latestHcp} roundsThisYear={roundsThisYear} />}
+            </div>
+          </div>
+          <div className="dh-right">
+            {data && (
+              <div className="pa-controls-left">
+                <input className="input" placeholder="Pesquisar campo…" value={courseSearch}
+                  onChange={e => setCourseSearch(e.target.value)} />
+                <select className="select" value={view}
+                  onChange={e => setView(e.target.value as ViewKey)}>
+                  <option value="by_course">Por campo</option>
+                  <option value="by_course_analysis">Análise por campo</option>
+                  <option value="by_date">Por data</option>
+                  <option value="by_tournament">Por torneio</option>
+                  <option value="analysis">Análises</option>
+                </select>
+                {(view === "by_course" || view === "by_course_analysis") && (
+                  <select className="select" value={courseSort}
+                    onChange={e => setCourseSort(e.target.value as CourseSort)}>
+                    <option value="last_desc">Mais recente</option>
+                    <option value="count_desc">Mais jogados</option>
+                    <option value="name_asc">Nome A–Z</option>
+                  </select>
+                )}
+              </div>
+            )}
+            {meta?.lastUpdate && <span className="dh-lastupd" title="Última actualização dos dados">act. {meta.lastUpdate}</span>}
+          </div>
         </div>
       </div>
 
@@ -2210,14 +2211,18 @@ function FederadosStatsPanel({ stats, inativosStats: _inativosStats, drillDown, 
   );
 }
 
+/* Adaptador fino (stats dos federados) → delega na definição única UiKpiCard.
+   Valor numérico formatado pt-PT, centrado, com percentagem opcional. */
 function KpiCard({ label, value, pct, big, sub }: { label: React.ReactNode; value: number; pct?: number; big?: boolean; sub?: string }) {
   return (
-    <div className="card" style={{ padding: 10, textAlign: "center" }}>
-      <div className="muted fs-10" style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>{label}</div>
-      <div className="fw-900" style={{ fontSize: big ? 28 : 22 }}>{value.toLocaleString("pt-PT")}</div>
-      {pct != null && <div className="muted fs-10">{(pct * 100).toFixed(1)}%</div>}
-      {sub && <div className="muted fs-10">{sub}</div>}
-    </div>
+    <UiKpiCard
+      label={label}
+      value={value.toLocaleString("pt-PT")}
+      size={big ? "lg" : "md"}
+      pct={pct}
+      sub={sub}
+      align="center"
+    />
   );
 }
 
