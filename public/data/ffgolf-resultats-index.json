@@ -1,8 +1,353 @@
 {
-  "generatedAt": "2026-06-08T06:52:49.717Z",
+  "generatedAt": "2026-06-15T07:26:50.067Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
-  "total": 1616,
+  "total": 1624,
   "tournaments": [
+    {
+      "file": "01-00-2601441226.json",
+      "trnId": "2601441226",
+      "name": "CHAMPIONNAT DEPARTEMENTAL JEUNES 18 TROUS",
+      "formule": "Simple",
+      "date": "14/06/2026",
+      "dateIso": "2026-06-14",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 7,
+      "totalPlayers": 71,
+      "divisions": [
+        {
+          "serieId": "11",
+          "label": "Simple Score maximum",
+          "players": 18
+        },
+        {
+          "serieId": "16",
+          "label": "Simple Score maximum",
+          "players": 10
+        },
+        {
+          "serieId": "18",
+          "label": "Simple Score maximum",
+          "players": 22
+        },
+        {
+          "serieId": "22",
+          "label": "Simple Score maximum",
+          "players": 2
+        },
+        {
+          "serieId": "25",
+          "label": "Simple Score maximum",
+          "players": 4
+        },
+        {
+          "serieId": "27",
+          "label": "Simple Score maximum",
+          "players": 5
+        },
+        {
+          "serieId": "110",
+          "label": "Simple Score maximum",
+          "players": 10
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
+    },
+    {
+      "file": "01-00-2601405353.json",
+      "trnId": "2601405353",
+      "name": "Championnat Jeunes Occitanie 2026 Qualificatif CFJ - Golf du Cap d&#039;Agde",
+      "formule": "Simple",
+      "date": "13/06/2026",
+      "dateIso": "2026-06-13",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 6,
+      "totalPlayers": 86,
+      "divisions": [
+        {
+          "serieId": "19",
+          "label": "Simple Score maximum",
+          "players": 16
+        },
+        {
+          "serieId": "113",
+          "label": "Simple Score maximum",
+          "players": 30
+        },
+        {
+          "serieId": "117",
+          "label": "Simple Score maximum",
+          "players": 25
+        },
+        {
+          "serieId": "211",
+          "label": "Simple Score maximum",
+          "players": 5
+        },
+        {
+          "serieId": "215",
+          "label": "Simple Score maximum",
+          "players": 6
+        },
+        {
+          "serieId": "219",
+          "label": "Simple Score maximum",
+          "players": 4
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
+    },
+    {
+      "file": "01-00-2601423995.json",
+      "trnId": "2601423995",
+      "name": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD",
+      "formule": "Simple",
+      "date": "13/06/2026",
+      "dateIso": "2026-06-13",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 4,
+      "totalPlayers": 106,
+      "divisions": [
+        {
+          "serieId": "19",
+          "label": "Simple Score maximum",
+          "players": 48
+        },
+        {
+          "serieId": "113",
+          "label": "Simple Score maximum",
+          "players": 38
+        },
+        {
+          "serieId": "211",
+          "label": "Simple Score maximum",
+          "players": 13
+        },
+        {
+          "serieId": "215",
+          "label": "Simple Score maximum",
+          "players": 7
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
+    },
+    {
+      "file": "01-00-2601438552.json",
+      "trnId": "2601438552",
+      "name": "BRETAGNE INDIVIDUEL BENJAMINS ET U12",
+      "formule": "Simple",
+      "date": "13/06/2026",
+      "dateIso": "2026-06-13",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 4,
+      "totalPlayers": 62,
+      "divisions": [
+        {
+          "serieId": "115",
+          "label": "Simple Score maximum",
+          "players": 14
+        },
+        {
+          "serieId": "119",
+          "label": "Simple Score maximum",
+          "players": 27
+        },
+        {
+          "serieId": "213",
+          "label": "Simple Score maximum",
+          "players": 12
+        },
+        {
+          "serieId": "217",
+          "label": "Simple Score maximum",
+          "players": 9
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
+    },
+    {
+      "file": "01-00-2601441516.json",
+      "trnId": "2601441516",
+      "name": "Championnat Régional Jeunes",
+      "formule": "Simple",
+      "date": "13/06/2026",
+      "dateIso": "2026-06-13",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 4,
+      "totalPlayers": 96,
+      "divisions": [
+        {
+          "serieId": "29",
+          "label": "Simple Score maximum",
+          "players": 14
+        },
+        {
+          "serieId": "111",
+          "label": "Simple Score maximum",
+          "players": 39
+        },
+        {
+          "serieId": "115",
+          "label": "Simple Score maximum",
+          "players": 33
+        },
+        {
+          "serieId": "213",
+          "label": "Simple Score maximum",
+          "players": 10
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
+    },
+    {
+      "file": "01-00-2601444772.json",
+      "trnId": "2601444772",
+      "name": "Championnat Régional Minimes",
+      "formule": "Simple",
+      "date": "13/06/2026",
+      "dateIso": "2026-06-13",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 2,
+      "totalPlayers": 25,
+      "divisions": [
+        {
+          "serieId": "11",
+          "label": "Simple Score maximum",
+          "players": 22
+        },
+        {
+          "serieId": "22",
+          "label": "Simple Score maximum",
+          "players": 3
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
+    },
+    {
+      "file": "03-09-2601412558.json",
+      "trnId": "2601412558",
+      "name": "GRAND PRIX JEUNES OMAHA BEACH 2026",
+      "formule": "Simple",
+      "date": "13/06/2026",
+      "dateIso": "2026-06-13",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "09",
+      "seriesCount": 6,
+      "totalPlayers": 99,
+      "divisions": [
+        {
+          "serieId": "19",
+          "label": "Simple Score maximum",
+          "players": 38
+        },
+        {
+          "serieId": "113",
+          "label": "Simple Score maximum",
+          "players": 22
+        },
+        {
+          "serieId": "117",
+          "label": "Simple Score maximum",
+          "players": 13
+        },
+        {
+          "serieId": "211",
+          "label": "Simple Score maximum",
+          "players": 12
+        },
+        {
+          "serieId": "215",
+          "label": "Simple Score maximum",
+          "players": 9
+        },
+        {
+          "serieId": "219",
+          "label": "Simple Score maximum",
+          "players": 5
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
+    },
+    {
+      "file": "01-00-2601442511.json",
+      "trnId": "2601442511",
+      "name": "CHAMPIONNAT REGIONAL JEUNES NA 2026",
+      "formule": "Simple",
+      "date": "12/06/2026",
+      "dateIso": "2026-06-12",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 4,
+      "totalPlayers": 118,
+      "divisions": [
+        {
+          "serieId": "116",
+          "label": "Simple Score maximum",
+          "players": 30
+        },
+        {
+          "serieId": "122",
+          "label": "Simple Score maximum",
+          "players": 44
+        },
+        {
+          "serieId": "213",
+          "label": "Simple Score maximum",
+          "players": 19
+        },
+        {
+          "serieId": "219",
+          "label": "Simple Score maximum",
+          "players": 25
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
+    },
     {
       "file": "01-00-2601441621.json",
       "trnId": "2601441621",
