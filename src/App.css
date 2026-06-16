@@ -556,7 +556,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 }
 
 .detail-title {
- font-size: 22px;
+ font-size: 24px;
  font-weight: 800;
  letter-spacing: -0.02em;
  color: var(--text);
@@ -760,7 +760,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .dh-iconcol a:hover { background: var(--bg-hover); }
 .dh-idblock { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
 .dh-nameline { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.dh-nameline .detail-title { margin: 0; font-size: 24px; }
+.dh-nameline .detail-title { margin: 0; }
 .dh-mode-btn { padding: 2px 8px; font-size: 11px; font-weight: 600; background: transparent; border: 1px solid var(--border); border-radius: 10px; cursor: pointer; color: var(--text-2); white-space: nowrap; }
 .dh-mode-btn:hover { background: var(--bg-hover); }
 .dh-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
@@ -890,7 +890,6 @@ tr.cross-current { background: var(--bg-success); }
   border-bottom: none;
   height: 28px;
 }
-.sc-table-ec .row-label { text-align: left; padding-left: 10px; font-weight: 700; color: var(--text); min-width: 70px; }
 /* 1ª coluna (rótulos) fixa ao fazer scroll horizontal — os nomes Buraco/Par/
    Distância/Eclético/data ficam sempre visíveis ao percorrer os 18 buracos.
    Cada tipo de linha fixa o seu próprio fundo opaco para não haver bleed. */
@@ -977,7 +976,10 @@ tr.cross-current { background: var(--bg-success); }
 }
 /* Corpo das tabelas com tamanho coerente entre vistas: LISTA 13px, DETALHE 12px. */
 .pa-content .dtable-lg { font-size: 13px; }
-.pa-content .dtable-lg th, .pa-content .dtable-lg td { padding: 6px 10px; }
+.pa-content .dtable-lg th { padding: 5px 10px; }
+.pa-content .dtable-lg td { padding: 3px 10px; }
+/* by_course tem 1 linha por célula → linhas mais altas p/ igualar by_date/federado */
+.pa-content .dtable-lg.dtable-roomy td { padding-top: 9px; padding-bottom: 9px; }
 .pa-content .dtable, .pa-content .dt-compact, .pa-content .sc-table-modern { font-size: 12px; }
 .pa-content .dt-compact th, .pa-content .dt-compact td { padding: 6px 8px; }
 
@@ -1005,14 +1007,7 @@ tr.cross-current { background: var(--bg-success); }
 /* Tabela-resumo do Eclético com o mesmo tamanho da TeeSummaryTable (lista). */
 .pa-content .ec-summary { font-size: 13px; }
 
-/* ─── Card de KPI unificado — mesmo aspecto em todas as vistas (Análises, Federado,
-   Course Performance): fundo subtil sem borda, título discreto em caixa normal,
-   valor grande e limpo. ─── */
-.kpi-card { padding: 10px 14px; border-radius: var(--radius-lg); border: 1px solid var(--border-light); background: var(--bg-card); display: flex; flex-direction: column; gap: 2px; min-width: 120px; }
-.kpi-card-label { font-size: 10px; font-weight: 600; color: var(--text-3); letter-spacing: 0; }
-.kpi-card-val { font-size: 22px; font-weight: 700; color: var(--text-1); line-height: 1.1; font-variant-numeric: tabular-nums; }
-.kpi-card-sub { font-size: 11px; color: var(--text-3); margin-top: 1px; }
-.kpi-card-delta { font-size: 11px; font-weight: 700; }
+/* (.kpi-card removido — tudo usa agora o componente <KpiCard> / classe .kpi) */
 
 /* KPIs do jogador integrados no cabeçalho (.detail-header) — chips compactos.
    Poupam o espaço vertical que a faixa separada ocupava acima das tabelas. */
@@ -1176,11 +1171,45 @@ tr.cross-current { background: var(--bg-success); }
 .sc-table-modern tbody td { border-bottom: 1px solid var(--border-light); }
 .sc-table-modern .hole-header { background: var(--bg-header); color: var(--text-2); font-weight: 600; font-size: 11px; border-bottom: 1px solid var(--border); }
 .sc-table-modern .hole-header.ta-left { text-align: left; padding-left: 8px; min-width: 56px; }
-.sc-table-modern .row-label { text-align: left; padding-left: 8px; font-weight: 700; color: var(--text); min-width: 70px; }
 .sc-table-modern .col-out, .sc-table-modern .col-in { background: var(--bg-hover); border-left: 1px solid var(--border); font-weight: 600; font-size: 12px; font-variant-numeric: tabular-nums; }
+.sc-table-modern .col-out { border-right: 1px solid var(--border); }
 .sc-table-modern .col-total { background: var(--accent-light); border-left: 1px solid var(--border); font-weight: 800; font-variant-numeric: tabular-nums; }
 .sc-table-modern .sep-row td { border-bottom: 2px solid var(--border); }
 .sc-table-modern .meta-row td { color: var(--text-muted); font-size: 11px; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   .sc-grid — BASE ÚNICA de scorecard, partilhada pelas 3 tabelas
+   (.sc-table = Campos · .sc-table-ec = Análise · .sc-table-modern = Jogadores).
+   Adicionada como 2ª classe a cada <table> → MESMAS regras de fonte, peso e
+   bordas. Vem depois das regras por-classe para as governar (em pa-content
+   pode haver overrides residuais a afinar com preview). Suporta as duas
+   convenções de nome de coluna (col-* e sc-col-*).
+   ═══════════════════════════════════════════════════════════════════════ */
+.sc-grid { font-size: 12px; font-variant-numeric: tabular-nums; }
+.sc-grid th, .sc-grid td { font-size: 12px; }
+/* Cabeçalho (números dos buracos / Tee) — discreto e igual */
+.sc-grid thead th, .sc-grid .hole-header { font-size: 11px; font-weight: 600; color: var(--text-2); }
+/* Linhas de referência / meta (Metros · SI · Distância) */
+.sc-grid .meta-row td, .sc-grid .ec-ref-row td { font-size: 11px; }
+/* Rótulos da 1ª coluna (Buraco · Metros · SI · Par · Eclético · Δ) — fonte ÚNICA
+   de estilo dos rótulos. As regras antigas por-classe foram apagadas (ver abaixo)
+   para não competirem — sem !important, sem lixo. */
+.sc-grid td.row-label,
+.sc-grid th.row-label {
+  text-align: left;
+  padding-left: 8px;
+  font-weight: 600;
+  color: var(--text-2);
+  font-size: 11px;
+  min-width: 70px;
+}
+/* Divisores verticais (Out/In/Total) — 1px var(--border), iguais */
+.sc-grid .col-out, .sc-grid .col-in, .sc-grid .col-total,
+.sc-grid .sc-col-out, .sc-grid .sc-col-in, .sc-grid .sc-tot { border-left: 1px solid var(--border); }
+.sc-grid .col-out, .sc-grid .sc-col-out { border-right: 1px solid var(--border); }
+/* Separadores horizontais — 1px var(--border-light), iguais (sem 2px) */
+.sc-grid tbody td { border-bottom: 1px solid var(--border-light); }
+.sc-grid .sep-row td { border-bottom: 1px solid var(--border-light); }
 .sc-table-modern .par-label { color: var(--text-muted); font-weight: 600; font-size: 11px; }
 
 .sc-topar { display: block; font-size: 10px; font-weight: 600; margin-top: 1px; }
@@ -2228,8 +2257,14 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .col-mw120 { min-width: 120px; }
 
 /* Percentage widths (JogadoresPage cross-tables) */
+.col-p5 { width: 5%; }
 .col-p6 { width: 6%; }
 .col-p7 { width: 7%; }
+.col-p13 { width: 13%; }
+.col-p16 { width: 16%; }
+.col-p19 { width: 19%; }
+.col-p27 { width: 27%; }
+.col-p30 { width: 30%; }
 .col-p8 { width: 8%; }
 .col-p9 { width: 9%; }
 .col-p10 { width: 10%; }
@@ -2708,7 +2743,6 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .sim-br-sep { border-right: 2px solid var(--border); }
 
 /* JogadoresPage extras */
-.jog-big-val { font-size: 26px; font-weight: 900; }
 .jog-cross-pad { padding: 8px 4px; }
 
 /* Leaderboard extras */
@@ -2720,9 +2754,6 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 /* ─── Card / container patterns ─── */
 .card-detail { background: var(--bg-detail); border: 1px solid var(--border-light); border-radius: var(--radius-lg); padding: 8px 12px; }
 .card-detail-inner { border: 1px solid var(--border-light); border-top: 0; border-radius: 0 0 8px 8px; padding: 12px; background: var(--bg-card); }
-.card-stat-green { background: var(--bg-success); border-radius: var(--radius-lg); padding: 10px 6px; }
-.card-stat-blue { background: var(--bg-info); border-radius: var(--radius-lg); padding: 10px 6px; }
-.card-stat-detail { background: var(--bg-detail); border-radius: var(--radius-lg); padding: 10px 6px; }
 
 /* ─── Conclusion boxes (caConclusion overrides) ─── */
 
@@ -2754,7 +2785,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .jog-cross-wrap { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 12px; }
 .jog-cross-filter { display: flex; gap: 8px; margin-bottom: 12px; align-items: center; }
 .jog-field-line { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--bg-muted); font-size: 12px; }
-.jog-record-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; text-align: center; margin: 6px 0 10px; }
+.jog-record-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 6px 0 10px; }
 
 /* ─── Rivais header dynamic — keep structure, move statics ─── */
 
@@ -2960,12 +2991,13 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .cp-table thead th {
   text-align: left;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--text-muted);
-  padding: 4px 10px 8px;
-  border-bottom: 1px solid var(--border-light);
+  color: var(--text-3);
+  background: var(--bg-header);
+  padding: 6px 10px;
+  border-bottom: 2px solid var(--border);
   white-space: nowrap;
 }
 .cp-table th.cp-num,
@@ -2978,7 +3010,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
   cursor: pointer;
   border-bottom: 1px solid var(--border-light);
 }
-.cp-row:hover { background: var(--bg-subtle, rgba(0,0,0,0.025)); }
+.cp-row:hover { background: var(--bg-hover); }
 .cp-row td {
   padding: 7px 10px;
   vertical-align: baseline;

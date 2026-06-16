@@ -3,12 +3,12 @@ import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import type { Player, SexFilter } from "../data/types";
 import { useAppContext } from "../context/AppContext";
 import { resolvePlayedTee, resolvePlayedSI, isFakeSI } from "../utils/playedDistance";
-import { norm, shortDate, fmtSign, fmtToPar, fpgScoringUrl } from "../utils/format";
+import { norm, shortDate, fmtSign, fpgScoringUrl } from "../utils/format";
 import { getTeeHex, textOnColor, normKey, teeBorder } from "../utils/teeColors";
 import { clubShort, clubLong, hcpDisplay, escCls } from "../utils/playerUtils";
 import { numSafe, meanArr, stdevArr, minArr, maxArr, linearSlope } from "../utils/mathUtils";
 import { acesFromHoleScores } from "../utils/aces";
-import { scClass, fmtGrossDelta, fmtStb, sdClassByHcp, fmtSdVal, sc3m, SC, toParClass } from "../utils/scoreDisplay";
+import { fmtGrossDelta, fmtStb, sdClassByHcp, fmtSdVal, sc3m, SC } from "../utils/scoreDisplay";
 import {
   type PlayerPageData, type CourseData, type RoundData,
   type HcpInfo,
@@ -16,6 +16,7 @@ import {
 import { usePlayerData } from "../data/usePlayerData";
 import SexBadge from "../ui/SexBadge";
 import UiKpiCard from "../ui/KpiCard";
+import ListaTabela, { type ListaColuna } from "../ui/ListaTabela";
 import RotatedNotice from "../ui/RotatedNotice";
 import AroeiraNotice, { countRotatedRounds } from "../ui/AroeiraNotice";
 import { canonicalCourseName } from "../utils/courseAliases";
@@ -57,7 +58,7 @@ type ViewKey = "by_course" | "by_course_analysis" | "by_date" | "by_tournament" 
 type CourseSort = "last_desc" | "count_desc" | "name_asc";
 
 
-const scHostStyle: React.CSSProperties = { margin: "6px 8px", border: "1px solid var(--border)", borderRadius: "var(--radius-xl)", background: "var(--bg-card)", padding: 10, overflow: "hidden", width: "fit-content", maxWidth: "calc(100% - 16px)" };
+const scHostStyle: React.CSSProperties = { margin: "6px 8px", width: "fit-content", maxWidth: "calc(100% - 16px)" };
 
 /* ────────────────────────────────────────────────────────────────────────────────────────
    Micro-components
@@ -314,104 +315,57 @@ function ByDateView({ data, search }: {
     return rounds;
   }, [data, search, sortKey, sortDir]);
 
-  return (
-    <div className="card">
-    <div className="scroll-x">
-      <table className="dtable-lg">
-        <colgroup>
-          <col className="col-p9" /><col className="col-p18" /><col className="col-p15" />
-          <col className="col-p6" /><col className="col-p7" /><col className="col-p10" />
-          <col className="col-p9" /><col className="col-p9" /><col className="col-p8" /><col className="col-p9" />
-        </colgroup>
-        <thead>
-          <tr>
-            <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Data</SortableHdr>
-            <SortableHdr k="course" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Campo</SortableHdr>
-            <SortableHdr k="event" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Prova</SortableHdr>
-            <SortableHdr k="holes" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Bur.</SortableHdr>
-            <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">HCP</SortableHdr>
-            <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Tee</SortableHdr>
-            <SortableHdr k="meters" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Dist.</SortableHdr>
-            <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Gross</SortableHdr>
-            <SortableHdr k="stb" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Stb</SortableHdr>
-            <SortableHdr k="sd" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">SD</SortableHdr>
-          </tr>
-        </thead>
-        <tbody>
-          {all.map((r, idx) => {
-            const isOpen = openScorecardId === r.scoreId;
-            const toggle = () => setOpenScorecardId(isOpen ? null : r.scoreId);
-            const holes = data.HOLES[String(r.scoreId)];
-            const courseKey = norm(r.course);
-            const teeKey = r.teeKey || normKey(r.tee || "");
-            const ecEntry = data.ECDET?.[courseKey]?.[teeKey] || null;
-            const year = r.date ? r.date.slice(-4) : null;
-            const prevYear = idx > 0 && all[idx - 1].date ? all[idx - 1].date.slice(-4) : null;
-            const showYearBar = year && prevYear && year !== prevYear;
+  const columns: ListaColuna<RoundData & { course: string }>[] = [
+    { key: "date", label: "Data", width: "68px", sortable: true, render: r => (
+      <><TeeDate date={r.date} tee={r.tee || ""} /><div className="muted fs-10">#{r.scoreId}</div></>
+    ) },
+    { key: "course", label: "Campo", width: "150px", sortable: true, render: r => <CourseLink name={r.course} /> },
+    { key: "event", label: "Prova", sortable: true, render: r => (
+      <EventInfo name={r.eventName} origin={r.scoreOrigin} pill={effectivePill(r)} links={r._links}
+        fed={data.CURRENT_FED} tcode={r.tcode} ccode={r.ccode} course={r.course} />
+    ) },
+    { key: "holes", label: "Bur.", width: "44px", align: "right", sortable: true, render: r => <HoleBadge hc={r.holeCount} /> },
+    { key: "hcp", label: "HCP", width: "46px", align: "right", sortable: true, render: r => r.hi ?? "" },
+    { key: "tee", label: "Tee", width: "92px", sortable: true, render: r => <TeePill name={r.tee || ""} /> },
+    { key: "meters", label: "Dist.", width: "60px", align: "right", cellClassName: "muted", sortable: true, render: r => r.meters ? `${r.meters}m` : "" },
+    { key: "gross", label: "Gross", width: "64px", align: "right", sortable: true, render: r => <GrossCell gross={r.gross} par={r.par} /> },
+    { key: "stb", label: "Stb", width: "44px", align: "right", sortable: true, render: r => fmtStb(r.stb, r.holeCount) },
+    { key: "sd", label: "SD", width: "54px", align: "right", sortable: true, render: r => <SdCell round={r} /> },
+  ];
 
-            return (
-              <React.Fragment key={r.scoreId}>
-                {showYearBar && (
-                  <tr>
-                    <td colSpan={10} style={{ padding: 0, background: "transparent", borderBottom: "2px solid var(--border)" }}>
-                      <div className="year-label">{year}</div>
-                    </td>
-                  </tr>
-                )}
-                <tr className={`roundRow${isOpen ? " pa-row-open" : ""}`}
-                  onClick={() => r.hasCard && toggle()}
-                  style={{ cursor: r.hasCard ? "pointer" : "default" }}>
-                  <td>
-                    {r.hasCard
-                      ? <a href="#" onClick={e => { e.preventDefault(); toggle(); }}><TeeDate date={r.date} tee={r.tee || ""} /></a>
-                      : <TeeDate date={r.date} tee={r.tee || ""} />}
-                    <div className="muted fs-10">#{r.scoreId}</div>
-                  </td>
-                  <td><CourseLink name={r.course} /></td>
-                  <td><EventInfo
-                    name={r.eventName}
-                    origin={r.scoreOrigin}
-                    pill={effectivePill(r)}
-                    links={r._links}
-                    fed={data.CURRENT_FED}
-                    tcode={r.tcode}
-                    ccode={r.ccode}
-                    course={r.course}
-                  /></td>
-                  <td className="r"><HoleBadge hc={r.holeCount} /></td>
-                  <td className="r">{r.hi ?? ""}</td>
-                  <td><TeePill name={r.tee || ""} /></td>
-                  <td className="r muted">{r.meters ? `${r.meters}m` : ""}</td>
-                  <td className="r"><GrossCell gross={r.gross} par={r.par} /></td>
-                  <td className="r">{fmtStb(r.stb, r.holeCount)}</td>
-                  <td className="r"><SdCell round={r} /></td>
-                </tr>
-                {isOpen && holes && (
-                  <tr>
-                    <td colSpan={10} className="bg-page p-0">
-                      <div className="scroll-x" style={scHostStyle}>
-                        <ScorecardTable
-                          holes={holes}
-                          courseName={r.course}
-                          date={r.date}
-                          tee={r.tee || ""}
-                          hi={r.hi}
-                          links={r._links}
-                          pill={effectivePill(r)}
-                          eclecticEntry={ecEntry}
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                )}
-              </React.Fragment>
-            );
-          })}
-        </tbody>
-      </table>
+  return (
+    <>
+      <ListaTabela
+        columns={columns}
+        rows={all}
+        rowKey={r => r.scoreId}
+        sortKey={sortKey}
+        sortDir={sortDir}
+        onSort={toggleSort as (k: string) => void}
+        expandedKey={openScorecardId}
+        onRowClick={r => { if (r.hasCard) setOpenScorecardId(openScorecardId === r.scoreId ? null : r.scoreId); }}
+        rowClassName={(_r, open) => `roundRow${open ? " pa-row-open" : ""}`}
+        separatorBefore={(r, prev) => {
+          const year = r.date ? r.date.slice(-4) : null;
+          const prevYear = prev?.date ? prev.date.slice(-4) : null;
+          return (year && prevYear && year !== prevYear) ? <div className="year-label">{year}</div> : null;
+        }}
+        renderExpanded={r => {
+          const holes = data.HOLES[String(r.scoreId)];
+          if (!holes) return null;
+          const courseKey = norm(r.course);
+          const teeKey = r.teeKey || normKey(r.tee || "");
+          const ecEntry = data.ECDET?.[courseKey]?.[teeKey] || null;
+          return (
+            <div className="scroll-x" style={scHostStyle}>
+              <ScorecardTable holes={holes} courseName={r.course} date={r.date} tee={r.tee || ""}
+                hi={r.hi} links={r._links} pill={effectivePill(r)} eclecticEntry={ecEntry} />
+            </div>
+          );
+        }}
+      />
       {all.length === 0 && <EmptyState size="sm" message="Nenhuma ronda encontrada" />}
-    </div>
-    </div>
+    </>
   );
 }
 
@@ -543,8 +497,10 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
       {/* Summary row */}
       <tr className={open ? "pa-row-open" : ""}>
         <td>
+          <div className="count" style={{ background: lastHex, color: textOnColor(lastHex), border: teeBorder(lastHex) }}>{course.count}</div>
+        </td>
+        <td>
           <div className="rowHead">
-            <div className="count" style={{ background: lastHex, color: textOnColor(lastHex), border: teeBorder(lastHex) }}>{course.count}</div>
             <button type="button" className="courseBtn" onClick={() => setOpen(v => !v)}>{course.course}</button>
  {courseLinkKey && <a href={`/campos/${courseLinkKey}`} className="courseLink fs-10 ml-4" title="Ver campo" target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}>↗</a>}
             <PillBadge pill={course.rounds.map(r => effectivePill(r, course.course)).find(Boolean) || ""} />
@@ -556,7 +512,6 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
             />
           </div>
         </td>
-        <td className="r"><b>{course.count}</b></td>
         <td>{last && <TeeDate date={last.date} tee={last.tee || ""} />}</td>
         <td className="r">{last && <HoleBadge hc={last.holeCount} />}</td>
         <td className="r">{last?.hi ?? ""}</td>
@@ -762,16 +717,16 @@ function ByCourseView({ data, search, sort, isAnalysis }: {
   return (
     <div className="card">
       <div className="scroll-x">
-        <table className="dtable-lg">
+        <table className="dtable-lg dtable-roomy" style={{ tableLayout: "fixed" }}>
           <colgroup>
-            <col className="col-p26" /><col className="col-p7" /><col className="col-p9" />
-            <col className="col-p6" /><col className="col-p7" /><col className="col-p12" />
-            <col className="col-p8" /><col className="col-p9" /><col className="col-p8" /><col className="col-p8" />
+            <col style={{ width: "72px" }} /><col /><col style={{ width: "72px" }} />
+            <col style={{ width: "44px" }} /><col style={{ width: "46px" }} /><col style={{ width: "92px" }} />
+            <col style={{ width: "60px" }} /><col style={{ width: "64px" }} /><col style={{ width: "44px" }} /><col style={{ width: "54px" }} />
           </colgroup>
           <thead>
             <tr>
+              <SortableHdr k="voltas" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Voltas</SortableHdr>
               <SortableHdr k="course" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Campo</SortableHdr>
-              <SortableHdr k="voltas" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Voltas</SortableHdr>
               <SortableHdr k="ultima" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Última</SortableHdr>
               <th className="r">Bur.</th><th className="r">HCP</th><th>Tee</th>
               <th className="r">Dist.</th>
@@ -1447,21 +1402,14 @@ function WHSDetail({ hcp, bare }: { hcp: HcpInfo; bare?: boolean }) {
   return (
     <Wrap>
       <div className="jog-record-grid">
-        <div className="card-stat-green">
-          <div className="muted fs-10">MÍNIMO ATINGIDO</div>
-          <div className="jog-big-val c-par-ok">{hcp.lowHcp?.toFixed(1) ?? "–"}</div>
-        </div>
-        <div className="card-stat-blue">
-          <div className="muted fs-10">ACTUAL</div>
-          <div className="jog-big-val c-blue">{hcp.current.toFixed(1)}</div>
-          {hcp.lowHcp != null && (
- <div className="fs-11 fw-600" style={{ color: SC.danger }}>+{(hcp.current - hcp.lowHcp).toFixed(1)} do mínimo</div>
-          )}
-        </div>
-        <div className="card-stat-detail">
-          <div className="muted fs-10">MÉDIA {hcp.qtyCalc || 8} MELHORES</div>
-          <div className="jog-big-val c-text-3">{hcp.scoreAvg?.toFixed(1) ?? "–"}</div>
-        </div>
+        <UiKpiCard label="Mínimo atingido" value={hcp.lowHcp?.toFixed(1) ?? "–"}
+          color="var(--color-good)" accentBorder="var(--color-good)" />
+        <UiKpiCard label="Actual" value={hcp.current.toFixed(1)}
+          color="var(--chart-2)" accentBorder="var(--chart-2)"
+          sub={hcp.lowHcp != null
+            ? <span style={{ color: SC.danger, fontWeight: 600 }}>+{(hcp.current - hcp.lowHcp).toFixed(1)} do mínimo</span>
+            : undefined} />
+        <UiKpiCard label={`Média ${hcp.qtyCalc || 8} melhores`} value={hcp.scoreAvg?.toFixed(1) ?? "–"} />
       </div>
  <div className="fs-11 c-text-3 d-flex" style={{ gap: 14, borderTop: "1px solid var(--bg)", paddingTop: 8 }}>
         {hcp.softCap != null && <span>Soft cap: <b>{hcp.softCap.toFixed(1)}</b></span>}
@@ -2469,16 +2417,85 @@ function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localI
     return arr;
   }, [rounds, sortKey, sortDir]);
 
-  const hasExtra = extraMap && extraMap.size > 0;
-  // Ordem: Data | Campo | Prova | Bur. | HCP | Tee? | Par | Gross? | Stb | SD | Tipo
-  const COLS = 9 + (hasExtra ? 2 : 0);
-  let lastYear = "";
-
   // Contagem de rondas que NÃO temos em local
   // Ignorar registos administrativos (ajustes de HCP) que têm id=0/null/undefined — não são rondas jogadas
   const missingCount = localIds && localIds.size > 0
     ? rounds.filter(r => r.id && !localIds.has(r.id)).length
     : 0;
+
+  // Colunas SEM larguras fixas → auto-layout (pequenas apertadas, Campo/Prova
+  // absorvem o espaço), como a vista federado original. Mesmo conjunto/ordem.
+  const columns: ListaColuna<WhsRound>[] = [
+    {
+      key: "date", label: "Data", width: "60px", sortable: true,
+      render: r => {
+        const dateStr = (r.score_dateStr || "").slice(0, 10);
+        const ddmm = dateStr.split("-").reverse().join("-"); // YYYY-MM-DD → DD-MM-YYYY
+        const tee = extraMap?.get(r.id)?.tee || "";
+        const isMissing = !!r.id && !!localIds && localIds.size > 0 && !localIds.has(r.id);
+        return (
+          <>
+            <TeeDate date={ddmm} tee={tee} />
+            {isMissing && <span style={{ marginLeft: 4, color: "var(--color-warn-vivid)", fontSize: 10 }} title="Não temos esta ronda em local">●</span>}
+          </>
+        );
+      },
+    },
+    { key: "course", label: "Campo", width: "150px", sortable: true, cellClassName: "muted", render: r => r.course_description },
+    {
+      key: "event", label: "Prova", sortable: true,
+      render: r => {
+        const originKey = (r.score_origin || "").trim().toUpperCase();
+        const isIntl = originKey === "INTERN";
+        const tournName = r.tournament_description || "";
+        const isRegional = !isIntl && /regional/i.test(tournName);
+        const isNacional = !isIntl && !isRegional && /nacional/i.test(tournName);
+        return (
+          <>
+            <span className="muted">{r.tournament_description}</span>
+            <OriginPill origin={r.score_origin} />
+            {isIntl && <PillBadge pill="INTL" />}
+            {isRegional && <PillBadge pill="REGIONAL" />}
+            {isNacional && <PillBadge pill="NACIONAL" />}
+          </>
+        );
+      },
+    },
+    { key: "holes", label: "Bur.", width: "44px", align: "right", sortable: true, render: r => <HoleBadge hc={r.hole_count} /> },
+    { key: "hcp", label: "HCP", width: "46px", align: "right", sortable: true, cellClassName: "fw-700", render: r => r.calc_hcp_index ?? r.calculated_exact_hcp ?? "" },
+    { key: "tee", label: "Tee", width: "92px", sortable: true, render: r => { const e = extraMap?.get(r.id); return e?.tee ? <TeePill name={e.tee} /> : <span className="muted fs-10">…</span>; } },
+    { key: "par", label: "Par", width: "44px", align: "right", sortable: true, cellClassName: "muted", render: r => r.par_total ?? "" },
+    {
+      key: "gross", label: "Gross", width: "64px", align: "right", sortable: true,
+      render: r => {
+        const e = extraMap?.get(r.id);
+        if (e?.gross == null) return <span className="muted fs-10">…</span>;
+        return <GrossCell gross={e.gross} par={r.par_total ?? null} />;
+      },
+    },
+    { key: "stb", label: "Stb", width: "44px", align: "right", sortable: true, render: r => r.calculated_stablnet_total ?? "" },
+    {
+      key: "sd", label: "SD", width: "54px", align: "right", sortable: true,
+      render: r => {
+        const sdNum = r.score_differential != null ? Number(r.score_differential) : NaN;
+        const hiRef = r.calc_hcp_index ?? r.calculated_exact_hcp ?? hcpRef ?? null;
+        const sdCls = isFinite(sdNum) && hiRef != null ? sdClassByHcp(sdNum, Number(hiRef)) : "";
+        return isFinite(sdNum)
+          ? <span className={sdCls ? `p p-sm p-${sdCls}` : ""}>{r.score_differential}</span>
+          : (r.score_differential ?? "");
+      },
+    },
+    {
+      key: "origin", label: "Tipo", width: "96px", sortable: true,
+      render: r => {
+        const originKey = (r.score_origin || "").trim().toUpperCase();
+        if (originKey === "INTERN") return <PillBadge pill="INTL" />;
+        if (!originKey || originKey === "TORN") return <span className="muted fs-10">Torneio</span>;
+        // EDS / INDIV / TREINO / EXTRA / IMPORT → pill documentado (OriginPill)
+        return <OriginPill origin={r.score_origin} />;
+      },
+    },
+  ];
 
   return (
     <div style={{ maxHeight: 600, overflowY: "auto" }}>
@@ -2487,112 +2504,23 @@ function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localI
           {missingCount} ronda{missingCount !== 1 ? "s" : ""} na FPG que não temos em local
         </div>
       )}
-      <table className="dtable-lg">
-        <thead>
-          <tr>
-            <SortableHdr k="date"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Data</SortableHdr>
-            <SortableHdr k="course" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Campo</SortableHdr>
-            <SortableHdr k="event"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Prova</SortableHdr>
-            <SortableHdr k="holes"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Bur.</SortableHdr>
-            <SortableHdr k="hcp"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">HCP</SortableHdr>
-            {hasExtra && <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Tee</SortableHdr>}
-            <SortableHdr k="par"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Par</SortableHdr>
-            {hasExtra && <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Gross</SortableHdr>}
-            <SortableHdr k="stb"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Stb</SortableHdr>
-            <SortableHdr k="sd"     sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">SD</SortableHdr>
-            <SortableHdr k="origin" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Tipo</SortableHdr>
-          </tr>
-        </thead>
-        <tbody>
-          {sorted.slice(0, 200).map(r => {
-            const dateStr = (r.score_dateStr || "").slice(0, 10);
-            const year = dateStr.slice(0, 4);
-            const showYearBar = sortKey === "date" && year !== lastYear;
-            if (showYearBar) lastYear = year;
-
-            // Data sem ano: DD-MM
-            const shortDate = dateStr.slice(8, 10) + "-" + dateStr.slice(5, 7);
-
-            const sdNum = r.score_differential != null ? Number(r.score_differential) : NaN;
-            const hiRef = r.calc_hcp_index ?? r.calculated_exact_hcp ?? hcpRef ?? null;
-            const sdCls = isFinite(sdNum) && hiRef != null ? sdClassByHcp(sdNum, Number(hiRef)) : "";
-
-            const originKey = (r.score_origin || "").trim().toUpperCase();
-            const isIntl = originKey === "INTERN";
-            const tournName = r.tournament_description || "";
-            const isRegional = !isIntl && /regional/i.test(tournName);
-            const isNacional = !isIntl && !isRegional && /nacional/i.test(tournName);
-            const extra = extraMap?.get(r.id);
-
-            // Indicador visual se a ronda não existe nos nossos dados locais
-            // Ignorar registos admin (id=0/null) — ajustes de HCP, não rondas jogadas
-            const isMissing = r.id && localIds && localIds.size > 0 && !localIds.has(r.id);
-
-            return (
-              <React.Fragment key={r.id}>
-                {showYearBar && (
-                  <tr>
-                    <td colSpan={COLS} style={{ padding: 0, background: "transparent", borderBottom: "2px solid var(--border)" }}>
-                      <div className="year-label">{year}</div>
-                    </td>
-                  </tr>
-                )}
-                <tr
-                  style={{ cursor: "pointer" }}
-                  title={isMissing ? "Ronda que não temos em local — clicar para ver scorecard" : "Clicar para ver scorecard hole-by-hole"}
-                  onClick={() => onOpenScorecard(r)}
-                >
-                  <td className="fw-600">
-                    {shortDate}
-                    {isMissing && <span style={{ marginLeft: 4, color: "var(--color-warn-vivid)", fontSize: 10 }} title="Não temos esta ronda em local">●</span>}
-                  </td>
-                  <td className="muted">{r.course_description}</td>
-                  <td>
-                    <span className="muted">{r.tournament_description}</span>
-                    <OriginPill origin={r.score_origin} />
-                    {isIntl && <PillBadge pill="INTL" />}
-                    {isRegional && <PillBadge pill="REGIONAL" />}
-                    {isNacional && <PillBadge pill="NACIONAL" />}
-                  </td>
-                  <td className="r"><HoleBadge hc={r.hole_count} /></td>
-                  <td className="r fw-700">{r.calc_hcp_index ?? r.calculated_exact_hcp ?? ""}</td>
-                  {hasExtra && (
-                    <td>{extra?.tee ? <TeePill name={extra.tee} /> : <span className="muted fs-10">…</span>}</td>
-                  )}
-                  <td className="r muted">{r.par_total ?? ""}</td>
-                  {hasExtra && (
-                    <td className="r">
-                      {extra?.gross != null ? (
-                        <><b>{extra.gross}</b>{r.par_total != null && extra.gross !== r.par_total && (
-                          <span className={`score-delta ${toParClass(extra.gross - r.par_total)}`}>
-                            {fmtToPar(extra.gross - r.par_total)}
-                          </span>
-                        )}</>
-                      ) : <span className="muted fs-10">…</span>}
-                    </td>
-                  )}
-                  <td className="r">{r.calculated_stablnet_total ?? ""}</td>
-                  <td className="r">
-                    {isFinite(sdNum)
-                      ? <span className={sdCls ? `p p-sm p-${sdCls}` : ""}>{r.score_differential}</span>
-                      : (r.score_differential ?? "")}
-                  </td>
-                  <td>
-                    {originKey === "TORN" ? <span className="muted fs-10">Torneio</span>
-                      : originKey === "INTERN" ? <span className="muted fs-10">Internacional</span>
-                      : originKey === "EDS" ? <span className="p p-sm p-origin p-eds">EDS</span>
-                      : originKey === "INDIV" ? <span className="p p-sm p-origin p-indiv">INDIV</span>
-                      : originKey === "TREINO" ? <span className="p p-sm p-origin p-treino">TREINO</span>
-                      : originKey === "EXTRA" ? <span className="p p-sm p-origin p-extra">EXTRA</span>
-                      : originKey === "IMPORT" ? <span className="p p-sm p-origin p-import">IMPORT</span>
-                      : <span className="muted fs-10">{r.score_origin}</span>}
-                  </td>
-                </tr>
-              </React.Fragment>
-            );
-          })}
-        </tbody>
-      </table>
+      <ListaTabela
+        noCard
+        columns={columns}
+        rows={sorted.slice(0, 200)}
+        rowKey={r => `${r.id}-${r.score_dateStr}-${(r.tournament_description || "").slice(0, 12)}`}
+        sortKey={sortKey}
+        sortDir={sortDir}
+        onSort={toggleSort as (k: string) => void}
+        onRowClick={r => onOpenScorecard(r)}
+        rowClassName={() => "roundRow"}
+        separatorBefore={(r, prev) => {
+          if (sortKey !== "date") return null;
+          const y = (r.score_dateStr || "").slice(0, 4);
+          const py = prev ? (prev.score_dateStr || "").slice(0, 4) : null;
+          return y && y !== py ? <div className="year-label">{y}</div> : null;
+        }}
+      />
       {rounds.length > 200 && (
         <div className="muted fs-10 ta-c p-4">A mostrar 200 de {rounds.length} rondas</div>
       )}
@@ -2891,11 +2819,7 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
         const tornRounds = liveRounds.filter(r => /torn/i.test(String(r.score_origin || "")));
         const lastDate = liveRounds[0]?.score_dateStr?.slice(0, 10) || null;
         const kpi = (label: string, value: React.ReactNode, sub?: string) => (
-          <div className="kpi-card">
-            <div className="kpi-card-label">{label}</div>
-            <div className="kpi-card-val">{value}</div>
-            {sub && <div className="kpi-card-sub">{sub}</div>}
-          </div>
+          <UiKpiCard label={label} value={value} sub={sub} />
         );
         return (
           <div className="card" style={{ marginTop: 12 }}>
@@ -2980,14 +2904,9 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
             {scorecardModal.data && (() => {
               const sc = scorecardModal.data as unknown as Record<string, number | string | null | undefined>;
               const nh = Number(sc.nholes || sc.hole_count || 18);
-              const is9 = nh === 9;
               const gross = (h: number) => { const v = sc[`gross_${h}`]; return v != null ? Number(v) : 0; };
               const pars  = (h: number) => { const v = sc[`par_${h}`];   return v != null ? Number(v) : 0; };
               const sis   = (h: number) => { const v = sc[`stroke_index_${h}`]; return v != null ? Number(v) : 0; };
-              const f9Gross = Array.from({length: 9}, (_, i) => gross(i + 1)).reduce((a, b) => a + b, 0);
-              const f9Par   = Array.from({length: 9}, (_, i) => pars(i + 1)).reduce((a, b) => a + b, 0);
-              const b9Gross = !is9 ? Array.from({length: 9}, (_, i) => gross(i + 10)).reduce((a, b) => a + b, 0) : 0;
-              const b9Par   = !is9 ? Array.from({length: 9}, (_, i) => pars(i + 10)).reduce((a, b) => a + b, 0) : 0;
               return (
                 <>
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 8, marginBottom: 16, fontSize: 12 }}>
@@ -2998,75 +2917,19 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
                     <div><span className="muted">CR/Slope:</span> <b>{sc.course_rating ?? "—"}/{sc.slope ?? "—"}</b></div>
                     <div><span className="muted">CBA:</span> <b>{(sc as Record<string, number | undefined>).cba ?? (sc as Record<string, number | undefined>).cba_value ?? "—"}</b></div>
                   </div>
-                  <div style={{ overflowX: "auto" }}>
-                    <table className="lb-scorecard" style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
-                      <thead>
-                        <tr>
-                          <th style={{ textAlign: "left", padding: "4px 6px" }} className="muted fs-10">Bur.</th>
-                          {Array.from({length: 9}, (_, i) => i + 1).map(h => (
-                            <th key={h} className="lb-hole" style={{ textAlign: "center", padding: "4px 6px" }}>{h}</th>
-                          ))}
-                          <th className="lb-halftot" style={{ textAlign: "center", padding: "4px 6px", fontWeight: 700 }}>F9</th>
-                          {!is9 && Array.from({length: 9}, (_, i) => i + 10).map(h => (
-                            <th key={h} className="lb-hole" style={{ textAlign: "center", padding: "4px 6px" }}>{h}</th>
-                          ))}
-                          {!is9 && <th className="lb-halftot" style={{ textAlign: "center", padding: "4px 6px", fontWeight: 700 }}>B9</th>}
-                          <th style={{ textAlign: "center", padding: "4px 6px", fontWeight: 700 }}>Tot</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {/* Par */}
-                        <tr>
-                          <td className="muted fs-10" style={{ padding: "4px 6px" }}>Par</td>
-                          {Array.from({length: 9}, (_, i) => i + 1).map(h => (
-                            <td key={h} className="lb-hole muted" style={{ textAlign: "center", padding: "4px 6px" }}>{pars(h) || "—"}</td>
-                          ))}
-                          <td className="lb-halftot muted" style={{ textAlign: "center", padding: "4px 6px", fontWeight: 600 }}>{f9Par}</td>
-                          {!is9 && Array.from({length: 9}, (_, i) => i + 10).map(h => (
-                            <td key={h} className="lb-hole muted" style={{ textAlign: "center", padding: "4px 6px" }}>{pars(h) || "—"}</td>
-                          ))}
-                          {!is9 && <td className="lb-halftot muted" style={{ textAlign: "center", padding: "4px 6px", fontWeight: 600 }}>{b9Par}</td>}
-                          <td style={{ textAlign: "center", padding: "4px 6px", fontWeight: 700 }}>{sc.par_total ?? "—"}</td>
-                        </tr>
-                        {/* SI */}
-                        <tr>
-                          <td className="muted fs-10" style={{ padding: "4px 6px" }}>SI</td>
-                          {Array.from({length: 9}, (_, i) => i + 1).map(h => (
-                            <td key={h} className="lb-hole muted fs-10" style={{ textAlign: "center", padding: "4px 6px" }}>{sis(h) || "—"}</td>
-                          ))}
-                          <td className="lb-halftot"></td>
-                          {!is9 && Array.from({length: 9}, (_, i) => i + 10).map(h => (
-                            <td key={h} className="lb-hole muted fs-10" style={{ textAlign: "center", padding: "4px 6px" }}>{sis(h) || "—"}</td>
-                          ))}
-                          {!is9 && <td className="lb-halftot"></td>}
-                          <td></td>
-                        </tr>
-                        {/* Gross com cores oficiais via scClass */}
-                        <tr>
-                          <td style={{ padding: "4px 6px", fontWeight: 600 }}>Gross</td>
-                          {Array.from({length: 9}, (_, i) => i + 1).map(h => (
-                            <td key={h} className="lb-hole" style={{ textAlign: "center", padding: "4px 6px" }}>
-                              <span className={"sc-score " + scClass(gross(h), pars(h))}>{gross(h) || ""}</span>
-                            </td>
-                          ))}
-                          <td className="lb-halftot" style={{ textAlign: "center", padding: "4px 6px", fontWeight: 700 }}>
-                            {f9Gross} <span className="fs-10 c-text-3">({fmtToPar(f9Gross - f9Par)})</span>
-                          </td>
-                          {!is9 && Array.from({length: 9}, (_, i) => i + 10).map(h => (
-                            <td key={h} className="lb-hole" style={{ textAlign: "center", padding: "4px 6px" }}>
-                              <span className={"sc-score " + scClass(gross(h), pars(h))}>{gross(h) || ""}</span>
-                            </td>
-                          ))}
-                          {!is9 && (
-                            <td className="lb-halftot" style={{ textAlign: "center", padding: "4px 6px", fontWeight: 700 }}>
-                              {b9Gross} <span className="fs-10 c-text-3">({fmtToPar(b9Gross - b9Par)})</span>
-                            </td>
-                          )}
-                          <td style={{ textAlign: "center", padding: "4px 6px", fontWeight: 700 }}>{sc.gross_total ?? "—"}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                  <ScorecardTable
+                    bare
+                    holes={{
+                      g: Array.from({ length: nh }, (_, i) => gross(i + 1)),
+                      p: Array.from({ length: nh }, (_, i) => pars(i + 1)),
+                      si: Array.from({ length: nh }, (_, i) => sis(i + 1)),
+                      m: Array.from({ length: nh }, (_, i) => { const v = sc[`meters_${i + 1}`]; return v != null ? Number(v) : null; }),
+                      hc: nh,
+                    }}
+                    courseName={scorecardModal.round.course_description || ""}
+                    date={(scorecardModal.round.score_dateStr || "").slice(0, 10).split("-").reverse().join("-")}
+                    tee={String(sc.tee_name ?? "")}
+                  />
                 </>
               );
             })()}

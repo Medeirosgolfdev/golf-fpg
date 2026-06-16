@@ -3,6 +3,7 @@ import type { HoleStatsData, HoleStatEntry } from "../data/playerDataLoader";
 import { fD, fD2, fmtSign } from "../utils/format";
 import { sc3m, sc2, SC, scClass } from "../utils/scoreDisplay";
 import { sumArr } from "../utils/mathUtils";
+import KpiCard from "./KpiCard";
 
 /* ─── Heatmap de buracos: grelha 1×9 (9H) ou 2×9 (18H) ─── */
 function HoleHeatmap({ holes, hc }: { holes: HoleStatEntry[]; hc: number }) {
@@ -187,18 +188,9 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
 
       {/* Diagnosis cards */}
       <div className="haDiag">
-        <div className="kpi-card">
-          <div className="kpi-card-val">{fD(stats.totalStrokesLost)}</div>
-          <div className="kpi-card-label">pancadas perdidas p/ volta vs par</div>
-        </div>
-        <div className="kpi-card">
-          <div className="kpi-card-val">{parOrBetterPct.toFixed(0)}%</div>
-          <div className="kpi-card-label">par ou melhor ({parOrBetter}/{td?.total ?? 0} buracos)</div>
-        </div>
-        <div className="kpi-card">
-          <div className="kpi-card-val">{dblOrWorsePct.toFixed(0)}%</div>
-          <div className="kpi-card-label">double bogey ou pior ({dblOrWorse}/{td?.total ?? 0})</div>
-        </div>
+        <KpiCard value={fD(stats.totalStrokesLost)} label="pancadas perdidas p/ volta vs par" />
+        <KpiCard value={`${parOrBetterPct.toFixed(0)}%`} label={`par ou melhor (${parOrBetter}/${td?.total ?? 0} buracos)`} />
+        <KpiCard value={`${dblOrWorsePct.toFixed(0)}%`} label={`double bogey ou pior (${dblOrWorse}/${td?.total ?? 0})`} />
       </div>
 
       {/* Heatmap de buracos (colapsado por defeito) */}

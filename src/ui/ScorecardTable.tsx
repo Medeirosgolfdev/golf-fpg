@@ -3,7 +3,7 @@ import type { EclecticEntry, HoleScores } from "../data/playerDataLoader";
 import { sumArr } from "../utils/mathUtils";
 import { getTeeHex, textOnColor, teeBorder } from "../utils/teeColors";
 import { fmtSign, fmtToPar } from "../utils/format";
-import { scClass, fmtGrossDelta, fmtStb, toParClass, sc2, SC } from "../utils/scoreDisplay";
+import { scClass, fmtGrossDelta, fmtStb, toParClass } from "../utils/scoreDisplay";
 import { PillBadge } from "./PillBadge";
 import ScoreCircle from "./ScoreCircle";
 import { CourseLink } from "./jogadoresHelpers";
@@ -18,6 +18,9 @@ export interface ScorecardTableProps {
   links?: Record<string, string> | null;
   pill?: string;
   eclecticEntry?: EclecticEntry | null;
+  /** Sem cabeçalho (campo/data/tee/PAR-RESULTADO-SCORE) — para contextos que já
+   *  mostram essas stats por cima, ex: modal da Vista federado. */
+  bare?: boolean;
 }
 
 const linkLabels: Record<string, string> = {
@@ -48,7 +51,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
 }) {
   const ecArr = eclectic.holes.slice(0, holeCount).map(h => h?.best ?? null);
   const parArr = eclectic.holes.slice(0, holeCount).map((h, i) => h?.par ?? par[i]);
-  const ecBorder = { borderTop: "2px solid var(--border)" } as const;
+  const ecBorder = { borderTop: "1px solid var(--border-light)" } as const;
 
   const sumEc = sumArr(ecArr, 0, holeCount);
   const sumGross = sumArr(gross, 0, holeCount);
@@ -57,7 +60,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
     <>
       {/* Eclectic row */}
       <tr>
-        <td className="row-label par-label" style={ecBorder}>Eclético</td>
+        <td className="row-label" style={ecBorder}>Eclético</td>
         {Array.from({ length: holeCount }, (_, h) => {
           const ev = ecArr[h];
           const cls = scClass(ev, parArr[h]);
@@ -104,12 +107,12 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
 
       {/* Δ (delta) row */}
       <tr className="bg-detail">
-        <td className="row-label par-label">Δ</td>
+        <td className="row-label">Δ</td>
         {Array.from({ length: holeCount }, (_, h) => {
           const gv = gross[h];
           const ev = ecArr[h];
           const diff = gv != null && gv > 0 && ev != null ? ev - gv : null;
-          const dc = diff != null ? (diff <= 0 ? { color: SC.good, fontWeight: 700 } : { color: SC.danger, fontWeight: 600 }) : { color: "var(--text-muted)" };
+          const dc = { color: "var(--text-3)" } as const;
           return (
             <React.Fragment key={h}>
               <td style={dc}>
@@ -118,7 +121,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
               {h === frontEnd - 1 && !is9 && (() => {
                 const dOut = sumArr(ecArr, 0, frontEnd) - sumArr(gross, 0, frontEnd);
                 return (
-                  <td className="col-out fw-600" style={{ color: sc2(dOut, 0) }}>
+                  <td className="col-out fw-600" style={{ color: "var(--text-3)" }}>
                     {dOut === 0 ? "=" : (dOut > 0 ? "+" : "") + dOut}
                   </td>
                 );
@@ -129,7 +132,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
         {(() => {
           const dIn = (is9 ? sumEc : sumArr(ecArr, 9, holeCount)) - (is9 ? sumGross : sumArr(gross, 9, holeCount));
           return (
-            <td className={`col-${is9 ? "total" : "in"} fw-600`} style={{ color: sc2(dIn, 0) }}>
+            <td className={`col-${is9 ? "total" : "in"} fw-600`} style={{ color: "var(--text-3)" }}>
               {dIn === 0 ? "=" : (dIn > 0 ? "+" : "") + dIn}
             </td>
           );
@@ -137,7 +140,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
         {!is9 && (() => {
           const totalDiff = sumEc - sumGross;
           return (
-            <td className="col-total" style={{ color: sc2(totalDiff, 0) }}>
+            <td className="col-total" style={{ color: "var(--text-3)" }}>
               {fmtSign(totalDiff)}
             </td>
           );
@@ -147,7 +150,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
   );
 }
 
-export function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, eclecticEntry }: ScorecardTableProps) {
+export function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, eclecticEntry, bare }: ScorecardTableProps) {
   const { g: gross, p: par, si, m: meters, hc: holeCount } = holes;
   const is9 = holeCount === 9;
   const frontEnd = is9 ? holeCount : 9;
@@ -170,8 +173,9 @@ export function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, 
 
   return (
     <div className="sc-modern" style={{ "--tee-color": teeHex_, "--tee-fg": teeFg_ } as React.CSSProperties}>
-      {/* Header */}
-      <div className={`sc-header ${teeFg_ === "#fff" ? "c-white" : "sc-header-light"}`} style={{ background: teeHex_, border: teeBorder(teeHex_) }}>
+      {/* Header (omitido em modo bare) */}
+      {!bare && (
+      <div className={`sc-header ${teeFg_ === "#fff" ? "c-white" : "sc-header-light"}`} style={{ background: teeHex_ }}>
         <div className="sc-header-left">
           <div className="sc-title"><CourseLink name={courseName} /></div>
           <div className="sc-subtitle">
@@ -208,12 +212,13 @@ export function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, 
           </div>
         </div>
       </div>
+      )}
 
       {/* Table */}
-      <table className="sc-table-modern" data-sc-table="1">
+      <table className="sc-table-modern sc-grid" data-sc-table="1">
         <thead>
           <tr>
-            <th className="hole-header sim-br-sep">Buraco</th>
+            <th className="row-label sim-br-sep">Buraco</th>
             {Array.from({ length: totalHoles }, (_, h) => (
               <React.Fragment key={h}>
                 <th className="hole-header">{h + 1}</th>
@@ -228,7 +233,7 @@ export function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, 
           {/* Metros row */}
           {meters && meters.some(v => v != null && v > 0) && (
             <tr className="meta-row">
-              <td className="row-label c-muted fw-400">Metros</td>
+              <td className="row-label">Metros</td>
               {Array.from({ length: totalHoles }, (_, h) => (
                 <React.Fragment key={h}>
                   <td>{meters[h] != null && meters[h]! > 0 ? meters[h] : ""}</td>
@@ -247,7 +252,7 @@ export function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, 
           {/* S.I. row */}
           {si && si.some(v => v != null && v > 0) && (
             <tr className="meta-row">
-              <td className="row-label c-muted fw-400">SI</td>
+              <td className="row-label">SI</td>
               {Array.from({ length: totalHoles }, (_, h) => (
                 <React.Fragment key={h}>
                   <td>{si[h] != null && si[h]! > 0 ? si[h] : ""}</td>
@@ -261,7 +266,7 @@ export function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, 
 
           {/* Par row */}
           <tr className="sep-row">
-            <td className="row-label par-label">Par</td>
+            <td className="row-label">Par</td>
             {Array.from({ length: totalHoles }, (_, h) => (
               <React.Fragment key={h}>
                 <td>{par[h] != null && par[h]! > 0 ? par[h] : "–"}</td>

@@ -51,6 +51,28 @@ const HISTORICOS = [
     date_inicio: '10/18/2025', date_fim: '10/18/2025', rondas: 2, ax: 1129,
     escalao_manuel: 2104, age_groups: [2103, 2104, 2105],
     url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=20175' },
+  // ── Holiday Classic (Regional Championship, NC, 21-22 Dez, 2 rondas) ──
+  // Sem age_groups → apanha Boys 9-12 (foco do tracker). Manuel não jogou.
+  // ⚠ Se "GetMeta falhou" no log, o ax 1129 (intl) pode não ter acesso ao
+  // microsite US — testar ax alternativo (ver outros regionais USA).
+  { t: 8510,  name: 'Holiday Classic 2020',
+    date_inicio: '12/21/2020', date_fim: '12/22/2020', rondas: 2, ax: 1129, escalao_manuel: null,
+    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=8510' },
+  { t: 10306, name: 'Holiday Classic 2021',
+    date_inicio: '12/21/2021', date_fim: '12/22/2021', rondas: 2, ax: 1129, escalao_manuel: null,
+    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=10306' },
+  { t: 13273, name: 'Holiday Classic 2022',
+    date_inicio: '12/21/2022', date_fim: '12/22/2022', rondas: 2, ax: 1129, escalao_manuel: null,
+    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=13273' },
+  { t: 15480, name: 'Holiday Classic 2023',
+    date_inicio: '12/21/2023', date_fim: '12/22/2023', rondas: 2, ax: 1129, escalao_manuel: null,
+    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=15480' },
+  { t: 18000, name: 'Holiday Classic 2024',
+    date_inicio: '12/21/2024', date_fim: '12/22/2024', rondas: 2, ax: 1129, escalao_manuel: null,
+    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=18000' },
+  { t: 20878, name: 'Holiday Classic 2025',
+    date_inicio: '12/21/2025', date_fim: '12/22/2025', rondas: 2, ax: 1129, escalao_manuel: null,
+    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=20878' },
 ];
 
 const ESCALOES_PREFIXOS = ['boys 9', 'boys 10', 'boys 11', 'boys 12'];

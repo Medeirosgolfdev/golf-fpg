@@ -26,6 +26,7 @@ import { useSort } from "../hooks/useSort";
 import SortableHdr from "../ui/SortableHdr";
 import { Toolbar, ToolbarTitle, ToolbarMeta } from "../ui/Toolbar";
 import LoadingState from "../ui/LoadingState";
+import KpiCard from "../ui/KpiCard";
 import { EscPill, PILL_ROUND } from "../ui/PillBadge";
 import { FLAG } from "../utils/flagUtils";
 import { norm, escalaoAtDate, displayName } from "../utils/format";
@@ -767,33 +768,14 @@ export default function DrawsPage() {
       {/* KPI cards — actualizam com o tab seleccionado */}
       {data && (
         <div className="kpi-row">
-          <div className="kpi-card">
-            <div className="kpi-card-label">Rondas em conjunto</div>
-            <div className="kpi-card-val">{contagensTab[tab]}</div>
-            <div className="kpi-card-sub">{tab === "FPG" ? "FPG" : "internacionais"}</div>
-          </div>
-          <div className="kpi-card">
-            <div className="kpi-card-label">Companheiros únicos</div>
-            <div className="kpi-card-val">{linhasOrdenadas.length}</div>
-            <div className="kpi-card-sub">neste circuito</div>
-          </div>
+          <KpiCard label="Rondas em conjunto" value={contagensTab[tab]} sub={tab === "FPG" ? "FPG" : "internacionais"} />
+          <KpiCard label="Companheiros únicos" value={linhasOrdenadas.length} sub="neste circuito" />
           {covTab && (
-            <div className="kpi-card">
-              <div className="kpi-card-label">Cobertura de draws</div>
-              <div className="kpi-card-val" style={{ color: covColor }}>
-                {covPct != null ? `${covPct}%` : "—"}
-              </div>
-              <div className="kpi-card-sub">
-                {covTab.rondasComDraw}/{covTab.rondasJogadas} rondas
-              </div>
-            </div>
+            <KpiCard label="Cobertura de draws" value={covPct != null ? `${covPct}%` : "—"} color={covColor}
+              sub={`${covTab.rondasComDraw}/${covTab.rondasJogadas} rondas`} />
           )}
           {covTab && (
-            <div className="kpi-card">
-              <div className="kpi-card-label">Torneios</div>
-              <div className="kpi-card-val">{covTab.torneiosComDraw}</div>
-              <div className="kpi-card-sub">de {covTab.torneiosJogados} com draw</div>
-            </div>
+            <KpiCard label="Torneios" value={covTab.torneiosComDraw} sub={`de ${covTab.torneiosJogados} com draw`} />
           )}
         </div>
       )}

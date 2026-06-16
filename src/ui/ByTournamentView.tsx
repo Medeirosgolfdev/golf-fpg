@@ -3,7 +3,7 @@ import type { PlayerPageData, RoundData, HoleScores } from "../data/playerDataLo
 import { norm, fmtToPar, fmtSign } from "../utils/format";
 import { sumArr } from "../utils/mathUtils";
 import { scClass, toParClass, sc2 } from "../utils/scoreDisplay";
-import { getTeeHex, textOnColor } from "../utils/teeColors";
+import { getTeeHex, textOnColor, teeBorder } from "../utils/teeColors";
 import { numSafe } from "../utils/mathUtils";
 import { fmtStb } from "../utils/scoreDisplay";
 import { useSort } from "../hooks/useSort";
@@ -507,42 +507,54 @@ export function ByTournamentView({ data, search }: { data: PlayerPageData; searc
   return (
     <div className="card">
       <div className="scroll-x">
-        <table className="dtable-lg">
+        <table className="dtable-lg dtable-roomy" style={{ tableLayout: "fixed" }}>
           <colgroup>
-            <col className="col-p34" /><col className="col-p26" />
-            <col className="col-p9" /><col className="col-p14" /><col className="col-p17" />
+            <col style={{ width: "108px" }} /><col style={{ width: "64px" }} />
+            <col /><col /><col style={{ width: "72px" }} />
           </colgroup>
           <thead>
             <tr>
+              <SortableHdr k="datas" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Datas</SortableHdr>
+              <SortableHdr k="rondas" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Rondas</SortableHdr>
               <SortableHdr k="torneio" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Torneio</SortableHdr>
               <SortableHdr k="campo" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Campo</SortableHdr>
-              <SortableHdr k="rondas" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Rondas</SortableHdr>
               <SortableHdr k="melhor" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Melhor</SortableHdr>
-              <SortableHdr k="datas" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Datas</SortableHdr>
             </tr>
           </thead>
           <tbody>
             {sortedItems.map((it, idx) => {
               const start = it.rounds[0]?.date || "";
               const end = it.rounds[it.rounds.length - 1]?.date || "";
-              const dateStr = start && end && start !== end ? `${start} → ${end}` : (end || start);
+              const hasRange = !!(start && end && start !== end);
               const isOpen = openIdx === idx;
               const best = eventBest(it.rounds);
               const sortedRounds = isOpen ? it.rounds.slice().sort((a, b) => a.dateSort - b.dateSort) : [];
+              // Tee representativo do torneio (última ronda) → cor do pill de contagem
+              const repTee = it.rounds[it.rounds.length - 1]?.tee || "";
+              const tHex = getTeeHex(repTee);
               return (
                 <React.Fragment key={idx}>
                   <tr>
+                    <td style={{ color: "var(--text-2)", fontVariantNumeric: "tabular-nums", lineHeight: 1.25 }}>
+                      {hasRange ? (
+                        <>
+                          <div className="fs-11">{start}</div>
+                          <div className="fs-11 muted">→ {end}</div>
+                        </>
+                      ) : (
+                        <div className="fs-11">{end || start}</div>
+                      )}
+                    </td>
+                    <td className="r"><span className="count" style={{ background: tHex, color: textOnColor(tHex), border: teeBorder(tHex) }}>{it.rounds.length}</span></td>
                     <td>
                       <button className="courseBtn" onClick={() => setOpenIdx(isOpen ? null : idx)}>{it.name}</button>
                     </td>
-                    <td><b><CourseLink name={it.course} /></b></td>
-                    <td className="r"><b>{it.rounds.length}</b></td>
+                    <td><CourseLink name={it.course} /></td>
                     <td className="r">
                       {best
                         ? <><b>{best.gross}</b><span className={`score-delta ${best.toPar > 0 ? "pos" : best.toPar < 0 ? "neg" : ""}`}>{best.toPar > 0 ? "+" : ""}{best.toPar}</span></>
                         : <span className="muted">—</span>}
                     </td>
-                    <td style={{ color: "var(--text-2)", whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>{dateStr}</td>
                   </tr>
                   {isOpen && (
                     <tr className="details open">

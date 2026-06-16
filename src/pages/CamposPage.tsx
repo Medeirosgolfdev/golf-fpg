@@ -1,5 +1,6 @@
 import { useMemo, useState, useEffect, Fragment } from "react";
 import SidebarToggle from "../ui/SidebarToggle";
+import KpiCard from "../ui/KpiCard";
 import EmptyState from "../ui/EmptyState";
 import LoadingState from "../ui/LoadingState";
 import Counter from "../ui/Counter";
@@ -171,7 +172,7 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
 
   return (
     <div className="sc-wrap">
-      <table className="sc-table">
+      <table className="sc-table sc-grid">
         <thead>
           {/* PAR e SI — acima da linha de cabeçalho, para o cabeçalho ficar
               colado aos tees (sem interrupção). */}
@@ -308,7 +309,7 @@ function CourseNineRatings({ tees }: { tees: Tee[] }) {
     <details className="m-14-0" open>
       <summary className="h-xs" style={{ margin: "0 0 8px", cursor: "pointer" }}>Ratings por 9 buracos</summary>
       <div className="sc-wrap">
-        <table className="sc-table">
+        <table className="sc-table sc-grid">
           <thead>
             {/* Linha 1: Front 9 / Back 9 */}
             <tr>
@@ -740,7 +741,7 @@ function CourseHoleAverages({ course }: { course: Course }) {
         Cor: <span style={{ color: SC.good }}>abaixo</span> · <span style={{ color: SC.warn }}>acima</span> · <span style={{ color: SC.danger }}>bem acima</span> do par.
       </div>
       <div className="sc-wrap">
-        <table className="sc-table">
+        <table className="sc-table sc-grid">
           <thead>
             <tr>
               <th className="sc-sticky">Buraco</th>
@@ -1128,20 +1129,10 @@ export default function CamposPage() {
               {/* KPIs do campo */}
               {heroStats && (
                 <div className="kpi-row">
-                  <div className="kpi-card">
-                    <div className="kpi-card-label">Par</div>
-                    <div className="kpi-card-val">{heroStats.par ?? "–"}</div>
-                  </div>
-                  <div className="kpi-card">
-                    <div className="kpi-card-label">Tees</div>
-                    <div className="kpi-card-val">{heroStats.nTees}</div>
-                  </div>
+                  <KpiCard label="Par" value={heroStats.par ?? "–"} />
+                  <KpiCard label="Tees" value={heroStats.nTees} />
                   {heroStats.nPlayers > 0 && (
-                    <div className="kpi-card">
-                      <div className="kpi-card-label">Jogadores</div>
-                      <div className="kpi-card-val">{heroStats.nPlayers}</div>
-                      <div className="kpi-card-sub">já jogaram</div>
-                    </div>
+                    <KpiCard label="Jogadores" value={heroStats.nPlayers} sub="já jogaram" />
                   )}
                 </div>
               )}

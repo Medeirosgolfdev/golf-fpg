@@ -96,6 +96,7 @@ const CALENDARS: CalendarSource[] = [
   { id: "viag_roma",      name: "✈ Roma (Mar)",          color: C.cal.viag_roma, group: "VIAGENS" },
   { id: "viag_alg_mar",   name: "✈ Algarve (Mar/Abr)",  color: C.cal.viag_alg_mar, group: "VIAGENS" },
   { id: "viag_edinb",     name: "✈ Edimburgo (Mai)",     color: C.cal.viag_edinb, group: "VIAGENS" },
+  { id: "viag_jun",       name: "✈ Lisboa Jun · Manuel + M. Francisco",      color: C.cal.viag_roma,        group: "VIAGENS" },
   { id: "viag_alg_jul_m",   name: "✈ Algarve Jul · Manuel+2 (prov.)",         color: C.cal.viag_alg_jul_m,   group: "VIAGENS" },
   { id: "viag_alg_jul_ma",  name: "✈ Algarve Jul · Mariana (prov.)",          color: C.cal.viag_alg_jul_ma,  group: "VIAGENS" },
   { id: "viag_alg_jul_mf",  name: "✈ Algarve Jul/Ago · M. Francisco (prov.)", color: C.cal.viag_alg_jul_mf,  group: "VIAGENS" },
@@ -334,6 +335,11 @@ const EVENTS: CalEvent[] = [
   ev("viag_edinb", "✈ FR6673 FNC → EDI 15:00–19:05",             new Date(2026,4,23), "Ryanair", ""),
   ev("viag_edinb", "✈ FR6674 EDI → FNC 19:30–23:40",             new Date(2026,4,30), "Ryanair", ""),
 
+  // ── Lisboa Junho · Manuel + Manuel Francisco (confirmado) ──
+  ev("viag_jun", "✈ TP1690 FNC → LIS 14:15–16:00",              new Date(2026,5,22), "TAP", "ZUVRVP · M. Francisco (chegada est.)"),
+  ev("viag_jun", "✈ TP1686 FNC → LIS 09:25–11:10",              new Date(2026,5,26), "TAP", "Manuel"),
+  ev("viag_jun", "✈ TP1693 LIS → FNC 19:15–21:05",              new Date(2026,5,28), "TAP", "Manuel + M. Francisco"),
+
   /* ══════════════════════════════════════
      ✈ VIAGENS PROVISÓRIAS — Verão 2026 (por confirmar)
      ══════════════════════════════════════ */
@@ -341,12 +347,12 @@ const EVENTS: CalEvent[] = [
   // ── Algarve Julho · Manuel + Maria Antónia + Gastão (provisório) ──
   ev("viag_alg_jul_m",  "✈ TP1688 FNC → LIS 12:40–14:25",        new Date(2026,6,6),  "TAP", "Prov. · Manuel, M.ª Antónia, Gastão"),
   ev("viag_alg_jul_m",  "✈ TP1905 LIS → FAO 16:30–17:20",        new Date(2026,6,6),  "TAP", "Prov. · Manuel, M.ª Antónia, Gastão"),
-  ev("viag_alg_jul_m",  "✈ TP1693 LIS → FNC 19:10–21:05",        new Date(2026,6,18), "TAP", "Prov. · Manuel, M.ª Antónia, Gastão"),
+  ev("viag_alg_jul_m",  "✈ TP1693 LIS → FNC 19:10–21:05",        new Date(2026,6,17), "TAP", "Prov. · Manuel, M.ª Antónia, Gastão"),
 
   // ── Algarve Julho · Mariana (provisório) ──
   ev("viag_alg_jul_ma", "✈ TP1692 FNC → LIS 19:35–21:20",        new Date(2026,6,12), "TAP", "Prov. · Mariana"),
   ev("viag_alg_jul_ma", "✈ TP1907 LIS → FAO 23:00–23:50",        new Date(2026,6,12), "TAP", "Prov. · Mariana"),
-  ev("viag_alg_jul_ma", "✈ TP1693 LIS → FNC 19:10–21:05",        new Date(2026,6,18), "TAP", "Prov. · Mariana"),
+  ev("viag_alg_jul_ma", "✈ TP1693 LIS → FNC 19:10–21:05",        new Date(2026,6,17), "TAP", "Prov. · Mariana"),
 
   // ── Algarve Julho/Agosto · Manuel Francisco (provisório) ──
   ev("viag_alg_jul_mf", "✈ TP1692 FNC → LIS 19:35–21:20",        new Date(2026,6,12), "TAP", "Prov. · Manuel Francisco"),

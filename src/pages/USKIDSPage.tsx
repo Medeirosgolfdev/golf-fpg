@@ -410,6 +410,9 @@ export default function USKidsFieldPage() {
   };
   const md = useMasterDetail();
   const [filterManuel, setFilterManuel] = useState(true);
+  // Ocultar torneios com campo pequeno (< 60 jogadores) na tab Resultados
+  const [filterSmallField, setFilterSmallField] = useState(false);
+  const MIN_FIELD = 60;
 
   // selectedT sincronizado com URL params (?t=)
   const paramT = searchParams.get("t");
@@ -822,9 +825,13 @@ export default function USKidsFieldPage() {
 
   const renderSidebarTorneios = () => {
     const manuelFilter = (t: TorneioEntry) => !filterManuel || t.manuelJogou;
+    // Filtro de campo pequeno: só na tab Resultados. Usa totalInscritos
+    // (= soma de participantes na última ronda de cada escalão).
+    const fieldFilter = (t: TorneioEntry) =>
+      !(filterSmallField && tab === "resultados") || (t.totalInscritos ?? 0) >= MIN_FIELD;
     const activeList = tab === "campo"
       ? allTorneios.filter(t => !t.terminado && manuelFilter(t))
-      : allTorneios.filter(manuelFilter);
+      : allTorneios.filter(t => manuelFilter(t) && fieldFilter(t));
 
     const buildMonthMap = (list: TorneioEntry[]) => {
       const monthMap: Record<string, TorneioEntry[]> = {};
@@ -1007,6 +1014,17 @@ export default function USKidsFieldPage() {
             ★ Manuel
           </button>
         </>)}
+        {tab === "resultados" && (
+          <button
+            className={"tourn-tab tourn-tab-sm" + (filterSmallField ? " active" : "")}
+            onClick={() => setFilterSmallField(v => !v)}
+            title={`Ocultar torneios com menos de ${MIN_FIELD} jogadores`}
+            style={filterSmallField
+              ? { flexShrink:0, background:"var(--bg-success-subtle)", borderColor:"var(--color-good)", color:"var(--color-good-dark)" }
+              : { flexShrink:0, background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)" }}>
+            Campo ≥{MIN_FIELD}
+          </button>
+        )}
         <div style={{ flex:1, minWidth:8 }} />
         <a href="https://uskids-golf.vercel.app/" target="_blank" rel="noopener noreferrer"
           className="fs-11 fw-600" style={{ flexShrink:0, color:"var(--accent)", border:"1px solid var(--accent)", borderRadius:5, padding:"3px 8px", textDecoration:"none", whiteSpace:"nowrap", display:"inline-flex", alignItems:"center", gap:3 }}>

@@ -220,7 +220,7 @@ export function EclecticSection({ ecList, ecDet, courseRounds, holesData, active
             {/* Scorecard sem w-full: largura por conteúdo, células iguais entre tees —
                 a tabela de um tee só com 9 buracos fica visivelmente mais curta. */}
             <div className="scroll-x">
-              <table className="sc-table-ec" >
+              <table className="sc-table-ec sc-grid" >
                 <thead>
                   <tr>
                     <th className="row-label col-w60">Buraco</th>

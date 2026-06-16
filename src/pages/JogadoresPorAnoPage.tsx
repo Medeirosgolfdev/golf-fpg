@@ -327,7 +327,7 @@ export default function JogadoresPorAnoPage() {
     const sorted = [...rows].sort(cmp);
     return (
       <div style={{ overflowX: "auto", padding: "0 4px 12px" }}>
-        <table className="sc-table-ec" style={{ width: "100%" }}>
+        <table className="sc-table-ec sc-grid" style={{ width: "100%" }}>
           <thead>
             <tr>
               <th style={{ textAlign: "right" }}>#</th>

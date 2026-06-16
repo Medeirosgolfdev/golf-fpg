@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-06-14T22:43:19.110Z",
+  "generatedAt": "2026-06-16T17:49:21.699Z",
   "juniors": [
     {
       "id": "u433800",
@@ -49091,29 +49091,16 @@
       "id": "u521022",
       "canonicalName": "Martim Shipitsyn Moreira",
       "aliases": [],
-      "dob": "2012-02-16",
-      "sex": "M",
+      "dob": null,
+      "sex": null,
       "nationality": "PT",
       "country": "PT",
-      "region": "Lisboa",
-      "club": "Belas",
+      "region": null,
+      "club": null,
       "sources": {
         "uskids": {
           "memberId": "521022",
           "ageGroupCurrent": "Boys 12"
-        },
-        "fpg": {
-          "fed": "42985",
-          "club": "Belas",
-          "clubCode": "068",
-          "clubLong": "Clube de Golfe de Belas",
-          "hcpExact": 10.9,
-          "hcpDate": "2026-06-09",
-          "sex": "M",
-          "tags": [
-            "PJA"
-          ],
-          "primary": true
         }
       },
       "tournamentIds": [
@@ -49141,99 +49128,15 @@
         "uskids-11683",
         "uskids-11684",
         "uskids-11685",
-        "uskids-13702",
-        "fpg-152-10368-20240305-all",
-        "fpg-013-10092-20240618-all",
-        "fpg-191-10021-20241004-all",
-        "fpg-192-10005-20241130-all",
-        "fpg-000-10825-20250414-sub_14",
-        "fpg-038-10651-20250530-all",
-        "fpg-000-10939-20260430-sub_14"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-04-30",
-          "hcpExact": 8.6,
-          "source": "fpg",
-          "tcode": "10939",
-          "ccode": "000",
-          "label": "Campeonato Nacional de Jovens Sub 14 H"
-        },
-        {
-          "date": "2025-05-30",
-          "hcpExact": 8.3,
-          "source": "fpg",
-          "tcode": "10651",
-          "ccode": "038",
-          "label": "PJA  António Dantas Classic 2025"
-        },
-        {
-          "date": "2025-04-14",
-          "hcpExact": 8.5,
-          "source": "fpg",
-          "tcode": "10825",
-          "ccode": "000",
-          "label": "Campeonato Nacional de Clubes Sub 14"
-        },
-        {
-          "date": "2024-11-30",
-          "hcpExact": 5.6,
-          "source": "fpg",
-          "tcode": "10005",
-          "ccode": "192",
-          "label": "PJA TOUR Grand Final"
-        },
-        {
-          "date": "2024-10-04",
-          "hcpExact": 6.6,
-          "source": "fpg",
-          "tcode": "10021",
-          "ccode": "191",
-          "label": "PJA  Alfred Dunhill Links Championship"
-        },
-        {
-          "date": "2024-09-14",
-          "hcpExact": 7,
-          "source": "fpg",
-          "tcode": "10584",
-          "ccode": "038",
-          "label": "PJA European Masters Quinta do Peru"
-        },
-        {
-          "date": "2024-06-18",
-          "hcpExact": 6.6,
-          "source": "fpg",
-          "tcode": "10092",
-          "ccode": "013",
-          "label": "PJA TOUR US OPEN"
-        },
-        {
-          "date": "2024-04-12",
-          "hcpExact": 10.6,
-          "source": "fpg",
-          "tcode": "10097",
-          "ccode": "189",
-          "label": "PJA Masters 2024 - Montado"
-        },
-        {
-          "date": "2024-03-05",
-          "hcpExact": 10.9,
-          "source": "fpg",
-          "tcode": "10368",
-          "ccode": "152",
-          "label": "PJA - Portuguese Championship 2024"
-        }
+        "uskids-13702"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:521022",
-          "fpg:42985",
-          "dob:2012-02-16"
+          "uskids:521022"
         ],
         "mergedFromSources": [
-          "uskids",
-          "fpg"
+          "uskids"
         ]
       }
     },
@@ -64643,6 +64546,45 @@
           "uskids",
           "fpg",
           "doral"
+        ]
+      }
+    },
+    {
+      "id": "u527408",
+      "canonicalName": "Massimo Zati",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "IT",
+      "country": "IT",
+      "region": null,
+      "club": null,
+      "sources": {
+        "uskids": {
+          "memberId": "527408",
+          "ageGroupCurrent": "Boys 15-18"
+        }
+      },
+      "tournamentIds": [
+        "uskids-14302",
+        "uskids-5436",
+        "uskids-18125",
+        "uskids-12691",
+        "uskids-11826",
+        "uskids-11828",
+        "uskids-13677",
+        "uskids-13678",
+        "uskids-13679",
+        "uskids-13681",
+        "uskids-13682"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "uskids:527408"
+        ],
+        "mergedFromSources": [
+          "uskids"
         ]
       }
     },
@@ -92166,13 +92108,13 @@
         "uskids-11828",
         "uskids-11955",
         "uskids-11228",
-        "uskids-6795",
-        "uskids-11824",
         "uskids-13677",
         "uskids-13678",
         "uskids-13679",
         "uskids-13681",
         "uskids-13682",
+        "uskids-6795",
+        "uskids-11824",
         "uskids-15553"
       ],
       "_match": {
@@ -92238,13 +92180,13 @@
         "uskids-11828",
         "uskids-11955",
         "uskids-11228",
-        "uskids-6795",
-        "uskids-11824",
         "uskids-13677",
         "uskids-13678",
         "uskids-13679",
         "uskids-13681",
         "uskids-13682",
+        "uskids-6795",
+        "uskids-11824",
         "uskids-15553",
         "uskids-13680"
       ],
@@ -101597,6 +101539,7 @@
         "uskids-10476",
         "uskids-11720",
         "uskids-10419",
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408555",
         "ffgolf-2601403800",
@@ -101619,6 +101562,13 @@
         "ffgolf-2300971012"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 2.3,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 2.7,
@@ -108950,12 +108900,12 @@
         "uskids-11828",
         "uskids-11955",
         "uskids-11228",
-        "uskids-11824",
         "uskids-13677",
         "uskids-13678",
         "uskids-13679",
         "uskids-13681",
         "uskids-13682",
+        "uskids-11824",
         "uskids-13680"
       ],
       "_match": {
@@ -144094,9 +144044,9 @@
         "uskids-11827",
         "uskids-11828",
         "uskids-11955",
-        "uskids-11824",
         "uskids-13677",
         "uskids-13679",
+        "uskids-11824",
         "uskids-13680"
       ],
       "_match": {
@@ -152547,6 +152497,11 @@
         "uskids-11827",
         "uskids-11828",
         "uskids-11955",
+        "uskids-13677",
+        "uskids-13678",
+        "uskids-13679",
+        "uskids-13681",
+        "uskids-13682",
         "uskids-15321",
         "uskids-15326",
         "uskids-19141",
@@ -152554,11 +152509,6 @@
         "uskids-20541",
         "uskids-21794",
         "uskids-11824",
-        "uskids-13677",
-        "uskids-13678",
-        "uskids-13679",
-        "uskids-13681",
-        "uskids-13682",
         "uskids-13680",
         "uskids-16303",
         "uskids-16304",
@@ -174839,6 +174789,7 @@
         "uskids-13810",
         "uskids-11724",
         "uskids-12866",
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408555",
         "ffgolf-2601403800",
@@ -174861,6 +174812,13 @@
         "ffgolf-2301037948"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 2.3,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 4.3,
@@ -175042,11 +175000,11 @@
         "uskids-11827",
         "uskids-11828",
         "uskids-11955",
-        "uskids-11824",
         "uskids-13677",
         "uskids-13678",
         "uskids-13679",
         "uskids-13682",
+        "uskids-11824",
         "uskids-13680"
       ],
       "_match": {
@@ -175966,6 +175924,7 @@
         "uskids-21385",
         "uskids-21386",
         "uskids-21388",
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601403800",
         "ffgolf-2501365354",
@@ -175977,6 +175936,13 @@
         "wjgc-wjgc_2025_b1011"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 8.7,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 9.8,
@@ -177087,6 +177053,7 @@
         "uskids-10478",
         "uskids-10472",
         "uskids-10476",
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408555",
         "ffgolf-2601424402",
@@ -177116,6 +177083,13 @@
         "ffgolf-2300994570"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 1.5,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 2.6,
@@ -177932,6 +177906,7 @@
         "uskids-18712",
         "uskids-18711",
         "uskids-20341",
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408555",
         "ffgolf-2501365354",
@@ -177940,6 +177915,13 @@
         "ffgolf-2401147573"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 3.6,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 6.9,
@@ -180949,6 +180931,7 @@
         "uskids-13212",
         "uskids-21384",
         "uskids-21385",
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
         "ffgolf-2501391907",
@@ -180961,6 +180944,13 @@
         "ffgolf-2401147573"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 9.4,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 12.1,
@@ -187886,6 +187876,7 @@
         "uskids-18712",
         "uskids-18711",
         "uskids-19030",
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501364543",
         "ffgolf-2501309802",
@@ -187896,6 +187887,13 @@
         "ffgolf-2301037948"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 8.2,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 8.6,
@@ -203372,9 +203370,9 @@
         "uskids-12777",
         "uskids-15327",
         "uskids-11383",
+        "uskids-13682",
         "uskids-18045",
         "uskids-18130",
-        "uskids-13682",
         "uskids-13680",
         "uskids-18355",
         "uskids-21354"
@@ -206473,6 +206471,7 @@
       },
       "tournamentIds": [
         "uskids-12496",
+        "uskids-13273",
         "uskids-12059",
         "uskids-11482",
         "uskids-11483",
@@ -217447,10 +217446,18 @@
         "uskids-21384",
         "uskids-21385",
         "uskids-21386",
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2401147573"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 9.9,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 10.6,
@@ -218077,12 +218084,12 @@
         "uskids-11827",
         "uskids-11828",
         "uskids-11955",
-        "uskids-11824",
         "uskids-13677",
         "uskids-13678",
         "uskids-13679",
         "uskids-13681",
         "uskids-13682",
+        "uskids-11824",
         "uskids-13680",
         "uskids-16303",
         "uskids-16304",
@@ -219523,6 +219530,7 @@
         "uskids-17369",
         "uskids-17370",
         "uskids-17366",
+        "ffgolf-2601423995",
         "ffgolf-2601442078",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
@@ -219537,6 +219545,13 @@
         "ffgolf-2401150105"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 5.3,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-05-30",
           "hcpExact": 5.5,
@@ -227200,6 +227215,7 @@
         "uskids-13211",
         "uskids-13212",
         "uskids-20341",
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
         "ffgolf-2501391907",
@@ -227207,6 +227223,13 @@
         "wjgc-wjgc_2026_b89"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 11.6,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 13.4,
@@ -227620,12 +227643,20 @@
         "uskids-20340",
         "uskids-20342",
         "uskids-20343",
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
         "ffgolf-2501391907",
         "ffgolf-2501365354"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 12,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 13.2,
@@ -231855,10 +231886,18 @@
         "uskids-12866",
         "uskids-16063",
         "uskids-18711",
+        "ffgolf-2601423995",
         "ffgolf-2501391907",
         "ffgolf-2501365354"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 15.2,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-03-21",
           "hcpExact": 18,
@@ -233558,7 +233597,8 @@
         "uskids-20459",
         "uskids-16507",
         "uskids-20464",
-        "uskids-21814"
+        "uskids-21814",
+        "uskids-22481"
       ],
       "_match": {
         "confidence": "strong",
@@ -240089,9 +240129,9 @@
         "uskids-12706",
         "uskids-19263",
         "uskids-19264",
+        "uskids-13678",
         "uskids-12703",
         "uskids-14810",
-        "uskids-13678",
         "uskids-19268",
         "uskids-16594",
         "uskids-14069",
@@ -241446,13 +241486,13 @@
         "uskids-16795",
         "uskids-20175",
         "uskids-17173",
-        "uskids-15326",
-        "uskids-18052",
-        "uskids-18053",
         "uskids-13677",
         "uskids-13678",
         "uskids-13679",
         "uskids-13682",
+        "uskids-15326",
+        "uskids-18052",
+        "uskids-18053",
         "uskids-13680",
         "uskids-16303",
         "uskids-16304",
@@ -241570,14 +241610,14 @@
         "uskids-16396",
         "uskids-16795",
         "uskids-20175",
-        "uskids-15321",
-        "uskids-15326",
-        "uskids-18052",
         "uskids-13677",
         "uskids-13678",
         "uskids-13679",
         "uskids-13681",
         "uskids-13682",
+        "uskids-15321",
+        "uskids-15326",
+        "uskids-18052",
         "uskids-13680",
         "uskids-16303",
         "uskids-16304",
@@ -243421,12 +243461,12 @@
         "uskids-19418",
         "uskids-12777",
         "uskids-17059",
-        "uskids-13536",
-        "uskids-15666",
-        "uskids-18045",
         "uskids-13677",
         "uskids-13678",
         "uskids-13682",
+        "uskids-13536",
+        "uskids-15666",
+        "uskids-18045",
         "uskids-13680",
         "uskids-20780",
         "uskids-16305"
@@ -243466,12 +243506,12 @@
         "uskids-17054",
         "uskids-17055",
         "uskids-17059",
-        "uskids-13536",
-        "uskids-15666",
-        "uskids-18045",
         "uskids-13677",
         "uskids-13678",
         "uskids-13682",
+        "uskids-13536",
+        "uskids-15666",
+        "uskids-18045",
         "uskids-13680",
         "uskids-20780",
         "uskids-16305"
@@ -244054,8 +244094,8 @@
           "club": "Miramar",
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
-          "hcpExact": 0.7,
-          "hcpDate": "2026-06-06",
+          "hcpExact": 0.5,
+          "hcpDate": "2026-06-13",
           "sex": "M",
           "tags": [
             "inscrito-nacional"
@@ -248821,12 +248861,20 @@
         "uskids-16064",
         "uskids-16065",
         "uskids-16063",
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
         "ffgolf-2501308499",
         "ffgolf-2501323091"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 13.8,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 15.2,
@@ -255804,6 +255852,7 @@
         "uskids-21385",
         "uskids-21386",
         "uskids-21388",
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501391907",
         "ffgolf-2601403797",
@@ -255815,6 +255864,13 @@
         "wjgc-wjgc_2025_b1011"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 8.9,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 10.8,
@@ -261031,9 +261087,9 @@
         "uskids-20175",
         "uskids-18975",
         "uskids-20429",
+        "uskids-13682",
         "uskids-15326",
         "uskids-18053",
-        "uskids-13682",
         "uskids-16303",
         "uskids-16304",
         "uskids-16307",
@@ -278511,6 +278567,7 @@
         "uskids-18382",
         "uskids-18381",
         "uskids-17370",
+        "ffgolf-2601423995",
         "ffgolf-2601442078",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
@@ -278519,6 +278576,13 @@
         "ffgolf-2601403797"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 4,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-05-30",
           "hcpExact": 4.8,
@@ -285526,6 +285590,7 @@
         "uskids-16065",
         "uskids-16063",
         "uskids-19030",
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
         "ffgolf-2501391907",
@@ -285537,6 +285602,13 @@
         "ffgolf-2501305383"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 7.6,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 10.1,
@@ -292935,12 +293007,20 @@
         "uskids-18711",
         "uskids-20341",
         "uskids-21388",
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
         "ffgolf-2501391907",
         "ffgolf-2601403797"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 12.9,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 15.6,
@@ -304893,8 +304973,8 @@
           "club": "Estela",
           "clubCode": "022",
           "clubLong": "Estela Golf Club",
-          "hcpExact": 12.2,
-          "hcpDate": "2026-06-12",
+          "hcpExact": 12.1,
+          "hcpDate": "2026-06-13",
           "sex": "M",
           "tags": [
             "no-priority"
@@ -305066,7 +305146,7 @@
           "clubCode": "183",
           "clubLong": "PXO Clube de Golfe",
           "hcpExact": 4,
-          "hcpDate": "2026-05-02",
+          "hcpDate": "2026-06-13",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -306916,6 +306996,125 @@
       }
     },
     {
+      "id": "f42985",
+      "canonicalName": "Martim Moreira",
+      "aliases": [],
+      "dob": "2012-02-16",
+      "sex": "M",
+      "nationality": "PT",
+      "country": "PT",
+      "region": "Lisboa",
+      "club": "Belas",
+      "sources": {
+        "fpg": {
+          "fed": "42985",
+          "club": "Belas",
+          "clubCode": "068",
+          "clubLong": "Clube de Golfe de Belas",
+          "hcpExact": 10.9,
+          "hcpDate": "2026-06-09",
+          "sex": "M",
+          "tags": [
+            "PJA"
+          ],
+          "primary": true
+        }
+      },
+      "tournamentIds": [
+        "fpg-152-10368-20240305-all",
+        "fpg-013-10092-20240618-all",
+        "fpg-191-10021-20241004-all",
+        "fpg-192-10005-20241130-all",
+        "fpg-000-10825-20250414-sub_14",
+        "fpg-038-10651-20250530-all",
+        "fpg-000-10939-20260430-sub_14"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-04-30",
+          "hcpExact": 8.6,
+          "source": "fpg",
+          "tcode": "10939",
+          "ccode": "000",
+          "label": "Campeonato Nacional de Jovens Sub 14 H"
+        },
+        {
+          "date": "2025-05-30",
+          "hcpExact": 8.3,
+          "source": "fpg",
+          "tcode": "10651",
+          "ccode": "038",
+          "label": "PJA  António Dantas Classic 2025"
+        },
+        {
+          "date": "2025-04-14",
+          "hcpExact": 8.5,
+          "source": "fpg",
+          "tcode": "10825",
+          "ccode": "000",
+          "label": "Campeonato Nacional de Clubes Sub 14"
+        },
+        {
+          "date": "2024-11-30",
+          "hcpExact": 5.6,
+          "source": "fpg",
+          "tcode": "10005",
+          "ccode": "192",
+          "label": "PJA TOUR Grand Final"
+        },
+        {
+          "date": "2024-10-04",
+          "hcpExact": 6.6,
+          "source": "fpg",
+          "tcode": "10021",
+          "ccode": "191",
+          "label": "PJA  Alfred Dunhill Links Championship"
+        },
+        {
+          "date": "2024-09-14",
+          "hcpExact": 7,
+          "source": "fpg",
+          "tcode": "10584",
+          "ccode": "038",
+          "label": "PJA European Masters Quinta do Peru"
+        },
+        {
+          "date": "2024-06-18",
+          "hcpExact": 6.6,
+          "source": "fpg",
+          "tcode": "10092",
+          "ccode": "013",
+          "label": "PJA TOUR US OPEN"
+        },
+        {
+          "date": "2024-04-12",
+          "hcpExact": 10.6,
+          "source": "fpg",
+          "tcode": "10097",
+          "ccode": "189",
+          "label": "PJA Masters 2024 - Montado"
+        },
+        {
+          "date": "2024-03-05",
+          "hcpExact": 10.9,
+          "source": "fpg",
+          "tcode": "10368",
+          "ccode": "152",
+          "label": "PJA - Portuguese Championship 2024"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "fpg:42985",
+          "dob:2012-02-16"
+        ],
+        "mergedFromSources": [
+          "fpg"
+        ]
+      }
+    },
+    {
       "id": "f43053",
       "canonicalName": "Gabriel Marques Guerreiro",
       "aliases": [],
@@ -307341,8 +307540,8 @@
           "club": "Vale de Janelas",
           "clubCode": "177",
           "clubLong": "Clube de Golfe de Vale de Janelas",
-          "hcpExact": 2.7,
-          "hcpDate": "2026-06-12",
+          "hcpExact": 2.4,
+          "hcpDate": "2026-06-13",
           "sex": "F",
           "tags": [],
           "primary": true
@@ -308287,8 +308486,8 @@
           "club": "PXO Clube",
           "clubCode": "183",
           "clubLong": "PXO Clube de Golfe",
-          "hcpExact": 1.5,
-          "hcpDate": "2026-06-06",
+          "hcpExact": 1.4,
+          "hcpDate": "2026-06-13",
           "sex": "F",
           "tags": [],
           "primary": true
@@ -308969,8 +309168,8 @@
           "club": "Miramar",
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
-          "hcpExact": 7.3,
-          "hcpDate": "2026-06-09",
+          "hcpExact": 6.8,
+          "hcpDate": "2026-06-13",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -309202,8 +309401,8 @@
           "club": "Miramar",
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
-          "hcpExact": 7.5,
-          "hcpDate": "2026-06-05",
+          "hcpExact": 6.5,
+          "hcpDate": "2026-06-13",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -309405,8 +309604,8 @@
           "club": "Miramar",
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
-          "hcpExact": 3,
-          "hcpDate": "2026-06-06",
+          "hcpExact": 2.5,
+          "hcpDate": "2026-06-13",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -314152,8 +314351,8 @@
           "club": "Miramar",
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
-          "hcpExact": 45.6,
-          "hcpDate": "2026-05-02",
+          "hcpExact": 41.8,
+          "hcpDate": "2026-06-13",
           "sex": "M",
           "tags": [
             "inscrito-nacional"
@@ -314218,7 +314417,7 @@
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
           "hcpExact": 13.8,
-          "hcpDate": "2026-05-23",
+          "hcpDate": "2026-06-13",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -314298,8 +314497,8 @@
           "club": "Miramar",
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
-          "hcpExact": 19.3,
-          "hcpDate": "2026-06-03",
+          "hcpExact": 17.7,
+          "hcpDate": "2026-06-13",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -314446,7 +314645,7 @@
           "clubCode": "038",
           "clubLong": "Clube de Golf da Quinta do Peru",
           "hcpExact": 4.6,
-          "hcpDate": "2026-06-12",
+          "hcpDate": "2026-06-13",
           "sex": "F",
           "tags": [
             "PJA"
@@ -314556,8 +314755,8 @@
           "club": "Quinta do Peru",
           "clubCode": "038",
           "clubLong": "Clube de Golf da Quinta do Peru",
-          "hcpExact": 5.6,
-          "hcpDate": "2026-06-09",
+          "hcpExact": 5.2,
+          "hcpDate": "2026-06-13",
           "sex": "M",
           "tags": [
             "PJA"
@@ -314715,8 +314914,8 @@
           "club": "Estoril",
           "clubCode": "004",
           "clubLong": "Clube de Golf do Estoril",
-          "hcpExact": 28.4,
-          "hcpDate": "2026-05-23",
+          "hcpExact": 25.9,
+          "hcpDate": "2026-06-13",
           "sex": "M",
           "tags": [
             "inscrito-nacional"
@@ -315056,8 +315255,8 @@
           "club": "Miramar",
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
-          "hcpExact": 47.4,
-          "hcpDate": "2026-05-23",
+          "hcpExact": 43.3,
+          "hcpDate": "2026-06-13",
           "sex": "M",
           "tags": [
             "inscrito-nacional"
@@ -316079,8 +316278,8 @@
           "club": "Miramar",
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
-          "hcpExact": 16.2,
-          "hcpDate": "2026-05-30",
+          "hcpExact": 16,
+          "hcpDate": "2026-06-13",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -316153,7 +316352,7 @@
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
           "hcpExact": 9.3,
-          "hcpDate": "2026-06-05",
+          "hcpDate": "2026-06-13",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -318510,8 +318709,8 @@
           "club": "Miramar",
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
-          "hcpExact": 45.9,
-          "hcpDate": "2026-05-23",
+          "hcpExact": 41.3,
+          "hcpDate": "2026-06-13",
           "sex": "M",
           "tags": [
             "inscrito-nacional"
@@ -366279,10 +366478,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601444772",
         "ffgolf-2501347448",
         "ffgolf-2401204834"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 7.7,
+          "source": "ffg",
+          "tcode": "2601444772",
+          "label": "Championnat Régional Minimes"
+        },
         {
           "date": "2025-06-14",
           "hcpExact": 7.3,
@@ -366329,9 +366536,17 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601444772",
         "ffgolf-2301067845"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": -0.6,
+          "source": "ffg",
+          "tcode": "2601444772",
+          "label": "Championnat Régional Minimes"
+        },
         {
           "date": "2023-07-26",
           "hcpExact": 8.3,
@@ -366505,10 +366720,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601444772",
         "ffgolf-2501347448",
         "ffgolf-2401204834"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 8.8,
+          "source": "ffg",
+          "tcode": "2601444772",
+          "label": "Championnat Régional Minimes"
+        },
         {
           "date": "2025-06-14",
           "hcpExact": 9.9,
@@ -366597,10 +366820,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601444772",
         "ffgolf-2501347448",
         "ffgolf-2401204834"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 5.8,
+          "source": "ffg",
+          "tcode": "2601444772",
+          "label": "Championnat Régional Minimes"
+        },
         {
           "date": "2025-06-14",
           "hcpExact": 9.2,
@@ -366779,10 +367010,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601444772",
         "ffgolf-2300964296",
         "ffgolf-2301023458"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 3.9,
+          "source": "ffg",
+          "tcode": "2601444772",
+          "label": "Championnat Régional Minimes"
+        },
         {
           "date": "2023-06-30",
           "hcpExact": 11.7,
@@ -368456,6 +368695,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501333000",
         "ffgolf-2401274803",
         "ffgolf-2401234312",
@@ -368464,6 +368704,13 @@
         "ffgolf-2301037400"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 7.5,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-05-24",
           "hcpExact": 7.9,
@@ -368538,11 +368785,19 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501333000",
         "ffgolf-2401203249",
         "ffgolf-2301037400"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 12,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-05-24",
           "hcpExact": 12.5,
@@ -369112,6 +369367,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501364544",
         "ffgolf-2501333000",
         "ffgolf-2501335024",
@@ -369124,6 +369380,13 @@
         "ffgolf-2301037400"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 1.1,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-07-22",
           "hcpExact": 8,
@@ -376628,9 +376891,17 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601444772",
         "ffgolf-2401204834"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 8.7,
+          "source": "ffg",
+          "tcode": "2601444772",
+          "label": "Championnat Régional Minimes"
+        },
         {
           "date": "2024-06-01",
           "hcpExact": 14.9,
@@ -376670,9 +376941,17 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601444772",
         "ffgolf-2401204834"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 12.2,
+          "source": "ffg",
+          "tcode": "2601444772",
+          "label": "Championnat Régional Minimes"
+        },
         {
           "date": "2024-06-01",
           "hcpExact": 22.7,
@@ -376754,9 +377033,17 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601444772",
         "ffgolf-2501347448"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 8.7,
+          "source": "ffg",
+          "tcode": "2601444772",
+          "label": "Championnat Régional Minimes"
+        },
         {
           "date": "2025-06-14",
           "hcpExact": 11.9,
@@ -376796,10 +377083,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601444772",
         "ffgolf-2501347448",
         "ffgolf-2401204834"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 13.9,
+          "source": "ffg",
+          "tcode": "2601444772",
+          "label": "Championnat Régional Minimes"
+        },
         {
           "date": "2025-06-14",
           "hcpExact": 16.4,
@@ -378659,12 +378954,20 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501365354",
         "ffgolf-2401147573",
         "ffgolf-2401144206"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 7.1,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 8,
@@ -378725,6 +379028,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408555",
         "ffgolf-2501365354",
@@ -378738,6 +379042,13 @@
         "ffgolf-2301037948"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 5.6,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 6.2,
@@ -379005,6 +379316,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408555",
         "ffgolf-2601403800",
@@ -379024,6 +379336,13 @@
         "ffgolf-2301037948"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 4.5,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 6.4,
@@ -380742,6 +381061,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501308501",
         "ffgolf-2501364544",
         "ffgolf-2501333000",
@@ -380751,6 +381071,13 @@
         "ffgolf-2401181232"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 5,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-10-29",
           "hcpExact": 5,
@@ -380974,6 +381301,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501378086",
         "ffgolf-2501364543",
         "ffgolf-2501344701",
@@ -380987,6 +381315,13 @@
         "ffgolf-2301037400"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 4.9,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-09-27",
           "hcpExact": 4.9,
@@ -381414,10 +381749,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601444772",
         "ffgolf-2501347448",
         "ffgolf-2401204834"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 6.9,
+          "source": "ffg",
+          "tcode": "2601444772",
+          "label": "Championnat Régional Minimes"
+        },
         {
           "date": "2025-06-14",
           "hcpExact": 7.9,
@@ -381579,6 +381922,48 @@
         "confidence": "strong",
         "evidence": [
           "ffgolf:043759359"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g529511324",
+      "canonicalName": "Victor Didier Splingart",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "PAYS DE LA LOIRE",
+      "club": "Angers La Perriere",
+      "sources": {
+        "ffgolf": {
+          "lic": "529511324",
+          "club": "Angers La Perriere",
+          "hcp": 21.6,
+          "region": "PAYS DE LA LOIRE",
+          "sex": "M",
+          "glfLic": "0566"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601444772"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 15.2,
+          "source": "ffg",
+          "tcode": "2601444772",
+          "label": "Championnat Régional Minimes"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:529511324"
         ],
         "mergedFromSources": [
           "ffgolf"
@@ -381972,6 +382357,48 @@
       }
     },
     {
+      "id": "g526098322",
+      "canonicalName": "Louis Marchand",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "PAYS DE LA LOIRE",
+      "club": "Le Mans",
+      "sources": {
+        "ffgolf": {
+          "lic": "526098322",
+          "club": "Le Mans",
+          "hcp": 28.4,
+          "region": "PAYS DE LA LOIRE",
+          "sex": "M",
+          "glfLic": "0076"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601444772"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 16.1,
+          "source": "ffg",
+          "tcode": "2601444772",
+          "label": "Championnat Régional Minimes"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:526098322"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
       "id": "g531709303",
       "canonicalName": "Arthur Blasco",
       "aliases": [],
@@ -382034,10 +382461,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601444772",
         "ffgolf-2501308501",
         "ffgolf-2401204834"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 18.5,
+          "source": "ffg",
+          "tcode": "2601444772",
+          "label": "Championnat Régional Minimes"
+        },
         {
           "date": "2025-10-29",
           "hcpExact": 18.3,
@@ -382520,6 +382955,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501364544",
         "ffgolf-2501347448",
         "ffgolf-2401269568",
@@ -382531,6 +382967,13 @@
         "ffgolf-2401181232"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 1.2,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-07-22",
           "hcpExact": 9,
@@ -402197,10 +402640,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601444772",
         "ffgolf-2501347448",
         "ffgolf-2401204834"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 5.7,
+          "source": "ffg",
+          "tcode": "2601444772",
+          "label": "Championnat Régional Minimes"
+        },
         {
           "date": "2025-06-14",
           "hcpExact": 10.2,
@@ -402297,10 +402748,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601444772",
         "ffgolf-2501347448",
         "ffgolf-2401204834"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 16.5,
+          "source": "ffg",
+          "tcode": "2601444772",
+          "label": "Championnat Régional Minimes"
+        },
         {
           "date": "2025-06-14",
           "hcpExact": 16.8,
@@ -403131,6 +403590,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501365354",
         "ffgolf-2501309802",
@@ -403146,6 +403606,13 @@
         "ffgolf-2301037948"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 9.2,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 9.9,
@@ -403521,6 +403988,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601442078",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
@@ -403551,6 +404019,13 @@
         "ffgolf-2301037948"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 2,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-05-30",
           "hcpExact": 1.7,
@@ -403837,6 +404312,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601403800",
         "ffgolf-2501378086",
@@ -403852,6 +404328,13 @@
         "ffgolf-2301037948"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 6.3,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 6,
@@ -403975,6 +404458,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408555",
         "ffgolf-2601403800",
@@ -403985,6 +404469,13 @@
         "ffgolf-2301037948"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 5.2,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 6.8,
@@ -404155,6 +404646,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501365354",
         "ffgolf-2401151683",
@@ -404164,6 +404656,13 @@
         "ffgolf-2301037948"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 10.2,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 13.3,
@@ -404501,6 +405000,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408555",
         "ffgolf-2601403800",
@@ -404516,6 +405016,13 @@
         "ffgolf-2301037948"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 3.1,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 4.1,
@@ -404639,6 +405146,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601403800",
         "ffgolf-2501365354",
@@ -404649,6 +405157,13 @@
         "ffgolf-2301037948"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 7.8,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 8.2,
@@ -404737,6 +405252,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501365354",
         "ffgolf-2401151683",
@@ -404745,6 +405261,13 @@
         "ffgolf-2301037948"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 9.7,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 11.4,
@@ -404925,6 +405448,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501365354",
         "ffgolf-2401151683",
@@ -404934,6 +405458,13 @@
         "ffgolf-2301037948"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 15.2,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 18.4,
@@ -405015,6 +405546,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408555",
         "ffgolf-2601403800",
@@ -405028,6 +405560,13 @@
         "ffgolf-2301037948"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 2.3,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 6.4,
@@ -405137,6 +405676,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408555",
         "ffgolf-2601403800",
@@ -405153,6 +405693,13 @@
         "ffgolf-2301037948"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 4.8,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 4.3,
@@ -405499,6 +406046,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408555",
         "ffgolf-2601403800",
@@ -405510,6 +406058,13 @@
         "ffgolf-2301037948"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 6,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 7.2,
@@ -406043,6 +406598,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501365354",
         "ffgolf-2501309802",
@@ -406054,6 +406610,13 @@
         "ffgolf-2301024193"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 8.9,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 10.1,
@@ -410023,6 +410586,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501333000",
         "ffgolf-2401203249",
         "ffgolf-2401191724",
@@ -410030,6 +410594,13 @@
         "ffgolf-2301037400"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 9.2,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-05-24",
           "hcpExact": 11.1,
@@ -410097,6 +410668,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501375677",
         "ffgolf-2501364544",
         "ffgolf-2501333000",
@@ -410110,6 +410682,13 @@
         "ffgolf-2301037400"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 2.1,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-10-28",
           "hcpExact": 3.4,
@@ -410451,11 +411030,19 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501333000",
         "ffgolf-2401203249",
         "ffgolf-2301037400"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 14,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-05-24",
           "hcpExact": 15.5,
@@ -416151,10 +416738,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501333000",
         "ffgolf-2401203249"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 11.6,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-05-24",
           "hcpExact": 15.7,
@@ -418096,11 +418691,19 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2501309802",
         "ffgolf-2401151683",
         "ffgolf-2401150105"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 25.1,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2025-06-14",
           "hcpExact": 25.8,
@@ -418154,6 +418757,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601403800",
         "ffgolf-2501365354",
         "ffgolf-2501309802",
@@ -418164,6 +418768,13 @@
         "ffgolf-2401147573"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 11,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-02-21",
           "hcpExact": 11.7,
@@ -418252,6 +418863,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601403800",
         "ffgolf-2501365354",
@@ -418262,6 +418874,13 @@
         "ffgolf-2401150105"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 6.9,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 8.4,
@@ -420150,6 +420769,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408555",
         "ffgolf-2601403800",
@@ -420162,6 +420782,13 @@
         "ffgolf-2401147573"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 6.5,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 8.5,
@@ -420264,6 +420891,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601442078",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
@@ -420279,6 +420907,13 @@
         "ffgolf-2401144206"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 6.1,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-05-30",
           "hcpExact": 6.2,
@@ -420402,11 +421037,19 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501323091",
         "ffgolf-2401150105"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 15.4,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 15.8,
@@ -420460,6 +421103,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601442078",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
@@ -420476,6 +421120,13 @@
         "ffgolf-2401147573"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 6.1,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-05-30",
           "hcpExact": 6.2,
@@ -420788,6 +421439,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501309802",
         "ffgolf-2501323092",
@@ -420795,6 +421447,13 @@
         "ffgolf-2401150105"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 14.7,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 15.1,
@@ -420862,6 +421521,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501391907",
         "ffgolf-2501365354",
@@ -420869,6 +421529,13 @@
         "ffgolf-2401150105"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 17.2,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 20,
@@ -421334,6 +422001,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408555",
         "ffgolf-2601403800",
@@ -421347,6 +422015,13 @@
         "ffgolf-2401147573"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 2.5,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 4.7,
@@ -421456,6 +422131,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408555",
         "ffgolf-2601403800",
@@ -421468,6 +422144,13 @@
         "ffgolf-2401147573"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 2.6,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 5.3,
@@ -421636,6 +422319,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
         "ffgolf-2501391907",
@@ -421648,6 +422332,13 @@
         "ffgolf-2401147573"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 10.1,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 16.1,
@@ -421750,6 +422441,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601442078",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
@@ -421767,6 +422459,13 @@
         "ffgolf-2401147573"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 6.6,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-05-30",
           "hcpExact": 9,
@@ -421962,6 +422661,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601442078",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
@@ -421978,6 +422678,13 @@
         "ffgolf-2401147573"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 12.2,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-05-30",
           "hcpExact": 11.7,
@@ -422190,6 +422897,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601442078",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
@@ -422202,6 +422910,13 @@
         "ffgolf-2401147573"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 13.1,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-05-30",
           "hcpExact": 13.3,
@@ -422304,6 +423019,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
         "ffgolf-2501391907",
@@ -422314,6 +423030,13 @@
         "ffgolf-2401147573"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 17.8,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 18.4,
@@ -422602,11 +423325,19 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501391907",
         "ffgolf-2601403797"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 9.1,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 9.5,
@@ -422852,10 +423583,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501391907"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 17.6,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 18.3,
@@ -423706,6 +424445,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408555",
         "ffgolf-2501365354",
@@ -423713,6 +424453,13 @@
         "ffgolf-2401147573"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 4.8,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 7.7,
@@ -423822,11 +424569,19 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501323092",
         "ffgolf-2401147573"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 12.9,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 13.3,
@@ -424070,6 +424825,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2601442078",
         "ffgolf-2601415551",
         "ffgolf-2501308499",
@@ -424080,6 +424836,13 @@
         "ffgolf-2401203249"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 7.2,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2026-05-30",
           "hcpExact": 6.7,
@@ -424550,11 +425313,19 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501364543",
         "ffgolf-2501333000",
         "ffgolf-2501338141"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 7.3,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-07-21",
           "hcpExact": 19,
@@ -424608,10 +425379,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501333000",
         "ffgolf-2501338141"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 8.8,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-05-24",
           "hcpExact": 12.1,
@@ -428839,12 +429618,20 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501364543",
         "ffgolf-2501333000",
         "ffgolf-2501338141",
         "ffgolf-2401203249"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 13.4,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-07-21",
           "hcpExact": 28.2,
@@ -428905,11 +429692,19 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501333000",
         "ffgolf-2501338141",
         "ffgolf-2401203249"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 8.4,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-05-24",
           "hcpExact": 18.8,
@@ -435594,12 +436389,20 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501333000",
         "ffgolf-2401203249",
         "ffgolf-2401191724",
         "ffgolf-2300964296"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 7.9,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-05-24",
           "hcpExact": 13.9,
@@ -435660,6 +436463,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2601442078",
         "ffgolf-2601415551",
         "ffgolf-2501333000",
@@ -435667,6 +436471,13 @@
         "ffgolf-2401203249"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 5.9,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2026-05-30",
           "hcpExact": 9.3,
@@ -435734,6 +436545,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501364543",
         "ffgolf-2501333000",
         "ffgolf-2501338141",
@@ -435741,6 +436553,13 @@
         "ffgolf-2401191724"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 8,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-07-21",
           "hcpExact": 11.3,
@@ -435808,10 +436627,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501333000",
         "ffgolf-2401203249"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 23.3,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-05-24",
           "hcpExact": 20.3,
@@ -435942,6 +436769,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2601442078",
         "ffgolf-2601415551",
         "ffgolf-2501344701",
@@ -435950,6 +436778,13 @@
         "ffgolf-2401203249"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 5.2,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2026-05-30",
           "hcpExact": 6.7,
@@ -436024,10 +436859,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501333000",
         "ffgolf-2401203249"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 14.1,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-05-24",
           "hcpExact": 16.7,
@@ -436074,10 +436917,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501333000",
         "ffgolf-2401203249"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 14.3,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-05-24",
           "hcpExact": 20.3,
@@ -436124,12 +436975,20 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501333000",
         "ffgolf-2501338141",
         "ffgolf-2401203249",
         "ffgolf-2401191724"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 11.6,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-05-24",
           "hcpExact": 14.6,
@@ -436190,11 +437049,19 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501333000",
         "ffgolf-2401203249",
         "ffgolf-2401191724"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 7.9,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-05-24",
           "hcpExact": 15.3,
@@ -436248,11 +437115,19 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501333000",
         "ffgolf-2501338141",
         "ffgolf-2401203249"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 8.3,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-05-24",
           "hcpExact": 16.2,
@@ -436349,11 +437224,19 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501333000",
         "ffgolf-2501338141",
         "ffgolf-2401203249"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 7.3,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-05-24",
           "hcpExact": 12.9,
@@ -436524,9 +437407,17 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2401203249"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 20.9,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2024-06-01",
           "hcpExact": 32,
@@ -436566,10 +437457,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501333000",
         "ffgolf-2401203249"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 14.1,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-05-24",
           "hcpExact": 15.9,
@@ -438698,9 +439597,17 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601444772",
         "ffgolf-2401204834"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 17.7,
+          "source": "ffg",
+          "tcode": "2601444772",
+          "label": "Championnat Régional Minimes"
+        },
         {
           "date": "2024-06-01",
           "hcpExact": 44.8,
@@ -440983,6 +441890,48 @@
       }
     },
     {
+      "id": "g527531333",
+      "canonicalName": "Samuel Legal",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "BRETAGNE",
+      "club": "Baie De Morlaix",
+      "sources": {
+        "ffgolf": {
+          "lic": "527531333",
+          "club": "Baie De Morlaix",
+          "hcp": 40.2,
+          "region": "BRETAGNE",
+          "sex": "M",
+          "glfLic": "1179"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601438552"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 16.4,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:527531333"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
       "id": "g512925374",
       "canonicalName": "Pierre Emile Lemarquis-Laurent",
       "aliases": [],
@@ -441018,6 +441967,48 @@
         "confidence": "strong",
         "evidence": [
           "ffgolf:512925374"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g511060345",
+      "canonicalName": "Sacha Grabovac",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "BRETAGNE",
+      "club": "Pleneuf Val Andre",
+      "sources": {
+        "ffgolf": {
+          "lic": "511060345",
+          "club": "Pleneuf Val Andre",
+          "hcp": 31.3,
+          "region": "BRETAGNE",
+          "sex": "M",
+          "glfLic": "1057"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601438552"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 22.5,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:511060345"
         ],
         "mergedFromSources": [
           "ffgolf"
@@ -448039,6 +449030,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601442078",
         "ffgolf-2601423981",
         "ffgolf-2501391907",
@@ -448049,6 +449041,13 @@
         "ffgolf-2501323091"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 7.8,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-05-30",
           "hcpExact": 7.9,
@@ -448137,10 +449136,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501309802"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 8.2,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 9.3,
@@ -448187,6 +449194,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
         "ffgolf-2501391907",
@@ -448195,6 +449203,13 @@
         "ffgolf-2501309802"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 13.5,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 17.2,
@@ -448319,12 +449334,20 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501391907",
         "ffgolf-2501309802",
         "ffgolf-2501323091"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 15.7,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 17.7,
@@ -448385,11 +449408,19 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501365354",
         "ffgolf-2501309802"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 12.4,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 14.7,
@@ -448493,12 +449524,20 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501391907",
         "ffgolf-2501309802",
         "ffgolf-2501323091"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 14.9,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 17,
@@ -448609,11 +449648,19 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501391907",
         "ffgolf-2501309802"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 17.8,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 20.2,
@@ -448667,6 +449714,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
         "ffgolf-2501391907",
@@ -448675,6 +449723,13 @@
         "ffgolf-2501309802"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 12,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 15,
@@ -448807,11 +449862,19 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501309802",
         "ffgolf-2501323092"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 16,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 16.1,
@@ -448865,12 +449928,20 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501365354",
         "ffgolf-2501309802",
         "ffgolf-2401147573"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 18.3,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 20.6,
@@ -448931,9 +450002,17 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 19.4,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 22.3,
@@ -448973,6 +450052,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601442078",
         "ffgolf-2601423981",
         "ffgolf-2501391907",
@@ -448990,6 +450070,13 @@
         "ffgolf-2401147573"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 7.5,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-05-30",
           "hcpExact": 7.5,
@@ -449193,6 +450280,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
         "ffgolf-2501391907",
@@ -449202,6 +450290,13 @@
         "ffgolf-2501323091"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 13.4,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 15.1,
@@ -449283,11 +450378,19 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501309802",
         "ffgolf-2501323091"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 14.3,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 16.8,
@@ -449341,12 +450444,20 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601403800",
         "ffgolf-2501365354",
         "ffgolf-2501309802"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 5.6,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 5.7,
@@ -449873,10 +450984,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501364543",
         "ffgolf-2501333000"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 13.7,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-07-21",
           "hcpExact": 20.8,
@@ -449923,10 +451042,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501333000",
         "ffgolf-2501338141"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 15.2,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-05-24",
           "hcpExact": 29.2,
@@ -449973,11 +451100,19 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2601442078",
         "ffgolf-2501333000",
         "ffgolf-2501338141"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 11.6,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2026-05-30",
           "hcpExact": 12.7,
@@ -450031,10 +451166,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501333000",
         "ffgolf-2501338141"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 7.6,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-05-24",
           "hcpExact": 11.7,
@@ -450131,10 +451274,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501333000",
         "ffgolf-2501338141"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 14.8,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-05-24",
           "hcpExact": 23,
@@ -450181,10 +451332,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501333000",
         "ffgolf-2501338141"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 10.9,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-05-24",
           "hcpExact": 14.7,
@@ -450231,10 +451390,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501333000",
         "ffgolf-2501338141"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 13.8,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-05-24",
           "hcpExact": 19.2,
@@ -450281,9 +451448,17 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501333000"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 13.1,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-05-24",
           "hcpExact": 23.1,
@@ -450323,9 +451498,17 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501333000"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 15.9,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-05-24",
           "hcpExact": 23,
@@ -450457,9 +451640,17 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501333000"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 21.2,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-05-24",
           "hcpExact": 27.3,
@@ -454007,6 +455198,48 @@
       }
     },
     {
+      "id": "g534595350",
+      "canonicalName": "Tiago Clemot",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "PAYS DE LA LOIRE",
+      "club": "Angers La Perriere",
+      "sources": {
+        "ffgolf": {
+          "lic": "534595350",
+          "club": "Angers La Perriere",
+          "hcp": 38.8,
+          "region": "PAYS DE LA LOIRE",
+          "sex": "M",
+          "glfLic": "0566"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601444772"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 30.3,
+          "source": "ffg",
+          "tcode": "2601444772",
+          "label": "Championnat Régional Minimes"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:534595350"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
       "id": "g534499339",
       "canonicalName": "Pierre Gasquet-Gabens",
       "aliases": [],
@@ -454150,6 +455383,48 @@
         "confidence": "strong",
         "evidence": [
           "ffgolf:003606342"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g534632363",
+      "canonicalName": "Gaspard Hubert",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "PAYS DE LA LOIRE",
+      "club": "Ile D'Or",
+      "sources": {
+        "ffgolf": {
+          "lic": "534632363",
+          "club": "Ile D'Or",
+          "hcp": 20.1,
+          "region": "PAYS DE LA LOIRE",
+          "sex": "M",
+          "glfLic": "0575"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601444772"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 7.2,
+          "source": "ffg",
+          "tcode": "2601444772",
+          "label": "Championnat Régional Minimes"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:534632363"
         ],
         "mergedFromSources": [
           "ffgolf"
@@ -454441,9 +455716,17 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501338141"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 16.1,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-05-10",
           "hcpExact": 37.1,
@@ -454540,6 +455823,48 @@
         "confidence": "strong",
         "evidence": [
           "ffgolf:531107374"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g532387365",
+      "canonicalName": "Rafael Lair",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "BRETAGNE",
+      "club": "St Laurent",
+      "sources": {
+        "ffgolf": {
+          "lic": "532387365",
+          "club": "St Laurent",
+          "hcp": 41.8,
+          "region": "BRETAGNE",
+          "sex": "M",
+          "glfLic": "0109"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601438552"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 26.1,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:532387365"
         ],
         "mergedFromSources": [
           "ffgolf"
@@ -455779,9 +457104,17 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601444772",
         "ffgolf-2501347448"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 12.1,
+          "source": "ffg",
+          "tcode": "2601444772",
+          "label": "Championnat Régional Minimes"
+        },
         {
           "date": "2025-06-14",
           "hcpExact": 24.1,
@@ -458053,6 +459386,48 @@
       }
     },
     {
+      "id": "g528907337",
+      "canonicalName": "Mia Aubert",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "BRETAGNE",
+      "club": "Lanniron Quimper",
+      "sources": {
+        "ffgolf": {
+          "lic": "528907337",
+          "club": "Lanniron Quimper",
+          "hcp": 37.1,
+          "region": "BRETAGNE",
+          "sex": "F",
+          "glfLic": "2215"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601438552"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 22.9,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:528907337"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
       "id": "g531535376",
       "canonicalName": "Mila Thomas",
       "aliases": [],
@@ -458281,9 +459656,17 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2501338141"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 15.3,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2025-05-10",
           "hcpExact": 47.4,
@@ -458407,9 +459790,17 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 25.5,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 30.9,
@@ -458449,12 +459840,20 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
         "ffgolf-2501391907",
         "ffgolf-2501365354"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 17.2,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 20.3,
@@ -458599,11 +459998,19 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501391907",
         "ffgolf-2501365354"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 11,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 12.2,
@@ -458699,11 +460106,19 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
         "ffgolf-2501391907"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 16.4,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 18.4,
@@ -468516,6 +469931,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
         "ffgolf-2501391907",
@@ -468523,6 +469939,13 @@
         "ffgolf-2501323091"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 12.8,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 16.4,
@@ -468590,12 +470013,20 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
         "ffgolf-2501391907",
         "ffgolf-2601403797"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 13,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 17.7,
@@ -468656,12 +470087,20 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
         "ffgolf-2501391907",
         "ffgolf-2501365354"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 12.1,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 13.4,
@@ -468722,12 +470161,20 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
         "ffgolf-2501391907",
         "ffgolf-2601403797"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 12.2,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 15.3,
@@ -468788,9 +470235,17 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 16.1,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 17.7,
@@ -468830,9 +470285,17 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 14.8,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 18.1,
@@ -468872,12 +470335,20 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
         "ffgolf-2501391907",
         "ffgolf-2501365354"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 13,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 20.5,
@@ -468938,10 +470409,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501391907"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 16,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 16.6,
@@ -468988,10 +470467,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501391907"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 13.1,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 20.6,
@@ -469038,10 +470525,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501365354"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 12.9,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 14.2,
@@ -469088,10 +470583,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501391907"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 18.6,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 22.5,
@@ -469138,11 +470641,19 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
         "ffgolf-2501391907"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 15.5,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 19.5,
@@ -469196,10 +470707,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408553"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 15.4,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 18.6,
@@ -469246,6 +470765,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
         "ffgolf-2501391907",
@@ -469254,6 +470774,13 @@
         "ffgolf-2501323091"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 16.1,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 19.2,
@@ -469328,11 +470855,19 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408553",
         "ffgolf-2501391907"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 16,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 16,
@@ -469386,11 +470921,19 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501391907",
         "ffgolf-2501365354"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 21.6,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 25.9,
@@ -469444,9 +470987,17 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 24.9,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 24.8,
@@ -469486,10 +471037,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501391907"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 25.4,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 30.6,
@@ -469536,9 +471095,17 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 24.4,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 24.4,
@@ -469578,9 +471145,17 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 25.5,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 22.4,
@@ -469620,9 +471195,17 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 27.9,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 28.4,
@@ -469662,11 +471245,19 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2601408555",
         "ffgolf-2601403800"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 6,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 7.1,
@@ -469720,9 +471311,17 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 4.8,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 4.8,
@@ -469762,9 +471361,17 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 14.1,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 13.8,
@@ -469846,9 +471453,17 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 19.6,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 19.7,
@@ -469938,11 +471553,19 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501391907",
         "ffgolf-2501365354"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 15.3,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 17.1,
@@ -469996,12 +471619,20 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501391907",
         "ffgolf-2501309794",
         "ffgolf-2501313127"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 24.9,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 26.6,
@@ -470062,10 +471693,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981",
         "ffgolf-2501391907"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 20.7,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 25.9,
@@ -470112,9 +471751,17 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 30.8,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 35,
@@ -470154,9 +471801,17 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2601423981"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 32.6,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-04-25",
           "hcpExact": 34.2,
@@ -471928,10 +473583,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2501391907",
         "ffgolf-2401147573"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 18.1,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-03-21",
           "hcpExact": 22.9,
@@ -472078,9 +473741,17 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601423995",
         "ffgolf-2501391907"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 26.8,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        },
         {
           "date": "2026-03-21",
           "hcpExact": 30.3,
@@ -475794,10 +477465,18 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601438552",
         "ffgolf-2401269568",
         "ffgolf-2401211935"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 20.1,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        },
         {
           "date": "2024-11-09",
           "hcpExact": 27.2,
@@ -479817,6 +481496,48 @@
         "confidence": "strong",
         "evidence": [
           "ffgolf:531218361"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g532319278",
+      "canonicalName": "Quentin Marcetteau",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "PAYS DE LA LOIRE",
+      "club": "Le Mans Sarge",
+      "sources": {
+        "ffgolf": {
+          "lic": "532319278",
+          "club": "Le Mans Sarge",
+          "hcp": 8.5,
+          "region": "PAYS DE LA LOIRE",
+          "sex": "M",
+          "glfLic": "0743"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601444772"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 6.2,
+          "source": "ffg",
+          "tcode": "2601444772",
+          "label": "Championnat Régional Minimes"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:532319278"
         ],
         "mergedFromSources": [
           "ffgolf"
@@ -486607,6 +488328,132 @@
       }
     },
     {
+      "id": "g042476376",
+      "canonicalName": "Louis Hamon",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "BRETAGNE",
+      "club": "Rennes St Jacques",
+      "sources": {
+        "ffgolf": {
+          "lic": "042476376",
+          "club": "Rennes St Jacques",
+          "hcp": 21.9,
+          "region": "BRETAGNE",
+          "sex": "M",
+          "glfLic": "0059"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601438552"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 17.6,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:042476376"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g537717374",
+      "canonicalName": "Bianca Poillerat",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "BRETAGNE",
+      "club": "Saint Malo",
+      "sources": {
+        "ffgolf": {
+          "lic": "537717374",
+          "club": "Saint Malo",
+          "hcp": 28.8,
+          "region": "BRETAGNE",
+          "sex": "F",
+          "glfLic": "0317"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601438552"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 15.6,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:537717374"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g510682345",
+      "canonicalName": "Lily Rahimian",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "BRETAGNE",
+      "club": "Dinard",
+      "sources": {
+        "ffgolf": {
+          "lic": "510682345",
+          "club": "Dinard",
+          "hcp": 32.2,
+          "region": "BRETAGNE",
+          "sex": "F",
+          "glfLic": "0028"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601438552"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 17.4,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:510682345"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
       "id": "g531576340",
       "canonicalName": "Clemence L'Henoret",
       "aliases": [],
@@ -486643,6 +488490,90 @@
         "confidence": "strong",
         "evidence": [
           "ffgolf:531576340"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g536939350",
+      "canonicalName": "Gauthier Cottais",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "BRETAGNE",
+      "club": "Cap Malo",
+      "sources": {
+        "ffgolf": {
+          "lic": "536939350",
+          "club": "Cap Malo",
+          "hcp": 16.7,
+          "region": "BRETAGNE",
+          "sex": "M",
+          "glfLic": "2133"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601438552"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 11.1,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:536939350"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g527100334",
+      "canonicalName": "Louis Panozzo",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "BRETAGNE",
+      "club": "Cap Malo",
+      "sources": {
+        "ffgolf": {
+          "lic": "527100334",
+          "club": "Cap Malo",
+          "hcp": 15.5,
+          "region": "BRETAGNE",
+          "sex": "M",
+          "glfLic": "2133"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601438552"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 12.8,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:527100334"
         ],
         "mergedFromSources": [
           "ffgolf"
@@ -486769,6 +488700,669 @@
         "confidence": "strong",
         "evidence": [
           "ffgolf:045579375"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g537321354",
+      "canonicalName": "Manon Sibut",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "FR",
+      "country": "FR",
+      "region": null,
+      "club": "Lyon Salvagny",
+      "sources": {
+        "ffgolf": {
+          "lic": "537321354",
+          "club": "Lyon Salvagny",
+          "hcp": 27.3
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601423995"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 27.3,
+          "source": "ffg",
+          "tcode": "2601423995",
+          "label": "QUALIFICATION REGIONALE CFJ U12-BENJ-ETAPE 2-VSD"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:537321354"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g537000398",
+      "canonicalName": "Victor Morin",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "FR",
+      "country": "FR",
+      "region": null,
+      "club": "Lanniron Quimper",
+      "sources": {
+        "ffgolf": {
+          "lic": "537000398",
+          "club": "Lanniron Quimper",
+          "hcp": 29.5
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601438552"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 29.5,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:537000398"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g536977372",
+      "canonicalName": "Noah Lepage",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "FR",
+      "country": "FR",
+      "region": null,
+      "club": "Cap Malo",
+      "sources": {
+        "ffgolf": {
+          "lic": "536977372",
+          "club": "Cap Malo",
+          "hcp": 17.9
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601438552"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 17.9,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:536977372"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g539314368",
+      "canonicalName": "Lenaïc Pasquier",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "FR",
+      "country": "FR",
+      "region": null,
+      "club": "Baden",
+      "sources": {
+        "ffgolf": {
+          "lic": "539314368",
+          "club": "Baden",
+          "hcp": 25.4
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601438552"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 25.4,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:539314368"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g527831367",
+      "canonicalName": "Louis Delattre",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "FR",
+      "country": "FR",
+      "region": null,
+      "club": "Baden",
+      "sources": {
+        "ffgolf": {
+          "lic": "527831367",
+          "club": "Baden",
+          "hcp": 22.7
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601438552"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 22.7,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:527831367"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g526694348",
+      "canonicalName": "Clément Prodhomme",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "FR",
+      "country": "FR",
+      "region": null,
+      "club": "Cice Blossac",
+      "sources": {
+        "ffgolf": {
+          "lic": "526694348",
+          "club": "Cice Blossac",
+          "hcp": 22.4
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601438552"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 22.4,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:526694348"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g519284376",
+      "canonicalName": "Victor Charbonnier",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "FR",
+      "country": "FR",
+      "region": null,
+      "club": "Val Queven",
+      "sources": {
+        "ffgolf": {
+          "lic": "519284376",
+          "club": "Val Queven",
+          "hcp": 29.4
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601438552"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 29.4,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:519284376"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g043030379",
+      "canonicalName": "Maxime Daloy",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "FR",
+      "country": "FR",
+      "region": null,
+      "club": "Baden",
+      "sources": {
+        "ffgolf": {
+          "lic": "043030379",
+          "club": "Baden",
+          "hcp": 31.5
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601438552"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 31.5,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:043030379"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g510423384",
+      "canonicalName": "Maxence Franjou",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "FR",
+      "country": "FR",
+      "region": null,
+      "club": "Dinan La Corbinais",
+      "sources": {
+        "ffgolf": {
+          "lic": "510423384",
+          "club": "Dinan La Corbinais",
+          "hcp": 29.2
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601438552"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 29.2,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:510423384"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g534933323",
+      "canonicalName": "Titouan Le Guesclou",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "FR",
+      "country": "FR",
+      "region": null,
+      "club": "Begard",
+      "sources": {
+        "ffgolf": {
+          "lic": "534933323",
+          "club": "Begard",
+          "hcp": 28.3
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601438552"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 28.3,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:534933323"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g041634363",
+      "canonicalName": "Manon Cado Le Bras",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "FR",
+      "country": "FR",
+      "region": null,
+      "club": "Baie De Morlaix",
+      "sources": {
+        "ffgolf": {
+          "lic": "041634363",
+          "club": "Baie De Morlaix",
+          "hcp": 21.7
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601438552"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 21.7,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:041634363"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g534652387",
+      "canonicalName": "Mathilde Tournus",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "FR",
+      "country": "FR",
+      "region": null,
+      "club": "Cornouaille",
+      "sources": {
+        "ffgolf": {
+          "lic": "534652387",
+          "club": "Cornouaille",
+          "hcp": 40.7
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601438552"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 40.7,
+          "source": "ffg",
+          "tcode": "2601438552",
+          "label": "BRETAGNE INDIVIDUEL BENJAMINS ET U12"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:534652387"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g531835284",
+      "canonicalName": "Jean Chaudronnier",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "FR",
+      "country": "FR",
+      "region": null,
+      "club": "Pornic",
+      "sources": {
+        "ffgolf": {
+          "lic": "531835284",
+          "club": "Pornic",
+          "hcp": 12
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601444772"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 12,
+          "source": "ffg",
+          "tcode": "2601444772",
+          "label": "Championnat Régional Minimes"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:531835284"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g536366353",
+      "canonicalName": "Axel Morin",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "FR",
+      "country": "FR",
+      "region": null,
+      "club": "Pornic",
+      "sources": {
+        "ffgolf": {
+          "lic": "536366353",
+          "club": "Pornic",
+          "hcp": 9.3
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601444772"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 9.3,
+          "source": "ffg",
+          "tcode": "2601444772",
+          "label": "Championnat Régional Minimes"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:536366353"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g518559394",
+      "canonicalName": "Gaspard Brejon",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "FR",
+      "country": "FR",
+      "region": null,
+      "club": "Cholet",
+      "sources": {
+        "ffgolf": {
+          "lic": "518559394",
+          "club": "Cholet",
+          "hcp": 23.3
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601444772"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 23.3,
+          "source": "ffg",
+          "tcode": "2601444772",
+          "label": "Championnat Régional Minimes"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:518559394"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g533814356",
+      "canonicalName": "Cameron Lopes",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "FR",
+      "country": "FR",
+      "region": null,
+      "club": "Pornic",
+      "sources": {
+        "ffgolf": {
+          "lic": "533814356",
+          "club": "Pornic",
+          "hcp": 20
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601444772"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 20,
+          "source": "ffg",
+          "tcode": "2601444772",
+          "label": "Championnat Régional Minimes"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:533814356"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g513967354",
+      "canonicalName": "Lily-Rose D'Alba",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "FR",
+      "country": "FR",
+      "region": null,
+      "club": "Pornic",
+      "sources": {
+        "ffgolf": {
+          "lic": "513967354",
+          "club": "Pornic",
+          "hcp": 27.5
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601444772"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-06-13",
+          "hcpExact": 27.5,
+          "source": "ffg",
+          "tcode": "2601444772",
+          "label": "Championnat Régional Minimes"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:513967354"
         ],
         "mergedFromSources": [
           "ffgolf"
@@ -558350,13 +560944,13 @@
     }
   ],
   "stats": {
-    "total": 8809,
-    "droppedNoTourn": 25072,
-    "strong": 8785,
+    "total": 8842,
+    "droppedNoTourn": 25096,
+    "strong": 8818,
     "probable": 24,
     "manual": 0,
     "strongMerges": 7,
-    "probableMerges": 2283,
+    "probableMerges": 2282,
     "manualMerges": 5
   }
 }
