@@ -8,7 +8,7 @@ import { getTeeHex, textOnColor, normKey, teeBorder } from "../utils/teeColors";
 import { clubShort, clubLong, hcpDisplay, escCls } from "../utils/playerUtils";
 import { numSafe, meanArr, stdevArr, minArr, maxArr, linearSlope } from "../utils/mathUtils";
 import { acesFromHoleScores } from "../utils/aces";
-import { fmtGrossDelta, fmtStb, sdClassByHcp, fmtSdVal, sc3m, SC } from "../utils/scoreDisplay";
+import { fmtStb, sdClassByHcp, sc3m, SC } from "../utils/scoreDisplay";
 import {
   type PlayerPageData, type CourseData, type RoundData,
   type HcpInfo,
@@ -17,6 +17,7 @@ import { usePlayerData } from "../data/usePlayerData";
 import SexBadge from "../ui/SexBadge";
 import UiKpiCard from "../ui/KpiCard";
 import ListaTabela, { type ListaColuna } from "../ui/ListaTabela";
+import { HoleBadge, GrossCell, SdCell, CountPill, RoundNumericCells } from "../ui/tableCells";
 import RotatedNotice from "../ui/RotatedNotice";
 import AroeiraNotice, { countRotatedRounds } from "../ui/AroeiraNotice";
 import { canonicalCourseName } from "../utils/courseAliases";
@@ -64,23 +65,8 @@ const scHostStyle: React.CSSProperties = { margin: "6px 8px", width: "fit-conten
    Micro-components
    ──────────────────────────────────────────────────────────────────────────────────────── */
 
-function GrossCell({ gross, par }: { gross: number | null; par: number | null }) {
-  const { text, delta, cls } = fmtGrossDelta(gross, par);
-  if (!text) return null;
-  return <><b>{text}</b>{delta && <span className={`score-delta ${cls}`}>{delta}</span>}</>;
-}
-
-function SdCell({ round }: { round: RoundData }) {
-  const { text, cls } = fmtSdVal(round);
-  if (!text) return null;
-  return <span className={`p p-${cls}`}>{text}</span>;
-}
-
-function HoleBadge({ hc }: { hc: number }) {
-  return hc === 9
-    ? <span className="hb hb9">9</span>
-    : <span className="hb hb18">18</span>;
-}
+/* HoleBadge / GrossCell / SdCell movidos para ../ui/tableCells (partilhados
+   com ByTournamentView para unificar as células entre todas as tabelas). */
 
 /** Retorna a pill efectiva: usa _pill dos dados ou auto-detecta INTL/REGIONAL/NACIONAL */
 function effectivePill(round: { _pill?: string; course?: string; scoreOrigin?: string; eventName?: string }, courseName?: string): string {
@@ -472,7 +458,6 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
   const ecList = data.EC[courseKey] || [];
   const ecDet = data.ECDET[courseKey] || {};
   const holeStats = data.HOLE_STATS[courseKey] || {};
-  const lastHex = getTeeHex(last?.tee || "");
   const courseLinkKey = findCourseKey(course.course);
 
   // Na análise por campo, auto-seleccionar o tee com mais voltas quando se abre o detalhe
@@ -497,7 +482,7 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
       {/* Summary row */}
       <tr className={open ? "pa-row-open" : ""}>
         <td>
-          <div className="count" style={{ background: lastHex, color: textOnColor(lastHex), border: teeBorder(lastHex) }}>{course.count}</div>
+          <CountPill count={course.count} tee={last?.tee || ""} />
         </td>
         <td>
           <div className="rowHead">
@@ -626,13 +611,7 @@ function RoundRow({ r, data, courseName, isOpen, onToggle }: {
           <LinkBtns links={r._links} />
           <div className="muted fs-10">#{r.scoreId}</div>
         </td>
-        <td className="r"><HoleBadge hc={r.holeCount} /></td>
-        <td className="r">{r.hi ?? ""}</td>
-        <td><TeePill name={r.tee || ""} /></td>
-        <td className="r muted">{r.meters ? `${r.meters}m` : ""}</td>
-        <td className="r"><GrossCell gross={r.gross} par={r.par} /></td>
-        <td className="r">{fmtStb(r.stb, r.holeCount)}</td>
-        <td className="r"><SdCell round={r} /></td>
+        <RoundNumericCells r={r} />
       </tr>
       {isOpen && holes && (
         <tr>
@@ -2427,7 +2406,7 @@ function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localI
   // absorvem o espaço), como a vista federado original. Mesmo conjunto/ordem.
   const columns: ListaColuna<WhsRound>[] = [
     {
-      key: "date", label: "Data", width: "60px", sortable: true,
+      key: "date", label: "Data", width: "68px", sortable: true,
       render: r => {
         const dateStr = (r.score_dateStr || "").slice(0, 10);
         const ddmm = dateStr.split("-").reverse().join("-"); // YYYY-MM-DD → DD-MM-YYYY
@@ -2437,11 +2416,12 @@ function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localI
           <>
             <TeeDate date={ddmm} tee={tee} />
             {isMissing && <span style={{ marginLeft: 4, color: "var(--color-warn-vivid)", fontSize: 10 }} title="Não temos esta ronda em local">●</span>}
+            {r.id ? <div className="muted fs-10">#{r.id}</div> : null}
           </>
         );
       },
     },
-    { key: "course", label: "Campo", width: "150px", sortable: true, cellClassName: "muted", render: r => r.course_description },
+    { key: "course", label: "Campo", width: "150px", sortable: true, render: r => <CourseLink name={r.course_description} /> },
     {
       key: "event", label: "Prova", sortable: true,
       render: r => {
@@ -2462,7 +2442,7 @@ function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localI
       },
     },
     { key: "holes", label: "Bur.", width: "44px", align: "right", sortable: true, render: r => <HoleBadge hc={r.hole_count} /> },
-    { key: "hcp", label: "HCP", width: "46px", align: "right", sortable: true, cellClassName: "fw-700", render: r => r.calc_hcp_index ?? r.calculated_exact_hcp ?? "" },
+    { key: "hcp", label: "HCP", width: "46px", align: "right", sortable: true, render: r => r.calc_hcp_index ?? r.calculated_exact_hcp ?? "" },
     { key: "tee", label: "Tee", width: "92px", sortable: true, render: r => { const e = extraMap?.get(r.id); return e?.tee ? <TeePill name={e.tee} /> : <span className="muted fs-10">…</span>; } },
     { key: "par", label: "Par", width: "44px", align: "right", sortable: true, cellClassName: "muted", render: r => r.par_total ?? "" },
     {
@@ -2473,7 +2453,7 @@ function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localI
         return <GrossCell gross={e.gross} par={r.par_total ?? null} />;
       },
     },
-    { key: "stb", label: "Stb", width: "44px", align: "right", sortable: true, render: r => r.calculated_stablnet_total ?? "" },
+    { key: "stb", label: "Stb", width: "44px", align: "right", sortable: true, render: r => fmtStb(r.calculated_stablnet_total, r.hole_count) },
     {
       key: "sd", label: "SD", width: "54px", align: "right", sortable: true,
       render: r => {
@@ -2481,7 +2461,7 @@ function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localI
         const hiRef = r.calc_hcp_index ?? r.calculated_exact_hcp ?? hcpRef ?? null;
         const sdCls = isFinite(sdNum) && hiRef != null ? sdClassByHcp(sdNum, Number(hiRef)) : "";
         return isFinite(sdNum)
-          ? <span className={sdCls ? `p p-sm p-${sdCls}` : ""}>{r.score_differential}</span>
+          ? <span className={sdCls ? `p p-${sdCls}` : ""}>{r.score_differential}</span>
           : (r.score_differential ?? "");
       },
     },
@@ -2750,7 +2730,7 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
                       borderBottom: "1px solid var(--border)", paddingBottom: 3,
                     }}
                   >{sec.title}</div>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: 10 }}>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "7px 30px" }}>
                     {keys.map(renderKV)}
                   </div>
                 </div>
@@ -2768,7 +2748,7 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
                     borderBottom: "1px solid var(--border)", paddingBottom: 3,
                   }}
                 >Outros</div>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: 10 }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "7px 30px" }}>
                   {extraFields.map(renderKV)}
                 </div>
               </div>
@@ -2787,7 +2767,7 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
                 >
                   ⚙ Campos técnicos ({technicalCount}) <span style={{ opacity: 0.6, fontWeight: 400 }}>— IDs, tokens e redundâncias</span>
                 </summary>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: 10, marginTop: 8 }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "7px 30px", marginTop: 8 }}>
                   {FEDERADO_TECHNICAL_FIELDS.filter(k => fKeys.has(k)).map(renderKV)}
                 </div>
               </details>
@@ -2954,11 +2934,11 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
 const FEDERADO_SECTIONS: { title: string; fields: string[] }[] = [
   {
     title: "Identificação",
-    fields: ["federation_code", "name", "gender", "birthdate", "country", "country_prefix"],
+    fields: ["name", "federation_code", "gender", "birthdate", "age_level", "country", "country_prefix"],
   },
   {
     title: "Clube",
-    fields: ["acronym", "club_name", "club_code", "clubplayerstatus", "club_notpublic"],
+    fields: ["club_name", "acronym", "club_code", "clubplayerstatus", "club_notpublic"],
   },
   {
     title: "Handicap",
@@ -2966,7 +2946,7 @@ const FEDERADO_SECTIONS: { title: string; fields: string[] }[] = [
   },
   {
     title: "Estado FPG",
-    fields: ["federated_status", "player_type", "age_level", "admission_date", "notpublic"],
+    fields: ["federated_status", "player_type", "admission_date", "notpublic"],
   },
 ];
 
@@ -3066,10 +3046,6 @@ const STATUS_WARN_PILL: React.CSSProperties = {
 const STATUS_DANGER_PILL: React.CSSProperties = {
   background: "var(--color-danger)", color: "#fff", borderColor: "transparent",
 };
-const HCP_VALUE_PILL: React.CSSProperties = {
-  background: "var(--bg-topbar)", color: "#fff", borderColor: "transparent",
-  letterSpacing: "0.02em",
-};
 
 function normalizeAgeLabel(s: string): string {
   // "SUB12" → "Sub-12" · "SUB-14" → "Sub-14" · mantém "Absoluto", "Sénior", etc.
@@ -3125,11 +3101,11 @@ function formatFedValue(key: string, v: unknown): React.ReactNode {
     return <span className="p p-sm p-birth">{String(v)}</span>;
   }
 
-  // ── HCP Exacto / Index → pill escuro destacado ───────────────
+  // ── HCP Exacto / Index → número em destaque (texto, sem pill) ─
   if (key === "hcp_exact" || key === "hcp_index") {
     const n = Number(v);
     const txt = isFinite(n) ? (Number.isInteger(n) ? n.toString() : n.toFixed(1)) : String(v);
-    return <span className="p p-sm" style={HCP_VALUE_PILL}>{txt}</span>;
+    return <span className="fw-700" style={{ fontSize: 13 }}>{txt}</span>;
   }
 
   // ── Status de HCP (Válido / Provisório / …) ─────────────────
@@ -3199,15 +3175,11 @@ function formatFedValue(key: string, v: unknown): React.ReactNode {
     return <span className="p p-sm p-club">{String(v).padStart(3, "0")}</span>;
   }
 
-  // ── Rondas este ano → número destacado ──────────────────────
+  // ── Rondas este ano → número (texto, sem pill) ──────────────
   if (key === "rounds_current_year") {
     const n = Number(v);
     const isZero = isFinite(n) && n === 0;
-    return (
-      <span className="p p-sm" style={isZero ? { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "transparent" } : HCP_VALUE_PILL}>
-        {isFinite(n) ? n : String(v)}
-      </span>
-    );
+    return <span className={isZero ? "muted" : "fw-700"} style={{ fontSize: 13 }}>{isFinite(n) ? n : String(v)}</span>;
   }
 
   // ── Flags booleanas (notpublic, club_notpublic) ─────────────
@@ -3251,20 +3223,24 @@ function formatFedValue(key: string, v: unknown): React.ReactNode {
 function KV({ label, value, description }: { label: string; value: React.ReactNode; description?: string }) {
   const hasDesc = !!description;
   return (
-    <div>
+    <div style={{ flex: "0 0 auto", minWidth: 104, maxWidth: 240 }}>
       <div
         className="muted fs-10"
         style={{
-          marginBottom: 2,
+          marginBottom: 1,
+          lineHeight: 1.2,
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
           cursor: hasDesc ? "help" : "default",
           textDecoration: hasDesc ? "underline dotted var(--text-3)" : "none",
           textUnderlineOffset: "2px",
         }}
-        title={description}
+        title={description ? `${label} — ${description}` : label}
       >
         {label}{hasDesc && <span aria-hidden style={{ marginLeft: 3, opacity: 0.5 }}>ⓘ</span>}
       </div>
-      <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 4, minHeight: 20 }}>
+      <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 4, lineHeight: 1.25 }}>
         {value}
       </div>
     </div>

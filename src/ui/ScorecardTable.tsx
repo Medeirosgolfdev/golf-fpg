@@ -3,7 +3,7 @@ import type { EclecticEntry, HoleScores } from "../data/playerDataLoader";
 import { sumArr } from "../utils/mathUtils";
 import { getTeeHex, textOnColor, teeBorder } from "../utils/teeColors";
 import { fmtSign, fmtToPar } from "../utils/format";
-import { scClass, fmtGrossDelta, fmtStb, toParClass } from "../utils/scoreDisplay";
+import { scClass, fmtStb, toParClass } from "../utils/scoreDisplay";
 import { PillBadge } from "./PillBadge";
 import ScoreCircle from "./ScoreCircle";
 import { CourseLink } from "./jogadoresHelpers";
@@ -34,12 +34,6 @@ const linkLabels: Record<string, string> = {
   noticia_teetimes: "Notícia",
   link: "Ver torneio",
 };
-
-function GrossCell({ gross, par }: { gross: number | null; par: number | null }) {
-  const { text, delta, cls } = fmtGrossDelta(gross, par);
-  if (!text) return null;
-  return <><b>{text}</b>{delta && <span className={`score-delta ${cls}`}>{delta}</span>}</>;
-}
 
 function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
   gross: (number | null)[];

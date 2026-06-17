@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from "react";
 import type { PlayerPageData, RoundData, HoleScores } from "../data/playerDataLoader";
-import { norm, shortDate, fmtSign, fmtToPar } from "../utils/format";
+import { norm, shortDate, fmtToPar } from "../utils/format";
 import { normKey } from "../utils/teeColors";
-import { numSafe } from "../utils/mathUtils";
-import { fmtStb, sdClassByHcp } from "../utils/scoreDisplay";
+import { fmtStb } from "../utils/scoreDisplay";
+import { GrossCell, SdCell } from "./tableCells";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import TeeDate from "./TeeDate";
@@ -14,29 +14,6 @@ import { CourseLink } from "./jogadoresHelpers";
 /** Sort keys for Last20 scorecard table */
 export type L20SortKey = "whs" | "date" | "course" | "event" | "holes" | "hcp" | "tee" | "meters" | "gross" | "stb" | "sd" | "rank";
 
-function GrossCell({ gross, par }: { gross: number | null; par: number | null }) {
-  const { text, delta, cls } = (() => {
-    if (gross == null || par == null) return { text: "", delta: "", cls: "" };
-    if (gross <= 0 || par <= 0) return { text: "", delta: "", cls: "" };
-    const g = Number(gross);
-    const p = Number(par);
-    const d = g - p;
-    return {
-      text: String(g),
-      delta: d !== 0 ? fmtSign(d) : "",
-      cls: d > 0 ? "pos" : d < 0 ? "neg" : "",
-    };
-  })();
-  if (!text) return null;
-  return <><b>{text}</b>{delta && <span className={`score-delta ${cls}`}>{delta}</span>}</>;
-}
-
-function SdCell({ round }: { round: RoundData }) {
-  const val = numSafe(round.sd);
-  if (val == null) return null;
-  const cls = sdClassByHcp(val, round.hi);
-  return <span className={`p p-${cls}`}>{val.toFixed(1)}</span>;
-}
 
 function HoleBadge({ hc }: { hc: number }) {
   return hc === 9

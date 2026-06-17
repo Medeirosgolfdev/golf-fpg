@@ -16,7 +16,8 @@ import { Fragment, useEffect, useState, type CSSProperties } from "react";
 import { loadPPHistory, ppPlayerUrl, type PPHistory, type PPRound } from "../../data/federadosPPLoader";
 import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
-import { scClass, fmtGrossDelta, fmtStb, sdClassByHcp } from "../../utils/scoreDisplay";
+import { scClass, fmtStb, sdClassByHcp } from "../../utils/scoreDisplay";
+import { GrossCell as GrossDeltaCell } from "../../ui/tableCells";
 import TeeDate from "../../ui/TeeDate";
 import TeePill from "../../ui/TeePill";
 import LoadingState from "../../ui/LoadingState";
@@ -99,8 +100,7 @@ function GrossCell({ r }: { r: PPRound }) {
   const g = r.scorecard?.grossTotal ?? null;
   const par = r.scorecard?.parTotal ?? null;
   if (g == null) return <span className="muted">—</span>;
-  const { text, delta, cls } = fmtGrossDelta(g, par);
-  return <><b>{text}</b>{delta && <span className={`score-delta ${cls}`}>{delta}</span>}</>;
+  return <GrossDeltaCell gross={g} par={par} />;
 }
 
 export default function PPHistoryView({ fed, name }: { fed: string; name?: string }) {

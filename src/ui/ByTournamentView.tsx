@@ -3,13 +3,11 @@ import type { PlayerPageData, RoundData, HoleScores } from "../data/playerDataLo
 import { norm, fmtToPar, fmtSign } from "../utils/format";
 import { sumArr } from "../utils/mathUtils";
 import { scClass, toParClass, sc2 } from "../utils/scoreDisplay";
-import { getTeeHex, textOnColor, teeBorder } from "../utils/teeColors";
-import { numSafe } from "../utils/mathUtils";
-import { fmtStb } from "../utils/scoreDisplay";
+import { getTeeHex, textOnColor } from "../utils/teeColors";
+import { GrossCell, CountPill, RoundNumericCells } from "./tableCells";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import TeeDate from "./TeeDate";
-import TeePill from "./TeePill";
 import { ScorecardTable } from "./ScorecardTable";
 import { CourseLink } from "./jogadoresHelpers";
 
@@ -29,19 +27,7 @@ function TournRoundRow({ r, idx: _idx, data }: {
           <TeeDate date={r.date} tee={r.tee || ""} />
           <span className="muted fs-10 ml-4">#{r.scoreId}</span>
         </td>
-        <td className="r">{r.holeCount === 9 ? "9" : "18"}</td>
-        <td className="r">{r.hi ?? ""}</td>
-        <td><TeePill name={r.tee || ""} /></td>
-        <td className="r muted">{r.meters ? `${r.meters}m` : ""}</td>
-        <td className="r">
-          {r.gross != null && r.par != null && r.gross > 0 && r.par > 0
-            ? <><b>{r.gross}</b><span className={`score-delta ${r.gross > r.par ? "pos" : r.gross < r.par ? "neg" : ""}`}>{r.gross > r.par ? "+" : ""}{r.gross - r.par}</span></>
-            : ""}
-        </td>
-        <td className="r">{fmtStb(r.stb, r.holeCount)}</td>
-        <td className="r">
-          {r.sd != null ? <span className="p p-sm">{numSafe(r.sd)?.toFixed(1) ?? ""}</span> : ""}
-        </td>
+        <RoundNumericCells r={r} />
       </tr>
       {scOpen && holes && (
         <tr>
@@ -507,7 +493,7 @@ export function ByTournamentView({ data, search }: { data: PlayerPageData; searc
   return (
     <div className="card">
       <div className="scroll-x">
-        <table className="dtable-lg dtable-roomy" style={{ tableLayout: "fixed" }}>
+        <table className="dtable-lg" style={{ tableLayout: "fixed" }}>
           <colgroup>
             <col style={{ width: "108px" }} /><col style={{ width: "64px" }} />
             <col /><col /><col style={{ width: "72px" }} />
@@ -531,7 +517,6 @@ export function ByTournamentView({ data, search }: { data: PlayerPageData; searc
               const sortedRounds = isOpen ? it.rounds.slice().sort((a, b) => a.dateSort - b.dateSort) : [];
               // Tee representativo do torneio (última ronda) → cor do pill de contagem
               const repTee = it.rounds[it.rounds.length - 1]?.tee || "";
-              const tHex = getTeeHex(repTee);
               return (
                 <React.Fragment key={idx}>
                   <tr>
@@ -545,14 +530,14 @@ export function ByTournamentView({ data, search }: { data: PlayerPageData; searc
                         <div className="fs-11">{end || start}</div>
                       )}
                     </td>
-                    <td className="r"><span className="count" style={{ background: tHex, color: textOnColor(tHex), border: teeBorder(tHex) }}>{it.rounds.length}</span></td>
+                    <td className="r"><CountPill count={it.rounds.length} tee={repTee} /></td>
                     <td>
                       <button className="courseBtn" onClick={() => setOpenIdx(isOpen ? null : idx)}>{it.name}</button>
                     </td>
                     <td><CourseLink name={it.course} /></td>
                     <td className="r">
                       {best
-                        ? <><b>{best.gross}</b><span className={`score-delta ${best.toPar > 0 ? "pos" : best.toPar < 0 ? "neg" : ""}`}>{best.toPar > 0 ? "+" : ""}{best.toPar}</span></>
+                        ? <GrossCell gross={best.gross} par={best.gross - best.toPar} />
                         : <span className="muted">—</span>}
                     </td>
                   </tr>
@@ -580,13 +565,10 @@ export function ByTournamentView({ data, search }: { data: PlayerPageData; searc
                                 const totalGross = withGross.reduce((a, r) => a + Number(r.gross), 0);
                                 const totalStb = sortedRounds.reduce((a, r) => a + (r.stb ?? 0), 0);
                                 const totalPar = sortedRounds.reduce((a, r) => a + (Number(r.par) || 0), 0);
-                                const toPar = totalPar ? totalGross - totalPar : null;
-                                const toParStr = fmtToPar(toPar, "");
-                                const toParCls = toPar != null ? (toPar > 0 ? "pos" : toPar < 0 ? "neg" : "") : "";
                                 return (
                                   <tr className="bg-detail fw-700 bt-heavy">
                                     <td colSpan={5} className="r fw-700 c-text-2">Total ({withGross.length} voltas)</td>
-                                    <td className="r"><b>{totalGross}</b><span className={`score-delta ${toParCls}`}>{toParStr}</span></td>
+                                    <td className="r"><GrossCell gross={totalGross} par={totalPar || null} /></td>
                                     <td className="r">{totalStb || ""}</td>
                                     <td></td>
                                   </tr>

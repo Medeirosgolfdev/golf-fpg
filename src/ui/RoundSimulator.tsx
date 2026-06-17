@@ -5,19 +5,13 @@ import type { Course } from "../data/types";
 import { useAppContext } from "../context/AppContext";
 import { norm } from "../utils/format";
 import { meanArr } from "../utils/mathUtils";
-import { sdClassByHcp, fmtGrossDelta } from "../utils/scoreDisplay";
+import { sdClassByHcp } from "../utils/scoreDisplay";
+import { GrossCell } from "./tableCells";
 import { calcSD, expectedSD9, get9hRatings } from "../utils/whsCalc";
 import TeePill from "./TeePill";
 import TeeDate from "./TeeDate";
 import SexBadge from "./SexBadge";
 import { CourseLink } from "./jogadoresHelpers";
-
-/* ─── Helper: Gross cell with delta ─── */
-function GrossCell({ gross, par }: { gross: number | null; par: number | null }) {
-  const { text, delta, cls } = fmtGrossDelta(gross, par);
-  if (!text) return null;
-  return <><b>{text}</b>{delta && <span className={`score-delta ${cls}`}>{delta}</span>}</>;
-}
 
 /* ─── WHS quantity calculation ─── */
 function whsQtyCalc(nSds: number): number {
