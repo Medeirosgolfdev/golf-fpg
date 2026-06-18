@@ -260,7 +260,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
           </div>
           <div style={{ fontSize: 10, color: "var(--text-3)", marginTop: 1 }}>
             {editions.length} {editions.length === 1 ? "edição" : "edições"}
-            {wins > 0 && <> · <span style={{ color: "var(--color-warn-dark, #92400e)", fontWeight: 700 }}>🏆 {wins}</span></>}
+            {wins > 0 && <> · <span style={{ color: "var(--color-warn-dark, var(--color-warn-dark))", fontWeight: 700 }}>🏆 {wins}</span></>}
             {podiums > wins && <> · {podiums} pódios</>}
             {fmtYearRange(editions)}
           </div>
@@ -483,9 +483,9 @@ function SeriesScoringPill({ tournament }: { tournament: Tournament }) {
   return (
     <span title={isScratch ? "Competição scratch (gross)" : "Competição com handicap (net)"} style={{
       fontSize: 9, padding: "1px 5px", borderRadius: 3, fontWeight: 700,
-      background: isScratch ? "var(--bg-warn-subtle, #fffbeb)" : "var(--bg-info-subtle, #eff6ff)",
-      color: isScratch ? "var(--color-warn-dark, #92400e)" : "var(--color-info-dark, #1e3a8a)",
-      border: `1px solid ${isScratch ? "var(--color-warn-dark, #92400e)" : "var(--color-info-dark, #1e3a8a)"}`,
+      background: isScratch ? "var(--bg-warn-subtle, var(--bg-warn))" : "var(--bg-info-subtle, var(--bg-info))",
+      color: isScratch ? "var(--color-warn-dark, var(--color-warn-dark))" : "var(--color-info-dark, var(--color-navy))",
+      border: `1px solid ${isScratch ? "var(--color-warn-dark, var(--color-warn-dark))" : "var(--color-info-dark, var(--color-navy))"}`,
       lineHeight: 1.4, flexShrink: 0,
     }}>
       {isScratch ? "SCRATCH" : "HCP"}
@@ -544,10 +544,10 @@ function computeSeriesTrend(editions: Edition[]): SeriesTrend | null {
   const tail2 = positions.slice(-2);
   const wins = validPos.filter((p) => p === 1).length;
   if (tail2.every((p) => p === 1)) {
-    return { label: "dono", icon: "👑", bg: "var(--bg-warn-subtle, #fffbeb)", fg: "var(--color-warn-dark, #92400e)", title: "Última(s) edição(ões) ganhou — dono da série" };
+    return { label: "dono", icon: "👑", bg: "var(--bg-warn-subtle, var(--bg-warn))", fg: "var(--color-warn-dark, var(--color-warn-dark))", title: "Última(s) edição(ões) ganhou — dono da série" };
   }
   if (wins >= 3 && wins / validPos.length >= 0.6) {
-    return { label: "dono", icon: "👑", bg: "var(--bg-warn-subtle, #fffbeb)", fg: "var(--color-warn-dark, #92400e)", title: `${wins} vitórias em ${validPos.length} edições` };
+    return { label: "dono", icon: "👑", bg: "var(--bg-warn-subtle, var(--bg-warn))", fg: "var(--color-warn-dark, var(--color-warn-dark))", title: `${wins} vitórias em ${validPos.length} edições` };
   }
 
   if (validPos.length >= 3) {
@@ -570,12 +570,12 @@ function computeSeriesTrend(editions: Edition[]): SeriesTrend | null {
       return { label: "a subir", icon: "▲", bg: "var(--bg-success-subtle, #ecfdf5)", fg: "var(--color-good-dark)", title: `Posição melhorou de média #${avg1.toFixed(0)} para #${avg2.toFixed(0)}` };
     }
     if (delta > 3) {
-      return { label: "a piorar", icon: "▼", bg: "var(--bg-warn-subtle, #fffbeb)", fg: "var(--color-warn-dark, #92400e)", title: `Posição piorou de média #${avg1.toFixed(0)} para #${avg2.toFixed(0)}` };
+      return { label: "a piorar", icon: "▼", bg: "var(--bg-warn-subtle, var(--bg-warn))", fg: "var(--color-warn-dark, var(--color-warn-dark))", title: `Posição piorou de média #${avg1.toFixed(0)} para #${avg2.toFixed(0)}` };
     }
   }
 
   if (validPos.every((p) => p <= 10)) {
-    return { label: "consistente", icon: "●", bg: "var(--bg-info-subtle, #eff6ff)", fg: "var(--color-info-dark, #1e3a8a)", title: "Sempre em top-10 nesta série" };
+    return { label: "consistente", icon: "●", bg: "var(--bg-info-subtle, var(--bg-info))", fg: "var(--color-info-dark, var(--color-navy))", title: "Sempre em top-10 nesta série" };
   }
 
   return null;

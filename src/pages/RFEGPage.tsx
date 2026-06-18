@@ -1653,7 +1653,7 @@ function RFEGCategoriesView({ catCounts }: { catCounts: Record<string, number> }
         }
       />
 
-      <div style={{ marginTop: 12, padding: "10px 12px", background: "var(--bg-muted, #fff7e6)", border: "1px solid var(--border, #f1bf00)", borderRadius: 6, fontSize: 12 }}>
+      <div style={{ marginTop: 12, padding: "10px 12px", background: "var(--bg-muted, #fff7e6)", border: "1px solid var(--border, var(--color-rfeg-yellow))", borderRadius: 6, fontSize: 12 }}>
         <strong>⚠ Espanha não tem federação única.</strong> A RFEG (federação
         nacional) coexiste com 17 federações autonómicas (Andalucía, Madrid,
         Catalunya, Valencia, ...). Os resultados aparecem dispersos por três
@@ -2008,7 +2008,7 @@ export function RFEGPageLegacy() {
               setShowFederations(false);
               md.onSelect();
             }}
-            style={{ borderLeft: "3px solid #aa151b" }}
+            style={{ borderLeft: "3px solid var(--color-rfeg-red)" }}
           >
             <div className="course-item-name">📚 Categorías de edad RFEG</div>
             <div className="course-item-meta">
@@ -2027,7 +2027,7 @@ export function RFEGPageLegacy() {
               setShowCategories(false);
               md.onSelect();
             }}
-            style={{ borderLeft: "3px solid #aa151b" }}
+            style={{ borderLeft: "3px solid var(--color-rfeg-red)" }}
           >
             <div className="course-item-name">🏛️ Federaciones de Golf España</div>
             <div className="course-item-meta">
@@ -2045,14 +2045,14 @@ export function RFEGPageLegacy() {
               <React.Fragment key={`rfeg-${y}`}>
                 
 {yIdx === 0 && (
-                  <SidebarSectionTitle dark color="#aa151b" textColor="#ffffff" borderColor="#f1bf00" letterSpacing="0.08em">
+                  <SidebarSectionTitle dark color="var(--color-rfeg-red)" textColor="#ffffff" borderColor="var(--color-rfeg-yellow)" letterSpacing="0.08em">
                     🇪🇸 RFEG — Torneios juvenis
                   </SidebarSectionTitle>
                 )}
-                <div className="sidebar-year-label" style={{ padding: "2px 10px", fontSize: 10, fontWeight: 700, letterSpacing: "0.05em", color: "#ffffff", textTransform: "uppercase", marginTop: 4, background: "#aa151b" }}>{y}</div>
+                <div className="sidebar-year-label" style={{ padding: "2px 10px", fontSize: 10, fontWeight: 700, letterSpacing: "0.05em", color: "#ffffff", textTransform: "uppercase", marginTop: 4, background: "var(--color-rfeg-red)" }}>{y}</div>
                 {yearEntries.map((entry) => {
                   const active = cur?.id === entry.id && cur?.source === entry.source;
-                  const sourceColor = entry.source === "rfegolf" ? "#aa151b" : entry.source === "livegolfscoring" ? "#0a5" : entry.source === "golfdirecto" ? "#0066cc" : "#f1bf00";
+                  const sourceColor = entry.source === "rfegolf" ? "var(--color-rfeg-red)" : entry.source === "livegolfscoring" ? "#0a5" : entry.source === "golfdirecto" ? "#0066cc" : "var(--color-rfeg-yellow)";
                   const sourceFg = entry.source === "rfegolf" || entry.source === "livegolfscoring" || entry.source === "golfdirecto" ? "#fff" : "#000";
                   const sourceLabel = entry.source === "rfegolf" ? "RFEGolf" : entry.source === "livegolfscoring" ? "LGS" : entry.source === "golfdirecto" ? "FCG" : "NextCaddy";
                   return (
@@ -2229,9 +2229,9 @@ function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: H
 const RFEG_CONFIG: CircuitConfig = {
   routeBase: "/rfeg",
   title: "🇪🇸 España",
-  color: "#aa151b",
+  color: "var(--color-rfeg-red)",
   grouping: "year",
-  sourceColors: { rfegolf: "#aa151b", livegolfscoring: "#00aa55", golfdirecto: "#0066cc", nextcaddy: "#f1bf00" },
+  sourceColors: { rfegolf: "var(--color-rfeg-red)", livegolfscoring: "#00aa55", golfdirecto: "#0066cc", nextcaddy: "var(--color-rfeg-yellow)" },
   sourceLabels: { rfegolf: "RFEGolf", livegolfscoring: "LGS", golfdirecto: "FCG", nextcaddy: "NextCaddy" },
   filters: { search: true, year: true, escalao: true, sex: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos"] },
   veteranoThreshold: 3,

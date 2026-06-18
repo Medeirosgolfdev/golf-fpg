@@ -16,6 +16,7 @@ import {
   type Sub12Performance, type HoleDial,
 } from "../data/aroeira2AnaliseData";
 import EmptyState from "./EmptyState";
+import LoadingState from "./LoadingState";
 import UiKpiCard from "./KpiCard";
 import { fmtToPar, fmtHcp } from "../utils/format";
 import { scClass } from "../utils/scoreDisplay";
@@ -28,13 +29,13 @@ const fmtAvg = (n: number | null | undefined, d = 1) => (n == null || !isFinite(
 const fmtDelta = (n: number | null | undefined, d = 1) => (n == null || !isFinite(n)) ? "–" : (n === 0 ? "0" : (n > 0 ? "+" : "") + n.toFixed(d));
 
 const LABEL_INFO = {
-  birdie: { emoji: "🟢", text: "Oportunidade", bg: "rgba(22, 163, 74, .15)", border: "#16a34a" },
+  birdie: { emoji: "🟢", text: "Oportunidade", bg: "rgba(22, 163, 74, .15)", border: "var(--color-good)" },
   par:    { emoji: "🟡", text: "Par",          bg: "rgba(234, 179, 8, .12)",  border: "#eab308" },
-  bogey:  { emoji: "🔴", text: "Bogey",         bg: "rgba(220, 38, 38, .12)", border: "#dc2626" },
+  bogey:  { emoji: "🔴", text: "Bogey",         bg: "rgba(220, 38, 38, .12)", border: "var(--color-danger)" },
   danger: { emoji: "⚫", text: "Perigo",        bg: "rgba(0, 0, 0, .15)",     border: "#000" },
 } as const;
 
-const TONE_COLOR = { good: "var(--color-good, #16a34a)", warn: "#ea580c", danger: "var(--color-danger, #dc2626)", neutral: "var(--text-muted)" } as const;
+const TONE_COLOR = { good: "var(--color-good)", warn: "#ea580c", danger: "var(--color-danger)", neutral: "var(--text-muted)" } as const;
 
 /* ── KPI card — aspecto consistente ─────────────────── */
 /* Adaptador fino → delega na definição única UiKpiCard (realce por tom). */
@@ -135,12 +136,12 @@ function HoleMapTable({ holes }: { holes: HoleDistribution[] }) {
             <td className="lb-halftot fw-700">{holes.reduce((s, h) => s + h.avgScore, 0).toFixed(1)}</td>
           </tr>
           <tr style={{ background: "rgba(220, 252, 231, .65)" }}>
-            <td className="lb-name fw-700" style={{ color: "#166534" }}>⭐ Manuel</td>
-            {holes.slice(0, 9).map(h => <td key={h.hole} className="lb-hole fw-600" style={{ color: "#166534" }}>{fmtAvg(h.manuelAvg, 2)}</td>)}
-            <td className="lb-halftot fw-700" style={{ color: "#166534" }}>{fmtAvg(holes.slice(0, 9).reduce((s, h) => s + (h.manuelAvg ?? 0), 0))}</td>
-            {holes.slice(9).map(h => <td key={h.hole} className="lb-hole fw-600" style={{ color: "#166534" }}>{fmtAvg(h.manuelAvg, 2)}</td>)}
-            <td className="lb-halftot fw-700" style={{ color: "#166534" }}>{fmtAvg(holes.slice(9).reduce((s, h) => s + (h.manuelAvg ?? 0), 0))}</td>
-            <td className="lb-halftot fw-700" style={{ color: "#166534" }}>{fmtAvg(holes.reduce((s, h) => s + (h.manuelAvg ?? 0), 0))}</td>
+            <td className="lb-name fw-700" style={{ color: "var(--color-good-dark)" }}>⭐ Manuel</td>
+            {holes.slice(0, 9).map(h => <td key={h.hole} className="lb-hole fw-600" style={{ color: "var(--color-good-dark)" }}>{fmtAvg(h.manuelAvg, 2)}</td>)}
+            <td className="lb-halftot fw-700" style={{ color: "var(--color-good-dark)" }}>{fmtAvg(holes.slice(0, 9).reduce((s, h) => s + (h.manuelAvg ?? 0), 0))}</td>
+            {holes.slice(9).map(h => <td key={h.hole} className="lb-hole fw-600" style={{ color: "var(--color-good-dark)" }}>{fmtAvg(h.manuelAvg, 2)}</td>)}
+            <td className="lb-halftot fw-700" style={{ color: "var(--color-good-dark)" }}>{fmtAvg(holes.slice(9).reduce((s, h) => s + (h.manuelAvg ?? 0), 0))}</td>
+            <td className="lb-halftot fw-700" style={{ color: "var(--color-good-dark)" }}>{fmtAvg(holes.reduce((s, h) => s + (h.manuelAvg ?? 0), 0))}</td>
           </tr>
           <tr>
             <td className="lb-name fw-700">Tipo</td>
@@ -183,17 +184,17 @@ function MiniDonut({ dist, label, sublabel, hideIfEmpty = false }: {
   }
   const pct = (n: number) => (n / dist.n) * 100;
   const segs = [
-    { v: dist.birdiePlus, color: "#16a34a", name: "Birdie+" },
+    { v: dist.birdiePlus, color: "var(--color-good)", name: "Birdie+" },
     { v: dist.par,        color: "#d4d4d4", name: "Par" },
     { v: dist.bogey,      color: "#60a5fa", name: "Bogey" },
-    { v: dist.doublePlus, color: "#dc2626", name: "Duplo+" },
+    { v: dist.doublePlus, color: "var(--color-danger)", name: "Duplo+" },
   ];
   let acc = 0;
   return (
     <div style={{ flex: 1, textAlign: "center", minWidth: 90 }}>
       <svg width={SIZE} height={SIZE} style={{ display: "block", margin: "0 auto" }}>
         {/* base ring */}
-        <circle cx={SIZE / 2} cy={SIZE / 2} r={R} fill="none" stroke="#f3f4f6" strokeWidth={STROKE} />
+        <circle cx={SIZE / 2} cy={SIZE / 2} r={R} fill="none" stroke="var(--bg-muted)" strokeWidth={STROKE} />
         {/* segments */}
         {segs.map((s, i) => {
           if (s.v === 0) return null;
@@ -236,10 +237,10 @@ function HoleDial({ d }: { d: HoleDial }) {
       </div>
       {/* Mini-legenda das cores */}
       <div style={{ display: "flex", justifyContent: "space-around", marginTop: 8, fontSize: 9 }}>
-        <span style={{ color: "#16a34a", fontWeight: 700 }}>● Birdie+</span>
+        <span style={{ color: "var(--color-good)", fontWeight: 700 }}>● Birdie+</span>
         <span style={{ color: "#525252", fontWeight: 700 }}>● Par</span>
         <span style={{ color: "#1d4ed8", fontWeight: 700 }}>● Bogey</span>
-        <span style={{ color: "#dc2626", fontWeight: 700 }}>● Duplo+</span>
+        <span style={{ color: "var(--color-danger)", fontWeight: 700 }}>● Duplo+</span>
       </div>
     </div>
   );
@@ -253,7 +254,7 @@ function PlayerCardBlock({ card, parRef }: { card: PlayerScorecardBundle; parRef
   const parB9 = parRef.slice(9, 18).reduce((a, b) => a + b, 0);
   return (
     <div className="player-card-block" style={{
-      border: isManuel ? "2px solid #16a34a" : "1px solid var(--border)",
+      border: isManuel ? "2px solid var(--color-good)" : "1px solid var(--border)",
       borderRadius: 8, marginBottom: 8,
       background: isManuel ? "rgba(220, 252, 231, .55)" : "var(--bg-card)",
     }}>
@@ -276,7 +277,7 @@ function PlayerCardBlock({ card, parRef }: { card: PlayerScorecardBundle; parRef
           {fmtDelta(card.avgToPar)}
         </span>
         {card.category === "top21" && <span className="muted fs-11" style={{ minWidth: 50 }}>Pos {card.currentPos ?? "–"}</span>}
-        {card.category === "sub12_inscrito" && <span className="fs-11 fw-600" style={{ background: "rgba(59, 130, 246, .15)", padding: "3px 8px", borderRadius: 6, color: "#1e40af" }}>Sub-12 inscrito</span>}
+        {card.category === "sub12_inscrito" && <span className="fs-11 fw-600" style={{ background: "rgba(59, 130, 246, .15)", padding: "3px 8px", borderRadius: 6, color: "var(--color-info)" }}>Sub-12 inscrito</span>}
       </button>
       {open && card.rounds.length > 0 && (
         <div className="bjgt-chart-scroll" style={{ padding: "0 12px 10px" }}>
@@ -407,7 +408,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
     return buildHoleDials(allRounds, pkg.parReference, sub12FedSet);
   }, [pkg, sub12FedSet]);
 
-  if (loading) return <div className="muted fs-13" style={{ padding: 24 }}>A carregar análise…</div>;
+  if (loading) return <LoadingState message="A carregar análise…" />;
   if (error) return <div className="fs-13" style={{ padding: 24, color: "var(--color-danger)" }}>Erro: {error}</div>;
   if (!pkg) return <EmptyState size="sm" message="Sem dados" />;
 
@@ -458,7 +459,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
       <section>
         <h3>1b. 18 dials — média field, Sub-12, melhor e pior do Manuel</h3>
         <div className="muted fs-12" style={{ marginBottom: 10 }}>
-          Para cada buraco, melhor (Best) e pior (Worst) score já registado em rondas com routing actual. <strong style={{ color: "#166534" }}>⭐ Manuel</strong> (suas rondas), <strong style={{ color: "#1e40af" }}>Sub-12</strong> (Manuel + outros Sub-12 com histórico) e <strong>Field</strong> (todos no campo). Cores oficiais nas células: vermelho = birdie/eagle, azul = bogey/duplo.
+          Para cada buraco, melhor (Best) e pior (Worst) score já registado em rondas com routing actual. <strong style={{ color: "var(--color-good-dark)" }}>⭐ Manuel</strong> (suas rondas), <strong style={{ color: "var(--color-info)" }}>Sub-12</strong> (Manuel + outros Sub-12 com histórico) e <strong>Field</strong> (todos no campo). Cores oficiais nas células: vermelho = birdie/eagle, azul = bogey/duplo.
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 10 }}>
           {holeDials.map(d => <HoleDial key={d.hole} d={d} />)}
@@ -470,7 +471,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
         <h3>2. Buracos chave — Top 5 difíceis vs Top 5 fáceis</h3>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
           <div style={{ border: "2px solid var(--color-danger)", borderRadius: 8, padding: 12, background: "rgba(220, 38, 38, .04)" }}>
-            <h4 style={{ margin: "0 0 8px", color: "#991b1b" }}>🔴 Mais difíceis (vão preparados)</h4>
+            <h4 style={{ margin: "0 0 8px", color: "var(--color-danger-dark)" }}>🔴 Mais difíceis (vão preparados)</h4>
             <table className="sc-lb">
               <thead>
                 <tr><th className="lb-name">B</th><th className="lb-hole">Par</th><th className="lb-hole">Avg</th><th className="lb-hole">Δ</th><th className="lb-hole">%Bog+</th><th className="lb-hole">⭐ M</th></tr>
@@ -483,7 +484,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
                     <td className="lb-hole">{h.avgScore.toFixed(2)}</td>
                     <td className="lb-hole fw-700" style={{ color: "var(--color-danger)" }}>+{(h.avgScore - h.par).toFixed(2)}</td>
                     <td className="lb-hole">{fmtPct(h.pctBogey + h.pctDoublePlus)}</td>
-                    <td className="lb-hole fw-700" style={{ color: "#166534" }}>{fmtAvg(h.manuelAvg, 1)}</td>
+                    <td className="lb-hole fw-700" style={{ color: "var(--color-good-dark)" }}>{fmtAvg(h.manuelAvg, 1)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -503,7 +504,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
                     <td className="lb-hole">{h.avgScore.toFixed(2)}</td>
                     <td className="lb-hole fw-700" style={{ color: h.avgScore - h.par <= 0 ? "var(--color-good)" : "var(--text)" }}>{fmtDelta(h.avgScore - h.par, 2)}</td>
                     <td className="lb-hole">{fmtPct(h.pctBirdiePlus)}</td>
-                    <td className="lb-hole fw-700" style={{ color: "#166534" }}>{fmtAvg(h.manuelAvg, 1)}</td>
+                    <td className="lb-hole fw-700" style={{ color: "var(--color-good-dark)" }}>{fmtAvg(h.manuelAvg, 1)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -537,7 +538,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
                   <td className="lb-hole">{pg.count}</td>
                   <td className="lb-hole">{pg.fieldAvg.toFixed(2)}</td>
                   <td className="lb-hole fw-700" style={{ color: pg.fieldDelta < 0 ? "var(--color-good)" : "var(--color-danger)" }}>{fmtDelta(pg.fieldDelta, 2)}</td>
-                  <td className="lb-hole" style={{ color: "#166534" }}>{fmtAvg(pg.manuelAvg, 2)}</td>
+                  <td className="lb-hole" style={{ color: "var(--color-good-dark)" }}>{fmtAvg(pg.manuelAvg, 2)}</td>
                   <td className="lb-hole fw-700" style={{ color: pg.manuelDelta != null && pg.manuelDelta < 0 ? "var(--color-good)" : pg.manuelDelta != null && pg.manuelDelta > 0 ? "var(--color-danger)" : "var(--text)" }}>{fmtDelta(pg.manuelDelta, 2)}</td>
                   <td className="lb-hole" style={{ color: "var(--color-good)" }}>{fmtPct(pg.pctBirdiePlus)}</td>
                   <td className="lb-hole" style={{ color: "var(--color-danger)" }}>{fmtPct(pg.pctBogey)}</td>
@@ -575,20 +576,20 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
               </thead>
               <tbody>
                 <tr>
-                  <td className="lb-name fw-600" style={{ color: "#16a34a" }}>Best (eclética)</td>
+                  <td className="lb-name fw-600" style={{ color: "var(--color-good)" }}>Best (eclética)</td>
                   {manuelStats.map(s => <td key={s.hole} className="lb-hole"><span className={"sc-score " + scClass(s.best, s.par)}>{s.best || "–"}</span></td>)}
-                  <td className="lb-halftot fw-700" style={{ color: "#166534" }}>{manuelStats.filter(s => s.best > 0).reduce((a, s) => a + s.best, 0) || "–"}</td>
+                  <td className="lb-halftot fw-700" style={{ color: "var(--color-good-dark)" }}>{manuelStats.filter(s => s.best > 0).reduce((a, s) => a + s.best, 0) || "–"}</td>
                 </tr>
                 <tr>
-                  <td className="lb-name fw-600" style={{ color: "#dc2626" }}>Worst (anti-eclética)</td>
+                  <td className="lb-name fw-600" style={{ color: "var(--color-danger)" }}>Worst (anti-eclética)</td>
                   {manuelStats.map(s => <td key={s.hole} className="lb-hole"><span className={"sc-score " + scClass(s.worst, s.par)}>{s.worst || "–"}</span></td>)}
-                  <td className="lb-halftot fw-700" style={{ color: "#dc2626" }}>{manuelStats.filter(s => s.worst > 0).reduce((a, s) => a + s.worst, 0) || "–"}</td>
+                  <td className="lb-halftot fw-700" style={{ color: "var(--color-danger)" }}>{manuelStats.filter(s => s.worst > 0).reduce((a, s) => a + s.worst, 0) || "–"}</td>
                 </tr>
                 <tr>
                   <td className="lb-name fw-600">Pior – Melhor</td>
                   {manuelStats.map(s => {
                     const gap = s.scores.length ? s.worst - s.best : 0;
-                    const color = gap === 0 ? "#16a34a" : gap <= 1 ? "#65a30d" : gap <= 2 ? "var(--text)" : "#dc2626";
+                    const color = gap === 0 ? "var(--color-good)" : gap <= 1 ? "#65a30d" : gap <= 2 ? "var(--text)" : "var(--color-danger)";
                     return <td key={s.hole} className="lb-hole fw-700" style={{ color }}>{s.scores.length ? gap : "–"}</td>;
                   })}
                   <td className="lb-halftot fw-700">{manuelStats.filter(s => s.scores.length).reduce((a, s) => a + (s.worst - s.best), 0) || "–"}</td>
@@ -692,7 +693,7 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
             {sub12Perf.map((s, i) => {
               const isManuel = s.fedCode === MANUEL_FED;
               const statusLabel = s.status === "top21+inscrito" ? "🏆 jogou + inscrito" : s.status === "top21_so" ? "🏆 só jogou" : s.status === "inscrito_com_historico" ? "📋 inscrito + histórico" : "🆕 estreante";
-              const statusColor = s.status === "top21+inscrito" ? "#16a34a" : s.status === "top21_so" ? "#65a30d" : s.status === "inscrito_com_historico" ? "#1e40af" : "#ea580c";
+              const statusColor = s.status === "top21+inscrito" ? "var(--color-good)" : s.status === "top21_so" ? "#65a30d" : s.status === "inscrito_com_historico" ? "var(--color-info)" : "#ea580c";
               return (
                 <tr key={i} style={{ background: isManuel ? "rgba(220, 252, 231, .65)" : undefined }}>
                   <td className="lb-pos fw-700">{i + 1}</td>

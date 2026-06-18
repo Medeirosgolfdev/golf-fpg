@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { abreviarNome, escalaoAtDate } from "../utils/format";
+import { EscPill } from "./PillBadge";
 import type { Player, Tournament, GrupoEntry } from "../data/fpgTypes";
 import type { PlayersDB } from "./tournamentPrimitives";
 
@@ -23,6 +24,19 @@ interface Props {
   grupos: GrupoEntry[];
   playersDB: PlayersDB;
   categories: CategoriaCfg[];
+  /** Texto introdutório no topo. Default: derivado de `categories`
+   *  ("Homens N melhores · Senhoras N · Juniores N"). */
+  intro?: React.ReactNode;
+  /** Rótulo do nº a contar por categoria. Default: `n => "N melhores"`.
+   *  Em match play (composição de equipas) passa-se `n => "N + 1 supl."`. */
+  bestNLabel?: (n: number) => string;
+  /** Coluna de ordenação inicial. Default "total"; numa composição sem
+   *  resultados convém "hcp" para listar do melhor handicap ao pior. */
+  initialSort?: SortCol;
+  /** Modo "composição de equipas" (pré-jogo, match play): o rodapé de cada
+   *  categoria mostra o nº REAL de inscritos (não o `bestN` do regulamento) e
+   *  não há ranking. Sem isto, "(cfg.bestN)" leria-se como contagem. */
+  rosterMode?: boolean;
 }
 
 type SortCol = "nome" | "hcp" | "total" | number; // number = índice da ronda (1-based)
@@ -57,9 +71,10 @@ function fmtTP(tp: number): string {
   return tp === 0 ? "E" : tp > 0 ? `+${tp}` : `${tp}`;
 }
 
-export default function ClubesCategoriasView({ tournament, grupos, playersDB, categories }: Props) {
+export default function ClubesCategoriasView({ tournament, grupos, playersDB, categories, intro, bestNLabel, initialSort, rosterMode }: Props) {
   const tournDate = tournament?.date ?? null;
-  const [sortCol, setSortCol] = useState<SortCol>("total");
+  const labelN = bestNLabel ?? ((n: number) => `${n} melhores`);
+  const [sortCol, setSortCol] = useState<SortCol>(initialSort ?? "total");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
   function toggleSort(col: SortCol) {
     if (sortCol === col) setSortDir(d => (d === "asc" ? "desc" : "asc"));
@@ -87,6 +102,13 @@ export default function ClubesCategoriasView({ tournament, grupos, playersDB, ca
     if (esc && /^Sub (10|12|14|16|18)$/.test(esc)) return "J";
     if ((pdb?.sex || "").toUpperCase() === "F") return "S";
     return "H";
+  }
+
+  // Escalão de um jogador à data do torneio (Sub 14, Absoluto, Sénior, …).
+  function escOf(fed: string | null): string | null {
+    const pdb = fed ? playersDB[fed] : undefined;
+    const dob = (pdb as any)?.dob as string | undefined;
+    return escalaoAtDate(dob, tournDate);
   }
 
   const playedRounds = tournament
@@ -196,8 +218,17 @@ export default function ClubesCategoriasView({ tournament, grupos, playersDB, ca
   return (
     <div style={{ padding: "12px 16px 24px" }}>
       <div className="mb-10" style={{ fontSize: 13, color: "var(--text-muted)" }}>
-        Por categoria dentro de cada clube — <strong>Homens</strong> 5 melhores ·{" "}
-        <strong>Senhoras</strong> 2 melhores · <strong>Juniores</strong> (≤Sub-18) 3 melhores.
+        {intro ?? (
+          <>
+            Por categoria dentro de cada clube —{" "}
+            {categories.map((c, i) => (
+              <React.Fragment key={c.key}>
+                <strong>{c.label}</strong> {labelN(c.bestN)}
+                {i < categories.length - 1 ? " · " : "."}
+              </React.Fragment>
+            ))}
+          </>
+        )}
         {playedRounds > 0 && <span style={{ marginLeft: 8 }}>R{playedRounds}/{tournament?.rounds ?? playedRounds}</span>}
       </div>
 
@@ -242,7 +273,7 @@ export default function ClubesCategoriasView({ tournament, grupos, playersDB, ca
                         )}
                         {cfg.label}
                       </span>
-                      <span style={{ color: "var(--text-muted)", fontWeight: 600 }}>{cfg.bestN} melhores</span>
+                      <span style={{ color: "var(--text-muted)", fontWeight: 600 }}>{labelN(cfg.bestN)}</span>
                     </div>
                     <table className="w-full" style={{ borderCollapse: "collapse" }}>
                       <thead>
@@ -256,10 +287,17 @@ export default function ClubesCategoriasView({ tournament, grupos, playersDB, ca
                       <tbody>
                         {rows.map(({ j, p, rds, total }) => (
                           <tr key={j.fed ?? j.nome}>
-                            <td style={{ ...tdL, paddingLeft: 10, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: 150 }}>
-                              {p && j.fed
-                                ? <a href={`/jogadores/${j.fed}`} target="_blank" rel="noopener noreferrer" className="td-none" style={{ color: "inherit" }}>{abreviarNome(j.nome)}</a>
-                                : abreviarNome(j.nome)}
+                            <td style={{ ...tdL, paddingLeft: 10 }}>
+                              <span style={{ display: "grid", gridTemplateColumns: "94px 1fr", alignItems: "center", columnGap: 6 }}>
+                                <span style={{ whiteSpace: "nowrap" }}>
+                                  {(() => { const e = escOf(j.fed); return e ? <EscPill esc={e} /> : null; })()}
+                                </span>
+                                <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                                  {p && j.fed
+                                    ? <a href={`/jogadores/${j.fed}`} target="_blank" rel="noopener noreferrer" className="td-none" style={{ color: "inherit" }}>{abreviarNome(j.nome)}</a>
+                                    : abreviarNome(j.nome)}
+                                </span>
+                              </span>
                             </td>
                             <td style={{ ...tdC, color: "var(--text-muted)" }}>{fmtHcp(p?.hcpExact ?? (typeof j.hcp === "number" && j.hcp > 0 ? j.hcp : undefined))}</td>
                             {rds.map((s, ri) => (
@@ -274,7 +312,7 @@ export default function ClubesCategoriasView({ tournament, grupos, playersDB, ca
                       <tfoot>
                         <tr style={{ background: "var(--accent-light, #eef6ef)" }}>
                           <td colSpan={2} style={{ ...tdL, paddingLeft: 10, fontWeight: 700, fontSize: 10, textTransform: "uppercase", color: "var(--text-2)" }}>
-                            {cfg.label} ({cfg.bestN})
+                            {cfg.label} ({rosterMode ? rows.length : cfg.bestN})
                           </td>
                           {rdCols.map((_, ri) => <td key={ri} style={{ ...tdC, fontWeight: 700 }}>{rdTotals[ri] ?? "–"}</td>)}
                           {rdCols.length > 1 && (

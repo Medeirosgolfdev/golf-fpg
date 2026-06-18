@@ -51,10 +51,10 @@ function shortReg(name: string): string {
   return n.length > 24 ? n.slice(0, 23) + "…" : n;
 }
 const CIRCUIT_CHIP: Record<string, { bg: string; fg: string; label: string }> = {
-  US: { bg: "var(--bg-info-subtle, #eff6ff)", fg: "var(--color-info-dark, #1e3a8a)", label: "USKids" },
+  US: { bg: "var(--bg-info-subtle, var(--bg-info))", fg: "var(--color-info-dark, var(--color-navy))", label: "USKids" },
   PT: { bg: "var(--bg-success-subtle, #ecfdf5)", fg: "var(--color-good-dark)", label: "FPG (Portugal)" },
-  ES: { bg: "var(--bg-warn-subtle, #fffbeb)", fg: "var(--color-warn-dark, #92400e)", label: "RFEG (Espanha)" },
-  FR: { bg: "var(--bg-pink, #fdf2f8)", fg: "var(--color-purple, #6b21a8)", label: "FFG (França)" },
+  ES: { bg: "var(--bg-warn-subtle, var(--bg-warn))", fg: "var(--color-warn-dark, var(--color-warn-dark))", label: "RFEG (Espanha)" },
+  FR: { bg: "var(--bg-pink, var(--bg-pink))", fg: "var(--color-purple, #6b21a8)", label: "FFG (França)" },
 };
 
 const ICON_SCOPE = "\u{1F52D}";
@@ -597,7 +597,7 @@ function ScoutContent({ data, tournament, onSelect }: {
         {tDate && <span>{ICON_DOT} {fmtDate(tDate)}</span>}
         {tournament.course && <span>{ICON_DOT} {tournament.course}</span>}
         {isFuture
-          ? <span style={{ fontSize: 11, padding: "2px 8px", borderRadius: 999, background: "var(--bg-info-subtle, #eff6ff)", color: "var(--color-info-dark, #1e3a8a)", fontWeight: 600 }}>FUTURO</span>
+          ? <span style={{ fontSize: 11, padding: "2px 8px", borderRadius: 999, background: "var(--bg-info-subtle, var(--bg-info))", color: "var(--color-info-dark, var(--color-navy))", fontWeight: 600 }}>FUTURO</span>
           : <span style={{ fontSize: 11, padding: "2px 8px", borderRadius: 999, background: "var(--bg-muted)", color: "var(--text-2)", fontWeight: 600 }}>HISTORICO</span>
         }
         {isFieldOnlySource && (
@@ -649,7 +649,7 @@ function ScoutContent({ data, tournament, onSelect }: {
       )}
 
       {isFieldOnlySource && kpis.fieldOnlyCount > 0 && (
-        <div style={{ background: "var(--bg-warn-subtle, #fffbeb)", color: "var(--color-warn-dark, #92400e)",
+        <div style={{ background: "var(--bg-warn-subtle, var(--bg-warn))", color: "var(--color-warn-dark, var(--color-warn-dark))",
                       padding: "8px 12px", borderRadius: 6, marginBottom: 12, fontSize: 12 }}>
           {kpis.fieldOnlyCount} inscritos sem perfil canonico no nosso sistema (apenas nome + pais).
           Os scores historicos, tier, wins e diff vs Manuel nao estao disponiveis para estes.
@@ -713,10 +713,10 @@ function KpiBox({ label, value, sub, emphasis }: {
   emphasis?: "good" | "warn";
 }) {
   const color = emphasis === "good" ? "var(--color-good-dark)"
-    : emphasis === "warn" ? "var(--color-warn-dark, #92400e)"
+    : emphasis === "warn" ? "var(--color-warn-dark, var(--color-warn-dark))"
     : undefined;
   const border = emphasis === "good" ? "var(--color-good)"
-    : emphasis === "warn" ? "var(--color-amber, #f59e0b)"
+    : emphasis === "warn" ? "var(--color-amber, var(--color-amber))"
     : undefined;
   return <UiKpiCard label={label} value={value} sub={sub} color={color} accentBorder={border} />;
 }
@@ -874,7 +874,7 @@ function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSe
                             title={`${r.name}${r.escalao ? " · " + r.escalao : ""} (${fmtRegDate(r.date)})`}
                             style={{
                               fontSize: 9, fontWeight: 600, padding: "1px 6px", borderRadius: 10, textDecoration: "none", whiteSpace: "nowrap",
-                              background: "var(--bg-info-subtle, #eff6ff)", color: "var(--color-info-dark, #1e3a8a)", border: "1px solid var(--border-info, #bfdbfe)",
+                              background: "var(--bg-info-subtle, var(--bg-info))", color: "var(--color-info-dark, var(--color-navy))", border: "1px solid var(--border-info, var(--border-info))",
                             }}>
                             {r.circuit === "fpg" ? "🇵🇹 " : ""}{shortReg(r.name)} · {fmtRegDate(r.date)}
                           </a>
@@ -922,7 +922,7 @@ function FormDots({ positions }: { positions: Array<number | null> }) {
           : p <= 3
             ? "var(--medal-gold-strong)"
             : p <= 10
-              ? "var(--color-amber, #f59e0b)"
+              ? "var(--color-amber, var(--color-amber))"
               : "var(--text-3)";
         return (
           <span key={i}
@@ -949,7 +949,7 @@ const thStyle: React.CSSProperties = {
 const tdStyle: React.CSSProperties = { padding: "7px 8px", fontSize: 12, color: "var(--text-2)" };
 
 function flightPillStyle(active: boolean, isManuelFlight = false): React.CSSProperties {
-  const accent = isManuelFlight ? "var(--color-good-dark)" : "var(--color-info-dark, #1e3a8a)";
+  const accent = isManuelFlight ? "var(--color-good-dark)" : "var(--color-info-dark, var(--color-navy))";
   return {
     fontSize: 11, fontWeight: 600,
     padding: "5px 11px", borderRadius: 999,

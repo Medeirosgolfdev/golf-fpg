@@ -416,7 +416,7 @@ function FedCard({ label, value, subtitle, historical, historicalLabel, linkTo }
       }}>
         <span>{value || "sem registo"}</span>
         {isClickable && (
-          <span style={{ fontSize: 10, color: "var(--color-info-dark, #1e3a8a)", fontWeight: 600 }} title="Abrir ficha do jogador">↗</span>
+          <span style={{ fontSize: 10, color: "var(--color-info-dark, var(--color-navy))", fontWeight: 600 }} title="Abrir ficha do jogador">↗</span>
         )}
       </div>
       {subtitle && (
@@ -444,8 +444,8 @@ function FedCard({ label, value, subtitle, historical, historicalLabel, linkTo }
         rel="noreferrer"
         style={cardStyle}
         onMouseEnter={(e) => {
-          (e.currentTarget as HTMLElement).style.borderColor = "var(--color-info-dark, #1e3a8a)";
-          (e.currentTarget as HTMLElement).style.boxShadow = "0 0 0 1px var(--color-info-dark, #1e3a8a)";
+          (e.currentTarget as HTMLElement).style.borderColor = "var(--color-info-dark, var(--color-navy))";
+          (e.currentTarget as HTMLElement).style.boxShadow = "0 0 0 1px var(--color-info-dark, var(--color-navy))";
         }}
         onMouseLeave={(e) => {
           (e.currentTarget as HTMLElement).style.borderColor = "var(--border)";
@@ -465,7 +465,7 @@ function EscPill({ label, accent, strong }: { label: string; accent?: boolean; s
   if (accent && strong) {
     return (
       <span style={{
-        background: "var(--color-info-dark, #1e3a8a)",
+        background: "var(--color-info-dark, var(--color-navy))",
         color: "var(--bg)",
         fontSize: 12, padding: "3px 11px", borderRadius: 999,
         fontWeight: 700,
@@ -475,11 +475,11 @@ function EscPill({ label, accent, strong }: { label: string; accent?: boolean; s
   }
   return (
     <span style={{
-      background: "var(--bg-info-subtle, #eff6ff)",
-      color: "var(--color-info-dark, #1e3a8a)",
+      background: "var(--bg-info-subtle, var(--bg-info))",
+      color: "var(--color-info-dark, var(--color-navy))",
       fontSize: 11, padding: "3px 9px", borderRadius: 999,
       fontWeight: 600,
-      border: "1px solid var(--color-info-dark, #1e3a8a)",
+      border: "1px solid var(--color-info-dark, var(--color-navy))",
     }}>{label}</span>
   );
 }
@@ -544,11 +544,11 @@ function DobPill({ info, isManuel }: { info: DobInfo; isManuel: boolean }) {
 function RankPill({ label, value }: { label: string; value: number | string }) {
   return (
     <span style={{
-      background: "var(--bg-warn-subtle, #fffbeb)",
-      color: "var(--color-warn-dark, #92400e)",
+      background: "var(--bg-warn-subtle, var(--bg-warn))",
+      color: "var(--color-warn-dark, var(--color-warn-dark))",
       fontSize: 11, padding: "3px 9px", borderRadius: 6,
       fontWeight: 700,
-      border: "1px solid var(--color-warn-dark, #92400e)",
+      border: "1px solid var(--color-warn-dark, var(--color-warn-dark))",
     }}>
       🏆 {label} #{value}
     </span>

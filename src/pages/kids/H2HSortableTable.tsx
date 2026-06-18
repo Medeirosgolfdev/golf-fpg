@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { fmtToPar } from "../../utils/format";
 import { useSort } from "../../hooks/useSort";
+import SortableHdr from "../../ui/SortableHdr";
 import { RoundPill } from "../../ui/PillBadge";
 import type { H2HConfronto, H2HSortKey } from "./types";
 
@@ -32,9 +33,9 @@ export default function H2HSortableTable({ confrontos, firstName }: { confrontos
   }, [confrontos, sortKey, sortDir]);
 
   const SH = ({ k, children, className, style }: { k: H2HSortKey; children: React.ReactNode; className?: string; style?: React.CSSProperties }) => (
-    <th className={(className || "") + " lb-sortable"} style={style} onClick={() => toggleSort(k)}>
-      {children}{sortKey === k && <span className="sort-arrow">{sortDir === "asc" ? "▲" : "▼"}</span>}
-    </th>
+    <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={className} style={style}>
+      {children}
+    </SortableHdr>
   );
 
   return (

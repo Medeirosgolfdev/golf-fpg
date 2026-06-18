@@ -6,6 +6,7 @@ import { useSort } from "../hooks/useSort";
 import FilterChip from "../ui/FilterChip";
 import WdBadge from "../ui/WdBadge";
 import EmptyState from "../ui/EmptyState";
+import SortableHdr from "../ui/SortableHdr";
 /**
  *
  * ═══════════════════════════════════════════════════════════════
@@ -441,11 +442,11 @@ export function MultiRoundLeaderboard({
   }, [filteredComplete, filteredCut, filteredIncomplete, filteredWD, sortKey, sortDir, sortable]);
 
   function SHdr({ k, children, className }: { k: MRSortKey; children: React.ReactNode; className?: string }) {
-    const active = sortable && sortKey === k;
+    if (!sortable) return <th className={className}>{children}</th>;
     return (
-      <th className={(className || "") + (sortable ? " lb-sortable" : "")} onClick={() => handleSort(k)}>
-        {children}{active && <span className="sort-arrow">{sortDir === "asc" ? "▲" : "▼"}</span>}
-      </th>
+      <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className={className}>
+        {children}
+      </SortableHdr>
     );
   }
 

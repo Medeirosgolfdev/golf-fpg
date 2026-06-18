@@ -2218,7 +2218,7 @@ function FFGContentLegacy() {
                   <React.Fragment key={`lg-${year}`}>
                     <SidebarSectionTitle
                       dark
-                      color="var(--color-ffg-mid, #002654)"
+                      color="var(--color-ffg-mid, var(--color-ffg-dark))"
                       textColor="#ffffff"
                       borderColor="var(--color-ffg-dark)"
                       letterSpacing="0.08em"
@@ -2235,7 +2235,7 @@ function FFGContentLegacy() {
                         color: "#ffffff",
                         textTransform: "uppercase",
                         marginTop: 4,
-                        background: "var(--color-ffg-mid, #002654)",
+                        background: "var(--color-ffg-mid, var(--color-ffg-dark))",
                       }}
                     >
                       {year} · PDF
@@ -2591,11 +2591,11 @@ function FFGShellContent() {
     return {
       routeBase: "/ffg",
       title: "🇫🇷 France",
-      color: "#002654",
+      color: "var(--color-ffg-dark)",
       textColor: "#fff",
       grouping: "series-year",
       seriesOrder: ["FFG Officiel", "LGPIDF"],
-      sourceColors: { ffgres: "#002654", lgpidf: "#3b5a8c" },
+      sourceColors: { ffgres: "var(--color-ffg-dark)", lgpidf: "#3b5a8c" },
       sourceLabels: { ffgres: "FFG Officiel", lgpidf: "LGPIDF" },
       ligaLabels: FFG_LIGUE_LABELS,
       filters: { search: true, year: true, liga: true, intl: true, toggles: ["manuel", "pt", "top10"] },

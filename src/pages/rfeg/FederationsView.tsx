@@ -245,7 +245,7 @@ export function RFEGFederationsView() {
         }
       />
 
-      <div style={{ marginTop: 12, padding: "10px 12px", background: "var(--bg-muted, #fff7e6)", border: "1px solid var(--border, #f1bf00)", borderRadius: 6, fontSize: 12 }}>
+      <div style={{ marginTop: 12, padding: "10px 12px", background: "var(--bg-muted, #fff7e6)", border: "1px solid var(--border, var(--color-rfeg-yellow))", borderRadius: 6, fontSize: 12 }}>
         <strong>⚠ Estrutura federativa do golfe espanhol.</strong> A nível nacional
         existe a <strong>RFEG</strong> (Madrid, sede do golfe federado). Sob a sua tutela
         coexistem <strong>19 federações territoriais</strong> que organizam circuitos

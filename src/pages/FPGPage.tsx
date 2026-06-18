@@ -82,15 +82,29 @@ function autoGruposByClub(t: Tournament | null): GrupoEntry[] {
   // depois, por ordem alfabética de clube, para o cartão mostrar "A/B/C…" na
   // caixa e o nome do clube ao lado — igual aos juvenis curados).
   const byClub = new Map<string, { clube: string; jogadores: GrupoEntry["jogadores"] }>();
-  for (const p of t.players) {
-    const clube = (p.club || "Sem clube").trim();
+  const add = (clubeRaw: string, nome: string, fed: string | null, hcpRaw: unknown) => {
+    const clube = (clubeRaw || "Sem clube").trim();
     if (!byClub.has(clube)) byClub.set(clube, { clube, jogadores: [] });
-    const hcpRaw = (p as any).hcpExact ?? (p as any).hcpPlay;
     byClub.get(clube)!.jogadores.push({
-      nome: p.name,
-      fed: p.fedCode ?? null,
-      hcp: hcpRaw != null && hcpRaw !== "" ? hcpRaw : 0,
+      nome,
+      fed: fed ?? null,
+      hcp: hcpRaw != null && hcpRaw !== "" ? (hcpRaw as number) : 0,
     });
+  };
+  if (t.players.length) {
+    for (const p of t.players) {
+      add(p.club || "", p.name, p.fedCode ?? null, (p as any).hcpExact ?? (p as any).hcpPlay);
+    }
+  } else {
+    // Pré-jogo: ainda não há scorecards. Usar os inscritos (_admissions.players)
+    // para já compor as equipas por clube/categoria (exclui reservas).
+    const adm = (t as any)._admissions?.players as Array<{
+      nome: string; fed?: string; clube?: string; hcp?: number | string; status?: string;
+    }> | undefined;
+    for (const p of adm || []) {
+      if (p.status === "reserva") continue;
+      add(p.clube || "", p.nome, p.fed ?? null, p.hcp);
+    }
   }
   const letra = (i: number) =>
     i < 26 ? String.fromCharCode(65 + i)
@@ -1938,6 +1952,36 @@ function Content() {
                   // não por pancadas. As vistas de Grupos por strokeplay não se
                   // aplicam; mostra-se nota e remete para Individual / Draw.
                   if (fmt?.matchPlay) {
+                    // Pré-jogo: mostra já a COMPOSIÇÃO das equipas por clube e
+                    // categoria (Homens/Senhoras/Juniores) a partir dos inscritos.
+                    // A classificação por pontos surge depois, com os resultados.
+                    const banner = (
+                      <div className="flex-wrap" style={{
+                        display: "flex", alignItems: "center", gap: 8,
+                        padding: "10px 16px", borderBottom: "1px solid var(--border)",
+                        background: "var(--accent-light, #eef6ef)", fontSize: 12, color: "var(--text-2)",
+                      }}>
+                        <span style={{ fontSize: 16 }}>🆚</span>
+                        <span><strong>Match Play — classificação por pontos.</strong> {fmt.note}. A classificação por equipa surge quando houver resultados; vê o <strong>Draw</strong> para os emparelhamentos 3-way.</span>
+                      </div>
+                    );
+                    if (fmt.categories && grupos.length) {
+                      return (
+                        <>
+                          {banner}
+                          <ClubesCategoriasView
+                            tournament={curClubes}
+                            grupos={grupos}
+                            playersDB={playersDB}
+                            categories={fmt.categories}
+                            rosterMode
+                            bestNLabel={(n) => `máx. ${n} + 1 supl.`}
+                            initialSort="hcp"
+                            intro={<>Composição das equipas por clube — cada clube alinha em 3 campeonatos: <strong>Homens</strong>, <strong>Senhoras</strong> e <strong>Juniores</strong> (≤Sub-18). O número ao lado de cada categoria é o nº de inscritos; "máx." é o limite do regulamento (titulares + 1 suplente).</>}
+                          />
+                        </>
+                      );
+                    }
                     return (
                       <div className="fs-13 c-muted" style={{ padding: "32px 24px", textAlign: "center" }}>
                         <div className="mb-12" style={{ fontSize: 32 }}>🆚</div>

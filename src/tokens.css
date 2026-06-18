@@ -128,6 +128,8 @@
   --color-ffg-dark:      #002654;   /* FFG/France sidebar header — bleu de France */
   --color-ffg-mid:       #ed2939;   /* FFG border accent — rouge de France */
   --color-ffg-text:      #ffffff;   /* FFG text (branco sobre azul) */
+  --color-rfeg-red:      #aa151b;   /* RFEG/Espanha — rojo de la bandera */
+  --color-rfeg-yellow:   #f1bf00;   /* RFEG/Espanha — gualda (amarelo da bandeira) */
   --color-amber:        #f59e0b;
   --color-green-light:  #4ade80;
   --color-navy:         #1e3a5f;
@@ -323,7 +325,7 @@
   --line:          var(--border);
 
 
-  /* ── 14. Tamanhos · Raios · Sombras · Espaçamento ──────────── */
+  /* ── 14. Tamanhos · Raios · Sombras ────────────────────────── */
   --topbar-h:    56px;
   --sidebar-w:   280px;
 
@@ -338,7 +340,93 @@
   --shadow:    0 2px 8px rgba(30, 50, 20, 0.08);
   --shadow-lg: 0 4px 16px rgba(30, 50, 20, 0.10);
 
-  --space-section: 12px;
-  --space-inner:   14px;
+
+  /* ── 15. Tipografia ────────────────────────────────────────── */
+  /* Famílias (antes hardcoded em App.css). */
+  --font-sans: 'DM Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Escala de tamanhos — nomeada por px para mapeamento 1:1 com as
+     utility-classes .fs-N e com os tamanhos inline existentes.
+     Usar SEMPRE estes tokens em código novo (nunca px avulsos). */
+  --fs-8:   8px;
+  --fs-9:   9px;
+  --fs-10:  10px;
+  --fs-11:  11px;
+  --fs-12:  12px;
+  --fs-13:  13px;
+  --fs-14:  14px;   /* corpo base */
+  --fs-15:  15px;
+  --fs-16:  16px;
+  --fs-18:  18px;
+  --fs-20:  20px;
+  --fs-22:  22px;
+  --fs-24:  24px;
+  --fs-28:  28px;
+  --fs-32:  32px;
+  --fs-64:  64px;
+
+  /* Aliases semânticos (preferir em componentes novos). */
+  --fs-body:     var(--fs-14);
+  --fs-sm:       var(--fs-12);
+  --fs-xs:       var(--fs-11);
+  --fs-micro:    var(--fs-10);
+  --fs-h-sm:     var(--fs-12);
+  --fs-h-md:     var(--fs-14);
+  --fs-h-lg:     var(--fs-16);
+  --fs-display:  var(--fs-24);
+
+  /* Pesos. */
+  --fw-400: 400;
+  --fw-500: 500;
+  --fw-600: 600;
+  --fw-700: 700;
+  --fw-800: 800;
+  --fw-900: 900;
+  --fw-normal:   var(--fw-400);
+  --fw-medium:   var(--fw-500);
+  --fw-semibold: var(--fw-600);
+  --fw-bold:     var(--fw-700);
+  --fw-heavy:    var(--fw-800);
+
+  /* Alturas de linha. */
+  --lh-tight:   1.15;
+  --lh-snug:    1.3;
+  --lh-normal:  1.5;
+  --lh-relaxed: 1.7;
+
+
+  /* ── 16. Espaçamento ───────────────────────────────────────── */
+  /* Escala nomeada por px (1:1 com utility-classes .mb-N/.mt-N/.gap-N/.p-N). */
+  --space-1:   1px;
+  --space-2:   2px;
+  --space-3:   3px;
+  --space-4:   4px;
+  --space-6:   6px;
+  --space-8:   8px;
+  --space-10:  10px;
+  --space-12:  12px;
+  --space-14:  14px;
+  --space-16:  16px;
+  --space-18:  18px;
+  --space-20:  20px;
+  --space-24:  24px;
+  --space-32:  32px;
+  --space-40:  40px;
+
+  /* Aliases de uso (mantidos para retrocompatibilidade). */
+  --space-section: var(--space-12);
+  --space-inner:   var(--space-14);
+
+
+  /* ── 17. Z-index ───────────────────────────────────────────── */
+  /* Escala canónica — substitui os valores avulsos espalhados. */
+  --z-base:     1;    /* th sticky, sobreposições mínimas dentro de tabelas */
+  --z-raised:   2;
+  --z-sticky:   6;    /* colunas/cabeçalhos sticky */
+  --z-dropdown: 50;
+  --z-sidebar:  100;
+  --z-overlay:  1000; /* drawers, backdrops */
+  --z-modal:    9999; /* modais e toasts no topo */
 
 }

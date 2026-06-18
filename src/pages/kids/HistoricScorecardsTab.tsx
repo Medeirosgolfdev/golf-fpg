@@ -22,6 +22,7 @@ import { useMemo, useState } from "react";
 import { scClass } from "../../utils/scoreDisplay";
 import { fmtToPar } from "../../utils/format";
 import SortableHdr from "../../ui/SortableHdr";
+import LoadingState from "../../ui/LoadingState";
 
 interface FieldEscalao { nome: string; jogadores?: unknown[] }
 interface FieldTorneio { t: number; name: string; date_inicio: string; escaloes: FieldEscalao[] }
@@ -244,7 +245,7 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
     return <div className="muted p-16">Sem torneio selecionado.</div>;
   }
   if (editions === null) {
-    return <div className="muted p-16">A carregar histórico…</div>;
+    return <LoadingState message="A carregar histórico…" />;
   }
   if (editions.length === 0) {
     return (

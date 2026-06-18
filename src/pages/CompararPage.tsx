@@ -27,9 +27,13 @@ import { loadPlayerStats, type PlayerStatsDb } from "../data/playerStatsTypes";
 import { norm } from "../utils/format";
 import { clubShort, hcpDisplay } from "../utils/playerUtils";
 import { deepFixMojibake } from "../utils/fixEncoding";
+import LoadingState from "../ui/LoadingState";
+import { C } from "../utils/colors";
 
-const COLORS = ["#16a34a", "#2563eb", "#dc2626", "#d97706"];
-const COLORS_LIGHT = ["#dcfce7", "#dbeafe", "#fee2e2", "#fef3c7"];
+// Séries de cor dos gráficos — fonte única em colors.ts (espelho dos tokens --chart-N).
+const COLORS = [C.chartGreen, C.chartBlue, C.chartRed, C.chartAmber];
+// Variantes claras (fundos de série). TODO: mover para colors.ts quando houver tokens -light dedicados.
+const COLORS_LIGHT = ["var(--bg-success-strong)", "var(--bg-info-strong)", "var(--bg-danger-strong)", "var(--bg-warn-strong)"];
 
 interface Slot {
   fed: string; player: Player;
@@ -209,12 +213,12 @@ function RadarChart({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats | null
         {[0.25, 0.5, 0.75, 1].map(frac => (
           <polygon key={frac}
             points={Array.from({ length: N }, (_, i) => { const p = pointOnAxis(i, frac); return `${p.x},${p.y}`; }).join(" ")}
-            fill="none" stroke="#d5dac9" strokeWidth={frac === 1 ? 1 : 0.5} opacity={0.6}
+            fill="none" stroke="var(--border-light)" strokeWidth={frac === 1 ? 1 : 0.5} opacity={0.6}
           />
         ))}
         {axes.map((_, i) => {
           const p = pointOnAxis(i, 1);
-          return <line key={i} x1={CX} y1={CY} x2={p.x} y2={p.y} stroke="#d5dac9" strokeWidth={0.5} />;
+          return <line key={i} x1={CX} y1={CY} x2={p.x} y2={p.y} stroke="var(--border-light)" strokeWidth={0.5} />;
         })}
         {loaded.map(({ s, agg, i: si }) => {
           const pts = axisData.map((ad, ai) => {
@@ -241,7 +245,7 @@ function RadarChart({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats | null
           const p = pointOnAxis(i, 1.18);
           return (
             <text key={i} x={p.x} y={p.y} textAnchor="middle" dominantBaseline="middle"
-              fontSize={10} fontWeight={600} fill="#4a5940">{ax.label}</text>
+              fontSize={10} fontWeight={600} fill="var(--text-2)">{ax.label}</text>
           );
         })}
       </svg>
@@ -357,7 +361,7 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
           return (
             <div key={cat.key}>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                <span style={{ fontSize: 12, width: 75, fontWeight: 600, color: "#4a5940" }}>
+                <span style={{ fontSize: 12, width: 75, fontWeight: 600, color: "var(--text-2)" }}>
                   {cat.emoji} {cat.label}
                 </span>
               </div>
@@ -377,7 +381,7 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
                           borderRadius: 4, opacity: 0.75,
                         }} />
                       </div>
-                      <span style={{ fontSize: 11, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, width: 46, textAlign: "right", color: "#4a5940" }}>
+                      <span style={{ fontSize: 11, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, width: 46, textAlign: "right", color: "var(--text-2)" }}>
                         {v.toFixed(1)}%
                       </span>
                     </div>
@@ -443,7 +447,7 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
       </div>
 
       <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", maxHeight: 230, marginTop: 8 }}>
-        <line x1={PAD.left} x2={W - PAD.right} y1={yPos(0)} y2={yPos(0)} stroke="#16a34a" strokeWidth={1} strokeDasharray="4,3" opacity={0.5} />
+        <line x1={PAD.left} x2={W - PAD.right} y1={yPos(0)} y2={yPos(0)} stroke="var(--color-good)" strokeWidth={1} strokeDasharray="4,3" opacity={0.5} />
         {[-0.5, 0.5, 1.0].filter(v => v >= minV && v <= maxV).map(v => (
           <g key={v}><line x1={PAD.left} x2={W - PAD.right} y1={yPos(v)} y2={yPos(v)} stroke="#e2e8f0" strokeWidth={0.5} />
           <text x={PAD.left - 4} y={yPos(v) + 3} textAnchor="end" fontSize={9} fill="#94a3b8">{v > 0 ? "+" : ""}{v.toFixed(1)}</text></g>
@@ -500,10 +504,10 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
                   const diff = e?.avg != null && e?.par != null ? e.avg - e.par : null;
                   const sl = e?.strokesLost ?? null;
                   const isBest = diff != null && diff === bestAvg && avgs.filter(v => v === bestAvg).length === 1;
-                  const diffCol = diff == null ? undefined : diff <= 0 ? "#16a34a" : diff <= 0.3 ? "#d97706" : "#dc2626";
+                  const diffCol = diff == null ? undefined : diff <= 0 ? "var(--color-good)" : diff <= 0.3 ? "var(--color-warn)" : "var(--color-danger)";
                   return (<React.Fragment key={i}>
                     <td className="r" style={{ color: diffCol }}>{diff != null ? (isBest ? <b>{fD2(diff)}</b> : fD2(diff)) : "–"}</td>
-                    <td className="r" style={{ color: sl != null && sl > 0.2 ? "#dc2626" : "var(--text-3)" }}>{sl != null ? fD2(sl) : "–"}</td>
+                    <td className="r" style={{ color: sl != null && sl > 0.2 ? "var(--color-danger)" : "var(--text-3)" }}>{sl != null ? fD2(sl) : "–"}</td>
                   </React.Fragment>);
                 })}
               </tr>);
@@ -555,7 +559,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
       <div className="caTitle">Head-to-Head ({totalMatches} torneios comuns)</div>
 
       {/* Win progress bar */}
-      <div style={{ display: "flex", height: 32, borderRadius: 8, overflow: "hidden", marginBottom: 12, border: "1px solid #d5dac9" }}>
+      <div style={{ display: "flex", height: 32, borderRadius: 8, overflow: "hidden", marginBottom: 12, border: "1px solid var(--border-light)" }}>
         {loaded.map((s, i) => {
           const w = totalMatches > 0 ? (wins[i] / totalMatches * 100) : 0;
           if (w === 0) return null;
@@ -667,7 +671,7 @@ function HcpEvolutionSection({ slots }: { slots: Slot[] }) {
               <div className="caKpiVal" style={{ color: s.color }}>{last != null ? last.toFixed(1) : "–"}</div>
               <div className="caKpiLbl">{shortName(s.name)}</div>
               {delta != null && (
-                <div style={{ fontSize: 10, fontWeight: 700, marginTop: 2, color: delta < 0 ? "#16a34a" : delta > 0 ? "#dc2626" : "#7a8a6e" }}>
+                <div style={{ fontSize: 10, fontWeight: 700, marginTop: 2, color: delta < 0 ? "var(--color-good)" : delta > 0 ? "var(--color-danger)" : "var(--text-3)" }}>
                   {delta > 0 ? "+" : ""}{delta.toFixed(1)} no período
                 </div>
               )}
@@ -714,7 +718,7 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
             {["Perfil radar", "Tabela detalhada", "Distribuição de scores", "Buraco a buraco", "Head-to-head", "Evolução HCP"].map(label => (
               <span key={label} style={{
                 padding: "4px 12px", borderRadius: 12, background: "#f0f2ec",
-                fontSize: 11, fontWeight: 600, color: "#4a5940",
+                fontSize: 11, fontWeight: 600, color: "var(--text-2)",
               }}>{label}</span>
             ))}
           </div>
@@ -722,10 +726,7 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
       )}
 
       {anyLoading && (
-        <div className="holeAnalysis" style={{ textAlign: "center", padding: 24 }}>
-          <div style={{ fontSize: 24, marginBottom: 8 }}>⏳</div>
-          <div className="muted">A carregar dados dos jogadores…</div>
-        </div>
+        <LoadingState message="A carregar dados dos jogadores…" />
       )}
 
       {slots.length >= 2 && !anyLoading && (<>

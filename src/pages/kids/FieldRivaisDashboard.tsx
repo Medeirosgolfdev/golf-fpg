@@ -10,6 +10,7 @@
  */
 import React, { useEffect, useMemo, useState } from "react";
 import RivaisDashboard from "../../ui/RivaisDashboard";
+import LoadingState from "../../ui/LoadingState";
 import { cachedFetchJson } from "../../data/fetchCache";
 import { meanArr } from "../../utils/mathUtils";
 import { normName, type AutoRivalPlayer } from "../../data/KIDSdataLoader";
@@ -1018,7 +1019,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
 
   // Render — early returns DEPOIS de todos os hooks acima estarem chamados.
   if (!field || !mh) {
-    return <div className="muted p-16">A carregar dados de torneios futuros…</div>;
+    return <LoadingState message="A carregar dados de torneios futuros…" />;
   }
   if (futureTorneios.length === 0) {
     return <div className="muted p-16">Sem torneios futuros disponíveis.</div>;

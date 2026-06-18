@@ -1714,7 +1714,7 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
                   className="p"
                   onClick={() => setPpView(true)}
                   title={`Handicap Pitch & Putt: ${pp.hcp} (${pp.hcpStatus}). Clica para ver histórico P&P.`}
-                  style={{ cursor: "pointer", background: "var(--badge-pp, #0e7490)", color: "#fff", border: "1px solid var(--badge-pp, #0e7490)" }}
+                  style={{ cursor: "pointer", background: "var(--badge-pp, var(--badge-pp))", color: "#fff", border: "1px solid var(--badge-pp, var(--badge-pp))" }}
                 >🏑 P&amp;P {pp.hcp}</span>
               )}
               <SexBadge sex={selected.sex} size="md" />
@@ -1733,7 +1733,7 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
               {aces.length > 0 && (
                 <span
                   className="p"
-                  style={{ background: "var(--score-eagle, #f59e0b)", color: "#fff", border: "1px solid var(--score-eagle, #f59e0b)" }}
+                  style={{ background: "var(--score-eagle, var(--color-amber))", color: "#fff", border: "1px solid var(--score-eagle, var(--color-amber))" }}
                   title={aces
                     .map(a => `Buraco ${a.hole} (par ${a.par})${a.course ? ` · ${a.course}` : ""}${a.date ? ` · ${a.date}` : ""}`)
                     .join("\n")}
@@ -3660,7 +3660,7 @@ function PlayerSidebarItem({
     escKey === "sub24" ? "var(--esc-sub24-bg)" :
     null;
   const accent =
-    isNacional ? "var(--color-good-dark, #166534)" :
+    isNacional ? "var(--color-good-dark, var(--color-good-dark))" :
     isPja      ? SIDEBAR_ACCENT.pja :
     isOrphan   ? "var(--color-warn)" :
     escBg      ??
@@ -3714,7 +3714,7 @@ function PlayerSidebarItem({
         <HcpPill hcp={displayHcp} escHcps={escHcps} />
         {ppHcp != null && (
           <span className="p p-sm" title={`Handicap Pitch & Putt: ${ppHcp}`}
-            style={{ background: "var(--badge-pp, #0e7490)", color: "#fff", border: "1px solid var(--badge-pp, #0e7490)" }}>
+            style={{ background: "var(--badge-pp, var(--badge-pp))", color: "#fff", border: "1px solid var(--badge-pp, var(--badge-pp))" }}>
             🏑 {ppHcp}
           </span>
         )}
@@ -3730,7 +3730,7 @@ function PlayerSidebarItem({
           {/* Rondas neste ano civil — mesma fonte (data.json) que o detalhe header.
               Usado para ordenação por defeito. */}
           {(roundsCurrentYear != null && roundsCurrentYear > 0) && (
-            <span title={`${roundsCurrentYear} rondas em ${new Date().getFullYear()}`} style={{ color: "var(--color-good-dark, #166534)", fontWeight: 600 }}>🗓 {roundsCurrentYear}</span>
+            <span title={`${roundsCurrentYear} rondas em ${new Date().getFullYear()}`} style={{ color: "var(--color-good-dark, var(--color-good-dark))", fontWeight: 600 }}>🗓 {roundsCurrentYear}</span>
           )}
           {/* Total — também do data.json. */}
           {(roundsTotal != null && roundsTotal > 0) && (
@@ -4433,7 +4433,7 @@ export default function JogadoresPage() {
               title={onlyPP
                 ? `A mostrar só jogadores com HCP de Pitch & Putt — clicar para limpar`
                 : `Mostrar só os ${ppCount} jogadores com HCP de Pitch & Putt`}
-              style={onlyPP ? { background: "var(--badge-pp, #0e7490)", color: "#fff", borderColor: "var(--badge-pp, #0e7490)" } : undefined}
+              style={onlyPP ? { background: "var(--badge-pp, var(--badge-pp))", color: "#fff", borderColor: "var(--badge-pp, var(--badge-pp))" } : undefined}
             >
               <span className="p-icon-big" aria-hidden="true">🏑</span>
               <span className="p-filter-count">{ppCount}</span>

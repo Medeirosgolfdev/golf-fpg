@@ -717,14 +717,14 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
               {/* Comunidade Autónoma (RFEG) — inferida do clube */}
               {rival && !isManuel && (rival as any).esRegion && (
                 <span className="p p-sm fs-11" title="Comunidade Autónoma"
-                  style={{ background: "#fef3c7", color: "#92400e", border: "1px solid #fcd34d" }}>
+                  style={{ background: "var(--bg-warn-strong)", color: "var(--color-warn-dark)", border: "1px solid #fcd34d" }}>
                   📍 {(rival as any).esRegion}
                 </span>
               )}
               {/* Categoria oficial RFEG (Benjamín/Alevín/Infantil/Cadete/Junior/Juvenil) */}
               {rival && !isManuel && (rival as any).esCatEdad && (
                 <span className="p p-sm fs-11" title="Categoria RFEG"
-                  style={{ background: "#dbeafe", color: "#1e40af", border: "1px solid #93c5fd", fontWeight: 600 }}>
+                  style={{ background: "var(--bg-info-strong)", color: "var(--color-info)", border: "1px solid #93c5fd", fontWeight: 600 }}>
                   {(rival as any).esCatEdad}
                 </span>
               )}
@@ -753,7 +753,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
               {/* Identidade FFG/França — license + clube + região */}
               {rival && !isManuel && (rival as any).frFed && (
                 <span className="p p-sm p-club fs-11" title="Licença FFGolf"
-                  style={{ background: "#eff6ff", color: "#1e40af", border: "1px solid #93c5fd" }}>
+                  style={{ background: "var(--bg-info)", color: "var(--color-info)", border: "1px solid #93c5fd" }}>
                   🇫🇷 {(rival as any).frFed}
                 </span>
               )}
@@ -764,7 +764,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
               )}
               {rival && !isManuel && (rival as any).frRegion && (
                 <span className="p p-sm fs-11" title="Région FFGolf"
-                  style={{ background: "#fef3c7", color: "#92400e", border: "1px solid #fcd34d" }}>
+                  style={{ background: "var(--bg-warn-strong)", color: "var(--color-warn-dark)", border: "1px solid #fcd34d" }}>
                   📍 {(rival as any).frRegion}
                 </span>
               )}
@@ -910,7 +910,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
               const agNum = parseInt((ag?.match(/\d+/)??[])[0]??"0");
               const agCls = agNum<=10?"p-sub10":agNum<=12?"p-sub12":agNum<=14?"p-sub14":"p-sub18";
               return (
-                <div key={t.id} style={{ border: "1.5px solid var(--medal-gold,#d97706)", borderRadius: 8, padding: "10px 12px", display: "flex", gap: 10, alignItems: "center" }}>
+                <div key={t.id} style={{ border: "1.5px solid var(--medal-gold,var(--color-warn))", borderRadius: 8, padding: "10px 12px", display: "flex", gap: 10, alignItems: "center" }}>
                   <span className="shrink-0" style={{ fontSize: 32, lineHeight: 1 }}>🥇</span>
                   <div>
                     <div className="fs-13 fw-600">{t.name}</div>
@@ -920,7 +920,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                       {t.field>0 && <span style={{ marginLeft: 5, color: "var(--text-3)" }}>· {t.field>15?"⭐ ":""}{t.field} jog.</span>}
                     </div>
                     {res.tp!=null && <div style={{ fontSize: 12, fontWeight: 600, color: "var(--color-good-dark)", marginTop: 2 }}>{fmtToPar(res.tp)} ±par</div>}
-                    {bateuManuel && <div style={{ fontSize: 10, color: "var(--medal-gold,#d97706)", marginTop: 2 }}>⚔️ ganhou ao Manuel (#{mPos})</div>}
+                    {bateuManuel && <div style={{ fontSize: 10, color: "var(--medal-gold,var(--color-warn))", marginTop: 2 }}>⚔️ ganhou ao Manuel (#{mPos})</div>}
                   </div>
                 </div>
               );
@@ -1129,9 +1129,9 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                                     style={{
                                       ...linkStyle,
                                       cursor: "help",
-                                      background: isScratch ? "#fef3c7" : "#dbeafe",
-                                      color: isScratch ? "#92400e" : "#1e40af",
-                                      border: `1px solid ${isScratch ? "#f59e0b" : "#3b82f6"}`,
+                                      background: isScratch ? "var(--bg-warn-strong)" : "var(--bg-info-strong)",
+                                      color: isScratch ? "var(--color-warn-dark)" : "var(--color-info)",
+                                      border: `1px solid ${isScratch ? "var(--color-amber)" : "#3b82f6"}`,
                                     }}>
                                     {isScratch ? "Scratch" : "Handicap"}
                                   </span>
@@ -1141,7 +1141,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                           );
                         })()}
                         {manuelEsteve && !isManuel && (
-                          <span style={{ background:"#d1fae5", color:"#065f46", border:"1px solid #6ee7b7",
+                          <span style={{ background:"var(--bg-success-subtle)", color:"#065f46", border:"1px solid #6ee7b7",
                             fontSize:9, padding:"1px 5px", borderRadius:4, fontWeight:600 }}>★ M{manuelPos!=null?` #${manuelPos}`:""}</span>
                         )}
                       </div>

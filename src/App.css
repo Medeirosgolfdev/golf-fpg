@@ -16,8 +16,9 @@ input, button, select, textarea, table { font-family: inherit; }
 
 html, body, #root {
  height: 100%;
- font-family: 'DM Sans', sans-serif;
- font-size: 14px;
+ font-family: var(--font-sans);
+ font-size: var(--fs-14);
+ line-height: var(--lh-normal);
  color: var(--text);
  background: var(--bg);
  -webkit-font-smoothing: antialiased;
@@ -78,7 +79,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 
 /* ─── Notice / Alert Boxes ─── */
 .notice { margin: 12px 0; padding: 10px 14px; border-radius: var(--radius-lg); font-size: 12px; line-height: 1.5; }
-.notice code { background: var(--bg-code); padding: 1px 5px; border-radius: var(--radius-sm); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+.notice code { background: var(--bg-code); padding: 1px 5px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 12px; }
 .notice-info { background: var(--bg-info); border: 1px solid var(--score-bogey-border); color: var(--color-info); }
 .notice-warn { background: var(--bg-warn); border: 1px solid var(--border-warn); color: var(--color-warn-dark); }
 .notice-warn-text { color: var(--color-warn-dark); font-weight: 600; }
@@ -1354,7 +1355,7 @@ tr.cross-current { background: var(--bg-success); }
 
 
 .sim-td-sd {
- font-family: 'JetBrains Mono', monospace;
+ font-family: var(--font-mono);
  font-weight: 700;
  font-size: 12px;
 }
@@ -1451,7 +1452,7 @@ tr.cross-current { background: var(--bg-success); }
 }
 
 .sim-strip-num {
- font-family: 'JetBrains Mono', monospace;
+ font-family: var(--font-mono);
  font-size: 22px;
  font-weight: 800;
  color: var(--text);
@@ -1459,7 +1460,7 @@ tr.cross-current { background: var(--bg-success); }
 }
 
 .sim-strip-sub {
- font-family: 'JetBrains Mono', monospace;
+ font-family: var(--font-mono);
  font-size: 10px;
  color: var(--text-3);
  line-height: 1;
@@ -1527,7 +1528,7 @@ tr.cross-current { background: var(--bg-success); }
 .sim-strip-calc-input {
  width: 80px;
  text-align: center;
- font-family: 'JetBrains Mono', monospace;
+ font-family: var(--font-mono);
  font-size: 14px;
  font-weight: 600;
  padding: 3px 6px;
@@ -1542,7 +1543,7 @@ tr.cross-current { background: var(--bg-success); }
 }
 
 .sim-strip-calc-output {
- font-family: 'JetBrains Mono', monospace;
+ font-family: var(--font-mono);
  font-size: 18px;
  font-weight: 800;
  color: var(--accent);
@@ -1626,7 +1627,7 @@ tr.cross-current { background: var(--bg-success); }
 }
 
 .sim-manual-fields .input {
- font-family: 'JetBrains Mono', monospace;
+ font-family: var(--font-mono);
 }
 
 /* ─── Sidebar Back Button — escondido em desktop ─── */
@@ -2110,7 +2111,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
  display: inline-flex; align-items: center; justify-content: center;
  min-width: 28px; height: 24px; border-radius: var(--radius);
  font-size: 12px; font-weight: 900;
- font-family: 'JetBrains Mono', monospace;
+ font-family: var(--font-mono);
  margin-right: 8px; flex-shrink: 0;
  border: 2px solid transparent;
 }
@@ -2119,7 +2120,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .sidebar-rank-rest { background: var(--bg-muted); color: var(--text-2); border-color: var(--border); }
 
 .sidebar-sd {
- font-size: 11px; font-family: 'JetBrains Mono', monospace;
+ font-size: 11px; font-family: var(--font-mono);
  font-weight: 700; padding: 2px 7px; border-radius: var(--radius-sm);
  margin-left: auto; flex-shrink: 0;
 }
@@ -2170,20 +2171,20 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .gap-16 { gap: 16px; }
 
 /* ─── Text ─── */
-.fw-600 { font-weight: 600; }
-.fw-700 { font-weight: 700; }
-.fw-800 { font-weight: 800; }
-.fw-900 { font-weight: 900; }
+.fw-600 { font-weight: var(--fw-600); }
+.fw-700 { font-weight: var(--fw-700); }
+.fw-800 { font-weight: var(--fw-800); }
+.fw-900 { font-weight: var(--fw-900); }
 /* NOTE: fs-8 and fs-9 are intentionally clamped to 10px as the minimum readable size.
    Use .fs-10 directly for clarity in new code. */
-.fs-10 { font-size: 10px; }
-.fs-11 { font-size: 11px; }
-.fs-12 { font-size: 12px; }
-.fs-13 { font-size: 13px; }
-.fs-14 { font-size: 14px; }
+.fs-10 { font-size: var(--fs-10); }
+.fs-11 { font-size: var(--fs-11); }
+.fs-12 { font-size: var(--fs-12); }
+.fs-13 { font-size: var(--fs-13); }
+.fs-14 { font-size: var(--fs-14); }
 .ta-c { text-align: center; }
 .lh-16 { line-height: 1.6; }
-.mono { font-family: 'JetBrains Mono', monospace; }
+.mono { font-family: var(--font-mono); }
 .nowrap { white-space: nowrap; }
 .text-ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
@@ -2378,18 +2379,18 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .cs-table .cs-name { text-align: left; padding-left: 8px; min-width: 155px; }
 .cs-table .cs-name .tourn-pname { font-size: 12px; }
 .cs-table .cs-fed  { width: 52px; font-size: 10px; color: var(--text-muted);
-  font-family: 'JetBrains Mono', monospace; }
+  font-family: var(--font-mono); }
 .cs-table .cs-esc  { width: 52px; }
 .cs-table .cs-club { min-width: 80px; color: var(--text-3); }
 .cs-table .cs-hcp  { width: 42px; text-align: right;
-  font-family: 'JetBrains Mono', monospace; color: var(--text-3); }
+  font-family: var(--font-mono); color: var(--text-3); }
 
 /* Colunas por torneio */
 .cs-table .cs-t-pos   { width: 28px; font-weight: 700; color: var(--text-3); }
 .cs-table .cs-t-gross { width: 40px; font-size: 13px; font-weight: 800;
-  font-family: 'JetBrains Mono', monospace; }
+  font-family: var(--font-mono); }
 .cs-table .cs-t-topar { width: 32px; font-weight: 700;
-  font-family: 'JetBrains Mono', monospace; }
+  font-family: var(--font-mono); }
 .cs-table .cs-t-sd  { width: 44px; }
 .cs-table .cs-t-stat { width: 28px; }  /* 🐦 / par / ■ */
 
@@ -2431,23 +2432,23 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 
 /* Colunas de identidade */
 .sc-lb .lb-esc   { width: 52px; }
-.sc-lb .lb-fed   { width: 44px; font-size: 10px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+.sc-lb .lb-fed   { width: 44px; font-size: 10px; color: var(--text-muted); font-family: var(--font-mono); }
 .sc-lb .lb-club  { width: 70px; font-size: 11px; overflow: hidden;
   text-overflow: ellipsis; white-space: nowrap; }
-.sc-lb .lb-hcp   { width: 36px; text-align: right; font-family: 'JetBrains Mono', monospace;
+.sc-lb .lb-hcp   { width: 36px; text-align: right; font-family: var(--font-mono);
   font-size: 11px; color: var(--text-3); }
 .sc-lb .lb-tee   { width: 24px; }
 
 /* Total + par — ±Par vem ANTES de Tot, separador visual à esquerda */
 .sc-lb .lb-topar { width: 34px; font-weight: 700;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   background: var(--accent-light);
   border-left: 1px solid var(--border); }
 /* th usa 11px (herdado); td usa 13px como no mockup */
 .sc-lb td.lb-topar { font-size: 12px; }
 .sc-lb th.lb-topar { font-size: 11px; }
 .sc-lb .lb-gross { width: 38px; font-size: 12px; font-weight: 800;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   background: var(--accent-light);
   border-left: 1px solid var(--border-light); }
 
@@ -2459,10 +2460,10 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 
 /* Colunas por ronda (MultiRoundLeaderboard) — separador no início de cada grupo */
 .sc-lb .lb-rnd    { width: 38px; background: var(--bg-rnd, #e8f2e4);
-  font-weight: 700; font-family: 'JetBrains Mono', monospace;
+  font-weight: 700; font-family: var(--font-mono);
   border-left: 2px solid var(--border-strong, #999); }
 .sc-lb .lb-rnd-tp { width: 30px; background: var(--bg-rnd, #e8f2e4); font-size: 11px;
-  font-family: 'JetBrains Mono', monospace; }
+  font-family: var(--font-mono); }
 .sc-lb .lb-rnd-sd   { width: 44px; background: var(--bg-rnd-stats, #f5f9f3); }
 .sc-lb .lb-rnd-bird { width: 22px; background: var(--bg-rnd-stats, #f5f9f3);
   font-size: 11px; color: var(--color-good); font-weight: 700; }
@@ -2496,7 +2497,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 /* Células de buraco em linhas de jogador: padding compacto */
 .sc-lb tbody tr:not(.lb-par-row):not(.lb-si-row) td.lb-hole { padding: 3px 2px; }
 .sc-lb .lb-halftot    { width: 42px; background: var(--bg-hover);
-  font-weight: 600; font-size: 11px; font-family: 'JetBrains Mono', monospace;
+  font-weight: 600; font-size: 11px; font-family: var(--font-mono);
   border-left: 1px solid var(--border); }
 
 /* Linhas PAR / SI */
@@ -2660,7 +2661,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
  width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0;
 }
 .cal-search-date {
- font-size: 10px; font-family: 'JetBrains Mono', monospace;
+ font-size: 10px; font-family: var(--font-mono);
  color: var(--text-3); font-weight: 600; min-width: 32px; flex-shrink: 0;
 }
 .cal-search-title {
@@ -3103,7 +3104,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
  color: var(--text);
 }
 .tee-suffix {
- font-family: 'JetBrains Mono', monospace;
+ font-family: var(--font-mono);
  font-size: 11px;
  color: var(--text-3);
 }
@@ -3153,7 +3154,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 }
 .ratings-table .r-num {
  text-align: right;
- font-family: 'JetBrains Mono', monospace;
+ font-family: var(--font-mono);
  font-size: 12px;
 }
 .r-sex {
@@ -3213,10 +3214,10 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .error-msg { font-size: 13px; margin-top: 4px; }
 
 /* ─── Extended Utilities ─── */
-.fs-16 { font-size: 16px; }
-.fs-18 { font-size: 18px; }
-.fs-24 { font-size: 24px; }
-.fw-500 { font-weight: 500; }
+.fs-16 { font-size: var(--fs-16); }
+.fs-18 { font-size: var(--fs-18); }
+.fs-24 { font-size: var(--fs-24); }
+.fw-500 { font-weight: var(--fw-500); }
 .jc-center { justify-content: center; }
 .ta-left         { text-align: left; }
 .ta-right        { text-align: right; }

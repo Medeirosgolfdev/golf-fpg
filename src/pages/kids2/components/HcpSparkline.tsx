@@ -52,7 +52,7 @@ export default function HcpSparkline({ points, width = 80, height = 20, playerNa
   const last = sorted[sorted.length - 1];
   const first = sorted[0];
   const delta = last.hcpExact - first.hcpExact;
-  const trendColor = delta < 0 ? "var(--success, #16a34a)" : delta > 0 ? "var(--danger, #dc2626)" : "var(--text-3, #6b7280)";
+  const trendColor = delta < 0 ? "var(--success, var(--color-good))" : delta > 0 ? "var(--danger, var(--color-danger))" : "var(--text-3, #6b7280)";
 
   return (
     <>
@@ -166,7 +166,7 @@ function HcpHistoryModal({
           </thead>
           <tbody>
             {desc.map((p, i) => (
-              <tr key={i} style={{ borderBottom: "1px solid var(--border-light, #f3f4f6)" }}>
+              <tr key={i} style={{ borderBottom: "1px solid var(--border-light, var(--bg-muted))" }}>
                 <td style={{ padding: "5px 8px", fontVariantNumeric: "tabular-nums" }}>{p.date}</td>
                 <td style={{ padding: "5px 8px", textAlign: "right", fontVariantNumeric: "tabular-nums", fontWeight: 600 }}>
                   {p.hcpExact.toFixed(1)}
