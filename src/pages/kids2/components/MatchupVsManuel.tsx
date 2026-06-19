@@ -85,7 +85,7 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
       background: "var(--bg)",
       border: "1px solid var(--border)",
       borderRadius: 10,
-      padding: "14px 16px",
+      padding: "12px 16px",
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
         <span style={{ fontSize: "var(--fs-18)" }}>⚔️</span>

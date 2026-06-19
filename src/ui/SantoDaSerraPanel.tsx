@@ -228,7 +228,7 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
                     title={isOpen ? "Fechar detalhes" : "Ver todos os top-5"}>
                     <td style={{ verticalAlign: "middle" }}>
                       <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-                        <span style={{ fontFamily: "monospace", fontSize: "var(--fs-11)", opacity: 0.6, width: 10 }}>{isOpen ? "▼" : "▶"}</span>
+                        <span style={{ fontFamily: "var(--font-mono)", fontSize: "var(--fs-11)", opacity: 0.6, width: 10 }}>{isOpen ? "▼" : "▶"}</span>
                         {a.fed ? (
                           <a href={`/jogadores/${a.fed}?view=federado`} target="_blank" rel="noopener noreferrer"
                             onClick={(e) => e.stopPropagation()}
@@ -242,7 +242,7 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
                         )}
                       </span>
                     </td>
-                    <td style={{ fontFamily: "monospace", fontSize: "var(--fs-12)", color: "var(--text-3)" }}>
+                    <td style={{ fontFamily: "var(--font-mono)", fontSize: "var(--fs-12)", color: "var(--text-3)" }}>
                       {a.fed || "—"}
                     </td>
                     <td style={{ fontSize: "var(--fs-12)", color: "var(--text-2)" }}

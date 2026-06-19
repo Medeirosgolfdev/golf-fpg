@@ -1,4 +1,4 @@
-﻿/**
+/**
  * kids2/components/AnaliseSection.tsx
  *
  * Análise hole-by-hole estilo Masters — porta a AnaliseSection da KIDSPage
@@ -188,7 +188,7 @@ export default function AnaliseSection({ data, junior, filterTids }: Props) {
     return (
       <section>
         <h3 style={{ margin: "8px 0 10px", fontSize: "var(--fs-14)", fontWeight: 700, color: "var(--text)" }}>Análise</h3>
-        <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", padding: "12px 14px", background: "var(--bg-muted)", borderRadius: 6 }}>
+        <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", padding: "12px 16px", background: "var(--bg-muted)", borderRadius: 6 }}>
           — sem scorecards hole-by-hole disponíveis para análise —
         </div>
       </section>

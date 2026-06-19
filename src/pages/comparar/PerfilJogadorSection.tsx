@@ -1,4 +1,4 @@
-﻿/**
+/**
  * PerfilJogadorSection — Leitura rápida e comparação visual.
  *
  * Substitui a análise SWOT técnica (σ, SD, +0.73 vs par) por:
@@ -156,7 +156,7 @@ function RondaTipica({ rows }: { rows: Row[] }) {
 
   return (
     <div className="card p-12" style={{ background: "var(--bg-1)" }}>
-      <div className="fw-800 fs-14 mb-8">🎯 Numa ronda típica (par 72)</div>
+      <div className="h-md">🎯 Numa ronda típica (par 72)</div>
       <div className="muted fs-11 mb-10">
         Projecção de pancadas ganhas/perdidas em 4 Par 3 + 10 Par 4 + 4 Par 5. Lê assim: "Em cada ronda, este jogador perde em média X pancadas nos Par 3, Y nos Par 4, Z nos Par 5."
       </div>
@@ -318,7 +318,7 @@ function VisualComparisons({ rows }: { rows: Row[] }) {
 function Block({ title, explain, children }: { title: string; explain?: string; children: React.ReactNode }) {
   return (
     <div>
-      <div className="fw-700 fs-12 mb-2">{title}</div>
+      <div className="fw-800 fs-12 mb-2">{title}</div>
       {explain && <div className="muted fs-10 mb-6">{explain}</div>}
       {children}
     </div>
@@ -572,13 +572,13 @@ export default function PerfilJogadorSection({ slots, allAgg, statsDb, period }:
 
         {/* 2. Comparações visuais (barras) */}
         <div className="card p-12" style={{ background: "var(--bg-1)" }}>
-          <div className="fw-800 fs-14 mb-8">📊 Comparação a par a par</div>
+          <div className="h-md">📊 Comparação a par a par</div>
           <VisualComparisons rows={rows} />
         </div>
 
         {/* 3. Leitura narrativa por jogador */}
         <div>
-          <div className="fw-800 fs-14 mb-8">📝 Leitura individual</div>
+          <div className="h-md">📝 Leitura individual</div>
           <div style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(rows.length, 2)}, 1fr)`, gap: 12 }}>
             {rows.map(r => {
               const others = rows.filter(o => o.i !== r.i);

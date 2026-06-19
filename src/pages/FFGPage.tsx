@@ -680,7 +680,7 @@ function FFGTeeTimesTab({ data }: { data: FFGResTournament }) {
       postScorecardCells: (
         <>
           <td style={{ padding: "6px 8px", textAlign: "center", fontWeight: 600 }}>{p.teeTime || "—"}</td>
-          <td style={{ padding: "6px 8px", textAlign: "center", fontSize: "var(--fs-11)", fontFamily: "monospace" }}>
+          <td style={{ padding: "6px 8px", textAlign: "center", fontSize: "var(--fs-11)", fontFamily: "var(--font-mono)" }}>
             {p.license || "—"}
           </td>
         </>
@@ -736,7 +736,7 @@ function FFGTeeTimesTab({ data }: { data: FFGResTournament }) {
 /* ── CategoriesView (Catégories d'âge FFG — info no body) ─────── */
 function CategoriesView({ data }: { data: FFGCategoriesData }) {
   return (
-    <div style={{ padding: "12px 16px" }}>
+    <div className="p-12-16">
       <DetailHeader
         title="📚 Catégories d'âge FFG"
         sub={
@@ -812,10 +812,10 @@ function CategoriesView({ data }: { data: FFGCategoriesData }) {
                       <td><strong>{uCode}</strong></td>
                       <td className="muted">{ffgLabel}</td>
                       <td style={{ textAlign: "center" }}>{m?.trous ?? "—"}</td>
-                      <td style={{ textAlign: "right", fontFamily: "monospace" }}>
+                      <td style={{ textAlign: "right", fontFamily: "var(--font-mono)" }}>
                         {m?.Garcons ? m.Garcons.toLocaleString("pt-PT") : "—"}
                       </td>
-                      <td style={{ textAlign: "right", fontFamily: "monospace" }}>
+                      <td style={{ textAlign: "right", fontFamily: "var(--font-mono)" }}>
                         {m?.Filles ? m.Filles.toLocaleString("pt-PT") : "—"}
                       </td>
                     </tr>

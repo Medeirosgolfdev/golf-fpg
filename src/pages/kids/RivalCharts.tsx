@@ -1,4 +1,4 @@
-﻿/**
+/**
  * kids/RivalCharts.tsx — Componentes de gráficos do detalhe do rival
  * (extraído de KIDSPage.tsx para reduzir tamanho)
  *
@@ -113,7 +113,7 @@ export function TorneiosRecorrentes({
 }) {
   if (!groups.length) return null;
   return (
-    <div className="card mb-12"  style={{ padding: "12px 16px" }}>
+    <div className="card mb-12">
       <div className="h-sm mb-8" style={{ color: "var(--text-2)" }}>
         Evolução no mesmo torneio · <span className="fw-400 fs-11">torneios com 2+ presenças</span>
       </div>

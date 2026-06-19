@@ -70,7 +70,7 @@ export default function StatsTable({ slots, allAgg, statsDb }: { slots: Slot[]; 
                     const v = r.values[ci];
                     const isBest = bestIdx[ri] === ci;
                     return (
-                      <td key={ci} className="r" style={{ fontWeight: isBest ? 800 : 400, color: isBest ? COLORS[x.i] : undefined, fontFamily: "'JetBrains Mono', monospace", background: isBest ? COLORS_LIGHT[x.i] : undefined }}>
+                      <td key={ci} className="r" style={{ fontWeight: isBest ? 800 : 400, color: isBest ? COLORS[x.i] : undefined, fontFamily: "var(--font-mono)", background: isBest ? COLORS_LIGHT[x.i] : undefined }}>
                         {v ?? "–"}
                       </td>
                     );

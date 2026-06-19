@@ -956,7 +956,7 @@ export default function TeeAdvisorView({ simCourses }: { simCourses: Course[] })
         <NumInput value={secondM} step={5} title="Alcance médio da 2ª pancada (madeira/híbrido)" onChange={setSecondM} />
       </Toolbar>
 
-      <div className="card" style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", padding: "12px 16px" }}>
+      <div className="card" style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
         <span style={{ fontSize: "var(--fs-22)" }}>📏</span>
         <span style={{ fontWeight: 800, fontSize: "var(--fs-15)" }}>Distância habitual</span>
         <input

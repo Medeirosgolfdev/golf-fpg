@@ -1,4 +1,4 @@
-﻿/**
+/**
  * BJGTPage.tsx — BJGT Tournament Results
  * 3 tournaments · day sub-tabs (Acumulado, R1, R2, R3)
  */
@@ -274,7 +274,7 @@ function ManuelDay({ data, ri }: { data: TData; ri: number }) {
 
   return (
     <div className="card">
-      <div className="h-md fs-14">🇵🇹 Análise Manuel — R{ri + 1}</div>
+      <div className="h-md">🇵🇹 Análise Manuel — R{ri + 1}</div>
       <div className="muted fs-10 mb-8">Gross: {r.gross} ({fmtToPar(r.gross-parTotal)}) · F9: {r.f9} {fmtSub(r.f9!-parF9)} · B9: {r.b9} {fmtSub(r.b9!-parB9)} · Média field: {fieldAvg.toFixed(1)}</div>
       <div className="grid-auto-fill mb-8" style={{ gap: 6 }}>
         {eagles.length > 0 && <div className="card-detail br" style={{ padding: "4px 8px" }}><span className="fw-800" style={{ color: SC.good }}>🦅 {eagles.length}</span><span className="fs-10 c-text-3"> {eagles.map(h => "H"+h.h).join(", ")}</span></div>}
@@ -397,7 +397,7 @@ function TournView({ def, evo, evoYear }: { def: TDef; evo?: Map<string, EvoEntr
       accHeader={hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined}
       accExtra={(
         <div className="card">
-          <div className="h-md fs-14">📊 Dificuldade por Buraco — Todas as rondas</div>
+          <div className="h-md">📊 Dificuldade por Buraco — Todas as rondas</div>
           <FStats data={data} ri="all" />
           <HoleDiff data={data} ri="all" mn={manuelName} />
         </div>
@@ -405,7 +405,7 @@ function TournView({ def, evo, evoYear }: { def: TDef; evo?: Map<string, EvoEntr
       roundExtra={(tab) => (
         <>
           <div className="card">
-            <div className="h-md fs-14">📊 Dificuldade por Buraco — {rLabel(tab)}</div>
+            <div className="h-md">📊 Dificuldade por Buraco — {rLabel(tab)}</div>
             <FStats data={data} ri={tab} />
             <HoleDiff data={data} ri={tab} mn={manuelName} />
           </div>
@@ -629,7 +629,7 @@ function Content() {
             <TournView def={cur} evo={evoMap} evoYear={evoYear} />
             {manuelEvo && cur.year === 2026 && (
               <div className="card" style={{ background: "var(--bg-success-subtle)", border: "1px solid var(--good)" }}>
-                <div className="h-md fs-14">🇵🇹 Manuel — Evolução WJGC (±Par)</div>
+                <div className="h-md">🇵🇹 Manuel — Evolução WJGC (±Par)</div>
                 <div className="gap-16 flex-wrap" style={{ display: "flex", alignItems: "center" }}>
                   <div className="ta-c" style={{ flex: "1 1 100px" }}>
                     <div className="muted fs-10">{evoYear} ({manuelEvo.from})</div>
@@ -750,7 +750,7 @@ export function bjgtMajorDivision(def: TDef, evo: Map<string, EvoEntry> | undefi
     accHeader: hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined,
     accExtra: (
       <div className="card">
-        <div className="h-md fs-14">📊 Dificuldade por Buraco — Todas as rondas</div>
+        <div className="h-md">📊 Dificuldade por Buraco — Todas as rondas</div>
         <FStats data={data} ri="all" />
         <HoleDiff data={data} ri="all" mn={manuelName} />
       </div>
@@ -758,7 +758,7 @@ export function bjgtMajorDivision(def: TDef, evo: Map<string, EvoEntry> | undefi
     roundExtra: (tab) => (
       <>
         <div className="card">
-          <div className="h-md fs-14">📊 Dificuldade por Buraco — {rLabel(tab)}</div>
+          <div className="h-md">📊 Dificuldade por Buraco — {rLabel(tab)}</div>
           <FStats data={data} ri={tab} />
           <HoleDiff data={data} ri={tab} mn={manuelName} />
         </div>

@@ -70,6 +70,7 @@ export interface DriveGroup {
   key: string;
   label: string;
   campo?: string;
+  tcode?: string;
   date: string;
   escalao: string | null | undefined;
   isMulti: boolean;
@@ -116,10 +117,12 @@ export function buildDriveGroups(tournaments: FPGTournament[]): DriveGroup[] {
         if (b._roundLabel === "Resumo") return -1;
         return (a._roundLabel || "").localeCompare(b._roundLabel || "");
       });
+      const resumo = entries.find(e => e._roundLabel === "Resumo") ?? entries[0];
       groups.push({
         key: t._multiGroup,
-        label: shortCampo(t.campo),
+        label: resumo?.name || shortCampo(t.campo),
         campo: t.campo,
+        tcode: resumo?.tcode,
         date: t.date,
         escalao: t.escalao ?? null,
         isMulti: true,
@@ -134,8 +137,9 @@ export function buildDriveGroups(tournaments: FPGTournament[]): DriveGroup[] {
       const entries = [...(eventMap.get(eventKey) || [])].sort((a, b) => escIdx(a.escalao) - escIdx(b.escalao));
       groups.push({
         key: eventKey,
-        label: shortCampo(t.campo),
+        label: entries[0]?.name || shortCampo(t.campo),
         campo: t.campo,
+        tcode: entries.length === 1 ? entries[0].tcode : undefined,
         date: t.date,
         escalao: entries.length === 1 ? entries[0].escalao : null,
         isMulti: false,
@@ -146,8 +150,9 @@ export function buildDriveGroups(tournaments: FPGTournament[]): DriveGroup[] {
     } else {
       groups.push({
         key: t.tcode + "_" + t.date,
-        label: shortCampo(t.campo),
+        label: t.name || shortCampo(t.campo),
         campo: t.campo,
+        tcode: t.tcode,
         date: t.date,
         escalao: t.escalao ?? null,
         isMulti: false,
@@ -260,6 +265,7 @@ export function buildDriveEntries(tournaments: FPGTournament[]): CircuitEntry[] 
       id: g.key,
       year: yearOf(g.date),
       name: g.label || g.campo || "Torneio",
+      tcode: g.tcode,
       series: DRIVE_SERIES_LABEL[seriesKey] || seriesKey,
       liga: g.entries[0]?.region || undefined,
       course: g.campo || undefined,

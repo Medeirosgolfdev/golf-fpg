@@ -64,6 +64,10 @@ function buildMajorEntries(bjgtDefs: TDef[], doralEntries: Entry[], doralNames: 
     const courses = [...new Set(divisions.map((dv) => dv.results?.campo).filter((c): c is string => !!c))];
     // Nome real do evento (do JSON), sem o sufixo do escalão (" - Boys 10-11").
     const evName = (defs[0]?.data.tournament || "").replace(/\s*[-–]\s*(boys|girls|u\d|sub).*$/i, "").trim();
+    const roundDates = defs[0]?.roundDates;
+    const roundsCount = roundDates?.length || defs[0]?.data.players[0]?.rounds?.length || undefined;
+    const dateStart = roundDates?.[0] ? `${roundDates[0]} ${year}` : undefined;
+    const dateEnd = roundDates && roundDates.length > 1 ? `${roundDates[roundDates.length - 1]} ${year}` : undefined;
     out.push({
       id: `${series}:${year}`,
       year,
@@ -71,6 +75,9 @@ function buildMajorEntries(bjgtDefs: TDef[], doralEntries: Entry[], doralNames: 
       series: seriesLabel,
       source: series,
       course: courses.length === 1 ? courses[0] : country,
+      dateStart,
+      dateEnd,
+      roundsCount,
       playerCount: defs.reduce((s, d) => s + d.data.players.filter((p) => p.total != null).length, 0),
       divisionCount: divisions.length,
       hasManuel: defs.some((d) => d.data.players.some((p) => isM(p.name))),
@@ -89,6 +96,7 @@ function buildMajorEntries(bjgtDefs: TDef[], doralEntries: Entry[], doralNames: 
       .map((e) => doralMajorDivision(e, doralEvoFor(e, doralEntries)))
       .sort(majorDivCompare);
     const dCourses = [...new Set(ents.map((e) => e.course).filter((c): c is string => !!c))];
+    const doralRounds = Math.max(...ents.map((e) => Math.max(...e.players.map((p) => p.rounds.length), 0)), 0) || undefined;
     out.push({
       id: `doral:${year}`,
       year,
@@ -96,6 +104,7 @@ function buildMajorEntries(bjgtDefs: TDef[], doralEntries: Entry[], doralNames: 
       series: "Doral",
       source: "doral",
       course: dCourses.length === 1 ? dCourses[0] : "USA",
+      roundsCount: doralRounds,
       playerCount: ents.reduce((s, e) => s + e.players.filter((p) => p.total != null).length, 0),
       divisionCount: divisions.length,
       hasManuel: ents.some((e) => e.players.some((p) => isM(p.name))),

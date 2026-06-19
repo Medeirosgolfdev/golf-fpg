@@ -300,7 +300,7 @@ export default function TopClubesPanel({
                     title={isOpen ? "Fechar detalhes" : "Ver atletas e títulos"}
                   >
                     <td
-                      style={{ fontFamily: "monospace", fontSize: "var(--fs-11)", color: "var(--text-3)" }}
+                      style={{ fontFamily: "var(--font-mono)", fontSize: "var(--fs-11)", color: "var(--text-3)" }}
                     >
                       {idx + 1}
                     </td>
@@ -308,7 +308,7 @@ export default function TopClubesPanel({
                       <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
                         <span
                           style={{
-                            fontFamily: "monospace",
+                            fontFamily: "var(--font-mono)",
                             fontSize: "var(--fs-11)",
                             opacity: 0.6,
                             width: 10,

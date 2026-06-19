@@ -1,4 +1,4 @@
-﻿import React, { useContext } from "react";
+import React, { useContext } from "react";
 import { isoDate, fmtDate, displayName } from "../utils/format";
 import { flag } from "../utils/flagUtils";
 import { normName as normNameAuto, type AutoRivalPlayer } from "../data/KIDSdataLoader";
@@ -172,7 +172,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                 <div key={e.age_group} className="card" style={{
                   background: man ? "var(--accent-light)" : dst ? "var(--bg-card)" : "var(--bg-card)",
                   border: `1.5px solid ${man ? "var(--accent)" : dst ? "var(--border)" : "var(--border-light)"}`,
-                  padding:"12px 14px",
+                  padding:"12px 16px",
                   boxShadow: man ? "0 0 0 2px var(--accent-alpha-10)" : undefined,
                 }}>
                   {/* Cabeçalho do card */}

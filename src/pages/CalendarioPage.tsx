@@ -1,4 +1,4 @@
-﻿/**
+/**
  * CalendarioPage.tsx — Calendário Multi-Fonte 2026
  *
  * Código de cores:
@@ -824,7 +824,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                               color: enabledCals.has(cal.id) ? "var(--text)" : "var(--text-3)",
                               flex: 1, fontWeight: isExpanded ? 600 : enabledCals.has(cal.id) ? 500 : 400,
                             }}>{cal.name}</span>
-                            <span className="fs-10" style={{ fontFamily: "'JetBrains Mono', monospace",
+                            <span className="fs-10" style={{ fontFamily: "var(--font-mono)",
                               color: "var(--text-3)", flexShrink: 0 }}>{calEvts.length}</span>
                             <span className="fs-10" style={{ color: "var(--text-3)", flexShrink: 0, transition: "transform 0.15s",
                               transform: isExpanded ? "rotate(180deg)" : "none" }}>▼</span>
@@ -850,7 +850,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                                 }}
                                   onMouseEnter={e => (e.currentTarget.style.background = "var(--bg-hover)")}
                                   onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
-                                  <span className="fs-10 fw-600 shrink-0" style={{ fontFamily: "'JetBrains Mono', monospace", color: cal.color, minWidth: 30 }}>{dd}</span>
+                                  <span className="fs-10 fw-600 shrink-0" style={{ fontFamily: "var(--font-mono)", color: cal.color, minWidth: 30 }}>{dd}</span>
                                   <span className="text-ellipsis fs-10 ta-left" style={{ color: "var(--text-2)", flex: 1 }}>{ev.title}</span>
                                 </button>
                               );
@@ -908,7 +908,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
               {searchOpen && searchQ.length >= 2 && searchResults.length === 0 && (
                 <div style={{ position: "absolute", top: "100%", left: 0, right: 0, marginTop: 4,
                   background: "var(--bg-card)", border: "1px solid var(--border-light)",
-                  borderRadius: "var(--radius-lg)", padding: "12px 14px",
+                  borderRadius: "var(--radius-lg)", padding: "12px 16px",
                   color: "var(--text-3)" }} className="fs-11 ta-c">
                   Nenhum evento encontrado
                 </div>

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * JovensAnaliseView — página de análise dos últimos 4 anos de Campeonatos
  * Regional e Nacional de Jovens.
  *
@@ -581,7 +581,7 @@ function RegionChampionsBlock({
           }}
           title={open ? "Colapsar" : "Expandir"}
         >
-          <span style={{ fontFamily: "monospace", fontSize: "var(--fs-11)", opacity: 0.7 }}>
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: "var(--fs-11)", opacity: 0.7 }}>
             {open ? "▼" : "▶"}
           </span>
           <span>📍 {region}</span>

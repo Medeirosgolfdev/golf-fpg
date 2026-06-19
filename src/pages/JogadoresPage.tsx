@@ -1,4 +1,4 @@
-﻿import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import type { Player, SexFilter } from "../data/types";
 import { useAppContext } from "../context/AppContext";
@@ -2200,7 +2200,7 @@ function HcpBinDrillCard({ bin, federados, onClose, onPickPlayer }: {
         </div>
         <button className="p p-sm" onClick={onClose} title="Fechar">✕</button>
       </div>
-      <div className="fw-700 fs-12 mb-4">Top 15 (ordenados por HCP)</div>
+      <div className="fw-800 fs-12 mb-4">Top 15 (ordenados por HCP)</div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 4 }}>
         {top.map((p, i) => (
           <button

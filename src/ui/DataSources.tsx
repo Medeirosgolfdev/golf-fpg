@@ -1,4 +1,4 @@
-﻿/**
+/**
  * DataSources.tsx — componentes partilhados para diagnóstico de ficheiros de dados.
  *
  * - `formatSourceLabel(path)`  → abreviatura legível ("pull001", "clubes2024")
@@ -191,7 +191,7 @@ export function FileBadge({
           // Mesmo tamanho/cor do "data" e "N jog" ao lado — aparência mínima, sem pill
           fontSize: "var(--fs-10)",
           fontWeight: 500,
-          fontFamily: "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+          fontFamily: "var(--font-mono)",
           color: "var(--text-muted)",
           opacity: 0.75,
           cursor: tournaments ? "context-menu" : "default",
@@ -255,7 +255,7 @@ function FilePopover({
         gap: 6,
       }}>
         <div>
-          <div className="fw-700 fs-11" style={{ fontFamily: "ui-monospace, monospace" }}>
+          <div className="fw-700 fs-11" style={{ fontFamily: "var(--font-mono)" }}>
             {formatSourceLabel(path)}
           </div>
           <div className="c-muted fs-10" style={{ wordBreak: "break-all" }}>{path}</div>
@@ -277,12 +277,12 @@ function FilePopover({
             alignItems: "baseline",
             borderBottom: i < sorted.length - 1 ? "1px solid var(--border-light)" : undefined,
           }}>
-            <span className="c-muted fs-10" style={{ width: 78, flexShrink: 0, fontFamily: "ui-monospace, monospace" }}>
+            <span className="c-muted fs-10" style={{ width: 78, flexShrink: 0, fontFamily: "var(--font-mono)" }}>
               {t.date || ""}
             </span>
             <span className="fs-11" style={{ flex: 1, wordBreak: "break-word" }}>{t.name}</span>
             {t.tcode && (
-              <span className="c-muted fs-10" style={{ flexShrink: 0, fontFamily: "ui-monospace, monospace" }}>
+              <span className="c-muted fs-10" style={{ flexShrink: 0, fontFamily: "var(--font-mono)" }}>
                 {t.tcode}
               </span>
             )}
@@ -439,7 +439,7 @@ function DataSourcesPanel({
         padding: "6px 10px 8px",
         borderBottom: "1px solid var(--border-light)",
       }}>
-        <div className="fw-700 fs-12">📂 Ficheiros de dados lidos pela página</div>
+        <div className="h-sm">📂 Ficheiros de dados lidos pela página</div>
         <div className="c-muted fs-10 mt-2">
           {sources.length} ficheiro{sources.length !== 1 ? "s" : ""} · {totalCount} registo{totalCount !== 1 ? "s" : ""} total
         </div>
@@ -487,7 +487,7 @@ function SourceRow({ source }: { source: DataSource }) {
       <span style={{ flex: 1, minWidth: 0 }}>
         <div style={{
           fontSize: "var(--fs-11)",
-          fontFamily: "ui-monospace, monospace",
+          fontFamily: "var(--font-mono)",
           wordBreak: "break-all",
           color: isError ? "var(--color-warn-dark)" : undefined,
           fontWeight: isError ? 600 : 400,
@@ -507,7 +507,7 @@ function SourceRow({ source }: { source: DataSource }) {
             marginTop: 3,
             padding: "3px 6px",
             fontSize: "var(--fs-10)",
-            fontFamily: "ui-monospace, monospace",
+            fontFamily: "var(--font-mono)",
             color: "var(--color-warn-dark)",
             background: "var(--bg-card)",
             border: "1px solid var(--color-warn)",

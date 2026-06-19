@@ -1,4 +1,4 @@
-﻿/**
+/**
  * kids/RivalDetail.tsx — Painel de detalhe do rival selecionado
  * (extraído de KIDSPage.tsx — 1158 linhas)
  */
@@ -893,14 +893,14 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
 
       {/* ══ GRÁFICO DE EVOLUÇÃO ══ */}
       {evoRivalData.filter(d => d.tp != null && d.rounds > 0).length >= 2 && (
-        <div className="card mb-12"  style={{ padding: "12px 16px" }}>
+        <div className="card mb-12"  >
           <EvolucaoChart tournResults={evoRivalData} manuelResults={evoManuelData} />
         </div>
       )}
 
       {/* ══ PALMARÈS ══ */}
       {palmares.length > 0 && (
-        <div className="card mb-12"  style={{ padding: "12px 16px" }}>
+        <div className="card mb-12"  >
           <div className="h-sm mb-8" style={{ color: "var(--text-2)" }}>🥇 Palmarès · {palmares.length} {palmares.length===1?"vitória":"vitórias"}</div>
           <div className="gap-8" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(210px,1fr))" }}>
             {palmares.map(({ t, res }) => {
@@ -949,7 +949,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
           under:scoringBlock.bp[pp].under,
         })).filter(x=>x.n>0);
         return (
-          <div className="card mb-12"  style={{ padding: "12px 16px" }}>
+          <div className="card mb-12"  >
             <div style={{ fontSize: "var(--fs-10)", fontWeight: 600, color: "var(--text-3)", marginBottom: 6 }}>
               Distribuição de scoring · {tot} buracos
             </div>
@@ -993,7 +993,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
 
       {/* ══ ANÁLISE ESTILO MASTERS ══ */}
       {autoScorecards.length > 0 && (
-        <div className="card mb-12" style={{ padding: "12px 16px" }}>
+        <div className="card mb-12" >
           <div className="h-sm mb-8" style={{ color: "var(--text-2)" }}>
             📊 Análise · Scoring · Por ronda · F9 vs B9 · Por buraco
           </div>
@@ -1060,7 +1060,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                         <RoundPill nR={rds.length} />
                         {/* Debug pill (?debug=1): mostra tid do torneio para diagnóstico */}
                         {debugMode && (
-                          <span title={`tid: ${t.id}`} className="fs-10 shrink-0 overflow-hidden" style={{ fontFamily: "'JetBrains Mono', monospace", padding: "1px 5px", borderRadius: 4, background: "var(--bg-warn-light)", color: "var(--color-warn-dark)", border: "1px solid var(--bg-warn-strong)", maxWidth: 200, textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                          <span title={`tid: ${t.id}`} className="fs-10 shrink-0 overflow-hidden" style={{ fontFamily: "var(--font-mono)", padding: "1px 5px", borderRadius: 4, background: "var(--bg-warn-light)", color: "var(--color-warn-dark)", border: "1px solid var(--bg-warn-strong)", maxWidth: 200, textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                             {t.id}
                           </span>
                         )}

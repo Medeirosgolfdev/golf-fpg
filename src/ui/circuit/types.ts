@@ -157,6 +157,8 @@ export interface CircuitEntry {
   name: string;
   /** Série para agrupamento extra (BJGT vs EOWAGR; FFG vs LGPIDF). */
   series?: string;
+  /** Código do torneio (ex: "10615") — mostrado como pill na sidebar. */
+  tcode?: string;
   /** Fonte de dados (RFEGolf/NextCaddy/...) — controla cor do chip na sidebar. */
   source?: string;
   /** Liga/região (FFG: ligue) — alimenta o filtro `liga` da toolbar. */

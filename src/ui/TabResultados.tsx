@@ -1,4 +1,4 @@
-﻿import { useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 // Components: TabResultados + EscalaoTabs + EscalaoSection (Draw R{n} integrado).
 import React from "react";
 import { displayName, fmtDate, fmtToPar, isoDate } from "../utils/format";
@@ -410,7 +410,7 @@ function SecaoGreatgolf({ data }: { data: GreatgolfData }) {
       </div>
 
       {open && (
-        <div style={{ padding:"14px 16px" }}>
+        <div style={{ padding:"12px 16px" }}>
           {/* Selector de categoria — usa tourn-tab */}
           <div style={{ display:"flex", gap:6, marginBottom:14 }}>
             {cats.map(c => (

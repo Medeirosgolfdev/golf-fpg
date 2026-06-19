@@ -1,4 +1,4 @@
-﻿/**
+/**
  * kids2/components/InlineScorecard.tsx
  *
  * Mesmo conteúdo do ScorecardModal mas SEM overlay/popup — pensado para
@@ -110,7 +110,7 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
       background: "var(--bg-card)",
       border: "1px solid var(--border)",
       borderRadius: 8,
-      padding: "12px 14px",
+      padding: "12px 16px",
       marginTop: 6,
     }}>
       <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 10, gap: 12 }}>

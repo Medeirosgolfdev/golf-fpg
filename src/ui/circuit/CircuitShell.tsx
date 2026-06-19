@@ -856,6 +856,7 @@ function CircuitSidebar({
 
                     {/* Linha 3: pills */}
                     <div style={{ display: "flex", gap: 4, flexWrap: "wrap", alignItems: "center", margin: "3px 0" }}>
+                      {e.tcode && <span className="p p-sm p-muted">{e.tcode}</span>}
                       {/* Escalão/sexo só fazem sentido quando há UM escalão; com vários
                           mostrar apenas "N esc." (senão parece que só tem o 1º). */}
                       {nDiv <= 1 && esc && <EscPill esc={esc} />}

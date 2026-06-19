@@ -624,7 +624,7 @@ function PlayerTable({ players, dateRef, coursePar }: { players: RFEGPlayer[]; d
 
     const postForResults = (
       <>
-        <td style={{ textAlign: "center", fontWeight: 700, fontFamily: "'JetBrains Mono', monospace" }}>
+        <td style={{ textAlign: "center", fontWeight: 700, fontFamily: "var(--font-mono)" }}>
           {p.toPar == null
             ? "—"
             : (p.toPar === 0
@@ -633,13 +633,13 @@ function PlayerTable({ players, dateRef, coursePar }: { players: RFEGPlayer[]; d
                     ? <span style={{ color: "var(--color-bad, #c00)" }}>+{p.toPar}</span>
                     : <span style={{ color: "var(--color-good-dark, #0a0)" }}>{p.toPar}</span>))}
         </td>
-        <td style={{ textAlign: "center", fontWeight: 700, fontFamily: "'JetBrains Mono', monospace" }}>
+        <td style={{ textAlign: "center", fontWeight: 700, fontFamily: "var(--font-mono)" }}>
           {p.total ?? "—"}
         </td>
         {!showHoleByHole && Array.from({ length: maxRounds }, (_, idx) => {
           const r = (p.rounds || []).find((x) => x.round === idx + 1);
           return (
-            <td key={`r${idx}`} style={{ textAlign: "center", fontFamily: "'JetBrains Mono', monospace" }}>
+            <td key={`r${idx}`} style={{ textAlign: "center", fontFamily: "var(--font-mono)" }}>
               {r && r.gross != null ? r.gross : "—"}
             </td>
           );
@@ -1194,15 +1194,15 @@ function ResultsTable({ results, dobLookup, dateRef }: {
                       </>
                     ) : <span className="muted">—</span>}
                   </td>
-                  <td style={{ padding: "4px 8px", textAlign: "center", fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, color: tpClass(p.toPar) }}>
+                  <td style={{ padding: "4px 8px", textAlign: "center", fontFamily: "var(--font-mono)", fontWeight: 700, color: tpClass(p.toPar) }}>
                     {fmtTp(p.toPar)}
                   </td>
                   {Array.from({ length: nR }, (_, ri) => (
-                    <td key={ri} style={{ padding: "4px 8px", textAlign: "center", fontFamily: "'JetBrains Mono', monospace" }}>
+                    <td key={ri} style={{ padding: "4px 8px", textAlign: "center", fontFamily: "var(--font-mono)" }}>
                       {p.rounds[ri] ?? "—"}
                     </td>
                   ))}
-                  <td style={{ padding: "4px 8px", textAlign: "center", fontWeight: 700, fontFamily: "'JetBrains Mono', monospace" }}>
+                  <td style={{ padding: "4px 8px", textAlign: "center", fontWeight: 700, fontFamily: "var(--font-mono)" }}>
                     {p.total}
                   </td>
                 </tr>
@@ -1633,7 +1633,7 @@ const RFEG_CATEGORIES: RFEGCategory[] = [
 function RFEGCategoriesView({ catCounts }: { catCounts: Record<string, number> }) {
   const refYear = 2026;
   return (
-    <div style={{ padding: "12px 16px" }}>
+    <div className="p-12-16">
       <DetailHeader
         title="📚 Categorías de edad RFEG"
         sub={
@@ -1690,21 +1690,21 @@ function RFEGCategoriesView({ catCounts }: { catCounts: Record<string, number> }
                   <td>
                     <span className={c.pillClass || "p p-sm"}>{c.name}</span>
                   </td>
-                  <td style={{ textAlign: "center", fontFamily: "monospace" }}>
+                  <td style={{ textAlign: "center", fontFamily: "var(--font-mono)" }}>
                     <strong>{c.subN}</strong>
                   </td>
                   <td style={{ textAlign: "center" }}>{c.age}</td>
-                  <td style={{ textAlign: "center", fontFamily: "monospace" }}>
+                  <td style={{ textAlign: "center", fontFamily: "var(--font-mono)" }}>
                     {c.millesime}
                   </td>
-                  <td style={{ textAlign: "center", fontFamily: "monospace" }}>
+                  <td style={{ textAlign: "center", fontFamily: "var(--font-mono)" }}>
                     {c.intl}
                   </td>
                   <td style={{ textAlign: "center" }}>{c.fpg}</td>
                   <td style={{ textAlign: "center", color: "var(--text-2)" }}>
                     {c.ffg}
                   </td>
-                  <td style={{ textAlign: "right", fontFamily: "monospace" }}>
+                  <td style={{ textAlign: "right", fontFamily: "var(--font-mono)" }}>
                     {total > 0 ? (
                       <span title={`${trad} como "${traditionalKey}" + ${sub} como "${subRfeg}"`}>
                         {total}

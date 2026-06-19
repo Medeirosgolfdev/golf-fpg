@@ -29,39 +29,43 @@ html, body, #root {
    ═══════════════════════════════════════════ */
 
 /* ─── Headings ─── */
-.h-xs { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); margin-bottom: 6px; }
-.h-sm { font-size: 12px; font-weight: 800; color: var(--text-dark); margin: 14px 0 8px; }
-.h-sm-warn { font-size: 12px; font-weight: 800; color: var(--color-warn-dark); margin-bottom: 4px; }
-.h-md { font-size: 14px; font-weight: 800; color: var(--text); margin-bottom: 10px; }
-.h-lg { font-size: 16px; font-weight: 800; color: var(--text); margin: 24px 0 8px; }
+.h-xs { font-size: var(--fs-11); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); margin-bottom: 6px; }
+.h-sm { font-size: var(--fs-12); font-weight: 800; color: var(--text-dark); margin: 14px 0 8px; }
+.h-sm-warn { font-size: var(--fs-12); font-weight: 800; color: var(--color-warn-dark); margin-bottom: 4px; }
+.h-md { font-size: var(--fs-14); font-weight: 800; color: var(--text); margin-bottom: 10px; }
+.h-lg { font-size: var(--fs-16); font-weight: 800; color: var(--text); margin: 24px 0 8px; }
 
 /* ─── Cards ─── */
-.card { margin: var(--space-section) 0; padding: var(--space-inner); border: 1px solid var(--border-light); border-radius: var(--radius-lg); background: var(--bg-card); box-shadow: var(--shadow-sm); }
+.card { margin: var(--space-section) 0; padding: var(--space-12) var(--space-16); border: 1px solid var(--border-light); border-radius: var(--radius-lg); background: var(--bg-card); box-shadow: var(--shadow-sm); }
 
 /* ─── Data Tables ─── */
 /* Três tamanhos — mesma linguagem visual: header verde-suave, hover suave, bordas --border-light */
 
-/* Tabela padrão (13px corpo, 6/10 padding) */
-.dtable { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
-.dtable th { padding: 6px 10px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); background: var(--bg-header); border-bottom: 2px solid var(--border); white-space: nowrap; }
+/* ─── Data Tables — linguagem visual unificada ───────────────────────
+   Todas as variantes partilham o mesmo tamanho de fonte e estilo de header.
+   A única diferença é o padding (adaptado ao contexto) e o sticky do -lg. */
+
+/* Tabela padrão — 6/10 padding */
+.dtable { width: 100%; border-collapse: collapse; font-size: var(--fs-13); font-variant-numeric: tabular-nums; }
+.dtable th { padding: 6px 10px; text-align: left; font-size: var(--fs-11); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); background: var(--bg-header); border-bottom: 2px solid var(--border); white-space: nowrap; }
 .dtable th.r, .dtable td.r { text-align: right; }
 .dtable td { padding: 6px 10px; border-bottom: 1px solid var(--border-light); vertical-align: middle; }
 .dtable tbody tr:hover { background: var(--bg-hover); }
 
-/* Tabela espaçosa (14px corpo, 8/12 padding, header sticky) */
-.dtable-lg { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
-.dtable-lg th { padding: 8px 12px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); background: var(--bg-header); border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: var(--z-sticky); white-space: nowrap; }
+/* Tabela com header sticky — 7/12 padding, mesmo aspecto visual */
+.dtable-lg { width: 100%; border-collapse: collapse; font-size: var(--fs-13); font-variant-numeric: tabular-nums; }
+.dtable-lg th { padding: 6px 10px; text-align: left; font-size: var(--fs-11); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); background: var(--bg-header); border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: var(--z-sticky); white-space: nowrap; }
 .dtable-lg th.r, .dtable-lg td.r { text-align: right; }
-.dtable-lg td { padding: 7px 12px; border-bottom: 1px solid var(--border-light); vertical-align: middle; }
+.dtable-lg td { padding: 6px 10px; border-bottom: 1px solid var(--border-light); vertical-align: middle; }
 .dtable-lg .r { text-align: right; }
 .dtable-lg .roundRow { cursor: pointer; transition: background 0.15s; }
 .dtable-lg .roundRow:hover { background: var(--bg-hover); }
 .dtable-lg .tourn-pname { font-weight: 700; }
 .dtable-lg .tourn-pname.tourn-pname-link { color: var(--link-color); }
 
-/* Tabela compacta para painéis e cards (11px corpo, 4/6 padding) */
-.dtable-sm { width: 100%; border-collapse: collapse; font-size: 11px; font-variant-numeric: tabular-nums; }
-.dtable-sm th { padding: 4px 6px; text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); background: var(--bg-header); border-bottom: 2px solid var(--border); white-space: nowrap; }
+/* Tabela compacta para painéis e cards — 4/6 padding, mesmo aspecto visual */
+.dtable-sm { width: 100%; border-collapse: collapse; font-size: var(--fs-13); font-variant-numeric: tabular-nums; }
+.dtable-sm th { padding: 4px 6px; text-align: left; font-size: var(--fs-11); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); background: var(--bg-header); border-bottom: 2px solid var(--border); white-space: nowrap; }
 .dtable-sm th.r, .dtable-sm td.r { text-align: right; }
 .dtable-sm td { padding: 4px 6px; border-bottom: 1px solid var(--border-light); vertical-align: middle; }
 .dtable-sm tbody tr:hover { background: var(--bg-hover); }
@@ -90,20 +94,20 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 
 /* ─── Notice / Alert Boxes ─── */
 /* Sistema unificado: .notice + modificador de severidade */
-.notice { margin: 12px 0; padding: 10px 14px; border-radius: var(--radius-lg); font-size: 12px; line-height: 1.5; }
-.notice code { background: var(--bg-code); padding: 1px 5px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 12px; }
+.notice { margin: 12px 0; padding: 10px 14px; border-radius: var(--radius-lg); font-size: var(--fs-12); line-height: 1.5; }
+.notice code { background: var(--bg-code); padding: 1px 5px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: var(--fs-12); }
 .notice-info    { background: var(--bg-info);            border: 1px solid var(--score-bogey-border); color: var(--color-info); }
 .notice-warn    { background: var(--bg-warn);            border: 1px solid var(--border-warn);        color: var(--color-warn-dark); }
 .notice-success { background: var(--bg-success-subtle);  border: 1px solid var(--color-good);         color: var(--color-good-dark); }
 /* notice-error funciona standalone (sem .notice) ou combinado — tem o seu próprio espaçamento */
-.notice-error { margin: 12px 0; padding: 10px 14px; border-radius: var(--radius-lg); font-size: 12px; line-height: 1.5; background: var(--bg-danger); border: 1px solid var(--border-danger); color: var(--color-danger-dark); }
+.notice-error { margin: 12px 0; padding: 10px 14px; border-radius: var(--radius-lg); font-size: var(--fs-12); line-height: 1.5; background: var(--bg-danger); border: 1px solid var(--border-danger); color: var(--color-danger-dark); }
 /* Variante horizontal (icon + texto lado a lado) */
 .notice-row { display: flex; align-items: center; gap: 10px; }
-.notice-row > .notice-icon { font-size: 18px; flex-shrink: 0; }
+.notice-row > .notice-icon { font-size: var(--fs-18); flex-shrink: 0; }
 /* Texto de aviso inline (sem caixa) */
 .notice-warn-text { color: var(--color-warn-dark); font-weight: 600; }
 .notice-error.ta-c { text-align: center; }
-.notice-error-msg { color: var(--color-danger-dark); font-weight: 600; font-size: 12px; }
+.notice-error-msg { color: var(--color-danger-dark); font-weight: 600; font-size: var(--fs-12); }
 
 /* ─── Conclusion Boxes ─── */
 .conclusion-box { margin-top: 10px; padding: 10px 14px; background: var(--bg-warn); border: 1px solid var(--border-warn); border-radius: var(--radius-lg); }
@@ -210,14 +214,14 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .jogadores-page .toolbar .select,
 .tourn-layout .toolbar .select {
  height: 28px;
- font-size: 12px;
+ font-size: var(--fs-12);
  min-width: 90px;
  padding: 0 6px;
 }
 
 .jogadores-page .toolbar .input {
  height: 28px;
- font-size: 12px;
+ font-size: var(--fs-12);
  padding: 0 8px;
  width: 180px;
 }
@@ -231,7 +235,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
  border-radius: var(--radius);
  background: var(--bg);
  color: var(--text-3);
- font-size: 11px;
+ font-size: var(--fs-11);
  cursor: pointer;
  display: flex;
  align-items: center;
@@ -249,7 +253,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 
 .field label {
  display: block;
- font-size: 11px;
+ font-size: var(--fs-11);
  font-weight: 600;
  color: var(--text-3);
  text-transform: uppercase;
@@ -260,7 +264,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .input, .select {
  padding: 5px 8px;
  font: inherit;
- font-size: 12px;
+ font-size: var(--fs-12);
  border: 1px solid var(--border);
  border-radius: var(--radius);
  background: var(--bg-card);
@@ -307,7 +311,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
   justify-content: center;
   gap: 6px;
   padding: 5px 14px;
-  font-size: 12px;
+  font-size: var(--fs-12);
   font-weight: 600;
   line-height: 1.2;
   color: var(--text-2);
@@ -331,7 +335,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
   box-shadow: var(--shadow-accent-sm);
 }
 .segmented-toggle .seg-btn .seg-count {
-  font-size: 10px;
+  font-size: var(--fs-10);
   font-weight: 700;
   padding: 1px 6px;
   border-radius: 10px;
@@ -345,7 +349,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 
 .chip {
  padding: 3px 10px;
- font-size: 12px;
+ font-size: var(--fs-12);
  font-weight: 500;
  color: var(--accent);
  background: var(--accent-light);
@@ -391,8 +395,8 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 }
 
 /* Sidebar items (shared between Campos and Jogadores) */
-.sidebar-section-title { padding: 6px 10px; border-bottom: 1px solid var(--border-light); font-size: 11px; font-weight: 700; color: var(--text-2); }
-.sidebar-section-title-dark { padding: 6px 10px; font-size: 11px; font-weight: 700; color: #fff; background: var(--color-good-dark); letter-spacing: 0.04em; }
+.sidebar-section-title { padding: 6px 10px; border-bottom: 1px solid var(--border-light); font-size: var(--fs-11); font-weight: 700; color: var(--text-2); }
+.sidebar-section-title-dark { padding: 6px 10px; font-size: var(--fs-11); font-weight: 700; color: #fff; background: var(--color-good-dark); letter-spacing: 0.04em; }
 
 .course-item {
  display: block;
@@ -420,7 +424,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 }
 
 .course-item-name {
- font-size: 13px;
+ font-size: var(--fs-13);
  font-weight: 600;
  color: var(--text);
  line-height: 1.3;
@@ -451,13 +455,13 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .p {
  display: inline-flex; align-items: center; justify-content: center;
  padding: 2px 8px;
- font-size: 11px; font-weight: 600; line-height: 1.4;
+ font-size: var(--fs-11); font-weight: 600; line-height: 1.4;
  border-radius: var(--radius);
  border: 1.5px solid transparent;
  white-space: nowrap;
  vertical-align: middle;
 }
-.p-sm { font-size: 10px; padding: 1px 6px; }
+.p-sm { font-size: var(--fs-10); padding: 1px 6px; }
 
 /* ── Icon-only pill (Jovens/Seniores/Novos) ── */
 /* Emoji grande, sem texto ao lado. Padding menor e emoji 18px para destacar. */
@@ -467,7 +471,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
  line-height: 1;
 }
 .p-icon-big {
- font-size: 18px;
+ font-size: var(--fs-18);
  line-height: 1;
  display: inline-block;
 }
@@ -508,7 +512,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .p-filter { cursor: pointer; transition: all 0.15s; background: var(--bg); color: var(--text-3); opacity: 0.6; }
 .p-filter:hover { opacity: 0.85; }
 .p-filter.active { opacity: 1; background: var(--text-dark); color: #fff; box-shadow: var(--shadow-sm); }
-.p-filter-count { font-size: 10px; font-weight: 500; opacity: 0.7; margin-left: 2px; }
+.p-filter-count { font-size: var(--fs-10); font-weight: 500; opacity: 0.7; margin-left: 2px; }
 .active .p-filter-count { opacity: 0.85; }
 
 /* Escalão filter — active state shows escalão color via .p-sub* classes */
@@ -516,11 +520,11 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .p-esc-filter:not(.active) { background: var(--bg); color: var(--text-3); }
 .p-esc-filter:hover { opacity: 0.85; }
 .p-esc-filter.active { opacity: 1; box-shadow: var(--shadow-sm); }
-.p-esc-clear { width: 24px; height: 24px; padding: 0; justify-content: center; border-radius: 50%; font-size: 10px; opacity: 0.7; background: var(--bg-hover); color: var(--text-3); }
+.p-esc-clear { width: 24px; height: 24px; padding: 0; justify-content: center; border-radius: 50%; font-size: var(--fs-10); opacity: 0.7; background: var(--bg-hover); color: var(--text-3); }
 .p-esc-clear:hover { opacity: 1; background: var(--bg-danger); color: var(--color-danger-dark); }
 
 .course-item-meta {
- font-size: 11px;
+ font-size: var(--fs-11);
  color: var(--text-3);
  margin-top: 1px;
 }
@@ -536,13 +540,13 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 }
 .detail-toolbar .select {
  height: 28px;
- font-size: 12px;
+ font-size: var(--fs-12);
  min-width: 90px;
  padding: 0 6px;
 }
 .detail-toolbar .input {
  height: 28px;
- font-size: 12px;
+ font-size: var(--fs-12);
  padding: 0 8px;
 }
 
@@ -573,7 +577,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 }
 
 .detail-title {
- font-size: 24px;
+ font-size: var(--fs-24);
  font-weight: 800;
  letter-spacing: -0.02em;
  color: var(--text);
@@ -585,7 +589,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 }
 
 .detail-sub {
- font-size: 12px;
+ font-size: var(--fs-12);
  margin-top: 3px;
 }
 
@@ -597,13 +601,13 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 
 .sc-table {
  border-collapse: collapse;
- font-size: 12px;
+ font-size: var(--fs-12);
  white-space: nowrap;
  font-variant-numeric: tabular-nums;
 }
 
 .sc-table th {
- font-size: 11px;
+ font-size: var(--fs-11);
  font-weight: 600;
  padding: 8px 6px;
  color: var(--text-2);
@@ -634,7 +638,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
  text-align: center;
  border-bottom: 1px solid var(--border-light);
  font-weight: 600;
- font-size: 12px;
+ font-size: var(--fs-12);
 }
 
 /* Linhas PAR / SI — estilo limpo (sem bandas de cor), como os scorecards de
@@ -655,7 +659,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .ratings-table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
 .ratings-table th {
  padding: 6px 10px;
- font-size: 11px;
+ font-size: var(--fs-11);
  font-weight: 700;
  color: var(--text-3);
  text-transform: uppercase;
@@ -704,7 +708,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
  display: inline-flex;
  align-items: center;
  justify-content: center;
- font-size: 10px;
+ font-size: var(--fs-10);
  font-weight: 700;
  width: 16px;
  height: 16px;
@@ -717,7 +721,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
  align-items: center;
  justify-content: center;
  padding: 2px 8px;
- font-size: 11px;
+ font-size: var(--fs-11);
  font-weight: 600;
  border-radius: var(--radius);
  border: 1.5px solid transparent;
@@ -770,12 +774,12 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .dh-top { display: flex; align-items: center; gap: 14px; }
 .dh-photo { width: 88px; height: 110px; border-radius: 6px; object-fit: cover; flex-shrink: 0; box-shadow: var(--shadow-sm); }
 .dh-iconcol { display: flex; flex-direction: column; align-items: center; gap: 2px; flex-shrink: 0; }
-.dh-iconcol a { font-size: 12px; line-height: 1; text-decoration: none; padding: 2px; border-radius: 4px; }
+.dh-iconcol a { font-size: var(--fs-12); line-height: 1; text-decoration: none; padding: 2px; border-radius: 4px; }
 .dh-iconcol a:hover { background: var(--bg-hover); }
 .dh-idblock { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
 .dh-nameline { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .dh-nameline .detail-title { margin: 0; }
-.dh-mode-btn { padding: 2px 8px; font-size: 11px; font-weight: 600; background: transparent; border: 1px solid var(--border); border-radius: 10px; cursor: pointer; color: var(--text-2); white-space: nowrap; }
+.dh-mode-btn { padding: 2px 8px; font-size: var(--fs-11); font-weight: 600; background: transparent; border: 1px solid var(--border); border-radius: 10px; cursor: pointer; color: var(--text-2); white-space: nowrap; }
 .dh-mode-btn:hover { background: var(--bg-hover); }
 .dh-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
 /* Controlos empilhados: pesquisa / dropdown(s) / data = linhas separadas. */
@@ -801,7 +805,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 /* Card base → use .card (unified) */
 
 .rowHead { display: flex; align-items: center; gap: 8px; }
-.count { display: inline-flex; align-items: center; justify-content: center; min-width: 22px; height: 22px; border-radius: var(--radius); font-size: 10px; font-weight: 700; padding: 0 5px; flex-shrink: 0; }
+.count { display: inline-flex; align-items: center; justify-content: center; min-width: 22px; height: 22px; border-radius: var(--radius); font-size: var(--fs-10); font-weight: 700; padding: 0 5px; flex-shrink: 0; }
 .courseBtn { background: none; border: none; cursor: pointer; font: inherit; font-weight: 600; color: var(--text); text-align: left; padding: 0; }
 .courseBtn:hover { color: var(--accent); text-decoration: underline; }
 .courseLink { color: var(--link-color); text-decoration: underline; text-decoration-color: var(--link-underline); text-underline-offset: 2px; cursor: pointer; }
@@ -815,9 +819,9 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .details .inner { padding: 0; background: var(--bg-detail); }
 .innerWrap { padding: 12px 14px; }
 
-/* .dt-compact → compact data table (12px, tabular-nums, header bg-header) */
-.dt-compact { width: 100%; border-collapse: collapse; font-size: 12px; font-variant-numeric: tabular-nums; }
-.dt-compact th { padding: 5px 8px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); background: var(--bg-header); border-bottom: 2px solid var(--border); text-align: left; white-space: nowrap; }
+/* .dt-compact → alias de .dtable-sm (padding ligeiramente mais generoso) */
+.dt-compact { width: 100%; border-collapse: collapse; font-size: var(--fs-13); font-variant-numeric: tabular-nums; }
+.dt-compact th { padding: 5px 8px; font-size: var(--fs-11); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); background: var(--bg-header); border-bottom: 2px solid var(--border); text-align: left; white-space: nowrap; }
 .dt-compact th.r, .dt-compact td.r { text-align: right; }
 .dt-compact th.ta-c, .dt-compact td.ta-c { text-align: center; }
 .dt-compact td { padding: 5px 8px; border-bottom: 1px solid var(--border-light); }
@@ -828,15 +832,15 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 /* Utility: clickable rows with cursor + subtle hover */
 tr.clickable { cursor: pointer; }
 /* Utility: "year" separator label shown between rows/sections */
-.year-label { padding: 5px 12px; font-size: 11px; font-weight: 600; color: var(--text-3); letter-spacing: 0; }
+.year-label { padding: 5px 12px; font-size: var(--fs-11); font-weight: 600; color: var(--text-3); letter-spacing: 0; }
 /* Highlighted active row in Eclético por tee summary table */
 .dtable tr.tee-row-active,
 .dtable-lg tr.tee-row-active { background: var(--color-good-alpha); box-shadow: inset 3px 0 0 var(--color-good); }
 
-.score-delta { font-size: 10px; font-weight: 500; margin-left: 3px; }
+.score-delta { font-size: var(--fs-10); font-weight: 500; margin-left: 3px; }
 .score-delta.pos { color: var(--color-danger); }
 .score-delta.neg { color: var(--color-good); }
-.hb { font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: var(--radius-sm); }
+.hb { font-size: var(--fs-10); font-weight: 700; padding: 1px 5px; border-radius: var(--radius-sm); }
 .hb9 { background: var(--color-warn); color: #fff; }
 .hb18 { background: var(--badge-fed); color: #fff; }
 /* Pill badges (from melhorias.json) */
@@ -854,16 +858,16 @@ a.dateLink .tee-date { text-decoration: underline; text-underline-offset: 2px; }
 .sc-score {
  display: inline-flex; align-items: center; justify-content: center;
  min-width: 24px; min-height: 24px;
- font-weight: 700; font-size: 11px;
+ font-weight: 700; font-size: var(--fs-11);
 }
-.sc-score-sm { min-width: 20px; min-height: 20px; width: 20px; height: 20px; font-size: 10px; }
+.sc-score-sm { min-width: 20px; min-height: 20px; width: 20px; height: 20px; font-size: var(--fs-10); }
 
 /* ── Error Boundary fallback ── */
 
 /* ── Layout helpers (Phase 6 — audit compliance) ── */
 
 .actions { display: flex; gap: 6px; align-items: center; }
-.btn { padding: 4px 10px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-card); cursor: pointer; font: inherit; font-size: 11px; font-weight: 600; }
+.btn { padding: 4px 10px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-card); cursor: pointer; font: inherit; font-size: var(--fs-11); font-weight: 600; }
 .btn:hover { background: var(--bg-hover); }
 .btnGhost { border-color: transparent; color: var(--accent); }
 
@@ -871,21 +875,21 @@ a.dateLink .tee-date { text-decoration: underline; text-underline-offset: 2px; }
 .an-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-section); margin-bottom: var(--space-section); }
 .an-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-section); margin-bottom: var(--space-section); }
 
-.kpi-info { font-size: 11px; cursor: help; margin-left: 4px; }
+.kpi-info { font-size: var(--fs-11); cursor: help; margin-left: 4px; }
 
 .an-hist-row { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
-.an-hist-label { width: 140px; font-size: 11px; color: var(--text-2); text-align: right; flex-shrink: 0; }
-.an-hist-bar { height: 18px; border-radius: var(--radius-sm); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; min-width: 4%; transition: width 0.3s; }
+.an-hist-label { width: 140px; font-size: var(--fs-11); color: var(--text-2); text-align: right; flex-shrink: 0; }
+.an-hist-bar { height: 18px; border-radius: var(--radius-sm); color: #fff; font-size: var(--fs-10); font-weight: 700; display: flex; align-items: center; justify-content: center; min-width: 4%; transition: width 0.3s; }
 
 tr.cross-current { background: var(--bg-success); }
 .cross-current td:first-child { border-left: 3px solid var(--color-good); }
 /* .ec-sum → eclectic summary table */
-.ec-sum th { padding: 6px 10px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); background: var(--bg-header); border-bottom: 2px solid var(--border); white-space: nowrap; }
+.ec-sum th { padding: 6px 10px; text-align: left; font-size: var(--fs-11); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); background: var(--bg-header); border-bottom: 2px solid var(--border); white-space: nowrap; }
 .ec-sum th.r, .ec-sum td.r { text-align: right; }
 .ec-sum td { padding: 6px 10px; border-bottom: 1px solid var(--border-light); }
 .ec-sum tr:hover { background: var(--bg-hover); cursor: pointer; }
 
-.sc-table-ec { border-collapse: collapse; font-size: 12px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.sc-table-ec { border-collapse: collapse; font-size: var(--fs-12); white-space: nowrap; font-variant-numeric: tabular-nums; }
 /* Sem grelha completa — só linhas horizontais subtis (como na leaderboard .sc-lb),
    para a tabela respirar e ficar limpa. */
 .sc-table-ec th, .sc-table-ec td { padding: 3px 6px; text-align: center; border: none; height: 28px; vertical-align: middle; }
@@ -895,7 +899,7 @@ tr.cross-current { background: var(--bg-success); }
    É reconhecível como cabeçalho pelo fundo coeso + separador espesso, não por
    gritar em CAPS/bold. */
 .sc-table-ec thead th {
-  font-size: 11px;
+  font-size: var(--fs-11);
   font-weight: 500;
   color: var(--text-3);
   background: transparent;
@@ -917,20 +921,20 @@ tr.cross-current { background: var(--bg-success); }
    aspecto — mesma cor, peso e tamanho — para o bloco de referência ser coeso. */
 .sc-table-ec thead th.row-label,
 .sc-table-ec .ec-ref-row .row-label,
-.sc-table-ec .ec-eclectic-row .row-label { color: var(--text-2); font-weight: 600; font-size: 11px; }
+.sc-table-ec .ec-eclectic-row .row-label { color: var(--text-2); font-weight: 600; font-size: var(--fs-11); }
 .sc-table-ec .col-out, .sc-table-ec .col-in { border-left: 1px solid var(--border-light); font-weight: 600; font-variant-numeric: tabular-nums; }
 /* "Out" fechado dos dois lados (divisor à direita separa o front 9 do back 9) */
 .sc-table-ec .col-out { border-right: 1px solid var(--border-light); }
 /* Subtotais (Out/In/Total): gross em cima, diferença para o par em pequenino por baixo */
 .sc-table-ec .ec-sum-g { line-height: 1.05; }
-.sc-table-ec .ec-sum-tp { font-size: 9px; font-weight: 600; line-height: 1.05; margin-top: 1px; }
+.sc-table-ec .ec-sum-tp { font-size: var(--fs-9); font-weight: 600; line-height: 1.05; margin-top: 1px; }
 .sc-table-ec .col-total { border-left: 1px solid var(--border); font-weight: 700; font-variant-numeric: tabular-nums; }
 .sc-table-ec .sep-row td { border-bottom: 2px solid var(--border); }
-.sc-table-ec .meta-row td { color: var(--text-muted); font-size: 10px; }
+.sc-table-ec .meta-row td { color: var(--text-muted); font-size: var(--fs-10); }
 /* Bloco de referência (Par + Distância) — estilo quieto e UNIFORME, alinhado
    com o cabeçalho, para não competir com as linhas de dados (Eclético + rondas).
    Fundo transparente, cor única discreta, peso normal, mesmo tamanho. */
-.sc-table-ec .ec-ref-row td { background: transparent; color: var(--text-3); font-weight: 400; font-size: 11px; font-variant-numeric: tabular-nums; border-bottom: none; }
+.sc-table-ec .ec-ref-row td { background: transparent; color: var(--text-3); font-weight: 400; font-size: var(--fs-11); font-variant-numeric: tabular-nums; border-bottom: none; }
 .sc-table-ec .ec-ref-row .col-out,
 .sc-table-ec .ec-ref-row .col-in,
 .sc-table-ec .ec-ref-row .col-total { color: var(--text-2); font-weight: 500; }
@@ -955,7 +959,7 @@ tr.cross-current { background: var(--bg-success); }
 .ec-summary tbody tr:hover { background: var(--bg-hover-subtle); }
 /* Tabela-resumo: variantes 18H/9H empilhadas na mesma célula (par/eclético/vsPar) */
 .ec-summary .ec-sum-var { line-height: 1.35; }
-.ec-summary .ec-sum-hc { font-size: 9px; color: var(--text-muted); font-weight: 600; margin-right: 2px; }
+.ec-summary .ec-sum-hc { font-size: var(--fs-9); color: var(--text-muted); font-weight: 600; margin-right: 2px; }
 
 /* Bloco de cada tee (Eclético por tee) — card plano e quieto: fundo branco,
    apenas uma hairline subtil, sem sombra nem cor de realce. O estado activo
@@ -969,7 +973,7 @@ tr.cross-current { background: var(--bg-success); }
 
 /* Header de cada bloco de tee (Eclético por tee) — fundo neutro discreto */
 .ecPillHeader { padding: 10px 14px; cursor: pointer; display: flex; align-items: center; flex-wrap: wrap; gap: 5px; background: var(--bg-detail); border-bottom: 1px solid var(--border-light); }
-.ecPillHeader .muted { font-size: 11px; }
+.ecPillHeader .muted { font-size: var(--fs-11); }
 
 /* ─── Coerência tipográfica das tabelas DENTRO das vistas da página de jogadores ───
    Todos os cabeçalhos falam a mesma língua do scorecard do Eclético: caixa normal
@@ -983,18 +987,17 @@ tr.cross-current { background: var(--bg-success); }
   text-transform: none;
   letter-spacing: 0;
   font-weight: 500;
-  font-size: 11px;
+  font-size: var(--fs-11);
   color: var(--text-3);
   background: transparent;
   border-bottom: 2px solid var(--border);
 }
-/* Corpo das tabelas com tamanho coerente entre vistas: LISTA 13px, DETALHE 12px. */
-.pa-content .dtable-lg { font-size: 13px; }
+/* Detalhe da análise mais compacto (padding reduzido para caber mais dados). */
 .pa-content .dtable-lg th { padding: 5px 10px; }
 .pa-content .dtable-lg td { padding: 3px 10px; }
 /* by_course tem 1 linha por célula → linhas mais altas p/ igualar by_date/federado */
 .pa-content .dtable-lg.dtable-roomy td { padding-top: 9px; padding-bottom: 9px; }
-.pa-content .dtable, .pa-content .dt-compact, .pa-content .sc-table-modern { font-size: 12px; }
+.pa-content .dtable, .pa-content .dt-compact, .pa-content .sc-table-modern { font-size: var(--fs-12); }
 .pa-content .dt-compact th, .pa-content .dt-compact td { padding: 6px 8px; }
 
 /* Scorecards hole-by-hole: o .sc-table-modern passa a ter o MESMO aspecto limpo do
@@ -1011,15 +1014,15 @@ tr.cross-current { background: var(--bg-success); }
 .pa-content .sc-table-modern .col-in { background: transparent; border-left: 1px solid var(--border-light); font-weight: 600; }
 .pa-content .sc-table-modern .col-total { background: transparent; border-left: 1px solid var(--border); font-weight: 700; }
 .pa-content .sc-table-modern .par-label,
-.pa-content .sc-table-modern .meta-row td { font-size: 11px; }
+.pa-content .sc-table-modern .meta-row td { font-size: var(--fs-11); }
 /* Escala de cabeçalhos coerente nas vistas: todos os títulos de secção em peso 700
    (em vez de 800 pesado), para uma hierarquia limpa e uniforme. */
 .pa-content .h-md, .pa-content .h-sm, .pa-content .h-lg { font-weight: 700; }
 /* Barra de título de secção (ex.: "Resumo por Tee") limpa: sem fundo pesado, mesmo
    peso/separador dos outros títulos de secção. */
-.pa-content .sc-bar-head { background: transparent; font-weight: 700; font-size: 12px; color: var(--text-2); }
+.pa-content .sc-bar-head { background: transparent; font-weight: 700; font-size: var(--fs-12); color: var(--text-2); }
 /* Tabela-resumo do Eclético com o mesmo tamanho da TeeSummaryTable (lista). */
-.pa-content .ec-summary { font-size: 13px; }
+.pa-content .ec-summary { font-size: var(--fs-13); }
 
 /* (.kpi-card removido — tudo usa agora o componente <KpiCard> / classe .kpi) */
 
@@ -1027,39 +1030,39 @@ tr.cross-current { background: var(--bg-success); }
    Poupam o espaço vertical que a faixa separada ocupava acima das tabelas. */
 .jog-kpi-strip { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
 .jog-kpi-strip .kpi { padding: 5px 11px; min-width: 0; gap: 0; }
-.jog-kpi-strip .kpi-lbl { font-size: 9px; }
-.jog-kpi-strip .kpi-val { font-size: 16px; }
-.jog-kpi-strip .kpi-sub { font-size: 10px; }
+.jog-kpi-strip .kpi-lbl { font-size: var(--fs-9); }
+.jog-kpi-strip .kpi-val { font-size: var(--fs-16); }
+.jog-kpi-strip .kpi-sub { font-size: var(--fs-10); }
 
 /* ─── Course Performance Analysis ─── */
 /* courseAnalysis → .card (unified) */
 .caKpis { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
 /* Alinhado ao .kpi-card: fundo subtil sem borda, valor limpo (não-mono), label discreta. */
 .caKpi { background: var(--bg-detail); border-radius: var(--radius-lg); padding: 10px 14px; min-width: 110px; }
-.caKpiVal { font-size: 22px; font-weight: 700; color: var(--text); line-height: 1.1; font-variant-numeric: tabular-nums; }
+.caKpiVal { font-size: var(--fs-22); font-weight: 700; color: var(--text); line-height: 1.1; font-variant-numeric: tabular-nums; }
 .caKpiVal.best { color: var(--color-good); }
 .caKpiVal.worst { color: var(--color-danger); }
-.caKpiLbl { font-size: 10px; color: var(--text-3); font-weight: 600; margin-top: 2px; }
+.caKpiLbl { font-size: var(--fs-10); color: var(--text-3); font-weight: 600; margin-top: 2px; }
 .trend-up .caKpiVal { color: var(--color-good); }
 .trend-down .caKpiVal { color: var(--color-danger); }
 .trend-flat .caKpiVal { color: var(--text-3); }
-.caConcText { font-size: 12px; color: var(--color-warn-dark); line-height: 1.5; }
+.caConcText { font-size: var(--fs-12); color: var(--color-warn-dark); line-height: 1.5; }
 
 /* ─── Hole-by-hole Analysis ─── */
 .haDiag { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; margin-bottom: 4px; }
 .haDiagCard { display: flex; align-items: center; gap: 10px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 10px 12px; }
-.haDiagIcon { width: 36px; height: 36px; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-.haDiagVal { font-size: 20px; font-weight: 900; line-height: 1.1; }
-.haDiagLbl { font-size: 10px; color: var(--text-3); font-weight: 600; margin-top: 1px; line-height: 1.2; }
+.haDiagIcon { width: 36px; height: 36px; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: var(--fs-18); flex-shrink: 0; }
+.haDiagVal { font-size: var(--fs-20); font-weight: 900; line-height: 1.1; }
+.haDiagLbl { font-size: var(--fs-10); color: var(--text-3); font-weight: 600; margin-top: 1px; line-height: 1.2; }
 .haParGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; }
 .haParCard { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 10px 12px; background: var(--bg-card); }
-.haParAlert { font-size: 10px; font-weight: 700; color: var(--color-danger); margin-bottom: 4px; }
-.haParHead { font-size: 13px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
-.haParAvg { font-size: 18px; font-weight: 900; line-height: 1.2; }
-.haParStat { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+.haParAlert { font-size: var(--fs-10); font-weight: 700; color: var(--color-danger); margin-bottom: 4px; }
+.haParHead { font-size: var(--fs-13); font-weight: 800; color: var(--text); margin-bottom: 4px; }
+.haParAvg { font-size: var(--fs-18); font-weight: 900; line-height: 1.2; }
+.haParStat { font-size: var(--fs-11); color: var(--text-3); margin-top: 2px; }
 .haParStat span { font-weight: 400; }
 .haParDistBar { display: flex; height: 10px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
-.haParDistNums { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+.haParDistNums { font-size: var(--fs-10); color: var(--text-muted); margin-top: 2px; }
 .haDistBar { display: flex; height: 20px; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 6px; border: 1px solid var(--border); }
 .haDistSeg { min-width: 2px; transition: width 0.3s; }
 .seg-eagle { background: var(--score-eagle); }
@@ -1068,7 +1071,7 @@ tr.cross-current { background: var(--bg-success); }
 .seg-bogey { background: var(--score-bogey-border); }
 .seg-double { background: var(--score-double); }
 .seg-triple { background: var(--score-triple); }
-.haDistLegend { display: flex; flex-wrap: wrap; gap: 8px; font-size: 10px; color: var(--text-2); }
+.haDistLegend { display: flex; flex-wrap: wrap; gap: 8px; font-size: var(--fs-10); color: var(--text-2); }
 .haLeg { display: flex; align-items: center; gap: 3px; }
 .haLegDot { display: inline-block; width: 10px; height: 10px; border-radius: var(--radius-xs); }
 .haTopWrap { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
@@ -1076,19 +1079,19 @@ tr.cross-current { background: var(--bg-success); }
 .haTopCol { background: var(--bg-card); border-radius: var(--radius-lg); padding: 10px 12px; border: 1px solid var(--border); }
 .haTopStrength { border-left: 3px solid var(--color-good); }
 .haTopWeakness { border-left: 3px solid var(--color-danger); }
-.haTopItem { display: flex; align-items: center; gap: 8px; font-size: 11px; padding: 5px 0; border-bottom: 1px solid var(--border-light); }
+.haTopItem { display: flex; align-items: center; gap: 8px; font-size: var(--fs-11); padding: 5px 0; border-bottom: 1px solid var(--border-light); }
 .haTopItem:last-child { border-bottom: none; }
-.haTopHole { width: 28px; height: 28px; border-radius: 50%; background: var(--bg-success-strong); color: var(--color-good); font-weight: 900; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.haTopHole { width: 28px; height: 28px; border-radius: 50%; background: var(--bg-success-strong); color: var(--color-good); font-weight: 900; font-size: var(--fs-13); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .haTopHoleRed { background: var(--bg-danger-strong); color: var(--color-danger); }
-.haTopMeta { font-size: 10px; color: var(--text-3); margin-top: 1px; }
-.haTopEmpty { font-size: 11px; color: var(--text-muted); font-style: italic; padding: 6px 0; }
-.haTopSummary { margin-top: 8px; padding: 8px; background: var(--bg-danger); border-radius: var(--radius-lg); font-size: 11px; color: var(--color-danger-dark); }
+.haTopMeta { font-size: var(--fs-10); color: var(--text-3); margin-top: 1px; }
+.haTopEmpty { font-size: var(--fs-11); color: var(--text-muted); font-style: italic; padding: 6px 0; }
+.haTopSummary { margin-top: 8px; padding: 8px; background: var(--bg-danger); border-radius: var(--radius-lg); font-size: var(--fs-11); color: var(--color-danger-dark); }
 
 /* ─── Progressive disclosure: detalhes colapsáveis ─── */
 .details-block { border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 0; background: var(--bg-card); overflow: hidden; }
-.details-block > summary { padding: 8px 12px; cursor: pointer; font-size: 13px; font-weight: 700; color: var(--text-1); list-style: none; user-select: none; display: flex; align-items: center; gap: 6px; }
+.details-block > summary { padding: 8px 12px; cursor: pointer; font-size: var(--fs-13); font-weight: 700; color: var(--text-1); list-style: none; user-select: none; display: flex; align-items: center; gap: 6px; }
 .details-block > summary::-webkit-details-marker { display: none; }
-.details-block > summary::before { content: "▸"; display: inline-block; transition: transform 0.15s; color: var(--text-3); font-size: 11px; }
+.details-block > summary::before { content: "▸"; display: inline-block; transition: transform 0.15s; color: var(--text-3); font-size: var(--fs-11); }
 .details-block[open] > summary::before { transform: rotate(90deg); }
 .details-block > summary:hover { background: var(--bg-hover); }
 .details-block[open] > summary { border-bottom: 1px solid var(--border-light); }
@@ -1098,25 +1101,25 @@ tr.cross-current { background: var(--bg-success); }
 .heatmap-wrap { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
 .heatmap-row-container { display: flex; gap: 8px; align-items: stretch; }
 .heatmap-cells { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 4px; flex: 1; min-width: 0; }
-.heatmap-rowlabel { display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: var(--text-3); letter-spacing: 0.04em; min-width: 28px; flex-shrink: 0; }
+.heatmap-rowlabel { display: flex; align-items: center; justify-content: center; font-size: var(--fs-10); font-weight: 700; color: var(--text-3); letter-spacing: 0.04em; min-width: 28px; flex-shrink: 0; }
 .heatmap-cell { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6px 2px; border-radius: var(--radius-md); border: 1px solid var(--border-light); transition: transform 0.15s; min-height: 62px; min-width: 0; }
 .heatmap-cell:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
-.heatmap-hole { font-size: 18px; font-weight: 900; line-height: 1; }
-.heatmap-par { font-size: 9px; opacity: 0.75; margin-top: 2px; white-space: nowrap; }
-.heatmap-vp { font-size: 11px; font-weight: 700; margin-top: 3px; font-variant-numeric: tabular-nums; }
-@media (max-width: 700px) { .heatmap-cells { gap: 3px; } .heatmap-hole { font-size: 14px; } .heatmap-cell { min-height: 56px; padding: 4px 1px; } .heatmap-rowlabel { min-width: 26px; font-size: 11px; } .heatmap-par { font-size: 10px; } }
+.heatmap-hole { font-size: var(--fs-18); font-weight: 900; line-height: 1; }
+.heatmap-par { font-size: var(--fs-9); opacity: 0.75; margin-top: 2px; white-space: nowrap; }
+.heatmap-vp { font-size: var(--fs-11); font-weight: 700; margin-top: 3px; font-variant-numeric: tabular-nums; }
+@media (max-width: 700px) { .heatmap-cells { gap: 3px; } .heatmap-hole { font-size: var(--fs-14); } .heatmap-cell { min-height: 56px; padding: 4px 1px; } .heatmap-rowlabel { min-width: 26px; font-size: var(--fs-11); } .heatmap-par { font-size: var(--fs-10); } }
 
 /* ─── F9 vs B9 comparison ─── */
 .f9b9-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: stretch; margin-top: 6px; }
 .f9b9-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 10px 14px; display: flex; flex-direction: column; gap: 2px; }
 .f9b9-worse { border-color: var(--color-danger); box-shadow: inset 0 0 0 1px var(--color-danger-alpha); }
 .f9b9-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
-.f9b9-label { font-size: 13px; font-weight: 800; color: var(--text-1); }
-.f9b9-sl { font-size: 22px; font-weight: 900; line-height: 1; font-variant-numeric: tabular-nums; }
-.f9b9-dbl { font-size: 13px; font-weight: 700; color: var(--text-2); margin-top: 2px; }
+.f9b9-label { font-size: var(--fs-13); font-weight: 800; color: var(--text-1); }
+.f9b9-sl { font-size: var(--fs-22); font-weight: 900; line-height: 1; font-variant-numeric: tabular-nums; }
+.f9b9-dbl { font-size: var(--fs-13); font-weight: 700; color: var(--text-2); margin-top: 2px; }
 .f9b9-diff { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 0 6px; }
-.f9b9-diff-icon { font-size: 22px; font-weight: 900; color: var(--text-3); line-height: 1; }
-.f9b9-diff-txt { font-size: 11px; font-weight: 700; text-align: center; }
+.f9b9-diff-icon { font-size: var(--fs-22); font-weight: 900; color: var(--text-3); line-height: 1; }
+.f9b9-diff-txt { font-size: var(--fs-11); font-weight: 700; text-align: center; }
 @media (max-width: 700px) { .f9b9-grid { grid-template-columns: 1fr; } .f9b9-diff { flex-direction: row; padding: 4px 0; } }
 
 /* ─── Desempenho por tipo de par (bar chart comparativo) ─── */
@@ -1124,14 +1127,14 @@ tr.cross-current { background: var(--bg-success); }
 .par-type-row { display: grid; grid-template-columns: 90px 1fr 54px 100px; grid-template-areas: "lbl bar val sl" "lbl dist dist dist"; gap: 8px 10px; align-items: center; padding: 8px 10px; border-radius: var(--radius-md); border: 1px solid var(--border); background: var(--bg-card); }
 .par-type-worst { border-color: var(--color-danger); background: var(--color-danger-alpha); }
 .par-type-label { grid-area: lbl; display: flex; flex-direction: column; gap: 2px; }
-.par-type-name { font-size: 14px; font-weight: 800; color: var(--text-1); }
+.par-type-name { font-size: var(--fs-14); font-weight: 800; color: var(--text-1); }
 .par-type-bar-track { grid-area: bar; position: relative; height: 18px; background: var(--bg-detail); border-radius: var(--radius-sm); overflow: hidden; }
 .par-type-zero { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--text-3); opacity: 0.4; }
 .par-type-bar { position: absolute; top: 2px; bottom: 2px; min-width: 2px; border-radius: var(--radius-xs); transition: width 0.3s; }
-.par-type-val { grid-area: val; font-size: 15px; font-weight: 800; text-align: right; font-variant-numeric: tabular-nums; }
-.par-type-sl { grid-area: sl; font-size: 12px; font-weight: 600; color: var(--text-2); text-align: right; font-variant-numeric: tabular-nums; }
+.par-type-val { grid-area: val; font-size: var(--fs-15); font-weight: 800; text-align: right; font-variant-numeric: tabular-nums; }
+.par-type-sl { grid-area: sl; font-size: var(--fs-12); font-weight: 600; color: var(--text-2); text-align: right; font-variant-numeric: tabular-nums; }
 .par-type-dist { grid-area: dist; margin-top: 4px; }
-.par-type-dist-nums { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+.par-type-dist-nums { font-size: var(--fs-10); color: var(--text-muted); margin-top: 2px; }
 @media (max-width: 700px) {
   .par-type-row { grid-template-columns: 70px 1fr 50px; grid-template-areas: "lbl bar val" "sl sl sl" "dist dist dist"; }
   .par-type-sl { text-align: left; }
@@ -1144,52 +1147,52 @@ tr.cross-current { background: var(--bg-success); }
 /* ─── Score distribution chart (bar chart vertical compacto) ─── */
 .score-dist { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; margin-top: 6px; align-items: end; }
 .score-dist-col { display: flex; flex-direction: column; align-items: center; gap: 1px; min-width: 0; }
-.score-dist-val { font-size: 10px; font-weight: 600; color: var(--text-2); height: 12px; font-variant-numeric: tabular-nums; }
+.score-dist-val { font-size: var(--fs-10); font-weight: 600; color: var(--text-2); height: 12px; font-variant-numeric: tabular-nums; }
 .score-dist-barwrap { width: 100%; height: 56px; display: flex; align-items: flex-end; background: var(--bg-detail); border-radius: var(--radius-sm); overflow: hidden; }
 .score-dist-bar { width: 100%; min-height: 2px; transition: height 0.3s; opacity: 0.85; }
-.score-dist-pct { font-size: 10px; font-weight: 700; color: var(--text-2); margin-top: 2px; font-variant-numeric: tabular-nums; }
-.score-dist-lbl { font-size: 9px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.03em; }
+.score-dist-pct { font-size: var(--fs-10); font-weight: 700; color: var(--text-2); margin-top: 2px; font-variant-numeric: tabular-nums; }
+.score-dist-lbl { font-size: var(--fs-9); color: var(--text-3); text-transform: uppercase; letter-spacing: 0.03em; }
 
 /* ─── HoleStatsSection Table Cells ─── */
-.hs-cell { padding: 4px 6px; text-align: center; font-size: 11px; border-bottom: 1px solid var(--bg-hover); }
-.hs-label { padding: 4px 6px 4px 8px; text-align: left; font-size: 11px; border-bottom: 1px solid var(--bg-hover); border-right: 2px solid var(--border-light); white-space: nowrap; min-width: 70px; }
-.hs-out { padding: 4px 6px; text-align: center; font-size: 11px; border-bottom: 1px solid var(--bg-hover); background: var(--bg-muted); border-left: 1px solid var(--border-light); border-right: 1px solid var(--border-light); }
-.hs-in { padding: 4px 6px; text-align: center; font-size: 11px; border-bottom: 1px solid var(--bg-hover); background: var(--bg-muted); border-left: 1px solid var(--border-light); border-right: 1px solid var(--border-light); }
-.hs-total { padding: 4px 6px; text-align: center; font-size: 11px; border-bottom: 1px solid var(--bg-hover); background: var(--bg-muted); border-left: 1px solid var(--border-light); font-weight: 800; }
+.hs-cell { padding: 4px 6px; text-align: center; font-size: var(--fs-11); border-bottom: 1px solid var(--bg-hover); }
+.hs-label { padding: 4px 6px 4px 8px; text-align: left; font-size: var(--fs-11); border-bottom: 1px solid var(--bg-hover); border-right: 2px solid var(--border-light); white-space: nowrap; min-width: 70px; }
+.hs-out { padding: 4px 6px; text-align: center; font-size: var(--fs-11); border-bottom: 1px solid var(--bg-hover); background: var(--bg-muted); border-left: 1px solid var(--border-light); border-right: 1px solid var(--border-light); }
+.hs-in { padding: 4px 6px; text-align: center; font-size: var(--fs-11); border-bottom: 1px solid var(--bg-hover); background: var(--bg-muted); border-left: 1px solid var(--border-light); border-right: 1px solid var(--border-light); }
+.hs-total { padding: 4px 6px; text-align: center; font-size: var(--fs-11); border-bottom: 1px solid var(--bg-hover); background: var(--bg-muted); border-left: 1px solid var(--border-light); font-weight: 800; }
 
 /* ─── FRAG Scorecard (injected HTML fragments) ─── */
-.scHost table { border-collapse: collapse; font-size: 11px; }
+.scHost table { border-collapse: collapse; font-size: var(--fs-11); }
 .scHost td, .scHost th { padding: 2px 4px; text-align: center; border: 1px solid var(--border-light); }
 
-.sc-bar-head { background: var(--bg-header); padding: 8px 12px; font-size: 12px; font-weight: 700; color: var(--text-2); display: flex; justify-content: space-between; border-bottom: 2px solid var(--border); }
+.sc-bar-head { background: var(--bg-header); padding: 8px 12px; font-size: var(--fs-12); font-weight: 700; color: var(--text-2); display: flex; justify-content: space-between; border-bottom: 2px solid var(--border); }
 
 .sc-modern { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); background: var(--bg-card); margin: 12px 0; width: fit-content; max-width: 100%; }
 .sc-header { padding: 12px 16px; color: #fff; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
 .sc-header-light { color: var(--grey-900); }
 .sc-header-left { flex: 1; min-width: 0; }
 .sc-header-right { display: flex; gap: 12px; align-items: center; }
-.sc-title { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
-.sc-subtitle { font-size: 13px; opacity: 0.9; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.sc-title { font-size: var(--fs-18); font-weight: 800; margin-bottom: 4px; }
+.sc-subtitle { font-size: var(--fs-13); opacity: 0.9; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
 .sc-subtitle > span:not(:last-child)::after { content: '·'; margin-left: 6px; opacity: 0.6; }
 .sc-links { margin-top: 4px; display: flex; gap: 8px; flex-wrap: wrap; }
-.sc-ext-link { font-size: 11px; color: inherit; opacity: 0.85; text-decoration: none; border: 1px solid var(--overlay-white-30); border-radius: var(--radius-sm); padding: 1px 6px; }
+.sc-ext-link { font-size: var(--fs-11); color: inherit; opacity: 0.85; text-decoration: none; border: 1px solid var(--overlay-white-30); border-radius: var(--radius-sm); padding: 1px 6px; }
 .sc-ext-link:hover { opacity: 1; background: var(--overlay-white-15); }
 .sc-stat { text-align: center; min-width: 55px; }
-.sc-stat-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.8; margin-bottom: 2px; }
-.sc-stat-value { font-size: 18px; font-weight: 900; line-height: 1; }
-.sc-stat-score .sc-stat-value { font-size: 18px; }
+.sc-stat-label { font-size: var(--fs-10); text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.8; margin-bottom: 2px; }
+.sc-stat-value { font-size: var(--fs-18); font-weight: 900; line-height: 1; }
+.sc-stat-score .sc-stat-value { font-size: var(--fs-18); }
 
-.sc-table-modern { border-collapse: collapse; font-size: 13px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.sc-table-modern { border-collapse: collapse; font-size: var(--fs-13); white-space: nowrap; font-variant-numeric: tabular-nums; }
 .sc-table-modern th, .sc-table-modern td { padding: 6px 5px; text-align: center; border: none; height: 34px; vertical-align: middle; }
-.sc-table-modern th { background: var(--bg-header); font-weight: 600; font-size: 11px; color: var(--text-2); border-bottom: 1px solid var(--border); }
+.sc-table-modern th { background: var(--bg-header); font-weight: 600; font-size: var(--fs-11); color: var(--text-2); border-bottom: 1px solid var(--border); }
 .sc-table-modern tbody td { border-bottom: 1px solid var(--border-light); }
-.sc-table-modern .hole-header { background: var(--bg-header); color: var(--text-2); font-weight: 600; font-size: 11px; border-bottom: 1px solid var(--border); }
+.sc-table-modern .hole-header { background: var(--bg-header); color: var(--text-2); font-weight: 600; font-size: var(--fs-11); border-bottom: 1px solid var(--border); }
 .sc-table-modern .hole-header.ta-left { text-align: left; padding-left: 8px; min-width: 56px; }
-.sc-table-modern .col-out, .sc-table-modern .col-in { background: var(--bg-hover); border-left: 1px solid var(--border); font-weight: 600; font-size: 12px; font-variant-numeric: tabular-nums; }
+.sc-table-modern .col-out, .sc-table-modern .col-in { background: var(--bg-hover); border-left: 1px solid var(--border); font-weight: 600; font-size: var(--fs-12); font-variant-numeric: tabular-nums; }
 .sc-table-modern .col-out { border-right: 1px solid var(--border); }
 .sc-table-modern .col-total { background: var(--accent-light); border-left: 1px solid var(--border); font-weight: 800; font-variant-numeric: tabular-nums; }
 .sc-table-modern .sep-row td { border-bottom: 2px solid var(--border); }
-.sc-table-modern .meta-row td { color: var(--text-muted); font-size: 11px; }
+.sc-table-modern .meta-row td { color: var(--text-muted); font-size: var(--fs-11); }
 
 /* ═══════════════════════════════════════════════════════════════════════
    .sc-grid — BASE ÚNICA de scorecard, partilhada pelas 3 tabelas
@@ -1199,12 +1202,12 @@ tr.cross-current { background: var(--bg-success); }
    pode haver overrides residuais a afinar com preview). Suporta as duas
    convenções de nome de coluna (col-* e sc-col-*).
    ═══════════════════════════════════════════════════════════════════════ */
-.sc-grid { font-size: 12px; font-variant-numeric: tabular-nums; }
-.sc-grid th, .sc-grid td { font-size: 12px; }
+.sc-grid { font-size: var(--fs-12); font-variant-numeric: tabular-nums; }
+.sc-grid th, .sc-grid td { font-size: var(--fs-12); }
 /* Cabeçalho (números dos buracos / Tee) — discreto e igual */
-.sc-grid thead th, .sc-grid .hole-header { font-size: 11px; font-weight: 600; color: var(--text-2); }
+.sc-grid thead th, .sc-grid .hole-header { font-size: var(--fs-11); font-weight: 600; color: var(--text-2); }
 /* Linhas de referência / meta (Metros · SI · Distância) */
-.sc-grid .meta-row td, .sc-grid .ec-ref-row td { font-size: 11px; }
+.sc-grid .meta-row td, .sc-grid .ec-ref-row td { font-size: var(--fs-11); }
 /* Rótulos da 1ª coluna (Buraco · Metros · SI · Par · Eclético · Δ) — fonte ÚNICA
    de estilo dos rótulos. As regras antigas por-classe foram apagadas (ver abaixo)
    para não competirem — sem !important, sem lixo. */
@@ -1214,7 +1217,7 @@ tr.cross-current { background: var(--bg-success); }
   padding-left: 8px;
   font-weight: 600;
   color: var(--text-2);
-  font-size: 11px;
+  font-size: var(--fs-11);
   min-width: 70px;
 }
 /* Divisores verticais (Out/In/Total) — 1px var(--border), iguais */
@@ -1224,14 +1227,14 @@ tr.cross-current { background: var(--bg-success); }
 /* Separadores horizontais — 1px var(--border-light), iguais (sem 2px) */
 .sc-grid tbody td { border-bottom: 1px solid var(--border-light); }
 .sc-grid .sep-row td { border-bottom: 1px solid var(--border-light); }
-.sc-table-modern .par-label { color: var(--text-muted); font-weight: 600; font-size: 11px; }
+.sc-table-modern .par-label { color: var(--text-muted); font-weight: 600; font-size: var(--fs-11); }
 
-.sc-topar { display: block; font-size: 10px; font-weight: 600; margin-top: 1px; }
+.sc-topar { display: block; font-size: var(--fs-10); font-weight: 600; margin-top: 1px; }
 
 /* FRAG scorecard score circles — note: class name is .eagle not .sc-eagle
    Tamanho unificado: 26×26 / 13px em modern, lb e scHost */
 .sc-table-modern .sc-score, .sc-table-ec .sc-score, .scHost .sc-score {
- font-weight: 700; font-size: 12px; min-width: 22px; min-height: 22px;
+ font-weight: 700; font-size: var(--fs-12); min-width: 22px; min-height: 22px;
  width: 22px; height: 22px;
  display: inline-flex; align-items: center; justify-content: center;
 }
@@ -1258,7 +1261,7 @@ tr.cross-current { background: var(--bg-success); }
 .sc-score.quint { background: var(--score-quint); color: #fff; border-radius: 0; }
 .sc-score.worse { background: var(--score-worse); color: #fff; border-radius: 0; }
 .sc-score.sc-empty { color: var(--border); font-weight: 400; background: none; }
-.sc-score.sc-nr { color: var(--border); font-weight: 400; font-size: 10px; background: none; }
+.sc-score.sc-nr { color: var(--border); font-weight: 400; font-size: var(--fs-10); background: none; }
 /* Buraco não terminado — valor inferido (Net Double Bogey). Pintado a cinzento
    para distinguir de scores reais (como nos resultados de torneios sociais). */
 .sc-score.sc-inferred { background: var(--score-inferred-bg); color: var(--score-inferred-fg); border-radius: 0; font-style: italic; }
@@ -1266,14 +1269,14 @@ tr.cross-current { background: var(--bg-success); }
 @media (max-width: 900px) {
  .sc-header { flex-direction: column; align-items: flex-start; gap: 8px; }
  .sc-header-right { width: 100%; justify-content: space-around; }
- .sc-table-modern { font-size: 12px; }
+ .sc-table-modern { font-size: var(--fs-12); }
  .sc-table-modern th, .sc-table-modern td { padding: 5px 4px; }
- .sc-table-modern .sc-score, .sc-table-ec .sc-score, .scHost .sc-score { min-width: 22px; min-height: 22px; width: 22px; height: 22px; font-size: 12px; }
- .sc-title { font-size: 16px; }
- .sc-subtitle { font-size: 11px; }
- .sc-stat-label { font-size: 10px; }
- .sc-stat-value { font-size: 18px; }
- .sc-stat-score .sc-stat-value { font-size: 20px; }
+ .sc-table-modern .sc-score, .sc-table-ec .sc-score, .scHost .sc-score { min-width: 22px; min-height: 22px; width: 22px; height: 22px; font-size: var(--fs-12); }
+ .sc-title { font-size: var(--fs-16); }
+ .sc-subtitle { font-size: var(--fs-11); }
+ .sc-stat-label { font-size: var(--fs-10); }
+ .sc-stat-value { font-size: var(--fs-18); }
+ .sc-stat-score .sc-stat-value { font-size: var(--fs-20); }
 }
 
 @media (max-width: 900px) {
@@ -1286,13 +1289,13 @@ tr.cross-current { background: var(--bg-success); }
  padding: 24px;
  text-align: center;
  color: var(--text-3);
- font-size: 13px;
+ font-size: var(--fs-13);
 }
 
 /* ─── Utility ─── */
 
 /* Cor + tamanho secundário — mantém font-size para não quebrar usos existentes */
-.muted { color: var(--text-3); font-size: 12px; }
+.muted { color: var(--text-3); font-size: var(--fs-12); }
 
 /* ─── Scrollbar ─── */
 
@@ -1344,7 +1347,7 @@ tr.cross-current { background: var(--bg-success); }
  background: var(--bg);
  padding: 8px 12px;
  text-align: right;
- font-size: 12px;
+ font-size: var(--fs-12);
  font-weight: 600;
  text-transform: uppercase;
  letter-spacing: 0.04em;
@@ -1370,7 +1373,7 @@ tr.cross-current { background: var(--bg-success); }
 .sim-td-sd {
  font-family: var(--font-mono);
  font-weight: 700;
- font-size: 12px;
+ font-size: var(--fs-12);
 }
 
 
@@ -1401,7 +1404,7 @@ tr.cross-current { background: var(--bg-success); }
  background: var(--bg-warn);
  border: 1.5px solid var(--border-warn);
  border-radius: var(--radius);
- font-size: 13px;
+ font-size: var(--fs-13);
  color: var(--color-warn-dark);
  line-height: 1.5;
  margin: 0 0 -1px;
@@ -1409,7 +1412,7 @@ tr.cross-current { background: var(--bg-success); }
 }
 
 .sim-hi-banner-icon {
- font-size: 18px;
+ font-size: var(--fs-18);
  flex-shrink: 0;
 }
 
@@ -1456,7 +1459,7 @@ tr.cross-current { background: var(--bg-success); }
 }
 
 .sim-strip-label {
- font-size: 10px;
+ font-size: var(--fs-10);
  text-transform: uppercase;
  letter-spacing: 0.05em;
  color: var(--text-3);
@@ -1466,7 +1469,7 @@ tr.cross-current { background: var(--bg-success); }
 
 .sim-strip-num {
  font-family: var(--font-mono);
- font-size: 22px;
+ font-size: var(--fs-22);
  font-weight: 800;
  color: var(--text);
  line-height: 1.2;
@@ -1474,7 +1477,7 @@ tr.cross-current { background: var(--bg-success); }
 
 .sim-strip-sub {
  font-family: var(--font-mono);
- font-size: 10px;
+ font-size: var(--fs-10);
  color: var(--text-3);
  line-height: 1;
 }
@@ -1502,7 +1505,7 @@ tr.cross-current { background: var(--bg-success); }
 }
 
 .sim-strip-tab {
- font-size: 11px;
+ font-size: var(--fs-11);
  font-weight: 600;
  padding: 4px 12px;
  border: none;
@@ -1542,7 +1545,7 @@ tr.cross-current { background: var(--bg-success); }
  width: 80px;
  text-align: center;
  font-family: var(--font-mono);
- font-size: 14px;
+ font-size: var(--fs-14);
  font-weight: 600;
  padding: 3px 6px;
  border: 1.5px solid var(--border);
@@ -1557,7 +1560,7 @@ tr.cross-current { background: var(--bg-success); }
 
 .sim-strip-calc-output {
  font-family: var(--font-mono);
- font-size: 18px;
+ font-size: var(--fs-18);
  font-weight: 800;
  color: var(--accent);
  line-height: 1.2;
@@ -1624,7 +1627,7 @@ tr.cross-current { background: var(--bg-success); }
 
 .sim-manual-label {
  font-weight: 600;
- font-size: 12px;
+ font-size: var(--fs-12);
  min-width: 80px;
  color: var(--text-2, #555);
 }
@@ -1636,7 +1639,7 @@ tr.cross-current { background: var(--bg-success); }
 }
 
 .sim-manual-fields .field label {
- font-size: 11px;
+ font-size: var(--fs-11);
 }
 
 .sim-manual-fields .input {
@@ -1653,7 +1656,7 @@ tr.cross-current { background: var(--bg-success); }
  background: var(--bg-hover);
  border: 1px solid var(--border);
  border-radius: var(--radius);
- font-size: 12px;
+ font-size: var(--fs-12);
  font-weight: 600;
  color: var(--text-2);
  cursor: pointer;
@@ -1676,9 +1679,9 @@ tr.cross-current { background: var(--bg-success); }
  .topbar      { gap: 6px; padding: 0 8px; height: 44px; }
  .top-stats   { display: none; }
  .brand-icon  { width: 22px; height: 22px; }
- .brand-title { font-size: 13px; }
+ .brand-title { font-size: var(--fs-13); }
  .nav         { margin-left: 4px; }
- .nav-btn     { font-size: 11px; padding: 4px 8px; }
+ .nav-btn     { font-size: var(--fs-11); padding: 4px 8px; }
 
  .toolbar       { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding: 5px 8px; gap: 5px; align-items: center; min-height: 0; }
  /* JogadoresPage e CamposPage têm muitos filtros — em mobile preferimos
@@ -1705,12 +1708,12 @@ tr.cross-current { background: var(--bg-success); }
  .tourn-layout .toolbar > * { flex-shrink: 0; }
  .toolbar-sep   { display: none; }
  .toolbar-meta  { display: none; }
- .toolbar-title { font-size: 12px; }
+ .toolbar-title { font-size: var(--fs-12); }
 
  .sidebar-back-btn { display: flex; }
 
- .input  { width: 120px; height: 28px; font-size: 11px; padding: 0 7px; }
- .select { min-width: 70px; max-width: 130px; height: 28px; font-size: 11px; padding: 0 4px; }
+ .input  { width: 120px; height: 28px; font-size: var(--fs-11); padding: 0 7px; }
+ .select { min-width: 70px; max-width: 130px; height: 28px; font-size: var(--fs-11); padding: 0 4px; }
  .jogadores-page .toolbar .input  { width: 140px; }
  .jogadores-page .toolbar .select { min-width: 70px; }
 
@@ -1756,7 +1759,7 @@ tr.cross-current { background: var(--bg-success); }
  .jog-pills          { gap: 3px; row-gap: 3px; margin-top: 0; align-items: center; }
  .jog-pills .p       { font-size: 9.5px; padding: 1px 5px; line-height: 1.3; }
  .jog-pills .sex-badge,
- .jog-pills .jog-sex-inline { width: 14px; height: 14px; font-size: 9px; }
+ .jog-pills .jog-sex-inline { width: 14px; height: 14px; font-size: var(--fs-9); }
  .jog-pills .sex-badge-pill { font-size: 9.5px; padding: 1px 6px; line-height: 1.3; }
  .jog-pills .muted.fs-11 { font-size: 9.5px; opacity: 0.75; }
  .jog-record-grid    { grid-template-columns: 1fr 1fr; gap: 4px; }
@@ -1773,47 +1776,47 @@ tr.cross-current { background: var(--bg-success); }
     sem cortar nem rebentar — caso o utilizador troque manualmente
     para "Mês" (em mobile o default é "Lista"). */
  .cal-content        { padding: 0 6px 8px; }
- .cal-dow            { font-size: 9px !important; padding: 4px 0 !important; letter-spacing: 0 !important; }
+ .cal-dow            { font-size: var(--fs-9) !important; padding: 4px 0 !important; letter-spacing: 0 !important; }
  .cal-month-grid > div { padding: 1px !important; }
- .cal-month-grid .fs-11 { font-size: 10px; min-height: 18px !important; padding: 0 2px !important; }
- .cal-month-grid .fs-10 { font-size: 9px; }
+ .cal-month-grid .fs-11 { font-size: var(--fs-10); min-height: 18px !important; padding: 0 2px !important; }
+ .cal-month-grid .fs-10 { font-size: var(--fs-9); }
  .hl-cell            { padding: 2px !important; }
- .hl-cell .fs-14     { font-size: 12px !important; }
+ .hl-cell .fs-14     { font-size: var(--fs-12) !important; }
 
  .scroll-x, .tourn-scroll, .sc-modern { overflow-x: auto; -webkit-overflow-scrolling: touch; }
- .dtable       { font-size: 12px; }
- .dtable th    { padding: 5px 6px; font-size: 10px; }
+ .dtable       { font-size: var(--fs-12); }
+ .dtable th    { padding: 5px 6px; font-size: var(--fs-10); }
  .dtable td    { padding: 5px 6px; }
- .dtable-lg    { font-size: 12px; }
- .dtable-lg th { padding: 5px 7px; font-size: 10px; }
+ .dtable-lg    { font-size: var(--fs-12); }
+ .dtable-lg th { padding: 5px 7px; font-size: var(--fs-10); }
  .dtable-lg td { padding: 5px 7px; }
 
  .sc-h                          { min-width: 28px; }
- .sc-table-modern               { font-size: 11px; }
+ .sc-table-modern               { font-size: var(--fs-11); }
  .sc-table-modern th,
  .sc-table-modern td            { padding: 4px 3px; }
  .sc-table-modern .sc-score,
  .sc-table-ec .sc-score,
- .scHost .sc-score              { min-width: 22px; min-height: 22px; width: 22px; height: 22px; font-size: 10px; }
- .sc-table-modern .row-label    { min-width: 52px; font-size: 10px; padding-left: 4px; }
+ .scHost .sc-score              { min-width: 22px; min-height: 22px; width: 22px; height: 22px; font-size: var(--fs-10); }
+ .sc-table-modern .row-label    { min-width: 52px; font-size: var(--fs-10); padding-left: 4px; }
  .sc-header                     { flex-direction: column; gap: 6px; padding: 10px 12px; }
  .sc-header-right               { width: 100%; justify-content: space-around; }
- .sc-title                      { font-size: 14px; }
- .sc-stat-value                 { font-size: 16px; }
+ .sc-title                      { font-size: var(--fs-14); }
+ .sc-stat-value                 { font-size: var(--fs-16); }
 
  .tourn-scorecard th,
- .tourn-scorecard td  { padding: 4px 4px; font-size: 11px; }
+ .tourn-scorecard td  { padding: 4px 4px; font-size: var(--fs-11); }
  .tourn-lb-name-col   { min-width: 110px !important; }
- .tourn-player-row td { font-size: 11px; }
- .tourn-hole-cell     { min-width: 24px !important; padding: 2px 1px !important; font-size: 10px; }
- .tourn-lb-pills .p   { font-size: 9px; padding: 1px 4px; }
+ .tourn-player-row td { font-size: var(--fs-11); }
+ .tourn-hole-cell     { min-width: 24px !important; padding: 2px 1px !important; font-size: var(--fs-10); }
+ .tourn-lb-pills .p   { font-size: var(--fs-9); padding: 1px 4px; }
 
  .an-grid  { grid-template-columns: repeat(2, 1fr); gap: 8px; }
  .an-grid3 { grid-template-columns: repeat(2, 1fr); gap: 8px; }
  .kpis, .tourn-kpis     { grid-template-columns: repeat(3, 1fr); gap: 5px; }
  .kpi, .tourn-kpi       { padding: 8px 6px; }
- .kpi-val, .tourn-kpi-val { font-size: 18px; }
- .kpi-lbl, .tourn-kpi-lbl { font-size: 9px; }
+ .kpi-val, .tourn-kpi-val { font-size: var(--fs-18); }
+ .kpi-lbl, .tourn-kpi-lbl { font-size: var(--fs-9); }
  .kpi-card              { padding: 8px 10px; }
  .haDiag                { grid-template-columns: repeat(2, 1fr); }
  .haParGrid             { grid-template-columns: repeat(2, 1fr); }
@@ -1822,21 +1825,21 @@ tr.cross-current { background: var(--bg-success); }
 
  .card         { padding: 10px; margin: 6px 0; }
  .escalao-pills  { gap: 2px; flex-wrap: wrap; }
- .p-esc-filter   { font-size: 10px; padding: 1px 5px; }
- .tourn-tab      { font-size: 11px; padding: 3px 7px; }
- .tourn-tab-sm   { font-size: 10px; padding: 2px 5px; }
- .chip           { font-size: 10px; padding: 2px 6px; }
+ .p-esc-filter   { font-size: var(--fs-10); padding: 1px 5px; }
+ .tourn-tab      { font-size: var(--fs-11); padding: 3px 7px; }
+ .tourn-tab-sm   { font-size: var(--fs-10); padding: 2px 5px; }
+ .chip           { font-size: var(--fs-10); padding: 2px 6px; }
 
  .page-full         { padding: 8px; }
  .cmp-radar-wrap    { max-width: 100%; }
- .cmp-search-input  { width: 100% !important; font-size: 13px; }
+ .cmp-search-input  { width: 100% !important; font-size: var(--fs-13); }
  .cmp-search-row    { flex-direction: column; align-items: stretch; gap: 6px; }
  .cmp-search-row .cmp-search-wrap { width: 100%; }
  .cmp-chip          { align-self: flex-start; }
 
  .mobile-hide     { display: none; }
  .mobile-only     { display: initial; }
- .sidebar-toggle  { width: 30px; height: 30px; font-size: 12px; }
+ .sidebar-toggle  { width: 30px; height: 30px; font-size: var(--fs-12); }
 
  /* Botões com tap target mais confortável em mobile */
  .tourn-tab, .tourn-tab-sm, .nav-btn, .course-item {
@@ -1850,7 +1853,7 @@ tr.cross-current { background: var(--bg-success); }
 @media (max-width: 480px) {
  .brand-title  { display: none; }
  .topbar       { gap: 4px; padding: 0 6px; height: 40px; }
- .nav-btn      { font-size: 10px; padding: 3px 6px; }
+ .nav-btn      { font-size: var(--fs-10); padding: 3px 6px; }
  .toolbar      { padding: 4px 6px; gap: 4px; }
  .input        { width: 100px; }
  .select       { min-width: 60px; max-width: 110px; }
@@ -1861,9 +1864,9 @@ tr.cross-current { background: var(--bg-success); }
  .haDiag, .haParGrid         { grid-template-columns: 1fr; }
  .kpis, .tourn-kpis          { grid-template-columns: repeat(2, 1fr); }
  .pa-content                 { padding: 6px; }
- .tourn-tab    { font-size: 10px; padding: 2px 5px; }
- .tourn-tab-sm { font-size: 9px;  padding: 1px 4px; }
- .detail-title { font-size: 15px; }
+ .tourn-tab    { font-size: var(--fs-10); padding: 2px 5px; }
+ .tourn-tab-sm { font-size: var(--fs-9);  padding: 1px 4px; }
+ .detail-title { font-size: var(--fs-15); }
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -1874,30 +1877,30 @@ tr.cross-current { background: var(--bg-success); }
 /* Password gate — uses unified .pw-* classes (see below) */
 
 /* Toolbar labels */
-.toolbar-title { font-size: 14px; font-weight: 800; color: var(--text); white-space: nowrap; }
-.toolbar-meta  { font-size: 11px; color: var(--text-3); white-space: nowrap; }
+.toolbar-title { font-size: var(--fs-14); font-weight: 800; color: var(--text); white-space: nowrap; }
+.toolbar-meta  { font-size: var(--fs-11); color: var(--text-3); white-space: nowrap; }
 .toolbar-sep   { width: 1px; height: 20px; background: var(--border-light); flex-shrink: 0; }
-.sort-arrow { font-size: 10px; margin-left: 2px; opacity: 0.65; }
-.tourn-ext-link { display: inline-flex; align-items: center; font-size: 10px; font-weight: 600; color: var(--text-3); background: var(--bg); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 1px 8px; height: 22px; text-decoration: none; white-space: nowrap; transition: all 0.15s; }
+.sort-arrow { font-size: var(--fs-10); margin-left: 2px; opacity: 0.65; }
+.tourn-ext-link { display: inline-flex; align-items: center; font-size: var(--fs-10); font-weight: 600; color: var(--text-3); background: var(--bg); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 1px 8px; height: 22px; text-decoration: none; white-space: nowrap; transition: all 0.15s; }
 .tourn-ext-link:hover { background: var(--bg-hover); color: var(--text); border-color: var(--border); }
 
 /* Tabs */
 
 /* Section */
 .tourn-section { overflow: visible; }
-.tourn-meta { font-size: 12px; color: var(--text-3); margin-bottom: 12px; }
+.tourn-meta { font-size: var(--fs-12); color: var(--text-3); margin-bottom: 12px; }
 .tourn-scroll { border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: var(--shadow); background: var(--bg-card); }
 
 /* ─── DRAW TABLE ─── */
 .tourn-draw th {
  padding: 10px 14px; text-align: left;
- font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em;
+ font-size: var(--fs-11); font-weight: 800; text-transform: uppercase; letter-spacing: .05em;
  color: var(--text-2); background: var(--bg-header); border-bottom: 2px solid var(--border);
 }
 .tourn-draw th.r { text-align: right; }
 .tourn-draw td {
  padding: 10px 14px; vertical-align: middle;
- border-bottom: 1px solid var(--bg-hover); font-size: 14px;
+ border-bottom: 1px solid var(--bg-hover); font-size: var(--fs-14);
 }
 .tourn-draw .r { text-align: right; }
 
@@ -1912,7 +1915,7 @@ tr.cross-current { background: var(--bg-success); }
 /* Time column */
 
 /* Player cell — name + pills */
-.tourn-pname { font-weight: 700; font-size: 14px; white-space: nowrap; color: var(--text); }
+.tourn-pname { font-weight: 700; font-size: var(--fs-14); white-space: nowrap; color: var(--text); }
 .tourn-pname.tourn-pname-link { cursor: pointer; color: var(--link-color); text-decoration: underline; text-decoration-color: var(--link-underline); text-underline-offset: 2px; }
 .tourn-pname.tourn-pname-link:hover { color: var(--link-hover); text-decoration-color: var(--link-hover); }
 /* Quando o nome é renderizado como <button> (callback onSelectPlayer), repor o
@@ -1934,12 +1937,12 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 
 /* Override .p sizes for tournament draw context */
 .tourn-draw-player .p {
- padding: 2px 10px; font-size: 12px; font-weight: 600; border-radius: var(--radius); line-height: 1.5;
+ padding: 2px 10px; font-size: var(--fs-12); font-weight: 600; border-radius: var(--radius); line-height: 1.5;
 }
 .tourn-draw-player .p-tee,
-.tourn-draw-tee .p-tee { font-size: 10px; padding: 2px 8px; }
+.tourn-draw-tee .p-tee { font-size: var(--fs-10); padding: 2px 8px; }
 .tourn-lb-pills .p-tee,
-.tourn-meta .p-tee { font-size: 10px; padding: 1px 7px; vertical-align: middle; }
+.tourn-meta .p-tee { font-size: var(--fs-10); padding: 1px 7px; vertical-align: middle; }
 
 /* PJA + INTL use their own solid backgrounds */
 
@@ -1958,7 +1961,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
  padding: 6px 5px; text-align: center; border: none;
 }
 .tourn-scorecard th {
- background: var(--bg-header); font-weight: 600; font-size: 11px; color: var(--text-2); border-bottom: 1px solid var(--border);
+ background: var(--bg-header); font-weight: 600; font-size: var(--fs-11); color: var(--text-2); border-bottom: 1px solid var(--border);
 }
 .tourn-scorecard tbody td { border-bottom: 1px solid var(--border-light); }
 .tourn-scorecard th.sortable { cursor: pointer; user-select: none; }
@@ -1966,20 +1969,20 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 
 /* Column widths — flexible */
 .tourn-scorecard .tourn-lb-name-col { text-align: left; padding-left: 10px; white-space: nowrap; }
-.tourn-lb-pills .p { font-size: 10px; padding: 1px 7px; }
+.tourn-lb-pills .p { font-size: var(--fs-10); padding: 1px 7px; }
 .tourn-scorecard .tourn-sum-col { background: var(--bg-hover); white-space: nowrap; padding: 6px 5px; }
 
 /* Course info rows */
-.tourn-par-row td { font-size: 11px; font-weight: 600; color: var(--text-muted); background: var(--bg-hover); border-bottom: 2px solid var(--border); }
-.tourn-dist-row td { font-size: 10px; color: var(--text-muted); background: var(--bg-detail); }
-.tourn-si-row td { font-size: 10px; color: var(--text-muted); background: var(--bg); border-bottom: 1px solid var(--border-light); }
+.tourn-par-row td { font-size: var(--fs-11); font-weight: 600; color: var(--text-muted); background: var(--bg-hover); border-bottom: 2px solid var(--border); }
+.tourn-dist-row td { font-size: var(--fs-10); color: var(--text-muted); background: var(--bg-detail); }
+.tourn-si-row td { font-size: var(--fs-10); color: var(--text-muted); background: var(--bg); border-bottom: 1px solid var(--border-light); }
 .tourn-scorecard .tourn-in-border { border-left: 2px solid var(--border); }
 
 /* Player rows */
-.tourn-player-row td { font-size: 12px; }
+.tourn-player-row td { font-size: var(--fs-12); }
 .tourn-player-row:hover { background: var(--bg-detail); }
 .tourn-scorecard .tourn-sum-under { background: var(--accent-light); }
-.tourn-lb-name-col .tourn-pname { font-weight: 700; font-size: 12px; white-space: nowrap; }
+.tourn-lb-name-col .tourn-pname { font-weight: 700; font-size: var(--fs-12); white-space: nowrap; }
 .tourn-lb-name-col .tourn-pname.tourn-pname-link { color: var(--link-color); }
 
 /* Female row — subtle blue tint */
@@ -2016,18 +2019,18 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
   border-radius: var(--radius-lg);
   background: var(--bg-card);
 }
-.kpi-lbl { font-size: 10px; font-weight: 600; color: var(--text-3); letter-spacing: 0; text-transform: none; }
-.kpi-val { font-size: 22px; font-weight: 700; color: var(--text-1); line-height: 1.1; font-variant-numeric: tabular-nums; }
-.kpi-val.fs-16 { font-size: 16px; }
-.kpi-val-lg { font-size: 28px; font-weight: 900; }
-.kpi-delta { font-size: 11px; font-weight: 700; margin-top: 1px; }
-.kpi-sub { font-size: 11px; color: var(--text-3); margin-top: 1px; }
+.kpi-lbl { font-size: var(--fs-10); font-weight: 600; color: var(--text-3); letter-spacing: 0; text-transform: none; }
+.kpi-val { font-size: var(--fs-22); font-weight: 700; color: var(--text-1); line-height: 1.1; font-variant-numeric: tabular-nums; }
+.kpi-val.fs-16 { font-size: var(--fs-16); }
+.kpi-val-lg { font-size: var(--fs-28); font-weight: 900; }
+.kpi-delta { font-size: var(--fs-11); font-weight: 700; margin-top: 1px; }
+.kpi-sub { font-size: var(--fs-11); color: var(--text-3); margin-top: 1px; }
 
 /* ─── Form Analysis Table ─── */
-.tourn-form-table th { background: var(--bg-header); font-weight: 700; font-size: 10px; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.04em; padding: 6px 8px; border: none; border-bottom: 2px solid var(--border); text-align: left; }
-.tourn-form-table td { padding: 6px 8px; border: none; border-bottom: 1px solid var(--border-light); font-size: 12px; vertical-align: middle; }
+.tourn-form-table th { background: var(--bg-header); font-weight: 700; font-size: var(--fs-10); color: var(--text-2); text-transform: uppercase; letter-spacing: 0.04em; padding: 6px 8px; border: none; border-bottom: 2px solid var(--border); text-align: left; }
+.tourn-form-table td { padding: 6px 8px; border: none; border-bottom: 1px solid var(--border-light); font-size: var(--fs-12); vertical-align: middle; }
 .tourn-form-table tbody tr:hover { background: var(--bg-detail); }
-.tourn-form-table .tourn-pname { font-weight: 700; font-size: 12px; }
+.tourn-form-table .tourn-pname { font-weight: 700; font-size: var(--fs-12); }
 .tourn-form-table .tourn-pname.tourn-pname-link { color: var(--link-color); }
 
 /* Sparkline — mini SD dots */
@@ -2037,21 +2040,21 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .trend-down { background: var(--bg-danger-subtle); color: var(--color-danger-dark); }
 
 /* Utility classes for tournament */
-.tourn-scorecard .tourn-lbl { text-align: left; padding-left: 8px; font-weight: 800; color: var(--text-2); border-right: 2px solid var(--border); font-size: 10px; text-transform: uppercase; }
+.tourn-scorecard .tourn-lbl { text-align: left; padding-left: 8px; font-weight: 800; color: var(--text-2); border-right: 2px solid var(--border); font-size: var(--fs-10); text-transform: uppercase; }
 
 /* ═══════ Overlay Export ═══════ */
 
-.ov-field label { font-size: 11px; font-weight: 800; color: var(--text-3); text-transform: uppercase; letter-spacing: .3px; }
-.ov-field .input { font-size: 13px; padding: 6px 10px; font-weight: 600; border-radius: var(--radius); border: 1.5px solid var(--border); background: var(--bg); transition: border-color .15s; }
+.ov-field label { font-size: var(--fs-11); font-weight: 800; color: var(--text-3); text-transform: uppercase; letter-spacing: .3px; }
+.ov-field .input { font-size: var(--fs-13); padding: 6px 10px; font-weight: 600; border-radius: var(--radius); border: 1.5px solid var(--border); background: var(--bg); transition: border-color .15s; }
 .ov-field .input:focus { border-color: var(--link-color); outline: none; }
 
 /* Secção colapsável de personalização */
 .ov-section { background: var(--bg-detail); border-radius: var(--radius); padding: 10px 12px; margin-bottom: 8px; border: 1px solid var(--border-light); }
-.ov-section-label { font-size: 10px; font-weight: 900; color: var(--text-3); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 6px; }
+.ov-section-label { font-size: var(--fs-10); font-weight: 900; color: var(--text-3); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 6px; }
 
 /* Botões opção (fundo, presets, tema) */
 .ov-opt-btn {
-  padding: 4px 10px; font-size: 11px; font-weight: 700; border-radius: 6px;
+  padding: 4px 10px; font-size: var(--fs-11); font-weight: 700; border-radius: 6px;
   border: 1.5px solid var(--border); background: var(--bg); color: var(--text-2);
   cursor: pointer; transition: all .15s; user-select: none; line-height: 1.3;
 }
@@ -2059,13 +2062,13 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .ov-opt-btn.active { background: var(--link-color); color: #fff; border-color: var(--link-color); }
 
 /* Toggle checkboxes — estilo pill */
-.ov-toggle { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px 2px 4px; border-radius: 6px; cursor: pointer; transition: background .12s; user-select: none; font-size: 12px; font-weight: 600; color: var(--text-2); }
+.ov-toggle { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px 2px 4px; border-radius: 6px; cursor: pointer; transition: background .12s; user-select: none; font-size: var(--fs-12); font-weight: 600; color: var(--text-2); }
 .ov-toggle:hover { background: var(--bg-hover); }
 .ov-toggle input[type="checkbox"] { accent-color: var(--link-color); width: 15px; height: 15px; margin: 0; cursor: pointer; }
 
 @media (max-width: 600px) {
  .ov-fields { gap: 6px; }
- .ov-field .input { font-size: 12px; padding: 5px 8px; }
+ .ov-field .input { font-size: var(--fs-12); padding: 5px 8px; }
  .ov-options { gap: 8px; }
  .ov-toggles { gap: 4px 8px; }
  .ov-gallery { gap: 8px; }
@@ -2093,7 +2096,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 /* ─── Unified Distribution Bar ─── */
 
 /* ─── Unified Filter Bar ─── */
-.filter-checkbox { display: flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; color: var(--text-3); cursor: pointer; }
+.filter-checkbox { display: flex; align-items: center; gap: 4px; font-size: var(--fs-11); font-weight: 600; color: var(--text-3); cursor: pointer; }
 .filter-checkbox input { accent-color: var(--accent); width: 13px; height: 13px; }
 
 /* ─── Unified Highlight Card (player card, featured) ─── */
@@ -2103,7 +2106,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 /* Compact tab group */
 
 /* ─── Legend row ─── */
-.legend-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 8px; font-size: 10px; color: var(--text-3); }
+.legend-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 8px; font-size: var(--fs-10); color: var(--text-3); }
 .legend-dot { display: inline-block; width: 9px; height: 9px; border-radius: var(--radius-xs); }
 .legend-item { display: inline-flex; align-items: center; gap: 2px; }
 
@@ -2111,19 +2114,19 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 
 /* ─── Password Gate ─── */
 .pw-gate { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; gap: 14px; }
-.pw-icon { font-size: 32px; }
-.pw-title { font-size: 16px; font-weight: 700; color: var(--text-2); }
-.pw-sub { font-size: 13px; color: var(--text-3); }
-.pw-input { padding: 8px 14px; border: 1.5px solid var(--border); border-radius: var(--radius); font-size: 14px; width: 200px; }
+.pw-icon { font-size: var(--fs-32); }
+.pw-title { font-size: var(--fs-16); font-weight: 700; color: var(--text-2); }
+.pw-sub { font-size: var(--fs-13); color: var(--text-3); }
+.pw-input { padding: 8px 14px; border: 1.5px solid var(--border); border-radius: var(--radius); font-size: var(--fs-14); width: 200px; }
 .pw-input-error { border-color: var(--color-danger); }
-.pw-btn { padding: 8px 20px; background: var(--bg-topbar); color: #fff; border: none; border-radius: var(--radius); font-size: 13px; font-weight: 700; cursor: pointer; }
-.pw-error { font-size: 11px; color: var(--color-danger); font-weight: 600; }
+.pw-btn { padding: 8px 20px; background: var(--bg-topbar); color: #fff; border: none; border-radius: var(--radius); font-size: var(--fs-13); font-weight: 700; cursor: pointer; }
+.pw-error { font-size: var(--fs-11); color: var(--color-danger); font-weight: 600; }
 
 /* ─── Rivais/Cross (previously Comparar.css) ─── */
 .sidebar-rank {
  display: inline-flex; align-items: center; justify-content: center;
  min-width: 28px; height: 24px; border-radius: var(--radius);
- font-size: 12px; font-weight: 900;
+ font-size: var(--fs-12); font-weight: 900;
  font-family: var(--font-mono);
  margin-right: 8px; flex-shrink: 0;
  border: 2px solid transparent;
@@ -2133,7 +2136,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .sidebar-rank-rest { background: var(--bg-muted); color: var(--text-2); border-color: var(--border); }
 
 .sidebar-sd {
- font-size: 11px; font-family: var(--font-mono);
+ font-size: var(--fs-11); font-family: var(--font-mono);
  font-weight: 700; padding: 2px 7px; border-radius: var(--radius-sm);
  margin-left: auto; flex-shrink: 0;
 }
@@ -2144,8 +2147,8 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 /* Rivais table */
 
 .rivais-group-header { background: var(--bg-topbar); color: var(--text-inv); }
-.rivais-player-name { padding: 6px 8px; font-size: 12px; font-weight: 600; text-align: left; min-width: 170px; white-space: nowrap; border-right: 1px solid var(--border); }
-.rivais-flag { font-size: 13px; margin-right: 4px; }
+.rivais-player-name { padding: 6px 8px; font-size: var(--fs-12); font-weight: 600; text-align: left; min-width: 170px; white-space: nowrap; border-right: 1px solid var(--border); }
+.rivais-flag { font-size: var(--fs-13); margin-right: 4px; }
 
 /* ─── Calendar Page ─── */
 .cal-page { height: 100%; display: flex; overflow: hidden; }
@@ -2156,7 +2159,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 
 /* ─── Responsive additions ─── */
 @media (max-width: 768px) {
- .rivais-player-name { min-width: 130px; font-size: 11px; }
+ .rivais-player-name { min-width: 130px; font-size: var(--fs-11); }
 }
 
 /* ═══════════════════════════════════════════
@@ -2249,7 +2252,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .cb-birdie { color: var(--color-danger); font-weight: 700; }
 .cb-par-ok { color: var(--color-good); font-weight: 700; }
 .cb-blue  { color: var(--color-info-alt); font-weight: 700; }
-.cb-blue-10 { color: var(--color-info-alt); font-weight: 700; font-size: 10px; }
+.cb-blue-10 { color: var(--color-info-alt); font-weight: 700; font-size: var(--fs-10); }
 .cb-blue-800 { color: var(--color-info-alt); font-weight: 800; }
 .cb-amber  { color: var(--color-warn-dark); font-weight: 700; }
 
@@ -2315,18 +2318,23 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .op-7 { opacity: 0.7; }
 
 /* ─── Padding shortcuts ─── */
-.p-0  { padding: 0; }
-.p-8  { padding: 8px; }
-.p-12 { padding: 12px; }
-.p-16 { padding: 16px; }
-.p-24 { padding: 24px; }
-.p-40 { padding: 40px; }
-.p-0-4px { padding: 0 4px; }
-.p-8-12  { padding: 8px 12px; }
+.p-0    { padding: 0; }
+.p-8    { padding: 8px; }
+.p-12   { padding: 12px; }
+.p-16   { padding: 16px; }
+.p-24   { padding: 24px; }
+.p-40   { padding: 40px; }
+.p-0-4px  { padding: 0 4px; }
+.p-6-10   { padding: 6px 10px; }    /* padding canónico de tabela .dtable */
+.p-8-12   { padding: 8px 12px; }
+.p-10-12  { padding: 10px 12px; }   /* padding canónico de secção compacta */
+.p-10-14  { padding: 10px 14px; }   /* padding canónico de notice / kpi */
+.p-12-16  { padding: 12px 16px; }   /* padding canónico de card com conteúdo */
+.p-14-16  { padding: 14px 16px; }   /* padding canónico de card espaçoso */
 
 /* ─── Linha de info / análise dos leaderboards (Resumo + rondas) ─── */
 .lb-info-line {
-  font-size: 13px;
+  font-size: var(--fs-13);
   font-weight: 600;
   color: var(--text-2);
   margin: 6px 0 12px;
@@ -2334,7 +2342,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
   line-height: 1.55;
 }
 .lb-evo-summary {
-  font-size: 13px;
+  font-size: var(--fs-13);
   font-weight: 700;
   color: var(--text-2);
   margin: 10px 0 12px;
@@ -2347,10 +2355,10 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 /* ─── Table helpers ─── */
 .bc-collapse { border-collapse: collapse; }
 /* ─── Uppercase label (cabeçalhos compactos, sec headers) ─── */
-.label-caps { font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+.label-caps { font-size: var(--fs-10); font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
 
 /* ─── Table / layout combos (DrivePage) ─── */
-.tbl-compact      { font-size: 12px; border-collapse: collapse; width: auto; font-variant-numeric: tabular-nums; }
+.tbl-compact      { font-size: var(--fs-12); border-collapse: collapse; width: auto; font-variant-numeric: tabular-nums; }
 .sticky-col-0     { position: sticky; left: 0; z-index: 2; background: var(--bg-card, #fff); }
 .sticky-col-1     { position: sticky; left: 26px; z-index: 2; background: var(--bg-card, #fff); box-shadow: var(--shadow-sticky-col); }
 
@@ -2360,17 +2368,17 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .sc-lb thead tr:last-child .sticky-col-1 { z-index: 6; }
 
 /* Contexto partilhado para scorecards (Drive, Diversos, BJGT) */
-.tourn-scorecard .sc-score { min-width: 22px; min-height: 22px; font-size: 11px; }
+.tourn-scorecard .sc-score { min-width: 22px; min-height: 22px; font-size: var(--fs-11); }
 .mt-24            { margin-top: 24px; }
 
 /* ═══════════════════════════════════════════════════════════════
    CS-TABLE — tabela temporada cruzada (jogadores × torneios)
    Usada por: ResumoTable, TournamentGrid (Sub-12)
    ═══════════════════════════════════════════════════════════════ */
-.cs-table { border-collapse: collapse; font-size: 12px; }
+.cs-table { border-collapse: collapse; font-size: var(--fs-12); }
 .cs-table th,
 .cs-table td { padding: 5px 5px; text-align: center; border: none; border-bottom: 1px solid var(--border-light); white-space: nowrap; }
-.cs-table th { background: var(--bg-header); font-weight: 700; font-size: 11px; color: var(--text-3); }
+.cs-table th { background: var(--bg-header); font-weight: 700; font-size: var(--fs-11); color: var(--text-3); }
 .cs-table th.cs-sortable { cursor: pointer; user-select: none; }
 .cs-table th.cs-sortable:hover { background: var(--bg-hover-subtle); }
 
@@ -2388,10 +2396,10 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .cs-table .cs-id-end { border-right: 3px solid var(--border) !important; }
 
 /* Colunas de identidade (fixas à esquerda) */
-.cs-table .cs-pos  { width: 28px; font-weight: 800; font-size: 11px; color: var(--text-3); }
+.cs-table .cs-pos  { width: 28px; font-weight: 800; font-size: var(--fs-11); color: var(--text-3); }
 .cs-table .cs-name { text-align: left; padding-left: 8px; min-width: 155px; }
-.cs-table .cs-name .tourn-pname { font-size: 12px; }
-.cs-table .cs-fed  { width: 52px; font-size: 10px; color: var(--text-muted);
+.cs-table .cs-name .tourn-pname { font-size: var(--fs-12); }
+.cs-table .cs-fed  { width: 52px; font-size: var(--fs-10); color: var(--text-muted);
   font-family: var(--font-mono); }
 .cs-table .cs-esc  { width: 52px; }
 .cs-table .cs-club { min-width: 80px; color: var(--text-3); }
@@ -2400,7 +2408,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 
 /* Colunas por torneio */
 .cs-table .cs-t-pos   { width: 28px; font-weight: 700; color: var(--text-3); }
-.cs-table .cs-t-gross { width: 40px; font-size: 13px; font-weight: 800;
+.cs-table .cs-t-gross { width: 40px; font-size: var(--fs-13); font-weight: 800;
   font-family: var(--font-mono); }
 .cs-table .cs-t-topar { width: 32px; font-weight: 700;
   font-family: var(--font-mono); }
@@ -2408,8 +2416,8 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .cs-table .cs-t-stat { width: 28px; }  /* 🐦 / par / ■ */
 
 /* Colunas de resumo de temporada */
-.cs-table .cs-s-games { width: 36px; font-weight: 700; font-size: 13px; }
-.cs-table .cs-s-pts   { width: 48px; font-weight: 800; font-size: 13px;
+.cs-table .cs-s-games { width: 36px; font-weight: 700; font-size: var(--fs-13); }
+.cs-table .cs-s-pts   { width: 48px; font-weight: 800; font-size: var(--fs-13);
   color: var(--color-warn-dark); }
 .cs-table .cs-s-sd    { width: 50px; }
 .cs-table .cs-s-stat  { width: 28px; }
@@ -2422,12 +2430,12 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 /* ═══════════════════════════════════════════════════════════════
    Usado em: ScorecardLeaderboard, TotalLeaderboard, AccumulatedLB
    ═══════════════════════════════════════════════════════════════ */
-.sc-lb { border-collapse: collapse; font-size: 13px; }
+.sc-lb { border-collapse: collapse; font-size: var(--fs-13); }
 /* Regra base: sem bordas laterais; separador horizontal apenas */
 .sc-lb th,
 .sc-lb td { padding: 6px 5px; text-align: center; border: none; white-space: nowrap; }
 /* th header: padding do mockup (7px 5px), font 11px/600 */
-.sc-lb th { background: var(--bg-header); font-weight: 600; font-size: 11px; color: var(--text-2);
+.sc-lb th { background: var(--bg-header); font-weight: 600; font-size: var(--fs-11); color: var(--text-2);
   padding: 7px 5px; border-bottom: 1px solid var(--border); }
 /* Linhas de dados: separador horizontal visível */
 .sc-lb tbody td { border-bottom: 1px solid var(--border-light); }
@@ -2436,20 +2444,20 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .sc-lb th.lb-sortable:hover { background: var(--bg-hover-subtle); }
 
 /* Coluna posição */
-.sc-lb .lb-pos { width: 28px; font-weight: 800; font-size: 11px; color: var(--text-3); }
+.sc-lb .lb-pos { width: 28px; font-weight: 800; font-size: var(--fs-11); color: var(--text-3); }
 
 /* Coluna nome — shadow substitui border-right */
 .sc-lb .lb-name { text-align: left; padding-left: 8px; white-space: nowrap;
   min-width: 130px; }
-.sc-lb .lb-name .tourn-pname { font-size: 12px; }
+.sc-lb .lb-name .tourn-pname { font-size: var(--fs-12); }
 
 /* Colunas de identidade */
 .sc-lb .lb-esc   { width: 52px; }
-.sc-lb .lb-fed   { width: 44px; font-size: 10px; color: var(--text-muted); font-family: var(--font-mono); }
-.sc-lb .lb-club  { width: 70px; font-size: 11px; overflow: hidden;
+.sc-lb .lb-fed   { width: 44px; font-size: var(--fs-10); color: var(--text-muted); font-family: var(--font-mono); }
+.sc-lb .lb-club  { width: 70px; font-size: var(--fs-11); overflow: hidden;
   text-overflow: ellipsis; white-space: nowrap; }
 .sc-lb .lb-hcp   { width: 36px; text-align: right; font-family: var(--font-mono);
-  font-size: 11px; color: var(--text-3); }
+  font-size: var(--fs-11); color: var(--text-3); }
 .sc-lb .lb-tee   { width: 24px; }
 
 /* Total + par — ±Par vem ANTES de Tot, separador visual à esquerda */
@@ -2458,32 +2466,32 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
   background: var(--accent-light);
   border-left: 1px solid var(--border); }
 /* th usa 11px (herdado); td usa 13px como no mockup */
-.sc-lb td.lb-topar { font-size: 12px; }
-.sc-lb th.lb-topar { font-size: 11px; }
-.sc-lb .lb-gross { width: 38px; font-size: 12px; font-weight: 800;
+.sc-lb td.lb-topar { font-size: var(--fs-12); }
+.sc-lb th.lb-topar { font-size: var(--fs-11); }
+.sc-lb .lb-gross { width: 38px; font-size: var(--fs-12); font-weight: 800;
   font-family: var(--font-mono);
   background: var(--accent-light);
   border-left: 1px solid var(--border-light); }
 
 /* Estatísticas pós-scorecard — separador forte após In */
 .sc-lb .lb-sd       { width: 48px; border-left: 2px solid var(--border); }
-.sc-lb .lb-bird     { width: 28px; font-size: 12px; color: var(--color-good); font-weight: 700; border-left: 1px solid var(--border-light); }
-.sc-lb .lb-par-stat { width: 28px; font-size: 12px; color: var(--text-3); border-left: 1px solid var(--border-light); }
-.sc-lb .lb-bog      { width: 28px; font-size: 12px; color: var(--color-danger); border-left: 1px solid var(--border-light); }
+.sc-lb .lb-bird     { width: 28px; font-size: var(--fs-12); color: var(--color-good); font-weight: 700; border-left: 1px solid var(--border-light); }
+.sc-lb .lb-par-stat { width: 28px; font-size: var(--fs-12); color: var(--text-3); border-left: 1px solid var(--border-light); }
+.sc-lb .lb-bog      { width: 28px; font-size: var(--fs-12); color: var(--color-danger); border-left: 1px solid var(--border-light); }
 
 /* Colunas por ronda (MultiRoundLeaderboard) — separador no início de cada grupo */
 .sc-lb .lb-rnd    { width: 38px; background: var(--bg-rnd, #e8f2e4);
   font-weight: 700; font-family: var(--font-mono);
   border-left: 2px solid var(--border-strong, #999); }
-.sc-lb .lb-rnd-tp { width: 30px; background: var(--bg-rnd, #e8f2e4); font-size: 11px;
+.sc-lb .lb-rnd-tp { width: 30px; background: var(--bg-rnd, #e8f2e4); font-size: var(--fs-11);
   font-family: var(--font-mono); }
 .sc-lb .lb-rnd-sd   { width: 44px; background: var(--bg-rnd-stats, #f5f9f3); }
 .sc-lb .lb-rnd-bird { width: 22px; background: var(--bg-rnd-stats, #f5f9f3);
-  font-size: 11px; color: var(--color-good); font-weight: 700; }
+  font-size: var(--fs-11); color: var(--color-good); font-weight: 700; }
 .sc-lb .lb-rnd-par  { width: 22px; background: var(--bg-rnd-stats, #f5f9f3);
-  font-size: 11px; color: var(--text-3); }
+  font-size: var(--fs-11); color: var(--text-3); }
 .sc-lb .lb-rnd-bog  { width: 22px; background: var(--bg-rnd-stats, #f5f9f3);
-  font-size: 11px; color: var(--color-danger); }
+  font-size: var(--fs-11); color: var(--color-danger); }
 /* Headers usam a variante mais escura (mockup: #dde8d9 / #f0f5ee) */
 .sc-lb thead th.lb-rnd, .sc-lb thead th.lb-rnd-tp { background: var(--bg-rnd-header); }
 .sc-lb thead th.lb-rnd-sd,
@@ -2492,9 +2500,9 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .sc-lb thead th.lb-rnd-bog  { background: var(--bg-rnd-stats-header); }
 
 /* Colunas acumuladas (totais) — verde-salva para distinguir das rondas verde-folha */
-.sc-lb .lb-acc-bird { width: 22px; background: var(--bg-acc); font-size: 11px; color: var(--color-good); font-weight: 700; }
-.sc-lb .lb-acc-par  { width: 22px; background: var(--bg-acc); font-size: 11px; color: var(--text-3); }
-.sc-lb .lb-acc-bog  { width: 22px; background: var(--bg-acc); font-size: 11px; color: var(--color-danger); }
+.sc-lb .lb-acc-bird { width: 22px; background: var(--bg-acc); font-size: var(--fs-11); color: var(--color-good); font-weight: 700; }
+.sc-lb .lb-acc-par  { width: 22px; background: var(--bg-acc); font-size: var(--fs-11); color: var(--text-3); }
+.sc-lb .lb-acc-bog  { width: 22px; background: var(--bg-acc); font-size: var(--fs-11); color: var(--color-danger); }
 .sc-lb thead th.lb-acc-bird,
 .sc-lb thead th.lb-acc-par,
 .sc-lb thead th.lb-acc-bog  { background: var(--bg-acc-header); }
@@ -2510,7 +2518,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 /* Células de buraco em linhas de jogador: padding compacto */
 .sc-lb tbody tr:not(.lb-par-row):not(.lb-si-row) td.lb-hole { padding: 3px 2px; }
 .sc-lb .lb-halftot    { width: 42px; background: var(--bg-hover);
-  font-weight: 600; font-size: 11px; font-family: var(--font-mono);
+  font-weight: 600; font-size: var(--fs-11); font-family: var(--font-mono);
   border-left: 1px solid var(--border); }
 
 /* Linhas PAR / SI */
@@ -2526,16 +2534,16 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .sc-lb .lb-par-row td.lb-topar { background: var(--accent-light); }
 .sc-lb .lb-par-row td.lb-gross { background: var(--accent-light); }
 .sc-lb .lb-si-row     { background: var(--bg); }
-.sc-lb .lb-si-row td  { font-size: 10px; color: var(--text-muted); background: var(--bg);
+.sc-lb .lb-si-row td  { font-size: var(--fs-10); color: var(--text-muted); background: var(--bg);
   border-bottom: 1px solid var(--border-light); }
-.sc-lb .lb-par-lbl    { text-align: right; padding-right: 8px; font-size: 11px;
+.sc-lb .lb-par-lbl    { text-align: right; padding-right: 8px; font-size: var(--fs-11);
   font-weight: 600; color: var(--text-muted); }
 
 /* Círculos de score — 26×26, font 13px, igual ao mockup */
 .sc-lb .sc-score {
   min-width: 26px; min-height: 26px;
   width: 26px; height: 26px;
-  font-size: 13px; font-weight: 700;
+  font-size: var(--fs-13); font-weight: 700;
 }
 
 /* Linha hover */
@@ -2584,20 +2592,20 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 /* ─── Leaderboard-specific cells ─── */
 
 /* ─── Rivais Dashboard table cells ─── */
-.rivais-th { padding: 8px 5px; text-align: center; font-size: 11px; font-weight: 700; }
-.rivais-th-name { padding: 8px 8px; font-size: 11px; font-weight: 700; text-align: left; min-width: 170px; position: sticky; left: 0; background: var(--bg-topbar); z-index: 2; }
+.rivais-th { padding: 8px 5px; text-align: center; font-size: var(--fs-11); font-weight: 700; }
+.rivais-th-name { padding: 8px 8px; font-size: var(--fs-11); font-weight: 700; text-align: left; min-width: 170px; position: sticky; left: 0; background: var(--bg-topbar); z-index: 2; }
 /* ─── Simulador inputs ─── */
-.sim-input { width: 30px; text-align: center; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 3px 0; font: inherit; font-size: 12px; background: var(--bg-card); }
-.sim-input-sm { width: 26px; text-align: center; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 2px 0; font: inherit; font-size: 10px; background: var(--bg); color: var(--text-muted); }
-.sim-input-accent { width: 26px; text-align: center; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 2px 0; font: inherit; font-size: 11px; background: var(--accent-light); }
-.sim-section-toggle { cursor: pointer; font-weight: 600; font-size: 14px; color: var(--text); }
-.sim-note { margin-top: 8px; padding: 6px 10px; background: var(--bg-note-warn); border-radius: var(--radius); font-size: 12px; line-height: 1.6; }
+.sim-input { width: 30px; text-align: center; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 3px 0; font: inherit; font-size: var(--fs-12); background: var(--bg-card); }
+.sim-input-sm { width: 26px; text-align: center; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 2px 0; font: inherit; font-size: var(--fs-10); background: var(--bg); color: var(--text-muted); }
+.sim-input-accent { width: 26px; text-align: center; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 2px 0; font: inherit; font-size: var(--fs-11); background: var(--accent-light); }
+.sim-section-toggle { cursor: pointer; font-weight: 600; font-size: var(--fs-14); color: var(--text); }
+.sim-note { margin-top: 8px; padding: 6px 10px; background: var(--bg-note-warn); border-radius: var(--radius); font-size: var(--fs-12); line-height: 1.6; }
 
 /* ─── Separator / divider ─── */
 .v-sep { width: 1px; height: 28px; background: currentColor; opacity: 0.25; }
 
 /* ─── Mini badge (jogadores) ─── */
-.mini-badge { font-size: 11px; padding: 2px 6px; border: 1px solid var(--border); border-radius: var(--radius); }
+.mini-badge { font-size: var(--fs-11); padding: 2px 6px; border: 1px solid var(--border); border-radius: var(--radius); }
 
 /* ─── JogadoresPage cross-table border ─── */
 .bg-success { background: var(--bg-success); }
@@ -2616,12 +2624,12 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .fw-400 { font-weight: 400; }
 
 /* ─── Color + size combos ─── */
-.c-blue-13 { color: var(--color-info-alt); font-size: 13px; font-weight: 800; }
+.c-blue-13 { color: var(--color-info-alt); font-size: var(--fs-13); font-weight: 800; }
 .c-amber-underline { color: var(--color-warn-dark); font-weight: 600; text-decoration: underline; }
 .c-blue-2563 { color: var(--chart-2); }
-.c-blue-2563-10 { color: var(--chart-2); font-size: 10px; font-weight: 600; }
-.c-amber-11 { color: var(--color-warn-dark); font-weight: 700; font-size: 11px; }
-.c-par-ok-11 { color: var(--color-good); font-weight: 700; font-size: 11px; }
+.c-blue-2563-10 { color: var(--chart-2); font-size: var(--fs-10); font-weight: 600; }
+.c-amber-11 { color: var(--color-warn-dark); font-weight: 700; font-size: var(--fs-11); }
+.c-par-ok-11 { color: var(--color-good); font-weight: 700; font-size: var(--fs-11); }
 .c-teal { color: var(--color-teal); font-weight: 600; text-decoration: underline; }
 
 /* ─── Borders ─── */
@@ -2630,16 +2638,16 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 
 /* Calendar */
 .cal-content { display: flex; flex-direction: column; height: 100%; padding: 0 12px 12px; }
-.cal-month-title { font-size: 18px; font-weight: 600; color: var(--text); margin: 0; }
+.cal-month-title { font-size: var(--fs-18); font-weight: 600; color: var(--text); margin: 0; }
 .cal-indent { padding-left: 28px; display: flex; flex-direction: column; gap: 0; margin-bottom: 4px; }
 .cal-page-inner { padding: 16px 20px; display: flex; flex-direction: column; gap: 20px; }
 .cal-week-grid { display: grid; grid-template-columns: repeat(7, 1fr); }
 .cal-day-label { padding: 2px 0; }
 .cal-dot-indicator { position: absolute; bottom: 1px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 50%; }
-.cal-day-cell { font-size: 11px; cursor: pointer; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; margin: 1px auto; position: relative; transition: background 0.15s; }
+.cal-day-cell { font-size: var(--fs-11); cursor: pointer; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; margin: 1px auto; position: relative; transition: background 0.15s; }
 .cal-overlay { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); }
 .cal-no-select { user-select: none; }
-.cal-day-num { font-size: 15px; width: 22px; text-align: center; }
+.cal-day-num { font-size: var(--fs-15); width: 22px; text-align: center; }
 
 /* ─── Calendar toggle group button ─── */
 .cal-toggle-btn {
@@ -2653,12 +2661,12 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
  width: 16px; height: 16px; border-radius: var(--radius-sm);
  border: 2px solid var(--accent); background: transparent;
  display: flex; align-items: center; justify-content: center;
- flex-shrink: 0; font-size: 10px; color: #fff; line-height: 1;
+ flex-shrink: 0; font-size: var(--fs-10); color: #fff; line-height: 1;
  transition: all 0.15s;
 }
 .cal-toggle-check.on { background: var(--accent); }
 .cal-toggle-label {
- font-size: 11px; font-weight: 700; color: var(--text);
+ font-size: var(--fs-11); font-weight: 700; color: var(--text);
  flex: 1; text-align: left; text-transform: uppercase; letter-spacing: 0.04em;
 }
 
@@ -2674,11 +2682,11 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
  width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0;
 }
 .cal-search-date {
- font-size: 10px; font-family: var(--font-mono);
+ font-size: var(--fs-10); font-family: var(--font-mono);
  color: var(--text-3); font-weight: 600; min-width: 32px; flex-shrink: 0;
 }
 .cal-search-title {
- font-size: 11px; color: var(--text); flex: 1;
+ font-size: var(--fs-11); color: var(--text); flex: 1;
  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 
@@ -2732,27 +2740,27 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 
 
 /* Comparar */
-.cmp-search-input { width: 100%; font-size: 14px; padding: 10px 14px; }
+.cmp-search-input { width: 100%; font-size: var(--fs-14); padding: 10px 14px; }
 .cmp-search-wrap { position: relative; flex: 1; }
 .cmp-result-list { max-height: 340px; overflow-y: auto; }
 .cmp-radar-wrap { width: 100%; max-width: 420px; display: block; margin: 0 auto; }
 .cmp-radar-wrap-sm { width: 100%; max-height: 280px; background: var(--bg); border-radius: var(--radius-lg); border: 1px solid var(--border-light); }
 .cmp-radar-sm { width: 100%; max-height: 230px; margin-top: 8px; }
-.cmp-chip { font-size: 13px; padding: 6px 12px; }
-.cmp-remove-btn { background: none; border: none; cursor: pointer; color: var(--text-3); padding: 0 2px; font-size: 15px; line-height: 1; }
+.cmp-chip { font-size: var(--fs-13); padding: 6px 12px; }
+.cmp-remove-btn { background: none; border: none; cursor: pointer; color: var(--text-3); padding: 0 2px; font-size: var(--fs-15); line-height: 1; }
 .cmp-empty-icon { font-size: 40px; margin-bottom: 12px; }
-.cmp-empty-title { text-align: center; font-size: 16px; margin-bottom: 6px; }
+.cmp-empty-title { text-align: center; font-size: var(--fs-16); margin-bottom: 6px; }
 .cmp-distrib-bar { display: flex; height: 32px; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 12px; border: 1px solid var(--border); }
 .cmp-distrib-track { flex: 1; background: var(--bg-hover); border-radius: var(--radius-sm); height: 18px; overflow: hidden; }
-.cmp-stat-label { font-size: 12px; width: 75px; font-weight: 600; color: var(--text-2); }
+.cmp-stat-label { font-size: var(--fs-12); width: 75px; font-weight: 600; color: var(--text-2); }
 .cmp-feature-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 16px; }
-.cmp-feature-tag { padding: 4px 12px; border-radius: var(--radius-xl); background: var(--bg-hover); font-size: 11px; font-weight: 600; color: var(--text-2); }
+.cmp-feature-tag { padding: 4px 12px; border-radius: var(--radius-xl); background: var(--bg-hover); font-size: var(--fs-11); font-weight: 600; color: var(--text-2); }
 
 /* Simulador extras */
 .sim-note-block { display: block; margin: 6px 0; padding: 4px 10px; background: var(--bg-note-warn-strong); border-radius: var(--radius); color: var(--color-warn-dark); }
-.sim-note-alt { margin: 6px 0; padding: 6px 10px; background: var(--bg-note-warn); border-radius: var(--radius); font-size: 12px; line-height: 1.6; }
-.sim-toggle-link { cursor: pointer; font-weight: 600; font-size: 13px; color: var(--color-warn-dark); display: flex; align-items: center; gap: 6px; }
-.sim-italic-note { font-size: 11px; color: var(--text-3); margin-top: 6px; font-style: italic; padding: 0 8px; }
+.sim-note-alt { margin: 6px 0; padding: 6px 10px; background: var(--bg-note-warn); border-radius: var(--radius); font-size: var(--fs-12); line-height: 1.6; }
+.sim-toggle-link { cursor: pointer; font-weight: 600; font-size: var(--fs-13); color: var(--color-warn-dark); display: flex; align-items: center; gap: 6px; }
+.sim-italic-note { font-size: var(--fs-11); color: var(--text-3); margin-top: 6px; font-style: italic; padding: 0 8px; }
 /* sim-warn-box → .notice-warn (unified) */
 .sim-br-sep { border-right: 2px solid var(--border); }
 
@@ -2784,7 +2792,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .bb-border { border-bottom: 1px solid var(--border, #ddd); margin: 2px 0; }
 
 /* ─── Empty / loading states ─── */
-.empty-icon { font-size: 32px; margin-bottom: 12px; }
+.empty-icon { font-size: var(--fs-32); margin-bottom: 12px; }
 .empty-icon-lg { font-size: 40px; margin-bottom: 8px; }
 .empty-state-lg { text-align: center; padding: 60px; }
 
@@ -2798,7 +2806,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 /* ─── Comparar + Jogadores specifics ─── */
 .jog-cross-wrap { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 12px; }
 .jog-cross-filter { display: flex; gap: 8px; margin-bottom: 12px; align-items: center; }
-.jog-field-line { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--bg-muted); font-size: 12px; }
+.jog-field-line { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--bg-muted); font-size: var(--fs-12); }
 .jog-record-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 6px 0 10px; }
 
 /* ─── Rivais header dynamic — keep structure, move statics ─── */
@@ -2852,7 +2860,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
  background: transparent;
  color: var(--nav-text);
  font: inherit;
- font-size: 13px;
+ font-size: var(--fs-13);
  font-weight: 600;
  border-radius: var(--radius-lg);
  cursor: pointer;
@@ -2880,18 +2888,18 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
  justify-content: center;
  height: 100%;
  color: var(--text-3);
- font-size: 15px;
+ font-size: var(--fs-15);
 }
 .error-box {
  color: var(--color-danger-dark);
 }
 .error-title {
  font-weight: 700;
- font-size: 18px;
+ font-size: var(--fs-18);
  margin-bottom: 4px;
 }
 .course-flag {
- font-size: 14px;
+ font-size: var(--fs-14);
  line-height: 1;
  flex-shrink: 0;
 }
@@ -2900,7 +2908,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
  align-items: center;
  gap: 4px;
  padding: 2px 10px;
- font-size: 11px;
+ font-size: var(--fs-11);
  font-weight: 600;
  border-radius: var(--radius);
  background: var(--bg-purple);
@@ -2912,7 +2920,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
  color: var(--accent);
  text-decoration: none;
  font-weight: 500;
- font-size: 12px;
+ font-size: var(--fs-12);
 }
 .detail-link:hover {
  text-decoration: underline;
@@ -2924,7 +2932,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 }
 /* ── Tab underline (FPGPage, USKIDSPage, etc.) ────────────── */
 .tab-under {
-  padding: 6px 14px; font-size: 12px; font-weight: 500;
+  padding: 6px 14px; font-size: var(--fs-12); font-weight: 500;
   color: var(--text-muted); background: transparent; border: none;
   border-bottom: 2px solid transparent; cursor: pointer;
   transition: all .15s; white-space: nowrap;
@@ -2958,11 +2966,11 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .tab-btn.active { background: var(--text-dark); color: #fff; border-color: var(--text-dark); }
 
 /* ── Search input + compact select (DrivePage, FPGPage) ── */
-.input-search { font-size: 11px; padding: 3px 8px 3px 22px; border-radius: 6px;
+.input-search { font-size: var(--fs-11); padding: 3px 8px 3px 22px; border-radius: 6px;
   border: 1px solid var(--border); background: var(--bg-card,#fff);
   outline: none; width: 140px; }
 .input-search:focus { border-color: var(--accent); }
-.select-compact { font-size: 11px; padding: 3px 6px; border-radius: 6px;
+.select-compact { font-size: var(--fs-11); padding: 3px 6px; border-radius: 6px;
   border: 1px solid var(--border); background: var(--bg-card,#fff); }
 
 .tee-badges-row {
@@ -2989,7 +2997,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
   border-top: 1px solid var(--border-light);
 }
 .course-players-title {
-  font-size: 12px;
+  font-size: var(--fs-12);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -3000,11 +3008,11 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .cp-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: var(--fs-13);
 }
 .cp-table thead th {
   text-align: left;
-  font-size: 11px;
+  font-size: var(--fs-11);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -3040,7 +3048,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .cp-chev {
   display: inline-block;
   color: var(--text-muted);
-  font-size: 15px;
+  font-size: var(--fs-15);
   line-height: 1;
   transition: transform 0.15s ease;
 }
@@ -3051,7 +3059,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 /* Tag 18b/9b na coluna Voltas */
 .cp-tag {
   display: inline-block;
-  font-size: 10px;
+  font-size: var(--fs-10);
   font-weight: 700;
   color: var(--text-muted);
   background: var(--bg-subtle, rgba(0,0,0,0.06));
@@ -3069,10 +3077,10 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .cp-row-sub td { padding: 0 10px 7px; vertical-align: baseline; }
 .cp-row-paired:hover, .cp-row-sub:hover { background: var(--bg-subtle, rgba(0,0,0,0.025)); }
 .cp-row-sub.cp-row-manuel { background: var(--bg-subtle, rgba(0,0,0,0.04)); }
-.cp-round-9 { font-size: 10px; font-weight: 600; color: var(--text-muted); }
-.cp-round-nc { font-size: 11px; font-style: italic; color: var(--text-muted); }
-.cp-tp { font-weight: 600; font-size: 12px; }
-.cp-muted { color: var(--text-muted); font-size: 12px; }
+.cp-round-9 { font-size: var(--fs-10); font-weight: 600; color: var(--text-muted); }
+.cp-round-nc { font-size: var(--fs-11); font-style: italic; color: var(--text-muted); }
+.cp-tp { font-weight: 600; font-size: var(--fs-12); }
+.cp-muted { color: var(--text-muted); font-size: var(--fs-12); }
 /* Linha de detalhe — voltas, calmo e sem cor de fundo */
 .cp-detail-row td { padding: 2px 10px 12px; }
 .cp-rounds {
@@ -3091,11 +3099,11 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
   white-space: nowrap;
 }
 .cp-round-date {
-  font-size: 11px;
+  font-size: var(--fs-11);
   color: var(--text-muted);
 }
 .cp-round-score {
-  font-size: 12px;
+  font-size: var(--fs-12);
   font-weight: 700;
   color: var(--text);
 }
@@ -3112,13 +3120,13 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
  flex-shrink: 0;
 }
 .tee-label {
- font-size: 12px;
+ font-size: var(--fs-12);
  font-weight: 600;
  color: var(--text);
 }
 .tee-suffix {
  font-family: var(--font-mono);
- font-size: 11px;
+ font-size: var(--fs-11);
  color: var(--text-3);
 }
 .sc-wrap {
@@ -3168,15 +3176,15 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .ratings-table .r-num {
  text-align: right;
  font-family: var(--font-mono);
- font-size: 12px;
+ font-size: var(--fs-12);
 }
 .r-sex {
  font-weight: 600;
  text-align: center;
- font-size: 12px;
+ font-size: var(--fs-12);
  color: var(--text-3);
 }
-.tee-date { display: inline-block; padding: 1px 7px; border-radius: var(--radius); font-size: 11px; font-weight: 600; white-space: nowrap; }
+.tee-date { display: inline-block; padding: 1px 7px; border-radius: var(--radius); font-size: var(--fs-11); font-weight: 600; white-space: nowrap; }
 .ov-export {
  margin: 20px 0;
  padding: 16px 18px;
@@ -3190,7 +3198,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .ov-header { padding: 0 0 8px; }
 .ov-export-btn {
  padding: 10px 28px; background: var(--link-color); color: #fff; border: none; border-radius: 8px;
- font-size: 14px; font-weight: 800; cursor: pointer; transition: all 0.15s;
+ font-size: var(--fs-14); font-weight: 800; cursor: pointer; transition: all 0.15s;
  box-shadow: var(--shadow-float); letter-spacing: .3px;
 }
 .ov-export-btn:hover { background: var(--accent-hover); transform: translateY(-1px); box-shadow: var(--shadow-float-hover); }
@@ -3205,10 +3213,10 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .ov-card-header {
  display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;
 }
-.ov-card-label { font-size: 12px; font-weight: 800; color: var(--text-2); }
+.ov-card-label { font-size: var(--fs-12); font-weight: 800; color: var(--text-2); }
 .ov-share-btn {
  padding: 4px 12px; border-radius: 8px; background: var(--accent-alpha-10);
- border: 1.5px solid var(--accent-alpha-20); cursor: pointer; font-size: 13px; line-height: 1;
+ border: 1.5px solid var(--accent-alpha-20); cursor: pointer; font-size: var(--fs-13); line-height: 1;
  transition: all .12s; font-weight: 600;
 }
 .ov-share-btn:hover { background: var(--link-color); color: #fff; border-color: var(--link-color); transform: scale(1.05); }
@@ -3224,7 +3232,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
  .ov-export { padding: 12px; }
  .ov-export-btn { width: 100%; text-align: center; padding: 12px 20px; }
 }
-.error-msg { font-size: 13px; margin-top: 4px; }
+.error-msg { font-size: var(--fs-13); margin-top: 4px; }
 
 /* ─── Extended Utilities ─── */
 .fs-16 { font-size: var(--fs-16); }
@@ -3255,7 +3263,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
  border-radius: var(--radius-lg);
  background: var(--bg-card);
  color: var(--text-3);
- font-size: 13px;
+ font-size: var(--fs-13);
  font-weight: 600;
  cursor: pointer;
  font-family: inherit;
@@ -3274,7 +3282,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 }
 .tourn-tab-sm {
  padding: 4px 10px;
- font-size: 12px;
+ font-size: var(--fs-12);
 }
 /* Inactive/muted state — used for "★ Manuel" filter off, etc. */
 .tourn-tab-muted {
@@ -3311,18 +3319,18 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
    ═══════════════════════════════════════════ */
 
 /* ─── Status de jogo ─── */
-.badge-wd  { font-size: 10px; color: var(--color-danger); font-style: italic; }
-.badge-inc { font-size: 10px; font-weight: 700; color: var(--color-danger); margin-left: 4px; }
+.badge-wd  { font-size: var(--fs-10); color: var(--color-danger); font-style: italic; }
+.badge-inc { font-size: var(--fs-10); font-weight: 700; color: var(--color-danger); margin-left: 4px; }
 
 /* ─── Torneio / competição ─── */
-.badge-gf      { font-size: 10px; font-weight: 800; color: var(--color-amber); margin-left: 5px; }
-.badge-warn-sm { font-size: 10px; color: var(--color-warn); }
-.badge-next    { display: inline-block; font-size: 10px; font-weight: 700; color: #fff; padding: 0 4px; border-radius: var(--radius-sm); margin-left: 2px; }
+.badge-gf      { font-size: var(--fs-10); font-weight: 800; color: var(--color-amber); margin-left: 5px; }
+.badge-warn-sm { font-size: var(--fs-10); color: var(--color-warn); }
+.badge-next    { display: inline-block; font-size: var(--fs-10); font-weight: 700; color: #fff; padding: 0 4px; border-radius: var(--radius-sm); margin-left: 2px; }
 
 /* ─── Série de torneios (cor dinâmica via style) ─── */
 .badge-serie {
  display: inline-flex; align-items: center;
- font-size: 10px; font-weight: 600;
+ font-size: var(--fs-10); font-weight: 600;
  padding: 1px 6px;
  border-radius: var(--radius-sm);
  white-space: nowrap;
@@ -3330,12 +3338,12 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 }
 
 /* ─── Evolução de categoria (BJGT) ─── */
-.badge-evo-up  { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: var(--radius-sm); background: var(--badge-evo-up-bg);  color: var(--badge-evo-up-fg);  white-space: nowrap; }
-.badge-evo-eq  { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: var(--radius-sm); background: var(--badge-evo-eq-bg);  color: var(--badge-evo-eq-fg);  white-space: nowrap; }
-.badge-evo-new { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 5px; border-radius: var(--radius-sm); background: var(--badge-evo-new-bg); color: var(--badge-evo-new-fg); white-space: nowrap; }
+.badge-evo-up  { display: inline-block; font-size: var(--fs-10); font-weight: 700; padding: 1px 5px; border-radius: var(--radius-sm); background: var(--badge-evo-up-bg);  color: var(--badge-evo-up-fg);  white-space: nowrap; }
+.badge-evo-eq  { display: inline-block; font-size: var(--fs-10); font-weight: 700; padding: 1px 5px; border-radius: var(--radius-sm); background: var(--badge-evo-eq-bg);  color: var(--badge-evo-eq-fg);  white-space: nowrap; }
+.badge-evo-new { display: inline-block; font-size: var(--fs-10); font-weight: 600; padding: 1px 5px; border-radius: var(--radius-sm); background: var(--badge-evo-new-bg); color: var(--badge-evo-new-fg); white-space: nowrap; }
 
 /* ─── Meta sub-header de tabela (datas, rótulos compactos) ─── */
-.th-sub { font-size: 10px; font-weight: 400; color: var(--text-muted); display: block; line-height: 1.2; }
+.th-sub { font-size: var(--fs-10); font-weight: 400; color: var(--text-muted); display: block; line-height: 1.2; }
 
 /* ─── Indicador de ronda recente (ponto verde) ─── */
 .new-round-dot {
@@ -3368,12 +3376,12 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 /* --- Search input icon (PlayerFilterBar pattern) --- */
 .search-icon-abs {
   position: absolute; left: 7px; top: 50%; transform: translateY(-50%);
-  font-size: 11px; color: var(--text-muted); pointer-events: none;
+  font-size: var(--fs-11); color: var(--text-muted); pointer-events: none;
 }
 .search-wrap { position: relative; flex-shrink: 0; }
 .filter-bar { display:flex; flex-wrap:wrap; align-items:center; gap:6px; padding:6px 0 8px; border-bottom:1px solid var(--border); margin-bottom:8px; }
 .filter-clear-btn {
-  font-size: 10px; padding: 2px 8px; border-radius: 20px;
+  font-size: var(--fs-10); padding: 2px 8px; border-radius: 20px;
   border: 1px solid var(--border); background: var(--bg-hover);
   color: var(--text-muted); cursor: pointer; font-family: inherit;
 }
@@ -3511,7 +3519,7 @@ table td.lb-col-divider {
   display: flex; gap: 6px; align-items: center; flex-wrap: wrap;
 }
 .njov-filter-label {
-  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  font-size: var(--fs-11); font-weight: 700; text-transform: uppercase;
   letter-spacing: 0.04em; color: var(--text-3);
 }
 .njov-chip {
@@ -3537,7 +3545,7 @@ table td.lb-col-divider {
 
 .hoc-wrap { margin: 20px 0 28px; }
 .hoc-title {
-  font-size: 14px; font-weight: 700; text-transform: uppercase;
+  font-size: var(--fs-14); font-weight: 700; text-transform: uppercase;
   letter-spacing: 0.06em; color: var(--text-2);
   margin: 0 0 10px;
 }
@@ -3547,18 +3555,18 @@ table td.lb-col-divider {
 }
 .hoc-table {
   width: 100%; border-collapse: collapse;
-  font-size: 12px; font-variant-numeric: tabular-nums;
+  font-size: var(--fs-12); font-variant-numeric: tabular-nums;
 }
 .hoc-table th {
   padding: 6px 8px; text-align: center;
   background: var(--bg-header);
   border-bottom: 2px solid var(--border);
-  font-size: 11px; font-weight: 700;
+  font-size: var(--fs-11); font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.04em;
   color: var(--text-3); white-space: nowrap;
 }
 .hoc-th-year { width: 60px; }
-.hoc-th-esc { font-size: 11px; }
+.hoc-th-esc { font-size: var(--fs-11); }
 .hoc-th-sex { font-weight: 600; padding: 4px; }
 .hoc-table tbody tr { border-bottom: 1px solid var(--border-light); }
 .hoc-year {
@@ -3587,10 +3595,10 @@ table td.lb-col-divider {
   font-weight: 600; color: var(--text-1);
   white-space: nowrap; max-width: 150px;
   overflow: hidden; text-overflow: ellipsis;
-  font-size: 12px;
+  font-size: var(--fs-12);
 }
 .hoc-score {
-  font-size: 11px; color: var(--text-3);
+  font-size: var(--fs-11); color: var(--text-3);
   margin-top: 2px;
 }
 .hoc-gross { font-weight: 700; color: var(--text-2); margin-right: 4px; }
@@ -3613,48 +3621,48 @@ table td.lb-col-divider {
 }
 .njov-card-title {
   display: flex; align-items: center; gap: 10px;
-  font-size: 16px; font-weight: 700;
+  font-size: var(--fs-16); font-weight: 700;
 }
 .njov-card-year {
   font-weight: 800; color: var(--accent);
   background: var(--bg-1); padding: 2px 8px;
-  border-radius: 4px; font-size: 14px;
+  border-radius: 4px; font-size: var(--fs-14);
 }
 .njov-card-esc {
   font-weight: 700; color: var(--text-1);
 }
 .njov-card-meta {
   display: flex; gap: 8px; flex-wrap: wrap;
-  font-size: 12px; color: var(--text-3);
+  font-size: var(--fs-12); color: var(--text-3);
   margin-top: 4px;
 }
 .njov-dot { color: var(--text-3); opacity: 0.6; }
 
 .njov-table { margin: 0; }
 .njov-table th { background: transparent; }
-.njov-th-club { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); padding: 6px 10px; text-align: left; background: transparent; border-bottom: 2px solid var(--border); white-space: nowrap; }
+.njov-th-club { font-size: var(--fs-11); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); padding: 6px 10px; text-align: left; background: transparent; border-bottom: 2px solid var(--border); white-space: nowrap; }
 .njov-th-round { color: var(--text-3); font-weight: 600; }
 .njov-td-pos { font-weight: 700; color: var(--text-2); }
 .njov-td-name { font-weight: 600; color: var(--text-1); white-space: nowrap; }
 .njov-td-club {
-  color: var(--text-3); font-size: 12px;
+  color: var(--text-3); font-size: var(--fs-12);
   max-width: 220px; overflow: hidden;
   text-overflow: ellipsis; white-space: nowrap;
 }
-.njov-td-round { color: var(--text-2); font-size: 12px; }
+.njov-td-round { color: var(--text-2); font-size: var(--fs-12); }
 .njov-td-gross { font-weight: 700; color: var(--text-1); }
-.njov-td-topar { color: var(--text-2); font-size: 12px; }
+.njov-td-topar { color: var(--text-2); font-size: var(--fs-12); }
 .njov-row-gold { background: var(--bg-gold-subtle); }
 .njov-row-gold:hover { background: var(--bg-gold-hover); }
 
 .njov-footer {
   margin-top: 32px; padding-top: 16px;
   border-top: 1px solid var(--border-light);
-  font-size: 11px; color: var(--text-3);
+  font-size: var(--fs-11); color: var(--text-3);
   line-height: 1.6;
 }
 .njov-footer code {
-  font-size: 11px;
+  font-size: var(--fs-11);
   background: var(--bg-header);
   padding: 1px 4px; border-radius: 3px;
 }
@@ -3678,14 +3686,14 @@ table td.lb-col-divider {
   min-width: 0;
 }
 .filter-label {
-  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  font-size: var(--fs-10); font-weight: 700; text-transform: uppercase;
   letter-spacing: 0.04em; color: var(--text-muted);
   padding-left: 2px;
 }
 .filter-input {
   width: 100%;
   padding: 5px 8px;
-  font: inherit; font-size: 12px;
+  font: inherit; font-size: var(--fs-12);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--bg);
@@ -3705,7 +3713,7 @@ table td.lb-col-divider {
   background: var(--bg-card);
   color: var(--text);
   cursor: pointer;
-  font: inherit; font-size: 12px; font-weight: 500;
+  font: inherit; font-size: var(--fs-12); font-weight: 500;
   transition: background 0.15s, border-color 0.15s;
 }
 .btn-pill:hover:not(:disabled) {
@@ -3719,7 +3727,7 @@ table td.lb-col-divider {
 .player-list-table {
   border-collapse: collapse;
   width: 100%;
-  font-size: 12px;
+  font-size: var(--fs-12);
 }
 .player-list-table thead th {
   position: sticky; top: 0; z-index: 1;
@@ -3729,7 +3737,7 @@ table td.lb-col-divider {
   padding: 6px 8px;
   border-bottom: 2px solid var(--border);
   white-space: nowrap;
-  font-size: 11px;
+  font-size: var(--fs-11);
   text-transform: uppercase;
   letter-spacing: 0.03em;
 }
@@ -3793,7 +3801,7 @@ table td.lb-col-divider {
   border: none;
   background: transparent;
   color: var(--text-2);
-  font-size: 14px;
+  font-size: var(--fs-14);
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
@@ -3817,7 +3825,7 @@ table td.lb-col-divider {
 
 .selector-group > label {
   display: block;
-  font-size: 12px;
+  font-size: var(--fs-12);
   font-weight: 600;
   text-transform: uppercase;
   color: var(--text-3);
@@ -3829,7 +3837,7 @@ table td.lb-col-divider {
   padding: 8px 12px;
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
-  font-size: 13px;
+  font-size: var(--fs-13);
   background: var(--bg-base);
   color: var(--text-1);
   transition: all 0.2s;
@@ -3853,7 +3861,7 @@ table td.lb-col-divider {
   padding: 12px;
   text-align: center;
   color: var(--text-3);
-  font-size: 13px;
+  font-size: var(--fs-13);
 }
 
 .selector-item {
@@ -3866,7 +3874,7 @@ table td.lb-col-divider {
   cursor: pointer;
   transition: all 0.15s;
   border-bottom: 1px solid var(--border-light);
-  font-size: 13px;
+  font-size: var(--fs-13);
 }
 
 .selector-item:last-child {
@@ -3889,7 +3897,7 @@ table td.lb-col-divider {
 }
 
 .selector-item-meta {
-  font-size: 11px;
+  font-size: var(--fs-11);
   opacity: 0.7;
   margin-top: 2px;
 }
@@ -3909,7 +3917,7 @@ table td.lb-col-divider {
 .scorecard-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: var(--fs-13);
 }
 
 .scorecard-table thead {
@@ -3953,7 +3961,7 @@ table td.lb-col-divider {
 }
 
 .cell-diff {
-  font-size: 11px;
+  font-size: var(--fs-11);
   color: var(--text-3);
   display: block;
   margin-top: 2px;
@@ -3967,7 +3975,7 @@ table td.lb-col-divider {
   display: inline-block;
   padding: 4px 8px;
   border-radius: 4px;
-  font-size: 12px;
+  font-size: var(--fs-12);
   font-weight: 600;
   border: 1px solid;
 }
@@ -4032,7 +4040,7 @@ table td.lb-col-divider {
 }
 
 .comparison-legend h4 {
-  font-size: 12px;
+  font-size: var(--fs-12);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -4050,7 +4058,7 @@ table td.lb-col-divider {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 12px;
+  font-size: var(--fs-12);
 }
 
 .legend-label {

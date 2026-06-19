@@ -1,4 +1,4 @@
-﻿/**
+/**
  * EnglandGolfPage.tsx -- England Golf Tournament Results
  *
  * Duplicacao da BJGTPage adaptada para England Golf (GolfGenius).
@@ -290,7 +290,7 @@ function ManuelDay({ data, ri }: { data: TData; ri: number }) {
 
   return (
     <div className="card">
-      <div className="h-md fs-14">🇵🇹 Análise Manuel — R{ri + 1}</div>
+      <div className="h-md">🇵🇹 Análise Manuel — R{ri + 1}</div>
       <div className="muted fs-10 mb-8">Gross: {r.gross} ({fmtToPar(r.gross-parTotal)}) · F9: {r.f9} {fmtSub(r.f9!-parF9)} · B9: {r.b9} {fmtSub(r.b9!-parB9)} · Média field: {fieldAvg.toFixed(1)}</div>
       <div className="grid-auto-fill mb-8" style={{ gap: 6 }}>
         {eagles.length > 0 && <div className="card-detail br" style={{ padding: "4px 8px" }}><span className="fw-800" style={{ color: SC.good }}>🦅 {eagles.length}</span><span className="fs-10 c-text-3"> {eagles.map(h => "H"+h.h).join(", ")}</span></div>}
@@ -422,7 +422,7 @@ function TournView({ def, evo, evoYear, selectedDivision }: { def: TDef; evo?: M
       accHeader={hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined}
       accExtra={(
         <div className="card">
-          <div className="h-md fs-14">📊 Dificuldade por Buraco — Todas as rondas</div>
+          <div className="h-md">📊 Dificuldade por Buraco — Todas as rondas</div>
           <FStats data={data} ri="all" />
           <HoleDiff data={data} ri="all" mn={manuelName} />
         </div>
@@ -430,7 +430,7 @@ function TournView({ def, evo, evoYear, selectedDivision }: { def: TDef; evo?: M
       roundExtra={(tab) => (
         <>
           <div className="card">
-            <div className="h-md fs-14">📊 Dificuldade por Buraco — {rLabel(tab)}</div>
+            <div className="h-md">📊 Dificuldade por Buraco — {rLabel(tab)}</div>
             <FStats data={data} ri={tab} />
             <HoleDiff data={data} ri={tab} mn={manuelName} />
           </div>
@@ -718,7 +718,7 @@ function makeEnglandDivision(
     // Apresentação PLANA (igual ao JOB/Doral): leaderboard sem card; análise por baixo.
     accExtra: (
       <div className="card">
-        <div className="h-md fs-14">📊 Dificuldade por Buraco — Todas as rondas</div>
+        <div className="h-md">📊 Dificuldade por Buraco — Todas as rondas</div>
         <FStats data={data} ri="all" />
         <HoleDiff data={data} ri="all" mn={manuelName} />
       </div>
@@ -726,7 +726,7 @@ function makeEnglandDivision(
     roundExtra: (tab) => (
       <>
         <div className="card">
-          <div className="h-md fs-14">📊 Dificuldade por Buraco — {rLabel(tab)}</div>
+          <div className="h-md">📊 Dificuldade por Buraco — {rLabel(tab)}</div>
           <FStats data={data} ri={tab} />
           <HoleDiff data={data} ri={tab} mn={manuelName} />
         </div>

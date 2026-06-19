@@ -107,7 +107,7 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
           <span>{rows.length} {rows.length === 1 ? "torneio" : "torneios"}</span>
           {memberId && (
             <span style={{
-              fontFamily: "ui-monospace, monospace", fontSize: "var(--fs-10)",
+              fontFamily: "var(--font-mono)", fontSize: "var(--fs-10)",
               padding: "1px 5px", borderRadius: 3,
               background: "var(--bg-muted)", border: "1px solid var(--border-light)",
             }} title="USKids memberId actual">
@@ -119,7 +119,7 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
             const note = typeof h === "string" ? null : h.note;
             return (
               <span key={i} title={note || "Legacy USKids memberId"} style={{
-                fontFamily: "ui-monospace, monospace", fontSize: "var(--fs-10)",
+                fontFamily: "var(--font-mono)", fontSize: "var(--fs-10)",
                 padding: "1px 5px", borderRadius: 3,
                 background: "var(--bg)", border: "1px dashed var(--border)",
                 color: "var(--text-3)",

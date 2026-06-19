@@ -1,4 +1,4 @@
-﻿/**
+/**
  * FTMDoralPage.tsx — First Tee Miami Doral Jr. Classic Results
  * Lê ficheiros Golf Genius (sem par[], com divisions[], toPar directo)
  * Boys 8-9: 9 buracos (H10-H18) · Boys 10-11 / 12-13: 18 buracos
@@ -802,7 +802,7 @@ function Content() {
                   : "strokes vs par / ronda";
                 return (
                   <div className="card" style={{ background:"var(--bg-success-subtle)", border:"1px solid var(--good)", marginTop:8 }}>
-                    <div className="h-md fs-14">🇵🇹 Manuel — Evolução Doral</div>
+                    <div className="h-md">🇵🇹 Manuel — Evolução Doral</div>
                     <div style={{ display:"flex", gap:16, flexWrap:"wrap", alignItems:"center" }}>
                       <div style={{ textAlign:"center", flex:"1 1 100px" }}>
                         <div className="muted fs-10">{manuelEvo.prevYear} ({manuelEvo.from})</div>

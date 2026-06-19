@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ComparePage.tsx — Página /comparar
  *
  * Duas tabs (estilo .tab-under, coerente com FPGPage/BJGTPage/USKIDSPage):
@@ -188,12 +188,12 @@ function SimilarityTable({ rows, onPick, pickedKey }: {
               >
                 <td style={{ fontWeight: 700 }}>{course.master.name}</td>
                 <td className="muted">{tee.teeName}</td>
-                <td className="r" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{tee.distances?.total ?? "–"}</td>
-                <td className="r" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{teePar || "–"}</td>
-                <td className="r" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+                <td className="r" style={{ fontFamily: "var(--font-mono)" }}>{tee.distances?.total ?? "–"}</td>
+                <td className="r" style={{ fontFamily: "var(--font-mono)" }}>{teePar || "–"}</td>
+                <td className="r" style={{ fontFamily: "var(--font-mono)" }}>
                   {tee.ratings?.holes18?.slopeRating ? tee.ratings.holes18.slopeRating.toFixed(0) : "–"}
                 </td>
-                <td className="r" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+                <td className="r" style={{ fontFamily: "var(--font-mono)" }}>
                   {tee.ratings?.holes18?.courseRating ? tee.ratings.holes18.courseRating.toFixed(1) : "–"}
                 </td>
                 <td className="r">
@@ -201,7 +201,7 @@ function SimilarityTable({ rows, onPick, pickedKey }: {
                     className="p p-sm"
                     style={{
                       ...simBadgeStyle(tier),
-                      fontFamily: "'JetBrains Mono', monospace",
+                      fontFamily: "var(--font-mono)",
                       fontWeight: 700,
                       minWidth: 52,
                       justifyContent: "center",

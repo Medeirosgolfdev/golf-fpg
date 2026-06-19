@@ -1,4 +1,4 @@
-﻿// @refresh reset
+// @refresh reset
 /**
  * DrivePage.tsx — DRIVE Tour & Challenge + AQUAPOR Results 2026
  * v10: Reads scraper v7 format directly (fedCode, roundScores)
@@ -1200,7 +1200,7 @@ function DriveContent() {
     const v = getQP("series");
     return (v === "all" || v === "tour" || v === "challenge" || v === "aquapor") ? v : "tour";
   });
-  const [filterManuel, setFilterManuel] = useState(() => getQP("manuel") !== "0");
+  const [filterManuel, setFilterManuel] = useState(() => getQP("manuel") === "1");
     const md = useMasterDetail();
   const [regionFilter, setRegionFilter]         = useState<string | null>(() => getQP("region"));
   const [escFilter, setEscFilter]               = useState<string[]>(() => {
@@ -1231,7 +1231,7 @@ function DriveContent() {
     const sp = new URLSearchParams();
     if (navMode !== "torneios") sp.set("nav", navMode);
     if (series !== "tour") sp.set("series", series);
-    if (!filterManuel) sp.set("manuel", "0");
+    if (filterManuel) sp.set("manuel", "1");
     if (regionFilter) sp.set("region", regionFilter);
     if (escFilter.length) sp.set("esc", escFilter.join(","));
     if (yearFilter) sp.set("year", yearFilter);
@@ -1978,7 +1978,7 @@ function DriveContent() {
 
               <div className="card mt-8">
                 {/* Header do card igual ao Resumo */}
-                <div className="h-md fs-14">
+                <div className="h-md">
                   {sub12View === "grid" ? "📊" : sub12View === "ranking" ? "🏆" : "📈"}{" "}
                   {sub12View === "grid" ? "Tabela" : sub12View === "ranking" ? "Ranking" : "Evolução SD"}{" "}
                   — Sub-12 {SUB12_SERIES_TABS.find(s => s.key === sub12Series)?.label} {activeYear ?? ""}
@@ -2052,7 +2052,7 @@ function DriveContent() {
             {selectedGroupKey === null && (
               <div>
                 <div className="card overflow-hidden">
-                  <div className="h-md fs-14">
+                  <div className="h-md">
                     📋 {series === "tour" ? "Drive Tour" : series === "challenge" ? "Drive Challenge" : series === "aquapor" ? "AQUAPOR" : "DRIVE"}
                     {regionFilter ? " " + (regionOf(regionFilter)?.label || "") : ""}
                     {escFilter.length > 0 ? " — " + escFilter.join(", ") : ""} — Temporada {activeYear ?? "Todos"}

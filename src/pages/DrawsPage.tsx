@@ -1,4 +1,4 @@
-﻿/**
+/**
  * src/pages/DrawsPage.tsx
  *
  * Página dedicada de Draws/Pairings do Manuel — lista de jogadores com quem
@@ -457,7 +457,7 @@ function TorneiosList({
       {open && (
         <div style={{ maxHeight: 380, overflowY: "auto" }}>
           {items.length === 0 ? (
-            <div className="muted" style={{ padding: "10px 12px" }}>
+            <div className="muted" className="p-10-12">
               {emptyText}
             </div>
           ) : (

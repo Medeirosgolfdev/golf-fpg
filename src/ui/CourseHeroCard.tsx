@@ -1,4 +1,4 @@
-﻿/**
+/**
  * src/ui/CourseHeroCard.tsx
  *
  * Componente partilhado de "hero" do campo — KPIs (distância/par/slope/CR)
@@ -229,7 +229,7 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                 const tFor = (dist: number) => (range === 0 || !dist) ? 0.5 : (dist - minDist) / range;
 
                 return (
-                  <div key={p.par} className="haParCard" style={{ borderLeft: "3px solid " + accentColor, padding: "14px 16px" }}>
+                  <div key={p.par} className="haParCard" style={{ borderLeft: "3px solid " + accentColor, padding: "12px 16px" }}>
                     <div style={{ color: accentColor, display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap", fontSize: "var(--fs-16)", fontWeight: 800, marginBottom: 4 }}>
                       <span>Par {p.par}</span>
                       <span className="muted" style={{ fontWeight: 500, fontSize: "var(--fs-13)" }}>
@@ -248,7 +248,7 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                         return (
                           <span
                             key={h.hole}
-                            style={{ display: "inline-flex", alignItems: "baseline", gap: 4, fontFamily: "'JetBrains Mono', monospace" }}
+                            style={{ display: "inline-flex", alignItems: "baseline", gap: 4, fontFamily: "var(--font-mono)" }}
                             title={`Buraco ${h.hole} · ${h.distance ?? "—"}m`}
                           >
                             <span style={{ fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-3)" }}>B{h.hole}</span>
@@ -292,7 +292,7 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                         background: col?.bg ?? "var(--bg-muted)",
                         color: col?.fg ?? "var(--text-3)",
                         border: `1px solid ${col?.border ?? "var(--border)"}`,
-                        fontFamily: "'JetBrains Mono', monospace",
+                        fontFamily: "var(--font-mono)",
                       }}
                     >
                       <span style={{ fontSize: "var(--fs-10)", fontWeight: 700, opacity: 0.85 }}>B{h.hole}</span>

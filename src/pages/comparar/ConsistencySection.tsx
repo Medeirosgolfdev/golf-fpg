@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { firstName } from "../../utils/format";
 import { sc3, SC } from "../../utils/scoreDisplay";
 import type { Slot, AggStats, ScoreDistBucket, PeriodKey } from "./types";
@@ -55,7 +55,7 @@ function MiniDonut({ pct, value, color, label, n, highlight = false }: {
           fontSize={highlight ? 13 : 12}
           fontWeight={800}
           fill={color === C_PAR ? "var(--text-2)" : color}
-          fontFamily="'JetBrains Mono',monospace"
+          fontFamily={"var(--font-mono)"}
         >{value}</text>
       </svg>
       <div style={{ fontSize: "var(--fs-11)", fontWeight:700, color:"var(--text-2)", marginTop:2 }}>{label}</div>
@@ -410,7 +410,7 @@ function NinesPane({ loaded }: { loaded: { s: Slot; agg: AggStats | null; i: num
 
           return (
             <div key={nine} className="card p-10" style={{ background:"var(--bg-1)" }}>
-              <div className="fw-800 fs-13 mb-8">{nine === "F9" ? "🌅 Front 9 (buracos 1–9)" : "🌇 Back 9 (buracos 10–18)"}</div>
+              <div className="h-md">{nine === "F9" ? "🌅 Front 9 (buracos 1–9)" : "🌇 Back 9 (buracos 10–18)"}</div>
               {visible.map(({ s, agg, i }) => {
                 const v = get(agg!);
                 const isBest = bestTp != null && v.tp != null && Math.abs(v.tp - bestTp) < 0.001;

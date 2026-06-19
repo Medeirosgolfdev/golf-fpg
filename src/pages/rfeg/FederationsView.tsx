@@ -226,7 +226,7 @@ export function RFEGFederationsView() {
   const trackedTotal = ncFeds.length + gdFeds.length;
 
   return (
-    <div style={{ padding: "12px 16px" }}>
+    <div className="p-12-16">
       <DetailHeader
         title="🏛️ Federaciones de Golf España"
         sub={
@@ -299,13 +299,13 @@ export function RFEGFederationsView() {
               <tr key={f.name}>
                 <td><strong>{f.name}</strong></td>
                 <td style={{ textAlign: "center" }}>{f.region}</td>
-                <td style={{ textAlign: "center", fontFamily: "monospace" }}>
+                <td style={{ textAlign: "center", fontFamily: "var(--font-mono)" }}>
                   <code>{f.licPrefix}</code>
                 </td>
-                <td style={{ textAlign: "center", fontFamily: "monospace" }}>
+                <td style={{ textAlign: "center", fontFamily: "var(--font-mono)" }}>
                   <code>{f.ncCode}</code>
                 </td>
-                <td style={{ textAlign: "right", fontFamily: "monospace", color: "var(--color-good)", fontWeight: 600 }}>
+                <td style={{ textAlign: "right", fontFamily: "var(--font-mono)", color: "var(--color-good)", fontWeight: 600 }}>
                   {f.scrapedCount}
                 </td>
                 <td style={{ textAlign: "center" }}>
@@ -350,13 +350,13 @@ export function RFEGFederationsView() {
                   )}
                 </td>
                 <td style={{ textAlign: "center" }}>{f.region}</td>
-                <td style={{ textAlign: "center", fontFamily: "monospace" }}>
+                <td style={{ textAlign: "center", fontFamily: "var(--font-mono)" }}>
                   <code>{f.licPrefix}</code>
                 </td>
                 <td style={{ textAlign: "center" }}>
                   <ExtLink href="https://www.golfdirecto.com/" className="tourn-ext-link">golfdirecto.com</ExtLink>
                 </td>
-                <td style={{ textAlign: "right", fontFamily: "monospace", color: "var(--color-good)", fontWeight: 600 }}>
+                <td style={{ textAlign: "right", fontFamily: "var(--font-mono)", color: "var(--color-good)", fontWeight: 600 }}>
                   {f.scrapedCount}
                 </td>
                 <td style={{ textAlign: "center" }}>
@@ -394,7 +394,7 @@ export function RFEGFederationsView() {
               <tr key={f.name}>
                 <td>{f.name}</td>
                 <td style={{ textAlign: "center" }}>{f.region}</td>
-                <td style={{ textAlign: "center", fontFamily: "monospace" }}>
+                <td style={{ textAlign: "center", fontFamily: "var(--font-mono)" }}>
                   <code>{f.licPrefix}</code>
                 </td>
                 <td style={{ textAlign: "center" }}>
@@ -426,10 +426,10 @@ export function RFEGFederationsView() {
               <tr key={f.name}>
                 <td>{f.name}</td>
                 <td style={{ textAlign: "center" }}>{f.region}</td>
-                <td style={{ textAlign: "center", fontFamily: "monospace" }}>
+                <td style={{ textAlign: "center", fontFamily: "var(--font-mono)" }}>
                   <code>{f.licPrefix}</code>
                 </td>
-                <td style={{ textAlign: "center", fontFamily: "monospace" }}>
+                <td style={{ textAlign: "center", fontFamily: "var(--font-mono)" }}>
                   <code>{f.ncCode}</code>
                 </td>
                 <td style={{ textAlign: "center" }}>

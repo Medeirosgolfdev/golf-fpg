@@ -1,4 +1,4 @@
-﻿/**
+/**
  * AnaliseSection — secção de análise estilo Masters.com dentro do detalhe
  * de um jogador na KIDSPage.
  *
@@ -306,7 +306,7 @@ function NineSplitPane({ cards, fieldCards }: { cards: AutoScorecard[]; fieldCar
   const item = (label: string, toPar: number | null, dist: ScoringDist, fieldToPar: number | null) => {
     const pp = distPct(dist);
     return (
-      <div style={{ padding: "12px 14px", border: "1px solid var(--border-light)", borderRadius: 6 }}>
+      <div style={{ padding: "12px 16px", border: "1px solid var(--border-light)", borderRadius: 6 }}>
         <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", letterSpacing: "0.06em", fontWeight: 700, marginBottom: 4 }}>{label}</div>
         <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 8 }}>
           <span style={{ fontSize: "var(--fs-28)", fontWeight: 800, color: toPar == null ? "var(--text-3)" : toPar < 0 ? "var(--color-good-dark)" : toPar > 0 ? "var(--color-warn)" : "var(--text)" }}>

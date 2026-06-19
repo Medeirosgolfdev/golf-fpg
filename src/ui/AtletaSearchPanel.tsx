@@ -1,4 +1,4 @@
-﻿/**
+/**
  * AtletaSearchPanel.tsx
  *
  * Procura por nome ou nº de federado um atleta e mostra os seus melhores
@@ -222,7 +222,7 @@ export default function AtletaSearchPanel({
     <section style={{ margin: "16px 12px 28px" }}>
       <div
         style={{
-          padding: "12px 14px",
+          padding: "12px 16px",
           background: "var(--bg-card-strong, var(--bg-muted))",
           border: "1px solid var(--border)",
           borderRadius: 8,
@@ -291,7 +291,7 @@ export default function AtletaSearchPanel({
                     title="Clica para ver detalhe"
                   >
                     <td style={{ fontWeight: 700 }}>{a.name}</td>
-                    <td style={{ fontFamily: "monospace", fontSize: "var(--fs-12)", color: "var(--text-3)" }}>
+                    <td style={{ fontFamily: "var(--font-mono)", fontSize: "var(--fs-12)", color: "var(--text-3)" }}>
                       {a.fed || "—"}
                     </td>
                     <td style={{ fontSize: "var(--fs-12)", color: "var(--text-2)" }}>
@@ -322,7 +322,7 @@ export default function AtletaSearchPanel({
         >
           <header
             style={{
-              padding: "12px 14px",
+              padding: "12px 16px",
               background: "var(--bg-card-strong, var(--bg-muted))",
               borderBottom: "1px solid var(--border)",
               display: "flex",

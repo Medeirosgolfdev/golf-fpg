@@ -317,7 +317,7 @@ function StatsTable({ slots, allAgg, stats }: { slots: Slot[]; allAgg: (AggStats
                     <td key={ci} className="r" style={{
                       fontWeight: isBest ? 800 : 400,
                       color: isBest ? COLORS[x.i] : undefined,
-                      fontFamily: "'JetBrains Mono', monospace",
+                      fontFamily: "var(--font-mono)",
                       background: isBest ? COLORS_LIGHT[x.i] : undefined,
                     }}>
                       {v ?? "–"}
@@ -381,7 +381,7 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
                           borderRadius: 4, opacity: 0.75,
                         }} />
                       </div>
-                      <span style={{ fontSize: "var(--fs-11)", fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, width: 46, textAlign: "right", color: "var(--text-2)" }}>
+                      <span style={{ fontSize: "var(--fs-11)", fontFamily: "var(--font-mono)", fontWeight: 700, width: 46, textAlign: "right", color: "var(--text-2)" }}>
                         {v.toFixed(1)}%
                       </span>
                     </div>
@@ -566,7 +566,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
           return (
             <div key={i} style={{
               width: `${w}%`, background: COLORS[i], display: "flex", alignItems: "center", justifyContent: "center",
-              color: "#fff", fontWeight: 800, fontSize: "var(--fs-12)", fontFamily: "'JetBrains Mono', monospace",
+              color: "#fff", fontWeight: 800, fontSize: "var(--fs-12)", fontFamily: "var(--font-mono)",
             }}>
               {wins[i] > 0 && `${firstName(s.player.name)} ${wins[i]}`}
             </div>
