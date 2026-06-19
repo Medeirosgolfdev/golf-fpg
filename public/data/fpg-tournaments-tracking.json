@@ -1,12 +1,12 @@
 {
-  "lastUpdated": "2026-06-15T06:34:01.256Z",
+  "lastUpdated": "2026-06-19T21:02:57.185Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
-  "today": "2026-06-15",
+  "today": "2026-06-19",
   "summary": {
-    "total": 1192,
+    "total": 1193,
     "complete": 1181,
     "in_progress": 0,
-    "future": 0,
+    "future": 1,
     "stale": 9,
     "excluded": 1,
     "missing_admissions": 0,
@@ -16,6 +16,26 @@
     "unknown": 0
   },
   "tournaments": [
+    {
+      "ccode": "059",
+      "tcode": "10685",
+      "name": "Campeonato Regional de Clubes 2026",
+      "date": "2026-06-20",
+      "rounds": 1,
+      "has_admissions": true,
+      "admissions_count": 37,
+      "has_draws": false,
+      "draws_rounds_with_data": 0,
+      "draws_players_total": 0,
+      "has_classif": true,
+      "player_count": 0,
+      "players_with_scorecards": 0,
+      "players_with_full_scorecards": 0,
+      "scorecards_source": "pull-torneios-10685.json",
+      "scorecards_ratio": 0,
+      "full_scorecards_ratio": 0,
+      "status": "future"
+    },
     {
       "ccode": "000",
       "tcode": "10912",
