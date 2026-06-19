@@ -674,13 +674,13 @@ function FFGTeeTimesTab({ data }: { data: FFGResTournament }) {
         <>
           <td className="lb-club" title={p.club}>{p.club?.trim() || "—"}</td>
           <td className="lb-hcp">{p.hcp != null ? p.hcp.toFixed(1) : "—"}</td>
-          <td className="lb-tee" style={{ fontSize: 11 }}>{p._serieId}</td>
+          <td className="lb-tee" style={{ fontSize: "var(--fs-11)" }}>{p._serieId}</td>
         </>
       ),
       postScorecardCells: (
         <>
           <td style={{ padding: "6px 8px", textAlign: "center", fontWeight: 600 }}>{p.teeTime || "—"}</td>
-          <td style={{ padding: "6px 8px", textAlign: "center", fontSize: 11, fontFamily: "monospace" }}>
+          <td style={{ padding: "6px 8px", textAlign: "center", fontSize: "var(--fs-11)", fontFamily: "monospace" }}>
             {p.license || "—"}
           </td>
         </>
@@ -701,7 +701,7 @@ function FFGTeeTimesTab({ data }: { data: FFGResTournament }) {
   const postScorecardHeaderCells = (
     <>
       <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px", textAlign: "center" }}>HORA</SortableHdr>
-      <th style={{ padding: "7px 8px", textAlign: "center", fontSize: 11 }}>Licence</th>
+      <th style={{ padding: "7px 8px", textAlign: "center", fontSize: "var(--fs-11)" }}>Licence</th>
     </>
   );
 
@@ -753,7 +753,7 @@ function CategoriesView({ data }: { data: FFGCategoriesData }) {
       />
 
       <div style={{ overflowX: "auto", marginTop: 16 }}>
-        <table className="data-table" style={{ width: "100%" }}>
+        <table className="dtable">
           <thead>
             <tr>
               <th style={{ textAlign: "left" }}>Catégorie FR</th>
@@ -786,7 +786,7 @@ function CategoriesView({ data }: { data: FFGCategoriesData }) {
         </p>
         {data.distancesParCategorie?.matches && Object.keys(data.distancesParCategorie.matches).length > 0 ? (
           <>
-            <table className="data-table" style={{ width: "100%" }}>
+            <table className="dtable">
               <thead>
                 <tr>
                   <th style={{ textAlign: "left" }}>Categoria</th>
@@ -841,7 +841,7 @@ function CategoriesView({ data }: { data: FFGCategoriesData }) {
               background: "var(--bg-card, #fff)",
               border: "1px solid var(--border)",
               borderRadius: 4,
-              fontSize: 11,
+              fontSize: "var(--fs-11)",
               overflow: "auto",
             }}>
 {`# 1. Descarregar o Vademecum (PDF ~88MB)
@@ -976,7 +976,7 @@ function FFGResView({ data, lgpidfSupp }: { data: FFGResTournament; lgpidfSupp?:
         <>
           <td className="lb-club" title={p.club}>{p.club || "—"}</td>
           <td className="lb-hcp">{p.hcp != null ? p.hcp.toFixed(1) : "—"}</td>
-          <td className="lb-tee" style={{ fontSize: 11 }}>{p._serieId}</td>
+          <td className="lb-tee" style={{ fontSize: "var(--fs-11)" }}>{p._serieId}</td>
         </>
       ),
       postScorecardCells: (
@@ -1075,7 +1075,7 @@ function FFGResView({ data, lgpidfSupp }: { data: FFGResTournament; lgpidfSupp?:
               key={t.key}
               className={`tab-under ${tab === t.key ? "active" : ""}`}
               onClick={() => setTab(t.key)}
-              style={{ padding: "8px 12px", border: "none", background: "none", cursor: "pointer", fontSize: 13 }}
+              style={{ padding: "8px 12px", border: "none", background: "none", cursor: "pointer", fontSize: "var(--fs-13)" }}
             >
               {t.label} <span className="muted">({t.count})</span>
             </button>
@@ -1214,7 +1214,7 @@ function LGPIDFView({ data }: { data: LGPIDFTournament }) {
         <div className="fs-10 mb-8" style={{ display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }}>
           <span className="muted">Divisões:</span>
           {data.divisions.map((d) => (
-            <span key={d} className="chip" style={{ fontSize: 10 }} title={divisionLabel(d)}>
+            <span key={d} className="chip" style={{ fontSize: "var(--fs-10)" }} title={divisionLabel(d)}>
               <strong>{d}</strong> <span className="muted">— {divisionLabel(d)}</span>
             </span>
           ))}
@@ -1240,7 +1240,7 @@ function LGPIDFView({ data }: { data: LGPIDFTournament }) {
             key={t.key}
             className={`tab-under ${tab === t.key ? "active" : ""}`}
             onClick={() => setTab(t.key)}
-            style={{ padding: "8px 12px", border: "none", background: "none", cursor: "pointer", fontSize: 13 }}
+            style={{ padding: "8px 12px", border: "none", background: "none", cursor: "pointer", fontSize: "var(--fs-13)" }}
           >
             {t.label} <span className="muted">({t.count})</span>
           </button>
@@ -1317,13 +1317,13 @@ function LGPIDFInscritosTab({ data }: { data: LGPIDFTournament }) {
         <>
           <td className="lb-club" title={p.club}>{p.club || "—"}</td>
           <td className="lb-hcp">{p.hcp != null ? p.hcp.toFixed(1) : "—"}</td>
-          <td className="lb-tee" style={{ fontSize: 11 }}>{p.category || "—"}</td>
+          <td className="lb-tee" style={{ fontSize: "var(--fs-11)" }}>{p.category || "—"}</td>
         </>
       ),
       postScorecardCells: (
         <td style={{ padding: "6px 8px", textAlign: "center" }}>
-          {p.wildCard && <span className="chip" style={{ background: "var(--accent, #2563eb)", color: "#fff", fontSize: 10 }}>WC</span>}
-          {p.scratch && <span className="chip" style={{ marginLeft: 4, fontSize: 10 }}>SCR</span>}
+          {p.wildCard && <span className="chip" style={{ background: "var(--accent, #2563eb)", color: "#fff", fontSize: "var(--fs-10)" }}>WC</span>}
+          {p.scratch && <span className="chip" style={{ marginLeft: 4, fontSize: "var(--fs-10)" }}>SCR</span>}
           {!p.wildCard && !p.scratch && <span className="muted fs-10">—</span>}
         </td>
       ),
@@ -1446,7 +1446,7 @@ function LGPIDFTeeTimesTab({ data }: { data: LGPIDFTournament }) {
         <>
           <td className="lb-club" title={p.club}>{p.club || "—"}</td>
           <td className="lb-hcp">{p.hcp != null ? p.hcp.toFixed(1) : "—"}</td>
-          <td className="lb-tee" style={{ fontSize: 11 }}>{p.category || "—"}</td>
+          <td className="lb-tee" style={{ fontSize: "var(--fs-11)" }}>{p.category || "—"}</td>
         </>
       ),
       postScorecardCells: (
@@ -1519,7 +1519,7 @@ function LGPIDFCourseMapTab({ data }: { data: LGPIDFTournament }) {
               <ExtLink href={pdf.pdfUrl}>📄 {pdf.pdfFilename}</ExtLink> · {pdf.holes.length} buracos · Total: {total.toLocaleString("pt-PT")} {pdf.holes[0]?.unit || ""}
             </div>
             <div style={{ overflowX: "auto" }}>
-              <table className="data-table" style={{ width: "100%", fontSize: 12, textAlign: "center" }}>
+              <table className="dtable-sm" style={{ textAlign: "center" }}>
                 <thead>
                   <tr>
                     <th>Buraco</th>
@@ -1535,7 +1535,7 @@ function LGPIDFCourseMapTab({ data }: { data: LGPIDFTournament }) {
                   </tr>
                   <tr>
                     <td>Lado</td>
-                    {pdf.holes.map((h) => <td key={h.hole} style={{ fontSize: 10 }}>{h.entrySide.slice(0, 1)}</td>)}
+                    {pdf.holes.map((h) => <td key={h.hole} style={{ fontSize: "var(--fs-10)" }}>{h.entrySide.slice(0, 1)}</td>)}
                     <td>—</td>
                   </tr>
                 </tbody>
@@ -1608,14 +1608,14 @@ function LGPIDFLeaderboardTab({ data }: { data: LGPIDFTournament }) {
           <span style={{ marginRight: 4 }}>{gf("FR")}</span>
           <span className="fw-700">{normalizeName(p.name)}</span>
           {manuel && <> {" "}<ManuelPill /></>}
-          {p.dnf && <span className="chip" style={{ marginLeft: 4, fontSize: 10, background: "var(--bg-muted)" }}>DNF</span>}
+          {p.dnf && <span className="chip" style={{ marginLeft: 4, fontSize: "var(--fs-10)", background: "var(--bg-muted)" }}>DNF</span>}
         </>
       ),
       prefixCells: (
         <>
           <td className="lb-club" title={p.club}>{p.club || "—"}</td>
           <td className="lb-hcp">{p.hcp != null ? p.hcp.toFixed(1) : "—"}</td>
-          <td className="lb-tee" style={{ fontSize: 11 }}>{p.division || "—"}</td>
+          <td className="lb-tee" style={{ fontSize: "var(--fs-11)" }}>{p.division || "—"}</td>
         </>
       ),
       postScorecardCells: (
@@ -2039,25 +2039,25 @@ function FFGContentLegacy() {
                   placeholder="🔍 Pesquisar torneio ou jogador..."
                   value={ffgFilterText}
                   onChange={(e) => setFfgFilterText(e.target.value)}
-                  style={{ padding: "5px 26px 5px 10px", fontSize: 13, width: "100%", boxSizing: "border-box" }}
+                  style={{ padding: "5px 26px 5px 10px", fontSize: "var(--fs-13)", width: "100%", boxSizing: "border-box" }}
                 />
                 {ffgFilterText && (
                   <button
                     onClick={() => setFfgFilterText("")}
-                    style={{ position: "absolute", right: 4, top: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--text-muted)", fontSize: 16 }}
+                    style={{ position: "absolute", right: 4, top: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--text-muted)", fontSize: "var(--fs-16)" }}
                     aria-label="Limpar pesquisa"
                   >×</button>
                 )}
               </div>
-              <select className="input" value={ffgFilterYear} onChange={(e) => setFfgFilterYear(e.target.value)} style={{ padding: "5px 8px", fontSize: 13 }}>
+              <select className="input" value={ffgFilterYear} onChange={(e) => setFfgFilterYear(e.target.value)} style={{ padding: "5px 8px", fontSize: "var(--fs-13)" }}>
                 <option value="all">📅 Todos os anos</option>
                 {ffgYears.map((y) => <option key={y} value={y}>{y} ({ffgResAll.filter((t) => String(t.year) === y).length})</option>)}
               </select>
-              <select className="input" value={ffgFilterType} onChange={(e) => setFfgFilterType(e.target.value)} style={{ padding: "5px 8px", fontSize: 13 }}>
+              <select className="input" value={ffgFilterType} onChange={(e) => setFfgFilterType(e.target.value)} style={{ padding: "5px 8px", fontSize: "var(--fs-13)" }}>
                 <option value="all">🏆 Todos os tipos</option>
                 {ffgTypes.map((t) => <option key={t} value={t}>{TYPE_LABELS[t] || t} ({ffgResAll.filter((x) => x.typeCompetition === t).length})</option>)}
               </select>
-              <select className="input" value={ffgFilterLigue} onChange={(e) => setFfgFilterLigue(e.target.value)} style={{ padding: "5px 8px", fontSize: 13 }}>
+              <select className="input" value={ffgFilterLigue} onChange={(e) => setFfgFilterLigue(e.target.value)} style={{ padding: "5px 8px", fontSize: "var(--fs-13)" }}>
                 <option value="all">🇫🇷 Todas as ligas</option>
                 {ffgLigues.map((l) => <option key={l} value={l}>{LIGUE_LABELS[l] || l} ({ffgResAll.filter((t) => t.ligue === l).length})</option>)}
               </select>
@@ -2068,7 +2068,7 @@ function FFGContentLegacy() {
                 title={ffgFilterIntl ? "A mostrar apenas Internationaux/International. Clica para ver todos." : "Filtrar apenas torneios Internationaux/International"}
                 className="chip"
                 style={{
-                  cursor: "pointer", fontSize: 12, padding: "5px 10px",
+                  cursor: "pointer", fontSize: "var(--fs-12)", padding: "5px 10px",
                   fontWeight: 700, letterSpacing: "0.04em",
                   background: ffgFilterIntl ? "var(--pill-intl-bg)" : "var(--bg-card)",
                   color: ffgFilterIntl ? "var(--pill-regional-bg)" : "var(--text)",
@@ -2085,7 +2085,7 @@ function FFGContentLegacy() {
                 <button
                   onClick={() => { setFfgFilterText(""); setFfgFilterYear("all"); setFfgFilterLigue("all"); setFfgFilterType("all"); setFfgFilterIntl(false); }}
                   className="chip"
-                  style={{ cursor: "pointer", fontSize: 11 }}
+                  style={{ cursor: "pointer", fontSize: "var(--fs-11)" }}
                 >
                   ✕ Limpar
                 </button>
@@ -2109,7 +2109,7 @@ function FFGContentLegacy() {
                   <div className="course-item-meta">
                     {ffgCategories.categories.length} categorias · Millésime → idade → U-age internacional
                   </div>
-                  <div className="course-item-meta" style={{ fontSize: 10 }}>
+                  <div className="course-item-meta" style={{ fontSize: "var(--fs-10)" }}>
                     Vademecum FFG · Cahier des charges
                   </div>
                 </button>
@@ -2136,7 +2136,7 @@ function FFGContentLegacy() {
                       className="sidebar-year-label"
                       style={{
                         padding: "2px 10px",
-                        fontSize: 10,
+                        fontSize: "var(--fs-10)",
                         fontWeight: 700,
                         letterSpacing: "0.05em",
                         color: "#ffffff",
@@ -2169,7 +2169,7 @@ function FFGContentLegacy() {
                           <div className="course-item-name">{entry.name}</div>
                           <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginTop: 4, alignItems: "center" }}>
                             <span className="chip" style={{
-                              fontSize: 9,
+                              fontSize: "var(--fs-9)",
                               background: entry.typeCompetition === "01" ? "var(--color-ffg-dark)" : "var(--color-ffg-mid)",
                               color: "#fff",
                               padding: "1px 6px",
@@ -2183,7 +2183,7 @@ function FFGContentLegacy() {
                               </span>
                             )}
                             <span className="chip" style={{
-                              fontSize: 9,
+                              fontSize: "var(--fs-9)",
                               background: "var(--bg-muted, #e5e7eb)",
                               color: "var(--text-2)",
                               padding: "1px 6px",
@@ -2194,7 +2194,7 @@ function FFGContentLegacy() {
                             <RoundPill nR={tRounds} />
                           </div>
                           {entry.date && (
-                            <div className="course-item-meta" style={{ fontSize: 11, marginTop: 4 }}>📅 {entry.date}</div>
+                            <div className="course-item-meta" style={{ fontSize: "var(--fs-11)", marginTop: 4 }}>📅 {entry.date}</div>
                           )}
                           <div className="course-item-meta">
                             🏆 {entry.totalPlayers} jog · {entry.seriesCount} séries
@@ -2229,7 +2229,7 @@ function FFGContentLegacy() {
                       className="sidebar-year-label"
                       style={{
                         padding: "2px 10px",
-                        fontSize: 10,
+                        fontSize: "var(--fs-10)",
                         fontWeight: 700,
                         letterSpacing: "0.05em",
                         color: "#ffffff",
@@ -2265,7 +2265,7 @@ function FFGContentLegacy() {
                             </div>
                           )}
                           {t.dateStart && (
-                            <div className="course-item-meta" style={{ fontSize: 11 }}>
+                            <div className="course-item-meta" style={{ fontSize: "var(--fs-11)" }}>
                               📅 {(() => {
                                 const [y, m, d] = t.dateStart.split("-");
                                 if (t.dateEnd && t.dateEnd !== t.dateStart) {

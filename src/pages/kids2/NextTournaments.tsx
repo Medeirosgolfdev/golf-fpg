@@ -1,4 +1,4 @@
-/**
+﻿/**
  * kids2/NextTournaments.tsx
  *
  * /kids2/next-t - Field Rivais Dashboard.
@@ -58,7 +58,7 @@ function NextTournamentsContent() {
         <div style={{ padding: "16px 20px" }}>
           <LoadingState />
           {progress && (
-            <div style={{ fontSize: 12, color: "var(--text-3)", textAlign: "center", marginTop: 8 }}>
+            <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", textAlign: "center", marginTop: 8 }}>
               A carregar rivais... {progress.done}/{progress.total}
             </div>
           )}
@@ -80,13 +80,13 @@ function NextTournamentsContent() {
       }}>
         <h1 style={{
           margin: 0,
-          fontSize: 18,
+          fontSize: "var(--fs-18)",
           fontWeight: 600,
           color: "var(--text)",
         }}>
           Próximos torneios
         </h1>
-        <span style={{ fontSize: 12, color: "var(--text-3)" }}>
+        <span style={{ fontSize: "var(--fs-12)", color: "var(--text-3)" }}>
           {autoRivals.length.toLocaleString("pt-PT")} rivais analisados
         </span>
       </div>

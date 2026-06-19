@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+﻿import React, { useMemo, useState } from "react";
 import { abreviarNome, escalaoAtDate } from "../utils/format";
 import { EscPill } from "./PillBadge";
 import type { Player, Tournament, GrupoEntry } from "../data/fpgTypes";
@@ -181,7 +181,7 @@ export default function ClubesCategoriasView({ tournament, grupos, playersDB, ca
     });
   }, [grupos, categories, byFed, rdCols, playersDB, tournDate, parTotal, playedRounds, sortCol, sortDir]);
 
-  const tdC: React.CSSProperties = { padding: "5px 6px", fontSize: 12, textAlign: "center", borderBottom: "1px solid var(--border)", verticalAlign: "middle" };
+  const tdC: React.CSSProperties = { padding: "5px 6px", fontSize: "var(--fs-12)", textAlign: "center", borderBottom: "1px solid var(--border)", verticalAlign: "middle" };
   const tdL: React.CSSProperties = { ...tdC, textAlign: "left" };
 
   function Hdr({ label, col, left }: { label: string; col: SortCol; left?: boolean }) {
@@ -189,7 +189,7 @@ export default function ClubesCategoriasView({ tournament, grupos, playersDB, ca
     return (
       <th onClick={() => toggleSort(col)} style={{
         ...tdC, textAlign: left ? "left" : "center", paddingLeft: left ? 10 : 6,
-        cursor: "pointer", userSelect: "none", fontWeight: 700, fontSize: 10,
+        cursor: "pointer", userSelect: "none", fontWeight: 700, fontSize: "var(--fs-10)",
         color: active ? SINGLE_COLOR : "var(--text-muted)", background: "var(--bg-muted)",
         textTransform: "uppercase", letterSpacing: "0.04em",
       }}>
@@ -206,7 +206,7 @@ export default function ClubesCategoriasView({ tournament, grupos, playersDB, ca
         <div style={{ lineHeight: 1.15 }}>
           <div>{s}</div>
           {tp != null && (
-            <div style={{ fontSize: 9, lineHeight: 1, opacity: counts ? 0.85 : 0.6, color: counts ? SINGLE_COLOR : "var(--text-muted)" }}>
+            <div style={{ fontSize: "var(--fs-9)", lineHeight: 1, opacity: counts ? 0.85 : 0.6, color: counts ? SINGLE_COLOR : "var(--text-muted)" }}>
               ({fmtTP(tp)})
             </div>
           )}
@@ -217,7 +217,7 @@ export default function ClubesCategoriasView({ tournament, grupos, playersDB, ca
 
   return (
     <div style={{ padding: "12px 16px 24px" }}>
-      <div className="mb-10" style={{ fontSize: 13, color: "var(--text-muted)" }}>
+      <div className="mb-10" style={{ fontSize: "var(--fs-13)", color: "var(--text-muted)" }}>
         {intro ?? (
           <>
             Por categoria dentro de cada clube —{" "}
@@ -242,7 +242,7 @@ export default function ClubesCategoriasView({ tournament, grupos, playersDB, ca
               {/* Header do clube — SEM total combinado (cada escalão é um
                   campeonato à parte; a posição vive em cada sub-grupo). */}
               <div style={{ background: SINGLE_COLOR, color: "#fff", padding: "8px 12px", display: "flex", alignItems: "center", gap: 10 }}>
-                <div className="shrink-0 fw-900" style={{ width: 30, height: 30, background: "rgba(255,255,255,0.18)", borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>
+                <div className="shrink-0 fw-900" style={{ width: 30, height: 30, background: "rgba(255,255,255,0.18)", borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "var(--fs-16)" }}>
                   {g.grupo}
                 </div>
                 <div className="flex-1 fw-700 fs-13" style={{ minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
@@ -260,7 +260,7 @@ export default function ClubesCategoriasView({ tournament, grupos, playersDB, ca
                     <div style={{
                       background: isChamp ? "var(--accent-light, #eef6ef)" : "var(--bg-hover)",
                       padding: "4px 10px",
-                      fontSize: 11, fontWeight: 700, color: "var(--text-2)",
+                      fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-2)",
                       display: "flex", justifyContent: "space-between", alignItems: "center",
                       borderTop: idx === 0 ? "none" : "1px solid var(--border)",
                       borderBottom: "1px solid var(--border)",
@@ -311,7 +311,7 @@ export default function ClubesCategoriasView({ tournament, grupos, playersDB, ca
                       </tbody>
                       <tfoot>
                         <tr style={{ background: "var(--accent-light, #eef6ef)" }}>
-                          <td colSpan={2} style={{ ...tdL, paddingLeft: 10, fontWeight: 700, fontSize: 10, textTransform: "uppercase", color: "var(--text-2)" }}>
+                          <td colSpan={2} style={{ ...tdL, paddingLeft: 10, fontWeight: 700, fontSize: "var(--fs-10)", textTransform: "uppercase", color: "var(--text-2)" }}>
                             {cfg.label} ({rosterMode ? rows.length : cfg.bestN})
                           </td>
                           {rdCols.map((_, ri) => <td key={ri} style={{ ...tdC, fontWeight: 700 }}>{rdTotals[ri] ?? "–"}</td>)}
@@ -319,7 +319,7 @@ export default function ClubesCategoriasView({ tournament, grupos, playersDB, ca
                             <td style={{ ...tdC, fontWeight: 900 }}>
                               <div style={{ lineHeight: 1.15 }}>
                                 <div>{catTotal ?? "–"}</div>
-                                {catTP != null && <div style={{ fontSize: 9, lineHeight: 1, opacity: 0.7 }}>({fmtTP(catTP)})</div>}
+                                {catTP != null && <div style={{ fontSize: "var(--fs-9)", lineHeight: 1, opacity: 0.7 }}>({fmtTP(catTP)})</div>}
                               </div>
                             </td>
                           )}

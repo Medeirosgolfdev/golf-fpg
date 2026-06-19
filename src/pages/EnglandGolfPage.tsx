@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EnglandGolfPage.tsx -- England Golf Tournament Results
  *
  * Duplicacao da BJGTPage adaptada para England Golf (GolfGenius).
@@ -554,12 +554,12 @@ function EnglandContentLegacy() {
                   // Year header
                   const yearHeader = (
                     <div key={`year-${series}-${year}`} style={{
-                      backgroundColor: "#1e3a5f",
+                      backgroundColor: "var(--color-navy)",
                       color: "#fff",
                       padding: "12px 8px",
                       marginBottom: 8,
                       fontWeight: 600,
-                      fontSize: 14,
+                      fontSize: "var(--fs-14)",
                       borderRadius: "4px"
                     }}>
                       {year}
@@ -643,7 +643,7 @@ function EnglandContentLegacy() {
                     type="button"
                     onClick={() => setSelectedDivision(null)}
                     className={"tab-under" + (!selectedDivision ? " active" : "")}
-                    style={{ fontSize: 13 }}
+                    style={{ fontSize: "var(--fs-13)" }}
                   >
                     Todos ({cur.data.players.length})
                   </button>
@@ -656,7 +656,7 @@ function EnglandContentLegacy() {
                         type="button"
                         onClick={() => setSelectedDivision(div)}
                         className={"tab-under" + (active ? " active" : "")}
-                        style={{ fontSize: 13 }}
+                        style={{ fontSize: "var(--fs-13)" }}
                       >
                         {div} <span className="fs-10 muted" style={{ marginLeft: 4 }}>({count})</span>
                       </button>
@@ -782,10 +782,10 @@ function buildEnglandEntries(urls: UrlEntry[], all: (TDef | null)[]): CircuitEnt
 const ENGLAND_CONFIG: CircuitConfig = {
   routeBase: "/england",
   title: "England Golf",
-  color: "#1e3a5f",
+  color: "var(--color-navy)",
   textColor: "#fff",
   grouping: "year",
-  sourceColors: { england: "#1e3a5f" },
+  sourceColors: { england: "var(--color-navy)" },
   sourceLabels: { england: "England Golf" },
   filters: { search: true, year: true, escalao: true, sex: true, toggles: ["manuel", "pt", "top10", "veteranos"] },
   veteranoThreshold: 3,

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * JogadoresPorAnoPage.tsx — Listagem evolutiva de jogadores por ANO DE NASCIMENTO
  *
  * Página de utilidade (NÃO está na NavBar — acede-se por URL directo
@@ -97,7 +97,7 @@ function Kpi({ label, value, sub, title }: { label: string; value: React.ReactNo
   return (
     <div className="card" title={title} style={{ margin: 0, padding: "8px 10px", textAlign: "center", minWidth: 86 }}>
       <div className="muted fs-10">{label}</div>
-      <div className="fw-900" style={{ fontSize: 18, lineHeight: 1.1 }}>{value}</div>
+      <div className="fw-900" style={{ fontSize: "var(--fs-18)", lineHeight: 1.1 }}>{value}</div>
       {sub && <div className="muted fs-10">{sub}</div>}
     </div>
   );
@@ -312,7 +312,7 @@ export default function JogadoresPorAnoPage() {
     const m = metricsOf(rows);
     return (
       <span style={{ display: "inline-flex", alignItems: "center", gap: 6, marginLeft: "auto", flexWrap: "wrap" }}>
-        <Kpi label="Sexo" value={<span style={{ display: "inline-flex", gap: 4, fontSize: 14, alignItems: "center" }}><SexBadge sex="M" />{m.nM} <SexBadge sex="F" />{m.nF}</span>} />
+        <Kpi label="Sexo" value={<span style={{ display: "inline-flex", gap: 4, fontSize: "var(--fs-14)", alignItems: "center" }}><SexBadge sex="M" />{m.nM} <SexBadge sex="F" />{m.nF}</span>} />
         <Kpi label="HCP médio" value={m.avgHcp == null ? "—" : m.avgHcp.toFixed(1)} />
         <Kpi label="Melhor HCP" value={m.bestHcp == null ? "—" : m.bestHcp.toFixed(1)} />
         <Kpi label="Rondas 12m" value={m.avgR12 == null ? "—" : m.avgR12.toFixed(1)} sub="média" />
@@ -559,7 +559,7 @@ export default function JogadoresPorAnoPage() {
       {effectiveCombine && cohorts.length > 0 && (
         <div className="card" style={{ margin: "12px 0", padding: 0 }}>
           <div style={{ padding: "10px 12px", display: "flex", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
-            <span className="fw-900" style={{ fontSize: 16 }}>
+            <span className="fw-900" style={{ fontSize: "var(--fs-16)" }}>
               {(() => {
                 const ys = cohorts.map(c => c.year).sort((a, b) => a - b);
                 return ys.length === 1 ? `${ys[0]}` : `${ys[0]}–${ys[ys.length - 1]} (${ys.length} anos)`;
@@ -576,7 +576,7 @@ export default function JogadoresPorAnoPage() {
       {!effectiveCombine && cohorts.map(({ year, rows }) => (
         <details key={year} open className="card" style={{ margin: "12px 0", padding: 0 }}>
           <summary style={{ cursor: "pointer", listStyle: "none", padding: "10px 12px", display: "flex", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
-            <span className="fw-900" style={{ fontSize: 18 }}>{year}</span>
+            <span className="fw-900" style={{ fontSize: "var(--fs-18)" }}>{year}</span>
             <span className="muted fs-10">≈ {CURRENT_YEAR - year} anos</span>
             <Counter>{rows.length} jog.</Counter>
             <KpiRow rows={rows} />

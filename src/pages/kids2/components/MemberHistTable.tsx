@@ -100,14 +100,14 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
   return (
     <section style={{ marginBottom: 4 }}>
       <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", margin: "8px 0 10px", gap: 8 }}>
-        <h3 style={{ margin: 0, fontSize: 14, fontWeight: 700, color: "var(--text)" }}>
+        <h3 style={{ margin: 0, fontSize: "var(--fs-14)", fontWeight: 700, color: "var(--text)" }}>
           📊 Histórico USKids
         </h3>
-        <div style={{ display: "flex", gap: 6, alignItems: "center", fontSize: 11, color: "var(--text-3)" }}>
+        <div style={{ display: "flex", gap: 6, alignItems: "center", fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
           <span>{rows.length} {rows.length === 1 ? "torneio" : "torneios"}</span>
           {memberId && (
             <span style={{
-              fontFamily: "ui-monospace, monospace", fontSize: 10,
+              fontFamily: "ui-monospace, monospace", fontSize: "var(--fs-10)",
               padding: "1px 5px", borderRadius: 3,
               background: "var(--bg-muted)", border: "1px solid var(--border-light)",
             }} title="USKids memberId actual">
@@ -119,7 +119,7 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
             const note = typeof h === "string" ? null : h.note;
             return (
               <span key={i} title={note || "Legacy USKids memberId"} style={{
-                fontFamily: "ui-monospace, monospace", fontSize: 10,
+                fontFamily: "ui-monospace, monospace", fontSize: "var(--fs-10)",
                 padding: "1px 5px", borderRadius: 3,
                 background: "var(--bg)", border: "1px dashed var(--border)",
                 color: "var(--text-3)",
@@ -132,49 +132,49 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
       </div>
 
       <div style={{ overflowX: "auto" }}>
-        <table style={{ width: "100%", fontSize: 11, borderCollapse: "collapse", fontVariantNumeric: "tabular-nums" }}>
+        <table className="dtable-sm">
           <thead>
-            <tr style={{ color: "var(--text-3)", fontSize: 10, textTransform: "uppercase", letterSpacing: 0.3, borderBottom: "1px solid var(--border)" }}>
-              <SortableHdr k="date"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={thStyle}>Data</SortableHdr>
-              <SortableHdr k="name"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={thStyle}>Torneio</SortableHdr>
-              <SortableHdr k="flight" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 80 }}>Escalão</SortableHdr>
-              <SortableHdr k="pos"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 50, textAlign: "center" }}>Pos</SortableHdr>
-              <SortableHdr k="total"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 60, textAlign: "right" }}>Total</SortableHdr>
-              <SortableHdr k="toPar"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 50, textAlign: "right" }}>±par</SortableHdr>
-              <th style={{ ...thStyle, width: 100, textAlign: "right" }}>Rondas</th>
-              <th style={{ ...thStyle, width: 50, textAlign: "right" }}>↗</th>
+            <tr>
+              <SortableHdr k="date"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Data</SortableHdr>
+              <SortableHdr k="name"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Torneio</SortableHdr>
+              <SortableHdr k="flight" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: 80 }}>Escalão</SortableHdr>
+              <SortableHdr k="pos"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: 50, textAlign: "center" }}>Pos</SortableHdr>
+              <SortableHdr k="total"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: 60, textAlign: "right" }}>Total</SortableHdr>
+              <SortableHdr k="toPar"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: 50, textAlign: "right" }}>±par</SortableHdr>
+              <th style={{ width: 100, textAlign: "right" }}>Rondas</th>
+              <th style={{ width: 50, textAlign: "right" }}>↗</th>
             </tr>
           </thead>
           <tbody>
             {sortedRows.map((r) => {
               const links = categorizeTournamentLinks(r.tournament);
               return (
-              <tr key={r.tid} style={{ borderBottom: "1px solid var(--border-light)" }}>
-                <td style={{ ...tdStyle, color: "var(--text-3)" }}>{fmtDate(r.date)}</td>
-                <td style={{ ...tdStyle, fontWeight: 600 }}>{r.name}</td>
-                <td style={{ ...tdStyle, color: "var(--text-3)" }}>{r.flight}</td>
-                <td style={{ ...tdStyle, textAlign: "center", fontWeight: 700,
+              <tr key={r.tid}>
+                <td style={{ color: "var(--text-3)" }}>{fmtDate(r.date)}</td>
+                <td style={{ fontWeight: 600 }}>{r.name}</td>
+                <td style={{ color: "var(--text-3)" }}>{r.flight}</td>
+                <td style={{ textAlign: "center", fontWeight: 700,
                   color: r.pos != null && r.pos <= 3 ? "var(--medal-gold-strong)" : "var(--text-2)" }}>
                   {r.pos != null ? `#${r.pos}` : "—"}
                 </td>
-                <td style={{ ...tdStyle, textAlign: "right" }}>{r.total != null ? r.total : "—"}</td>
-                <td style={{ ...tdStyle, textAlign: "right", fontWeight: r.toPar != null && r.toPar !== 0 ? 700 : 400,
+                <td style={{ textAlign: "right" }}>{r.total != null ? r.total : "—"}</td>
+                <td style={{ textAlign: "right", fontWeight: r.toPar != null && r.toPar !== 0 ? 700 : 400,
                   color: r.toPar == null ? "var(--text-3)"
                     : r.toPar < 0 ? "var(--medal-gold-strong)"
                     : r.toPar > 0 ? "var(--color-danger-dark)"
                     : "var(--text-2)" }}>
                   {r.toPar == null ? "—" : r.toPar === 0 ? "E" : r.toPar > 0 ? `+${r.toPar}` : String(r.toPar)}
                 </td>
-                <td style={{ ...tdStyle, textAlign: "right", color: "var(--text-3)" }}>
+                <td style={{ textAlign: "right", color: "var(--text-3)" }}>
                   {r.rounds.length > 0 ? r.rounds.map((g) => g ?? "—").join(" · ") : "—"}
                 </td>
-                <td style={{ ...tdStyle, textAlign: "right" }}>
+                <td style={{ textAlign: "right" }}>
                   {links.length > 0 ? (
                     <a href={links[0].url} target="_blank" rel="noreferrer"
                       title={`Abrir em ${links[0].label}`}
                       style={{
                         color: `var(${links[0].colorVar})`,
-                        textDecoration: "none", fontWeight: 700, fontSize: 12,
+                        textDecoration: "none", fontWeight: 700, fontSize: "var(--fs-12)",
                       }}
                     >↗</a>
                   ) : <span style={{ color: "var(--text-3)" }}>—</span>}
@@ -189,8 +189,6 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
   );
 }
 
-const thStyle: CSSProperties = { padding: "5px 6px", fontWeight: 600, textAlign: "left" };
-const tdStyle: CSSProperties = { padding: "4px 6px", fontSize: 11 };
 
 function fmtDate(iso: string): string {
   if (!iso) return "—";

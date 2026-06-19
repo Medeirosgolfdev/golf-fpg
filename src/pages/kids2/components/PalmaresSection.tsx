@@ -1,4 +1,4 @@
-/**
+﻿/**
  * kids2/components/PalmaresSection.tsx
  *
  * Catálogo completo de vitórias do junior em formato de cards dourados, ordenado
@@ -65,10 +65,10 @@ export default function PalmaresSection({ data, junior, filterTids }: Props) {
   return (
     <section style={{ marginBottom: 4 }}>
       <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", margin: "8px 0 10px", gap: 8 }}>
-        <h3 style={{ margin: 0, fontSize: 14, fontWeight: 700, color: "var(--text)" }}>
+        <h3 style={{ margin: 0, fontSize: "var(--fs-14)", fontWeight: 700, color: "var(--text)" }}>
           🏆 Palmarès
         </h3>
-        <span style={{ fontSize: 11, color: "var(--text-3)" }}>
+        <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
           {showAll
             ? `${allWins.length} vitórias`
             : `${visible.length} de ${allWins.length} vitórias · recentes + ★★★+`}
@@ -91,7 +91,7 @@ export default function PalmaresSection({ data, junior, filterTids }: Props) {
           style={{
             marginTop: 10, padding: "6px 14px",
             background: "var(--bg-muted)", border: "1px solid var(--border-light)",
-            borderRadius: 6, fontSize: 12, fontWeight: 600,
+            borderRadius: 6, fontSize: "var(--fs-12)", fontWeight: 600,
             color: "var(--text-2)", cursor: "pointer",
             width: "100%",
           }}
@@ -105,7 +105,7 @@ export default function PalmaresSection({ data, junior, filterTids }: Props) {
           style={{
             marginTop: 10, padding: "6px 14px",
             background: "var(--bg)", border: "1px solid var(--border-light)",
-            borderRadius: 6, fontSize: 11, fontWeight: 600,
+            borderRadius: 6, fontSize: "var(--fs-11)", fontWeight: 600,
             color: "var(--text-3)", cursor: "pointer",
             width: "100%",
           }}
@@ -138,22 +138,22 @@ function WinCard({ win }: { win: WinCard }) {
       minHeight: 90,
     }}>
       <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 6 }}>
-        <span style={{ fontSize: 16, lineHeight: 1 }}>🏆</span>
+        <span style={{ fontSize: "var(--fs-16)", lineHeight: 1 }}>🏆</span>
         <span title={`${win.stars}/5 estrelas de prestígio`} style={{
-          fontSize: 10, letterSpacing: 0.3, color: "var(--medal-gold-strong)", flexShrink: 0, fontWeight: 600,
+          fontSize: "var(--fs-10)", letterSpacing: 0.3, color: "var(--medal-gold-strong)", flexShrink: 0, fontWeight: 600,
         }}>
           {formatStars(win.stars)}
         </span>
       </div>
       <div style={{ flex: 1 }}>
-        <div style={{ fontSize: 13, fontWeight: 700, color: "var(--text)", lineHeight: 1.25 }}>
+        <div style={{ fontSize: "var(--fs-13)", fontWeight: 700, color: "var(--text)", lineHeight: 1.25 }}>
           {t.name || t.shortName || win.tid}
         </div>
-        <div style={{ fontSize: 10, color: "var(--text-3)", marginTop: 3 }}>
+        <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 3 }}>
           {monthLabel ? `${monthLabel} ${year}` : year} · {win.flight.label}
         </div>
       </div>
-      <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11, flexWrap: "wrap" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: "var(--fs-11)", flexWrap: "wrap" }}>
         {win.toPar != null && (
           <span style={{
             fontWeight: 700,
@@ -164,7 +164,7 @@ function WinCard({ win }: { win: WinCard }) {
         )}
         {win.manuelToPar != null && (
           <span title="±par do Manuel neste torneio" style={{
-            fontSize: 9, padding: "1px 5px", borderRadius: 3, fontWeight: 700,
+            fontSize: "var(--fs-9)", padding: "1px 5px", borderRadius: 3, fontWeight: 700,
             background: "var(--bg-success-subtle, #ecfdf5)", color: "var(--color-good-dark)",
             border: "1px solid var(--color-good-dark)",
           }}>
@@ -174,7 +174,7 @@ function WinCard({ win }: { win: WinCard }) {
         {url && (
           <a href={url} target="_blank" rel="noreferrer" style={{
             marginLeft: "auto", color: "var(--text-3)", textDecoration: "none",
-            fontSize: 12, fontWeight: 600,
+            fontSize: "var(--fs-12)", fontWeight: 600,
           }} title="Abrir resultados">↗</a>
         )}
       </div>

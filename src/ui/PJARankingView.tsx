@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+﻿import React, { useMemo, useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useSort } from "../hooks/useSort";
 import { escPillCls, type EscLookup } from "../utils/playerUtils";
@@ -771,7 +771,7 @@ export function PJARankingView({
         componente é usado standalone (sem externalFilterName). */}
     {externalFilterName === undefined && (
       <div className="shrink-0" style={{ position: "relative" }}>
-        <span style={{ position: "absolute", left: 7, top: "50%", transform: "translateY(-50%)", fontSize: 11, color: "var(--text-muted)", pointerEvents: "none" }}>🔍</span>
+        <span style={{ position: "absolute", left: 7, top: "50%", transform: "translateY(-50%)", fontSize: "var(--fs-11)", color: "var(--text-muted)", pointerEvents: "none" }}>🔍</span>
         <input type="text" placeholder="Nome ou clube…" value={internalFilterName}
           onChange={e => setFilterName(e.target.value)}
           className="input-search" style={{ width: 140 }} />
@@ -822,7 +822,7 @@ export function PJARankingView({
                 // Tipografia uniforme: mesma font-size e font-weight nas 3 linhas.
                 // Só a cor distingue hierarquia (título mais escuro; local+data mais muted).
                 const lineStyle: React.CSSProperties = {
-                  fontSize: 10,
+                  fontSize: "var(--fs-10)",
                   fontWeight: 600,
                   lineHeight: 1.2,
                   whiteSpace: "normal",
@@ -851,7 +851,7 @@ export function PJARankingView({
                         <RoundPill nR={tc.totalRondas ?? tc.rounds.length} />
                         {tc.totalRondas && tc.totalRondas > tc.rounds.length && (
                           <span title={`Só ${tc.rounds.length} rondas contam para o ranking PJA (regulamento §2.5 — últimos 2 dias)`}
-                                style={{ marginLeft: 3, fontSize: 9, fontWeight: 700, color: "var(--color-warn-dark)" }}>
+                                style={{ marginLeft: 3, fontSize: "var(--fs-9)", fontWeight: 700, color: "var(--color-warn-dark)" }}>
                             {tc.rounds.length}/{tc.totalRondas} contam
                           </span>
                         )}
@@ -878,7 +878,7 @@ export function PJARankingView({
                   {tc.rounds.map(r => (
                     <React.Fragment key={r.roundKey}>
                       <CSortTh k={"toPar_" + r.roundKey} s={sortKey} d={sortDir} on={handleSort} className="cs-t-topar cs-grp">
-                        {r.label ? <span style={{ fontSize: 10, fontWeight: 800, color: "var(--color-good-dark)" }}>{r.label}</span> : "±Par"}
+                        {r.label ? <span style={{ fontSize: "var(--fs-10)", fontWeight: 800, color: "var(--color-good-dark)" }}>{r.label}</span> : "±Par"}
                       </CSortTh>
                       <CSortTh k={"pts_" + r.roundKey} s={sortKey} d={sortDir} on={handleSort} className="cs-t-gross cs-col" style={{ color: "var(--color-warn-dark)", fontWeight: 700 }}>Pts</CSortTh>
                     </React.Fragment>
@@ -969,7 +969,7 @@ export function PJARankingView({
               {sortedNaoInscritos.length} jogador{sortedNaoInscritos.length === 1 ? "" : "es"} · pontuou em eventos PJA mas não está inscrito, não conta para o ranking
             </span>
           </div>
-          <table className="cs-table" style={{ fontSize: 12 }}>
+          <table className="cs-table" style={{ fontSize: "var(--fs-12)" }}>
             <thead>
               <tr>
                 <th style={{ padding: "6px 8px", textAlign: "left" }}>#</th>

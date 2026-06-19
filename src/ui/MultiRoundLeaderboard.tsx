@@ -1,4 +1,4 @@
-// @refresh reset
+﻿// @refresh reset
 import { MultiRoundRow, PlayerFilter, EMPTY_FILTER, ExtraColumn } from "./multiRoundTypes";
 import { fmtHcp, medal } from "../utils/format";
 import { flag as flagOf, normCountry } from "../utils/flagUtils";
@@ -129,9 +129,9 @@ function PlayerFilterBar({ rows, filter, onChange, total, playersDB }: {
       <div className="search-wrap">
         <span className="search-icon-abs">🔍</span>
         <input type="text" placeholder="Nome ou clube…" value={filter.name} onChange={e => onChange({ ...filter, name:e.target.value })}
-          style={{ fontSize:11, padding:"3px 8px 3px 22px", borderRadius:6, border:"1px solid var(--border)", background:"var(--bg-card,#fff)", color:"var(--text)", width:140, outline:"none" }} />
+          style={{ fontSize: "var(--fs-11)", padding:"3px 8px 3px 22px", borderRadius:6, border:"1px solid var(--border)", background:"var(--bg-card,#fff)", color:"var(--text)", width:140, outline:"none" }} />
       </div>
-      {hasOpts && <span style={{ color:"var(--border)", fontSize:11 }}>|</span>}
+      {hasOpts && <span style={{ color:"var(--border)", fontSize: "var(--fs-11)" }}>|</span>}
       {availEsc.length > 1 && availEsc.map(e => { const k = e.toLowerCase().replace(/[\s-]/g,""); const s = ESC_STYLE[k]; return <FilterChip key={e} active={filter.escs.includes(e)} onClick={() => onChange({ ...filter, escs:toggleArr(filter.escs,e) })} color={s?.bg}>{e}</FilterChip>; })}
       {availTees.length > 1 && availTees.map(t => { const hex = getTeeHex(t); return (
         <FilterChip key={t} active={filter.tees.includes(t)} onClick={() => onChange({ ...filter, tees:toggleArr(filter.tees,t) })} color={hex}>
@@ -140,7 +140,7 @@ function PlayerFilterBar({ rows, filter, onChange, total, playersDB }: {
           </span>
         </FilterChip>
       ); })}
-      {availClubs.length > 2 && <select value={filter.club} onChange={e => onChange({ ...filter, club:e.target.value })} style={{ fontSize:11, padding:"3px 6px", borderRadius:6, border:`1px solid ${filter.club?"var(--accent)":"var(--border)"}`, background:"var(--bg-card,#fff)", color:"var(--text)", cursor:"pointer", fontWeight:filter.club?700:400 }}><option value="">Todos os clubes</option>{availClubs.map(c => <option key={c} value={c}>{c}</option>)}</select>}
+      {availClubs.length > 2 && <select value={filter.club} onChange={e => onChange({ ...filter, club:e.target.value })} style={{ fontSize: "var(--fs-11)", padding:"3px 6px", borderRadius:6, border:`1px solid ${filter.club?"var(--accent)":"var(--border)"}`, background:"var(--bg-card,#fff)", color:"var(--text)", cursor:"pointer", fontWeight:filter.club?700:400 }}><option value="">Todos os clubes</option>{availClubs.map(c => <option key={c} value={c}>{c}</option>)}</select>}
       {availSex.length === 2 && (
         <>
           <FilterChip active={filter.sex === "M"} onClick={() => onChange({ ...filter, sex: filter.sex === "M" ? "" : "M" })} color="var(--badge-male, #2563eb)">M</FilterChip>
@@ -149,14 +149,14 @@ function PlayerFilterBar({ rows, filter, onChange, total, playersDB }: {
       )}
       {availYears.length > 1 && (
         <>
-          <span style={{ color: "var(--border)", fontSize: 11 }}>|</span>
-          <span style={{ fontSize: 10, color: "var(--text-muted)", fontWeight: 600 }}>Nasc.</span>
+          <span style={{ color: "var(--border)", fontSize: "var(--fs-11)" }}>|</span>
+          <span style={{ fontSize: "var(--fs-10)", color: "var(--text-muted)", fontWeight: 600 }}>Nasc.</span>
           {availYears.map(y => (
             <FilterChip key={y} active={selYears.includes(y)} onClick={() => onChange({ ...filter, birthYears: toggleArr(selYears, y) })}>{y}</FilterChip>
           ))}
         </>
       )}
-      {isActive && <><span style={{ fontSize:10, color:"var(--text-muted)", marginLeft:2 }}>{filtered.length} de {total}</span><button onClick={() => onChange(EMPTY_FILTER)} className="filter-clear-btn" style={{ fontSize:10, color:"var(--text-muted)" }}>✕ limpar</button></>}
+      {isActive && <><span style={{ fontSize: "var(--fs-10)", color:"var(--text-muted)", marginLeft:2 }}>{filtered.length} de {total}</span><button onClick={() => onChange(EMPTY_FILTER)} className="filter-clear-btn" style={{ fontSize: "var(--fs-10)", color:"var(--text-muted)" }}>✕ limpar</button></>}
     </div>
   );
 }

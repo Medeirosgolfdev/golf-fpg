@@ -1,4 +1,4 @@
-/**
+﻿/**
  * DataSources.tsx — componentes partilhados para diagnóstico de ficheiros de dados.
  *
  * - `formatSourceLabel(path)`  → abreviatura legível ("pull001", "clubes2024")
@@ -189,7 +189,7 @@ export function FileBadge({
         onContextMenu={onContext}
         style={{
           // Mesmo tamanho/cor do "data" e "N jog" ao lado — aparência mínima, sem pill
-          fontSize: 10,
+          fontSize: "var(--fs-10)",
           fontWeight: 500,
           fontFamily: "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
           color: "var(--text-muted)",
@@ -233,7 +233,7 @@ function FilePopover({
     position: "fixed",
     left: Math.min(anchorPos.x, window.innerWidth - 340),
     top: Math.min(anchorPos.y, window.innerHeight - 320),
-    zIndex: 9999,
+    zIndex: "var(--z-modal)",
     width: 340,
     maxHeight: 320,
     overflow: "auto",
@@ -242,7 +242,7 @@ function FilePopover({
     borderRadius: 6,
     boxShadow: "0 6px 20px rgba(0,0,0,0.25)",
     padding: "6px 0",
-    fontSize: 11,
+    fontSize: "var(--fs-11)",
   };
   return (
     <div style={style} onClick={(e) => e.stopPropagation()}>
@@ -370,7 +370,7 @@ export function DataSourcesChip({
         📂 {sources.length} {label}
         {errors > 0 && <span style={{ color: "var(--color-warn-dark)", fontWeight: 700 }}>⚠ {errors}</span>}
         {loading > 0 && <span className="c-muted">…</span>}
-        <span className="c-muted" style={{ fontSize: 9 }}>{open ? "▲" : "▼"}</span>
+        <span className="c-muted" style={{ fontSize: "var(--fs-9)" }}>{open ? "▲" : "▼"}</span>
       </button>
       {open && anchorRect && (
         <DataSourcesPanel
@@ -420,7 +420,7 @@ function DataSourcesPanel({
     position: "fixed",
     top,
     left,
-    zIndex: 10000,
+    zIndex: "var(--z-topmost)",
     width: PANEL_WIDTH,
     maxHeight,
     overflow: "auto",
@@ -481,12 +481,12 @@ function SourceRow({ source }: { source: DataSource }) {
       borderBottom: "1px solid var(--border-light)",
       background: isError ? "var(--bg-warn-subtle)" : undefined,
     }}>
-      <span style={{ color: statusColor, fontSize: 13, flexShrink: 0, lineHeight: 1.4 }} title={source.status}>
+      <span style={{ color: statusColor, fontSize: "var(--fs-13)", flexShrink: 0, lineHeight: 1.4 }} title={source.status}>
         {statusIcon}
       </span>
       <span style={{ flex: 1, minWidth: 0 }}>
         <div style={{
-          fontSize: 11,
+          fontSize: "var(--fs-11)",
           fontFamily: "ui-monospace, monospace",
           wordBreak: "break-all",
           color: isError ? "var(--color-warn-dark)" : undefined,
@@ -494,7 +494,7 @@ function SourceRow({ source }: { source: DataSource }) {
         }}>
           {source.path}
         </div>
-        <div className="c-muted" style={{ fontSize: 10, marginTop: 1, display: "flex", gap: 8, flexWrap: "wrap" }}>
+        <div className="c-muted" style={{ fontSize: "var(--fs-10)", marginTop: 1, display: "flex", gap: 8, flexWrap: "wrap" }}>
           {source.count != null && (
             <span>{source.count} {source.count === 1 ? "registo" : "registos"}</span>
           )}
@@ -506,7 +506,7 @@ function SourceRow({ source }: { source: DataSource }) {
           <div style={{
             marginTop: 3,
             padding: "3px 6px",
-            fontSize: 10,
+            fontSize: "var(--fs-10)",
             fontFamily: "ui-monospace, monospace",
             color: "var(--color-warn-dark)",
             background: "var(--bg-card)",

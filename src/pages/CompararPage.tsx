@@ -138,9 +138,9 @@ function PlayerSearch({ players, slots, onAdd, onRemove }: {
         <div style={{ position: "relative", flex: 1 }}>
           <input className="input" value={q} onChange={e => { setQ(e.target.value); setOpen(true); }} onFocus={() => q.trim() && setOpen(true)}
             placeholder="Pesquisar jogador…" disabled={slots.length >= 4}
-            style={{ width: "100%", fontSize: 14, padding: "10px 14px" }} />
+            style={{ width: "100%", fontSize: "var(--fs-14)", padding: "10px 14px" }} />
           {open && results.length > 0 && (
-            <div style={{ position: "absolute", top: "100%", left: 0, right: 0, zIndex: 50, background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: "var(--radius)", boxShadow: "var(--shadow-lg)", maxHeight: 280, overflowY: "auto" }}>
+            <div style={{ position: "absolute", top: "100%", left: 0, right: 0, zIndex: "var(--z-dropdown)", background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: "var(--radius)", boxShadow: "var(--shadow-lg)", maxHeight: 280, overflowY: "auto" }}>
               {results.map(p => (
                 <button key={p.fed} className="course-item" onClick={() => { onAdd(p.fed); setQ(""); setOpen(false); }}>
                   <div className="course-item-name">{p.name}</div>
@@ -150,20 +150,20 @@ function PlayerSearch({ players, slots, onAdd, onRemove }: {
             </div>
           )}
         </div>
-        <span className="chip" style={{ fontSize: 13, padding: "6px 12px" }}>{slots.length}/4</span>
+        <span className="chip" style={{ fontSize: "var(--fs-13)", padding: "6px 12px" }}>{slots.length}/4</span>
       </div>
       {slots.length > 0 && (
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
           {slots.map((s, i) => (
             <span key={s.fed} className="jog-pill" style={{
               borderColor: COLORS[i], background: COLORS_LIGHT[i],
-              display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 14px", fontSize: 13, borderRadius: 20,
+              display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 14px", fontSize: "var(--fs-13)", borderRadius: 20,
             }}>
               <span style={{ width: 10, height: 10, borderRadius: "50%", background: COLORS[i], flexShrink: 0 }} />
               <b>{shortName(s.player.name)}</b>
-              <span className="muted" style={{ fontSize: 11 }}>HCP {hcpDisplay(s.player.hcp)}</span>
-              {s.loading && <span style={{ fontSize: 11 }}>⏳</span>}
-              <button onClick={() => onRemove(s.fed)} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--text-3)", padding: "0 2px", fontSize: 15, lineHeight: 1 }} title="Remover">✕</button>
+              <span className="muted" style={{ fontSize: "var(--fs-11)" }}>HCP {hcpDisplay(s.player.hcp)}</span>
+              {s.loading && <span style={{ fontSize: "var(--fs-11)" }}>⏳</span>}
+              <button onClick={() => onRemove(s.fed)} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--text-3)", padding: "0 2px", fontSize: "var(--fs-15)", lineHeight: 1 }} title="Remover">✕</button>
             </span>
           ))}
         </div>
@@ -292,8 +292,8 @@ function StatsTable({ slots, allAgg, stats }: { slots: Slot[]; allAgg: (AggStats
   return (
     <div className="courseAnalysis" style={{ padding: 0, overflow: "hidden" }}>
       <div className="caTitle" style={{ padding: "14px 16px 0" }}>Comparação Detalhada</div>
-      <div className="pa-table-wrap" style={{ marginTop: 8 }}>
-        <table className="pa-table" style={{ fontSize: 13 }}>
+      <div style={{ marginTop: 8 }}>
+        <table className="dtable">
           <thead>
             <tr>
               <th style={{ minWidth: 140 }}>Métrica</th>
@@ -307,7 +307,7 @@ function StatsTable({ slots, allAgg, stats }: { slots: Slot[]; allAgg: (AggStats
           <tbody>
             {rows.map((r, ri) => (
               <tr key={ri}>
-                <td style={{ fontWeight: 600, fontSize: 12 }}>
+                <td style={{ fontWeight: 600, fontSize: "var(--fs-12)" }}>
                   <span style={{ marginRight: 6 }}>{r.emoji}</span>{r.label}
                 </td>
                 {loaded.map((x, ci) => {
@@ -361,7 +361,7 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
           return (
             <div key={cat.key}>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                <span style={{ fontSize: 12, width: 75, fontWeight: 600, color: "var(--text-2)" }}>
+                <span style={{ fontSize: "var(--fs-12)", width: 75, fontWeight: 600, color: "var(--text-2)" }}>
                   {cat.emoji} {cat.label}
                 </span>
               </div>
@@ -372,16 +372,16 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
                   const barW = Math.max(2, (v / maxVal) * 100);
                   return (
                     <div key={x.i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                      <span style={{ fontSize: 11, width: 60, textAlign: "right", color: COLORS[x.i], fontWeight: 600, flexShrink: 0 }}>
+                      <span style={{ fontSize: "var(--fs-11)", width: 60, textAlign: "right", color: COLORS[x.i], fontWeight: 600, flexShrink: 0 }}>
                         {firstName(x.s.player.name)}
                       </span>
-                      <div style={{ flex: 1, background: "#f0f2ec", borderRadius: 4, height: 18, overflow: "hidden" }}>
+                      <div style={{ flex: 1, background: "var(--bg-subtle)", borderRadius: 4, height: 18, overflow: "hidden" }}>
                         <div style={{
                           width: `${barW}%`, height: "100%", background: COLORS[x.i],
                           borderRadius: 4, opacity: 0.75,
                         }} />
                       </div>
-                      <span style={{ fontSize: 11, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, width: 46, textAlign: "right", color: "var(--text-2)" }}>
+                      <span style={{ fontSize: "var(--fs-11)", fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, width: 46, textAlign: "right", color: "var(--text-2)" }}>
                         {v.toFixed(1)}%
                       </span>
                     </div>
@@ -482,8 +482,8 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
         })}
       </div>
 
-      <div className="pa-table-wrap" style={{ marginTop: 8 }}>
-        <table className="pa-table">
+      <div style={{ marginTop: 8 }}>
+        <table className="dtable">
           <thead><tr>
             <th className="r">H</th><th className="r">Par</th>
             {loaded.map((s, i) => (<React.Fragment key={s.fed}>
@@ -566,7 +566,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
           return (
             <div key={i} style={{
               width: `${w}%`, background: COLORS[i], display: "flex", alignItems: "center", justifyContent: "center",
-              color: "#fff", fontWeight: 800, fontSize: 12, fontFamily: "'JetBrains Mono', monospace",
+              color: "#fff", fontWeight: 800, fontSize: "var(--fs-12)", fontFamily: "'JetBrains Mono', monospace",
             }}>
               {wins[i] > 0 && `${firstName(s.player.name)} ${wins[i]}`}
             </div>
@@ -575,8 +575,8 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
         {loaded.length === 2 && totalMatches - wins[0] - wins[1] > 0 && (
           <div style={{
             width: `${(totalMatches - wins[0] - wins[1]) / totalMatches * 100}%`,
-            background: "#e2e8f0", display: "flex", alignItems: "center", justifyContent: "center",
-            color: "#64748b", fontWeight: 700, fontSize: 12,
+            background: "var(--bg-muted)", display: "flex", alignItems: "center", justifyContent: "center",
+            color: "var(--text-muted)", fontWeight: 700, fontSize: "var(--fs-12)",
           }}>
             {totalMatches - wins[0] - wins[1]}
           </div>
@@ -598,8 +598,8 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
         )}
       </div>
 
-      <div className="pa-table-wrap" style={{ maxHeight: 340, overflowY: "auto" }}>
-        <table className="pa-table">
+      <div style={{ maxHeight: 340, overflowY: "auto" }}>
+        <table className="dtable">
           <thead><tr>
             <th>Data</th><th>Torneio</th>
             {loaded.map((s, i) => <th key={i} className="r" style={{ color: COLORS[i] }}>{firstName(s.player.name)}</th>)}
@@ -657,7 +657,7 @@ function HcpEvolutionSection({ slots }: { slots: Slot[] }) {
           <option value={0}>Total</option><option value={36}>3 anos</option><option value={24}>2 anos</option><option value={12}>1 ano</option><option value={6}>6 meses</option>
         </select>
       </div>
-      <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", maxHeight: 280, background: "#fafafa", borderRadius: 8, border: "1px solid var(--border-light)" }}>
+      <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", maxHeight: 280, background: "var(--bg-subtle)", borderRadius: 8, border: "1px solid var(--border-light)" }}>
         {Array.from({ length: 5 }, (_, i) => { const val = minH - padH + (rangeH + 2 * padH) * (i / 4); return (<g key={i}><line x1={PAD.left} y1={yPos(val)} x2={W - PAD.right} y2={yPos(val)} stroke="#e2e8f0" strokeWidth={0.5} /><text x={PAD.left - 4} y={yPos(val) + 3} textAnchor="end" fontSize={9} fill="#94a3b8">{val.toFixed(1)}</text></g>); })}
         {series.map((s, si) => { if (s.pts.length < 2) return null; const d = s.pts.map(pt => `${xPos(pt.d).toFixed(1)},${yPos(pt.h).toFixed(1)}`).join(" L "); return (<g key={si}><path d={`M ${d}`} fill="none" stroke={s.color} strokeWidth={2} opacity={0.8} strokeLinejoin="round" />{s.pts.map((pt, j) => (<circle key={j} cx={xPos(pt.d)} cy={yPos(pt.h)} r={2.5} fill={s.color} opacity={0.5}><title>{s.name}: HCP {pt.h} ({new Date(pt.d).toLocaleDateString("pt-PT")})</title></circle>))}</g>); })}
       </svg>
@@ -671,7 +671,7 @@ function HcpEvolutionSection({ slots }: { slots: Slot[] }) {
               <div className="caKpiVal" style={{ color: s.color }}>{last != null ? last.toFixed(1) : "–"}</div>
               <div className="caKpiLbl">{shortName(s.name)}</div>
               {delta != null && (
-                <div style={{ fontSize: 10, fontWeight: 700, marginTop: 2, color: delta < 0 ? "var(--color-good)" : delta > 0 ? "var(--color-danger)" : "var(--text-3)" }}>
+                <div style={{ fontSize: "var(--fs-10)", fontWeight: 700, marginTop: 2, color: delta < 0 ? "var(--color-good)" : delta > 0 ? "var(--color-danger)" : "var(--text-3)" }}>
                   {delta > 0 ? "+" : ""}{delta.toFixed(1)} no período
                 </div>
               )}
@@ -710,15 +710,15 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
       {slots.length === 0 && (
         <div className="holeAnalysis" style={{ textAlign: "center", padding: "40px 20px" }}>
           <div style={{ fontSize: 40, marginBottom: 12 }}>⚔️</div>
-          <div className="haTitle" style={{ textAlign: "center", fontSize: 16, marginBottom: 6 }}>Comparar Jogadores</div>
-          <div className="muted" style={{ fontSize: 13, lineHeight: 1.6 }}>
+          <div className="haTitle" style={{ textAlign: "center", fontSize: "var(--fs-16)", marginBottom: 6 }}>Comparar Jogadores</div>
+          <div className="muted" style={{ fontSize: "var(--fs-13)", lineHeight: 1.6 }}>
             Pesquisa e adiciona até 4 jogadores para comparar lado a lado.
           </div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center", marginTop: 16 }}>
             {["Perfil radar", "Tabela detalhada", "Distribuição de scores", "Buraco a buraco", "Head-to-head", "Evolução HCP"].map(label => (
               <span key={label} style={{
-                padding: "4px 12px", borderRadius: 12, background: "#f0f2ec",
-                fontSize: 11, fontWeight: 600, color: "var(--text-2)",
+                padding: "4px 12px", borderRadius: 12, background: "var(--bg-subtle)",
+                fontSize: "var(--fs-11)", fontWeight: 600, color: "var(--text-2)",
               }}>{label}</span>
             ))}
           </div>
@@ -740,7 +740,7 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
 
       {slots.length === 1 && !anyLoading && (
         <div className="holeAnalysis" style={{ textAlign: "center", padding: 24 }}>
-          <div style={{ fontSize: 24, marginBottom: 8 }}>👆</div>
+          <div style={{ fontSize: "var(--fs-24)", marginBottom: 8 }}>👆</div>
           <div className="muted">Adiciona mais jogadores para ver a comparação</div>
         </div>
       )}

@@ -1,4 +1,4 @@
-// @refresh reset
+﻿// @refresh reset
 /**
  * TorneiosAnalisePage.tsx — Análise Genérica de Torneios
  *
@@ -1540,7 +1540,7 @@ function Content() {
                 etc. O valor é partilhado (searchQuery). */}
             <div style={{ flexShrink: 0, position: "relative", display: "inline-flex", alignItems: "center" }}>
               <span aria-hidden="true" style={{
-                position: "absolute", left: 8, fontSize: 11, color: "var(--text-muted)", pointerEvents: "none",
+                position: "absolute", left: 8, fontSize: "var(--fs-11)", color: "var(--text-muted)", pointerEvents: "none",
               }}>🔎</span>
               <input
                 type="search"
@@ -1553,7 +1553,7 @@ function Content() {
                 }
                 aria-label="Pesquisar"
                 style={{
-                  fontSize: 12,
+                  fontSize: "var(--fs-12)",
                   padding: "4px 22px 4px 24px",
                   width: 200,
                   border: "1px solid var(--border)",
@@ -1571,7 +1571,7 @@ function Content() {
                   style={{
                     position: "absolute", right: 2,
                     background: "none", border: "none", cursor: "pointer",
-                    color: "var(--text-muted)", fontSize: 14, padding: "0 4px",
+                    color: "var(--text-muted)", fontSize: "var(--fs-14)", padding: "0 4px",
                     lineHeight: 1,
                   }}
                 >×</button>
@@ -1884,7 +1884,7 @@ function Content() {
             {/* Tabs Individual / Grupos */}
             <div style={{
               display: "flex", borderBottom: "1px solid var(--border)",
-              background: "var(--bg-card,#fff)", position: "sticky", top: 0, zIndex: 10,
+              background: "var(--bg-card,#fff)", position: "sticky", top: 0, zIndex: "var(--z-panel-hdr)",
             }}>
               {(["grupos", "individual"] as const).map(v => {
                 const label = v === "grupos" ? "🏅 Grupos" : "📋 Individual";
@@ -1909,7 +1909,7 @@ function Content() {
               <div className="flex-wrap" style={{
                 display: "flex", alignItems: "center", gap: 8,
                 padding: "8px 16px", borderBottom: "1px solid var(--border)",
-                background: "var(--bg-muted,#f7f7f7)", fontSize: 12,
+                background: "var(--bg-muted,#f7f7f7)", fontSize: "var(--fs-12)",
               }}>
                 <span className="fw-600" style={{ color: "var(--text-muted)" }}>FPG:</span>
                 <TournExtLinks
@@ -1959,9 +1959,9 @@ function Content() {
                       <div className="flex-wrap" style={{
                         display: "flex", alignItems: "center", gap: 8,
                         padding: "10px 16px", borderBottom: "1px solid var(--border)",
-                        background: "var(--accent-light, #eef6ef)", fontSize: 12, color: "var(--text-2)",
+                        background: "var(--accent-light, #eef6ef)", fontSize: "var(--fs-12)", color: "var(--text-2)",
                       }}>
-                        <span style={{ fontSize: 16 }}>🆚</span>
+                        <span style={{ fontSize: "var(--fs-16)" }}>🆚</span>
                         <span><strong>Match Play — classificação por pontos.</strong> {fmt.note}. A classificação por equipa surge quando houver resultados; vê o <strong>Draw</strong> para os emparelhamentos 3-way.</span>
                       </div>
                     );
@@ -1984,7 +1984,7 @@ function Content() {
                     }
                     return (
                       <div className="fs-13 c-muted" style={{ padding: "32px 24px", textAlign: "center" }}>
-                        <div className="mb-12" style={{ fontSize: 32 }}>🆚</div>
+                        <div className="mb-12" style={{ fontSize: "var(--fs-32)" }}>🆚</div>
                         <div className="fw-600 mb-6">Match Play — classificação por pontos</div>
                         <div className="fs-12">{fmt.note}<br/>A classificação por equipa (pontos) será apresentada quando os resultados forem publicados.<br/>Vê o tab <strong>Individual</strong> e o <strong>Draw</strong> para os emparelhamentos 3-way.</div>
                       </div>
@@ -2013,7 +2013,7 @@ function Content() {
                   }
                   return (
                     <div className="fs-13 c-muted" style={{ padding: "32px 24px", textAlign: "center" }}>
-                      <div className="mb-12" style={{ fontSize: 32 }}>📋</div>
+                      <div className="mb-12" style={{ fontSize: "var(--fs-32)" }}>📋</div>
                       <div className="fw-600 mb-6">Vista de grupos não disponível para {curClubesYear}</div>
                       <div className="fs-12">Os dados de composição de grupos desta edição não estão carregados.<br/>Use o tab <strong>Individual</strong> para ver os resultados.</div>
                     </div>

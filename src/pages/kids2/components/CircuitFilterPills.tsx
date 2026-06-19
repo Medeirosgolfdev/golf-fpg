@@ -1,4 +1,4 @@
-/**
+﻿/**
  * kids2/components/CircuitFilterPills.tsx
  *
  * Pills "FILTRAR POR CIRCUITO" para o painel direito do PlayerProfile.
@@ -84,7 +84,7 @@ export default function CircuitFilterPills({ data, junior, active, onChange }: P
       borderRadius: 6,
       marginBottom: 10,
     }}>
-      <div style={{ fontSize: 10, fontWeight: 700, color: "var(--text-3)", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 6 }}>
+      <div style={{ fontSize: "var(--fs-10)", fontWeight: 700, color: "var(--text-3)", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 6 }}>
         Filtrar por circuito
       </div>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
@@ -103,7 +103,7 @@ export default function CircuitFilterPills({ data, junior, active, onChange }: P
 
 function pillStyle(active: boolean): React.CSSProperties {
   return {
-    fontSize: 11, fontWeight: 600,
+    fontSize: "var(--fs-11)", fontWeight: 600,
     padding: "3px 9px", borderRadius: 999,
     border: `1px solid ${active ? "var(--text)" : "var(--border)"}`,
     background: active ? "var(--text)" : "var(--bg)",

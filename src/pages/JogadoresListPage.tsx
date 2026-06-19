@@ -1,4 +1,4 @@
-/**
+﻿/**
  * JogadoresListPage.tsx
  *
  * Landing page de /jogadores — tabela tipo FPG FederatedsList_V2 com
@@ -469,10 +469,10 @@ export default function JogadoresListPage() {
           {sorted.length.toLocaleString("pt-PT")} de {rows.length.toLocaleString("pt-PT")}
         </ToolbarMeta>
         <ToolbarSep />
-        <button onClick={resetFilters} className="btn-pill" style={{ fontSize: 12 }}>
+        <button onClick={resetFilters} className="btn-pill" style={{ fontSize: "var(--fs-12)" }}>
           Limpar filtros
         </button>
-        <span style={{ marginLeft: "auto", fontSize: 11, color: "var(--text-muted)" }}>
+        <span style={{ marginLeft: "auto", fontSize: "var(--fs-11)", color: "var(--text-muted)" }}>
           <a
             href={FPG_LIST_URL}
             target="_blank"
@@ -585,7 +585,7 @@ export default function JogadoresListPage() {
       </div>
 
       {/* ── Filtros avançados ────────────────────────────────── */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 8, padding: "4px 8px 12px", fontSize: 12 }}>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 8, padding: "4px 8px 12px", fontSize: "var(--fs-12)" }}>
         <ToggleChip checked={activosAnoOnly} onChange={setActivosAnoOnly} label="🗓 Só com rondas este ano" />
         <ToggleChip checked={jovensOnly} onChange={setJovensOnly} label="🧒 Só Jovens (Sub-X)" />
         <ToggleChip checked={comSDOnly} onChange={setComSDOnly} label="📊 Só com SD calculado" />
@@ -602,7 +602,7 @@ export default function JogadoresListPage() {
       ) : (
         <>
           <div style={{ overflowX: "auto" }}>
-            <table className="player-list-table" style={{ width: "100%", fontSize: 12 }}>
+            <table className="player-list-table" style={{ width: "100%", fontSize: "var(--fs-12)" }}>
               <thead>
                 <tr>
                   <SortableHdr k="nfed" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Nº Fed</SortableHdr>
@@ -662,7 +662,7 @@ export default function JogadoresListPage() {
                         >⚠</span>
                       )}
                     </td>
-                    <td title={r.countryName} style={{ fontSize: 14 }}>
+                    <td title={r.countryName} style={{ fontSize: "var(--fs-14)" }}>
                       {r.countryName && r.countryName !== "Portugal" ? gf(r.countryName) : ""}
                     </td>
                     <td title={r.clubLong}>{r.clubShort}{r.clubCode ? ` (${r.clubCode})` : ""}</td>
@@ -697,7 +697,7 @@ export default function JogadoresListPage() {
 
           {/* Paginação */}
           {totalPages > 1 && (
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 8, padding: "12px 0", fontSize: 12 }}>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 8, padding: "12px 0", fontSize: "var(--fs-12)" }}>
               <button onClick={() => setPage(1)} disabled={page === 1} className="btn-pill">«</button>
               <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} className="btn-pill">‹</button>
               <span style={{ minWidth: 80, textAlign: "center" }}>
@@ -711,7 +711,7 @@ export default function JogadoresListPage() {
       )}
 
       {/* Footer com link FPG */}
-      <div style={{ marginTop: 16, fontSize: 11, color: "var(--text-muted)", textAlign: "center" }}>
+      <div style={{ marginTop: 16, fontSize: "var(--fs-11)", color: "var(--text-muted)", textAlign: "center" }}>
         Fonte: <code>federados.json</code> (~{rows.length.toLocaleString("pt-PT")} federados) ·{" "}
         <a href={FPG_LIST_URL} target="_blank" rel="noopener noreferrer" style={{ color: "var(--chart-2)" }}>
           Tabela oficial FPG (handicaps.asp) ↗
@@ -744,7 +744,7 @@ function ToggleChip({ checked, onChange, label }: {
         background: checked ? "var(--accent)" : "var(--bg-card)",
         color: checked ? "#fff" : "var(--text)",
         borderColor: checked ? "var(--accent)" : "var(--border)",
-        fontSize: 12,
+        fontSize: "var(--fs-12)",
       }}
     >
       {label}

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * InscricoesComponents.tsx — Componentes de Inscrições do Campeonato Nacional
  *
  * Extraído de FPGPage.tsx para melhorar organização modular.
@@ -460,7 +460,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
       {/* ── Alerta inscrições/desinscrições últimas 48h ── */}
       {(recentes48h.length > 0 || removidos48h.length > 0) && (
         <div style={{ display: "flex", flexWrap: "wrap", gap: 8, padding: "6px 12px",
-          background: "var(--bg-muted)", borderRadius: 6, margin: "4px 0 6px", fontSize: 12 }}>
+          background: "var(--bg-muted)", borderRadius: 6, margin: "4px 0 6px", fontSize: "var(--fs-12)" }}>
           {recentes48h.length > 0 && (
             <span style={{ color: "var(--color-good)" }}>
               <span className="fw-700">+{recentes48h.length} inscrito{recentes48h.length > 1 ? "s" : ""} (48h):</span>{" "}

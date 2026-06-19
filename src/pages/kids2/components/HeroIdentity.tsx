@@ -1,4 +1,4 @@
-/**
+﻿/**
  * kids2/components/HeroIdentity.tsx
  *
  * Hero da ficha — bandeira grande + nome em destaque + variantes + tier badge
@@ -122,7 +122,7 @@ export default function HeroIdentity({ data, junior }: Props) {
               <span style={{
                 background: "var(--bg-success-subtle)",
                 color: "var(--color-good-dark)",
-                fontSize: 11,
+                fontSize: "var(--fs-11)",
                 padding: "3px 9px",
                 borderRadius: 999,
                 fontWeight: 700,
@@ -138,7 +138,7 @@ export default function HeroIdentity({ data, junior }: Props) {
                 <span style={{
                   background: c.bg,
                   color: c.fg,
-                  fontSize: 12,
+                  fontSize: "var(--fs-12)",
                   padding: "3px 10px",
                   borderRadius: 999,
                   fontWeight: 700,
@@ -151,13 +151,13 @@ export default function HeroIdentity({ data, junior }: Props) {
             })()}
           </div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 8, fontSize: 13, color: "var(--text-2)", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 8, fontSize: "var(--fs-13)", color: "var(--text-2)", flexWrap: "wrap" }}>
             <span>📍 {country || "—"}</span>
             {junior.nationality && junior.country && junior.nationality !== junior.country && (
               <>
                 <span style={{ opacity: 0.4 }}>·</span>
                 <span title="Nacionalidade distinta do país onde reside/joga" style={{
-                  fontSize: 11, padding: "2px 8px", borderRadius: 999,
+                  fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: 999,
                   background: "var(--bg-muted)", color: "var(--text-2)", fontWeight: 600,
                   border: "1px solid var(--border-light)",
                 }}>
@@ -176,7 +176,7 @@ export default function HeroIdentity({ data, junior }: Props) {
               <>
                 <span style={{ opacity: 0.4 }}>·</span>
                 <span style={{
-                  fontSize: 11,
+                  fontSize: "var(--fs-11)",
                   padding: "2px 8px",
                   borderRadius: 999,
                   background: "var(--bg-muted)",
@@ -192,7 +192,7 @@ export default function HeroIdentity({ data, junior }: Props) {
           {mainClub && (
             <div style={{ marginTop: 10, display: "inline-flex", alignItems: "center", gap: 6 }}>
               <span style={{
-                fontSize: 13,
+                fontSize: "var(--fs-13)",
                 padding: "5px 11px",
                 borderRadius: 6,
                 background: "var(--bg-muted)",
@@ -202,7 +202,7 @@ export default function HeroIdentity({ data, junior }: Props) {
               }}>
                 🏌️ {mainClub}
                 {mainClubSource && (
-                  <span style={{ marginLeft: 6, fontSize: 10, color: "var(--text-3)", fontWeight: 500 }}>
+                  <span style={{ marginLeft: 6, fontSize: "var(--fs-10)", color: "var(--text-3)", fontWeight: 500 }}>
                     · {mainClubSource}
                   </span>
                 )}
@@ -216,10 +216,10 @@ export default function HeroIdentity({ data, junior }: Props) {
               padding: "6px 10px",
               background: "var(--bg-muted)",
               borderRadius: 6,
-              fontSize: 12,
+              fontSize: "var(--fs-12)",
               color: "var(--text-2)",
             }}>
-              <span style={{ fontSize: 10, fontWeight: 700, color: "var(--text-3)", letterSpacing: 0.4, textTransform: "uppercase", marginRight: 6 }}>
+              <span style={{ fontSize: "var(--fs-10)", fontWeight: 700, color: "var(--text-3)", letterSpacing: 0.4, textTransform: "uppercase", marginRight: 6 }}>
                 Também conhecido como
               </span>
               {variants.map((v, i) => (
@@ -241,28 +241,28 @@ export default function HeroIdentity({ data, junior }: Props) {
 
           {wins.length > 0 && (
             <div style={{ marginTop: 10, display: "flex", flexWrap: "wrap", gap: 5, alignItems: "center" }}>
-              <span style={{ fontSize: 10, fontWeight: 700, color: "var(--text-3)", letterSpacing: 0.4, textTransform: "uppercase", marginRight: 4 }}>
+              <span style={{ fontSize: "var(--fs-10)", fontWeight: 700, color: "var(--text-3)", letterSpacing: 0.4, textTransform: "uppercase", marginRight: 4 }}>
                 🏆 Palmarès
               </span>
               {topWins.map((w, i) => (
                 <span key={i} title={`${w.fmtDate} · ${w.flightLabel}${w.parts ? " · " + w.parts : ""}`} style={{
                   // Discreto: sem fundo, só border subtil + estrela dourada pequena.
-                  fontSize: 11, padding: "2px 8px", borderRadius: 999,
+                  fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: 999,
                   background: "var(--bg)",
                   border: "1px solid var(--border-light)",
                   color: "var(--text-2)", fontWeight: 500,
                   display: "inline-flex", alignItems: "center", gap: 4,
                   whiteSpace: "nowrap",
                 }}>
-                  <span style={{ color: "var(--medal-gold-strong)", letterSpacing: 0.2, fontSize: 10 }}>
+                  <span style={{ color: "var(--medal-gold-strong)", letterSpacing: 0.2, fontSize: "var(--fs-10)" }}>
                     {"★".repeat(w.stars)}
                   </span>
                   <span>{w.shortName}</span>
-                  <span style={{ opacity: 0.55, fontSize: 10 }}>· {w.year}</span>
+                  <span style={{ opacity: 0.55, fontSize: "var(--fs-10)" }}>· {w.year}</span>
                 </span>
               ))}
               {hiddenWinsCount > 0 && (
-                <span style={{ fontSize: 10, color: "var(--text-3)", fontWeight: 500 }}>
+                <span style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", fontWeight: 500 }}>
                   +{hiddenWinsCount} {hiddenWinsCount === 1 ? "vitória" : "vitórias"}
                 </span>
               )}
@@ -323,7 +323,7 @@ export default function HeroIdentity({ data, junior }: Props) {
           {hcps.map((h, i) => (
             <span key={i} style={{
               background: "var(--bg-muted)",
-              fontSize: 11, padding: "3px 9px", borderRadius: 999,
+              fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: 999,
               fontWeight: 600, color: "var(--text-2)",
               border: "1px solid var(--border-light)",
               display: "inline-flex", alignItems: "center", gap: 4,
@@ -337,7 +337,7 @@ export default function HeroIdentity({ data, junior }: Props) {
           {hcps.length === 0 && junior.hcpHistory && junior.hcpHistory.length >= 2 && (
             <span style={{
               background: "var(--bg-muted)",
-              fontSize: 11, padding: "3px 9px", borderRadius: 999,
+              fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: 999,
               fontWeight: 600, color: "var(--text-2)",
               border: "1px solid var(--border-light)",
               display: "inline-flex", alignItems: "center", gap: 4,
@@ -349,7 +349,7 @@ export default function HeroIdentity({ data, junior }: Props) {
           {totalRounds > 0 && (
             <span title="Total de rondas jogadas em todas as fontes (inclui 9H)" style={{
               background: "var(--bg-muted)",
-              fontSize: 11, padding: "3px 9px", borderRadius: 999,
+              fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: 999,
               fontWeight: 600, color: "var(--text-2)",
               border: "1px solid var(--border-light)",
             }}>
@@ -392,7 +392,7 @@ function FedCard({ label, value, subtitle, historical, historicalLabel, linkTo }
   const inner = (
     <>
       <div style={{
-        fontSize: 11,
+        fontSize: "var(--fs-11)",
         color: empty ? "var(--text-3)" : "var(--accent, var(--color-info-dark))",
         fontWeight: 800,
         letterSpacing: 0.6,
@@ -402,10 +402,10 @@ function FedCard({ label, value, subtitle, historical, historicalLabel, linkTo }
         gap: 5,
       }}>
         <span>{label}</span>
-        {flag && <span style={{ fontSize: 12, lineHeight: 1, opacity: empty ? 0.5 : 1 }} title={`Federação: ${label}`}>{flag}</span>}
+        {flag && <span style={{ fontSize: "var(--fs-12)", lineHeight: 1, opacity: empty ? 0.5 : 1 }} title={`Federação: ${label}`}>{flag}</span>}
       </div>
       <div style={{
-        fontSize: 15,
+        fontSize: "var(--fs-15)",
         fontWeight: 700,
         marginTop: 3,
         color: empty ? "var(--text-3)" : "var(--text)",
@@ -416,16 +416,16 @@ function FedCard({ label, value, subtitle, historical, historicalLabel, linkTo }
       }}>
         <span>{value || "sem registo"}</span>
         {isClickable && (
-          <span style={{ fontSize: 10, color: "var(--color-info-dark, var(--color-navy))", fontWeight: 600 }} title="Abrir ficha do jogador">↗</span>
+          <span style={{ fontSize: "var(--fs-10)", color: "var(--color-info-dark, var(--color-navy))", fontWeight: 600 }} title="Abrir ficha do jogador">↗</span>
         )}
       </div>
       {subtitle && (
-        <div style={{ fontSize: 11, color: "var(--text-2)", marginTop: 2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+        <div style={{ fontSize: "var(--fs-11)", color: "var(--text-2)", marginTop: 2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
           {subtitle}
         </div>
       )}
       {historical && historical.length > 0 && historicalLabel && (
-        <div style={{ fontSize: 10, color: "var(--text-3)", marginTop: 4, fontStyle: "italic" }}>
+        <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 4, fontStyle: "italic" }}>
           {historical.map((h, i) => (
             <div key={i}>{historicalLabel(h)}</div>
           ))}
@@ -467,7 +467,7 @@ function EscPill({ label, accent, strong }: { label: string; accent?: boolean; s
       <span style={{
         background: "var(--color-info-dark, var(--color-navy))",
         color: "var(--bg)",
-        fontSize: 12, padding: "3px 11px", borderRadius: 999,
+        fontSize: "var(--fs-12)", padding: "3px 11px", borderRadius: 999,
         fontWeight: 700,
         letterSpacing: 0.3,
       }}>{label}</span>
@@ -477,7 +477,7 @@ function EscPill({ label, accent, strong }: { label: string; accent?: boolean; s
     <span style={{
       background: "var(--bg-info-subtle, var(--bg-info))",
       color: "var(--color-info-dark, var(--color-navy))",
-      fontSize: 11, padding: "3px 9px", borderRadius: 999,
+      fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: 999,
       fontWeight: 600,
       border: "1px solid var(--color-info-dark, var(--color-navy))",
     }}>{label}</span>
@@ -526,14 +526,14 @@ function DobPill({ info, isManuel }: { info: DobInfo; isManuel: boolean }) {
   return (
     <span title={title} style={{
       ...styles[info.state],
-      fontSize: 11, padding: "2px 9px", borderRadius: 999,
+      fontSize: "var(--fs-11)", padding: "2px 9px", borderRadius: 999,
       fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 5,
     }}>
       🎂 {info.dobLabel}
       <span style={{ opacity: 0.7 }}>·</span>
       <span style={{ fontWeight: 700 }}>{info.ageLabel}</span>
       {info.nextBdayDays != null && info.nextBdayDays <= 30 && info.nextAge != null && (
-        <span style={{ marginLeft: 4, fontSize: 10, opacity: 0.85 }}>
+        <span style={{ marginLeft: 4, fontSize: "var(--fs-10)", opacity: 0.85 }}>
           🎉 {info.nextAge} em {info.nextBdayDays}d
         </span>
       )}
@@ -546,7 +546,7 @@ function RankPill({ label, value }: { label: string; value: number | string }) {
     <span style={{
       background: "var(--bg-warn-subtle, var(--bg-warn))",
       color: "var(--color-warn-dark, var(--color-warn-dark))",
-      fontSize: 11, padding: "3px 9px", borderRadius: 6,
+      fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: 6,
       fontWeight: 700,
       border: "1px solid var(--color-warn-dark, var(--color-warn-dark))",
     }}>

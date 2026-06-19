@@ -1,4 +1,4 @@
-/**
+﻿/**
  * kids2/components/InlineScorecard.tsx
  *
  * Mesmo conteúdo do ScorecardModal mas SEM overlay/popup — pensado para
@@ -115,8 +115,8 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
     }}>
       <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 10, gap: 12 }}>
         <div>
-          <div style={{ fontSize: 13, fontWeight: 700, color: "var(--text)" }}>{playerName}</div>
-          <div style={{ fontSize: 11, color: "var(--text-3)", marginTop: 2 }}>
+          <div style={{ fontSize: "var(--fs-13)", fontWeight: 700, color: "var(--text)" }}>{playerName}</div>
+          <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", marginTop: 2 }}>
             {tournament.name || tournament.shortName} · {flight.label}
             {roundRows.length > 1 ? ` · ${roundRows.length} rondas` : ` · Ronda ${focusedRound}`}
             {tournament.course && <> · <span style={{ fontStyle: "italic" }}>{tournament.course}</span></>}
@@ -126,7 +126,7 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
           <button
             onClick={onClose}
             style={{
-              fontSize: 14, fontWeight: 700,
+              fontSize: "var(--fs-14)", fontWeight: 700,
               padding: "2px 9px",
               borderRadius: 5,
               border: "1px solid var(--border)",
@@ -143,16 +143,16 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
       {totalGross > 0 && totalPar > 0 && totalToPar !== null && (
         <div style={{ display: "flex", gap: 14, alignItems: "baseline", marginBottom: 10, padding: "6px 10px", background: "var(--bg)", borderRadius: 5, border: "1px solid var(--border-light)" }}>
           <div>
-            <span style={{ fontSize: 10, color: "var(--text-3)", letterSpacing: 0.3, textTransform: "uppercase" }}>Total</span>
-            <span style={{ fontSize: 20, fontWeight: 800, marginLeft: 6, color: "var(--text)", fontVariantNumeric: "tabular-nums" }}>{totalGross}</span>
+            <span style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", letterSpacing: 0.3, textTransform: "uppercase" }}>Total</span>
+            <span style={{ fontSize: "var(--fs-20)", fontWeight: 800, marginLeft: 6, color: "var(--text)", fontVariantNumeric: "tabular-nums" }}>{totalGross}</span>
           </div>
           <div>
-            <span style={{ fontSize: 10, color: "var(--text-3)", letterSpacing: 0.3, textTransform: "uppercase" }}>±par</span>
-            <span className={`sc-topar ${toParClass(totalToPar)}`} style={{ fontSize: 14, fontWeight: 700, marginLeft: 6, display: "inline" }}>
+            <span style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", letterSpacing: 0.3, textTransform: "uppercase" }}>±par</span>
+            <span className={`sc-topar ${toParClass(totalToPar)}`} style={{ fontSize: "var(--fs-14)", fontWeight: 700, marginLeft: 6, display: "inline" }}>
               {fmtSign(totalToPar)}
             </span>
           </div>
-          <div style={{ marginLeft: "auto", fontSize: 10, color: "var(--text-3)" }}>
+          <div style={{ marginLeft: "auto", fontSize: "var(--fs-10)", color: "var(--text-3)" }}>
             Par {totalPar}{totalM > 0 && ` · ${totalM}m`}{is9 && " · 9 buracos"}
           </div>
         </div>
@@ -238,7 +238,7 @@ export default function InlineScorecard({ tournament, flight, result, focusedRou
         <div style={{
           marginTop: 8,
           padding: "5px 8px",
-          fontSize: 10,
+          fontSize: "var(--fs-10)",
           color: "var(--text-3)",
           fontStyle: "italic",
           borderTop: "1px dashed var(--border-light)",

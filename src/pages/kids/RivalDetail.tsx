@@ -1,4 +1,4 @@
-/**
+﻿/**
  * kids/RivalDetail.tsx — Painel de detalhe do rival selecionado
  * (extraído de KIDSPage.tsx — 1158 linhas)
  */
@@ -634,7 +634,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
               )}
               {/* Scoring tier badge (se não há playerType) */}
               {!playerType && tierBadge && (
-                <span style={{ fontSize: 12, fontWeight: 800, padding: "3px 10px", borderRadius: 20,
+                <span style={{ fontSize: "var(--fs-12)", fontWeight: 800, padding: "3px 10px", borderRadius: 20,
                   background: tierBadge.cls === "seg-eagle" ? "var(--score-eagle)"
                     : tierBadge.cls === "seg-birdie" ? "var(--medal-gold)"
                     : tierBadge.cls === "seg-par" ? "var(--color-good-dark)"
@@ -665,7 +665,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                   .map(([tcode, t]) => ({ tcode, d: parseDate(t.startDate) }))
                   .filter(x => /^\d+$/.test(x.tcode) && x.d !== "0000-00-00")
                   .sort((a, b) => b.d.localeCompare(a.d))[0];
-                const baseStyle = { background: "#fff7ed", color: "#9a3412", border: "1px solid #fdba74", fontWeight: 600, textDecoration: "none" };
+                const baseStyle = { background: "var(--bg-warn-orange)", color: "var(--color-warn-dark)", border: "1px solid var(--border-warn)", fontWeight: 600, textDecoration: "none" };
                 if (!recent) {
                   return (
                     <span className="p p-sm fs-11"
@@ -698,7 +698,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
               {/* Identidade RFEG/Espanha (licença + clube ES) */}
               {rival && !isManuel && (rival as any).esLicencia && (
                 <span className="p p-sm p-club fs-11" title="Licença RFEG"
-                  style={{ background: "#fef9e7", color: "#854d0e", border: "1px solid #facc15" }}>
+                  style={{ background: "var(--bg-warn-light)", color: "var(--color-warn-dark)", border: "1px solid var(--border-warn)" }}>
                   🇪🇸 {(rival as any).esLicencia}
                 </span>
               )}
@@ -734,7 +734,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                 if (!sub) return null;
                 return (
                   <span className="p p-sm fs-11" title="Escalão internacional"
-                    style={{ background: "#ede9fe", color: "#6d28d9", border: "1px solid #c4b5fd", fontWeight: 600 }}>
+                    style={{ background: "var(--bg-purple)", color: "var(--text-purple)", border: "1px solid var(--border-purple)", fontWeight: 600 }}>
                     {sub}
                   </span>
                 );
@@ -746,7 +746,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
               {/* HCP exacto RFEG */}
               {rival && !isManuel && typeof (rival as any).esHcp === "number" && (
                 <span className="p p-sm fs-11" title={(rival as any).esHcpDate ? `HCP em ${(rival as any).esHcpDate}` : "HCP RFEG"}
-                  style={{ background: "#ecfdf5", color: "#065f46", border: "1px solid #6ee7b7", fontWeight: 700 }}>
+                  style={{ background: "var(--bg-success)", color: "var(--color-good-dark)", border: "1px solid var(--border-success)", fontWeight: 700 }}>
                   HCP {(rival as any).esHcp.toFixed(1)}
                 </span>
               )}
@@ -773,7 +773,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
               )}
               {rival && !isManuel && typeof (rival as any).frHcp === "number" && (
                 <span className="p p-sm fs-11" title="HCP FFGolf"
-                  style={{ background: "#ecfdf5", color: "#065f46", border: "1px solid #6ee7b7", fontWeight: 700 }}>
+                  style={{ background: "var(--bg-success)", color: "var(--color-good-dark)", border: "1px solid var(--border-success)", fontWeight: 700 }}>
                   HCP {(rival as any).frHcp.toFixed(1)}
                 </span>
               )}
@@ -783,10 +783,10 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                   style={{ padding: "2px 7px" }}>#{rank}/{totalRanked}</span>
               )}
               {tr && <span className="fs-13 fw-700" style={{ color: TR_I[tr as keyof typeof TR_I].c }}>{TR_I[tr as keyof typeof TR_I].i}</span>}
-              {rival?.up.map(u => { const up = UP.find(x => x.id === u); return up ? <span key={u} className="p p-sm" style={{ background: "var(--bg-success-strong)", color: "var(--color-good-dark)", fontSize: 11 }}>▲ {up.short}</span> : null; })}
+              {rival?.up.map(u => { const up = UP.find(x => x.id === u); return up ? <span key={u} className="p p-sm" style={{ background: "var(--bg-success-strong)", color: "var(--color-good-dark)", fontSize: "var(--fs-11)" }}>▲ {up.short}</span> : null; })}
               {dobInfo && (() => {
                 if (!dobInfo.exact && dobInfo.rangeStr === "?") return null;
-                const pillStyle = { background: "var(--bg-info)", color: "var(--color-info)", fontWeight: 700, fontSize: 12 };
+                const pillStyle = { background: "var(--bg-info)", color: "var(--color-info)", fontWeight: 700, fontSize: "var(--fs-12)" };
                 if (dobInfo.exact) return (
                   <>
                     <span className="p p-sm" style={pillStyle}>🎂 {dobInfo.ageStr}</span>
@@ -823,9 +823,9 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                         borderRadius: 6, background: bg, border: `1px solid ${border}`, flexShrink: 0 }}>
                       <span className="fs-13">{mdl2}</span>
                       <div style={{ lineHeight: 1.2 }}>
-                        <div style={{ fontSize: 10, fontWeight: 700, color: "var(--color-warn-dark)", maxWidth: 90,
+                        <div style={{ fontSize: "var(--fs-10)", fontWeight: 700, color: "var(--color-warn-dark)", maxWidth: 90,
                           overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{shortName}</div>
-                        <div style={{ fontSize: 9, color: "var(--text-3)" }}>
+                        <div style={{ fontSize: "var(--fs-9)", color: "var(--text-3)" }}>
                           {yearOf(t.dateExact, t.date)}{ag ? ` · ${ag}` : ""}
                         </div>
                       </div>
@@ -835,7 +835,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                 {palmares.length > 5 && (
                   <div style={{ display: "inline-flex", alignItems: "center", gap: 3, padding: "3px 8px",
                     borderRadius: 6, background: "var(--bg-warn-strong)", border: "1px solid var(--medal-gold)" }}>
-                    <span style={{ fontSize: 11, fontWeight: 800, color: "var(--color-warn-dark)" }}>+{palmares.length - 5}</span>
+                    <span style={{ fontSize: "var(--fs-11)", fontWeight: 800, color: "var(--color-warn-dark)" }}>+{palmares.length - 5}</span>
                     <span className="fs-11">🏆</span>
                   </div>
                 )}
@@ -846,7 +846,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
           {/* V/E/D vs Manuel — caixas coloridas */}
           {h2hData && !isManuel && (
             <div className="shrink-0 ta-c">
-              <div style={{ fontSize: 11, fontWeight: 700, color: "var(--text-3)", marginBottom: 6,
+              <div style={{ fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-3)", marginBottom: 6,
                 textTransform: "uppercase", letterSpacing: "0.06em" }}>vs Manuel</div>
               <div style={{ display: "flex", gap: 5, marginBottom: 5 }}>
                 {([
@@ -855,12 +855,12 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                   { n: h2hData.losses, bg: "var(--bg-danger-strong)",  co: "var(--color-danger-vivid)", l: "D" },
                 ] as const).map(({ n, bg, co, l }) => (
                   <div key={l} className="ta-c" style={{ minWidth: 46, padding: "10px 6px", background: bg, borderRadius: 10 }}>
-                    <div className="fw-900" style={{ fontSize: 28, color: co, lineHeight: 1 }}>{n}</div>
+                    <div className="fw-900" style={{ fontSize: "var(--fs-28)", color: co, lineHeight: 1 }}>{n}</div>
                     <div className="fs-11 fw-700" style={{ color: co, marginTop: 2, opacity: .75 }}>{l}</div>
                   </div>
                 ))}
               </div>
-              <div style={{ fontSize: 11, color: "var(--text-3)" }}>
+              <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
                 {h2hData.tids.length} confronto{h2hData.tids.length !== 1 ? "s" : ""}
               </div>
             </div>
@@ -881,10 +881,10 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
               <div key={l} style={{ padding: "14px 10px", textAlign: "center",
                 borderRight: i < arr.length - 1 ? "1px solid var(--border-light)" : "none",
                 borderTop: "1px solid var(--border-light)" }}>
-                <div style={{ fontSize: 24, fontWeight: 900, lineHeight: 1,
+                <div style={{ fontSize: "var(--fs-24)", fontWeight: 900, lineHeight: 1,
                   color: accent ? "var(--color-good-dark)" : "var(--text)" }}>{v}</div>
-                {sub && <div style={{ fontSize: 11, color: "var(--text-3)", marginTop: 2 }}>{sub}</div>}
-                <div style={{ fontSize: 12, color: "var(--text-3)", marginTop: 5, fontWeight: 500 }}>{l}</div>
+                {sub && <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", marginTop: 2 }}>{sub}</div>}
+                <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", marginTop: 5, fontWeight: 500 }}>{l}</div>
               </div>
             );
           })}
@@ -911,16 +911,16 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
               const agCls = agNum<=10?"p-sub10":agNum<=12?"p-sub12":agNum<=14?"p-sub14":"p-sub18";
               return (
                 <div key={t.id} style={{ border: "1.5px solid var(--medal-gold,var(--color-warn))", borderRadius: 8, padding: "10px 12px", display: "flex", gap: 10, alignItems: "center" }}>
-                  <span className="shrink-0" style={{ fontSize: 32, lineHeight: 1 }}>🥇</span>
+                  <span className="shrink-0" style={{ fontSize: "var(--fs-32)", lineHeight: 1 }}>🥇</span>
                   <div>
                     <div className="fs-13 fw-600">{t.name}</div>
-                    <div style={{ fontSize: 11, color: "var(--text-2)", marginTop: 2 }}>
+                    <div style={{ fontSize: "var(--fs-11)", color: "var(--text-2)", marginTop: 2 }}>
                       {fmtDM(t.dateExact, t.date)}
                       {ag && <span className={`p p-sm ${agCls}`} style={{ marginLeft: 5 }}>{ag}</span>}
                       {t.field>0 && <span style={{ marginLeft: 5, color: "var(--text-3)" }}>· {t.field>15?"⭐ ":""}{t.field} jog.</span>}
                     </div>
-                    {res.tp!=null && <div style={{ fontSize: 12, fontWeight: 600, color: "var(--color-good-dark)", marginTop: 2 }}>{fmtToPar(res.tp)} ±par</div>}
-                    {bateuManuel && <div style={{ fontSize: 10, color: "var(--medal-gold,var(--color-warn))", marginTop: 2 }}>⚔️ ganhou ao Manuel (#{mPos})</div>}
+                    {res.tp!=null && <div style={{ fontSize: "var(--fs-12)", fontWeight: 600, color: "var(--color-good-dark)", marginTop: 2 }}>{fmtToPar(res.tp)} ±par</div>}
+                    {bateuManuel && <div style={{ fontSize: "var(--fs-10)", color: "var(--medal-gold,var(--color-warn))", marginTop: 2 }}>⚔️ ganhou ao Manuel (#{mPos})</div>}
                   </div>
                 </div>
               );
@@ -950,7 +950,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
         })).filter(x=>x.n>0);
         return (
           <div className="card mb-12"  style={{ padding: "12px 16px" }}>
-            <div style={{ fontSize: 10, fontWeight: 600, color: "var(--text-3)", marginBottom: 6 }}>
+            <div style={{ fontSize: "var(--fs-10)", fontWeight: 600, color: "var(--text-3)", marginBottom: 6 }}>
               Distribuição de scoring · {tot} buracos
             </div>
             {/* Barra — par é branco/transparente */}
@@ -964,14 +964,14 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
             {/* Legenda */}
             <div style={{ display: "flex", gap: "5px 12px", flexWrap: "wrap", marginBottom: parAvgs.length>0?10:0 }}>
               {segs.map(s => (
-                <span key={s.key} style={{ fontSize: 10, color: "var(--text-2)", display: "flex", alignItems: "center", gap: 4 }}>
+                <span key={s.key} style={{ fontSize: "var(--fs-10)", color: "var(--text-2)", display: "flex", alignItems: "center", gap: 4 }}>
                   <span className={s.key==="par"?"":s.cls}
                     style={{ width:8, height:8, display:"inline-block", flexShrink:0,
                       borderRadius: s.circle?"50%":2,
                       background: s.key==="par"?"#fff":undefined,
                       border: s.key==="par"?"1px solid var(--border)":undefined }} />
                   {s.label} {(s.n/tot*100).toFixed(0)}%
-                  <span style={{ color:"var(--text-3)", fontSize:9 }}>({s.n})</span>
+                  <span style={{ color:"var(--text-3)", fontSize: "var(--fs-9)" }}>({s.n})</span>
                 </span>
               ))}
             </div>
@@ -1031,7 +1031,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                 <React.Fragment key={t.id}>
                   {/* Separador de ano */}
                   {showYrSep && (
-                    <div style={{ padding:"4px 14px", fontSize:11, fontWeight:600, color:"var(--text-2)",
+                    <div style={{ padding:"4px 14px", fontSize: "var(--fs-11)", fontWeight:600, color:"var(--text-2)",
                       background:"var(--bg-muted)", borderBottom:"1px solid var(--border-light)",
                       borderTop: lastYear>0?"1px solid var(--border-light)":undefined }}>
                       {thisYear}
@@ -1046,16 +1046,16 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                     {/* Col 1: medalha ou posição */}
                     <div className="ta-c">
                       {mdl3
-                        ? <span style={{ fontSize:18, lineHeight:1 }}>{mdl3}</span>
+                        ? <span style={{ fontSize: "var(--fs-18)", lineHeight:1 }}>{mdl3}</span>
                         : pos!=null
-                          ? <span style={{ fontSize:13, fontWeight:700, color:"var(--text-2)" }}>#{pos}</span>
-                          : <span style={{ fontSize:12, color:"var(--text-3)" }}>—</span>}
+                          ? <span style={{ fontSize: "var(--fs-13)", fontWeight:700, color:"var(--text-2)" }}>#{pos}</span>
+                          : <span style={{ fontSize: "var(--fs-12)", color:"var(--text-3)" }}>—</span>}
                     </div>
 
                     {/* Col 2: nome + pills + meta */}
                     <div>
                       <div style={{ display:"flex", alignItems:"center", gap:5, flexWrap:"wrap" }}>
-                        <span style={{ fontWeight:600, fontSize:13 }}>{t.name}</span>
+                        <span style={{ fontWeight:600, fontSize: "var(--fs-13)" }}>{t.name}</span>
                         {/* Nº de rondas — pill do sistema global PillBadge */}
                         <RoundPill nR={rds.length} />
                         {/* Debug pill (?debug=1): mostra tid do torneio para diagnóstico */}
@@ -1068,7 +1068,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                         {(() => {
                           const { signupanytimeUrl, uskidsUrl, fpgUrl, ffgolfUrl, lgsUrl, ncUrl } = getTournLinks(t.id, t.url);
                           const linkStyle: React.CSSProperties = {
-                            display:"inline-flex", alignItems:"center", gap:2, fontSize:10,
+                            display:"inline-flex", alignItems:"center", gap:2, fontSize: "var(--fs-10)",
                             fontWeight:600, textDecoration:"none", padding:"1px 5px",
                             borderRadius:4, lineHeight:1.2, flexShrink:0,
                           };
@@ -1142,10 +1142,10 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                         })()}
                         {manuelEsteve && !isManuel && (
                           <span style={{ background:"var(--bg-success-subtle)", color:"#065f46", border:"1px solid #6ee7b7",
-                            fontSize:9, padding:"1px 5px", borderRadius:4, fontWeight:600 }}>★ M{manuelPos!=null?` #${manuelPos}`:""}</span>
+                            fontSize: "var(--fs-9)", padding:"1px 5px", borderRadius:4, fontWeight:600 }}>★ M{manuelPos!=null?` #${manuelPos}`:""}</span>
                         )}
                       </div>
-                      <div style={{ fontSize:11, color:"var(--text-2)", marginTop:1 }}>
+                      <div style={{ fontSize: "var(--fs-11)", color:"var(--text-2)", marginTop:1 }}>
                         {fmtDM(t.dateExact, t.date)}
                         {stars && ` · ${stars}`}
                         {t.field>0 && <> · {isLarge && "⭐ "}{t.field} jogadores</>}
@@ -1156,19 +1156,19 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                     {/* Col 3: escalão pill + 9H badge */}
                     <div style={{ display:"flex", flexDirection:"column", alignItems:"flex-end", gap:2 }}>
                       {ageGroup && <span className={`p p-sm ${agCls}`}>{ageGroup}</span>}
-                      {is9h && <span className="p p-sm" style={{ fontSize:9, background:"var(--color-info-dark)", color:"#fff", padding:"1px 4px" }}>9H</span>}
+                      {is9h && <span className="p p-sm" style={{ fontSize: "var(--fs-9)", background:"var(--color-info-dark)", color:"#fff", padding:"1px 4px" }}>9H</span>}
                     </div>
 
                     {/* Col 4: ±par total · se 9H mostra também equiv. 18H */}
                     <div style={{ textAlign:"right", minWidth:36 }}>
-                      <div style={{ fontSize:14, fontWeight:700,
+                      <div style={{ fontSize: "var(--fs-14)", fontWeight:700,
                         color: tpDisplay ? tpColorDark(res.tp) : "var(--text-3)" }}>
                         {tpDisplay ?? "—"}
                       </div>
                     </div>
 
                     {/* Col 5: top % */}
-                    <div style={{ textAlign:"right", minWidth:52, fontSize:12, fontWeight:500,
+                    <div style={{ textAlign:"right", minWidth:52, fontSize: "var(--fs-12)", fontWeight:500,
                       color: topPct!=null && topPct<=15 ? "var(--color-good-dark)" : "var(--text-3)" }}>
                       {topPct!=null ? `top ${topPct}%` : ""}
                     </div>
@@ -1177,7 +1177,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                     <div>
                       {hasCard && (
                         <span onClick={() => toggleExpand(t.id)}
-                          style={{ fontSize:8, color:"var(--text-3)", cursor:"pointer", userSelect:"none" }}>
+                          style={{ fontSize: "var(--fs-8)", color:"var(--text-3)", cursor:"pointer", userSelect:"none" }}>
                           {expanded ? "Scorecard ▲" : "Scorecard ▼"}
                         </span>
                       )}

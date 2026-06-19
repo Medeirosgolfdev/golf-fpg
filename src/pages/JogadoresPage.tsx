@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+﻿import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import type { Player, SexFilter } from "../data/types";
 import { useAppContext } from "../context/AppContext";
@@ -116,7 +116,7 @@ function LinkBtns({ links }: { links?: Record<string, string> }) {
           title={label.replace(/_/g, " ")}
           style={{
             display: "inline-flex", alignItems: "center", gap: 3,
-            fontSize: 10, marginLeft: 4, color: "var(--chart-2)", textDecoration: "none",
+            fontSize: "var(--fs-10)", marginLeft: 4, color: "var(--chart-2)", textDecoration: "none",
             verticalAlign: "middle",
           }}
           onClick={(e) => e.stopPropagation()}
@@ -244,7 +244,7 @@ function EventInfo({ name, origin, pill, links, fed, tcode, ccode, course }: {
           title={fedTitle}
           style={{
             display: "inline-flex", alignItems: "center", gap: 3,
-            fontSize: 10, color: "var(--text-muted)", textDecoration: "none",
+            fontSize: "var(--fs-10)", color: "var(--text-muted)", textDecoration: "none",
             verticalAlign: "middle", opacity: 0.6,
           }}
           onClick={e => e.stopPropagation()}
@@ -1362,10 +1362,10 @@ function CollapseCard({ title, icon, defaultOpen = false, children, badge }: {
         onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpen(v => !v)}
         style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", userSelect: "none", marginBottom: open ? 12 : 0 }}
       >
-        {icon && <span style={{ fontSize: 16 }}>{icon}</span>}
+        {icon && <span style={{ fontSize: "var(--fs-16)" }}>{icon}</span>}
         <span className="h-xs flex-1"  style={{ margin: 0 }}>{title}</span>
         {badge}
-        <span style={{ fontSize: 12, color: "var(--text-3)", marginLeft: 4 }}>{open ? "▲" : "▼"}</span>
+        <span style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", marginLeft: 4 }}>{open ? "▲" : "▼"}</span>
       </div>
       {open && children}
     </div>
@@ -1849,7 +1849,7 @@ function ClubsTable({ stats, onDrillDown, maxClub, pct, COL_M, COL_F }: {
         <div className="fw-700 fs-14">
           Todos os clubes · <span className="muted fs-10">{stats.allClubs.length} clubes · clica na linha para detalhe · clica no cabeçalho para ordenar</span>
         </div>
-        <div style={{ display: "flex", gap: 12, fontSize: 10 }}>
+        <div style={{ display: "flex", gap: 12, fontSize: "var(--fs-10)" }}>
           <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><SexBadge sex="M" /> Masculino</span>
           <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><SexBadge sex="F" /> Feminino</span>
         </div>
@@ -1964,7 +1964,7 @@ function FederadosStatsPanel({ stats, inativosStats: _inativosStats, drillDown, 
       <div className="card" style={{ padding: 12, marginBottom: 16 }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
           <div className="fw-700 fs-14">Distribuição de HCP · <span className="muted fs-10">{stats.withHcp.toLocaleString("pt-PT")} jogadores com HCP válido</span></div>
-          <div style={{ display: "flex", gap: 12, fontSize: 10 }}>
+          <div style={{ display: "flex", gap: 12, fontSize: "var(--fs-10)" }}>
             <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><SexBadge sex="M" /> Masculino</span>
             <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><SexBadge sex="F" /> Feminino</span>
           </div>
@@ -2026,13 +2026,13 @@ function FederadosStatsPanel({ stats, inativosStats: _inativosStats, drillDown, 
               onClick={() => onPickPlayer(p.federation_code)}
               style={{ width: "100%", padding: "4px 6px", marginBottom: 2, display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}
             >
-              <span className="fw-700" style={{ width: 22, textAlign: "center", fontSize: 11 }}>{i + 1}</span>
-              <span className="fw-600" style={{ flex: 1, textAlign: "left", fontSize: 12 }}>
+              <span className="fw-700" style={{ width: 22, textAlign: "center", fontSize: "var(--fs-11)" }}>{i + 1}</span>
+              <span className="fw-600" style={{ flex: 1, textAlign: "left", fontSize: "var(--fs-12)" }}>
                 {p.country_prefix && p.country_prefix !== "PT" && !p.country_prefix.startsWith("@") && <span className="mr-4">{gf(p.country_prefix)}</span>}
                 {p.name}
                 <span className="muted fs-10 ml-4">({p.acronym})</span>
               </span>
-              <span className="fw-900" style={{ fontSize: 14, color: (p.hcp_exact as number) < 0 ? "var(--medal-gold)" : "var(--text-1)" }}>
+              <span className="fw-900" style={{ fontSize: "var(--fs-14)", color: (p.hcp_exact as number) < 0 ? "var(--medal-gold)" : "var(--text-1)" }}>
                 {(p.hcp_exact as number).toFixed(1)}
               </span>
             </button>
@@ -2077,7 +2077,7 @@ function FederadosStatsPanel({ stats, inativosStats: _inativosStats, drillDown, 
                 onClick={() => onDrillDown({ type: "age", key: k })}
                 style={{ width: "100%", padding: "4px 0", marginBottom: 4, background: "none", border: "none", cursor: "pointer", textAlign: "left" }}
               >
-                <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, fontWeight: 500 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--fs-12)", fontWeight: 500 }}>
                   <span>{k}</span>
                   <span>
                     <span className="fs-10" style={{ display: "inline-flex", alignItems: "center", gap: 4, marginRight: 6 }}>
@@ -2101,7 +2101,7 @@ function FederadosStatsPanel({ stats, inativosStats: _inativosStats, drillDown, 
         <div className="card" style={{ padding: 12 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
             <div className="fw-700 fs-14">Top 25 países</div>
-            <div style={{ display: "flex", gap: 10, fontSize: 10 }}>
+            <div style={{ display: "flex", gap: 10, fontSize: "var(--fs-10)" }}>
               <span style={{ display: "inline-flex", alignItems: "center", gap: 3 }}><SexBadge sex="M" /> M</span>
               <span style={{ display: "inline-flex", alignItems: "center", gap: 3 }}><SexBadge sex="F" /> F</span>
             </div>
@@ -2110,7 +2110,7 @@ function FederadosStatsPanel({ stats, inativosStats: _inativosStats, drillDown, 
             const mPct = c.count > 0 ? (c.m / c.count) * 100 : 0;
             return (
               <div key={c.cp} style={{ marginBottom: 6 }}>
-                <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, alignItems: "center", gap: 6 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--fs-12)", alignItems: "center", gap: 6 }}>
                   <span style={{ flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                     {c.cp && !c.cp.startsWith("@") ? gf(c.cp) : "🏴"} <span className="fw-600">{c.name}</span> <span className="muted fs-10">({c.cp})</span>
                   </span>
@@ -2209,14 +2209,14 @@ function HcpBinDrillCard({ bin, federados, onClose, onPickPlayer }: {
             onClick={() => onPickPlayer(p.federation_code)}
             style={{ padding: "4px 8px", display: "flex", alignItems: "center", gap: 8, cursor: "pointer", textAlign: "left" }}
           >
-            <span className="fw-700 muted" style={{ width: 22, fontSize: 11 }}>{i + 1}</span>
+            <span className="fw-700 muted" style={{ width: 22, fontSize: "var(--fs-11)" }}>{i + 1}</span>
             <SexBadge sex={p.gender as "M" | "F"} />
-            <span style={{ flex: 1, fontSize: 12 }}>
+            <span style={{ flex: 1, fontSize: "var(--fs-12)" }}>
               {p.country_prefix && p.country_prefix !== "PT" && !p.country_prefix.startsWith("@") && <span className="mr-4">{gf(p.country_prefix)}</span>}
               <span className="fw-600">{p.name}</span>
               <span className="muted fs-10 ml-4">({p.acronym})</span>
             </span>
-            <span className="fw-900" style={{ fontSize: 13, color: (p.hcp_exact as number) < 0 ? "var(--medal-gold)" : "var(--text-1)" }}>
+            <span className="fw-900" style={{ fontSize: "var(--fs-13)", color: (p.hcp_exact as number) < 0 ? "var(--medal-gold)" : "var(--text-1)" }}>
               {(p.hcp_exact as number).toFixed(1)}
             </span>
           </button>
@@ -2299,9 +2299,9 @@ function DrillDownCard({ drillDown, stats, onClose, onPickPlayer }: {
               onClick={() => onPickPlayer(p.federation_code)}
               style={{ width: "100%", padding: "3px 6px", marginBottom: 2, display: "flex", alignItems: "center", gap: 6, cursor: "pointer" }}
             >
-              <span className="fw-700" style={{ width: 18, fontSize: 11 }}>{i + 1}</span>
-              <span style={{ flex: 1, textAlign: "left", fontSize: 12 }}>{p.name}</span>
-              <span className="fw-900" style={{ fontSize: 13, color: (p.hcp_exact as number) < 0 ? "var(--medal-gold)" : "var(--text-1)" }}>
+              <span className="fw-700" style={{ width: 18, fontSize: "var(--fs-11)" }}>{i + 1}</span>
+              <span style={{ flex: 1, textAlign: "left", fontSize: "var(--fs-12)" }}>{p.name}</span>
+              <span className="fw-900" style={{ fontSize: "var(--fs-13)", color: (p.hcp_exact as number) < 0 ? "var(--medal-gold)" : "var(--text-1)" }}>
                 {(p.hcp_exact as number).toFixed(1)}
               </span>
             </button>
@@ -2313,7 +2313,7 @@ function DrillDownCard({ drillDown, stats, onClose, onPickPlayer }: {
           <div>
             <div className="fw-700 fs-14 mb-4">Por escalão</div>
             {sortedAges.map(([k, v]) => (
-              <div key={k} style={{ display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 2 }}>
+              <div key={k} style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--fs-12)", marginBottom: 2 }}>
                 <span>{k}</span><span className="fw-700">{v}</span>
               </div>
             ))}
@@ -2325,7 +2325,7 @@ function DrillDownCard({ drillDown, stats, onClose, onPickPlayer }: {
           <div>
             <div className="fw-700 fs-14 mb-4">Top clubes</div>
             {topClubsDrill.map(([code, c]) => (
-              <div key={code} style={{ display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 2 }}>
+              <div key={code} style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--fs-12)", marginBottom: 2 }}>
                 <span>{c.name}</span><span className="fw-700">{c.count}</span>
               </div>
             ))}
@@ -2337,7 +2337,7 @@ function DrillDownCard({ drillDown, stats, onClose, onPickPlayer }: {
           <div>
             <div className="fw-700 fs-14 mb-4">Por país</div>
             {topCountriesDrill.map(([cp, n]) => (
-              <div key={cp} style={{ display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 2 }}>
+              <div key={cp} style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--fs-12)", marginBottom: 2 }}>
                 <span>{cp && !cp.startsWith("@") ? gf(cp) : "🏴"} {cp}</span><span className="fw-700">{n}</span>
               </div>
             ))}
@@ -2415,7 +2415,7 @@ function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localI
         return (
           <>
             <TeeDate date={ddmm} tee={tee} />
-            {isMissing && <span style={{ marginLeft: 4, color: "var(--color-warn-vivid)", fontSize: 10 }} title="Não temos esta ronda em local">●</span>}
+            {isMissing && <span style={{ marginLeft: 4, color: "var(--color-warn-vivid)", fontSize: "var(--fs-10)" }} title="Não temos esta ronda em local">●</span>}
             {r.id ? <div className="muted fs-10">#{r.id}</div> : null}
           </>
         );
@@ -2641,21 +2641,21 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
                   href={`https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${f.federation_code}`}
                   target="_blank" rel="noopener noreferrer"
                   title="Ver ficha WHS no FPG Scoring"
-                  style={{ marginLeft: 8, fontSize: 14, color: "var(--chart-2)", textDecoration: "none", verticalAlign: "middle" }}
+                  style={{ marginLeft: 8, fontSize: "var(--fs-14)", color: "var(--chart-2)", textDecoration: "none", verticalAlign: "middle" }}
                   onClick={e => e.stopPropagation()}
                 >🔗</a>
                 <a
                   href={`https://my.fpg.pt/Home/PlayerWHS.aspx?no=${f.federation_code}`}
                   target="_blank" rel="noopener noreferrer"
                   title="Ver ficha WHS no My FPG"
-                  style={{ marginLeft: 4, fontSize: 14, color: "var(--chart-2)", textDecoration: "none", verticalAlign: "middle" }}
+                  style={{ marginLeft: 4, fontSize: "var(--fs-14)", color: "var(--chart-2)", textDecoration: "none", verticalAlign: "middle" }}
                   onClick={e => e.stopPropagation()}
                 >🔗</a>
                 <a
                   href={ppPlayerUrl(f.federation_code)}
                   target="_blank" rel="noopener noreferrer"
                   title="Ver ficha Pitch & Putt no FPG Scoring (mundo paralelo)"
-                  style={{ marginLeft: 4, fontSize: 14, textDecoration: "none", verticalAlign: "middle" }}
+                  style={{ marginLeft: 4, fontSize: "var(--fs-14)", textDecoration: "none", verticalAlign: "middle" }}
                   onClick={e => e.stopPropagation()}
                 >🏑</a>
               </>
@@ -2725,7 +2725,7 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
                   <div
                     className="muted"
                     style={{
-                      fontSize: 11, fontWeight: 700, letterSpacing: "0.05em",
+                      fontSize: "var(--fs-11)", fontWeight: 700, letterSpacing: "0.05em",
                       textTransform: "uppercase", marginBottom: 6,
                       borderBottom: "1px solid var(--border)", paddingBottom: 3,
                     }}
@@ -2743,7 +2743,7 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
                 <div
                   className="muted"
                   style={{
-                    fontSize: 11, fontWeight: 700, letterSpacing: "0.05em",
+                    fontSize: "var(--fs-11)", fontWeight: 700, letterSpacing: "0.05em",
                     textTransform: "uppercase", marginBottom: 6,
                     borderBottom: "1px solid var(--border)", paddingBottom: 3,
                   }}
@@ -2760,7 +2760,7 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
                 <summary
                   className="muted"
                   style={{
-                    cursor: "pointer", fontSize: 11, fontWeight: 600,
+                    cursor: "pointer", fontSize: "var(--fs-11)", fontWeight: 600,
                     letterSpacing: "0.03em", userSelect: "none",
                   }}
                   title="IDs internos, tokens e campos redundantes — úteis para debug."
@@ -2829,7 +2829,7 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
               <div style={{ fontWeight: 600 }}>⚠ Não foi possível carregar rondas em tempo real</div>
               <details style={{ marginTop: 4, opacity: 0.85 }}>
                 <summary style={{ cursor: "pointer" }}>Ver detalhes do erro</summary>
-                <pre style={{ whiteSpace: "pre-wrap", fontSize: 10, marginTop: 4, textAlign: "left" }}>{liveError}</pre>
+                <pre style={{ whiteSpace: "pre-wrap", fontSize: "var(--fs-10)", marginTop: 4, textAlign: "left" }}>{liveError}</pre>
               </details>
             </div>
           )}
@@ -2849,7 +2849,7 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
       {scorecardModal && (
         <div
           onClick={() => setScorecardModal(null)}
-          style={{ position: "fixed", inset: 0, background: "var(--overlay-black-50)", zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}
+          style={{ position: "fixed", inset: 0, background: "var(--overlay-black-50)", zIndex: "var(--z-overlay)", display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}
         >
           <div
             onClick={e => e.stopPropagation()}
@@ -2862,7 +2862,7 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
               </div>
               <button
                 onClick={() => setScorecardModal(null)}
-                style={{ border: "none", background: "transparent", fontSize: 20, cursor: "pointer", padding: 4 }}
+                style={{ border: "none", background: "transparent", fontSize: "var(--fs-20)", cursor: "pointer", padding: 4 }}
                 title="Fechar"
               >✕</button>
             </div>
@@ -2889,7 +2889,7 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
               const sis   = (h: number) => { const v = sc[`stroke_index_${h}`]; return v != null ? Number(v) : 0; };
               return (
                 <>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 8, marginBottom: 16, fontSize: 12 }}>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 8, marginBottom: 16, fontSize: "var(--fs-12)" }}>
                     <div><span className="muted">Par total:</span> <b>{sc.par_total ?? "—"}</b></div>
                     <div><span className="muted">Gross:</span> <b>{sc.gross_total ?? "—"}</b></div>
                     <div><span className="muted">Stableford:</span> <b>{(sc as Record<string, number | undefined>).stableford ?? (sc as Record<string, number | undefined>).calculated_stablnet_total ?? "—"}</b></div>
@@ -3075,7 +3075,7 @@ function formatFedValue(key: string, v: unknown): React.ReactNode {
 
   // ── Nome — texto, não pill (demasiado longo) ─────────────────
   if (key === "name") {
-    return <span className="fw-700" style={{ fontSize: 13 }}>{String(v)}</span>;
+    return <span className="fw-700" style={{ fontSize: "var(--fs-13)" }}>{String(v)}</span>;
   }
 
   // ── Género ───────────────────────────────────────────────────
@@ -3105,7 +3105,7 @@ function formatFedValue(key: string, v: unknown): React.ReactNode {
   if (key === "hcp_exact" || key === "hcp_index") {
     const n = Number(v);
     const txt = isFinite(n) ? (Number.isInteger(n) ? n.toString() : n.toFixed(1)) : String(v);
-    return <span className="fw-700" style={{ fontSize: 13 }}>{txt}</span>;
+    return <span className="fw-700" style={{ fontSize: "var(--fs-13)" }}>{txt}</span>;
   }
 
   // ── Status de HCP (Válido / Provisório / …) ─────────────────
@@ -3179,7 +3179,7 @@ function formatFedValue(key: string, v: unknown): React.ReactNode {
   if (key === "rounds_current_year") {
     const n = Number(v);
     const isZero = isFinite(n) && n === 0;
-    return <span className={isZero ? "muted" : "fw-700"} style={{ fontSize: 13 }}>{isFinite(n) ? n : String(v)}</span>;
+    return <span className={isZero ? "muted" : "fw-700"} style={{ fontSize: "var(--fs-13)" }}>{isFinite(n) ? n : String(v)}</span>;
   }
 
   // ── Flags booleanas (notpublic, club_notpublic) ─────────────
@@ -3356,9 +3356,9 @@ function FilteredStatsCard({ filtered, viewMode, onPickPlayer, activeFiltersCoun
                   onClick={() => onPickPlayer(p.fed)}
                   style={{ padding: "4px 8px", display: "flex", alignItems: "center", gap: 8, cursor: "pointer", textAlign: "left" }}
                 >
-                  <span className="fw-700 muted" style={{ width: 22, fontSize: 11 }}>{i + 1}</span>
+                  <span className="fw-700 muted" style={{ width: 22, fontSize: "var(--fs-11)" }}>{i + 1}</span>
                   {p.sex === "M" || p.sex === "F" ? <SexBadge sex={p.sex} /> : null}
-                  <span style={{ flex: 1, fontSize: 12 }}>
+                  <span style={{ flex: 1, fontSize: "var(--fs-12)" }}>
                     {cp && cp !== "PT" && !cp.startsWith("@") && <span className="mr-4">{gf(cp)}</span>}
                     <span className="fw-600">{p.name}</span>
                     {(() => {
@@ -3366,7 +3366,7 @@ function FilteredStatsCard({ filtered, viewMode, onPickPlayer, activeFiltersCoun
                       return club ? <span className="muted fs-10 ml-4">({club})</span> : null;
                     })()}
                   </span>
-                  <span className="fw-900" style={{ fontSize: 13, color: (p.hcp as number) < 0 ? "var(--medal-gold)" : "var(--text-1)" }}>
+                  <span className="fw-900" style={{ fontSize: "var(--fs-13)", color: (p.hcp as number) < 0 ? "var(--medal-gold)" : "var(--text-1)" }}>
                     {(p.hcp as number).toFixed(1)}
                   </span>
                 </button>
@@ -3386,7 +3386,7 @@ function FilteredStatsCard({ filtered, viewMode, onPickPlayer, activeFiltersCoun
               const mPct = total > 0 ? (v.m / total) * 100 : 0;
               return (
                 <div key={k} style={{ marginBottom: 5 }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--fs-12)" }}>
                     <span className="fw-500">{k}</span>
                     <span className="fw-700">{total}</span>
                   </div>
@@ -3407,7 +3407,7 @@ function FilteredStatsCard({ filtered, viewMode, onPickPlayer, activeFiltersCoun
             <div className="fw-700 fs-14 mb-8">Top 12 clubes</div>
             {topClubs.map(([code, c]) => (
               <div key={code} style={{ marginBottom: 4 }}>
-                <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--fs-12)" }}>
                   <span className="fw-500">{c.name} <span className="muted fs-10">({code})</span></span>
                   <span className="fw-700">{c.count}</span>
                 </div>
@@ -3424,7 +3424,7 @@ function FilteredStatsCard({ filtered, viewMode, onPickPlayer, activeFiltersCoun
             <div className="fw-700 fs-14 mb-8">Por região</div>
             {topRegions.map(([r, n]) => (
               <div key={r} style={{ marginBottom: 4 }}>
-                <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--fs-12)" }}>
                   <span className="fw-500">{r}</span>
                   <span className="fw-700">{n}</span>
                 </div>
@@ -3442,7 +3442,7 @@ function FilteredStatsCard({ filtered, viewMode, onPickPlayer, activeFiltersCoun
         <div className="card" style={{ padding: 12 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
             <div className="fw-700 fs-14">Distribuição de HCP · <span className="muted fs-10">{withHcp} jogadores</span></div>
-            <div style={{ display: "flex", gap: 10, fontSize: 10 }}>
+            <div style={{ display: "flex", gap: 10, fontSize: "var(--fs-10)" }}>
               <span style={{ display: "inline-flex", alignItems: "center", gap: 3 }}><SexBadge sex="M" /> M</span>
               <span style={{ display: "inline-flex", alignItems: "center", gap: 3 }}><SexBadge sex="F" /> F</span>
             </div>
@@ -3725,7 +3725,7 @@ function PlayerSidebarItem({
 
       {/* Linha 3: fed# + rondas (total · este ano) + rank HCP (se rankingMode) */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
-        <span style={{ fontSize: 11, color: "var(--text-muted)", display: "inline-flex", alignItems: "center", gap: 8 }}>
+        <span style={{ fontSize: "var(--fs-11)", color: "var(--text-muted)", display: "inline-flex", alignItems: "center", gap: 8 }}>
           <span>#{p.fed}</span>
           {/* Rondas neste ano civil — mesma fonte (data.json) que o detalhe header.
               Usado para ordenação por defeito. */}
@@ -4564,7 +4564,7 @@ export default function JogadoresPage() {
           </button>
         )}
         <Counter ml="auto">{filtered.length} jogadores</Counter>
-        <span style={{ display: "inline-flex", gap: 6, fontSize: 10, opacity: 0.6, whiteSpace: "nowrap" }}>
+        <span style={{ display: "inline-flex", gap: 6, fontSize: "var(--fs-10)", opacity: 0.6, whiteSpace: "nowrap" }}>
           <a
             href="/analise-percurso-juniores.html"
             target="_blank"
@@ -4617,7 +4617,7 @@ export default function JogadoresPage() {
                     const s = stats[esc];
                     if (!s || s.total === 0) return null;
                     return (
-                      <div key={esc} style={{ padding: "4px 6px", background: "var(--bg, white)", borderRadius: 4, fontSize: 11 }}>
+                      <div key={esc} style={{ padding: "4px 6px", background: "var(--bg, white)", borderRadius: 4, fontSize: "var(--fs-11)" }}>
                         <div className="fw-700">{esc}</div>
                         <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
                           <b>{s.total}</b>

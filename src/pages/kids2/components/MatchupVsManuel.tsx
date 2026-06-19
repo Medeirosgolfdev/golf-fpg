@@ -88,8 +88,8 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
       padding: "14px 16px",
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-        <span style={{ fontSize: 18 }}>⚔️</span>
-        <h3 style={{ margin: 0, fontSize: 14, fontWeight: 700, color: "var(--text)" }}>
+        <span style={{ fontSize: "var(--fs-18)" }}>⚔️</span>
+        <h3 style={{ margin: 0, fontSize: "var(--fs-14)", fontWeight: 700, color: "var(--text)" }}>
           Confronto com Manuel
         </h3>
       </div>
@@ -101,39 +101,39 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
         <Stat value={fmtDiff(worst)} label="pior margem" />
       </div>
 
-      <table style={{ width: "100%", fontSize: 12, borderCollapse: "collapse", background: "var(--bg)", borderRadius: 6, overflow: "hidden", border: "1px solid var(--border-light)" }}>
+      <table className="dtable">
         <thead>
-          <tr style={{ background: "var(--bg-muted)", color: "var(--text-2)" }}>
-            <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={th}>Data</SortableHdr>
-            <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={th}>Torneio</SortableHdr>
-            <SortableHdr k="flight" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={th}>Escalão</SortableHdr>
-            <SortableHdr k="jGross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...th, textAlign: "right" }}>{junior.canonicalName.split(" ")[0]}</SortableHdr>
-            <SortableHdr k="jPos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...th, textAlign: "center" }}>Pos</SortableHdr>
-            <SortableHdr k="mGross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...th, ...thManuel, textAlign: "right" }}>Manuel</SortableHdr>
-            <SortableHdr k="mPos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...th, ...thManuel, textAlign: "center" }}>Pos</SortableHdr>
-            <SortableHdr k="diff" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...th, textAlign: "right" }}>diff</SortableHdr>
+          <tr>
+            <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Data</SortableHdr>
+            <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Torneio</SortableHdr>
+            <SortableHdr k="flight" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Escalão</SortableHdr>
+            <SortableHdr k="jGross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "right" }}>{junior.canonicalName.split(" ")[0]}</SortableHdr>
+            <SortableHdr k="jPos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "center" }}>Pos</SortableHdr>
+            <SortableHdr k="mGross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thManuel, textAlign: "right" }}>Manuel</SortableHdr>
+            <SortableHdr k="mPos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thManuel, textAlign: "center" }}>Pos</SortableHdr>
+            <SortableHdr k="diff" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "right" }}>diff</SortableHdr>
           </tr>
         </thead>
         <tbody>
           {sortedRows.map((r, i) => (
-            <tr key={i} style={{ borderBottom: "1px solid var(--border-light)" }}>
-              <td style={td}>{fmtDateShort(r.t.date)}</td>
-              <td style={td}>
+            <tr key={i}>
+              <td>{fmtDateShort(r.t.date)}</td>
+              <td>
                 {r.t.name || r.t.shortName || r.t.id}
                 {r.t.links?.[0]?.url && (
                   <a href={r.t.links[0].url} target="_blank" rel="noreferrer" style={{ marginLeft: 4, color: "var(--color-info)" }}>↗</a>
                 )}
               </td>
-              <td style={tdMuted}>{r.rJ.flight.label}</td>
-              <td style={{ ...td, textAlign: "right", fontVariantNumeric: "tabular-nums" }}>
+              <td style={{ color: "var(--text-3)" }}>{r.rJ.flight.label}</td>
+              <td style={{ textAlign: "right" }}>
                 <RoundsCell result={r.rJ.result} />
               </td>
-              <td style={{ ...td, textAlign: "center" }}><PosTrophy pos={r.rJ.result.pos} /></td>
-              <td style={{ ...td, ...tdManuel, textAlign: "right", fontVariantNumeric: "tabular-nums" }}>
+              <td style={{ textAlign: "center" }}><PosTrophy pos={r.rJ.result.pos} /></td>
+              <td style={{ ...tdManuel, textAlign: "right" }}>
                 <RoundsCell result={r.rM.result} />
               </td>
-              <td style={{ ...td, ...tdManuel, textAlign: "center" }}><PosTrophy pos={r.rM.result.pos} /></td>
-              <td style={{ ...td, textAlign: "right", fontWeight: 700, color: r.diff > 0 ? "var(--color-danger-dark)" : r.diff < 0 ? "var(--medal-gold-strong)" : "var(--text-3)" }}>
+              <td style={{ ...tdManuel, textAlign: "center" }}><PosTrophy pos={r.rM.result.pos} /></td>
+              <td style={{ textAlign: "right", fontWeight: 700, color: r.diff > 0 ? "var(--color-danger-dark)" : r.diff < 0 ? "var(--medal-gold-strong)" : "var(--text-3)" }}>
                 {fmtDiff(r.diff)}
               </td>
             </tr>
@@ -143,10 +143,6 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
     </div>
   );
 }
-
-const th: React.CSSProperties = { padding: "6px 8px", fontSize: 11, fontWeight: 600, textAlign: "left" };
-const td: React.CSSProperties = { padding: "6px 8px", fontSize: 12 };
-const tdMuted: React.CSSProperties = { ...td, color: "var(--text-3)" };
 
 // "Cor Manuel" — token reservado no projecto para destacar tudo o que está
 // ligado ao Manuel (row highlight, sticky cols, gross pill no print).
@@ -159,8 +155,8 @@ const tdManuel: React.CSSProperties = { background: "color-mix(in srgb, var(--bg
 function Stat({ value, label }: { value: string; label: string }) {
   return (
     <div style={{ textAlign: "center" }}>
-      <div style={{ fontSize: 24, fontWeight: 700, lineHeight: 1, color: "var(--text)" }}>{value}</div>
-      <div style={{ fontSize: 10, color: "var(--text-3)", marginTop: 3, fontWeight: 500 }}>{label}</div>
+      <div style={{ fontSize: "var(--fs-24)", fontWeight: 700, lineHeight: 1, color: "var(--text)" }}>{value}</div>
+      <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 3, fontWeight: 500 }}>{label}</div>
     </div>
   );
 }
@@ -187,7 +183,7 @@ function PosTrophy({ pos }: { pos: any }) {
   if (pos <= 3) {
     const bg = pos === 1 ? "var(--medal-gold-bg)" : pos === 2 ? "var(--medal-silver-bg)" : "var(--medal-bronze-bg)";
     const fg = pos === 1 ? "var(--medal-gold-fg)" : pos === 2 ? "var(--medal-silver-fg)" : "var(--medal-bronze-fg)";
-    return <span style={{ background: bg, color: fg, fontWeight: 700, padding: "1px 6px", borderRadius: 4, fontSize: 11 }}>🏆 #{pos}</span>;
+    return <span style={{ background: bg, color: fg, fontWeight: 700, padding: "1px 6px", borderRadius: 4, fontSize: "var(--fs-11)" }}>🏆 #{pos}</span>;
   }
   return <span>#{pos}</span>;
 }

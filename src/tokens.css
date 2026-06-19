@@ -59,6 +59,8 @@
   --bg-code:          rgba(59, 130, 246, 0.10);
   --bg-note-warn:     rgba(146, 64, 14, 0.05);
   --bg-note-warn-strong: rgba(146, 64, 14, 0.08);
+  --bg-gold-subtle:   rgba(255, 215, 0, 0.06);   /* linha de campeão / destaque ouro */
+  --bg-gold-hover:    rgba(255, 215, 0, 0.12);
 
   --bg-rnd:           #e8f2e4;   /* colunas de ronda no leaderboard multi-ronda */
   --bg-rnd-stats:     #f5f9f3;
@@ -158,7 +160,9 @@
   --overlay-white-08:  rgba(255, 255, 255, 0.08);
   --overlay-white-14:  rgba(255, 255, 255, 0.14);
   --overlay-white-15:  rgba(255, 255, 255, 0.15);
+  --overlay-white-25:  rgba(255, 255, 255, 0.25);
   --overlay-white-30:  rgba(255, 255, 255, 0.30);
+  --overlay-black-08:  rgba(0, 0, 0, 0.08);
   --overlay-black-15:  rgba(0, 0, 0, 0.15);
   --overlay-black-25:  rgba(0, 0, 0, 0.25);
   --overlay-black-30:  rgba(0, 0, 0, 0.30);
@@ -340,6 +344,15 @@
   --shadow:    0 2px 8px rgba(30, 50, 20, 0.08);
   --shadow-lg: 0 4px 16px rgba(30, 50, 20, 0.10);
 
+  /* Sombras funcionais adicionais (usadas em App.css). */
+  --shadow-inset-sm:     inset 0 1px 2px rgba(0, 0, 0, 0.05);  /* inputs, toggles */
+  --shadow-accent-sm:    0 1px 3px rgba(45, 106, 48, 0.30);     /* botão activo accent */
+  --shadow-sticky-col:   2px 0 4px rgba(0, 0, 0, 0.06);         /* coluna sticky */
+  --shadow-float:        0 2px 8px rgba(0, 0, 0, 0.15);         /* botão flutuante */
+  --shadow-float-hover:  0 4px 12px rgba(0, 0, 0, 0.20);
+  --shadow-float-active: 0 1px 4px rgba(0, 0, 0, 0.15);
+  --shadow-focus-blue:   0 0 0 2px rgba(59, 130, 246, 0.20);    /* anel de foco azul */
+
 
   /* ── 15. Tipografia ────────────────────────────────────────── */
   /* Famílias (antes hardcoded em App.css). */
@@ -421,12 +434,15 @@
 
   /* ── 17. Z-index ───────────────────────────────────────────── */
   /* Escala canónica — substitui os valores avulsos espalhados. */
-  --z-base:     1;    /* th sticky, sobreposições mínimas dentro de tabelas */
-  --z-raised:   2;
-  --z-sticky:   6;    /* colunas/cabeçalhos sticky */
-  --z-dropdown: 50;
-  --z-sidebar:  100;
-  --z-overlay:  1000; /* drawers, backdrops */
-  --z-modal:    9999; /* modais e toasts no topo */
+  --z-base:        1;     /* th sticky, sobreposições mínimas dentro de tabelas */
+  --z-raised:      2;     /* elementos levantados acima da base */
+  --z-float:       3;     /* sticky cols de 2ª camada (acima de raised) */
+  --z-sticky:      6;     /* colunas/cabeçalhos sticky */
+  --z-panel-hdr:   10;    /* header sticky dentro de painel (acima de sticky-col) */
+  --z-dropdown:    50;
+  --z-sidebar:     100;
+  --z-overlay:     1000;  /* drawers, backdrops */
+  --z-modal:       9999;  /* modais e toasts no topo */
+  --z-topmost:     10000; /* acima de modais — usar com moderação */
 
 }

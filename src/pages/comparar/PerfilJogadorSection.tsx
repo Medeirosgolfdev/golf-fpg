@@ -1,4 +1,4 @@
-/**
+﻿/**
  * PerfilJogadorSection — Leitura rápida e comparação visual.
  *
  * Substitui a análise SWOT técnica (σ, SD, +0.73 vs par) por:
@@ -126,7 +126,7 @@ function ComparativeBar({ rows, getValue, dir, format, scaleMin, scaleMax }: {
               {isBest && (
                 <span style={{
                   position: "absolute", right: 4, top: "50%", transform: "translateY(-50%)",
-                  fontSize: 10, fontWeight: 800, color: "#fff",
+                  fontSize: "var(--fs-10)", fontWeight: 800, color: "#fff",
                   textShadow: "0 0 2px rgba(0,0,0,.4)",
                 }}>★</span>
               )}
@@ -172,7 +172,7 @@ function RondaTipica({ rows }: { rows: Row[] }) {
             }}>
               <div className="d-flex items-center gap-6 mb-8">
                 <span className="round" style={{ width: 11, height: 11, background: COLORS[r.i] }} />
-                <b style={{ color: COLORS[r.i], fontSize: 13 }}>{firstName(r.s.player.name)}</b>
+                <b style={{ color: COLORS[r.i], fontSize: "var(--fs-13)" }}>{firstName(r.s.player.name)}</b>
                 {isBest && <span className="fs-10" style={{ color: SC.good, fontWeight: 800 }}>★ melhor</span>}
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
@@ -513,7 +513,7 @@ function ReadingCard({ row, reading }: { row: Row; reading: Reading }) {
           <div style={{
             marginTop: 10, padding: 8, borderRadius: 6,
             background: COLORS_LIGHT[row.i], color: "var(--text-2)",
-            fontSize: 12, lineHeight: 1.5,
+            fontSize: "var(--fs-12)", lineHeight: 1.5,
           }}
           dangerouslySetInnerHTML={{ __html: `<b>📌 Resumo:</b> ${reading.conclusion}` }}
           />
@@ -532,7 +532,7 @@ function Bulleted({ title, color, items }: { title: string; color: string; items
         {items.map((t, i) => (
           <li
             key={i}
-            style={{ fontSize: 12, lineHeight: 1.55, color: "var(--text-2)", marginBottom: 3 }}
+            style={{ fontSize: "var(--fs-12)", lineHeight: 1.55, color: "var(--text-2)", marginBottom: 3 }}
             dangerouslySetInnerHTML={{ __html: t }}
           />
         ))}

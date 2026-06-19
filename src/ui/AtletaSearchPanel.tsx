@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AtletaSearchPanel.tsx
  *
  * Procura por nome ou nº de federado um atleta e mostra os seus melhores
@@ -151,7 +151,7 @@ function buildAthleteIndex(
 
 function PosBadge({ pos }: { pos: number }) {
   const styles: Record<number, { bg: string; fg: string; label: string }> = {
-    1: { bg: "var(--medal-gold-bg, #fef3c7)", fg: "var(--medal-gold-fg, #92400e)", label: "🥇 1º" },
+    1: { bg: "var(--medal-gold-bg, #fef3c7)", fg: "var(--medal-gold-fg, var(--color-warn-dark))", label: "🥇 1º" },
     2: { bg: "var(--medal-silver-bg, #f1f5f9)", fg: "var(--medal-silver-fg, #475569)", label: "🥈 2º" },
     3: { bg: "var(--medal-bronze-bg, #fdf2e9)", fg: "var(--medal-bronze-fg, #9a3412)", label: "🥉 3º" },
   };
@@ -170,7 +170,7 @@ function PosBadge({ pos }: { pos: number }) {
         background: s.bg,
         color: s.fg,
         fontWeight: 700,
-        fontSize: 11,
+        fontSize: "var(--fs-11)",
         whiteSpace: "nowrap",
         letterSpacing: 0.2,
       }}
@@ -243,7 +243,7 @@ export default function AtletaSearchPanel({
             padding: "8px 12px",
             border: "1px solid var(--border)",
             borderRadius: 6,
-            fontSize: 14,
+            fontSize: "var(--fs-14)",
             background: "var(--bg-input, var(--bg-card))",
             color: "var(--text-1)",
           }}
@@ -268,26 +268,16 @@ export default function AtletaSearchPanel({
             marginBottom: 12,
           }}
         >
-          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+          <table className="dtable">
             <thead>
-              <tr
-                style={{
-                  background: "var(--bg-header)",
-                  textAlign: "left",
-                  fontSize: 11,
-                  fontWeight: 700,
-                  textTransform: "uppercase",
-                  letterSpacing: 0.3,
-                  color: "var(--text-3)",
-                }}
-              >
-                <th style={{ padding: "8px 12px" }}>Atleta</th>
-                <th style={{ padding: "8px 12px" }}>Fed</th>
-                <th style={{ padding: "8px 12px" }}>Clube</th>
-                <th style={{ padding: "8px 12px", textAlign: "right" }}>Particip.</th>
-                <th style={{ padding: "8px 12px", textAlign: "right" }}>🥇</th>
-                <th style={{ padding: "8px 12px", textAlign: "right" }}>Top-5</th>
-                <th style={{ padding: "8px 12px", textAlign: "right" }}>Melhor</th>
+              <tr>
+                <th>Atleta</th>
+                <th>Fed</th>
+                <th>Clube</th>
+                <th className="r">Particip.</th>
+                <th className="r">🥇</th>
+                <th className="r">Top-5</th>
+                <th className="r">Melhor</th>
               </tr>
             </thead>
             <tbody>
@@ -297,43 +287,22 @@ export default function AtletaSearchPanel({
                   <tr
                     key={k}
                     onClick={() => handleSelect(a)}
-                    style={{
-                      borderTop: "1px solid var(--border-light)",
-                      cursor: "pointer",
-                    }}
+                    style={{ cursor: "pointer" }}
                     title="Clica para ver detalhe"
                   >
-                    <td style={{ padding: "8px 12px", fontWeight: 700 }}>{a.name}</td>
-                    <td
-                      style={{
-                        padding: "8px 12px",
-                        fontFamily: "monospace",
-                        fontSize: 12,
-                        color: "var(--text-3)",
-                      }}
-                    >
+                    <td style={{ fontWeight: 700 }}>{a.name}</td>
+                    <td style={{ fontFamily: "monospace", fontSize: "var(--fs-12)", color: "var(--text-3)" }}>
                       {a.fed || "—"}
                     </td>
-                    <td style={{ padding: "8px 12px", fontSize: 12, color: "var(--text-2)" }}>
+                    <td style={{ fontSize: "var(--fs-12)", color: "var(--text-2)" }}>
                       {a.club || "—"}
                     </td>
-                    <td style={{ padding: "8px 12px", textAlign: "right" }}>
-                      {a.results.length}
-                    </td>
-                    <td
-                      style={{
-                        padding: "8px 12px",
-                        textAlign: "right",
-                        color: a.golds > 0 ? "var(--accent)" : "var(--text-3)",
-                        fontWeight: a.golds > 0 ? 700 : 400,
-                      }}
-                    >
+                    <td className="r">{a.results.length}</td>
+                    <td className="r" style={{ color: a.golds > 0 ? "var(--accent)" : "var(--text-3)", fontWeight: a.golds > 0 ? 700 : 400 }}>
                       {a.golds || "—"}
                     </td>
-                    <td style={{ padding: "8px 12px", textAlign: "right" }}>{a.top5 || "—"}</td>
-                    <td style={{ padding: "8px 12px", textAlign: "right" }}>
-                      {a.best < 999 ? <PosBadge pos={a.best} /> : "—"}
-                    </td>
+                    <td className="r">{a.top5 || "—"}</td>
+                    <td className="r">{a.best < 999 ? <PosBadge pos={a.best} /> : "—"}</td>
                   </tr>
                 );
               })}
@@ -393,7 +362,7 @@ export default function AtletaSearchPanel({
               onClick={() => setSelectedKey(null)}
               style={{
                 padding: "5px 10px",
-                fontSize: 12,
+                fontSize: "var(--fs-12)",
                 background: "var(--bg-card)",
                 border: "1px solid var(--border)",
                 borderRadius: 4,
@@ -431,78 +400,38 @@ export default function AtletaSearchPanel({
 
           {/* Tabela cronológica */}
           <div style={{ overflowX: "auto", paddingBottom: 14 }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+            <table className="dtable">
               <thead>
-                <tr
-                  style={{
-                    background: "var(--bg-header)",
-                    textAlign: "left",
-                    fontSize: 11,
-                    fontWeight: 700,
-                    textTransform: "uppercase",
-                    letterSpacing: 0.3,
-                    color: "var(--text-3)",
-                  }}
-                >
-                  <th style={{ padding: "8px 12px" }}>Data</th>
-                  <th style={{ padding: "8px 12px" }}>Esc</th>
-                  <th style={{ padding: "8px 12px" }}>Pos</th>
-                  <th style={{ padding: "8px 12px" }}>Tipo</th>
-                  <th style={{ padding: "8px 12px", textAlign: "right" }}>Total</th>
-                  <th style={{ padding: "8px 12px", textAlign: "right" }}>±Par</th>
-                  <th style={{ padding: "8px 12px", textAlign: "right" }}>Em</th>
-                  <th style={{ padding: "8px 12px" }}>Torneio</th>
+                <tr>
+                  <th>Data</th>
+                  <th>Esc</th>
+                  <th>Pos</th>
+                  <th>Tipo</th>
+                  <th className="r">Total</th>
+                  <th className="r">±Par</th>
+                  <th className="r">Em</th>
+                  <th>Torneio</th>
                 </tr>
               </thead>
               <tbody>
                 {selected.results.map((r, i) => (
-                  <tr
-                    key={i}
-                    style={{ borderTop: "1px solid var(--border-light)" }}
-                  >
-                    <td
-                      style={{
-                        padding: "6px 12px",
-                        whiteSpace: "nowrap",
-                        fontVariantNumeric: "tabular-nums",
-                      }}
-                    >
-                      {r.date}
-                    </td>
-                    <td style={{ padding: "6px 12px" }}>{r.escalao ? <EscPill esc={r.escalao} /> : "—"}</td>
-                    <td style={{ padding: "6px 12px" }}>
-                      <PosBadge pos={r.pos} />
-                    </td>
-                    <td style={{ padding: "6px 12px", fontSize: 11, color: "var(--text-3)" }}>
+                  <tr key={i}>
+                    <td style={{ whiteSpace: "nowrap" }}>{r.date}</td>
+                    <td>{r.escalao ? <EscPill esc={r.escalao} /> : "—"}</td>
+                    <td><PosBadge pos={r.pos} /></td>
+                    <td style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
                       <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
                         <span>{r.isClubes ? "Clubes" : "Jovens"}</span>
                         {r.rounds > 1 && <RoundPill nR={r.rounds} />}
                       </span>
                     </td>
-                    <td
-                      style={{
-                        padding: "6px 12px",
-                        textAlign: "right",
-                        fontWeight: 600,
-                      }}
-                    >
-                      {r.gross ?? "—"}
-                    </td>
-                    <td style={{ padding: "6px 12px", textAlign: "right" }}>
-                      {r.toPar != null ? fmtToPar(r.toPar) : "—"}
-                    </td>
-                    <td
-                      style={{
-                        padding: "6px 12px",
-                        textAlign: "right",
-                        fontSize: 11,
-                        color: "var(--text-3)",
-                      }}
-                      title={`Total de ${r.totalPlayers} inscritos`}
-                    >
+                    <td className="r" style={{ fontWeight: 600 }}>{r.gross ?? "—"}</td>
+                    <td className="r">{r.toPar != null ? fmtToPar(r.toPar) : "—"}</td>
+                    <td className="r" style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}
+                      title={`Total de ${r.totalPlayers} inscritos`}>
                       {r.totalPlayers > 0 ? `${r.pos}/${r.totalPlayers}` : "—"}
                     </td>
-                    <td style={{ padding: "6px 12px" }}>
+                    <td>
                       <a
                         href={fpgScoringUrl(r.ccode, r.tcode)}
                         target="_blank"

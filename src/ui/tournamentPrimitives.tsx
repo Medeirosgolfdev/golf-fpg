@@ -1,4 +1,4 @@
-/**
+﻿/**
  *
  * ═══════════════════════════════════════════════════════════════
  * FAMÍLIA DE TABELAS — MANTER SEMPRE EM SINCRONIA
@@ -238,7 +238,7 @@ export function TournPName({
           target="_blank"
           rel="noopener noreferrer"
           title="Ver em Kids"
-          style={{ marginLeft: 4, fontWeight: 800, color: "var(--color-good-dark)", fontSize: 11, textDecoration: "none" }}>
+          style={{ marginLeft: 4, fontWeight: 800, color: "var(--color-good-dark)", fontSize: "var(--fs-11)", textDecoration: "none" }}>
           ↗
         </a>
       )}

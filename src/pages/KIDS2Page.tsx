@@ -1,4 +1,4 @@
-/**
+﻿/**
  * KIDS2Page.tsx — rebuild canonical-first.
  *
  * Layout:
@@ -112,12 +112,12 @@ function KIDS2PageContent() {
       <Kids2SubNav leading={<SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />}>
         <DataSourcesChip sources={data.sources} />
         <ToolbarSep />
-        <span className="toolbar-meta shrink-0" style={{ fontSize: 10, color: "var(--color-good-dark)", fontWeight: 700 }}>
+        <span className="toolbar-meta shrink-0" style={{ fontSize: "var(--fs-10)", color: "var(--color-good-dark)", fontWeight: 700 }}>
           {data.juniors.length} juniors · {data.tournaments.length} torneios · ✓
         </span>
         <ToolbarSep />
         {/* Pills de fonte */}
-        <span style={{ fontSize: 10, fontWeight: 700, color: "var(--text-3)", letterSpacing: 0.4, textTransform: "uppercase", flexShrink: 0 }}>
+        <span style={{ fontSize: "var(--fs-10)", fontWeight: 700, color: "var(--text-3)", letterSpacing: 0.4, textTransform: "uppercase", flexShrink: 0 }}>
           Fonte
         </span>
         {SOURCE_PILLS.map((p) => {

@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect, Fragment } from "react";
+﻿import { useMemo, useState, useEffect, Fragment } from "react";
 import SidebarToggle from "../ui/SidebarToggle";
 import KpiCard from "../ui/KpiCard";
 import EmptyState from "../ui/EmptyState";
@@ -28,6 +28,7 @@ import { canonicalCourseName } from "../utils/courseAliases";
 import { SC } from "../utils/scoreDisplay";
 import { physicalTeeGroups, physicalTeeKey, sexesIn, type SexKey, type PhysTeeGroup } from "../utils/teeGroups";
 import TeeBars from "../ui/TeeBars";
+import DetailHeader from "../ui/DetailHeader";
 
 /* Mapa fed-code → nome para jogadores que não estão em players.json.
    Gerado por scripts/build-course-player-names.js a partir de federados.json.
@@ -253,10 +254,10 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
                 {sexes.flatMap((s) => {
                   const r = g.h18[s];
                   return [
-                    <td key={`r-${s}-cr`} className="ta-c" style={{ fontSize: 12, borderLeft: sepL }}>
+                    <td key={`r-${s}-cr`} className="ta-c" style={{ fontSize: "var(--fs-12)", borderLeft: sepL }}>
                       {r ? fmtCR(r.cr) : ""}
                     </td>,
-                    <td key={`r-${s}-sl`} className="ta-c" style={{ fontSize: 12, borderLeft: sepThin }}>
+                    <td key={`r-${s}-sl`} className="ta-c" style={{ fontSize: "var(--fs-12)", borderLeft: sepThin }}>
                       {r ? r.sl : ""}
                     </td>,
                   ];
@@ -341,8 +342,8 @@ function CourseNineRatings({ tees }: { tees: Tee[] }) {
                 {nines.flatMap((n) => n.sexes.flatMap((s, i) => {
                   const r = n.get(g)[s];
                   return [
-                    <td key={`${n.id}-${s}-cr`} className="ta-c" style={{ fontSize: 12, borderLeft: i === 0 ? sepL : sepThin }}>{r ? fmtCR(r.cr) : ""}</td>,
-                    <td key={`${n.id}-${s}-sl`} className="ta-c" style={{ fontSize: 12, borderLeft: sepThin }}>{r ? r.sl : ""}</td>,
+                    <td key={`${n.id}-${s}-cr`} className="ta-c" style={{ fontSize: "var(--fs-12)", borderLeft: i === 0 ? sepL : sepThin }}>{r ? fmtCR(r.cr) : ""}</td>,
+                    <td key={`${n.id}-${s}-sl`} className="ta-c" style={{ fontSize: "var(--fs-12)", borderLeft: sepThin }}>{r ? r.sl : ""}</td>,
                   ];
                 }))}
               </tr>
@@ -1070,61 +1071,59 @@ export default function CamposPage() {
         <div className="course-detail" ref={md.detailRef}>
           {selected ? (
             <>
-              <div className="detail-header">
-                <div className="detail-header-top">
-                <div>
-                  <h2 className="detail-title">
-                    {selected.master.name}
-                    {selectedFlag && (
-                      <span className="course-country-badge">
-                        {selectedFlag} {resolveCountryName(selected)}
-                      </span>
-                    )}
-                    {isAway(selected) && <PillBadge pill="INTL" />}
-                  </h2>
-                  <div className="detail-sub">
-                    <span className="muted" title={isAway(selected) ? "Campo internacional" : isTournamentCourse(selected.courseKey) ? "Torneio" : "Campo de Portugal"}>
-                      {courseRef(selected)}
+              <DetailHeader
+                title={<>
+                  {selected.master.name}
+                  {selectedFlag && (
+                    <span className="course-country-badge">
+                      {selectedFlag} {resolveCountryName(selected)}
                     </span>
-                    {scorecardLink && (
-                      <>
-                        {" · "}
-                        <ExtLink href={scorecardLink} className="detail-link">
-                          Ver scorecard ↗
-                        </ExtLink>
-                      </>
-                    )}
-                    {selected.master.links?.extra?.map((lnk) => (
-                      <span key={lnk.url}>
-                        {" · "}
-                        <ExtLink href={lnk.url} className="detail-link">
-                          {lnk.label} ↗
-                        </ExtLink>
-                      </span>
-                    ))}
+                  )}
+                  {isAway(selected) && <PillBadge pill="INTL" />}
+                </>}
+                sub={<>
+                  <span className="muted" title={isAway(selected) ? "Campo internacional" : isTournamentCourse(selected.courseKey) ? "Torneio" : "Campo de Portugal"}>
+                    {courseRef(selected)}
+                  </span>
+                  {scorecardLink && (
+                    <>
+                      {" · "}
+                      <ExtLink href={scorecardLink} className="detail-link">
+                        Ver scorecard ↗
+                      </ExtLink>
+                    </>
+                  )}
+                  {selected.master.links?.extra?.map((lnk) => (
+                    <span key={lnk.url}>
+                      {" · "}
+                      <ExtLink href={lnk.url} className="detail-link">
+                        {lnk.label} ↗
+                      </ExtLink>
+                    </span>
+                  ))}
+                </>}
+                actions={
+                  <div className="segmented-toggle" role="tablist" aria-label="Vista do campo">
+                    <button
+                      role="tab"
+                      aria-selected={detailView === "scorecard"}
+                      className={`seg-btn${detailView === "scorecard" ? " active" : ""}`}
+                      onClick={() => setDetailView("scorecard")}
+                    >
+                      <span className="seg-label">Scorecard</span>
+                    </button>
+                    <button
+                      role="tab"
+                      aria-selected={detailView === "manuel"}
+                      className={`seg-btn${detailView === "manuel" ? " active" : ""}`}
+                      onClick={() => setDetailView("manuel")}
+                      title="Média por buraco do Manuel neste campo"
+                    >
+                      <span className="seg-label">Como jogou</span>
+                    </button>
                   </div>
-                </div>
-                <div className="segmented-toggle" role="tablist" aria-label="Vista do campo">
-                  <button
-                    role="tab"
-                    aria-selected={detailView === "scorecard"}
-                    className={`seg-btn${detailView === "scorecard" ? " active" : ""}`}
-                    onClick={() => setDetailView("scorecard")}
-                  >
-                    <span className="seg-label">Scorecard</span>
-                  </button>
-                  <button
-                    role="tab"
-                    aria-selected={detailView === "manuel"}
-                    className={`seg-btn${detailView === "manuel" ? " active" : ""}`}
-                    onClick={() => setDetailView("manuel")}
-                    title="Média por buraco do Manuel neste campo"
-                  >
-                    <span className="seg-label">Como jogou</span>
-                  </button>
-                </div>
-                </div>
-              </div>
+                }
+              />
 
               {/* KPIs do campo */}
               {heroStats && (

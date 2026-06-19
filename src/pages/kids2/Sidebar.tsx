@@ -1,4 +1,4 @@
-/**
+﻿/**
  * kids2/Sidebar.tsx
  *
  * Sidebar de rivais. Filtros (search + país) locais; pills de fonte e toggles
@@ -185,7 +185,7 @@ export default function Sidebar({
       height: "100%",
     }}>
       <div style={{ padding: "10px 12px", borderBottom: "1px solid var(--border-light)" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 11, color: "var(--text-3)", marginBottom: 8 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "var(--fs-11)", color: "var(--text-3)", marginBottom: 8 }}>
           <span style={{ marginLeft: "auto" }}>
             {totalFiltered === totalShown
               ? `${totalFiltered} de ${data.juniors.length}`
@@ -202,7 +202,7 @@ export default function Sidebar({
             padding: "6px 10px",
             border: "1px solid var(--border)",
             borderRadius: 6,
-            fontSize: 13,
+            fontSize: "var(--fs-13)",
             background: "var(--bg)",
             color: "var(--text)",
           }}
@@ -231,10 +231,10 @@ export default function Sidebar({
                 icon={flagE || "🌐"}
               >
                 <span style={{ flex: 1 }}>{country || "Sem país"}</span>
-                <span style={{ fontSize: 10, opacity: 0.7, fontWeight: 600, marginRight: 4 }}>
+                <span style={{ fontSize: "var(--fs-10)", opacity: 0.7, fontWeight: 600, marginRight: 4 }}>
                   {juniors.length}{totalInCountry > juniors.length ? `/${totalInCountry}` : ""}
                 </span>
-                <span style={{ fontSize: 9, opacity: 0.5 }}>{collapsed ? "▶" : "▼"}</span>
+                <span style={{ fontSize: "var(--fs-9)", opacity: 0.5 }}>{collapsed ? "▶" : "▼"}</span>
               </SectionHeader>
               {!collapsed && juniors.map((j) => (
                 <RivalRow key={j.id} junior={j} manuel={manuel} selected={selectedId === j.id} onSelect={onSelect} sharedCount={sharedCountByJunior.get(j.id) || 0} />
@@ -243,7 +243,7 @@ export default function Sidebar({
           );
         })}
         {directos.length === 0 && byCountry.length === 0 && (
-          <div style={{ padding: "20px 12px", textAlign: "center", color: "var(--text-3)", fontSize: 12 }}>
+          <div style={{ padding: "20px 12px", textAlign: "center", color: "var(--text-3)", fontSize: "var(--fs-12)" }}>
             Sem rivais com estes filtros
           </div>
         )}
@@ -263,7 +263,7 @@ function SectionHeader({ children, color, icon, onClick }: {
       onClick={onClick}
       style={{
         padding: "6px 12px",
-        fontSize: 11,
+        fontSize: "var(--fs-11)",
         fontWeight: 700,
         background: "var(--bg-muted)",
         color,
@@ -271,7 +271,7 @@ function SectionHeader({ children, color, icon, onClick }: {
         borderTop: "1px solid var(--border-light)",
         position: "sticky",
         top: 0,
-        zIndex: 1,
+        zIndex: "var(--z-base)",
         cursor: onClick ? "pointer" : "default",
         display: "flex",
         alignItems: "center",
@@ -280,7 +280,7 @@ function SectionHeader({ children, color, icon, onClick }: {
         letterSpacing: 0.4,
       }}
     >
-      {icon && <span style={{ fontSize: 13, lineHeight: 1 }}>{icon}</span>}
+      {icon && <span style={{ fontSize: "var(--fs-13)", lineHeight: 1 }}>{icon}</span>}
       {children}
     </div>
   );
@@ -315,21 +315,21 @@ function RivalRow({ junior, manuel, selected, onSelect, sharedCount }: {
         background: selected ? "var(--bg-active, rgba(0,0,0,0.04))" : "transparent",
         textAlign: "left",
         cursor: "pointer",
-        fontSize: 12,
+        fontSize: "var(--fs-12)",
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-        <span style={{ fontSize: 13, flexShrink: 0 }}>{flagEmoji}</span>
+        <span style={{ fontSize: "var(--fs-13)", flexShrink: 0 }}>{flagEmoji}</span>
         <span style={{ flex: 1, fontWeight: selected ? 700 : 600, color: "var(--text)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
           {junior.canonicalName}
-          {isManuel && <span style={{ marginLeft: 4, fontSize: 9, padding: "1px 5px", borderRadius: 4, background: "var(--bg-success-subtle)", color: "var(--color-good-dark)", fontWeight: 700 }}>REF</span>}
+          {isManuel && <span style={{ marginLeft: 4, fontSize: "var(--fs-9)", padding: "1px 5px", borderRadius: 4, background: "var(--bg-success-subtle)", color: "var(--color-good-dark)", fontWeight: 700 }}>REF</span>}
         </span>
-        <span style={{ flexShrink: 0, fontSize: 11, fontWeight: 600, color: "var(--text-3)" }}>{tournCount}</span>
+        <span style={{ flexShrink: 0, fontSize: "var(--fs-11)", fontWeight: 600, color: "var(--text-3)" }}>{tournCount}</span>
       </div>
-      <div style={{ paddingLeft: 19, display: "flex", alignItems: "center", gap: 6, fontSize: 10, color: "var(--text-3)", marginTop: 2 }}>
+      <div style={{ paddingLeft: 19, display: "flex", alignItems: "center", gap: 6, fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 2 }}>
         {club && <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>🏌️ {club}</span>}
         {shared > 0 && (
-          <span style={{ marginLeft: "auto", padding: "0 5px", borderRadius: 4, background: "var(--bg-warn-subtle, #fffbeb)", color: "var(--color-warn-dark, #92400e)", fontWeight: 700 }}>
+          <span style={{ marginLeft: "auto", padding: "0 5px", borderRadius: 4, background: "var(--bg-warn-subtle, var(--bg-warn))", color: "var(--color-warn-dark, var(--color-warn-dark))", fontWeight: 700 }}>
             {shared}× M
           </span>
         )}

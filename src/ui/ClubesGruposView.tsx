@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+﻿import React, { useState, useMemo } from "react";
 import { useSort } from "../hooks/useSort";
 import { C as _C } from "../utils/colors";
 import { abreviarNome, medal } from "../utils/format";
@@ -195,15 +195,15 @@ export default function ClubesGruposView({
     return sortDir === "asc" ? (av as number) - (bv as number) : (bv as number) - (av as number);
   }), [teamDataList, sortCol, sortDir]);
 
-  const tdC: React.CSSProperties = { padding: "5px 6px", fontSize: 12, textAlign: "center", borderBottom: "1px solid var(--border)" };
+  const tdC: React.CSSProperties = { padding: "5px 6px", fontSize: "var(--fs-12)", textAlign: "center", borderBottom: "1px solid var(--border)" };
   const tdL: React.CSSProperties = { ...tdC, textAlign: "left" };
-  const thC: React.CSSProperties = { ...tdC, fontWeight: 700, fontSize: 11, color: "var(--text-muted)", background: "var(--bg-muted)", textTransform: "uppercase", letterSpacing: "0.04em" };
+  const thC: React.CSSProperties = { ...tdC, fontWeight: 700, fontSize: "var(--fs-11)", color: "var(--text-muted)", background: "var(--bg-muted)", textTransform: "uppercase", letterSpacing: "0.04em" };
 
   function SortBtn({ label, col }: { label: string; col: SortCol }) {
     const active = sortCol === col;
     return (
       <button onClick={() => toggleSortCol(col)} style={{
-        fontSize: 11, fontWeight: active ? 700 : 500, padding: "3px 9px", borderRadius: 4,
+        fontSize: "var(--fs-11)", fontWeight: active ? 700 : 500, padding: "3px 9px", borderRadius: 4,
         border: `1px solid ${active ? "var(--accent)" : "var(--border)"}`,
         background: active ? "var(--accent)" : "var(--bg-hover)",
         color: active ? "#fff" : "var(--text-muted)", cursor: "pointer",
@@ -220,11 +220,11 @@ export default function ClubesGruposView({
 
       {/* Barra de ordenação */}
       <div className="mb-10 flex-wrap" style={{ display: "flex", alignItems: "center", gap: 6 }}>
-        <span style={{ fontSize: 10, color: "var(--text-muted)" }}>Ordenar:</span>
+        <span style={{ fontSize: "var(--fs-10)", color: "var(--text-muted)" }}>Ordenar:</span>
         <SortBtn label="Grupo" col="grupo" />
         {rdCols.map(rd => <SortBtn key={rd} label={`R${rd}`} col={rd} />)}
         <SortBtn label="Total" col="total" />
-        <span style={{ marginLeft: "auto", fontSize: 14, color: "var(--text-muted)", marginTop: 4 }}>
+        <span style={{ marginLeft: "auto", fontSize: "var(--fs-14)", color: "var(--text-muted)", marginTop: 4 }}>
           {formatNote === undefined
             ? <>Melhores {defaultBestN} de 4 · Máximo {maxHoleScore} pancadas por buraco</>
             : formatNote}
@@ -245,7 +245,7 @@ export default function ClubesGruposView({
             const teams = (clubTeamOrder.get(clube) ?? []).sort().join(" + ");
             return (
               <span key={clube} style={{
-                fontSize: 10, display: "inline-flex", alignItems: "center", gap: 5,
+                fontSize: "var(--fs-10)", display: "inline-flex", alignItems: "center", gap: 5,
                 border: `1px solid ${color}`, borderRadius: 4, padding: "2px 8px",
                 background: `${color}12`,
               }}>
@@ -277,7 +277,7 @@ export default function ClubesGruposView({
               {/* Header do card */}
               <div style={{ background: color, color: "#fff", padding: "8px 12px", display: "flex", alignItems: "center", gap: 10 }}>
                 {/* Letra do grupo em caixa */}
-                <div className="shrink-0 fw-900" style={{ width: 34, height: 34, background: "rgba(255,255,255,0.18)", borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, lineHeight: 1 }}>
+                <div className="shrink-0 fw-900" style={{ width: 34, height: 34, background: "rgba(255,255,255,0.18)", borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "var(--fs-20)", lineHeight: 1 }}>
                   {g.grupo}
                 </div>
 
@@ -302,7 +302,7 @@ export default function ClubesGruposView({
                       <div className="fs-10" style={{ opacity: 0.85, lineHeight: 1, marginBottom: 2 }}>
                         {viewRd != null ? `R${viewRd}` : (mdl ?? `#${pos}`)}
                       </div>
-                      <div className="fw-900" style={{ fontSize: 20, lineHeight: 1 }}>{dispScore}</div>
+                      <div className="fw-900" style={{ fontSize: "var(--fs-20)", lineHeight: 1 }}>{dispScore}</div>
                       {dispTP != null && (
                         <div className="fs-10 mt-1" style={{ opacity: 0.85, lineHeight: 1 }}>
                           ({dispTP >= 0 ? `+${dispTP}` : dispTP})
@@ -320,13 +320,23 @@ export default function ClubesGruposView({
                     {(() => {
                       function PHdr({ label, col, style }: { label: string; col: "nome" | "hcp" | number; style?: React.CSSProperties }) {
                         const active = playerSort === col;
+                        const title = active
+                          ? (playerSortDir === "asc" ? "Ordenado crescente" : "Ordenado decrescente")
+                          : "Clique para ordenar";
                         return (
-                          <th onClick={() => togglePlayerSort(col)} style={{
-                            ...thC, cursor: "pointer", userSelect: "none",
-                            color: active ? color : "var(--text-muted)",
-                            ...style,
-                          }}>
-                            {label}{active ? (playerSortDir === "asc" ? "▲" : "▼") : ""}
+                          <th
+                            className="lb-sortable"
+                            onClick={() => togglePlayerSort(col)}
+                            title={title}
+                            style={{
+                              ...thC, cursor: "pointer", userSelect: "none",
+                              color: active ? color : "var(--text-muted)",
+                              fontWeight: active ? 700 : undefined,
+                              ...style,
+                            }}
+                          >
+                            {label}
+                            {active && <span className="fs-10" style={{ marginLeft: 2 }}>{playerSortDir === "asc" ? "▲" : "▼"}</span>}
                           </th>
                         );
                       }
@@ -412,7 +422,7 @@ export default function ClubesGruposView({
                                     <div style={{ fontWeight: c ? 700 : 400 }}>{score}</div>
                                     {tp != null && (
                                       <div style={{
-                                        fontSize: 9, lineHeight: 1,
+                                        fontSize: "var(--fs-9)", lineHeight: 1,
                                         color: c ? color : "var(--text-muted)",
                                         opacity: c ? 0.85 : 0.65,
                                       }}>
@@ -447,7 +457,7 @@ export default function ClubesGruposView({
                 {/* Rodapé: apenas total dos 4 jogadores */}
                 <tfoot>
                   <tr style={{ background: color }}>
-                    <td colSpan={2} style={{ ...tdL, paddingLeft: 10, fontWeight: 600, fontSize: 10, color: "rgba(255,255,255,0.85)", textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                    <td colSpan={2} style={{ ...tdL, paddingLeft: 10, fontWeight: 600, fontSize: "var(--fs-10)", color: "rgba(255,255,255,0.85)", textTransform: "uppercase", letterSpacing: "0.04em" }}>
                       Total {g.jogadores.length} Jogadores
                     </td>
                     {viewCols.map((rd) => {
@@ -500,7 +510,7 @@ export default function ClubesGruposView({
                 <div style={{
                   display: "flex", gap: 0,
                   borderTop: "1px solid var(--border)",
-                  fontSize: 11,
+                  fontSize: "var(--fs-11)",
                 }}>
                   {g.capitao && (
                     <div style={{
@@ -511,7 +521,7 @@ export default function ClubesGruposView({
                     }}>
                       <span className="fs-13">🎖️</span>
                       <span>
-                        <span style={{ fontSize: 9, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--text-muted)", display: "block", lineHeight: 1 }}>Capitão</span>
+                        <span style={{ fontSize: "var(--fs-9)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--text-muted)", display: "block", lineHeight: 1 }}>Capitão</span>
                         <span style={{ fontWeight: 600, color: "var(--text)" }}>{g.capitao}</span>
                       </span>
                     </div>
@@ -524,7 +534,7 @@ export default function ClubesGruposView({
                     }}>
                       <span className="fs-13">🔄</span>
                       <span>
-                        <span style={{ fontSize: 9, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--text-muted)", display: "block", lineHeight: 1 }}>Suplente</span>
+                        <span style={{ fontSize: "var(--fs-9)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--text-muted)", display: "block", lineHeight: 1 }}>Suplente</span>
                         <span style={{ fontWeight: 600, color: "var(--text)" }}>{g.suplente}</span>
                       </span>
                     </div>

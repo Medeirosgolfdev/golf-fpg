@@ -1,4 +1,4 @@
-/**
+﻿/**
  * ComparisonDonut — donut SVG simples estilo Masters.com
  *
  * Mostra uma percentagem do jogador (verde) com uma "costela" interna
@@ -58,7 +58,7 @@ export default function ComparisonDonut({
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
       {!minimal && label && (
-        <div style={{ fontSize: 11, fontWeight: 700, color: "var(--text-3)", letterSpacing: "0.08em" }}>
+        <div style={{ fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-3)", letterSpacing: "0.08em" }}>
           {label}
         </div>
       )}
@@ -108,7 +108,7 @@ export default function ComparisonDonut({
         )}
       </svg>
       {!minimal && caption && (
-        <div style={{ fontSize: 11, color: "var(--text-3)" }}>{caption}</div>
+        <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>{caption}</div>
       )}
     </div>
   );

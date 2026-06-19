@@ -1,4 +1,4 @@
-/**
+﻿/**
  * src/ui/FilterChip.tsx
  *
  * Botão pill de filtro com estado active/inactive e cor opcional.
@@ -25,7 +25,7 @@ export default function FilterChip({ active, onClick, color, children }: FilterC
     <button
       onClick={onClick}
       style={{
-        fontSize: 10,
+        fontSize: "var(--fs-10)",
         padding: "2px 8px",
         borderRadius: 20,
         border: `1px solid ${active ? accent : "var(--border)"}`,

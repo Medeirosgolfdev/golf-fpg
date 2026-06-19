@@ -245,7 +245,7 @@ export function RFEGFederationsView() {
         }
       />
 
-      <div style={{ marginTop: 12, padding: "10px 12px", background: "var(--bg-muted, #fff7e6)", border: "1px solid var(--border, var(--color-rfeg-yellow))", borderRadius: 6, fontSize: 12 }}>
+      <div style={{ marginTop: 12, padding: "10px 12px", background: "var(--bg-muted, #fff7e6)", border: "1px solid var(--border, var(--color-rfeg-yellow))", borderRadius: 6, fontSize: "var(--fs-12)" }}>
         <strong>⚠ Estrutura federativa do golfe espanhol.</strong> A nível nacional
         existe a <strong>RFEG</strong> (Madrid, sede do golfe federado). Sob a sua tutela
         coexistem <strong>19 federações territoriais</strong> que organizam circuitos
@@ -256,22 +256,22 @@ export function RFEGFederationsView() {
 
       <div style={{ marginTop: 16, display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
         <div style={{ padding: 12, background: "var(--bg-muted, #f5f5f5)", borderRadius: 6, border: "1px solid var(--border)" }}>
-          <div style={{ fontSize: 24, fontWeight: 700, color: "#0a5" }}>{ncFeds.length}</div>
+          <div style={{ fontSize: "var(--fs-24)", fontWeight: 700, color: "var(--color-good)" }}>{ncFeds.length}</div>
           <div className="fs-11 muted">via NextCaddy (scrapadas)</div>
           <div className="fs-10" style={{ marginTop: 4 }}>{totalScraped} torneios indexados</div>
         </div>
         <div style={{ padding: 12, background: "var(--bg-muted, #f5f5f5)", borderRadius: 6, border: "1px solid var(--border)" }}>
-          <div style={{ fontSize: 24, fontWeight: 700, color: "#0a5" }}>{gdFeds.length}</div>
+          <div style={{ fontSize: "var(--fs-24)", fontWeight: 700, color: "var(--color-good)" }}>{gdFeds.length}</div>
           <div className="fs-11 muted">via GolfDirecto (scrapada)</div>
           <div className="fs-10" style={{ marginTop: 4 }}>{totalGdScraped} games descobertos</div>
         </div>
         <div style={{ padding: 12, background: "var(--bg-muted, #f5f5f5)", borderRadius: 6, border: "1px solid var(--border)" }}>
-          <div style={{ fontSize: 24, fontWeight: 700, color: "var(--text-2)" }}>{ownFeds.length}</div>
+          <div style={{ fontSize: "var(--fs-24)", fontWeight: 700, color: "var(--text-2)" }}>{ownFeds.length}</div>
           <div className="fs-11 muted">com site próprio</div>
           <div className="fs-10" style={{ marginTop: 4 }}>sem dados scrapados</div>
         </div>
         <div style={{ padding: 12, background: "var(--bg-muted, #f5f5f5)", borderRadius: 6, border: "1px solid var(--border)" }}>
-          <div style={{ fontSize: 24, fontWeight: 700, color: "var(--text-3)" }}>{emptyFeds.length}</div>
+          <div style={{ fontSize: "var(--fs-24)", fontWeight: 700, color: "var(--text-3)" }}>{emptyFeds.length}</div>
           <div className="fs-11 muted">delegações</div>
           <div className="fs-10" style={{ marginTop: 4 }}>Ceuta + Melilla</div>
         </div>
@@ -282,7 +282,7 @@ export function RFEGFederationsView() {
 
       <h3 style={{ marginTop: 24, marginBottom: 8 }}>✅ Federações com NextCaddy (rastreadas)</h3>
       <div style={{ overflowX: "auto" }}>
-        <table className="data-table" style={{ width: "100%", fontSize: 12 }}>
+        <table className="dtable">
           <thead>
             <tr>
               <th style={{ textAlign: "left" }}>Federação</th>
@@ -305,7 +305,7 @@ export function RFEGFederationsView() {
                 <td style={{ textAlign: "center", fontFamily: "monospace" }}>
                   <code>{f.ncCode}</code>
                 </td>
-                <td style={{ textAlign: "right", fontFamily: "monospace", color: "#0a5", fontWeight: 600 }}>
+                <td style={{ textAlign: "right", fontFamily: "monospace", color: "var(--color-good)", fontWeight: 600 }}>
                   {f.scrapedCount}
                 </td>
                 <td style={{ textAlign: "center" }}>
@@ -328,7 +328,7 @@ export function RFEGFederationsView() {
         — ainda activa para torneios antigos mas requer scraper diferente (não implementado).
       </p>
       <div style={{ overflowX: "auto" }}>
-        <table className="data-table" style={{ width: "100%", fontSize: 12 }}>
+        <table className="dtable">
           <thead>
             <tr>
               <th style={{ textAlign: "left" }}>Federação</th>
@@ -356,7 +356,7 @@ export function RFEGFederationsView() {
                 <td style={{ textAlign: "center" }}>
                   <ExtLink href="https://www.golfdirecto.com/" className="tourn-ext-link">golfdirecto.com</ExtLink>
                 </td>
-                <td style={{ textAlign: "right", fontFamily: "monospace", color: "#0a5", fontWeight: 600 }}>
+                <td style={{ textAlign: "right", fontFamily: "monospace", color: "var(--color-good)", fontWeight: 600 }}>
                   {f.scrapedCount}
                 </td>
                 <td style={{ textAlign: "center" }}>
@@ -379,7 +379,7 @@ export function RFEGFederationsView() {
         quando entram em provas Andaluzas/Madrileñas/Catalanas/etc.
       </p>
       <div style={{ overflowX: "auto" }}>
-        <table className="data-table" style={{ width: "100%", fontSize: 12 }}>
+        <table className="dtable">
           <thead>
             <tr>
               <th style={{ textAlign: "left" }}>Federação</th>
@@ -411,7 +411,7 @@ export function RFEGFederationsView() {
 
       <h3 style={{ marginTop: 24, marginBottom: 8 }}>⚪ Delegações de cidades autónomas</h3>
       <div style={{ overflowX: "auto" }}>
-        <table className="data-table" style={{ width: "100%", fontSize: 12 }}>
+        <table className="dtable">
           <thead>
             <tr>
               <th style={{ textAlign: "left" }}>Delegação</th>
@@ -443,7 +443,7 @@ export function RFEGFederationsView() {
 
       <div style={{ marginTop: 24 }}>
         <h3 style={{ marginBottom: 8 }}>🌐 Plataformas onde aparecem os resultados</h3>
-        <ul style={{ fontSize: 12, marginTop: 8 }}>
+        <ul style={{ fontSize: "var(--fs-12)", marginTop: 8 }}>
           <li>
             <strong>RFEG nacional</strong> — campeonatos nacionais (juvenis, masc., fem.,
             profissionais). Dados vêm de <code>rfegolf.es</code> (microsite com inscrições + DOB)

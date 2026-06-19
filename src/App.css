@@ -39,14 +39,18 @@ html, body, #root {
 .card { margin: var(--space-section) 0; padding: var(--space-inner); border: 1px solid var(--border-light); border-radius: var(--radius-lg); background: var(--bg-card); box-shadow: var(--shadow-sm); }
 
 /* ─── Data Tables ─── */
+/* Três tamanhos — mesma linguagem visual: header verde-suave, hover suave, bordas --border-light */
+
+/* Tabela padrão (13px corpo, 6/10 padding) */
 .dtable { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
 .dtable th { padding: 6px 10px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); background: var(--bg-header); border-bottom: 2px solid var(--border); white-space: nowrap; }
 .dtable th.r, .dtable td.r { text-align: right; }
-.dtable td { padding: 6px 10px; border-bottom: 1px solid var(--border-light); }
+.dtable td { padding: 6px 10px; border-bottom: 1px solid var(--border-light); vertical-align: middle; }
 .dtable tbody tr:hover { background: var(--bg-hover); }
 
+/* Tabela espaçosa (14px corpo, 8/12 padding, header sticky) */
 .dtable-lg { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
-.dtable-lg th { padding: 8px 12px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); background: var(--bg-header); border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: 1; white-space: nowrap; }
+.dtable-lg th { padding: 8px 12px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); background: var(--bg-header); border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: var(--z-sticky); white-space: nowrap; }
 .dtable-lg th.r, .dtable-lg td.r { text-align: right; }
 .dtable-lg td { padding: 7px 12px; border-bottom: 1px solid var(--border-light); vertical-align: middle; }
 .dtable-lg .r { text-align: right; }
@@ -54,6 +58,13 @@ html, body, #root {
 .dtable-lg .roundRow:hover { background: var(--bg-hover); }
 .dtable-lg .tourn-pname { font-weight: 700; }
 .dtable-lg .tourn-pname.tourn-pname-link { color: var(--link-color); }
+
+/* Tabela compacta para painéis e cards (11px corpo, 4/6 padding) */
+.dtable-sm { width: 100%; border-collapse: collapse; font-size: 11px; font-variant-numeric: tabular-nums; }
+.dtable-sm th { padding: 4px 6px; text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); background: var(--bg-header); border-bottom: 2px solid var(--border); white-space: nowrap; }
+.dtable-sm th.r, .dtable-sm td.r { text-align: right; }
+.dtable-sm td { padding: 4px 6px; border-bottom: 1px solid var(--border-light); vertical-align: middle; }
+.dtable-sm tbody tr:hover { background: var(--bg-hover); }
 
 /* ─── Sortable header (global, all tables) ─── */
 th.lb-sortable { cursor: pointer; user-select: none; transition: color 0.15s; }
@@ -78,14 +89,19 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 /* Cards that contain wide scrollable tables must clip their children */
 
 /* ─── Notice / Alert Boxes ─── */
+/* Sistema unificado: .notice + modificador de severidade */
 .notice { margin: 12px 0; padding: 10px 14px; border-radius: var(--radius-lg); font-size: 12px; line-height: 1.5; }
 .notice code { background: var(--bg-code); padding: 1px 5px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 12px; }
-.notice-info { background: var(--bg-info); border: 1px solid var(--score-bogey-border); color: var(--color-info); }
-.notice-warn { background: var(--bg-warn); border: 1px solid var(--border-warn); color: var(--color-warn-dark); }
-.notice-warn-text { color: var(--color-warn-dark); font-weight: 600; }
-
-/* ─── Notice / Error ─── */
+.notice-info    { background: var(--bg-info);            border: 1px solid var(--score-bogey-border); color: var(--color-info); }
+.notice-warn    { background: var(--bg-warn);            border: 1px solid var(--border-warn);        color: var(--color-warn-dark); }
+.notice-success { background: var(--bg-success-subtle);  border: 1px solid var(--color-good);         color: var(--color-good-dark); }
+/* notice-error funciona standalone (sem .notice) ou combinado — tem o seu próprio espaçamento */
 .notice-error { margin: 12px 0; padding: 10px 14px; border-radius: var(--radius-lg); font-size: 12px; line-height: 1.5; background: var(--bg-danger); border: 1px solid var(--border-danger); color: var(--color-danger-dark); }
+/* Variante horizontal (icon + texto lado a lado) */
+.notice-row { display: flex; align-items: center; gap: 10px; }
+.notice-row > .notice-icon { font-size: 18px; flex-shrink: 0; }
+/* Texto de aviso inline (sem caixa) */
+.notice-warn-text { color: var(--color-warn-dark); font-weight: 600; }
 .notice-error.ta-c { text-align: center; }
 .notice-error-msg { color: var(--color-danger-dark); font-weight: 600; font-size: 12px; }
 
@@ -280,7 +296,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   background: var(--bg-muted);
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+  box-shadow: var(--shadow-inset-sm);
   flex-shrink: 0;
   white-space: nowrap;
 }
@@ -312,19 +328,19 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .segmented-toggle .seg-btn.active {
   background: var(--accent);
   color: #fff;
-  box-shadow: 0 1px 3px rgba(45,106,48,0.30);
+  box-shadow: var(--shadow-accent-sm);
 }
 .segmented-toggle .seg-btn .seg-count {
   font-size: 10px;
   font-weight: 700;
   padding: 1px 6px;
   border-radius: 10px;
-  background: rgba(0,0,0,0.08);
+  background: var(--overlay-black-08);
   color: inherit;
   font-variant-numeric: tabular-nums;
 }
 .segmented-toggle .seg-btn.active .seg-count {
-  background: rgba(255,255,255,0.25);
+  background: var(--overlay-white-25);
 }
 
 .chip {
@@ -636,25 +652,22 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 
 .sc-par-row .sc-meta-label { color: var(--text-2); }
 .sc-hcp-row .sc-meta-label { color: var(--text-3); }
+.ratings-table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
 .ratings-table th {
- padding: 8px 8px;
+ padding: 6px 10px;
  font-size: 11px;
- font-weight: 600;
+ font-weight: 700;
  color: var(--text-3);
  text-transform: uppercase;
  letter-spacing: 0.04em;
+ background: var(--bg-header);
  border-bottom: 2px solid var(--border);
  text-align: left;
 }
-
 .ratings-table td {
- padding: 5px 8px;
-}
-.ratings-table tbody tr {
+ padding: 6px 10px;
  border-bottom: 1px solid var(--border-light);
-}
-.ratings-table tbody tr:last-child {
- border-bottom: none;
+ vertical-align: middle;
 }
 .ratings-table tbody tr:hover {
  background: var(--bg-hover);
@@ -1485,7 +1498,7 @@ tr.cross-current { background: var(--bg-success); }
  border: 1px solid var(--border);
  border-radius: var(--radius-lg);
  background: var(--bg-muted);
- box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+ box-shadow: var(--shadow-inset-sm);
 }
 
 .sim-strip-tab {
@@ -1509,7 +1522,7 @@ tr.cross-current { background: var(--bg-success); }
 .sim-strip-tab.active {
  background: var(--accent);
  color: #fff;
- box-shadow: 0 1px 3px rgba(45,106,48,0.30);
+ box-shadow: var(--shadow-accent-sm);
 }
 
 .sim-strip-calc-fields {
@@ -2339,7 +2352,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 /* ─── Table / layout combos (DrivePage) ─── */
 .tbl-compact      { font-size: 12px; border-collapse: collapse; width: auto; font-variant-numeric: tabular-nums; }
 .sticky-col-0     { position: sticky; left: 0; z-index: 2; background: var(--bg-card, #fff); }
-.sticky-col-1     { position: sticky; left: 26px; z-index: 2; background: var(--bg-card, #fff); box-shadow: 2px 0 4px rgba(0,0,0,0.06); }
+.sticky-col-1     { position: sticky; left: 26px; z-index: 2; background: var(--bg-card, #fff); box-shadow: var(--shadow-sticky-col); }
 
 /* Só o header de colunas fica sticky — SI e PAR fazem scroll */
 .sc-lb thead tr:last-child th { position: sticky; top: 0; z-index: 4; }
@@ -2357,7 +2370,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .cs-table { border-collapse: collapse; font-size: 12px; }
 .cs-table th,
 .cs-table td { padding: 5px 5px; text-align: center; border: none; border-bottom: 1px solid var(--border-light); white-space: nowrap; }
-.cs-table th { background: var(--bg-header); font-weight: 700; font-size: 11px; color: var(--text-2); }
+.cs-table th { background: var(--bg-header); font-weight: 700; font-size: 11px; color: var(--text-3); }
 .cs-table th.cs-sortable { cursor: pointer; user-select: none; }
 .cs-table th.cs-sortable:hover { background: var(--bg-hover-subtle); }
 
@@ -2402,10 +2415,10 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .cs-table .cs-s-stat  { width: 28px; }
 
 /* Hover */
-.cs-table tbody tr:hover { background: var(--bg-detail); }
+.cs-table tbody tr:hover { background: var(--bg-hover); }
 .cs-table tbody tr.pointer { cursor: pointer; }
 .cs-table tbody tr:hover .sticky-col-0,
-.cs-table tbody tr:hover .sticky-col-1 { background: var(--bg-detail); }
+.cs-table tbody tr:hover .sticky-col-1 { background: var(--bg-hover); }
 /* ═══════════════════════════════════════════════════════════════
    Usado em: ScorecardLeaderboard, TotalLeaderboard, AccumulatedLB
    ═══════════════════════════════════════════════════════════════ */
@@ -3178,10 +3191,10 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .ov-export-btn {
  padding: 10px 28px; background: var(--link-color); color: #fff; border: none; border-radius: 8px;
  font-size: 14px; font-weight: 800; cursor: pointer; transition: all 0.15s;
- box-shadow: 0 2px 8px rgba(0,0,0,.15); letter-spacing: .3px;
+ box-shadow: var(--shadow-float); letter-spacing: .3px;
 }
-.ov-export-btn:hover { background: var(--accent-hover); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,.2); }
-.ov-export-btn:active { transform: translateY(0); box-shadow: 0 1px 4px rgba(0,0,0,.15); }
+.ov-export-btn:hover { background: var(--accent-hover); transform: translateY(-1px); box-shadow: var(--shadow-float-hover); }
+.ov-export-btn:active { transform: translateY(0); box-shadow: var(--shadow-float-active); }
 .ov-export-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
 .ov-gallery {
  display: flex; flex-wrap: wrap; gap: 16px;
@@ -3631,8 +3644,8 @@ table td.lb-col-divider {
 .njov-td-round { color: var(--text-2); font-size: 12px; }
 .njov-td-gross { font-weight: 700; color: var(--text-1); }
 .njov-td-topar { color: var(--text-2); font-size: 12px; }
-.njov-row-gold { background: rgba(255, 215, 0, 0.06); }
-.njov-row-gold:hover { background: rgba(255, 215, 0, 0.12); }
+.njov-row-gold { background: var(--bg-gold-subtle); }
+.njov-row-gold:hover { background: var(--bg-gold-hover); }
 
 .njov-footer {
   margin-top: 32px; padding-top: 16px;
@@ -3682,7 +3695,7 @@ table td.lb-col-divider {
 .filter-input:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  box-shadow: var(--shadow-focus-blue);
 }
 
 .btn-pill {

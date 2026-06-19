@@ -122,7 +122,7 @@ function buildAthletes(tournaments: Tournament[]): AthleteSummary[] {
 
 function PosBadge({ pos }: { pos: number }) {
   const styles: Record<number, { bg: string; fg: string; label: string }> = {
-    1: { bg: "var(--medal-gold-bg, #fef3c7)", fg: "var(--medal-gold-fg, #92400e)", label: "🥇 1º" },
+    1: { bg: "var(--medal-gold-bg, #fef3c7)", fg: "var(--medal-gold-fg, var(--color-warn-dark))", label: "🥇 1º" },
     2: { bg: "var(--medal-silver-bg, #f1f5f9)", fg: "var(--medal-silver-fg, #475569)", label: "🥈 2º" },
     3: { bg: "var(--medal-bronze-bg, #fdf2e9)", fg: "var(--medal-bronze-fg, #9a3412)", label: "🥉 3º" },
   };
@@ -130,7 +130,7 @@ function PosBadge({ pos }: { pos: number }) {
   return (
     <span style={{
       display: "inline-block", padding: "2px 6px", borderRadius: 4,
-      background: s.bg, color: s.fg, fontWeight: 700, fontSize: 11,
+      background: s.bg, color: s.fg, fontWeight: 700, fontSize: "var(--fs-11)",
       whiteSpace: "nowrap", letterSpacing: 0.2,
     }}>
       {s.label}
@@ -202,17 +202,17 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
         <span className="muted fs-12">{athletes.length} atletas · {totalEntries} top-5 · {totalChamp} 🥇 · {totalPodium} pódios</span>
       </header>
       <div style={{ overflowX: "auto" }}>
-        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+        <table className="dtable">
           <thead>
-            <tr style={{ background: "var(--bg-header)", textAlign: "left", fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.3, color: "var(--text-3)" }}>
-              <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={onSort} style={{ padding: "8px 12px", borderBottom: "2px solid var(--border)" }}>Atleta</SortableHdr>
-              <SortableHdr k="fed" sortKey={sortKey} sortDir={sortDir} onSort={onSort} style={{ padding: "8px 12px", borderBottom: "2px solid var(--border)" }}>Fed</SortableHdr>
-              <SortableHdr k="dob" sortKey={sortKey} sortDir={sortDir} onSort={onSort} style={{ padding: "8px 12px", borderBottom: "2px solid var(--border)" }}>Nasc.</SortableHdr>
-              <SortableHdr k="top5" sortKey={sortKey} sortDir={sortDir} onSort={onSort} style={{ padding: "8px 12px", borderBottom: "2px solid var(--border)", textAlign: "right" }}>Top-5</SortableHdr>
-              <SortableHdr k="champ" sortKey={sortKey} sortDir={sortDir} onSort={onSort} style={{ padding: "8px 12px", borderBottom: "2px solid var(--border)", textAlign: "right" }}>🥇</SortableHdr>
-              <SortableHdr k="podium" sortKey={sortKey} sortDir={sortDir} onSort={onSort} style={{ padding: "8px 12px", borderBottom: "2px solid var(--border)", textAlign: "right" }}>Pódio</SortableHdr>
-              <SortableHdr k="best" sortKey={sortKey} sortDir={sortDir} onSort={onSort} style={{ padding: "8px 12px", borderBottom: "2px solid var(--border)", textAlign: "right" }}>Melhor</SortableHdr>
-              <SortableHdr k="years" sortKey={sortKey} sortDir={sortDir} onSort={onSort} style={{ padding: "8px 12px", borderBottom: "2px solid var(--border)" }}>Anos</SortableHdr>
+            <tr>
+              <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Atleta</SortableHdr>
+              <SortableHdr k="fed" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Fed</SortableHdr>
+              <SortableHdr k="dob" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Nasc.</SortableHdr>
+              <SortableHdr k="top5" sortKey={sortKey} sortDir={sortDir} onSort={onSort} style={{ textAlign: "right" }}>Top-5</SortableHdr>
+              <SortableHdr k="champ" sortKey={sortKey} sortDir={sortDir} onSort={onSort} style={{ textAlign: "right" }}>🥇</SortableHdr>
+              <SortableHdr k="podium" sortKey={sortKey} sortDir={sortDir} onSort={onSort} style={{ textAlign: "right" }}>Pódio</SortableHdr>
+              <SortableHdr k="best" sortKey={sortKey} sortDir={sortDir} onSort={onSort} style={{ textAlign: "right" }}>Melhor</SortableHdr>
+              <SortableHdr k="years" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Anos</SortableHdr>
             </tr>
           </thead>
           <tbody>
@@ -223,12 +223,12 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
               return (
                 <>
                   <tr key={key}
-                    style={{ borderBottom: "1px solid var(--border-light)", cursor: "pointer", background: isOpen ? "var(--bg-info-subtle, rgba(59,130,246,0.04))" : undefined }}
+                    style={{ cursor: "pointer", background: isOpen ? "var(--bg-info-subtle, rgba(59,130,246,0.04))" : undefined }}
                     onClick={() => toggle(key)}
                     title={isOpen ? "Fechar detalhes" : "Ver todos os top-5"}>
-                    <td style={{ padding: "8px 12px", verticalAlign: "middle" }}>
+                    <td style={{ verticalAlign: "middle" }}>
                       <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-                        <span style={{ fontFamily: "monospace", fontSize: 11, opacity: 0.6, width: 10 }}>{isOpen ? "▼" : "▶"}</span>
+                        <span style={{ fontFamily: "monospace", fontSize: "var(--fs-11)", opacity: 0.6, width: 10 }}>{isOpen ? "▼" : "▶"}</span>
                         {a.fed ? (
                           <a href={`/jogadores/${a.fed}?view=federado`} target="_blank" rel="noopener noreferrer"
                             onClick={(e) => e.stopPropagation()}
@@ -242,49 +242,47 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
                         )}
                       </span>
                     </td>
-                    <td style={{ padding: "8px 12px", verticalAlign: "middle", fontFamily: "monospace", fontSize: 12, color: "var(--text-3)" }}>
+                    <td style={{ fontFamily: "monospace", fontSize: "var(--fs-12)", color: "var(--text-3)" }}>
                       {a.fed || "—"}
                     </td>
-                    <td style={{ padding: "8px 12px", verticalAlign: "middle", fontSize: 12, color: "var(--text-2)" }}
+                    <td style={{ fontSize: "var(--fs-12)", color: "var(--text-2)" }}
                         title={a.dob || ""}>
                       {a.dob ? a.dob.slice(0, 4) : "—"}
                     </td>
-                    <td style={{ padding: "8px 12px", textAlign: "right", verticalAlign: "middle", fontWeight: 700 }}>{a.totalTop5}</td>
-                    <td style={{ padding: "8px 12px", textAlign: "right", verticalAlign: "middle", color: a.championships > 0 ? "var(--accent)" : "var(--text-3)" }}>
+                    <td className="r" style={{ fontWeight: 700 }}>{a.totalTop5}</td>
+                    <td className="r" style={{ color: a.championships > 0 ? "var(--accent)" : "var(--text-3)" }}>
                       {a.championships > 0 ? a.championships : "—"}
                     </td>
-                    <td style={{ padding: "8px 12px", textAlign: "right", verticalAlign: "middle" }}>{a.podiums}</td>
-                    <td style={{ padding: "8px 12px", textAlign: "right", verticalAlign: "middle" }}>
-                      <PosBadge pos={a.best} />
+                    <td className="r">{a.podiums}</td>
+                    <td className="r"><PosBadge pos={a.best} />
                     </td>
-                    <td style={{ padding: "8px 12px", verticalAlign: "middle", fontSize: 11, color: "var(--text-3)" }}>
+                    <td style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
                       {years.length === 1 ? years[0] : `${years[0]}–${years[years.length - 1]}`} ({years.length})
                     </td>
                   </tr>
                   {isOpen && (
                     <tr key={key + "-details"}>
                       <td colSpan={8} style={{ padding: "0 12px 14px 36px", background: "var(--bg-info-subtle, rgba(59,130,246,0.02))" }}>
-                        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12, marginTop: 4 }}>
+                        <table className="dtable-sm" style={{ marginTop: 4 }}>
                           <thead>
-                            <tr style={{ fontSize: 10, fontWeight: 600, textTransform: "uppercase", letterSpacing: 0.3, color: "var(--text-3)" }}>
-                              <th style={{ padding: "4px 8px", textAlign: "left" }}>Data</th>
-                              <th style={{ padding: "4px 8px", textAlign: "left" }}>Pos</th>
-                              <th style={{ padding: "4px 8px", textAlign: "left" }}>Esc</th>
-                              <th style={{ padding: "4px 8px", textAlign: "right" }}>Total</th>
-                              <th style={{ padding: "4px 8px", textAlign: "right" }}>±Par</th>
-                              <th style={{ padding: "4px 8px", textAlign: "left" }}>Torneio</th>
+                            <tr>
+                              <th>Data</th>
+                              <th>Pos</th>
+                              <th>Esc</th>
+                              <th className="r">Total</th>
+                              <th className="r">±Par</th>
+                              <th>Torneio</th>
                             </tr>
                           </thead>
                           <tbody>
                             {a.entries.map((e, i) => (
-                              <tr key={i} style={{ borderTop: i > 0 ? "1px dotted var(--border-light)" : undefined }}>
-                                <td style={{ padding: "4px 8px", whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>{e.date}</td>
-                                <td style={{ padding: "4px 8px" }}><PosBadge pos={e.pos} /></td>
-                                <td style={{ padding: "4px 8px" }}>{e.escalao}{e.isClubes ? " · Clubes" : ""}</td>
-                                <td style={{ padding: "4px 8px", textAlign: "right", fontWeight: 600 }}>{e.gross ?? "\u2014"}</td>
-                                <td style={{ padding: "4px 8px", textAlign: "right" }}>{e.toPar != null ? fmtToPar(e.toPar) : "\u2014"}</td>
-                                <td style={{ padding: "4px 8px" }}>
-                                  <a href={fpgScoringUrl(e.ccode, e.tcode)} target="_blank" rel="noopener noreferrer"
+                              <tr key={i}>
+                                <td style={{ whiteSpace: "nowrap" }}>{e.date}</td>
+                                <td><PosBadge pos={e.pos} /></td>
+                                <td>{e.escalao}{e.isClubes ? " · Clubes" : ""}</td>
+                                <td className="r" style={{ fontWeight: 600 }}>{e.gross ?? "\u2014"}</td>
+                                <td className="r">{e.toPar != null ? fmtToPar(e.toPar) : "\u2014"}</td>
+                                <td ><a href={fpgScoringUrl(e.ccode, e.tcode)} target="_blank" rel="noopener noreferrer"
                                     style={{ color: "var(--accent)", textDecoration: "none" }}
                                     title="Ver torneio na FPG (nova janela)">
                                     {e.tournamentName} ↗

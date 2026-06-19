@@ -1,4 +1,4 @@
-/**
+﻿/**
  * BJGTPage.tsx — BJGT Tournament Results
  * 3 tournaments · day sub-tabs (Acumulado, R1, R2, R3)
  */
@@ -569,7 +569,7 @@ function Content() {
                         setTi(URLS.indexOf(target));
                         md.onSelect();
                       }}>
-                      <div className="course-item-name" style={{ fontSize: 14 }}>{year}</div>
+                      <div className="course-item-name" style={{ fontSize: "var(--fs-14)" }}>{year}</div>
                       <div className="course-item-meta">📍 {isEowagr ? "Le Touquet — La Forêt" : "Villa Padierna"}</div>
                       <div className="course-item-meta" style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
                         <span>{escWithData}/{yearUrls.length} escalões</span>
@@ -633,16 +633,16 @@ function Content() {
                 <div className="gap-16 flex-wrap" style={{ display: "flex", alignItems: "center" }}>
                   <div className="ta-c" style={{ flex: "1 1 100px" }}>
                     <div className="muted fs-10">{evoYear} ({manuelEvo.from})</div>
-                    <div className="fw-900" style={{ fontSize: 24 }}>{fmtSign(manuelEvo.otherValue)}</div>
+                    <div className="fw-900" style={{ fontSize: "var(--fs-24)" }}>{fmtSign(manuelEvo.otherValue)}</div>
                   </div>
-                  <div style={{ fontSize: 24, color: "var(--good-dark)" }}>→</div>
+                  <div style={{ fontSize: "var(--fs-24)", color: "var(--good-dark)" }}>→</div>
                   <div className="ta-c" style={{ flex: "1 1 100px" }}>
                     <div className="muted fs-10">{cur.year} ({manuelEvo.to})</div>
-                    <div className="fw-900" style={{ fontSize: 24, color: manuelEvo.delta < 0 ? "var(--good-dark)" : "var(--text-3)" }}>{fmtSign(manuelEvo.otherValue + manuelEvo.delta)}</div>
+                    <div className="fw-900" style={{ fontSize: "var(--fs-24)", color: manuelEvo.delta < 0 ? "var(--good-dark)" : "var(--text-3)" }}>{fmtSign(manuelEvo.otherValue + manuelEvo.delta)}</div>
                   </div>
                   <div className="ta-c" style={{ flex: "1 1 80px" }}>
                     <div className="muted fs-10">Δ ±Par</div>
-                    <div className="fw-900" style={{ fontSize: 24, color: manuelEvo.delta < 0 ? "var(--good-dark)" : SC.danger }}>{manuelEvo.delta > 0 ? "+" : ""}{manuelEvo.delta}</div>
+                    <div className="fw-900" style={{ fontSize: "var(--fs-24)", color: manuelEvo.delta < 0 ? "var(--good-dark)" : SC.danger }}>{manuelEvo.delta > 0 ? "+" : ""}{manuelEvo.delta}</div>
                     <div className="muted fs-10">vs par (3R)</div>
                   </div>
                 </div>

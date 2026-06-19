@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useState } from "react";
+﻿import React, { useMemo, useCallback, useState } from "react";
 import { useSort } from "../hooks/useSort";
 import { sdClassByHcp } from "../utils/scoreDisplay";
 import { fmtDateShort, fmtHcp, escalaoAtDate } from "../utils/format";
@@ -205,7 +205,7 @@ function SDCell(props: {
     <td className="r" style={props.style}>
       <span className={"p p-sm p-" + cls}>{props.sd.toFixed(1)}</span>
       {(is9 || tip) && (
-        <span style={{ fontSize: 10, color: "var(--text-muted)", marginLeft: 1 }}>
+        <span style={{ fontSize: "var(--fs-10)", color: "var(--text-muted)", marginLeft: 1 }}>
           {is9 && "*"}
           {tip}
         </span>
@@ -555,7 +555,7 @@ export function ResumoTable(props: {
                     }}
                     className="btn"
                     style={{
-                      fontSize: 11,
+                      fontSize: "var(--fs-11)",
                       fontWeight: 800,
                       width: 20,
                       height: 18,
@@ -606,7 +606,7 @@ export function ResumoTable(props: {
                         {roundLabel ? (
                           <span
                             style={{
-                              fontSize: 10,
+                              fontSize: "var(--fs-10)",
                               fontWeight: 800,
                               color: isTotalCol ? "var(--color-warn-dark)" : "var(--color-good-dark)",
                             }}

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+﻿import React, { useState, useMemo } from "react";
 import type { PlayerPageData, RoundData, HoleScores } from "../data/playerDataLoader";
 import { norm, fmtToPar, fmtSign } from "../utils/format";
 import { sumArr } from "../utils/mathUtils";
@@ -57,7 +57,7 @@ function CompRow({ label, hc: _hc, is9, frontEnd, cells, outVal, inVal, totalVal
   style?: React.CSSProperties; sepRow?: boolean; outWeight?: number; inWeight?: number;
   className?: string;
 }) {
-  const cs: React.CSSProperties = { padding: "5px 6px", textAlign: "center", fontSize: 12, borderBottom: "1px solid var(--border-light)", ...style };
+  const cs: React.CSSProperties = { padding: "5px 6px", textAlign: "center", fontSize: "var(--fs-12)", borderBottom: "1px solid var(--border-light)", ...style };
   const colLabel: React.CSSProperties = { ...cs, textAlign: "left", paddingLeft: 8, borderRight: "1px solid var(--border-light)" };
   const colOut: React.CSSProperties = { ...cs, borderLeft: "1px solid var(--border-light)", borderRight: "1px solid var(--border-light)", fontWeight: outWeight };
   const colIn: React.CSSProperties = { ...colOut, fontWeight: inWeight };
@@ -84,7 +84,7 @@ function CompScoreRow({ label, labelBg, labelFg, gross, par, hc, is9, frontEnd, 
   gross: (number | null)[]; par: (number | null)[] | null;
   hc: number; is9: boolean; frontEnd: number; backStart: number;
 }) {
-  const cs: React.CSSProperties = { padding: "5px 6px", textAlign: "center", fontSize: 12, borderBottom: "1px solid var(--border-light)" };
+  const cs: React.CSSProperties = { padding: "5px 6px", textAlign: "center", fontSize: "var(--fs-12)", borderBottom: "1px solid var(--border-light)" };
   const colLabel: React.CSSProperties = { ...cs, textAlign: "left", paddingLeft: 8, borderRight: "1px solid var(--border-light)" };
   const colOut: React.CSSProperties = { ...cs, borderLeft: "1px solid var(--border-light)", borderRight: "1px solid var(--border-light)", fontWeight: 700 };
   const colIn: React.CSSProperties = { ...colOut };
@@ -142,7 +142,7 @@ function CompDeltaRow({ first, last, hc, is9, frontEnd, backStart }: {
   first: (number | null)[]; last: (number | null)[];
   hc: number; is9: boolean; frontEnd: number; backStart: number;
 }) {
-  const cs: React.CSSProperties = { padding: "5px 6px", textAlign: "center", fontSize: 11, borderBottom: "1px solid var(--border-light)" };
+  const cs: React.CSSProperties = { padding: "5px 6px", textAlign: "center", fontSize: "var(--fs-11)", borderBottom: "1px solid var(--border-light)" };
   const colLabel: React.CSSProperties = { ...cs, textAlign: "left", paddingLeft: 8, borderRight: "1px solid var(--border-light)", fontWeight: 700, color: "var(--text-3)" };
   const colOut: React.CSSProperties = { ...cs, borderLeft: "1px solid var(--border-light)", borderRight: "1px solid var(--border-light)" };
   const colIn: React.CSSProperties = { ...colOut };

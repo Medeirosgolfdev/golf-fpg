@@ -141,15 +141,15 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
   return (
     <section>
       <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", margin: "8px 0 10px", gap: 12 }}>
-        <h3 style={{ margin: 0, fontSize: 14, fontWeight: 700, color: "var(--text)" }}>Resultados</h3>
-        <span style={{ fontSize: 11, color: "var(--text-3)" }}>
+        <h3 style={{ margin: 0, fontSize: "var(--fs-14)", fontWeight: 700, color: "var(--text)" }}>Resultados</h3>
+        <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
           {rows.length}{activeSources.size > 0 ? ` de ${allRows.length}` : ""} {rows.length === 1 ? "resultado" : "resultados"}
         </span>
       </div>
 
       {sourcesAvailable.length > 1 && (
         <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 10, padding: "8px 10px", background: "var(--bg-muted)", borderRadius: 6, alignItems: "center" }}>
-          <span style={{ fontSize: 10, fontWeight: 700, color: "var(--text-3)", letterSpacing: 0.4, textTransform: "uppercase", marginRight: 2 }}>
+          <span style={{ fontSize: "var(--fs-10)", fontWeight: 700, color: "var(--text-3)", letterSpacing: 0.4, textTransform: "uppercase", marginRight: 2 }}>
             Fonte
           </span>
           {sourcesAvailable.map(([src, count]) => {
@@ -159,7 +159,7 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
                 key={src}
                 onClick={() => toggleSource(src)}
                 style={{
-                  fontSize: 11,
+                  fontSize: "var(--fs-11)",
                   padding: "2px 9px",
                   borderRadius: 999,
                   border: `1px solid ${active ? "var(--color-info-dark)" : "var(--border-light)"}`,
@@ -178,7 +178,7 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
             <button
               onClick={() => setActiveSources(new Set())}
               style={{
-                fontSize: 11,
+                fontSize: "var(--fs-11)",
                 padding: "2px 9px",
                 borderRadius: 999,
                 border: "1px solid var(--color-danger-dark)",
@@ -215,8 +215,8 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
                 marginBottom: 4,
               }}
             >
-              <span style={{ fontSize: 13, fontWeight: 700 }}>{expanded ? "▼" : "▶"} {y}</span>
-              <span style={{ fontSize: 11, color: "var(--text-3)" }}>
+              <span style={{ fontSize: "var(--fs-13)", fontWeight: 700 }}>{expanded ? "▼" : "▶"} {y}</span>
+              <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
                 {yearRows.length} torneios · {wins} vitórias{manuelEncounters > 0 ? ` · ${manuelEncounters}× vs Manuel` : ""}
               </span>
             </div>
@@ -254,18 +254,18 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
           </div>
         );
       })}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 10, padding: "8px 10px", fontSize: 10, color: "var(--text-3)", background: "var(--bg-muted)", borderRadius: 6 }}>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 10, padding: "8px 10px", fontSize: "var(--fs-10)", color: "var(--text-3)", background: "var(--bg-muted)", borderRadius: 6 }}>
         <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-          <span style={{ background: "var(--medal-gold-bg)", color: "var(--medal-gold-fg)", fontWeight: 700, padding: "1px 5px", borderRadius: 3, fontSize: 10 }}>🏆 #1</span> ouro
+          <span style={{ background: "var(--medal-gold-bg)", color: "var(--medal-gold-fg)", fontWeight: 700, padding: "1px 5px", borderRadius: 3, fontSize: "var(--fs-10)" }}>🏆 #1</span> ouro
         </span>
         <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-          <span style={{ background: "var(--medal-silver-bg)", color: "var(--medal-silver-fg)", fontWeight: 700, padding: "1px 5px", borderRadius: 3, fontSize: 10 }}>🏆 #2</span> prata
+          <span style={{ background: "var(--medal-silver-bg)", color: "var(--medal-silver-fg)", fontWeight: 700, padding: "1px 5px", borderRadius: 3, fontSize: "var(--fs-10)" }}>🏆 #2</span> prata
         </span>
         <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-          <span style={{ background: "var(--medal-bronze-bg)", color: "var(--medal-bronze-fg)", fontWeight: 700, padding: "1px 5px", borderRadius: 3, fontSize: 10 }}>🏆 #3</span> bronze
+          <span style={{ background: "var(--medal-bronze-bg)", color: "var(--medal-bronze-fg)", fontWeight: 700, padding: "1px 5px", borderRadius: 3, fontSize: "var(--fs-10)" }}>🏆 #3</span> bronze
         </span>
         <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-          <span style={{ background: "var(--bg-success-subtle, #ecfdf5)", border: "1px solid var(--border-success, #97c459)", color: "var(--color-good-dark)", fontWeight: 700, padding: "1px 4px", borderRadius: 3, fontSize: 10 }}>±N</span>
+          <span style={{ background: "var(--bg-success-subtle, #ecfdf5)", border: "1px solid var(--border-success, #97c459)", color: "var(--color-good-dark)", fontWeight: 700, padding: "1px 4px", borderRadius: 3, fontSize: "var(--fs-10)" }}>±N</span>
           diff vs Manuel
         </span>
         <span style={{ marginLeft: "auto" }}>
@@ -276,7 +276,6 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
   );
 }
 
-const thStyle: React.CSSProperties = { textAlign: "left", padding: "6px 4px", fontWeight: 600, color: "var(--text-3)", fontSize: 10, textTransform: "uppercase", letterSpacing: 0.3, cursor: "pointer" };
 
 function YearTable({ rows, onOpenRound, expandedKey, expandedScorecardNode }: {
   rows: Row[];
@@ -313,17 +312,17 @@ function YearTable({ rows, onOpenRound, expandedKey, expandedScorecardNode }: {
   }, [rows, sortKey, sortDir]);
 
   return (
-    <table style={{ width: "100%", fontSize: 11, borderCollapse: "collapse", fontVariantNumeric: "tabular-nums" }}>
+    <table className="dtable-sm">
       <thead>
-        <tr style={{ borderBottom: "1px solid var(--border)" }}>
-          <SortableHdr<ResKey> k="date"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 56 }}>Data</SortableHdr>
-          <SortableHdr<ResKey> k="type"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 56 }}>Tipo</SortableHdr>
-          <SortableHdr<ResKey> k="pos"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 50, textAlign: "center" }}>Pos</SortableHdr>
-          <SortableHdr<ResKey> k="name"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={thStyle}>Torneio</SortableHdr>
-          <SortableHdr<ResKey> k="flight" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 70 }}>Escalão</SortableHdr>
-          <SortableHdr<ResKey> k="rounds" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 80, textAlign: "right" }}>Rondas</SortableHdr>
-          <SortableHdr<ResKey> k="toPar"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 42, textAlign: "right" }}>±par</SortableHdr>
-          <SortableHdr<ResKey> k="vsM"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 46, textAlign: "right" }}>vs M</SortableHdr>
+        <tr>
+          <SortableHdr<ResKey> k="date"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: 56 }}>Data</SortableHdr>
+          <SortableHdr<ResKey> k="type"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: 56 }}>Tipo</SortableHdr>
+          <SortableHdr<ResKey> k="pos"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: 50, textAlign: "center" }}>Pos</SortableHdr>
+          <SortableHdr<ResKey> k="name"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Torneio</SortableHdr>
+          <SortableHdr<ResKey> k="flight" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: 70 }}>Escalão</SortableHdr>
+          <SortableHdr<ResKey> k="rounds" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: 80, textAlign: "right" }}>Rondas</SortableHdr>
+          <SortableHdr<ResKey> k="toPar"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: 42, textAlign: "right" }}>±par</SortableHdr>
+          <SortableHdr<ResKey> k="vsM"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: 46, textAlign: "right" }}>vs M</SortableHdr>
         </tr>
       </thead>
       <tbody>
@@ -366,18 +365,18 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
   const categorizedLinks = categorizeTournamentLinks(r.tournament);
   const roundsWithStrokes = new Set(rounds.filter((rd) => rd.strokes && rd.strokes.some((s) => s > 0)).map((rd) => rd.round));
   return (
-    <tr style={{ background: bg, borderBottom: "1px solid var(--border-light)" }}>
-      <td style={{ ...tdStyle, color: "var(--text-3)" }}>{fmtDate(r.date)}</td>
-      <td style={tdStyle}>
-        <span style={{ fontSize: 9, padding: "1px 5px", borderRadius: 3, background: "var(--bg)", border: "1px solid var(--border-light)" }}>
+    <tr style={{ background: bg }}>
+      <td style={{ color: "var(--text-3)" }}>{fmtDate(r.date)}</td>
+      <td>
+        <span style={{ fontSize: "var(--fs-9)", padding: "1px 5px", borderRadius: 3, background: "var(--bg)", border: "1px solid var(--border-light)" }}>
           {SOURCE_LABELS[r.tournament.sourceId] || r.tournament.sourceId}
         </span>
       </td>
-      <td style={{ ...tdStyle, textAlign: "center" }}>
+      <td style={{ textAlign: "center" }}>
         <PosBadgeSmall pos={r.result.pos} />
         {r.topPct != null && (
           <div style={{
-            fontSize: 9, marginTop: 1,
+            fontSize: "var(--fs-9)", marginTop: 1,
             color: r.topPct <= 10 ? "var(--medal-gold-strong)" : r.topPct <= 25 ? "var(--text-2)" : "var(--text-3)",
             fontWeight: r.topPct <= 25 ? 700 : 400,
           }} title={`Posição como percentil do field (#${r.result.pos}/${r.flight.fieldSize})`}>
@@ -385,7 +384,7 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
           </div>
         )}
       </td>
-      <td style={tdStyle}>
+      <td>
         <div style={{ display: "flex", alignItems: "center", gap: 5, flexWrap: "wrap" }}>
           <span>{r.tournament.name || r.tournament.shortName || r.tid}</span>
           {(() => {
@@ -406,7 +405,7 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
               rel="noreferrer"
               title={`Abrir em ${l.label}`}
               style={{
-                fontSize: 9, padding: "1px 5px", borderRadius: 3, fontWeight: 700,
+                fontSize: "var(--fs-9)", padding: "1px 5px", borderRadius: 3, fontWeight: 700,
                 background: "var(--bg)", color: `var(${l.colorVar})`,
                 border: `1px solid var(${l.colorVar})`,
                 textDecoration: "none", lineHeight: 1.4,
@@ -423,7 +422,7 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
           const fs = r.flight.fieldSize;
           if (typeof fs === "number" && fs > 0) {
             return (
-              <div style={{ fontSize: 10, color: "var(--text-3)", marginTop: 1 }}>
+              <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 1 }}>
                 field {fs} {fs === 1 ? "jogador" : "jogadores"}
               </div>
             );
@@ -431,8 +430,8 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
           return null;
         })()}
       </td>
-      <td style={{ ...tdStyle, color: "var(--text-3)" }}>{r.flight.label}</td>
-      <td style={{ ...tdStyle, textAlign: "right" }}>
+      <td style={{ color: "var(--text-3)" }}>{r.flight.label}</td>
+      <td style={{ textAlign: "right" }}>
         {rounds.length > 0 ? (
           rounds.map((rd, i) => {
             const g = rd.gross;
@@ -444,7 +443,7 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
                   <button
                     onClick={() => onOpenRound(r, rd.round)}
                     style={{
-                      background: "none", border: "none", padding: "0 2px", fontSize: 11,
+                      background: "none", border: "none", padding: "0 2px", fontSize: "var(--fs-11)",
                       color: "var(--color-info-dark, #1e3a8a)", cursor: "pointer",
                       textDecoration: "underline", fontWeight: 600, fontVariantNumeric: "tabular-nums",
                     }}
@@ -458,18 +457,18 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
           })
         ) : (total ?? "—")}
       </td>
-      <td style={{ ...tdStyle, textAlign: "right", color: toPar != null && toPar < 0 ? "var(--color-good-dark)" : toPar != null && toPar > 0 ? "var(--color-danger-dark)" : "var(--text-3)", fontWeight: toPar != null && toPar < 0 ? 700 : 400 }}>
+      <td style={{ textAlign: "right", color: toPar != null && toPar < 0 ? "var(--color-good-dark)" : toPar != null && toPar > 0 ? "var(--color-danger-dark)" : "var(--text-3)", fontWeight: toPar != null && toPar < 0 ? 700 : 400 }}>
         {toPar == null ? "—" : toPar === 0 ? "E" : toPar > 0 ? `+${toPar}` : String(toPar)}
       </td>
-      <td style={{ ...tdStyle, textAlign: "right" }}>
+      <td style={{ textAlign: "right" }}>
         {r.vsManuelDiff != null && (
-          <span style={{ background: "var(--bg-success-subtle, #ecfdf5)", color: "var(--color-good-dark)", fontWeight: 700, padding: "1px 4px", borderRadius: 3, fontSize: 10, border: "1px solid var(--border-success, #97c459)" }}
+          <span style={{ background: "var(--bg-success-subtle, #ecfdf5)", color: "var(--color-good-dark)", fontWeight: 700, padding: "1px 4px", borderRadius: 3, fontSize: "var(--fs-10)", border: "1px solid var(--border-success, #97c459)" }}
             title={r.manuelPos != null ? `Manuel ficou em #${r.manuelPos}` : "Manuel também jogou"}>
             {r.vsManuelDiff === 0 ? "0" : r.vsManuelDiff > 0 ? `+${r.vsManuelDiff}` : String(r.vsManuelDiff)}
           </span>
         )}
         {r.manuelPos != null && (
-          <div style={{ fontSize: 9, color: "var(--color-good-dark)", marginTop: 1, fontWeight: 600 }}>
+          <div style={{ fontSize: "var(--fs-9)", color: "var(--color-good-dark)", marginTop: 1, fontWeight: 600 }}>
             ★M #{r.manuelPos}
           </div>
         )}
@@ -478,14 +477,13 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
   );
 }
 
-const tdStyle: React.CSSProperties = { padding: "5px 4px", fontSize: 11, verticalAlign: "top" };
 
 function PosBadgeSmall({ pos }: { pos: number | null | undefined }) {
   if (typeof pos !== "number") return <span style={{ color: "var(--text-3)" }}>—</span>;
   if (pos <= 3) {
     const bg = pos === 1 ? "var(--medal-gold-bg)" : pos === 2 ? "var(--medal-silver-bg)" : "var(--medal-bronze-bg)";
     const fg = pos === 1 ? "var(--medal-gold-fg)" : pos === 2 ? "var(--medal-silver-fg)" : "var(--medal-bronze-fg)";
-    return <span style={{ background: bg, color: fg, fontWeight: 700, padding: "1px 5px", borderRadius: 3, fontSize: 10 }}>🏆 #{pos}</span>;
+    return <span style={{ background: bg, color: fg, fontWeight: 700, padding: "1px 5px", borderRadius: 3, fontSize: "var(--fs-10)" }}>🏆 #{pos}</span>;
   }
   return <span style={{ color: "var(--text-3)" }}>#{pos}</span>;
 }
@@ -503,10 +501,10 @@ function ScoringPill({ tournament, flight }: { tournament: Tournament; flight: F
   void flight; // reservado para futuras heurísticas (flight-level override)
   return (
     <span title={isScratch ? "Competição scratch (gross)" : "Competição com handicap (net)"} style={{
-      fontSize: 9, padding: "1px 5px", borderRadius: 3, fontWeight: 700,
-      background: isScratch ? "var(--bg-warn-subtle, #fffbeb)" : "var(--bg-info-subtle, #eff6ff)",
-      color: isScratch ? "var(--color-warn-dark, #92400e)" : "var(--color-info-dark, #1e3a8a)",
-      border: `1px solid ${isScratch ? "var(--color-warn-dark, #92400e)" : "var(--color-info-dark, #1e3a8a)"}`,
+      fontSize: "var(--fs-9)", padding: "1px 5px", borderRadius: 3, fontWeight: 700,
+      background: isScratch ? "var(--bg-warn-subtle, var(--bg-warn))" : "var(--bg-info-subtle, #eff6ff)",
+      color: isScratch ? "var(--color-warn-dark, var(--color-warn-dark))" : "var(--color-info-dark, #1e3a8a)",
+      border: `1px solid ${isScratch ? "var(--color-warn-dark, var(--color-warn-dark))" : "var(--color-info-dark, #1e3a8a)"}`,
       lineHeight: 1.4,
     }}>
       {isScratch ? "SCRATCH" : "HCP"}

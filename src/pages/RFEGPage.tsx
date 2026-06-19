@@ -616,7 +616,7 @@ function PlayerTable({ players, dateRef, coursePar }: { players: RFEGPlayer[]; d
             </span>
           ) : <span className="muted">—</span>}
         </td>
-        <td title={p.pais ?? ""} style={{ padding: "6px 8px", textAlign: "center", fontSize: 18 }}>
+        <td title={p.pais ?? ""} style={{ padding: "6px 8px", textAlign: "center", fontSize: "var(--fs-18)" }}>
           {p._flag}
         </td>
       </>
@@ -649,7 +649,7 @@ function PlayerTable({ players, dateRef, coursePar }: { players: RFEGPlayer[]; d
     const postForInscritos = (
       <td style={{ padding: "6px 8px", textAlign: "center" }}>
         {p.estado
-          ? <span style={{ background: "var(--bg-muted)", color: "var(--text-muted)", fontSize: 10, padding: "1px 6px", borderRadius: 10, border: "1px solid var(--border-light)" }}>{p.estado}</span>
+          ? <span style={{ background: "var(--bg-muted)", color: "var(--text-muted)", fontSize: "var(--fs-10)", padding: "1px 6px", borderRadius: 10, border: "1px solid var(--border-light)" }}>{p.estado}</span>
           : <span className="muted fs-10">✓</span>}
       </td>
     );
@@ -1142,20 +1142,20 @@ function ResultsTable({ results, dobLookup, dateRef }: {
               className={`tourn-tab ${i === groupIdx ? "active" : ""}`}
               onClick={() => setGroupIdx(i)}
             >
-              {gr.label} <span className="chip" style={{ marginLeft: 4, fontSize: 10 }}>{gr.players.length}</span>
+              {gr.label} <span className="chip" style={{ marginLeft: 4, fontSize: "var(--fs-10)" }}>{gr.players.length}</span>
             </button>
           ))}
         </div>
       )}
       {(g.courseRating || g.slope) && (
-        <div style={{ padding: "6px 12px", fontSize: 12 }} className="muted">
+        <div style={{ padding: "6px 12px", fontSize: "var(--fs-12)" }} className="muted">
           {g.courseRating && <>CR {g.courseRating} </>}
           {g.slope && <>· Slope {g.slope} </>}
           {g.pdfUrl && <ExtLink href={g.pdfUrl} className="tourn-ext-link">📄 PDF original</ExtLink>}
         </div>
       )}
       <div style={{ overflowX: "auto" }}>
-        <table className="data-table" style={{ width: "100%", fontSize: 13 }}>
+        <table className="dtable">
           <thead>
             <tr>
               <SortableHdr k="pos" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as any)}>#</SortableHdr>
@@ -1281,7 +1281,7 @@ function DrawSaidaView({ detail, entry }: {
               type="button"
               className={`chip ${activeRound === r.round ? "active" : ""}`}
               onClick={() => setActiveRound(r.round)}
-              style={{ cursor: "pointer", fontSize: 12, padding: "3px 10px" }}
+              style={{ cursor: "pointer", fontSize: "var(--fs-12)", padding: "3px 10px" }}
             >
               R{r.round} · {r.players.length} jog
             </button>
@@ -1398,7 +1398,7 @@ function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEnt
         }
       />
 
-      <div className="card" style={{ margin: "8px 0", padding: "8px 12px", display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center", fontSize: 13 }}>
+      <div className="card" style={{ margin: "8px 0", padding: "8px 12px", display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center", fontSize: "var(--fs-13)" }}>
         {entry.category && <span className={catPillClass(entry.category)}>{entry.category}</span>}
         {(() => {
           // Pill de sexo: usa SexBadge (componente global, NUNCA símbolos Unicode).
@@ -1438,7 +1438,7 @@ function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEnt
           style={{ opacity: hasResults ? 1 : 0.4 }}
           title="Resultados ronda-a-ronda + scorecards"
         >
-          📋 Resultados {hasResults && <span className="chip" style={{ marginLeft: 4, fontSize: 10 }}>{fpgTournament!.players.length}</span>}
+          📋 Resultados {hasResults && <span className="chip" style={{ marginLeft: 4, fontSize: "var(--fs-10)" }}>{fpgTournament!.players.length}</span>}
         </button>
         <button
           type="button"
@@ -1447,7 +1447,7 @@ function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEnt
           disabled={inscritosTotal === 0}
           style={{ opacity: inscritosTotal > 0 ? 1 : 0.4 }}
         >
-          👥 Inscritos <span className="chip" style={{ marginLeft: 4, fontSize: 10 }}>{inscritosTotal}</span>
+          👥 Inscritos <span className="chip" style={{ marginLeft: 4, fontSize: "var(--fs-10)" }}>{inscritosTotal}</span>
         </button>
         <button
           type="button"
@@ -1491,7 +1491,7 @@ function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEnt
                       disabled={!enabled}
                       className={`chip ${active ? "active" : ""}`}
                       onClick={() => { if (enabled) setList(k); }}
-                      style={{ cursor: enabled ? "pointer" : "default", opacity: enabled ? 1 : 0.4, fontSize: 11, padding: "3px 8px" }}
+                      style={{ cursor: enabled ? "pointer" : "default", opacity: enabled ? 1 : 0.4, fontSize: "var(--fs-11)", padding: "3px 8px" }}
                     >
                       {LIST_LABELS[k]} ({c[k]})
                     </button>
@@ -1513,7 +1513,7 @@ function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEnt
         )}
       </div>
 
-      <p className="muted" style={{ marginTop: 16, fontSize: 11 }}>
+      <p className="muted" style={{ marginTop: 16, fontSize: "var(--fs-11)" }}>
         Fonte: {sourceLabel.toLowerCase()} · ID {entry.id} · scrape: {data.scrapedAt}
       </p>
     </>
@@ -1653,7 +1653,7 @@ function RFEGCategoriesView({ catCounts }: { catCounts: Record<string, number> }
         }
       />
 
-      <div style={{ marginTop: 12, padding: "10px 12px", background: "var(--bg-muted, #fff7e6)", border: "1px solid var(--border, var(--color-rfeg-yellow))", borderRadius: 6, fontSize: 12 }}>
+      <div style={{ marginTop: 12, padding: "10px 12px", background: "var(--bg-muted, #fff7e6)", border: "1px solid var(--border, var(--color-rfeg-yellow))", borderRadius: 6, fontSize: "var(--fs-12)" }}>
         <strong>⚠ Espanha não tem federação única.</strong> A RFEG (federação
         nacional) coexiste com 17 federações autonómicas (Andalucía, Madrid,
         Catalunya, Valencia, ...). Os resultados aparecem dispersos por três
@@ -1663,7 +1663,7 @@ function RFEGCategoriesView({ catCounts }: { catCounts: Record<string, number> }
       </div>
 
       <div style={{ overflowX: "auto", marginTop: 16 }}>
-        <table className="data-table" style={{ width: "100%" }}>
+        <table className="dtable">
           <thead>
             <tr>
               <th style={{ textAlign: "left" }}>Categoría RFEG</th>
@@ -1709,7 +1709,7 @@ function RFEGCategoriesView({ catCounts }: { catCounts: Record<string, number> }
                       <span title={`${trad} como "${traditionalKey}" + ${sub} como "${subRfeg}"`}>
                         {total}
                         {trad > 0 && sub > 0 && (
-                          <span className="muted" style={{ fontSize: 10 }}>
+                          <span className="muted" style={{ fontSize: "var(--fs-10)" }}>
                             {" "}({trad}+{sub})
                           </span>
                         )}
@@ -1736,7 +1736,7 @@ function RFEGCategoriesView({ catCounts }: { catCounts: Record<string, number> }
           background: "var(--bg-muted, #f5f5f5)",
           border: "1px solid var(--border)",
           borderRadius: 4,
-          fontSize: 12,
+          fontSize: "var(--fs-12)",
           overflow: "auto",
         }}>
           {`escalão = ano_torneio − ano_nascimento
@@ -1752,7 +1752,7 @@ p.ex. jogador nascido em 2014, em 2026:
           Nos torneios scrapados aparecem <em>simultaneamente</em> as duas
           nomenclaturas:
         </p>
-        <ul style={{ fontSize: 12, marginTop: 8 }}>
+        <ul style={{ fontSize: "var(--fs-12)", marginTop: 8 }}>
           <li>
             <strong>Tradicional</strong> — nomes históricos (Benjamín, Alevín,
             Infantil, Cadete, Junior, Juvenil). Usados sobretudo nos campeonatos
@@ -1964,24 +1964,24 @@ export function RFEGPageLegacy() {
           placeholder="🔍 Pesquisar..."
           value={filterText}
           onChange={(e) => setFilterText(e.target.value)}
-          style={{ padding: "3px 8px", fontSize: 12, width: 160, marginLeft: 8 }}
+          style={{ padding: "3px 8px", fontSize: "var(--fs-12)", width: 160, marginLeft: 8 }}
         />
-        <select className="input" value={filterYear} onChange={(e) => setFilterYear(e.target.value)} style={{ padding: "3px 6px", fontSize: 12 }}>
+        <select className="input" value={filterYear} onChange={(e) => setFilterYear(e.target.value)} style={{ padding: "3px 6px", fontSize: "var(--fs-12)" }}>
           <option value="all">📅 Anos</option>
           {years.map((y) => <option key={y} value={y}>{y} ({index.byYear[y] ?? "?"})</option>)}
         </select>
-        <select className="input" value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)} style={{ padding: "3px 6px", fontSize: 12 }}>
+        <select className="input" value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)} style={{ padding: "3px 6px", fontSize: "var(--fs-12)" }}>
           <option value="all">🏆 Categorias</option>
           {categories.map(({ key, count }) => (
             <option key={key} value={key}>{key} ({count})</option>
           ))}
         </select>
-        <select className="input" value={filterSex} onChange={(e) => setFilterSex(e.target.value)} style={{ padding: "3px 6px", fontSize: 12 }}>
+        <select className="input" value={filterSex} onChange={(e) => setFilterSex(e.target.value)} style={{ padding: "3px 6px", fontSize: "var(--fs-12)" }}>
           <option value="all">M+F</option>
           <option value="M">Masculino</option>
           <option value="F">Femenino</option>
         </select>
-        <select className="input" value={filterSource} onChange={(e) => setFilterSource(e.target.value)} style={{ padding: "3px 6px", fontSize: 12 }}>
+        <select className="input" value={filterSource} onChange={(e) => setFilterSource(e.target.value)} style={{ padding: "3px 6px", fontSize: "var(--fs-12)" }}>
           <option value="all">Fontes</option>
           <option value="livegolfscoring">LGS (hbh)</option>
           <option value="rfegolf">RFEGolf</option>
@@ -1991,7 +1991,7 @@ export function RFEGPageLegacy() {
           <button
             onClick={() => { setFilterText(""); setFilterYear("all"); setFilterCategory("all"); setFilterSex("all"); setFilterSource("all"); }}
             className="chip"
-            style={{ cursor: "pointer", fontSize: 11 }}
+            style={{ cursor: "pointer", fontSize: "var(--fs-11)" }}
           >✕</button>
         )}
         {cur && cur.course && <ToolbarMeta>📍 {cur.course}</ToolbarMeta>}
@@ -2014,7 +2014,7 @@ export function RFEGPageLegacy() {
             <div className="course-item-meta">
               {RFEG_CATEGORIES.length} categorias · Benjamín → Sub-25
             </div>
-            <div className="course-item-meta" style={{ fontSize: 10 }}>
+            <div className="course-item-meta" style={{ fontSize: "var(--fs-10)" }}>
               Tradicional + Sub-N · Equiv. FPG/FFG/Internacional
             </div>
           </button>
@@ -2033,7 +2033,7 @@ export function RFEGPageLegacy() {
             <div className="course-item-meta">
               19 territoriais · 4 NextCaddy · 13 sites próprios
             </div>
-            <div className="course-item-meta" style={{ fontSize: 10 }}>
+            <div className="course-item-meta" style={{ fontSize: "var(--fs-10)" }}>
               RFEG + Andaluza/Madrid/Canaria/CyL/Catalana/...
             </div>
           </button>
@@ -2049,7 +2049,7 @@ export function RFEGPageLegacy() {
                     🇪🇸 RFEG — Torneios juvenis
                   </SidebarSectionTitle>
                 )}
-                <div className="sidebar-year-label" style={{ padding: "2px 10px", fontSize: 10, fontWeight: 700, letterSpacing: "0.05em", color: "#ffffff", textTransform: "uppercase", marginTop: 4, background: "var(--color-rfeg-red)" }}>{y}</div>
+                <div className="sidebar-year-label" style={{ padding: "2px 10px", fontSize: "var(--fs-10)", fontWeight: 700, letterSpacing: "0.05em", color: "#ffffff", textTransform: "uppercase", marginTop: 4, background: "var(--color-rfeg-red)" }}>{y}</div>
                 {yearEntries.map((entry) => {
                   const active = cur?.id === entry.id && cur?.source === entry.source;
                   const sourceColor = entry.source === "rfegolf" ? "var(--color-rfeg-red)" : entry.source === "livegolfscoring" ? "#0a5" : entry.source === "golfdirecto" ? "#0066cc" : "var(--color-rfeg-yellow)";
@@ -2063,7 +2063,7 @@ export function RFEGPageLegacy() {
                     >
                       <div className="course-item-name">{entry.name}</div>
                       <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginTop: 4, alignItems: "center" }}>
-                        <span className="chip" style={{ fontSize: 9, background: sourceColor, color: sourceFg, padding: "1px 6px", borderRadius: 8 }}>{sourceLabel}</span>
+                        <span className="chip" style={{ fontSize: "var(--fs-9)", background: sourceColor, color: sourceFg, padding: "1px 6px", borderRadius: 8 }}>{sourceLabel}</span>
                         {entry.category && (() => {
                           const cat = SUB_TO_ES_TERM[entry.category] || entry.category;
                           return <EscPill esc={cat} />;
@@ -2081,13 +2081,13 @@ export function RFEGPageLegacy() {
                         )}
                       </div>
                       {entry.dateStart && (
-                        <div className="course-item-meta" style={{ fontSize: 11, marginTop: 4 }}>📅 {dateRange(entry.dateStart, entry.dateEnd)}</div>
+                        <div className="course-item-meta" style={{ fontSize: "var(--fs-11)", marginTop: 4 }}>📅 {dateRange(entry.dateStart, entry.dateEnd)}</div>
                       )}
                       {entry.course && (
                         <div className="course-item-meta" style={{ fontWeight: 600, color: "var(--text-2)" }}>📍 {entry.course.length > 50 ? entry.course.slice(0, 50) + "…" : entry.course}</div>
                       )}
                       {entry.counts && entry.counts.admitidos > 0 && (
-                        <div className="course-item-meta" style={{ fontSize: 11, marginTop: 2 }}>
+                        <div className="course-item-meta" style={{ fontSize: "var(--fs-11)", marginTop: 2 }}>
                           🏌️ {entry.counts.admitidos} {entry.source === "livegolfscoring" || entry.source === "golfdirecto" ? "jogadores" : "inscritos"}
                         </div>
                       )}

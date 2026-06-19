@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Aroeira2AnaliseView.tsx — análise rica do PJA Aroeira Masters 2026 (029/10543)
  *
  * Usa as classes CSS padrão do projecto (.sc-lb, .lb-*) para consistência
@@ -177,8 +177,8 @@ function MiniDonut({ dist, label, sublabel, hideIfEmpty = false }: {
           <circle cx={SIZE / 2} cy={SIZE / 2} r={R} fill="none" stroke="#e5e7eb" strokeWidth={STROKE} />
           <text x={SIZE / 2} y={SIZE / 2 + 4} fontSize="11" fill="var(--text-muted)" textAnchor="middle">–</text>
         </svg>
-        <div style={{ fontSize: 11, fontWeight: 700, marginTop: 2 }}>{label}</div>
-        <div style={{ fontSize: 9, color: "var(--text-muted)" }}>0 rondas</div>
+        <div style={{ fontSize: "var(--fs-11)", fontWeight: 700, marginTop: 2 }}>{label}</div>
+        <div style={{ fontSize: "var(--fs-9)", color: "var(--text-muted)" }}>0 rondas</div>
       </div>
     );
   }
@@ -217,8 +217,8 @@ function MiniDonut({ dist, label, sublabel, hideIfEmpty = false }: {
         </text>
         <text x={SIZE / 2} y={SIZE / 2 + 11} fontSize="8" textAnchor="middle" fill="var(--text-muted)">par-or-better</text>
       </svg>
-      <div style={{ fontSize: 11, fontWeight: 700, marginTop: 4 }}>{label}</div>
-      <div style={{ fontSize: 9, color: "var(--text-muted)" }}>{sublabel}</div>
+      <div style={{ fontSize: "var(--fs-11)", fontWeight: 700, marginTop: 4 }}>{label}</div>
+      <div style={{ fontSize: "var(--fs-9)", color: "var(--text-muted)" }}>{sublabel}</div>
     </div>
   );
 }
@@ -227,8 +227,8 @@ function HoleDial({ d }: { d: HoleDial }) {
   return (
     <div style={{ padding: 10, border: "1px solid var(--border)", borderRadius: 8, background: "var(--bg-card)" }}>
       <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 6 }}>
-        <span style={{ fontSize: 16, fontWeight: 800 }}>B{d.hole}</span>
-        <span className="muted" style={{ fontSize: 11 }}>par <b>{d.par}</b></span>
+        <span style={{ fontSize: "var(--fs-16)", fontWeight: 800 }}>B{d.hole}</span>
+        <span className="muted" style={{ fontSize: "var(--fs-11)" }}>par <b>{d.par}</b></span>
       </div>
       <div style={{ display: "flex", gap: 6, justifyContent: "space-between" }}>
         <MiniDonut dist={d.manuelDist} label="⭐ Manuel" sublabel={`${d.manuelN} rds${d.manuelBest != null ? ` · best ${d.manuelBest} · worst ${d.manuelWorst}` : ""}`} />
@@ -236,7 +236,7 @@ function HoleDial({ d }: { d: HoleDial }) {
         <MiniDonut dist={d.fieldDist}  label="Field"      sublabel={`${d.fieldN} rds${d.fieldBest != null ? ` · best ${d.fieldBest}` : ""}`} />
       </div>
       {/* Mini-legenda das cores */}
-      <div style={{ display: "flex", justifyContent: "space-around", marginTop: 8, fontSize: 9 }}>
+      <div style={{ display: "flex", justifyContent: "space-around", marginTop: 8, fontSize: "var(--fs-9)" }}>
         <span style={{ color: "var(--color-good)", fontWeight: 700 }}>● Birdie+</span>
         <span style={{ color: "#525252", fontWeight: 700 }}>● Par</span>
         <span style={{ color: "#1d4ed8", fontWeight: 700 }}>● Bogey</span>

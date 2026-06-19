@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+﻿import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import type { RoundData, PlayerPageData, HcpInfo } from "../data/playerDataLoader";
 import type { Course } from "../data/types";
@@ -1026,7 +1026,7 @@ export function RoundSimulator({
           {savedTs && (
             <span
               style={{
-                fontSize: 10,
+                fontSize: "var(--fs-10)",
                 color: "var(--color-good)",
                 fontWeight: 600,
               }}
@@ -1038,7 +1038,7 @@ export function RoundSimulator({
             <button
               onClick={saveNow}
               style={{
-                fontSize: 11,
+                fontSize: "var(--fs-11)",
                 padding: "3px 10px",
                 borderRadius: 6,
                 border: "1px solid var(--line)",
@@ -1055,7 +1055,7 @@ export function RoundSimulator({
             <button
               onClick={loadSaved}
               style={{
-                fontSize: 11,
+                fontSize: "var(--fs-11)",
                 padding: "3px 10px",
                 borderRadius: 6,
                 border: "1px solid var(--line)",
@@ -1071,7 +1071,7 @@ export function RoundSimulator({
             <button
               onClick={exportPDF}
               style={{
-                fontSize: 11,
+                fontSize: "var(--fs-11)",
                 padding: "3px 10px",
                 borderRadius: 6,
                 border: "1px solid var(--line)",
@@ -1087,7 +1087,7 @@ export function RoundSimulator({
           <button
             onClick={clearAll}
             style={{
-              fontSize: 11,
+              fontSize: "var(--fs-11)",
               padding: "3px 10px",
               borderRadius: 6,
               border: "1px solid var(--line)",
@@ -1174,7 +1174,7 @@ export function RoundSimulator({
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontSize: 11,
+                    fontSize: "var(--fs-11)",
                     fontWeight: 800,
                     flexShrink: 0,
                   }}
@@ -1189,7 +1189,7 @@ export function RoundSimulator({
                     borderRadius: 6,
                     overflow: "hidden",
                     border: "1px solid var(--line)",
-                    fontSize: 11,
+                    fontSize: "var(--fs-11)",
                   }}
                 >
                   {(["sd", "course"] as const).map((m) => (
@@ -1223,7 +1223,7 @@ export function RoundSimulator({
                     borderRadius: 6,
                     overflow: "hidden",
                     border: "1px solid var(--line)",
-                    fontSize: 11,
+                    fontSize: "var(--fs-11)",
                   }}
                   title="Número de buracos jogados"
                 >
@@ -1265,7 +1265,7 @@ export function RoundSimulator({
                     {result.exceptionalAdj !== 0 && (
                       <span
                         style={{
-                          fontSize: 10,
+                          fontSize: "var(--fs-10)",
                           fontWeight: 700,
                           color: "#fff",
                           borderRadius: 4,
@@ -1285,7 +1285,7 @@ export function RoundSimulator({
                     {result.entersTop && (
                       <span
                         style={{
-                          fontSize: 10,
+                          fontSize: "var(--fs-10)",
                           fontWeight: 700,
                           color: "var(--color-good)",
                         }}
@@ -1296,12 +1296,12 @@ export function RoundSimulator({
                           : ""}
                       </span>
                     )}
-                    <span style={{ fontSize: 11, color: "var(--text-3)" }}>
+                    <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
                       HCP
                     </span>
                     <span
                       style={{
-                        fontSize: 18,
+                        fontSize: "var(--fs-18)",
                         fontWeight: 800,
                         lineHeight: 1,
                         color:
@@ -1316,7 +1316,7 @@ export function RoundSimulator({
                     </span>
                     <span
                       style={{
-                        fontSize: 12,
+                        fontSize: "var(--fs-12)",
                         fontWeight: 700,
                         color:
                           result.delta < -0.05
@@ -1342,7 +1342,7 @@ export function RoundSimulator({
                       background: "transparent",
                       cursor: "pointer",
                       color: "var(--text-3)",
-                      fontSize: 18,
+                      fontSize: "var(--fs-18)",
                       padding: "0 2px",
                       lineHeight: 1,
                       marginLeft: result?.valid ? 0 : "auto",
@@ -1386,7 +1386,7 @@ export function RoundSimulator({
                           border: "1px solid var(--line)",
                           background: "var(--bg-card)",
                           color: "var(--text-1)",
-                          fontSize: 14,
+                          fontSize: "var(--fs-14)",
                           fontWeight: 700,
                         }}
                       />
@@ -1502,7 +1502,7 @@ export function RoundSimulator({
                           border: "1px solid var(--line)",
                           background: "var(--bg-card)",
                           color: "var(--text-1)",
-                          fontSize: 14,
+                          fontSize: "var(--fs-14)",
                           fontWeight: 700,
                         }}
                       />
@@ -1579,7 +1579,7 @@ export function RoundSimulator({
                     marginTop: 8,
                     padding: "6px 10px",
                     borderRadius: 6,
-                    fontSize: 11,
+                    fontSize: "var(--fs-11)",
                     lineHeight: 1.55,
                     background: "var(--bg-detail)",
                     border: "1px dashed var(--border)",
@@ -1602,7 +1602,7 @@ export function RoundSimulator({
                     marginTop: 8,
                     padding: "6px 10px",
                     borderRadius: 6,
-                    fontSize: 11,
+                    fontSize: "var(--fs-11)",
                     lineHeight: 1.6,
                     background:
                       "var(--bg-warn, rgba(224,123,0,0.08))",
@@ -1636,7 +1636,7 @@ export function RoundSimulator({
             cursor: "pointer",
             padding: "8px 16px",
             color: "var(--text-3)",
-            fontSize: 13,
+            fontSize: "var(--fs-13)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -1674,7 +1674,7 @@ export function RoundSimulator({
           >
             <div
               style={{
-                fontSize: 10,
+                fontSize: "var(--fs-10)",
                 color: "var(--text-3)",
                 fontWeight: 600,
                 textTransform: "uppercase",
@@ -1686,11 +1686,11 @@ export function RoundSimulator({
             </div>
             <div
               className="fw-900"
-              style={{ fontSize: 22, lineHeight: 1 }}
+              style={{ fontSize: "var(--fs-22)", lineHeight: 1 }}
             >
               {currentHI.toFixed(1)}
             </div>
-            <div style={{ fontSize: 10, color: "var(--text-3)", marginTop: 2 }}>
+            <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 2 }}>
               {qtyCalcCur} mel./{initialPool.length}
             </div>
           </div>
@@ -1729,7 +1729,7 @@ export function RoundSimulator({
               >
                 <div
                   style={{
-                    fontSize: 10,
+                    fontSize: "var(--fs-10)",
                     color: "var(--text-3)",
                     fontWeight: 600,
                     textTransform: "uppercase",
@@ -1747,7 +1747,7 @@ export function RoundSimulator({
                 </div>
                 <div
                   style={{
-                    fontSize: 20,
+                    fontSize: "var(--fs-20)",
                     fontWeight: 900,
                     lineHeight: 1,
                     color:
@@ -1762,7 +1762,7 @@ export function RoundSimulator({
                 </div>
                 <div
                   style={{
-                    fontSize: 11,
+                    fontSize: "var(--fs-11)",
                     fontWeight: 700,
                     color:
                       r.delta < -0.05
@@ -1808,7 +1808,7 @@ export function RoundSimulator({
               >
                 <div
                   style={{
-                    fontSize: 10,
+                    fontSize: "var(--fs-10)",
                     color: "var(--text-3)",
                     fontWeight: 600,
                     textTransform: "uppercase",
@@ -1821,7 +1821,7 @@ export function RoundSimulator({
                 <div
                   className="fw-900"
                   style={{
-                    fontSize: 24,
+                    fontSize: "var(--fs-24)",
                     lineHeight: 1,
                     color: finalDColor,
                   }}
@@ -1907,7 +1907,7 @@ export function RoundSimulator({
                           <span
                             style={{
                               marginLeft: 4,
-                              fontSize: 10,
+                              fontSize: "var(--fs-10)",
                               color: "var(--chart-2)",
                               fontWeight: 700,
                             }}
@@ -1937,7 +1937,7 @@ export function RoundSimulator({
                         {row.exceptionalAdj !== 0 && (
                           <span
                             style={{
-                              fontSize: 9,
+                              fontSize: "var(--fs-9)",
                               marginLeft: 3,
                               color: "var(--color-warn, #e07b00)",
                               fontWeight: 700,
@@ -2032,7 +2032,7 @@ export function RoundSimulator({
                     <td
                       className="r"
                       style={{
-                        fontSize: 11,
+                        fontSize: "var(--fs-11)",
                         fontWeight: 700,
                         color: "var(--text-2)",
                       }}
@@ -2064,10 +2064,10 @@ export function RoundSimulator({
                               style={{
                                 marginLeft: 6,
                                 background: "#fde68a",
-                                color: "#92400e",
+                                color: "var(--color-warn-dark)",
                                 borderRadius: 4,
                                 padding: "1px 5px",
-                                fontSize: 10,
+                                fontSize: "var(--fs-10)",
                                 fontWeight: 700,
                               }}
                             >
@@ -2125,7 +2125,7 @@ export function RoundSimulator({
                           </span>
                           <span
                             style={{
-                              fontSize: 9,
+                              fontSize: "var(--fs-9)",
                               color: "var(--text-3)",
                               textDecoration: "line-through",
                             }}
@@ -2180,7 +2180,7 @@ export function RoundSimulator({
                       style={{
                         padding: "4px 8px",
                         background: "var(--bg-header)",
-                        fontSize: 10,
+                        fontSize: "var(--fs-10)",
                         color: "var(--text-3)",
                         fontWeight: 700,
                         letterSpacing: ".05em",
@@ -2202,7 +2202,7 @@ export function RoundSimulator({
                         <td
                           className="r"
                           style={{
-                            fontSize: 11,
+                            fontSize: "var(--fs-11)",
                             color: "var(--color-danger)",
                             fontWeight: 700,
                           }}

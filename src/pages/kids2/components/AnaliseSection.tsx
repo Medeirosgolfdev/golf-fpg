@@ -1,4 +1,4 @@
-/**
+﻿/**
  * kids2/components/AnaliseSection.tsx
  *
  * Análise hole-by-hole estilo Masters — porta a AnaliseSection da KIDSPage
@@ -187,8 +187,8 @@ export default function AnaliseSection({ data, junior, filterTids }: Props) {
   if (valid.length === 0) {
     return (
       <section>
-        <h3 style={{ margin: "8px 0 10px", fontSize: 14, fontWeight: 700, color: "var(--text)" }}>Análise</h3>
-        <div style={{ fontSize: 12, color: "var(--text-3)", padding: "12px 14px", background: "var(--bg-muted)", borderRadius: 6 }}>
+        <h3 style={{ margin: "8px 0 10px", fontSize: "var(--fs-14)", fontWeight: 700, color: "var(--text)" }}>Análise</h3>
+        <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", padding: "12px 14px", background: "var(--bg-muted)", borderRadius: 6 }}>
           — sem scorecards hole-by-hole disponíveis para análise —
         </div>
       </section>
@@ -198,8 +198,8 @@ export default function AnaliseSection({ data, junior, filterTids }: Props) {
   return (
     <section>
       <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", margin: "8px 0 10px" }}>
-        <h3 style={{ margin: 0, fontSize: 14, fontWeight: 700, color: "var(--text)" }}>Análise</h3>
-        <span style={{ fontSize: 11, color: "var(--text-3)" }}>
+        <h3 style={{ margin: 0, fontSize: "var(--fs-14)", fontWeight: 700, color: "var(--text)" }}>Análise</h3>
+        <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
           {valid.length} {valid.length === 1 ? "torneio" : "torneios"} com scorecard
           {fieldCards.length > 0 && <> · field {fieldCards.length}</>}
         </span>
@@ -208,7 +208,7 @@ export default function AnaliseSection({ data, junior, filterTids }: Props) {
       {/* Selector de torneio/escalão como dropdown (em vez de N pills) */}
       {flightOpts.length > 1 && (
         <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 10 }}>
-          <label style={{ fontSize: 11, color: "var(--text-3)", fontWeight: 600 }}>
+          <label style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", fontWeight: 600 }}>
             Torneio / escalão
           </label>
           <select
@@ -216,7 +216,7 @@ export default function AnaliseSection({ data, junior, filterTids }: Props) {
             onChange={(e) => setSelectedFlight(e.target.value)}
             style={{
               flex: 1, maxWidth: 460, padding: "5px 8px",
-              fontSize: 12, fontWeight: 500,
+              fontSize: "var(--fs-12)", fontWeight: 500,
               border: "1px solid var(--border)", borderRadius: 6,
               background: "var(--bg)", color: "var(--text)",
               cursor: "pointer",
@@ -245,7 +245,7 @@ export default function AnaliseSection({ data, junior, filterTids }: Props) {
               background: "none",
               border: "none",
               padding: "6px 12px",
-              fontSize: 13,
+              fontSize: "var(--fs-13)",
               fontWeight: 600,
               cursor: "pointer",
               color: subTab === t.k ? "var(--accent)" : "var(--text-2)",
@@ -287,7 +287,7 @@ function ScoringPane({ player, field }: { player: ScoringDist; field: ScoringDis
   ];
   return (
     <div>
-      <div style={{ fontSize: 11, color: "var(--text-3)", marginBottom: 10 }}>
+      <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", marginBottom: 10 }}>
         Distribuição de scoring · {player.total} buracos do jogador · field {field.total} buracos
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12, justifyItems: "center" }}>
@@ -325,7 +325,7 @@ function RoundsPane({ cards }: { cards: DerivedCard[] }) {
       });
     });
   }
-  if (entries.length === 0) return <div style={{ fontSize: 11, color: "var(--text-3)", padding: 10 }}>— sem rondas —</div>;
+  if (entries.length === 0) return <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", padding: 10 }}>— sem rondas —</div>;
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
@@ -347,20 +347,20 @@ function RoundBar({ entry }: { entry: { tornLabel: string; round: number; gross:
   ].filter((s) => s.pct > 0);
   const tpColor = entry.toPar == null ? "var(--text-3)" : entry.toPar < 0 ? "var(--color-good-dark)" : entry.toPar > 0 ? "var(--color-warn)" : "var(--text-2)";
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "minmax(140px, 1.5fr) 90px 1fr 90px", alignItems: "center", gap: 10, fontSize: 12 }}>
+    <div style={{ display: "grid", gridTemplateColumns: "minmax(140px, 1.5fr) 90px 1fr 90px", alignItems: "center", gap: 10, fontSize: "var(--fs-12)" }}>
       <div style={{ fontWeight: 600, color: "var(--text)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
         {entry.tornLabel} <span style={{ color: "var(--text-3)", fontWeight: 400 }}>· R{entry.round}</span>
       </div>
       <div style={{ textAlign: "center", fontWeight: 700, color: tpColor, fontVariantNumeric: "tabular-nums" }}>
         {entry.gross != null ? `${entry.gross}` : "—"}
-        {entry.toPar != null && <span style={{ fontSize: 10, marginLeft: 4 }}>({entry.toPar > 0 ? `+${entry.toPar}` : entry.toPar})</span>}
+        {entry.toPar != null && <span style={{ fontSize: "var(--fs-10)", marginLeft: 4 }}>({entry.toPar > 0 ? `+${entry.toPar}` : entry.toPar})</span>}
       </div>
       <div style={{ display: "flex", height: 14, borderRadius: 3, overflow: "hidden", gap: 1, background: "var(--bg-muted)" }}>
         {segs.map((s) => (
           <div key={s.k} style={{ flex: s.pct, background: s.color }} title={`${s.k}: ${s.pct.toFixed(0)}%`} />
         ))}
       </div>
-      <div style={{ fontSize: 10, color: "var(--text-3)", textAlign: "right" }}>
+      <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", textAlign: "right" }}>
         {entry.dist.birdies}🐦 · {entry.dist.bogeys + entry.dist.dbPlus}↑
       </div>
     </div>
@@ -379,12 +379,12 @@ function NineSplitPane({ cards, fieldCards }: { cards: DerivedCard[]; fieldCards
     const pp = distPct(dist);
     return (
       <div style={{ padding: "14px 16px", border: "1px solid var(--border-light)", borderRadius: 6, background: "var(--bg)" }}>
-        <div style={{ fontSize: 11, color: "var(--text-3)", letterSpacing: 0.6, fontWeight: 700, marginBottom: 4, textTransform: "uppercase" }}>{label}</div>
+        <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", letterSpacing: 0.6, fontWeight: 700, marginBottom: 4, textTransform: "uppercase" }}>{label}</div>
         <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 10 }}>
-          <span style={{ fontSize: 28, fontWeight: 800, color: toPar == null ? "var(--text-3)" : toPar < 0 ? "var(--color-good-dark)" : toPar > 0 ? "var(--color-warn)" : "var(--text)", fontVariantNumeric: "tabular-nums" }}>
+          <span style={{ fontSize: "var(--fs-28)", fontWeight: 800, color: toPar == null ? "var(--text-3)" : toPar < 0 ? "var(--color-good-dark)" : toPar > 0 ? "var(--color-warn)" : "var(--text)", fontVariantNumeric: "tabular-nums" }}>
             {toPar != null ? (toPar >= 0 ? `+${toPar.toFixed(1)}` : toPar.toFixed(1)) : "—"}
           </span>
-          <span style={{ fontSize: 11, color: "var(--text-3)" }}>
+          <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
             ±par média
             {fieldToPar != null && <span> · field {fieldToPar >= 0 ? "+" : ""}{fieldToPar.toFixed(1)}</span>}
           </span>
@@ -397,7 +397,7 @@ function NineSplitPane({ cards, fieldCards }: { cards: DerivedCard[]; fieldCards
             }} title={`${k}: ${(pp as Record<string, number>)[k].toFixed(0)}%`} />
           ))}
         </div>
-        <div style={{ fontSize: 10, color: "var(--text-3)", marginTop: 5 }}>
+        <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 5 }}>
           {dist.birdies}🐦 · {dist.pars} pars · {dist.bogeys}↑ · {dist.dbPlus}↑↑
         </div>
       </div>
@@ -406,7 +406,7 @@ function NineSplitPane({ cards, fieldCards }: { cards: DerivedCard[]; fieldCards
 
   return (
     <div>
-      <div style={{ fontSize: 11, color: "var(--text-3)", marginBottom: 10 }}>
+      <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", marginBottom: 10 }}>
         Consistência entre nove da frente (1–9) e nove do fundo (10–18).
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
@@ -461,7 +461,7 @@ function HolesPane({ player, field }: {
   }));
   const allVals = rows.flatMap((r) => [r.avg, r.fieldAvg]).filter((v): v is number => v != null);
   if (allVals.length === 0) {
-    return <div style={{ fontSize: 11, color: "var(--text-3)", padding: 10 }}>— sem dados —</div>;
+    return <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", padding: 10 }}>— sem dados —</div>;
   }
   const maxAvg = Math.max(...allVals);
   const minAvg = Math.min(...allVals);
@@ -469,7 +469,7 @@ function HolesPane({ player, field }: {
 
   return (
     <div>
-      <div style={{ fontSize: 11, color: "var(--text-3)", marginBottom: 10 }}>
+      <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", marginBottom: 10 }}>
         Média de strokes por buraco — jogador (cor) vs field (cinzento).
       </div>
       <div className="scroll-x">
@@ -485,13 +485,13 @@ function HolesPane({ player, field }: {
                   <div title={`Field ${r.hole}: ${r.fieldAvg?.toFixed(2) ?? "—"}`}
                     style={{ width: "40%", height: `${fHeight}%`, minHeight: r.fieldAvg != null ? 2 : 0, background: "var(--text-3)", borderRadius: "2px 2px 0 0" }} />
                 </div>
-                <div style={{ fontSize: 9, color: "var(--text-3)" }}>{r.hole}</div>
+                <div style={{ fontSize: "var(--fs-9)", color: "var(--text-3)" }}>{r.hole}</div>
               </div>
             );
           })}
         </div>
       </div>
-      <div style={{ display: "flex", gap: 14, fontSize: 10, color: "var(--text-3)", marginTop: 8, justifyContent: "center" }}>
+      <div style={{ display: "flex", gap: 14, fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 8, justifyContent: "center" }}>
         <span><span style={{ display: "inline-block", width: 10, height: 10, background: "var(--accent)", borderRadius: 2, marginRight: 4 }} />jogador</span>
         <span><span style={{ display: "inline-block", width: 10, height: 10, background: "var(--text-3)", borderRadius: 2, marginRight: 4 }} />field (escalão)</span>
       </div>

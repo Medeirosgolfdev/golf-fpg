@@ -1,4 +1,4 @@
-/**
+﻿/**
  * src/pages/DrawsPage.tsx
  *
  * Página dedicada de Draws/Pairings do Manuel — lista de jogadores com quem
@@ -431,12 +431,12 @@ function TorneiosList({
           borderBottom: open ? "1px solid var(--border-light)" : "none",
           cursor: "pointer",
           textAlign: "left",
-          fontSize: 12,
+          fontSize: "var(--fs-12)",
           fontWeight: 800,
           color: "var(--text)",
         }}
       >
-        <span style={{ color: "var(--text-3)", fontSize: 11 }}>
+        <span style={{ color: "var(--text-3)", fontSize: "var(--fs-11)" }}>
           {open ? "▾" : "▸"}
         </span>
         <span
@@ -852,7 +852,7 @@ export default function DrawsPage() {
               );
             })}
             {escFilter.size > 0 && (
-              <button type="button" className="btn-link muted" style={{ fontSize: 11 }} onClick={() => setEscFilter(new Set())}>
+              <button type="button" className="btn-link muted" style={{ fontSize: "var(--fs-11)" }} onClick={() => setEscFilter(new Set())}>
                 limpar
               </button>
             )}
@@ -951,14 +951,14 @@ export default function DrawsPage() {
                                     {seg(rec.d, "var(--text-muted)", "empates")}
                                     {seg(rec.l, "var(--color-danger)", "vitórias do companheiro")}
                                   </span>
-                                  <span style={{ fontSize: 12, fontWeight: 700, fontVariantNumeric: "tabular-nums" }}>
+                                  <span style={{ fontSize: "var(--fs-12)", fontWeight: 700, fontVariantNumeric: "tabular-nums" }}>
                                     <span style={{ color: "var(--color-good)" }}>{rec.w}V</span>
                                     <span className="muted" style={{ fontWeight: 400 }}> · </span>
                                     <span style={{ color: "var(--text-2)" }}>{rec.d}E</span>
                                     <span className="muted" style={{ fontWeight: 400 }}> · </span>
                                     <span style={{ color: "var(--color-danger)" }}>{rec.l}D</span>
                                   </span>
-                                  <span className="muted" style={{ fontSize: 11 }}>
+                                  <span className="muted" style={{ fontSize: "var(--fs-11)" }}>
                                     {rec.w > rec.l ? "Manuel leva vantagem" : rec.l > rec.w ? `${row.nome.split(" ")[0]} leva vantagem` : "equilibrado"}
                                     {" "}({rec.played} {rec.played === 1 ? "ronda comparável" : "rondas comparáveis"})
                                   </span>
@@ -1002,7 +1002,7 @@ export default function DrawsPage() {
                                       <span style={{ color: tpColor(r.manuelScore?.toPar), fontWeight: 700, minWidth: 60, textAlign: "right" }}>
                                         {fmtScore(r.manuelScore)}
                                       </span>
-                                      <span className="muted" style={{ fontSize: 11 }}>vs</span>
+                                      <span className="muted" style={{ fontSize: "var(--fs-11)" }}>vs</span>
                                       <span style={{ color: tpColor(r.companheiroScore?.toPar), fontWeight: 700, minWidth: 60 }}>
                                         {fmtScore(r.companheiroScore)}
                                       </span>

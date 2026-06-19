@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+﻿import React, { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import type { PlayerPageData, CrossPlayerData } from "../data/playerDataLoader";
 import { numSafe } from "../utils/mathUtils";
@@ -56,7 +56,7 @@ function HcpEvolutionChart({ players, currentFed, escName }: {
     <div className="card mt-12">
       <div className="h-xs fs-14 mb-8">📈 Evolução HCP - {escName}</div>
       <div className="mb-8">
-        <label style={{ marginRight: 12, fontSize: 12 }}>
+        <label style={{ marginRight: 12, fontSize: "var(--fs-12)" }}>
           Período:
           <select value={period} onChange={e => setPeriod(Number(e.target.value))} style={{ marginLeft: 6, padding: "4px 8px" }}>
             <option value={3}>Últimos 3 meses</option>
@@ -114,7 +114,7 @@ function HcpEvolutionChart({ players, currentFed, escName }: {
               onClick={() => togglePlayer(p.fed)}
               style={{
                 padding: "4px 8px",
-                fontSize: 11,
+                fontSize: "var(--fs-11)",
                 background: isHidden ? "var(--bg-muted)" : color + "20",
                 border: `1px solid ${color}`,
                 borderRadius: 4,

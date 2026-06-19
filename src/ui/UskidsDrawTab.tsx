@@ -226,35 +226,33 @@ export default function UskidsDrawTab({
 
       {/* Tabela */}
       <div className="scroll-x">
-        <table className="lb-table" style={{ width: "100%", borderCollapse: "collapse" }}>
+        <table className="dtable">
           <thead>
             <tr>
               <SortableHdr k="pos"    sortKey={sortKey} sortDir={sortDir}
                 onSort={(k) => toggleSort(k as SortKey)}
-                style={{ padding: "7px 8px", textAlign: "center", width: 36 }}>#</SortableHdr>
+                style={{ textAlign: "center", width: 36 }}>#</SortableHdr>
               <SortableHdr k="flag"   sortKey={sortKey} sortDir={sortDir}
                 onSort={(k) => toggleSort(k as SortKey)}
-                style={{ padding: "7px 8px", textAlign: "center", width: 28 }}></SortableHdr>
+                style={{ textAlign: "center", width: 28 }}></SortableHdr>
               <SortableHdr k="nome"   sortKey={sortKey} sortDir={sortDir}
-                onSort={(k) => toggleSort(k as SortKey)}
-                style={{ padding: "7px 12px", textAlign: "left" }}>Jogador</SortableHdr>
+                onSort={(k) => toggleSort(k as SortKey)}>Jogador</SortableHdr>
               <SortableHdr k="cidade" sortKey={sortKey} sortDir={sortDir}
-                onSort={(k) => toggleSort(k as SortKey)}
-                style={{ padding: "7px 8px", textAlign: "left" }}>Cidade</SortableHdr>
+                onSort={(k) => toggleSort(k as SortKey)}>Cidade</SortableHdr>
               <SortableHdr k="hora"   sortKey={sortKey} sortDir={sortDir}
                 onSort={(k) => toggleSort(k as SortKey)}
-                style={{ padding: "7px 8px", textAlign: "center" }}>Hora</SortableHdr>
+                style={{ textAlign: "center" }}>Hora</SortableHdr>
               <SortableHdr k="buraco" sortKey={sortKey} sortDir={sortDir}
                 onSort={(k) => toggleSort(k as SortKey)}
-                style={{ padding: "7px 8px", textAlign: "center" }}>Buraco</SortableHdr>
+                style={{ textAlign: "center" }}>Buraco</SortableHdr>
               {temAlgumScore && (
                 <>
                   <SortableHdr k="topar" sortKey={sortKey} sortDir={sortDir}
                     onSort={(k) => toggleSort(k as SortKey)}
-                    style={{ padding: "7px 8px", textAlign: "center" }}>±</SortableHdr>
+                    style={{ textAlign: "center" }}>±</SortableHdr>
                   <SortableHdr k="score" sortKey={sortKey} sortDir={sortDir}
                     onSort={(k) => toggleSort(k as SortKey)}
-                    style={{ padding: "7px 8px", textAlign: "center" }}>Resultado</SortableHdr>
+                    style={{ textAlign: "center" }}>Resultado</SortableHdr>
                 </>
               )}
             </tr>
@@ -265,7 +263,6 @@ export default function UskidsDrawTab({
               const borderTop = isFirstOfGroup ? "3px solid var(--text-3)" : undefined;
               const bgRow = p.isManuel ? "var(--bg-success-subtle)" : undefined;
               const baseCell: React.CSSProperties = {
-                padding: "6px 8px",
                 whiteSpace: "nowrap",
                 ...(borderTop ? { borderTop } : {}),
                 ...(bgRow ? { background: bgRow } : {}),

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * kids2/components/EvolutionChart.tsx
  *
  * Linha temporal das performances do jogador. Eixo X = data, eixo Y = ±par.
@@ -165,8 +165,8 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
   if (visiblePoints.length < 2) {
     return (
       <section style={{ marginBottom: 14 }}>
-        <h3 style={{ margin: "8px 0 10px", fontSize: 14, fontWeight: 700, color: "var(--text)" }}>Evolução</h3>
-        <div style={{ fontSize: 12, color: "var(--text-3)", padding: "10px 12px", background: "var(--bg-muted)", borderRadius: 6 }}>
+        <h3 style={{ margin: "8px 0 10px", fontSize: "var(--fs-14)", fontWeight: 700, color: "var(--text)" }}>Evolução</h3>
+        <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", padding: "10px 12px", background: "var(--bg-muted)", borderRadius: 6 }}>
           Insuficiência de dados para representar evolução ({visiblePoints.length} {visiblePoints.length === 1 ? "ponto" : "pontos"}{hidden9HCount > 0 ? ` · ${hidden9HCount} de 9H escondidos` : ""}).
         </div>
       </section>
@@ -189,7 +189,7 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
   return (
     <section style={{ marginBottom: 14 }}>
       <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", margin: "8px 0 10px" }}>
-        <h3 style={{ margin: 0, fontSize: 14, fontWeight: 700, color: "var(--text)" }}>Evolução</h3>
+        <h3 style={{ margin: 0, fontSize: "var(--fs-14)", fontWeight: 700, color: "var(--text)" }}>Evolução</h3>
         <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
           <button
             onClick={() => setYMode("toPar")}
@@ -304,7 +304,7 @@ export default function EvolutionChart({ data, junior, filterTids }: Props) {
         </div>
 
         {/* Legenda */}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, padding: "6px 8px", fontSize: 10, color: "var(--text-3)" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, padding: "6px 8px", fontSize: "var(--fs-10)", color: "var(--text-3)" }}>
           {sources.map((src) => (
             <span key={src} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
               <span style={{ width: 9, height: 9, borderRadius: "50%", background: SOURCE_COLORS[src] || "var(--text-3)", display: "inline-block" }} />
@@ -347,9 +347,9 @@ function CustomTooltip({ active, payload, yMode }: any) {
   };
   const metricLabel = yMode === "toPar" ? "±par" : yMode === "toParNorm" ? "±par/18H" : "Posição";
   return (
-    <div style={{ background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 6, padding: "6px 10px", fontSize: 11, boxShadow: "0 2px 6px rgba(0,0,0,0.1)" }}>
+    <div style={{ background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 6, padding: "6px 10px", fontSize: "var(--fs-11)", boxShadow: "0 2px 6px rgba(0,0,0,0.1)" }}>
       <div style={{ fontWeight: 700, color: "var(--text)" }}>{p.tName}</div>
-      <div style={{ color: "var(--text-3)", fontSize: 10 }}>
+      <div style={{ color: "var(--text-3)", fontSize: "var(--fs-10)" }}>
         {p.flight} · {fmtDate(p.date)}{p.nholes === 9 ? " · 9H" : ""}
       </div>
       <div style={{ color: "var(--text-2)", marginTop: 3, display: "flex", flexDirection: "column", gap: 2 }}>
@@ -369,7 +369,7 @@ function CustomTooltip({ active, payload, yMode }: any) {
 
 function btnStyle(active: boolean): React.CSSProperties {
   return {
-    fontSize: 11, fontWeight: 600,
+    fontSize: "var(--fs-11)", fontWeight: 600,
     border: "1px solid " + (active ? "var(--color-info-dark)" : "var(--border-light)"),
     background: active ? "var(--color-info-dark)" : "var(--bg)",
     color: active ? "var(--bg)" : "var(--text-2)",

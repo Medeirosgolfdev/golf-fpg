@@ -1,4 +1,4 @@
-/**
+﻿/**
  * ComparePage.tsx — Página /comparar
  *
  * Duas tabs (estilo .tab-under, coerente com FPGPage/BJGTPage/USKIDSPage):
@@ -333,11 +333,11 @@ function CourseComparisonView({ simCourses }: { simCourses: Course[] }) {
           <div className="card">
             <div className="h-md" style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
               🎯 Campos Similares
-              <span className="muted" style={{ fontWeight: 500, fontSize: 12 }}>
+              <span className="muted" style={{ fontWeight: 500, fontSize: "var(--fs-12)" }}>
                 · {similarities.length} resultado{similarities.length === 1 ? "" : "s"} ≥ 40%
               </span>
             </div>
-            <div className="muted" style={{ fontSize: 12, marginTop: -6, marginBottom: 12 }}>
+            <div className="muted" style={{ fontSize: "var(--fs-12)", marginTop: -6, marginBottom: 12 }}>
               Pesos: 25% distância · 15% par · 60% min(slope, CR) · Clica no cabeçalho para ordenar · Clica numa linha para comparar buracos
             </div>
             {similarities.length === 0 ? (
@@ -355,14 +355,14 @@ function CourseComparisonView({ simCourses }: { simCourses: Course[] }) {
             <div className="card" style={{ borderLeft: "4px solid var(--accent)" }}>
               <div className="h-md" style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 6 }}>
                 <span>🆚 Comparação de buracos</span>
-                <span className="muted" style={{ fontSize: 12, fontWeight: 500 }}>
+                <span className="muted" style={{ fontSize: "var(--fs-12)", fontWeight: 500 }}>
                   {selectedCourse.master.name} <span style={{ color: "var(--accent)" }}>·</span> {pickedRow.course.master.name}
                 </span>
                 <button
                   type="button"
                   onClick={() => setPickedRow(null)}
                   style={{
-                    marginLeft: "auto", padding: "4px 10px", fontSize: 11, fontWeight: 600,
+                    marginLeft: "auto", padding: "4px 10px", fontSize: "var(--fs-11)", fontWeight: 600,
                     background: "var(--bg-muted)", border: "1px solid var(--border)",
                     borderRadius: 6, cursor: "pointer", color: "var(--text-2)",
                   }}
@@ -370,7 +370,7 @@ function CourseComparisonView({ simCourses }: { simCourses: Course[] }) {
                   ✕ Fechar
                 </button>
               </div>
-              <div className="muted" style={{ fontSize: 12, marginBottom: 12 }}>
+              <div className="muted" style={{ fontSize: "var(--fs-12)", marginBottom: 12 }}>
                 Hero completo do campo comparado — usa o toggle "Por par / Por buraco" para alinhar a vista com o campo principal acima.
               </div>
               <HeroCard course={pickedRow.course} tee={pickedRow.tee} />

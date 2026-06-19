@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+﻿import React, { useMemo } from "react";
 import { fmtToPar } from "../../utils/format";
 import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
@@ -62,27 +62,27 @@ export default function H2HSortableTable({ confrontos, firstName }: { confrontos
             }}>
               <td style={{ padding: "7px 12px", fontWeight: 500 }}>
                 {c.tornName.replace(/\s*\d{4}$/, "")}
-                <span style={{ marginLeft: 5, fontSize: 10, color: "var(--text-3)" }}> '{String(c.year).slice(2)}</span>
+                <span style={{ marginLeft: 5, fontSize: "var(--fs-10)", color: "var(--text-3)" }}> '{String(c.year).slice(2)}</span>
                 {c.nRounds && c.nRounds > 1 && (
                   <span style={{ marginLeft: 6 }}>
                     <RoundPill nR={c.nRounds} />
                   </span>
                 )}
               </td>
-              <td style={{ textAlign: "center", fontSize: 10, color: "var(--text-2)" }}>{c.ageGroup ?? "—"}</td>
+              <td style={{ textAlign: "center", fontSize: "var(--fs-10)", color: "var(--text-2)" }}>{c.ageGroup ?? "—"}</td>
               <td className="ta-c">
                 <strong>#{c.manPos}</strong>
-                {c.manTp != null && <span style={{ fontSize: 10, color: (c.manTp ?? 1) <= 0 ? "var(--color-good-dark)" : "var(--text-3)", marginLeft: 4 }}>({fmtToPar(c.manTp)})</span>}
+                {c.manTp != null && <span style={{ fontSize: "var(--fs-10)", color: (c.manTp ?? 1) <= 0 ? "var(--color-good-dark)" : "var(--text-3)", marginLeft: 4 }}>({fmtToPar(c.manTp)})</span>}
               </td>
               <td style={{ textAlign: "center", color: rivalWon ? "var(--color-good-dark)" : "var(--color-danger-vivid)" }}>
                 <strong>#{c.rivalPos}</strong>
                 {c.rivalTp != null && <span className="fs-10 ml-4">({fmtToPar(c.rivalTp)})</span>}
               </td>
-              <td style={{ textAlign: "center", fontSize: 11,
+              <td style={{ textAlign: "center", fontSize: "var(--fs-11)",
                 color: dif != null && dif < 0 ? "var(--color-good-dark)" : dif != null && dif > 0 ? "var(--color-danger-vivid)" : "var(--text-3)" }}>
                 {dif != null ? (dif > 0 ? "+" : "") + dif : "—"}
               </td>
-              <td style={{ textAlign: "right", fontWeight: 700, fontSize: 11, paddingRight: 12,
+              <td style={{ textAlign: "right", fontWeight: 700, fontSize: "var(--fs-11)", paddingRight: 12,
                 color: rivalWon ? "var(--color-good-dark)" : draw ? "var(--text-3)" : "var(--color-danger-vivid)" }}>
                 {rivalWon ? `${firstName} venceu` : draw ? "empate" : "Manuel venceu"}
               </td>

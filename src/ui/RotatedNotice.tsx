@@ -1,4 +1,4 @@
-/**
+﻿/**
  * RotatedNotice.tsx
  *
  * Pequena nota informativa para mostrar no header de scorecards cuja
@@ -29,7 +29,7 @@ export default function RotatedNotice({ rotated, inline }: Props) {
       <span
         title={`Buracos renumerados: a sequência jogada foi rodada +${offsetHoles} para alinhar com o layout actual do campo`}
         style={{
-          fontSize: 10,
+          fontSize: "var(--fs-10)",
           color: "var(--text-2)",
           marginLeft: 6,
           padding: "1px 5px",
@@ -47,7 +47,7 @@ export default function RotatedNotice({ rotated, inline }: Props) {
   return (
     <div
       style={{
-        fontSize: 11,
+        fontSize: "var(--fs-11)",
         color: "var(--text-2)",
         marginTop: 6,
         padding: "6px 10px",

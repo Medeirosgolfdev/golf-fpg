@@ -1,4 +1,4 @@
-/**
+﻿/**
  * kids2/components/ScorecardModal.tsx
  *
  * Modal hole-by-hole baseado no padrão KIDSPage/TournScorecard.
@@ -119,7 +119,7 @@ export default function ScorecardModal({ open, onClose, tournament, flight, resu
       style={{
         position: "fixed", inset: 0,
         background: "rgba(0,0,0,0.5)",
-        zIndex: 1000,
+        zIndex: "var(--z-overlay)",
         display: "flex", alignItems: "center", justifyContent: "center",
         padding: 20,
       }}
@@ -140,7 +140,7 @@ export default function ScorecardModal({ open, onClose, tournament, flight, resu
         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 14, gap: 12 }}>
           <div>
             <h3 style={{ margin: 0, fontSize: 17, color: "var(--text)", fontWeight: 700 }}>{playerName}</h3>
-            <div style={{ fontSize: 12, color: "var(--text-3)", marginTop: 3 }}>
+            <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", marginTop: 3 }}>
               {tournament.name || tournament.shortName} · {flight.label}
               {roundRows.length > 1 ? ` · ${roundRows.length} rondas` : ` · Ronda ${round}`}
               {tournament.course && <> · <span style={{ fontStyle: "italic" }}>{tournament.course}</span></>}
@@ -149,7 +149,7 @@ export default function ScorecardModal({ open, onClose, tournament, flight, resu
           <button
             onClick={onClose}
             style={{
-              fontSize: 18, fontWeight: 700,
+              fontSize: "var(--fs-18)", fontWeight: 700,
               padding: "4px 12px",
               borderRadius: 6,
               border: "1px solid var(--border)",
@@ -164,16 +164,16 @@ export default function ScorecardModal({ open, onClose, tournament, flight, resu
         {totalGross > 0 && totalPar > 0 && totalToPar !== null && (
           <div style={{ display: "flex", gap: 16, alignItems: "baseline", marginBottom: 12, padding: "8px 12px", background: "var(--bg-muted)", borderRadius: 6 }}>
             <div>
-              <span style={{ fontSize: 11, color: "var(--text-3)", letterSpacing: 0.4, textTransform: "uppercase" }}>Gross total</span>
-              <span style={{ fontSize: 24, fontWeight: 800, marginLeft: 8, color: "var(--text)", fontVariantNumeric: "tabular-nums" }}>{totalGross}</span>
+              <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", letterSpacing: 0.4, textTransform: "uppercase" }}>Gross total</span>
+              <span style={{ fontSize: "var(--fs-24)", fontWeight: 800, marginLeft: 8, color: "var(--text)", fontVariantNumeric: "tabular-nums" }}>{totalGross}</span>
             </div>
             <div>
-              <span style={{ fontSize: 11, color: "var(--text-3)", letterSpacing: 0.4, textTransform: "uppercase" }}>±par</span>
-              <span className={`sc-topar ${toParClass(totalToPar)}`} style={{ fontSize: 18, fontWeight: 700, marginLeft: 8, display: "inline" }}>
+              <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", letterSpacing: 0.4, textTransform: "uppercase" }}>±par</span>
+              <span className={`sc-topar ${toParClass(totalToPar)}`} style={{ fontSize: "var(--fs-18)", fontWeight: 700, marginLeft: 8, display: "inline" }}>
                 {fmtSign(totalToPar)}
               </span>
             </div>
-            <div style={{ marginLeft: "auto", fontSize: 11, color: "var(--text-3)" }}>
+            <div style={{ marginLeft: "auto", fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
               Par {totalPar}{totalM > 0 && ` · ${totalM}m`}{is9 && " · 9 buracos"}
               {roundRows.length > 1 && ` · ${roundRows.length} rondas`}
             </div>
@@ -265,7 +265,7 @@ export default function ScorecardModal({ open, onClose, tournament, flight, resu
           <div style={{
             marginTop: 10,
             padding: "6px 10px",
-            fontSize: 11,
+            fontSize: "var(--fs-11)",
             color: "var(--text-3)",
             fontStyle: "italic",
             borderTop: "1px dashed var(--border-light)",

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * kids/RivaisSidebar.tsx — Sidebar de selecção de rivais
  * (extraído de KIDSPage.tsx)
  */
@@ -113,7 +113,7 @@ export const RivaisSidebar = React.memo(function RivaisSidebar({ selected, onSel
         {/* Linha 1: rank + flag + nome + nº torneios */}
         <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 3 }}>
           {rank != null ? (
-            <span style={{ flexShrink: 0, fontSize: 10, minWidth: 18, height: 18, borderRadius: 4,
+            <span style={{ flexShrink: 0, fontSize: "var(--fs-10)", minWidth: 18, height: 18, borderRadius: 4,
               background: rank <= 3 ? "var(--bg-topbar)" : rank <= 10 ? "var(--bg-warn-strong)" : "var(--bg-muted)",
               color: rank <= 3 ? "var(--text-inv)" : rank <= 10 ? "var(--color-warn-dark)" : "var(--text-3)",
               display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: 700 }}>
@@ -121,12 +121,12 @@ export const RivaisSidebar = React.memo(function RivaisSidebar({ selected, onSel
             </span>
           ) : <span style={{ width: 18 }} />}
           <span className="fs-13 shrink-0">{flagEmoji}</span>
-          <span style={{ flex: 1, fontSize: 12, fontWeight: isActive ? 700 : 600, color: "var(--text)",
+          <span style={{ flex: 1, fontSize: "var(--fs-12)", fontWeight: isActive ? 700 : 600, color: "var(--text)",
             overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
             {p.n}
             {p.isM && <span className="p p-sm p-outline" style={{ marginLeft: 5 }}>REF</span>}
           </span>
-          <span style={{ flexShrink: 0, fontSize: 12, fontWeight: 700, color: isActive ? "var(--accent)" : "var(--text-3)" }}>
+          <span style={{ flexShrink: 0, fontSize: "var(--fs-12)", fontWeight: 700, color: isActive ? "var(--accent)" : "var(--text-3)" }}>
             {played}
           </span>
         </div>
@@ -148,9 +148,9 @@ export const RivaisSidebar = React.memo(function RivaisSidebar({ selected, onSel
               {fmtToPar(bestTp)}
             </span>
           )}
-          {mhCnt > 0 && <span style={{ fontSize: 10, color: "var(--accent)", fontWeight: 600 }} title={`${mhCnt} torneios USKids`}>📊</span>}
+          {mhCnt > 0 && <span style={{ fontSize: "var(--fs-10)", color: "var(--accent)", fontWeight: 600 }} title={`${mhCnt} torneios USKids`}>📊</span>}
           {((p as any).fpgClub || (p as any).esClub) && (
-            <span style={{ fontSize: 9, color: "var(--color-good-dark)", fontWeight: 600, opacity: 0.85 }}
+            <span style={{ fontSize: "var(--fs-9)", color: "var(--color-good-dark)", fontWeight: 600, opacity: 0.85 }}
               title={(p as any).fpgClub ? "Clube FPG" : "Clube espanhol"}>
               🏌️ {(p as any).fpgClub || (p as any).esClub}
             </span>
@@ -184,13 +184,13 @@ export const RivaisSidebar = React.memo(function RivaisSidebar({ selected, onSel
           </>
         )}
         {total === 0 && (
-          <div style={{ padding: "16px 12px", fontSize: 12, color: "var(--text-muted)", textAlign: "center" }}>
+          <div style={{ padding: "16px 12px", fontSize: "var(--fs-12)", color: "var(--text-muted)", textAlign: "center" }}>
             Sem rivais com estes filtros
           </div>
         )}
       </div>
 
-      <div style={{ padding: "5px 10px", borderTop: "1px solid var(--border-light)", fontSize: 10, color: "var(--text-muted)", flexShrink: 0 }}>
+      <div style={{ padding: "5px 10px", borderTop: "1px solid var(--border-light)", fontSize: "var(--fs-10)", color: "var(--text-muted)", flexShrink: 0 }}>
         {total} rivais · {totalRanked} com rank
       </div>
     </div>

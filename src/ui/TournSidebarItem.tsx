@@ -1,4 +1,4 @@
-// @refresh reset
+﻿// @refresh reset
 /**
  * TournSidebarItem — item de sidebar unificado (design E3)
  * Todos os pills vêm de PillBadge.tsx — fonte única.
@@ -36,7 +36,7 @@ function LinkBtn({ ccode, tcode, active }: { ccode?: string; tcode?: string; act
         background: "none", border: "none", padding: "0 1px",
         cursor: "pointer", color: "var(--accent)",
         opacity: active ? 1 : 0.5,
-        fontSize: 11, lineHeight: 1,
+        fontSize: "var(--fs-11)", lineHeight: 1,
         display: "inline-flex", alignItems: "center", verticalAlign: "middle",
       }}>🔗</button>
   );
@@ -134,17 +134,17 @@ export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills
     <Wrapper {...commonProps} {...wrapperProps}>
       {/* Linha 1: nome */}
       <div className="gap-4" style={{ display: "flex", alignItems: "flex-start", marginBottom: 3 }}>
-        <span className="course-item-name" style={{ flex: 1, fontSize: 12, fontWeight: isActive ? 700 : 500, lineHeight: 1.3 }}>
+        <span className="course-item-name" style={{ flex: 1, fontSize: "var(--fs-12)", fontWeight: isActive ? 700 : 500, lineHeight: 1.3 }}>
           {t.name}
         </span>
         {nAces > 0 && (
-          <span title={`${nAces} hole-in-one neste torneio`} style={{ flexShrink: 0, fontSize: 12 }}>🕳️</span>
+          <span title={`${nAces} hole-in-one neste torneio`} style={{ flexShrink: 0, fontSize: "var(--fs-12)" }}>🕳️</span>
         )}
       </div>
 
       {/* Linha 2: campo */}
       {t.campo && (
-        <div style={{ fontSize: 12, color: "var(--text-2)", fontWeight: 500, marginBottom: 3 }}>
+        <div style={{ fontSize: "var(--fs-12)", color: "var(--text-2)", fontWeight: 500, marginBottom: 3 }}>
           📍 {t.campo}
         </div>
       )}
@@ -181,11 +181,11 @@ export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills
 
       {/* Linha 4: data + nº jog + origem do ficheiro */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 6 }}>
-        <span style={{ fontSize: 11, color: "var(--text-muted)", flexShrink: 0 }}>{shortDate(t.date)}</span>
+        <span style={{ fontSize: "var(--fs-11)", color: "var(--text-muted)", flexShrink: 0 }}>{shortDate(t.date)}</span>
         <div style={{ display: "flex", alignItems: "center", gap: 4, flexShrink: 0 }}>
           {t._sourceFile && <FileBadge path={t._sourceFile} />}
           {(t.playerCount ?? 0) > 0 && (
-            <span style={{ fontSize: 11, color: "var(--text-muted)" }}>{t.playerCount} jog</span>
+            <span style={{ fontSize: "var(--fs-11)", color: "var(--text-muted)" }}>{t.playerCount} jog</span>
           )}
         </div>
       </div>

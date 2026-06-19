@@ -245,35 +245,11 @@ export default function TopClubesPanel({
         </span>
       </header>
       <div style={{ overflowX: "auto", paddingBottom: 14 }}>
-        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+        <table className="dtable">
           <thead>
-            <tr
-              style={{
-                background: "var(--bg-header)",
-                textAlign: "left",
-                fontSize: 11,
-                fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: 0.3,
-                color: "var(--text-3)",
-              }}
-            >
-              <th
-                style={{
-                  padding: "8px 12px",
-                  borderBottom: "2px solid var(--border)",
-                  width: 32,
-                }}
-              >
-                #
-              </th>
-              <SortableHdr
-                k="club"
-                sortKey={sortKey}
-                sortDir={sortDir}
-                onSort={onSort}
-                style={{ padding: "8px 12px", borderBottom: "2px solid var(--border)" }}
-              >
+            <tr>
+              <th style={{ width: 32 }}>#</th>
+              <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>
                 Clube
               </SortableHdr>
               <SortableHdr
@@ -281,11 +257,7 @@ export default function TopClubesPanel({
                 sortKey={sortKey}
                 sortDir={sortDir}
                 onSort={onSort}
-                style={{
-                  padding: "8px 12px",
-                  borderBottom: "2px solid var(--border)",
-                  textAlign: "right",
-                }}
+                style={{ textAlign: "right" }}
               >
                 Títulos
               </SortableHdr>
@@ -294,11 +266,7 @@ export default function TopClubesPanel({
                 sortKey={sortKey}
                 sortDir={sortDir}
                 onSort={onSort}
-                style={{
-                  padding: "8px 12px",
-                  borderBottom: "2px solid var(--border)",
-                  textAlign: "right",
-                }}
+                style={{ textAlign: "right" }}
               >
                 Atletas
               </SortableHdr>
@@ -307,21 +275,11 @@ export default function TopClubesPanel({
                 sortKey={sortKey}
                 sortDir={sortDir}
                 onSort={onSort}
-                style={{
-                  padding: "8px 12px",
-                  borderBottom: "2px solid var(--border)",
-                  textAlign: "right",
-                }}
+                style={{ textAlign: "right" }}
               >
                 Escalões
               </SortableHdr>
-              <SortableHdr
-                k="years"
-                sortKey={sortKey}
-                sortDir={sortDir}
-                onSort={onSort}
-                style={{ padding: "8px 12px", borderBottom: "2px solid var(--border)" }}
-              >
+              <SortableHdr k="years" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>
                 Anos
               </SortableHdr>
             </tr>
@@ -335,32 +293,23 @@ export default function TopClubesPanel({
                   <tr
                     key={c.key}
                     style={{
-                      borderBottom: "1px solid var(--border-light)",
                       cursor: "pointer",
-                      background: isOpen
-                        ? "var(--bg-info-subtle, rgba(59,130,246,0.04))"
-                        : undefined,
+                      background: isOpen ? "var(--bg-info-subtle, rgba(59,130,246,0.04))" : undefined,
                     }}
                     onClick={() => toggle(c.key)}
                     title={isOpen ? "Fechar detalhes" : "Ver atletas e títulos"}
                   >
                     <td
-                      style={{
-                        padding: "8px 12px",
-                        verticalAlign: "middle",
-                        fontFamily: "monospace",
-                        fontSize: 11,
-                        color: "var(--text-3)",
-                      }}
+                      style={{ fontFamily: "monospace", fontSize: "var(--fs-11)", color: "var(--text-3)" }}
                     >
                       {idx + 1}
                     </td>
-                    <td style={{ padding: "8px 12px", verticalAlign: "middle" }}>
+                    <td>
                       <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
                         <span
                           style={{
                             fontFamily: "monospace",
-                            fontSize: 11,
+                            fontSize: "var(--fs-11)",
                             opacity: 0.6,
                             width: 10,
                           }}
@@ -371,43 +320,22 @@ export default function TopClubesPanel({
                       </span>
                     </td>
                     <td
-                      style={{
-                        padding: "8px 12px",
-                        textAlign: "right",
-                        verticalAlign: "middle",
-                        fontWeight: 800,
-                        color: "var(--accent)",
-                      }}
+                      className="r" style={{ fontWeight: 800, color: "var(--accent)" }}
                     >
                       {c.titles.length}
                     </td>
                     <td
-                      style={{
-                        padding: "8px 12px",
-                        textAlign: "right",
-                        verticalAlign: "middle",
-                      }}
+                      className="r"
                     >
                       {c.athletes.length}
                     </td>
                     <td
-                      style={{
-                        padding: "8px 12px",
-                        textAlign: "right",
-                        verticalAlign: "middle",
-                      }}
+                      className="r"
                       title={[...c.escaloes].join(", ")}
                     >
                       {c.escaloes.size}
                     </td>
-                    <td
-                      style={{
-                        padding: "8px 12px",
-                        verticalAlign: "middle",
-                        fontSize: 11,
-                        color: "var(--text-3)",
-                      }}
-                    >
+                    <td style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
                       {ys.length === 1 ? ys[0] : `${ys[0]}–${ys[ys.length - 1]}`} ({ys.length})
                     </td>
                   </tr>
@@ -444,7 +372,7 @@ export default function TopClubesPanel({
                                   borderRadius: 12,
                                   background: "var(--bg-card)",
                                   border: "1px solid var(--border-light)",
-                                  fontSize: 12,
+                                  fontSize: "var(--fs-12)",
                                 }}
                               >
                                 {a.fed ? (
@@ -468,7 +396,7 @@ export default function TopClubesPanel({
                                 )}
                                 <span
                                   style={{
-                                    fontSize: 11,
+                                    fontSize: "var(--fs-11)",
                                     fontWeight: 700,
                                     color: "var(--accent)",
                                   }}
@@ -480,54 +408,25 @@ export default function TopClubesPanel({
                           </div>
                         </div>
                         {/* Títulos detalhados */}
-                        <table
-                          style={{
-                            width: "100%",
-                            borderCollapse: "collapse",
-                            fontSize: 12,
-                            marginTop: 4,
-                          }}
-                        >
+                        <table className="dtable-sm" style={{ marginTop: 4 }}>
                           <thead>
-                            <tr
-                              style={{
-                                fontSize: 10,
-                                fontWeight: 600,
-                                textTransform: "uppercase",
-                                letterSpacing: 0.3,
-                                color: "var(--text-3)",
-                              }}
-                            >
-                              <th style={{ padding: "4px 8px", textAlign: "left" }}>Data</th>
-                              <th style={{ padding: "4px 8px", textAlign: "left" }}>Esc</th>
-                              <th style={{ padding: "4px 8px", textAlign: "left" }}>Sx</th>
-                              <th style={{ padding: "4px 8px", textAlign: "left" }}>Atleta</th>
-                              <th style={{ padding: "4px 8px", textAlign: "right" }}>Total</th>
-                              <th style={{ padding: "4px 8px", textAlign: "right" }}>±Par</th>
-                              <th style={{ padding: "4px 8px", textAlign: "left" }}>Torneio</th>
+                            <tr>
+                              <th>Data</th>
+                              <th>Esc</th>
+                              <th>Sx</th>
+                              <th>Atleta</th>
+                              <th className="r">Total</th>
+                              <th className="r">±Par</th>
+                              <th>Torneio</th>
                             </tr>
                           </thead>
                           <tbody>
                             {c.titles.map((t, i) => (
-                              <tr
-                                key={i}
-                                style={{
-                                  borderTop:
-                                    i > 0 ? "1px dotted var(--border-light)" : undefined,
-                                }}
-                              >
-                                <td
-                                  style={{
-                                    padding: "4px 8px",
-                                    whiteSpace: "nowrap",
-                                    fontVariantNumeric: "tabular-nums",
-                                  }}
-                                >
-                                  {t.date}
-                                </td>
-                                <td style={{ padding: "4px 8px" }}>{t.escalao}</td>
-                                <td style={{ padding: "4px 8px" }}>{t.sex}</td>
-                                <td style={{ padding: "4px 8px" }}>
+                              <tr key={i}>
+                                <td style={{ whiteSpace: "nowrap" }}>{t.date}</td>
+                                <td>{t.escalao}</td>
+                                <td>{t.sex}</td>
+                                <td>
                                   {t.athleteFed ? (
                                     <a
                                       href={`/jogadores/${t.athleteFed}?view=federado`}
@@ -546,24 +445,9 @@ export default function TopClubesPanel({
                                     t.athleteName
                                   )}
                                 </td>
-                                <td
-                                  style={{
-                                    padding: "4px 8px",
-                                    textAlign: "right",
-                                    fontWeight: 600,
-                                  }}
-                                >
-                                  {t.gross ?? "—"}
-                                </td>
-                                <td
-                                  style={{
-                                    padding: "4px 8px",
-                                    textAlign: "right",
-                                  }}
-                                >
-                                  {t.toPar != null ? fmtToPar(t.toPar) : "—"}
-                                </td>
-                                <td style={{ padding: "4px 8px" }}>
+                                <td className="r" style={{ fontWeight: 600 }}>{t.gross ?? "—"}</td>
+                                <td className="r">{t.toPar != null ? fmtToPar(t.toPar) : "—"}</td>
+                                <td>
                                   <a
                                     href={fpgScoringUrl(t.ccode, t.tcode)}
                                     target="_blank"

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * RivaisDashboard — International rivals analysis table
  */
 import React, { useMemo, useState } from "react";
@@ -328,7 +328,7 @@ export default function RivaisDashboard({
                         colSpan={g.span}
                         style={{
                           textAlign: "center",
-                          fontSize: 11,
+                          fontSize: "var(--fs-11)",
                           fontWeight: 500,
                           color: "var(--text-3)",
                           padding: "5px 4px",

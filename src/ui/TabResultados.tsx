@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+﻿import { useState, useMemo } from "react";
 // Components: TabResultados + EscalaoTabs + EscalaoSection (Draw R{n} integrado).
 import React from "react";
 import { displayName, fmtDate, fmtToPar, isoDate } from "../utils/format";
@@ -342,7 +342,7 @@ function EscalaoTabs({ escaloes, torneio: t, defaultIdx, arMap, drawsData }: {
   const escalaoEsperado = escalaoManuelParaData(t.date_inicio);
 
   const escTabStyle = (i: number): React.CSSProperties => ({
-    padding: "6px 12px", fontSize: 12,
+    padding: "6px 12px", fontSize: "var(--fs-12)",
     fontWeight: esc === i ? 700 : 500,
     color: esc === i ? "var(--text)" : "var(--text-muted)",
     background: "transparent", border: "none",

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * JovensAnaliseView — página de análise dos últimos 4 anos de Campeonatos
  * Regional e Nacional de Jovens.
  *
@@ -108,7 +108,7 @@ function PodiumLine({ p, columnEsc, expectedPos, highlightManuel = true }: {
         ) : (
           <span className="fw-700" title={p.name}>{abreviarNome(p.name || "—", 22)}</span>
         )}
-        {manuel && highlightManuel && <span title="Manuel" style={{ fontSize: 10 }}>★</span>}
+        {manuel && highlightManuel && <span title="Manuel" style={{ fontSize: "var(--fs-10)" }}>★</span>}
         {elevated && (
           <span title={`Foi ${p.pos}º na classificação geral. O pódio do escalão+sexo é específico — quem ficou à frente pode ter sido de outra categoria (outro sexo, outro escalão num torneio combinado) ou um jogador estrangeiro.`}
             className="fs-10 muted fw-600"
@@ -204,7 +204,7 @@ function PodiumCell({ ch, isChampion }: { ch: Champion | null; isChampion: boole
               <a href={scoringUrl} target="_blank" rel="noopener noreferrer"
                 title="Ver resultados oficiais na FPG ↗"
                 style={{
-                  fontSize: 11, textDecoration: "none",
+                  fontSize: "var(--fs-11)", textDecoration: "none",
                   color: "var(--accent)", fontWeight: 700,
                   whiteSpace: "nowrap",
                 }}>
@@ -215,7 +215,7 @@ function PodiumCell({ ch, isChampion }: { ch: Champion | null; isChampion: boole
               <Link to={tournamentUrl("FPG", ch.ccode, ch.tcode.split("+")[0])}
                 title="Ver no nosso scoreboard"
                 style={{
-                  fontSize: 10, textDecoration: "none",
+                  fontSize: "var(--fs-10)", textDecoration: "none",
                   color: "var(--text-2)", fontWeight: 600,
                   whiteSpace: "nowrap",
                   padding: "0 4px", borderRadius: 3,
@@ -250,11 +250,11 @@ function PodiumLabelCell({ label, isChampion }: { label: string; isChampion: boo
       // sticky ao lado da coluna Escalão (que é width 90px @ left:0)
       position: "sticky", left: 90, background: "var(--bg-card)",
       borderRight: "1px solid var(--border-light)",
-      zIndex: 1,
+      zIndex: "var(--z-base)",
     }}>
       <div style={{
         display: "flex", flexDirection: "column", alignItems: "flex-start",
-        fontSize: 10, lineHeight: 1.2, fontWeight: 700,
+        fontSize: "var(--fs-10)", lineHeight: 1.2, fontWeight: 700,
         color: isChampion ? "var(--color-good-dark)" : "var(--text-2)",
         textTransform: "uppercase", letterSpacing: 0.3, whiteSpace: "nowrap",
       }}>
@@ -581,7 +581,7 @@ function RegionChampionsBlock({
           }}
           title={open ? "Colapsar" : "Expandir"}
         >
-          <span style={{ fontFamily: "monospace", fontSize: 11, opacity: 0.7 }}>
+          <span style={{ fontFamily: "monospace", fontSize: "var(--fs-11)", opacity: 0.7 }}>
             {open ? "▼" : "▶"}
           </span>
           <span>📍 {region}</span>
@@ -598,19 +598,19 @@ function RegionChampionsBlock({
       )}
       {open && <>
       <div style={{ overflowX: "auto", paddingBottom: 14 }}>
-        <table style={{ borderCollapse: "collapse", fontSize: 12, minWidth: "100%" }}>
+        <table style={{ borderCollapse: "collapse", fontSize: "var(--fs-12)", minWidth: "100%" }}>
           <thead>
             <tr>
               <SortableHdr k="esc" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort as any}
-                style={{ padding: "6px 8px", borderBottom: "2px solid var(--border)", textAlign: "left", position: "sticky", left: 0, background: "var(--bg-card)", minWidth: 90, width: 90, zIndex: 3, cursor: "pointer" }}>
+                style={{ padding: "6px 8px", borderBottom: "2px solid var(--border)", textAlign: "left", position: "sticky", left: 0, background: "var(--bg-card)", minWidth: 90, width: 90, zIndex: "var(--z-float)", cursor: "pointer" }}>
                 Escalão
               </SortableHdr>
               <SortableHdr k="sex" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort as any}
-                style={{ padding: "6px 8px", borderBottom: "2px solid var(--border)", textAlign: "left", position: "sticky", left: 90, background: "var(--bg-card)", minWidth: 90, zIndex: 3, cursor: "pointer", borderRight: "1px solid var(--border-light)" }}>
+                style={{ padding: "6px 8px", borderBottom: "2px solid var(--border)", textAlign: "left", position: "sticky", left: 90, background: "var(--bg-card)", minWidth: 90, zIndex: "var(--z-float)", cursor: "pointer", borderRight: "1px solid var(--border-light)" }}>
                 Tipo
               </SortableHdr>
               {yearCols.map(y => (
-                <th key={y} style={{ padding: "6px 10px", borderBottom: "2px solid var(--border)", borderLeft: "1px solid var(--border-light)", textAlign: "center", fontWeight: 700, fontSize: 13, minWidth: 220 }}>
+                <th key={y} style={{ padding: "6px 10px", borderBottom: "2px solid var(--border)", borderLeft: "1px solid var(--border-light)", textAlign: "center", fontWeight: 700, fontSize: "var(--fs-13)", minWidth: 220 }}>
                   {y}
                 </th>
               ))}
@@ -627,7 +627,7 @@ function RegionChampionsBlock({
                   <tr style={{ borderTop: newEscGroup ? "2px solid var(--border)" : "1px solid var(--border-light)" }}>
                     <td rowSpan={2} style={{
                       padding: "6px 8px", position: "sticky", left: 0, background: "var(--bg-card)",
-                      verticalAlign: "middle", width: 90, minWidth: 90, zIndex: 2,
+                      verticalAlign: "middle", width: 90, minWidth: 90, zIndex: "var(--z-raised)",
                     }}>
                       <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}>
                         <EscPill esc={esc} />
@@ -685,7 +685,7 @@ function TopPlayers({ players, years, mode = "all" }: { players: PlayerStats[]; 
         📊 Jogadores mais frequentes <span className="fs-11 muted">(entre Regional + Nacional, últimos {years.length} anos)</span>
       </h3>
       <div style={{ overflowX: "auto" }}>
-        <table style={{ borderCollapse: "collapse", fontSize: 12, minWidth: "100%" }}>
+        <table style={{ borderCollapse: "collapse", fontSize: "var(--fs-12)", minWidth: "100%" }}>
           <thead>
             <tr style={{ borderBottom: "2px solid var(--border)" }}>
               <th style={{ padding: "6px 8px", textAlign: "right" }}>#</th>
@@ -719,7 +719,7 @@ function TopPlayers({ players, years, mode = "all" }: { players: PlayerStats[]; 
                     ) : (
                       <span className="fw-600">{p.displayName || p.name}</span>
                     )}
-                    {manuel && <span style={{ marginLeft: 4, fontSize: 10 }}>★</span>}
+                    {manuel && <span style={{ marginLeft: 4, fontSize: "var(--fs-10)" }}>★</span>}
                   </td>
                   <td style={{ padding: "5px 8px" }} className="fs-11 muted">{p.fed || "—"}</td>
                   <td style={{ padding: "5px 8px", textAlign: "right" }} className="fw-700">{p.appearances}</td>
@@ -846,7 +846,7 @@ function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; 
                 ? "var(--medal-gold-bg, #fef3c7)"  // amber/dourado para anos com título (🏆)
                 : (played ? undefined : "var(--bg-muted)"),
               opacity: played ? 1 : 0.6,
-              fontSize: 11,
+              fontSize: "var(--fs-11)",
               display: "inline-flex", alignItems: "center", gap: 3,
               whiteSpace: "nowrap",
             }}>
@@ -857,11 +857,11 @@ function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; 
                 t.ccode && t.tcode ? (
                   <a key={i} href={fpgScoringUrl(t.ccode, t.tcode.split("+")[0])} target="_blank" rel="noopener noreferrer"
                     title={`Campeão ${t.type} ${t.escalao} ${t.sex} (${t.region}) — abrir torneio na FPG ↗`}
-                    style={{ fontSize: 11, textDecoration: "none" }}>
+                    style={{ fontSize: "var(--fs-11)", textDecoration: "none" }}>
                     🏆
                   </a>
                 ) : (
-                  <span key={i} title={`Campeão ${t.type} ${t.escalao} ${t.sex} (${t.region})`} style={{ fontSize: 11 }}>
+                  <span key={i} title={`Campeão ${t.type} ${t.escalao} ${t.sex} (${t.region})`} style={{ fontSize: "var(--fs-11)" }}>
                     🏆
                   </span>
                 )
@@ -875,7 +875,7 @@ function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; 
                   rel="noopener noreferrer"
                   title={`${bestApp.pos}º de ${bestApp.total} em ${bestApp.tournamentName} — abrir torneio na FPG ↗`}
                   style={{
-                    fontSize: 10,
+                    fontSize: "var(--fs-10)",
                     fontWeight: 700,
                     color: "var(--text-3)",
                     textDecoration: "none",
@@ -891,7 +891,7 @@ function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; 
                 <span
                   title={`${bestApp.pos}º de ${bestApp.total} em ${bestApp.tournamentName}`}
                   style={{
-                    fontSize: 10,
+                    fontSize: "var(--fs-10)",
                     fontWeight: 700,
                     color: "var(--text-3)",
                     background: "var(--bg-muted)",

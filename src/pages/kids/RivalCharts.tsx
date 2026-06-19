@@ -1,4 +1,4 @@
-/**
+﻿/**
  * kids/RivalCharts.tsx — Componentes de gráficos do detalhe do rival
  * (extraído de KIDSPage.tsx para reduzir tamanho)
  *
@@ -64,7 +64,7 @@ export function EvolucaoChart({
   return (
     <div className="mb-16">
       <div className="flex-between-mb6">
-        <div style={{ fontSize: 12, fontWeight: 700, color: "var(--text-2)" }}>
+        <div style={{ fontSize: "var(--fs-12)", fontWeight: 700, color: "var(--text-2)" }}>
           Evolução por torneio
         </div>
         <div style={{ display: "flex", gap: 3 }}>
@@ -77,7 +77,7 @@ export function EvolucaoChart({
           ))}
         </div>
       </div>
-      <div style={{ fontSize: 10, color: "var(--text-3)", marginBottom: 6 }}>
+      <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", marginBottom: 6 }}>
         {mode === "tpr"
           ? "±par/ronda equiv. 18h — torneios de 9 buracos são normalizados (⁹ no nome)"
           : "Posição relativa no field — independente do par e dimensão do torneio"}
@@ -126,7 +126,7 @@ export function TorneiosRecorrentes({
           return (
             <div key={g.canon} className="card" style={{ padding: "8px 12px", margin: 0,
               borderLeft: podiumBorder ? `3px solid ${podiumBorder}` : undefined }}>
-              <div style={{ fontSize: 12, fontWeight: 700, color: "var(--text)", marginBottom: 6,
+              <div style={{ fontSize: "var(--fs-12)", fontWeight: 700, color: "var(--text)", marginBottom: 6,
                 display: "flex", alignItems: "center", gap: 4 }}>
                 {hasPodium && <span>{g.entries.some(e => e.pos === 1) ? "🏆" : g.entries.some(e => e.pos === 2) ? "🥈" : "🥉"}</span>}
                 <span className="overflow-hidden flex-1" style={{ textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{g.name}</span>
@@ -143,7 +143,7 @@ export function TorneiosRecorrentes({
                   return (
                     <React.Fragment key={i}>
                       {i > 0 && (
-                        <span style={{ fontSize: 12, fontWeight: 900, flexShrink: 0,
+                        <span style={{ fontSize: "var(--fs-12)", fontWeight: 900, flexShrink: 0,
                           color: delta != null && delta < 0 ? "var(--color-good-dark)"
                             : delta != null && delta > 0 ? "var(--color-danger-vivid)"
                             : "var(--text-3)" }}>
@@ -152,14 +152,14 @@ export function TorneiosRecorrentes({
                       )}
                       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 0,
                         padding: "3px 5px", borderRadius: 4, background: bg, border: `1px solid ${bd}`, flexShrink: 0 }}>
-                        <span style={{ fontSize: 9, color: "var(--text-3)", fontWeight: 500 }}>{e.year}</span>
+                        <span style={{ fontSize: "var(--fs-9)", color: "var(--text-3)", fontWeight: 500 }}>{e.year}</span>
                         <span style={{ fontSize: mdl ? 14 : 11, fontWeight: 900, lineHeight: 1,
                           color: e.pos === 1 ? "var(--color-warn-dark)" : e.pos != null && e.pos <= 3 ? "var(--medal-silver)" : "var(--text-3)" }}>
                           {mdl ?? (e.pos != null ? `#${e.pos}` : "—")}
                         </span>
-                        {e.tp != null && <span style={{ fontSize: 9, fontWeight: 600,
+                        {e.tp != null && <span style={{ fontSize: "var(--fs-9)", fontWeight: 600,
                           color: (e.tp ?? 0) <= 0 ? "var(--color-good-dark)" : "var(--text-3)" }}>{tpStr}</span>}
-                        {e.ageGroup && <span style={{ fontSize: 8, color: "var(--text-muted)", fontWeight: 500, whiteSpace: "nowrap" }}>{e.ageGroup}</span>}
+                        {e.ageGroup && <span style={{ fontSize: "var(--fs-8)", color: "var(--text-muted)", fontWeight: 500, whiteSpace: "nowrap" }}>{e.ageGroup}</span>}
                       </div>
                     </React.Fragment>
                   );
@@ -201,10 +201,10 @@ export function H2HTable({
         <div className="h-sm" style={{ color: "var(--text-2)" }}>
           Head-to-head · {confrontos.length} confronto{confrontos.length !== 1 ? "s" : ""}
         </div>
-        <span style={{ fontSize: 13, fontWeight: 700, color: derrotas < vitorias ? "var(--color-danger-vivid)" : "var(--color-good-dark)" }}>
+        <span style={{ fontSize: "var(--fs-13)", fontWeight: 700, color: derrotas < vitorias ? "var(--color-danger-vivid)" : "var(--color-good-dark)" }}>
           {firstName} {derrotas}× vs Manuel {vitorias}×
         </span>
-        <span style={{ fontSize: 11, color: "var(--text-3)", marginLeft: "auto" }}>
+        <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", marginLeft: "auto" }}>
           Avg: {firstName} {avgRivPos}º · Manuel {avgManPos}º
           {avgDifTp != null && ` · Dif. ±par: ${parseFloat(avgDifTp) > 0 ? "+" : ""}${avgDifTp}`}
         </span>

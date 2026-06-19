@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+﻿import { useMemo } from "react";
 import { AutoRivalPlayer, normName as normNameAuto } from "../data/KIDSdataLoader";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
@@ -49,8 +49,8 @@ function RivCell({ tp, pos, fieldSize }: { tp: number | null; pos: number; field
   const posText = fmtPosRivais(pos, fieldSize);
   return (
     <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:1, lineHeight:1.2 }}>
-      <span style={{ fontSize:13, fontWeight:800, color: tpColor }}>{tpText}</span>
-      <span style={{ fontSize:11, color:"var(--text-3)" }}>{posText}</span>
+      <span style={{ fontSize: "var(--fs-13)", fontWeight:800, color: tpColor }}>{tpText}</span>
+      <span style={{ fontSize: "var(--fs-11)", color:"var(--text-3)" }}>{posText}</span>
     </div>
   );
 }
@@ -239,11 +239,11 @@ export function FieldEscalaoTable({ escalaoNome, players, isFuture, torneioT, re
               return (
                 <tr key={p.nome} style={{ background: rowBg, fontWeight: isM ? 700 : 400 }}>
                   {!isFuture && (
-                    <td style={{ textAlign:"center", fontSize:14, fontWeight:700 }}>
+                    <td style={{ textAlign:"center", fontSize: "var(--fs-14)", fontWeight:700 }}>
                       {(p.pos ?? 0) === 1 ? "🥇" : (p.pos ?? 0) === 2 ? "🥈" : (p.pos ?? 0) === 3 ? "🥉" : (p.pos ?? "?")}
                     </td>
                   )}
-                  <td style={{ textAlign:"center", fontSize:16 }}>{flag(p.pais)}</td>
+                  <td style={{ textAlign:"center", fontSize: "var(--fs-16)" }}>{flag(p.pais)}</td>
                   <td style={{ padding:"7px 10px" }}>
                     <span style={{ display:"flex", alignItems:"center", gap:6, flexWrap:"wrap" }}>
                       <span>{displayName(p.nome)}</span>
@@ -257,7 +257,7 @@ export function FieldEscalaoTable({ escalaoNome, players, isFuture, torneioT, re
                             window.open(`/kids2#${hash}`, "_blank");
                           }}
                           title="Ver em Kids"
-                          style={{ fontWeight:800, color:"var(--color-good-dark)", fontSize:14, cursor:"pointer", textDecoration:"none", flexShrink:0 }}>
+                          style={{ fontWeight:800, color:"var(--color-good-dark)", fontSize: "var(--fs-14)", cursor:"pointer", textDecoration:"none", flexShrink:0 }}>
                           ↗
                         </a>
                       )}
@@ -267,20 +267,20 @@ export function FieldEscalaoTable({ escalaoNome, players, isFuture, torneioT, re
                     const { text, color } = fmtToParRivais(p.finalToPar ?? null);
                     return (
                       <td style={{ textAlign:"center" }}>
-                        <span style={{ fontSize:13, fontWeight:800, color }}>{text}</span>
+                        <span style={{ fontSize: "var(--fs-13)", fontWeight:800, color }}>{text}</span>
                       </td>
                     );
                   })()}
                   {histCols.map(c => {
                     if (!arEntry) return (
                       <td key={c.year} style={{ textAlign:"center" }}>
-                        <span style={{ color:"var(--text-muted)", fontSize:13 }}>—</span>
+                        <span style={{ color:"var(--text-muted)", fontSize: "var(--fs-13)" }}>—</span>
                       </td>
                     );
                     const res = playerSeriesResult(arEntry, sBase, c.year);
                     if (!res || res.p <= 0) return (
                       <td key={c.year} style={{ textAlign:"center" }}>
-                        <span style={{ color:"var(--text-muted)", fontSize:13 }}>—</span>
+                        <span style={{ color:"var(--text-muted)", fontSize: "var(--fs-13)" }}>—</span>
                       </td>
                     );
                     return (
@@ -289,7 +289,7 @@ export function FieldEscalaoTable({ escalaoNome, players, isFuture, torneioT, re
                       </td>
                     );
                   })}
-                  <td style={{ textAlign:"center", color:"var(--text-3)", fontWeight:700, fontSize:12 }}>
+                  <td style={{ textAlign:"center", color:"var(--text-3)", fontWeight:700, fontSize: "var(--fs-12)" }}>
                     {totalTorn || "—"}
                   </td>
                 </tr>
@@ -302,13 +302,13 @@ export function FieldEscalaoTable({ escalaoNome, players, isFuture, torneioT, re
         <div style={{ textAlign:"right", marginTop:6 }}>
           {urlResultados && (
             <a href={urlResultados} target="_blank" rel="noopener noreferrer"
-              className="p p-sm p-muted" style={{ textDecoration:"none", fontSize:11 }}>
+              className="p p-sm p-muted" style={{ textDecoration:"none", fontSize: "var(--fs-11)" }}>
               Resultados ↗
             </a>
           )}
           {urlUskids && (
             <a href={urlUskids} target="_blank" rel="noopener noreferrer"
-              className="p p-sm p-muted" style={{ textDecoration:"none", fontSize:11, marginLeft:6 }}>
+              className="p p-sm p-muted" style={{ textDecoration:"none", fontSize: "var(--fs-11)", marginLeft:6 }}>
               USKids ↗
             </a>
           )}

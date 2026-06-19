@@ -1,4 +1,4 @@
-/**
+﻿/**
  * ScorecardLB.tsx — Single-round scorecard leaderboard
  *
  * Extracted from LeaderboardComponents.tsx
@@ -351,9 +351,9 @@ export function ScorecardLB({
             {base}
             <span title={(p as any)._absolutoNote || "Jogou em torneio simultâneo"}
               style={{
-                fontSize: 9, lineHeight: 1.4, padding: "1px 6px",
+                fontSize: "var(--fs-9)", lineHeight: 1.4, padding: "1px 6px",
                 borderRadius: 8, background: "var(--bg-warn-subtle, #fef3c7)",
-                color: "var(--color-warn-dark, #92400e)",
+                color: "var(--color-warn-dark, var(--color-warn-dark))",
                 border: "1px solid var(--color-warn, #f59e0b)",
                 cursor: "help", fontWeight: 700, whiteSpace: "nowrap",
               }}>⚠ Abs</span>

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * KidsLink — Seta ↗ com link para KIDSPage de um jogador.
  * Usa um Map<normName, { name, memberId? }> para resolver o hash.
  * Reutilizado em USKIDSPage, BJGTPage, DORALPage.
@@ -26,7 +26,7 @@ export function KidsLink({ nome }: { nome: string }) {
       onClick={e => { e.preventDefault(); window.open(`/kids2#${hash}`, "_blank"); }}
       title="Ver em Kids"
       style={{
-        fontWeight: 800, color: "var(--color-good-dark)", fontSize: 13,
+        fontWeight: 800, color: "var(--color-good-dark)", fontSize: "var(--fs-13)",
         cursor: "pointer", textDecoration: "none", flexShrink: 0, marginLeft: 4,
       }}>
       ↗

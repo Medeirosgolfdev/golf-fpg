@@ -1,4 +1,4 @@
-/**
+﻿/**
  * kids2/components/MetricsGrid.tsx
  *
  * 6 cards: Torneios · Vitórias · Top-3 · Melhor ±par · Média ronda (±σ) · % sub-par.
@@ -93,9 +93,9 @@ function Card({ label, value, subtitle, accent }: {
       borderRadius: 6,
       padding: "10px 12px",
     }}>
-      <div style={{ fontSize: 11, color: "var(--text-2)", fontWeight: 600 }}>{label}</div>
-      <div style={{ fontSize: 22, fontWeight: 700, marginTop: 3, color: valueColor }}>{value}</div>
-      {subtitle && <div style={{ fontSize: 10, color: "var(--text-3)", marginTop: 2 }}>{subtitle}</div>}
+      <div style={{ fontSize: "var(--fs-11)", color: "var(--text-2)", fontWeight: 600 }}>{label}</div>
+      <div style={{ fontSize: "var(--fs-22)", fontWeight: 700, marginTop: 3, color: valueColor }}>{value}</div>
+      {subtitle && <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 2 }}>{subtitle}</div>}
     </div>
   );
 }

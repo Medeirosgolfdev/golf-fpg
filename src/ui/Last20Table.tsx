@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+﻿import React, { useState, useMemo } from "react";
 import type { PlayerPageData, RoundData, HoleScores } from "../data/playerDataLoader";
 import { norm, shortDate, fmtToPar } from "../utils/format";
 import { normKey } from "../utils/teeColors";
@@ -73,7 +73,7 @@ function LinkBtns({ links }: { links?: Record<string, string> }) {
           title={label.replace(/_/g, " ")}
           style={{
             display: "inline-flex", alignItems: "center", gap: 3,
-            fontSize: 10, marginLeft: 4, color: "var(--chart-2)", textDecoration: "none",
+            fontSize: "var(--fs-10)", marginLeft: 4, color: "var(--chart-2)", textDecoration: "none",
             verticalAlign: "middle",
           }}
           onClick={(e) => e.stopPropagation()}
@@ -182,7 +182,7 @@ export function Last20Table({ data, last20Table, best8, whsPosMap, bare: _bare }
                     ...(isBest8 ? { background: "var(--bg-success)" } : {}),
                     ...(isFading ? { opacity: 0.4 } : {}),
                   }}>
-                    <td className="r" style={{ fontSize: 11, fontWeight: 700, color: whsPosMap.get(r.scoreId) != null ? "var(--text-2)" : "var(--text-4)" }}>
+                    <td className="r" style={{ fontSize: "var(--fs-11)", fontWeight: 700, color: whsPosMap.get(r.scoreId) != null ? "var(--text-2)" : "var(--text-4)" }}>
                       {whsPosMap.get(r.scoreId) ?? "–"}
                     </td>
                     <td>

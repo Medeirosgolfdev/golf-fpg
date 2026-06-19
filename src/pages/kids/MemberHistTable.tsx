@@ -1,4 +1,4 @@
-/**
+﻿/**
  * kids/MemberHistTable.tsx — Tabela do historial USKids (Member History)
  * (extraído de KIDSPage.tsx para reduzir tamanho)
  */
@@ -64,7 +64,7 @@ export function MemberHistTable({ mhTorneios, memberId }: {
     <div className="mt-24 mb-16">
       <div className="h-sm mb-8" style={{ color: "var(--text-2)", display: "flex", alignItems: "center", gap: 8 }}>
         <span>📊 Histórico USKids · {mhTorneios.length} torneios</span>
-        <span style={{ fontSize: 10, color: "var(--text-3)", fontWeight: 400 }}>ID: {memberId}</span>
+        <span style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", fontWeight: 400 }}>ID: {memberId}</span>
       </div>
       <div className="scroll-x">
         <table className="dtable w-full fs-12" >
@@ -90,7 +90,7 @@ export function MemberHistTable({ mhTorneios, memberId }: {
               return (
                 <tr key={t.tid} style={{ borderBottom: "1px solid var(--border-light)" }}>
                   <td style={{ padding: "4px 8px", fontWeight: 500 }}>{t.name}</td>
-                  <td style={{ textAlign: "center", fontSize: 10, color: "var(--text-2)" }}>{t.ageGroup}</td>
+                  <td style={{ textAlign: "center", fontSize: "var(--fs-10)", color: "var(--text-2)" }}>{t.ageGroup}</td>
                   <td style={{ textAlign: "center", fontWeight: 700,
                     color: t.place <= 3 && t.place > 0 ? "var(--color-good-dark)" : "var(--text-2)" }}>
                     {t.place > 0 ? `${t.place}º` : "—"}
@@ -103,10 +103,10 @@ export function MemberHistTable({ mhTorneios, memberId }: {
                       </>
                     ) : "—"}
                   </td>
-                  <td style={{ textAlign: "center", fontSize: 10, color: "var(--text-3)" }}>
+                  <td style={{ textAlign: "center", fontSize: "var(--fs-10)", color: "var(--text-3)" }}>
                     {rdGross.length > 0 ? rdGross.join(" + ") : "—"}
                   </td>
-                  <td style={{ fontSize: 10, color: "var(--text-3)" }}>{fmtD}</td>
+                  <td style={{ fontSize: "var(--fs-10)", color: "var(--text-3)" }}>{fmtD}</td>
                 </tr>
               );
             })}

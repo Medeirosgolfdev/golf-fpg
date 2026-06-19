@@ -1,4 +1,4 @@
-// @refresh reset
+﻿// @refresh reset
 /**
  * DrivePage.tsx — DRIVE Tour & Challenge + AQUAPOR Results 2026
  * v10: Reads scraper v7 format directly (fedCode, roundScores)
@@ -33,6 +33,8 @@ import { useMasterDetail } from "../hooks/useMasterDetail";
 import KpiCard from "../ui/KpiCard";
 import LoadingState from "../ui/LoadingState";
 import { ScorecardLeaderboard } from "../ui/ScorecardLeaderboard";
+import SortableHdr from "../ui/SortableHdr";
+import DetailHeader from "../ui/DetailHeader";
 import SexBadge from "../ui/SexBadge";
 import { C } from "../utils/colors";
 import { tournamentAces } from "../utils/aces";
@@ -358,7 +360,7 @@ function DrivePointsTable() {
         onClick={() => setOpen(o => !o)}
         style={{ background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center", gap: 6 }}>
         <span className="h-md fs-13">🏅 Tabela de Pontos Drive Tour</span>
-        <span style={{ fontSize: 10, color: "var(--text-muted)", marginTop: 1 }}>{open ? "▲ fechar" : "▼ ver"}</span>
+        <span style={{ fontSize: "var(--fs-10)", color: "var(--text-muted)", marginTop: 1 }}>{open ? "▲ fechar" : "▼ ver"}</span>
       </button>
       {open && (
         <div className="mt-10">
@@ -530,25 +532,13 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
         {refP.slope && <> · Slope {refP.slope}</>}
       </>}
       prefixHeaderCells={<>
-        <th className={"lb-esc lb-sortable" + (sortKey==="esc" ? " lb-sort-active" : "")}
-          onClick={() => handleSort("esc")} style={{cursor:"pointer"}}>
-          ESC.{sortKey==="esc" ? (sortDir==="asc"?" ▲":" ▼") : ""}
-        </th>
+        <SortableHdr k="esc" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-esc">ESC.</SortableHdr>
         <th className="lb-club">CLUBE</th>
-        <th className={"lb-hcp lb-sortable" + (sortKey==="hcp" ? " lb-sort-active" : "")}
-          onClick={() => handleSort("hcp")} style={{cursor:"pointer"}}>
-          HCP{sortKey==="hcp" ? (sortDir==="asc"?" ▲":" ▼") : ""}
-        </th>
-        <th className={"lb-tee lb-sortable" + (sortKey==="tee" ? " lb-sort-active" : "")}
-          onClick={() => handleSort("tee")} style={{cursor:"pointer"}}>
-          TEE{sortKey==="tee" ? (sortDir==="asc"?" ▲":" ▼") : ""}
-        </th>
+        <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-hcp">HCP</SortableHdr>
+        <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-tee">TEE</SortableHdr>
       </>}
       postScorecardHeaderCells={<>
-        <th className={"lb-sd lb-sortable" + (sortKey==="sd" ? " lb-sort-active" : "")}
-          onClick={() => handleSort("sd")} style={{cursor:"pointer"}}>
-          SD{sortKey==="sd" ? (sortDir==="asc"?" ▲":" ▼") : ""}
-        </th>
+        <SortableHdr k="sd" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-sd">SD</SortableHdr>
         <th className="lb-bird">🐦</th>
         <th className="lb-par-stat">Par</th>
         <th className="lb-bog">■</th>
@@ -1006,7 +996,7 @@ function UpcomingSchedule({ series }: { series: Sub12SeriesTab }) {
           return (
             <div key={i} style={{
               display: "inline-flex", alignItems: "center", gap: 4,
-              padding: "3px 8px", borderRadius: "var(--radius-pill)", fontSize: 10,
+              padding: "3px 8px", borderRadius: "var(--radius-pill)", fontSize: "var(--fs-10)",
               fontWeight: isNext ? 800 : isPast ? 400 : 600,
               background: isNext ? col + "18" : isPast ? "transparent" : "var(--bg-card)",
               color: isPast ? "var(--text-muted)" : isNext ? col : "var(--text-2)",
@@ -1057,7 +1047,7 @@ function RankingView({ rows, onPlayerClick }: { rows: Sub12Row[]; onPlayerClick:
             <tbody>
               {ranked.map((p, i) => (
                 <tr key={p.fed} className={`pointer${p.sex === "F" ? " tourn-female-row" : ""}`} onClick={() => onPlayerClick(p.fed)}>
-                  <td className="r" style={{ fontSize: 16 }}>{medal(i + 1) ?? <span className="mono fw-700">{i+1}</span>}</td>
+                  <td className="r" style={{ fontSize: "var(--fs-16)" }}>{medal(i + 1) ?? <span className="mono fw-700">{i+1}</span>}</td>
                   <td>
                     <a href={`/jogadores/${p.fed}`} target="_blank" rel="noopener noreferrer"
                       className="fw-700"
@@ -1090,7 +1080,7 @@ function RankingView({ rows, onPlayerClick }: { rows: Sub12Row[]; onPlayerClick:
                   href={`/jogadores/${p.fed}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "4px 8px", background: "var(--bg)", borderRadius: "var(--radius)", fontSize: 11, color: "inherit", textDecoration: "none" }}
+                  style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "4px 8px", background: "var(--bg)", borderRadius: "var(--radius)", fontSize: "var(--fs-11)", color: "inherit", textDecoration: "none" }}
                   onClick={e => { e.stopPropagation(); }}>
                   <span className="fw-600">{p.name}</span>
                   <span className="mono">{r?.gross ?? "–"} <span className="c-muted">({r?.tournShort})</span></span>
@@ -1142,11 +1132,11 @@ function EvolutionChart({ rows }: { rows: Sub12Row[] }) {
 function PlayerDetail({ row, onClose }: { row: Sub12Row; onClose: () => void }) {
   return (
     <div className="card" style={{ border: "2px solid var(--accent)", position: "relative" }}>
-      <button onClick={onClose} title="Fechar" aria-label="Fechar" style={{ position: "absolute", top: 8, right: 10, background: "none", border: "none", cursor: "pointer", fontSize: 18, color: "var(--text-3)" }}>✕</button>
+      <button onClick={onClose} title="Fechar" aria-label="Fechar" style={{ position: "absolute", top: 8, right: 10, background: "none", border: "none", cursor: "pointer", fontSize: "var(--fs-18)", color: "var(--text-3)" }}>✕</button>
       <div className="mb-8" style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
-        <span className="fw-800" style={{ fontSize: 16 }}>{row.name}</span>
+        <span className="fw-800" style={{ fontSize: "var(--fs-16)" }}>{row.name}</span>
         <span className="muted fs-11">{row.club} · {row.region} · HCP {fmtHcp(row.hcp)}</span>
-        <PlayerLink fed={row.fed} name="Ver perfil →" style={{ fontSize: 11, color: "var(--accent)", textDecoration: "underline" }} />
+        <PlayerLink fed={row.fed} name="Ver perfil →" style={{ fontSize: "var(--fs-11)", color: "var(--accent)", textDecoration: "underline" }} />
       </div>
       <div className="mb-10 flex-wrap d-flex gap-6">
         <KpiCard label="Torneios"  value={String(row.tourneiosPlayed)} />
@@ -1721,7 +1711,7 @@ function DriveContent() {
                   <span className="p p-sm p-tourn" style={PILL_TCODE}>{tc}</span>
                 )}
                 {url && <button type="button" onClick={ev => { ev.stopPropagation(); window.open(url, "_blank", "noopener,noreferrer"); }}
-                  style={{ background: "none", border: "none", padding: "0 1px", cursor: "pointer", fontSize: 11, color: "var(--accent)", opacity: isActive ? 1 : 0.55, lineHeight: 1, display: "inline-flex", alignItems: "center", verticalAlign: "middle" }}>🔗</button>}
+                  style={{ background: "none", border: "none", padding: "0 1px", cursor: "pointer", fontSize: "var(--fs-11)", color: "var(--accent)", opacity: isActive ? 1 : 0.55, lineHeight: 1, display: "inline-flex", alignItems: "center", verticalAlign: "middle" }}>🔗</button>}
               </span>
             );
           })}
@@ -2132,29 +2122,22 @@ function DriveContent() {
                     }
                     return out;
                   })();
+                  const canonicalUrl = tournamentUrl("drive", curTournament.ccode, curTournament.tcode);
+                  const titleText = selectedGroup.label || curTournament.campo || curTournament.name || "Torneio";
                   return (
-                  <div className="detail-header">
-                    {/* Cabeçalho ao estilo CircuitShell: título grande + acções,
-                        sub-linha com campo/data e pills. Título clicável → link
-                        canónico `/drive/torneio/{ccode}-{tcode}` (partilhável). */}
-                    <div className="detail-header-top">
-                      {(() => {
-                        const canonicalUrl = tournamentUrl("drive", curTournament.ccode, curTournament.tcode);
-                        const titleText = selectedGroup.label || curTournament.campo || curTournament.name || "Torneio";
-                        return canonicalUrl ? (
-                          <a href={canonicalUrl} target="_blank" rel="noopener noreferrer"
-                            title="Link canónico do torneio (abrir em nova aba para partilhar)"
-                            style={{ color: "inherit", textDecoration: "none" }}>
-                            <h2 className="detail-title" style={{ margin: 0 }}>{titleText}</h2>
-                          </a>
-                        ) : <h2 className="detail-title" style={{ margin: 0 }}>{titleText}</h2>;
-                      })()}
-                      <div className="flex-wrap" style={{ display: "flex", gap: 6, alignItems: "center" }}>
-                        <TournExtLinks ccode={curTournament.ccode} tcode={curTournament.tcode} />
-                        <PrintButton />
-                      </div>
-                    </div>
-                    <div className="detail-sub">
+                  <DetailHeader
+                    title={canonicalUrl ? (
+                      <a href={canonicalUrl} target="_blank" rel="noopener noreferrer"
+                        title="Link canónico do torneio (abrir em nova aba para partilhar)"
+                        style={{ color: "inherit", textDecoration: "none" }}>
+                        {titleText}
+                      </a>
+                    ) : titleText}
+                    actions={<>
+                      <TournExtLinks ccode={curTournament.ccode} tcode={curTournament.tcode} />
+                      <PrintButton />
+                    </>}
+                    sub={<>
                       {curTournament.campo && <span className="muted">📍 {curTournament.campo}</span>}
                       <span className="muted ml-8">📅 {fmtDateShort(curTournament.date)}</span>
                       <span className="gap-4 ml-8" style={{ display: "inline-flex", alignItems: "center", flexWrap: "wrap" }}>
@@ -2178,8 +2161,8 @@ function DriveContent() {
                         {!selectedGroup.isEvent && curTournament.escalao && <EscPill esc={curTournament.escalao} />}
                         {selectedGroup.isEvent && <span className="muted">{selectedGroup.entries.length} escalões</span>}
                       </span>
-                    </div>
-                  </div>
+                    </>}
+                  />
                   );
                 })()}
 

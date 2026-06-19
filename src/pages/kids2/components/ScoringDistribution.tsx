@@ -1,4 +1,4 @@
-/**
+﻿/**
  * kids2/components/ScoringDistribution.tsx
  *
  * Distribuição agregada de scores de carreira (todos os buracos jogados em
@@ -57,8 +57,8 @@ export default function ScoringDistribution({ data, junior, filterTids }: Props)
   return (
     <section style={{ marginBottom: 4 }}>
       <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", margin: "8px 0 10px" }}>
-        <h3 style={{ margin: 0, fontSize: 14, fontWeight: 700, color: "var(--text)" }}>Distribuição de scoring</h3>
-        <span style={{ fontSize: 11, color: "var(--text-3)" }}>
+        <h3 style={{ margin: 0, fontSize: "var(--fs-14)", fontWeight: 700, color: "var(--text)" }}>Distribuição de scoring</h3>
+        <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
           {total} {total === 1 ? "buraco jogado" : "buracos jogados"} · {stats.subParPct}% sub-par
         </span>
       </div>
@@ -82,7 +82,7 @@ export default function ScoringDistribution({ data, junior, filterTids }: Props)
                 width: `${pct}%`,
                 background: b.bg,
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: 10, color: b.fg,
+                fontSize: "var(--fs-10)", color: b.fg,
                 fontWeight: 700,
                 minWidth: pct < 4 ? 0 : undefined,
                 overflow: "hidden",
@@ -98,7 +98,7 @@ export default function ScoringDistribution({ data, junior, filterTids }: Props)
       {/* Legenda */}
       <div style={{
         display: "flex", flexWrap: "wrap", gap: 10, marginTop: 6,
-        fontSize: 10, color: "var(--text-3)",
+        fontSize: "var(--fs-10)", color: "var(--text-3)",
       }}>
         {buckets.map((b) => {
           // Para o Par (fundo transparente) damos uma borda no quadradinho da legenda
@@ -147,20 +147,20 @@ function ParCard({ pb }: { pb: ParBreakdown }) {
       padding: "8px 10px",
     }}>
       <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between" }}>
-        <span style={{ fontSize: 11, fontWeight: 700, color: "var(--text-2)" }}>Par {pb.parValue}</span>
-        <span style={{ fontSize: 10, color: "var(--text-3)" }}>{pb.holesPlayed}</span>
+        <span style={{ fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-2)" }}>Par {pb.parValue}</span>
+        <span style={{ fontSize: "var(--fs-10)", color: "var(--text-3)" }}>{pb.holesPlayed}</span>
       </div>
       <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginTop: 3 }}>
-        <span style={{ fontSize: 18, fontWeight: 700, color: "var(--text)" }}>
+        <span style={{ fontSize: "var(--fs-18)", fontWeight: 700, color: "var(--text)" }}>
           {pb.avgStrokes != null ? pb.avgStrokes.toFixed(2) : "—"}
         </span>
-        <span style={{ fontSize: 11, fontWeight: 700, color: diffColor }}>
+        <span style={{ fontSize: "var(--fs-11)", fontWeight: 700, color: diffColor }}>
           {diffLabel}
         </span>
       </div>
       {/* Mini breakdown E/B/P/b/d dentro deste par — cores espelham regra do scorecard
           (App.css linhas 1004-1024). Par é neutro (transparente — sem cor própria). */}
-      <div style={{ display: "flex", gap: 4, marginTop: 5, fontSize: 9, color: "var(--text-3)" }}>
+      <div style={{ display: "flex", gap: 4, marginTop: 5, fontSize: "var(--fs-9)", color: "var(--text-3)" }}>
         {pb.eagles > 0 && <span title="Eagles+"><strong style={{ color: "var(--score-eagle)" }}>{pb.eagles}</strong>E</span>}
         {pb.birdies > 0 && <span title="Birdies"><strong style={{ color: "var(--score-birdie)" }}>{pb.birdies}</strong>B</span>}
         {pb.pars > 0 && <span title="Pars"><strong style={{ color: "var(--text-2)" }}>{pb.pars}</strong>P</span>}

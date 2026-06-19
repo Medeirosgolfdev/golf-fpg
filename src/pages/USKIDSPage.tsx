@@ -1,4 +1,4 @@
-// @refresh reset
+﻿// @refresh reset
 import { useEffect, useState, useMemo, useTransition, useCallback } from "react";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
@@ -337,7 +337,7 @@ function TabRivais({ resultados, fieldData, torneiosComManuel, selectedT, setSel
               style={{
                 display:"flex", alignItems:"center", justifyContent:"center",
                 padding:"0 14px", borderLeft:"1px solid var(--border)",
-                color:"var(--color-info)", textDecoration:"none", fontSize:18,
+                color:"var(--color-info)", textDecoration:"none", fontSize: "var(--fs-18)",
               }}>
               🔭
             </Link>
@@ -754,7 +754,7 @@ export default function USKidsFieldPage() {
           style={{ padding:"10px 14px", display:"block", width:"100%", textAlign:"left", borderBottom:"2px solid var(--border-light)" }}
           onClick={() => { setShowRivaisTabela(true); setSelectedT(null); md.onSelect(); }}>
           <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-            <span style={{ fontSize:15 }}>📊</span>
+            <span style={{ fontSize: "var(--fs-15)" }}>📊</span>
             <span className="fs-13 fw-700" style={{ color: showRivaisTabela ? "var(--accent)" : "var(--text)" }}>
               Tabela global
             </span>
@@ -812,7 +812,7 @@ export default function USKidsFieldPage() {
                 onClick={(e) => e.stopPropagation()}
                 style={{
                   display:"flex", alignItems:"center", justifyContent:"center",
-                  padding:"0 10px", color:"var(--color-info)", textDecoration:"none", fontSize:14,
+                  padding:"0 10px", color:"var(--color-info)", textDecoration:"none", fontSize: "var(--fs-14)",
                 }}>
                 🔭
               </Link>

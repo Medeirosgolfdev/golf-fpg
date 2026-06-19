@@ -1,4 +1,4 @@
-/**
+﻿/**
  * pages/kids/CourseTab.tsx
  *
  * Tab "O Campo" do FieldRivaisDashboard.
@@ -226,7 +226,7 @@ export default function CourseTab({ torneio, escalaoNome, mh }: {
     return (
       <div className="muted p-16" style={{ display: "flex", flexDirection: "column", gap: 6 }}>
         <span>Sem informação detalhada de campo para este torneio/escalão.</span>
-        <span style={{ fontSize: 11 }}>
+        <span style={{ fontSize: "var(--fs-11)" }}>
           Esta vista lê os dados do member-history-slim. Se o torneio é novo
           e ainda não foi scrapado, a info aparecerá depois do próximo run de
           <code style={{ margin: "0 4px", padding: "1px 4px", background: "var(--bg-muted)", borderRadius: 3 }}>fetch-uskids-results</code>.

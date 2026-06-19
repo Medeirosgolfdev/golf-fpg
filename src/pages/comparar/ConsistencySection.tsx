@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { firstName } from "../../utils/format";
 import { sc3, SC } from "../../utils/scoreDisplay";
 import type { Slot, AggStats, ScoreDistBucket, PeriodKey } from "./types";
@@ -8,7 +8,7 @@ import { COLORS, COLORS_LIGHT, periodLabel } from "./types";
    Cores partilhadas com a resto da página e com o scoring tradicional
    ═════════════════════════════════════════════════════════════════ */
 
-const C_EAGLE  = "#f59e0b";            // âmbar (token --score-eagle)
+const C_EAGLE  = "var(--score-eagle)";  // âmbar
 const C_BIRDIE = SC.good;               // verde
 const C_PAR    = "var(--border-medium)";
 const C_BOGEY  = "var(--color-info)";
@@ -58,8 +58,8 @@ function MiniDonut({ pct, value, color, label, n, highlight = false }: {
           fontFamily="'JetBrains Mono',monospace"
         >{value}</text>
       </svg>
-      <div style={{ fontSize:11, fontWeight:700, color:"var(--text-2)", marginTop:2 }}>{label}</div>
-      <div style={{ fontSize:10, color:"var(--text-muted)" }}>{n} buraco{n === 1 ? "" : "s"}</div>
+      <div style={{ fontSize: "var(--fs-11)", fontWeight:700, color:"var(--text-2)", marginTop:2 }}>{label}</div>
+      <div style={{ fontSize: "var(--fs-10)", color:"var(--text-muted)" }}>{n} buraco{n === 1 ? "" : "s"}</div>
     </div>
   );
 }
@@ -251,7 +251,7 @@ function ScoringDonutsPane({ loaded }: { loaded: { s: Slot; agg: AggStats | null
             }}>
               <div className="d-flex items-center gap-8 mb-8">
                 <span className="round" style={{ width: 12, height: 12, background: COLORS[i] }} />
-                <b style={{ color: COLORS[i], fontSize: 14 }}>{firstName(s.player.name)}</b>
+                <b style={{ color: COLORS[i], fontSize: "var(--fs-14)" }}>{firstName(s.player.name)}</b>
                 <span className="muted fs-11">· {agg.nRoundsWithCard} rondas · {d.total} buracos</span>
               </div>
               <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", gap:4 }}>
@@ -636,7 +636,7 @@ export default function ConsistencySection({ slots, allAgg, period }: {
               color: pane === p.key ? "var(--text-1)" : "var(--text-3)",
               fontWeight: pane === p.key ? 700 : 500,
               cursor: "pointer",
-              fontSize: 13,
+              fontSize: "var(--fs-13)",
             }}
           >
             {p.emoji} {p.label}

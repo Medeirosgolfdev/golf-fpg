@@ -112,7 +112,7 @@ function HcpHistoryModal({
         position: "fixed",
         inset: 0,
         background: "rgba(0,0,0,0.5)",
-        zIndex: 1000,
+        zIndex: "var(--z-overlay)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -133,7 +133,7 @@ function HcpHistoryModal({
         }}
       >
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
-          <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700 }}>
+          <h3 style={{ margin: 0, fontSize: "var(--fs-16)", fontWeight: 700 }}>
             📈 Histórico de HCP{playerName ? ` — ${playerName}` : ""}
           </h3>
           <button
@@ -144,35 +144,35 @@ function HcpHistoryModal({
               borderRadius: 4,
               padding: "4px 10px",
               cursor: "pointer",
-              fontSize: 13,
+              fontSize: "var(--fs-13)",
             }}
           >
             Fechar
           </button>
         </div>
 
-        <div style={{ fontSize: 12, color: "var(--text-3, #6b7280)", marginBottom: 10 }}>
+        <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3, #6b7280)", marginBottom: 10 }}>
           {desc.length} snapshots · {desc[desc.length - 1]?.date} → {desc[0]?.date}
         </div>
 
-        <table style={{ width: "100%", fontSize: 12, borderCollapse: "collapse" }}>
+        <table className="dtable">
           <thead>
-            <tr style={{ borderBottom: "1px solid var(--border-light, #e5e7eb)" }}>
-              <th style={{ textAlign: "left", padding: "6px 8px" }}>Data</th>
-              <th style={{ textAlign: "right", padding: "6px 8px" }}>HCP</th>
-              <th style={{ textAlign: "left", padding: "6px 8px" }}>Fonte</th>
-              <th style={{ textAlign: "left", padding: "6px 8px" }}>Torneio</th>
+            <tr>
+              <th>Data</th>
+              <th className="r">HCP</th>
+              <th>Fonte</th>
+              <th>Torneio</th>
             </tr>
           </thead>
           <tbody>
             {desc.map((p, i) => (
-              <tr key={i} style={{ borderBottom: "1px solid var(--border-light, var(--bg-muted))" }}>
-                <td style={{ padding: "5px 8px", fontVariantNumeric: "tabular-nums" }}>{p.date}</td>
-                <td style={{ padding: "5px 8px", textAlign: "right", fontVariantNumeric: "tabular-nums", fontWeight: 600 }}>
+              <tr key={i}>
+                <td>{p.date}</td>
+                <td className="r" style={{ fontWeight: 600 }}>
                   {p.hcpExact.toFixed(1)}
                 </td>
-                <td style={{ padding: "5px 8px", color: "var(--text-2, #4b5563)" }}>{p.source}</td>
-                <td style={{ padding: "5px 8px", color: "var(--text-2, #4b5563)" }}>
+                <td style={{ color: "var(--text-2)" }}>{p.source}</td>
+                <td style={{ color: "var(--text-2)" }}>
                   {p.label || (p.tcode ? `tcode ${p.tcode}` : "—")}
                 </td>
               </tr>

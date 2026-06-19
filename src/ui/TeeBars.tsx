@@ -1,4 +1,4 @@
-/**
+﻿/**
  * src/ui/TeeBars.tsx
  *
  * Barras de tees partilhadas entre CamposPage e SimuladorPage. Uma barra por
@@ -71,7 +71,7 @@ export default function TeeBars({ tees, onSelectTee, selectedTeeId, onSelectGrou
                     title="Seleccionar este rating para o cálculo"
                     style={{
                       display: "inline-flex", alignItems: "center", gap: 5,
-                      padding: "3px 8px", borderRadius: 6, cursor: "pointer", fontSize: 12,
+                      padding: "3px 8px", borderRadius: 6, cursor: "pointer", fontSize: "var(--fs-12)",
                       border: `1.5px solid ${active ? "var(--accent)" : "var(--border)"}`,
                       background: active ? "var(--accent-light)" : "var(--bg-card)",
                       color: active ? "var(--accent-text)" : "var(--text-2)",

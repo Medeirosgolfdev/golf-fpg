@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AdmissionsTab.tsx — renderer da tab "Inscrições" num torneio.
  *
  * Usa o componente partilhado `ScorecardLeaderboard` (mesma tabela das
@@ -203,7 +203,7 @@ export default function AdmissionsTab({
             </td>
             <td style={{ padding: "6px 8px", textAlign: "center" }}>
               {isReserva
-                ? <span style={{ background: "var(--bg-muted)", color: "var(--text-muted)", fontSize: 10, padding: "1px 6px", borderRadius: 10, border: "1px solid var(--border-light)" }}>pendente</span>
+                ? <span style={{ background: "var(--bg-muted)", color: "var(--text-muted)", fontSize: "var(--fs-10)", padding: "1px 6px", borderRadius: 10, border: "1px solid var(--border-light)" }}>pendente</span>
                 : <span className="muted fs-10">✓</span>}
             </td>
           </>

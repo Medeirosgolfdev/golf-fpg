@@ -1,4 +1,4 @@
-/**
+﻿/**
  * src/ui/circuit/CircuitShell.tsx
  *
  * Página-mãe dos circuitos internacionais. Recebe `entries[] + config`
@@ -269,7 +269,7 @@ function DrawView({ rounds }: { rounds: Record<string, CircuitDrawGroup[]> }) {
             <div className="fw-700" style={{ marginBottom: 4 }}>
               {g.teeTime || "—"}{g.startHole ? ` · Buraco ${g.startHole}` : ""}{g.tee ? ` · ${g.tee}` : ""}
             </div>
-            <div className="muted" style={{ fontSize: 13 }}>
+            <div className="muted" style={{ fontSize: "var(--fs-13)" }}>
               {g.players.map((pl, j) => (
                 <span key={j}>{j > 0 ? " · " : ""}{pl.name}{pl.club ? ` (${pl.club})` : ""}</span>
               ))}
@@ -483,7 +483,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
           {flt.search && (
             <input
               className="input"
-              style={{ width: 160, fontSize: 12, padding: "3px 8px", marginLeft: 8 }}
+              style={{ width: 160, fontSize: "var(--fs-12)", padding: "3px 8px", marginLeft: 8 }}
               placeholder="🔍 Pesquisar…"
               value={search}
               onChange={e => setSearch(e.target.value)}
@@ -519,26 +519,26 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
             </>
           )}
           {flt.escalao && (
-            <select className="input" value={fEsc} onChange={e => setFEsc(e.target.value)} style={{ fontSize: 12, padding: "3px 6px" }}>
+            <select className="input" value={fEsc} onChange={e => setFEsc(e.target.value)} style={{ fontSize: "var(--fs-12)", padding: "3px 6px" }}>
               <option value="all">🏆 Escalão</option>
               {escaloes.map(es => <option key={es} value={es}>{es}</option>)}
             </select>
           )}
           {flt.sex && (
-            <select className="input" value={fSex} onChange={e => setFSex(e.target.value)} style={{ fontSize: 12, padding: "3px 6px" }}>
+            <select className="input" value={fSex} onChange={e => setFSex(e.target.value)} style={{ fontSize: "var(--fs-12)", padding: "3px 6px" }}>
               <option value="all">M+F</option>
               <option value="M">Masculino</option>
               <option value="F">Femenino</option>
             </select>
           )}
           {flt.source && sources.length > 1 && (
-            <select className="input" value={fSource} onChange={e => setFSource(e.target.value)} style={{ fontSize: 12, padding: "3px 6px" }}>
+            <select className="input" value={fSource} onChange={e => setFSource(e.target.value)} style={{ fontSize: "var(--fs-12)", padding: "3px 6px" }}>
               <option value="all">Fonte</option>
               {sources.map(s => <option key={s} value={s}>{config.sourceLabels?.[s] ?? s}</option>)}
             </select>
           )}
           {flt.liga && ligas.length > 1 && (
-            <select className="input" value={fLiga} onChange={e => setFLiga(e.target.value)} style={{ fontSize: 12, padding: "3px 6px" }}>
+            <select className="input" value={fLiga} onChange={e => setFLiga(e.target.value)} style={{ fontSize: "var(--fs-12)", padding: "3px 6px" }}>
               <option value="all">🇫🇷 Liga</option>
               {ligas.map(l => <option key={l} value={l}>{config.ligaLabels?.[l] ?? l}</option>)}
             </select>
@@ -560,7 +560,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
               className="input"
               value={infoView ?? ""}
               onChange={e => setInfoView(e.target.value || null)}
-              style={{ fontSize: 12, padding: "3px 6px" }}
+              style={{ fontSize: "var(--fs-12)", padding: "3px 6px" }}
               title="Páginas informativas"
             >
               <option value="">ⓘ Info</option>
@@ -815,7 +815,7 @@ function CircuitSidebar({
           )}
           {g.years.map(({ year, items }) => (
             <React.Fragment key={String(year)}>
-              <div className="sidebar-year-label" style={{ padding: "2px 10px", fontSize: 10, fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", marginTop: 4, background: config.color, color: config.textColor ?? "#fff" }}>
+              <div className="sidebar-year-label" style={{ padding: "2px 10px", fontSize: "var(--fs-10)", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", marginTop: 4, background: config.color, color: config.textColor ?? "#fff" }}>
                 {year ?? "Sem data"}
               </div>
               {items.map(e => {
@@ -839,7 +839,7 @@ function CircuitSidebar({
                     style={{ borderLeft: `4px solid ${accent}`, borderRadius: "0 6px 6px 0" }}
                   >
                     {/* Linha 1: nome */}
-                    <div className="course-item-name" style={{ fontSize: 12, fontWeight: active ? 700 : 500, lineHeight: 1.3 }}>
+                    <div className="course-item-name" style={{ fontSize: "var(--fs-12)", fontWeight: active ? 700 : 500, lineHeight: 1.3 }}>
                       {e.name}
                       {e.hasManuel && <ManuelPill />}
                       {entryHasAce(e) && <span title="Hole-in-one neste torneio"> 🕳️</span>}
@@ -847,7 +847,7 @@ function CircuitSidebar({
 
                     {/* Linha 2: campo */}
                     {e.course && (
-                      <div style={{ fontSize: 12, color: "var(--text-2)", fontWeight: 500, marginTop: 3 }}>
+                      <div style={{ fontSize: "var(--fs-12)", color: "var(--text-2)", fontWeight: 500, marginTop: 3 }}>
                         📍 {e.course.length > 50 ? e.course.slice(0, 50) + "…" : e.course}
                       </div>
                     )}
@@ -869,14 +869,14 @@ function CircuitSidebar({
 
                     {/* Linha 4: data · fonte (ficheiro) · nº jog */}
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 6 }}>
-                      <span style={{ fontSize: 11, color: "var(--text-muted)", flexShrink: 0 }}>
+                      <span style={{ fontSize: "var(--fs-11)", color: "var(--text-muted)", flexShrink: 0 }}>
                         {dateStr ? `📅 ${dateStr}` : "—"}
                       </span>
                       <div style={{ display: "flex", alignItems: "center", gap: 4, flexShrink: 0 }}>
                         {srcLabel && (
-                          <span className="chip" title={`Fonte: ${srcLabel}`} style={{ fontSize: 9, padding: "1px 6px", borderRadius: 8, background: srcColor, color: fgFor(srcColor) }}>{srcLabel}</span>
+                          <span className="chip" title={`Fonte: ${srcLabel}`} style={{ fontSize: "var(--fs-9)", padding: "1px 6px", borderRadius: 8, background: srcColor, color: fgFor(srcColor) }}>{srcLabel}</span>
                         )}
-                        {nP > 0 && <span style={{ fontSize: 11, color: "var(--text-muted)" }}>{nP} jog</span>}
+                        {nP > 0 && <span style={{ fontSize: "var(--fs-11)", color: "var(--text-muted)" }}>{nP} jog</span>}
                       </div>
                     </div>
                   </div>

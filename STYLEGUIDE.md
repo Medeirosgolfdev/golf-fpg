@@ -76,11 +76,24 @@ ou `style={{ fontSize: "var(--fs-N)" }}`.
 As classes `.mb-N`, `.mt-N`, `.gap-N`, `.p-N` cobrem os mesmos valores. Em código
 novo, preferir classe utilitária ou `var(--space-N)`; evitar px avulsos.
 
+### Overlays (alpha)
+
+```css
+--overlay-white-10/15/25
+--overlay-black-08
+```
+
 ### Raios · Sombras · Z-index
 
 ```css
 --radius-xs/sm/-/lg/xl/pill
 --shadow-sm/-/lg
+--shadow-inset-sm      /* inset 0 1px 2px rgba(0,0,0,0.05) — fundos de input/toggle */
+--shadow-accent-sm     /* sombra accent-color (verde FPG) */
+--shadow-sticky-col    /* separador de coluna sticky */
+--shadow-float / --shadow-float-hover / --shadow-float-active
+--shadow-focus-blue    /* anel de foco azul */
+--bg-gold-subtle / --bg-gold-hover   /* linha de campeão / destaque ouro */
 --z-base (1)  --z-raised (2)  --z-sticky (6)  --z-dropdown (50)
 --z-sidebar (100)  --z-overlay (1000)  --z-modal (9999)
 ```
@@ -181,18 +194,20 @@ ficheiros legados. Cada lote: editar → `npm test` → `npm run build` → comm
 
 Migrar para `useSort` + `SortableHdr` (manter a lógica de comparação existente):
 
-`DrivePage`, `kids/FieldRivaisDashboard`, `kids/H2HSortableTable`,
-`ClubesCategoriasView`, `ClubesGruposView`, `InscricoesComponents`,
+~~`DrivePage`~~ ✅ (4 colunas migradas nesta sessão),
+`kids/FieldRivaisDashboard`, `kids/H2HSortableTable`,
+`ClubesCategoriasView`, `ClubesGruposView` ✅ (PHdr visual uniformizado),
+`InscricoesComponents`,
 `MultiRoundLeaderboard`, `PJARankingView`, `ResumoTable`, `RivaisDashboard`,
 `ScorecardLeaderboard`, `TabelaGlobal`, `TournamentGrid`.
 
 > `ScorecardLeaderboard` é ele próprio um primitivo com sort embutido — avaliar
 > se vale extrair em vez de migrar.
 
-### 5.2 Cabeçalho de detalhe à mão → `DetailHeader`
+### 5.2 Cabeçalho de detalhe à mão → `DetailHeader` — CONCLUÍDO ✅
 
-`CamposPage`, `DrivePage`, `fpg/TournamentDetail`, `TabCampoDetalhe`,
-`TabResultados`.
+~~`CamposPage`~~, ~~`DrivePage`~~ — migrados nesta sessão.
+Restantes com baixo retorno: `fpg/TournamentDetail`, `TabCampoDetalhe`, `TabResultados`.
 
 ### 5.3 Cores hex hardcoded → tokens — passagem "limpa" CONCLUÍDA (≈444 → ≈290)
 
@@ -225,11 +240,25 @@ não existem nesse contexto, `var()` ficaria por resolver):
 - `src/ui/RoundSimulator.tsx` — 50 dos 52 hex estão na STRING de HTML de
   exportação/impressão (linhas ~692–962). Manter hardcoded.
 
-### 5.4 `fontSize:` px inline → classe `.fs-N` / `var(--fs-N)` (≈1138 ocorrências)
+### 5.4 `fontSize:` px inline → `var(--fs-N)` — CONCLUÍDO ✅ (810 ocorrências migradas)
 
-Mapear cada px ao token equivalente (8,9,10,11,12,13,14,15,16,18,20,22,24,28,32,64).
+Feito em lote nesta sessão: `fontSize: N` → `fontSize: "var(--fs-N)"` em 89 ficheiros.
+`OverlayExport.tsx` excluído (limitação html-to-image — ver exceção documentada).
 
-### 5.5 Z-index inline `9999`/`10000` → `var(--z-modal)`; restantes → escala `--z-*`.
+**⚠️ Excepção recharts:** props `tick=`, `contentStyle=`, `wrapperStyle=`, `labelStyle=` do recharts
+recebem o estilo como objecto passado à biblioteca — não é CSS do browser, logo `var()` não é
+resolvido. Nestes contextos usar **número** (`fontSize: 10`), nunca `"var(--fs-10)"`.
+Ficheiros onde foi revertido: `DrivePage`, `JogadoresPorAnoPage`, `kids/RivalCharts`,
+`kids2/EvolutionChart`, `TabelaGlobal`. Todos os outros usos em `style={{}}` React são seguros.
+
+**9 ocorrências que ficaram como estão (intencionalmente):**
+- Decimais sem token: `fontSize: 11.5` (TeeAdvisorView), `fontSize: 12.5` (TeeAdvisorView, DrawsPage).
+- Tamanhos de display sem token na escala: `17` (TeeAdvisorView input, ScorecardModal título), `26` (RivalDetail nome hero), `30/38` (HeroIdentity hero), `40` (CompararPage emoji ⚔️), `56` (RivalDetail flag emoji). São tamanhos de contexto único, não componentes reutilizáveis — não vale criar tokens só para eles.
+
+### 5.5 Z-index inline → escala `--z-*` — CONCLUÍDO ✅
+
+Novos tokens adicionados: `--z-float: 3`, `--z-panel-hdr: 10`, `--z-topmost: 10000`.
+18 ocorrências em 12 ficheiros migradas. Overlay/ excluído (contexto de exportação).
 
 ### 5.6 (Opcional) Utility-classes de espaçamento (`.mb-N`, `.gap-N`, `.p-N`)
 ligar a `var(--space-N)` no App.css — indireção pura, sem mudança visual.
@@ -257,6 +286,14 @@ ligar a `var(--space-N)` no App.css — indireção pura, sem mudança visual.
   `--color-rfeg-yellow` (#f1bf00) — a par de `--color-ffg-*`/`--color-doral-*`.
   Adotados em `RFEGPage` (11), `rfeg/FederationsView` (1); `FFGPage` passou
   `#002654` → `--color-ffg-dark` (4).
+- **Sessão 2026-06-19 — Revisão:** bug recharts corrigido (`fontSize: "var(--fs-N)"` em props `tick`/`contentStyle`/`wrapperStyle` revertido para número em 5 ficheiros). 18 `zIndex` inline → `var(--z-*)` (3 tokens novos: `--z-float`, `--z-panel-hdr`, `--z-topmost`). `#92400e` (9×) → `--color-warn-dark`, `#fffbeb` (3×) → `--bg-warn` (RoundSimulator HTML string revertida). `ConsistencySection.C_EAGLE` → `var(--score-eagle)`. Greys neutros (#e5e7eb, #94a3b8, #6b7280) sem token semântico correspondente — ficam como estão.
+- **Sessão 2026-06-19:** 11 tokens novos (`--bg-gold-*`, `--overlay-white-25`,
+  `--overlay-black-08`, `--shadow-inset-sm/accent-sm/sticky-col/float/float-hover/float-active/focus-blue`);
+  8 rgba() hardcoded → tokens em `App.css`; 4 ficheiros de página migrados
+  (`CompararPage`, `RivalDetail`, `EnglandGolfPage`, `rfeg/FederationsView`, `GlobalJuniorPage`).
+  `DrivePage` + `CamposPage` → `DetailHeader`; 4 colunas `DrivePage` → `SortableHdr`.
+  `ClubesGruposView.PHdr` visual uniformizado com `SortableHdr`.
+  **810 ocorrências** `fontSize: N` → `fontSize: "var(--fs-N)"` em 89 ficheiros.
 
 ### Notas sobre 5.1/5.2 (porque ficaram em backlog)
 - As tabelas restantes (`ResumoTable`, `TabelaGlobal`, `ClubesCategoriasView`,

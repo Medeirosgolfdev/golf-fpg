@@ -1,4 +1,4 @@
-/**
+﻿/**
  * GlobalJuniorPage.tsx — Global Junior Golf Live (GJGL) Tournament Results
  *
  * Lê `public/data/gjgl-catalog.json` em runtime e, para cada slug com
@@ -333,7 +333,7 @@ export function GlobalJuniorPageLegacy() {
           <div style={{ padding: "8px 4px", maxHeight: "calc(100vh - 120px)", overflowY: "auto" }}>
             {byYear.map(([year, ts]) => (
               <div key={year} style={{ marginBottom: 12 }}>
-                <div style={{ fontWeight: 700, padding: "4px 10px", color: "var(--text-muted)", fontSize: 12 }}>
+                <div style={{ fontWeight: 700, padding: "4px 10px", color: "var(--text-muted)", fontSize: "var(--fs-12)" }}>
                   {year} ({ts.length})
                 </div>
                 {ts.map(t => {
@@ -349,7 +349,7 @@ export function GlobalJuniorPageLegacy() {
                         padding: "6px 10px", marginBottom: 2, borderRadius: 4,
                         background: isActive ? "var(--bg-selected, #e5f0ff)" : "transparent",
                         border: "1px solid var(--border-subtle, #e0e0e0)",
-                        cursor: "pointer", fontSize: 12,
+                        cursor: "pointer", fontSize: "var(--fs-12)",
                         opacity: hasData ? 1 : 0.55,
                       }}
                       title={hasData ? "" : "Sem dados scrapados ainda"}
@@ -379,7 +379,7 @@ export function GlobalJuniorPageLegacy() {
               <span style={{ marginRight: 8 }}>{COUNTRY_FLAG[activeCatalogEntry.country] || "🏳"}</span>
               {activeCatalogEntry.title}
             </h2>
-            <div style={{ fontSize: 12, color: "var(--text-muted)", marginBottom: 16 }}>
+            <div style={{ fontSize: "var(--fs-12)", color: "var(--text-muted)", marginBottom: 16 }}>
               {activeData?.start_date && (
                 <>{activeData.start_date}{activeData.end_date && activeData.end_date !== activeData.start_date ? ` – ${activeData.end_date}` : ""}</>
               )}
@@ -391,7 +391,7 @@ export function GlobalJuniorPageLegacy() {
             {activeError && (
               <div className="center-msg" style={{ padding: 24 }}>
                 <p>Sem dados scrapados ainda para este torneio.</p>
-                <p style={{ fontSize: 12, color: "var(--text-muted)" }}>
+                <p style={{ fontSize: "var(--fs-12)", color: "var(--text-muted)" }}>
                   Para descarregar: <code>node scripts/scrape-gjgl.js --slug {activeCatalogEntry.slug}</code>
                 </p>
               </div>
@@ -439,7 +439,7 @@ function DivisionTabs({ data }: { data: GjglData }) {
             style={{ marginRight: 6 }}
           >
             U{div.ak}
-            <span style={{ marginLeft: 6, fontSize: 11, color: "var(--text-muted)" }}>
+            <span style={{ marginLeft: 6, fontSize: "var(--fs-11)", color: "var(--text-muted)" }}>
               ({div.players.length})
             </span>
           </button>
@@ -455,7 +455,7 @@ function DivisionTabs({ data }: { data: GjglData }) {
         <IntlTournView tournament={tournament} scOptions={gjglScorecardOptions()} />
       ) : (
         <div style={{ padding: 16 }}>
-          <p style={{ fontSize: 13, color: "var(--text-muted)" }}>
+          <p style={{ fontSize: "var(--fs-13)", color: "var(--text-muted)" }}>
             Scorecards hole-by-hole não disponíveis (o scraper actual extrai leaderboard mas
             os scorecards individuais do GJGL precisam de melhorias no parser).
           </p>
@@ -468,19 +468,19 @@ function DivisionTabs({ data }: { data: GjglData }) {
 
 function SimpleLeaderboard({ div }: { div: GjglDivision }) {
   return (
-    <table style={{ width: "100%", fontSize: 13, borderCollapse: "collapse" }}>
+    <table className="dtable">
       <thead>
-        <tr style={{ borderBottom: "1px solid var(--border-subtle)" }}>
-          <th style={{ textAlign: "left", padding: 6 }}>Pos</th>
-          <th style={{ textAlign: "left", padding: 6 }}>País</th>
-          <th style={{ textAlign: "left", padding: 6 }}>Nome</th>
-          <th style={{ textAlign: "right", padding: 6 }}>HCP</th>
-          <th style={{ textAlign: "right", padding: 6 }}>Nasc.~</th>
-          <th style={{ textAlign: "right", padding: 6 }}>R1</th>
-          <th style={{ textAlign: "right", padding: 6 }}>R2</th>
-          <th style={{ textAlign: "right", padding: 6 }}>R3</th>
-          <th style={{ textAlign: "right", padding: 6 }}>Total</th>
-          <th style={{ textAlign: "right", padding: 6 }}>vs Par</th>
+        <tr>
+          <th>Pos</th>
+          <th>País</th>
+          <th>Nome</th>
+          <th className="r">HCP</th>
+          <th className="r">Nasc.~</th>
+          <th className="r">R1</th>
+          <th className="r">R2</th>
+          <th className="r">R3</th>
+          <th className="r">Total</th>
+          <th className="r">vs Par</th>
         </tr>
       </thead>
       <tbody>
@@ -488,17 +488,17 @@ function SimpleLeaderboard({ div }: { div: GjglDivision }) {
           const isManuel = isM(p.name);
           const pos = p.pos != null ? p.pos : (p.tiedFlag ? "T" : "—");
           return (
-            <tr key={i} style={{ borderBottom: "1px solid var(--border-subtle, #eee)", background: isManuel ? "var(--bg-success-subtle, #f0fff0)" : undefined, fontWeight: isManuel ? 700 : undefined }}>
-              <td style={{ padding: 6 }}>{pos}</td>
-              <td style={{ padding: 6 }}>{flagForCountry(p.country)} {p.country || "—"}</td>
-              <td style={{ padding: 6 }}>{p.name}{isManuel && " 🇵🇹"}</td>
-              <td style={{ textAlign: "right", padding: 6 }}>{p.hcpRaw ?? (p.hcp != null ? p.hcp : "—")}</td>
-              <td style={{ textAlign: "right", padding: 6, color: "var(--text-muted)" }} title={p.gradYear ? `Grad year ${p.gradYear}` : ""}>{p.birthYearEst ?? "—"}</td>
-              <td style={{ textAlign: "right", padding: 6 }}>{(p.rounds || [])[0]?.gross ?? "—"}</td>
-              <td style={{ textAlign: "right", padding: 6 }}>{(p.rounds || [])[1]?.gross ?? "—"}</td>
-              <td style={{ textAlign: "right", padding: 6 }}>{(p.rounds || [])[2]?.gross ?? "—"}</td>
-              <td style={{ textAlign: "right", padding: 6 }}>{p.total ?? "—"}</td>
-              <td style={{ textAlign: "right", padding: 6 }}>{fmtTopar(p.toPar)}</td>
+            <tr key={i} style={{ background: isManuel ? "var(--bg-success-subtle)" : undefined, fontWeight: isManuel ? 700 : undefined }}>
+              <td>{pos}</td>
+              <td>{flagForCountry(p.country)} {p.country || "—"}</td>
+              <td>{p.name}{isManuel && " 🇵🇹"}</td>
+              <td className="r">{p.hcpRaw ?? (p.hcp != null ? p.hcp : "—")}</td>
+              <td className="r" style={{ color: "var(--text-muted)" }} title={p.gradYear ? `Grad year ${p.gradYear}` : ""}>{p.birthYearEst ?? "—"}</td>
+              <td className="r">{(p.rounds || [])[0]?.gross ?? "—"}</td>
+              <td className="r">{(p.rounds || [])[1]?.gross ?? "—"}</td>
+              <td className="r">{(p.rounds || [])[2]?.gross ?? "—"}</td>
+              <td className="r">{p.total ?? "—"}</td>
+              <td className="r">{fmtTopar(p.toPar)}</td>
             </tr>
           );
         })}
@@ -580,7 +580,7 @@ function buildGjglEntries(catalog: Catalog, index: GjglIndex | null): CircuitEnt
 const GJGL_CONFIG: CircuitConfig = {
   routeBase: "/global-junior",
   title: "🏌️ Global Junior",
-  color: "#0a7e3f",
+  color: "var(--color-good-dark)",
   textColor: "#fff",
   grouping: "year",
   filters: { search: true, year: true, toggles: ["manuel", "pt", "top10"] },

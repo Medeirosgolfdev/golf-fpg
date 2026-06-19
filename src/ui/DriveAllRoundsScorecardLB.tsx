@@ -1,4 +1,4 @@
-/**
+﻿/**
  * DriveAllRoundsScorecardLB — Combined multi-round scorecard display (Drive/AQUAPOR)
  *
  * Data logic delegated to useAllRoundsData hook.
@@ -144,7 +144,7 @@ function DriveAllRoundsScorecardLB({
               </td>
               <td className="lb-tee" style={{
                 fontWeight: 600,
-                fontSize: 10,
+                fontSize: "var(--fs-10)",
                 color: "var(--text-muted)",
               }}>
                 {RD_LABELS[ri] ?? `R${ri + 1}`}
@@ -191,7 +191,7 @@ function DriveAllRoundsScorecardLB({
           <>
             <td className="lb-club">{row.club || "–"}</td>
             <td className="lb-hcp">{fmtHcp(row.hcp)}</td>
-            <td className="lb-tee" style={{ fontWeight: 600, fontSize: 10, color: "var(--text-muted)" }}>
+            <td className="lb-tee" style={{ fontWeight: 600, fontSize: "var(--fs-10)", color: "var(--text-muted)" }}>
               {row.rdLabel}
             </td>
           </>
@@ -220,7 +220,7 @@ function DriveAllRoundsScorecardLB({
     <>
       <th className="lb-club">Clube</th>
       <th className="lb-hcp">HCP</th>
-      <th className="lb-tee" style={{ fontSize: 10, fontWeight: 600, color: "var(--text-muted)" }}>Rnd</th>
+      <th className="lb-tee" style={{ fontSize: "var(--fs-10)", fontWeight: 600, color: "var(--text-muted)" }}>Rnd</th>
     </>
   );
 
@@ -299,7 +299,7 @@ function DriveAllRoundsScorecardLB({
           key={String(g)}
           onClick={() => setGroupMode(g)}
           style={{
-            fontSize: 10,
+            fontSize: "var(--fs-10)",
             padding: "2px 9px",
             border: "none",
             cursor: "pointer",

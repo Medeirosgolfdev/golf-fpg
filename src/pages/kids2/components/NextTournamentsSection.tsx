@@ -1,4 +1,4 @@
-/**
+﻿/**
  * kids2/components/NextTournamentsSection.tsx
  *
  * Próximos torneios em que ESTE jogador está inscrito (USKids + FPG).
@@ -37,10 +37,10 @@ export default function NextTournamentsSection({ data, junior }: Props) {
   return (
     <section style={{ marginBottom: 4 }}>
       <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", margin: "8px 0 10px", gap: 8 }}>
-        <h3 style={{ margin: 0, fontSize: 14, fontWeight: 700, color: "var(--text)" }}>
+        <h3 style={{ margin: 0, fontSize: "var(--fs-14)", fontWeight: 700, color: "var(--text)" }}>
           📅 Próximos torneios
         </h3>
-        <span style={{ fontSize: 11, color: "var(--text-3)" }}>
+        <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
           {regs.length} {regs.length === 1 ? "inscrição" : "inscrições"}
         </span>
       </div>
@@ -60,14 +60,14 @@ export default function NextTournamentsSection({ data, junior }: Props) {
             }}
             title={`${r.name}${r.campo ? " · " + r.campo : ""}`}
           >
-            <span style={{ fontSize: 11, fontWeight: 700, color: "var(--text-2)", minWidth: 78 }}>
+            <span style={{ fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-2)", minWidth: 78 }}>
               {fmtDate(r.date)}
             </span>
             <span style={{ flex: 1, minWidth: 0 }}>
-              <span style={{ display: "block", fontSize: 13, fontWeight: 600, color: "var(--text)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              <span style={{ display: "block", fontSize: "var(--fs-13)", fontWeight: 600, color: "var(--text)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                 {r.name}
               </span>
-              <span style={{ fontSize: 10, color: "var(--text-3)" }}>
+              <span style={{ fontSize: "var(--fs-10)", color: "var(--text-3)" }}>
                 {CIRCUIT_LABEL[r.circuit]}
                 {r.escalao ? ` · ${r.escalao}` : ""}
                 {r.campo ? ` · ${r.campo}` : ""}
@@ -75,12 +75,12 @@ export default function NextTournamentsSection({ data, junior }: Props) {
             </span>
             {r.status === "reserva" && (
               <span style={{
-                fontSize: 9, fontWeight: 700, padding: "1px 6px", borderRadius: 3,
+                fontSize: "var(--fs-9)", fontWeight: 700, padding: "1px 6px", borderRadius: 3,
                 background: "var(--bg-warn-orange, #fff7ed)", color: "var(--color-orange-deep, #c2410c)",
                 border: "1px solid var(--color-amber, #f59e0b)", flexShrink: 0,
               }}>RESERVA</span>
             )}
-            <span style={{ color: "var(--text-3)", fontSize: 13, fontWeight: 600, flexShrink: 0 }}>↗</span>
+            <span style={{ color: "var(--text-3)", fontSize: "var(--fs-13)", fontWeight: 600, flexShrink: 0 }}>↗</span>
           </a>
         ))}
       </div>

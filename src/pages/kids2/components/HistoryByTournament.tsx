@@ -107,8 +107,8 @@ export default function HistoryByTournament({ data, junior, filterTids }: Props)
   return (
     <section>
       <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", margin: "8px 0 10px" }}>
-        <h3 style={{ margin: 0, fontSize: 14, fontWeight: 700, color: "var(--text)" }}>Histórico por torneio</h3>
-        <span style={{ fontSize: 11, color: "var(--text-3)" }}>
+        <h3 style={{ margin: 0, fontSize: "var(--fs-14)", fontWeight: 700, color: "var(--text)" }}>Histórico por torneio</h3>
+        <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
           {multiSeries.length} {multiSeries.length === 1 ? "série recorrente" : "séries recorrentes"} · {totalWins} vitórias totais
         </span>
       </div>
@@ -126,7 +126,7 @@ export default function HistoryByTournament({ data, junior, filterTids }: Props)
             marginTop: 8,
             width: "100%",
             padding: "6px 10px",
-            fontSize: 12,
+            fontSize: "var(--fs-12)",
             background: "var(--bg-muted)",
             border: "1px solid var(--border-light)",
             borderRadius: 6,
@@ -141,7 +141,7 @@ export default function HistoryByTournament({ data, junior, filterTids }: Props)
 
       {oneOffs.length > 0 && (
         <div style={{ marginTop: 12, padding: "8px 12px", background: "var(--bg-muted)", border: "1px solid var(--border-light)", borderRadius: 6 }}>
-          <div style={{ fontSize: 11, color: "var(--text-3)", fontWeight: 700, marginBottom: 6, textTransform: "uppercase", letterSpacing: 0.4 }}>
+          <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", fontWeight: 700, marginBottom: 6, textTransform: "uppercase", letterSpacing: 0.4 }}>
             Edições únicas · {oneOffs.length}
           </div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
@@ -155,7 +155,7 @@ export default function HistoryByTournament({ data, junior, filterTids }: Props)
               <button
                 onClick={() => setShowAllOneOffs(true)}
                 style={{
-                  fontSize: 11,
+                  fontSize: "var(--fs-11)",
                   padding: "3px 9px",
                   border: "1px solid var(--border-light)",
                   borderRadius: 999,
@@ -239,18 +239,18 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
           borderBottom: expanded ? "1px solid var(--border-light)" : "none",
         }}
       >
-        <span style={{ fontSize: 11, color: "var(--text-3)", flexShrink: 0, width: 12 }}>
+        <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", flexShrink: 0, width: 12 }}>
           {expanded ? "▼" : "▶"}
         </span>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 6, overflow: "hidden", flexWrap: "wrap" }}>
-            <div style={{ fontSize: 13, fontWeight: 700, color: "var(--text)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+            <div style={{ fontSize: "var(--fs-13)", fontWeight: 700, color: "var(--text)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
               {label}
             </div>
             <span
               title={`Prestígio: ${tournWeight.stars}/5 · rondas ${tournWeight.parts.rounds.toFixed(2)} · field ${tournWeight.parts.field.toFixed(2)}${tournWeight.parts.nations != null ? ` · nações ${tournWeight.parts.nations.toFixed(2)}` : " · (sem nationsCount)"}`}
               style={{
-                fontSize: 11, letterSpacing: 0.5, color: "var(--medal-gold-strong)", flexShrink: 0,
+                fontSize: "var(--fs-11)", letterSpacing: 0.5, color: "var(--medal-gold-strong)", flexShrink: 0,
               }}
             >
               {formatStars(tournWeight.stars)}
@@ -258,7 +258,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
             <SeriesScoringPill tournament={last.tournament} />
             <SeriesNineHolesPill tournament={last.tournament} flight={last.flight} />
           </div>
-          <div style={{ fontSize: 10, color: "var(--text-3)", marginTop: 1 }}>
+          <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 1 }}>
             {editions.length} {editions.length === 1 ? "edição" : "edições"}
             {wins > 0 && <> · <span style={{ color: "var(--color-warn-dark, var(--color-warn-dark))", fontWeight: 700 }}>🏆 {wins}</span></>}
             {podiums > wins && <> · {podiums} pódios</>}
@@ -268,11 +268,11 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
         <Sparkline editions={editions} />
         <div style={{ flexShrink: 0, minWidth: 50, textAlign: "right" }}>
           <PosBadge pos={lastPos} />
-          <div style={{ fontSize: 9, color: "var(--text-3)", marginTop: 1 }}>{fmtYear(last?.tournament.date)}</div>
+          <div style={{ fontSize: "var(--fs-9)", color: "var(--text-3)", marginTop: 1 }}>{fmtYear(last?.tournament.date)}</div>
         </div>
         {trend && (
           <span style={{
-            fontSize: 10, padding: "2px 7px", borderRadius: 10, fontWeight: 700,
+            fontSize: "var(--fs-10)", padding: "2px 7px", borderRadius: 10, fontWeight: 700,
             background: trend.bg, color: trend.fg, border: `1px solid ${trend.fg}`,
             whiteSpace: "nowrap", flexShrink: 0,
           }} title={trend.title}>
@@ -283,17 +283,17 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
 
       {expanded && (
         <div style={{ padding: "8px 12px" }}>
-          <table style={{ width: "100%", fontSize: 11, borderCollapse: "collapse", fontVariantNumeric: "tabular-nums" }}>
+          <table className="dtable-sm">
             <thead>
-              <tr style={{ color: "var(--text-3)", fontSize: 10, textTransform: "uppercase", letterSpacing: 0.3 }}>
-                <SortableHdr k="year" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={tdH}>Ano</SortableHdr>
-                <SortableHdr k="flight" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={tdH}>Escalão</SortableHdr>
-                <SortableHdr k="pos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...tdH, textAlign: "center" }}>Pos</SortableHdr>
-                <SortableHdr k="topPct" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...tdH, textAlign: "center" }} title="Posição como percentil do field">Top%</SortableHdr>
-                <SortableHdr k="rounds" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...tdH, textAlign: "right" }}>Rondas</SortableHdr>
-                <SortableHdr k="toPar" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...tdH, textAlign: "right" }}>±par</SortableHdr>
-                {manuel && manuel.id !== editions[0]?.result.juniorId && <th style={{ ...tdH, textAlign: "center", width: 60 }} title="Posição do Manuel quando também jogou">M</th>}
-                <th style={{ ...tdH, textAlign: "right" }}>↗</th>
+              <tr>
+                <SortableHdr k="year" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Ano</SortableHdr>
+                <SortableHdr k="flight" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Escalão</SortableHdr>
+                <SortableHdr k="pos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "center" }}>Pos</SortableHdr>
+                <SortableHdr k="topPct" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "center" }} title="Posição como percentil do field">Top%</SortableHdr>
+                <SortableHdr k="rounds" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "right" }}>Rondas</SortableHdr>
+                <SortableHdr k="toPar" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "right" }}>±par</SortableHdr>
+                {manuel && manuel.id !== editions[0]?.result.juniorId && <th style={{ textAlign: "center", width: 60 }} title="Posição do Manuel quando também jogou">M</th>}
+                <th style={{ textAlign: "right" }}>↗</th>
               </tr>
             </thead>
             <tbody>
@@ -332,7 +332,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
                       <td style={{ ...tdC, textAlign: "center" }}>
                         {manuelPos != null ? (
                           <span title={`Manuel ficou em #${manuelPos} neste torneio`} style={{
-                            fontSize: 10, padding: "1px 5px", borderRadius: 3,
+                            fontSize: "var(--fs-10)", padding: "1px 5px", borderRadius: 3,
                             background: "var(--bg-success-subtle, #ecfdf5)", color: "var(--color-good-dark)",
                             fontWeight: 700, border: "1px solid var(--color-good-dark)",
                             whiteSpace: "nowrap",
@@ -346,7 +346,7 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
                           <a key={l.key + l.url} href={l.url} target="_blank" rel="noreferrer"
                             title={`Abrir em ${l.label}`}
                             style={{
-                              fontSize: 9, padding: "1px 4px", borderRadius: 3, fontWeight: 700,
+                              fontSize: "var(--fs-9)", padding: "1px 4px", borderRadius: 3, fontWeight: 700,
                               color: `var(${l.colorVar})`, border: `1px solid var(${l.colorVar})`,
                               textDecoration: "none", lineHeight: 1.3, background: "var(--bg)",
                               whiteSpace: "nowrap",
@@ -373,7 +373,7 @@ function Sparkline({ editions }: { editions: Edition[] }) {
   const positions = editions.map((e) => (typeof e.result.pos === "number" ? e.result.pos : null));
   const validPositions = positions.filter((p): p is number => p !== null);
   if (validPositions.length === 0) {
-    return <div style={{ width: 120, fontSize: 10, color: "var(--text-3)", textAlign: "center" }}>—</div>;
+    return <div style={{ width: 120, fontSize: "var(--fs-10)", color: "var(--text-3)", textAlign: "center" }}>—</div>;
   }
   const maxPos = Math.max(...validPositions, 10);
   const w = 140;
@@ -423,7 +423,7 @@ function OneOffPill({ ed }: { ed: Edition }) {
   const isTop3 = typeof pos === "number" && pos <= 3;
   return (
     <span style={{
-      fontSize: 11,
+      fontSize: "var(--fs-11)",
       padding: "3px 9px",
       borderRadius: 999,
       background: "var(--bg)",
@@ -433,7 +433,7 @@ function OneOffPill({ ed }: { ed: Edition }) {
       alignItems: "center",
       gap: 5,
     }} title={`${ed.tournament.name || ""} · ${ed.flight.label}`}>
-      <span style={{ color: "var(--text-3)", fontSize: 10 }}>{fmtYear(ed.tournament.date)}</span>
+      <span style={{ color: "var(--text-3)", fontSize: "var(--fs-10)" }}>{fmtYear(ed.tournament.date)}</span>
       <span style={{ fontWeight: 600 }}>{shorten(ed.tournament.name || "")}</span>
       <PosBadge pos={pos} small />
     </span>
@@ -482,7 +482,7 @@ function SeriesScoringPill({ tournament }: { tournament: Tournament }) {
   const isScratch = /SCRATCH/i.test(st);
   return (
     <span title={isScratch ? "Competição scratch (gross)" : "Competição com handicap (net)"} style={{
-      fontSize: 9, padding: "1px 5px", borderRadius: 3, fontWeight: 700,
+      fontSize: "var(--fs-9)", padding: "1px 5px", borderRadius: 3, fontWeight: 700,
       background: isScratch ? "var(--bg-warn-subtle, var(--bg-warn))" : "var(--bg-info-subtle, var(--bg-info))",
       color: isScratch ? "var(--color-warn-dark, var(--color-warn-dark))" : "var(--color-info-dark, var(--color-navy))",
       border: `1px solid ${isScratch ? "var(--color-warn-dark, var(--color-warn-dark))" : "var(--color-info-dark, var(--color-navy))"}`,
@@ -499,7 +499,7 @@ function SeriesNineHolesPill({ tournament, flight }: { tournament: Tournament; f
   if (!is9) return null;
   return (
     <span title="Torneio de 9 buracos" style={{
-      fontSize: 9, padding: "1px 5px", borderRadius: 3, fontWeight: 700,
+      fontSize: "var(--fs-9)", padding: "1px 5px", borderRadius: 3, fontWeight: 700,
       background: "var(--bg-muted)", color: "var(--text-2)",
       border: "1px solid var(--border-light)", lineHeight: 1.4, flexShrink: 0,
     }}>

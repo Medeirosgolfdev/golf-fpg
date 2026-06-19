@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+﻿import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle } from "../ui/Toolbar";
@@ -246,7 +246,7 @@ function MultiTeeSDTable({
   const hasNet = hi !== null;
   const colCount = hasNet ? 3 : 2;  // Score, SD, [Net]
   const ROW1_H = 30;
-  const stickyBase: React.CSSProperties = { position: "sticky", zIndex: 3 };
+  const stickyBase: React.CSSProperties = { position: "sticky", zIndex: "var(--z-float)" };
 
   return (
     <div className="sim-scroll-x scroll-x" style={{ maxHeight: 500 }}>
@@ -262,7 +262,7 @@ function MultiTeeSDTable({
               background: "var(--bg)",
               borderBottom: "2px solid var(--border)",
               padding: "6px 8px",
-              fontSize: 11,
+              fontSize: "var(--fs-11)",
               fontWeight: 600,
               letterSpacing: "0.04em",
               color: "var(--text-3)",
@@ -279,7 +279,7 @@ function MultiTeeSDTable({
                   color: textOnColor(c.hex),
                   textAlign: "center",
                   padding: "5px 8px",
-                  fontSize: 11,
+                  fontSize: "var(--fs-11)",
                   fontWeight: 700,
                   letterSpacing: "0.03em",
                   borderLeft: i > 0 ? "2px solid var(--border)" : undefined,
@@ -298,10 +298,10 @@ function MultiTeeSDTable({
               const base: React.CSSProperties = {
                 ...stickyBase,
                 top: ROW1_H,
-                zIndex: 2,
+                zIndex: "var(--z-raised)",
                 background: "var(--bg)",
                 padding: "4px 8px",
-                fontSize: 10,
+                fontSize: "var(--fs-10)",
                 fontWeight: 600,
                 letterSpacing: "0.04em",
                 color: "var(--text-3)",
@@ -341,7 +341,7 @@ function MultiTeeSDTable({
                   textAlign: "center",
                   whiteSpace: "nowrap",
                   padding: "5px 8px",
-                  fontSize: 12,
+                  fontSize: "var(--fs-12)",
                   borderBottom: "1px solid var(--border-light)",
                   background: isSel ? "var(--accent)" : isPar ? "var(--accent-light)" : undefined,
                   color: isSel ? "var(--bg-card)" : isPar ? "var(--accent)" : undefined,
@@ -376,7 +376,7 @@ function MultiTeeSDTable({
                       <td className="mono" style={{
                         ...tdBase,
                         textAlign: "right",
-                        fontSize: 12,
+                        fontSize: "var(--fs-12)",
                         fontWeight: isHcp ? 700 : 600,
                         color: isHcp ? "var(--grey-900)" : undefined,
                       }}>
@@ -1450,8 +1450,8 @@ export default function SimuladorPage() {
 
       {/* Banner: preencher HI */}
       {hi === null && (
-        <div className="sim-hi-banner">
-          <span className="sim-hi-banner-icon">⚠</span>
+        <div className="notice notice-warn notice-row">
+          <span className="notice-icon">⚠</span>
           <span>
             Preenche o <strong>Handicap Index (HI)</strong> na toolbar para calcular o
             {" "}<strong>Course Handicap</strong>, <strong>Playing Handicap</strong>,

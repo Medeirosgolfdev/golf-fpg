@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AnaliseSection — secção de análise estilo Masters.com dentro do detalhe
  * de um jogador na KIDSPage.
  *
@@ -123,7 +123,7 @@ export default function AnaliseSection({ playerName, scorecards, tornName }: Pro
             key={t.k}
             onClick={() => setSubTab(t.k)}
             className={"tab-under" + (subTab === t.k ? " active" : "")}
-            style={{ background: "none", border: "none", padding: "4px 10px", fontSize: 13, fontWeight: 600, cursor: "pointer", color: subTab === t.k ? "var(--accent)" : "var(--text-2)" }}
+            style={{ background: "none", border: "none", padding: "4px 10px", fontSize: "var(--fs-13)", fontWeight: 600, cursor: "pointer", color: subTab === t.k ? "var(--accent)" : "var(--text-2)" }}
           >
             {t.l}
           </button>
@@ -212,7 +212,7 @@ function ScoringPane({ player, field }: { player: ScoringDist; field: ScoringDis
   ];
   return (
     <div>
-      <div style={{ fontSize: 11, color: "var(--text-3)", marginBottom: 10 }}>
+      <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", marginBottom: 10 }}>
         Distribuição de scoring · {player.total} buracos · field {field.total} buracos (escalão)
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12, justifyItems: "center" }}>
@@ -274,20 +274,20 @@ function RoundBar({ entry }: { entry: { tid: string; tornLabel: string; round: n
   ].filter(s => s.pct > 0);
   const tpColor = entry.toPar == null ? "var(--text-3)" : entry.toPar < 0 ? "var(--color-good-dark)" : entry.toPar > 0 ? "var(--color-warn)" : "var(--text-2)";
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "140px 80px 1fr 80px", alignItems: "center", gap: 10, fontSize: 12 }}>
+    <div style={{ display: "grid", gridTemplateColumns: "140px 80px 1fr 80px", alignItems: "center", gap: 10, fontSize: "var(--fs-12)" }}>
       <div style={{ fontWeight: 600, color: "var(--text)" }}>
         {entry.tornLabel} <span style={{ color: "var(--text-3)", fontWeight: 400 }}>· R{entry.round}</span>
       </div>
       <div style={{ textAlign: "center", fontWeight: 700, color: tpColor }}>
         {entry.gross != null ? `${entry.gross}` : "—"}
-        {entry.toPar != null && <span style={{ fontSize: 10, marginLeft: 4 }}>({entry.toPar > 0 ? `+${entry.toPar}` : entry.toPar})</span>}
+        {entry.toPar != null && <span style={{ fontSize: "var(--fs-10)", marginLeft: 4 }}>({entry.toPar > 0 ? `+${entry.toPar}` : entry.toPar})</span>}
       </div>
       <div style={{ display: "flex", height: 14, borderRadius: 3, overflow: "hidden", gap: 1, background: "var(--bg-muted)" }}>
         {segs.map(s => (
           <div key={s.k} style={{ flex: s.pct, background: s.color }} title={`${s.k}: ${s.pct.toFixed(0)}%`} />
         ))}
       </div>
-      <div style={{ fontSize: 10, color: "var(--text-3)", textAlign: "right" }}>
+      <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", textAlign: "right" }}>
         {entry.dist.birdies}🐦 · {entry.dist.bogeys + entry.dist.dbPlus}↑
       </div>
     </div>
@@ -307,12 +307,12 @@ function NineSplitPane({ cards, fieldCards }: { cards: AutoScorecard[]; fieldCar
     const pp = distPct(dist);
     return (
       <div style={{ padding: "12px 14px", border: "1px solid var(--border-light)", borderRadius: 6 }}>
-        <div style={{ fontSize: 11, color: "var(--text-3)", letterSpacing: "0.06em", fontWeight: 700, marginBottom: 4 }}>{label}</div>
+        <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", letterSpacing: "0.06em", fontWeight: 700, marginBottom: 4 }}>{label}</div>
         <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 8 }}>
-          <span style={{ fontSize: 28, fontWeight: 800, color: toPar == null ? "var(--text-3)" : toPar < 0 ? "var(--color-good-dark)" : toPar > 0 ? "var(--color-warn)" : "var(--text)" }}>
+          <span style={{ fontSize: "var(--fs-28)", fontWeight: 800, color: toPar == null ? "var(--text-3)" : toPar < 0 ? "var(--color-good-dark)" : toPar > 0 ? "var(--color-warn)" : "var(--text)" }}>
             {toPar != null ? (toPar >= 0 ? `+${toPar.toFixed(1)}` : toPar.toFixed(1)) : "—"}
           </span>
-          <span style={{ fontSize: 11, color: "var(--text-3)" }}>
+          <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
             ±par média
             {fieldToPar != null && <span> · field {fieldToPar >= 0 ? "+" : ""}{fieldToPar.toFixed(1)}</span>}
           </span>
@@ -326,7 +326,7 @@ function NineSplitPane({ cards, fieldCards }: { cards: AutoScorecard[]; fieldCar
             }} title={`${k}: ${(pp as Record<string, number>)[k].toFixed(0)}%`} />
           ))}
         </div>
-        <div style={{ fontSize: 10, color: "var(--text-3)", marginTop: 4 }}>
+        <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 4 }}>
           {dist.birdies}🐦 · {dist.pars} pars · {dist.bogeys}↑ · {dist.dbPlus}↑↑
         </div>
       </div>
@@ -335,7 +335,7 @@ function NineSplitPane({ cards, fieldCards }: { cards: AutoScorecard[]; fieldCar
 
   return (
     <div>
-      <div style={{ fontSize: 11, color: "var(--text-3)", marginBottom: 10 }}>
+      <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", marginBottom: 10 }}>
         Consistência entre nove da frente e nove do fundo.
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
@@ -408,7 +408,7 @@ function HolesPane({ player, field }: {
 
   return (
     <div>
-      <div style={{ fontSize: 11, color: "var(--text-3)", marginBottom: 10 }}>
+      <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", marginBottom: 10 }}>
         Média de strokes por buraco — jogador (verde) vs field (cinza).
       </div>
       <div className="scroll-x">
@@ -424,13 +424,13 @@ function HolesPane({ player, field }: {
                   <div title={`Field ${r.hole}: ${r.fieldAvg?.toFixed(2) ?? "—"}`}
                     style={{ width: "40%", height: `${fHeight}%`, minHeight: r.fieldAvg != null ? 2 : 0, background: "var(--text-3)", borderRadius: "2px 2px 0 0" }} />
                 </div>
-                <div style={{ fontSize: 9, color: "var(--text-3)" }}>{r.hole}</div>
+                <div style={{ fontSize: "var(--fs-9)", color: "var(--text-3)" }}>{r.hole}</div>
               </div>
             );
           })}
         </div>
       </div>
-      <div style={{ display: "flex", gap: 14, fontSize: 10, color: "var(--text-3)", marginTop: 8, justifyContent: "center" }}>
+      <div style={{ display: "flex", gap: 14, fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 8, justifyContent: "center" }}>
         <span><span style={{ display: "inline-block", width: 10, height: 10, background: "var(--accent)", borderRadius: 2, marginRight: 4 }} />jogador</span>
         <span><span style={{ display: "inline-block", width: 10, height: 10, background: "var(--text-3)", borderRadius: 2, marginRight: 4 }} />field (escalao)</span>
       </div>

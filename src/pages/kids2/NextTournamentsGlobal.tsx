@@ -1,4 +1,4 @@
-/**
+﻿/**
  * kids2/NextTournamentsGlobal.tsx — /kids2/inscricoes
  *
  * Tabela global: todos os jogadores do roster e os PRÓXIMOS torneios em que
@@ -82,8 +82,8 @@ function Content() {
       <Kids2SubNav />
       <div style={{ padding: "16px 20px" }}>
       <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 12, flexWrap: "wrap" }}>
-        <h1 style={{ margin: 0, fontSize: 18, fontWeight: 600, color: "var(--text)" }}>📋 Inscrições — próximos torneios</h1>
-        <span style={{ fontSize: 12, color: "var(--text-3)" }}>{rows.length} inscrições</span>
+        <h1 style={{ margin: 0, fontSize: "var(--fs-18)", fontWeight: 600, color: "var(--text)" }}>📋 Inscrições — próximos torneios</h1>
+        <span style={{ fontSize: "var(--fs-12)", color: "var(--text-3)" }}>{rows.length} inscrições</span>
       </div>
 
       {!data || !map ? (
@@ -108,7 +108,7 @@ function Content() {
               type="text" value={q} onChange={e => setQ(e.target.value)}
               placeholder="🔍 Jogador ou torneio…"
               style={{
-                marginLeft: "auto", padding: "5px 10px", fontSize: 13,
+                marginLeft: "auto", padding: "5px 10px", fontSize: "var(--fs-13)",
                 border: "1px solid var(--border-light)", borderRadius: 6,
                 background: "var(--bg-card)", color: "var(--text)", minWidth: 200,
               }} />
@@ -117,7 +117,7 @@ function Content() {
           {rows.length === 0 ? (
             <EmptyState size="md" icon="📅" message="Sem inscrições futuras com os filtros actuais." />
           ) : (
-            <table className="lb-table" style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+            <table className="dtable">
               <thead>
                 <tr>
                   <SortableHdr k="player" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Jogador</SortableHdr>
@@ -130,9 +130,8 @@ function Content() {
               </thead>
               <tbody>
                 {rows.map((row, i) => (
-                  <tr key={row.junior.id + ":" + row.reg.circuit + ":" + row.reg.tournamentId + ":" + i}
-                    style={{ borderBottom: "1px solid var(--border-light)" }}>
-                    <td style={{ padding: "6px 8px" }}>
+                  <tr key={row.junior.id + ":" + row.reg.circuit + ":" + row.reg.tournamentId + ":" + i}>
+                    <td>
                       <a
                         href={"/kids2/" + encodeURIComponent(row.junior.id)}
                         target="_blank" rel="noopener noreferrer"
@@ -141,22 +140,22 @@ function Content() {
                         {row.junior.canonicalName}
                       </a>
                     </td>
-                    <td style={{ padding: "6px 8px", whiteSpace: "nowrap" }}>{CIRCUIT_LABEL[row.reg.circuit]}</td>
-                    <td style={{ padding: "6px 8px" }}>
+                    <td style={{ whiteSpace: "nowrap" }}>{CIRCUIT_LABEL[row.reg.circuit]}</td>
+                    <td>
                       <a href={row.reg.link} target="_blank" rel="noopener noreferrer" style={{ color: "var(--text)", textDecoration: "none" }} title={row.reg.campo || row.reg.name}>
                         {row.reg.name}
                       </a>
                       {row.reg.status === "reserva" && (
                         <span style={{
-                          marginLeft: 6, fontSize: 9, fontWeight: 700, padding: "1px 5px", borderRadius: 3,
+                          marginLeft: 6, fontSize: "var(--fs-9)", fontWeight: 700, padding: "1px 5px", borderRadius: 3,
                           background: "var(--bg-warn-orange, #fff7ed)", color: "var(--color-orange-deep, #c2410c)",
                           border: "1px solid var(--color-amber, #f59e0b)",
                         }}>RESERVA</span>
                       )}
                     </td>
-                    <td style={{ padding: "6px 8px", whiteSpace: "nowrap", color: "var(--text-2)" }}>{fmtDate(row.reg.date)}</td>
-                    <td style={{ padding: "6px 8px", whiteSpace: "nowrap", color: "var(--text-3)" }}>{row.reg.escalao || "—"}</td>
-                    <td style={{ padding: "6px 8px" }}>
+                    <td style={{ whiteSpace: "nowrap", color: "var(--text-2)" }}>{fmtDate(row.reg.date)}</td>
+                    <td style={{ whiteSpace: "nowrap", color: "var(--text-3)" }}>{row.reg.escalao || "—"}</td>
+                    <td>
                       <a href={row.reg.link} target="_blank" rel="noopener noreferrer" style={{ color: "var(--text-3)", textDecoration: "none", fontWeight: 600 }} title="Abrir torneio (nova aba)">↗</a>
                     </td>
                   </tr>

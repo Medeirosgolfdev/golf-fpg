@@ -1,4 +1,4 @@
-/**
+﻿/**
  * FTMDoralPage.tsx — First Tee Miami Doral Jr. Classic Results
  * Lê ficheiros Golf Genius (sem par[], com divisions[], toPar directo)
  * Boys 8-9: 9 buracos (H10-H18) · Boys 10-11 / 12-13: 18 buracos
@@ -365,7 +365,7 @@ function DivView({ entry, evo }: { entry: Entry; evo?: Map<string, EvoEntryD> })
             <span>{ev.otherValue}</span>
             {nEditions > 1 && (
               <span style={{
-                fontSize: 9, fontWeight: 700,
+                fontSize: "var(--fs-9)", fontWeight: 700,
                 background: "var(--bg-muted, #eee)", color: "var(--text-2, #666)",
                 borderRadius: 8, padding: "0 5px", lineHeight: "14px",
               }}>{nEditions}×</span>
@@ -385,7 +385,7 @@ function DivView({ entry, evo }: { entry: Entry; evo?: Map<string, EvoEntryD> })
         if (!ev) return <span className="c-muted">–</span>;
         const value = ev.deltaIsComparable ? ev.deltaGross : ev.delta;
         const sign  = value > 0 ? "+" : "";
-        const suffix = ev.deltaIsComparable ? "" : <span className="c-muted" style={{ fontSize: 9, marginLeft: 1 }}>/r</span>;
+        const suffix = ev.deltaIsComparable ? "" : <span className="c-muted" style={{ fontSize: "var(--fs-9)", marginLeft: 1 }}>/r</span>;
         const tooltip = ev.deltaIsComparable
           ? `Δ vs ${ev.prevYear} (gross ${ev.otherValue}, mesmo escalão e nº de rondas)`
           : `Δ média strokes-vs-par por ronda · ${ev.prevYear}: ${ev.refAvgVsPar.toFixed(1)} vs hoje ${ev.curAvgVsPar.toFixed(1)} (comparação cross-escalões com nº de rondas diferentes)`;
@@ -744,7 +744,7 @@ function Content() {
                   if (idx >= 0) { setTi(idx); md.onSelect(); }
                 }}}
                 style={{ cursor: "pointer", borderLeft: "4px solid var(--color-doral-mid)", borderRadius: "0 6px 6px 0" }}>
-                <div className="course-item-name" style={{ fontSize: 14 }}>{year}</div>
+                <div className="course-item-name" style={{ fontSize: "var(--fs-14)" }}>{year}</div>
                 <div className="course-item-meta">📍 Trump National Doral</div>
                 <div className="course-item-meta" style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
                   <span>{yearEntries.length} escalões</span>
@@ -806,18 +806,18 @@ function Content() {
                     <div style={{ display:"flex", gap:16, flexWrap:"wrap", alignItems:"center" }}>
                       <div style={{ textAlign:"center", flex:"1 1 100px" }}>
                         <div className="muted fs-10">{manuelEvo.prevYear} ({manuelEvo.from})</div>
-                        <div className="fw-900" style={{ fontSize:24 }}>{manuelEvo.otherValue}</div>
+                        <div className="fw-900" style={{ fontSize: "var(--fs-24)" }}>{manuelEvo.otherValue}</div>
                       </div>
-                      <div style={{ fontSize:24, color:"var(--good-dark)" }}>→</div>
+                      <div style={{ fontSize: "var(--fs-24)", color:"var(--good-dark)" }}>→</div>
                       <div style={{ textAlign:"center", flex:"1 1 100px" }}>
                         <div className="muted fs-10">{cur.year} ({manuelEvo.to})</div>
-                        <div className="fw-900" style={{ fontSize:24, color: dValue < 0 ? "var(--good-dark)" : "var(--text-3)" }}>
+                        <div className="fw-900" style={{ fontSize: "var(--fs-24)", color: dValue < 0 ? "var(--good-dark)" : "var(--text-3)" }}>
                           {curGross != null ? curGross : "—"}
                         </div>
                       </div>
                       <div style={{ textAlign:"center", flex:"1 1 80px" }}>
                         <div className="muted fs-10">Δ</div>
-                        <div className="fw-900" style={{ fontSize:24, color: dValue < 0 ? "var(--good-dark)" : SC.danger }}>
+                        <div className="fw-900" style={{ fontSize: "var(--fs-24)", color: dValue < 0 ? "var(--good-dark)" : SC.danger }}>
                           {dValue > 0 ? "+" : ""}{dValue}{dSuffix}
                         </div>
                         <div className="muted fs-10">{dLabel}</div>
@@ -917,7 +917,7 @@ export function doralMajorDivision(entry: Entry, evo: Map<string, EvoEntryD> | u
         return (
           <span title={tooltip} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
             <span>{ev.otherValue}</span>
-            {nEditions > 1 && <span style={{ fontSize: 9, fontWeight: 700, background: "var(--bg-muted, #eee)", color: "var(--text-2, #666)", borderRadius: 8, padding: "0 5px", lineHeight: "14px" }}>{nEditions}×</span>}
+            {nEditions > 1 && <span style={{ fontSize: "var(--fs-9)", fontWeight: 700, background: "var(--bg-muted, #eee)", color: "var(--text-2, #666)", borderRadius: 8, padding: "0 5px", lineHeight: "14px" }}>{nEditions}×</span>}
           </span>
         );
       },
@@ -929,7 +929,7 @@ export function doralMajorDivision(entry: Entry, evo: Map<string, EvoEntryD> | u
         if (!ev) return <span className="c-muted">–</span>;
         const value = ev.deltaIsComparable ? ev.deltaGross : ev.delta;
         const sign = value > 0 ? "+" : "";
-        const suffix = ev.deltaIsComparable ? "" : <span className="c-muted" style={{ fontSize: 9, marginLeft: 1 }}>/r</span>;
+        const suffix = ev.deltaIsComparable ? "" : <span className="c-muted" style={{ fontSize: "var(--fs-9)", marginLeft: 1 }}>/r</span>;
         const tooltip = ev.deltaIsComparable
           ? `Δ vs ${ev.prevYear} (gross ${ev.otherValue}, mesmo escalão e nº de rondas)`
           : `Δ média strokes-vs-par por ronda · ${ev.prevYear}: ${ev.refAvgVsPar.toFixed(1)} vs hoje ${ev.curAvgVsPar.toFixed(1)}`;

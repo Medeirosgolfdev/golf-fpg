@@ -1,4 +1,4 @@
-/**
+﻿/**
  * RivaisIntlPage.tsx — Rivais Internacionais
  *
  * Dashboard comparativo de todos os rivais do Manuel
@@ -1300,9 +1300,9 @@ function RivaisIntlContent() {
         <ToolbarSep />
         <span className="toolbar-meta shrink-0" >
           {loaded
-            ? <span style={{ fontSize: 10, color: "var(--color-good-dark)", fontWeight: 700 }}>{rivals.length} rivais · ✓</span>
+            ? <span style={{ fontSize: "var(--fs-10)", color: "var(--color-good-dark)", fontWeight: 700 }}>{rivals.length} rivais · ✓</span>
             : progress
-              ? <span style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 10, color: "var(--text-muted)" }}>
+              ? <span style={{ display: "flex", alignItems: "center", gap: 5, fontSize: "var(--fs-10)", color: "var(--text-muted)" }}>
                   {rivals.length} · {progress.done}/{progress.total}
                   <span style={{ display: "inline-block", width: 50, height: 4, background: "var(--border)", borderRadius: 2, overflow: "hidden", position: "relative" }}>
                     <span style={{ position: "absolute", left: 0, top: 0, height: "100%",
@@ -1310,7 +1310,7 @@ function RivaisIntlContent() {
                       background: "var(--color-good-dark)", borderRadius: 2, transition: "width .3s" }} />
                   </span>
                 </span>
-              : <span style={{ fontSize: 10, color: "var(--text-muted)" }}>⏳ a iniciar…</span>}
+              : <span style={{ fontSize: "var(--fs-10)", color: "var(--text-muted)" }}>⏳ a iniciar…</span>}
         </span>
         <ToolbarSep />
         {/* Pesquisa */}

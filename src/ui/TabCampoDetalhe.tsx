@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+﻿import React, { useContext } from "react";
 import { isoDate, fmtDate, displayName } from "../utils/format";
 import { flag } from "../utils/flagUtils";
 import { normName as normNameAuto, type AutoRivalPlayer } from "../data/KIDSdataLoader";
@@ -23,7 +23,7 @@ export function KidsLink({ nome }: { nome: string }) {
       href="/kids2"
       onClick={e => { e.preventDefault(); window.open(`/kids2#${hash}`, "_blank"); }}
       title="Ver em Kids"
-      style={{ fontWeight: 800, color: "var(--color-good-dark)", fontSize: 13,
+      style={{ fontWeight: 800, color: "var(--color-good-dark)", fontSize: "var(--fs-13)",
         cursor: "pointer", textDecoration: "none", flexShrink: 0, marginLeft: 4 }}>
       ↗
     </a>
@@ -184,7 +184,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                       <div className="fs-11 c-text-3" style={{ marginTop:1 }}>{e.holes} buracos</div>
                     </div>
                     <div style={{ textAlign:"right" }}>
-                      <div className="fw-800" style={{ fontSize:15, color: man ? "var(--accent)" : "var(--text)" }}>
+                      <div className="fw-800" style={{ fontSize: "var(--fs-15)", color: man ? "var(--accent)" : "var(--text)" }}>
                         {e.inscritos}<span className="fs-11 fw-400 c-text-3">/{e.maximo}</span>
                       </div>
                       {bd && (
@@ -295,7 +295,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                               display:"flex", alignItems:"center", gap:2,
                               color:"var(--text-3)", opacity:.75, padding:"0 0 1px",
                             }}>
-                              <span style={{ color:"var(--color-bad)", fontSize:9, marginRight:1 }}>✕</span>
+                              <span style={{ color:"var(--color-bad)", fontSize: "var(--fs-9)", marginRight:1 }}>✕</span>
                               <span style={{ textDecoration:"line-through" }}>{displayName(r.nome)}</span>
                               {r.pais && <span style={{ marginLeft:2 }}>{flag(r.pais)}</span>}
                               <KidsLink nome={r.nome} />

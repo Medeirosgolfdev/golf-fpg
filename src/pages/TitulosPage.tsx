@@ -1,4 +1,4 @@
-/**
+﻿/**
  * src/pages/TitulosPage.tsx
  *
  * Pagina "Titulos" - vista historica dos campeonatos de jovens FPG, dividida
@@ -216,7 +216,7 @@ export default function TitulosPage() {
 
   const tabBtnStyle = (key: TabKey): React.CSSProperties => ({
     padding: "8px 16px",
-    fontSize: 13,
+    fontSize: "var(--fs-13)",
     fontWeight: 700,
     background: activeTab === key ? "var(--bg-card)" : "transparent",
     color: activeTab === key ? "var(--text-1)" : "var(--text-3)",

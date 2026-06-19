@@ -1,4 +1,4 @@
-/**
+﻿/**
  * src/ui/CourseHeroCard.tsx
  *
  * Componente partilhado de "hero" do campo — KPIs (distância/par/slope/CR)
@@ -107,7 +107,7 @@ function InfoIcon({ title }: { title: string }) {
         display: "inline-flex", alignItems: "center", justifyContent: "center",
         width: 14, height: 14, borderRadius: "50%",
         background: "var(--bg-muted)", color: "var(--text-2)",
-        fontSize: 9, fontWeight: 800, marginLeft: 4, cursor: "help",
+        fontSize: "var(--fs-9)", fontWeight: 800, marginLeft: 4, cursor: "help",
         fontFamily: "system-ui, sans-serif",
       }}
     >ⓘ</span>
@@ -135,8 +135,8 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
   return (
     <div className="card">
       <div className="h-md" style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
-        <span style={{ fontSize: 18 }}>⛳ {course.master.name}</span>
-        <span className="muted" style={{ fontSize: 13, fontWeight: 500 }}>· {tee.teeName}</span>
+        <span style={{ fontSize: "var(--fs-18)" }}>⛳ {course.master.name}</span>
+        <span className="muted" style={{ fontSize: "var(--fs-13)", fontWeight: 500 }}>· {tee.teeName}</span>
         {course.master.country && (
           <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)" }}>
             {course.master.country}
@@ -150,7 +150,7 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
           <div>
             <div className="haDiagVal">
               {distance ?? "–"}
-              <span style={{ fontSize: 13, fontWeight: 600, color: "var(--text-3)", marginLeft: 4 }}>m</span>
+              <span style={{ fontSize: "var(--fs-13)", fontWeight: 600, color: "var(--text-3)", marginLeft: 4 }}>m</span>
             </div>
             <div className="haDiagLbl">Distância total</div>
           </div>
@@ -195,7 +195,7 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                   type="button"
                   onClick={() => setViewMode(m)}
                   style={{
-                    padding: "4px 12px", fontSize: 11, fontWeight: 700,
+                    padding: "4px 12px", fontSize: "var(--fs-11)", fontWeight: 700,
                     border: "none", borderRadius: 6, cursor: "pointer",
                     background: viewMode === m ? "var(--bg-card)" : "transparent",
                     color: viewMode === m ? "var(--text)" : "var(--text-3)",
@@ -206,7 +206,7 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                 </button>
               ))}
             </div>
-            <span className="muted" style={{ fontSize: 11, fontWeight: 500 }}>
+            <span className="muted" style={{ fontSize: "var(--fs-11)", fontWeight: 500 }}>
               {viewMode === "par"
                 ? "Distância dentro de cada par (claro → escuro)"
                 : "Sequência B1→B18 (cor = par; lightness = comprimento relativo)"}
@@ -230,14 +230,14 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
 
                 return (
                   <div key={p.par} className="haParCard" style={{ borderLeft: "3px solid " + accentColor, padding: "14px 16px" }}>
-                    <div style={{ color: accentColor, display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap", fontSize: 16, fontWeight: 800, marginBottom: 4 }}>
+                    <div style={{ color: accentColor, display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap", fontSize: "var(--fs-16)", fontWeight: 800, marginBottom: 4 }}>
                       <span>Par {p.par}</span>
-                      <span className="muted" style={{ fontWeight: 500, fontSize: 13 }}>
+                      <span className="muted" style={{ fontWeight: 500, fontSize: "var(--fs-13)" }}>
                         {p.count} buraco{p.count === 1 ? "" : "s"} · {pct}%
                       </span>
                     </div>
                     {p.avgDistance != null && (
-                      <div style={{ fontSize: 11, color: "var(--text-3)", marginBottom: 10 }}>
+                      <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", marginBottom: 10 }}>
                         Média <span style={{ fontWeight: 700, color: "var(--text-2)" }}>{Math.round(p.avgDistance)}m</span>
                         {p.totalDistance > 0 && <> · Total <span style={{ fontWeight: 700, color: "var(--text-2)" }}>{p.totalDistance}m</span></>}
                       </div>
@@ -251,7 +251,7 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                             style={{ display: "inline-flex", alignItems: "baseline", gap: 4, fontFamily: "'JetBrains Mono', monospace" }}
                             title={`Buraco ${h.hole} · ${h.distance ?? "—"}m`}
                           >
-                            <span style={{ fontSize: 11, fontWeight: 700, color: "var(--text-3)" }}>B{h.hole}</span>
+                            <span style={{ fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-3)" }}>B{h.hole}</span>
                             <span
                               className="p"
                               style={{
@@ -259,7 +259,7 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                                 color: col.fg,
                                 border: `1px solid ${col.border}`,
                                 fontWeight: 700,
-                                fontSize: 13,
+                                fontSize: "var(--fs-13)",
                                 padding: "3px 9px",
                                 minWidth: 50,
                                 justifyContent: "center",
@@ -295,11 +295,11 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                         fontFamily: "'JetBrains Mono', monospace",
                       }}
                     >
-                      <span style={{ fontSize: 10, fontWeight: 700, opacity: 0.85 }}>B{h.hole}</span>
-                      <span style={{ fontSize: 15, fontWeight: 800, lineHeight: 1.1, marginTop: 2 }}>
-                        {h.distance != null && h.distance > 0 ? <>{h.distance}<span style={{ fontSize: 10, fontWeight: 600, opacity: 0.85, marginLeft: 1 }}>m</span></> : "—"}
+                      <span style={{ fontSize: "var(--fs-10)", fontWeight: 700, opacity: 0.85 }}>B{h.hole}</span>
+                      <span style={{ fontSize: "var(--fs-15)", fontWeight: 800, lineHeight: 1.1, marginTop: 2 }}>
+                        {h.distance != null && h.distance > 0 ? <>{h.distance}<span style={{ fontSize: "var(--fs-10)", fontWeight: 600, opacity: 0.85, marginLeft: 1 }}>m</span></> : "—"}
                       </span>
-                      <span style={{ fontSize: 9, fontWeight: 600, opacity: 0.75, marginTop: 1 }}>
+                      <span style={{ fontSize: "var(--fs-9)", fontWeight: 600, opacity: 0.75, marginTop: 1 }}>
                         par {h.par ?? "?"}
                       </span>
                     </div>
@@ -314,7 +314,7 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                   <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                     {front9.length > 0 && (
                       <div>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6, fontSize: 11, color: "var(--text-3)" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6, fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
                           <span className="h-xs" style={{ marginBottom: 0 }}>Front 9</span>
                           <span>Par {sumPar(front9)} · {sumDist(front9)}m</span>
                         </div>
@@ -325,7 +325,7 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                     )}
                     {back9.length > 0 && (
                       <div>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6, fontSize: 11, color: "var(--text-3)" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6, fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
                           <span className="h-xs" style={{ marginBottom: 0 }}>Back 9</span>
                           <span>Par {sumPar(back9)} · {sumDist(back9)}m</span>
                         </div>
@@ -337,7 +337,7 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                   </div>
                 );
               })()}
-              <div style={{ display: "flex", gap: 16, marginTop: 12, flexWrap: "wrap", fontSize: 11, color: "var(--text-3)" }}>
+              <div style={{ display: "flex", gap: 16, marginTop: 12, flexWrap: "wrap", fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
                 {([3, 4, 5] as const).map(p => {
                   const sample = holeColor(p, 0.6);
                   return (

@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+﻿import { useState, useMemo } from "react";
 import { flag } from "../utils/flagUtils";
 import { sortArrow } from "../utils/format";
 import WdBadge from "./WdBadge";
@@ -595,13 +595,13 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
         <div style={{ display:"flex", gap:6, flexWrap:"nowrap", overflowX:"auto", marginBottom:12, alignItems:"stretch", scrollbarWidth:"none" }}>
           <KpiCard
             label="MANUEL — TOTAL"
-            labelStyle={{ color:"var(--color-info-alt)", fontSize:9, marginBottom:3 }}
+            labelStyle={{ color:"var(--color-info-alt)", fontSize: 9, marginBottom:3 }}
             value={
               <div style={{ display:"flex", gap:8, alignItems:"baseline" }}>
-                <span><span className="fw-800 fs-14">{manuelKpis.torn}</span><span style={{ fontSize:9, color:"var(--text-3)", marginLeft:2 }}>T</span></span>
-                <span><span className="fw-800 fs-14">{manuelKpis.rondas}</span><span style={{ fontSize:9, color:"var(--text-3)", marginLeft:2 }}>R</span></span>
-                {manuelKpis.avg && <span><span className="fw-700 fs-13">{manuelKpis.avg}</span><span style={{ fontSize:9, color:"var(--text-3)", marginLeft:2 }}>avg</span></span>}
-                {manuelKpis.best && <span><span className="fw-700 fs-13" style={{ color:"var(--color-good-dark)" }}>{manuelKpis.best}</span><span style={{ fontSize:9, color:"var(--text-3)", marginLeft:2 }}>min</span></span>}
+                <span><span className="fw-800 fs-14">{manuelKpis.torn}</span><span style={{ fontSize: "var(--fs-9)", color:"var(--text-3)", marginLeft:2 }}>T</span></span>
+                <span><span className="fw-800 fs-14">{manuelKpis.rondas}</span><span style={{ fontSize: "var(--fs-9)", color:"var(--text-3)", marginLeft:2 }}>R</span></span>
+                {manuelKpis.avg && <span><span className="fw-700 fs-13">{manuelKpis.avg}</span><span style={{ fontSize: "var(--fs-9)", color:"var(--text-3)", marginLeft:2 }}>avg</span></span>}
+                {manuelKpis.best && <span><span className="fw-700 fs-13" style={{ color:"var(--color-good-dark)" }}>{manuelKpis.best}</span><span style={{ fontSize: "var(--fs-9)", color:"var(--text-3)", marginLeft:2 }}>min</span></span>}
               </div>
             }
             style={{ flex:"0 0 auto", padding:"6px 10px", background:"var(--bg-info-subtle,var(--bg-info))", borderLeft:"3px solid var(--accent)", minWidth:0 }}
@@ -636,7 +636,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
             style={{ position:"relative" }}>
             Filtros {showFilters ? "▲" : "▼"}
             {activeCount > 0 && (
-              <span style={{ position:"absolute", top:-4, right:-4, background:"var(--accent)", color:"#fff", borderRadius:"50%", width:16, height:16, fontSize:10, fontWeight:700, display:"flex", alignItems:"center", justifyContent:"center" }}>
+              <span style={{ position:"absolute", top:-4, right:-4, background:"var(--accent)", color:"#fff", borderRadius:"50%", width:16, height:16, fontSize: "var(--fs-10)", fontWeight:700, display:"flex", alignItems:"center", justifyContent:"center" }}>
                 {activeCount}
               </span>
             )}
@@ -646,7 +646,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
         </div>
         {showFilters && (
           <div style={{ display:"flex", gap:8, flexWrap:"wrap", padding:"8px 0 4px", borderTop:"1px solid var(--border-light)", marginTop:6 }}>
-            <label className="filter-checkbox" style={{ fontSize:11 }}>
+            <label className="filter-checkbox" style={{ fontSize: "var(--fs-11)" }}>
               <input type="checkbox" checked={dOnly} onChange={e => setDOnly(e.target.checked)} /> Só com dados
             </label>
           </div>
@@ -658,7 +658,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
         {(Object.keys(TG_TIER) as Array<keyof typeof TG_TIER>).map(k => (
           <span key={k} className="legend-item">
             <span className="legend-dot" style={{ background: TG_TIER[k].bg }} />
-            <span style={{ color: TG_TIER[k].c, fontSize:10 }}>{TG_TIER_L[k]}</span>
+            <span style={{ color: TG_TIER[k].c, fontSize: "var(--fs-10)" }}>{TG_TIER_L[k]}</span>
           </span>
         ))}
       </div>
@@ -715,7 +715,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                           <td key={tid} className="ta-c"
                             style={{ background: inscrito ? "var(--bg-info-strong,var(--bg-info))" : undefined }}>
                             {inscrito
-                              ? <span style={{ fontSize:14 }}>⛳</span>
+                              ? <span style={{ fontSize: "var(--fs-14)" }}>⛳</span>
                               : <span className="fs-10 c-border">—</span>}
                           </td>
                         );

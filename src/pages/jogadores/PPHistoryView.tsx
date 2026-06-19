@@ -1,4 +1,4 @@
-/**
+﻿/**
  * PPHistoryView.tsx — Histórico Pitch & Putt de um jogador.
  *
  * Lê /data/pp-history/{fed}.json (gerado por scripts/scrape-pp-whs-node.js):
@@ -51,7 +51,7 @@ function Scorecard({ r }: { r: PPRound }) {
         {sc.slope != null && <span className="muted fs-11">Slope {sc.slope}</span>}
       </div>
       <div className="scroll-x">
-        <table style={{ borderCollapse: "collapse", width: "fit-content", fontSize: 12, fontVariantNumeric: "tabular-nums" }}>
+        <table style={{ borderCollapse: "collapse", width: "fit-content", fontSize: "var(--fs-12)", fontVariantNumeric: "tabular-nums" }}>
           <thead>
             <tr>
               <th style={head}>Buraco</th>

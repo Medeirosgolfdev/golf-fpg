@@ -1,4 +1,4 @@
-/**
+﻿/**
  * CalendarioPage.tsx — Calendário Multi-Fonte 2026
  *
  * Código de cores:
@@ -518,7 +518,7 @@ function EventPopup({ event, onClose }: { event: CalEvent; onClose: () => void }
           </span>
           <button onClick={onClose} title="Fechar" aria-label="Fechar" style={{ background: hl ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.2)", border: "none",
             color: hl ? hl.text : "#fff",
-            width: 26, height: 26, borderRadius: "50%", cursor: "pointer", fontSize: 14,
+            width: 26, height: 26, borderRadius: "50%", cursor: "pointer", fontSize: "var(--fs-14)",
             display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
         </div>
         <div className="cal-sidebar">
@@ -881,16 +881,16 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                 onFocus={() => searchQ.length >= 2 && setSearchOpen(true)}
                 placeholder="Pesquisar…"
                 style={{ width: "100%", padding: "5px 8px 5px 26px", border: "1px solid var(--border)",
-                  borderRadius: "var(--radius)", fontSize: 11, fontFamily: "inherit",
+                  borderRadius: "var(--radius)", fontSize: "var(--fs-11)", fontFamily: "inherit",
                   background: "var(--bg-card)", color: "var(--text)", outline: "none" }}
                 onKeyDown={e => { if (e.key === "Escape") { setSearchOpen(false); setSearchQ(""); } }} />
               <span style={{ position: "absolute", left: 8, top: "50%", transform: "translateY(-50%)",
-                fontSize: 12, color: "var(--text-muted)", pointerEvents: "none" }}>🔍</span>
+                fontSize: "var(--fs-12)", color: "var(--text-muted)", pointerEvents: "none" }}>🔍</span>
               {searchOpen && searchResults.length > 0 && (
                 <div style={{ position: "absolute", top: "100%", left: 0, right: 0, marginTop: 4,
                   background: "var(--bg-card)", border: "1px solid var(--border-light)",
                   borderRadius: "var(--radius-lg)", boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
-                  maxHeight: 320, overflowY: "auto", zIndex: 100 }}>
+                  maxHeight: 320, overflowY: "auto", zIndex: "var(--z-sidebar)" }}>
                   {searchResults.map(ev => {
                     const cal = CAL_MAP.get(ev.calId);
                     const d = ev.date;
@@ -928,9 +928,9 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
               style={{ width: 32, height: 32, borderRadius: "50%", border: "1px solid var(--border)",
                 background: "var(--bg-card)", cursor: currentMonth <= 0 ? "default" : "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: 18, color: currentMonth <= 0 ? "var(--border)" : "var(--text-2)",
+                fontSize: "var(--fs-18)", color: currentMonth <= 0 ? "var(--border)" : "var(--text-2)",
                 flexShrink: 0 }}>‹</button>
-            <span className="fw-700 ta-c" style={{ fontSize: 15, color: "var(--text)", flex: 1 }}>
+            <span className="fw-700 ta-c" style={{ fontSize: "var(--fs-15)", color: "var(--text)", flex: 1 }}>
               {monthLabel(currentMonth)} 2026
             </span>
             <span className="fs-11 c-text-3 mono shrink-0" >{visibleEvents.length} provas</span>
@@ -938,7 +938,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
               style={{ width: 32, height: 32, borderRadius: "50%", border: "1px solid var(--border)",
                 background: "var(--bg-card)", cursor: currentMonth >= 11 ? "default" : "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: 18, color: currentMonth >= 11 ? "var(--border)" : "var(--text-2)",
+                fontSize: "var(--fs-18)", color: currentMonth >= 11 ? "var(--border)" : "var(--text-2)",
                 flexShrink: 0 }}>›</button>
           </div>
         </div>
@@ -1036,7 +1036,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                           title={e.title}
                           className={barCls ? `hl-bar ${barCls}` : undefined}
                           style={{
-                            fontSize: 10,
+                            fontSize: "var(--fs-10)",
                             padding: showTitle ? "1px 5px" : "1px 0",
                             marginBottom: 1,
                             marginLeft:  (pos === "mid" || pos === "end") ? -CP : 0,
@@ -1112,7 +1112,7 @@ function DayEventsPopup({ date, events, onSelect, onClose }: {
           <span className="fw-600 fs-13" style={{ color: "#fff" }}>{title}</span>
           <button onClick={onClose} title="Fechar" aria-label="Fechar" style={{ background: "rgba(255,255,255,0.2)",
             border: "none", color: "#fff", width: 26, height: 26, borderRadius: "50%", cursor: "pointer",
-            fontSize: 14, display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
+            fontSize: "var(--fs-14)", display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
         </div>
         <div className="cal-sidebar d-flex flex-col gap-4" style={{ overflowY: "auto" }}>
           {events.map(e => (
@@ -1148,7 +1148,7 @@ function SmBtn({ l, onClick, dis }: { l: string; onClick: () => void; dis?: bool
   return (
     <button onClick={onClick} disabled={dis} style={{
       background: "none", border: "none", cursor: dis ? "default" : "pointer",
-      fontSize: 16, color: dis ? "var(--border)" : "var(--text-3)",
+      fontSize: "var(--fs-16)", color: dis ? "var(--border)" : "var(--text-3)",
       width: 24, height: 24, borderRadius: "50%", display: "flex", alignItems: "center",
       justifyContent: "center", padding: 0,
     }}>{l}</button>
