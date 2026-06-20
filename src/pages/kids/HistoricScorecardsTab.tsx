@@ -113,10 +113,10 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
 }) {
   const [topN, setTopN] = useState<5 | 10 | 20 | 0>(10); // 0 = todos
   const [groupMode, setGroupMode] = useState<boolean>(true); // true = Agrupado
-  // Sort state — default por ±par ASC. Em modo Agrupado, agrega por jogador
-  // (best/min para gross/toPar; total para birds/pars/bogeys). Em modo
-  // Independente actua sobre a ronda individual.
-  const [sortKey, setSortKey] = useState<SortKey>("topar");
+  // Sort state — default por posição oficial (pos) ASC. Em modo Agrupado,
+  // agrega por jogador (R1 para buracos; best/min para gross/toPar; total
+  // para birds/pars/bogeys). Em modo Independente actua sobre a ronda individual.
+  const [sortKey, setSortKey] = useState<SortKey>("pos");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
   function toggleSort(k: SortKey) {
     if (sortKey === k) setSortDir(d => d === "asc" ? "desc" : "asc");
@@ -435,9 +435,12 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
                 const playerMetric = (pl: PlayerCard, key: SortKey): number | string => {
                   if (key.startsWith("h")) {
                     const hi = parseInt(key.slice(1), 10) - 1;
-                    // média dos strokes nesse buraco em todas as rondas (0 = sem dado)
-                    const vals = pl.rounds.map(r => r.strokes[hi] || 0).filter(v => v > 0);
-                    return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 99;
+                    // score nesse buraco na primeira ronda com dado disponível
+                    for (const r of pl.rounds) {
+                      const v = r.strokes[hi];
+                      if (v && v > 0) return v;
+                    }
+                    return 99;
                   }
                   switch (key) {
                     case "name":    return pl.name;

@@ -23,11 +23,11 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
-  useJuniorsCanonical, computeTier, getTierLabel, getTierColors,
+  useJuniorsCanonical, computeTier, computeRanking, getTierLabel, getTierColors,
   getSharedTournamentIds, getSharedFlightTids, countWins, countTop3,
   bestRoundGross,
 } from "./data";
-import type { CanonicalData, Junior, Tournament, Result, Flight } from "./data";
+import type { CanonicalData, Junior, Tournament, Result, Flight, RankingEntry } from "./data";
 import { flag as flagOf } from "../../utils/flagUtils";
 import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
@@ -675,6 +675,13 @@ function ScoutContent({ data, tournament, onSelect, tournaments, currentTid, onT
   const isFuture = tDate > today;
   const isFieldOnlySource = tournament.id.startsWith("usk");
 
+  // Ranking percentil por coorte — memoizado (O(n) sobre todos os juniors).
+  // Usa data.juniors (array estável do canonical) para comparar globalmente.
+  const ranking = useMemo<Map<string, RankingEntry>>(
+    () => computeRanking(data.juniors, data.tournamentById),
+    [data.juniors, data.tournamentById],
+  );
+
   // Resultados históricos (edição anterior)
   const [resultsData, setResultsData] = useState<UskResultsJson | null>(null);
   useEffect(() => {
@@ -808,7 +815,7 @@ function ScoutContent({ data, tournament, onSelect, tournaments, currentTid, onT
         if (src.rfeg) circuits.push("ES");
         if (src.ffgolf) circuits.push("FR");
 
-        const tier = isFieldOnly ? null : computeTier(junior, data.tournamentById);
+        const tier = isFieldOnly ? null : computeTier(junior, data.tournamentById, ranking);
         const threat = computeThreat({
           fieldOnly: isFieldOnly,
           hasManuel: !!manuel,
