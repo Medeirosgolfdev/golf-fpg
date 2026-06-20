@@ -152,6 +152,15 @@ const FULL_FIELD_TCODES = new Set([
   18242, // European Championship 2025
   21131, // European Championship 2026 (26 Mai 2026)
   19418, // Venice Open 2025
+  20175, // Rome Classic 2025
+  // ── Irish Open (todos os anos) ──
+  8660, 11307, 13470, 16020, 18978, // 2021-2025
+  21455, // 2026
+  // ── Paris Invitational ──
+  18975, // 2025
+  21795, // 2026
+  // ── Belgium Invitational ──
+  22480, // 2026
   // ── Preparados para correr DEPOIS de ocorrerem ──
   21610, // World Championship 2026 (Set 2026)
   22243, // Venice Open 2026 (Ago 2026)

@@ -142,20 +142,23 @@ function escalaoMatches(userEsc: string, candEsc: string): boolean {
 // NOTA: Marco Simone Local Tour 2026 (tcode 21573) ficou fora porque é uma
 // série de eventos locais não-coberta pelo scraper signupanytime. Quando a
 // FPG publicar field também desse torneio, adicionar aqui.
-const UP_TORN: Array<{ id: string; name: string; short?: string; url?: string; tcode?: string }> = [
+const UP_TORN: Array<{ id: string; name: string; short?: string; url?: string; tcode?: string; date_iso?: string }> = [
   // European Championship 2026 (26 Mai — já jogado, Manuel participou)
-  { id: "european26", tcode: "21131", name: "European Championship 2026", short: "EU '26",     url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/521131/european-championship-2026/field" },
+  { id: "european26", tcode: "21131", date_iso: "2026-05-26", name: "European Championship 2026", short: "EU '26",     url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/521131/european-championship-2026/field" },
   // Irish Open 2026 — 1-2 Jul, K Club (Irlanda)
-  { id: "irish26",    tcode: "21455", name: "Irish Open 2026",            short: "Irish '26",  url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/521455/irish-open-2026/field" },
+  { id: "irish26",    tcode: "21455", date_iso: "2026-07-01", name: "Irish Open 2026",            short: "Irish '26",  url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/521455/irish-open-2026/field" },
   // Paris Invitational 2026 — 4-6 Jul (França)
-  { id: "paris26",    tcode: "21795", name: "Paris Invitational 2026",    short: "Paris '26",  url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/521795/paris-invitational-2026/field" },
+  { id: "paris26",    tcode: "21795", date_iso: "2026-07-04", name: "Paris Invitational 2026",    short: "Paris '26",  url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/521795/paris-invitational-2026/field" },
   // World Championship 2026 — 30 Jul-1 Ago (Pinehurst, USA)
-  { id: "world26",    tcode: "21610", name: "World Championship 2026",    short: "WC '26",     url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/521610/world-championship-2026/field" },
+  { id: "world26",    tcode: "21610", date_iso: "2026-07-30", name: "World Championship 2026",    short: "WC '26",     url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/521610/world-championship-2026/field" },
   // Venice Open 2026 — 13-15 Ago (Itália)
-  { id: "venice26",   tcode: "22243", name: "Venice Open 2026",           short: "Venice '26", url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/522243/venice-open-2026/field" },
+  { id: "venice26",   tcode: "22243", date_iso: "2026-08-13", name: "Venice Open 2026",           short: "Venice '26", url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/522243/venice-open-2026/field" },
   // Belgium Invitational 2026 — 26-27 Set (Bélgica, novo torneio europeu)
-  { id: "belgium26",  tcode: "22480", name: "Belgium Invitational 2026",  short: "Belgium '26", url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/522480/belgium-invitational-2026/field" },
+  { id: "belgium26",  tcode: "22480", date_iso: "2026-09-26", name: "Belgium Invitational 2026",  short: "Belgium '26", url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/522480/belgium-invitational-2026/field" },
 ];
+// Só torneios ainda não passados (data hoje ou futura)
+const _today = new Date().toISOString().slice(0, 10);
+const UP_TORN_FUTURE = UP_TORN.filter(u => !u.date_iso || u.date_iso >= _today);
 
 // Ficheiros FFG Internationaux U14 a integrar (Garçons). O escalão U14
 // abrange Boys 9-14 — qualquer escalão dentro desse range vê estes torneios.
@@ -948,7 +951,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
         co: fullCo(fm.p.pais),
         isM: fm.isM,
         r,
-        up: fm.isM ? UP_TORN.map(u => u.id) : up,
+        up: fm.isM ? UP_TORN_FUTURE.map(u => u.id) : up,
         dob,
       });
     }
@@ -994,7 +997,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
     if (!manuel) return null;
 
     const allCountries = [...new Set(D.map(p => p.co))].sort();
-    return { D, T, UP: UP_TORN, manuel, AVG_R, T_WEIGHTS, allCountries, seriesBoundaries };
+    return { D, T, UP: UP_TORN_FUTURE, manuel, AVG_R, T_WEIGHTS, allCountries, seriesBoundaries };
   }, [field, mh, torneioT, escalaoNome, autoRivals, futureTorneios, uskRes]);
 
   // Detectar "famílias" de torneios — séries recorrentes que aparecem múltiplas
@@ -1312,7 +1315,10 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
   escalaoNome: string;
   autoRivals?: AutoRivalPlayer[];
 }) {
-  const MIN_FIELD_SIZE = 10;
+  // Mínimo de jogadores que completaram o torneio para mostrar a edição.
+  // 5 (vs 10 anterior) para incluir Irish Open e outros torneios CANONICAL com
+  // campos pequenos por escalão (ex: Irish 2021 Boys 12 = 7 jogadores, Irish 2025 = 6).
+  const MIN_FIELD_SIZE = 5;
   // Sem cap — mostramos o field inteiro (cada ano pode ter N diferente)
   // Scores impossíveis (data quality): qualquer ronda 18H abaixo deste valor
   // é descartada (jogador tratado como DNF nessa ronda). Ex: WJGC25 Parker
@@ -1563,13 +1569,17 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
       if (completed.length < MIN_FIELD_SIZE) continue;
       // Filtro de cobertura: edições antigas (2014-2019) só têm uma fracção dos
       // jogadores no slim (scrape incompleto). Se n_jogadores_com_place / max_place
-      // < 0.8, considera-se que o field é incompleto demais para ser representativo.
+      // < 0.6, considera-se que o field é incompleto demais para ser representativo.
       // Ex: 2019 Boys 11 → 18 jogadores no slim mas max place=71 → ratio 0.25 → drop.
-      const placedEntries = completed.filter(e => e.officialPlace != null);
-      if (placedEntries.length > 0) {
-        const maxOfficialPlace = Math.max(...placedEntries.map(e => e.officialPlace!));
-        const coverage = placedEntries.length / maxOfficialPlace;
-        if (coverage < 0.8) continue; // field incompleto — descarta a edição
+      // EXCEPÇÃO: torneios em CANONICAL_TCODES foram scrape'd intencionalmente
+      // (FULL_FIELD) — mostrar o que temos, mesmo que incompleto.
+      if (!CANONICAL_TCODES.has(tcode)) {
+        const placedEntries = completed.filter(e => e.officialPlace != null);
+        if (placedEntries.length > 0) {
+          const maxOfficialPlace = Math.max(...placedEntries.map(e => e.officialPlace!));
+          const coverage = placedEntries.length / maxOfficialPlace;
+          if (coverage < 0.6) continue; // field incompleto — descarta a edição
+        }
       }
       // Calcular "would-be position" — posição que cada jogador teria se TODOS
       // contassem para o ranking (ordenando por total ASC). Necessária para
@@ -1651,7 +1661,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
   if (!data) {
     return (
       <div className="muted p-16">
-        Sem histórico de pancadas para esta combinação torneio/escalão. (Edições com field &ge; {MIN_FIELD_SIZE} jogadores apenas.)
+        Sem histórico de pancadas para esta combinação torneio/escalão. (Edições com &ge; {MIN_FIELD_SIZE} jogadores e cobertura &ge; 60% apenas.)
       </div>
     );
   }
@@ -1666,11 +1676,12 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
           {data.baseName} {String.fromCharCode(0xb7)} {data.ageGroup} {String.fromCharCode(0xb7)} {data.editions.length} edi{data.editions.length === 1 ? "ção" : "ções"}
         </span>
       </div>
-      <table className="bc-collapse" style={{ fontSize: "var(--fs-11)", fontVariantNumeric: "tabular-nums", width: "100%" }}>
+      <div style={{ overflowX: "auto" }}>
+      <table className="bc-collapse" style={{ fontSize: "var(--fs-11)", fontVariantNumeric: "tabular-nums", width: "max-content" }}>
         <thead>
           <tr style={{ background: "var(--bg-muted)", color: "var(--text-2)", borderBottom: "1px solid var(--border)" }}>
             <th rowSpan={2} onClick={() => onSort("rank")}
-                style={{ padding: "6px 8px", textAlign: "center", fontWeight: 700, position: "sticky", left: 0, background: "var(--bg-muted)", zIndex: "var(--z-raised)", cursor: "pointer", userSelect: "none" }}>
+                style={{ padding: "6px 8px", textAlign: "center", fontWeight: 700, position: "sticky", left: 0, background: "var(--bg-muted)", zIndex: "var(--z-raised)", cursor: "pointer", userSelect: "none", width: 50, minWidth: 50 }}>
               Pos{arrow("rank")}
             </th>
             {data.editions.map((e, ei) => (
@@ -1712,7 +1723,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
               // Nome
               cells.push(
                 <th key={`${e.year}_name`}
-                    style={{ padding: "3px 6px", textAlign: "left", fontWeight: 600, fontSize: "var(--fs-10)", borderLeft: ei === 0 ? "1px solid var(--border)" : "2px solid var(--border)", minWidth: 110 }}>
+                    style={{ padding: "3px 6px", textAlign: "left", fontWeight: 600, fontSize: "var(--fs-10)", borderLeft: ei === 0 ? "1px solid var(--border)" : "2px solid var(--border)", width: 150, minWidth: 150 }}>
                   Nome
                 </th>
               );
@@ -1720,7 +1731,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
               const totalKey = `${e.year}_T`;
               cells.push(
               <th key={totalKey} onClick={() => onSort(totalKey)}
-                  style={{ padding: "3px 6px", textAlign: "center", fontWeight: 700, fontSize: "var(--fs-10)", background: "var(--bg-card, var(--bg))", color: "var(--text-2)", cursor: "pointer", userSelect: "none" }}>
+                  style={{ padding: "3px 6px", textAlign: "center", fontWeight: 700, fontSize: "var(--fs-10)", background: "var(--bg-card, var(--bg))", color: "var(--text-2)", cursor: "pointer", userSelect: "none", width: 44, minWidth: 44 }}>
                   T{arrow(totalKey)}
                 </th>
               );
@@ -1730,7 +1741,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
                 cells.push(
                   <th key={tpKey} onClick={() => onSort(tpKey)}
                       title={`Par por ronda: ${e.parPerRound} (total: ${e.parPerRound * e.nRounds})`}
-                      style={{ padding: "3px 6px", textAlign: "center", fontWeight: 600, fontSize: "var(--fs-10)", color: "var(--text-3)", cursor: "pointer", userSelect: "none" }}>
+                      style={{ padding: "3px 6px", textAlign: "center", fontWeight: 600, fontSize: "var(--fs-10)", color: "var(--text-3)", cursor: "pointer", userSelect: "none", width: 44, minWidth: 44 }}>
                     ±par{arrow(tpKey)}
                   </th>
                 );
@@ -1740,7 +1751,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
                 const key = `${e.year}_R${i + 1}`;
                 cells.push(
                   <th key={key} onClick={() => onSort(key)}
-                      style={{ padding: "3px 6px", textAlign: "center", fontWeight: 600, fontSize: "var(--fs-10)", cursor: "pointer", userSelect: "none" }}>
+                      style={{ padding: "3px 6px", textAlign: "center", fontWeight: 600, fontSize: "var(--fs-10)", cursor: "pointer", userSelect: "none", width: 38, minWidth: 38 }}>
                     R{i + 1}{arrow(key)}
                   </th>
                 );
@@ -1828,6 +1839,7 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
           })}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }

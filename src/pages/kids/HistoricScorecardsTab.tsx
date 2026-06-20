@@ -87,7 +87,7 @@ const MIN_FIELD_SIZE = 3;
 const MIN_GROSS_18H = 55;
 const MIN_GROSS_9H = 28;
 
-type SortKey = "pos" | "year" | "name" | "country" | "rnd" | "topar" | "gross" | "birds" | "pars" | "bogeys";
+type SortKey = "pos" | "year" | "name" | "country" | "rnd" | "topar" | "gross" | "birds" | "pars" | "bogeys" | `h${number}`;
 
 /** Conta birdies/pars/bogeys/worse num scorecard. */
 function tallyHoles(strokes: number[], par: number[] | null): { birds: number; pars: number; bogeys: number; worse: number } {
@@ -124,6 +124,7 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
       setSortKey(k);
       // Defaults sensatos: jogador/país/ano DESC para anos primeiro, gross/topar ASC
       const ascByDefault = new Set(["topar", "gross", "name", "country", "rnd"]);
+      if (k.startsWith("h")) { setSortDir("asc"); return; }
       setSortDir(ascByDefault.has(k) ? "asc" : "desc");
     }
   }
@@ -349,17 +350,19 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
               <SortableHdr k="topar" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-topar">±</SortableHdr>
               <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-gross">Tot</SortableHdr>
               {Array.from({ length: Math.min(9, hpr) }, (_, h) => (
-                <th key={h} className={"lb-hole" + (h === 0 ? " lb-hole-first" : "") + " fs-10"}>
+                <SortableHdr key={h} k={`h${h + 1}` as SortKey} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}
+                  className={"lb-hole" + (h === 0 ? " lb-hole-first" : "") + " fs-10"}>
                   {h + 1}
-                </th>
+                </SortableHdr>
               ))}
               <th className="lb-halftot">{is9 ? "Tot" : "Out"}</th>
               {!is9 && (
                 <>
                   {Array.from({ length: 9 }, (_, h) => (
-                    <th key={h + 9} className={"lb-hole" + (h === 0 ? " lb-hole-first" : "") + " fs-10"}>
+                    <SortableHdr key={h + 9} k={`h${h + 10}` as SortKey} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}
+                      className={"lb-hole" + (h === 0 ? " lb-hole-first" : "") + " fs-10"}>
                       {h + 10}
-                    </th>
+                    </SortableHdr>
                   ))}
                   <th className="lb-halftot">In</th>
                 </>
@@ -430,6 +433,12 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
                 const dir = sortDir === "asc" ? 1 : -1;
                 // Métricas agregadas por jogador (na ronda "best" para gross/toPar)
                 const playerMetric = (pl: PlayerCard, key: SortKey): number | string => {
+                  if (key.startsWith("h")) {
+                    const hi = parseInt(key.slice(1), 10) - 1;
+                    // média dos strokes nesse buraco em todas as rondas (0 = sem dado)
+                    const vals = pl.rounds.map(r => r.strokes[hi] || 0).filter(v => v > 0);
+                    return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 99;
+                  }
                   switch (key) {
                     case "name":    return pl.name;
                     case "country": return pl.country || "";
@@ -498,6 +507,12 @@ export default function HistoricScorecardsTab({ mh, torneio, escalaoNome }: {
                 }
                 const dir = sortDir === "asc" ? 1 : -1;
                 const cmp = (a: FlatRow, b: FlatRow): number => {
+                  if (sortKey.startsWith("h")) {
+                    const hi = parseInt(sortKey.slice(1), 10) - 1;
+                    const va = a.r.strokes[hi] || 99;
+                    const vb = b.r.strokes[hi] || 99;
+                    return (va - vb) * dir;
+                  }
                   switch (sortKey) {
                     case "year":    return (a.ed.year.localeCompare(b.ed.year)) * dir;
                     case "name":    return a.pl.name.localeCompare(b.pl.name) * dir;
