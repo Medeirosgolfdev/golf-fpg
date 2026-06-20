@@ -51,6 +51,20 @@ const HISTORICOS = [
     date_inicio: '10/18/2025', date_fim: '10/18/2025', rondas: 2, ax: 1129,
     escalao_manuel: 2104, age_groups: [2103, 2104, 2105],
     url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=20175' },
+  // ── Irish Open (Irlanda) ──
+  { t: 16020, name: 'Irish Open 2024',
+    date_inicio: '7/9/2024', date_fim: '7/10/2024', rondas: 2, ax: 1129,
+    escalao_manuel: null,
+    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=16020' },
+  { t: 18978, name: 'Irish Open 2025',
+    date_inicio: '7/9/2025', date_fim: '7/10/2025', rondas: 2, ax: 1129,
+    escalao_manuel: null,
+    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=18978' },
+  // ── Paris Invitational (França) — estreou 2025 ──
+  { t: 18975, name: 'Paris Invitational 2025',
+    date_inicio: '7/6/2025', date_fim: '7/8/2025', rondas: 2, ax: 1129,
+    escalao_manuel: null,
+    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=18975' },
   // ── Holiday Classic (Regional Championship, NC, 21-22 Dez, 2 rondas) ──
   // Sem age_groups → apanha Boys 9-12 (foco do tracker). Manuel não jogou.
   // ⚠ Se "GetMeta falhou" no log, o ax 1129 (intl) pode não ter acesso ao

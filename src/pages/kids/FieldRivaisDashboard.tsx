@@ -17,6 +17,7 @@ import { normName, type AutoRivalPlayer } from "../../data/KIDSdataLoader";
 import type { RivalPlayer, TournDef, RoundAvg } from "../../ui/bjgtAnalysisTypes";
 import HistoricScorecardsTab from "./HistoricScorecardsTab";
 import CourseTab from "./CourseTab";
+import { ScoutEmbed } from "../kids2/ScoutView";
 
 // Mapeamento país-ISO (curto) → nome extenso (RivaisDashboard usa "co" extenso)
 const CO_FULL: Record<string, string> = {
@@ -46,8 +47,12 @@ const CANONICAL_TCODES = new Set([
   "12229", "14302", "16428", "19418",                  // 2022, 2023, 2024, 2025
   // Marco Simone Invitational — última edição (estreou 2025)
   "18438", "21080",                                    // 2025, 2026
-  // Rome Classic — última edição (estreou 2025)
-  "20175",                                             // 2025
+  // Rome Classic — 4 edições (2022-2025)
+  "12578", "14670", "16795", "20175",                  // 2022, 2023, 2024, 2025
+  // Irish Open (Irlanda) — 5 edições (2021-2025); boa penetração europeia
+  "8660", "11307", "13470", "16020", "18978",          // 2021, 2022, 2023, 2024, 2025
+  // Paris Invitational (França) — 1 edição disponível no member-history
+  "18975",                                             // 2025
   // (Holiday Classic excluído — raramente há ≥ 5 europeus do escalão a
   //  jogar, faz mais barulho que sinal na cross-table.)
 ]);
@@ -138,9 +143,18 @@ function escalaoMatches(userEsc: string, candEsc: string): boolean {
 // série de eventos locais não-coberta pelo scraper signupanytime. Quando a
 // FPG publicar field também desse torneio, adicionar aqui.
 const UP_TORN: Array<{ id: string; name: string; short?: string; url?: string; tcode?: string }> = [
+  // European Championship 2026 (26 Mai — já jogado, Manuel participou)
   { id: "european26", tcode: "21131", name: "European Championship 2026", short: "EU '26",     url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/521131/european-championship-2026/field" },
+  // Irish Open 2026 — 1-2 Jul, K Club (Irlanda)
+  { id: "irish26",    tcode: "21455", name: "Irish Open 2026",            short: "Irish '26",  url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/521455/irish-open-2026/field" },
+  // Paris Invitational 2026 — 4-6 Jul (França)
+  { id: "paris26",    tcode: "21795", name: "Paris Invitational 2026",    short: "Paris '26",  url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/521795/paris-invitational-2026/field" },
+  // World Championship 2026 — 30 Jul-1 Ago (Pinehurst, USA)
   { id: "world26",    tcode: "21610", name: "World Championship 2026",    short: "WC '26",     url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/521610/world-championship-2026/field" },
+  // Venice Open 2026 — 13-15 Ago (Itália)
   { id: "venice26",   tcode: "22243", name: "Venice Open 2026",           short: "Venice '26", url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/522243/venice-open-2026/field" },
+  // Belgium Invitational 2026 — 26-27 Set (Bélgica, novo torneio europeu)
+  { id: "belgium26",  tcode: "22480", name: "Belgium Invitational 2026",  short: "Belgium '26", url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/522480/belgium-invitational-2026/field" },
 ];
 
 // Ficheiros FFG Internationaux U14 a integrar (Garçons). O escalão U14
@@ -237,7 +251,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
   const [escalaoNome, setEscalaoNome] = useState<string>(defaultEscalao);
   // Tab activa: PLAYERS (cross-table de rivais), SCORES (totais por ronda),
   // SCORECARDS (pancadas hole-by-hole top-N) ou CAMPO (anatomia do campo).
-  const [activeTab, setActiveTab] = useState<"players" | "scores" | "scorecards" | "campo">("players");
+  const [activeTab, setActiveTab] = useState<"players" | "scores" | "scorecards" | "campo" | "scout">("players");
 
   // Load field + member history + uskids-results (último é fallback para
   // sintetizar Passados de torneios UP_TORN que acabaram hoje/ontem).
@@ -1033,16 +1047,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
 
   return (
     <div>
-      <div style={{
-        display: "flex",
-        gap: 10,
-        alignItems: "center",
-        marginBottom: 12,
-        flexWrap: "wrap",
-        padding: "10px 12px",
-        background: "var(--surface-2, var(--bg-secondary, #f1f1ee))",
-        borderRadius: 8,
-      }}>
+      <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 12, flexWrap: "wrap" }}>
         <span style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", fontWeight: 500 }}>Torneio</span>
         <select
           className="select fs-13"
@@ -1070,9 +1075,20 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
         >
           {(() => {
             const UP_T_SET = new Set(UP_TORN.map(u => u.tcode));
+            const todayIso = new Date().toISOString().slice(0, 10);
+            const fmtDate = (us: string) => {
+              const iso = (s => { const [m2,d2,y2]=(s||"").split("/"); return y2?`${y2}-${String(m2).padStart(2,"0")}-${String(d2).padStart(2,"0")}`:s; })(us);
+              if (!iso || !iso.includes("-")) return us;
+              const [y, m, d] = iso.split("-");
+              return `${d}/${m}/${y}`;
+            };
             const groupOf = (e: FieldTorneio): string => {
               if (e.t > 0) {
-                if (UP_T_SET.has(String(e.t))) return "Próximos torneios";
+                if (UP_T_SET.has(String(e.t))) {
+                  const [m2,d2,y2]=(e.date_inicio||"").split("/");
+                  const iso = y2?`${y2}-${String(m2).padStart(2,"0")}-${String(d2).padStart(2,"0")}`:"";
+                  if (iso && iso >= todayIso) return "Próximos torneios";
+                }
                 return "Passados USKids (Manuel)";
               }
               if (e.t > -100) return "Outros";
@@ -1130,7 +1146,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
               return (
                 <optgroup key={groupLabel} label={groupLabel}>
                   {items.map(t => (
-                    <option key={t.t} value={t.t}>{t.name} ({t.date_inicio})</option>
+                    <option key={t.t} value={t.t}>{t.name} ({fmtDate(t.date_inicio)})</option>
                   ))}
                 </optgroup>
               );
@@ -1210,41 +1226,30 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
         )}
       </div>
 
-      {/* Tabs Jogadores / Scores — alterna entre análise dos inscritos e pancadas históricas */}
-      <div style={{
-        display: "inline-flex",
-        gap: 2,
-        marginBottom: 12,
-        padding: 2,
-        background: "var(--surface-2, var(--bg-secondary, #f1f1ee))",
-        borderRadius: 8,
-      }}>
-        <button
-          onClick={() => setActiveTab("players")}
-          style={tabBtnStyle(activeTab === "players")}
-          title="Análise dos jogadores inscritos × histórico de torneios"
-        >
+      <div className="tabbar-under" role="tablist">
+        <button type="button" role="tab" aria-selected={activeTab === "players"}
+          className={"tab-under" + (activeTab === "players" ? " active" : "")}
+          onClick={() => setActiveTab("players")}>
           Jogadores
         </button>
-        <button
-          onClick={() => setActiveTab("scores")}
-          style={tabBtnStyle(activeTab === "scores")}
-          title="Pancadas necessárias para top-N nas edições passadas"
-        >
+        <button type="button" role="tab" aria-selected={activeTab === "scout"}
+          className={"tab-under" + (activeTab === "scout" ? " active" : "")}
+          onClick={() => setActiveTab("scout")}>
+          🔭 Scout
+        </button>
+        <button type="button" role="tab" aria-selected={activeTab === "scores"}
+          className={"tab-under" + (activeTab === "scores" ? " active" : "")}
+          onClick={() => setActiveTab("scores")}>
           Scores
         </button>
-        <button
-          onClick={() => setActiveTab("scorecards")}
-          style={tabBtnStyle(activeTab === "scorecards")}
-          title="Scorecards hole-by-hole dos top-N de cada edição"
-        >
+        <button type="button" role="tab" aria-selected={activeTab === "scorecards"}
+          className={"tab-under" + (activeTab === "scorecards" ? " active" : "")}
+          onClick={() => setActiveTab("scorecards")}>
           Scorecards
         </button>
-        <button
-          onClick={() => setActiveTab("campo")}
-          style={tabBtnStyle(activeTab === "campo")}
-          title="Anatomia do campo onde se joga o torneio"
-        >
+        <button type="button" role="tab" aria-selected={activeTab === "campo"}
+          className={"tab-under" + (activeTab === "campo" ? " active" : "")}
+          onClick={() => setActiveTab("campo")}>
           O Campo
         </button>
       </div>
@@ -1283,24 +1288,17 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
       {activeTab === "campo" && (
         <CourseTab torneio={futureTorneios.find(x => x.t === torneioT) || null} escalaoNome={escalaoNome} mh={mh} />
       )}
+      {activeTab === "scout" && (
+        <ScoutEmbed
+          tid={torneioT > 0 ? "usk" + torneioT : (EXTRA_TID_BY_NEG[torneioT] ?? "")}
+          hideNav
+          escalao={escalaoNome}
+        />
+      )}
     </div>
   );
 }
 
-function tabBtnStyle(active: boolean): React.CSSProperties {
-  return {
-    fontSize: "var(--fs-12)",
-    fontWeight: 600,
-    padding: "5px 14px",
-    border: "none",
-    borderRadius: 6,
-    background: active ? "var(--surface-1, var(--bg-primary, #ffffff))" : "transparent",
-    color: active ? "var(--text)" : "var(--text-3)",
-    cursor: "pointer",
-    boxShadow: active ? "0 1px 2px rgba(0,0,0,0.04)" : "none",
-    transition: "background 0.12s, color 0.12s",
-  };
-}
 
 // ─────────────────────────────────────────────────────────────────────
 // HistoricTopNTable — pancadas dos top-40 ao longo dos anos

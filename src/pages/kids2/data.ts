@@ -392,9 +392,9 @@ export type TierKey = "elite" | "strong" | "solid" | "developing" | "beginner";
 
 const TIER_LABELS: Record<TierKey, string> = {
   elite: "Elite",
-  strong: "Forte Competidor",
+  strong: "Forte",
   solid: "Sólido",
-  developing: "Em Desenvolvimento",
+  developing: "Em Dev.",
   beginner: "Iniciante",
 };
 

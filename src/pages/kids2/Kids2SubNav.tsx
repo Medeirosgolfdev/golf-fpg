@@ -15,9 +15,6 @@ import { type ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Toolbar, ToolbarSep } from "../../ui/Toolbar";
 
-// Torneio de referência para o botão Scout (mesmo default usado em
-// FieldRivaisDashboard/NextTournaments). Actualizar por temporada.
-const DEFAULT_SCOUT_TID = "usk21131"; // European Championship 2026
 
 interface Props {
   /** Conteúdo à esquerda do título (ex: SidebarToggle na página principal). */
@@ -31,7 +28,6 @@ const TABS: { to: string; label: string; match: (p: string) => boolean }[] = [
       p === "/kids2" || (/^\/kids2\/[^/]+$/.test(p) && p !== "/kids2/next-t" && p !== "/kids2/inscricoes") },
   { to: "/kids2/next-t", label: "📅 Próximos torneios", match: (p) => p === "/kids2/next-t" },
   { to: "/kids2/inscricoes", label: "📋 Inscrições", match: (p) => p === "/kids2/inscricoes" },
-  { to: `/kids2/scout/${DEFAULT_SCOUT_TID}`, label: "🔭 Scout", match: (p) => p.startsWith("/kids2/scout") },
 ];
 
 export default function Kids2SubNav({ leading, children }: Props) {

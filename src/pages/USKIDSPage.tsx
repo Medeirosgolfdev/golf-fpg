@@ -309,7 +309,7 @@ function TabRivais({ resultados, fieldData, torneiosComManuel, selectedT, setSel
       {torneiosComManuel.map(t => {
         const isFuture = isoDate(t.date_inicio) > today;
         const resT = resultados.find(r => r.t === t.t);
-        // Scout view (/kids2/scout/usk{tcode}) — field intel: lista de inscritos com
+        // Scout view (/kids2/next-t?v=scout&t=usk{tcode}) — field intel: lista de inscritos com
         // tier, idade e confronto vs Manuel; abre em nova aba (KIDS2).
         return (
           <div key={t.t}
@@ -329,7 +329,7 @@ function TabRivais({ resultados, fieldData, torneiosComManuel, selectedT, setSel
               </div>
             </button>
             <Link
-              to={`/kids2/scout/usk${t.t}`}
+              to={`/kids2/next-t?v=scout&t=usk${t.t}`}
               target="_blank"
               rel="noreferrer"
               title="Scout — campo de inscritos com tier, idade e confronto vs Manuel (abre KIDS2 em nova aba)"
@@ -805,7 +805,7 @@ export default function USKidsFieldPage() {
                 </div>
               </button>
               <Link
-                to={`/kids2/scout/usk${t.t}`}
+                to={`/kids2/next-t?v=scout&t=usk${t.t}`}
                 target="_blank"
                 rel="noreferrer"
                 title="Scout — campo de inscritos com tier vs Manuel (KIDS2, nova aba)"
@@ -907,7 +907,7 @@ export default function USKidsFieldPage() {
             </a>
           )}
           <Link
-            to={`/kids2/scout/usk${t.t}`}
+            to={`/kids2/next-t?v=scout&t=usk${t.t}`}
             target="_blank"
             rel="noreferrer"
             onClick={e => e.stopPropagation()}

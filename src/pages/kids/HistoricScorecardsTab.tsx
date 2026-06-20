@@ -83,7 +83,7 @@ interface Edition {
   players: PlayerCard[];
 }
 
-const MIN_FIELD_SIZE = 10;
+const MIN_FIELD_SIZE = 3;
 const MIN_GROSS_18H = 55;
 const MIN_GROSS_9H = 28;
 

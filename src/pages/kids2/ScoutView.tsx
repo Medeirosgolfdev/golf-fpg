@@ -39,6 +39,14 @@ import PasswordGate from "../../ui/PasswordGate";
 import { cachedFetchJson } from "../../data/fetchCache";
 import { useUpcomingByJunior, type UpcomingReg } from "./upcomingRegs";
 import Kids2SubNav from "./Kids2SubNav";
+import { MANUEL_BIRTH_YEAR } from "../../constants/manuel";
+
+// ── Tipos para uskids-results.json ───────────────────────────────────
+interface UskRsPlayer { nome: string; pais: string; score: number; buracos: number; to_par?: number }
+interface UskRsRonda  { ronda: number; leaderboard: UskRsPlayer[] }
+interface UskRsEscalao { nome: string; age_group?: number | string; rondas: UskRsRonda[] }
+interface UskRsTourn  { t: number; name: string; escaloes: UskRsEscalao[] }
+interface UskResultsJson { resultados: UskRsTourn[] }
 
 const MONTHS_PT_SHORT = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
 function fmtRegDate(iso: string): string {
@@ -46,6 +54,25 @@ function fmtRegDate(iso: string): string {
   const [, m, d] = iso.split("-");
   return `${Number(d)} ${MONTHS_PT_SHORT[Number(m) - 1] || m}`;
 }
+function shortTournName(name: string): string {
+  return name
+    .replace("European Championship", "EC")
+    .replace("World Championship", "WC")
+    .replace("Venice Open", "Venice")
+    .replace("Marco Simone Invitational", "Marco Simone")
+    .replace("Rome Classic", "Rome")
+    .replace("Irish Open", "Irish")
+    .replace("Paris Invitational", "Paris")
+    .replace("Belgium Invitational", "Belgium")
+    .replace("Red White & Blue Invitational", "RWB")
+    .replace("Sandestin Championship", "Sandestin")
+    .replace("Desert Shootout", "Desert")
+    .replace("Mississippi State Invitational", "MS State")
+    .replace("South Carolina State Invitational", "SC State")
+    .replace(/Real Club de Golf\s+/, "")
+    .replace(/20(\d{2})\b/, "'$1");
+}
+
 function shortReg(name: string): string {
   const n = name.replace(/\b20\d{2}\b/g, "").replace(/\s+/g, " ").trim();
   return n.length > 24 ? n.slice(0, 23) + "…" : n;
@@ -57,8 +84,42 @@ const CIRCUIT_CHIP: Record<string, { bg: string; fg: string; label: string }> = 
   FR: { bg: "var(--bg-pink, var(--bg-pink))", fg: "var(--color-purple, #6b21a8)", label: "FFG (França)" },
 };
 
+// ── Séries USKids: tcode → edições [mais recente primeiro] ───────────
+const SERIES_EDITIONS: Record<string, number[]> = {
+  "European Championship":     [21131, 18242, 15704, 13568, 8300],
+  "World Championship":        [21610, 18124, 15807, 14029, 11604],
+  "Venice Open":               [22243, 19418, 16428, 14302, 12229],
+  "Rome Classic":              [20175, 16795, 14670, 12578],
+  "Marco Simone Invitational": [21080, 18438],
+  "Marco Simone":              [21080, 18438],
+  "Irish Open":                [21455, 18978, 16020, 13470],
+  "Paris Invitational":        [21795, 18975],
+  "Belgium Invitational":      [22480],
+  "Red White & Blue Invitational": [18719, 16705, 14218],
+};
+
+function seriesBase(name: string): string {
+  return name.replace(/\s+20\d{2}\b.*$/, "").trim();
+}
+
+function prevEditionTcode(tournName: string, currentTcode: number): number | null {
+  const base = seriesBase(tournName);
+  const editions = SERIES_EDITIONS[base];
+  if (!editions || editions.length < 2) return null;
+  const idx = editions.indexOf(currentTcode);
+  if (idx < 0) return editions[0] !== currentTcode ? editions[0] : (editions[1] ?? null);
+  return editions[idx + 1] ?? null;
+}
+
+function tournTcode(tid: string): number | null {
+  const m1 = tid.match(/^uskids-(\d+)$/);
+  if (m1) return parseInt(m1[1], 10);
+  const m2 = tid.match(/^usk(\d+)$/);
+  if (m2) return parseInt(m2[1], 10);
+  return null;
+}
+
 const ICON_SCOPE = "\u{1F52D}";
-const ICON_BACK = "←";
 const ICON_DOT = "·";
 const ICON_SWORDS = "⚔️";
 const ICON_TROPHY = "\u{1F3C6}";
@@ -192,6 +253,7 @@ interface ScoutRow {
   vsMTotal: number | null;
   vsMCount: number;
   vsMSameFlight: number;
+  sharedTournNames: { name: string; posRival: number | null; posManuel: number | null }[];
   fieldOnly?: boolean;
   cidade?: string;
   hcp: number | null;
@@ -250,6 +312,69 @@ function usToIso(s: string | undefined): string {
   return m[3] + "-" + m[1].padStart(2, "0") + "-" + m[2].padStart(2, "0");
 }
 
+interface ScoutTournamentOption { tid: string; name: string }
+
+/** Componente embebível (sem nav) — usado como tab em NextTournaments. */
+export function ScoutEmbed({
+  tid,
+  tournaments,
+  onTidChange,
+  hideNav,
+  escalao,
+}: {
+  tid: string;
+  tournaments?: ScoutTournamentOption[];
+  onTidChange?: (tid: string) => void;
+  /** Quando true, oculta o header Torneio+Escalão (o pai já tem os seus selectors) */
+  hideNav?: boolean;
+  /** Escalão do pai (ex: "Boys 12") — sincroniza o flight filter quando hideNav=true */
+  escalao?: string;
+}) {
+  const status = useJuniorsCanonical();
+  const field = useUskidsField();
+
+  if (status.kind === "loading") return <LoadingState />;
+  if (status.kind === "error") return <EmptyState size="md" message={"Falhou: " + status.error} />;
+
+  const data = status.data;
+
+  const canonical = data.tournamentById.get(tid);
+  if (canonical) {
+    return <ScoutContent key={tid} data={data} tournament={canonical}
+      tournaments={tournaments} currentTid={tid} onTidChange={onTidChange}
+      hideNav={hideNav} escalao={escalao}
+      onSelect={(jid) => window.open("/kids2/" + jid, "_blank", "noopener")} />;
+  }
+
+  const uskMatch = tid.match(/^usk(\d+)$/);
+  if (uskMatch) {
+    const canonicalFallback = data.tournamentById.get("uskids-" + uskMatch[1]);
+    if (canonicalFallback) {
+      return <ScoutContent key={tid} data={data} tournament={canonicalFallback}
+        tournaments={tournaments} currentTid={tid} onTidChange={onTidChange}
+        hideNav={hideNav} escalao={escalao}
+        onSelect={(jid) => window.open("/kids2/" + jid, "_blank", "noopener")} />;
+    }
+    if (field?.torneios) {
+      const tcode = parseInt(uskMatch[1], 10);
+      const ft = field.torneios.find((x) => x.t === tcode);
+      if (ft) {
+        const built = buildFieldTournament(ft, data);
+        return <ScoutContent key={tid} data={built.data} tournament={built.tournament}
+          tournaments={tournaments} currentTid={tid} onTidChange={onTidChange}
+          hideNav={hideNav} escalao={escalao}
+          onSelect={(jid) => window.open("/kids2/" + jid, "_blank", "noopener")} />;
+      }
+    }
+  }
+
+  return (
+    <div style={{ padding: 20 }}>
+      <p style={{ color: "var(--text-3)" }}>Torneio <code>{tid}</code> nao encontrado.</p>
+    </div>
+  );
+}
+
 export default function ScoutView() {
   const { unlocked, unlock } = usePasswordGate();
   if (!unlocked) return <PasswordGate onUnlock={unlock} />;
@@ -257,40 +382,12 @@ export default function ScoutView() {
 }
 
 function ScoutViewContent() {
-  const status = useJuniorsCanonical();
-  const field = useUskidsField();
   const params = useParams<{ tid: string }>();
-
-  if (status.kind === "loading") return <LoadingState />;
-  if (status.kind === "error") return <EmptyState size="md" message={"Falhou: " + status.error} />;
-
-  const data = status.data;
-  const tid = params.tid || "";
-
-  const canonical = data.tournamentById.get(tid);
-  if (canonical) {
-    return <ScoutContent data={data} tournament={canonical} onSelect={(jid) => window.open("/kids2/" + jid, "_blank", "noopener")} />;
-  }
-
-  const uskMatch = tid.match(/^usk(\d+)$/);
-  if (uskMatch && field?.torneios) {
-    const tcode = parseInt(uskMatch[1], 10);
-    const ft = field.torneios.find((x) => x.t === tcode);
-    if (ft) {
-      const built = buildFieldTournament(ft, data);
-      return <ScoutContent
-        data={built.data}
-        tournament={built.tournament}
-        onSelect={(jid) => window.open("/kids2/" + jid, "_blank", "noopener")}
-      />;
-    }
-  }
-
   return (
-    <div style={{ padding: 20 }}>
-      <p style={{ color: "var(--text-3)" }}>Torneio <code>{tid}</code> nao encontrado.</p>
-      <Link to="/kids2" style={{ color: "var(--color-info)" }}>{ICON_BACK} voltar</Link>
-    </div>
+    <>
+      <Kids2SubNav />
+      <ScoutEmbed tid={params.tid || ""} />
+    </>
   );
 }
 
@@ -369,17 +466,228 @@ function buildFieldTournament(ft: FieldTournament, data: CanonicalData): { tourn
 const _fieldExtras = new Map<string, { cidade?: string }>();
 
 // ═══════════════════════════════════════════════════════════════════
+//   FieldStrengthPanel — distribuição de tiers + dificuldade
+// ═══════════════════════════════════════════════════════════════════
+
+const TIER_BAR: Record<string, { bar: string; label: string; chip: string }> = {
+  elite:      { bar: "#dc2626", label: "Elite",      chip: "#fef2f2" },
+  strong:     { bar: "#f59e0b", label: "Forte",      chip: "#fffbeb" },
+  solid:      { bar: "#3b82f6", label: "Sólido",     chip: "#eff6ff" },
+  developing: { bar: "#22c55e", label: "Jovem",      chip: "#f0fdf4" },
+  beginner:   { bar: "#94a3b8", label: "Estreante",  chip: "#f8fafc" },
+};
+
+function FieldStrengthPanel({ rows, label }: { rows: ScoutRow[]; label?: string }) {
+  const total = rows.length;
+  if (total === 0) return null;
+
+  const counts: Record<string, number> = { elite: 0, strong: 0, solid: 0, developing: 0, beginner: 0, unknown: 0 };
+  const countryMap = new Map<string, number>();
+  for (const r of rows) {
+    const t = r.tier as string | null;
+    counts[t || "unknown"] = (counts[t || "unknown"] || 0) + 1;
+    const c = (r.junior.country || r.junior.nationality || "").toUpperCase();
+    if (c) countryMap.set(c, (countryMap.get(c) || 0) + 1);
+  }
+
+  const topCountries = [...countryMap.entries()].sort((a, b) => b[1] - a[1]).slice(0, 7);
+  const known = total - counts.unknown;
+  const knownPct = (known / total) * 100;
+  const eliteStrongPct = ((counts.elite + counts.strong) / total) * 100;
+
+  let diffLabel = "Campo Local";
+  let diffColor = "var(--text-3)";
+  if (counts.elite / total >= 0.10 && knownPct >= 40) {
+    diffLabel = "Campo de Elite"; diffColor = "#dc2626";
+  } else if (eliteStrongPct >= 20 && knownPct >= 35) {
+    diffLabel = "Campo Muito Competitivo"; diffColor = "#f59e0b";
+  } else if (eliteStrongPct >= 10 && knownPct >= 25) {
+    diffLabel = "Campo Competitivo"; diffColor = "var(--color-info)";
+  } else if (knownPct >= 25) {
+    diffLabel = "Campo Misto"; diffColor = "var(--color-good-dark)";
+  }
+
+  const TIERS = ["elite", "strong", "solid", "developing", "beginner"] as const;
+
+  return (
+    <div style={{ flex: 1, minWidth: 220, padding: "10px 12px", background: "var(--bg-card, var(--bg-muted))",
+                  borderRadius: 8, border: "1px solid var(--border-light)" }}>
+      {label && <div style={{ fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-2)", textTransform: "uppercase", letterSpacing: 1, marginBottom: 8 }}>{label}</div>}
+      <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "flex-start" }}>
+      <div style={{ minWidth: 150 }}>
+        <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", fontWeight: 700, textTransform: "uppercase", letterSpacing: 1, marginBottom: 4 }}>Dificuldade</div>
+        <div style={{ fontSize: "var(--fs-15)", fontWeight: 700, color: diffColor }}>{diffLabel}</div>
+        <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", marginTop: 3 }}>{Math.round(knownPct)}% com histórico USKids</div>
+      </div>
+
+      <div style={{ flex: 1, minWidth: 180 }}>
+        <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", fontWeight: 700, textTransform: "uppercase", letterSpacing: 1, marginBottom: 6 }}>Distribuição de Tier</div>
+        <div style={{ display: "flex", height: 10, borderRadius: 5, overflow: "hidden", gap: 1, background: "var(--border-light)" }}>
+          {TIERS.map((tier) => {
+            const n = counts[tier] || 0;
+            if (n === 0) return null;
+            return (
+              <div key={tier} title={`${TIER_BAR[tier].label}: ${n} (${Math.round((n / total) * 100)}%)`}
+                   style={{ background: TIER_BAR[tier].bar, flex: n, minWidth: 2 }} />
+            );
+          })}
+          {counts.unknown > 0 && (
+            <div title={`Sem perfil: ${counts.unknown}`} style={{ background: "#e2e8f0", flex: counts.unknown, minWidth: 2 }} />
+          )}
+        </div>
+        <div style={{ display: "flex", gap: 5, flexWrap: "wrap", marginTop: 6 }}>
+          {TIERS.filter(t => (counts[t] || 0) > 0).map((tier) => (
+            <span key={tier} style={{ fontSize: "var(--fs-10)", padding: "1px 6px", borderRadius: 3, background: TIER_BAR[tier].chip, fontWeight: 600, color: "var(--text-2)" }}>
+              {TIER_BAR[tier].label} {counts[tier]}
+            </span>
+          ))}
+          {counts.unknown > 0 && (
+            <span style={{ fontSize: "var(--fs-10)", padding: "1px 6px", borderRadius: 3, background: "var(--bg-muted)", color: "var(--text-3)", fontWeight: 600 }}>
+              Novos {counts.unknown}
+            </span>
+          )}
+        </div>
+      </div>
+
+      <div style={{ flex: 1, minWidth: 180 }}>
+        <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", fontWeight: 700, textTransform: "uppercase", letterSpacing: 1, marginBottom: 6 }}>Países ({countryMap.size})</div>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "3px 10px" }}>
+          {topCountries.map(([cc, n]) => (
+            <span key={cc} style={{ fontSize: "var(--fs-12)", whiteSpace: "nowrap" }}>
+              {flagOf(cc)} {cc} <span style={{ color: "var(--text-3)", fontSize: "var(--fs-11)" }}>×{n}</span>
+            </span>
+          ))}
+        </div>
+      </div>
+      </div>{/* flex inner */}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+//   PreviousEditionPanel — resultados da edição anterior
+// ═══════════════════════════════════════════════════════════════════
+
+function PreviousEditionPanel({ prevTcode, resultsData }: {
+  prevTcode: number;
+  resultsData: UskResultsJson | null;
+}) {
+  if (!resultsData) return null;
+  const prevEntry = resultsData.resultados.find(r => r.t === prevTcode);
+  if (!prevEntry) return null;
+
+  // Filtrar escalões Boys 9-13 (relevantes para a análise)
+  const boysRe = /boys?\s*(9|10|11|12|13)/i;
+  const escaloes = prevEntry.escaloes
+    .filter(e => boysRe.test(e.nome || e.age_group || ""))
+    .sort((a, b) => {
+      const numOf = (e: typeof a) => parseInt((e.nome || e.age_group || "").match(/\d+/)?.[0] ?? "99", 10);
+      return numOf(a) - numOf(b);
+    });
+  const toShow = escaloes.length > 0 ? escaloes : prevEntry.escaloes.slice(0, 4);
+
+  return (
+    <details style={{ marginBottom: 14 }} open>
+      <summary style={{ cursor: "pointer", fontSize: "var(--fs-13)", fontWeight: 600, color: "var(--text-2)",
+                        padding: "8px 12px", background: "var(--bg-muted)", borderRadius: 6,
+                        listStyle: "none", display: "flex", alignItems: "center", gap: 8 }}>
+        <span>📋</span>
+        <span>Edição anterior: <strong style={{ color: "var(--text)" }}>{prevEntry.name}</strong></span>
+        <span style={{ marginLeft: "auto", fontSize: "var(--fs-11)", color: "var(--text-3)" }}>▼</span>
+      </summary>
+      <div style={{ paddingTop: 10, display: "flex", gap: 14, flexWrap: "wrap", alignItems: "flex-start" }}>
+        {toShow.map((esc) => {
+          if (esc.rondas.length === 0) return null;
+          // Acumular to_par de TODAS as rondas por jogador (nome normalizado)
+          const totals = new Map<string, { nome: string; pais: string; tp: number }>();
+          for (const ronda of esc.rondas) {
+            for (const p of ronda.leaderboard) {
+              const key = p.nome.trim().toLowerCase();
+              const prev = totals.get(key);
+              const tp = p.to_par ?? 0;
+              if (prev) { prev.tp += tp; }
+              else { totals.set(key, { nome: p.nome, pais: p.pais, tp }); }
+            }
+          }
+          const top = [...totals.values()]
+            .sort((a, b) => a.tp - b.tp)
+            .slice(0, 10);
+          return (
+            <div key={esc.nome} style={{ minWidth: 190, flex: 1 }}>
+              <div style={{ fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-2)",
+                            textTransform: "uppercase", letterSpacing: 1, marginBottom: 5,
+                            borderBottom: "1px solid var(--border-light)", paddingBottom: 3,
+                            display: "flex", alignItems: "center", gap: 6 }}>
+                {esc.nome}
+                {esc.age_group != null && (
+                  <a href={`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${prevTcode}`}
+                     target="_blank" rel="noopener noreferrer"
+                     style={{ fontSize: "var(--fs-10)", fontWeight: 400, textTransform: "none",
+                              letterSpacing: 0, color: "var(--color-info)", lineHeight: 1 }}
+                     title="Ver resultados no signupanytime">
+                    ↗
+                  </a>
+                )}
+              </div>
+              <table style={{ borderCollapse: "collapse", fontSize: "var(--fs-12)", width: "100%" }}>
+                <tbody>
+                  {top.map((p, i) => (
+                    <tr key={i} style={{ borderBottom: i < top.length - 1 ? "1px solid var(--border-light)" : "none" }}>
+                      <td style={{ padding: "2px 5px 2px 0", color: "var(--text-3)", fontVariantNumeric: "tabular-nums", textAlign: "right", minWidth: 18 }}>{i + 1}</td>
+                      <td style={{ padding: "2px 4px" }}>{flagOf(p.pais)}</td>
+                      <td style={{ padding: "2px 0", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: 140 }}>{p.nome}</td>
+                      <td style={{ padding: "2px 0 2px 8px", fontWeight: 600, fontVariantNumeric: "tabular-nums", textAlign: "right", whiteSpace: "nowrap",
+                                   color: p.tp < 0 ? "var(--score-birdie, #dc2626)" : "var(--text-2)" }}>
+                        {p.tp > 0 ? "+" + p.tp : p.tp === 0 ? "E" : String(p.tp)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          );
+        })}
+        {toShow.length === 0 && (
+          <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", padding: "8px 0" }}>
+            Sem escalões Boys disponíveis nesta edição.
+          </div>
+        )}
+      </div>
+    </details>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════
 //   ScoutContent — vista principal
 // ═══════════════════════════════════════════════════════════════════
 
-function ScoutContent({ data, tournament, onSelect }: {
+function ScoutContent({ data, tournament, onSelect, tournaments, currentTid, onTidChange, hideNav, escalao }: {
   data: CanonicalData; tournament: Tournament; onSelect: (jid: string) => void;
+  tournaments?: ScoutTournamentOption[];
+  currentTid?: string;
+  onTidChange?: (tid: string) => void;
+  hideNav?: boolean;
+  escalao?: string;
 }) {
   const manuel = data.manuel;
   const today = new Date().toISOString().slice(0, 10);
   const tDate = tournament.date || tournament.startDate || "";
   const isFuture = tDate > today;
   const isFieldOnlySource = tournament.id.startsWith("usk");
+
+  // Resultados históricos (edição anterior)
+  const [resultsData, setResultsData] = useState<UskResultsJson | null>(null);
+  useEffect(() => {
+    cachedFetchJson("/data/uskids-results.json")
+      .then(d => setResultsData(d as UskResultsJson))
+      .catch(() => {});
+  }, []);
+
+  const prevTcode = useMemo(() => {
+    const tcode = tournTcode(tournament.id);
+    if (!tcode) return null;
+    return prevEditionTcode(tournament.name || tournament.shortName || "", tcode);
+  }, [tournament]);
 
   // Inscrições futuras por jogador (USKids + FPG) — para a coluna "Próximos".
   const upcoming = useUpcomingByJunior(data);
@@ -391,7 +699,24 @@ function ScoutContent({ data, tournament, onSelect }: {
     return f?.flightKey || null;
   }, [tournament, manuel]);
 
-  const [flightFilter, setFlightFilter] = useState<string>(manuelFlightKey || "all");
+  // Escalão actual do Manuel por ano de nascimento (ex: Boys 12 em 2026)
+  const manuelAge = new Date().getFullYear() - MANUEL_BIRTH_YEAR;
+  const defaultFlightKey = useMemo(() => {
+    if (manuelFlightKey) return manuelFlightKey;
+    const match = tournament.flights.find((f) => new RegExp(`boys\\s*${manuelAge}\\b`, "i").test(f.label));
+    return match?.flightKey || "all";
+  }, [manuelFlightKey, tournament.flights, manuelAge]);
+
+  const [flightFilter, setFlightFilter] = useState<string>(defaultFlightKey);
+
+  // Quando embebido no pai (hideNav=true), sincronizar o flight com o escalão seleccionado no pai.
+  useEffect(() => {
+    if (!hideNav || !escalao) return;
+    const match = tournament.flights.find(
+      (f) => f.label === escalao || f.label.startsWith(escalao + " ") || f.label.startsWith(escalao + "("),
+    );
+    if (match) setFlightFilter(match.flightKey);
+  }, [hideNav, escalao, tournament.flights]);
 
   const allRows = useMemo<ScoutRow[]>(() => {
     const out: ScoutRow[] = [];
@@ -443,19 +768,31 @@ function ScoutContent({ data, tournament, onSelect }: {
         let vsMTotal: number | null = null;
         let vsMCount = 0;
         let vsMSameFlight = 0;
+        const sharedTournNames: { name: string; posRival: number | null; posManuel: number | null }[] = [];
         if (manuel && !isFieldOnly) {
           const shared = getSharedTournamentIds(junior, manuel);
           let sum = 0; let n = 0;
           for (const stid of shared) {
             const t2 = data.tournamentById.get(stid);
             if (!t2) continue;
+            let hadFlight = false;
+            let posRival: number | null = null;
+            let posManuel: number | null = null;
             for (const f2 of t2.flights) {
               const rJ = f2.results.find((x) => x.juniorId === junior.id);
               const rM = f2.results.find((x) => x.juniorId === manuel.id);
               if (rJ?.totalGross != null && rM?.totalGross != null) {
                 sum += rJ.totalGross - rM.totalGross;
                 n++;
+                hadFlight = true;
+                if (rJ.pos != null) posRival = rJ.pos;
+                if (rM.pos != null) posManuel = rM.pos;
               }
+            }
+            // chips: excluir o torneio actual (óbvio e redundante)
+            if (hadFlight && stid !== tournament.id) {
+              const tname = t2.name || t2.shortName || stid;
+              sharedTournNames.push({ name: shortTournName(tname), posRival, posManuel });
             }
           }
           if (n > 0) { vsMTotal = sum / n; vsMCount = n; }
@@ -486,7 +823,7 @@ function ScoutContent({ data, tournament, onSelect }: {
           tier,
           bestPos, recentPos, formPositions,
           wins, top3, totalTourns, bestGross,
-          vsMTotal, vsMCount, vsMSameFlight,
+          vsMTotal, vsMCount, vsMSameFlight, sharedTournNames,
           fieldOnly: isFieldOnly,
           cidade,
           hcp, club, circuits,
@@ -510,23 +847,28 @@ function ScoutContent({ data, tournament, onSelect }: {
   );
 
   const kpis = useMemo(() => {
-    const manuelInField = manuel && tournament.flights.some((f) => f.results.some((r) => r.juniorId === manuel.id));
-    const totalInscritos = allRows.length + (manuelInField ? 1 : 0);
-    const fieldOnlyCount = allRows.filter((r) => r.fieldOnly).length;
-    const matchedCount = allRows.length - fieldOnlyCount;
+    // KPIs sobre o escalão seleccionado (rows), não o torneio inteiro (allRows)
+    const selectedFlightHasManuel = manuel && (
+      flightFilter === "all"
+        ? tournament.flights.some((f) => f.results.some((r) => r.juniorId === manuel.id))
+        : tournament.flights.find((f) => f.flightKey === flightFilter)?.results.some((r) => r.juniorId === manuel.id) ?? false
+    );
+    const totalInscritos = rows.length + (selectedFlightHasManuel ? 1 : 0);
+    const fieldOnlyCount = rows.filter((r) => r.fieldOnly).length;
+    const matchedCount = rows.length - fieldOnlyCount;
     const countries = new Set<string>();
-    for (const r of allRows) {
+    for (const r of rows) {
       const c = r.junior.country || r.junior.nationality;
       if (c) countries.add(c.toUpperCase());
     }
-    const withManuelHistory = allRows.filter((r) => r.vsMCount > 0).length;
-    const eliteCount = allRows.filter((r) => r.tier === "elite" || r.tier === "strong").length;
+    const withManuelHistory = rows.filter((r) => r.vsMCount > 0).length;
+    const eliteCount = rows.filter((r) => r.tier === "elite" || r.tier === "strong").length;
     return {
       totalInscritos, matchedPct: totalInscritos > 0 ? Math.round((matchedCount / totalInscritos) * 100) : 0,
       countries: countries.size, withManuelHistory, eliteCount, fieldOnlyCount, matchedCount,
-      manuelInField: !!manuelInField,
+      manuelInField: !!selectedFlightHasManuel,
     };
-  }, [allRows, manuel, tournament]);
+  }, [rows, flightFilter, manuel, tournament]);
 
   // Quando o Manuel está inscrito, o que interessa é a ameaça → ordenar por
   // ela (mais perigoso primeiro). Caso contrário, mantém o default histórico.
@@ -577,36 +919,65 @@ function ScoutContent({ data, tournament, onSelect }: {
 
   return (
     <>
-      <Kids2SubNav />
-      <div style={{ padding: "16px 20px", maxWidth: 1240, margin: "0 auto" }}>
-      {tournament.links && tournament.links.length > 0 && (
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12, flexWrap: "wrap" }}>
-          {tournament.links.map((l, i) => (
-            <a key={i} href={l.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: "var(--fs-13)", color: "var(--color-info)" }}>
+      <div>
+      {/* ── Barra de navegação estilo Rivais (oculta quando embebido no pai) ── */}
+      {!hideNav && <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 12, flexWrap: "wrap" }}>
+        <span style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", fontWeight: 500 }}>Torneio</span>
+        {tournaments && tournaments.length > 0 ? (
+          <select
+            className="select fs-13"
+            value={currentTid || ""}
+            onChange={(e) => onTidChange?.(e.target.value)}
+          >
+            {tournaments.map((t) => (
+              <option key={t.tid} value={t.tid}>{t.name}</option>
+            ))}
+          </select>
+        ) : (
+          <span style={{ fontSize: "var(--fs-13)", fontWeight: 600, color: "var(--text)" }}>
+            {tournament.name || tournament.shortName || tournament.id}
+          </span>
+        )}
+
+        {tournament.flights.length > 1 && (
+          <>
+            <span style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", fontWeight: 500 }}>Escalão</span>
+            <select className="select fs-13" value={flightFilter} onChange={(e) => setFlightFilter(e.target.value)}>
+              <option value="all">Todos ({allRows.length})</option>
+              {tournament.flights.map((f) => {
+                const isManuelFlight = !!manuel && f.results.some((r) => r.juniorId === manuel.id);
+                return (
+                  <option key={f.flightKey} value={f.flightKey}>
+                    {f.label} ({f.results.length}){isManuelFlight ? " ⚔️" : ""}
+                  </option>
+                );
+              })}
+            </select>
+          </>
+        )}
+
+        {/* Meta: data · campo · badges + link directo */}
+        <span style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap", marginLeft: 4 }}>
+          {tDate && <span style={{ fontSize: "var(--fs-12)", color: "var(--text-3)" }}>{ICON_DOT} {fmtDate(tDate)}</span>}
+          {tournament.course && <span style={{ fontSize: "var(--fs-12)", color: "var(--text-3)" }}>{ICON_DOT} {tournament.course}</span>}
+          {isFuture
+            ? <span style={{ fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: 999, background: "var(--bg-info-subtle, var(--bg-info))", color: "var(--color-info-dark, var(--color-navy))", fontWeight: 600 }}>FUTURO</span>
+            : <span style={{ fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: 999, background: "var(--bg-muted)", color: "var(--text-2)", fontWeight: 600 }}>HISTORICO</span>
+          }
+          {isFieldOnlySource && (
+            <span title="Inscritos do uskids-field.json"
+                  style={{ fontSize: "var(--fs-10)", padding: "1px 6px", borderRadius: 3, background: "var(--bg-muted)", color: "var(--text-3)", border: "1px solid var(--border-light)" }}>
+              USKids field
+            </span>
+          )}
+          {tournament.links?.map((l, i) => (
+            <a key={i} href={l.url} target="_blank" rel="noopener noreferrer"
+               style={{ fontSize: "var(--fs-12)", color: "var(--color-info)", marginLeft: 2 }}>
               {l.label} {ICON_EXTERNAL}
             </a>
           ))}
-        </div>
-      )}
-
-      <h2 style={{ margin: "0 0 4px", fontSize: "var(--fs-22)", color: "var(--text)" }}>
-        {ICON_SCOPE} Field Scout
-      </h2>
-      <div style={{ fontSize: "var(--fs-14)", color: "var(--text-2)", marginBottom: 14, display: "flex", gap: 8, alignItems: "baseline", flexWrap: "wrap" }}>
-        <strong style={{ color: "var(--text)" }}>{tournament.name || tournament.shortName || tournament.id}</strong>
-        {tDate && <span>{ICON_DOT} {fmtDate(tDate)}</span>}
-        {tournament.course && <span>{ICON_DOT} {tournament.course}</span>}
-        {isFuture
-          ? <span style={{ fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: 999, background: "var(--bg-info-subtle, var(--bg-info))", color: "var(--color-info-dark, var(--color-navy))", fontWeight: 600 }}>FUTURO</span>
-          : <span style={{ fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: 999, background: "var(--bg-muted)", color: "var(--text-2)", fontWeight: 600 }}>HISTORICO</span>
-        }
-        {isFieldOnlySource && (
-          <span title="Inscritos do uskids-field.json - alguns jogadores podem nao ter perfil canonico"
-                style={{ fontSize: "var(--fs-10)", padding: "1px 6px", borderRadius: 3, background: "var(--bg-muted)", color: "var(--text-3)", border: "1px solid var(--border-light)" }}>
-            USKids field
-          </span>
-        )}
-      </div>
+        </span>
+      </div>}
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 10, marginBottom: 14 }}>
         <KpiBox label="Inscritos" value={String(kpis.totalInscritos)} sub={isFieldOnlySource && kpis.fieldOnlyCount > 0
@@ -619,25 +990,34 @@ function ScoutContent({ data, tournament, onSelect }: {
                 emphasis={kpis.withManuelHistory > 0 ? "good" : undefined} />
       </div>
 
+      {flightFilter === "all" && tournament.flights.length > 1 ? (
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 14 }}>
+          {tournament.flights.map(f => {
+            const flightRows = allRows.filter(r => r.flight.flightKey === f.flightKey);
+            return <FieldStrengthPanel key={f.flightKey} rows={flightRows} label={f.label} />;
+          })}
+        </div>
+      ) : (
+        <FieldStrengthPanel rows={rows} />
+      )}
+
       {kpis.manuelInField && manuel && manuelStats && (
         <div style={{
-          marginBottom: 14, padding: "10px 14px",
+          marginTop: 14, marginBottom: 14, padding: "10px 14px",
           background: "var(--bg-success-subtle, #ecfdf5)",
           border: "1px solid var(--border-success, #97c459)",
-          borderRadius: 8, display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap",
+          borderRadius: 8, display: "flex", alignItems: "center", gap: 16,
         }}>
-          <span style={{ fontSize: "var(--fs-18)" }}>{ICON_SWORDS}</span>
-          <div style={{ flex: 1, minWidth: 200 }}>
-            <div style={{ fontWeight: 700, color: "var(--color-good-dark)", fontSize: "var(--fs-14)" }}>
+          <span style={{ fontSize: "var(--fs-18)", flexShrink: 0 }}>{ICON_SWORDS}</span>
+          <div style={{ flex: 1, minWidth: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+            <span style={{ fontWeight: 700, color: "var(--color-good-dark)", fontSize: "var(--fs-13)" }}>
               Manuel inscrito {manuelFlightKey ? "no " + (tournament.flights.find((f) => f.flightKey === manuelFlightKey)?.label || "") : ""}
-            </div>
-            <div style={{ fontSize: "var(--fs-12)", color: "var(--color-good-dark)", marginTop: 2 }}>
-              {manuelStats.flightFieldSize} inscritos no escalao{" "}
-              {ICON_DOT} {manuelStats.rivalsWithHistory} ja cruzaram com ele{" "}
-              {manuelStats.rivalsWithHistory > 0 && (
-                <>{ICON_DOT} {manuelStats.rivalsBeatManuelOnAvg} com media superior</>
-              )}
-            </div>
+            </span>
+            <span style={{ fontSize: "var(--fs-13)", color: "var(--color-good-dark)", marginLeft: 10 }}>
+              {manuelStats.flightFieldSize} inscritos
+              {" "}{ICON_DOT} {manuelStats.rivalsWithHistory} já cruzaram
+              {manuelStats.rivalsWithHistory > 0 && <>{" "}{ICON_DOT} {manuelStats.rivalsBeatManuelOnAvg} com média superior</>}
+            </span>
           </div>
           <Link to={"/kids2/" + manuel.id}
                 style={{ fontSize: "var(--fs-12)", padding: "5px 10px", borderRadius: 6,
@@ -656,22 +1036,10 @@ function ScoutContent({ data, tournament, onSelect }: {
         </div>
       )}
 
-      {tournament.flights.length > 1 && (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 14 }}>
-          <button onClick={() => setFlightFilter("all")} style={flightPillStyle(flightFilter === "all")}>
-            Todos {ICON_DOT} {allRows.length + (kpis.manuelInField ? 1 : 0)}
-          </button>
-          {tournament.flights.map((f) => {
-            const isManuelFlight = !!manuel && f.results.some((r) => r.juniorId === manuel.id);
-            return (
-              <button key={f.flightKey} onClick={() => setFlightFilter(f.flightKey)} style={flightPillStyle(flightFilter === f.flightKey, isManuelFlight)}>
-                {f.label} {ICON_DOT} {f.results.length}
-                {isManuelFlight && <> {ICON_DOT} {ICON_SWORDS} Manuel</>}
-              </button>
-            );
-          })}
-        </div>
+      {prevTcode && (
+        <PreviousEditionPanel prevTcode={prevTcode} resultsData={resultsData} />
       )}
+
 
       {flightFilter === "all" && tournament.flights.length > 1 ? (
         tournament.flights.map((f) => {
@@ -765,7 +1133,7 @@ function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSe
             <SortableHdr<ScoutKey> k="name"        sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={thStyle}>Nome</SortableHdr>
             <SortableHdr<ScoutKey> k="threat"      sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 92 }} title="Ameaça ao Manuel — combina confronto directo, tier, forma recente e vitórias">{ICON_SWORDS} Ameaça</SortableHdr>
             <SortableHdr<ScoutKey> k="age"         sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, textAlign: "center", width: 50 }}>Idade</SortableHdr>
-            <SortableHdr<ScoutKey> k="tier"        sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 110 }}>Tier</SortableHdr>
+            <SortableHdr<ScoutKey> k="tier"        sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 80 }}>Tier ▲</SortableHdr>
             <SortableHdr<ScoutKey> k="hcp"         sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, textAlign: "center", width: 56 }} title="Handicap (PT / Espanha / França)">HCP</SortableHdr>
             <SortableHdr<ScoutKey> k="wins"        sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, textAlign: "center", width: 48 }}>{ICON_TROPHY}</SortableHdr>
             <th style={{ ...thStyle, width: 90, textAlign: "center" }} title="Ultimas 3 posicoes (mais recente a esquerda)">Forma</th>
@@ -802,6 +1170,33 @@ function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSe
                     <span style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", marginLeft: 6 }}>{ICON_DOT} {row.flight.label}</span>
                   )}
                   {(row.club || row.cidade) && <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 1 }}>{row.club || row.cidade}</div>}
+                  {row.sharedTournNames.length > 0 && (
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 3, marginTop: 4 }}>
+                      {row.sharedTournNames.map((s, i) => (
+                        <span key={i} style={{ fontSize: "var(--fs-9)", padding: "1px 5px", borderRadius: 3,
+                                               background: "var(--bg-info-subtle, #eff6ff)", color: "var(--color-info-dark, var(--color-navy))",
+                                               fontWeight: 700, border: "1px solid var(--color-info)", whiteSpace: "nowrap" }}>
+                          {ICON_SWORDS} {s.name}
+                          {(s.posRival != null || s.posManuel != null) && (() => {
+                            const pr = s.posRival; const pm = s.posManuel;
+                            const mColor = pm != null && pr != null
+                              ? pm < pr ? "var(--color-good-dark, #15803d)"
+                              : pm > pr ? "var(--color-danger-dark, #b91c1c)"
+                              : undefined
+                              : undefined;
+                            return (
+                              <span style={{ fontWeight: 400, marginLeft: 4 }}>
+                                #{pr ?? "?"} vs{" "}
+                                <span style={{ color: mColor, fontWeight: mColor ? 700 : 400 }}>
+                                  MF#{pm ?? "?"}
+                                </span>
+                              </span>
+                            );
+                          })()}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </td>
                 <td style={tdStyle}>
                   <ThreatChip level={row.threatLevel} reasons={row.threatReasons} />
@@ -828,14 +1223,17 @@ function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSe
                   </td>
                 )}
                 {manuel && (
-                  <td style={{ ...tdStyle, textAlign: "right", fontWeight: 700,
-                    color: row.vsMTotal == null ? "var(--text-3)" :
-                           row.vsMTotal > 0 ? "var(--color-danger-dark)" :
-                           row.vsMTotal < 0 ? "var(--medal-gold-strong)" : "var(--text-3)" }}>
-                    {row.vsMTotal == null ? "-" :
-                     row.vsMTotal === 0 ? "0" :
-                     row.vsMTotal > 0 ? "+" + row.vsMTotal.toFixed(1) :
-                     row.vsMTotal.toFixed(1)}
+                  <td style={{ ...tdStyle, textAlign: "right" }}
+                      title={row.sharedTournNames.length > 0 ? "Cruzamentos: " + row.sharedTournNames.map(s => s.name).join(", ") : undefined}>
+                    <div style={{ fontWeight: 700,
+                      color: row.vsMTotal == null ? "var(--text-3)" :
+                             row.vsMTotal > 0 ? "var(--color-danger-dark)" :
+                             row.vsMTotal < 0 ? "var(--medal-gold-strong)" : "var(--text-3)" }}>
+                      {row.vsMTotal == null ? "-" :
+                       row.vsMTotal === 0 ? "0" :
+                       row.vsMTotal > 0 ? "+" + row.vsMTotal.toFixed(1) :
+                       row.vsMTotal.toFixed(1)}
+                    </div>
                   </td>
                 )}
                 {manuel && (
@@ -947,18 +1345,6 @@ const thStyle: React.CSSProperties = {
   color: "var(--text-2)", textTransform: "uppercase", letterSpacing: 0.3, cursor: "pointer",
 };
 const tdStyle: React.CSSProperties = { padding: "7px 8px", fontSize: "var(--fs-12)", color: "var(--text-2)" };
-
-function flightPillStyle(active: boolean, isManuelFlight = false): React.CSSProperties {
-  const accent = isManuelFlight ? "var(--color-good-dark)" : "var(--color-info-dark, var(--color-navy))";
-  return {
-    fontSize: "var(--fs-11)", fontWeight: 600,
-    padding: "5px 11px", borderRadius: 999,
-    border: "1px solid " + (active ? accent : "var(--border)"),
-    background: active ? accent : "var(--bg)",
-    color: active ? "var(--bg)" : "var(--text-2)",
-    cursor: "pointer", lineHeight: 1.4,
-  };
-}
 
 function fmtDate(iso: string): string {
   const [y, m, d] = iso.split("-");

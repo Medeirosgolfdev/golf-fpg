@@ -100,6 +100,17 @@ const ALL_TCODES = [
   // ── El Prat 2023 (USKids Open Spain) ──
   15573,
 
+  // ── Irish Open (Irlanda, 2021-2026) ──
+  8660, 11307, 13470, 16020, 18978, // 2021, 2022, 2023, 2024, 2025
+  21455, // 2026
+
+  // ── Paris Invitational (França, 2025-2026) ──
+  18975, // 2025
+  21795, // 2026
+
+  // ── Belgium Invitational (Bélgica, 2026 — novo torneio europeu) ──
+  22480, // 2026
+
   // ── 2026 USA (já estavam) ──
   21004, // Desert Shootout 2026
 ];
