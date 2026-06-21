@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-06-20T10:03:46.754Z",
+  "generatedAt": "2026-06-21T23:25:56.255Z",
   "juniors": [
     {
       "id": "u433800",
@@ -139283,7 +139283,10 @@
         "uskids-21453",
         "uskids-12090",
         "uskids-12091",
-        "uskids-20138"
+        "uskids-20138",
+        "uskids-22337",
+        "uskids-22338",
+        "uskids-22339"
       ],
       "_match": {
         "confidence": "strong",
@@ -158212,7 +158215,9 @@
         "uskids-20382",
         "uskids-21450",
         "uskids-21452",
-        "uskids-21453"
+        "uskids-21453",
+        "uskids-22373",
+        "uskids-22375"
       ],
       "_match": {
         "confidence": "strong",
@@ -215954,8 +215959,8 @@
           "club": "Estoril",
           "clubCode": "004",
           "clubLong": "Clube de Golf do Estoril",
-          "hcpExact": 5.3,
-          "hcpDate": "2026-05-30",
+          "hcpExact": 5.7,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [
             "PJA"
@@ -216012,6 +216017,14 @@
         "doral-ftm_doral_2022"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 5.3,
+          "source": "fpg",
+          "tcode": "10578",
+          "ccode": "004",
+          "label": "CAMPEONATO do CLUBE - Taça Dr. José Sousa e Melo"
+        },
         {
           "date": "2026-05-22",
           "hcpExact": 5.5,
@@ -220797,8 +220810,8 @@
           "club": "Estoril",
           "clubCode": "004",
           "clubLong": "Clube de Golf do Estoril",
-          "hcpExact": 5,
-          "hcpDate": "2026-06-05",
+          "hcpExact": 5.1,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [
             "PJA"
@@ -220830,6 +220843,14 @@
         "fpg-000-10939-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 5,
+          "source": "fpg",
+          "tcode": "10578",
+          "ccode": "004",
+          "label": "CAMPEONATO do CLUBE - Taça Dr. José Sousa e Melo"
+        },
         {
           "date": "2026-06-03",
           "hcpExact": 5.7,
@@ -249118,7 +249139,7 @@
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
           "hcpExact": 0.5,
-          "hcpDate": "2026-06-13",
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [
             "inscrito-nacional"
@@ -249134,6 +249155,14 @@
         "fpg-000-10937-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 0.5,
+          "source": "fpg",
+          "tcode": "10646",
+          "ccode": "003",
+          "label": "Taça R. S. Yeatman"
+        },
         {
           "date": "2026-06-03",
           "hcpExact": 0.9,
@@ -251236,7 +251265,7 @@
           "clubCode": "004",
           "clubLong": "Clube de Golf do Estoril",
           "hcpExact": 3.6,
-          "hcpDate": "2026-06-05",
+          "hcpDate": "2026-06-19",
           "sex": "F",
           "tags": [],
           "primary": true
@@ -251338,7 +251367,7 @@
           "clubCode": "004",
           "clubLong": "Clube de Golf do Estoril",
           "hcpExact": 2.1,
-          "hcpDate": "2026-06-09",
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [
             "PJA"
@@ -251364,6 +251393,14 @@
         "fpg-000-10939-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 2.1,
+          "source": "fpg",
+          "tcode": "10578",
+          "ccode": "004",
+          "label": "CAMPEONATO do CLUBE - Taça Dr. José Sousa e Melo"
+        },
         {
           "date": "2026-06-03",
           "hcpExact": 2.1,
@@ -252124,7 +252161,7 @@
           "clubCode": "004",
           "clubLong": "Clube de Golf do Estoril",
           "hcpExact": 2.6,
-          "hcpDate": "2026-06-06",
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [
             "PJA"
@@ -252153,6 +252190,14 @@
         "fpg-000-10937-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 2.6,
+          "source": "fpg",
+          "tcode": "10578",
+          "ccode": "004",
+          "label": "CAMPEONATO do CLUBE - Taça Dr. José Sousa e Melo"
+        },
         {
           "date": "2026-06-03",
           "hcpExact": 3.2,
@@ -277747,8 +277792,8 @@
           "club": "Santo da Serra",
           "clubCode": "007",
           "clubLong": "Santo da Serra",
-          "hcpExact": 9.7,
-          "hcpDate": "2026-06-12",
+          "hcpExact": 9.6,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [
             "PJA"
@@ -278821,7 +278866,7 @@
           "clubCode": "004",
           "clubLong": "Clube de Golf do Estoril",
           "hcpExact": 11.3,
-          "hcpDate": "2026-06-09",
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [
             "PJA"
@@ -278857,6 +278902,14 @@
         "fpg-000-10941-20260430-sub_12"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 11.3,
+          "source": "fpg",
+          "tcode": "10578",
+          "ccode": "004",
+          "label": "CAMPEONATO do CLUBE - Taça Dr. José Sousa e Melo"
+        },
         {
           "date": "2026-05-08",
           "hcpExact": 11.7,
@@ -291250,6 +291303,82 @@
       }
     },
     {
+      "id": "u614400",
+      "canonicalName": "Keegan Wilson",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "US",
+      "country": "US",
+      "region": null,
+      "club": null,
+      "sources": {
+        "uskids": {
+          "memberId": "614400",
+          "ageGroupCurrent": "Boys 9"
+        }
+      },
+      "tournamentIds": [
+        "uskids-20794",
+        "uskids-20796",
+        "uskids-20797",
+        "uskids-20798",
+        "uskids-20799",
+        "uskids-20921",
+        "uskids-21237",
+        "uskids-20905",
+        "uskids-18097",
+        "uskids-18098",
+        "uskids-18099",
+        "uskids-18100",
+        "uskids-18096",
+        "uskids-20927",
+        "uskids-19747",
+        "uskids-20920",
+        "uskids-19748",
+        "uskids-20795",
+        "uskids-16644",
+        "uskids-16645",
+        "uskids-16646",
+        "uskids-16647",
+        "uskids-17262",
+        "uskids-17265",
+        "uskids-17266",
+        "uskids-17267",
+        "uskids-17892",
+        "uskids-17893",
+        "uskids-19750",
+        "uskids-19751",
+        "uskids-19752",
+        "uskids-16648",
+        "uskids-22274",
+        "uskids-17261",
+        "uskids-17263",
+        "uskids-17264",
+        "uskids-21299",
+        "uskids-21300",
+        "uskids-21301",
+        "uskids-21304",
+        "uskids-18856",
+        "uskids-18857",
+        "uskids-18858",
+        "uskids-18860",
+        "uskids-18862",
+        "uskids-18863",
+        "uskids-21302",
+        "uskids-18861"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "uskids:614400"
+        ],
+        "mergedFromSources": [
+          "uskids"
+        ]
+      }
+    },
+    {
       "id": "u614459",
       "canonicalName": "Sullivan Powers",
       "aliases": [],
@@ -298271,8 +298400,8 @@
         "uskids-20382",
         "uskids-19686",
         "uskids-22373",
-        "uskids-22374",
-        "uskids-22375"
+        "uskids-22375",
+        "uskids-22374"
       ],
       "_match": {
         "confidence": "strong",
@@ -310614,7 +310743,7 @@
           "club": "Quinta do Peru",
           "clubCode": "038",
           "clubLong": "Quinta do Peru",
-          "hcpExact": -1.8,
+          "hcpExact": -2,
           "hcpDate": "2026-06-12",
           "sex": "M",
           "tags": [],
@@ -310799,7 +310928,7 @@
           "clubCode": "004",
           "clubLong": "Estoril",
           "hcpExact": 0.7,
-          "hcpDate": "2026-06-06",
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [
             "PJA"
@@ -310816,6 +310945,14 @@
         "fpg-000-10935-20260430-sub_18"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 0.7,
+          "source": "fpg",
+          "tcode": "10578",
+          "ccode": "004",
+          "label": "CAMPEONATO do CLUBE - Taça Dr. José Sousa e Melo"
+        },
         {
           "date": "2026-06-03",
           "hcpExact": 0.4,
@@ -311100,8 +311237,8 @@
           "club": "Oporto",
           "clubCode": "001",
           "clubLong": "Oporto Golf Clube",
-          "hcpExact": 6.9,
-          "hcpDate": "2026-06-05",
+          "hcpExact": 6.7,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [
             "PJA"
@@ -311115,6 +311252,14 @@
         "fpg-000-10939-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 6.9,
+          "source": "fpg",
+          "tcode": "10646",
+          "ccode": "003",
+          "label": "Taça R. S. Yeatman"
+        },
         {
           "date": "2026-06-03",
           "hcpExact": 7.9,
@@ -312226,7 +312371,7 @@
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
           "hcpExact": 8.7,
-          "hcpDate": "2026-06-09",
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -312236,6 +312381,14 @@
         "fpg-000-10935-20260430-sub_18"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 8.7,
+          "source": "fpg",
+          "tcode": "10646",
+          "ccode": "003",
+          "label": "Taça R. S. Yeatman"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 7.8,
@@ -312296,8 +312449,8 @@
           "club": "Palheiro",
           "clubCode": "059",
           "clubLong": "Clube Palheiro Golfe",
-          "hcpExact": 7.3,
-          "hcpDate": "2026-06-12",
+          "hcpExact": 7.1,
+          "hcpDate": "2026-06-18",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -313240,8 +313393,8 @@
           "club": "Oporto",
           "clubCode": "001",
           "clubLong": "Oporto Golf Clube",
-          "hcpExact": 0,
-          "hcpDate": "2026-06-06",
+          "hcpExact": -0.7,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -313260,6 +313413,14 @@
         "fpg-000-10935-20260430-sub_18"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 0,
+          "source": "fpg",
+          "tcode": "10646",
+          "ccode": "003",
+          "label": "Taça R. S. Yeatman"
+        },
         {
           "date": "2026-06-03",
           "hcpExact": -0.2,
@@ -313530,7 +313691,7 @@
           "clubCode": "001",
           "clubLong": "Oporto",
           "hcpExact": -1.1,
-          "hcpDate": "2026-06-06",
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [
             "PJA"
@@ -313548,6 +313709,14 @@
         "fpg-000-10939-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": -1.1,
+          "source": "fpg",
+          "tcode": "10646",
+          "ccode": "003",
+          "label": "Taça R. S. Yeatman"
+        },
         {
           "date": "2026-06-03",
           "hcpExact": -0.8,
@@ -314218,7 +314387,7 @@
           "clubCode": "177",
           "clubLong": "Clube de Golfe de Vale de Janelas",
           "hcpExact": 2.4,
-          "hcpDate": "2026-06-13",
+          "hcpDate": "2026-06-19",
           "sex": "F",
           "tags": [],
           "primary": true
@@ -314298,7 +314467,7 @@
           "clubCode": "004",
           "clubLong": "Estoril",
           "hcpExact": 4.8,
-          "hcpDate": "2026-06-16",
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [
             "PJA"
@@ -314317,6 +314486,14 @@
         "fpg-000-10939-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 4.8,
+          "source": "fpg",
+          "tcode": "10578",
+          "ccode": "004",
+          "label": "CAMPEONATO do CLUBE - Taça Dr. José Sousa e Melo"
+        },
         {
           "date": "2026-06-03",
           "hcpExact": 5.5,
@@ -315357,7 +315534,7 @@
           "clubCode": "107",
           "clubLong": "Clube de Golfe Citynorte",
           "hcpExact": 41.4,
-          "hcpDate": "2026-06-05",
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -315545,8 +315722,8 @@
           "club": "Citynorte",
           "clubCode": "107",
           "clubLong": "Clube de Golfe Citynorte",
-          "hcpExact": 14.9,
-          "hcpDate": "2026-05-02",
+          "hcpExact": 16.1,
+          "hcpDate": "2026-06-19",
           "sex": "F",
           "tags": [],
           "primary": true
@@ -315845,8 +316022,8 @@
           "club": "Miramar",
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
-          "hcpExact": 6.8,
-          "hcpDate": "2026-06-13",
+          "hcpExact": 5.7,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -315858,6 +316035,14 @@
         "fpg-000-10939-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 6.8,
+          "source": "fpg",
+          "tcode": "10646",
+          "ccode": "003",
+          "label": "Taça R. S. Yeatman"
+        },
         {
           "date": "2026-06-03",
           "hcpExact": 7.9,
@@ -315999,8 +316184,8 @@
           "club": "Miramar",
           "clubCode": "003",
           "clubLong": "Miramar",
-          "hcpExact": 6.5,
-          "hcpDate": "2026-06-06",
+          "hcpExact": 6.3,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -316010,6 +316195,14 @@
         "fpg-000-10937-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 6.5,
+          "source": "fpg",
+          "tcode": "10646",
+          "ccode": "003",
+          "label": "Taça R. S. Yeatman"
+        },
         {
           "date": "2026-06-03",
           "hcpExact": 7.2,
@@ -316079,7 +316272,7 @@
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
           "hcpExact": 6.5,
-          "hcpDate": "2026-06-13",
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -316091,6 +316284,14 @@
         "fpg-000-10939-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 6.5,
+          "source": "fpg",
+          "tcode": "10646",
+          "ccode": "003",
+          "label": "Taça R. S. Yeatman"
+        },
         {
           "date": "2026-06-03",
           "hcpExact": 9.1,
@@ -316175,8 +316376,8 @@
           "club": "Miramar",
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
-          "hcpExact": 2.1,
-          "hcpDate": "2026-06-06",
+          "hcpExact": 2.7,
+          "hcpDate": "2026-06-19",
           "sex": "F",
           "tags": [],
           "primary": true
@@ -316189,6 +316390,14 @@
         "fpg-000-10938-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 2.1,
+          "source": "fpg",
+          "tcode": "10646",
+          "ccode": "003",
+          "label": "Taça R. S. Yeatman"
+        },
         {
           "date": "2026-06-03",
           "hcpExact": 3.2,
@@ -316281,8 +316490,8 @@
           "club": "Miramar",
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
-          "hcpExact": 2.5,
-          "hcpDate": "2026-06-13",
+          "hcpExact": 2,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -316295,6 +316504,14 @@
         "fpg-000-10939-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 2.5,
+          "source": "fpg",
+          "tcode": "10646",
+          "ccode": "003",
+          "label": "Taça R. S. Yeatman"
+        },
         {
           "date": "2026-06-03",
           "hcpExact": 3.9,
@@ -316387,8 +316604,8 @@
           "club": "Citynorte",
           "clubCode": "107",
           "clubLong": "Clube de Golfe Citynorte",
-          "hcpExact": 9.7,
-          "hcpDate": "2026-06-05",
+          "hcpExact": 9.5,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -316496,8 +316713,8 @@
           "club": "Miramar",
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
-          "hcpExact": 6.7,
-          "hcpDate": "2026-06-05",
+          "hcpExact": 6.8,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [
             "PJA"
@@ -316515,6 +316732,14 @@
         "fpg-000-10937-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 6.7,
+          "source": "fpg",
+          "tcode": "10646",
+          "ccode": "003",
+          "label": "Taça R. S. Yeatman"
+        },
         {
           "date": "2026-06-03",
           "hcpExact": 6.5,
@@ -316640,7 +316865,7 @@
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
           "hcpExact": 5.4,
-          "hcpDate": "2026-06-05",
+          "hcpDate": "2026-06-19",
           "sex": "F",
           "tags": [
             "PJA"
@@ -316658,6 +316883,14 @@
         "fpg-000-10940-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 5.4,
+          "source": "fpg",
+          "tcode": "10646",
+          "ccode": "003",
+          "label": "Taça R. S. Yeatman"
+        },
         {
           "date": "2026-06-03",
           "hcpExact": 4.6,
@@ -316782,8 +317015,8 @@
           "club": "Miramar",
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
-          "hcpExact": 8.1,
-          "hcpDate": "2026-06-05",
+          "hcpExact": 7.9,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [
             "PJA"
@@ -316804,6 +317037,14 @@
         "fpg-000-10939-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 8.1,
+          "source": "fpg",
+          "tcode": "10646",
+          "ccode": "003",
+          "label": "Taça R. S. Yeatman"
+        },
         {
           "date": "2026-06-03",
           "hcpExact": 8,
@@ -316945,7 +317186,7 @@
           "clubCode": "107",
           "clubLong": "Clube de Golfe Citynorte",
           "hcpExact": 26.5,
-          "hcpDate": "2026-06-05",
+          "hcpDate": "2026-06-19",
           "sex": "F",
           "tags": [],
           "primary": true
@@ -316991,8 +317232,8 @@
           "club": "Oporto",
           "clubCode": "001",
           "clubLong": "Oporto Golf Clube",
-          "hcpExact": 9.6,
-          "hcpDate": "2026-06-05",
+          "hcpExact": 9.7,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -317002,6 +317243,14 @@
         "fpg-000-10937-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 9.6,
+          "source": "fpg",
+          "tcode": "10646",
+          "ccode": "003",
+          "label": "Taça R. S. Yeatman"
+        },
         {
           "date": "2026-06-03",
           "hcpExact": 10.1,
@@ -317176,8 +317425,8 @@
           "club": "Oporto",
           "clubCode": "001",
           "clubLong": "Oporto Golf Clube",
-          "hcpExact": 1.3,
-          "hcpDate": "2026-06-05",
+          "hcpExact": 0.3,
+          "hcpDate": "2026-06-19",
           "sex": "F",
           "tags": [],
           "primary": true
@@ -317187,6 +317436,14 @@
         "fpg-000-10938-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 1.3,
+          "source": "fpg",
+          "tcode": "10646",
+          "ccode": "003",
+          "label": "Taça R. S. Yeatman"
+        },
         {
           "date": "2026-06-03",
           "hcpExact": 0.5,
@@ -317567,8 +317824,8 @@
           "club": "Oporto",
           "clubCode": "001",
           "clubLong": "Oporto Golf Clube",
-          "hcpExact": 4.9,
-          "hcpDate": "2026-06-05",
+          "hcpExact": 5.3,
+          "hcpDate": "2026-06-19",
           "sex": "F",
           "tags": [],
           "primary": true
@@ -317579,6 +317836,14 @@
         "fpg-000-10938-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 4.9,
+          "source": "fpg",
+          "tcode": "10646",
+          "ccode": "003",
+          "label": "Taça R. S. Yeatman"
+        },
         {
           "date": "2026-06-03",
           "hcpExact": 5.3,
@@ -317929,7 +318194,7 @@
           "clubCode": "001",
           "clubLong": "Oporto Golf Clube",
           "hcpExact": 9.5,
-          "hcpDate": "2026-06-05",
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [
             "no-priority"
@@ -317942,6 +318207,14 @@
         "fpg-000-10939-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 9.5,
+          "source": "fpg",
+          "tcode": "10646",
+          "ccode": "003",
+          "label": "Taça R. S. Yeatman"
+        },
         {
           "date": "2026-06-03",
           "hcpExact": 9.8,
@@ -318320,8 +318593,8 @@
           "club": "Citynorte",
           "clubCode": "107",
           "clubLong": "Clube de Golfe Citynorte",
-          "hcpExact": 29.2,
-          "hcpDate": "2026-06-05",
+          "hcpExact": 28.9,
+          "hcpDate": "2026-06-19",
           "sex": "F",
           "tags": [],
           "primary": true
@@ -318367,8 +318640,8 @@
           "club": "Citynorte",
           "clubCode": "107",
           "clubLong": "Clube de Golfe Citynorte",
-          "hcpExact": 14.8,
-          "hcpDate": "2026-05-23",
+          "hcpExact": 13.9,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -318633,8 +318906,8 @@
           "club": "Estoril",
           "clubCode": "004",
           "clubLong": "Clube de Golf do Estoril",
-          "hcpExact": 7.2,
-          "hcpDate": "2026-06-09",
+          "hcpExact": 6.4,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -318644,6 +318917,14 @@
         "fpg-000-10937-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 7.2,
+          "source": "fpg",
+          "tcode": "10578",
+          "ccode": "004",
+          "label": "CAMPEONATO do CLUBE - Taça Dr. José Sousa e Melo"
+        },
         {
           "date": "2026-06-03",
           "hcpExact": 7.2,
@@ -318916,8 +319197,8 @@
           "club": "Oporto",
           "clubCode": "001",
           "clubLong": "Oporto Golf Clube",
-          "hcpExact": 6.9,
-          "hcpDate": "2026-06-05",
+          "hcpExact": 6.4,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -318928,6 +319209,14 @@
         "fpg-000-10937-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 6.9,
+          "source": "fpg",
+          "tcode": "10646",
+          "ccode": "003",
+          "label": "Taça R. S. Yeatman"
+        },
         {
           "date": "2026-06-03",
           "hcpExact": 7.7,
@@ -319012,8 +319301,8 @@
           "club": "Amendoeira",
           "clubCode": "179",
           "clubLong": "Amendoeira Clube de Golfe",
-          "hcpExact": 9,
-          "hcpDate": "2026-06-09",
+          "hcpExact": 8.8,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -319522,8 +319811,8 @@
           "club": "Citynorte",
           "clubCode": "107",
           "clubLong": "Clube de Golfe Citynorte",
-          "hcpExact": 15.1,
-          "hcpDate": "2026-06-05",
+          "hcpExact": 15.8,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -319578,8 +319867,8 @@
           "club": "Citynorte",
           "clubCode": "107",
           "clubLong": "Clube de Golfe Citynorte",
-          "hcpExact": 5.6,
-          "hcpDate": "2026-06-06",
+          "hcpExact": 4.8,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -319590,6 +319879,14 @@
         "fpg-000-10937-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 5.6,
+          "source": "fpg",
+          "tcode": "10646",
+          "ccode": "003",
+          "label": "Taça R. S. Yeatman"
+        },
         {
           "date": "2026-06-03",
           "hcpExact": 6.9,
@@ -319828,7 +320125,7 @@
           "clubCode": "107",
           "clubLong": "Clube de Golfe Citynorte",
           "hcpExact": 40.6,
-          "hcpDate": "2026-06-05",
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [
             "inscrito-nacional"
@@ -319876,8 +320173,8 @@
           "club": "Citynorte",
           "clubCode": "107",
           "clubLong": "Clube de Golfe Citynorte",
-          "hcpExact": 32.5,
-          "hcpDate": "2026-06-05",
+          "hcpExact": 32.1,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -319957,8 +320254,8 @@
           "club": "Citynorte",
           "clubCode": "107",
           "clubLong": "Clube de Golfe Citynorte",
-          "hcpExact": 8.2,
-          "hcpDate": "2026-06-05",
+          "hcpExact": 8.6,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -320071,8 +320368,8 @@
           "club": "Estoril",
           "clubCode": "004",
           "clubLong": "Clube de Golf do Estoril",
-          "hcpExact": 5,
-          "hcpDate": "2026-06-10",
+          "hcpExact": 5.4,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [
             "auto-junior"
@@ -320084,6 +320381,14 @@
         "fpg-000-10899-20260330-sub_18"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 5,
+          "source": "fpg",
+          "tcode": "10578",
+          "ccode": "004",
+          "label": "CAMPEONATO do CLUBE - Taça Dr. José Sousa e Melo"
+        },
         {
           "date": "2026-05-22",
           "hcpExact": 3.8,
@@ -321093,8 +321398,8 @@
           "club": "Miramar",
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
-          "hcpExact": 13.1,
-          "hcpDate": "2026-06-17",
+          "hcpExact": 13,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -321106,6 +321411,14 @@
         "fpg-000-10941-20260430-sub_12"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 13.1,
+          "source": "fpg",
+          "tcode": "10646",
+          "ccode": "003",
+          "label": "Taça R. S. Yeatman"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 14.5,
@@ -321174,8 +321487,8 @@
           "club": "Miramar",
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
-          "hcpExact": 17.8,
-          "hcpDate": "2026-06-17",
+          "hcpExact": 17.5,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -321188,6 +321501,14 @@
         "fpg-000-10941-20260430-sub_12"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 17.8,
+          "source": "fpg",
+          "tcode": "10646",
+          "ccode": "003",
+          "label": "Taça R. S. Yeatman"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 22.9,
@@ -321322,7 +321643,7 @@
           "clubCode": "038",
           "clubLong": "Clube de Golf da Quinta do Peru",
           "hcpExact": 4.6,
-          "hcpDate": "2026-06-13",
+          "hcpDate": "2026-06-19",
           "sex": "F",
           "tags": [
             "PJA"
@@ -321432,8 +321753,8 @@
           "club": "Quinta do Peru",
           "clubCode": "038",
           "clubLong": "Clube de Golf da Quinta do Peru",
-          "hcpExact": 5.2,
-          "hcpDate": "2026-06-13",
+          "hcpExact": 4.9,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [
             "PJA"
@@ -321591,8 +321912,8 @@
           "club": "Estoril",
           "clubCode": "004",
           "clubLong": "Clube de Golf do Estoril",
-          "hcpExact": 25.9,
-          "hcpDate": "2026-06-13",
+          "hcpExact": 26,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [
             "inscrito-nacional"
@@ -321604,6 +321925,14 @@
         "fpg-000-10941-20260430-sub_12"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 26.1,
+          "source": "fpg",
+          "tcode": "10578",
+          "ccode": "004",
+          "label": "CAMPEONATO do CLUBE - Taça Dr. José Sousa e Melo"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 30.7,
@@ -322783,8 +323112,8 @@
           "club": "Vale Pisão",
           "clubCode": "125",
           "clubLong": "Vale Pisão",
-          "hcpExact": 9.2,
-          "hcpDate": "2026-05-30",
+          "hcpExact": 8.8,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [
             "PJA"
@@ -322800,6 +323129,14 @@
         "fpg-000-10939-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 9.2,
+          "source": "fpg",
+          "tcode": "10646",
+          "ccode": "003",
+          "label": "Taça R. S. Yeatman"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 9.8,
@@ -322956,7 +323293,7 @@
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
           "hcpExact": 16,
-          "hcpDate": "2026-06-13",
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -322968,6 +323305,14 @@
         "fpg-000-10941-20260430-sub_12"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 16,
+          "source": "fpg",
+          "tcode": "10646",
+          "ccode": "003",
+          "label": "Taça R. S. Yeatman"
+        },
         {
           "date": "2026-04-30",
           "hcpExact": 18,
@@ -323028,8 +323373,8 @@
           "club": "Miramar",
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
-          "hcpExact": 9.3,
-          "hcpDate": "2026-06-13",
+          "hcpExact": 8.7,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -323040,6 +323385,14 @@
         "fpg-000-10939-20260430-sub_14"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 9.3,
+          "source": "fpg",
+          "tcode": "10646",
+          "ccode": "003",
+          "label": "Taça R. S. Yeatman"
+        },
         {
           "date": "2026-06-03",
           "hcpExact": 10.3,
@@ -323100,8 +323453,8 @@
           "club": "Miramar",
           "clubCode": "003",
           "clubLong": "Club de Golf de Miramar",
-          "hcpExact": 42.4,
-          "hcpDate": "2026-06-05",
+          "hcpExact": 41.7,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [
             "inscrito-nacional"
@@ -323368,7 +323721,7 @@
           "clubCode": "043",
           "clubLong": "Clube de Golfe de Ponte de Lima",
           "hcpExact": 9.5,
-          "hcpDate": "2026-06-09",
+          "hcpDate": "2026-06-19",
           "sex": "F",
           "tags": [],
           "primary": true
@@ -323737,8 +324090,8 @@
           "club": "Estoril",
           "clubCode": "004",
           "clubLong": "Clube de Golf do Estoril",
-          "hcpExact": 8,
-          "hcpDate": "2026-05-23",
+          "hcpExact": 8.1,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [
             "PJA"
@@ -323756,6 +324109,14 @@
         "fpg-000-10937-20260430-sub_16"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 8,
+          "source": "fpg",
+          "tcode": "10578",
+          "ccode": "004",
+          "label": "CAMPEONATO do CLUBE - Taça Dr. José Sousa e Melo"
+        },
         {
           "date": "2026-05-22",
           "hcpExact": 7.6,
@@ -323904,8 +324265,8 @@
           "club": "Amendoeira",
           "clubCode": "179",
           "clubLong": "Amendoeira Clube de Golfe",
-          "hcpExact": 9.5,
-          "hcpDate": "2026-06-09",
+          "hcpExact": 9.1,
+          "hcpDate": "2026-06-19",
           "sex": "M",
           "tags": [],
           "primary": true
@@ -334706,6 +335067,14 @@
       ],
       "hcpHistory": [
         {
+          "date": "2026-06-19",
+          "hcpExact": -0.4,
+          "source": "fpg",
+          "tcode": "10578",
+          "ccode": "004",
+          "label": "CAMPEONATO do CLUBE - Taça Dr. José Sousa e Melo"
+        },
+        {
           "date": "2026-06-03",
           "hcpExact": 0,
           "source": "fpg",
@@ -336518,6 +336887,14 @@
       ],
       "hcpHistory": [
         {
+          "date": "2026-06-19",
+          "hcpExact": 2.2,
+          "source": "fpg",
+          "tcode": "10578",
+          "ccode": "004",
+          "label": "CAMPEONATO do CLUBE - Taça Dr. José Sousa e Melo"
+        },
+        {
           "date": "2026-06-12",
           "hcpExact": 2.5,
           "source": "fpg",
@@ -337701,6 +338078,14 @@
       ],
       "hcpHistory": [
         {
+          "date": "2026-06-19",
+          "hcpExact": 4.1,
+          "source": "fpg",
+          "tcode": "10578",
+          "ccode": "004",
+          "label": "CAMPEONATO do CLUBE - Taça Dr. José Sousa e Melo"
+        },
+        {
           "date": "2026-06-12",
           "hcpExact": 4.2,
           "source": "fpg",
@@ -337921,6 +338306,14 @@
         "fpg-000-10912-20260612-all"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 7.4,
+          "source": "fpg",
+          "tcode": "10578",
+          "ccode": "004",
+          "label": "CAMPEONATO do CLUBE - Taça Dr. José Sousa e Melo"
+        },
         {
           "date": "2026-06-12",
           "hcpExact": 8,
@@ -338305,6 +338698,14 @@
         "fpg-000-10912-20260612-all"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 6.1,
+          "source": "fpg",
+          "tcode": "10578",
+          "ccode": "004",
+          "label": "CAMPEONATO do CLUBE - Taça Dr. José Sousa e Melo"
+        },
         {
           "date": "2026-06-12",
           "hcpExact": 6.2,
@@ -340418,6 +340819,14 @@
         "fpg-000-10912-20260612-all"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-06-19",
+          "hcpExact": 4.7,
+          "source": "fpg",
+          "tcode": "10578",
+          "ccode": "004",
+          "label": "CAMPEONATO do CLUBE - Taça Dr. José Sousa e Melo"
+        },
         {
           "date": "2026-06-12",
           "hcpExact": 4.7,
@@ -567054,13 +567463,13 @@
     }
   ],
   "stats": {
-    "total": 8930,
-    "droppedNoTourn": 25096,
-    "strong": 8906,
+    "total": 8931,
+    "droppedNoTourn": 25092,
+    "strong": 8907,
     "probable": 24,
     "manual": 0,
     "strongMerges": 7,
-    "probableMerges": 2295,
+    "probableMerges": 2294,
     "manualMerges": 5
   }
 }
