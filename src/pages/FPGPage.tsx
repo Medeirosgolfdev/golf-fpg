@@ -35,6 +35,7 @@ import { PJARankingView } from "../ui/PJARankingView";
 import ClubesGruposView from "../ui/ClubesGruposView";
 import ClubesCategoriasView, { type CategoriaCfg } from "../ui/ClubesCategoriasView";
 import TournExtLinks from "../ui/TournExtLinks";
+import type { FpgDraw, FpgDrawFlight } from "../data/nacional2026Loader";
 // Tipos e utilitários FPG — fonte canónica em ../data/fpgTypes.ts e ../data/fpgUtils.ts
 import type { Tournament, GrupoEntry } from "../data/fpgTypes";
 import { buildDisplayList, tournamentHasManuel } from "../data/fpgUtils";
@@ -187,12 +188,8 @@ interface MatchPlayData {
   clubs: { key: string; name: string; shortName: string }[];
   categories: MpCat[];
   course?: { nome?: string; tee?: string; par: number[]; parTotal?: number; };
-  dia2?: {
-    date?: string;
-    modalidade?: string;
-    campo?: string;
-    groups: Record<string, MpDrawGroup[]>;
-  };
+  dia1?: { date?: string; modalidade?: string; campo?: string; groups: Record<string, MpDrawGroup[]>; };
+  dia2?: { date?: string; modalidade?: string; campo?: string; groups: Record<string, MpDrawGroup[]>; };
 }
 
 const MP_CLUB_COLOR = "var(--color-good-dark,#2d6a4f)";
@@ -229,7 +226,7 @@ function MatchPlayResultsTable({
   const grand: Record<string, number> = {};
   for (const cl of clubs)
     grand[cl.key] = results.categories.reduce((gs, rcat) =>
-      gs + rcat.dias.reduce((ds, dia) => ds + (dia.subtotal[cl.key] ?? 0), 0), 0);
+      gs + rcat.dias.reduce((ds, dia) => ds + (dia.subtotal?.[cl.key] ?? 0), 0), 0);
   const places: Record<string, number> | undefined = (results as any).grandTotal?._places;
   const sortedClubs = [...clubs].sort((a, b) =>
     places ? (places[a.key] ?? 99) - (places[b.key] ?? 99) : (grand[b.key] ?? 0) - (grand[a.key] ?? 0));
@@ -241,7 +238,6 @@ function MatchPlayResultsTable({
       clubs.filter(cl => (m.players?.[cl.key]?.scores?.length ?? 0) >= 9).length >= 2
     ))
   );
-  const hasDraw2 = !!(results.dia2 && Object.values(results.dia2.groups).some(g => g.length > 0));
 
   const f9 = Array.from({ length: 9 }, (_, i) => i);
   const b9 = Array.from({ length: 9 }, (_, i) => i + 9);
@@ -361,7 +357,7 @@ function MatchPlayResultsTable({
                   const catParticipants: string[] | undefined = (rcat as any).participants;
                   if (catParticipants && !catParticipants.includes(cl.key)) return null;
                   const catLabel = catCfg.find(c => c.key === rcat.key)?.label ?? rcat.key;
-                  const catTotal = rcat.dias.reduce((s, dia) => s + (dia.subtotal[cl.key] ?? 0), 0);
+                  const catTotal = rcat.dias.reduce((s, dia) => s + (dia.subtotal?.[cl.key] ?? 0), 0);
                   const allMatches = rcat.dias.flatMap(dia => dia.matches ?? []);
                   // Opponents: filtered by category participants when defined
                   const catOpps = catParticipants
@@ -2364,48 +2360,91 @@ function Content() {
                       const _par = _mp?.course?.par ?? [];
                       const _meters = _mp?.course?.meters ?? [];
                       const _tee = _mp?.course?.tee;
-                      // Sintetizar jogadores do match play para que AllRoundsScorecardLB os mostre
+                      // Sintetizar jogadores do match play, agrupando todos os dias por jogador
+                      // (fedCode como chave → Manuel aparece 1× com R1+R2, não 2×)
                       const _mpPlayers = _mp && _par.length > 0
-                        ? _mp.categories.flatMap(cat =>
-                            cat.dias.flatMap(dia =>
-                              (dia.matches ?? []).flatMap(m =>
-                                _mp.clubs.map(cl => {
-                                  const p = m.players?.[cl.key];
-                                  if (!p?.scores || p.scores.filter(Boolean).length < 9) return null;
-                                  const gross = p.scores.reduce((s: number, v) => s + (v ?? 0), 0);
-                                  const parTot = _par.reduce((s, v) => s + v, 0);
-                                  return {
-                                    scoreId: `mp-${cl.key}-${m.match}`,
-                                    name: p.name ?? cl.name,
-                                    club: cl.name,
-                                    fedCode: p.fed,
-                                    pos: null as unknown as number,
-                                    grossTotal: gross,
-                                    toPar: gross - parTot,
-                                    scores: p.scores,
-                                    par: _par,
-                                    nholes: 18,
-                                    teeName: _tee,
-                                    meters: _meters,
-                                    roundScores: [{
-                                      round: 1,
-                                      gross,
-                                      scores: p.scores,
-                                      pars: _par,
-                                      si: [],
-                                      meters: _meters,
-                                      teeName: _tee,
-                                    }],
-                                  };
-                                }).filter((x): x is NonNullable<typeof x> => x !== null)
-                              )
-                            )
-                          )
+                        ? (() => {
+                            const parTot = _par.reduce((s, v) => s + v, 0);
+                            type RndEntry = { diaNum: number; gross: number; scores: (number|null)[]; nholes: number };
+                            const byPlayer = new Map<string, { fed?: string; name: string; club: string; rounds: RndEntry[] }>();
+                            for (const cat of _mp.categories) {
+                              for (const dia of cat.dias) {
+                                for (const m of dia.matches ?? []) {
+                                  for (const cl of _mp.clubs) {
+                                    const p = m.players?.[cl.key];
+                                    if (!p?.scores || p.scores.filter(Boolean).length < 9) continue;
+                                    const holesPlayed = p.scores.filter((v): v is number => v != null);
+                                    const gross = holesPlayed.reduce((s, v) => s + v, 0);
+                                    const nholes = holesPlayed.length;
+                                    // fed code → merge rounds; sem fed → entrada única por dia/match
+                                    const key = p.fed ?? `${cat.key}-d${dia.dia}-${cl.key}-m${m.match}`;
+                                    const existing = byPlayer.get(key);
+                                    const rnd: RndEntry = { diaNum: dia.dia, gross, scores: p.scores, nholes };
+                                    if (existing) existing.rounds.push(rnd);
+                                    else byPlayer.set(key, { fed: p.fed, name: p.name ?? cl.name, club: cl.name, rounds: [rnd] });
+                                  }
+                                }
+                              }
+                            }
+                            return Array.from(byPlayer.entries()).map(([key, entry]) => {
+                              const allGross = entry.rounds.reduce((s, r) => s + r.gross, 0);
+                              const allComplete = entry.rounds.every(r => r.nholes >= 18);
+                              const toPar = allComplete ? allGross - parTot * entry.rounds.length : null;
+                              const nholes = entry.rounds.reduce((s, r) => s + r.nholes, 0);
+                              return {
+                                scoreId: `mp-${key}`,
+                                name: entry.name,
+                                club: entry.club,
+                                fedCode: entry.fed,
+                                pos: null as unknown as number,
+                                grossTotal: allGross,
+                                toPar,
+                                scores: entry.rounds[0]?.scores,
+                                par: _par,
+                                nholes,
+                                teeName: _tee,
+                                meters: _meters,
+                                roundScores: entry.rounds.map(r => ({
+                                  round: r.diaNum,
+                                  gross: r.gross,
+                                  scores: r.scores,
+                                  pars: _par,
+                                  si: [],
+                                  meters: _meters,
+                                  teeName: _tee,
+                                })),
+                              };
+                            });
+                          })()
                         : [];
-                      const _t = _mpPlayers.length > 0
-                        ? { ...curClubes, players: _mpPlayers as any }
-                        : curClubes;
-                      return <TournamentDetail tournament={_t} escLookup={escLookup} playersDB={playersDB} />;
+                      // Injetar dia1 como _draws["1"] sintético para aparecer como "Draw R1"
+                      const _dia1 = _mp?.dia1;
+                      const _syntheticDraw1: FpgDraw | undefined = _dia1 ? (() => {
+                        const clubMap = Object.fromEntries((_mp?.clubs ?? []).map(c => [c.key, c]));
+                        const flights: FpgDrawFlight[] = Object.values(_dia1.groups)
+                          .flat()
+                          .map(g => ({
+                            teeTime: g.teeTime,
+                            startHole: 1,
+                            tee: g.tee ?? null,
+                            players: g.players.map(p => ({
+                              nome: p.name,
+                              clube: clubMap[p.club]?.name ?? p.club,
+                              fed: p.fed ?? null,
+                              tee: p.tee ?? null,
+                            })),
+                          }))
+                          .sort((a, b) => a.teeTime.localeCompare(b.teeTime));
+                        const total = flights.reduce((s, f) => s + f.players.length, 0);
+                        return { name: `Draw — ${_dia1.modalidade ?? "R1"}`, date: _dia1.date, totalJogadores: total, groups: flights };
+                      })() : undefined;
+                      const _existingDraws: Record<string, FpgDraw> = (curClubes as any)._draws ?? {};
+                      const _draws = _syntheticDraw1 ? { "1": _syntheticDraw1, ..._existingDraws } : _existingDraws;
+                      const _t = {
+                        ...((_mpPlayers.length > 0 ? { ...curClubes, players: _mpPlayers as any } : curClubes) as object),
+                        _draws,
+                      };
+                      return <TournamentDetail tournament={_t as any} escLookup={escLookup} playersDB={playersDB} />;
                     })()
                   : !clubesLoading && (
                       <div className="center-msg muted">

@@ -10747,20 +10747,15 @@
                     "CGSS": 1,
                     "PXO": 0,
                     "CPG": 2,
-                    "players": {},
+                    "players": {
+                      "CPG": { "name": "Pedro Camacho", "fed": "30570" },
+                      "CGSS": { "name": "José Xavier Moniz", "fed": "23904" },
+                      "PXO": { "name": "Miguel Pereira", "fed": "25098" }
+                    },
                     "h2h": [
-                      {
-                        "w": "CPG",
-                        "l": "CGSS"
-                      },
-                      {
-                        "w": "CPG",
-                        "l": "PXO"
-                      },
-                      {
-                        "w": "CGSS",
-                        "l": "PXO"
-                      }
+                      { "w": "CPG", "l": "CGSS" },
+                      { "w": "CPG", "l": "PXO" },
+                      { "w": "CGSS", "l": "PXO" }
                     ]
                   },
                   {
@@ -10768,20 +10763,15 @@
                     "CGSS": 1,
                     "PXO": 0,
                     "CPG": 2,
-                    "players": {},
+                    "players": {
+                      "CPG": { "name": "Mark King", "fed": "59046" },
+                      "CGSS": { "name": "Rafael Reis Alves", "fed": "40492" },
+                      "PXO": { "name": "Andrew Ramsden", "fed": "57261" }
+                    },
                     "h2h": [
-                      {
-                        "w": "CPG",
-                        "l": "CGSS"
-                      },
-                      {
-                        "w": "CPG",
-                        "l": "PXO"
-                      },
-                      {
-                        "w": "CGSS",
-                        "l": "PXO"
-                      }
+                      { "w": "CPG", "l": "CGSS" },
+                      { "w": "CPG", "l": "PXO" },
+                      { "w": "CGSS", "l": "PXO" }
                     ]
                   },
                   {
@@ -10789,20 +10779,15 @@
                     "CGSS": 1,
                     "PXO": 0,
                     "CPG": 2,
-                    "players": {},
+                    "players": {
+                      "CPG": { "name": "Joen Falsner", "fed": "57871" },
+                      "CGSS": { "name": "Henrique Cunha", "fed": "36844" },
+                      "PXO": { "name": "Hindrik Cornelissen", "fed": "59287" }
+                    },
                     "h2h": [
-                      {
-                        "w": "CPG",
-                        "l": "CGSS"
-                      },
-                      {
-                        "w": "CPG",
-                        "l": "PXO"
-                      },
-                      {
-                        "w": "CGSS",
-                        "l": "PXO"
-                      }
+                      { "w": "CPG", "l": "CGSS" },
+                      { "w": "CPG", "l": "PXO" },
+                      { "w": "CGSS", "l": "PXO" }
                     ]
                   },
                   {
@@ -10820,8 +10805,8 @@
                         "fed": "35256"
                       },
                       "PXO": {
-                        "name": "Paulo Silva",
-                        "fed": "25101"
+                        "name": "Victor Amaro",
+                        "fed": "38456"
                       }
                     },
                     "h2h": [
@@ -10845,10 +10830,12 @@
                     "PXO": 0,
                     "CPG": 1,
                     "players": {
+                      "CPG": { "name": "Oliver Kirchel", "fed": "49819" },
                       "CGSS": {
                         "name": "Alexandre Henriques",
                         "fed": "2178"
-                      }
+                      },
+                      "PXO": { "name": "Paulo Silva", "fed": "25101" }
                     },
                     "h2h": [
                       {
@@ -10892,96 +10879,27 @@
                         "fed": "52884",
                         "gross": 80,
                         "toPar": 8,
-                        "scores": [
-                          5,
-                          5,
-                          4,
-                          4,
-                          3,
-                          6,
-                          4,
-                          4,
-                          4,
-                          5,
-                          3,
-                          6,
-                          3,
-                          5,
-                          5,
-                          3,
-                          5,
-                          6
-                        ]
+                        "scores": [5,5,4,4,3,6,4,4,4,5,3,6,3,5,5,3,5,6]
                       },
                       "CPG": {
                         "name": "José Pedro Miranda",
                         "fed": "38976",
                         "gross": 83,
                         "toPar": 11,
-                        "scores": [
-                          6,
-                          4,
-                          4,
-                          4,
-                          5,
-                          5,
-                          4,
-                          5,
-                          4,
-                          5,
-                          4,
-                          5,
-                          3,
-                          4,
-                          7,
-                          5,
-                          3,
-                          6
-                        ]
+                        "scores": [6,4,4,4,5,5,4,5,4,5,4,5,3,4,7,5,3,6]
                       },
                       "PXO": {
                         "name": "Tomás Câmara",
                         "fed": "53548",
                         "gross": null,
                         "toPar": null,
-                        "scores": [
-                          7,
-                          5,
-                          5,
-                          5,
-                          3,
-                          6,
-                          3,
-                          4,
-                          6,
-                          4,
-                          4,
-                          6,
-                          4,
-                          6,
-                          7,
-                          null,
-                          null,
-                          6
-                        ]
+                        "scores": [7,5,5,5,3,6,3,4,6,4,4,6,4,6,7,null,null,6]
                       }
                     },
                     "h2h": [
-                      {
-                        "w": "CGSS",
-                        "l": "CPG",
-                        "margin": "1UP"
-                      },
-                      {
-                        "w": "CGSS",
-                        "l": "PXO",
-                        "margin": "5&4"
-                      },
-                      {
-                        "w": "CPG",
-                        "l": "PXO",
-                        "margin": "5&4"
-                      }
+                      { "w": "CGSS", "l": "CPG", "margin": "1UP" },
+                      { "w": "CGSS", "l": "PXO", "margin": "5&4" },
+                      { "w": "CPG",  "l": "PXO", "margin": "5&4" }
                     ]
                   },
                   {
@@ -10990,36 +10908,14 @@
                     "PXO": 1.5,
                     "CPG": 0.5,
                     "players": {
-                      "CGSS": {
-                        "name": "Maria Câmara",
-                        "fed": "40990"
-                      },
-                      "CPG": {
-                        "name": "Salvador Rodrigues",
-                        "fed": "39465"
-                      },
-                      "PXO": {
-                        "name": "Laura Santos",
-                        "fed": "45393"
-                      }
+                      "CGSS": { "name": "Maria Câmara",      "fed": "40990" },
+                      "CPG":  { "name": "Salvador Rodrigues","fed": "39465" },
+                      "PXO":  { "name": "Laura Santos",      "fed": "45393" }
                     },
                     "h2h": [
-                      {
-                        "w": "CGSS",
-                        "l": "CPG",
-                        "margin": null
-                      },
-                      {
-                        "w": "PXO",
-                        "l": "CGSS",
-                        "margin": null
-                      },
-                      {
-                        "w": "PXO",
-                        "l": "CPG",
-                        "half": true,
-                        "margin": null
-                      }
+                      { "w": "CGSS", "l": "CPG", "margin": null },
+                      { "w": "PXO",  "l": "CGSS","margin": null },
+                      { "w": "PXO",  "l": "CPG", "half": true, "margin": null }
                     ]
                   },
                   {
@@ -11028,35 +10924,14 @@
                     "PXO": 0,
                     "CPG": 2,
                     "players": {
-                      "CGSS": {
-                        "name": "Gonçalo Gouveia",
-                        "fed": "50398"
-                      },
-                      "CPG": {
-                        "name": "André Gonçalves",
-                        "fed": "41121"
-                      },
-                      "PXO": {
-                        "name": "Rafael Brito",
-                        "fed": "53532"
-                      }
+                      "CGSS": { "name": "Gonçalo Gouveia",  "fed": "50398" },
+                      "CPG":  { "name": "André Gonçalves",  "fed": "41121" },
+                      "PXO":  { "name": "Rafael Brito",     "fed": "53532" }
                     },
                     "h2h": [
-                      {
-                        "w": "CPG",
-                        "l": "CGSS",
-                        "margin": null
-                      },
-                      {
-                        "w": "CPG",
-                        "l": "PXO",
-                        "margin": null
-                      },
-                      {
-                        "w": "CGSS",
-                        "l": "PXO",
-                        "margin": null
-                      }
+                      { "w": "CPG",  "l": "CGSS","margin": null },
+                      { "w": "CPG",  "l": "PXO", "margin": null },
+                      { "w": "CGSS", "l": "PXO", "margin": null }
                     ]
                   },
                   {
@@ -11065,43 +10940,78 @@
                     "PXO": 0.5,
                     "CPG": 2,
                     "players": {
-                      "CGSS": {
-                        "name": "Mafalda Sousa"
-                      },
-                      "CPG": {
-                        "name": "Maria Cunha",
-                        "fed": "46482"
-                      },
-                      "PXO": {
-                        "name": "Santiago Santos",
-                        "fed": "53687"
-                      }
+                      "CGSS": { "name": "Mafalda Sousa" },
+                      "CPG":  { "name": "Maria Cunha",   "fed": "46482" },
+                      "PXO":  { "name": "Santiago Santos","fed": "53687" }
                     },
                     "h2h": [
-                      {
-                        "w": "CPG",
-                        "l": "CGSS",
-                        "margin": null
-                      },
-                      {
-                        "w": "CPG",
-                        "l": "PXO",
-                        "margin": null
-                      },
-                      {
-                        "w": "CGSS",
-                        "l": "PXO",
-                        "half": true,
-                        "margin": null
-                      }
+                      { "w": "CPG",  "l": "CGSS","margin": null },
+                      { "w": "CPG",  "l": "PXO", "margin": null },
+                      { "w": "CGSS", "l": "PXO", "half": true, "margin": null }
                     ]
                   }
                 ],
-                "subtotal": {
-                  "CGSS": 4.5,
-                  "PXO": 2,
-                  "CPG": 5.5
-                }
+                "subtotal": { "CGSS": 4.5, "PXO": 2, "CPG": 5.5 }
+              },
+              {
+                "dia": 2,
+                "matches": [
+                  {
+                    "match": 1,
+                    "players": {
+                      "CGSS": { "name": "Mafalda Sousa" },
+                      "CPG":  { "name": "André Gonçalves","fed": "41121" },
+                      "PXO":  { "name": "Tomás Câmara",  "fed": "53548" }
+                    },
+                    "h2h": []
+                  },
+                  {
+                    "match": 2,
+                    "players": {
+                      "CGSS": { "name": "Gonçalo Gouveia","fed": "50398" },
+                      "CPG":  { "name": "Maria Cunha",    "fed": "46482" },
+                      "PXO":  { "name": "Laura Santos",   "fed": "45393" }
+                    },
+                    "h2h": []
+                  },
+                  {
+                    "match": 3,
+                    "players": {
+                      "CGSS": { "name": "Maria Câmara",    "fed": "40990" },
+                      "CPG":  { "name": "José Pedro Miranda","fed": "38976" },
+                      "PXO":  { "name": "Rafael Brito",    "fed": "53532" }
+                    },
+                    "h2h": []
+                  },
+                  {
+                    "match": 4,
+                    "CGSS": 1,
+                    "PXO": 0,
+                    "CPG": 2,
+                    "players": {
+                      "CGSS": {
+                        "name": "Manuel Medeiros",
+                        "fed": "52884",
+                        "scores": [5,5,3,4,3,6,4,4,5,5,3,6,3,4,null,null,null,null]
+                      },
+                      "CPG": {
+                        "name": "Salvador Rodrigues",
+                        "fed": "39465",
+                        "scores": [3,4,3,4,4,5,3,5,3,4,2,6,3,4,null,null,null,null]
+                      },
+                      "PXO": {
+                        "name": "Santiago Santos",
+                        "fed": "53687",
+                        "scores": [6,4,4,4,5,7,4,5,5,8,5,5,4,6,null,null,null,null]
+                      }
+                    },
+                    "h2h": [
+                      { "w": "CPG",  "l": "CGSS","margin": "5&4" },
+                      { "w": "CGSS", "l": "PXO", "margin": "5&4" },
+                      { "w": "CPG",  "l": "PXO", "margin": null  }
+                    ]
+                  }
+                ]
               }
             ]
           },
