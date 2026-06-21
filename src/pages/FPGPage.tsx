@@ -171,7 +171,7 @@ const CLUBES_TEAM_FORMAT: Record<string, {
 
 // ── 3-Way Match Play Results ──────────────────────────────────────────────
 interface MpPlayer { name: string; fed?: string; gross?: number | null; toPar?: number | null; scores?: (number | null)[]; }
-interface MpH2H    { w: string; l: string; margin: string | null; }
+interface MpH2H    { w: string; l: string; margin: string | null; half?: boolean; }
 interface MpMatch  {
   match: number;
   note?: string;
@@ -230,7 +230,9 @@ function MatchPlayResultsTable({
   for (const cl of clubs)
     grand[cl.key] = results.categories.reduce((gs, rcat) =>
       gs + rcat.dias.reduce((ds, dia) => ds + (dia.subtotal[cl.key] ?? 0), 0), 0);
-  const sortedClubs = [...clubs].sort((a, b) => (grand[b.key] ?? 0) - (grand[a.key] ?? 0));
+  const places: Record<string, number> | undefined = (results as any).grandTotal?._places;
+  const sortedClubs = [...clubs].sort((a, b) =>
+    places ? (places[a.key] ?? 99) - (places[b.key] ?? 99) : (grand[b.key] ?? 0) - (grand[a.key] ?? 0));
   const maxGrand = Math.max(...clubs.map(cl => grand[cl.key] ?? 0));
   const hasResults = maxGrand > 0;
 
@@ -332,7 +334,7 @@ function MatchPlayResultsTable({
 
       {/* ══ CLUBE CARDS — standings + resultados ════════════ */}
       <div style={{ padding: "16px 16px 0" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 14 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: 14 }}>
           {sortedClubs.map((cl, rank) => {
             const isLeading = hasResults && (grand[cl.key] ?? 0) === maxGrand;
             const opps = clubs.filter(c => c.key !== cl.key);
@@ -355,30 +357,38 @@ function MatchPlayResultsTable({
                   </div>
                 </div>
                 {results.categories.map((rcat, catIdx) => {
+                  // Skip category if this club is not a participant (e.g. CGSS in Senhoras)
+                  const catParticipants: string[] | undefined = (rcat as any).participants;
+                  if (catParticipants && !catParticipants.includes(cl.key)) return null;
                   const catLabel = catCfg.find(c => c.key === rcat.key)?.label ?? rcat.key;
                   const catTotal = rcat.dias.reduce((s, dia) => s + (dia.subtotal[cl.key] ?? 0), 0);
                   const allMatches = rcat.dias.flatMap(dia => dia.matches ?? []);
+                  // Opponents: filtered by category participants when defined
+                  const catOpps = catParticipants
+                    ? opps.filter(o => catParticipants.includes(o.key))
+                    : opps;
                   return (
                     <div key={rcat.key} style={{ borderTop: catIdx === 0 ? "none" : "1px solid var(--border)" }}>
-                      <div style={{
-                        background: "var(--bg-muted)", padding: "4px 12px",
-                        display: "flex", justifyContent: "space-between", alignItems: "center",
-                        fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-2)",
-                        borderBottom: "1px solid var(--border)",
-                      }}>
-                        <span>{catLabel}</span>
-                        {catTotal > 0 && <span style={{ color: MP_CLUB_COLOR }}>{fmtPts(catTotal)} pts</span>}
-                      </div>
                       <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "var(--fs-12)" }}>
                         <thead>
-                          <tr style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
-                            <th style={{ padding: "4px 10px", textAlign: "left", fontWeight: 600, background: "var(--bg-2)" }}>Jogador</th>
-                            {opps.map(opp => (
-                              <th key={opp.key} style={{ padding: "4px 8px", textAlign: "center", fontWeight: 600, background: "var(--bg-2)", whiteSpace: "nowrap" }}>
+                          <tr>
+                            <th colSpan={catOpps.length + 2} style={{
+                              padding: "5px 10px", textAlign: "left",
+                              background: "var(--bg-muted)", borderBottom: "1px solid var(--border)",
+                              fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-2)",
+                            }}>
+                              <span>{catLabel}</span>
+                              {catTotal > 0 && <span style={{ float: "right", color: MP_CLUB_COLOR }}>{fmtPts(catTotal)} pts</span>}
+                            </th>
+                          </tr>
+                          <tr style={{ background: "var(--bg-muted)", borderBottom: "1px solid var(--border)" }}>
+                            <th style={{ padding: "4px 10px", textAlign: "left", fontWeight: 700, fontSize: "var(--fs-11)", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.04em" }}>Jogador</th>
+                            {catOpps.map(opp => (
+                              <th key={opp.key} style={{ padding: "4px 8px", textAlign: "center", fontWeight: 700, fontSize: "var(--fs-11)", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.04em", whiteSpace: "nowrap" }}>
                                 vs {opp.shortName}
                               </th>
                             ))}
-                            <th style={{ padding: "4px 8px", textAlign: "center", fontWeight: 600, background: "var(--bg-2)" }}>Pts</th>
+                            <th style={{ padding: "4px 8px", textAlign: "center", fontWeight: 700, fontSize: "var(--fs-11)", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.04em" }}>Pts</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -402,20 +412,23 @@ function MatchPlayResultsTable({
                                     </span>
                                   )}
                                 </td>
-                                {opps.map(opp => {
+                                {catOpps.map(opp => {
                                   const h2hEntry = m.h2h?.find(h =>
                                     (h.w === cl.key && h.l === opp.key) || (h.l === cl.key && h.w === opp.key)
                                   );
-                                  const won = h2hEntry?.w === cl.key;
+                                  const isHalf = h2hEntry?.half === true;
+                                  const won = !isHalf && h2hEntry?.w === cl.key;
                                   const margin = h2hEntry?.margin;
                                   return (
                                     <td key={opp.key} style={{ padding: "8px 8px", textAlign: "center" }}>
                                       {h2hEntry ? (
-                                        <span style={{ fontSize: "var(--fs-11)", fontWeight: won ? 700 : 400, color: won ? MP_CLUB_COLOR : "var(--text-3)" }}>
+                                        isHalf ? (
+                                          <span style={{ fontSize: "var(--fs-11)", fontWeight: 500, color: "var(--text-2)" }}>½</span>
+                                        ) : (
+                                        <span style={{ fontSize: "var(--fs-11)", fontWeight: won ? 700 : 400, color: won ? "var(--accent)" : "var(--score-birdie)" }}>
                                           {won ? "✓" : "✗"}{margin ? <> <strong>{margin}</strong></> : ""}
                                         </span>
-                                      ) : pts != null ? (
-                                        <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>½</span>
+                                        )
                                       ) : (
                                         <span style={{ color: "var(--text-3)" }}>—</span>
                                       )}
@@ -444,205 +457,140 @@ function MatchPlayResultsTable({
         </div>
       </div>
 
-      {/* ══ DRAW DIA 1 ══════════════════════════════════════ */}
-      <div style={{ padding: "20px 16px 0" }}>
-        <div style={{ fontSize: "var(--fs-12)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px", color: "var(--text-2)", marginBottom: 12 }}>
-          Draw Dia 1
-          {results.course?.nome && <span style={{ fontWeight: 400, marginLeft: 8, textTransform: "none" }}>· {results.course.nome}</span>}
-          <span style={{ fontWeight: 400, marginLeft: 8, color: "var(--text-3)", textTransform: "none" }}>Match Play 3-way</span>
-        </div>
-        {catCfg.map(c => {
-          const rcat = results.categories.find(rc => rc.key === c.key);
-          if (!rcat) return null;
-          const allMatches = rcat.dias.flatMap(dia => dia.matches ?? []);
-          return (
-            <div key={c.key} style={{ marginBottom: 16 }}>
-              <div style={{ fontSize: "var(--fs-12)", color: "var(--text-2)", fontWeight: 600, marginBottom: 8 }}>{c.label}</div>
-              {allMatches.map(m => {
-                const mRec = m as unknown as Record<string, unknown>;
-                return (
-                  <div key={m.match} style={{ border: "1px solid var(--border)", borderRadius: 8, marginBottom: 10, overflow: "hidden" }}>
-                    <div style={{ background: "var(--bg-muted)", padding: "6px 12px", borderBottom: "1px solid var(--border)", fontSize: "var(--fs-12)", fontWeight: 700, display: "flex", alignItems: "center", gap: 8 }}>
-                      <span style={{ color: "var(--text-2)" }}>Match {m.match}</span>
-                      {m.h2h && m.h2h.length > 0 && (
-                        <span style={{ marginLeft: "auto", display: "flex", gap: 10, flexWrap: "wrap" }}>
-                          {m.h2h.map((h, i) => {
-                            const wCl = clubs.find(c2 => c2.key === h.w);
-                            const lCl = clubs.find(c2 => c2.key === h.l);
-                            return (
-                              <span key={i} style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", fontWeight: 400 }}>
-                                <strong style={{ color: MP_CLUB_COLOR }}>{wCl?.shortName ?? h.w}</strong>
-                                {" def. "}{lCl?.shortName ?? h.l}
-                                {h.margin ? <strong style={{ marginLeft: 3 }}> {h.margin}</strong> : null}
-                              </span>
-                            );
-                          })}
-                        </span>
-                      )}
-                    </div>
-                    <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "var(--fs-13)" }}>
-                      <tbody>
-                        {clubs.map((cl, ci) => {
-                          const player = m.players?.[cl.key];
-                          const pts = mRec[cl.key] as number | null | undefined;
-                          const maxPts = Math.max(...clubs.map(c2 => (mRec[c2.key] as number ?? -1)));
-                          const isWin = pts != null && pts === maxPts && pts > 0;
-                          return (
-                            <tr key={cl.key} style={{ borderTop: ci > 0 ? "1px solid var(--border)" : undefined, background: isWin ? "var(--accent-light,#eef6ef)" : undefined }}>
-                              <td style={{ padding: "8px 10px", width: 40, fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-2)" }}>{cl.shortName}</td>
-                              <td style={{ padding: "8px 4px", fontWeight: isWin ? 600 : 400 }}>
-                                {player?.name
-                                  ? (player.fed
-                                    ? <a href={`/jogadores/${player.fed}`} style={{ color: "var(--text-1)", textDecoration: "none" }}
-                                        onMouseOver={e => (e.currentTarget.style.textDecoration = "underline")}
-                                        onMouseOut={e => (e.currentTarget.style.textDecoration = "none")}>{player.name}</a>
-                                    : player.name)
-                                  : <span style={{ color: "var(--text-3)" }}>—</span>}
-                              </td>
-                              <td style={{ padding: "8px 12px", textAlign: "right", fontWeight: isWin ? 700 : 400, color: isWin ? MP_CLUB_COLOR : "var(--text-3)" }}>
-                                {pts != null ? fmtPts(pts) : ""}
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
-                  </div>
-                );
-              })}
-            </div>
-          );
-        })}
-      </div>
+      {/* ══ SCORECARDS — match play style (sem números, só resultado por buraco) ══ */}
+      {hasScorecards && (() => {
+        // Running match-play status (from clA perspective)
+        const mpRunning = (scA: (number|null)[], scB: (number|null)[]) => {
+          const n = par.length;
+          const statuses: { label: string; aLeads: boolean; bLeads: boolean; ended: boolean }[] = [];
+          let diff = 0; let ended = false;
+          for (let i = 0; i < n; i++) {
+            const a = scA[i], b = scB[i];
+            if (!ended && a != null && b != null) {
+              if (a < b) diff++; else if (a > b) diff--;
+            }
+            const rem = n - 1 - i;
+            if (ended) { statuses.push({ label: "", aLeads: diff > 0, bLeads: diff < 0, ended: true }); }
+            else if (Math.abs(diff) > rem) { statuses.push({ label: `${Math.abs(diff)}&${rem}`, aLeads: diff > 0, bLeads: diff < 0, ended: true }); ended = true; }
+            else if (diff === 0) { statuses.push({ label: "AS", aLeads: false, bLeads: false, ended: false }); }
+            else { statuses.push({ label: `${Math.abs(diff)}up`, aLeads: diff > 0, bLeads: diff < 0, ended: false }); }
+          }
+          return { statuses, diff };
+        };
 
-      {/* ══ SCORECARDS ══════════════════════════════════════ */}
-      {hasScorecards && (
-        <div style={{ padding: "20px 16px 0" }}>
-          <div style={{ fontSize: "var(--fs-12)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px", color: "var(--text-2)", marginBottom: 12 }}>Scorecards</div>
-          {catCfg.flatMap(c => {
-            const rcat = results.categories.find(rc => rc.key === c.key);
-            if (!rcat) return [];
-            return rcat.dias.flatMap(dia =>
-              (dia.matches ?? []).map(m => {
-                const withScores = clubs.filter(cl => (m.players?.[cl.key]?.scores?.length ?? 0) >= 9);
-                if (withScores.length < 2) return null;
-                return (
-                  <div key={`${dia.dia}-${m.match}`} style={{ marginBottom: 28 }}>
-                    <div style={{ fontSize: "var(--fs-12)", fontWeight: 700, color: "var(--text-2)", marginBottom: 10, textTransform: "uppercase", letterSpacing: "0.4px" }}>
-                      Match {m.match} — {c.label}
-                    </div>
-                    <div style={{ border: "1px solid var(--border)", borderRadius: 6, overflow: "hidden", marginBottom: 4, boxShadow: "0 1px 3px rgba(0,0,0,.06)" }}>
-                      <div style={{ overflowX: "auto" }}>
-                        <table style={{ borderCollapse: "collapse", width: "max-content", minWidth: "100%", fontSize: "var(--fs-11)" }}>
-                          <thead>
-                            <tr style={{ background: "var(--bg-2)" }}>
-                              <th style={{ ...cLbl, background: "var(--bg-2)", fontWeight: 700, color: "var(--text-2)" }}>Buraco</th>
-                              {f9.map(i => <th key={i} style={cSc}>{i + 1}</th>)}
-                              <th style={{ ...cSum, borderLeft: "2px solid var(--border)" }}>Out</th>
-                              {b9.map(i => <th key={i} style={cSc}>{i + 1}</th>)}
-                              <th style={{ ...cSum, borderLeft: "2px solid var(--border)" }}>In</th>
-                              <th style={{ ...cSum, borderLeft: "2px solid var(--border)" }}>Tot</th>
-                            </tr>
-                            <tr style={{ borderBottom: "2px solid var(--border)" }}>
-                              <th style={{ ...cLbl, fontWeight: 400, color: "var(--text-3)" }}>Par</th>
-                              {f9.map(i => <td key={i} style={{ ...cSc, color: "var(--text-3)" }}>{par[i]}</td>)}
-                              <td style={{ ...cSum, borderLeft: "2px solid var(--border)", color: "var(--text-3)", fontWeight: 400 }}>{f9.reduce((s, i) => s + (par[i] ?? 0), 0)}</td>
-                              {b9.map(i => <td key={i} style={{ ...cSc, color: "var(--text-3)" }}>{par[i]}</td>)}
-                              <td style={{ ...cSum, borderLeft: "2px solid var(--border)", color: "var(--text-3)", fontWeight: 400 }}>{b9.reduce((s, i) => s + (par[i] ?? 0), 0)}</td>
-                              <td style={{ ...cSum, borderLeft: "2px solid var(--border)", color: "var(--text-3)", fontWeight: 400 }}>{par.reduce((s, p) => s + p, 0)}</td>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {withScores.map((cl, ri) => {
-                              const player = m.players?.[cl.key];
-                              const sc = player?.scores ?? [];
-                              const f9sum = f9.reduce((s, i) => s + (sc[i] ?? 0), 0);
-                              const b9sum = b9.reduce((s, i) => s + (sc[i] ?? 0), 0);
-                              const tot = sc.reduce((s: number, v) => s + (v ?? 0), 0);
-                              const wins = m.h2h?.filter(h => h.w === cl.key) ?? [];
-                              const losses = m.h2h?.filter(h => h.l === cl.key) ?? [];
-                              return (
-                                <tr key={cl.key} style={{ borderTop: ri === 0 ? "none" : "1px solid var(--border)" }}>
-                                  <td style={cLbl}>
-                                    <div style={{ fontWeight: 600 }}>
-                                      <span style={{ fontSize: 10, color: "var(--text-3)", marginRight: 4 }}>{cl.shortName}</span>
-                                      {player?.name ?? cl.name}
-                                    </div>
-                                    <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 1 }}>
-                                      {wins.map((h, hi) => { const opp = clubs.find(c2 => c2.key === h.l); return <span key={`w${hi}`} style={{ fontSize: 10, color: MP_CLUB_COLOR }}>✓ {opp?.shortName ?? h.l}{h.margin ? ` ${h.margin}` : ""}</span>; })}
-                                      {losses.map((h, hi) => { const opp = clubs.find(c2 => c2.key === h.w); return <span key={`l${hi}`} style={{ fontSize: 10, color: "var(--text-3)" }}>✗ {opp?.shortName ?? h.w}{h.margin ? ` ${h.margin}` : ""}</span>; })}
-                                    </div>
-                                  </td>
-                                  {f9.map(i => { const g = sc[i]; return <td key={i} style={cSc}>{g != null ? <span style={{ display: "inline-block", width: 18, lineHeight: "18px", ...scCls(g, par[i]) }}>{g}</span> : <span style={{ color: "var(--text-3)" }}>–</span>}</td>; })}
-                                  <td style={{ ...cSum, borderLeft: "2px solid var(--border)" }}>{f9sum || "–"}</td>
-                                  {b9.map(i => { const g = sc[i]; return <td key={i} style={cSc}>{g != null ? <span style={{ display: "inline-block", width: 18, lineHeight: "18px", ...scCls(g, par[i]) }}>{g}</span> : <span style={{ color: "var(--text-3)" }}>–</span>}</td>; })}
-                                  <td style={{ ...cSum, borderLeft: "2px solid var(--border)" }}>{b9sum || "–"}</td>
-                                  <td style={{ ...cSum, borderLeft: "2px solid var(--border)" }}>{tot || "–"}</td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })
-            );
-          })}
-        </div>
-      )}
-
-      {/* ══ DRAW DIA 2 ══════════════════════════════════════ */}
-      {hasDraw2 && results.dia2 && (() => {
-        const d2 = results.dia2!;
-        const allGroups: (MpDrawGroup & { cat: string })[] = [];
-        for (const [catKey, groups] of Object.entries(d2.groups))
-          for (const g of groups) allGroups.push({ ...g, cat: catKey });
-        allGroups.sort((a, b) => a.teeTime.localeCompare(b.teeTime));
         return (
           <div style={{ padding: "20px 16px 0" }}>
-            <div style={{ fontSize: "var(--fs-12)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px", color: "var(--text-2)", marginBottom: 10 }}>
-              Draw Dia 2
-              {d2.campo && <span style={{ fontWeight: 400, marginLeft: 8, textTransform: "none" }}>· {d2.campo}</span>}
-              {d2.date && <span style={{ fontWeight: 400, color: "var(--text-3)", marginLeft: 4, textTransform: "none" }}>· {d2.date}</span>}
-              {d2.modalidade && <span style={{ fontWeight: 400, color: "var(--text-3)", marginLeft: 4, textTransform: "none" }}>· {d2.modalidade}</span>}
-            </div>
-            {allGroups.map((g, i) => {
-              const catLabel = catCfg.find(c => c.key === g.cat)?.label ?? g.cat;
-              return (
-                <div key={i} style={{ border: "1px solid var(--border)", borderRadius: 8, marginBottom: 10, overflow: "hidden" }}>
-                  <div style={{ background: "var(--bg-2)", padding: "6px 12px", borderBottom: "1px solid var(--border)", fontSize: "var(--fs-12)", fontWeight: 600, display: "flex", gap: 10, alignItems: "center" }}>
-                    <span>{g.teeTime}</span>
-                    <span style={{ color: "var(--text-3)", fontWeight: 400 }}>{catLabel}</span>
-                    {g.tee && <span style={{ color: "var(--text-3)", fontWeight: 400 }}>· {g.tee}</span>}
-                  </div>
-                  <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "var(--fs-13)" }}>
-                    <tbody>
-                      {g.players.map((p, pi) => {
-                        const cl = clubs.find(c => c.key === p.club);
-                        return (
-                          <tr key={pi} style={{ borderTop: pi > 0 ? "1px solid var(--border)" : undefined }}>
-                            <td style={{ padding: "7px 10px", width: 40, fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-2)" }}>{cl?.shortName ?? p.club}</td>
-                            <td style={{ padding: "7px 4px" }}>
-                              {p.fed
-                                ? <a href={`/jogadores/${p.fed}`} style={{ color: "var(--text-1)", textDecoration: "none" }}
-                                    onMouseOver={e => (e.currentTarget.style.textDecoration = "underline")}
-                                    onMouseOut={e => (e.currentTarget.style.textDecoration = "none")}>{p.name}</a>
-                                : p.name}
-                            </td>
-                            {p.tee && <td style={{ padding: "7px 12px", fontSize: "var(--fs-11)", color: "var(--text-3)" }}>{p.tee}</td>}
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
+            <div style={{ fontSize: "var(--fs-12)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.5px", color: "var(--text-2)", marginBottom: 12 }}>Scorecards</div>
+            {catCfg.flatMap(c => {
+              const rcat = results.categories.find(rc => rc.key === c.key);
+              if (!rcat) return [];
+              return rcat.dias.flatMap(dia =>
+                (dia.matches ?? []).map(m => {
+                  const withScores = clubs.filter(cl => (m.players?.[cl.key]?.scores?.length ?? 0) >= 9);
+                  if (withScores.length < 2) return null;
+
+                  // Pairs for match rows
+                  const pairs: [typeof clubs[0], typeof clubs[0]][] = [];
+                  for (let i = 0; i < withScores.length; i++)
+                    for (let j = i + 1; j < withScores.length; j++)
+                      pairs.push([withScores[i], withScores[j]]);
+
+                  const cMatch: React.CSSProperties = { ...cSc, fontSize: 9, fontWeight: 500, padding: "5px 3px" };
+
+                  return (
+                    <div key={`${dia.dia}-${m.match}`} style={{ marginBottom: 28 }}>
+                      <div style={{ fontSize: "var(--fs-12)", fontWeight: 700, color: "var(--text-2)", marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.4px" }}>
+                        Match {m.match} — {c.label}
+                      </div>
+
+                      {/* Player summary */}
+                      <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 10 }}>
+                        {withScores.map(cl => {
+                          const player = m.players?.[cl.key];
+                          const pts = m[cl.key as keyof MpMatch] as number | undefined;
+                          const isTop = pts != null && withScores.every(c2 => (m[c2.key as keyof MpMatch] as number ?? 0) <= pts);
+                          return (
+                            <div key={cl.key} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                              <span style={{ fontSize: 10, fontWeight: 700, color: isTop ? "var(--accent)" : "var(--text-3)", textTransform: "uppercase" }}>{cl.shortName}</span>
+                              <span style={{ fontSize: "var(--fs-12)", fontWeight: 600, color: "var(--text-1)" }}>{player?.name ?? cl.name}</span>
+                              {player?.gross != null && <span style={{ fontSize: 10, color: "var(--text-3)" }}>{player.gross}{player.toPar != null ? ` (${player.toPar >= 0 ? "+" : ""}${player.toPar})` : ""}</span>}
+                              <span style={{ display: "flex", gap: 4 }}>
+                                {(m.h2h ?? []).filter(h => h.w === cl.key && !h.half).map((h, hi) => { const opp = clubs.find(c2 => c2.key === h.l); return <span key={hi} style={{ fontSize: 10, color: "var(--accent)" }}>✓ {opp?.shortName}{h.margin ? ` ${h.margin}` : ""}</span>; })}
+                                {(m.h2h ?? []).filter(h => h.l === cl.key && !h.half).map((h, hi) => { const opp = clubs.find(c2 => c2.key === h.w); return <span key={hi} style={{ fontSize: 10, color: "var(--text-3)" }}>✗ {opp?.shortName}{h.margin ? ` ${h.margin}` : ""}</span>; })}
+                                {(m.h2h ?? []).filter(h => h.half && (h.w === cl.key || h.l === cl.key)).map((h, hi) => { const opp = clubs.find(c2 => c2.key === (h.w === cl.key ? h.l : h.w)); return <span key={hi} style={{ fontSize: 10, color: "var(--text-2)" }}>½ {opp?.shortName}</span>; })}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Match table — one "Match" row per pair */}
+                      <div style={{ border: "1px solid var(--border)", borderRadius: 6, overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,.06)" }}>
+                        <div style={{ overflowX: "auto" }}>
+                          <table style={{ borderCollapse: "collapse", width: "max-content", minWidth: "100%", fontSize: "var(--fs-11)" }}>
+                            <thead>
+                              <tr style={{ background: "var(--bg-2)", borderBottom: "2px solid var(--border)" }}>
+                                <th style={{ ...cLbl, fontWeight: 700, color: "var(--text-2)" }}>Match</th>
+                                {f9.map(i => <th key={i} style={cSc}>{i + 1}</th>)}
+                                <th style={{ ...cSum, borderLeft: "2px solid var(--border)" }} />
+                                {b9.map(i => <th key={i} style={cSc}>{i + 1}</th>)}
+                                <th style={{ ...cSum, borderLeft: "2px solid var(--border)" }} />
+                                <th style={{ ...cSum, borderLeft: "2px solid var(--border)" }}>Resultado</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {pairs.map(([clA, clB], pi) => {
+                                const scA = m.players?.[clA.key]?.scores ?? [];
+                                const scB = m.players?.[clB.key]?.scores ?? [];
+                                const { statuses, diff } = mpRunning(scA, scB);
+                                const winner = diff > 0 ? clA : diff < 0 ? clB : null;
+                                const finalEntry = m.h2h?.find(h =>
+                                  (h.w === clA.key && h.l === clB.key) || (h.w === clB.key && h.l === clA.key)
+                                );
+                                const finalLabel = finalEntry?.half ? "½" : finalEntry ? `${finalEntry.margin ?? (diff > 0 ? clA.shortName : clB.shortName + " ganha")}` : (winner ? `${Math.abs(diff)}up` : "AS");
+                                const cellColor = (s: typeof statuses[0]) => {
+                                  if (!s || s.label === "" || s.ended && s.label === "") return "var(--text-3)";
+                                  if (s.label === "AS") return "var(--text-3)";
+                                  if (s.aLeads) return "var(--accent)";
+                                  if (s.bLeads) return "#b45309";
+                                  return "var(--text-2)";
+                                };
+                                return (
+                                  <tr key={pi} style={{ borderTop: pi === 0 ? "none" : "1px solid var(--border)" }}>
+                                    <td style={{ ...cLbl, fontStyle: "normal" }}>
+                                      <span style={{ color: "var(--accent)", fontWeight: 700 }}>{clA.shortName}</span>
+                                      <span style={{ color: "var(--text-3)", margin: "0 4px" }}>vs</span>
+                                      <span style={{ color: "#b45309", fontWeight: 700 }}>{clB.shortName}</span>
+                                    </td>
+                                    {f9.map((i, fi) => {
+                                      const s = statuses[i];
+                                      return <td key={i} style={{ ...cMatch, color: s ? cellColor(s) : "var(--text-3)" }}>{s?.label || ""}</td>;
+                                    })}
+                                    <td style={{ ...cSum, borderLeft: "2px solid var(--border)" }} />
+                                    {b9.map(i => {
+                                      const s = statuses[i];
+                                      return <td key={i} style={{ ...cMatch, color: s ? cellColor(s) : "var(--text-3)", fontWeight: s?.ended ? 700 : 500 }}>{s?.label || ""}</td>;
+                                    })}
+                                    <td style={{ ...cSum, borderLeft: "2px solid var(--border)" }} />
+                                    <td style={{ ...cSum, borderLeft: "2px solid var(--border)", fontWeight: 700, color: finalEntry?.half ? "var(--text-2)" : winner ? (winner.key === clA.key ? "var(--accent)" : "#b45309") : "var(--text-3)" }}>
+                                      {finalLabel}
+                                    </td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
               );
             })}
           </div>
         );
       })()}
+
     </div>
   );
 
@@ -1425,7 +1373,15 @@ function Content() {
   // Lista filtrada por escalão dentro de Clubes, agrupada por ano
   const clubesList = useMemo(
     () => clubesTournaments
-      .filter(t => !filterManuel || t.players.some(p => isManuel(p)))
+      .filter(t => !filterManuel || t.players.some(p => isManuel(p)) || (() => {
+        const mp = (t as any).matchPlayResults as MatchPlayData | undefined;
+        if (!mp) return false;
+        return mp.categories.some(cat => cat.dias.some(dia =>
+          (dia.matches ?? []).some(m => Object.values(m.players ?? {}).some(
+            (p: any) => p.fed === "52884" || isManuel({ name: p.name ?? "" } as any)
+          ))
+        ));
+      })())
       .filter(t => yearMatchesFilter((t as any)._clubesYear ?? t.date?.substring(0, 4), yearFilter))
       .filter(t => matchesSearch(t))
       .sort((a, b) => {
@@ -2405,6 +2361,8 @@ function Content() {
                       const _fmt = CLUBES_TEAM_FORMAT[`${curClubes.ccode}-${curClubes.tcode}`];
                       const _mp = _fmt?.matchPlay ? (curClubes as any).matchPlayResults as MatchPlayData | undefined : undefined;
                       const _par = _mp?.course?.par ?? [];
+                      const _meters = _mp?.course?.meters ?? [];
+                      const _tee = _mp?.course?.tee;
                       // Sintetizar jogadores do match play para que AllRoundsScorecardLB os mostre
                       const _mpPlayers = _mp && _par.length > 0
                         ? _mp.categories.flatMap(cat =>
@@ -2426,13 +2384,16 @@ function Content() {
                                     scores: p.scores,
                                     par: _par,
                                     nholes: 18,
+                                    teeName: _tee,
+                                    meters: _meters,
                                     roundScores: [{
                                       round: 1,
                                       gross,
                                       scores: p.scores,
                                       pars: _par,
                                       si: [],
-                                      meters: [],
+                                      meters: _meters,
+                                      teeName: _tee,
                                     }],
                                   };
                                 }).filter((x): x is NonNullable<typeof x> => x !== null)
