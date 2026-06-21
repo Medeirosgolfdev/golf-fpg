@@ -31,7 +31,7 @@ import { TOURNAMENT_EXTRA_LINKS } from "./constants";
 import PrintButton from "../../ui/PrintButton";
 import PrintPJAButton from "../../ui/PrintPJAButton";
 
-function TournamentDetail({ tournament, escLookup, playersDB }: { tournament: Tournament; escLookup: EscLookup; playersDB: PlayersDB }) {
+function TournamentDetail({ tournament, escLookup, playersDB, extraTabs }: { tournament: Tournament; escLookup: EscLookup; playersDB: PlayersDB; extraTabs?: { key: string; label: string; content: React.ReactNode }[] }) {
   const isMulti = (tournament.rounds || 1) > 1 && tournament.players.some(p => (p.roundScores?.length ?? 0) > 1);
   const nRounds = tournament.rounds || 1;
   const hasAnyRounds = (tournament.players?.length ?? 0) > 0;
@@ -118,8 +118,12 @@ function TournamentDetail({ tournament, escLookup, playersDB }: { tournament: To
       const drawKeys = [...drawsByRound.keys()].sort((a, b) => a - b);
       for (const r of drawKeys) out.push({ key: `draw:${r}`, label: `Draw R${r}` });
     }
+    // Tabs extra injectadas pelo parent (ex: scorecards de match play)
+    for (const et of extraTabs ?? []) {
+      if (!out.some(t => t.key === et.key)) out.push({ key: et.key, label: et.label });
+    }
     return out;
-  }, [hasAdmissions, isMulti, expanded, drawsByRound, hasAnyRounds]);
+  }, [hasAdmissions, isMulti, expanded, drawsByRound, hasAnyRounds, extraTabs]);
 
   // Tab activa = URL state (?tab=KEY). Permite deep-links como
   //   /FPG/torneio/000-10935?tab=draw:1   → abre directo no Draw R1
@@ -359,37 +363,41 @@ function TournamentDetail({ tournament, escLookup, playersDB }: { tournament: To
       )}
 
       {/* Conteúdo */}
-      {isAdmissionsTab && admissions
-        ? <AdmissionsTab
+      {(() => {
+        // Extra tab injectada pelo parent (ex: scorecards de match play)
+        const extraTab = (extraTabs ?? []).find(et => et.key === activeKey);
+        if (extraTab) return extraTab.content;
+        if (isAdmissionsTab && admissions)
+          return <AdmissionsTab
             admissions={admissions}
             playersDB={playersDB as any}
             date={tournament.date}
             fpgUrl={tournament.ccode && tournament.tcode ? `https://scoring.fpg.pt/lists/tournAdmissions.aspx?ccode=${tournament.ccode}&tcode=${tournament.tcode}` : undefined}
             tournamentEscalao={tournament.escalao || undefined}
             tournamentSex={/\bF\b|\bS\b|Feminino/i.test(tournament.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(tournament.name || "") ? "M" : undefined}
-          />
-        : isDrawTab
-          ? <DrawTab
-              draw={drawsByRound.get(drawRoundNum) || { groups: [] }}
-              roundNum={drawRoundNum}
-              playersDB={playersDB as any}
-              tournamentEscalao={tournament.escalao || undefined}
-              tournamentSex={/\bF\b|\bS\b|Feminino/i.test(tournament.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(tournament.name || "") ? "M" : undefined}
-              tournamentDate={tournament.date}
-              admissions={admissions}
-              results={drawResults}
-              fpgUrl={tournament.ccode && tournament.tcode ? `https://scoring.fpg.pt/lists/linkpage.aspx?page=draw&club=${tournament.ccode}&tourn=${tournament.tcode}&round=${drawRoundNum}&ack=8428ACK987` : undefined}
-            />
-          : isCombined
-            ? <AllRoundsScorecardLB tournament={tournament} escLookup={escLookup} playersDB={playersDB} />
-            : isAnaliseAroeiraTab
-              ? <Aroeira2AnaliseView tournament={tournament} />
-              : isAcc
-              ? <AccumulatedLB tournament={curT} nRounds={nRounds} escLookup={escLookup} playersDB={playersDB} />
-              : isRoundTab || !isMulti
-                ? <ScorecardLB tournament={curT} escLookup={escLookup} playersDB={playersDB} />
-                : null /* sem tabs válidas — pode ser torneio futuro sem admissions (unlikely) */
-      }
+          />;
+        if (isDrawTab)
+          return <DrawTab
+            draw={drawsByRound.get(drawRoundNum) || { groups: [] }}
+            roundNum={drawRoundNum}
+            playersDB={playersDB as any}
+            tournamentEscalao={tournament.escalao || undefined}
+            tournamentSex={/\bF\b|\bS\b|Feminino/i.test(tournament.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(tournament.name || "") ? "M" : undefined}
+            tournamentDate={tournament.date}
+            admissions={admissions}
+            results={drawResults}
+            fpgUrl={tournament.ccode && tournament.tcode ? `https://scoring.fpg.pt/lists/linkpage.aspx?page=draw&club=${tournament.ccode}&tourn=${tournament.tcode}&round=${drawRoundNum}&ack=8428ACK987` : undefined}
+          />;
+        if (isCombined)
+          return <AllRoundsScorecardLB tournament={tournament} escLookup={escLookup} playersDB={playersDB} />;
+        if (isAnaliseAroeiraTab)
+          return <Aroeira2AnaliseView tournament={tournament} />;
+        if (isAcc)
+          return <AccumulatedLB tournament={curT} nRounds={nRounds} escLookup={escLookup} playersDB={playersDB} />;
+        if (isRoundTab || !isMulti)
+          return <ScorecardLB tournament={curT} escLookup={escLookup} playersDB={playersDB} />;
+        return null;
+      })()}
     </div>
   );
 }
