@@ -581,7 +581,8 @@ function collectWins(junior: Junior, tournamentById: Map<string, Tournament>): W
     for (const f of t.flights || []) {
       const r = f.results.find((x) => x.juniorId === junior.id);
       if (r?.pos !== 1) continue;
-      const w = getTournWeight(t);
+      const flightFs = typeof f.fieldSize === "number" && f.fieldSize > 0 ? f.fieldSize : f.results.length;
+      const w = getTournWeight(t, flightFs);
       const date = t.date || t.startDate || "";
       out.push({
         tid,

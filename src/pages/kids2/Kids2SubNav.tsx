@@ -25,9 +25,10 @@ interface Props {
 
 const TABS: { to: string; label: string; match: (p: string) => boolean }[] = [
   { to: "/kids2", label: "🌍 Jogadores", match: (p) =>
-      p === "/kids2" || (/^\/kids2\/[^/]+$/.test(p) && p !== "/kids2/next-t" && p !== "/kids2/inscricoes") },
+      p === "/kids2" || (/^\/kids2\/[^/]+$/.test(p) && p !== "/kids2/next-t" && p !== "/kids2/inscricoes" && !p.startsWith("/kids2/ranking")) },
   { to: "/kids2/next-t", label: "📅 Próximos torneios", match: (p) => p === "/kids2/next-t" },
   { to: "/kids2/inscricoes", label: "📋 Inscrições", match: (p) => p === "/kids2/inscricoes" },
+  { to: "/kids2/ranking", label: "🏆 Ranking", match: (p) => p.startsWith("/kids2/ranking") },
 ];
 
 export default function Kids2SubNav({ leading, children }: Props) {

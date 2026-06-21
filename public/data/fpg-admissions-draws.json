@@ -9653,7 +9653,9 @@
             "hcp": 15.7,
             "vac": null,
             "dataInscricao": "2026/06/17 12:58",
-            "status": "confirmed"
+            "status": "confirmed",
+            "_substituido": true,
+            "_nota": "Substituído por Mafalda Sousa"
           },
           {
             "pos": 34,
@@ -9693,14 +9695,280 @@
             "hcp": 5.5,
             "vac": null,
             "dataInscricao": "2026/06/17 13:07",
-            "status": "confirmed"
+            "status": "confirmed",
+            "_substituido": true,
+            "_nota": "Substituído por António Spínola"
+          },
+          {
+            "pos": 38,
+            "fed": null,
+            "nome": "António Spínola",
+            "clube": "Santo da Serra",
+            "hcp": null,
+            "vac": null,
+            "status": "confirmed",
+            "_substituto": true,
+            "_substituiuFed": "2275"
+          },
+          {
+            "pos": 39,
+            "fed": null,
+            "nome": "Mafalda Sousa",
+            "clube": "Santo da Serra",
+            "hcp": null,
+            "vac": null,
+            "status": "confirmed",
+            "_substituto": true,
+            "_substituiuFed": "41124"
           }
         ],
         "date": "2026-06-20",
         "_url": "https://scoring.datagolf.pt/pt/tournAdmissions.aspx?ccode=059&tcode=10685",
         "scrapedAt": "2026-06-17T17:11:39.664Z"
       },
-      "draws": {},
+      "draws": {
+        "2": {
+          "date": "2026-06-21",
+          "modalidade": "Stroke Play",
+          "campo": "Palheiro Golf",
+          "tees": "Brancas (Homens) / Azuis (Senhoras) / Amarelas+Vermelhas (Juniores)",
+          "totalJogadores": 34,
+          "groups": [
+            {
+              "teeTime": "08:09",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "King, Mark",
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Hobley, Brandon",
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Carreira, José Francisco",
+                  "clube": "PXO Clube"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:18",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Rodrigues, José Duarte",
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Spínola, António",
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Ramsden, Andrew",
+                  "clube": "PXO Clube"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:27",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Petim, André",
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Moniz, José Xavier",
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Pereira, Miguel",
+                  "clube": "PXO Clube"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:36",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Kirchel, Oliver",
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Cunha, Henrique",
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Cornelissen, Hindrik",
+                  "clube": "PXO Clube"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:45",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Falsner, Joen",
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Reis Alves, Rafael",
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Amaro, Victor",
+                  "clube": "PXO Clube"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:54",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Camacho, Pedro",
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Henriques, Alexandre",
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Silva, Paulo",
+                  "clube": "PXO Clube"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:03",
+              "startHole": 1,
+              "tee": "Azuis",
+              "players": [
+                {
+                  "nome": "Handa, Élia",
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Pereira, Fátima",
+                  "clube": "PXO Clube"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:12",
+              "startHole": 1,
+              "tee": "Azuis",
+              "players": [
+                {
+                  "nome": "Riley, Gill Riley",
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Sousa, Elisabete",
+                  "clube": "PXO Clube"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:21",
+              "startHole": 1,
+              "tee": "Amarelas/Vermelhas",
+              "players": [
+                {
+                  "nome": "Gonçalves, André",
+                  "clube": "Palheiro",
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Sousa, Mafalda",
+                  "clube": "Santo da Serra",
+                  "tee": "Vermelhas"
+                },
+                {
+                  "nome": "Câmara, Tomás",
+                  "clube": "PXO Clube",
+                  "tee": "Amarelas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:30",
+              "startHole": 1,
+              "tee": "Amarelas/Vermelhas",
+              "players": [
+                {
+                  "nome": "Cunha, Maria",
+                  "clube": "Palheiro",
+                  "tee": "Vermelhas"
+                },
+                {
+                  "nome": "Gouveia, Gonçalo",
+                  "clube": "Santo da Serra",
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Santos, Laura",
+                  "clube": "PXO Clube",
+                  "tee": "Vermelhas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:39",
+              "startHole": 1,
+              "tee": "Amarelas/Vermelhas",
+              "players": [
+                {
+                  "nome": "Miranda, José Pedro",
+                  "clube": "Palheiro",
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Câmara, Maria",
+                  "clube": "Santo da Serra",
+                  "tee": "Vermelhas"
+                },
+                {
+                  "nome": "Brito, Rafael",
+                  "clube": "PXO Clube",
+                  "tee": "Amarelas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:48",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Rodrigues, Salvador",
+                  "clube": "Palheiro",
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Goulartt Medeiros, Manuel",
+                  "clube": "Santo da Serra",
+                  "tee": "Amarelas"
+                },
+                {
+                  "nome": "Santos, Santiago",
+                  "clube": "PXO Clube",
+                  "tee": "Amarelas"
+                }
+              ]
+            }
+          ]
+        }
+      },
       "_manual": true
     },
     {

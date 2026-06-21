@@ -196,7 +196,8 @@ function collectAllWins(data: CanonicalData, junior: Junior, filterTids?: Set<st
       if (r?.pos !== 1) continue;
       if (seenTid.has(tid)) continue; // 1 win per tournament
       seenTid.add(tid);
-      const w = getTournWeight(t);
+      const flightFs = typeof f.fieldSize === "number" && f.fieldSize > 0 ? f.fieldSize : f.results.length;
+      const w = getTournWeight(t, flightFs);
       // ±par do junior (preferir explícito, senão calcular)
       const parTotal = f.par?.reduce((a, b) => a + (b || 0), 0) || t.parTotal || 0;
       const grosses = (r.rounds || []).map((rd) => rd.gross).filter((g): g is number => typeof g === "number");

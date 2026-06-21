@@ -76,7 +76,7 @@ function mkTournament(
     sourceId: "uskids",
     sourceKey: id.replace(/[^0-9]/g, "") || id,
     name: `Test ${id}`,
-    date: "2025-06-01",
+    date: "2026-06-01",
     parTotal: par18,
     holesPerRound: 18,
     ...(opts.rounds != null ? { rounds: opts.rounds } : {}),
@@ -188,12 +188,22 @@ describe("countWins / countTop3", () => {
    computeTier
    ------------------------------------------------------------------ */
 describe("computeTier", () => {
-  it("devolve null com < 2 posicoes conhecidas", () => {
+  it("devolve null sem nenhuma posicao conhecida", () => {
     const r = mkRival("u1", "X", ["t1"]);
+    // torneio existe mas o jogador não tem pos (null) → posCount=0 → null
+    const ti = mkTournamentByMap([
+      mkTournament("t1", "Boys 11", [{ juniorId: "u1", pos: null }]),
+    ]);
+    expect(computeTier(r, ti)).toBeNull();
+  });
+
+  it("1 resultado num torneio local da tier developing", () => {
+    const r = mkRival("u1", "Solo", ["t1"]);
     const ti = mkTournamentByMap([
       mkTournament("t1", "Boys 11", [{ juniorId: "u1", pos: 1 }]),
     ]);
-    expect(computeTier(r, ti)).toBeNull();
+    // Sem fieldSize → stars=1.5, fMult=0.50; 1.5×0.50×10 = 7.5 → developing (≥2, <10)
+    expect(computeTier(r, ti)).toBe("developing");
   });
 
   it("Elite: vitoria num torneio 5 estrelas (4 rondas, campo grande)", () => {
@@ -206,7 +216,7 @@ describe("computeTier", () => {
     expect(getTierLabel("elite")).toBe("Elite");
   });
 
-  it("Strong: 5 vitorias em local tours 1 estrela -- nao chega a Elite", () => {
+  it("Strong: 5 vitorias em local tours -- nao chega a Elite", () => {
     const r = mkRival("u1", "LocalKing", ["t1", "t2", "t3", "t4", "t5", "t6"]);
     const ti = mkTournamentByMap([
       mkTournament("t1", "B11", [{ juniorId: "u1", pos: 1 }]),
@@ -252,37 +262,39 @@ describe("computeCareerScore -- bonus sub-par", () => {
       mkTournament("t2", "B11", [{ juniorId: "u1", pos: 2 }]),
     ]);
     const score = computeCareerScore(r, ti)!;
-    // t1: pos1 = 10; t2: pos2 = 7; ambos x(1 estrela x 0.6 sem fieldSize) = 6 + 4.2 = 10.2
-    expect(score).toBeCloseTo(10.2, 3);
+    // Sem fieldSize → stars=1.5, fMult=0.50; posScore(1)=10, posScore(2)=8
+    // t1: 1.5×0.50×10 = 7.5 | t2: 1.5×0.50×8 = 6.0 | total = 13.5
+    expect(score).toBeCloseTo(13.5, 3);
   });
 
   it("bonus x1.3 quando toPar=-3", () => {
     const r = mkRival("u1", "SubPar", ["t1", "t2"]);
     const t1: Tournament = {
       id: "t1", sourceId: "uskids", sourceKey: "1",
-      name: "T1", date: "2025-06-01", parTotal: 72, holesPerRound: 18, rounds: 1, flights: [
+      name: "T1", date: "2026-06-01", parTotal: 72, holesPerRound: 18, rounds: 1, flights: [
         { flightKey: "b11", label: "B11", ageMin: 11, ageMax: 11, sex: "M",
           results: [{ juniorId: "u1", pos: 1, toPar: -3, status: "OK" }] },
       ], links: [],
     };
     const t2: Tournament = {
       id: "t2", sourceId: "uskids", sourceKey: "2",
-      name: "T2", date: "2025-06-08", parTotal: 72, holesPerRound: 18, rounds: 1, flights: [
+      name: "T2", date: "2026-06-08", parTotal: 72, holesPerRound: 18, rounds: 1, flights: [
         { flightKey: "b11", label: "B11", ageMin: 11, ageMax: 11, sex: "M",
           results: [{ juniorId: "u1", pos: 2, toPar: 0, status: "OK" }] },
       ], links: [],
     };
     const ti = new Map([["t1", t1], ["t2", t2]]);
     const score = computeCareerScore(r, ti)!;
-    // t1: 1x0.6x10 x 1.3 (toPar=-3) = 7.8 | t2: 1x0.6x7 = 4.2
-    expect(score).toBeCloseTo(7.8 + 4.2, 3);
+    // Sem fieldSize → stars=1.5, fMult=0.50
+    // t1: 1.5×0.50×10×1.3(toPar=-3) = 9.75 | t2: 1.5×0.50×8 = 6.0 | total = 15.75
+    expect(score).toBeCloseTo(9.75 + 6.0, 3);
   });
 
   it("bonus capped a x1.5 quando toPar <= -5", () => {
     const r = mkRival("u1", "Eagle", ["t1", "t2"]);
     const t1: Tournament = {
       id: "t1", sourceId: "uskids", sourceKey: "1",
-      name: "T1", date: "2025-06-01", parTotal: 72, holesPerRound: 18, rounds: 1, flights: [
+      name: "T1", date: "2026-06-01", parTotal: 72, holesPerRound: 18, rounds: 1, flights: [
         { flightKey: "b11", label: "B11", ageMin: 11, ageMax: 11, sex: "M",
           results: [{ juniorId: "u1", pos: 1, toPar: -10, status: "OK" }] },
       ], links: [],
@@ -290,8 +302,9 @@ describe("computeCareerScore -- bonus sub-par", () => {
     const t2 = mkTournament("t2", "B11", [{ juniorId: "u1", pos: 3 }]);
     const ti = new Map([["t1", t1], ["t2", t2]]);
     const score = computeCareerScore(r, ti)!;
-    // t1: 1x0.6x10 x 1.5(cap) = 9.0 | t2: 1x0.6x5 = 3.0 | total = 12.0
-    expect(score).toBeCloseTo(9.0 + 3.0, 3);
+    // Sem fieldSize → stars=1.5, fMult=0.50; posScore(3)=6
+    // t1: 1.5×0.50×10×1.5(cap) = 11.25 | t2: 1.5×0.50×6 = 4.5 | total = 15.75
+    expect(score).toBeCloseTo(11.25 + 4.5, 3);
   });
 });
 
@@ -464,28 +477,97 @@ describe("categorizeTournamentLinks", () => {
 });
 
 /* ------------------------------------------------------------------
+   computeCareerScore -- bonus de distância
+   ------------------------------------------------------------------ */
+describe("computeCareerScore -- bonus distancia", () => {
+  /** Cria torneio com yards[] e par[] definidos para simular campo de N metros. */
+  function mkTournWithYards(id: string, totalYards: number, pos: number): Tournament {
+    // 18 buracos de par 4, yards iguais
+    const yardsPerHole = Math.round(totalYards / 18);
+    return {
+      id, sourceId: "uskids", sourceKey: id,
+      name: `Test ${id}`, date: "2026-06-01",
+      parTotal: 72, holesPerRound: 18, rounds: 1,
+      flights: [{
+        flightKey: "b12", label: "Boys 12", ageMin: 12, ageMax: 12, sex: "M",
+        par: Array(18).fill(4),
+        yards: Array(18).fill(yardsPerHole),
+        results: [{ juniorId: "u1", pos, status: "OK" }],
+      }],
+      links: [],
+    };
+  }
+
+  it("sem yards definidos usa dMult=1.0 (sem bonus)", () => {
+    const r = mkRival("u1", "X", ["t1"]);
+    const ti = mkTournamentByMap([mkTournament("t1", "B12", [{ juniorId: "u1", pos: 1 }])]);
+    const score = computeCareerScore(r, ti)!;
+    // stars=1.5, fMult=0.50, posScore=10, recency=1.0, dMult=1.0
+    expect(score).toBeCloseTo(1.5 * 0.50 * 10 * 1.0, 2);
+  });
+
+  it("campo curto (<4400m = ~4812yds) tem dMult=1.0", () => {
+    // 4200 yards × 0.9144 ≈ 3841m → <4400 → dMult=1.00
+    const r = mkRival("u1", "X", ["t1"]);
+    const ti = mkTournamentByMap([mkTournWithYards("t1", 4200, 1)]);
+    const score = computeCareerScore(r, ti)!;
+    expect(score).toBeCloseTo(1.5 * 0.50 * 10 * 1.00, 2);
+  });
+
+  it("campo medio (5000-5100m = ~5468-5578yds) tem dMult=1.13", () => {
+    // 5500 yards × 0.9144 ≈ 5029m → 5000-5100 → dMult=1.13
+    const r = mkRival("u1", "X", ["t1"]);
+    const ti = mkTournamentByMap([mkTournWithYards("t1", 5500, 1)]);
+    const score = computeCareerScore(r, ti)!;
+    expect(score).toBeCloseTo(1.5 * 0.50 * 10 * 1.13, 2);
+  });
+
+  it("campo longo (+5500m = ~6015yds+) tem dMult=1.60", () => {
+    // 6200 yards × 0.9144 ≈ 5669m → ≥5500 → dMult=1.60
+    const r = mkRival("u1", "X", ["t1"]);
+    const ti = mkTournamentByMap([mkTournWithYards("t1", 6200, 1)]);
+    const score = computeCareerScore(r, ti)!;
+    expect(score).toBeCloseTo(1.5 * 0.50 * 10 * 1.60, 2);
+  });
+});
+
+/* ------------------------------------------------------------------
    getTournWeight + formatStars
    ------------------------------------------------------------------ */
 describe("getTournWeight", () => {
-  it("da 5 estrelas a um torneio maximo (4 rondas, 300 inscritos, 20 nacoes)", () => {
+  it("da 5.5 estrelas a um torneio WC (3 rondas, 150 inscritos, 30 nacoes)", () => {
     const t: Tournament = {
       id: "t1", sourceId: "uskids", sourceKey: "1",
-      rounds: 4,
-      flights: [{ flightKey: "all", label: "All", fieldSize: 300, results: [] }],
-      extra: { nationsCount: 20 },
+      rounds: 3,
+      flights: [{ flightKey: "all", label: "All", fieldSize: 150, results: [] }],
+      extra: { nationsCount: 30 },
     };
     const w = getTournWeight(t);
-    expect(w.stars).toBe(5);
-    expect(w.score).toBeGreaterThanOrEqual(0.85);
+    // 0.50×0.85 + 0.35×0.50 + 0.15×1.0 = 0.750 → ≥0.70 → 5.5★
+    expect(w.stars).toBe(5.5);
+    expect(w.score).toBeGreaterThanOrEqual(0.70);
   });
-  it("da 1 estrela a um torneio pequeno (1 ronda, poucos inscritos)", () => {
+
+  it("da 5 estrelas a um EC (3 rondas, 60 inscritos, 15 nacoes)", () => {
+    const t: Tournament = {
+      id: "t1", sourceId: "uskids", sourceKey: "1",
+      rounds: 3,
+      flights: [{ flightKey: "all", label: "All", fieldSize: 60, results: [] }],
+      extra: { nationsCount: 15 },
+    };
+    const w = getTournWeight(t);
+    // 0.50×0.85 + 0.35×0.20 + 0.15×0.50 = 0.570 → ≥0.56 → 5★
+    expect(w.stars).toBe(5.0);
+  });
+  it("da 1.5 estrelas a um torneio pequeno (1 ronda, poucos inscritos)", () => {
     const t: Tournament = {
       id: "t1", sourceId: "uskids", sourceKey: "1",
       rounds: 1,
       flights: [{ flightKey: "all", label: "All", fieldSize: 5, results: [] }],
     };
     const w = getTournWeight(t);
-    expect(w.stars).toBe(1);
+    // 0.60×0.20 + 0.40×(5/300) = 0.12 + 0.0067 = 0.1267 → ≥0.10 → 1.5★
+    expect(w.stars).toBe(1.5);
   });
   it("infere nr de rondas pelo 1o resultado quando t.rounds nao esta definido", () => {
     const t: Tournament = {
@@ -499,11 +581,15 @@ describe("getTournWeight", () => {
       }],
     };
     const w = getTournWeight(t);
-    expect(w.parts.rounds).toBeCloseTo(3 / 4, 5);
+    // rondas não-linear: 3 rondas → 0.85
+    expect(w.parts.rounds).toBeCloseTo(0.85, 5);
   });
-  it("formatStars devolve 5 caracteres com mix estrelas", () => {
+  it("formatStars — inteiros e meias-estrelas", () => {
     expect(formatStars(3)).toBe("★★★☆☆");
     expect(formatStars(0)).toBe("☆☆☆☆☆");
     expect(formatStars(5)).toBe("★★★★★");
+    expect(formatStars(4.5)).toBe("★★★★½");   // 4 full + ½, 0 empty
+    expect(formatStars(5.5)).toBe("★★★★★½"); // 5 full + ½ (acima do tecto de 5)
+    expect(formatStars(2.5)).toBe("★★½☆☆");  // 2 full + ½ + 2 empty
   });
 });

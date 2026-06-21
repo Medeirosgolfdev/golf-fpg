@@ -10685,7 +10685,678 @@
       "rounds": 2,
       "playerCount": 0,
       "players": [],
-      "_upcoming": true
+      "matchPlayResults": {
+        "lastUpdated": "2026-06-20",
+        "clubs": [
+          {
+            "key": "CGSS",
+            "name": "C.G.S.S.",
+            "shortName": "SdS"
+          },
+          {
+            "key": "PXO",
+            "name": "PXO Golf",
+            "shortName": "PXO"
+          },
+          {
+            "key": "CPG",
+            "name": "C.P. Golf",
+            "shortName": "CPG"
+          }
+        ],
+        "categories": [
+          {
+            "key": "H",
+            "label": "Homens",
+            "dias": [
+              {
+                "dia": 1,
+                "matches": [
+                  {
+                    "match": 1,
+                    "CGSS": 1,
+                    "PXO": 0,
+                    "CPG": 2,
+                    "players": {
+                      "CGSS": {
+                        "name": "Brandon Hobley",
+                        "fed": "20292"
+                      },
+                      "CPG": {
+                        "name": "José Duarte Rodrigues",
+                        "fed": "35256"
+                      },
+                      "PXO": {
+                        "name": "Paulo Silva"
+                      }
+                    }
+                  },
+                  {
+                    "match": 2,
+                    "CGSS": 1,
+                    "PXO": 0,
+                    "CPG": 2,
+                    "players": {
+                      "CGSS": {
+                        "name": "António Spínola"
+                      },
+                      "CPG": {
+                        "name": "André Petim",
+                        "fed": "52647"
+                      },
+                      "PXO": {
+                        "name": "PXO (por confirmar)"
+                      }
+                    }
+                  },
+                  {
+                    "match": 3,
+                    "CGSS": 1,
+                    "PXO": 0,
+                    "CPG": 2,
+                    "players": {
+                      "CGSS": {
+                        "name": "José Xavier Moniz",
+                        "fed": "23904"
+                      },
+                      "CPG": {
+                        "name": "André Petim",
+                        "fed": "52647"
+                      },
+                      "PXO": {
+                        "name": "Miguel Pereira",
+                        "fed": "25098"
+                      }
+                    }
+                  },
+                  {
+                    "match": 4,
+                    "CGSS": 1,
+                    "PXO": 0,
+                    "CPG": 2,
+                    "players": {
+                      "CGSS": {
+                        "name": "Henrique Cunha",
+                        "fed": "36844"
+                      },
+                      "CPG": {
+                        "name": "Oliver Kirchel",
+                        "fed": "49819"
+                      },
+                      "PXO": {
+                        "name": "Hindrik Cornelissen",
+                        "fed": "59287"
+                      }
+                    }
+                  },
+                  {
+                    "match": 5,
+                    "CGSS": 2,
+                    "PXO": 0,
+                    "CPG": 1,
+                    "players": {
+                      "CGSS": {
+                        "name": "Rafael Reis Alves",
+                        "fed": "40492"
+                      },
+                      "CPG": {
+                        "name": "Joen Falsner",
+                        "fed": "57871"
+                      },
+                      "PXO": {
+                        "name": "Victor Amaro",
+                        "fed": "38456"
+                      }
+                    }
+                  },
+                  {
+                    "match": 6,
+                    "CGSS": 2,
+                    "PXO": 0,
+                    "CPG": 1,
+                    "players": {
+                      "CGSS": {
+                        "name": "Alexandre Henriques",
+                        "fed": "2178"
+                      },
+                      "CPG": {
+                        "name": "Pedro Camacho",
+                        "fed": "30570"
+                      },
+                      "PXO": {
+                        "name": "Paulo Silva",
+                        "fed": "25101"
+                      }
+                    }
+                  }
+                ],
+                "subtotal": {
+                  "CGSS": 8,
+                  "PXO": 0,
+                  "CPG": 10
+                }
+              }
+            ]
+          },
+          {
+            "key": "S",
+            "label": "Senhoras",
+            "note": "Encontro a 2 — CGSS sem jogadoras inscritas nesta categoria",
+            "dias": [
+              {
+                "dia": 1,
+                "matches": [
+                  {
+                    "match": 1,
+                    "CGSS": null,
+                    "PXO": 0,
+                    "CPG": 1,
+                    "players": {
+                      "CPG": {
+                        "name": "Élia Handa",
+                        "fed": "10404"
+                      },
+                      "PXO": {
+                        "name": "Elisabete Sousa",
+                        "fed": "48346"
+                      }
+                    }
+                  },
+                  {
+                    "match": 2,
+                    "CGSS": null,
+                    "PXO": 1,
+                    "CPG": 0,
+                    "players": {
+                      "CPG": {
+                        "name": "Gill Riley",
+                        "fed": "18226"
+                      },
+                      "PXO": {
+                        "name": "Fátima Pereira",
+                        "fed": "37274"
+                      }
+                    }
+                  }
+                ],
+                "subtotal": {
+                  "CGSS": 0,
+                  "PXO": 1,
+                  "CPG": 1
+                }
+              }
+            ]
+          },
+          {
+            "key": "J",
+            "label": "Juniores",
+            "dias": [
+              {
+                "dia": 1,
+                "matches": [
+                  {
+                    "match": 1,
+                    "CGSS": 2,
+                    "PXO": 0,
+                    "CPG": 1,
+                    "players": {
+                      "CGSS": {
+                        "name": "Manuel Medeiros",
+                        "fed": "52884",
+                        "gross": 80,
+                        "toPar": 8,
+                        "scores": [
+                          5,
+                          5,
+                          4,
+                          4,
+                          3,
+                          6,
+                          4,
+                          4,
+                          4,
+                          5,
+                          3,
+                          6,
+                          3,
+                          5,
+                          5,
+                          3,
+                          5,
+                          6
+                        ]
+                      },
+                      "CPG": {
+                        "name": "José Pedro Miranda",
+                        "fed": "38976",
+                        "gross": 83,
+                        "toPar": 11,
+                        "scores": [
+                          6,
+                          4,
+                          4,
+                          4,
+                          5,
+                          5,
+                          4,
+                          5,
+                          4,
+                          5,
+                          4,
+                          5,
+                          3,
+                          4,
+                          7,
+                          5,
+                          3,
+                          6
+                        ]
+                      },
+                      "PXO": {
+                        "name": "Tomás Câmara",
+                        "fed": "53548",
+                        "gross": null,
+                        "toPar": null,
+                        "scores": [
+                          7,
+                          5,
+                          5,
+                          5,
+                          3,
+                          6,
+                          3,
+                          4,
+                          6,
+                          4,
+                          4,
+                          6,
+                          4,
+                          6,
+                          7,
+                          null,
+                          null,
+                          6
+                        ]
+                      }
+                    },
+                    "h2h": [
+                      {
+                        "w": "CGSS",
+                        "l": "CPG",
+                        "margin": "1UP"
+                      },
+                      {
+                        "w": "CGSS",
+                        "l": "PXO",
+                        "margin": "5&4"
+                      },
+                      {
+                        "w": "CPG",
+                        "l": "PXO",
+                        "margin": "5&4"
+                      }
+                    ]
+                  },
+                  {
+                    "match": 2,
+                    "CGSS": 1,
+                    "PXO": 1.5,
+                    "CPG": 0.5,
+                    "players": {
+                      "CGSS": {
+                        "name": "Maria Câmara",
+                        "fed": "40990"
+                      },
+                      "CPG": {
+                        "name": "Salvador Rodrigues",
+                        "fed": "39465"
+                      },
+                      "PXO": {
+                        "name": "Laura Santos",
+                        "fed": "45393"
+                      }
+                    }
+                  },
+                  {
+                    "match": 3,
+                    "CGSS": 1,
+                    "PXO": 0,
+                    "CPG": 2,
+                    "players": {
+                      "CGSS": {
+                        "name": "Gonçalo Gouveia",
+                        "fed": "50398"
+                      },
+                      "CPG": {
+                        "name": "André Gonçalves",
+                        "fed": "41121"
+                      },
+                      "PXO": {
+                        "name": "Rafael Brito",
+                        "fed": "53532"
+                      }
+                    }
+                  },
+                  {
+                    "match": 4,
+                    "CGSS": 0.5,
+                    "PXO": 0.5,
+                    "CPG": 2,
+                    "players": {
+                      "CGSS": {
+                        "name": "Mafalda Sousa"
+                      },
+                      "CPG": {
+                        "name": "Maria Cunha",
+                        "fed": "46482"
+                      },
+                      "PXO": {
+                        "name": "Santiago Santos",
+                        "fed": "53687"
+                      }
+                    }
+                  }
+                ],
+                "subtotal": {
+                  "CGSS": 4.5,
+                  "PXO": 2,
+                  "CPG": 5.5
+                }
+              }
+            ]
+          }
+        ],
+        "dia2": {
+          "date": "2026-06-21",
+          "modalidade": "Match Play",
+          "campo": "Palheiro Golf",
+          "groups": {
+            "H": [
+              {
+                "teeTime": "08:09",
+                "tee": "Brancas",
+                "players": [
+                  {
+                    "name": "Mark King",
+                    "fed": "59046",
+                    "club": "CPG"
+                  },
+                  {
+                    "name": "Brandon Hobley",
+                    "fed": "20292",
+                    "club": "CGSS"
+                  },
+                  {
+                    "name": "José Francisco Carreira",
+                    "fed": "26438",
+                    "club": "PXO"
+                  }
+                ]
+              },
+              {
+                "teeTime": "08:18",
+                "tee": "Brancas",
+                "players": [
+                  {
+                    "name": "José Duarte Rodrigues",
+                    "fed": "35256",
+                    "club": "CPG"
+                  },
+                  {
+                    "name": "António Spínola",
+                    "club": "CGSS"
+                  },
+                  {
+                    "name": "Andrew Ramsden",
+                    "fed": "57261",
+                    "club": "PXO"
+                  }
+                ]
+              },
+              {
+                "teeTime": "08:27",
+                "tee": "Brancas",
+                "players": [
+                  {
+                    "name": "André Petim",
+                    "fed": "52647",
+                    "club": "CPG"
+                  },
+                  {
+                    "name": "José Xavier Moniz",
+                    "fed": "23904",
+                    "club": "CGSS"
+                  },
+                  {
+                    "name": "Miguel Pereira",
+                    "fed": "25098",
+                    "club": "PXO"
+                  }
+                ]
+              },
+              {
+                "teeTime": "08:36",
+                "tee": "Brancas",
+                "players": [
+                  {
+                    "name": "Oliver Kirchel",
+                    "fed": "49819",
+                    "club": "CPG"
+                  },
+                  {
+                    "name": "Henrique Cunha",
+                    "fed": "36844",
+                    "club": "CGSS"
+                  },
+                  {
+                    "name": "Hindrik Cornelissen",
+                    "fed": "59287",
+                    "club": "PXO"
+                  }
+                ]
+              },
+              {
+                "teeTime": "08:45",
+                "tee": "Brancas",
+                "players": [
+                  {
+                    "name": "Joen Falsner",
+                    "fed": "57871",
+                    "club": "CPG"
+                  },
+                  {
+                    "name": "Rafael Reis Alves",
+                    "fed": "40492",
+                    "club": "CGSS"
+                  },
+                  {
+                    "name": "Victor Amaro",
+                    "fed": "38456",
+                    "club": "PXO"
+                  }
+                ]
+              },
+              {
+                "teeTime": "08:54",
+                "tee": "Brancas",
+                "players": [
+                  {
+                    "name": "Pedro Camacho",
+                    "fed": "30570",
+                    "club": "CPG"
+                  },
+                  {
+                    "name": "Alexandre Henriques",
+                    "fed": "2178",
+                    "club": "CGSS"
+                  },
+                  {
+                    "name": "Paulo Silva",
+                    "fed": "25101",
+                    "club": "PXO"
+                  }
+                ]
+              }
+            ],
+            "S": [
+              {
+                "teeTime": "09:03",
+                "tee": "Azuis",
+                "players": [
+                  {
+                    "name": "Élia Handa",
+                    "fed": "10404",
+                    "club": "CPG"
+                  },
+                  {
+                    "name": "Fátima Pereira",
+                    "fed": "37274",
+                    "club": "PXO"
+                  }
+                ]
+              },
+              {
+                "teeTime": "09:12",
+                "tee": "Azuis",
+                "players": [
+                  {
+                    "name": "Gill Riley",
+                    "fed": "18226",
+                    "club": "CPG"
+                  },
+                  {
+                    "name": "Elisabete Sousa",
+                    "fed": "48346",
+                    "club": "PXO"
+                  }
+                ]
+              }
+            ],
+            "J": [
+              {
+                "teeTime": "09:21",
+                "tee": "Amarelas/Vermelhas",
+                "players": [
+                  {
+                    "name": "André Gonçalves",
+                    "fed": "41121",
+                    "club": "CPG",
+                    "tee": "Amarelas"
+                  },
+                  {
+                    "name": "Mafalda Sousa",
+                    "club": "CGSS",
+                    "tee": "Vermelhas"
+                  },
+                  {
+                    "name": "Tomás Câmara",
+                    "fed": "53548",
+                    "club": "PXO",
+                    "tee": "Amarelas"
+                  }
+                ]
+              },
+              {
+                "teeTime": "09:30",
+                "tee": "Amarelas/Vermelhas",
+                "players": [
+                  {
+                    "name": "Maria Cunha",
+                    "fed": "46482",
+                    "club": "CPG",
+                    "tee": "Vermelhas"
+                  },
+                  {
+                    "name": "Gonçalo Gouveia",
+                    "fed": "50398",
+                    "club": "CGSS",
+                    "tee": "Amarelas"
+                  },
+                  {
+                    "name": "Laura Santos",
+                    "fed": "45393",
+                    "club": "PXO",
+                    "tee": "Vermelhas"
+                  }
+                ]
+              },
+              {
+                "teeTime": "09:39",
+                "tee": "Amarelas/Vermelhas",
+                "players": [
+                  {
+                    "name": "José Pedro Miranda",
+                    "fed": "38976",
+                    "club": "CPG",
+                    "tee": "Amarelas"
+                  },
+                  {
+                    "name": "Maria Câmara",
+                    "fed": "40990",
+                    "club": "CGSS",
+                    "tee": "Vermelhas"
+                  },
+                  {
+                    "name": "Rafael Brito",
+                    "fed": "53532",
+                    "club": "PXO",
+                    "tee": "Amarelas"
+                  }
+                ]
+              },
+              {
+                "teeTime": "09:48",
+                "tee": "Amarelas",
+                "players": [
+                  {
+                    "name": "Salvador Rodrigues",
+                    "fed": "39465",
+                    "club": "CPG",
+                    "tee": "Amarelas"
+                  },
+                  {
+                    "name": "Manuel Medeiros",
+                    "fed": "52884",
+                    "club": "CGSS",
+                    "tee": "Amarelas"
+                  },
+                  {
+                    "name": "Santiago Santos",
+                    "fed": "53687",
+                    "club": "PXO",
+                    "tee": "Amarelas"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "course": {
+          "nome": "Palheiro Golf",
+          "tee": "Amarelas (Juniores)",
+          "par": [
+            4,
+            4,
+            3,
+            4,
+            3,
+            5,
+            3,
+            4,
+            4,
+            5,
+            3,
+            5,
+            3,
+            4,
+            5,
+            4,
+            4,
+            5
+          ],
+          "parTotal": 72
+        }
+      }
     }
   ]
 }

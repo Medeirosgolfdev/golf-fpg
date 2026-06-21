@@ -169,6 +169,445 @@ const CLUBES_TEAM_FORMAT: Record<string, {
   },
 };
 
+// ── 3-Way Match Play Results ──────────────────────────────────────────────
+interface MpPlayer { name: string; fed?: string; gross?: number | null; toPar?: number | null; scores?: (number | null)[]; }
+interface MpH2H    { w: string; l: string; margin: string | null; }
+interface MpMatch  {
+  match: number;
+  note?: string;
+  players?: Record<string, MpPlayer>;
+  h2h?: MpH2H[];
+}
+interface MpDia    { dia: number; matches?: MpMatch[]; subtotal: Record<string, number>; }
+interface MpCat    { key: string; label: string; note?: string; dias: MpDia[]; }
+interface MpDrawPlayer { name: string; fed?: string; club: string; tee?: string; }
+interface MpDrawGroup  { teeTime: string; tee?: string; players: MpDrawPlayer[]; }
+interface MatchPlayData {
+  lastUpdated?: string;
+  clubs: { key: string; name: string; shortName: string }[];
+  categories: MpCat[];
+  course?: { nome?: string; tee?: string; par: number[]; parTotal?: number; };
+  dia2?: {
+    date?: string;
+    modalidade?: string;
+    campo?: string;
+    groups: Record<string, MpDrawGroup[]>;
+  };
+}
+
+function MatchPlayResultsTable({
+  results,
+  categories: catCfg,
+}: {
+  results: MatchPlayData;
+  categories: { key: string; label: string; bestN: number }[];
+}) {
+  const [activeCat, setActiveCat] = useState(catCfg[0].key);
+  const [activeDay, setActiveDay] = useState<1 | 2>(1);
+  const clubs = results.clubs;
+  const cat = results.categories.find(c => c.key === activeCat);
+
+  const fmtPts = (v: number | null | undefined) => {
+    if (v == null) return "—";
+    if (v === 0.5) return "½";
+    if (v === 1.5) return "1½";
+    return String(v);
+  };
+
+  const cellWin: React.CSSProperties = {
+    background: "var(--accent-light, #eef6ef)",
+    fontWeight: 700,
+    color: "var(--score-birdie, #dc2626)",
+  };
+
+  // grand total across all days
+  const grand: Record<string, number> = {};
+  if (cat) {
+    for (const dia of cat.dias) {
+      for (const [k, v] of Object.entries(dia.subtotal)) {
+        grand[k] = (grand[k] ?? 0) + v;
+      }
+    }
+  }
+  const maxGrand = cat ? Math.max(...Object.values(grand)) : 0;
+
+  return (
+    <div style={{ padding: "0 0 24px" }}>
+      {/* Day tabs — só aparece se houver dia2 */}
+      {results.dia2 && (
+        <div style={{ display: "flex", gap: 0, borderBottom: "2px solid var(--border)", background: "var(--bg-2)" }}>
+          {([1, 2] as const).map(d => (
+            <button key={d} onClick={() => setActiveDay(d)}
+              style={{
+                padding: "10px 20px", border: "none", background: "none", cursor: "pointer",
+                fontSize: "var(--fs-13)", fontWeight: activeDay === d ? 700 : 400,
+                color: activeDay === d ? "var(--accent)" : "var(--text-2)",
+                borderBottom: activeDay === d ? "2px solid var(--accent)" : "2px solid transparent",
+                marginBottom: -2,
+              }}>
+              {d === 1 ? "Dia 1 — Match Play" : `Dia 2 — ${results.dia2?.modalidade ?? "Stroke Play"}`}
+            </button>
+          ))}
+        </div>
+      )}
+      {/* Category tabs */}
+      <div style={{ display: "flex", gap: 4, padding: "12px 16px 0", borderBottom: "1px solid var(--border)" }}>
+        {catCfg.map(c => (
+          <button key={c.key} onClick={() => setActiveCat(c.key)}
+            className={`tab-under${activeCat === c.key ? " active" : ""}`}
+            style={{ fontSize: "var(--fs-13)" }}>
+            {c.label}
+          </button>
+        ))}
+      </div>
+
+      {/* ── Dia 2: Draw ─────────────────────────────────── */}
+      {activeDay === 2 && results.dia2 && (() => {
+        const d2 = results.dia2!;
+        const groups: MpDrawGroup[] = d2.groups[activeCat] ?? [];
+        return (
+          <div style={{ padding: 16 }}>
+            <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", marginBottom: 14 }}>
+              {d2.campo}{d2.date ? ` · ${d2.date}` : ""}
+              {cat?.note && <span style={{ marginLeft: 8, fontStyle: "italic" }}>{cat.note}</span>}
+            </div>
+            {groups.length === 0
+              ? <div className="fs-13 c-muted">Sem draw para esta categoria.</div>
+              : groups.map((g, i) => (
+                <div key={i} style={{
+                  border: "1px solid var(--border)", borderRadius: 8, marginBottom: 10, overflow: "hidden",
+                }}>
+                  <div style={{
+                    background: "var(--bg-2)", padding: "6px 12px",
+                    borderBottom: "1px solid var(--border)",
+                    fontSize: "var(--fs-12)", fontWeight: 600, display: "flex", gap: 10, alignItems: "center",
+                  }}>
+                    <span>{g.teeTime}</span>
+                    {g.tee && <span style={{ color: "var(--text-3)", fontWeight: 400 }}>{g.tee}</span>}
+                  </div>
+                  <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "var(--fs-13)" }}>
+                    <tbody>
+                      {g.players.map((p, pi) => {
+                        const cl = clubs.find(c => c.key === p.club);
+                        return (
+                          <tr key={pi} style={{ borderTop: pi > 0 ? "1px solid var(--border)" : undefined }}>
+                            <td style={{ padding: "7px 10px", width: 36, fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-2)" }}>
+                              {cl?.shortName ?? p.club}
+                            </td>
+                            <td style={{ padding: "7px 4px" }}>
+                              {p.fed
+                                ? <a href={`/jogadores/${p.fed}`} style={{ color: "var(--text-1)", textDecoration: "none" }}
+                                    onMouseOver={e => (e.currentTarget.style.textDecoration = "underline")}
+                                    onMouseOut={e => (e.currentTarget.style.textDecoration = "none")}>
+                                    {p.name}
+                                  </a>
+                                : p.name}
+                            </td>
+                            {p.tee && <td style={{ padding: "7px 12px", fontSize: "var(--fs-11)", color: "var(--text-3)" }}>{p.tee}</td>}
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              ))}
+          </div>
+        );
+      })()}
+
+      {/* ── Dia 1: Resultados ───────────────────────────── */}
+      {activeDay === 1 && cat && (
+        <div style={{ padding: "16px" }}>
+          {cat.note && (
+            <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", marginBottom: 12, fontStyle: "italic" }}>
+              {cat.note}
+            </div>
+          )}
+
+          {cat.dias.map(dia => {
+            const maxSub = Math.max(...clubs.map(cl => dia.subtotal[cl.key] ?? 0));
+            return (
+              <div key={dia.dia} style={{ marginBottom: 20 }}>
+                <div style={{
+                  fontSize: "var(--fs-11)", fontWeight: 600, color: "var(--text-3)",
+                  textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 10,
+                }}>
+                  Dia {dia.dia}
+                </div>
+
+                {/* Per-match cards */}
+                {dia.matches?.map(m => {
+                  const mRec = m as Record<string, unknown>;
+                  const maxPts = Math.max(...clubs.map(cl => (mRec[cl.key] as number | null) ?? -1));
+                  return (
+                    <div key={m.match} style={{
+                      border: "1px solid var(--border)", borderRadius: 8,
+                      marginBottom: 10, overflow: "hidden",
+                    }}>
+                      {/* Match header */}
+                      <div style={{
+                        background: "var(--bg-2, #f5f5f5)",
+                        padding: "6px 12px", borderBottom: "1px solid var(--border)",
+                        fontSize: "var(--fs-12)", fontWeight: 600,
+                        display: "flex", alignItems: "center", gap: 8,
+                      }}>
+                        <span>Match {m.match}</span>
+                      </div>
+                      {/* Players */}
+                      <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "var(--fs-13)" }}>
+                        <tbody>
+                          {clubs.map(cl => {
+                            const pts = mRec[cl.key] as number | null | undefined;
+                            const player = m.players?.[cl.key];
+                            const isWin = pts != null && pts > 0 && pts === maxPts;
+                            return (
+                              <tr key={cl.key}
+                                style={isWin ? { background: "var(--accent-light, #eef6ef)" } : undefined}>
+                                <td style={{
+                                  padding: "8px 10px", width: 36,
+                                  fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-2)",
+                                }}>
+                                  {cl.shortName}
+                                </td>
+                                <td style={{ padding: "8px 4px" }}>
+                                  {player?.name
+                                    ? (player.fed
+                                      ? <a href={`/jogadores/${player.fed}`}
+                                          style={{ color: "var(--text-1)", textDecoration: "none" }}
+                                          onMouseOver={e => (e.currentTarget.style.textDecoration = "underline")}
+                                          onMouseOut={e => (e.currentTarget.style.textDecoration = "none")}>
+                                          {player.name}
+                                        </a>
+                                      : player.name)
+                                    : <span style={{ color: "var(--text-3)" }}>—</span>}
+                                </td>
+                                <td style={{ padding: "8px 8px", color: "var(--text-2)", fontSize: "var(--fs-12)", whiteSpace: "nowrap" }}>
+                                  {player?.gross != null
+                                    ? <>{player.gross}{player.toPar != null && <span style={{ marginLeft: 3 }}>({player.toPar >= 0 ? "+" : ""}{player.toPar})</span>}</>
+                                    : null}
+                                </td>
+                                <td style={{
+                                  padding: "8px 12px", textAlign: "right",
+                                  fontWeight: isWin ? 700 : 400,
+                                  color: isWin ? "var(--score-birdie, #dc2626)" : "var(--text-2)",
+                                }}>
+                                  {fmtPts(pts)}
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                      {/* H2H results footer */}
+                      {m.h2h && m.h2h.length > 0 && (
+                        <div style={{
+                          borderTop: "1px solid var(--border)", padding: "5px 12px",
+                          fontSize: "var(--fs-11)", color: "var(--text-3)",
+                          display: "flex", flexWrap: "wrap", gap: "4px 12px",
+                        }}>
+                          {m.h2h.map((h, i) => {
+                            const wCl = clubs.find(c => c.key === h.w);
+                            const lCl = clubs.find(c => c.key === h.l);
+                            return (
+                              <span key={i}>
+                                <strong>{wCl?.shortName ?? h.w}</strong>{" ganhou a "}<strong>{lCl?.shortName ?? h.l}</strong>
+                                {h.margin ? ` ${h.margin}` : ""}
+                              </span>
+                            );
+                          })}
+                        </div>
+                      )}
+                      {/* Scorecard buraco-a-buraco */}
+                      {(() => {
+                        const par = results.course?.par;
+                        const hasScores = par && clubs.some(cl => m.players?.[cl.key]?.scores?.length);
+                        if (!hasScores || !par) return null;
+                        const holesBg = (hole: number) =>
+                          hole % 2 === 0 ? "var(--bg-2, #f5f5f5)" : "transparent";
+                        const scCls = (g: number | null, p: number) => {
+                          if (g == null) return {};
+                          const diff = g - p;
+                          if (diff <= -2) return { background: "#fef3c7", color: "#92400e", borderRadius: "50%", fontWeight: 700 }; // eagle
+                          if (diff === -1) return { background: "#fee2e2", color: "#991b1b", borderRadius: "50%", fontWeight: 700 }; // birdie
+                          if (diff === 1) return { background: "#dbeafe", color: "#1e40af" }; // bogey
+                          if (diff === 2) return { background: "#bfdbfe", color: "#1e3a8a", fontWeight: 700 }; // double
+                          if (diff >= 3) return { background: "#93c5fd", color: "#1e3a8a", fontWeight: 700 }; // triple+
+                          return {};
+                        };
+                        const holes9 = (start: number) => Array.from({ length: 9 }, (_, i) => start + i);
+                        const f9 = holes9(0);
+                        const b9 = holes9(9);
+                        const cellSc: React.CSSProperties = {
+                          padding: "4px 2px", textAlign: "center", fontSize: "var(--fs-11)",
+                          width: 26, minWidth: 26,
+                        };
+                        const cellLbl: React.CSSProperties = {
+                          padding: "4px 8px", fontSize: "var(--fs-11)", fontWeight: 600,
+                          color: "var(--text-3)", whiteSpace: "nowrap", position: "sticky", left: 0,
+                          background: "var(--bg-1, white)", zIndex: 1,
+                        };
+                        const cellSum: React.CSSProperties = {
+                          padding: "4px 6px", textAlign: "center", fontSize: "var(--fs-11)",
+                          fontWeight: 700, color: "var(--text-2)",
+                        };
+                        return (
+                          <div style={{ borderTop: "1px solid var(--border)", overflowX: "auto" }}>
+                            <table style={{ borderCollapse: "collapse", fontSize: "var(--fs-11)", width: "max-content", minWidth: "100%" }}>
+                              <thead>
+                                <tr style={{ background: "var(--bg-2, #f5f5f5)" }}>
+                                  <th style={{ ...cellLbl, background: "var(--bg-2, #f5f5f5)" }}>Buraco</th>
+                                  {f9.map(i => <th key={i} style={{ ...cellSc, background: holesBg(i + 1) }}>{i + 1}</th>)}
+                                  <th style={{ ...cellSum, borderLeft: "2px solid var(--border)" }}>OUT</th>
+                                  {b9.map(i => <th key={i} style={{ ...cellSc, background: holesBg(i + 1) }}>{i + 1}</th>)}
+                                  <th style={{ ...cellSum, borderLeft: "2px solid var(--border)" }}>IN</th>
+                                  <th style={{ ...cellSum, borderLeft: "2px solid var(--border)" }}>TOT</th>
+                                </tr>
+                                <tr style={{ borderBottom: "2px solid var(--border)" }}>
+                                  <th style={{ ...cellLbl, fontWeight: 400, color: "var(--text-3)" }}>Par</th>
+                                  {f9.map(i => <td key={i} style={{ ...cellSc, background: holesBg(i + 1), color: "var(--text-3)" }}>{par[i]}</td>)}
+                                  <td style={{ ...cellSum, borderLeft: "2px solid var(--border)", color: "var(--text-3)" }}>
+                                    {f9.reduce((s, i) => s + (par[i] ?? 0), 0)}
+                                  </td>
+                                  {b9.map(i => <td key={i} style={{ ...cellSc, background: holesBg(i + 1), color: "var(--text-3)" }}>{par[i]}</td>)}
+                                  <td style={{ ...cellSum, borderLeft: "2px solid var(--border)", color: "var(--text-3)" }}>
+                                    {b9.reduce((s, i) => s + (par[i] ?? 0), 0)}
+                                  </td>
+                                  <td style={{ ...cellSum, borderLeft: "2px solid var(--border)", color: "var(--text-3)" }}>
+                                    {par.reduce((s, p) => s + p, 0)}
+                                  </td>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {clubs.map((cl, ri) => {
+                                  const pl = m.players?.[cl.key];
+                                  const sc = pl?.scores;
+                                  if (!sc) return null;
+                                  const f9sum = f9.reduce((s, i) => s + (sc[i] ?? 0), 0);
+                                  const b9sum = b9.reduce((s, i) => s + (sc[i] ?? 0), 0);
+                                  const tot = sc.reduce((s, v) => s + (v ?? 0), 0);
+                                  return (
+                                    <tr key={cl.key} style={{ borderTop: ri > 0 ? "1px solid var(--border)" : undefined }}>
+                                      <td style={{ ...cellLbl, fontWeight: 700 }}>{cl.shortName}</td>
+                                      {f9.map(i => {
+                                        const g = sc[i];
+                                        const extra = g != null ? scCls(g, par[i]) : {};
+                                        return (
+                                          <td key={i} style={{ ...cellSc, background: holesBg(i + 1) }}>
+                                            {g != null
+                                              ? <span style={{ display: "inline-block", width: 18, lineHeight: "18px", ...extra }}>{g}</span>
+                                              : <span style={{ color: "var(--text-3)" }}>—</span>}
+                                          </td>
+                                        );
+                                      })}
+                                      <td style={{ ...cellSum, borderLeft: "2px solid var(--border)" }}>{f9sum || "—"}</td>
+                                      {b9.map(i => {
+                                        const g = sc[i];
+                                        const extra = g != null ? scCls(g, par[i]) : {};
+                                        return (
+                                          <td key={i} style={{ ...cellSc, background: holesBg(i + 1) }}>
+                                            {g != null
+                                              ? <span style={{ display: "inline-block", width: 18, lineHeight: "18px", ...extra }}>{g}</span>
+                                              : <span style={{ color: "var(--text-3)" }}>—</span>}
+                                          </td>
+                                        );
+                                      })}
+                                      <td style={{ ...cellSum, borderLeft: "2px solid var(--border)" }}>{b9sum || "—"}</td>
+                                      <td style={{ ...cellSum, borderLeft: "2px solid var(--border)" }}>{tot || "—"}</td>
+                                    </tr>
+                                  );
+                                })}
+                              </tbody>
+                            </table>
+                          </div>
+                        );
+                      })()}
+                    </div>
+                  );
+                })}
+
+                {/* Subtotal */}
+                <div style={{ border: "1px solid var(--border)", borderRadius: 8, overflow: "hidden" }}>
+                  <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "var(--fs-13)" }}>
+                    <thead>
+                      <tr style={{ background: "var(--bg-2, #f5f5f5)" }}>
+                        <th style={{ padding: "6px 12px", textAlign: "left", fontSize: "var(--fs-12)", color: "var(--text-2)", fontWeight: 600 }}>
+                          Subtotal Dia {dia.dia}
+                        </th>
+                        {clubs.map(cl => (
+                          <th key={cl.key} style={{ padding: "6px 16px", textAlign: "center", fontSize: "var(--fs-12)", color: "var(--text-2)" }}>
+                            {cl.shortName}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style={{ padding: "8px 12px" }} />
+                        {clubs.map(cl => {
+                          const v = dia.subtotal[cl.key] ?? 0;
+                          const isWin = v > 0 && v === maxSub;
+                          return (
+                            <td key={cl.key} style={{
+                              padding: "8px 16px", textAlign: "center",
+                              ...(isWin ? cellWin : {}),
+                            }}>
+                              {fmtPts(v)}
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            );
+          })}
+
+          {/* Grand total — só aparece quando há >1 dia */}
+          {cat.dias.length > 1 && (
+            <div style={{ marginTop: 16 }}>
+              <div style={{ fontSize: "var(--fs-11)", fontWeight: 700, marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.5px" }}>
+                Total Final
+              </div>
+              <div style={{ border: "1px solid var(--border)", borderRadius: 8, overflow: "hidden" }}>
+                <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "var(--fs-14)" }}>
+                  <thead>
+                    <tr style={{ background: "var(--bg-2, #f5f5f5)" }}>
+                      <th style={{ padding: "8px 12px", textAlign: "left" }} />
+                      {clubs.map(cl => (
+                        <th key={cl.key} style={{ padding: "8px 16px", textAlign: "center", fontSize: "var(--fs-12)", color: "var(--text-2)" }}>
+                          {cl.shortName}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style={{ padding: "8px 12px", fontWeight: 600, fontSize: "var(--fs-13)" }}>Pontos</td>
+                      {clubs.map(cl => {
+                        const v = grand[cl.key] ?? 0;
+                        const isWin = v > 0 && v === maxGrand;
+                        return (
+                          <td key={cl.key} style={{
+                            padding: "8px 16px", textAlign: "center",
+                            ...(isWin ? cellWin : {}),
+                          }}>
+                            {fmtPts(v)}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function Content() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -1952,9 +2391,7 @@ function Content() {
                   // não por pancadas. As vistas de Grupos por strokeplay não se
                   // aplicam; mostra-se nota e remete para Individual / Draw.
                   if (fmt?.matchPlay) {
-                    // Pré-jogo: mostra já a COMPOSIÇÃO das equipas por clube e
-                    // categoria (Homens/Senhoras/Juniores) a partir dos inscritos.
-                    // A classificação por pontos surge depois, com os resultados.
+                    const mpResults = (curClubes as any).matchPlayResults as MatchPlayData | undefined;
                     const banner = (
                       <div className="flex-wrap" style={{
                         display: "flex", alignItems: "center", gap: 8,
@@ -1962,9 +2399,24 @@ function Content() {
                         background: "var(--accent-light, #eef6ef)", fontSize: "var(--fs-12)", color: "var(--text-2)",
                       }}>
                         <span style={{ fontSize: "var(--fs-16)" }}>🆚</span>
-                        <span><strong>Match Play — classificação por pontos.</strong> {fmt.note}. A classificação por equipa surge quando houver resultados; vê o <strong>Draw</strong> para os emparelhamentos 3-way.</span>
+                        <span>
+                          <strong>Match Play — classificação por pontos.</strong>{" "}{fmt.note}.
+                          {mpResults
+                            ? <> Resultados Dia 1 · {mpResults.lastUpdated}. Dia 2: stroke play, Palheiro Golf.</>
+                            : <> A classificação por equipa surge quando houver resultados; vê o <strong>Draw</strong> para os emparelhamentos 3-way.</>}
+                        </span>
                       </div>
                     );
+                    // Com resultados: mostra tabela de match play
+                    if (mpResults && fmt.categories) {
+                      return (
+                        <>
+                          {banner}
+                          <MatchPlayResultsTable results={mpResults} categories={fmt.categories} />
+                        </>
+                      );
+                    }
+                    // Pré-jogo: mostra composição das equipas por clube e categoria
                     if (fmt.categories && grupos.length) {
                       return (
                         <>

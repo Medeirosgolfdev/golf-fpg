@@ -73,7 +73,9 @@ export default function HistoryByTournament({ data, junior, filterTids }: Props)
         // Usar peso da edição mais recente como representativo da série.
         // Score: estrelas dominam (★ = 1000pts), depois vitórias/pódios/frequência.
         const lastEd = eds[eds.length - 1];
-        const stars = getTournWeight(lastEd.tournament).stars;
+        const lastFlight = lastEd.flight;
+        const lastFlightFs = typeof lastFlight.fieldSize === "number" && lastFlight.fieldSize > 0 ? lastFlight.fieldSize : lastFlight.results.length;
+        const stars = getTournWeight(lastEd.tournament, lastFlightFs).stars;
         const score = stars * 1000 + wins * 50 + podiums * 5 + eds.length;
         ms.push({ seriesId: sid, editions: eds, label, score, stars });
       } else {
@@ -188,7 +190,10 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
   const trend = computeSeriesTrend(editions);
 
   // Prestígio da série — usa o peso da edição mais recente (representativa)
-  const tournWeight = useMemo(() => getTournWeight(last.tournament), [last.tournament]);
+  const tournWeight = useMemo(() => {
+    const fs = typeof last.flight.fieldSize === "number" && last.flight.fieldSize > 0 ? last.flight.fieldSize : last.flight.results.length;
+    return getTournWeight(last.tournament, fs);
+  }, [last.tournament, last.flight]);
 
   const sortedEditions = useMemo(() => {
     const mul = sortDir === "asc" ? 1 : -1;
