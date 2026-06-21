@@ -334,7 +334,7 @@ function MatchPlayResultsTable({
 
       {/* ══ CLUBE CARDS — standings + resultados ════════════ */}
       <div style={{ padding: "16px 16px 0" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: 14 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(310px, 1fr))", gap: 10 }}>
           {sortedClubs.map((cl, rank) => {
             const isLeading = hasResults && (grand[cl.key] ?? 0) === maxGrand;
             const opps = clubs.filter(c => c.key !== cl.key);
@@ -343,16 +343,16 @@ function MatchPlayResultsTable({
                 background: "var(--bg-card,#fff)", border: "1px solid var(--border)",
                 borderRadius: 8, overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,.06)",
               }}>
-                <div style={{ background: MP_CLUB_COLOR, color: "#fff", padding: "10px 14px", display: "flex", alignItems: "center", gap: 10 }}>
+                <div style={{ background: MP_CLUB_COLOR, color: "#fff", padding: "8px 12px", display: "flex", alignItems: "center", gap: 10 }}>
                   <div style={{
-                    width: 30, height: 30, background: "rgba(255,255,255,0.2)", borderRadius: 6, flexShrink: 0,
+                    width: 34, height: 34, background: "rgba(255,255,255,0.2)", borderRadius: 6, flexShrink: 0,
                     display: "flex", alignItems: "center", justifyContent: "center",
-                    fontSize: "var(--fs-14)", fontWeight: 900,
+                    fontSize: "var(--fs-20)", fontWeight: 900,
                   }}>{rank + 1}</div>
-                  <div style={{ flex: 1, fontSize: "var(--fs-14)", fontWeight: 700, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  <div style={{ flex: 1, fontSize: "var(--fs-12)", fontWeight: 700, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                     {cl.name}
                   </div>
-                  <div style={{ fontSize: "var(--fs-22)", fontWeight: 900, lineHeight: 1, opacity: hasResults ? 1 : 0.35 }}>
+                  <div style={{ fontSize: "var(--fs-20)", fontWeight: 900, lineHeight: 1, opacity: hasResults ? 1 : 0.35 }}>
                     {fmtPts(grand[cl.key] ?? 0)}
                   </div>
                 </div>
@@ -396,9 +396,10 @@ function MatchPlayResultsTable({
                             const mRec = m as unknown as Record<string, unknown>;
                             const player = m.players?.[cl.key];
                             const pts = mRec[cl.key] as number | null | undefined;
+                            const tdB: React.CSSProperties = { borderBottom: "1px solid var(--border)" };
                             return (
-                              <tr key={`${m.match}-${mi}`} style={{ borderTop: mi === 0 ? "none" : "1px solid var(--border)" }}>
-                                <td style={{ padding: "8px 10px" }}>
+                              <tr key={`${m.match}-${mi}`}>
+                                <td style={{ padding: "5px 10px", ...tdB }}>
                                   {player?.name
                                     ? (player.fed
                                       ? <a href={`/jogadores/${player.fed}`} style={{ color: "var(--text-1)", textDecoration: "none" }}
@@ -420,7 +421,7 @@ function MatchPlayResultsTable({
                                   const won = !isHalf && h2hEntry?.w === cl.key;
                                   const margin = h2hEntry?.margin;
                                   return (
-                                    <td key={opp.key} style={{ padding: "8px 8px", textAlign: "center" }}>
+                                    <td key={opp.key} style={{ padding: "5px 6px", textAlign: "center", ...tdB }}>
                                       {h2hEntry ? (
                                         isHalf ? (
                                           <span style={{ fontSize: "var(--fs-11)", fontWeight: 500, color: "var(--text-2)" }}>½</span>
@@ -436,7 +437,7 @@ function MatchPlayResultsTable({
                                   );
                                 })}
                                 <td style={{
-                                  padding: "8px 8px", textAlign: "center",
+                                  padding: "5px 6px", textAlign: "center", ...tdB,
                                   fontWeight: pts != null && pts > 0 ? 700 : 400,
                                   color: pts != null && pts > 0 ? MP_CLUB_COLOR : "var(--text-3)",
                                   fontSize: "var(--fs-13)",
