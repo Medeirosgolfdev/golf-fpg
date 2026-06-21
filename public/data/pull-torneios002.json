@@ -1,7 +1,7 @@
 {
-  "lastUpdated": "15/06/2026",
+  "lastUpdated": "21/06/2026",
   "source": "scrape-classif-node.js (Node puro, linkpage + classif.aspx/ClassifLST)",
-  "totalTournaments": 53,
+  "totalTournaments": 54,
   "totalPlayers": 1905,
   "totalScorecards": 1818,
   "tournaments": [
@@ -343786,6 +343786,22 @@
           ]
         }
       ]
+    },
+    {
+      "name": "Campeonato Regional de Clubes 2026",
+      "ccode": "059",
+      "tcode": "10685",
+      "date": "2026-06-20",
+      "campo": "",
+      "clube": "059",
+      "circuit": "tour",
+      "series": "tour",
+      "region": "outro",
+      "escalao": null,
+      "num": 1,
+      "rounds": 1,
+      "playerCount": 0,
+      "players": []
     }
   ]
 }

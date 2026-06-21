@@ -1,18 +1,18 @@
 {
-  "lastUpdated": "2026-06-20T21:05:46.264Z",
+  "lastUpdated": "2026-06-21T06:12:10.182Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
-  "today": "2026-06-20",
+  "today": "2026-06-21",
   "summary": {
     "total": 1193,
     "complete": 1181,
-    "in_progress": 1,
+    "in_progress": 0,
     "future": 0,
     "stale": 9,
     "excluded": 1,
     "missing_admissions": 0,
     "missing_classif": 0,
     "missing_scorecards": 1,
-    "missing_draws": 0,
+    "missing_draws": 1,
     "unknown": 0
   },
   "tournaments": [
@@ -34,7 +34,7 @@
       "scorecards_source": "pull-torneios-10685.json",
       "scorecards_ratio": 0,
       "full_scorecards_ratio": 0,
-      "status": "in_progress"
+      "status": "missing_draws"
     },
     {
       "ccode": "000",
