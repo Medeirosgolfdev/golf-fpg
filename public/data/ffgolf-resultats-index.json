@@ -1,8 +1,58 @@
 {
-  "generatedAt": "2026-06-15T07:26:50.067Z",
+  "generatedAt": "2026-06-22T07:30:54.549Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
-  "total": 1624,
+  "total": 1628,
   "tournaments": [
+    {
+      "file": "03-07-2601415658.json",
+      "trnId": "2601415658",
+      "name": "GRAND PRIX JEUNES DE THUMERIES",
+      "formule": "Simple",
+      "date": "20/06/2026",
+      "dateIso": "2026-06-20",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "07",
+      "seriesCount": 6,
+      "totalPlayers": 143,
+      "divisions": [
+        {
+          "serieId": "19",
+          "label": "Simple Score maximum",
+          "players": 55
+        },
+        {
+          "serieId": "113",
+          "label": "Simple Score maximum",
+          "players": 39
+        },
+        {
+          "serieId": "117",
+          "label": "Simple Score maximum",
+          "players": 18
+        },
+        {
+          "serieId": "211",
+          "label": "Simple Score maximum",
+          "players": 17
+        },
+        {
+          "serieId": "215",
+          "label": "Simple Score maximum",
+          "players": 9
+        },
+        {
+          "serieId": "219",
+          "label": "Simple Score maximum",
+          "players": 5
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
+    },
     {
       "file": "01-00-2601441226.json",
       "trnId": "2601441226",
@@ -259,6 +309,65 @@
       "ffgolfSection": null
     },
     {
+      "file": "01-00-2601444991.json",
+      "trnId": "2601444991",
+      "name": "CHAMPIONNAT REGIONAL JEUNES TOUR 1",
+      "formule": "Simple",
+      "date": "13/06/2026",
+      "dateIso": "2026-06-13",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 4,
+      "totalPlayers": 58,
+      "divisions": [
+        {
+          "serieId": "113",
+          "label": "Simple Score maximum",
+          "players": 22
+        },
+        {
+          "serieId": "117",
+          "label": "Simple Score maximum",
+          "players": 25
+        },
+        {
+          "serieId": "215",
+          "label": "Simple Score maximum",
+          "players": 2
+        },
+        {
+          "serieId": "219",
+          "label": "Simple Score maximum",
+          "players": 9
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
+    },
+    {
+      "file": "01-00-2601445037.json",
+      "trnId": "2601445037",
+      "name": "CHAMPIONNAT REGIONAL JEUNES TOUR 1 9 Trous",
+      "formule": "Simple",
+      "date": "13/06/2026",
+      "dateIso": "2026-06-13",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 0,
+      "totalPlayers": 0,
+      "divisions": [],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
+    },
+    {
       "file": "03-09-2601412558.json",
       "trnId": "2601412558",
       "name": "GRAND PRIX JEUNES OMAHA BEACH 2026",
@@ -340,6 +449,56 @@
           "serieId": "219",
           "label": "Simple Score maximum",
           "players": 25
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null
+    },
+    {
+      "file": "01-00-2601441760.json",
+      "trnId": "2601441760",
+      "name": "Championnat départemental Juniors",
+      "formule": "Simple",
+      "date": "07/06/2026",
+      "dateIso": "2026-06-07",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 6,
+      "totalPlayers": 20,
+      "divisions": [
+        {
+          "serieId": "17",
+          "label": "Simple Score maximum",
+          "players": 3
+        },
+        {
+          "serieId": "19",
+          "label": "Simple Score maximum",
+          "players": 8
+        },
+        {
+          "serieId": "28",
+          "label": "Simple Score maximum",
+          "players": 2
+        },
+        {
+          "serieId": "111",
+          "label": "Simple Score maximum",
+          "players": 1
+        },
+        {
+          "serieId": "210",
+          "label": "Simple Score maximum",
+          "players": 1
+        },
+        {
+          "serieId": "212",
+          "label": "Simple Score maximum",
+          "players": 5
         }
       ],
       "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
