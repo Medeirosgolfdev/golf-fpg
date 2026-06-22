@@ -664,7 +664,625 @@
       "nivel": "S"
     }
   ],
-  "horarios": [],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "17:00",
+          "tee": 1,
+          "name": "Hugo Martinez Cerrada",
+          "hcp": 12.4,
+          "ins": "2337044",
+          "jid": "76411",
+          "nivel": "A"
+        },
+        {
+          "time": "17:00",
+          "tee": 1,
+          "name": "Santiago Martinez Jimenez",
+          "hcp": 28.3,
+          "ins": "2337045",
+          "jid": "76411",
+          "nivel": "S"
+        },
+        {
+          "time": "17:00",
+          "tee": 1,
+          "name": "Marco Antonio Ruiz Torres",
+          "hcp": 18.6,
+          "ins": "2336892",
+          "jid": "76411",
+          "nivel": "M"
+        },
+        {
+          "time": "17:00",
+          "tee": 1,
+          "name": "Pablo Ruiz Losada",
+          "hcp": 54,
+          "ins": "2336893",
+          "jid": "76411",
+          "nivel": "B"
+        },
+        {
+          "time": "17:00",
+          "tee": 2,
+          "name": "Ana Barbi Arce",
+          "hcp": 7.3,
+          "ins": "2335395",
+          "jid": "76411",
+          "nivel": "M"
+        },
+        {
+          "time": "17:00",
+          "tee": 2,
+          "name": "Iñigo Seisdedos Barbi",
+          "hcp": 40.3,
+          "ins": "2335396",
+          "jid": "76411",
+          "nivel": "B"
+        },
+        {
+          "time": "17:00",
+          "tee": 2,
+          "name": "Jaime Luis Molinero Gomez-Cano",
+          "hcp": 15.2,
+          "ins": "2335400",
+          "jid": "76411",
+          "nivel": "M"
+        },
+        {
+          "time": "17:00",
+          "tee": 2,
+          "name": "Jaime Molinero Moreno",
+          "hcp": 44.7,
+          "ins": "2335399",
+          "jid": "76411",
+          "nivel": "B"
+        },
+        {
+          "time": "17:00",
+          "tee": 3,
+          "name": "Emilio Perez Pichot",
+          "hcp": 26,
+          "ins": "2335110",
+          "jid": "76411",
+          "nivel": "A"
+        },
+        {
+          "time": "17:00",
+          "tee": 3,
+          "name": "Emilio Perez Nuñez",
+          "hcp": 34,
+          "ins": "2335109",
+          "jid": "76411",
+          "nivel": "S"
+        },
+        {
+          "time": "17:00",
+          "tee": 3,
+          "name": "Leo Diez De Llano",
+          "hcp": 28,
+          "ins": "2334919",
+          "jid": "76411",
+          "nivel": "A"
+        },
+        {
+          "time": "17:00",
+          "tee": 3,
+          "name": "Vanessa De Llano Sanchez",
+          "hcp": 36,
+          "ins": "2334920",
+          "jid": "76411",
+          "nivel": "M"
+        },
+        {
+          "time": "17:00",
+          "tee": 5,
+          "name": "Victor Rafael Diaz Diaz",
+          "hcp": 36,
+          "ins": "2334936",
+          "jid": "76411",
+          "nivel": "M"
+        },
+        {
+          "time": "17:00",
+          "tee": 5,
+          "name": "Hugo Diaz Ramos",
+          "hcp": 37,
+          "ins": "2334937",
+          "jid": "76411",
+          "nivel": "I"
+        },
+        {
+          "time": "17:00",
+          "tee": 5,
+          "name": "Fernando Jañez Moral",
+          "hcp": 20.4,
+          "ins": "2337314",
+          "jid": "76411",
+          "nivel": "S"
+        },
+        {
+          "time": "17:00",
+          "tee": 5,
+          "name": "Mario Jañez Guijarro",
+          "hcp": 54,
+          "ins": "2337315",
+          "jid": "76411",
+          "nivel": "B"
+        },
+        {
+          "time": "17:00",
+          "tee": 6,
+          "name": "Carlos Garcia Pascual",
+          "hcp": 21.4,
+          "ins": "2335116",
+          "jid": "76411",
+          "nivel": "S"
+        },
+        {
+          "time": "17:00",
+          "tee": 6,
+          "name": "Diego Garcia Perez",
+          "hcp": 54,
+          "ins": "2335117",
+          "jid": "76411",
+          "nivel": "B"
+        },
+        {
+          "time": "17:00",
+          "tee": 6,
+          "name": "Juan Pablo Ocaña Gonzalez",
+          "hcp": 36,
+          "ins": "2336299",
+          "jid": "76411",
+          "nivel": "M"
+        },
+        {
+          "time": "17:00",
+          "tee": 6,
+          "name": "Juan Ocaña Bachiller",
+          "hcp": 42,
+          "ins": "2336300",
+          "jid": "76411",
+          "nivel": "C"
+        },
+        {
+          "time": "17:00",
+          "tee": 7,
+          "name": "Gonzalo Martinez Fernandez",
+          "hcp": 38.5,
+          "ins": "2335441",
+          "jid": "76411",
+          "nivel": "S"
+        },
+        {
+          "time": "17:00",
+          "tee": 7,
+          "name": "Gonzalo Martinez Linares",
+          "hcp": 43,
+          "ins": "2335442",
+          "jid": "76411",
+          "nivel": "I"
+        },
+        {
+          "time": "17:00",
+          "tee": 7,
+          "name": "Luis Fernando Campoy Zuasti",
+          "hcp": 26.7,
+          "ins": "2335429",
+          "jid": "76411",
+          "nivel": "S"
+        },
+        {
+          "time": "17:00",
+          "tee": 7,
+          "name": "Alejandro Campoy Asensi",
+          "hcp": 54,
+          "ins": "2335430",
+          "jid": "76411",
+          "nivel": "C"
+        },
+        {
+          "time": "17:00",
+          "tee": 8,
+          "name": "Jaime Garcia Neila",
+          "hcp": 27,
+          "ins": "2335465",
+          "jid": "76411",
+          "nivel": "M"
+        },
+        {
+          "time": "17:00",
+          "tee": 8,
+          "name": "Jaime Garcia Gordillo",
+          "hcp": 54,
+          "ins": "2335466",
+          "jid": "76411",
+          "nivel": "A"
+        },
+        {
+          "time": "17:00",
+          "tee": 8,
+          "name": "Ivo Rene Nijst Quintero",
+          "hcp": 35,
+          "ins": "2334932",
+          "jid": "76411",
+          "nivel": "M"
+        },
+        {
+          "time": "17:00",
+          "tee": 8,
+          "name": "Oliver Nijst Berrizbeitia",
+          "hcp": 54,
+          "ins": "2334933",
+          "jid": "76411",
+          "nivel": "B"
+        },
+        {
+          "time": "17:00",
+          "tee": 9,
+          "name": "Margarita Millan Ordoñez",
+          "hcp": 35,
+          "ins": "2335530",
+          "jid": "76411",
+          "nivel": "M"
+        },
+        {
+          "time": "17:00",
+          "tee": 9,
+          "name": "Alvaro Pardo Millan",
+          "hcp": 54,
+          "ins": "2335531",
+          "jid": "76411",
+          "nivel": "B"
+        },
+        {
+          "time": "17:00",
+          "tee": 9,
+          "name": "Javier Pardo Calvo",
+          "hcp": 10.7,
+          "ins": "2335528",
+          "jid": "76411",
+          "nivel": "M"
+        },
+        {
+          "time": "17:00",
+          "tee": 9,
+          "name": "Iñigo Pardo Millan",
+          "hcp": 54,
+          "ins": "2335529",
+          "jid": "76411",
+          "nivel": "A"
+        },
+        {
+          "time": "18:30",
+          "tee": 1,
+          "name": "Fernando Gil Cabrera",
+          "hcp": 11,
+          "ins": "2334911",
+          "jid": "76411",
+          "nivel": "S"
+        },
+        {
+          "time": "18:30",
+          "tee": 1,
+          "name": "Miguel Gil Garcia",
+          "hcp": 20.2,
+          "ins": "2334910",
+          "jid": "76411",
+          "nivel": "A"
+        },
+        {
+          "time": "18:30",
+          "tee": 1,
+          "name": "Marcos Lozano Davila",
+          "hcp": 21.5,
+          "ins": "2334942",
+          "jid": "76411",
+          "nivel": "B"
+        },
+        {
+          "time": "18:30",
+          "tee": 1,
+          "name": "Carlos Lozano Dominguez",
+          "hcp": 24.7,
+          "ins": "2334943",
+          "jid": "76411",
+          "nivel": "S"
+        },
+        {
+          "time": "18:30",
+          "tee": 2,
+          "name": "Gabriel Garcia Aragon",
+          "hcp": 17.8,
+          "ins": "2334952",
+          "jid": "76411",
+          "nivel": "S"
+        },
+        {
+          "time": "18:30",
+          "tee": 2,
+          "name": "Patricia Garcia Lopez",
+          "hcp": 23.4,
+          "ins": "2334953",
+          "jid": "76411",
+          "nivel": "C"
+        },
+        {
+          "time": "18:30",
+          "tee": 2,
+          "name": "Diego Corral Fuentes",
+          "hcp": 22,
+          "ins": "2337676",
+          "jid": "76411",
+          "nivel": "C"
+        },
+        {
+          "time": "18:30",
+          "tee": 2,
+          "name": "Adolfo Corral Quintana",
+          "hcp": 25.9,
+          "ins": "2337675",
+          "jid": "76411",
+          "nivel": "S"
+        },
+        {
+          "time": "18:30",
+          "tee": 3,
+          "name": "Esteban Martin Barrajon",
+          "hcp": 5.1,
+          "ins": "2334958",
+          "jid": "76411",
+          "nivel": "P"
+        },
+        {
+          "time": "18:30",
+          "tee": 3,
+          "name": "Ines Martin Martinez",
+          "hcp": 54,
+          "ins": "2334957",
+          "jid": "76411",
+          "nivel": "B"
+        },
+        {
+          "time": "18:30",
+          "tee": 3,
+          "name": "Maria Del Valle Martinez Martinez",
+          "hcp": 36,
+          "ins": "2334935",
+          "jid": "76411",
+          "nivel": "M"
+        },
+        {
+          "time": "18:30",
+          "tee": 3,
+          "name": "Nicolas Martin Martinez",
+          "hcp": 51.9,
+          "ins": "2334934",
+          "jid": "76411",
+          "nivel": "A"
+        },
+        {
+          "time": "18:30",
+          "tee": 4,
+          "name": "Roberto Martin Figueruelo",
+          "hcp": 35.6,
+          "ins": "2335003",
+          "jid": "76411",
+          "nivel": "S"
+        },
+        {
+          "time": "18:30",
+          "tee": 4,
+          "name": "Rodrigo Martin Martin",
+          "hcp": 42,
+          "ins": "2335002",
+          "jid": "76411",
+          "nivel": "I"
+        },
+        {
+          "time": "18:30",
+          "tee": 4,
+          "name": "Juan Martin Martin",
+          "hcp": 29.6,
+          "ins": "2335432",
+          "jid": "76411",
+          "nivel": "A"
+        },
+        {
+          "time": "18:30",
+          "tee": 4,
+          "name": "Jose Manuel Martin Martin",
+          "hcp": 35.4,
+          "ins": "2335433",
+          "jid": "76411",
+          "nivel": "S"
+        },
+        {
+          "time": "18:30",
+          "tee": 5,
+          "name": "Pablo Cardoso Martin",
+          "hcp": 29.6,
+          "ins": "2335038",
+          "jid": "76411",
+          "nivel": "M"
+        },
+        {
+          "time": "18:30",
+          "tee": 5,
+          "name": "Paula Cardoso Arenas",
+          "hcp": 38.8,
+          "ins": "2335039",
+          "jid": "76411",
+          "nivel": "C"
+        },
+        {
+          "time": "18:30",
+          "tee": 5,
+          "name": "Pablo Villalobos Garcia",
+          "hcp": 18.9,
+          "ins": "2334996",
+          "jid": "76411",
+          "nivel": "M"
+        },
+        {
+          "time": "18:30",
+          "tee": 5,
+          "name": "Mateo Villalobos Mariño",
+          "hcp": 50,
+          "ins": "2334997",
+          "jid": "76411",
+          "nivel": "B"
+        },
+        {
+          "time": "18:30",
+          "tee": 6,
+          "name": "Gonzalo Garcia-Liñan Fragero",
+          "hcp": 17.7,
+          "ins": "2334921",
+          "jid": "76411",
+          "nivel": "M"
+        },
+        {
+          "time": "18:30",
+          "tee": 6,
+          "name": "Gonzalo Garcia-Liñan Cafure",
+          "hcp": 51.7,
+          "ins": "2334922",
+          "jid": "76411",
+          "nivel": "B"
+        },
+        {
+          "time": "18:30",
+          "tee": 6,
+          "name": "Teresa Olalquiaga Aranguren",
+          "hcp": 26.6,
+          "ins": "2335031",
+          "jid": "76411",
+          "nivel": "S"
+        },
+        {
+          "time": "18:30",
+          "tee": 6,
+          "name": "Ana De La Lastra Olalquiaga",
+          "hcp": 45.1,
+          "ins": "2335032",
+          "jid": "76411",
+          "nivel": "I"
+        },
+        {
+          "time": "18:30",
+          "tee": 7,
+          "name": "Ignacio Villalobos Garcia",
+          "hcp": 15.9,
+          "ins": "2334999",
+          "jid": "76411",
+          "nivel": "M"
+        },
+        {
+          "time": "18:30",
+          "tee": 7,
+          "name": "Pablo Villalobos Mariño",
+          "hcp": 47.9,
+          "ins": "2334998",
+          "jid": "76411",
+          "nivel": "B"
+        },
+        {
+          "time": "18:30",
+          "tee": 7,
+          "name": "Andres Vegas Aneiros",
+          "hcp": 36,
+          "ins": "2335004",
+          "jid": "76411",
+          "nivel": "S"
+        },
+        {
+          "time": "18:30",
+          "tee": 7,
+          "name": "Diego Vegas Carlini",
+          "hcp": 42,
+          "ins": "2335005",
+          "jid": "76411",
+          "nivel": "C"
+        },
+        {
+          "time": "18:30",
+          "tee": 8,
+          "name": "Hector Mayordomo Herraiz",
+          "hcp": 36,
+          "ins": "2334914",
+          "jid": "76411",
+          "nivel": "M"
+        },
+        {
+          "time": "18:30",
+          "tee": 8,
+          "name": "Marco Mayordomo Castaño",
+          "hcp": 42.1,
+          "ins": "2334915",
+          "jid": "76411",
+          "nivel": "A"
+        },
+        {
+          "time": "18:30",
+          "tee": 8,
+          "name": "Alfredo Portillo Garcia",
+          "hcp": 26.1,
+          "ins": "2334956",
+          "jid": "76411",
+          "nivel": "M"
+        },
+        {
+          "time": "18:30",
+          "tee": 8,
+          "name": "Manuela Portillo Pastor",
+          "hcp": 54,
+          "ins": "2334955",
+          "jid": "76411",
+          "nivel": "B"
+        },
+        {
+          "time": "18:30",
+          "tee": 9,
+          "name": "Matias Pedraza Aguilar",
+          "hcp": 34.2,
+          "ins": "2334962",
+          "jid": "76411",
+          "nivel": "S"
+        },
+        {
+          "time": "18:30",
+          "tee": 9,
+          "name": "Adriana Mayordomo Castaño",
+          "hcp": 48,
+          "ins": "2334963",
+          "jid": "76411",
+          "nivel": "A"
+        },
+        {
+          "time": "18:30",
+          "tee": 9,
+          "name": "Nuria Perez Magariños",
+          "hcp": 6.8,
+          "ins": "2334945",
+          "jid": "76411",
+          "nivel": "M"
+        },
+        {
+          "time": "18:30",
+          "tee": 9,
+          "name": "Santiago Zaforas Perez",
+          "hcp": 54,
+          "ins": "2334946",
+          "jid": "76411",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -750,5 +1368,5 @@
   "pdfs": [
     "/uploads/competiciones/cartel/1288896109_71359-torne-benefico-aladina-padres-e-hijos-turno-de-manana-17-00-turno-de-tarde-18-30.pdf"
   ],
-  "horariosScrapedAt": "2026-06-15T10:29:18.392Z"
+  "horariosScrapedAt": "2026-06-22T09:55:24.287Z"
 }
