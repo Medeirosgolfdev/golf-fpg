@@ -1,21 +1,18 @@
 /**
- * CompararPage.tsx — Comparação entre jogadores (v2)
+ * CompararPage.tsx — Comparação entre jogadores (tab "🏌️ Jogadores")
  *
- * Melhorias:
+ * Secções:
  *   1. Radar chart — perfil comparativo visual
- *   2. Tabela comparativa lado a lado com highlight do melhor
+ *   2. Tabela comparativa lado a lado com highlight do melhor (StatsTable)
  *   3. Distribuição de scores (eagle→triple) com barras
- *   4. Buraco a buraco (gráfico + tabela)
- *   5. Head-to-Head com barra de vitórias
+ *   4. Buraco a buraco — gráfico + tabela ordenável (HoleByHoleSection)
+ *   5. Head-to-Head com barra de vitórias e tabela ordenável
  *   6. Evolução HCP com delta no período
  *
- * Classes CSS do design system existente:
- *   .holeAnalysis .haTitle .haSubTitle
- *   .haDiag .haDiagCard .haDiagIcon .haDiagBody .haDiagVal .haDiagLbl
- *   .courseAnalysis .caTitle .caKpis .caKpi .caKpiVal .caKpiLbl
- *   .haParGrid .haParCard .haParHead .haParAvg .haParStat
- *   .pa-table-wrap .pa-table .roundRow
- *   .jog-pill .chip .muted .input .select
+ * Classes CSS do design system:
+ *   .card .h-md .h-sm .dtable .muted .input .select
+ *   .caKpis .caKpi .caKpiVal .caKpiLbl   (KPI cards — App.css L1039)
+ *   .jog-pill .chip .roundRow
  */
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import type { Player, PlayersDb } from "../data/types";
