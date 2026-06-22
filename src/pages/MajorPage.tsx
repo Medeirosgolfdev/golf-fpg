@@ -191,6 +191,45 @@ function jobEvoFor(file: JobFile, all: JobFile[], divIndex: number, label: strin
   return { evo: raw.evoMap, evoYear: raw.evoYear };
 }
 
+function buildFmEntries(files: JobFile[]): CircuitEntry[] {
+  return files.map((f): CircuitEntry => {
+    const divisions: CircuitDivision[] = f.divisions.map((dv, i) => {
+      const label = dv.division; // FM: usar o nome do age group directamente ("10 and Under", "11 & 12", …)
+      const { evo, evoYear } = jobEvoFor(f, files, i, label);
+      const hasEvo = !!evo && evo.size > 0;
+      const results = jobDivisionToTournament(dv, label);
+      if (hasEvo) for (const pl of results.players) {
+        const ev = evo!.get(pl.name);
+        if (ev) { (pl as unknown as { _regressado?: boolean })._regressado = true; if (ev.pill === "UP") (pl as unknown as { _subiu?: boolean })._subiu = true; }
+      }
+      return {
+        key: `d${i}`,
+        escalao: label,
+        tabLabel: label,
+        hasManuel: dv.players.some((p) => isM(p.name)),
+        results,
+        scOptions: jobScorecardOptions(),
+        evoCols: hasEvo ? makeEvoCols(evo!, evoYear) : undefined,
+        accHeader: hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined,
+      };
+    });
+    const all = f.divisions.flatMap((d) => d.players);
+    return {
+      id: `fm:${f.year}`,
+      year: f.year,
+      name: `Future Masters Golf ${f.year}`,
+      course: f.course || "Dothan Country Club",
+      series: "FM",
+      source: "fm",
+      playerCount: all.filter((p) => p.total != null).length,
+      divisionCount: divisions.length,
+      hasManuel: all.some((p) => isM(p.name)),
+      hasPt: all.some((p) => /portugal/i.test(p.country || "") || isM(p.name)),
+      divisions,
+    };
+  });
+}
+
 function buildJobEntries(files: JobFile[]): CircuitEntry[] {
   return files.map((f): CircuitEntry => {
     const divisions: CircuitDivision[] = f.divisions.map((dv, i) => {
@@ -237,8 +276,8 @@ const MAJOR_CONFIG: CircuitConfig = {
   color: "#b8860b",
   textColor: "#fff",
   grouping: "year",
-  sourceColors: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c" },
-  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB" },
+  sourceColors: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c", fm: "#1a5276" },
+  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM" },
   filters: { search: true, year: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos", "regressados", "subiram"] },
   veteranoThreshold: 3,
   loadingMessage: "A carregar MAJOR…",
@@ -247,11 +286,15 @@ const MAJOR_CONFIG: CircuitConfig = {
 // Anos a tentar para os ficheiros Junior Orange Bowl (orangebowl_<ano>.json).
 const JOB_YEARS = Array.from({ length: 16 }, (_, i) => 2012 + i); // 2012..2027
 
+// Anos disponíveis do Future Masters Golf (ftm_fm_<ano>.json).
+const FM_YEARS = [2019, 2021, 2022, 2023, 2024, 2025, 2026];
+
 function MajorContent() {
   const [bjgtDefs, setBjgtDefs] = useState<TDef[]>([]);
   const [doralEntries, setDoralEntries] = useState<Entry[]>([]);
   const [doralNames, setDoralNames] = useState<Map<number, string>>(new Map());
   const [jobFiles, setJobFiles] = useState<JobFile[]>([]);
+  const [fmFiles, setFmFiles] = useState<JobFile[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -291,13 +334,23 @@ function MajorContent() {
         cachedFetchJson<JobFile>(`/data/orangebowl_${y}.json`).catch(() => null),
       ))).filter((f): f is JobFile => !!f && Array.isArray(f.divisions));
       if (alive) setJobFiles(jobs);
+
+      // Future Masters Golf — tenta cada ano (404 ignorado).
+      const fms = (await Promise.all(FM_YEARS.map((y) =>
+        cachedFetchJson<JobFile>(`/data/ftm_fm_${y}.json`).catch(() => null),
+      ))).filter((f): f is JobFile => !!f && Array.isArray(f.divisions));
+      if (alive) setFmFiles(fms);
     })();
     return () => { alive = false; };
   }, []);
 
   const entries = useMemo(
-    () => [...buildMajorEntries(bjgtDefs, doralEntries, doralNames), ...buildJobEntries(jobFiles)],
-    [bjgtDefs, doralEntries, doralNames, jobFiles],
+    () => [
+      ...buildMajorEntries(bjgtDefs, doralEntries, doralNames),
+      ...buildJobEntries(jobFiles),
+      ...buildFmEntries(fmFiles),
+    ],
+    [bjgtDefs, doralEntries, doralNames, jobFiles, fmFiles],
   );
 
   if (loading) return <LoadingState message="A carregar MAJOR…" />;
