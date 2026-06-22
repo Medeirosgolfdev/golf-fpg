@@ -971,6 +971,163 @@ const villaPadiernaFlamingos2 = vpFlamingosCourse("away-villa-padierna-flamingos
 /* Exportacao */
 
 /** Campos extra adicionados manualmente (ainda sem rondas no melhorias.json) */
+/* ─────────────────────────────────────────────────────────────────────────
+   Golf Paris Val d'Europe Disneyland — USKids Paris Invitational 2025
+   Campo: 27 buracos (3×9: ROUGE, BLEU, BLANC). Combinação do torneio: RED+BLUE.
+   Fonte distâncias: mscorecard.com (cid=1236598351821) + PDF oficial do torneio.
+   SI: mscorecard (requer login) — confirmado para Rouge e Bleu nines.
+   CR/Slope: não disponível (bloqueio rate-limit no scrape; atualizar se encontrado).
+   ────────────────────────────────────────────────────────────────────── */
+
+// Par e SI para a combinação RED (Rouge) + BLUE (Bleu)
+const parisPar = [5,3,5,4,3,5,4,3,4, 4,4,4,3,5,3,4,4,5]; // par 72
+const parisSI  = [7,15,3,11,17,1,5,13,9, 14,18,6,10,2,16,12,4,8];
+
+// Distâncias por tee (metros) — fonte mscorecard.com (tees nomeados do campo)
+// Combinação Rouge (front 9) + Bleu (back 9)
+const parisNoirs   = [461,159,442,331,126,473,341,179,329, 326,283,393,198,542,151,294,373,475]; // 5876m — Noirs/Brancos (mesmo tee físico)
+const parisJaunes  = [429,141,408,304,108,449,316,148,305, 310,257,373,176,499,143,279,347,450]; // 5442m — Amarelos
+const parisBleus   = [408,124,387,282, 84,399,296,123,282, 287,242,351,155,485,118,258,326,422]; // 5029m — Azuis
+const parisRouges  = [383,102,367,263, 68,374,275,110,256, 267,228,329,137,466,101,233,306,406]; // 4671m — Vermelhos
+const parisViolets = [365,110,375,270, 75,355,285,115,235, 210,340,230,123,290,270, 90,225,310]; // 4273m — Violetas
+
+// Distâncias por tee (metros) — fonte: PDF "Paris Invitational 2025 - Meters" (tees de torneio USKids)
+// Nota: parisBleus = parisB12M (mesmo tee físico Bleus). Os outros são interpolados/específicos do torneio.
+const parisB1518M = [461,159,442,331,126,473,341,155,329, 326,283,387,168,535,146,294,373,450]; // 5779m (Boys 15-18, 13-14) — entre Noirs e Jaunes
+const parisB12M   = parisBleus; // 5029m (Boys 12, Girls 13-15) — tee Bleus (idêntico)
+const parisB11M   = [383,102,367,263, 84,374,253,105,249, 267,224,329,134,466,101,233,306,406]; // 4646m (Boys 11, 10) — entre Bleus e Rouges
+const parisB9M    = [337, 90,328,236, 90,311,207,100,218, 226,196,264,117,350,101,216,277,320]; // 3985m (Girls 11-12, Boys 9)
+
+function parisHoles(dist: number[]): Hole[] {
+  return dist.map((d, i) => ({ hole: i + 1, par: parisPar[i], si: parisSI[i], distance: d }));
+}
+function parisDist(dist: number[]): { total: number; front9: number; back9: number; holesCount: 18; complete18: true } {
+  const front9 = dist.slice(0, 9).reduce((a, b) => a + b, 0);
+  const back9  = dist.slice(9).reduce((a, b) => a + b, 0);
+  return { total: front9 + back9, front9, back9, holesCount: 18, complete18: true };
+}
+
+const PARIS_PDF_LINKS = [
+  { label: "US Kids Paris Invitational 2025 - Distances (Meters)", url: "/data/paris_invitational_2025_distances_-_meters.pdf" },
+];
+
+const golfParisValDEurope: Course = {
+  courseKey: "away-golf-paris-val-deurope-red-blue",
+  master: {
+    courseId: "away-golf-paris-val-deurope-red-blue",
+    name: "Golf Paris Val d'Europe Disneyland - RED/BLUE",
+    country: "França",
+    links: {
+      fpg: null,
+      scorecards: "https://www.mscorecard.com/mscorecard/showcourse.php?cid=1236598351821",
+      extra: PARIS_PDF_LINKS,
+    },
+    tees: [
+      // ── Tees nomeados do campo (mscorecard + CR/Slope via des-balles-et-des-birdies.com) ──
+      {
+        teeId: "paris-noirs",
+        sex: "M",
+        teeName: "Noirs / USKids Boys 15-18 / 13-14",
+        scorecardMeta: { teeColor: "#1a1a1a" },
+        ratings: { holes18: { par: 72, courseRating: 72.0, slopeRating: 131 } },
+        holes: parisHoles(parisNoirs),
+        distances: parisDist(parisNoirs),
+      },
+      {
+        teeId: "paris-jaunes-m",
+        sex: "M",
+        teeName: "Jaunes",
+        scorecardMeta: { teeColor: "#eab308" },
+        ratings: { holes18: { par: 72, courseRating: 69.9, slopeRating: 123 } },
+        holes: parisHoles(parisJaunes),
+        distances: parisDist(parisJaunes),
+      },
+      {
+        teeId: "paris-jaunes-f",
+        sex: "F",
+        teeName: "Jaunes",
+        scorecardMeta: { teeColor: "#eab308" },
+        ratings: { holes18: { par: 72, courseRating: 75.3, slopeRating: 138 } },
+        holes: parisHoles(parisJaunes),
+        distances: parisDist(parisJaunes),
+      },
+      {
+        teeId: "paris-bleus-m",
+        sex: "M",
+        teeName: "Bleus / USKids Boys 12",
+        scorecardMeta: { teeColor: "#3b82f6" },
+        ratings: { holes18: { par: 72, courseRating: 67.8, slopeRating: 119 } },
+        holes: parisHoles(parisBleus),
+        distances: parisDist(parisBleus),
+      },
+      {
+        teeId: "paris-bleus-f",
+        sex: "F",
+        teeName: "Bleus",
+        scorecardMeta: { teeColor: "#3b82f6" },
+        ratings: { holes18: { par: 72, courseRating: 72.8, slopeRating: 132 } },
+        holes: parisHoles(parisBleus),
+        distances: parisDist(parisBleus),
+      },
+      {
+        teeId: "paris-rouges-m",
+        sex: "M",
+        teeName: "Rouges",
+        scorecardMeta: { teeColor: "#ef4444" },
+        ratings: { holes18: { par: 72, courseRating: 66.0, slopeRating: 115 } },
+        holes: parisHoles(parisRouges),
+        distances: parisDist(parisRouges),
+      },
+      {
+        teeId: "paris-rouges-f",
+        sex: "F",
+        teeName: "Rouges",
+        scorecardMeta: { teeColor: "#ef4444" },
+        ratings: { holes18: { par: 72, courseRating: 70.4, slopeRating: 127 } },
+        holes: parisHoles(parisRouges),
+        distances: parisDist(parisRouges),
+      },
+      {
+        teeId: "paris-violets-m",
+        sex: "M",
+        teeName: "Violets",
+        scorecardMeta: { teeColor: "#a855f7" },
+        ratings: { holes18: { par: 72, courseRating: 63.8, slopeRating: 112 } },
+        holes: parisHoles(parisViolets),
+        distances: parisDist(parisViolets),
+      },
+      {
+        teeId: "paris-violets-f",
+        sex: "F",
+        teeName: "Violets",
+        scorecardMeta: { teeColor: "#a855f7" },
+        ratings: { holes18: { par: 72, courseRating: 67.9, slopeRating: 124 } },
+        holes: parisHoles(parisViolets),
+        distances: parisDist(parisViolets),
+      },
+      // ── Tees de torneio USKids (PDF oficial) — distâncias intermédias sem nome no mscorecard ──
+      {
+        teeId: "paris-uk-boys11",
+        sex: "M",
+        teeName: "USKids Boys 11 / 10",
+        scorecardMeta: { teeColor: "#f97316" }, // Longleaf Tee 4 — entre Bleus e Rouges
+        ratings: { holes18: { par: 72, courseRating: null, slopeRating: null } },
+        holes: parisHoles(parisB11M),
+        distances: parisDist(parisB11M),
+      },
+      {
+        teeId: "paris-uk-boys9",
+        sex: "M",
+        teeName: "USKids Boys 9 / Girls 11-12",
+        scorecardMeta: { teeColor: "#f97316" }, // Longleaf Tee 3
+        ratings: { holes18: { par: 72, courseRating: null, slopeRating: null } },
+        holes: parisHoles(parisB9M),
+        distances: parisDist(parisB9M),
+      },
+    ],
+  },
+};
+
 export function getExtraCourses(): Course[] {
   return [
     villaPadiernaFlamingos,
@@ -988,5 +1145,6 @@ export function getExtraCourses(): Course[] {
     montecchiaGreenWhite,
     frassanelle,
     galzignano,
+    golfParisValDEurope,
   ];
 }

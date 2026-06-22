@@ -87,6 +87,18 @@ export const MS_USKIDS_PAR = [4,4,4,3,4,4,3,5,5,4,4,5,3,4,4,4,3,5]; // par 72
 export const MS_USKIDS_SI  = [11,1,3,17,13,15,5,9,7,4,16,12,18,6,2,10,14,8];
 export const MS_USKIDS_M_B12   = [274,349,302,113,266,258,152,375,382,307,247,381,103,310,292,255,151,442]; // 4959m
 export const MS_USKIDS_M_B1011 = [274,299,272,103,227,231,132,338,352,267,219,356,91,270,237,225,133,404]; // 4430m
+
+// Golf Paris Val d'Europe Disneyland — USKids Paris Invitational 2025
+// Combinação RED (Rouge) + BLUE (Bleu), par 72
+// Fonte tees: mscorecard.com/mscorecard/showcourse.php?cid=1236598351821 + PDF oficial torneio
+export const PARIS_VDE_PAR   = [5,3,5,4,3,5,4,3,4, 4,4,4,3,5,3,4,4,5]; // par 72
+export const PARIS_VDE_SI    = [7,15,3,11,17,1,5,13,9, 14,18,6,10,2,16,12,4,8];
+// Boys 12 → tee Bleus (Longleaf 5), 5029m
+export const PARIS_VDE_B12_M = [408,124,387,282,84,399,296,123,282, 287,242,351,155,485,118,258,326,422]; // 5029m
+// Boys 11/10 → tee intermédio (Longleaf 4), 4646m — distâncias oficiais do torneio
+export const PARIS_VDE_B11_M = [383,102,367,263,84,374,253,105,249, 267,224,329,134,466,101,233,306,406]; // 4646m
+// Boys 15-18 / Boys 13-14 → tee Brancos+tee intermédio (Longleaf 6), 5779m
+export const PARIS_VDE_B1518_M = [461,159,442,331,126,473,341,155,329, 326,283,387,168,535,146,294,373,450]; // 5779m
 export const MS_USKIDS_M_B9    = [240,262,238,103,200,201,127,298,308,234,219,291,91,236,225,190,133,354]; // 3950m
 
 // Doral Junior Golf Classic (away-doral-*)

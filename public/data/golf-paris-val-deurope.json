@@ -1,0 +1,158 @@
+{
+  "_meta": {
+    "course": "Golf Paris Val d'Europe Disneyland",
+    "address": "40 Allée de La Mare Houleuse, 77700 Magny-le-Hongre, Île-de-France, France",
+    "phone": "+33 1 60 45 68 90",
+    "email": "dlp.nwy.golf@disney.com",
+    "website": "https://www.resonance.golf/fr/jouer/france/paris/golf-paris-val-deurope/",
+    "source": "https://www.mscorecard.com/mscorecard/showcourse.php?cid=1236598351821",
+    "scraped": "2026-06-22",
+    "measurement": "meters",
+    "holes": 27,
+    "tees": ["Noirs", "Blancs", "Jaunes", "Bleus", "Rouges", "Violets"],
+    "cr_slope": null,
+    "notes": [
+      "CR/Slope: ainda por scraper (bloqueio rate-limit; tentar noutra sessão).",
+      "Noirs=Blancs em todos os noves (mesmo tee físico).",
+      "⚠️ Tees Jaunes/Bleus/Rouges/Violets do nine BLANC têm dados incorrectos no mscorecard — mostram valores idênticos ao nine Rouge. Apenas Noirs/Blancs (3021m) são fiáveis para o Blanc."
+    ]
+  },
+  "nines": {
+    "rouge": {
+      "label": "ROUGE",
+      "par":    [5,  3,  5,  4,  3,  5,  4,  3,  4],
+      "si":     [7, 15,  3, 11, 17,  1,  5, 13,  9],
+      "parTotal": 36,
+      "tees": {
+        "Noirs":   [461,159,442,331,126,473,341,179,329],
+        "Blancs":  [461,159,442,331,126,473,341,179,329],
+        "Jaunes":  [429,141,408,304,108,449,316,148,305],
+        "Bleus":   [408,124,387,282, 84,399,296,123,282],
+        "Rouges":  [383,102,367,263, 68,374,275,110,256],
+        "Violets": [365,110,375,270, 75,355,285,115,235]
+      },
+      "totals": {
+        "Noirs":2841,"Blancs":2841,"Jaunes":2608,"Bleus":2385,"Rouges":2198,"Violets":2185
+      }
+    },
+    "bleu": {
+      "label": "BLEU",
+      "par":    [4,  4,  4,  3,  5,  3,  4,  4,  5],
+      "si":     [13,17,  5,  9,  1, 15, 11,  3,  7],
+      "parTotal": 36,
+      "tees": {
+        "Noirs":   [326,283,393,198,542,151,294,373,475],
+        "Blancs":  [326,283,393,198,542,151,294,373,475],
+        "Jaunes":  [310,257,373,176,499,143,279,347,450],
+        "Bleus":   [287,242,351,155,485,118,258,326,422],
+        "Rouges":  [267,228,329,137,466,101,233,306,406],
+        "Violets": [210,340,230,123,290,270, 90,225,310]
+      },
+      "totals": {
+        "Noirs":3035,"Blancs":3035,"Jaunes":2834,"Bleus":2644,"Rouges":2473,"Violets":2088
+      }
+    },
+    "blanc": {
+      "label": "BLANC",
+      "par":    [4,  5,  4,  3,  4,  4,  3,  4,  5],
+      "si":     [15,  1,  5, 13,  7,  9, 17,  3, 11],
+      "parTotal": 36,
+      "tees": {
+        "Noirs":   [335,532,368,163,348,321,139,391,424],
+        "Blancs":  [335,532,368,163,348,321,139,391,424],
+        "Jaunes":  null,
+        "Bleus":   null,
+        "Rouges":  null,
+        "Violets": null
+      },
+      "totals": {
+        "Noirs":3021,"Blancs":3021,"Jaunes":null,"Bleus":null,"Rouges":null,"Violets":null
+      }
+    }
+  },
+  "tournament_2025": {
+    "name": "USKids Golf Paris Invitational 2025",
+    "combination": "RED+BLUE (Rouge+Bleu)",
+    "source_pdf": "paris_invitational_2025_distances_-_meters.pdf",
+    "age_groups": {
+      "Boys 15-18": { "tee_label": "Longleaf 6", "tees_mscorecard": "Brancos+intermédio", "M": [461,159,442,331,126,473,341,155,329, 326,283,387,168,535,146,294,373,450], "total": 5779 },
+      "Boys 13-14": { "tee_label": "Longleaf 6", "tees_mscorecard": "Brancos+intermédio", "M": [461,159,442,331,126,473,341,155,329, 326,283,387,168,535,146,294,373,450], "total": 5779 },
+      "Boys 12":    { "tee_label": "Longleaf 5", "tees_mscorecard": "Bleus",              "M": [408,124,387,282,84,399,296,123,282, 287,242,351,155,485,118,258,326,422], "total": 5029 },
+      "Boys 11":    { "tee_label": "Longleaf 4", "tees_mscorecard": "intermédio",          "M": [383,102,367,263,84,374,253,105,249, 267,224,329,134,466,101,233,306,406], "total": 4646 },
+      "Boys 10":    { "tee_label": "Longleaf 4", "tees_mscorecard": "intermédio",          "M": [383,102,367,263,84,374,253,105,249, 267,224,329,134,466,101,233,306,406], "total": 4646 },
+      "Girls 15-18":{ "tee_label": "Longleaf 5", "tees_mscorecard": "Bleus",              "M": [408,124,387,282,84,399,296,123,282, 287,242,351,155,485,118,258,326,422], "total": 5029 },
+      "Girls 13-14":{ "tee_label": "Longleaf 5", "tees_mscorecard": "Bleus",              "M": [408,124,387,282,84,399,296,123,282, 287,242,351,155,485,118,258,326,422], "total": 5029 },
+      "Girls 11-12":{ "tee_label": "Longleaf 3", "tees_mscorecard": "intermédio curto",   "M": [337,90,328,236,90,311,207,100,218, 226,196,264,117,350,101,216,277,320], "total": 3985 },
+      "Boys 9":     { "tee_label": "Longleaf 3", "tees_mscorecard": "intermédio curto",   "M": [337,90,328,236,90,311,207,100,218, 226,196,264,117,350,101,216,277,320], "total": 3985 },
+      "Girls 9-10": { "combination": "WHITE (Blanc)", "tee_label": "Longleaf 2", "M": [185,295,195,85,190,175,75,200,265], "total": 1665, "holes": 9 },
+      "Boys 8":     { "combination": "WHITE (Blanc)", "tee_label": "Longleaf 2", "M": [185,295,195,85,190,175,75,200,265], "total": 1665, "holes": 9 },
+      "Boys 7":     { "combination": "WHITE (Blanc)", "tee_label": "Longleaf 1", "M": [154,246,163,71,158,146,63,167,221],  "total": 1388, "holes": 9 },
+      "Girls 8 & Under": { "combination": "WHITE (Blanc)", "tee_label": "Longleaf RS", "M": [123,197,130,57,127,117,50,133,177], "total": 1110, "holes": 9 },
+      "Boys 6 & Under":  { "combination": "WHITE (Blanc)", "tee_label": "Longleaf RS", "M": [123,197,130,57,127,117,50,133,177], "total": 1110, "holes": 9 }
+    },
+    "manuel_boys12": {
+      "combination": "RED+BLUE (Rouge+Bleu)",
+      "tee": "Bleus",
+      "par18": [5,3,5,4,3,5,4,3,4, 4,4,4,3,5,3,4,4,5],
+      "si18":  [7,15,3,11,17,1,5,13,9, 14,18,6,10,2,16,12,4,8],
+      "M":     [408,124,387,282,84,399,296,123,282, 287,242,351,155,485,118,258,326,422],
+      "total": 5029
+    }
+  },
+  "combinations_18h": {
+    "Rouge+Bleu": {
+      "par": 72, "front": "rouge", "back": "bleu",
+      "par18":  [5,3,5,4,3,5,4,3,4, 4,4,4,3,5,3,4,4,5],
+      "si18":   [7,15,3,11,17,1,5,13,9, 14,18,6,10,2,16,12,4,8],
+      "totals": {"Noirs":5876,"Blancs":5876,"Jaunes":5442,"Bleus":5029,"Rouges":4671,"Violets":4273}
+    },
+    "Rouge+Blanc": {
+      "par": 72, "front": "rouge", "back": "blanc",
+      "par18":  [5,3,5,4,3,5,4,3,4, 4,5,4,3,4,4,3,4,5],
+      "si18":   [7,15,3,11,17,1,5,13,9, 16,2,6,14,8,10,18,4,12],
+      "totals": {"Noirs":5862,"Blancs":5862,"Jaunes":null,"Bleus":null,"Rouges":null,"Violets":null}
+    },
+    "Bleu+Rouge": {
+      "par": 72, "front": "bleu", "back": "rouge",
+      "par18":  [4,4,4,3,5,3,4,4,5, 5,3,5,4,3,5,4,3,4],
+      "si18":   [13,17,5,9,1,15,11,3,7, 8,16,4,12,18,2,6,14,10],
+      "totals": {"Noirs":5876,"Blancs":5876,"Jaunes":5442,"Bleus":5029,"Rouges":4671,"Violets":4273}
+    },
+    "Bleu+Blanc": {
+      "par": 72, "front": "bleu", "back": "blanc",
+      "par18":  [4,4,4,3,5,3,4,4,5, 4,5,4,3,4,4,3,4,5],
+      "si18":   [13,17,5,9,1,15,11,3,7, 16,2,6,14,8,10,18,4,12],
+      "totals": {"Noirs":6056,"Blancs":6056,"Jaunes":null,"Bleus":null,"Rouges":null,"Violets":null}
+    },
+    "Blanc+Rouge": {
+      "par": 72, "front": "blanc", "back": "rouge",
+      "par18":  [4,5,4,3,4,4,3,4,5, 5,3,5,4,3,5,4,3,4],
+      "si18":   [15,1,5,13,7,9,17,3,11, 8,16,4,12,18,2,6,14,10],
+      "totals": {"Noirs":5862,"Blancs":5862,"Jaunes":null,"Bleus":null,"Rouges":null,"Violets":null}
+    },
+    "Blanc+Bleu": {
+      "par": 72, "front": "blanc", "back": "bleu",
+      "par18":  [4,5,4,3,4,4,3,4,5, 4,4,4,3,5,3,4,4,5],
+      "si18":   [15,1,5,13,7,9,17,3,11, 14,18,6,10,2,16,12,4,8],
+      "totals": {"Noirs":6056,"Blancs":6056,"Jaunes":null,"Bleus":null,"Rouges":null,"Violets":null}
+    },
+    "Rouge+Rouge": {
+      "par": 72, "front": "rouge", "back": "rouge",
+      "par18":  [5,3,5,4,3,5,4,3,4, 5,3,5,4,3,5,4,3,4],
+      "si18":   [7,15,3,11,17,1,5,13,9, 8,16,4,12,18,2,6,14,10],
+      "totals": {"Noirs":5682,"Blancs":5682,"Jaunes":5216,"Bleus":4770,"Rouges":4396,"Violets":4370}
+    },
+    "Bleu+Bleu": {
+      "par": 72, "front": "bleu", "back": "bleu",
+      "par18":  [4,4,4,3,5,3,4,4,5, 4,4,4,3,5,3,4,4,5],
+      "si18":   [13,17,5,9,1,15,11,3,7, 14,18,6,10,2,16,12,4,8],
+      "totals": {"Noirs":6070,"Blancs":6070,"Jaunes":5668,"Bleus":5288,"Rouges":4946,"Violets":4176}
+    },
+    "Blanc+Blanc": {
+      "par": 72, "front": "blanc", "back": "blanc",
+      "par18":  [4,5,4,3,4,4,3,4,5, 4,5,4,3,4,4,3,4,5],
+      "si18":   [15,1,5,13,7,9,17,3,11, 16,2,6,14,8,10,18,4,12],
+      "totals": {"Noirs":6042,"Blancs":6042,"Jaunes":null,"Bleus":null,"Rouges":null,"Violets":null}
+    }
+  }
+}
