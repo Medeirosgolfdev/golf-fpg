@@ -297,24 +297,22 @@ export function AllRoundsScorecardLB({
                   S.I.
                 </td>
                 <td className="lb-topar" />
-                <td className="lb-gross">{si.reduce((a, b) => a + b, 0) || ""}</td>
+                {/* O S.I. é um identificador por buraco (1-18), não um valor
+                    somável → totais/subtotais (TOT/OUT/IN) ficam em branco. */}
+                <td className="lb-gross" />
                 {si.slice(0, 9).map((v, i) => (
                   <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>
                     {v || ""}
                   </td>
                 ))}
-                <td className="lb-halftot">
-                  {si.slice(0, 9).reduce((a, b) => a + b, 0) || ""}
-                </td>
+                <td className="lb-halftot" />
                 {!is9 &&
                   si.slice(9, 18).map((v, i) => (
                     <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>
                       {v || ""}
                     </td>
                   ))}
-                {!is9 && (
-                  <td className="lb-halftot">{si.slice(9).reduce((a, b) => a + b, 0) || ""}</td>
-                )}
+                {!is9 && <td className="lb-halftot" />}
                 {Array.from({ length: postCols }, (_, i) => (
                   <td key={i} />
                 ))}

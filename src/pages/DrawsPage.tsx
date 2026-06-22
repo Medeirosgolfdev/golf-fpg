@@ -457,7 +457,7 @@ function TorneiosList({
       {open && (
         <div style={{ maxHeight: 380, overflowY: "auto" }}>
           {items.length === 0 ? (
-            <div className="muted" className="p-10-12">
+            <div className="muted p-10-12">
               {emptyText}
             </div>
           ) : (

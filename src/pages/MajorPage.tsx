@@ -116,8 +116,8 @@ function buildMajorEntries(bjgtDefs: TDef[], doralEntries: Entry[], doralNames: 
 }
 
 /* ─── Junior Orange Bowl — ficheiros orangebowl_<ano>.json (scrape-junior-orange-bowl.js) ─── */
-interface JobPlayer { pos: string; name: string; country: string; location?: string; detailId?: string | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number }[]; }
-interface JobDivision { division: string; tid?: string; par?: (number | null)[] | null; parTotal?: number | null; meters?: (number | null)[] | null; si?: (number | null)[] | null; teeName?: string | null; metersTotal?: number | null; players: JobPlayer[]; }
+interface JobPlayer { pos: string; name: string; country: string; location?: string; detailId?: string | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number; startingHole?: number }[]; }
+interface JobDivision { division: string; source?: string; tid?: string; par?: (number | null)[] | null; parTotal?: number | null; meters?: (number | null)[] | null; si?: (number | null)[] | null; teeName?: string | null; metersTotal?: number | null; players: JobPlayer[]; }
 interface JobFile { tournament: string; year: number; source?: string; course?: string | null; divisions: JobDivision[]; }
 
 // Divisão 1 = Rapazes, Divisão 2 = Raparigas (consistente em todas as edições JOB).
@@ -130,28 +130,60 @@ function jobScorecardOptions(): ScorecardOptions {
 function jobDivisionToTournament(div: JobDivision, name: string): FPGTournament {
   const players = div.players.filter((p) => p.total != null);
   const nR = Math.max(...players.map((p) => (p.rounds ? p.rounds.length : 0) || p.roundGross.length), 0);
-  // Par REAL do campo (derivado dos marcadores pelo scraper). Fallback para
-  // ficheiros antigos sem par: derivar parTotal de (total − toPar) / nº rondas.
-  let par18: number[];
-  let parTotal: number;
-  if (Array.isArray(div.par) && div.par.length === 18 && div.par.every((x) => x != null)) {
-    par18 = div.par as number[];
-    parTotal = div.parTotal ?? par18.reduce((a, b) => a + b, 0);
-  } else {
+
+  // Detectar divisão de 9 buracos (ex: FM "10 and Under"). ⚠ Os mais novos
+  // jogam 9 buracos e ALTERNAM o nine por dia: um dia o FRONT-9 (startingHole=1),
+  // outro o BACK-9 (startingHole=10). O par/metros/SI vêm do course_analytics com
+  // 18 buracos → é preciso fatiar para os 9 jogados POR RONDA (consoante o
+  // startingHole dessa ronda), senão a coloração buraco-a-buraco fica errada.
+  const nineHole = players.some((p) => (p.rounds || []).some((r) => r.scores?.length === 9));
+  const holes = nineHole ? 9 : 18;
+
+  // Arrays do campo completo (18 buracos), quando válidos.
+  const full18 = (arr?: (number | null)[] | null): number[] | null =>
+    Array.isArray(arr) && arr.length === 18 && arr.every((x) => x != null) ? (arr as number[]) : null;
+  const par18 = full18(div.par);
+  const meters18 = full18(div.meters);
+  const si18 = full18(div.si);
+
+  // Fatia um array de 18 para os 9 buracos de uma ronda (back-9 → offset 9).
+  const sliceFor = (arr18: number[] | null, startHole?: number): number[] => {
+    if (!arr18) return [];
+    if (!nineHole) return arr18;
+    const off = startHole === 10 ? 9 : 0;
+    return arr18.slice(off, off + 9);
+  };
+
+  // Par derivado (fallback para ficheiros sem par[18]): par "chato" de `holes`.
+  let parDerived: number[] | null = null;
+  if (!par18) {
     const ref = players.find((p) => p.toPar != null && p.total != null && (p.rounds?.length || p.roundGross.length));
     const refR = ref ? (ref.rounds?.length || ref.roundGross.length) : nR;
-    parTotal = ref && refR ? Math.round((ref.total! - ref.toPar!) / refR) : 72;
-    const hi = Math.ceil(parTotal / 18), lo = Math.floor(parTotal / 18), rem = parTotal % 18;
-    par18 = Array.from({ length: 18 }, (_, i) => (i < rem ? hi : lo));
+    const pt = ref && refR ? Math.round((ref.total! - ref.toPar!) / refR) : (nineHole ? 36 : 72);
+    const hi = Math.ceil(pt / holes), lo = Math.floor(pt / holes), rem = pt % holes;
+    parDerived = Array.from({ length: holes }, (_, i) => (i < rem ? hi : lo));
   }
-  // Metros/SI reais por buraco (course_analytics). Só usar se 18 valores válidos.
-  const meters18 = Array.isArray(div.meters) && div.meters.length === 18 && div.meters.every((x) => x != null) ? (div.meters as number[]) : [];
-  const si18 = Array.isArray(div.si) && div.si.length === 18 && div.si.every((x) => x != null) ? (div.si as number[]) : [];
-  // A linha de metros no scorecard só aparece quando há teeName. O course_analytics
-  // do JOB nem sempre dá nome de tee → usar "Tee" como rótulo quando há metros.
-  const teeName = meters18.length ? (div.teeName || "Tee") : undefined;
+
+  // Par/SI/metros por ronda em função do seu startingHole.
+  const parForRound = (sh?: number) => (par18 ? sliceFor(par18, sh) : (parDerived || []));
+  const metersForRound = (sh?: number) => sliceFor(meters18, sh);
+  const siForRound = (sh?: number) => sliceFor(si18, sh);
+
+  // Representativo (cabeçalho/stats): a 1ª ronda jogada na divisão.
+  const repSH = players.find((p) => p.rounds?.length)?.rounds?.[0]?.startingHole;
+  const par = parForRound(repSH);
+  const parTotal = par.reduce((a, b) => a + b, 0) || (nineHole ? 36 : 72);
+  // A linha de metros no scorecard só aparece quando há teeName.
+  const teeName = meters18 ? (div.teeName || "Tee") : undefined;
+
   const fpg: FPGPlayer[] = players.map((p) => {
-    const rounds = (p.rounds || []).map((r, ri) => ({ round: ri + 1, gross: r.gross, scores: r.scores || [], pars: par18, si: si18, meters: meters18, teeName }));
+    const rounds = (p.rounds || []).map((r, ri) => {
+      // Preferir a soma dos scores quando a ronda está completa (mais fiável que
+      // o `gross` do leaderboard, que pode divergir em ficheiros antigos).
+      const sc = r.scores || [];
+      const gross = sc.length === holes ? sc.reduce((a, b) => a + b, 0) : r.gross;
+      return { round: ri + 1, gross, scores: sc, pars: parForRound(r.startingHole), si: siForRound(r.startingHole), meters: metersForRound(r.startingHole), teeName };
+    });
     return {
       scoreId: p.detailId || p.name,
       pos: parseInt(String(p.pos).replace(/^T/i, ""), 10) || null,
@@ -159,10 +191,10 @@ function jobDivisionToTournament(div: JobDivision, name: string): FPGTournament 
       club: p.country ? `${gf(p.country)} ${normPaisDisplay(p.country)}` : "",
       grossTotal: p.total,
       toPar: p.toPar,
-      nholes: 18,
+      nholes: holes,
       parTotal,
       scores: p.rounds?.[0]?.scores,
-      par: par18,
+      par,
       roundScores: rounds,
       _roundsPlayed: rounds.length || p.roundGross.length,
       _isPortuguese: /portugal/i.test(p.country || "") || /^(pt|prt)$/i.test(p.country || ""),
@@ -209,6 +241,9 @@ function buildFmEntries(files: JobFile[]): CircuitEntry[] {
         hasManuel: dv.players.some((p) => isM(p.name)),
         results,
         scOptions: jobScorecardOptions(),
+        // Link para a página de resultados GolfGenius deste escalão (cada age
+        // group tem a sua própria página /pages/{id}).
+        links: dv.source ? [{ label: "Resultados GolfGenius", icon: "🔗", url: dv.source }] : undefined,
         evoCols: hasEvo ? makeEvoCols(evo!, evoYear) : undefined,
         accHeader: hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined,
       };
