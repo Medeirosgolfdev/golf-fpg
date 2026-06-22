@@ -33,7 +33,7 @@ import { getTeeHex, textOnColor, teeBorder } from "../../utils/teeColors";
 import { MANUEL_FED } from "../../constants/manuel";
 import { resolvePlayedMeters, resolvePlayedTee, courseKeyName } from "../../utils/playedDistance";
 
-const MONO = "'JetBrains Mono', monospace";
+const MONO = "var(--font-mono)";
 
 /** Coerção segura para número — alguns campos do JSON vêm como string (ex: sd "14"). */
 const toNum = (v: unknown): number | null => {
@@ -1031,7 +1031,7 @@ export default function TeeAdvisorView({ simCourses }: { simCourses: Course[] })
               </div>
 
               <div style={{ marginTop: 16 }}>
-                <div style={{ fontWeight: 700, fontSize: "var(--fs-13)", marginBottom: 4 }}>
+                <div className="h-sm" style={{ marginTop: 0, marginBottom: 4 }}>
                   📋 Diferença buraco a buraco — {teeA.tee.teeName} vs {teeB.tee.teeName}
                 </div>
                 <div className="muted" style={{ fontSize: "var(--fs-12)", marginBottom: 8 }}>
