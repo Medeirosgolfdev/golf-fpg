@@ -207,8 +207,8 @@ function RadarChart({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats | null
   };
 
   return (
-    <div className="courseAnalysis" style={{ padding: 16 }}>
-      <div className="caTitle">Perfil Comparativo</div>
+    <div className="card">
+      <div className="h-md">Perfil Comparativo</div>
       <svg viewBox="0 0 300 290" style={{ width: "100%", maxWidth: 420, display: "block", margin: "0 auto" }}>
         {[0.25, 0.5, 0.75, 1].map(frac => (
           <polygon key={frac}
@@ -290,9 +290,9 @@ function StatsTable({ slots, allAgg, stats }: { slots: Slot[]; allAgg: (AggStats
   });
 
   return (
-    <div className="courseAnalysis" style={{ padding: 0, overflow: "hidden" }}>
-      <div className="caTitle" style={{ padding: "14px 16px 0" }}>Comparação Detalhada</div>
-      <div style={{ marginTop: 8 }}>
+    <div className="card" style={{ padding: 0, overflow: "hidden" }}>
+      <div className="h-md" style={{ padding: "14px 16px 0" }}>Comparação Detalhada</div>
+      <div style={{ marginTop: 8, overflowX: "auto" }}>
         <table className="dtable">
           <thead>
             <tr>
@@ -349,8 +349,8 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
   ];
 
   return (
-    <div className="courseAnalysis" style={{ padding: 16 }}>
-      <div className="caTitle">Distribuição de Scores</div>
+    <div className="card">
+      <div className="h-md">Distribuição de Scores</div>
       <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 8 }}>
         {cats.filter(c => c.key !== "total").map(cat => {
           const vals = loaded.map(x => {
@@ -438,8 +438,8 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
   const yPos = (v: number) => PAD.top + ((maxV - v) / range) * (H - PAD.top - PAD.bottom);
 
   return (
-    <div className="courseAnalysis">
-      <div className="caTitle" style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+    <div className="card">
+      <div className="h-md" style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
         Buraco a Buraco
         <select className="select" value={sel} onChange={e => setSel(Number(e.target.value))}>
           {combos.map((c, i) => <option key={i} value={i}>{c.label} ({c.nRounds.filter(n => n > 0).join("/")} rondas)</option>)}
@@ -482,7 +482,7 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
         })}
       </div>
 
-      <div style={{ marginTop: 8 }}>
+      <div style={{ marginTop: 8, overflowX: "auto" }}>
         <table className="dtable">
           <thead><tr>
             <th className="r">H</th><th className="r">Par</th>
@@ -555,8 +555,8 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
   const totalMatches = matches.length;
 
   return (
-    <div className="courseAnalysis">
-      <div className="caTitle">Head-to-Head ({totalMatches} torneios comuns)</div>
+    <div className="card">
+      <div className="h-md">Head-to-Head ({totalMatches} torneios comuns)</div>
 
       {/* Win progress bar */}
       <div style={{ display: "flex", height: 32, borderRadius: 8, overflow: "hidden", marginBottom: 12, border: "1px solid var(--border-light)" }}>
@@ -598,7 +598,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
         )}
       </div>
 
-      <div style={{ maxHeight: 340, overflowY: "auto" }}>
+      <div style={{ maxHeight: 340, overflowY: "auto", overflowX: "auto" }}>
         <table className="dtable">
           <thead><tr>
             <th>Data</th><th>Torneio</th>
@@ -650,8 +650,8 @@ function HcpEvolutionSection({ slots }: { slots: Slot[] }) {
   const yPos = (h: number) => H - PAD.bottom - ((h - (minH - padH)) / (rangeH + 2 * padH)) * (H - PAD.top - PAD.bottom);
 
   return (
-    <div className="courseAnalysis">
-      <div className="caTitle" style={{ display: "flex", alignItems: "center", gap: 10 }}>
+    <div className="card">
+      <div className="h-md" style={{ display: "flex", alignItems: "center", gap: 10 }}>
         Evolução HCP
         <select className="select" value={period} onChange={e => setPeriod(Number(e.target.value))}>
           <option value={0}>Total</option><option value={36}>3 anos</option><option value={24}>2 anos</option><option value={12}>1 ano</option><option value={6}>6 meses</option>
@@ -708,9 +708,9 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
       <PlayerSearch players={players} slots={slots} onAdd={addPlayer} onRemove={removePlayer} />
 
       {slots.length === 0 && (
-        <div className="holeAnalysis" style={{ textAlign: "center", padding: "40px 20px" }}>
+        <div className="card" style={{ textAlign: "center", padding: "40px 20px" }}>
           <div style={{ fontSize: 40, marginBottom: 12 }}>⚔️</div>
-          <div className="haTitle" style={{ textAlign: "center", fontSize: "var(--fs-16)", marginBottom: 6 }}>Comparar Jogadores</div>
+          <div className="h-md" style={{ textAlign: "center", fontSize: "var(--fs-16)", marginBottom: 6 }}>Comparar Jogadores</div>
           <div className="muted" style={{ fontSize: "var(--fs-13)", lineHeight: 1.6 }}>
             Pesquisa e adiciona até 4 jogadores para comparar lado a lado.
           </div>
@@ -739,7 +739,7 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
       </>)}
 
       {slots.length === 1 && !anyLoading && (
-        <div className="holeAnalysis" style={{ textAlign: "center", padding: 24 }}>
+        <div className="card" style={{ textAlign: "center", padding: 24 }}>
           <div style={{ fontSize: "var(--fs-24)", marginBottom: 8 }}>👆</div>
           <div className="muted">Adiciona mais jogadores para ver a comparação</div>
         </div>
