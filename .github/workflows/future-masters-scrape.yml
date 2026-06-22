@@ -1,0 +1,111 @@
+name: FUTURE MASTERS scrape
+
+# Descarrega TUDO do Future Masters Golf (Dothan, Alabama): leaderboard +
+# scorecards + par/metros + draws (tee sheet), via scrape-future-masters-all.js.
+#
+# Node puro, SEM secrets/cookies — golfgenius.com e futuremastersgolf.com são
+# públicos. O script AUTO-DESCOBRE os ids do GolfGenius do ano corrente a partir
+# do site oficial, por isso cada edição nova funciona sem editar nada.
+#
+# Corre:
+#   - Automaticamente: TODOS os dias de Junho às 05:00 UTC (≈ meia-noite em
+#     Dothan, CDT) — a janela do torneio. Modo `--current`: só o ano corrente
+#     descoberto (leve), apanhando as rondas terminadas no dia anterior.
+#   - A pedido (botão "Run workflow"): pode refazer TODOS os anos (all_years) ou
+#     correr sem scorecards (rápido).
+on:
+  workflow_dispatch:
+    inputs:
+      all_years:
+        description: 'Refazer TODOS os anos (não só o corrente)? Longo — refaz scorecards históricos.'
+        required: false
+        default: 'false'
+        type: choice
+        options: ['false', 'true']
+      skip_scorecards:
+        description: 'Saltar scorecards (rápido, só leaderboard+par+draws)?'
+        required: false
+        default: 'false'
+        type: choice
+        options: ['false', 'true']
+
+  schedule:
+    # Diário às 05:00 UTC, só em Junho (janela do torneio). 05:00 UTC ≈ 00:00 CDT
+    # em Dothan → apanha as rondas terminadas no dia anterior.
+    - cron: '0 5 * 6 *'
+
+permissions:
+  contents: write
+
+# Evita runs concorrentes a fazer push em paralelo.
+concurrency:
+  group: future-masters-scrape
+  cancel-in-progress: false
+
+jobs:
+  future-masters-scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Correr scrape-future-masters-all.js
+        run: |
+          ARGS=""
+          # Por defeito (cron) corre só o ano corrente descoberto (--current).
+          # workflow_dispatch com all_years=true refaz todos os anos.
+          if [ "${{ github.event.inputs.all_years }}" != "true" ]; then
+            ARGS="$ARGS --current"
+          fi
+          if [ "${{ github.event.inputs.skip_scorecards }}" = "true" ]; then
+            ARGS="$ARGS --skip-scorecards"
+          fi
+          echo "Args: $ARGS"
+          node scripts/scrape-future-masters-all.js $ARGS
+
+      - name: Commit e push (se houver mudanças)
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add public/data/ftm_fm_*.json
+
+          if git diff --staged --quiet; then
+            echo "ℹ️  Nenhuma alteração — sem commit."
+            exit 0
+          fi
+
+          DATE=$(date -u +'%Y-%m-%d %H:%M UTC')
+          git commit -m "data: update Future Masters ${DATE}"
+
+          # Push robusto: retry com pull --rebase (caso outro workflow committe).
+          PUSH_OK=0
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
+              PUSH_OK=1
+              break
+            fi
+            git rebase --abort 2>/dev/null || true
+            echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
+            sleep $((i * 5))
+          done
+          if [ "$PUSH_OK" != "1" ]; then
+            echo "❌ Push falhou após 5 tentativas"
+            exit 1
+          fi
+          echo "✓ Commit feito"

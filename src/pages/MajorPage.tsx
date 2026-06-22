@@ -117,7 +117,8 @@ function buildMajorEntries(bjgtDefs: TDef[], doralEntries: Entry[], doralNames: 
 
 /* ─── Junior Orange Bowl — ficheiros orangebowl_<ano>.json (scrape-junior-orange-bowl.js) ─── */
 interface JobPlayer { pos: string; name: string; country: string; location?: string; detailId?: string | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number; startingHole?: number }[]; }
-interface JobDivision { division: string; source?: string; tid?: string; par?: (number | null)[] | null; parTotal?: number | null; meters?: (number | null)[] | null; si?: (number | null)[] | null; teeName?: string | null; metersTotal?: number | null; players: JobPlayer[]; }
+interface JobDrawGroup { time?: string; startHole?: number | null; players: { name: string; tee?: string }[]; }
+interface JobDivision { division: string; source?: string; tid?: string; par?: (number | null)[] | null; parTotal?: number | null; meters?: (number | null)[] | null; si?: (number | null)[] | null; teeName?: string | null; metersTotal?: number | null; players: JobPlayer[]; draws?: Record<string, { round: number; label?: string; date?: string; groups: JobDrawGroup[] }>; }
 interface JobFile { tournament: string; year: number; source?: string; course?: string | null; divisions: JobDivision[]; }
 
 // Divisão 1 = Rapazes, Divisão 2 = Raparigas (consistente em todas as edições JOB).
@@ -244,6 +245,12 @@ function buildFmEntries(files: JobFile[]): CircuitEntry[] {
         // Link para a página de resultados GolfGenius deste escalão (cada age
         // group tem a sua própria página /pages/{id}).
         links: dv.source ? [{ label: "Resultados GolfGenius", icon: "🔗", url: dv.source }] : undefined,
+        // Draw / tee times (pré-jogo) → tab "Draw" do CircuitShell.
+        draw: dv.draws && Object.keys(dv.draws).length
+          ? { rounds: Object.fromEntries(Object.entries(dv.draws).map(([rn, info]) => [
+              rn, info.groups.map((g) => ({ teeTime: g.time, startHole: g.startHole ?? undefined, players: g.players.map((p) => ({ name: p.name })) })),
+            ])) }
+          : undefined,
         evoCols: hasEvo ? makeEvoCols(evo!, evoYear) : undefined,
         accHeader: hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined,
       };

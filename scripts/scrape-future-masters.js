@@ -44,11 +44,15 @@ const EDITIONS = [
     // automaticamente. Os 4 escalões partilham a liga 12683907791899867163,
     // distinguidos pelo page_id. v2tids correspondentes (referência): 10U
     // 12819312035821008950 · 13-14 12819272936217131039 · 15-18 12819314883820533817.
+    // pageId = página de resultados; drawPageId = página de tee-times (widget
+    // next_round). Ambos do site futuremastersgolf.com (2026-06-22).
     ageGroups: {
-      '10 and Under': '12683728656330143910',
-      '11 & 12':      '12683907823877241012',
-      '13 & 14':      '12683915475898349755',
-      '15-18':        '12683921987974740162',
+      '10 and Under': { pageId: '12683728656330143910', drawPageId: '12683728654283323556' },
+      // 11&12: a página de resultados ainda não expõe o v2tid (leaderboard vazia,
+      // R1 a arrancar) → fornecer o v2tid directo; o pageId resolve a liga p/ o par.
+      '11 & 12':      { pageId: '12683907823877241012', v2tid: '12819301568717273138', drawPageId: '12683907822400846002' },
+      '13 & 14':      { pageId: '12683915475898349755', drawPageId: '12683915474052855993' },
+      '15-18':        { pageId: '12683921987974740162', drawPageId: '12683921986565454016' },
     },
   },
   {
@@ -182,8 +186,8 @@ const DOTHAN_PAR_TOTAL = DOTHAN_PAR.reduce((a, b) => a + b, 0); // 70
 // Normaliza o valor de um age group (string pageId | objecto | null) num spec.
 function normSpec(v) {
   if (v == null) return null;
-  if (typeof v === 'string') return { pageId: v, v2tid: null, leagueId: null };
-  return { pageId: v.pageId || null, v2tid: v.v2tid || null, leagueId: v.leagueId || null };
+  if (typeof v === 'string') return { pageId: v, v2tid: null, leagueId: null, drawPageId: null };
+  return { pageId: v.pageId || null, v2tid: v.v2tid || null, leagueId: v.leagueId || null, drawPageId: v.drawPageId || null };
 }
 
 // URL pública dos resultados de um escalão (link "Resultados GolfGenius").
@@ -295,6 +299,64 @@ async function fetchCourseStats(leagueId) {
     console.log(`      par: [${best.par.join(',')}] total=${best.parTotal} (${best.par.length}B)`);
   }
   return best;
+}
+
+// ─── Draws / Tee sheet (widget next_round) ─────────────────────────────────
+// Cada linha desktop (tr.search_rows.hidden-xs) tem 2 grupos lado a lado, cada
+// um = [Time, Hole, Players]; os jogadores vivem em <div class="players_portrait">.
+
+function parseTeeSheet(html) {
+  const groups = [];
+  const rowRe = /<tr class='search_rows hidden-xs'[^>]*>([\s\S]*?)<\/tr>/g;
+  let rm;
+  while ((rm = rowRe.exec(html)) !== null) {
+    const tds = [...rm[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/g)].map(m => m[1]);
+    for (let i = 0; i + 2 < tds.length; i += 3) {
+      const time = tds[i].replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').trim();
+      const hole = parseInt(tds[i + 1].replace(/<[^>]+>/g, '').trim(), 10);
+      const players = [...tds[i + 2].matchAll(/players_portrait'>\s*([\s\S]*?)<span class='tee_abbr'>([\s\S]*?)<\/span>/g)]
+        .map(m => {
+          const name = normalizeName(m[1].replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').trim());
+          const tee = m[2].replace(/<[^>]+>/g, '').trim();
+          return tee ? { name, tee } : { name };
+        })
+        .filter(p => p.name);
+      if (time && players.length) groups.push({ time, startHole: hole || null, players });
+    }
+  }
+  return groups;
+}
+
+// Descarrega os draws (tee sheet) de um escalão: enumera as rondas e parseia
+// os grupos de cada uma. Devolve { [round]: { round, label, date, groups } }.
+async function fetchDraws(leagueId, drawPageId) {
+  const base = `${GG_BASE}/leagues/${leagueId}/widgets/next_round?page_id=${drawPageId}`;
+  let idxHtml;
+  try {
+    idxHtml = await httpGet(base);
+  } catch (e) {
+    console.log(`      draws: índice falhou (${e.message})`);
+    return null;
+  }
+  // Rondas disponíveis (dedup por round_id).
+  const seen = new Set();
+  const rounds = [...idxHtml.matchAll(/round_id=(\d+)[^>]*>\s*(Round\s*(\d+)[^<]*)/g)]
+    .filter(m => !seen.has(m[1]) && seen.add(m[1]))
+    .map(m => ({ rid: m[1], label: m[2].trim().replace(/\s+/g, ' '), num: parseInt(m[3], 10) }));
+
+  const draws = {};
+  for (const r of rounds) {
+    let html;
+    try {
+      html = await httpGet(`${base}&round_id=${r.rid}`);
+    } catch { continue; }
+    await sleep(250);
+    const groups = parseTeeSheet(html);
+    if (groups.length === 0) continue; // ronda ainda sem draw publicado
+    const dateM = r.label.match(/\(([^)]+)\)/);
+    draws[r.num] = { round: r.num, label: `Round ${r.num}`, date: dateM ? dateM[1].trim() : '', groups };
+  }
+  return Object.keys(draws).length ? draws : null;
 }
 
 // ─── Normalização de nomes ─────────────────────────────────────────────────
@@ -630,6 +692,21 @@ async function scrapeAgeGroup(spec, divisionName, opts = {}) {
     await enrichScorecards(division, spec.pageId, skipIfPresent);
   }
 
+  // 4. Draws / tee sheet (pré-jogo, via widget next_round).
+  if (spec.drawPageId && leagueId) {
+    console.log(`    a buscar draws (tee sheet)…`);
+    await sleep(300);
+    const draws = await fetchDraws(leagueId, spec.drawPageId);
+    if (draws) {
+      division.draws = draws;
+      const nR = Object.keys(draws).length;
+      const nG = Object.values(draws).reduce((s, d) => s + d.groups.length, 0);
+      console.log(`      draws: ${nR} ronda(s), ${nG} grupos`);
+    } else {
+      console.log(`      draws: ainda sem tee sheet publicado`);
+    }
+  }
+
   return division;
 }
 
@@ -734,6 +811,12 @@ async function scrapeYear(year, ageGroups, opts = {}) {
 
       if (!skipScorecards) await enrichScorecards(existing, spec.pageId, true);
 
+      // Refrescar draws (mudam durante o evento) se houver drawPageId.
+      if (spec.drawPageId && existing.leagueId) {
+        const draws = await fetchDraws(existing.leagueId, spec.drawPageId);
+        if (draws) existing.draws = draws;
+      }
+
       result.divisions[existingIdx] = existing;
       result.scrapedAt = new Date().toISOString();
       writeJsonAtomic(outPath, result);
@@ -819,4 +902,4 @@ if (require.main === module) {
   main().catch(e => { console.error('FATAL:', e); process.exit(1); });
 }
 
-module.exports = { parseScorecard, fetchPlayerScorecard, enrichScorecards, fmDateKey, scrapeLeaderboard, getLeagueId, fetchCourseStats };
+module.exports = { parseScorecard, fetchPlayerScorecard, enrichScorecards, fmDateKey, scrapeLeaderboard, getLeagueId, fetchCourseStats, parseTeeSheet, fetchDraws, scrapeYear, EDITIONS, GG_BASE };
