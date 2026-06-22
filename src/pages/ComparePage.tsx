@@ -530,7 +530,7 @@ function CourseSideBySide({
           </div>
         );
         const renderKpis = (dist: number | null, par: number | null, cr: number | null, slope: number | null) => (
-          <div className="haDiag">
+          <div className="haDiag" style={{ gridTemplateColumns: "repeat(2, max-content)" }}>
             <KpiCard icon="📏" bg="var(--bg-info-strong)" val={dist ?? "–"} unit={dist != null ? "m" : undefined} lbl="Distância total" />
             <KpiCard icon="⛳" bg="var(--accent-light)" val={par || "–"} lbl="Par total · 18H" />
             <KpiCard icon="📐" bg="var(--bg-warn)" val={slope ?? "–"} lbl="Slope" />
