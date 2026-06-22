@@ -31,7 +31,7 @@ import { TOURNAMENT_EXTRA_LINKS } from "./constants";
 import PrintButton from "../../ui/PrintButton";
 import PrintPJAButton from "../../ui/PrintPJAButton";
 
-function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options, accShowCols, accExtraColumns, accHeader, drawHideCols }: { tournament: Tournament; escLookup: EscLookup; playersDB: PlayersDB; extraTabs?: { key: string; label: string; content: React.ReactNode }[]; options?: ScorecardOptions; accShowCols?: { esc?: boolean; fed?: boolean; tee?: boolean; club?: boolean; hcp?: boolean }; accExtraColumns?: React.ComponentProps<typeof AccumulatedLB>["extraColumns"]; accHeader?: React.ReactNode; drawHideCols?: React.ComponentProps<typeof DrawTab>["hideCols"] }) {
+function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options, accShowCols, accExtraColumns, accHeader, drawHideCols, hideHeader }: { tournament: Tournament; escLookup: EscLookup; playersDB: PlayersDB; extraTabs?: { key: string; label: string; content: React.ReactNode }[]; options?: ScorecardOptions; accShowCols?: { esc?: boolean; fed?: boolean; tee?: boolean; club?: boolean; hcp?: boolean }; accExtraColumns?: React.ComponentProps<typeof AccumulatedLB>["extraColumns"]; accHeader?: React.ReactNode; drawHideCols?: React.ComponentProps<typeof DrawTab>["hideCols"]; hideHeader?: boolean }) {
   const isMulti = (tournament.rounds || 1) > 1 && tournament.players.some(p => (p.roundScores?.length ?? 0) > 1);
   const nRounds = tournament.rounds || 1;
   const hasAnyRounds = (tournament.players?.length ?? 0) > 0;
@@ -187,7 +187,10 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
 
   return (
     <div>
-      {/* Cabeçalho */}
+      {/* Cabeçalho — escondido quando o parent já desenha um header próprio
+          (ex: o CircuitShell da página MAJOR, que mostra o nome do torneio +
+          campo + pills por cima deste TournamentDetail). */}
+      {!hideHeader && (
       <div className="detail-header">
         <div className="flex-wrap gap-8" style={{ display: "flex", alignItems: "baseline" }}>
           {/* Título clicável: link canónico `/FPG/torneio/{ccode}-{tcode}`.
@@ -324,6 +327,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
         </div>
         <LinksBar links={tournament.links} escalao={tournament.escalao} />
       </div>
+      )}
 
       {/* Nota editorial do torneio (_note) — usada para contexto cross-torneio
           (ex: "alguns jogadores jogaram simultaneamente no Absoluto").

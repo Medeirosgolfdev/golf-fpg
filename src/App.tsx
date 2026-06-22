@@ -397,6 +397,7 @@ export default function App() {
                 {/* Deep-link canónico de torneio Drive: /drive/torneio/{ccode}-{tcode} */}
                 <Route path="/drive/torneio/:tkey" element={<DrivePage />} />
                 <Route path="/major" element={<MajorPage />} />
+                <Route path="/major/:source/:year" element={<MajorPage />} />
                 <Route path="/bjgt/:fed?" element={<Navigate to="/major" replace />} />
                 <Route path="/bjgt-legacy/:fed?" element={<BJGTPage />} />
                 <Route path="/bjgt-analysis/:fed?" element={<BJGTAnalysisPage />} />

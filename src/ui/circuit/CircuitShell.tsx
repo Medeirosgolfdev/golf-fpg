@@ -612,7 +612,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
               <LoadingState message={config.loadingMessage ?? "A carregar dados…"} />
             ) : curDiv ? (
               <>
-                {!curDiv.renderFull && (
+                {(!curDiv.renderFull || curDiv.renderFullKeepHeader) && (
                 <DetailHeader
                   title={cur.name}
                   actions={headerHasActions ? (

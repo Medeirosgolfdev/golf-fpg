@@ -10,6 +10,7 @@
  * As rotas antigas /doral e /bjgt redireccionam para /major (ver App.tsx).
  */
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { cachedFetchJson } from "../data/fetchCache";
 import { isManuelByName as isM } from "../constants/manuel";
 import { usePasswordGate } from "../hooks/usePasswordGate";
@@ -290,9 +291,14 @@ function buildFmEntries(files: JobFile[]): CircuitEntry[] {
         // Link para a página de resultados GolfGenius deste escalão (cada age
         // group tem a sua própria página /pages/{id}). Fica no header do detalhe.
         links: dv.source ? [{ label: "Resultados GolfGenius", icon: "🔗", url: dv.source }] : undefined,
+        // Mantém o DetailHeader do shell (nome do torneio "Future Masters Golf
+        // {ano}" + campo + pills), igual aos restantes torneios (JOB/Doral/BJGT).
+        renderFullKeepHeader: true,
         // Detalhe IDÊNTICO à FPGPage: tabs flat intercaladas via TournamentDetail
         // (em vez das section-tabs Resultados/Draw do shell). Passa as scOptions
         // do FM (esconder HCP/SD/Fed/Tee, clube="País") e a evolução ano-a-ano.
+        // `hideHeader` evita o header próprio do TournamentDetail (que mostraria
+        // só o escalão "13 & 14") — quem desenha o cabeçalho é o shell.
         renderFull: () => (
           <TournamentDetail
             tournament={results}
@@ -303,6 +309,7 @@ function buildFmEntries(files: JobFile[]): CircuitEntry[] {
             accExtraColumns={evoCols}
             accHeader={hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined}
             drawHideCols={FM_DRAW_HIDE_COLS}
+            hideHeader
           />
         ),
       };
@@ -386,6 +393,8 @@ const JOB_YEARS = Array.from({ length: 16 }, (_, i) => 2012 + i); // 2012..2027
 const FM_YEARS = [2019, 2021, 2022, 2023, 2024, 2025, 2026];
 
 function MajorContent() {
+  const navigate = useNavigate();
+  const params = useParams<{ source?: string; year?: string }>();
   const [bjgtDefs, setBjgtDefs] = useState<TDef[]>([]);
   const [doralEntries, setDoralEntries] = useState<Entry[]>([]);
   const [doralNames, setDoralNames] = useState<Map<number, string>>(new Map());
@@ -449,8 +458,21 @@ function MajorContent() {
     [bjgtDefs, doralEntries, doralNames, jobFiles, fmFiles],
   );
 
+  // Torneio seleccionado via URL (/major/:source/:year → id "source:year").
+  const selectedId = params.source && params.year ? `${params.source}:${params.year}` : undefined;
+
   if (loading) return <LoadingState message="A carregar MAJOR…" />;
-  return <CircuitShell entries={entries} config={MAJOR_CONFIG} />;
+  return (
+    <CircuitShell
+      entries={entries}
+      config={MAJOR_CONFIG}
+      selectedId={selectedId}
+      onSelectEntry={(e) => {
+        const [src, yr] = e.id.split(":");
+        navigate(`/major/${src}/${yr}`);
+      }}
+    />
+  );
 }
 
 export default function MajorPage() {

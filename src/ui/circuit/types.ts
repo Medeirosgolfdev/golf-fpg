@@ -106,6 +106,15 @@ export interface CircuitDivision {
    */
   renderFull?: () => React.ReactNode;
   /**
+   * Só relevante com `renderFull`: mantém o DetailHeader do shell (título do
+   * torneio + campo + pills) por cima do conteúdo `renderFull`. A FM usa isto
+   * para ter o mesmo cabeçalho que os restantes torneios (JOB/Doral/BJGT) ao
+   * mesmo tempo que delega o corpo no `TournamentDetail` (tabs flat com draws).
+   * A DrivePage NÃO o define — lá o `TournamentDetail` traz o seu próprio header
+   * com o nome real do torneio, e o do shell seria redundante.
+   */
+  renderFullKeepHeader?: boolean;
+  /**
    * Substituição total da secção de Draw. Quando definido, o shell renderiza isto
    * em vez do `DrawView` interno (a DrivePage usa-o para mostrar o `DrawTab` da
    * FPGPage, com selector de ronda próprio). A secção aparece com base em `draw`.
