@@ -22,7 +22,7 @@ import { useMasterDetail } from "../hooks/useMasterDetail";
 import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
 
-export type Kids2SourceKey = "uskids" | "fpg" | "rfeg" | "ffgolf" | "wjgc" | "eowagr" | "doral";
+export type Kids2SourceKey = "uskids" | "fpg" | "rfeg" | "ffgolf" | "wjgc" | "eowagr" | "doral" | "fm";
 
 const SOURCE_PILLS: { key: Kids2SourceKey; label: string }[] = [
   { key: "uskids", label: "USKids" },
@@ -32,6 +32,7 @@ const SOURCE_PILLS: { key: Kids2SourceKey; label: string }[] = [
   { key: "wjgc", label: "WJGC" },
   { key: "eowagr", label: "EOWAGR" },
   { key: "doral", label: "Doral" },
+  { key: "fm", label: "Future Masters" },
 ];
 
 export default function KIDS2Page() {

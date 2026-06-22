@@ -47,6 +47,9 @@ interface Props {
    *  o fed quer só tenha nome. Quando ausente (ronda ainda não jogada), as
    *  colunas mostram "–". */
   results?: Map<string, { gross: number; toPar: number | null }>;
+  /** Esconde colunas que não se aplicam à fonte (ex: GolfGenius/internacional
+   *  não expõe FED/HCP/Nasc.). Default: mostra todas. */
+  hideCols?: { esc?: boolean; fed?: boolean; clube?: boolean; hcp?: boolean; tee?: boolean; nasc?: boolean };
 }
 
 type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "tee" | "nasc" | "hora" | "buraco" | "toPar" | "gross";
@@ -142,8 +145,9 @@ function teeNameFor(escalao?: string, sex?: "M" | "F"): string | undefined {
 export default function DrawTab({
   draw, roundNum, playersDB,
   tournamentEscalao, tournamentSex, tournamentDate,
-  admissions, fpgUrl, results,
+  admissions, fpgUrl, results, hideCols,
 }: Props) {
+  const hc = hideCols || {};
   const effDate = tournamentDate || draw.date || null;
   const fedBirthdates = useFedBirthdates();
   const teeName = teeNameFor(tournamentEscalao, tournamentSex);
@@ -466,21 +470,25 @@ export default function DrawTab({
         ),
         prefixCells: (
           <>
-            <td className="lb-esc" style={bStyle}>
-              {p.escHist ? <EscPill esc={p.escHist} /> : <span className="muted">–</span>}
-            </td>
-            <td className="lb-fed" style={bStyle}>{p.fed || "–"}</td>
-            <td className="lb-club" title={p.clube} style={bStyle}>{p.clube || "–"}</td>
-            <td className="lb-hcp" style={bStyle}>{p.hcp != null ? fmtHcp(p.hcp) : "–"}</td>
-            <td className="lb-tee" style={bStyle}><TeeDot teeName={p.tee || teeName} /></td>
-            <td title={p.dob ? `${p.dob} (${age ?? "?"} anos à data)` : ""} style={{ textAlign: "center", padding: "6px 8px", whiteSpace: "nowrap", ...bStyle }}>
-              {p.dobYear != null ? (
-                <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-                  <YearPill year={p.dobYear} />
-                  {age != null && <span className="muted fs-10">({age})</span>}
-                </span>
-              ) : <span className="muted">–</span>}
-            </td>
+            {!hc.esc && (
+              <td className="lb-esc" style={bStyle}>
+                {p.escHist ? <EscPill esc={p.escHist} /> : <span className="muted">–</span>}
+              </td>
+            )}
+            {!hc.fed && <td className="lb-fed" style={bStyle}>{p.fed || "–"}</td>}
+            {!hc.clube && <td className="lb-club" title={p.clube} style={bStyle}>{p.clube || "–"}</td>}
+            {!hc.hcp && <td className="lb-hcp" style={bStyle}>{p.hcp != null ? fmtHcp(p.hcp) : "–"}</td>}
+            {!hc.tee && <td className="lb-tee" style={bStyle}><TeeDot teeName={p.tee || teeName} /></td>}
+            {!hc.nasc && (
+              <td title={p.dob ? `${p.dob} (${age ?? "?"} anos à data)` : ""} style={{ textAlign: "center", padding: "6px 8px", whiteSpace: "nowrap", ...bStyle }}>
+                {p.dobYear != null ? (
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+                    <YearPill year={p.dobYear} />
+                    {age != null && <span className="muted fs-10">({age})</span>}
+                  </span>
+                ) : <span className="muted">–</span>}
+              </td>
+            )}
           </>
         ),
         postScorecardCells: (
@@ -499,7 +507,7 @@ export default function DrawTab({
         ),
       };
     });
-  }, [sorted, playersDB, teeName, effDate, groupBg, sortKey]);
+  }, [sorted, playersDB, teeName, effDate, groupBg, sortKey, hc.esc, hc.fed, hc.clube, hc.hcp, hc.tee, hc.nasc]);
 
   if (draw.error) {
     return <div className="detail-toolbar" style={{ padding: 16 }}>
@@ -526,12 +534,12 @@ export default function DrawTab({
 
   const prefixHeaderCells = (
     <>
-      <SortableHdr k="esc"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">ESC.</SortableHdr>
-      <SortableHdr k="fed"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-fed">FED</SortableHdr>
-      <SortableHdr k="clube" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">CLUBE</SortableHdr>
-      <SortableHdr k="hcp"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">HCP</SortableHdr>
-      <SortableHdr k="tee"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-tee">TEE</SortableHdr>
-      <SortableHdr k="nasc"  sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px", textAlign: "center" }}>Nasc.</SortableHdr>
+      {!hc.esc && <SortableHdr k="esc"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">ESC.</SortableHdr>}
+      {!hc.fed && <SortableHdr k="fed"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-fed">FED</SortableHdr>}
+      {!hc.clube && <SortableHdr k="clube" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">CLUBE</SortableHdr>}
+      {!hc.hcp && <SortableHdr k="hcp"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">HCP</SortableHdr>}
+      {!hc.tee && <SortableHdr k="tee"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-tee">TEE</SortableHdr>}
+      {!hc.nasc && <SortableHdr k="nasc"  sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px", textAlign: "center" }}>Nasc.</SortableHdr>}
     </>
   );
   const postScorecardHeaderCells = (

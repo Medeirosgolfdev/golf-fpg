@@ -23,6 +23,7 @@ on:
       - 'public/data/bjgt_*.json'
       - 'public/data/eowagr*.json'
       - 'public/data/ftm_doral_*.json'
+      - 'public/data/ftm_fm_*.json'
       - 'public/data/juniors-overrides.json'
       - 'scripts/aggregator/**'
       - '.github/workflows/build-juniors.yml'

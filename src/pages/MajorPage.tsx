@@ -22,6 +22,9 @@ import { DATA_FILES as DORAL_FILES, normalizeFile, doralEvoFor, doralMajorDivisi
 import { buildEvoMap, type EvoEntry } from "../hooks/useEvoComparison";
 import { gf, normPaisDisplay } from "../utils/flagUtils";
 import type { Tournament as FPGTournament, Player as FPGPlayer, ScorecardOptions } from "./FPGPage";
+import type { FpgDraw } from "../data/nacional2026Loader";
+import { TournamentDetail } from "./fpg/TournamentDetail";
+import { EMPTY_ESC_LOOKUP, EMPTY_PLAYERS_DB } from "../ui/tournamentPrimitives";
 
 /** id do torneio BJGT/EOWAGR → URL de origem (BlueGolf), para os links do header. */
 const BJGT_SRC = new Map<string, string>(BJGT_URLS.map((m) => [m.id, m.sourceUrl]));
@@ -129,7 +132,10 @@ function jobScorecardOptions(): ScorecardOptions {
 }
 
 function jobDivisionToTournament(div: JobDivision, name: string): FPGTournament {
-  const players = div.players.filter((p) => p.total != null);
+  // Incluir quem tem total OU rondas com scores — em torneios a DECORRER o
+  // GolfGenius ainda não publica o `total` agregado (fica null), mas há já
+  // scorecards por ronda que queremos mostrar.
+  const players = div.players.filter((p) => p.total != null || (p.rounds || []).some((r) => (r.scores || []).length > 0));
   const nR = Math.max(...players.map((p) => (p.rounds ? p.rounds.length : 0) || p.roundGross.length), 0);
 
   // Detectar divisão de 9 buracos (ex: FM "10 and Under"). ⚠ Os mais novos
@@ -185,13 +191,19 @@ function jobDivisionToTournament(div: JobDivision, name: string): FPGTournament 
       const gross = sc.length === holes ? sc.reduce((a, b) => a + b, 0) : r.gross;
       return { round: ri + 1, gross, scores: sc, pars: parForRound(r.startingHole), si: siForRound(r.startingHole), meters: metersForRound(r.startingHole), teeName };
     });
+    // Em torneios a DECORRER o GolfGenius dá o to-par corrente mas ainda não o
+    // `total` agregado (null). Reconstruir o gross/to-par acumulado das rondas
+    // jogadas — senão o jogador aparece como WD e a média fica 999.
+    const playedGross = rounds.reduce((s, r) => s + (r.gross || 0), 0);
+    const grossTotal = p.total ?? (rounds.length ? playedGross : null);
+    const toPar = p.toPar ?? (rounds.length ? playedGross - parTotal * rounds.length : null);
     return {
       scoreId: p.detailId || p.name,
       pos: parseInt(String(p.pos).replace(/^T/i, ""), 10) || null,
       name: p.name,
       club: p.country ? `${gf(p.country)} ${normPaisDisplay(p.country)}` : "",
-      grossTotal: p.total,
-      toPar: p.toPar,
+      grossTotal,
+      toPar,
       nholes: holes,
       parTotal,
       scores: p.rounds?.[0]?.scores,
@@ -224,6 +236,30 @@ function jobEvoFor(file: JobFile, all: JobFile[], divIndex: number, label: strin
   return { evo: raw.evoMap, evoYear: raw.evoYear };
 }
 
+// Colunas do DrawTab sem dados na fonte GolfGenius/internacional (FED/HCP/Nasc.
+// não existem; ESC é uniforme = o escalão; TEE não vem por jogador). Escondidas
+// para o draw do FM não ter 5 colunas vazias. O CLUBE preenche-se com o país.
+const FM_DRAW_HIDE_COLS = { esc: true, fed: true, hcp: true, tee: true, nasc: true } as const;
+
+/** Converte os draws scraped (FM) para o formato FpgDraw que o TournamentDetail
+ *  consome via `tournament._draws`. Preenche `clube` com o país do jogador
+ *  (cruzando o nome com o leaderboard), já que o tee sheet só traz o nome. */
+function fmDrawsToFpg(draws: NonNullable<JobDivision["draws"]>, players: JobPlayer[]): Record<string, FpgDraw> {
+  const norm = (s: string) => s.toLowerCase().replace(/\s+/g, " ").trim();
+  const countryByName = new Map<string, string>();
+  for (const p of players) {
+    if (p.name && p.country) countryByName.set(norm(p.name), `${gf(p.country)} ${normPaisDisplay(p.country)}`.trim());
+  }
+  return Object.fromEntries(Object.entries(draws).map(([rn, info]) => [rn, {
+    groups: (info.groups || []).map((g) => ({
+      teeTime: g.time || "",
+      startHole: g.startHole ?? null,
+      tee: null,
+      players: g.players.map((p) => ({ nome: p.name, clube: countryByName.get(norm(p.name)) ?? null, tee: p.tee ?? null })),
+    })),
+  } as FpgDraw]));
+}
+
 function buildFmEntries(files: JobFile[]): CircuitEntry[] {
   return files.map((f): CircuitEntry => {
     const divisions: CircuitDivision[] = f.divisions.map((dv, i) => {
@@ -235,24 +271,40 @@ function buildFmEntries(files: JobFile[]): CircuitEntry[] {
         const ev = evo!.get(pl.name);
         if (ev) { (pl as unknown as { _regressado?: boolean })._regressado = true; if (ev.pill === "UP") (pl as unknown as { _subiu?: boolean })._subiu = true; }
       }
+      // Anexar os draws ao torneio → o TournamentDetail monta as tabs flat
+      // intercaladas (Draw R1 · R1 · Draw R2 · R2 · … · Resumo · Scorecards).
+      if (dv.draws && Object.keys(dv.draws).length) {
+        (results as unknown as { _draws?: Record<string, FpgDraw> })._draws = fmDrawsToFpg(dv.draws, dv.players);
+      }
+      // Limpar o tcode placeholder (`job-…`) para o TournamentDetail não mostrar
+      // o pill/link FPG (o FM não tem ccode/tcode).
+      (results as unknown as { ccode?: string; tcode?: string }).ccode = undefined;
+      (results as unknown as { ccode?: string; tcode?: string }).tcode = undefined;
+      const evoCols = hasEvo ? makeEvoCols(evo!, evoYear) : undefined;
       return {
         key: `d${i}`,
         escalao: label,
         tabLabel: label,
         hasManuel: dv.players.some((p) => isM(p.name)),
         results,
-        scOptions: jobScorecardOptions(),
         // Link para a página de resultados GolfGenius deste escalão (cada age
-        // group tem a sua própria página /pages/{id}).
+        // group tem a sua própria página /pages/{id}). Fica no header do detalhe.
         links: dv.source ? [{ label: "Resultados GolfGenius", icon: "🔗", url: dv.source }] : undefined,
-        // Draw / tee times (pré-jogo) → tab "Draw" do CircuitShell.
-        draw: dv.draws && Object.keys(dv.draws).length
-          ? { rounds: Object.fromEntries(Object.entries(dv.draws).map(([rn, info]) => [
-              rn, info.groups.map((g) => ({ teeTime: g.time, startHole: g.startHole ?? undefined, players: g.players.map((p) => ({ name: p.name })) })),
-            ])) }
-          : undefined,
-        evoCols: hasEvo ? makeEvoCols(evo!, evoYear) : undefined,
-        accHeader: hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined,
+        // Detalhe IDÊNTICO à FPGPage: tabs flat intercaladas via TournamentDetail
+        // (em vez das section-tabs Resultados/Draw do shell). Passa as scOptions
+        // do FM (esconder HCP/SD/Fed/Tee, clube="País") e a evolução ano-a-ano.
+        renderFull: () => (
+          <TournamentDetail
+            tournament={results}
+            escLookup={EMPTY_ESC_LOOKUP}
+            playersDB={EMPTY_PLAYERS_DB}
+            options={jobScorecardOptions()}
+            accShowCols={{ esc: false, fed: false, tee: false, hcp: false }}
+            accExtraColumns={evoCols}
+            accHeader={hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined}
+            drawHideCols={FM_DRAW_HIDE_COLS}
+          />
+        ),
       };
     });
     const all = f.divisions.flatMap((d) => d.players);
@@ -263,7 +315,9 @@ function buildFmEntries(files: JobFile[]): CircuitEntry[] {
       course: f.course || "Dothan Country Club",
       series: "FM",
       source: "fm",
-      playerCount: all.filter((p) => p.total != null).length,
+      // Conta quem jogou (total OU rondas com scores) — em torneios a decorrer
+      // o `total` agregado ainda é null.
+      playerCount: all.filter((p) => p.total != null || (p.rounds || []).some((r) => (r.scores || []).length > 0)).length,
       divisionCount: divisions.length,
       hasManuel: all.some((p) => isM(p.name)),
       hasPt: all.some((p) => /portugal/i.test(p.country || "") || isM(p.name)),

@@ -11,7 +11,7 @@
  */
 import React, { useMemo } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import type { Tournament } from "../../data/fpgTypes";
+import type { Tournament, ScorecardOptions } from "../../data/fpgTypes";
 import type { EscLookup } from "../../utils/playerUtils";
 import type { PlayersDB } from "../../ui/tournamentPrimitives";
 import { expandMultiRound, synthesizeDrawFromCumulative } from "../../data/fpgUtils";
@@ -31,7 +31,7 @@ import { TOURNAMENT_EXTRA_LINKS } from "./constants";
 import PrintButton from "../../ui/PrintButton";
 import PrintPJAButton from "../../ui/PrintPJAButton";
 
-function TournamentDetail({ tournament, escLookup, playersDB, extraTabs }: { tournament: Tournament; escLookup: EscLookup; playersDB: PlayersDB; extraTabs?: { key: string; label: string; content: React.ReactNode }[] }) {
+function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options, accShowCols, accExtraColumns, accHeader, drawHideCols }: { tournament: Tournament; escLookup: EscLookup; playersDB: PlayersDB; extraTabs?: { key: string; label: string; content: React.ReactNode }[]; options?: ScorecardOptions; accShowCols?: { esc?: boolean; fed?: boolean; tee?: boolean; club?: boolean; hcp?: boolean }; accExtraColumns?: React.ComponentProps<typeof AccumulatedLB>["extraColumns"]; accHeader?: React.ReactNode; drawHideCols?: React.ComponentProps<typeof DrawTab>["hideCols"] }) {
   const isMulti = (tournament.rounds || 1) > 1 && tournament.players.some(p => (p.roundScores?.length ?? 0) > 1);
   const nRounds = tournament.rounds || 1;
   const hasAnyRounds = (tournament.players?.length ?? 0) > 0;
@@ -386,16 +386,17 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs }: { tou
             tournamentDate={tournament.date}
             admissions={admissions}
             results={drawResults}
+            hideCols={drawHideCols}
             fpgUrl={tournament.ccode && tournament.tcode ? `https://scoring.fpg.pt/lists/linkpage.aspx?page=draw&club=${tournament.ccode}&tourn=${tournament.tcode}&round=${drawRoundNum}&ack=8428ACK987` : undefined}
           />;
         if (isCombined)
-          return <AllRoundsScorecardLB tournament={tournament} escLookup={escLookup} playersDB={playersDB} />;
+          return <AllRoundsScorecardLB tournament={tournament} escLookup={escLookup} playersDB={playersDB} options={options} />;
         if (isAnaliseAroeiraTab)
           return <Aroeira2AnaliseView tournament={tournament} />;
         if (isAcc)
-          return <AccumulatedLB tournament={curT} nRounds={nRounds} escLookup={escLookup} playersDB={playersDB} />;
+          return <>{accHeader}<AccumulatedLB tournament={curT} nRounds={nRounds} escLookup={escLookup} playersDB={playersDB} showCols={accShowCols} extraColumns={accExtraColumns} /></>;
         if (isRoundTab || !isMulti)
-          return <ScorecardLB tournament={curT} escLookup={escLookup} playersDB={playersDB} />;
+          return <ScorecardLB tournament={curT} escLookup={escLookup} playersDB={playersDB} options={options} />;
         return null;
       })()}
     </div>

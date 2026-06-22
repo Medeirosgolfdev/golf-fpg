@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-06-22T01:03:24.871Z",
+  "generatedAt": "2026-06-22T22:55:44.719Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -18523,6 +18523,23 @@
       ],
       "firstDate": "2024-05-24",
       "lastDate": "2025-09-19",
+      "editionsCount": 7
+    },
+    {
+      "id": "future-masters",
+      "label": "Future Masters Golf",
+      "sourceId": "fm",
+      "tournamentIds": [
+        "fm-ftm_fm_2019",
+        "fm-ftm_fm_2021",
+        "fm-ftm_fm_2022",
+        "fm-ftm_fm_2023",
+        "fm-ftm_fm_2024",
+        "fm-ftm_fm_2025",
+        "fm-ftm_fm_2026"
+      ],
+      "firstDate": "2019-06-22",
+      "lastDate": "2026-06-20",
       "editionsCount": 7
     },
     {

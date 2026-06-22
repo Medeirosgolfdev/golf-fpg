@@ -32,6 +32,7 @@ const SOURCES = [
   { id: "eowagr", label: "European Open WAGR", load: () => require("./sources/eowagr") },
   { id: "wjgc", label: "WJGC / BJGT", load: () => require("./sources/wjgc") },
   { id: "doral", label: "First Tee Miami Doral", load: () => require("./sources/doral") },
+  { id: "fm", label: "Future Masters Golf (Dothan)", load: () => require("./sources/futuremasters") },
 ];
 
 function parseArgs(argv) {
