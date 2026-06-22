@@ -29,6 +29,8 @@ import { clubShort, hcpDisplay } from "../utils/playerUtils";
 import { deepFixMojibake } from "../utils/fixEncoding";
 import LoadingState from "../ui/LoadingState";
 import { C } from "../utils/colors";
+import { useSort } from "../hooks/useSort";
+import SortableHdr from "../ui/SortableHdr";
 
 // Séries de cor dos gráficos — fonte única em colors.ts (espelho dos tokens --chart-N).
 const COLORS = [C.chartGreen, C.chartBlue, C.chartRed, C.chartAmber];
@@ -256,6 +258,7 @@ function RadarChart({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats | null
 /* ═══════════════════ § 2 TABELA COMPARATIVA ═══════════════════ */
 
 function StatsTable({ slots, allAgg, stats }: { slots: Slot[]; allAgg: (AggStats | null)[]; stats: PlayerStatsDb }) {
+  const { sortKey, sortDir, toggleSort } = useSort<"label">("label", "asc");
   const loaded = slots.map((s, i) => ({ s, agg: allAgg[i], st: stats[s.fed], i })).filter(x => x.agg || x.st);
   if (loaded.length < 2) return null;
 
@@ -289,6 +292,10 @@ function StatsTable({ slots, allAgg, stats }: { slots: Slot[]; allAgg: (AggStats
     return nums.indexOf(target);
   });
 
+  const sortedRows = [...rows.map((r, ri) => ({ ...r, bi: bestIdx[ri] }))].sort((a, b) =>
+    sortDir === "asc" ? a.label.localeCompare(b.label) : b.label.localeCompare(a.label)
+  );
+
   return (
     <div className="card" style={{ padding: 0, overflow: "hidden" }}>
       <div className="h-md" style={{ padding: "14px 16px 0" }}>Comparação Detalhada</div>
@@ -296,7 +303,7 @@ function StatsTable({ slots, allAgg, stats }: { slots: Slot[]; allAgg: (AggStats
         <table className="dtable">
           <thead>
             <tr>
-              <th style={{ minWidth: 140 }}>Métrica</th>
+              <SortableHdr k="label" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ minWidth: 140 }}>Métrica</SortableHdr>
               {loaded.map(x => (
                 <th key={x.i} className="r" style={{ color: COLORS[x.i], minWidth: 80 }}>
                   {firstName(x.s.player.name)}
@@ -305,14 +312,14 @@ function StatsTable({ slots, allAgg, stats }: { slots: Slot[]; allAgg: (AggStats
             </tr>
           </thead>
           <tbody>
-            {rows.map((r, ri) => (
+            {sortedRows.map((r, ri) => (
               <tr key={ri}>
                 <td style={{ fontWeight: 600, fontSize: "var(--fs-12)" }}>
                   <span style={{ marginRight: 6 }}>{r.emoji}</span>{r.label}
                 </td>
                 {loaded.map((x, ci) => {
                   const v = r.values[ci];
-                  const isBest = bestIdx[ri] === ci;
+                  const isBest = r.bi === ci;
                   return (
                     <td key={ci} className="r" style={{
                       fontWeight: isBest ? 800 : 400,
@@ -399,6 +406,7 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
 /* ═══════════════════ § 4 BURACO A BURACO ═══════════════════ */
 
 function HoleByHoleSection({ slots }: { slots: Slot[] }) {
+  const { sortKey: hSortKey, sortDir: hSortDir, toggleSort: toggleHoleSort } = useSort<string>("h", "asc");
   const loaded = slots.filter(s => s.data);
   if (loaded.length < 2) return null;
 
@@ -429,6 +437,29 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
   if (combos.length === 0) return null;
   const combo = combos[Math.min(sel, combos.length - 1)];
   const refStats = combo.stats.find(Boolean)!;
+
+  const sortedHoleIndices = (() => {
+    const n = refStats.holes.length;
+    const idxs = Array.from({ length: n }, (_, i) => i);
+    if (hSortKey === "h") return hSortDir === "asc" ? idxs : [...idxs].reverse();
+    return [...idxs].sort((a, b) => {
+      let va = 0, vb = 0;
+      if (hSortKey === "par") {
+        const getP = (hi: number) => loaded.reduce<number>((acc, _, si) => acc || (combo.stats[si]?.holes[hi]?.par ?? 0), 0);
+        va = getP(a); vb = getP(b);
+      } else if (hSortKey.startsWith("avg")) {
+        const pi = parseInt(hSortKey.slice(3));
+        const sa = combo.stats[pi]?.holes[a]; const sb = combo.stats[pi]?.holes[b];
+        va = sa?.avg != null && sa?.par != null ? sa.avg - sa.par : 999;
+        vb = sb?.avg != null && sb?.par != null ? sb.avg - sb.par : 999;
+      } else if (hSortKey.startsWith("sl")) {
+        const pi = parseInt(hSortKey.slice(2));
+        va = combo.stats[pi]?.holes[a]?.strokesLost ?? 0;
+        vb = combo.stats[pi]?.holes[b]?.strokesLost ?? 0;
+      }
+      return hSortDir === "asc" ? va - vb : vb - va;
+    });
+  })();
 
   const W = 780, H = 200, PAD = { top: 20, right: 10, bottom: 40, left: 40 };
   const holeW = (W - PAD.left - PAD.right) / refStats.holes.length;
@@ -485,14 +516,15 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
       <div style={{ marginTop: 8, overflowX: "auto" }}>
         <table className="dtable">
           <thead><tr>
-            <th className="r">H</th><th className="r">Par</th>
+            <SortableHdr k="h" sortKey={hSortKey} sortDir={hSortDir} onSort={toggleHoleSort} className="r">H</SortableHdr>
+            <SortableHdr k="par" sortKey={hSortKey} sortDir={hSortDir} onSort={toggleHoleSort} className="r">Par</SortableHdr>
             {loaded.map((s, i) => (<React.Fragment key={s.fed}>
-              <th className="r" style={{ color: COLORS[i] }}>{firstName(s.player.name)} Avg</th>
-              <th className="r" style={{ color: COLORS[i] }}>SL</th>
+              <SortableHdr k={`avg${i}`} sortKey={hSortKey} sortDir={hSortDir} onSort={toggleHoleSort} className="r" style={{ color: COLORS[i] }}>{firstName(s.player.name)} Avg</SortableHdr>
+              <SortableHdr k={`sl${i}`} sortKey={hSortKey} sortDir={hSortDir} onSort={toggleHoleSort} className="r" style={{ color: COLORS[i] }}>SL</SortableHdr>
             </React.Fragment>))}
           </tr></thead>
           <tbody>
-            {refStats.holes.map((_, hi) => {
+            {sortedHoleIndices.map((hi) => {
               const entries = loaded.map((_, si) => combo.stats[si]?.holes[hi] ?? null);
               const par = entries.map(e => e?.par ?? 0).find(p => p > 0) || 0;
               const avgs = entries.map(e => e?.avg != null && e?.par != null ? e.avg - e.par : null);
@@ -522,6 +554,7 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
 /* ═══════════════════ § 5 HEAD-TO-HEAD ═══════════════════ */
 
 function HeadToHeadSection({ slots }: { slots: Slot[] }) {
+  const { sortKey: h2hKey, sortDir: h2hDir, toggleSort: toggleH2H } = useSort<string>("date", "desc");
   const loaded = slots.filter(s => s.data);
   if (loaded.length < 2) return null;
 
@@ -553,6 +586,21 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
   const wins = loaded.map(() => 0);
   matches.forEach(m => { wins[m.results[0].idx]++; });
   const totalMatches = matches.length;
+
+  const sortedMatches = [...matches].sort((a, b) => {
+    if (h2hKey === "event") return h2hDir === "asc" ? a.event.localeCompare(b.event) : b.event.localeCompare(a.event);
+    if (h2hKey === "delta" && loaded.length === 2) {
+      const getDelta = (m: typeof matches[0]) => { const r0 = m.results.find(r => r.idx === 0), r1 = m.results.find(r => r.idx === 1); return r0 && r1 ? Math.abs(r0.gross - r1.gross) : 0; };
+      return h2hDir === "asc" ? getDelta(a) - getDelta(b) : getDelta(b) - getDelta(a);
+    }
+    if (h2hKey.startsWith("g")) {
+      const pi = parseInt(h2hKey.slice(1));
+      const ga = a.results.find(r => r.idx === pi)?.gross ?? 9999;
+      const gb = b.results.find(r => r.idx === pi)?.gross ?? 9999;
+      return h2hDir === "asc" ? ga - gb : gb - ga;
+    }
+    return h2hDir === "asc" ? a.dateSort - b.dateSort : b.dateSort - a.dateSort;
+  });
 
   return (
     <div className="card">
@@ -601,12 +649,13 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
       <div style={{ maxHeight: 340, overflowY: "auto", overflowX: "auto" }}>
         <table className="dtable">
           <thead><tr>
-            <th>Data</th><th>Torneio</th>
-            {loaded.map((s, i) => <th key={i} className="r" style={{ color: COLORS[i] }}>{firstName(s.player.name)}</th>)}
-            <th className="r">Δ</th>
+            <SortableHdr k="date" sortKey={h2hKey} sortDir={h2hDir} onSort={toggleH2H}>Data</SortableHdr>
+            <SortableHdr k="event" sortKey={h2hKey} sortDir={h2hDir} onSort={toggleH2H}>Torneio</SortableHdr>
+            {loaded.map((s, i) => <SortableHdr key={i} k={`g${i}`} sortKey={h2hKey} sortDir={h2hDir} onSort={toggleH2H} className="r" style={{ color: COLORS[i] }}>{firstName(s.player.name)}</SortableHdr>)}
+            <SortableHdr k="delta" sortKey={h2hKey} sortDir={h2hDir} onSort={toggleH2H} className="r">Δ</SortableHdr>
           </tr></thead>
           <tbody>
-            {matches.slice(0, 30).map((m, mi) => {
+            {sortedMatches.slice(0, 30).map((m, mi) => {
               const bestGross = Math.min(...m.results.map(r => r.gross));
               return (<tr key={mi} className="roundRow">
                 <td style={{ color: "var(--text-3)", whiteSpace: "nowrap" }}>{m.date}</td>
