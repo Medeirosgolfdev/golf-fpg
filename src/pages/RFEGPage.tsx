@@ -28,7 +28,8 @@ import SexBadge from "../ui/SexBadge";
 import ExtLink from "../ui/ExternalLink";
 import { ScorecardLeaderboard, type ScorecardRow } from "../ui/ScorecardLeaderboard";
 import { isManuelByName as isM } from "../constants/manuel";
-import { displayName } from "../utils/format";
+import { displayName, fmtToPar } from "../utils/format";
+import { tpColor } from "../ui/tournamentPrimitives";
 import { flag } from "../utils/flagUtils";
 import { formatPlayerName } from "../utils/playerUtils";
 import { IntlTournView } from "../ui/IntlTournView";
@@ -625,13 +626,7 @@ function PlayerTable({ players, dateRef, coursePar }: { players: RFEGPlayer[]; d
     const postForResults = (
       <>
         <td style={{ textAlign: "center", fontWeight: 700, fontFamily: "var(--font-mono)" }}>
-          {p.toPar == null
-            ? "—"
-            : (p.toPar === 0
-                ? <span style={{ color: "var(--text-2)" }}>E</span>
-                : (p.toPar > 0
-                    ? <span style={{ color: "var(--color-bad, #c00)" }}>+{p.toPar}</span>
-                    : <span style={{ color: "var(--color-good-dark, #0a0)" }}>{p.toPar}</span>))}
+          <span style={{ color: tpColor(p.toPar) }}>{fmtToPar(p.toPar)}</span>
         </td>
         <td style={{ textAlign: "center", fontWeight: 700, fontFamily: "var(--font-mono)" }}>
           {p.total ?? "—"}
@@ -1128,9 +1123,6 @@ function ResultsTable({ results, dobLookup, dateRef }: {
     });
   }, [enriched, sortKey, sortDir]);
 
-  const fmtTp = (n: number) => n === 0 ? "E" : n > 0 ? `+${n}` : `${n}`;
-  const tpClass = (n: number) => n === 0 ? "var(--text-2)" : n > 0 ? "var(--color-bad, #c00)" : "var(--color-good-dark, #0a0)";
-
   return (
     <div>
       {groups.length > 1 && (
@@ -1194,8 +1186,8 @@ function ResultsTable({ results, dobLookup, dateRef }: {
                       </>
                     ) : <span className="muted">—</span>}
                   </td>
-                  <td style={{ padding: "4px 8px", textAlign: "center", fontFamily: "var(--font-mono)", fontWeight: 700, color: tpClass(p.toPar) }}>
-                    {fmtTp(p.toPar)}
+                  <td style={{ padding: "4px 8px", textAlign: "center", fontFamily: "var(--font-mono)", fontWeight: 700, color: tpColor(p.toPar) }}>
+                    {fmtToPar(p.toPar)}
                   </td>
                   {Array.from({ length: nR }, (_, ri) => (
                     <td key={ri} style={{ padding: "4px 8px", textAlign: "center", fontFamily: "var(--font-mono)" }}>

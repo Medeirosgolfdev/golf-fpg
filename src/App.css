@@ -2961,10 +2961,6 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
    style inline repetido `display:flex; flex-wrap:wrap; gap:10; margin:12px 0`. */
 .kpi-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0; }
 
-/* .tab-btn → alias de .tourn-tab (usado em CamposPage) */
-.tab-btn:hover:not(.active) { background: var(--bg-hover); color: var(--text-2); }
-.tab-btn.active { background: var(--text-dark); color: #fff; border-color: var(--text-dark); }
-
 /* ── Search input + compact select (DrivePage, FPGPage) ── */
 .input-search { font-size: var(--fs-11); padding: 3px 8px 3px 22px; border-radius: 6px;
   border: 1px solid var(--border); background: var(--bg-card,#fff);
@@ -3390,9 +3386,6 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 /* --- Tee color dot (in filter chips) --- */
 .tee-dot-sq { display:inline-block; width:8px; height:8px; border-radius:2px; border:1px solid rgba(0,0,0,.18); }
 
-/* --- Tab bar (BJGTPage, DORALPage, FPGPage pattern) --- */
-.tab-bar { display:flex; border-bottom:1px solid var(--border); margin-bottom:12px; gap:2px; overflow-x:auto; }
-
 /* --- Score inline separators --- */
 .inline-sep { border-left:2px solid var(--border); padding:0 3px; display:inline-block; }
 
@@ -3787,6 +3780,8 @@ table td.lb-col-divider {
   width: 100%;
 }
 
+/* Barra de tabs (BJGTPage, DORALPage, FPGPage, DrivePage, IntlTournView…).
+   Definição única — antes estava duplicada (a 2ª vencia por cascata). */
 .tab-bar {
   display: flex;
   gap: 0;
@@ -3794,29 +3789,7 @@ table td.lb-col-divider {
   background: var(--bg-card);
   padding: 0;
   margin: 0;
-}
-
-.tab-btn {
-  padding: 12px 16px;
-  border: none;
-  background: transparent;
-  color: var(--text-2);
-  font-size: var(--fs-14);
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -2px;
-}
-
-.tab-btn:hover {
-  color: var(--text-1);
-  background: rgba(0, 0, 0, 0.02);
-}
-
-.tab-btn.active {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
+  overflow-x: auto;
 }
 
 .selector-group {

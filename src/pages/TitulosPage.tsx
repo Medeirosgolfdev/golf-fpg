@@ -214,19 +214,6 @@ export default function TitulosPage() {
   if (historicoErr) return <EmptyState message={`Erro a carregar dados: ${historicoErr}`} />;
   if (!historico) return <LoadingState message="A carregar Titulos..." />;
 
-  const tabBtnStyle = (key: TabKey): React.CSSProperties => ({
-    padding: "8px 16px",
-    fontSize: "var(--fs-13)",
-    fontWeight: 700,
-    background: activeTab === key ? "var(--bg-card)" : "transparent",
-    color: activeTab === key ? "var(--text-1)" : "var(--text-3)",
-    border: "none",
-    borderBottom:
-      activeTab === key ? "3px solid var(--accent)" : "3px solid transparent",
-    cursor: "pointer",
-    transition: "all 0.15s",
-  });
-
   return (
     <div className="page-full" style={{ maxWidth: "none" }}>
       <Toolbar>
@@ -245,19 +232,11 @@ export default function TitulosPage() {
       </Toolbar>
 
       {/* Tabs */}
-      <div
-        style={{
-          display: "flex",
-          gap: 4,
-          padding: "0 12px",
-          borderBottom: "1px solid var(--border)",
-          background: "var(--bg-muted)",
-        }}
-      >
+      <div className="tabbar-under">
         {(Object.keys(TAB_LABELS) as TabKey[]).map((k) => (
           <button
             key={k}
-            style={tabBtnStyle(k)}
+            className={"tab-under" + (activeTab === k ? " active" : "")}
             onClick={() => navigate(`/titulos/${k}`)}
           >
             {TAB_LABELS[k]}

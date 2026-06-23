@@ -6,6 +6,7 @@ import LoadingState from "../ui/LoadingState";
 import Counter from "../ui/Counter";
 import { Toolbar, ToolbarTitle } from "../ui/Toolbar";
 import { useMasterDetail } from "../hooks/useMasterDetail";
+import { MOBILE_BREAKPOINT } from "../hooks/useIsMobile";
 import { useParams, useNavigate } from "react-router-dom";
 import type { Course, Tee, SexFilter, CoursePlayerRound } from "../data/types";
 import { useAppContext } from "../context/AppContext";
@@ -13,6 +14,7 @@ import TeeBadge from "../ui/TeeBadge";
 import SexBadge from "../ui/SexBadge";
 import { teeCanonicalLabel, teeGroupHex } from "../utils/teeColors";
 import { fmt, fmtCR, norm, titleCase, sumRange, fmtToPar } from "../utils/format";
+import { flag } from "../utils/flagUtils";
 import { fixMojibake } from "../utils/fixEncoding";
 import { sortTees, filterTees } from "../utils/teeUtils";
 import { PillBadge } from "../ui/PillBadge";
@@ -70,25 +72,26 @@ const KNOWN_AWAY: Record<string, { country: string; flag: string }> = {
   "away-marco-simone":                       { country: "Itália",   flag: "\ud83c\uddee\ud83c\uddf9" },
 };
 
-const COUNTRY_FLAGS: Record<string, string> = {
-  "portugal": "🇵🇹", "espanha": "🇪🇸",
-  "italia": "🇮🇹", "franca": "🇫🇷",
-  "eua": "🇺🇸", "reino unido": "🇬🇧",
-  "inglaterra": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "escocia": "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "gales": "🏴󠁧󠁢󠁷󠁬󠁳󠁿",
-  "irlanda": "🇮🇪", "irlanda do norte": "🇬🇧",
-  "alemanha": "🇩🇪", "holanda": "🇳🇱", "suica": "🇨🇭",
-  "belgica": "🇧🇪", "turquia": "🇹🇷",
-  "marrocos": "🇲🇦", "brasil": "🇧🇷",
-  "africa do sul": "🇿🇦", "grecia": "🇬🇷",
-  "suecia": "🇸🇪", "noruega": "🇳🇴", "dinamarca": "🇩🇰",
-  "finlandia": "🇫🇮", "polonia": "🇵🇱",
-  "eslovaquia": "🇸🇰", "rep checa": "🇨🇿", "republica checa": "🇨🇿",
-  "hungria": "🇭🇺", "austria": "🇦🇹", "bulgaria": "🇧🇬",
-  "estonia": "🇪🇪", "ucrania": "🇺🇦", "islandia": "🇮🇸",
-  "canada": "🇨🇦", "porto rico": "🇵🇷",
-  "pais de gales": "🏴󠁧󠁢󠁷󠁬󠁳󠁿",
-  "rep dominicana": "🇩🇴",
+/* Override nome-PT → código ISO/subdivisão SÓ para os casos em que flag() não
+   resolve o nome português abreviado ou perderia a sub-bandeira (Inglaterra,
+   Escócia, Gales → Union Jack). Tudo o resto passa directo pelo flag() canónico
+   de flagUtils — sem emojis hardcoded. Chaves = normalizeCountryKey (lowercase,
+   sem diacríticos). */
+const COUNTRY_FLAG_CODE: Record<string, string> = {
+  "eua": "US",
+  "inglaterra": "GB-ENG", "escocia": "GB-SCT",
+  "gales": "GB-WLS", "pais de gales": "GB-WLS",
+  "rep checa": "CZ", "republica checa": "CZ",
+  "rep dominicana": "DO",
 };
+
+/** Bandeira a partir do nome do país (PT/EN), via flag() canónico, com override
+ *  só para os nomes abreviados/sub-bandeiras que flag() não distingue. */
+function flagFor(name: string): string {
+  if (!name) return "";
+  const code = COUNTRY_FLAG_CODE[normalizeCountryKey(name)];
+  return flag(code ?? name);
+}
 
 function normalizeCountryKey(raw: string): string {
   const s = fixMojibake(raw);
@@ -106,13 +109,15 @@ function resolveFlag(c: Course): string {
   if (!c.courseKey.startsWith("away-") || _ck === "portugal") return "";
   // 1) Tentar pelo country dos dados
   if (c.master.country) {
-    const key = normalizeCountryKey(c.master.country);
-    const flag = COUNTRY_FLAGS[key];
-    if (flag) return flag;
+    const f = flagFor(c.master.country);
+    if (f && f !== "🏳️") return f;
   }
-  // 2) Fallback: mapa de campos conhecidos
+  // 2) Fallback: nome de país do mapa de campos conhecidos
   const known = KNOWN_AWAY[c.courseKey];
-  if (known) return known.flag;
+  if (known) {
+    const f = flagFor(known.country);
+    if (f && f !== "🏳️") return f;
+  }
   // Campo away estrangeiro desconhecido — bandeira genérica
   if (c.courseKey.startsWith("away-")) return "\ud83c\udff3\ufe0f";
   return "";
@@ -813,7 +818,7 @@ export default function CamposPage() {
   const [detailView, setDetailView] = useState<"scorecard" | "manuel">("scorecard");
   /* Tee seleccionado para comparação de distâncias na tabela (Campos) */
   const [selTeeKey, setSelTeeKey] = useState<string | null>(null);
-    const isMobileInit = typeof window !== "undefined" && window.innerWidth <= 768;
+    const isMobileInit = typeof window !== "undefined" && window.innerWidth <= MOBILE_BREAKPOINT;
   const md = useMasterDetail(!(isMobileInit && urlCourseKey));
   /* Sync URL param → selectedKey */
   useEffect(() => {
@@ -843,7 +848,7 @@ export default function CamposPage() {
       if (!seen.has(key)) seen.set(key, name);
     }
     return [...seen.entries()]
-      .map(([k, v]) => ({ key: k, label: v, flag: COUNTRY_FLAGS[k] ?? "🌍" }))
+      .map(([k, v]) => { const f = flagFor(v); return { key: k, label: v, flag: f && f !== "🏳️" ? f : "🌍" }; })
       .sort((a, b) => a.label.localeCompare(b.label, "pt"));
   }, [courses]);
 
@@ -958,9 +963,9 @@ export default function CamposPage() {
     if (!selected) return null;
     const tees = selected.master.tees;
     // Tees FÍSICOS distintos: o mesmo tee (cor + distância) aparece como
-    // entradas separadas para M e F (CR/Slope diferentes). Contar só uma vez.
-    const physKey = (t: Tee) => `${teeGroupHex(t.teeName, t.scorecardMeta?.teeColor)}|${Math.round(t.distances?.total ?? 0)}`;
-    const nTees = new Set(tees.map(physKey)).size;
+    // entradas separadas para M e F (CR/Slope diferentes). Contar só uma vez,
+    // com a chave canónica physicalTeeKey (igual ao sidebar e ao total).
+    const nTees = new Set(tees.map(physicalTeeKey)).size;
     // Tee de referência: o mais longo com 18 buracos (ou o mais longo)
     const ref = [...tees]
       .filter((t) => (t.ratings?.holes18?.courseRating ?? 0) > 0)

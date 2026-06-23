@@ -622,22 +622,12 @@ export default function ConsistencySection({ slots, allAgg, period }: {
       </div>
 
       {/* Sub-tabs */}
-      <div className="d-flex flex-wrap gap-6 mb-14" style={{ borderBottom: "1px solid var(--border-light)" }}>
+      <div className="tabbar-under">
         {PANES.map(p => (
           <button
             key={p.key}
-            className="tab-under"
+            className={"tab-under" + (pane === p.key ? " active" : "")}
             onClick={() => setPane(p.key)}
-            style={{
-              padding: "6px 12px",
-              border: "none",
-              background: "transparent",
-              borderBottom: pane === p.key ? "2px solid var(--color-primary)" : "2px solid transparent",
-              color: pane === p.key ? "var(--text-1)" : "var(--text-3)",
-              fontWeight: pane === p.key ? 700 : 500,
-              cursor: "pointer",
-              fontSize: "var(--fs-13)",
-            }}
           >
             {p.emoji} {p.label}
           </button>

@@ -18,6 +18,8 @@ import {
 import EmptyState from "./EmptyState";
 import LoadingState from "./LoadingState";
 import UiKpiCard from "./KpiCard";
+import SortableHdr from "./SortableHdr";
+import { useSort } from "../hooks/useSort";
 import { fmtToPar, fmtHcp } from "../utils/format";
 import { scClass } from "../utils/scoreDisplay";
 import PlayerLink from "./PlayerLink";
@@ -395,6 +397,69 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
   const cronoRounds = useMemo(() => pkg ? buildChronologicalRounds(pkg.playerCards) : [], [pkg]);
   const evolution = useMemo(() => pkg ? buildEvolutionStats(pkg.playerCards) : [], [pkg]);
 
+  /* ── Ordenação das 3 tabelas de ranking ── */
+  const frSort = useSort<"name" | "hcp" | "rds" | "avgToPar" | "avgGross" | "best" | "vsField">("avgToPar");
+  const sortedFieldRanking = useMemo(() => {
+    const mult = frSort.sortDir === "asc" ? 1 : -1;
+    const num = (v: number | null) => v == null ? Infinity : v;
+    return [...fieldRanking].sort((a, b) => {
+      switch (frSort.sortKey) {
+        case "name":     return mult * a.name.localeCompare(b.name, "pt");
+        case "hcp":      return mult * (num(a.hcpExact) - num(b.hcpExact));
+        case "rds":      return mult * (a.nRounds - b.nRounds);
+        case "avgToPar": return mult * (a.avgToPar - b.avgToPar);
+        case "avgGross": return mult * (a.avgGross - b.avgGross);
+        case "best":     return mult * (a.bestGross - b.bestGross);
+        case "vsField":  return mult * (a.vsFieldAvg - b.vsFieldAvg);
+        default:         return 0;
+      }
+    });
+  }, [fieldRanking, frSort.sortKey, frSort.sortDir]);
+
+  const s12Sort = useSort<"name" | "club" | "hcp" | "status" | "rds" | "avgToPar" | "avgGross" | "best" | "worst" | "last" | "date">("avgToPar");
+  const sortedSub12Perf = useMemo(() => {
+    const mult = s12Sort.sortDir === "asc" ? 1 : -1;
+    const num = (v: number | null) => v == null ? Infinity : v;
+    const str = (v: string | null) => v ?? "";
+    return [...sub12Perf].sort((a, b) => {
+      switch (s12Sort.sortKey) {
+        case "name":     return mult * a.name.localeCompare(b.name, "pt");
+        case "club":     return mult * str(a.club).localeCompare(str(b.club), "pt");
+        case "hcp":      return mult * (num(a.hcpExact) - num(b.hcpExact));
+        case "status":   return mult * a.status.localeCompare(b.status, "pt");
+        case "rds":      return mult * (a.nRounds - b.nRounds);
+        case "avgToPar": return mult * (num(a.avgToPar) - num(b.avgToPar));
+        case "avgGross": return mult * (num(a.avgGross) - num(b.avgGross));
+        case "best":     return mult * (num(a.bestGross) - num(b.bestGross));
+        case "worst":    return mult * (num(a.worstGross) - num(b.worstGross));
+        case "last":     return mult * (num(a.lastGross) - num(b.lastGross));
+        case "date":     return mult * str(a.lastDate).localeCompare(str(b.lastDate));
+        default:         return 0;
+      }
+    });
+  }, [sub12Perf, s12Sort.sortKey, s12Sort.sortDir]);
+
+  const evSort = useSort<"name" | "hcp" | "rds" | "best" | "last" | "lastVsBest" | "slope" | "firstToLast" | "trendDelta" | "trend">("slope");
+  const sortedEvolution = useMemo(() => {
+    const mult = evSort.sortDir === "asc" ? 1 : -1;
+    const num = (v: number | null) => v == null ? Infinity : v;
+    return [...evolution].sort((a, b) => {
+      switch (evSort.sortKey) {
+        case "name":        return mult * a.name.localeCompare(b.name, "pt");
+        case "hcp":         return mult * (num(a.hcpExact) - num(b.hcpExact));
+        case "rds":         return mult * (a.rounds.length - b.rounds.length);
+        case "best":        return mult * (num(a.bestGross) - num(b.bestGross));
+        case "last":        return mult * (num(a.lastGross) - num(b.lastGross));
+        case "lastVsBest":  return mult * (num(a.lastVsBest) - num(b.lastVsBest));
+        case "slope":       return mult * (a.slope - b.slope);
+        case "firstToLast": return mult * (num(a.firstToLast) - num(b.firstToLast));
+        case "trendDelta":  return mult * (num(a.trendDelta) - num(b.trendDelta));
+        case "trend":       return mult * a.trendLabel.localeCompare(b.trendLabel, "pt");
+        default:            return 0;
+      }
+    });
+  }, [evolution, evSort.sortKey, evSort.sortDir]);
+
   const difficulty = useMemo(() => {
     if (!pkg) return { hard: [] as HoleDistribution[], easy: [] as HoleDistribution[] };
     const sorted = [...pkg.holeStats.perHole].sort((a, b) => (b.avgScore - b.par) - (a.avgScore - a.par));
@@ -622,17 +687,17 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
           <thead>
             <tr>
               <th className="lb-pos">#</th>
-              <th className="lb-name" style={{ textAlign: "left" }}>Jogador</th>
-              <th className="lb-hcp">HCP</th>
-              <th className="lb-hole">Rds</th>
-              <th className="lb-topar">Avg ±</th>
-              <th className="lb-gross">Avg G</th>
-              <th className="lb-hole">Best</th>
-              <th className="lb-hole">vs field</th>
+              <SortableHdr k="name" sortKey={frSort.sortKey} sortDir={frSort.sortDir} onSort={frSort.toggleSort} className="lb-name" style={{ textAlign: "left" }}>Jogador</SortableHdr>
+              <SortableHdr k="hcp" sortKey={frSort.sortKey} sortDir={frSort.sortDir} onSort={frSort.toggleSort} className="lb-hcp">HCP</SortableHdr>
+              <SortableHdr k="rds" sortKey={frSort.sortKey} sortDir={frSort.sortDir} onSort={frSort.toggleSort} className="lb-hole">Rds</SortableHdr>
+              <SortableHdr k="avgToPar" sortKey={frSort.sortKey} sortDir={frSort.sortDir} onSort={frSort.toggleSort} className="lb-topar">Avg ±</SortableHdr>
+              <SortableHdr k="avgGross" sortKey={frSort.sortKey} sortDir={frSort.sortDir} onSort={frSort.toggleSort} className="lb-gross">Avg G</SortableHdr>
+              <SortableHdr k="best" sortKey={frSort.sortKey} sortDir={frSort.sortDir} onSort={frSort.toggleSort} className="lb-hole">Best</SortableHdr>
+              <SortableHdr k="vsField" sortKey={frSort.sortKey} sortDir={frSort.sortDir} onSort={frSort.toggleSort} className="lb-hole">vs field</SortableHdr>
             </tr>
           </thead>
           <tbody>
-            {fieldRanking.map((r, i) => {
+            {sortedFieldRanking.map((r, i) => {
               const isManuel = r.fedCode === MANUEL_FED;
               return (
                 <tr key={i} style={{ background: isManuel ? "rgba(220, 252, 231, .8)" : undefined }}>
@@ -676,21 +741,21 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
           <thead>
             <tr>
               <th className="lb-pos">#</th>
-              <th className="lb-name" style={{ textAlign: "left" }}>Jogador</th>
-              <th className="lb-club" style={{ textAlign: "left" }}>Clube</th>
-              <th className="lb-hcp">HCP</th>
-              <th className="lb-name" style={{ textAlign: "left" }}>Estado</th>
-              <th className="lb-hole">Rds</th>
-              <th className="lb-topar">Avg ±</th>
-              <th className="lb-gross">Avg G</th>
-              <th className="lb-hole">Best</th>
-              <th className="lb-hole">Worst</th>
-              <th className="lb-hole">Última</th>
-              <th className="lb-name" style={{ textAlign: "left" }}>Data</th>
+              <SortableHdr k="name" sortKey={s12Sort.sortKey} sortDir={s12Sort.sortDir} onSort={s12Sort.toggleSort} className="lb-name" style={{ textAlign: "left" }}>Jogador</SortableHdr>
+              <SortableHdr k="club" sortKey={s12Sort.sortKey} sortDir={s12Sort.sortDir} onSort={s12Sort.toggleSort} className="lb-club" style={{ textAlign: "left" }}>Clube</SortableHdr>
+              <SortableHdr k="hcp" sortKey={s12Sort.sortKey} sortDir={s12Sort.sortDir} onSort={s12Sort.toggleSort} className="lb-hcp">HCP</SortableHdr>
+              <SortableHdr k="status" sortKey={s12Sort.sortKey} sortDir={s12Sort.sortDir} onSort={s12Sort.toggleSort} className="lb-name" style={{ textAlign: "left" }}>Estado</SortableHdr>
+              <SortableHdr k="rds" sortKey={s12Sort.sortKey} sortDir={s12Sort.sortDir} onSort={s12Sort.toggleSort} className="lb-hole">Rds</SortableHdr>
+              <SortableHdr k="avgToPar" sortKey={s12Sort.sortKey} sortDir={s12Sort.sortDir} onSort={s12Sort.toggleSort} className="lb-topar">Avg ±</SortableHdr>
+              <SortableHdr k="avgGross" sortKey={s12Sort.sortKey} sortDir={s12Sort.sortDir} onSort={s12Sort.toggleSort} className="lb-gross">Avg G</SortableHdr>
+              <SortableHdr k="best" sortKey={s12Sort.sortKey} sortDir={s12Sort.sortDir} onSort={s12Sort.toggleSort} className="lb-hole">Best</SortableHdr>
+              <SortableHdr k="worst" sortKey={s12Sort.sortKey} sortDir={s12Sort.sortDir} onSort={s12Sort.toggleSort} className="lb-hole">Worst</SortableHdr>
+              <SortableHdr k="last" sortKey={s12Sort.sortKey} sortDir={s12Sort.sortDir} onSort={s12Sort.toggleSort} className="lb-hole">Última</SortableHdr>
+              <SortableHdr k="date" sortKey={s12Sort.sortKey} sortDir={s12Sort.sortDir} onSort={s12Sort.toggleSort} className="lb-name" style={{ textAlign: "left" }}>Data</SortableHdr>
             </tr>
           </thead>
           <tbody>
-            {sub12Perf.map((s, i) => {
+            {sortedSub12Perf.map((s, i) => {
               const isManuel = s.fedCode === MANUEL_FED;
               const statusLabel = s.status === "top21+inscrito" ? "🏆 jogou + inscrito" : s.status === "top21_so" ? "🏆 só jogou" : s.status === "inscrito_com_historico" ? "📋 inscrito + histórico" : "🆕 estreante";
               const statusColor = s.status === "top21+inscrito" ? "var(--color-good)" : s.status === "top21_so" ? "#65a30d" : s.status === "inscrito_com_historico" ? "var(--color-info)" : "#ea580c";
@@ -793,20 +858,20 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
           <thead>
             <tr>
               <th className="lb-pos">#</th>
-              <th className="lb-name" style={{ textAlign: "left" }}>Jogador</th>
-              <th className="lb-hcp">HCP</th>
-              <th className="lb-hole">Rds</th>
-              <th className="lb-hole">Best</th>
-              <th className="lb-hole">Última</th>
-              <th className="lb-hole">Última−Best</th>
-              <th className="lb-hole">Slope</th>
-              <th className="lb-hole">Δ first→last</th>
-              <th className="lb-hole">Δ trend</th>
-              <th className="lb-name" style={{ textAlign: "left" }}>Tendência</th>
+              <SortableHdr k="name" sortKey={evSort.sortKey} sortDir={evSort.sortDir} onSort={evSort.toggleSort} className="lb-name" style={{ textAlign: "left" }}>Jogador</SortableHdr>
+              <SortableHdr k="hcp" sortKey={evSort.sortKey} sortDir={evSort.sortDir} onSort={evSort.toggleSort} className="lb-hcp">HCP</SortableHdr>
+              <SortableHdr k="rds" sortKey={evSort.sortKey} sortDir={evSort.sortDir} onSort={evSort.toggleSort} className="lb-hole">Rds</SortableHdr>
+              <SortableHdr k="best" sortKey={evSort.sortKey} sortDir={evSort.sortDir} onSort={evSort.toggleSort} className="lb-hole">Best</SortableHdr>
+              <SortableHdr k="last" sortKey={evSort.sortKey} sortDir={evSort.sortDir} onSort={evSort.toggleSort} className="lb-hole">Última</SortableHdr>
+              <SortableHdr k="lastVsBest" sortKey={evSort.sortKey} sortDir={evSort.sortDir} onSort={evSort.toggleSort} className="lb-hole">Última−Best</SortableHdr>
+              <SortableHdr k="slope" sortKey={evSort.sortKey} sortDir={evSort.sortDir} onSort={evSort.toggleSort} className="lb-hole">Slope</SortableHdr>
+              <SortableHdr k="firstToLast" sortKey={evSort.sortKey} sortDir={evSort.sortDir} onSort={evSort.toggleSort} className="lb-hole">Δ first→last</SortableHdr>
+              <SortableHdr k="trendDelta" sortKey={evSort.sortKey} sortDir={evSort.sortDir} onSort={evSort.toggleSort} className="lb-hole">Δ trend</SortableHdr>
+              <SortableHdr k="trend" sortKey={evSort.sortKey} sortDir={evSort.sortDir} onSort={evSort.toggleSort} className="lb-name" style={{ textAlign: "left" }}>Tendência</SortableHdr>
             </tr>
           </thead>
           <tbody>
-            {evolution.map((e, i) => {
+            {sortedEvolution.map((e, i) => {
               const isManuel = e.fedCode === MANUEL_FED;
               return (
                 <tr key={i} style={{ background: isManuel ? "rgba(220, 252, 231, .8)" : undefined }}>
