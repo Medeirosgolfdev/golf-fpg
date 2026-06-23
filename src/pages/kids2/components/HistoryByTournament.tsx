@@ -162,7 +162,7 @@ export default function HistoryByTournament({ data, junior, filterTids }: Props)
                   fontSize: "var(--fs-11)",
                   padding: "3px 9px",
                   border: "1px solid var(--border-light)",
-                  borderRadius: 999,
+                  borderRadius: "var(--radius)",
                   background: "var(--bg)",
                   color: "var(--text-2)",
                   cursor: "pointer",
@@ -432,7 +432,7 @@ function OneOffPill({ ed }: { ed: Edition }) {
     <span style={{
       fontSize: "var(--fs-11)",
       padding: "3px 9px",
-      borderRadius: 999,
+      borderRadius: "var(--radius)",
       background: "var(--bg)",
       border: `1px solid ${isTop3 ? trophyColor(pos) : "var(--border-light)"}`,
       color: "var(--text-2)",

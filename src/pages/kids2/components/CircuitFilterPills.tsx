@@ -104,7 +104,7 @@ export default function CircuitFilterPills({ data, junior, active, onChange }: P
 function pillStyle(active: boolean): React.CSSProperties {
   return {
     fontSize: "var(--fs-11)", fontWeight: 600,
-    padding: "3px 9px", borderRadius: 999,
+    padding: "3px 9px", borderRadius: "var(--radius)",
     border: `1px solid ${active ? "var(--text)" : "var(--border)"}`,
     background: active ? "var(--text)" : "var(--bg)",
     color: active ? "var(--bg)" : "var(--text-2)",

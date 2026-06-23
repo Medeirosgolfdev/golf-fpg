@@ -3256,7 +3256,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .tourn-tab {
  padding: 8px 18px;
  border: 1px solid var(--border-light);
- border-radius: var(--radius-lg);
+ border-radius: var(--radius);
  background: var(--bg-card);
  color: var(--text-3);
  font-size: var(--fs-13);
@@ -3702,7 +3702,7 @@ table td.lb-col-divider {
 .btn-pill {
   padding: 4px 10px;
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: var(--radius);
   background: var(--bg-card);
   color: var(--text);
   cursor: pointer;
