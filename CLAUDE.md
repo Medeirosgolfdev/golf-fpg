@@ -37,7 +37,13 @@ src/
   context/        # AppContext.tsx
   hooks/          # useIsMobile, useMasterDetail, useSort, usePlayerData
 
-scripts/          # ~20 scripts Node.js para pipeline de dados
+scripts/          # ~190 scripts Node.js para pipeline de dados (scrapers, builders, testes)
+scripts/lib/      # lib partilhada dos scrapers (cookies, fpg-http, atomic-write) — ver secção própria
+scripts/aggregator/ # orquestrador do agregador de juniores (sources/ + identity-matcher); workflow build-juniors.yml
+scripts/_archive/ # scripts legados/diagnóstico (browser-console, testes-diagnostico, etc.) — não corridos
+lib/              # (RAIZ, ≠ scripts/lib) biblioteca de processamento usada por pipeline.js e alguns builders
+                  #   (process-data, hole-stats, cross-stats, scorecard-fragment, course-aliases, players, …)
+api/              # funções serverless Vercel: datagolf.js (proxy WHS/scorecards) + inscricoes.js
 public/data/      # ficheiros JSON servidos ao runtime
 data-archive/ (raiz, fora de public/) # ficheiros pesados — NÃO copiados para o build/deploy (movido de public/data-archive em 2026-06-12)
 
@@ -46,22 +52,39 @@ App.css           # Classes de componentes (~110KB)
 design-system.html # Referência visual de todos os componentes CSS
 ```
 
+> **Pastas retiradas do Git em 2026-06-23 (arrumação)** — `scripts_backup/`, `_archive_2026-*/`, `_probe-tmp/`, `diag-out/`, `outputs/` foram removidas do versionamento (`git rm --cached`, continuam em disco) e adicionadas ao `.gitignore`. Eram backups/temporários sem referência no código. `output/{fed}/*` continua tracked de propósito (output do scraper FPG que alimenta as páginas). Os dois scripts browser-console legados da raiz (`pull-torneios.js`, `scrape-drive-aquapor-v7.js`) foram movidos para `scripts/_archive/browser-console/`.
+
 ### Páginas (lazy-loaded)
 
 | Rota | Página | Dados |
 |------|--------|-------|
+| `/jogadores` | JogadoresListPage | federados.json + métricas (landing de /jogadores, tabela tipo FederatedsList) |
 | `/jogadores/:fed` | JogadoresPage | data.json por jogador, player-stats.json |
+| `/jogadores-por-ano` | JogadoresPorAnoPage | players/federados por coorte de ano de nascimento (utilidade, fora da NavBar) |
 | `/campos/:courseKey?` | CamposPage | master-courses.json, away-courses.json, extraCourses.ts, course-players.json, {MANUEL}/analysis/data.json (tab "Como jogou") |
 | `/uskids` | USKIDSPage | uskids-results.json, uskids_torneios_completos(1-22).json, uskids-field.json |
 | `/kids` | KIDSPage | KIDSdataLoader (todos os JSON internacionais) |
+| `/kids2` (+ `/scout/:tid`, `/inscricoes`, `/ranking/:year`, `/:juniorId`, `/next-t`) | KIDS2Page | rebuild canonical-first do tracker de rivais; sub-rotas em `src/pages/kids2/` |
 | `/diversos` | FPGPage | pull-torneiosNNN.json |
 | `/drive` | DrivePage | drive-data.json, aquapor-data.json |
 | `/bjgt/:fed?` | BJGTPage | bjgt_*.json, wjgc_*.json |
 | `/bjgt-analysis/:fed?` | BJGTAnalysisPage | data.json por jogador |
-| `/comparar` | ComparePage (3 tabs: Campos, Vantagem de Tee, Jogadores) | master-courses, players.json, {MANUEL}/analysis/data.json |
+| `/major` (+ `/:source/:year`) | MajorPage | funde Doral + BJGT/EOWAGR no CircuitShell, agrupado por série/ano |
+| `/doral` | DORALPage | ftm_doral_*.json |
+| `/comparar` | ComparePage (3 tabs: Campos, Vantagem de Tee, Jogadores; tab Jogadores delega em CompararPage) | master-courses, players.json, {MANUEL}/analysis/data.json |
 | `/simulador` | SimuladorPage | simCourses (master), players.json, {fed}/analysis/data.json (selector de jogador + "E se?") |
 | `/calendario` | CalendarioPage | — |
-| `/doral` | DORALPage | ftm_doral_*.json |
+| `/draws` | DrawsPage | manuel-pairings.json (jogadores com quem o Manuel já foi parelhado, FPG + USKids) |
+| `/titulos` (+ `/:tab`) | TitulosPage | vista histórica de campeonatos de jovens FPG (3 tabs) |
+| `/nacionais-jovens` | NacionaisJovensPage | fpg-nacionais-historico.json (Campeões Nacionais Sub-10→18, 2005-2026; reusa JovensAnaliseView) |
+| `/ffg` | FFGPage | ffgolf-catalog.json + ffgolf/{year}_{slug}.json (torneios juvenis franceses) |
+| `/rfeg` (+ `/:compId`, `/:source/:id`) | RFEGPage | rfegolf-* + livegolfscoring + nextcaddy + fcg (torneios juvenis espanhóis) |
+| `/england` | EnglandGolfPage | england-golf-catalog.json + england_{slug}.json (England Golf / GolfGenius) |
+| `/global-junior` (+ `/:slug`) | GlobalJuniorPage | gjgl-catalog.json + gjgl/gjgl_{slug}.json (Global Junior Golf Live) |
+
+> **Páginas legadas mantidas como rotas alternativas** (`/bjgt-legacy`, `/kids-legacy`, `/doral-legacy`): versões antigas das páginas-mãe acima, preservadas durante a migração para o `CircuitShell`.
+>
+> **⚠ `ScotlandPage.tsx` (Junior Tour Scotland) está COMPLETA mas NÃO ligada às rotas** — página de circuito de 363 linhas (como England/FFG/RFEG), com scraper `scrape-junior-tour-scotland.js` e dados `scotland-jts-*.json`, mas sem `import`/`<Route>` no `App.tsx`. Feature construída e por lançar (decidir: ligar a rota ou remover).
 
 ## Comandos
 
@@ -83,11 +106,11 @@ npm run login     # login FPG (gera sessão)
 | Manuel — USKids playerID (legacy 2023) | `605933` — validado 2026-05-13. Conta abandonada: única aparição no El Prat 2023 Boys 9 (gross 44, place 3). **Nome USKids antigo:** "Manuel Francisco Goulartt De Medeiros". Ambos os IDs estão em `MANUEL_PLAYER_IDS` em `src/constants/manuel.ts`. |
 | Manuel — USKids accountUID | `762810` |
 | Manuel — DOB | `29/04/2014` (MANUEL_BIRTH_YEAR = 2014) |
-| TORNEIOS_COMPLETOS_COUNT | `29` (constante em USKIDSPage.tsx — atualizar ao adicionar completos; espelhar em KIDSdataLoader.ts) |
+| TORNEIOS_COMPLETOS_COUNT | `40` (constante em USKIDSPage.tsx — atualizar ao adicionar completos; espelhar em KIDSdataLoader.ts) |
 | Signupanytime ax — intl | `1129` |
 | Signupanytime ax — Marco Simone 2025 | `2739` |
 | Signupanytime ax — El Prat | `2760` |
-| Servidor local (update-jogadores/torneios) | `:3456` |
+| Servidor local (update-jogadores/torneios — LEGADO, em `scripts/_archive/browser-console/`) | `:3456` |
 
 ---
 
@@ -168,18 +191,27 @@ Migrados: scrape-drive-node, scrape-jovens-node, scrape-classif-node, scrape-fpg
 
 Dois modos: **Browser Console** (colar no F12 num site específico) e **Node.js Terminal** (correr em `C:\golf-fpg\scripts\`).
 
-### Fluxo: Atualizar jogadores FPG
+> **⚠ Reorganização 2026-06-23 — localização dos scripts da raiz.** A raiz já só
+> contém `pipeline.js` (continua na raiz porque o `scripts/fpg-scrape-node.js` o
+> invoca via `node pipeline.js --skip-import`). Os restantes scripts que estavam
+> soltos na raiz foram movidos:
+> - **Activos** (sem substituto Node-puro) → `scripts/`: `find-tcodes.js`, `uskids_scrape_courses - PERFEITO COM DISTANCIAS.js`.
+> - **Legados** (browser-console / Playwright / servidor-local, todos substituídos pelos `*-node.js` da era 2026-04) → `scripts/_archive/browser-console/`: `scraper-headless.js`, `update-jogadores.js`, `update-torneios.js`, `fpg-download-whs-only.js`, `scrape-consola-inscritos-campeonato-nacional.js`, `pull-torneios.js`, `scrape-drive-aquapor-v7.js`.
+>
+> **Os "Fluxos" abaixo (browser console + login.js + pipeline.js manual) são LEGADOS.** O fluxo de produção actual é 100% Node-puro via GitHub Actions (ver "GitHub Actions — estado" e os scripts `fpg-scrape-node.js` / `scrape-drive-node.js` / `scrape-classif-node.js`). Mantidos como referência / fallback manual.
 
-1. `node login.js` → `session.json` (abre browser para login manual em `area.my.fpg.pt`)
-2. Browser Console em `scoring.fpg.pt`: `fpg-download-whs-only.js` → `fpg-whs-all.json` (alternativa headless: `node scraper-headless.js --players`)
+### Fluxo: Atualizar jogadores FPG (LEGADO — usar `fpg-scrape-node.js` + Actions)
+
+1. `node scripts/login.js` → `session.json` (abre browser para login manual em `area.my.fpg.pt`)
+2. Browser Console em `scoring.fpg.pt`: `scripts/_archive/browser-console/fpg-download-whs-only.js` → `fpg-whs-all.json` (alt. headless: `node scripts/_archive/browser-console/scraper-headless.js --players`)
 3. `node pipeline.js --batch` → `output/{fed}/analysis/data.json`
-4. `node enrich-players.js` → `player-stats.json`
+4. `node scripts/enrich-players.js` → `player-stats.json`
 
-### Fluxo: Atualizar torneios (DRIVE/AQUAPOR/pull)
+### Fluxo: Atualizar torneios (DRIVE/AQUAPOR/pull) (LEGADO — usar `scrape-drive-node.js` + Actions)
 
-1. Browser Console em `scoring.datagolf.pt`: `scrape-drive-aquapor-v7.js` → `drive-data.json` + `aquapor-data.json`
-2. Browser Console em `scoring.datagolf.pt`: `pull-torneios.js` → `pull-torneiosNNN.json` (editar `POR_CODIGO` com ccode/tcode)
-3. `node build-drive-sd-lookup.js` → `drive-sd-lookup.json`
+1. Browser Console em `scoring.datagolf.pt`: `scripts/_archive/browser-console/scrape-drive-aquapor-v7.js` → `drive-data.json` + `aquapor-data.json`
+2. Browser Console em `scoring.datagolf.pt`: `scripts/_archive/browser-console/pull-torneios.js` → `pull-torneiosNNN.json` (editar `POR_CODIGO` com ccode/tcode)
+3. `node scripts/build-drive-sd-lookup.js` → `drive-sd-lookup.json`
 
 ### Fluxo: Descarregar inscrições + draws de torneios FPG
 
@@ -261,25 +293,21 @@ node pipeline.js --sync-players     # só actualizar players.json
 ```
 Output: `data.json`, `players.json`, `player-stats.json`, `away-courses.json`
 
-**login.js** — Abre browser para login manual em `area.my.fpg.pt`. Depois navegar para `scoring.fpg.pt` e pressionar ENTER → guarda `session.json`.
+**login.js** (`scripts/login.js`, = `npm run login`) — Abre browser para login manual em `area.my.fpg.pt`. Depois navegar para `scoring.fpg.pt` e pressionar ENTER → guarda `session.json`.
 
-**scraper-headless.js** — Alternativa headless ao fluxo browser.
+**scraper-headless.js** (`scripts/_archive/browser-console/`) — **LEGADO** (substituído pelos `*-node.js`). Alternativa headless Playwright ao fluxo browser. Movido da raiz em 2026-06-23.
 ```bash
-node scraper-headless.js --tournaments
-node scraper-headless.js --players
-node scraper-headless.js --players --feds 47078 52884
-HEADLESS=true node scraper-headless.js --tournaments --players
+node scripts/_archive/browser-console/scraper-headless.js --tournaments
+node scripts/_archive/browser-console/scraper-headless.js --players --feds 47078 52884
 ```
 
-**update-jogadores.js / update-torneios.js** — Servidor local (:3456) + script para colar no browser.
+**update-jogadores.js / update-torneios.js** (`scripts/_archive/browser-console/`) — **LEGADO** (substituídos por `fpg-scrape-node.js` / `scrape-drive-node.js`). Servidor local (:3456) + script para colar no browser. Movidos da raiz em 2026-06-23.
 ```bash
-node update-jogadores.js --new
-node update-jogadores.js --refresh
-node update-jogadores.js --feds 47078 52884
+node scripts/_archive/browser-console/update-jogadores.js --new
 ```
 Depois no F12 do site correspondente: `fetch("http://localhost:3456/browser-script.js").then(r=>r.text()).then(eval)`
 
-**scrape-drive-aquapor-v7.js** — Colar no F12 de `scoring.datagolf.pt/pt/tournaments.aspx`. v7 fix: usa `classifAgregate.aspx/ScoreCard` (v6 tinha bug R1=R2). **Legacy** — substituído por `scrape-drive-node.js` (Node puro, correr em GitHub Actions).
+**scrape-drive-aquapor-v7.js** (`scripts/_archive/browser-console/`) — Colar no F12 de `scoring.datagolf.pt/pt/tournaments.aspx`. v7 fix: usa `classifAgregate.aspx/ScoreCard` (v6 tinha bug R1=R2). **Legacy** — substituído por `scrape-drive-node.js` (Node puro, correr em GitHub Actions). Movido da raiz para `scripts/_archive/browser-console/` em 2026-06-23.
 
 **scrape-fpg-admissions-draws-node.js** — Node puro (2026-04-22). Substitui os browser-scripts `browser-scrape-fpg-admissions-draws.js` + `browser-scrape-fpg-draws-only.js` + `merge-fpg-admissions-draws.js`. Corre linkpage cross-domain (scoring.fpg.pt/lists) em paralelo, merge aditivo (preserva bons, rejeita `_suspect`), output único em `public/data/fpg-admissions-draws.json`. Scope: `scripts/fpg-admissions-scope.json` (333 torneios). Exit code 2 = sem novidades. Workflow: `update-fpg-admissions-draws.yml` (Sex/Sáb/Dom 20:00 UTC) — **regenera também `public/data/manuel-pairings.json` via `pairings-build.js` e committa-o** (alimenta a página `/draws`). Secret: `FPG_ADMISSIONS_COOKIES`.
 
@@ -300,17 +328,17 @@ node scripts/scrape-classif-node.js --scope scripts/classif-scope.json --out pub
 node scripts/scrape-classif-node.js --scope scripts/batch-aroeira.json --concurrency 2
 ```
 
-**pull-torneios.js** — Browser Console em `scoring.datagolf.pt`. **Legacy** — usar `scrape-classif-node.js` para novos torneios. Mantido como fallback para casos em que Node não funciona (e.g. ad-hoc num torneio de clube com `ccode` desconhecido).
+**pull-torneios.js** (`scripts/_archive/browser-console/`) — Browser Console em `scoring.datagolf.pt`. **Legacy** — usar `scrape-classif-node.js` para novos torneios. Mantido como fallback para casos em que Node não funciona (e.g. ad-hoc num torneio de clube com `ccode` desconhecido). Movido da raiz para `scripts/_archive/browser-console/` em 2026-06-23.
 
-**fpg-download-whs-only.js** — Browser Console em `scoring.fpg.pt/lists/PlayerWHS.aspx?no=52884`. Download ~2-5 min. Se a página refreshar, alterar `START_INDEX`.
+**fpg-download-whs-only.js** (`scripts/_archive/browser-console/`) — **LEGADO** (v4; substituído pelo WHS Node-puro do `fpg-scrape-node.js`). Browser Console em `scoring.fpg.pt/lists/PlayerWHS.aspx?no=52884`. Download ~2-5 min. Se a página refreshar, alterar `START_INDEX`. Movido da raiz em 2026-06-23.
 
-**Utilitários:**
-- `node make-scorecards-ui.js 52884` / `--all` — gera UI scorecards
-- `node enrich-players.js` → `player-stats.json`
-- `node build-drive-sd-lookup.js` → `drive-sd-lookup.json`
-- `node merge-courses.js` — consolida campos duplicados
-- `node find-tcodes.js` — varre ccode/tcode, imprime torneios
-- `node validate-encoding.js` — valida encoding dos JSON
+**Utilitários** (todos em `scripts/`):
+- `node scripts/make-scorecards-ui.js 52884` / `--all` — gera UI scorecards (= `npm run scorecards`)
+- `node scripts/enrich-players.js` → `player-stats.json`
+- `node scripts/build-drive-sd-lookup.js` → `drive-sd-lookup.json`
+- `node scripts/merge-courses.js` — consolida campos duplicados
+- `node scripts/find-tcodes.js` — varre ccode/tcode, imprime torneios (movido da raiz em 2026-06-23)
+- `node scripts/validate-encoding.js` — valida encoding dos JSON
 
 ### Refresh de federados (`scrape-federados-node.js`)
 
@@ -382,9 +410,9 @@ node fetch-uskids-field.js
 
 ### USKids — Script browser (F12)
 
-**uskids_scrape_courses_PERFEITO_COM_DISTANCIAS.js** — Colar em `www.signupanytime.com` (qualquer página). Gera `uskids_torneios_completos(N).json` com par+yards reais e scorecards completos. Suporta dois formatos de output: v1 (antigo, array) e v2 (novo, objecto com `signupanytime_t`).
+**uskids_scrape_courses - PERFEITO COM DISTANCIAS.js** (`scripts/`, movido da raiz em 2026-06-23) — **Activo, sem substituto Node** (gerador canónico dos completos). Colar em `www.signupanytime.com` (qualquer página). Gera `uskids_torneios_completos(N).json` com par+yards reais e scorecards completos. Suporta dois formatos de output: v1 (antigo, array) e v2 (novo, objecto com `signupanytime_t`).
 - Configurar: editar array `TOURNAMENTS`: `{ t: "21080" }`
-- Após download: copiar para `public/data/` e atualizar `TORNEIOS_COMPLETOS_COUNT` em USKIDSPage.tsx (actualmente **30**)
+- Após download: copiar para `public/data/` e atualizar `TORNEIOS_COMPLETOS_COUNT` em USKIDSPage.tsx (actualmente **40**)
 
 ### Flights no member-history (FLIGHTS + TOURN_NAMES em fetch-uskids-member-history.js)
 
@@ -1430,6 +1458,9 @@ validado server-side. **Não replicável de Node puro.**
 | **`update-ffgolf-golfgenius.yml`** | ✅ Novo 2026-05-08 | `scripts/scrape-ffgolf.js` | Seg 03:00 UTC (1×/semana, 1h depois do anterior) | **Playwright headless** — torneios juvenis FFG hospedados em GolfGenius (Championnats de France, Internationaux U14/U18). Default do cron: `--year <ano corrente>` (varre `public/data/ffgolf-catalog.json` filtrado por ano). Output: `public/data/ffgolf/{year}_{slug}.json`. workflow_dispatch tem inputs `year`/`slug`/`gg_page` (ad-hoc). Sem secrets. |
 | **`update-spain.yml`** | ✅ Novo 2026-05-17 | `scripts/discover-fcg-scope.js` + `scrape-rfegolf-node.js` + `scrape-livegolfscoring.js` + `scrape-nextcaddy.js` (+ horarios) + `scrape-fcg.js` + 7 builds (enrich-lgs-dates, infer-nextcaddy-par, build-rfegolf-index, build-licencia-{dob,hcp}-lookup, build-spain-players-export, build-rfegolf-rivals, build-fcg-rivals) | Seg 04:00 UTC (1×/semana, 1h depois do GolfGenius) | **Node puro, sem secrets** — pipeline única que cobre RFEG (microsite + livegolfscoring), NextCaddy (RFGA Andaluzia + FGM Madrid) e FCG (Federació Catalana via golfdirecto.com). Default do cron: discovery + `--skip-existing` em todos os scrapers + builds. workflow_dispatch tem inputs `force_rebuild`/`skip_discovery`/`lgs_range`/`rfegolf_range`/`fcg_years`. Timeout 240 min. Outputs em `public/data/{rfegolf-resultats,rfegolf-livegolfscoring,nextcaddy,fcg}/` + agregados. |
 | **`update-federados.yml`** | ✅ Novo 2026-06-14 | `scripts/scrape-federados-node.js` | Quarta 05:00 UTC (1×/semana, off-peak) | Refresh completo de `public/data/federados.json` (~15.600 activos). Exit code 2 = sem alterações. workflow_dispatch tem inputs `check_only`/`force_commit`. Secret: `DATAGOLF_SCORING_COOKIES`. |
+| **`build-juniors.yml`** | ✅ | `scripts/aggregator/index.js` | workflow_dispatch | Build do agregador canónico de juniores (orquestra adapters em `scripts/aggregator/sources/` + identity-matcher + sanity checks). Alimenta a vista global de juniores. |
+| **`uskids-refresh-all.yml`** | ✅ | `fetch-uskids-member-history.js --refresh-all` → `split-member-history.js` → `build-member-history-slim.js` | Dia 1 do mês 17:00 UTC | Refresh mensal completo do member-history USKids: re-scrape de toda a carreira, split em chunks ≤70 MB e rebuild do slim servido ao browser. |
+| **`future-masters-scrape.yml`** | ✅ | `scripts/scrape-future-masters-all.js` | Junho 05:00 UTC (anual) | Scrape do Future Masters (torneio juvenil UK). `workflow_dispatch` com `all_years=true` refaz todos os anos. |
 
 **IP-binding em Actions:** `scoring.datagolf.pt` CONFIRMADO não IP-bound
 (teste via hotspot 4G). `my.fpg.pt` CONFIRMADO não IP-bound (teste cross-IP

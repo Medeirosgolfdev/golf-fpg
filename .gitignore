@@ -104,3 +104,11 @@ probe6.mts
 src/pages/.fuse_hidden0000000400000001
 src/ui/.fuse_hidden0000000400000002
 public/data/fpg-admissions-draws.backup-1780784225241.json
+
+# Backups / arquivos / temporários de desenvolvimento — não versionar
+# (mantidos em disco localmente; retirados do Git em 2026-06-23 na arrumação)
+scripts_backup/
+_archive_*/
+_probe-tmp/
+diag-out/
+outputs/
