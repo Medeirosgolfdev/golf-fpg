@@ -40,7 +40,7 @@ on:
         required: false
         default: ''
       rfegolf_discovery_range:
-        description: 'Range de compIds RFEGolf p/ DISCOVERY (regenera rfegolf-scope.json). Default: "12700-17500".'
+        description: 'Range de compIds RFEGolf p/ DISCOVERY (funde com scope existente). Default: "15500-17800". Histórico: "12700-17800".'
         required: false
         default: ''
       fcg_years:
@@ -114,13 +114,15 @@ jobs:
           else
             echo "RFEGOLF_MODE=scope" >> $GITHUB_ENV
           fi
-          # RFEGolf discovery range (regenera rfegolf-scope.json a cada run).
-          # Range completo (histórico + futuro) porque discover-rfegolf-comps.js
-          # SOBRESCREVE o scope — um range estreito encolheria-o.
+          # RFEGolf discovery range. discover-rfegolf-comps.js agora FUNDE com o
+          # scope existente (re-probe autoritativo dentro do range, preserva o
+          # resto), por isso basta uma janela RECENTE e estreita — rápida e sem
+          # encolher o histórico. 15500-17800 cobre os comps de 2026 em diante.
+          # Para refazer o histórico todo de uma vez: passar 12700-17800 no input.
           if [ -n "${{ github.event.inputs.rfegolf_discovery_range }}" ]; then
             echo "RFEGOLF_DISC_RANGE=${{ github.event.inputs.rfegolf_discovery_range }}" >> $GITHUB_ENV
           else
-            echo "RFEGOLF_DISC_RANGE=12700-17500" >> $GITHUB_ENV
+            echo "RFEGOLF_DISC_RANGE=15500-17800" >> $GITHUB_ENV
           fi
           # FCG years
           if [ -n "${{ github.event.inputs.fcg_years }}" ]; then
@@ -149,7 +151,7 @@ jobs:
         id: disc_rfeg
         if: env.DO_DISCOVERY == 'true'
         continue-on-error: true
-        run: node scripts/discover-rfegolf-comps.js --range "$RFEGOLF_DISC_RANGE" --concurrency 6
+        run: node scripts/discover-rfegolf-comps.js --range "$RFEGOLF_DISC_RANGE" --concurrency 10
 
       # ── Scrapers (paralelos seriam ideais mas mantemos sequencial pelo git push) ──
       - name: Scrape RFEGolf (Campeonatos Nacionais)

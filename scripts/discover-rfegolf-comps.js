@@ -208,12 +208,38 @@ async function main() {
 
   // Filter to juvenile + within year range
   const currentYear = new Date().getFullYear();
-  const tournaments = results
+  const fresh = results
     .filter(function (r) { return r.juvenil; })
     .filter(function (r) { return !r.year || (r.year >= minYear && r.year <= currentYear + 2); })
     .sort(function (a, b) { return a.compId - b.compId; });
 
-  // Stats
+  // ── Merge com o scope existente (a menos que --no-merge) ──
+  // O re-probe é AUTORITATIVO dentro do range varrido; fora do range
+  // preservam-se as entradas antigas. Assim um range recente e estreito
+  // (rápido) não encolhe o scope histórico — só acrescenta/actualiza.
+  const noMerge = args.includes("--no-merge");
+  let tournaments = fresh;
+  let mergedFrom = 0;
+  if (!noMerge && fs.existsSync(outFile)) {
+    try {
+      const prev = JSON.parse(fs.readFileSync(outFile, "utf8"));
+      const prevT = Array.isArray(prev.tournaments) ? prev.tournaments : [];
+      const lo = parts[0], hi = parts[1];
+      const byId = new Map();
+      // Mantém só as antigas FORA do range varrido (dentro do range, o
+      // re-probe manda: um comp que deixou de existir/ser juvenil cai).
+      for (const t of prevT) {
+        if (t && typeof t.compId === "number" && (t.compId < lo || t.compId > hi)) byId.set(t.compId, t);
+      }
+      mergedFrom = byId.size;
+      for (const t of fresh) byId.set(t.compId, t);
+      tournaments = Array.from(byId.values()).sort(function (a, b) { return a.compId - b.compId; });
+    } catch (e) {
+      console.warn("  (merge falhou, a gravar só os novos: " + e.message + ")");
+    }
+  }
+
+  // Stats (sobre o scope final, já merged)
   const byYear = {};
   const byCategory = {};
   for (const t of tournaments) {
@@ -224,6 +250,7 @@ async function main() {
   const scope = {
     generatedAt: new Date().toISOString(),
     range: parts[0] + "-" + parts[1],
+    merged: !noMerge,
     minYear,
     totalProbed: ids.length,
     totalExisting: results.length,
@@ -233,7 +260,11 @@ async function main() {
     tournaments,
   };
   fs.writeFileSync(outFile, JSON.stringify(scope, null, 2));
-  console.log("\nDone. " + tournaments.length + " juvenile tournaments saved to " + outFile);
+  // Limpa o .partial (já não é preciso depois do write final)
+  try { if (fs.existsSync(outFile + ".partial")) fs.unlinkSync(outFile + ".partial"); } catch (e) { /* ignore */ }
+  console.log("\nDone. " + fresh.length + " juvenis no range " + parts[0] + "-" + parts[1] +
+              (noMerge ? "" : " (+ " + mergedFrom + " preservados fora do range)") +
+              " = " + tournaments.length + " total -> " + outFile);
   console.log("byYear:", byYear);
   console.log("byCategory:", byCategory);
 }
