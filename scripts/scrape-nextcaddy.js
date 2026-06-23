@@ -34,6 +34,24 @@ const path = require("path");
 const https = require("https");
 
 const OUT_DIR = path.resolve(__dirname, "../public/data/nextcaddy");
+
+/* ─── existingIsComplete — decide se um ficheiro já em disco deve ser saltado ──
+ * Com --skip-existing, NÃO basta o ficheiro existir: um torneio descoberto
+ * ANTES de ser jogado é gravado com leaderboard vazio e, sem isto, ficava
+ * congelado vazio para sempre (skip-existing saltava-o em cada run, mesmo
+ * depois de os resultados serem publicados).
+ * Considera-se "completo" (saltável) se já tem jogadores no leaderboard OU
+ * se é genuinamente PDF-only (nunca terá tabela HTML para parsear). Caso
+ * contrário (vazio/futuro/ilegível) re-obtém-se a cada run até ter dados. */
+function existingIsComplete(file) {
+  try {
+    const d = JSON.parse(fs.readFileSync(file, "utf8"));
+    const hasPlayers = (d.leaderboard || []).some((c) => (c.players || []).length > 0);
+    return hasPlayers || d.leaderboardPdfOnly === true;
+  } catch {
+    return false; // ilegível/truncado → re-obter
+  }
+}
 if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
 
 const BASE = "https://www.nextcaddy.com";
@@ -725,7 +743,7 @@ async function main() {
       const idx = cursor++;
       const tid = tours[idx];
       const outFile = path.join(OUT_DIR, `${tid}.json`);
-      if (skipExisting && !patchScorecards && fs.existsSync(outFile)) { skipped++; continue; }
+      if (skipExisting && !patchScorecards && fs.existsSync(outFile) && existingIsComplete(outFile)) { skipped++; continue; }
       const t0 = Date.now();
       console.log(`  [${idx + 1}/${tours.length}] ${tid}: starting...`);
       try {

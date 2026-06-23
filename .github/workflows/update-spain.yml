@@ -32,11 +32,15 @@ on:
         type: choice
         options: ['false', 'true']
       lgs_range:
-        description: 'Range de IDs livegolfscoring (ex: "1-500"). Default: "1-500".'
+        description: 'Range de IDs livegolfscoring (ex: "1-1000"). Default: "1-1000".'
         required: false
         default: ''
       rfegolf_range:
-        description: 'Range de compIds RFEGolf (ex: "13500-17000"). Se vazio, usa --scope.'
+        description: 'Range de compIds RFEGolf p/ SCRAPE (ex: "13500-17000"). Se vazio, usa --scope.'
+        required: false
+        default: ''
+      rfegolf_discovery_range:
+        description: 'Range de compIds RFEGolf p/ DISCOVERY (regenera rfegolf-scope.json). Default: "12700-17500".'
         required: false
         default: ''
       fcg_years:
@@ -64,7 +68,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          ref: main
+          # Em runs agendados, github.ref_name = branch default (main).
+          # Em workflow_dispatch, usa o branch escolhido — permite backfill
+          # para um branch de trabalho sem tocar em main.
+          ref: ${{ github.ref_name }}
           fetch-depth: 0
 
       - name: Setup Node.js
@@ -93,11 +100,12 @@ jobs:
           else
             echo "DO_DISCOVERY=true" >> $GITHUB_ENV
           fi
-          # LGS range
+          # LGS range (alargado de 1-500 → 1-1000 em 2026-06-23: novos torneios
+          # nacionais recebiam IDs LGS acima de 500 e ficavam por descobrir).
           if [ -n "${{ github.event.inputs.lgs_range }}" ]; then
             echo "LGS_RANGE=${{ github.event.inputs.lgs_range }}" >> $GITHUB_ENV
           else
-            echo "LGS_RANGE=1-500" >> $GITHUB_ENV
+            echo "LGS_RANGE=1-1000" >> $GITHUB_ENV
           fi
           # RFEGolf range (se especificado, usa range em vez de scope)
           if [ -n "${{ github.event.inputs.rfegolf_range }}" ]; then
@@ -105,6 +113,14 @@ jobs:
             echo "RFEGOLF_RANGE=${{ github.event.inputs.rfegolf_range }}" >> $GITHUB_ENV
           else
             echo "RFEGOLF_MODE=scope" >> $GITHUB_ENV
+          fi
+          # RFEGolf discovery range (regenera rfegolf-scope.json a cada run).
+          # Range completo (histórico + futuro) porque discover-rfegolf-comps.js
+          # SOBRESCREVE o scope — um range estreito encolheria-o.
+          if [ -n "${{ github.event.inputs.rfegolf_discovery_range }}" ]; then
+            echo "RFEGOLF_DISC_RANGE=${{ github.event.inputs.rfegolf_discovery_range }}" >> $GITHUB_ENV
+          else
+            echo "RFEGOLF_DISC_RANGE=12700-17500" >> $GITHUB_ENV
           fi
           # FCG years
           if [ -n "${{ github.event.inputs.fcg_years }}" ]; then
@@ -125,6 +141,15 @@ jobs:
         if: env.DO_DISCOVERY == 'true'
         continue-on-error: true
         run: node scripts/scrape-nextcaddy.js --discover --out scripts/nextcaddy-scope-all.json
+
+      # Discovery RFEGolf — regenera scripts/rfegolf-scope.json a cada run.
+      # ANTES não existia: o scope estava congelado em 2026-05-08 e nenhum
+      # Campeonato de España novo era descoberto. Agora corre como FCG/NextCaddy.
+      - name: Discovery RFEGolf (rfegolf.es → rfegolf-scope.json)
+        id: disc_rfeg
+        if: env.DO_DISCOVERY == 'true'
+        continue-on-error: true
+        run: node scripts/discover-rfegolf-comps.js --range "$RFEGOLF_DISC_RANGE" --concurrency 6
 
       # ── Scrapers (paralelos seriam ideais mas mantemos sequencial pelo git push) ──
       - name: Scrape RFEGolf (Campeonatos Nacionais)
@@ -220,6 +245,7 @@ jobs:
                   public/data/rfegolf-rivals.json \
                   public/data/fcg-rivals.json \
                   scripts/fcg-scope.json \
+                  scripts/rfegolf-scope.json \
                   scripts/nextcaddy-scope-all.json 2>/dev/null || true
 
           if git diff --staged --quiet; then
@@ -261,6 +287,7 @@ jobs:
           FAILED=""
           [ "${{ steps.disc_fcg.outcome }}"    = "failure" ] && FAILED="$FAILED discovery-FCG"
           [ "${{ steps.disc_nc.outcome }}"     = "failure" ] && FAILED="$FAILED discovery-NextCaddy"
+          [ "${{ steps.disc_rfeg.outcome }}"   = "failure" ] && FAILED="$FAILED discovery-RFEGolf"
           [ "${{ steps.rfegolf.outcome }}"     = "failure" ] && FAILED="$FAILED RFEGolf"
           [ "${{ steps.lgs.outcome }}"         = "failure" ] && FAILED="$FAILED livegolfscoring"
           [ "${{ steps.nextcaddy.outcome }}"   = "failure" ] && FAILED="$FAILED NextCaddy"
