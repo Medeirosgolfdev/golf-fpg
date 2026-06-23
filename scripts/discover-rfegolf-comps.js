@@ -172,7 +172,11 @@ async function main() {
   // ordem / publicados tarde); o lookahead apanha os recém-criados. Como o
   // merge eleva o máximo a cada run, a janela avança sozinha.
   const fromScope = args.includes("--from-scope");
-  const lookbehind = parseInt(getArg("lookbehind", "400"), 10);
+  // lookbehind pequeno de propósito: os compIds são atribuídos na fronteira
+  // (sempre acima do máximo), logo só precisamos de uma franja de segurança
+  // contra corridas. lookahead generoso para alcançar os próximos juvenis no
+  // espaço de IDs (que inclui todas as competições, não só as juvenis).
+  const lookbehind = parseInt(getArg("lookbehind", "200"), 10);
   const lookahead = parseInt(getArg("lookahead", "800"), 10);
   let rangeStr = rangeArg;
   if (fromScope) {
