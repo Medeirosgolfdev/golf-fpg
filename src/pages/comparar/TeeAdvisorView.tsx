@@ -29,7 +29,8 @@ import SortableHdr from "../../ui/SortableHdr";
 import EmptyState from "../../ui/EmptyState";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../../ui/Toolbar";
 import { norm, fmtToPar } from "../../utils/format";
-import { getTeeHex, textOnColor, teeBorder } from "../../utils/teeColors";
+import { getTeeHex } from "../../utils/teeColors";
+import SharedTeePill from "../../ui/TeePill";
 import { MANUEL_FED } from "../../constants/manuel";
 import { resolvePlayedMeters, resolvePlayedTee, courseKeyName } from "../../utils/playedDistance";
 
@@ -481,27 +482,18 @@ function buildConclusions(a: TeeMetrics, b: TeeMetrics): Conclusion[] {
 
 /* ═══════════════════ UI helpers ═══════════════════ */
 
+/** Pill de tee — usa o componente partilhado (.p .p-tee), passando o hex já
+ *  resolvido com a dica scorecardMeta.teeColor (que o partilhado não conhece). */
 function TeePill({ tee }: { tee: Tee }) {
-  const hex = getTeeHex(tee.teeName, tee.scorecardMeta?.teeColor);
-  return (
-    <span className="p p-sm" style={{
-      background: hex, color: textOnColor(hex), border: teeBorder(hex) ?? "1px solid var(--border)",
-      fontWeight: 700, justifyContent: "center", minWidth: 86,
-    }}>
-      {tee.teeName}
-    </span>
-  );
+  return <SharedTeePill name={tee.teeName} hex={getTeeHex(tee.teeName, tee.scorecardMeta?.teeColor)} />;
 }
 
-/** Nome de tee inline, sempre com a cor do tee (regra do projecto: referir tees com a sua cor). */
+/** Tee referido no corpo do texto: pill partilhada num tamanho compacto (0.92em),
+ *  para encaixar no fluxo das frases sem quebrar a linha. */
 function TeeNameSpan({ tee }: { tee: Tee }) {
-  const hex = getTeeHex(tee.teeName, tee.scorecardMeta?.teeColor);
   return (
-    <span style={{
-      background: hex, color: textOnColor(hex), border: teeBorder(hex) ?? "1px solid var(--border)",
-      borderRadius: 6, padding: "0 6px", fontWeight: 800, fontSize: "0.92em", whiteSpace: "nowrap",
-    }}>
-      {tee.teeName}
+    <span style={{ fontSize: "0.92em", whiteSpace: "nowrap" }}>
+      <SharedTeePill name={tee.teeName} hex={getTeeHex(tee.teeName, tee.scorecardMeta?.teeColor)} />
     </span>
   );
 }

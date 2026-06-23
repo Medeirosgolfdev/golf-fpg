@@ -24,6 +24,8 @@ import {
   aggregateField,
   type ScoringDist,
 } from "../../../utils/analysisStats";
+import { fmtToPar } from "../../../utils/format";
+import { tpColor } from "../../../ui/tournamentPrimitives";
 import ComparisonDonut from "../../../ui/ComparisonDonut";
 
 type SubTab = "scoring" | "rounds" | "ninesplit" | "holes";
@@ -231,7 +233,7 @@ export default function AnaliseSection({ data, junior, filterTids }: Props) {
       )}
 
       {/* Sub-tabs */}
-      <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 14, borderBottom: "1px solid var(--border-light)" }}>
+      <div className="tabbar-under">
         {([
           { k: "scoring", l: "Scoring" },
           { k: "rounds", l: "Por Ronda" },
@@ -241,17 +243,7 @@ export default function AnaliseSection({ data, junior, filterTids }: Props) {
           <button
             key={t.k}
             onClick={() => setSubTab(t.k)}
-            style={{
-              background: "none",
-              border: "none",
-              padding: "6px 12px",
-              fontSize: "var(--fs-13)",
-              fontWeight: 600,
-              cursor: "pointer",
-              color: subTab === t.k ? "var(--accent)" : "var(--text-2)",
-              borderBottom: subTab === t.k ? "2px solid var(--accent)" : "2px solid transparent",
-              marginBottom: -1,
-            }}
+            className={"tab-under" + (subTab === t.k ? " active" : "")}
           >
             {t.l}
           </button>
@@ -280,10 +272,10 @@ function ScoringPane({ player, field }: { player: ScoringDist; field: ScoringDis
   const fp = distPct(field);
   const rows = [
     { key: "eagles", label: "EAGLES+", pp: pp.eagles, fp: fp.eagles, n: player.eagles, color: "var(--score-eagle)" },
-    { key: "birdies", label: "BIRDIES", pp: pp.birdies, fp: fp.birdies, n: player.birdies, color: "var(--medal-gold)" },
-    { key: "pars", label: "PARS", pp: pp.pars, fp: fp.pars, n: player.pars, color: "var(--color-good-dark)" },
-    { key: "bogeys", label: "BOGEYS", pp: pp.bogeys, fp: fp.bogeys, n: player.bogeys, color: "var(--color-warn)" },
-    { key: "dbPlus", label: "DUPLO+", pp: pp.dbPlus, fp: fp.dbPlus, n: player.dbPlus, color: "var(--color-bad-dark)" },
+    { key: "birdies", label: "BIRDIES", pp: pp.birdies, fp: fp.birdies, n: player.birdies, color: "var(--score-birdie)" },
+    { key: "pars", label: "PARS", pp: pp.pars, fp: fp.pars, n: player.pars, color: "var(--score-par-seg)" },
+    { key: "bogeys", label: "BOGEYS", pp: pp.bogeys, fp: fp.bogeys, n: player.bogeys, color: "var(--score-bogey-border)" },
+    { key: "dbPlus", label: "DUPLO+", pp: pp.dbPlus, fp: fp.dbPlus, n: player.dbPlus, color: "var(--score-double)" },
   ];
   return (
     <div>
@@ -340,20 +332,20 @@ function RoundBar({ entry }: { entry: { tornLabel: string; round: number; gross:
   const p = distPct(entry.dist);
   const segs = [
     { k: "eagles", pct: p.eagles, color: "var(--score-eagle)" },
-    { k: "birdies", pct: p.birdies, color: "var(--medal-gold)" },
-    { k: "pars", pct: p.pars, color: "var(--color-good-light)" },
-    { k: "bogeys", pct: p.bogeys, color: "var(--color-warn)" },
-    { k: "dbPlus", pct: p.dbPlus, color: "var(--color-bad-dark)" },
+    { k: "birdies", pct: p.birdies, color: "var(--score-birdie)" },
+    { k: "pars", pct: p.pars, color: "var(--score-par-seg)" },
+    { k: "bogeys", pct: p.bogeys, color: "var(--score-bogey-border)" },
+    { k: "dbPlus", pct: p.dbPlus, color: "var(--score-double)" },
   ].filter((s) => s.pct > 0);
-  const tpColor = entry.toPar == null ? "var(--text-3)" : entry.toPar < 0 ? "var(--color-good-dark)" : entry.toPar > 0 ? "var(--color-warn)" : "var(--text-2)";
+  const tpCol = entry.toPar == null ? "var(--text-3)" : tpColor(entry.toPar) ?? "var(--text-2)";
   return (
     <div style={{ display: "grid", gridTemplateColumns: "minmax(140px, 1.5fr) 90px 1fr 90px", alignItems: "center", gap: 10, fontSize: "var(--fs-12)" }}>
       <div style={{ fontWeight: 600, color: "var(--text)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
         {entry.tornLabel} <span style={{ color: "var(--text-3)", fontWeight: 400 }}>· R{entry.round}</span>
       </div>
-      <div style={{ textAlign: "center", fontWeight: 700, color: tpColor, fontVariantNumeric: "tabular-nums" }}>
+      <div style={{ textAlign: "center", fontWeight: 700, color: tpCol, fontVariantNumeric: "tabular-nums" }}>
         {entry.gross != null ? `${entry.gross}` : "—"}
-        {entry.toPar != null && <span style={{ fontSize: "var(--fs-10)", marginLeft: 4 }}>({entry.toPar > 0 ? `+${entry.toPar}` : entry.toPar})</span>}
+        {entry.toPar != null && <span style={{ fontSize: "var(--fs-10)", marginLeft: 4 }}>({fmtToPar(entry.toPar)})</span>}
       </div>
       <div style={{ display: "flex", height: 14, borderRadius: 3, overflow: "hidden", gap: 1, background: "var(--bg-muted)" }}>
         {segs.map((s) => (
@@ -381,7 +373,7 @@ function NineSplitPane({ cards, fieldCards }: { cards: DerivedCard[]; fieldCards
       <div style={{ padding: "14px 16px", border: "1px solid var(--border-light)", borderRadius: 6, background: "var(--bg)" }}>
         <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", letterSpacing: 0.6, fontWeight: 700, marginBottom: 4, textTransform: "uppercase" }}>{label}</div>
         <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 10 }}>
-          <span style={{ fontSize: "var(--fs-28)", fontWeight: 800, color: toPar == null ? "var(--text-3)" : toPar < 0 ? "var(--color-good-dark)" : toPar > 0 ? "var(--color-warn)" : "var(--text)", fontVariantNumeric: "tabular-nums" }}>
+          <span style={{ fontSize: "var(--fs-28)", fontWeight: 800, color: toPar == null ? "var(--text-3)" : tpColor(toPar) ?? "var(--text)", fontVariantNumeric: "tabular-nums" }}>
             {toPar != null ? (toPar >= 0 ? `+${toPar.toFixed(1)}` : toPar.toFixed(1)) : "—"}
           </span>
           <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>
@@ -393,7 +385,7 @@ function NineSplitPane({ cards, fieldCards }: { cards: DerivedCard[]; fieldCards
           {(["eagles", "birdies", "pars", "bogeys", "dbPlus"] as const).map((k) => (
             <div key={k} style={{
               flex: (pp as Record<string, number>)[k],
-              background: k === "eagles" ? "var(--score-eagle)" : k === "birdies" ? "var(--medal-gold)" : k === "pars" ? "var(--color-good-light)" : k === "bogeys" ? "var(--color-warn)" : "var(--color-bad-dark)",
+              background: k === "eagles" ? "var(--score-eagle)" : k === "birdies" ? "var(--score-birdie)" : k === "pars" ? "var(--score-par-seg)" : k === "bogeys" ? "var(--score-bogey-border)" : "var(--score-double)",
             }} title={`${k}: ${(pp as Record<string, number>)[k].toFixed(0)}%`} />
           ))}
         </div>

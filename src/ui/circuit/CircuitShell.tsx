@@ -34,6 +34,8 @@ import { isManuelByName } from "../../constants/manuel";
 import { tournamentAces } from "../../utils/aces";
 import SortableHdr from "../SortableHdr";
 import { useSort } from "../../hooks/useSort";
+import EmptyState from "../EmptyState";
+import { normName } from "../../utils/normName";
 import type { Tournament as FPGTournament, Player as FPGPlayer } from "../../data/fpgTypes";
 import type {
   CircuitEntry, CircuitConfig, CircuitDivision, CircuitToggle,
@@ -41,13 +43,6 @@ import type {
 } from "./types";
 
 // ── Helpers ─────────────────────────────────────────────────────────── //
-
-/** Normaliza nome para indexação (lowercase, sem diacríticos, espaços únicos). */
-function normName(s: string): string {
-  return (s || "")
-    .normalize("NFD").replace(/[̀-ͯ]/g, "")
-    .toLowerCase().replace(/\s+/g, " ").trim();
-}
 
 /** Português? via flag do adaptador (_isPortuguese) ou nome do Manuel. */
 function isPt(p: FPGPlayer): boolean {
@@ -607,7 +602,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
             {curInfoItem ? (
               curInfoItem.render()
             ) : !cur ? (
-              <div className="center-msg muted">Sem torneios para mostrar.</div>
+              <EmptyState message="Sem torneios para mostrar." />
             ) : divsLoading ? (
               <LoadingState message={config.loadingMessage ?? "A carregar dados…"} />
             ) : curDiv ? (
@@ -750,7 +745,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
                 )}
               </>
             ) : (
-              <div className="center-msg muted">Sem dados para este torneio.</div>
+              <EmptyState message="Sem dados para este torneio." />
             )}
           </div>
         </div>

@@ -3,8 +3,10 @@
  */
 import React, { useState } from "react";
 import { fmtToPar } from "../utils/format";
-import { meanArr } from "../utils/mathUtils";
 import { scClass } from "../utils/scoreDisplay";
+import { flag } from "../utils/flagUtils";
+import { useSort } from "../hooks/useSort";
+import SortableHdr from "./SortableHdr";
 import EvoBadge from "./EvoBadge";
 import TabRow from "./TabRow";
 import { RoundPill } from "./PillBadge";
@@ -21,7 +23,8 @@ export interface ContestData {
 
 export interface ContestPlayer {
   n: string; // name
-  fl: string; // flag
+  co: string; // country (ISO-2 / EN / PT name)
+  fl?: string; // flag emoji (legacy; render derives from `co` via flag())
   isM?: boolean; // is Manuel
   p: number | string; // position
   t: number; // total gross
@@ -54,6 +57,9 @@ export default function ContestLeaderboard({
   evo,
 }: ContestLeaderboardProps) {
   const [roundTab, setRoundTab] = useState<number>(0); // 0=accumulated, 1,2,3=rounds
+  // Accumulated-view sort: "pos" (default) keeps the position order; "n"/"tot"/"tp"
+  // plus per-round keys ("r0", "r1", …) sort by the respective column.
+  const { sortKey, sortDir, toggleSort } = useSort<string>("pos");
   const par = contest.parArr;
   const parF = par.slice(0, 9).reduce((a, b) => a + b, 0);
   const parB = par.slice(9).reduce((a, b) => a + b, 0);
@@ -78,6 +84,30 @@ export default function ContestLeaderboard({
               (a.rd[roundTab - 1]?.g ?? 999) - (b.rd[roundTab - 1]?.g ?? 999)
           )
       : players;
+
+  // Accumulated view: sortable by header (default "pos" preserves position order).
+  const accSorted = (() => {
+    const dir = sortDir === "asc" ? 1 : -1;
+    const val = (p: ContestPlayer, idx: number): number | string => {
+      if (sortKey === "pos") return idx; // preserve original (position) order
+      if (sortKey === "n") return p.n.toLowerCase();
+      if (sortKey === "tot") return p.t;
+      if (sortKey === "tp") return p.tp;
+      if (sortKey.startsWith("r")) return p.rd[Number(sortKey.slice(1))]?.g ?? Infinity;
+      return idx;
+    };
+    return players
+      .map((p, idx) => ({ p, idx }))
+      .sort((a, b) => {
+        const va = val(a.p, a.idx);
+        const vb = val(b.p, b.idx);
+        if (typeof va === "string" || typeof vb === "string") {
+          return String(va).localeCompare(String(vb)) * dir || a.idx - b.idx;
+        }
+        return (va - vb) * dir || a.idx - b.idx;
+      })
+      .map(x => x.p);
+  })();
 
   const hasScores = (ri: number) =>
     players.some(p => p.rd[ri]?.s?.length > 0);
@@ -125,25 +155,32 @@ export default function ContestLeaderboard({
             <table className="dtable-lg">
               <thead>
                 <tr>
-                  <th className="col-w30">#</th>
-                  <th className="ta-left" style={{ minWidth: 120 }}>
+                  <SortableHdr k="pos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="col-w30">
+                    #
+                  </SortableHdr>
+                  <SortableHdr k="n" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="ta-left" style={{ minWidth: 120 }}>
                     Jogador
-                  </th>
+                  </SortableHdr>
                   {Array.from({ length: nR }, (_, i) => (
-                    <th key={i} className="r w-40">
+                    <SortableHdr key={i} k={`r${i}`} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r w-40">
                       R{i + 1}
-                    </th>
+                    </SortableHdr>
                   ))}
-                  <th className="r col-w50 fw-700">Tot</th>
-                  <th className="r w-40">±Par</th>
+                  <SortableHdr k="tot" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r col-w50 fw-700">
+                    Tot
+                  </SortableHdr>
+                  <SortableHdr k="tp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r w-40">
+                    ±Par
+                  </SortableHdr>
                 </tr>
               </thead>
               <tbody>
-                {sortedForRound.map((p, idx) => {
+                {accSorted.map((p, idx) => {
                   const isM = p.isM;
                   const isWD = typeof p.p !== "number";
-                  const prevP = idx > 0 ? sortedForRound[idx - 1].p : null;
-                  const showPos = p.p !== prevP;
+                  // Only dedupe repeated position labels when rows are in position order.
+                  const prevP = idx > 0 ? accSorted[idx - 1].p : null;
+                  const showPos = sortKey !== "pos" || p.p !== prevP;
                   return (
                     <tr
                       key={idx}
@@ -164,7 +201,7 @@ export default function ContestLeaderboard({
                         {showPos ? (isWD ? "WD" : p.p) : ""}
                       </td>
                       <td style={{ whiteSpace: "nowrap" }}>
-                        {p.fl}{" "}
+                        {flag(p.co)}{" "}
                         <span className={isM ? "fw-800" : "fw-600"}>
                           {p.n}
                         </span>
@@ -281,7 +318,7 @@ export default function ContestLeaderboard({
                             className="row-label fw-700"
                             style={{ whiteSpace: "nowrap" }}
                           >
-                            {p.fl} {p.n}
+                            {flag(p.co)} {p.n}
                           </td>
                           <td className="col-total">{rd.g}</td>
                           <td className="fw-700" style={{ color: tpColor(tp) }}>
