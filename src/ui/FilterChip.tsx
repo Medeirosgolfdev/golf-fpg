@@ -27,7 +27,7 @@ export default function FilterChip({ active, onClick, color, children }: FilterC
       style={{
         fontSize: "var(--fs-10)",
         padding: "2px 8px",
-        borderRadius: "var(--radius)",
+        borderRadius: "var(--radius-pill)",
         border: `1px solid ${active ? accent : "var(--border)"}`,
         background: active ? accent : "var(--bg-hover)",
         color: active ? "#fff" : "var(--text-muted)",

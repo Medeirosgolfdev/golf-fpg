@@ -227,7 +227,7 @@ export function AllRoundsScorecardLB({
             className="fs-10 c-muted"
             style={{
               padding: "2px 8px",
-              borderRadius: "var(--radius)",
+              borderRadius: "var(--radius-pill)",
               border: "1px solid var(--border)",
               background: "var(--bg-hover)",
               cursor: "pointer",

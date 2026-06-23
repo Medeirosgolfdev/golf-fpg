@@ -996,7 +996,7 @@ function UpcomingSchedule({ series }: { series: Sub12SeriesTab }) {
           return (
             <div key={i} style={{
               display: "inline-flex", alignItems: "center", gap: 4,
-              padding: "3px 8px", borderRadius: "var(--radius)", fontSize: "var(--fs-10)",
+              padding: "3px 8px", borderRadius: "var(--radius-pill)", fontSize: "var(--fs-10)",
               fontWeight: isNext ? 800 : isPast ? 400 : 600,
               background: isNext ? col + "18" : isPast ? "transparent" : "var(--bg-card)",
               color: isPast ? "var(--text-muted)" : isNext ? col : "var(--text-2)",

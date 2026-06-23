@@ -456,7 +456,7 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
  display: inline-flex; align-items: center; justify-content: center;
  padding: 2px 8px;
  font-size: var(--fs-11); font-weight: 600; line-height: 1.4;
- border-radius: var(--radius);
+ border-radius: var(--radius-pill);
  border: 1.5px solid transparent;
  white-space: nowrap;
  vertical-align: middle;
@@ -3256,7 +3256,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .tourn-tab {
  padding: 8px 18px;
  border: 1px solid var(--border-light);
- border-radius: var(--radius);
+ border-radius: var(--radius-pill);
  background: var(--bg-card);
  color: var(--text-3);
  font-size: var(--fs-13);
@@ -3702,7 +3702,7 @@ table td.lb-col-divider {
 .btn-pill {
   padding: 4px 10px;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-pill);
   background: var(--bg-card);
   color: var(--text);
   cursor: pointer;

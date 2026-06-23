@@ -338,7 +338,7 @@
   --radius:      6px;
   --radius-lg:   10px;
   --radius-xl:   12px;
-  --radius-pill: 20px;
+  --radius-pill: 3px;   /* raio de TODAS as pills/chips/filtros — quadrado. Botão único: muda só aqui. */
 
   --shadow-sm: 0 1px 2px rgba(30, 50, 20, 0.06);
   --shadow:    0 2px 8px rgba(30, 50, 20, 0.08);

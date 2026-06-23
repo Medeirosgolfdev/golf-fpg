@@ -963,8 +963,8 @@ function ScoutContent({ data, tournament, onSelect, tournaments, currentTid, onT
           {tDate && <span style={{ fontSize: "var(--fs-12)", color: "var(--text-3)" }}>{ICON_DOT} {fmtDate(tDate)}</span>}
           {tournament.course && <span style={{ fontSize: "var(--fs-12)", color: "var(--text-3)" }}>{ICON_DOT} {tournament.course}</span>}
           {isFuture
-            ? <Pill style={{ fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: "var(--radius)", background: "var(--bg-info-subtle, var(--bg-info))", color: "var(--color-info-dark, var(--color-navy))" }}>FUTURO</Pill>
-            : <Pill style={{ fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: "var(--radius)", background: "var(--bg-muted)", color: "var(--text-2)" }}>HISTORICO</Pill>
+            ? <Pill style={{ fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: "var(--radius-pill)", background: "var(--bg-info-subtle, var(--bg-info))", color: "var(--color-info-dark, var(--color-navy))" }}>FUTURO</Pill>
+            : <Pill style={{ fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: "var(--radius-pill)", background: "var(--bg-muted)", color: "var(--text-2)" }}>HISTORICO</Pill>
           }
           {isFieldOnlySource && (
             <span title="Inscritos do uskids-field.json"
@@ -1105,7 +1105,7 @@ function FlightHeader({ flight, isManuelFlight, count }: {
         <span style={{ fontSize: "var(--fs-12)", color: "var(--text-3)" }}>{ICON_DOT} {flight.fieldSize} total</span>
       )}
       {isManuelFlight && (
-        <Pill style={{ fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: "var(--radius)", background: "var(--bg-success-subtle, #ecfdf5)", color: "var(--color-good-dark)" }}>
+        <Pill style={{ fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: "var(--radius-pill)", background: "var(--bg-success-subtle, #ecfdf5)", color: "var(--color-good-dark)" }}>
           {ICON_SWORDS} Manuel
         </Pill>
       )}

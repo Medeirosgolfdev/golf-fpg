@@ -162,7 +162,7 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
                 style={{
                   fontSize: "var(--fs-11)",
                   padding: "2px 9px",
-                  borderRadius: "var(--radius)",
+                  borderRadius: "var(--radius-pill)",
                   border: `1px solid ${active ? "var(--color-info-dark)" : "var(--border-light)"}`,
                   background: active ? "var(--color-info-dark)" : "var(--bg)",
                   color: active ? "var(--bg)" : "var(--text-2)",
@@ -181,7 +181,7 @@ export default function ResultsTimeline({ data, junior, filterTids }: Props) {
               style={{
                 fontSize: "var(--fs-11)",
                 padding: "2px 9px",
-                borderRadius: "var(--radius)",
+                borderRadius: "var(--radius-pill)",
                 border: "1px solid var(--color-danger-dark)",
                 background: "var(--bg)",
                 color: "var(--color-danger-dark)",

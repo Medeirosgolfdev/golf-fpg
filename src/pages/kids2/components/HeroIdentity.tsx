@@ -130,7 +130,7 @@ export default function HeroIdentity({ data, junior }: Props) {
                 color: "var(--color-good-dark)",
                 fontSize: "var(--fs-11)",
                 padding: "3px 9px",
-                borderRadius: "var(--radius)",
+                borderRadius: "var(--radius-pill)",
                 fontWeight: 700,
                 letterSpacing: 0.4,
                 textTransform: "uppercase",
@@ -146,7 +146,7 @@ export default function HeroIdentity({ data, junior }: Props) {
                   color: c.fg,
                   fontSize: "var(--fs-12)",
                   padding: "3px 10px",
-                  borderRadius: "var(--radius)",
+                  borderRadius: "var(--radius-pill)",
                   fontWeight: 700,
                   border: `1px solid ${c.fg}`,
                   letterSpacing: 0.2,
@@ -163,7 +163,7 @@ export default function HeroIdentity({ data, junior }: Props) {
               <>
                 <span style={{ opacity: 0.4 }}>·</span>
                 <span title="Nacionalidade distinta do país onde reside/joga" style={{
-                  fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: "var(--radius)",
+                  fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: "var(--radius-pill)",
                   background: "var(--bg-muted)", color: "var(--text-2)", fontWeight: 600,
                   border: "1px solid var(--border-light)",
                 }}>
@@ -184,7 +184,7 @@ export default function HeroIdentity({ data, junior }: Props) {
                 <span style={{
                   fontSize: "var(--fs-11)",
                   padding: "2px 8px",
-                  borderRadius: "var(--radius)",
+                  borderRadius: "var(--radius-pill)",
                   background: "var(--bg-muted)",
                   color: "var(--text-2)",
                   fontWeight: 600,
@@ -253,7 +253,7 @@ export default function HeroIdentity({ data, junior }: Props) {
               {topWins.map((w, i) => (
                 <span key={i} title={`${w.fmtDate} · ${w.flightLabel}${w.parts ? " · " + w.parts : ""}`} style={{
                   // Discreto: sem fundo, só border subtil + estrela dourada pequena.
-                  fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: "var(--radius)",
+                  fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: "var(--radius-pill)",
                   background: "var(--bg)",
                   border: "1px solid var(--border-light)",
                   color: "var(--text-2)", fontWeight: 500,
@@ -329,7 +329,7 @@ export default function HeroIdentity({ data, junior }: Props) {
           {hcps.map((h, i) => (
             <span key={i} style={{
               background: "var(--bg-muted)",
-              fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: "var(--radius)",
+              fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: "var(--radius-pill)",
               fontWeight: 600, color: "var(--text-2)",
               border: "1px solid var(--border-light)",
               display: "inline-flex", alignItems: "center", gap: 4,
@@ -343,7 +343,7 @@ export default function HeroIdentity({ data, junior }: Props) {
           {hcps.length === 0 && junior.hcpHistory && junior.hcpHistory.length >= 2 && (
             <span style={{
               background: "var(--bg-muted)",
-              fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: "var(--radius)",
+              fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: "var(--radius-pill)",
               fontWeight: 600, color: "var(--text-2)",
               border: "1px solid var(--border-light)",
               display: "inline-flex", alignItems: "center", gap: 4,
@@ -355,7 +355,7 @@ export default function HeroIdentity({ data, junior }: Props) {
           {totalRounds > 0 && (
             <span title="Total de rondas jogadas em todas as fontes (inclui 9H)" style={{
               background: "var(--bg-muted)",
-              fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: "var(--radius)",
+              fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: "var(--radius-pill)",
               fontWeight: 600, color: "var(--text-2)",
               border: "1px solid var(--border-light)",
             }}>
@@ -473,7 +473,7 @@ function EscPill({ label, accent, strong }: { label: string; accent?: boolean; s
       <span style={{
         background: "var(--color-info-dark, var(--color-navy))",
         color: "var(--bg)",
-        fontSize: "var(--fs-12)", padding: "3px 11px", borderRadius: "var(--radius)",
+        fontSize: "var(--fs-12)", padding: "3px 11px", borderRadius: "var(--radius-pill)",
         fontWeight: 700,
         letterSpacing: 0.3,
       }}>{label}</span>
@@ -483,7 +483,7 @@ function EscPill({ label, accent, strong }: { label: string; accent?: boolean; s
     <span style={{
       background: "var(--bg-info-subtle, var(--bg-info))",
       color: "var(--color-info-dark, var(--color-navy))",
-      fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: "var(--radius)",
+      fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: "var(--radius-pill)",
       fontWeight: 600,
       border: "1px solid var(--color-info-dark, var(--color-navy))",
     }}>{label}</span>
@@ -532,7 +532,7 @@ function DobPill({ info, isManuel }: { info: DobInfo; isManuel: boolean }) {
   return (
     <span title={title} style={{
       ...styles[info.state],
-      fontSize: "var(--fs-11)", padding: "2px 9px", borderRadius: "var(--radius)",
+      fontSize: "var(--fs-11)", padding: "2px 9px", borderRadius: "var(--radius-pill)",
       fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 5,
     }}>
       🎂 {info.dobLabel}
