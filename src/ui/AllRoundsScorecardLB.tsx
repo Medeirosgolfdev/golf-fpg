@@ -136,34 +136,17 @@ export function AllRoundsScorecardLB({
           {playedRounds}R · Par {parTot}
         </span>
         {/* Toggle modo */}
-        <span
-          style={{
-            display: "flex",
-            gap: 2,
-            marginLeft: 4,
-            border: "1px solid var(--border)",
-            borderRadius: 8,
-            overflow: "hidden",
-          }}
-        >
+        <div className="segmented-toggle" style={{ marginLeft: 4 }}>
           {([true, false] as const).map((g) => (
             <button
               key={String(g)}
               onClick={() => setGroupMode(g)}
-              className="fs-10"
-              style={{
-                padding: "2px 9px",
-                border: "none",
-                cursor: "pointer",
-                background: groupMode === g ? "var(--accent)" : "transparent",
-                color: groupMode === g ? "#fff" : "var(--text-muted)",
-                fontWeight: groupMode === g ? 700 : 400,
-              }}
+              className={"seg-btn fs-10" + (groupMode === g ? " active" : "")}
             >
               {g ? "Agrupado" : "Independente"}
             </button>
           ))}
-        </span>
+        </div>
         <button onClick={() => setShowSC((v) => !v)} className="btn ml-auto">
           {showSC ? "Ocultar scorecard" : "Ver scorecard"}
         </button>
@@ -244,7 +227,7 @@ export function AllRoundsScorecardLB({
             className="fs-10 c-muted"
             style={{
               padding: "2px 8px",
-              borderRadius: 20,
+              borderRadius: "var(--radius-pill)",
               border: "1px solid var(--border)",
               background: "var(--bg-hover)",
               cursor: "pointer",

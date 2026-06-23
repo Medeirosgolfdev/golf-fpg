@@ -19,6 +19,7 @@ import type { MelhoriasJson } from "./data/melhoriasTypes";
 import { AppContext } from "./context/AppContext";
 import NavBar from "./ui/NavBar";
 import PasswordGate from "./ui/PasswordGate";
+import LoadingState from "./ui/LoadingState";
 
 /* ── Cabeçalho mínimo — usado nos estados loading/error/gate ── */
 function MinimalHeader() {
@@ -351,7 +352,7 @@ export default function App() {
       {status.kind === "loading" && (
         <>
           <MinimalHeader />
-          <main className="content"><div className="center-msg">A carregar…</div></main>
+          <main className="content"><LoadingState message="A carregar…" /></main>
         </>
       )}
 
@@ -382,7 +383,7 @@ export default function App() {
         <AppContext.Provider value={ctxValue}>
           <NavBar />
           <main className="content">
-            <Suspense fallback={<div className="center-msg">A carregar…</div>}>
+            <Suspense fallback={<LoadingState message="A carregar…" />}>
               <Routes>
                 <Route path="/campos/:courseKey?" element={<CamposPage />} />
                 <Route path="/jogadores/:fed" element={<JogadoresPage />} />

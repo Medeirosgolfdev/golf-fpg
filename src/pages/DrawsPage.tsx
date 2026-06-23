@@ -26,7 +26,9 @@ import { useSort } from "../hooks/useSort";
 import SortableHdr from "../ui/SortableHdr";
 import { Toolbar, ToolbarTitle, ToolbarMeta } from "../ui/Toolbar";
 import LoadingState from "../ui/LoadingState";
+import EmptyState from "../ui/EmptyState";
 import KpiCard from "../ui/KpiCard";
+import { tpColor } from "../ui/tournamentPrimitives";
 import { EscPill, PILL_ROUND } from "../ui/PillBadge";
 import { FLAG } from "../utils/flagUtils";
 import { norm, escalaoAtDate, displayName } from "../utils/format";
@@ -144,13 +146,6 @@ function fmtScore(s: Score): string {
   if (!s) return "—";
   const tp = s.toPar != null ? ` (${fmtToPar(s.toPar)})` : "";
   return `${s.gross}${tp}`;
-}
-
-function tpColor(v: number | null | undefined): string {
-  if (v == null) return "var(--text-muted, #888)";
-  if (v < 0) return "var(--score-birdie, #dc2626)";
-  if (v === 0) return "var(--text, #111)";
-  return "var(--text-muted, #555)";
 }
 
 function fmtDateShort(iso: string | null): string {
@@ -810,7 +805,7 @@ export default function DrawsPage() {
         )}
 
         {data && linhasOrdenadas.length === 0 && (
-          <div className="muted">Sem dados para {tab}.</div>
+          <EmptyState message="Sem dados para este torneio." />
         )}
 
         {/* Aviso de rondas sem draw scrapado (só FPG) */}

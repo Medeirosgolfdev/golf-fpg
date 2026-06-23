@@ -118,7 +118,7 @@ export default function ScorecardModal({ open, onClose, tournament, flight, resu
       onClick={onClose}
       style={{
         position: "fixed", inset: 0,
-        background: "rgba(0,0,0,0.5)",
+        background: "var(--overlay-black-50)",
         zIndex: "var(--z-overlay)",
         display: "flex", alignItems: "center", justifyContent: "center",
         padding: 20,
