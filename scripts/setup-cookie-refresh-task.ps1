@@ -4,7 +4,7 @@
 #  setup-cookie-refresh-task.ps1
 #  -----------------------------
 #  Regista uma Windows Scheduled Task "GolfFPG-CookieRefresh" que corre
-#  scripts\run-cookie-refresh.bat todos os dias às 10:00.
+#  scripts\run-cookie-refresh.bat todos os dias às 12:00.
 #
 #  USO (PowerShell como Administrador, em C:\golf-fpg):
 #      .\scripts\setup-cookie-refresh-task.ps1
@@ -78,13 +78,13 @@ $Action   = New-ScheduledTaskAction `
     -WorkingDirectory $RepoPath
 
 # Dois triggers:
-#   1. Daily as 10:00 — execucao normal
+#   1. Daily as 12:00 — execucao normal
 #   2. AtLogOn do user — apanha casos em que o PC estava off/hibernate as
-#      10h e liga-se depois (quando o user faz login, dispara 3 min depois
+#      12h e liga-se depois (quando o user faz login, dispara 3 min depois
 #      — tempo para rede estar pronta).
 #      Usar AtLogOn (nao AtStartup) porque LogonType=Interactive precisa
 #      de sessao activa, que so existe depois do user logar.
-$TriggerDaily = New-ScheduledTaskTrigger -Daily -At 10:00AM
+$TriggerDaily = New-ScheduledTaskTrigger -Daily -At 12:00PM
 $TriggerLogon = New-ScheduledTaskTrigger -AtLogOn -User $env:USERNAME
 $TriggerLogon.Delay = "PT3M"   # ISO-8601: 3 minutos apos login
 
@@ -105,7 +105,7 @@ $Settings = New-ScheduledTaskSettingsSet `
 $Settings.MultipleInstances = "IgnoreNew"
 
 # LogonType=Interactive: corre quando o user esta logado (ou auto-logado).
-# Combinado com auto-login via netplwiz, o PC arranca as 10h, faz login
+# Combinado com auto-login via netplwiz, o PC arranca as 12h, faz login
 # automatico, e 3 min depois o trigger AtLogOn dispara a task.
 # Isto evita problemas com Windows Hello passwordless / LOGON32_LOGON_BATCH.
 $Principal = New-ScheduledTaskPrincipal `
@@ -119,14 +119,14 @@ Register-ScheduledTask `
     -Trigger @($TriggerDaily, $TriggerLogon) `
     -Settings $Settings `
     -Principal $Principal `
-    -Description "Captura cookies frescos via Chrome 90 + Playwright. Corre diariamente as 10:00 + 3 min apos logon do user. Combinar com auto-login para autonomia completa." | Out-Null
+    -Description "Captura cookies frescos via Chrome 90 + Playwright. Corre diariamente as 12:00 + 3 min apos logon do user. Combinar com auto-login para autonomia completa." | Out-Null
 
 Write-Host "Task registada com LogonType=Interactive + AtLogOn trigger" -ForegroundColor Green
 
 Write-Host ""
 Write-Host "=== TAREFA CRIADA COM SUCESSO ===" -ForegroundColor Cyan
 Write-Host "  Nome:    $TaskName"
-Write-Host "  Hora:    Todos os dias as 10:00"
+Write-Host "  Hora:    Todos os dias as 12:00"
 Write-Host "  Script:  $BatFile"
 Write-Host "  Logs:    $LogFile"
 Write-Host ""
@@ -161,7 +161,7 @@ Write-Host "NOTA: -WakeToRun so acorda de SLEEP. Se o PC estiver DESLIGADO" -For
 Write-Host "(shut down), precisas de configurar 'RTC alarm' na BIOS/UEFI:" -ForegroundColor Yellow
 Write-Host "  - Entrar no setup BIOS/UEFI (tipicamente F2/Del no boot)"
 Write-Host "  - Procurar 'Power Management' > 'Wake on RTC' ou 'RTC Alarm'"
-Write-Host "  - Definir hora (ex: 09:55) para o PC ligar 5 min antes da task"
+Write-Host "  - Definir hora (ex: 11:55) para o PC ligar 5 min antes da task"
 Write-Host "  - Guardar e reiniciar"
 Write-Host ""
 Write-Host "Alternativa mais simples: configurar o plano de energia para o PC" -ForegroundColor Green

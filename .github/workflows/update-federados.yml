@@ -4,8 +4,13 @@ name: Actualizar Federados
 # via scripts/scrape-federados-node.js (Node puro, sem browser).
 #
 # Corre:
-#  - Automaticamente à Quarta às 05:00 UTC (1×/semana, off-peak, longe dos
-#    scrapers de fim-de-semana para evitar non-fast-forward no git push)
+#  - PRIMÁRIO (cascata): disparado por scripts/run-cookie-refresh.bat logo
+#    após o refresh diário de cookies às Quartas (gh workflow run). Garante
+#    que a Action corre com cookies de segundos — nunca falha por timing.
+#  - FALLBACK: cron à Quarta às 20:00 UTC, para o caso de o PC estar
+#    desligado de manhã e só refrescar os cookies à tarde. Corre DEPOIS da
+#    janela de refresh (manhã/início de tarde), nunca antes. Se a cascata já
+#    correu nesse dia, este run só confirma "sem alterações" (exit 2, no-op).
 #  - A pedido (botão "Run workflow" no GitHub)
 #
 # Útil para apanhar: novas fotos de jogadores (paths antigos passam a 404),
@@ -32,8 +37,12 @@ on:
         options: ['false', 'true']
 
   schedule:
-    # Minuto Hora Dia Mês DiaSemana (UTC) — 05:00 UTC à Quarta (3)
-    - cron: '0 5 * * 3'
+    # Minuto Hora Dia Mês DiaSemana (UTC) — 20:00 UTC à Quarta (3).
+    # FALLBACK tardio: corre depois da janela do refresh diário de cookies
+    # (que acontece de manhã/início de tarde local). O trigger primário é a
+    # cascata em scripts/run-cookie-refresh.bat. NÃO voltar a pôr de manhã
+    # (05:00 UTC corria ANTES do refresh → cookies de ~46h → HTTP 500).
+    - cron: '0 20 * * 3'
 
 permissions:
   contents: write

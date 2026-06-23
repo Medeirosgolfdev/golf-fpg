@@ -3,7 +3,7 @@ REM ═════════════════════════�
 REM  run-cookie-refresh.bat
 REM  ----------------------
 REM  Wrapper que corre o refresh-all-cookies.js + validacoes + (opcional)
-REM  push para GitHub Secrets. Chamado pela Scheduled Task das 10:00.
+REM  push para GitHub Secrets. Chamado pela Scheduled Task das 12:00.
 REM
 REM  Logs em: logs\cookie-refresh.log (UTF-8)
 REM
@@ -30,7 +30,7 @@ echo [%date% %time%] Cookie refresh starting >> "%LOGFILE%"
 echo ============================================================ >> "%LOGFILE%"
 
 REM ── Dedup: se cookies foram refrescados nas ultimas 4 horas, saltar ──
-REM Protege contra double-run (Daily 10:00 + AtStartup) quando o PC
+REM Protege contra double-run (Daily 12:00 + AtStartup) quando o PC
 REM reinicia logo apos uma execucao.
 REM Bypass com variavel de ambiente FORCE=1 (util para testes manuais):
 REM   set FORCE=1 && .\scripts\run-cookie-refresh.bat
@@ -126,6 +126,26 @@ if exist "%TMPFILE%" (
 ) else (
     echo      nao consegui ler api\.fpg-admissions-cookies.json - skip >> "%LOGFILE%"
 )
+
+REM ── PASSO 3b: CASCATA — disparar update-federados as Quartas, com cookies frescos ──
+REM Em vez de um cron fixo (que corria ANTES do refresh diario e falhava com
+REM cookies de ~46h), disparamos a Action AQUI, logo apos os Secrets terem
+REM sido actualizados e validados. Garante que a Action corre sempre com
+REM cookies de segundos. So a Quarta (DayOfWeek=3) para manter a cadencia
+REM semanal documentada; o cron tardio em update-federados.yml e so fallback.
+echo    - cascata: update-federados ^(so Quarta, com cookies validos^)... >> "%LOGFILE%"
+if not "!DG_EXIT!" == "0" (
+    echo      scoring.datagolf.pt invalido ^(DG_EXIT=!DG_EXIT!^) - skip trigger federados >> "%LOGFILE%"
+    goto :skip_federados
+)
+for /f %%d in ('powershell -NoProfile -Command "[int](Get-Date).DayOfWeek"') do set DOW=%%d
+if not "!DOW!" == "3" (
+    echo      hoje nao e Quarta ^(DayOfWeek=!DOW!^) - skip trigger federados >> "%LOGFILE%"
+    goto :skip_federados
+)
+gh workflow run update-federados.yml >> "%LOGFILE%" 2>&1
+echo      gh workflow run update-federados exit=!errorlevel! >> "%LOGFILE%"
+:skip_federados
 
 :end
 echo [%date% %time%] Fim. REFRESH_EXIT=!REFRESH_EXIT! FPG_EXIT=!FPG_EXIT! DG_EXIT=!DG_EXIT! >> "%LOGFILE%"
