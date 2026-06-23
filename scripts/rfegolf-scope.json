@@ -1,28 +1,30 @@
 {
-  "generatedAt": "2026-05-08T16:31:09.604Z",
-  "range": "12700-16250",
+  "generatedAt": "2026-06-23T22:30:37.683Z",
+  "range": "15500-17800",
+  "merged": true,
   "minYear": 2021,
-  "totalProbed": 3551,
-  "totalExisting": 2486,
-  "totalJuvenil": 407,
+  "totalProbed": 2301,
+  "totalExisting": 573,
+  "totalJuvenil": 427,
   "byYear": {
     "2021": 59,
     "2022": 57,
     "2023": 57,
     "2024": 61,
-    "2025": 47,
-    "2026": 40
+    "2025": 56,
+    "2026": 50,
+    "2027": 1
   },
   "byCategory": {
-    "Benjamín": 21,
-    "Juvenil": 143,
-    "Infantil": 56,
+    "Benjamín": 23,
+    "Juvenil": 146,
+    "Infantil": 60,
     "Junior": 32,
-    "Sub-18": 65,
+    "Sub-18": 68,
     "Sub-25": 2,
     "Cadete": 16,
-    "Sub-16": 42,
-    "Alevín": 27,
+    "Sub-16": 47,
+    "Alevín": 30,
     "Sub-21": 1,
     "Sub-14": 2
   },
@@ -3286,6 +3288,78 @@
       "juvenil": true
     },
     {
+      "compId": 15950,
+      "exists": true,
+      "name": "Campeonato de España Sub 16 Masculino y Femenino 2025",
+      "year": 2025,
+      "category": "Sub-16",
+      "sex": "M",
+      "juvenil": true
+    },
+    {
+      "compId": 15953,
+      "exists": true,
+      "name": "Campeonato de España Benjamín Femenino 2025",
+      "year": 2025,
+      "category": "Benjamín",
+      "sex": "F",
+      "juvenil": true
+    },
+    {
+      "compId": 15954,
+      "exists": true,
+      "name": "Campeonato de España Benjamín Masculino 2025",
+      "year": 2025,
+      "category": "Benjamín",
+      "sex": "M",
+      "juvenil": true
+    },
+    {
+      "compId": 15955,
+      "exists": true,
+      "name": "Campeonato de España Alevín Femenino 2025",
+      "year": 2025,
+      "category": "Alevín",
+      "sex": "F",
+      "juvenil": true
+    },
+    {
+      "compId": 15956,
+      "exists": true,
+      "name": "Campeonato de España Alevín Masculino 2025",
+      "year": 2025,
+      "category": "Alevín",
+      "sex": "M",
+      "juvenil": true
+    },
+    {
+      "compId": 15957,
+      "exists": true,
+      "name": "Campeonato de España Infantil Masculino 2025",
+      "year": 2025,
+      "category": "Infantil",
+      "sex": "M",
+      "juvenil": true
+    },
+    {
+      "compId": 15958,
+      "exists": true,
+      "name": "Campeonato de España Infantil Femenino 2025",
+      "year": 2025,
+      "category": "Infantil",
+      "sex": "F",
+      "juvenil": true
+    },
+    {
+      "compId": 15960,
+      "exists": true,
+      "name": "Match Juvenil Francia-España 2025",
+      "year": 2025,
+      "category": "Juvenil",
+      "sex": null,
+      "juvenil": true
+    },
+    {
       "compId": 15963,
       "exists": true,
       "name": "Match Irlanda - España Sub 18 Masculino 2025",
@@ -3376,12 +3450,39 @@
       "juvenil": true
     },
     {
+      "compId": 16009,
+      "exists": true,
+      "name": "Campeonato de España Alevín Femenino de Pitch & Putt 2025",
+      "year": 2025,
+      "category": "Alevín",
+      "sex": "F",
+      "juvenil": true
+    },
+    {
       "compId": 16022,
       "exists": true,
       "name": "Campeonato de Europa Sub 18 Femenino por Equipos 2026",
       "year": 2026,
       "category": "Sub-18",
       "sex": "F",
+      "juvenil": true
+    },
+    {
+      "compId": 16025,
+      "exists": true,
+      "name": "Puntuable Nacional Juvenil Femenino 2026",
+      "year": 2026,
+      "category": "Juvenil",
+      "sex": "F",
+      "juvenil": true
+    },
+    {
+      "compId": 16028,
+      "exists": true,
+      "name": "Puntuable Nacional Juvenil Masculino 2026",
+      "year": 2026,
+      "category": "Juvenil",
+      "sex": "M",
       "juvenil": true
     },
     {
@@ -3400,6 +3501,15 @@
       "year": 2026,
       "category": "Cadete",
       "sex": "M",
+      "juvenil": true
+    },
+    {
+      "compId": 16033,
+      "exists": true,
+      "name": "Match España - Inglaterra Sub 16 2026",
+      "year": 2026,
+      "category": "Sub-16",
+      "sex": null,
       "juvenil": true
     },
     {
@@ -3427,6 +3537,15 @@
       "year": 2026,
       "category": "Sub-16",
       "sex": "F",
+      "juvenil": true
+    },
+    {
+      "compId": 16040,
+      "exists": true,
+      "name": "Campeonato de España Interclubes Infantil 2026",
+      "year": 2026,
+      "category": "Infantil",
+      "sex": null,
       "juvenil": true
     },
     {
@@ -3478,6 +3597,33 @@
       "compId": 16059,
       "exists": true,
       "name": "Match Sudoeste Francia - España Sub 18 Masculino 2026",
+      "year": 2026,
+      "category": "Sub-18",
+      "sex": "M",
+      "juvenil": true
+    },
+    {
+      "compId": 16065,
+      "exists": true,
+      "name": "Campeonato de España de FFAA Sub 18 Masculino 2026 - 1ª División",
+      "year": 2026,
+      "category": "Sub-18",
+      "sex": "M",
+      "juvenil": true
+    },
+    {
+      "compId": 16066,
+      "exists": true,
+      "name": "Campeonato de España de FFAA Sub 18 Masculino 2026 - 2ª División",
+      "year": 2026,
+      "category": "Sub-18",
+      "sex": "M",
+      "juvenil": true
+    },
+    {
+      "compId": 16073,
+      "exists": true,
+      "name": "Campeonato de Europa Sub 18 Masculino por Equipos 2026",
       "year": 2026,
       "category": "Sub-18",
       "sex": "M",
@@ -3610,6 +3756,33 @@
       "juvenil": true
     },
     {
+      "compId": 16179,
+      "exists": true,
+      "name": "Campeonato de España Sub 16 Masculino 2026",
+      "year": 2026,
+      "category": "Sub-16",
+      "sex": "M",
+      "juvenil": true
+    },
+    {
+      "compId": 16180,
+      "exists": true,
+      "name": "Campeonato de España Sub 16 Femenino 2026",
+      "year": 2026,
+      "category": "Sub-16",
+      "sex": "F",
+      "juvenil": true
+    },
+    {
+      "compId": 16187,
+      "exists": true,
+      "name": "Campeonato de España Infantil Masculino 2026",
+      "year": 2026,
+      "category": "Infantil",
+      "sex": "M",
+      "juvenil": true
+    },
+    {
       "compId": 16189,
       "exists": true,
       "name": "Campeonato de España Infantil Femenino 2026",
@@ -3688,6 +3861,15 @@
       "year": 2026,
       "category": "Sub-16",
       "sex": "M",
+      "juvenil": true
+    },
+    {
+      "compId": 16214,
+      "exists": true,
+      "name": "Campeonato de España Sub-16 de Pitch & Putt 2027",
+      "year": 2027,
+      "category": "Sub-16",
+      "sex": null,
       "juvenil": true
     }
   ]

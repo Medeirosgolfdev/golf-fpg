@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-06-22T09:55:28.766Z",
+  "generatedAt": "2026-06-23T22:31:52.398Z",
   "source": "scripts/build-rfegolf-index.js",
-  "total": 2739,
-  "totalCompetitions": 2739,
+  "total": 2760,
+  "totalCompetitions": 2760,
   "skipped": 2,
   "byYear": {
     "2017": 1,
@@ -13,27 +13,27 @@
     "2022": 105,
     "2023": 115,
     "2024": 123,
-    "2025": 191,
-    "2026": 2030,
+    "2025": 199,
+    "2026": 2043,
     "2027": 1
   },
   "byCategory": {
-    "Sub-16": 69,
-    "Sub-18": 102,
-    "Juvenil": 274,
-    "Infantil": 142,
+    "Sub-16": 73,
+    "Sub-18": 105,
+    "Juvenil": 277,
+    "Infantil": 146,
     "Junior": 42,
     "Sub-14": 2,
-    "Alevín": 83,
-    "Benjamín": 79,
+    "Alevín": 85,
+    "Benjamín": 81,
     "Senior": 1,
     "Cadete": 22,
     "Sub-21": 18,
     "Sub-25": 6
   },
   "bySource": {
-    "rfegolf": 410,
-    "nextcaddy": 2041,
+    "rfegolf": 428,
+    "nextcaddy": 2044,
     "golfdirecto": 21,
     "livegolfscoring": 267
   },
@@ -325,6 +325,37 @@
     },
     {
       "source": "rfegolf",
+      "id": 16040,
+      "compId": 16040,
+      "file": "16040.json",
+      "filePath": "rfegolf-resultats/16040.json",
+      "name": "Campeonato de España Interclubes Infantil 2026",
+      "year": 2026,
+      "category": "Infantil",
+      "sex": "Mixto",
+      "dateStart": "29/08/2026",
+      "dateEnd": "30/08/2026",
+      "dateStartIso": "2026-08-29",
+      "dateEndIso": "2026-08-30",
+      "course": "GOLF Dirección CARRETERA A-",
+      "courseClubId": null,
+      "mode": "Por Equipos",
+      "style": "Stroke Play",
+      "hcpLimitMen": 36,
+      "hcpLimitWomen": 36,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "scrapedAt": "2026-06-23T22:30:59.349Z"
+    },
+    {
+      "source": "rfegolf",
       "id": 16038,
       "compId": 16038,
       "file": "16038.json",
@@ -446,6 +477,37 @@
       },
       "leaderboardPlayers": 0,
       "scrapedAt": "2026-06-12T14:37:09.282Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 16073,
+      "compId": 16073,
+      "file": "16073.json",
+      "filePath": "rfegolf-resultats/16073.json",
+      "name": "Campeonato de Europa Sub 18 Masculino por Equipos 2026",
+      "year": 2026,
+      "category": "Sub-18",
+      "sex": "M",
+      "dateStart": "07/07/2026",
+      "dateEnd": "11/07/2026",
+      "dateStartIso": "2026-07-07",
+      "dateEndIso": "2026-07-11",
+      "course": "GOLF CLUB Dirección CARRETERA JEREZ A ARCOS",
+      "courseClubId": null,
+      "mode": "Individual",
+      "style": "Stroke Play + Match Play",
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "scrapedAt": "2026-06-23T22:31:01.105Z"
     },
     {
       "source": "rfegolf",
@@ -756,6 +818,37 @@
       },
       "leaderboardPlayers": 0,
       "scrapedAt": "2026-06-12T14:37:07.633Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 16187,
+      "compId": 16187,
+      "file": "16187.json",
+      "filePath": "rfegolf-resultats/16187.json",
+      "name": "Campeonato de España Infantil Masculino 2026",
+      "year": 2026,
+      "category": "Infantil",
+      "sex": "M",
+      "dateStart": "26/06/2026",
+      "dateEnd": "28/06/2026",
+      "dateStartIso": "2026-06-26",
+      "dateEndIso": "2026-06-28",
+      "course": "GOLF Dirección CALLE AVD. PPE. FELIPE S",
+      "courseClubId": null,
+      "mode": "Individual",
+      "style": "Stroke Play",
+      "hcpLimitMen": 17,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 90,
+        "reservas": 51,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 4,
+        "provisional": 145
+      },
+      "leaderboardPlayers": 0,
+      "scrapedAt": "2026-06-23T22:31:04.613Z"
     },
     {
       "source": "rfegolf",
@@ -1277,6 +1370,68 @@
       "scrapedAt": "2026-06-12T14:37:10.435Z"
     },
     {
+      "source": "rfegolf",
+      "id": 16180,
+      "compId": 16180,
+      "file": "16180.json",
+      "filePath": "rfegolf-resultats/16180.json",
+      "name": "Campeonato de España Sub 16 Femenino 2026",
+      "year": 2026,
+      "category": "Sub-16",
+      "sex": "F",
+      "dateStart": "01/05/2026",
+      "dateEnd": "03/05/2026",
+      "dateStartIso": "2026-05-01",
+      "dateEndIso": "2026-05-03",
+      "course": "Golf de la Rioja Fed. de Golf Canaria Fed. Melillense Fed. de Golf Catalana Fed. Extr",
+      "courseClubId": null,
+      "mode": "Individual",
+      "style": "Stroke Play",
+      "hcpLimitMen": null,
+      "hcpLimitWomen": 15,
+      "counts": {
+        "admitidos": 87,
+        "reservas": 42,
+        "bajas": 3,
+        "invitados": 3,
+        "noAdmitidos": 8,
+        "provisional": 143
+      },
+      "leaderboardPlayers": 0,
+      "scrapedAt": "2026-06-23T22:31:05.510Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 16179,
+      "compId": 16179,
+      "file": "16179.json",
+      "filePath": "rfegolf-resultats/16179.json",
+      "name": "Campeonato de España Sub 16 Masculino 2026",
+      "year": 2026,
+      "category": "Sub-16",
+      "sex": "M",
+      "dateStart": "01/05/2026",
+      "dateEnd": "03/05/2026",
+      "dateStartIso": "2026-05-01",
+      "dateEndIso": "2026-05-03",
+      "course": "Golf de la Rioja Fed. de Golf Canaria Fed. Melillense Fed. de Golf Catalana Fed. Extr",
+      "courseClubId": null,
+      "mode": "Individual",
+      "style": "Stroke Play",
+      "hcpLimitMen": 10,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 87,
+        "reservas": 68,
+        "bajas": 0,
+        "invitados": 3,
+        "noAdmitidos": 18,
+        "provisional": 176
+      },
+      "leaderboardPlayers": 0,
+      "scrapedAt": "2026-06-23T22:31:03.923Z"
+    },
+    {
       "source": "livegolfscoring",
       "id": 365,
       "file": "365.json",
@@ -1327,6 +1482,68 @@
       "leaderboardPlayers": 47,
       "nRounds": 1,
       "scrapedAt": "2026-05-08T21:38:26.134Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 16066,
+      "compId": 16066,
+      "file": "16066.json",
+      "filePath": "rfegolf-resultats/16066.json",
+      "name": "Campeonato de España de FFAA Sub 18 Masculino 2026 - 2ª División",
+      "year": 2026,
+      "category": "Sub-18",
+      "sex": "M",
+      "dateStart": "23/04/2026",
+      "dateEnd": "26/04/2026",
+      "dateStartIso": "2026-04-23",
+      "dateEndIso": "2026-04-26",
+      "course": "GOLF CLUB Dirección AVENIDA LA RIOJA",
+      "courseClubId": null,
+      "mode": "Por Equipos",
+      "style": "Stroke Play + Match Play",
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 45,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 45
+      },
+      "leaderboardPlayers": 0,
+      "scrapedAt": "2026-06-23T22:31:01.817Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 16065,
+      "compId": 16065,
+      "file": "16065.json",
+      "filePath": "rfegolf-resultats/16065.json",
+      "name": "Campeonato de España de FFAA Sub 18 Masculino 2026 - 1ª División",
+      "year": 2026,
+      "category": "Sub-18",
+      "sex": "M",
+      "dateStart": "23/04/2026",
+      "dateEnd": "26/04/2026",
+      "dateStartIso": "2026-04-23",
+      "dateEndIso": "2026-04-26",
+      "course": "GOLF CLUB Dirección AVENIDA LA RIOJA",
+      "courseClubId": null,
+      "mode": "Por Equipos",
+      "style": "Stroke Play + Match Play",
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 56
+      },
+      "leaderboardPlayers": 0,
+      "scrapedAt": "2026-06-23T22:31:02.906Z"
     },
     {
       "source": "rfegolf",
@@ -1487,6 +1704,37 @@
       },
       "leaderboardPlayers": 0,
       "scrapedAt": "2026-06-12T14:36:49.863Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 16033,
+      "compId": 16033,
+      "file": "16033.json",
+      "filePath": "rfegolf-resultats/16033.json",
+      "name": "Match España - Inglaterra Sub 16 2026",
+      "year": 2026,
+      "category": "Sub-16",
+      "sex": null,
+      "dateStart": "11/04/2026",
+      "dateEnd": "12/04/2026",
+      "dateStartIso": "2026-04-11",
+      "dateEndIso": "2026-04-12",
+      "course": "RCG Sotogrande Leer",
+      "courseClubId": null,
+      "mode": "Por Equipos",
+      "style": "Match Play",
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "scrapedAt": "2026-06-23T22:30:58.546Z"
     },
     {
       "source": "rfegolf",
@@ -1971,6 +2219,68 @@
       "scrapedAt": "2026-06-12T14:36:50.176Z"
     },
     {
+      "source": "rfegolf",
+      "id": 16028,
+      "compId": 16028,
+      "file": "16028.json",
+      "filePath": "rfegolf-resultats/16028.json",
+      "name": "Puntuable Nacional Juvenil Masculino 2026",
+      "year": 2026,
+      "category": "Juvenil",
+      "sex": "M",
+      "dateStart": "27/02/2026",
+      "dateEnd": "01/03/2026",
+      "dateStartIso": "2026-02-27",
+      "dateEndIso": "2026-03-01",
+      "course": "CAMPO DE GOLF DE SALAMANCA Dirección CALLE MONTE DE ZARAPICOS S",
+      "courseClubId": null,
+      "mode": "Individual",
+      "style": "Stroke Play",
+      "hcpLimitMen": 18.4,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 87,
+        "reservas": 82,
+        "bajas": 3,
+        "invitados": 4,
+        "noAdmitidos": 13,
+        "provisional": 189
+      },
+      "leaderboardPlayers": 0,
+      "scrapedAt": "2026-06-23T22:30:56.545Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 16025,
+      "compId": 16025,
+      "file": "16025.json",
+      "filePath": "rfegolf-resultats/16025.json",
+      "name": "Puntuable Nacional Juvenil Femenino 2026",
+      "year": 2026,
+      "category": "Juvenil",
+      "sex": "F",
+      "dateStart": "27/02/2026",
+      "dateEnd": "01/03/2026",
+      "dateStartIso": "2026-02-27",
+      "dateEndIso": "2026-03-01",
+      "course": "GOLF Dirección AVENIDA DDEL TORMES",
+      "courseClubId": null,
+      "mode": "Individual",
+      "style": "Stroke Play",
+      "hcpLimitMen": null,
+      "hcpLimitWomen": 18.4,
+      "counts": {
+        "admitidos": 87,
+        "reservas": 28,
+        "bajas": 16,
+        "invitados": 3,
+        "noAdmitidos": 8,
+        "provisional": 142
+      },
+      "leaderboardPlayers": 0,
+      "scrapedAt": "2026-06-23T22:31:02.108Z"
+    },
+    {
       "source": "livegolfscoring",
       "id": 351,
       "file": "351.json",
@@ -2296,6 +2606,37 @@
       },
       "leaderboardPlayers": 0,
       "scrapedAt": "2026-06-12T14:34:51.289Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 15960,
+      "compId": 15960,
+      "file": "15960.json",
+      "filePath": "rfegolf-resultats/15960.json",
+      "name": "Match Juvenil Francia-España 2025",
+      "year": 2025,
+      "category": "Juvenil",
+      "sex": "Mixto",
+      "dateStart": "01/11/2025",
+      "dateEnd": "02/11/2025",
+      "dateStartIso": "2025-11-01",
+      "dateEndIso": "2025-11-02",
+      "course": "CLUB DE GOLF CAMPANO Dirección CARRETERA NACIONAL",
+      "courseClubId": null,
+      "mode": "Individual",
+      "style": "Match Play",
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "scrapedAt": "2026-06-23T22:30:58.006Z"
     },
     {
       "source": "livegolfscoring",
@@ -2955,6 +3296,37 @@
       "leaderboardPlayers": 66,
       "nRounds": 2,
       "scrapedAt": "2026-05-08T21:38:22.442Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 16009,
+      "compId": 16009,
+      "file": "16009.json",
+      "filePath": "rfegolf-resultats/16009.json",
+      "name": "Campeonato de España Alevín Femenino de Pitch & Putt 2025",
+      "year": 2025,
+      "category": "Alevín",
+      "sex": "F",
+      "dateStart": "08/08/2025",
+      "dateEnd": "09/08/2025",
+      "dateStartIso": "2025-08-08",
+      "dateEndIso": "2025-08-09",
+      "course": "Golf de la Rioja Fed. de Golf Canaria Fed. Melillense Fed. de Golf Catalana Fed. Extr",
+      "courseClubId": null,
+      "mode": "Individual",
+      "style": "Stroke Play",
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "scrapedAt": "2026-06-23T22:31:03.808Z"
     },
     {
       "source": "rfegolf",
@@ -3782,6 +4154,68 @@
     },
     {
       "source": "rfegolf",
+      "id": 15958,
+      "compId": 15958,
+      "file": "15958.json",
+      "filePath": "rfegolf-resultats/15958.json",
+      "name": "Campeonato de España Infantil Femenino 2025",
+      "year": 2025,
+      "category": "Infantil",
+      "sex": "F",
+      "dateStart": "25/06/2025",
+      "dateEnd": "27/06/2025",
+      "dateStartIso": "2025-06-25",
+      "dateEndIso": "2025-06-27",
+      "course": "GOLF Dirección COLADA FUENTEAMARGA.CAMPANO S",
+      "courseClubId": null,
+      "mode": "Individual",
+      "style": "Stroke Play",
+      "hcpLimitMen": null,
+      "hcpLimitWomen": 25,
+      "counts": {
+        "admitidos": 90,
+        "reservas": 11,
+        "bajas": 1,
+        "invitados": 0,
+        "noAdmitidos": 2,
+        "provisional": 104
+      },
+      "leaderboardPlayers": 0,
+      "scrapedAt": "2026-06-23T22:30:58.085Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 15957,
+      "compId": 15957,
+      "file": "15957.json",
+      "filePath": "rfegolf-resultats/15957.json",
+      "name": "Campeonato de España Infantil Masculino 2025",
+      "year": 2025,
+      "category": "Infantil",
+      "sex": "M",
+      "dateStart": "25/06/2025",
+      "dateEnd": "27/06/2025",
+      "dateStartIso": "2025-06-25",
+      "dateEndIso": "2025-06-27",
+      "course": "GOLF CLUB Dirección URBANIZACION Novo Sancti Petri",
+      "courseClubId": null,
+      "mode": "Individual",
+      "style": "Stroke Play",
+      "hcpLimitMen": 17,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 90,
+        "reservas": 53,
+        "bajas": 1,
+        "invitados": 0,
+        "noAdmitidos": 3,
+        "provisional": 147
+      },
+      "leaderboardPlayers": 0,
+      "scrapedAt": "2026-06-23T22:30:57.741Z"
+    },
+    {
+      "source": "rfegolf",
       "id": 15956,
       "compId": 15956,
       "file": "15956.json",
@@ -3810,6 +4244,99 @@
       },
       "leaderboardPlayers": 0,
       "scrapedAt": "2026-05-08T21:03:57.892Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 15955,
+      "compId": 15955,
+      "file": "15955.json",
+      "filePath": "rfegolf-resultats/15955.json",
+      "name": "Campeonato de España Alevín Femenino 2025",
+      "year": 2025,
+      "category": "Alevín",
+      "sex": "F",
+      "dateStart": "25/06/2025",
+      "dateEnd": "27/06/2025",
+      "dateStartIso": "2025-06-25",
+      "dateEndIso": "2025-06-27",
+      "course": "GOLF CLUB Dirección URBANIZACION Novo Sancti Petri",
+      "courseClubId": null,
+      "mode": "Individual",
+      "style": "Stroke Play",
+      "hcpLimitMen": null,
+      "hcpLimitWomen": 30,
+      "counts": {
+        "admitidos": 51,
+        "reservas": 24,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 7,
+        "provisional": 82
+      },
+      "leaderboardPlayers": 0,
+      "scrapedAt": "2026-06-23T22:30:55.477Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 15954,
+      "compId": 15954,
+      "file": "15954.json",
+      "filePath": "rfegolf-resultats/15954.json",
+      "name": "Campeonato de España Benjamín Masculino 2025",
+      "year": 2025,
+      "category": "Benjamín",
+      "sex": "M",
+      "dateStart": "25/06/2025",
+      "dateEnd": "27/06/2025",
+      "dateStartIso": "2025-06-25",
+      "dateEndIso": "2025-06-27",
+      "course": "CLUB DE GOLF CAMPANO Dirección CARRETERA NACIONAL",
+      "courseClubId": null,
+      "mode": "Individual",
+      "style": "Stroke Play",
+      "hcpLimitMen": 36,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 72,
+        "reservas": 10,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 20,
+        "provisional": 102
+      },
+      "leaderboardPlayers": 0,
+      "scrapedAt": "2026-06-23T22:30:57.066Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 15953,
+      "compId": 15953,
+      "file": "15953.json",
+      "filePath": "rfegolf-resultats/15953.json",
+      "name": "Campeonato de España Benjamín Femenino 2025",
+      "year": 2025,
+      "category": "Benjamín",
+      "sex": "F",
+      "dateStart": "25/06/2025",
+      "dateEnd": "27/06/2025",
+      "dateStartIso": "2025-06-25",
+      "dateEndIso": "2025-06-27",
+      "course": "CLUB DE GOLF CAMPANO Dirección CARRETERA NACIONAL",
+      "courseClubId": null,
+      "mode": "Individual",
+      "style": "Stroke Play",
+      "hcpLimitMen": null,
+      "hcpLimitWomen": 36,
+      "counts": {
+        "admitidos": 30,
+        "reservas": 4,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 4,
+        "provisional": 38
+      },
+      "leaderboardPlayers": 0,
+      "scrapedAt": "2026-06-23T22:30:54.839Z"
     },
     {
       "source": "rfegolf",
@@ -4529,6 +5056,37 @@
       "leaderboardPlayers": 89,
       "nRounds": 3,
       "scrapedAt": "2026-05-08T21:38:19.093Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 15950,
+      "compId": 15950,
+      "file": "15950.json",
+      "filePath": "rfegolf-resultats/15950.json",
+      "name": "Campeonato de España Sub 16 Masculino y Femenino 2025",
+      "year": 2025,
+      "category": "Sub-16",
+      "sex": "Mixto",
+      "dateStart": "02/05/2025",
+      "dateEnd": "04/05/2025",
+      "dateStartIso": "2025-05-02",
+      "dateEndIso": "2025-05-04",
+      "course": "Golf El Campano",
+      "courseClubId": null,
+      "mode": "Individual",
+      "style": "Stroke Play",
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "scrapedAt": "2026-06-23T22:30:53.080Z"
     },
     {
       "source": "rfegolf",
@@ -20496,6 +21054,121 @@
     },
     {
       "source": "nextcaddy",
+      "id": 71888,
+      "tourId": 71888,
+      "file": "71888.json",
+      "filePath": "nextcaddy/71888.json",
+      "name": "7ª Prueba Ranking y Series Roll Up Sherry Golf 2026 ",
+      "year": 2026,
+      "category": null,
+      "sex": "M",
+      "dateStart": null,
+      "dateEnd": null,
+      "dateStartIso": null,
+      "dateEndIso": null,
+      "course": "Sherry Golf Jerez",
+      "courseCode": "AMC3",
+      "organizer": null,
+      "format": "Stableford (Handicap)  Caballeros  Señor",
+      "categories": [
+        "Caballeros",
+        "Señoras",
+        "Junior Masculino",
+        "Senior",
+        "Junior",
+        "Infantil",
+        "Profesional",
+        "Juvenil"
+      ],
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "scrapedAt": "2026-06-23T22:31:25.187Z"
+    },
+    {
+      "source": "nextcaddy",
+      "id": 71884,
+      "tourId": 71884,
+      "file": "71884.json",
+      "filePath": "nextcaddy/71884.json",
+      "name": "CIRCUITO PIES BLANCOS 2026",
+      "year": 2026,
+      "category": null,
+      "sex": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "dateStartIso": null,
+      "dateEndIso": null,
+      "course": "Montecastillo Barceló Golf Club",
+      "courseCode": "AM29",
+      "organizer": null,
+      "format": "Stableford (Handicap)  Caballeros  Señor",
+      "categories": [
+        "Caballeros",
+        "Señoras",
+        "caballeros",
+        "señoras",
+        "Infantil",
+        "Profesional",
+        "Senior",
+        "Juvenil"
+      ],
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "scrapedAt": "2026-06-23T22:31:24.979Z"
+    },
+    {
+      "source": "nextcaddy",
+      "id": 71880,
+      "tourId": 71880,
+      "file": "71880.json",
+      "filePath": "nextcaddy/71880.json",
+      "name": "TORNEO DE PATROCINADORES R.F.E.G. 2026.",
+      "year": 2026,
+      "category": null,
+      "sex": null,
+      "dateStart": null,
+      "dateEnd": null,
+      "dateStartIso": null,
+      "dateEndIso": null,
+      "course": null,
+      "courseCode": null,
+      "organizer": null,
+      "format": "Stableford (Handicap)  Caballeros  Señor",
+      "categories": [
+        "Caballeros",
+        "Señoras",
+        "Infantil",
+        "Profesional",
+        "Senior",
+        "Juvenil"
+      ],
+      "counts": {
+        "admitidos": 198,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "scrapedAt": "2026-06-23T22:31:25.394Z"
+    },
+    {
+      "source": "nextcaddy",
       "id": 71860,
       "tourId": 71860,
       "file": "71860.json",
@@ -23217,7 +23890,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:42:40.216Z"
+      "scrapedAt": "2026-06-23T22:31:24.312Z"
     },
     {
       "source": "nextcaddy",
@@ -23291,7 +23964,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:42:40.556Z"
+      "scrapedAt": "2026-06-23T22:31:24.568Z"
     },
     {
       "source": "nextcaddy",
@@ -23328,7 +24001,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:42:39.351Z"
+      "scrapedAt": "2026-06-23T22:31:23.804Z"
     },
     {
       "source": "nextcaddy",
@@ -25010,7 +25683,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:42:23.912Z"
+      "scrapedAt": "2026-06-23T22:31:23.497Z"
     },
     {
       "source": "nextcaddy",
@@ -25387,7 +26060,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:42:14.066Z"
+      "scrapedAt": "2026-06-23T22:31:22.560Z"
     },
     {
       "source": "nextcaddy",
@@ -25720,7 +26393,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:42:16.204Z"
+      "scrapedAt": "2026-06-23T22:31:23.279Z"
     },
     {
       "source": "nextcaddy",
@@ -25794,7 +26467,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:42:40.184Z"
+      "scrapedAt": "2026-06-23T22:31:24.277Z"
     },
     {
       "source": "nextcaddy",
@@ -28292,7 +28965,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:42:00.389Z"
+      "scrapedAt": "2026-06-23T22:31:21.994Z"
     },
     {
       "source": "nextcaddy",
@@ -29070,7 +29743,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:41:32.257Z"
+      "scrapedAt": "2026-06-23T22:31:19.771Z"
     },
     {
       "source": "nextcaddy",
@@ -29925,7 +30598,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:41:30.325Z"
+      "scrapedAt": "2026-06-23T22:31:19.134Z"
     },
     {
       "source": "nextcaddy",
@@ -30779,7 +31452,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:41:45.818Z"
+      "scrapedAt": "2026-06-23T22:31:20.575Z"
     },
     {
       "source": "nextcaddy",
@@ -30816,7 +31489,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:41:19.441Z"
+      "scrapedAt": "2026-06-23T22:31:18.991Z"
     },
     {
       "source": "nextcaddy",
@@ -30853,7 +31526,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:41:19.218Z"
+      "scrapedAt": "2026-06-23T22:31:18.670Z"
     },
     {
       "source": "nextcaddy",
@@ -32405,7 +33078,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:42:04.364Z"
+      "scrapedAt": "2026-06-23T22:31:22.367Z"
     },
     {
       "source": "nextcaddy",
@@ -32776,7 +33449,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:40:57.679Z"
+      "scrapedAt": "2026-06-23T22:31:17.001Z"
     },
     {
       "source": "nextcaddy",
@@ -33592,7 +34265,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:40:56.039Z"
+      "scrapedAt": "2026-06-23T22:31:16.974Z"
     },
     {
       "source": "nextcaddy",
@@ -33630,7 +34303,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:40:54.005Z"
+      "scrapedAt": "2026-06-23T22:31:16.551Z"
     },
     {
       "source": "nextcaddy",
@@ -39582,7 +40255,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:39:59.611Z"
+      "scrapedAt": "2026-06-23T22:31:13.953Z"
     },
     {
       "source": "nextcaddy",
@@ -42445,7 +43118,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:39:12.826Z"
+      "scrapedAt": "2026-06-23T22:31:12.620Z"
     },
     {
       "source": "nextcaddy",
@@ -44246,7 +44919,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:41:53.318Z"
+      "scrapedAt": "2026-06-23T22:31:21.006Z"
     },
     {
       "source": "nextcaddy",
@@ -44283,7 +44956,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:41:14.728Z"
+      "scrapedAt": "2026-06-23T22:31:18.630Z"
     },
     {
       "source": "nextcaddy",
@@ -46904,7 +47577,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:38:46.700Z"
+      "scrapedAt": "2026-06-23T22:31:11.980Z"
     },
     {
       "source": "nextcaddy",
@@ -49820,7 +50493,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:38:24.070Z"
+      "scrapedAt": "2026-06-23T22:31:11.558Z"
     },
     {
       "source": "nextcaddy",
@@ -50041,7 +50714,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:38:10.423Z"
+      "scrapedAt": "2026-06-23T22:31:11.108Z"
     },
     {
       "source": "nextcaddy",
@@ -53597,7 +54270,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:42:19.065Z"
+      "scrapedAt": "2026-06-23T22:31:23.672Z"
     },
     {
       "source": "nextcaddy",
@@ -60076,7 +60749,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:39:22.447Z"
+      "scrapedAt": "2026-06-23T22:31:13.382Z"
     },
     {
       "source": "nextcaddy",
@@ -61120,7 +61793,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:41:07.357Z"
+      "scrapedAt": "2026-06-23T22:31:17.836Z"
     },
     {
       "source": "nextcaddy",
@@ -62753,7 +63426,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:41:09.372Z"
+      "scrapedAt": "2026-06-23T22:31:18.306Z"
     },
     {
       "source": "nextcaddy",
@@ -62791,7 +63464,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:40:22.987Z"
+      "scrapedAt": "2026-06-23T22:31:15.616Z"
     },
     {
       "source": "nextcaddy",
@@ -62829,7 +63502,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:39:19.157Z"
+      "scrapedAt": "2026-06-23T22:31:13.405Z"
     },
     {
       "source": "nextcaddy",
@@ -63578,7 +64251,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:41:58.135Z"
+      "scrapedAt": "2026-06-23T22:31:22.836Z"
     },
     {
       "source": "nextcaddy",
@@ -64484,7 +65157,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:38:26.968Z"
+      "scrapedAt": "2026-06-23T22:31:11.485Z"
     },
     {
       "source": "nextcaddy",
@@ -64521,7 +65194,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:37:54.421Z"
+      "scrapedAt": "2026-06-23T22:31:10.622Z"
     },
     {
       "source": "nextcaddy",
@@ -65714,7 +66387,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:37:45.389Z"
+      "scrapedAt": "2026-06-23T22:31:10.503Z"
     },
     {
       "source": "nextcaddy",
@@ -66588,7 +67261,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:40:20.090Z"
+      "scrapedAt": "2026-06-23T22:31:14.643Z"
     },
     {
       "source": "nextcaddy",
@@ -68136,7 +68809,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:40:06.140Z"
+      "scrapedAt": "2026-06-23T22:31:14.824Z"
     },
     {
       "source": "nextcaddy",
@@ -69746,7 +70419,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:41:58.070Z"
+      "scrapedAt": "2026-06-23T22:31:21.508Z"
     },
     {
       "source": "nextcaddy",
@@ -69857,7 +70530,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:41:38.940Z"
+      "scrapedAt": "2026-06-23T22:31:20.150Z"
     },
     {
       "source": "nextcaddy",
@@ -70046,7 +70719,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:40:51.419Z"
+      "scrapedAt": "2026-06-23T22:31:15.687Z"
     },
     {
       "source": "nextcaddy",
@@ -71288,7 +71961,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:37:23.361Z"
+      "scrapedAt": "2026-06-23T22:31:09.758Z"
     },
     {
       "source": "nextcaddy",
@@ -71325,7 +71998,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:37:23.062Z"
+      "scrapedAt": "2026-06-23T22:31:09.476Z"
     },
     {
       "source": "nextcaddy",
@@ -71446,7 +72119,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:37:17.432Z"
+      "scrapedAt": "2026-06-23T22:31:09.269Z"
     },
     {
       "source": "nextcaddy",
@@ -71489,7 +72162,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:37:17.156Z"
+      "scrapedAt": "2026-06-23T22:31:09.331Z"
     },
     {
       "source": "nextcaddy",
@@ -78384,7 +79057,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:41:31.210Z"
+      "scrapedAt": "2026-06-23T22:31:19.825Z"
     },
     {
       "source": "nextcaddy",
@@ -79096,7 +79769,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:40:59.643Z"
+      "scrapedAt": "2026-06-23T22:31:17.385Z"
     },
     {
       "source": "nextcaddy",
@@ -79698,7 +80371,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:38:50.325Z"
+      "scrapedAt": "2026-06-23T22:31:12.325Z"
     },
     {
       "source": "nextcaddy",
@@ -80349,7 +81022,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:40:03.048Z"
+      "scrapedAt": "2026-06-23T22:31:14.391Z"
     },
     {
       "source": "nextcaddy",

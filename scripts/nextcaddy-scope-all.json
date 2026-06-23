@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-22T09:54:42.041Z",
+  "generatedAt": "2026-06-23T22:23:57.250Z",
   "source": "/competiciones-comite",
   "comite": null,
   "year": null,
@@ -7,7 +7,7 @@
   "club": null,
   "provincia": null,
   "filter": null,
-  "total": 1525,
+  "total": 1528,
   "tours": [
     {
       "tourId": 67162,
@@ -62,20 +62,20 @@
       "name": "TORNEO ROSCO DE REYES",
       "date": "03 ene 2026",
       "rounds": null,
-      "clubCode": "ROSC",
-      "year": 2026
-    },
-    {
-      "tourId": 67191,
-      "name": "TORNEO FUNDACIÓN CAJASOL - ROSCÓN DE REYES",
-      "date": "03 ene 2026",
-      "rounds": null,
       "clubCode": "REYES",
       "year": 2026
     },
     {
       "tourId": 67079,
       "name": "TORNEO DE REYES \"PADRES E HIJOS\" 18 HOYOS",
+      "date": "03 ene 2026",
+      "rounds": null,
+      "clubCode": "ROSC",
+      "year": 2026
+    },
+    {
+      "tourId": 67191,
+      "name": "TORNEO FUNDACIÓN CAJASOL - ROSCÓN DE REYES",
       "date": "03 ene 2026",
       "rounds": null,
       "clubCode": "REYES",
@@ -3586,16 +3586,16 @@
       "year": 2026
     },
     {
-      "tourId": 69226,
-      "name": "PRUEBA ZONAL - LERMA (Valedera SACE)",
+      "tourId": 69356,
+      "name": "PRUEBA ZONAL- LERMA - 9 hoyos (copia)",
       "date": "21 mar 2026",
       "rounds": null,
       "clubCode": "ZONAL",
       "year": 2026
     },
     {
-      "tourId": 69356,
-      "name": "PRUEBA ZONAL- LERMA - 9 hoyos (copia)",
+      "tourId": 69226,
+      "name": "PRUEBA ZONAL - LERMA (Valedera SACE)",
       "date": "21 mar 2026",
       "rounds": null,
       "clubCode": null,
@@ -9358,7 +9358,7 @@
       "name": "MENS DAY 23/6",
       "date": "23 jun 2026",
       "rounds": null,
-      "clubCode": "SACE",
+      "clubCode": null,
       "year": 2026
     },
     {
@@ -9396,6 +9396,14 @@
     {
       "tourId": 67944,
       "name": "Torneo Privado LJG · 25 de Junio· 9:30 ·",
+      "date": "25 jun 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 71880,
+      "name": "TORNEO DE PATROCINADORES R.F.E.G. 2026.",
       "date": "25 jun 2026",
       "rounds": null,
       "clubCode": "LIGA",
@@ -9574,7 +9582,7 @@
       "name": "5 J. CIRCUITO VNG 2026. CATEGORIA ORO (0 - 12)",
       "date": "28 jun 2026",
       "rounds": null,
-      "clubCode": "VNG",
+      "clubCode": "CIRC",
       "year": 2026
     },
     {
@@ -9746,6 +9754,14 @@
       "year": 2026
     },
     {
+      "tourId": 71735,
+      "name": "Prueba Circuito 5ª categoría (Club de Campo La Galera)",
+      "date": "04 jul 2026",
+      "rounds": null,
+      "clubCode": "MOTOR",
+      "year": 2026
+    },
+    {
       "tourId": 71725,
       "name": "TORNEO TEMPUL MOTOR MAZDA",
       "date": "04 jul 2026",
@@ -9812,14 +9828,6 @@
     {
       "tourId": 68048,
       "name": "XXXVI CAMPEONATO DE DOBLES DE CyL 2026",
-      "date": "05 jul 2026",
-      "rounds": null,
-      "clubCode": null,
-      "year": 2026
-    },
-    {
-      "tourId": 71735,
-      "name": "Prueba Circuito 5ª categoría (Club de Campo La Galera)",
       "date": "05 jul 2026",
       "rounds": null,
       "clubCode": null,
@@ -9943,6 +9951,14 @@
       "date": "12 jul 2026",
       "rounds": null,
       "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 71884,
+      "name": "CIRCUITO PIES BLANCOS 2026",
+      "date": "12 jul 2026",
+      "rounds": null,
+      "clubCode": "CCVM",
       "year": 2026
     },
     {
@@ -10371,7 +10387,7 @@
     },
     {
       "tourId": 70790,
-      "name": "IV Memorial Alvaro Solano Reina",
+      "name": "IV Memorial Alvaro Solano Reina (Grupo Privado)",
       "date": "11 ago 2026",
       "rounds": null,
       "clubCode": null,
@@ -10405,14 +10421,6 @@
       "tourId": 70237,
       "name": "XXIII Murrys Cup (Grupo Privado)",
       "date": "13 ago 2026",
-      "rounds": null,
-      "clubCode": null,
-      "year": 2026
-    },
-    {
-      "tourId": 70607,
-      "name": "Torneo de Verano Sherry Golf Jerez 2026",
-      "date": "15 ago 2026",
       "rounds": null,
       "clubCode": null,
       "year": 2026
@@ -10452,6 +10460,14 @@
     {
       "tourId": 68726,
       "name": "IV Puntuable del Ranking de P&P 2026",
+      "date": "22 ago 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 70607,
+      "name": "Torneo de Verano Sherry Golf Jerez 2026",
       "date": "22 ago 2026",
       "rounds": null,
       "clubCode": "RCPH",
@@ -10501,6 +10517,14 @@
       "tourId": 71374,
       "name": "I Pequecircuito 2026",
       "date": "29 ago 2026",
+      "rounds": null,
+      "clubCode": null,
+      "year": 2026
+    },
+    {
+      "tourId": 71888,
+      "name": "7ª Prueba Ranking y Series Roll Up Sherry Golf 2026",
+      "date": "30 ago 2026",
       "rounds": null,
       "clubCode": null,
       "year": 2026
@@ -10635,7 +10659,7 @@
     },
     {
       "tourId": 71802,
-      "name": "II Torneo INDIVIDUAL Especial de Verano EMBUMAR y 10 Eagle Lounge Cafe Marbella - ALMERIMAR",
+      "name": "INDIVIDUAL II Torneo Especial de Verano ALMERIMAR EMBUMAR + 10 Eagle Lounge Cafe Marbella",
       "date": "05 sep 2026",
       "rounds": null,
       "clubCode": null,
@@ -10651,7 +10675,7 @@
     },
     {
       "tourId": 71860,
-      "name": "II Torneo PADRES E HIJOS Especial de Verano EMBUMAR y 10 Eagle Lounge Cafe Marbella - ALMERIMAR",
+      "name": "PADRES E HIJOS II Torneo Especial de Verano ALMERIMAR EMBUMAR + 10 Eagle Lounge Cafe Marbella",
       "date": "06 sep 2026",
       "rounds": null,
       "clubCode": null,
@@ -11499,7 +11523,7 @@
     },
     {
       "tourId": 71805,
-      "name": "IV Torneo Padres e Hijos TEM2026 GROSS DENTISTAS Costa del Sol",
+      "name": "IV Torneo Padres e Hijos TEM2026 GROSS DENTISTAS Golf Costa del Sol - Campo MAJ Golf Academy",
       "date": "17 oct 2026",
       "rounds": null,
       "clubCode": null,
