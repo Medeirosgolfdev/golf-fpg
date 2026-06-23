@@ -15,6 +15,8 @@ import EmptyState from "./EmptyState";
 import { FIELD_2025, VP_PAR, FIELD_CARDS } from "../data/rivalData";
 import { tpColor } from "./tournamentPrimitives";
 import type { RivalPlayer } from "./bjgtAnalysisTypes";
+import { useSort } from "../hooks/useSort";
+import SortableHdr from "./SortableHdr";
 
 interface FieldPlayerDetailProps {
   playerName: string;
@@ -39,6 +41,17 @@ export default function FieldPlayerDetail({
   const card = FIELD_CARDS.find(c => c.name === playerName);
   const lbEntry = FIELD_2025.leaderboard.find(p => p.name === playerName);
   const rival = D.find(d => d.n === playerName);
+
+  const { sortKey, sortDir, toggleSort } = useSort<
+    "name" | "date" | "par" | "pos" | "total" | "tp"
+  >("date", "desc", {
+    name: "asc",
+    date: "desc",
+    par: "asc",
+    pos: "asc",
+    total: "asc",
+    tp: "asc",
+  });
 
   if (!lbEntry && !rival)
     return (
@@ -285,6 +298,30 @@ export default function FieldPlayerDetail({
     }
   }
 
+  const sortedTournResults = (() => {
+    const mul = sortDir === "asc" ? 1 : -1;
+    const safeNum = (v: number | null) =>
+      v == null ? Number.POSITIVE_INFINITY : v;
+    const posNum = (v: number | string) =>
+      typeof v === "number" ? v : Number.POSITIVE_INFINITY;
+    return [...tournResults].sort((a, b) => {
+      switch (sortKey) {
+        case "name":
+          return mul * a.short.localeCompare(b.short);
+        case "date":
+          return mul * a.date.localeCompare(b.date);
+        case "par":
+          return mul * (a.par - b.par);
+        case "pos":
+          return mul * (posNum(a.pos) - posNum(b.pos));
+        case "total":
+          return mul * (safeNum(a.total) - safeNum(b.total));
+        case "tp":
+          return mul * (safeNum(a.tp) - safeNum(b.tp));
+      }
+    });
+  })();
+
   const completedResults = tournResults.filter(r => r.tp != null);
   const allRounds = completedResults.flatMap(r => r.rounds);
   const bestTp = completedResults.length
@@ -432,10 +469,10 @@ export default function FieldPlayerDetail({
             <table className="bc-collapse">
               <thead>
                 <tr>
-                  <th>Torneio</th>
-                  <th>Data</th>
-                  <th className="r">Par</th>
-                  <th className="r">Pos</th>
+                  <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Torneio</SortableHdr>
+                  <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Data</SortableHdr>
+                  <SortableHdr k="par" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Par</SortableHdr>
+                  <SortableHdr k="pos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Pos</SortableHdr>
                   {Array.from(
                     {
                       length: Math.max(
@@ -448,12 +485,12 @@ export default function FieldPlayerDetail({
                       </th>
                     )
                   )}
-                  <th className="r">Total</th>
-                  <th className="r">±Par</th>
+                  <SortableHdr k="total" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Total</SortableHdr>
+                  <SortableHdr k="tp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">±Par</SortableHdr>
                 </tr>
               </thead>
               <tbody>
-                {tournResults.map((r, i) => {
+                {sortedTournResults.map((r, i) => {
                   const mx = Math.max(
                     ...tournResults.map(x => x.rounds.length)
                   );

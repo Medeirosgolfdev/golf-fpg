@@ -1,6 +1,8 @@
-﻿import React, { useMemo, useState } from "react";
-import { abreviarNome, escalaoAtDate } from "../utils/format";
+﻿import React, { useMemo } from "react";
+import { abreviarNome, escalaoAtDate, fmtToPar, fmtHcp } from "../utils/format";
 import { EscPill } from "./PillBadge";
+import SortableHdr from "./SortableHdr";
+import { useSort } from "../hooks/useSort";
 import type { Player, Tournament, GrupoEntry } from "../data/fpgTypes";
 import type { PlayersDB } from "./tournamentPrimitives";
 
@@ -39,7 +41,7 @@ interface Props {
   rosterMode?: boolean;
 }
 
-type SortCol = "nome" | "hcp" | "total" | number; // number = índice da ronda (1-based)
+type SortCol = "nome" | "hcp" | "total" | `r${number}`; // r{N} = ronda (1-based)
 
 function grossForRound(p: Player | undefined, rd: number): number | null {
   if (!p) return null;
@@ -62,24 +64,10 @@ function bestN(scores: number[], n: number): number {
   return [...scores].sort((a, b) => a - b).slice(0, n).reduce((s, v) => s + v, 0);
 }
 
-function fmtHcp(h: number | string | undefined): string {
-  if (h == null) return "–";
-  return typeof h === "string" ? h : h % 1 === 0 ? String(h) : h.toFixed(1);
-}
-
-function fmtTP(tp: number): string {
-  return tp === 0 ? "E" : tp > 0 ? `+${tp}` : `${tp}`;
-}
-
 export default function ClubesCategoriasView({ tournament, grupos, playersDB, categories, intro, bestNLabel, initialSort, rosterMode }: Props) {
   const tournDate = tournament?.date ?? null;
   const labelN = bestNLabel ?? ((n: number) => `${n} melhores`);
-  const [sortCol, setSortCol] = useState<SortCol>(initialSort ?? "total");
-  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
-  function toggleSort(col: SortCol) {
-    if (sortCol === col) setSortDir(d => (d === "asc" ? "desc" : "asc"));
-    else { setSortCol(col); setSortDir("asc"); }
-  }
+  const { sortKey: sortCol, sortDir, toggleSort } = useSort<SortCol>(initialSort ?? "total");
 
   const byFed = useMemo(() => {
     const m = new Map<string, Player>();
@@ -126,7 +114,7 @@ export default function ClubesCategoriasView({ tournament, grupos, playersDB, ca
           av = a.p?.hcpExact ?? (typeof a.j.hcp === "number" ? a.j.hcp : 999);
           bv = b.p?.hcpExact ?? (typeof b.j.hcp === "number" ? b.j.hcp : 999);
         } else if (sortCol === "total") { av = a.total ?? INF; bv = b.total ?? INF; }
-        else { const ri = (sortCol as number) - 1; av = a.rds[ri] ?? INF; bv = b.rds[ri] ?? INF; }
+        else { const ri = parseInt(sortCol.slice(1), 10) - 1; av = a.rds[ri] ?? INF; bv = b.rds[ri] ?? INF; }
         if (typeof av === "string") return sortDir === "asc" ? av.localeCompare(bv as string, "pt") : (bv as string).localeCompare(av, "pt");
         return sortDir === "asc" ? (av as number) - (bv as number) : (bv as number) - (av as number);
       });
@@ -184,19 +172,12 @@ export default function ClubesCategoriasView({ tournament, grupos, playersDB, ca
   const tdC: React.CSSProperties = { padding: "5px 6px", fontSize: "var(--fs-12)", textAlign: "center", borderBottom: "1px solid var(--border)", verticalAlign: "middle" };
   const tdL: React.CSSProperties = { ...tdC, textAlign: "left" };
 
-  function Hdr({ label, col, left }: { label: string; col: SortCol; left?: boolean }) {
-    const active = sortCol === col;
-    return (
-      <th onClick={() => toggleSort(col)} style={{
-        ...tdC, textAlign: left ? "left" : "center", paddingLeft: left ? 10 : 6,
-        cursor: "pointer", userSelect: "none", fontWeight: 700, fontSize: "var(--fs-10)",
-        color: active ? SINGLE_COLOR : "var(--text-muted)", background: "var(--bg-muted)",
-        textTransform: "uppercase", letterSpacing: "0.04em",
-      }}>
-        {label}{active ? (sortDir === "asc" ? " ▲" : " ▼") : ""}
-      </th>
-    );
-  }
+  const hdrStyle = (left?: boolean): React.CSSProperties => ({
+    ...tdC, textAlign: left ? "left" : "center", paddingLeft: left ? 10 : 6,
+    cursor: "pointer", userSelect: "none", fontWeight: 700, fontSize: "var(--fs-10)",
+    color: "var(--text-muted)", background: "var(--bg-muted)",
+    textTransform: "uppercase", letterSpacing: "0.04em",
+  });
 
   function ScoreCell({ s, counts }: { s: number | null; counts: boolean }) {
     if (s == null) return <td style={{ ...tdC, color: "var(--text-muted)", opacity: 0.4 }}>–</td>;
@@ -207,7 +188,7 @@ export default function ClubesCategoriasView({ tournament, grupos, playersDB, ca
           <div>{s}</div>
           {tp != null && (
             <div style={{ fontSize: "var(--fs-9)", lineHeight: 1, opacity: counts ? 0.85 : 0.6, color: counts ? SINGLE_COLOR : "var(--text-muted)" }}>
-              ({fmtTP(tp)})
+              ({fmtToPar(tp)})
             </div>
           )}
         </div>
@@ -278,10 +259,10 @@ export default function ClubesCategoriasView({ tournament, grupos, playersDB, ca
                     <table className="w-full" style={{ borderCollapse: "collapse" }}>
                       <thead>
                         <tr>
-                          <Hdr label="Jogador" col="nome" left />
-                          <Hdr label="HCP" col="hcp" />
-                          {rdCols.map(rd => <Hdr key={rd} label={`R${rd}`} col={rd} />)}
-                          {rdCols.length > 1 && <Hdr label="Tot." col="total" />}
+                          <SortableHdr k="nome" sortKey={sortCol} sortDir={sortDir} onSort={toggleSort} style={hdrStyle(true)}>Jogador</SortableHdr>
+                          <SortableHdr k="hcp" sortKey={sortCol} sortDir={sortDir} onSort={toggleSort} style={hdrStyle()}>HCP</SortableHdr>
+                          {rdCols.map(rd => <SortableHdr key={rd} k={`r${rd}` as SortCol} sortKey={sortCol} sortDir={sortDir} onSort={toggleSort} style={hdrStyle()}>{`R${rd}`}</SortableHdr>)}
+                          {rdCols.length > 1 && <SortableHdr k="total" sortKey={sortCol} sortDir={sortDir} onSort={toggleSort} style={hdrStyle()}>Tot.</SortableHdr>}
                         </tr>
                       </thead>
                       <tbody>
@@ -299,7 +280,7 @@ export default function ClubesCategoriasView({ tournament, grupos, playersDB, ca
                                 </span>
                               </span>
                             </td>
-                            <td style={{ ...tdC, color: "var(--text-muted)" }}>{fmtHcp(p?.hcpExact ?? (typeof j.hcp === "number" && j.hcp > 0 ? j.hcp : undefined))}</td>
+                            <td style={{ ...tdC, color: "var(--text-muted)" }}>{fmtHcp(p?.hcpExact ?? (typeof j.hcp === "number" && j.hcp > 0 ? j.hcp : undefined), "–")}</td>
                             {rds.map((s, ri) => (
                               <ScoreCell key={ri} s={s} counts={s != null && thresholds[ri] != null && s <= (thresholds[ri] as number)} />
                             ))}
@@ -319,7 +300,7 @@ export default function ClubesCategoriasView({ tournament, grupos, playersDB, ca
                             <td style={{ ...tdC, fontWeight: 900 }}>
                               <div style={{ lineHeight: 1.15 }}>
                                 <div>{catTotal ?? "–"}</div>
-                                {catTP != null && <div style={{ fontSize: "var(--fs-9)", lineHeight: 1, opacity: 0.7 }}>({fmtTP(catTP)})</div>}
+                                {catTP != null && <div style={{ fontSize: "var(--fs-9)", lineHeight: 1, opacity: 0.7 }}>({fmtToPar(catTP)})</div>}
                               </div>
                             </td>
                           )}

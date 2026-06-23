@@ -1,6 +1,7 @@
 ﻿import { useState, useMemo } from "react";
-import { flag } from "../utils/flagUtils";
-import { sortArrow } from "../utils/format";
+import { flag, normPaisDisplay } from "../utils/flagUtils";
+import { useSort } from "../hooks/useSort";
+import SortableHdr from "./SortableHdr";
 import WdBadge from "./WdBadge";
 import KpiCard from "./KpiCard";
 import { uskTournNames, normName as normNameAuto } from "../data/KIDSdataLoader";
@@ -367,10 +368,14 @@ function tgMerge(autoRivals: AutoRivalPlayer[]): TGPlayer[] {
   };
   const resolve = (n: string) => ALIASES[normNameAuto(n)] ?? normNameAuto(n);
 
-  const map = new Map<string, TGPlayer>(TG_D.map(p => [resolve(p.n), { ...p, r: { ...p.r } }]));
+  // Canonicalizar `co` na origem para que entradas estáticas ("Russian
+  // Federation", "United States") dedupem com as canonicalizadas pelo loader
+  // ("Russia", "USA") — ver KIDSPage.tsx ~601.
+  const map = new Map<string, TGPlayer>(TG_D.map(p => [resolve(p.n), { ...p, co: normPaisDisplay(p.co), r: { ...p.r } }]));
 
   for (const ap of autoRivals) {
     const key = resolve(ap.n);
+    const apCoCanon = normPaisDisplay(ap.co || "");
     if (map.has(key)) {
       const ex = map.get(key)!;
       for (const [rawTid, res] of Object.entries(ap.r)) {
@@ -379,7 +384,7 @@ function tgMerge(autoRivals: AutoRivalPlayer[]): TGPlayer[] {
           ex.r[tid] = { p: res.p ?? "WD", tp: res.tp ?? null, t: undefined, rd: res.rd ?? [] };
         }
       }
-      if (ap.co && !ex.co) ex.co = ap.co;
+      if (apCoCanon && !ex.co) ex.co = apCoCanon;
       if (ap.dob && !ex.dob) ex.dob = ap.dob;
       // Merge up arrays — inscrições futuras do autoRivals
       if (ap.up?.length) ex.up = [...new Set([...ex.up, ...ap.up])];
@@ -391,7 +396,7 @@ function tgMerge(autoRivals: AutoRivalPlayer[]): TGPlayer[] {
           convertedR[tid] = { p: v.p ?? "WD" as "WD", tp: v.tp ?? null, rd: v.rd ?? [] };
         }
       }
-      map.set(key, { n: ap.n, co: ap.co ?? "", r: convertedR, up: ap.up ?? [] });
+      map.set(key, { n: ap.n, co: apCoCanon, r: convertedR, up: ap.up ?? [] });
     }
   }
   return Array.from(map.values());
@@ -435,8 +440,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
   const [fTour, setFTour] = useState("all");
   const [fCo,   setFCo]   = useState("all");
   const [q,     setQ]     = useState("");
-  const [sort,  setSort]  = useState("rank");
-  const [dir,   setDir]   = useState<"asc"|"desc">("asc");
+  const { sortKey: sort, sortDir: dir, toggleSort } = useSort<string>("rank");
   const [dOnly, setDOnly] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
 
@@ -572,8 +576,6 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
     return pl;
   }, [fTour, fCo, q, sort, dir, dOnly, rivals, rankMap, allTournCols, inscricaoMap, norm2]);
 
-  const doSort = (c: string) => { if (sort === c) setDir(d => d === "asc" ? "desc" : "asc"); else { setSort(c); setDir("asc"); } };
-
   // Manuel KPIs
   const manuelKpis = manuelRef ? (() => {
     const allRds = Object.values(manuelRef.r).flatMap((r: any) => r.rd?.filter((x: number) => x > 0) ?? []) as number[];
@@ -669,23 +671,22 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
           <table className="bc-collapse">
             <thead>
               <tr className="rivais-group-header">
-                <th className="rivais-th-name pointer" onClick={() => doSort("name")}>Jogador{sortArrow("name", sort, dir)}</th>
-                <th className="rivais-th pointer ta-c" onClick={() => doSort("nT")} title="Torneios">#T{sortArrow("nT", sort, dir)}</th>
+                <SortableHdr k="name" sortKey={sort} sortDir={dir} onSort={toggleSort} className="rivais-th-name">Jogador</SortableHdr>
+                <SortableHdr k="nT" sortKey={sort} sortDir={dir} onSort={toggleSort} className="rivais-th ta-c" title="Torneios">#T</SortableHdr>
                 {allTournCols.map(({ tid, info, weight, url, isFixed, isFuture }) => {
                   const stars = weight >= 1.3 ? "★★★★★" : weight >= 1.1 ? "★★★★" : weight >= 0.9 ? "★★★" : weight >= 0.6 ? "★★" : weight >= 0.4 ? "★" : "½";
                   return (
-                    <th key={tid} className="rivais-th pointer ta-c"
+                    <SortableHdr key={tid} k={"t:" + tid} sortKey={sort} sortDir={dir} onSort={toggleSort}
+                      className="rivais-th ta-c"
                       style={{ minWidth:56, opacity: isFixed ? 1 : 0.85,
-                        color: isFuture ? "var(--color-info)" : undefined }}
-                      onClick={() => doSort("t:" + tid)}>
+                        color: isFuture ? "var(--color-info)" : undefined }}>
                       {url ? <a href={url} target="_blank" rel="noopener noreferrer" className="rivais-link" onClick={e => e.stopPropagation()}>{info.short}</a> : info.short}
-                      {sortArrow("t:" + tid, sort, dir)}
                       {!isFuture && <div className="fs-10 fw-500 op-6 mt-1">{stars} {info.date}</div>}
                       {isFuture && <div className="fs-10 fw-500 mt-1" style={{ color:"var(--color-info)" }}>inscrito</div>}
-                    </th>
+                    </SortableHdr>
                   );
                 })}
-                <th className="rivais-th pointer ta-c" style={{ borderLeft:"3px solid var(--text-muted)", minWidth:56 }} onClick={() => doSort("rank")}>Rank{sortArrow("rank", sort, dir)}</th>
+                <SortableHdr k="rank" sortKey={sort} sortDir={dir} onSort={toggleSort} className="rivais-th ta-c" style={{ borderLeft:"3px solid var(--text-muted)", minWidth:56 }}>Rank</SortableHdr>
                 <th className="rivais-th ta-c">Tend.</th>
               </tr>
             </thead>

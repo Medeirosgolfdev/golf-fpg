@@ -15,8 +15,11 @@
 
 import { useMemo, useState } from "react";
 import { fmtToPar, fpgScoringUrl } from "../utils/format";
+import { normName } from "../utils/normName";
 import type { Tournament } from "../data/fpgTypes";
 import { RoundPill, EscPill } from "./PillBadge";
+import { useSort } from "../hooks/useSort";
+import SortableHdr from "./SortableHdr";
 
 interface PlayerEntry {
   pos: number | string | null;
@@ -59,16 +62,6 @@ interface AthleteFile {
   bronzes: number;
   top5: number;
   top10: number;
-}
-
-function normName(s: string): string {
-  return (s || "")
-    .toString()
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, " ");
 }
 
 /** Constroi um índice de atletas com todos os seus resultados em Nacionais. */
@@ -149,6 +142,12 @@ function buildAthleteIndex(
   return map;
 }
 
+/** Valor numérico para ordenação; nulos/strings vão para o fim (asc). */
+function numVal(v: number | string | null): number {
+  const n = typeof v === "number" ? v : v != null ? parseFloat(String(v)) : NaN;
+  return Number.isFinite(n) ? n : Number.POSITIVE_INFINITY;
+}
+
 function PosBadge({ pos }: { pos: number }) {
   const styles: Record<number, { bg: string; fg: string; label: string }> = {
     1: { bg: "var(--medal-gold-bg, #fef3c7)", fg: "var(--medal-gold-fg, var(--color-warn-dark))", label: "🥇 1º" },
@@ -191,6 +190,13 @@ export default function AtletaSearchPanel({
   const [q, setQ] = useState("");
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
 
+  const matchSort = useSort<
+    "name" | "fed" | "club" | "particip" | "golds" | "top5" | "best"
+  >("particip", "desc");
+  const detailSort = useSort<
+    "date" | "escalao" | "pos" | "tipo" | "gross" | "toPar" | "em" | "tournament"
+  >("date", "desc");
+
   const matches = useMemo(() => {
     const qNorm = normName(q);
     if (!qNorm || qNorm.length < 2) return [] as AthleteFile[];
@@ -208,10 +214,84 @@ export default function AtletaSearchPanel({
       .slice(0, 30);
   }, [q, all]);
 
+  const sortedMatches = useMemo(() => {
+    const { sortKey, sortDir } = matchSort;
+    const dir = sortDir === "asc" ? 1 : -1;
+    const arr = [...matches];
+    arr.sort((a, b) => {
+      let cmp = 0;
+      switch (sortKey) {
+        case "name":
+          cmp = a.name.localeCompare(b.name, "pt");
+          break;
+        case "fed":
+          cmp = (a.fed || "").localeCompare(b.fed || "", "pt");
+          break;
+        case "club":
+          cmp = (a.club || "").localeCompare(b.club || "", "pt");
+          break;
+        case "particip":
+          cmp = a.results.length - b.results.length;
+          break;
+        case "golds":
+          cmp = a.golds - b.golds;
+          break;
+        case "top5":
+          cmp = a.top5 - b.top5;
+          break;
+        case "best":
+          cmp = a.best - b.best;
+          break;
+      }
+      if (cmp === 0) cmp = a.name.localeCompare(b.name, "pt");
+      return cmp * dir;
+    });
+    return arr;
+  }, [matches, matchSort]);
+
   const selected = useMemo(() => {
     if (!selectedKey) return null;
     return index.get(selectedKey) || null;
   }, [selectedKey, index]);
+
+  const sortedResults = useMemo(() => {
+    if (!selected) return [] as NationalResult[];
+    const { sortKey, sortDir } = detailSort;
+    const dir = sortDir === "asc" ? 1 : -1;
+    const arr = [...selected.results];
+    arr.sort((a, b) => {
+      let cmp = 0;
+      switch (sortKey) {
+        case "date":
+          cmp = (a.date || "").localeCompare(b.date || "");
+          break;
+        case "escalao":
+          cmp = (a.escalao || "").localeCompare(b.escalao || "", "pt");
+          break;
+        case "pos":
+          cmp = a.pos - b.pos;
+          break;
+        case "tipo":
+          cmp = Number(a.isClubes) - Number(b.isClubes);
+          break;
+        case "gross":
+          cmp = numVal(a.gross) - numVal(b.gross);
+          break;
+        case "toPar":
+          cmp = numVal(a.toPar) - numVal(b.toPar);
+          break;
+        case "em":
+          cmp = a.totalPlayers - b.totalPlayers;
+          break;
+        case "tournament":
+          cmp = (a.tournamentName || "").localeCompare(b.tournamentName || "", "pt");
+          break;
+      }
+      if (cmp === 0) cmp = (b.date || "").localeCompare(a.date || "") || a.pos - b.pos;
+      return cmp * dir;
+    });
+    return arr;
+  }, [selected, detailSort]);
 
   const handleSelect = (a: AthleteFile) => {
     const k = a.fed ? `fed:${a.fed}` : `name:${normName(a.name)}`;
@@ -271,17 +351,17 @@ export default function AtletaSearchPanel({
           <table className="dtable">
             <thead>
               <tr>
-                <th>Atleta</th>
-                <th>Fed</th>
-                <th>Clube</th>
-                <th className="r">Particip.</th>
-                <th className="r">🥇</th>
-                <th className="r">Top-5</th>
-                <th className="r">Melhor</th>
+                <SortableHdr k="name" sortKey={matchSort.sortKey} sortDir={matchSort.sortDir} onSort={matchSort.toggleSort}>Atleta</SortableHdr>
+                <SortableHdr k="fed" sortKey={matchSort.sortKey} sortDir={matchSort.sortDir} onSort={matchSort.toggleSort}>Fed</SortableHdr>
+                <SortableHdr k="club" sortKey={matchSort.sortKey} sortDir={matchSort.sortDir} onSort={matchSort.toggleSort}>Clube</SortableHdr>
+                <SortableHdr k="particip" sortKey={matchSort.sortKey} sortDir={matchSort.sortDir} onSort={matchSort.toggleSort} className="r">Particip.</SortableHdr>
+                <SortableHdr k="golds" sortKey={matchSort.sortKey} sortDir={matchSort.sortDir} onSort={matchSort.toggleSort} className="r">🥇</SortableHdr>
+                <SortableHdr k="top5" sortKey={matchSort.sortKey} sortDir={matchSort.sortDir} onSort={matchSort.toggleSort} className="r">Top-5</SortableHdr>
+                <SortableHdr k="best" sortKey={matchSort.sortKey} sortDir={matchSort.sortDir} onSort={matchSort.toggleSort} className="r">Melhor</SortableHdr>
               </tr>
             </thead>
             <tbody>
-              {matches.map((a) => {
+              {sortedMatches.map((a) => {
                 const k = a.fed ? `fed:${a.fed}` : `name:${normName(a.name)}`;
                 return (
                   <tr
@@ -403,18 +483,18 @@ export default function AtletaSearchPanel({
             <table className="dtable">
               <thead>
                 <tr>
-                  <th>Data</th>
-                  <th>Esc</th>
-                  <th>Pos</th>
-                  <th>Tipo</th>
-                  <th className="r">Total</th>
-                  <th className="r">±Par</th>
-                  <th className="r">Em</th>
-                  <th>Torneio</th>
+                  <SortableHdr k="date" sortKey={detailSort.sortKey} sortDir={detailSort.sortDir} onSort={detailSort.toggleSort}>Data</SortableHdr>
+                  <SortableHdr k="escalao" sortKey={detailSort.sortKey} sortDir={detailSort.sortDir} onSort={detailSort.toggleSort}>Esc</SortableHdr>
+                  <SortableHdr k="pos" sortKey={detailSort.sortKey} sortDir={detailSort.sortDir} onSort={detailSort.toggleSort}>Pos</SortableHdr>
+                  <SortableHdr k="tipo" sortKey={detailSort.sortKey} sortDir={detailSort.sortDir} onSort={detailSort.toggleSort}>Tipo</SortableHdr>
+                  <SortableHdr k="gross" sortKey={detailSort.sortKey} sortDir={detailSort.sortDir} onSort={detailSort.toggleSort} className="r">Total</SortableHdr>
+                  <SortableHdr k="toPar" sortKey={detailSort.sortKey} sortDir={detailSort.sortDir} onSort={detailSort.toggleSort} className="r">±Par</SortableHdr>
+                  <SortableHdr k="em" sortKey={detailSort.sortKey} sortDir={detailSort.sortDir} onSort={detailSort.toggleSort} className="r">Em</SortableHdr>
+                  <SortableHdr k="tournament" sortKey={detailSort.sortKey} sortDir={detailSort.sortDir} onSort={detailSort.toggleSort}>Torneio</SortableHdr>
                 </tr>
               </thead>
               <tbody>
-                {selected.results.map((r, i) => (
+                {sortedResults.map((r, i) => (
                   <tr key={i}>
                     <td style={{ whiteSpace: "nowrap" }}>{r.date}</td>
                     <td>{r.escalao ? <EscPill esc={r.escalao} /> : "—"}</td>

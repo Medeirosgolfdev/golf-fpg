@@ -2,9 +2,10 @@
  * kids/MemberHistTable.tsx — Tabela do historial USKids (Member History)
  * (extraído de KIDSPage.tsx para reduzir tamanho)
  */
-import React, { useMemo, useState } from "react";
+import { useMemo } from "react";
 import SortableHdr from "../../ui/SortableHdr";
-import { fmtToPar, MONTHS_PT, sortArrow, isoDate } from "../../utils/format";
+import { useSort } from "../../hooks/useSort";
+import { fmtToPar, isoDate } from "../../utils/format";
 import { tpColorDark } from "../../utils/scoreDisplay";
 
 // Types partilhados
@@ -15,50 +16,30 @@ interface MHTournament {
   par?: number[]; startDate?: string;
 }
 
-// Helper local — coloração para to-par
-function tpColorMH(tp: number | null): string {
-  if (tp == null) return "var(--text-3)";
-  if (tp < 0) return "var(--color-good-dark)";
-  if (tp === 0) return "var(--text-2)";
-  return "var(--color-danger)";
-}
-
 export type MHSortCol = "date" | "pos" | "total" | "name";
 
 export function MemberHistTable({ mhTorneios, memberId }: {
   mhTorneios: Array<MHTournament & { tid: string }>;
   memberId: string;
 }) {
-  const [sortCol, setSortCol] = useState<MHSortCol>("date");
-  const [sortDir, setSortDir] = useState<"asc"|"desc">("desc");
-
-  const doSort = (col: MHSortCol) => {
-    if (sortCol === col) setSortDir(d => d === "asc" ? "desc" : "asc");
-    else { setSortCol(col); setSortDir(col === "name" ? "asc" : "desc"); }
-  };
+  const { sortKey, sortDir, toggleSort } = useSort<MHSortCol>("date", "desc", { name: "asc" });
 
   const sorted = useMemo(() => {
     return [...mhTorneios].sort((a, b) => {
       let cmp = 0;
-      if (sortCol === "date") {
+      if (sortKey === "date") {
         const pa = isoDate(a.startDate || ""), pb = isoDate(b.startDate || "");
         cmp = pa.localeCompare(pb);
-      } else if (sortCol === "pos") {
+      } else if (sortKey === "pos") {
         cmp = (a.place || 999) - (b.place || 999);
-      } else if (sortCol === "total") {
+      } else if (sortKey === "total") {
         cmp = (a.totalStrokes || 999) - (b.totalStrokes || 999);
-      } else if (sortCol === "name") {
+      } else if (sortKey === "name") {
         cmp = (a.name || "").localeCompare(b.name || "");
       }
       return sortDir === "desc" ? -cmp : cmp;
     });
-  }, [mhTorneios, sortCol, sortDir]);
-
-  const ThS = ({ col, label, style, className }: { col: MHSortCol; label: string; style?: React.CSSProperties; className?: string }) => (
-    <th onClick={() => doSort(col)} className={className} style={{ cursor: "pointer", userSelect: "none", ...style }}>
-      {label}{sortArrow(col, sortCol, sortDir)}
-    </th>
-  );
+  }, [mhTorneios, sortKey, sortDir]);
 
   return (
     <div className="mt-24 mb-16">
@@ -70,12 +51,12 @@ export function MemberHistTable({ mhTorneios, memberId }: {
         <table className="dtable w-full fs-12" >
           <thead>
             <tr>
-              <ThS col="name"  label="Torneio"  className="ta-left"  style={{ padding: "4px 8px" }} />
+              <SortableHdr k="name"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="ta-left" style={{ padding: "4px 8px" }}>Torneio</SortableHdr>
               <th className="ta-c" style={{ width: 60 }}>Escalão</th>
-              <ThS col="pos"   label="Pos"   className="ta-c"   style={{ width: 42 }} />
-              <ThS col="total" label="Total" className="ta-c" style={{ width: 60 }} />
+              <SortableHdr k="pos"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="ta-c" style={{ width: 42 }}>Pos</SortableHdr>
+              <SortableHdr k="total" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="ta-c" style={{ width: 60 }}>Total</SortableHdr>
               <th className="ta-c" style={{ width: 70 }}>Rondas</th>
-              <ThS col="date"  label="Data"  className="ta-left"  style={{ width: 70 }} />
+              <SortableHdr k="date"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="ta-left" style={{ width: 70 }}>Data</SortableHdr>
             </tr>
           </thead>
           <tbody>
@@ -99,7 +80,7 @@ export function MemberHistTable({ mhTorneios, memberId }: {
                     {t.totalStrokes > 0 ? (
                       <>
                         <span className="fw-600">{t.totalStrokes}</span>
-                        {tpStr && <span className="fs-10" style={{ color: tpColorMH(tp), marginLeft: 3 }}>({tpStr})</span>}
+                        {tpStr && <span className="fs-10" style={{ color: tpColorDark(tp), marginLeft: 3 }}>({tpStr})</span>}
                       </>
                     ) : "—"}
                   </td>

@@ -8,8 +8,11 @@
  * Inclui mapeamento para a plataforma de scoring usada (NextCaddy / site próprio
  * / não usado) — útil para perceber onde podemos ir buscar dados.
  */
+import type React from "react";
 import DetailHeader from "../../ui/DetailHeader";
 import ExtLink from "../../ui/ExternalLink";
+import SortableHdr from "../../ui/SortableHdr";
+import { useSort } from "../../hooks/useSort";
 
 interface RFEGFederation {
   /** Nome oficial RFEG */
@@ -216,6 +219,89 @@ export const RFEG_FEDERATIONS: RFEGFederation[] = [
   },
 ];
 
+/** Definição de uma coluna da FedTable. Quando `sortVal` é fornecido, a coluna
+ *  é ordenável por clique no cabeçalho. */
+interface FedColumn {
+  /** Chave única da coluna (usada como sortKey). */
+  key: string;
+  /** Texto do cabeçalho. */
+  label: React.ReactNode;
+  /** Acessor para o valor de ordenação. Omitir torna a coluna não-ordenável. */
+  sortVal?: (f: RFEGFederation) => string | number;
+  /** Renderiza a célula. */
+  cell: (f: RFEGFederation) => React.ReactNode;
+  /** Alinhamento do conteúdo (default: "center"). */
+  align?: "left" | "center" | "right";
+  /** Estilo extra aplicado à célula. */
+  cellStyle?: React.CSSProperties;
+  /** Direcção inicial ao seleccionar esta coluna (default: "asc"). */
+  defaultDir?: "asc" | "desc";
+}
+
+/** Tabela de federações genérica e ordenável por qualquer coluna com `sortVal`. */
+function FedTable({ rows, columns }: { rows: RFEGFederation[]; columns: FedColumn[] }) {
+  const dirMap: Record<string, "asc" | "desc"> = {};
+  for (const c of columns) if (c.defaultDir) dirMap[c.key] = c.defaultDir;
+  const { sortKey, sortDir, toggleSort } = useSort<string>(columns[0]?.key ?? "", "asc", dirMap);
+
+  const col = columns.find(c => c.key === sortKey);
+  const sorted = col?.sortVal
+    ? [...rows].sort((a, b) => {
+        const av = col.sortVal!(a);
+        const bv = col.sortVal!(b);
+        let cmp: number;
+        if (typeof av === "number" && typeof bv === "number") {
+          cmp = av - bv;
+        } else {
+          cmp = String(av).localeCompare(String(bv), "es");
+        }
+        return sortDir === "asc" ? cmp : -cmp;
+      })
+    : rows;
+
+  return (
+    <div style={{ overflowX: "auto" }}>
+      <table className="dtable">
+        <thead>
+          <tr>
+            {columns.map(c => {
+              const align = c.align ?? "center";
+              if (c.sortVal) {
+                return (
+                  <SortableHdr
+                    key={c.key}
+                    k={c.key}
+                    sortKey={sortKey}
+                    sortDir={sortDir}
+                    onSort={toggleSort}
+                    style={{ textAlign: align }}
+                  >
+                    {c.label}
+                  </SortableHdr>
+                );
+              }
+              return (
+                <th key={c.key} style={{ textAlign: align }}>{c.label}</th>
+              );
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {sorted.map(f => (
+            <tr key={f.name}>
+              {columns.map(c => (
+                <td key={c.key} style={{ textAlign: c.align ?? "center", ...c.cellStyle }}>
+                  {c.cell(f)}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 export function RFEGFederationsView() {
   const ncFeds = RFEG_FEDERATIONS.filter(f => f.platform === "NextCaddy");
   const gdFeds = RFEG_FEDERATIONS.filter(f => f.platform === "GolfDirecto");
@@ -281,44 +367,47 @@ export function RFEGFederationsView() {
       </div>
 
       <h3 style={{ marginTop: 24, marginBottom: 8 }}>✅ Federações com NextCaddy (rastreadas)</h3>
-      <div style={{ overflowX: "auto" }}>
-        <table className="dtable">
-          <thead>
-            <tr>
-              <th style={{ textAlign: "left" }}>Federação</th>
-              <th>Comunidade</th>
-              <th>Lic.</th>
-              <th>Cód. NC</th>
-              <th>Torneios</th>
-              <th>Site oficial</th>
-              <th>Página RFEG</th>
-            </tr>
-          </thead>
-          <tbody>
-            {ncFeds.map(f => (
-              <tr key={f.name}>
-                <td><strong>{f.name}</strong></td>
-                <td style={{ textAlign: "center" }}>{f.region}</td>
-                <td style={{ textAlign: "center", fontFamily: "var(--font-mono)" }}>
-                  <code>{f.licPrefix}</code>
-                </td>
-                <td style={{ textAlign: "center", fontFamily: "var(--font-mono)" }}>
-                  <code>{f.ncCode}</code>
-                </td>
-                <td style={{ textAlign: "right", fontFamily: "var(--font-mono)", color: "var(--color-good)", fontWeight: 600 }}>
-                  {f.scrapedCount}
-                </td>
-                <td style={{ textAlign: "center" }}>
-                  {f.website && <ExtLink href={f.website} className="tourn-ext-link">🔗</ExtLink>}
-                </td>
-                <td style={{ textAlign: "center" }}>
-                  <ExtLink href={f.rfegPage} className="tourn-ext-link">📄</ExtLink>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <FedTable
+        rows={ncFeds}
+        columns={[
+          {
+            key: "name", label: "Federação", align: "left",
+            sortVal: f => f.name,
+            cell: f => <strong>{f.name}</strong>,
+          },
+          {
+            key: "region", label: "Comunidade",
+            sortVal: f => f.region,
+            cell: f => f.region,
+          },
+          {
+            key: "lic", label: "Lic.",
+            cellStyle: { fontFamily: "var(--font-mono)" },
+            sortVal: f => f.licPrefix ?? "",
+            cell: f => <code>{f.licPrefix}</code>,
+          },
+          {
+            key: "ncCode", label: "Cód. NC",
+            cellStyle: { fontFamily: "var(--font-mono)" },
+            sortVal: f => f.ncCode ?? "",
+            cell: f => <code>{f.ncCode}</code>,
+          },
+          {
+            key: "scrapedCount", label: "Torneios", align: "right", defaultDir: "desc",
+            cellStyle: { fontFamily: "var(--font-mono)", color: "var(--color-good)", fontWeight: 600 },
+            sortVal: f => f.scrapedCount ?? 0,
+            cell: f => f.scrapedCount,
+          },
+          {
+            key: "website", label: "Site oficial",
+            cell: f => f.website && <ExtLink href={f.website} className="tourn-ext-link">🔗</ExtLink>,
+          },
+          {
+            key: "rfegPage", label: "Página RFEG",
+            cell: f => <ExtLink href={f.rfegPage} className="tourn-ext-link">📄</ExtLink>,
+          },
+        ]}
+      />
 
       <h3 style={{ marginTop: 24, marginBottom: 8 }}>🟢 Federações com GolfDirecto (rastreadas)</h3>
       <p className="fs-11 muted" style={{ marginBottom: 8 }}>
@@ -327,49 +416,52 @@ export function RFEGFederationsView() {
         Plataforma legacy (2018-2023): <ExtLink href="https://open.imaster.golf/" className="tourn-ext-link">open.imaster.golf</ExtLink>{" "}
         — ainda activa para torneios antigos mas requer scraper diferente (não implementado).
       </p>
-      <div style={{ overflowX: "auto" }}>
-        <table className="dtable">
-          <thead>
-            <tr>
-              <th style={{ textAlign: "left" }}>Federação</th>
-              <th>Comunidade</th>
-              <th>Lic.</th>
-              <th>Plataforma actual</th>
-              <th>Games scrapados</th>
-              <th>Site oficial</th>
-              <th>Página RFEG</th>
-            </tr>
-          </thead>
-          <tbody>
-            {gdFeds.map(f => (
-              <tr key={f.name}>
-                <td>
-                  <strong>{f.name}</strong>
-                  {f.notes && (
-                    <div className="fs-10 muted" style={{ marginTop: 2 }}>{f.notes}</div>
-                  )}
-                </td>
-                <td style={{ textAlign: "center" }}>{f.region}</td>
-                <td style={{ textAlign: "center", fontFamily: "var(--font-mono)" }}>
-                  <code>{f.licPrefix}</code>
-                </td>
-                <td style={{ textAlign: "center" }}>
-                  <ExtLink href="https://www.golfdirecto.com/" className="tourn-ext-link">golfdirecto.com</ExtLink>
-                </td>
-                <td style={{ textAlign: "right", fontFamily: "var(--font-mono)", color: "var(--color-good)", fontWeight: 600 }}>
-                  {f.scrapedCount}
-                </td>
-                <td style={{ textAlign: "center" }}>
-                  {f.website && <ExtLink href={f.website} className="tourn-ext-link">🔗</ExtLink>}
-                </td>
-                <td style={{ textAlign: "center" }}>
-                  <ExtLink href={f.rfegPage} className="tourn-ext-link">📄</ExtLink>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <FedTable
+        rows={gdFeds}
+        columns={[
+          {
+            key: "name", label: "Federação", align: "left",
+            sortVal: f => f.name,
+            cell: f => (
+              <>
+                <strong>{f.name}</strong>
+                {f.notes && (
+                  <div className="fs-10 muted" style={{ marginTop: 2 }}>{f.notes}</div>
+                )}
+              </>
+            ),
+          },
+          {
+            key: "region", label: "Comunidade",
+            sortVal: f => f.region,
+            cell: f => f.region,
+          },
+          {
+            key: "lic", label: "Lic.",
+            cellStyle: { fontFamily: "var(--font-mono)" },
+            sortVal: f => f.licPrefix ?? "",
+            cell: f => <code>{f.licPrefix}</code>,
+          },
+          {
+            key: "platform", label: "Plataforma actual",
+            cell: () => <ExtLink href="https://www.golfdirecto.com/" className="tourn-ext-link">golfdirecto.com</ExtLink>,
+          },
+          {
+            key: "scrapedCount", label: "Games scrapados", align: "right", defaultDir: "desc",
+            cellStyle: { fontFamily: "var(--font-mono)", color: "var(--color-good)", fontWeight: 600 },
+            sortVal: f => f.scrapedCount ?? 0,
+            cell: f => f.scrapedCount,
+          },
+          {
+            key: "website", label: "Site oficial",
+            cell: f => f.website && <ExtLink href={f.website} className="tourn-ext-link">🔗</ExtLink>,
+          },
+          {
+            key: "rfegPage", label: "Página RFEG",
+            cell: f => <ExtLink href={f.rfegPage} className="tourn-ext-link">📄</ExtLink>,
+          },
+        ]}
+      />
 
       <h3 style={{ marginTop: 24, marginBottom: 8 }}>🔵 Federações com sistema próprio (não rastreadas)</h3>
       <p className="fs-11 muted" style={{ marginBottom: 8 }}>
@@ -378,68 +470,68 @@ export function RFEGFederationsView() {
         federação. Os jogadores destas federações <em>aparecem</em> nos torneios scrapados
         quando entram em provas Andaluzas/Madrileñas/Catalanas/etc.
       </p>
-      <div style={{ overflowX: "auto" }}>
-        <table className="dtable">
-          <thead>
-            <tr>
-              <th style={{ textAlign: "left" }}>Federação</th>
-              <th>Comunidade</th>
-              <th>Lic.</th>
-              <th>Site oficial</th>
-              <th>Página RFEG</th>
-            </tr>
-          </thead>
-          <tbody>
-            {ownFeds.map(f => (
-              <tr key={f.name}>
-                <td>{f.name}</td>
-                <td style={{ textAlign: "center" }}>{f.region}</td>
-                <td style={{ textAlign: "center", fontFamily: "var(--font-mono)" }}>
-                  <code>{f.licPrefix}</code>
-                </td>
-                <td style={{ textAlign: "center" }}>
-                  <ExtLink href={f.website} className="tourn-ext-link">🔗 oficial</ExtLink>
-                </td>
-                <td style={{ textAlign: "center" }}>
-                  <ExtLink href={f.rfegPage} className="tourn-ext-link">📄 RFEG</ExtLink>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <FedTable
+        rows={ownFeds}
+        columns={[
+          {
+            key: "name", label: "Federação", align: "left",
+            sortVal: f => f.name,
+            cell: f => f.name,
+          },
+          {
+            key: "region", label: "Comunidade",
+            sortVal: f => f.region,
+            cell: f => f.region,
+          },
+          {
+            key: "lic", label: "Lic.",
+            cellStyle: { fontFamily: "var(--font-mono)" },
+            sortVal: f => f.licPrefix ?? "",
+            cell: f => <code>{f.licPrefix}</code>,
+          },
+          {
+            key: "website", label: "Site oficial",
+            cell: f => <ExtLink href={f.website} className="tourn-ext-link">🔗 oficial</ExtLink>,
+          },
+          {
+            key: "rfegPage", label: "Página RFEG",
+            cell: f => <ExtLink href={f.rfegPage} className="tourn-ext-link">📄 RFEG</ExtLink>,
+          },
+        ]}
+      />
 
       <h3 style={{ marginTop: 24, marginBottom: 8 }}>⚪ Delegações de cidades autónomas</h3>
-      <div style={{ overflowX: "auto" }}>
-        <table className="dtable">
-          <thead>
-            <tr>
-              <th style={{ textAlign: "left" }}>Delegação</th>
-              <th>Cidade</th>
-              <th>Lic.</th>
-              <th>Cód. NC (vazio)</th>
-              <th>Página RFEG</th>
-            </tr>
-          </thead>
-          <tbody>
-            {emptyFeds.map(f => (
-              <tr key={f.name}>
-                <td>{f.name}</td>
-                <td style={{ textAlign: "center" }}>{f.region}</td>
-                <td style={{ textAlign: "center", fontFamily: "var(--font-mono)" }}>
-                  <code>{f.licPrefix}</code>
-                </td>
-                <td style={{ textAlign: "center", fontFamily: "var(--font-mono)" }}>
-                  <code>{f.ncCode}</code>
-                </td>
-                <td style={{ textAlign: "center" }}>
-                  <ExtLink href={f.rfegPage} className="tourn-ext-link">📄</ExtLink>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <FedTable
+        rows={emptyFeds}
+        columns={[
+          {
+            key: "name", label: "Delegação", align: "left",
+            sortVal: f => f.name,
+            cell: f => f.name,
+          },
+          {
+            key: "region", label: "Cidade",
+            sortVal: f => f.region,
+            cell: f => f.region,
+          },
+          {
+            key: "lic", label: "Lic.",
+            cellStyle: { fontFamily: "var(--font-mono)" },
+            sortVal: f => f.licPrefix ?? "",
+            cell: f => <code>{f.licPrefix}</code>,
+          },
+          {
+            key: "ncCode", label: "Cód. NC (vazio)",
+            cellStyle: { fontFamily: "var(--font-mono)" },
+            sortVal: f => f.ncCode ?? "",
+            cell: f => <code>{f.ncCode}</code>,
+          },
+          {
+            key: "rfegPage", label: "Página RFEG",
+            cell: f => <ExtLink href={f.rfegPage} className="tourn-ext-link">📄</ExtLink>,
+          },
+        ]}
+      />
 
       <div style={{ marginTop: 24 }}>
         <h3 style={{ marginBottom: 8 }}>🌐 Plataformas onde aparecem os resultados</h3>

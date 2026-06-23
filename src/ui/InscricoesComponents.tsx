@@ -32,6 +32,8 @@ import { AnoEscalaoPill, TrendBadge } from "./AnoEscalaoPill";
 import PlayerLink from "./PlayerLink";
 import LoadingState from "./LoadingState";
 import EmptyState from "./EmptyState";
+import SortableHdr from "./SortableHdr";
+import { useSort } from "../hooks/useSort";
 import { FLAG } from "../utils/flagUtils";
 import { cachedFetchJson } from "../data/fetchCache";
 
@@ -373,8 +375,8 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
 }) {
   const fedCountries = useFedCountries();
   const [search, setSearch] = useState("");
-  const [sortKey, setSortKey] = useState<InscSortKey>("pos");
-  const [sortAsc, setSortAsc] = useState(true);
+  const { sortKey, sortDir, toggleSort } = useSort<InscSortKey>("pos");
+  const sortAsc = sortDir === "asc";
   const term = norm(search);
 
   const nossosCount = useMemo(
@@ -409,17 +411,6 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
       return sortAsc ? v : -v;
     });
   }, [t.jogadores, term, sortKey, sortAsc, nossosByFed, statsDb]);
-
-  function toggleSort(key: InscSortKey) {
-    if (sortKey === key) setSortAsc(v => !v); else { setSortKey(key); setSortAsc(true); }
-  }
-  function SortTh({ label, col, cls }: { label: string; col: InscSortKey; cls?: string }) {
-    const active = sortKey === col;
-    return <th className={cls} onClick={() => toggleSort(col)}
-      style={{ cursor: "pointer", userSelect: "none", whiteSpace: "nowrap" }}>
-      {label}{active ? (sortAsc ? " ↑" : " ↓") : " ↕"}
-    </th>;
-  }
 
   if (t._status !== "ok" && t._status !== "loading") return null;
   if (t._status === "loading") return <LoadingState size="sm" />;
@@ -489,15 +480,15 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
           </colgroup>
           <thead>
             <tr>
-              <SortTh label="#"     col="pos"    />
-              <SortTh label="Nome"  col="nome"   />
+              <SortableHdr k="pos"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>#</SortableHdr>
+              <SortableHdr k="nome"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Nome</SortableHdr>
               <th className="r">Fed</th>
-              <SortTh label="HCP"   col="hcp"    cls="r" />
-              <SortTh label="VAC"   col="vac"    cls="r" />
-              <SortTh label="SD5"   col="sd5"    cls="r" />
-              <SortTh label="T"     col="trend"  cls="r" />
-              <SortTh label="R3m"   col="rondas" cls="r" />
-              <SortTh label="Insc"  col="data"   cls="r" />
+              <SortableHdr k="hcp"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">HCP</SortableHdr>
+              <SortableHdr k="vac"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">VAC</SortableHdr>
+              <SortableHdr k="sd5"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">SD5</SortableHdr>
+              <SortableHdr k="trend"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">T</SortableHdr>
+              <SortableHdr k="rondas" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">R3m</SortableHdr>
+              <SortableHdr k="data"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Insc</SortableHdr>
               <th>Na BD</th>
             </tr>
           </thead>
