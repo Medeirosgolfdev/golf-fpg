@@ -97,7 +97,7 @@ jobs:
           if [ -n "${{ github.event.inputs.lgs_range }}" ]; then
             echo "LGS_RANGE=${{ github.event.inputs.lgs_range }}" >> $GITHUB_ENV
           else
-            echo "LGS_RANGE=1-500" >> $GITHUB_ENV
+            echo "LGS_RANGE=1-1000" >> $GITHUB_ENV
           fi
           # RFEGolf range (se especificado, usa range em vez de scope)
           if [ -n "${{ github.event.inputs.rfegolf_range }}" ]; then
