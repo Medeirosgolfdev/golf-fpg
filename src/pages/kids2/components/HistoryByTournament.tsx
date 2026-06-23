@@ -16,6 +16,8 @@ import { useSort } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";
 import { getTournWeight, formatStars } from "../tournWeight";
 import { categorizeTournamentLinks } from "../tournamentLinks";
+import { tpColor } from "../../../ui/tournamentPrimitives";
+import { fmtToPar } from "../../../utils/format";
 
 type EdSortKey = "year" | "flight" | "pos" | "rounds" | "toPar" | "topPct";
 
@@ -330,8 +332,8 @@ function SeriesRow({ label, editions, data }: { label: string; editions: Edition
                       {grosses.length ? grosses.join("·") : total ?? "—"}
                       {total != null && grosses.length > 1 && <span style={{ color: "var(--text-3)", marginLeft: 4 }}>({total})</span>}
                     </td>
-                    <td style={{ ...tdC, textAlign: "right", color: toPar != null && toPar < 0 ? "var(--medal-gold-strong)" : toPar != null && toPar > 0 ? "var(--color-danger-dark)" : "var(--text-3)", fontWeight: toPar != null && toPar !== 0 ? 700 : 400 }}>
-                      {toPar == null ? "—" : toPar === 0 ? "E" : toPar > 0 ? `+${toPar}` : String(toPar)}
+                    <td style={{ ...tdC, textAlign: "right", color: tpColor(toPar) ?? "var(--text-3)", fontWeight: toPar != null && toPar !== 0 ? 700 : 400 }}>
+                      {fmtToPar(toPar)}
                     </td>
                     {manuel && manuel.id !== ed.result.juniorId && (
                       <td style={{ ...tdC, textAlign: "center" }}>

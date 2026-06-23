@@ -16,6 +16,8 @@
 import { useMemo, useState } from "react";
 import type { CanonicalData, Junior, Tournament, Flight, Result } from "../data";
 import { getTournWeight, formatStars } from "../tournWeight";
+import { tpColor } from "../../../ui/tournamentPrimitives";
+import { fmtToPar, MONTHS_PT } from "../../../utils/format";
 
 const DEFAULT_LIMIT = 6;
 const RECENT_MONTHS = 24; // "recente" = últimos 24 meses
@@ -122,7 +124,7 @@ function WinCard({ win }: { win: WinCard }) {
   const date = t.date || t.startDate || "";
   const year = date.slice(0, 4) || "?";
   const month = date.slice(5, 7);
-  const monthLabel = month ? MONTHS_PT_SHORT[Number(month) - 1] : "";
+  const monthLabel = month ? MONTHS_PT[Number(month) - 1] : "";
   const url = t.links?.[0]?.url;
 
   return (
@@ -157,9 +159,9 @@ function WinCard({ win }: { win: WinCard }) {
         {win.toPar != null && (
           <span style={{
             fontWeight: 700,
-            color: win.toPar < 0 ? "var(--medal-gold-strong)" : win.toPar > 0 ? "var(--color-danger-dark)" : "var(--text-2)",
+            color: tpColor(win.toPar) ?? "var(--text-2)",
           }} title="Total ±par">
-            {win.toPar === 0 ? "E" : win.toPar > 0 ? `+${win.toPar}` : String(win.toPar)}
+            {fmtToPar(win.toPar)}
           </span>
         )}
         {win.manuelToPar != null && (
@@ -244,5 +246,3 @@ function collectAllWins(data: CanonicalData, junior: Junior, filterTids?: Set<st
     return w.stars * 6 + recency;
   }
 }
-
-const MONTHS_PT_SHORT = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];

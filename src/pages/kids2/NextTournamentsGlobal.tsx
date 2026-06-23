@@ -16,6 +16,7 @@ import SortableHdr from "../../ui/SortableHdr";
 import { useJuniorsCanonical, type Junior } from "./data";
 import { useUpcomingByJunior, type UpcomingReg } from "./upcomingRegs";
 import Kids2SubNav from "./Kids2SubNav";
+import { MONTHS_PT } from "../../utils/format";
 
 export default function NextTournamentsGlobal() {
   const { unlocked, unlock } = usePasswordGate();
@@ -26,11 +27,10 @@ export default function NextTournamentsGlobal() {
 interface Row { junior: Junior; reg: UpcomingReg; }
 type SortK = "date" | "player" | "tournament" | "circuit" | "escalao";
 
-const MONTHS_PT_SHORT = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
 function fmtDate(iso: string): string {
   if (!iso) return "";
   const [y, m, d] = iso.split("-");
-  return `${Number(d)} ${MONTHS_PT_SHORT[Number(m) - 1] || m} ${y}`;
+  return `${Number(d)} ${MONTHS_PT[Number(m) - 1] || m} ${y}`;
 }
 const CIRCUIT_LABEL: Record<UpcomingReg["circuit"], string> = { uskids: "🇺🇸 USKids", fpg: "🇵🇹 FPG" };
 

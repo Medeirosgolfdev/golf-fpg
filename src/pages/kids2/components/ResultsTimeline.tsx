@@ -13,6 +13,8 @@ import SortableHdr from "../../../ui/SortableHdr";
 import InlineScorecard from "./InlineScorecard";
 import { categorizeTournamentLinks } from "../tournamentLinks";
 import { RoundPill, NineHPill } from "../../../ui/PillBadge";
+import { tpColor } from "../../../ui/tournamentPrimitives";
+import { fmtToPar, MONTHS_PT } from "../../../utils/format";
 
 type ResKey = "date" | "type" | "pos" | "name" | "flight" | "rounds" | "toPar" | "vsM";
 
@@ -36,7 +38,6 @@ interface Row {
   topPct: number | null;
 }
 
-const MONTHS_ABBR = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
 const SOURCE_LABELS: Record<string, string> = {
   uskids: "USKids", fpg: "FPG", rfeg: "RFEG", ffgolf: "FFG", wjgc: "WJGC", eowagr: "EOWAGR", doral: "Doral",
 };
@@ -457,8 +458,8 @@ function ResultRow({ r, onOpenRound, isExpanded }: { r: Row; onOpenRound: (row: 
           })
         ) : (total ?? "—")}
       </td>
-      <td style={{ textAlign: "right", color: toPar != null && toPar < 0 ? "var(--color-good-dark)" : toPar != null && toPar > 0 ? "var(--color-danger-dark)" : "var(--text-3)", fontWeight: toPar != null && toPar < 0 ? 700 : 400 }}>
-        {toPar == null ? "—" : toPar === 0 ? "E" : toPar > 0 ? `+${toPar}` : String(toPar)}
+      <td style={{ textAlign: "right", color: tpColor(toPar) ?? "var(--text-3)", fontWeight: toPar != null && toPar < 0 ? 700 : 400 }}>
+        {fmtToPar(toPar)}
       </td>
       <td style={{ textAlign: "right" }}>
         {r.vsManuelDiff != null && (
@@ -517,5 +518,5 @@ function fmtDate(iso: string): string {
   const [, m, d] = iso.split("-");
   const mn = parseInt(m, 10);
   if (!mn || !d) return iso;
-  return `${d.padStart(2, "0")} ${MONTHS_ABBR[mn - 1] || ""}`;
+  return `${d.padStart(2, "0")} ${MONTHS_PT[mn - 1] || ""}`;
 }

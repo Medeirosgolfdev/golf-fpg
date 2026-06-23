@@ -9,6 +9,8 @@ import type { CanonicalData, Junior } from "../data";
 import { getSharedTournamentIds, getResultInTournament } from "../data";
 import { useSort } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";
+import { tpColor } from "../../../ui/tournamentPrimitives";
+import { MONTHS_PT } from "../../../utils/format";
 
 type SortKey = "date" | "name" | "flight" | "jGross" | "jPos" | "mGross" | "mPos" | "diff";
 
@@ -133,7 +135,7 @@ export default function MatchupVsManuel({ data, junior, manuel }: Props) {
                 <RoundsCell result={r.rM.result} />
               </td>
               <td style={{ ...tdManuel, textAlign: "center" }}><PosTrophy pos={r.rM.result.pos} /></td>
-              <td style={{ textAlign: "right", fontWeight: 700, color: r.diff > 0 ? "var(--color-danger-dark)" : r.diff < 0 ? "var(--medal-gold-strong)" : "var(--text-3)" }}>
+              <td style={{ textAlign: "right", fontWeight: 700, color: tpColor(r.diff) ?? "var(--text-3)" }}>
                 {fmtDiff(r.diff)}
               </td>
             </tr>
@@ -204,6 +206,5 @@ function fmtDateShort(iso: string | undefined): string {
   if (!iso) return "—";
   const [y, m] = iso.split("-").map(Number);
   if (!y || !m) return iso;
-  const months = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
-  return `${months[m - 1]} ${y}`;
+  return `${MONTHS_PT[m - 1]} ${y}`;
 }

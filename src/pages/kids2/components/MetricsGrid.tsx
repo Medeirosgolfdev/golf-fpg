@@ -8,7 +8,7 @@
 
 import type { CanonicalData, Junior } from "../data";
 import { countWins, countTop3, computeRoundStats } from "../data";
-import { fmtToPar } from "../../../utils/format";
+import { fmtToPar, MONTHS_PT } from "../../../utils/format";
 
 interface Props {
   data: CanonicalData;
@@ -38,7 +38,7 @@ export default function MetricsGrid({ data, junior, filterTids }: Props) {
       const date = t.date || t.startDate || "";
       const year = date.slice(0, 4);
       const m = date.slice(5, 7);
-      const monthLabel = m ? MONTHS_PT_SHORT[Number(m) - 1] : "";
+      const monthLabel = m ? MONTHS_PT[Number(m) - 1] : "";
       const fullName = t.name || t.shortName || "";
       const datePart = year ? (monthLabel ? `${monthLabel} ${year}` : year) : "";
       bestSub = `${shortNameOf(fullName)} · R${stats.bestToPar.round}${datePart ? " · " + datePart : ""}`;
@@ -127,5 +127,3 @@ function shortNameOf(s: string): string {
     // Cap final para evitar overflow em casos não cobertos
     .slice(0, 32);
 }
-
-const MONTHS_PT_SHORT = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];

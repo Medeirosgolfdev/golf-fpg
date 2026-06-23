@@ -8,19 +8,18 @@
 
 import type { CanonicalData, Junior } from "../data";
 import { useUpcomingByJunior, type UpcomingReg } from "../upcomingRegs";
+import { MONTHS_PT } from "../../../utils/format";
 
 interface Props {
   data: CanonicalData;
   junior: Junior;
 }
 
-const MONTHS_PT_SHORT = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
-
 function fmtDate(iso: string): string {
   if (!iso) return "";
   const [y, m, d] = iso.split("-");
   const mi = Number(m) - 1;
-  return `${Number(d)} ${MONTHS_PT_SHORT[mi] || m} ${y}`;
+  return `${Number(d)} ${MONTHS_PT[mi] || m} ${y}`;
 }
 
 const CIRCUIT_LABEL: Record<UpcomingReg["circuit"], string> = {

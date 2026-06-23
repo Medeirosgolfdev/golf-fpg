@@ -204,11 +204,11 @@ function ScoringPane({ player, field }: { player: ScoringDist; field: ScoringDis
   const pp = distPct(player);
   const fp = distPct(field);
   const rows = [
-    { key: "eagles",  label: "EAGLES",  pp: pp.eagles,  fp: fp.eagles,  n: player.eagles,  color: "var(--score-eagle)"    },
-    { key: "birdies", label: "BIRDIES", pp: pp.birdies, fp: fp.birdies, n: player.birdies, color: "var(--medal-gold)"     },
-    { key: "pars",    label: "PARS",    pp: pp.pars,    fp: fp.pars,    n: player.pars,    color: "var(--color-good-dark)"},
-    { key: "bogeys",  label: "BOGEYS",  pp: pp.bogeys,  fp: fp.bogeys,  n: player.bogeys,  color: "var(--color-warn)"     },
-    { key: "dbPlus",  label: "DUPLO+",  pp: pp.dbPlus,  fp: fp.dbPlus,  n: player.dbPlus,  color: "var(--color-bad-dark)" },
+    { key: "eagles",  label: "EAGLES",  pp: pp.eagles,  fp: fp.eagles,  n: player.eagles,  color: "var(--score-eagle)"        },
+    { key: "birdies", label: "BIRDIES", pp: pp.birdies, fp: fp.birdies, n: player.birdies, color: "var(--score-birdie)"       },
+    { key: "pars",    label: "PARS",    pp: pp.pars,    fp: fp.pars,    n: player.pars,    color: "var(--score-par-seg)"      },
+    { key: "bogeys",  label: "BOGEYS",  pp: pp.bogeys,  fp: fp.bogeys,  n: player.bogeys,  color: "var(--score-bogey-border)" },
+    { key: "dbPlus",  label: "DUPLO+",  pp: pp.dbPlus,  fp: fp.dbPlus,  n: player.dbPlus,  color: "var(--score-double)"       },
   ];
   return (
     <div>
@@ -266,11 +266,11 @@ function RoundsPane({ cards }: { cards: AutoScorecard[] }) {
 function RoundBar({ entry }: { entry: { tid: string; tornLabel: string; round: number; gross: number | null; toPar: number | null; dist: ScoringDist } }) {
   const p = distPct(entry.dist);
   const segs = [
-    { k: "eagles",  pct: p.eagles,  color: "var(--score-eagle)"     },
-    { k: "birdies", pct: p.birdies, color: "var(--medal-gold)"      },
-    { k: "pars",    pct: p.pars,    color: "var(--color-good-light)"},
-    { k: "bogeys",  pct: p.bogeys,  color: "var(--color-warn)"      },
-    { k: "dbPlus",  pct: p.dbPlus,  color: "var(--color-bad-dark)"  },
+    { k: "eagles",  pct: p.eagles,  color: "var(--score-eagle)"        },
+    { k: "birdies", pct: p.birdies, color: "var(--score-birdie)"       },
+    { k: "pars",    pct: p.pars,    color: "var(--score-par-seg)"      },
+    { k: "bogeys",  pct: p.bogeys,  color: "var(--score-bogey-border)" },
+    { k: "dbPlus",  pct: p.dbPlus,  color: "var(--score-double)"       },
   ].filter(s => s.pct > 0);
   const tpColor = entry.toPar == null ? "var(--text-3)" : entry.toPar < 0 ? "var(--color-good-dark)" : entry.toPar > 0 ? "var(--color-warn)" : "var(--text-2)";
   return (
@@ -322,7 +322,7 @@ function NineSplitPane({ cards, fieldCards }: { cards: AutoScorecard[]; fieldCar
           {(["eagles","birdies","pars","bogeys","dbPlus"] as const).map(k => (
             <div key={k} style={{
               flex: (pp as Record<string, number>)[k],
-              background: k === "eagles" ? "var(--score-eagle)" : k === "birdies" ? "var(--medal-gold)" : k === "pars" ? "var(--color-good-light)" : k === "bogeys" ? "var(--color-warn)" : "var(--color-bad-dark)",
+              background: k === "eagles" ? "var(--score-eagle)" : k === "birdies" ? "var(--score-birdie)" : k === "pars" ? "var(--score-par-seg)" : k === "bogeys" ? "var(--score-bogey-border)" : "var(--score-double)",
             }} title={`${k}: ${(pp as Record<string, number>)[k].toFixed(0)}%`} />
           ))}
         </div>

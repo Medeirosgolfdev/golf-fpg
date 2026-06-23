@@ -18,6 +18,7 @@
  */
 
 import type { Junior, Tournament } from "./data";
+import { MONTHS_PT } from "../../utils/format";
 
 export type DobState = "known" | "range" | "inferred" | "unknown";
 
@@ -40,8 +41,6 @@ export interface DobInfo {
   /** Próxima idade após o aniversário (só quando known + countdown activo). */
   nextAge: number | null;
 }
-
-const MONTHS_PT_SHORT = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
 
 // ═══════════════════════════════════════════════════════════════════════
 // Helpers de data
@@ -254,11 +253,11 @@ function fmtRange(lo: Date, hi: Date): string {
   const minY = lo.getFullYear(), maxY = hi.getFullYear();
   const minM = lo.getMonth(), maxM = hi.getMonth();
   if (minY === maxY) {
-    if (minM === maxM) return `${MONTHS_PT_SHORT[minM]} ${minY}`;
-    return `${MONTHS_PT_SHORT[minM]}–${MONTHS_PT_SHORT[maxM]} ${minY}`;
+    if (minM === maxM) return `${MONTHS_PT[minM]} ${minY}`;
+    return `${MONTHS_PT[minM]}–${MONTHS_PT[maxM]} ${minY}`;
   }
   // Cross-year — mostra meses se range é estreito
-  if (spanDays < 400) return `${MONTHS_PT_SHORT[minM]} ${minY} – ${MONTHS_PT_SHORT[maxM]} ${maxY}`;
+  if (spanDays < 400) return `${MONTHS_PT[minM]} ${minY} – ${MONTHS_PT[maxM]} ${maxY}`;
   return `${minY}–${maxY}`;
 }
 

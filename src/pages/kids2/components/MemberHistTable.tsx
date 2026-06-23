@@ -16,6 +16,8 @@ import type { CSSProperties } from "react";
 import type { CanonicalData, Junior, Tournament } from "../data";
 import { useSort } from "../../../hooks/useSort";
 import SortableHdr from "../../../ui/SortableHdr";
+import { MONTHS_PT, fmtToPar } from "../../../utils/format";
+import { tpColor } from "../../../ui/tournamentPrimitives";
 import { categorizeTournamentLinks } from "../tournamentLinks";
 
 interface Props {
@@ -25,8 +27,6 @@ interface Props {
 }
 
 type MHSortKey = "date" | "name" | "flight" | "pos" | "total" | "toPar";
-
-const MONTHS_PT_SHORT = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
 
 interface Row {
   tid: string;
@@ -160,10 +160,8 @@ export default function MemberHistTable({ data, junior, filterTids }: Props) {
                 <td style={{ textAlign: "right" }}>{r.total != null ? r.total : "—"}</td>
                 <td style={{ textAlign: "right", fontWeight: r.toPar != null && r.toPar !== 0 ? 700 : 400,
                   color: r.toPar == null ? "var(--text-3)"
-                    : r.toPar < 0 ? "var(--medal-gold-strong)"
-                    : r.toPar > 0 ? "var(--color-danger-dark)"
-                    : "var(--text-2)" }}>
-                  {r.toPar == null ? "—" : r.toPar === 0 ? "E" : r.toPar > 0 ? `+${r.toPar}` : String(r.toPar)}
+                    : tpColor(r.toPar) ?? "var(--text-2)" }}>
+                  {fmtToPar(r.toPar)}
                 </td>
                 <td style={{ textAlign: "right", color: "var(--text-3)" }}>
                   {r.rounds.length > 0 ? r.rounds.map((g) => g ?? "—").join(" · ") : "—"}
@@ -195,5 +193,5 @@ function fmtDate(iso: string): string {
   const [y, m] = iso.split("-");
   const mn = parseInt(m, 10);
   if (!y || !mn) return iso;
-  return `${MONTHS_PT_SHORT[mn - 1]} ${y}`;
+  return `${MONTHS_PT[mn - 1]} ${y}`;
 }
