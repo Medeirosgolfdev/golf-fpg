@@ -15,22 +15,12 @@ import { cachedFetchJson } from "../../data/fetchCache";
 import { meanArr } from "../../utils/mathUtils";
 import { normName, type AutoRivalPlayer } from "../../data/KIDSdataLoader";
 import type { RivalPlayer, TournDef, RoundAvg } from "../../ui/bjgtAnalysisTypes";
+import { normPaisDisplay } from "../../utils/flagUtils";
+import { fmtToPar } from "../../utils/format";
+import { tpColor } from "../../ui/tournamentPrimitives";
 import HistoricScorecardsTab from "./HistoricScorecardsTab";
 import CourseTab from "./CourseTab";
 import { ScoutEmbed } from "../kids2/ScoutView";
-
-// Mapeamento país-ISO (curto) → nome extenso (RivaisDashboard usa "co" extenso)
-const CO_FULL: Record<string, string> = {
-  AT: "Austria", BE: "Belgium", BG: "Bulgaria", CH: "Switzerland",
-  CN: "China", DE: "Germany", DK: "Denmark", ES: "Spain",
-  FI: "Finland", FR: "France", GB: "United Kingdom", GR: "Greece",
-  HU: "Hungary", IE: "Ireland", IT: "Italy", JP: "Japan",
-  LT: "Lithuania", LU: "Luxembourg", LV: "Latvia", NL: "Netherlands",
-  NO: "Norway", PL: "Poland", PT: "Portugal", RO: "Romania",
-  RU: "Russian Federation", SE: "Sweden", SK: "Slovakia",
-  TH: "Thailand", TR: "Turkey", UA: "Ukraine", US: "United States",
-};
-const fullCo = (cc: string): string => CO_FULL[(cc || "").toUpperCase()] || cc || "—";
 
 // ─────────────────────────────────────────────────────────────────────
 // Tcodes "canónicos" que aparecem sempre como coluna se metadata existe.
@@ -948,7 +938,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
 
       D.push({
         n: fm.p.nome,
-        co: fullCo(fm.p.pais),
+        co: normPaisDisplay(fm.p.pais),
         isM: fm.isM,
         r,
         up: fm.isM ? UP_TORN_FUTURE.map(u => u.id) : up,
@@ -1817,10 +1807,9 @@ function HistoricTopNTable({ mh, torneio, escalaoNome, autoRivals }: {
                   );
                   if (e.parPerRound) {
                     const tp = entry ? entry.total - e.parPerRound * e.nRounds : null;
-                    const tpColor = tp == null ? "var(--text-3)" : tp < 0 ? "var(--color-good-dark)" : tp > 0 ? "var(--color-danger-dark)" : "var(--text-2)";
                     cells.push(
-                      <td key={e.tcode + "_TP"} style={{ padding: "4px 6px", textAlign: "center", fontWeight: 600, color: tpColor }}>
-                        {tp == null ? "—" : tp === 0 ? "E" : tp > 0 ? "+" + tp : String(tp)}
+                      <td key={e.tcode + "_TP"} style={{ padding: "4px 6px", textAlign: "center", fontWeight: 600, color: tpColor(tp) ?? "var(--text-3)" }}>
+                        {fmtToPar(tp)}
                       </td>
                     );
                   }

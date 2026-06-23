@@ -814,7 +814,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                 {palmares.slice(0, 5).map(({ t, res }) => {
                   const ag = (res as any).ageGroup as string | null;
                   const mdl2 = typeof res.p === "number" ? (medal(res.p) ?? "🥉") : "🥉";
-                  const bg = res.p === 1 ? "#fffbea" : res.p === 2 ? "#f0f4ff" : "#fff4f0";
+                  const bg = res.p === 1 ? "var(--medal-gold-bg)" : res.p === 2 ? "var(--medal-silver-bg)" : "var(--medal-bronze-bg)";
                   const border = res.p === 1 ? "var(--medal-gold)" : res.p === 2 ? "var(--medal-silver)" : "var(--medal-bronze)";
                   const shortName = t.name.replace(/\s*\d{4}$/, "").replace(/\s*'\d{2}$/, "");
                   return (
@@ -1131,7 +1131,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                                       cursor: "help",
                                       background: isScratch ? "var(--bg-warn-strong)" : "var(--bg-info-strong)",
                                       color: isScratch ? "var(--color-warn-dark)" : "var(--color-info)",
-                                      border: `1px solid ${isScratch ? "var(--color-amber)" : "#3b82f6"}`,
+                                      border: `1px solid ${isScratch ? "var(--color-amber)" : "var(--color-info)"}`,
                                     }}>
                                     {isScratch ? "Scratch" : "Handicap"}
                                   </span>
@@ -1141,7 +1141,7 @@ export const RivalDetail = React.memo(function RivalDetail({ playerName }: { pla
                           );
                         })()}
                         {manuelEsteve && !isManuel && (
-                          <span style={{ background:"var(--bg-success-subtle)", color:"#065f46", border:"1px solid #6ee7b7",
+                          <span style={{ background:"var(--bg-success-subtle)", color:"var(--color-good-dark)", border:"1px solid var(--border-success)",
                             fontSize: "var(--fs-9)", padding:"1px 5px", borderRadius:4, fontWeight:600 }}>★ M{manuelPos!=null?` #${manuelPos}`:""}</span>
                         )}
                       </div>

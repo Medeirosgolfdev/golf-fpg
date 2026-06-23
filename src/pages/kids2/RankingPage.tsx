@@ -60,17 +60,17 @@ function shortName(name: string): string {
 }
 
 function posColor(pos: number | null | undefined): string {
-  if (pos === 1) return "#b45309";
-  if (pos === 2) return "#6b7280";
-  if (pos === 3) return "#92400e";
+  if (pos === 1) return "var(--medal-gold-fg)";
+  if (pos === 2) return "var(--medal-silver-fg)";
+  if (pos === 3) return "var(--medal-bronze-fg)";
   if (pos != null && pos <= 10) return "var(--color-info-dark, #1e3a8a)";
   return "var(--text-3)";
 }
 
 function posBg(pos: number | null | undefined): string {
-  if (pos === 1) return "#fef3c7";
-  if (pos === 2) return "#f3f4f6";
-  if (pos === 3) return "#fde68a";
+  if (pos === 1) return "var(--medal-gold-bg)";
+  if (pos === 2) return "var(--medal-silver-bg)";
+  if (pos === 3) return "var(--medal-bronze-bg)";
   if (pos != null && pos <= 10) return "var(--bg-info-subtle, #eff6ff)";
   return "transparent";
 }

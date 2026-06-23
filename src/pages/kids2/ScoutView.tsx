@@ -40,6 +40,10 @@ import { cachedFetchJson } from "../../data/fetchCache";
 import { useUpcomingByJunior, type UpcomingReg } from "./upcomingRegs";
 import Kids2SubNav from "./Kids2SubNav";
 import { MANUEL_BIRTH_YEAR } from "../../constants/manuel";
+import { tpColor } from "../../ui/tournamentPrimitives";
+import { fmtToPar, MONTHS_PT } from "../../utils/format";
+import { normName } from "../../utils/normName";
+import { Pill } from "../../ui/PillBadge";
 
 // ── Tipos para uskids-results.json ───────────────────────────────────
 interface UskRsPlayer { nome: string; pais: string; score: number; buracos: number; to_par?: number }
@@ -48,11 +52,10 @@ interface UskRsEscalao { nome: string; age_group?: number | string; rondas: UskR
 interface UskRsTourn  { t: number; name: string; escaloes: UskRsEscalao[] }
 interface UskResultsJson { resultados: UskRsTourn[] }
 
-const MONTHS_PT_SHORT = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
 function fmtRegDate(iso: string): string {
   if (!iso) return "";
   const [, m, d] = iso.split("-");
-  return `${Number(d)} ${MONTHS_PT_SHORT[Number(m) - 1] || m}`;
+  return `${Number(d)} ${MONTHS_PT[Number(m) - 1] || m}`;
 }
 function shortTournName(name: string): string {
   return name
@@ -297,14 +300,6 @@ function useUskidsField(): FieldData | null {
   return d;
 }
 
-function normName(s: string): string {
-  return (s || "").trim().toLowerCase()
-    .replace(/[-'’.·\/]+/g, " ")
-    .replace(/\s+/g, " ")
-    .trim()
-    .normalize("NFD").replace(/[̀-ͯ]/g, "");
-}
-
 function usToIso(s: string | undefined): string {
   if (!s) return "";
   const m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
@@ -470,11 +465,11 @@ const _fieldExtras = new Map<string, { cidade?: string }>();
 // ═══════════════════════════════════════════════════════════════════
 
 const TIER_BAR: Record<string, { bar: string; label: string; chip: string }> = {
-  elite:      { bar: "#dc2626", label: "Elite",      chip: "#fef2f2" },
-  strong:     { bar: "#f59e0b", label: "Forte",      chip: "#fffbeb" },
-  solid:      { bar: "#3b82f6", label: "Sólido",     chip: "#eff6ff" },
-  developing: { bar: "#22c55e", label: "Jovem",      chip: "#f0fdf4" },
-  beginner:   { bar: "#94a3b8", label: "Estreante",  chip: "#f8fafc" },
+  elite:      { bar: "var(--tier-bad)",  label: "Elite",      chip: "var(--bg-danger-subtle)" },
+  strong:     { bar: "var(--tier-weak)", label: "Forte",      chip: "var(--bg-warn-subtle)" },
+  solid:      { bar: "var(--tier-fair)", label: "Sólido",     chip: "var(--bg-info-subtle)" },
+  developing: { bar: "var(--tier-good)", label: "Jovem",      chip: "var(--bg-success-subtle)" },
+  beginner:   { bar: "var(--text-3)",    label: "Estreante",  chip: "var(--bg-muted)" },
 };
 
 function FieldStrengthPanel({ rows, label }: { rows: ScoutRow[]; label?: string }) {
@@ -637,8 +632,8 @@ function PreviousEditionPanel({ prevTcode, resultsData }: {
                       <td style={{ padding: "2px 4px" }}>{flagOf(p.pais)}</td>
                       <td style={{ padding: "2px 0", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: 140 }}>{p.nome}</td>
                       <td style={{ padding: "2px 0 2px 8px", fontWeight: 600, fontVariantNumeric: "tabular-nums", textAlign: "right", whiteSpace: "nowrap",
-                                   color: p.tp < 0 ? "var(--score-birdie, #dc2626)" : "var(--text-2)" }}>
-                        {p.tp > 0 ? "+" + p.tp : p.tp === 0 ? "E" : String(p.tp)}
+                                   color: tpColor(p.tp) ?? "var(--text-2)" }}>
+                        {fmtToPar(p.tp)}
                       </td>
                     </tr>
                   ))}
@@ -968,8 +963,8 @@ function ScoutContent({ data, tournament, onSelect, tournaments, currentTid, onT
           {tDate && <span style={{ fontSize: "var(--fs-12)", color: "var(--text-3)" }}>{ICON_DOT} {fmtDate(tDate)}</span>}
           {tournament.course && <span style={{ fontSize: "var(--fs-12)", color: "var(--text-3)" }}>{ICON_DOT} {tournament.course}</span>}
           {isFuture
-            ? <span style={{ fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: 999, background: "var(--bg-info-subtle, var(--bg-info))", color: "var(--color-info-dark, var(--color-navy))", fontWeight: 600 }}>FUTURO</span>
-            : <span style={{ fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: 999, background: "var(--bg-muted)", color: "var(--text-2)", fontWeight: 600 }}>HISTORICO</span>
+            ? <Pill style={{ fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: "var(--radius-pill)", background: "var(--bg-info-subtle, var(--bg-info))", color: "var(--color-info-dark, var(--color-navy))" }}>FUTURO</Pill>
+            : <Pill style={{ fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: "var(--radius-pill)", background: "var(--bg-muted)", color: "var(--text-2)" }}>HISTORICO</Pill>
           }
           {isFieldOnlySource && (
             <span title="Inscritos do uskids-field.json"
@@ -1110,9 +1105,9 @@ function FlightHeader({ flight, isManuelFlight, count }: {
         <span style={{ fontSize: "var(--fs-12)", color: "var(--text-3)" }}>{ICON_DOT} {flight.fieldSize} total</span>
       )}
       {isManuelFlight && (
-        <span style={{ fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: 999, background: "var(--bg-success-subtle, #ecfdf5)", color: "var(--color-good-dark)", fontWeight: 600 }}>
+        <Pill style={{ fontSize: "var(--fs-11)", padding: "2px 8px", borderRadius: "var(--radius-pill)", background: "var(--bg-success-subtle, #ecfdf5)", color: "var(--color-good-dark)" }}>
           {ICON_SWORDS} Manuel
-        </span>
+        </Pill>
       )}
     </div>
   );
@@ -1333,7 +1328,7 @@ function FormDots({ positions }: { positions: Array<number | null> }) {
           <span key={i}
                 title={p == null ? "-" : "#" + p}
                 style={{
-                  width: 20, height: 20, borderRadius: 999,
+                  width: 20, height: 20, borderRadius: "var(--radius-pill)",
                   display: "inline-flex", alignItems: "center", justifyContent: "center",
                   background: p == null ? "var(--bg-muted)" : "var(--bg)",
                   border: "1px solid " + color,
@@ -1356,6 +1351,5 @@ const tdStyle: React.CSSProperties = { padding: "7px 8px", fontSize: "var(--fs-1
 function fmtDate(iso: string): string {
   const [y, m, d] = iso.split("-");
   if (!y || !m || !d) return iso;
-  const months = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
-  return d + " " + months[parseInt(m, 10) - 1] + " " + y;
+  return d + " " + MONTHS_PT[parseInt(m, 10) - 1] + " " + y;
 }

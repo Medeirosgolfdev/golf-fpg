@@ -137,7 +137,7 @@ export function TorneiosRecorrentes({
                   const prev  = g.entries[i - 1];
                   const delta = (prev && e.pos != null && prev.pos != null) ? e.pos - prev.pos : null;
                   const mdl = medal(e.pos ?? 0);
-                  const bg    = e.pos === 1 ? "#fffbea" : e.pos === 2 ? "#f0f4ff" : e.pos === 3 ? "#fff4f0" : "var(--bg-detail)";
+                  const bg    = e.pos === 1 ? "var(--medal-gold-bg)" : e.pos === 2 ? "var(--medal-silver-bg)" : e.pos === 3 ? "var(--medal-bronze-bg)" : "var(--bg-detail)";
                   const bd    = e.pos === 1 ? "var(--medal-gold)" : e.pos === 2 ? "var(--medal-silver)" : e.pos === 3 ? "var(--medal-bronze)" : "var(--border-light)";
                   const tpStr = fmtToPar(e.tp);
                   return (
