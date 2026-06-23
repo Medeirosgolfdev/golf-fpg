@@ -84,7 +84,7 @@ export default function HeroIdentity({ data, junior }: Props) {
 
   const hcps: { source: string; value: number | undefined; date?: string }[] = [];
   if (junior.sources.fpg?.hcpExact != null) hcps.push({ source: "FPG", value: junior.sources.fpg.hcpExact, date: junior.sources.fpg.hcpDate });
-  if (junior.sources.rfeg?.hcp != null) hcps.push({ source: "RFEG", value: junior.sources.rfeg.hcp });
+  if (junior.sources.rfeg?.hcp != null) hcps.push({ source: "RFEG", value: junior.sources.rfeg.hcp, date: junior.sources.rfeg.hcpDate });
   if (junior.sources.ffgolf?.hcp != null) hcps.push({ source: "FFG", value: junior.sources.ffgolf.hcp });
 
   const ajga = (junior.meta as any)?.ajgaRank ?? (junior.computed as any)?.ajgaRank;
@@ -327,13 +327,14 @@ export default function HeroIdentity({ data, junior }: Props) {
           {escRfeg && <EscPill label={`${escRfeg} · RFEG`} />}
           {escFpgTag && <EscPill label={`${escFpgTag} · FPG`} />}
           {hcps.map((h, i) => (
-            <span key={i} style={{
+            <span key={i} title={`Handicap exacto (${h.source})${h.date ? " · " + h.date : ""}`} style={{
               background: "var(--bg-muted)",
               fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: "var(--radius-pill)",
               fontWeight: 600, color: "var(--text-2)",
               border: "1px solid var(--border-light)",
               display: "inline-flex", alignItems: "center", gap: 4,
             }}>
+              {SOURCE_FLAGS[h.source] && <span style={{ fontSize: "var(--fs-12)", lineHeight: 1 }}>{SOURCE_FLAGS[h.source]}</span>}
               🎯 HCP {h.value?.toFixed(1)} <span style={{ color: "var(--text-3)", marginLeft: 3 }}>· {h.source}</span>
               {i === hcps.length - 1 && junior.hcpHistory && junior.hcpHistory.length >= 2 && (
                 <HcpSparkline points={junior.hcpHistory} playerName={junior.canonicalName} />

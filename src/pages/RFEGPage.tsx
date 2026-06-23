@@ -1365,6 +1365,9 @@ function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEnt
 
   const hasResults = fpgTournament !== null && fpgTournament.players.length > 0;
   const inscritosTotal = listsAvailable.reduce((s, k) => s + c[k], 0);
+  // Sem resultados (ex: torneio futuro só com inscritos) → abrir directamente na
+  // tab Inscritos em vez de na de Resultados (que estaria vazia/desactivada).
+  const effectiveTab: RFEGTab = (tab === "scorecards" && !hasResults && inscritosTotal > 0) ? "inscritos" : tab;
   const sourceLabel = entry.source === "rfegolf" ? "RFEGolf" : entry.source === "nextcaddy" ? "NextCaddy" : entry.source === "golfdirecto" ? "FCG" : "LGS";
 
   return (
@@ -1424,7 +1427,7 @@ function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEnt
       <div className="detail-toolbar" style={{ flexWrap: "wrap", gap: 4, padding: "6px 0", borderBottom: "1px solid var(--border)" }}>
         <button
           type="button"
-          className={`tourn-tab ${tab === "scorecards" ? "active" : ""}`}
+          className={`tourn-tab ${effectiveTab === "scorecards" ? "active" : ""}`}
           onClick={() => setTab("scorecards")}
           disabled={!hasResults}
           style={{ opacity: hasResults ? 1 : 0.4 }}
@@ -1434,7 +1437,7 @@ function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEnt
         </button>
         <button
           type="button"
-          className={`tourn-tab ${tab === "inscritos" ? "active" : ""}`}
+          className={`tourn-tab ${effectiveTab === "inscritos" ? "active" : ""}`}
           onClick={() => setTab("inscritos")}
           disabled={inscritosTotal === 0}
           style={{ opacity: inscritosTotal > 0 ? 1 : 0.4 }}
@@ -1443,7 +1446,7 @@ function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEnt
         </button>
         <button
           type="button"
-          className={`tourn-tab ${tab === "draw" ? "active" : ""}`}
+          className={`tourn-tab ${effectiveTab === "draw" ? "active" : ""}`}
           onClick={() => setTab("draw")}
           title="Draw / Tee times (em construção)"
         >
@@ -1453,7 +1456,7 @@ function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEnt
 
       {/* ── Conteúdo da tab ───────────────────────────────────────── */}
       <div style={{ marginTop: 8 }}>
-        {tab === "scorecards" && (
+        {effectiveTab === "scorecards" && (
           hasResults ? (
             <IntlTournView
               tournament={fpgTournament!}
@@ -1467,7 +1470,7 @@ function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEnt
           )
         )}
 
-        {tab === "inscritos" && (
+        {effectiveTab === "inscritos" && (
           listsAvailable.length === 0 ? (
             <EmptyState message="Sem inscritos publicados." />
           ) : (
@@ -1500,7 +1503,7 @@ function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEnt
           )
         )}
 
-        {tab === "draw" && (
+        {effectiveTab === "draw" && (
           <DrawSaidaView detail={data} entry={entry} />
         )}
       </div>
@@ -1864,18 +1867,39 @@ export function RFEGPageLegacy() {
   const visible = useMemo(() => {
     if (!index) return [];
     let arr = index.tournaments;
+    (window as any).__RFEG_DEBUG = {
+      total: index.tournaments.length,
+      rfegolf: index.tournaments.filter((t) => t.source === "rfegolf").length,
+      rfegWithAdm: index.tournaments.filter((t) => t.source === "rfegolf" && (t.counts?.admitidos || 0) > 0).length,
+      has16187: index.tournaments.some((t) => t.id === 16187),
+      generatedAt: (index as any).generatedAt,
+    };
     // Filtrar torneios SEM dados úteis OU não-juvenis — poluem o sidebar.
     // Regras estritas:
     //   A. SÓ JUVENIS — `category` tem de estar preenchida (Alevín/Benjamín/Infantil/
     //      Cadete/Junior/Juvenil/Sub-N). Torneios de adultos (Caballeros, Señoras,
     //      Senior, Empresas, Liga Social, etc.) ficam fora porque o build-rfegolf-index
     //      não atribui categoria a torneios cujo nome+categories não tem escalão.
-    //   B. SÓ COM RESULTADOS — leaderboardPlayers > 0. Torneios apenas com inscritos
-    //      (sem leaderboard) não interessam para análise — só mostrar quando há
-    //      scorecards/totais para ver. Futuros (sem leaderboard) também caem aqui.
+    //   B. COM RESULTADOS *ou* INSCRITOS. leaderboardPlayers > 0 (LGS/NC/FCG já
+    //      têm classificação) OU counts.admitidos > 0 (microsite rfegolf, que
+    //      nunca traz leaderboard mas expõe a lista de inscritos com idade+hcp —
+    //      o único sítio onde aparecem os Campeonatos de España e os futuros).
+    //      Os rfegolf-só-inscritos são suprimidos quando já existe uma entrada
+    //      COM resultados (LGS/NC) do mesmo torneio (mesmo nome+ano) — evita
+    //      duplicar o campeonato passado que já tem classificação noutra fonte.
+    const norm = (n?: string | null, y?: number | null) =>
+      (n || "").toLowerCase().replace(/\s+/g, " ").trim() + "|" + (y ?? "");
+    const resultKeys = new Set(
+      index.tournaments
+        .filter((t) => t.source !== "rfegolf" && (t.leaderboardPlayers || 0) > 0)
+        .map((t) => norm(t.name, t.year)),
+    );
     arr = arr.filter((t) => {
       if (!t.category) return false;
-      if ((t.leaderboardPlayers || 0) === 0) return false;
+      const hasResults = (t.leaderboardPlayers || 0) > 0;
+      const hasInscritos = (t.counts?.admitidos || 0) > 0;
+      if (!hasResults && !hasInscritos) return false;
+      if (t.source === "rfegolf" && !hasResults && resultKeys.has(norm(t.name, t.year))) return false;
       return true;
     });
     if (filterYear !== "all") arr = arr.filter((t) => String(t.year) === filterYear);

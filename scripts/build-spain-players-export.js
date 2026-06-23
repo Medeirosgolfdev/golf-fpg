@@ -6,9 +6,20 @@
 const fs = require("fs");
 const path = require("path");
 const IN = path.resolve(__dirname, "../public/data/licencia-dob-lookup.json");
+const HCP_IN = path.resolve(__dirname, "../public/data/licencia-hcp-lookup.json");
 const OUT = path.resolve(__dirname, "../public/data/spain-players.json");
 const d = JSON.parse(fs.readFileSync(IN, "utf-8"));
 const lookup = d.lookup || {};
+
+// HCP mais recente por licença (licencia-hcp-lookup é keyed em MAIÚSCULAS).
+// Junta-se aqui para que o roster espanhol leve o handicap actual, consumido
+// pelo adapter aggregator/sources/rfeg.js → sources.rfeg.hcp.
+let hcpLookup = {};
+try {
+  hcpLookup = (JSON.parse(fs.readFileSync(HCP_IN, "utf-8")).lookup) || {};
+} catch (e) {
+  console.warn("Aviso: licencia-hcp-lookup.json em falta — entries ficam sem hcp.");
+}
 
 function norm(s) {
   return String(s || "").toLowerCase().normalize("NFKD")
@@ -18,6 +29,7 @@ function norm(s) {
 const byName = {};
 const byLicencia = {};
 for (const [lic, e] of Object.entries(lookup)) {
+  const hcpEntry = hcpLookup[lic.toUpperCase()] || null;
   const entry = {
     licencia: lic,
     name: e.name,
@@ -26,6 +38,8 @@ for (const [lic, e] of Object.entries(lookup)) {
     sex: e.sex,
     club: e.club,
     catEdad: e.catEdad,
+    hcp: hcpEntry && typeof hcpEntry.hcp === "number" ? hcpEntry.hcp : null,
+    hcpDate: hcpEntry?.dateIso || null,
     nat: "ESP",
   };
   byLicencia[lic] = entry;

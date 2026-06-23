@@ -6,6 +6,13 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 5173
+    },
+    {
+      "name": "verify",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["_probe-tmp/static.cjs"],
+      "port": 5198,
+      "autoPort": false
     }
   ]
 }

@@ -13,7 +13,7 @@ import { useAppContext } from "../context/AppContext";
 import TeeBadge from "../ui/TeeBadge";
 import SexBadge from "../ui/SexBadge";
 import { teeCanonicalLabel, teeGroupHex } from "../utils/teeColors";
-import { fmt, fmtCR, norm, titleCase, sumRange, fmtToPar } from "../utils/format";
+import { fmt, fmtCR, norm, sumRange, fmtToPar } from "../utils/format";
 import { flag } from "../utils/flagUtils";
 import { fixMojibake } from "../utils/fixEncoding";
 import { sortTees, filterTees } from "../utils/teeUtils";

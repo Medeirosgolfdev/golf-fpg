@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-06-22T09:55:28.766Z",
+  "generatedAt": "2026-06-23T18:06:26.360Z",
   "source": "scripts/build-rfegolf-index.js",
-  "total": 2739,
-  "totalCompetitions": 2739,
+  "total": 2740,
+  "totalCompetitions": 2740,
   "skipped": 2,
   "byYear": {
     "2017": 1,
@@ -14,14 +14,14 @@
     "2023": 115,
     "2024": 123,
     "2025": 191,
-    "2026": 2030,
+    "2026": 2031,
     "2027": 1
   },
   "byCategory": {
     "Sub-16": 69,
     "Sub-18": 102,
     "Juvenil": 274,
-    "Infantil": 142,
+    "Infantil": 143,
     "Junior": 42,
     "Sub-14": 2,
     "Alevín": 83,
@@ -32,7 +32,7 @@
     "Sub-25": 6
   },
   "bySource": {
-    "rfegolf": 410,
+    "rfegolf": 411,
     "nextcaddy": 2041,
     "golfdirecto": 21,
     "livegolfscoring": 267
@@ -585,7 +585,7 @@
       "dateEnd": "28/06/2026",
       "dateStartIso": "2026-06-26",
       "dateEndIso": "2026-06-28",
-      "course": "golf ... Juvenil Martín Cervera y Daniela Carrión",
+      "course": "Golf del",
       "courseClubId": null,
       "mode": "Individual",
       "style": "Stroke Play",
@@ -600,7 +600,7 @@
         "provisional": 0
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:37:09.229Z"
+      "scrapedAt": "2026-06-23T17:55:00.517Z"
     },
     {
       "source": "rfegolf",
@@ -631,7 +631,7 @@
         "provisional": 46
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:37:08.046Z"
+      "scrapedAt": "2026-06-23T17:54:53.567Z"
     },
     {
       "source": "rfegolf",
@@ -662,7 +662,7 @@
         "provisional": 117
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:37:07.669Z"
+      "scrapedAt": "2026-06-23T17:54:53.560Z"
     },
     {
       "source": "rfegolf",
@@ -693,7 +693,7 @@
         "provisional": 74
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:37:07.222Z"
+      "scrapedAt": "2026-06-23T17:54:53.290Z"
     },
     {
       "source": "rfegolf",
@@ -724,7 +724,7 @@
         "provisional": 144
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:37:07.652Z"
+      "scrapedAt": "2026-06-23T17:54:47.573Z"
     },
     {
       "source": "rfegolf",
@@ -755,7 +755,38 @@
         "provisional": 102
       },
       "leaderboardPlayers": 0,
-      "scrapedAt": "2026-06-12T14:37:07.633Z"
+      "scrapedAt": "2026-06-23T17:54:47.307Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 16187,
+      "compId": 16187,
+      "file": "16187.json",
+      "filePath": "rfegolf-resultats/16187.json",
+      "name": "Campeonato de España Infantil Masculino 2026",
+      "year": 2026,
+      "category": "Infantil",
+      "sex": "M",
+      "dateStart": "26/06/2026",
+      "dateEnd": "28/06/2026",
+      "dateStartIso": "2026-06-26",
+      "dateEndIso": "2026-06-28",
+      "course": "GOLF Dirección CALLE AVD. PPE. FELIPE S",
+      "courseClubId": null,
+      "mode": "Individual",
+      "style": "Stroke Play",
+      "hcpLimitMen": 17,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 90,
+        "reservas": 51,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 4,
+        "provisional": 145
+      },
+      "leaderboardPlayers": 0,
+      "scrapedAt": "2026-06-23T17:54:47.759Z"
     },
     {
       "source": "rfegolf",

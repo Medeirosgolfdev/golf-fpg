@@ -126,6 +126,17 @@ jobs:
         continue-on-error: true
         run: node scripts/scrape-nextcaddy.js --discover --out scripts/nextcaddy-scope-all.json
 
+      # Descobre CompIds RFEGolf NOVOS numa janela recente e une-os ao scope
+      # curado (--merge nunca remove). Sem este passo o scope ficava congelado
+      # e Campeonatos criados depois da última descoberta nunca eram apanhados
+      # (ex: Campeonato de España Infantil Masculino 16187, criado depois de
+      # 2026-05-08). Só corre em modo scope (no modo range explícito é redundante).
+      - name: Discovery RFEGolf (janela recente → rfegolf-scope.json)
+        id: disc_rfeg
+        if: env.DO_DISCOVERY == 'true' && env.RFEGOLF_MODE == 'scope'
+        continue-on-error: true
+        run: node scripts/discover-rfegolf-comps.js --range 15500-17200 --concurrency 6 --merge
+
       # ── Scrapers (paralelos seriam ideais mas mantemos sequencial pelo git push) ──
       - name: Scrape RFEGolf (Campeonatos Nacionais)
         id: rfegolf
@@ -220,7 +231,8 @@ jobs:
                   public/data/rfegolf-rivals.json \
                   public/data/fcg-rivals.json \
                   scripts/fcg-scope.json \
-                  scripts/nextcaddy-scope-all.json 2>/dev/null || true
+                  scripts/nextcaddy-scope-all.json \
+                  scripts/rfegolf-scope.json 2>/dev/null || true
 
           if git diff --staged --quiet; then
             echo "ℹ️  Nenhuma alteração — sem commit."
@@ -261,6 +273,7 @@ jobs:
           FAILED=""
           [ "${{ steps.disc_fcg.outcome }}"    = "failure" ] && FAILED="$FAILED discovery-FCG"
           [ "${{ steps.disc_nc.outcome }}"     = "failure" ] && FAILED="$FAILED discovery-NextCaddy"
+          [ "${{ steps.disc_rfeg.outcome }}"   = "failure" ] && FAILED="$FAILED discovery-RFEGolf"
           [ "${{ steps.rfegolf.outcome }}"     = "failure" ] && FAILED="$FAILED RFEGolf"
           [ "${{ steps.lgs.outcome }}"         = "failure" ] && FAILED="$FAILED livegolfscoring"
           [ "${{ steps.nextcaddy.outcome }}"   = "failure" ] && FAILED="$FAILED NextCaddy"

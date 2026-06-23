@@ -470,6 +470,7 @@ function buildJunior(entities) {
         lic: e.raw.sourceKey,
         club: e.raw.club,
         hcp: e.raw.hcp,
+        hcpDate: e.raw.hcpDate,
         catEdad: e.raw.ageGroupCurrent,
         sex: e.raw.sex,
         historicalLicenses: e.raw.extra?.historicalLicenses || [],

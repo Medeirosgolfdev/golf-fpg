@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-05-08T16:31:09.604Z",
-  "range": "12700-16250",
+  "generatedAt": "2026-06-23T18:24:00.121Z",
+  "range": "16187-16210",
   "minYear": 2021,
-  "totalProbed": 3551,
-  "totalExisting": 2486,
-  "totalJuvenil": 407,
+  "totalProbed": 24,
+  "totalExisting": 21,
+  "totalJuvenil": 408,
   "byYear": {
     "2021": 59,
     "2022": 57,
     "2023": 57,
     "2024": 61,
     "2025": 47,
-    "2026": 40
+    "2026": 41
   },
   "byCategory": {
     "Benjamín": 21,
     "Juvenil": 143,
-    "Infantil": 56,
+    "Infantil": 57,
     "Junior": 32,
     "Sub-18": 65,
     "Sub-25": 2,
@@ -3607,6 +3607,15 @@
       "year": 2026,
       "category": "Junior",
       "sex": null,
+      "juvenil": true
+    },
+    {
+      "compId": 16187,
+      "exists": true,
+      "name": "Campeonato de España Infantil Masculino 2026",
+      "year": 2026,
+      "category": "Infantil",
+      "sex": "M",
       "juvenil": true
     },
     {

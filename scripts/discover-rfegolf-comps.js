@@ -162,6 +162,9 @@ async function main() {
     ? path.resolve(process.cwd(), outArg)
     : path.resolve(__dirname, "rfegolf-scope.json");
   const verboseInterval = parseInt(getArg("log-every", "100"), 10);
+  // --merge: une os achados novos ao scope existente (nunca remove). Permite
+  // correr só uma janela recente de IDs no cron sem perder o histórico curado.
+  const merge = args.includes("--merge");
 
   const parts = rangeArg.split("-").map(function (s) { return parseInt(s.trim(), 10); });
   const ids = [];
@@ -208,10 +211,28 @@ async function main() {
 
   // Filter to juvenile + within year range
   const currentYear = new Date().getFullYear();
-  const tournaments = results
+  let tournaments = results
     .filter(function (r) { return r.juvenil; })
     .filter(function (r) { return !r.year || (r.year >= minYear && r.year <= currentYear + 2); })
     .sort(function (a, b) { return a.compId - b.compId; });
+
+  // --merge: une com o scope existente (preferindo a entrada recém-descoberta
+  // por compId). Crítico no cron, onde só se varre uma janela recente — sem
+  // merge perderíamos os ~400 comps históricos já curados.
+  let mergedCount = 0;
+  if (merge && fs.existsSync(outFile)) {
+    try {
+      const prev = JSON.parse(fs.readFileSync(outFile, "utf8"));
+      const byId = new Map();
+      for (const t of prev.tournaments || []) byId.set(t.compId, t);
+      const before = byId.size;
+      for (const t of tournaments) byId.set(t.compId, t);
+      mergedCount = byId.size - before;
+      tournaments = Array.from(byId.values()).sort(function (a, b) { return a.compId - b.compId; });
+    } catch (e) {
+      console.warn("--merge: falha a ler scope existente (" + e.message + ") — a escrever só os novos.");
+    }
+  }
 
   // Stats
   const byYear = {};
@@ -233,7 +254,8 @@ async function main() {
     tournaments,
   };
   fs.writeFileSync(outFile, JSON.stringify(scope, null, 2));
-  console.log("\nDone. " + tournaments.length + " juvenile tournaments saved to " + outFile);
+  console.log("\nDone. " + tournaments.length + " juvenile tournaments saved to " + outFile +
+    (merge ? " (merge: +" + mergedCount + " novos)" : ""));
   console.log("byYear:", byYear);
   console.log("byCategory:", byCategory);
 }

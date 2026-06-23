@@ -76,6 +76,7 @@ export interface JuniorSources {
     lic: string;
     club?: string;
     hcp?: number;
+    hcpDate?: string;
     catEdad?: string;
     sex?: "M" | "F";
     historicalLicenses?: Array<{ lic: string; club?: string; catEdad?: string; note?: string } | string>;

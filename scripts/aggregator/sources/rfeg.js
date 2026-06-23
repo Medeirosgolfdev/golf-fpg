@@ -74,6 +74,16 @@ function load(opts) {
     const country = countryToIso2(active.nat) || "ES";
     const cleanName = displayName(splitName(active.name || ""));
     if (!cleanName) continue;
+    // HCP actual: prefere a licença activa; se ausente, cai para qualquer
+    // licença histórica do mesmo jogador que tenha hcp (todas vêm do mesmo
+    // licencia-hcp-lookup, já agregado para o mais recente por data).
+    let hcp = typeof active.hcp === "number" ? active.hcp : null;
+    let hcpDate = active.hcpDate || null;
+    if (hcp == null) {
+      for (const p of sorted) {
+        if (typeof p.hcp === "number") { hcp = p.hcp; hcpDate = p.hcpDate || null; break; }
+      }
+    }
     players.push({
       sourceKey: active.licencia,
       name: cleanName,
@@ -82,6 +92,8 @@ function load(opts) {
       country,
       club: active.club || null,
       ageGroupCurrent: active.catEdad || null,
+      hcp,
+      hcpDate,
       extra: {
         historicalLicenses: historical,
         nat: active.nat,
