@@ -40,7 +40,7 @@ on:
         required: false
         default: ''
       rfegolf_discovery_range:
-        description: 'Range de compIds RFEGolf p/ DISCOVERY (funde com scope existente). Default: "15500-17800". Histórico: "12700-17800".'
+        description: 'Range fixo de compIds RFEGolf p/ DISCOVERY. Vazio = --from-scope (auto-fronteira, recomendado). Histórico completo: "12700-17800".'
         required: false
         default: ''
       fcg_years:
@@ -114,15 +114,15 @@ jobs:
           else
             echo "RFEGOLF_MODE=scope" >> $GITHUB_ENV
           fi
-          # RFEGolf discovery range. discover-rfegolf-comps.js agora FUNDE com o
-          # scope existente (re-probe autoritativo dentro do range, preserva o
-          # resto), por isso basta uma janela RECENTE e estreita — rápida e sem
-          # encolher o histórico. 15500-17800 cobre os comps de 2026 em diante.
-          # Para refazer o histórico todo de uma vez: passar 12700-17800 no input.
+          # RFEGolf discovery: por default usa --from-scope (auto-fronteira) —
+          # os compIds crescem por ordem de criação, logo basta varrer a janela
+          # à volta do máximo já conhecido (rápido, ~800-1200 IDs) e o merge
+          # fá-la avançar a cada run. Só se usa um range fixo se for passado no
+          # input (ex: 12700-17800 para refazer o histórico todo).
           if [ -n "${{ github.event.inputs.rfegolf_discovery_range }}" ]; then
             echo "RFEGOLF_DISC_RANGE=${{ github.event.inputs.rfegolf_discovery_range }}" >> $GITHUB_ENV
           else
-            echo "RFEGOLF_DISC_RANGE=15500-17800" >> $GITHUB_ENV
+            echo "RFEGOLF_DISC_RANGE=" >> $GITHUB_ENV
           fi
           # FCG years
           if [ -n "${{ github.event.inputs.fcg_years }}" ]; then
@@ -151,7 +151,14 @@ jobs:
         id: disc_rfeg
         if: env.DO_DISCOVERY == 'true'
         continue-on-error: true
-        run: node scripts/discover-rfegolf-comps.js --range "$RFEGOLF_DISC_RANGE" --concurrency 10
+        run: |
+          if [ -n "$RFEGOLF_DISC_RANGE" ]; then
+            echo "Range fixo: $RFEGOLF_DISC_RANGE"
+            node scripts/discover-rfegolf-comps.js --range "$RFEGOLF_DISC_RANGE" --concurrency 10
+          else
+            echo "Auto-fronteira (--from-scope)"
+            node scripts/discover-rfegolf-comps.js --from-scope --concurrency 10
+          fi
 
       # ── Scrapers (paralelos seriam ideais mas mantemos sequencial pelo git push) ──
       - name: Scrape RFEGolf (Campeonatos Nacionais)

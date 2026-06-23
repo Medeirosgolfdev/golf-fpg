@@ -163,7 +163,38 @@ async function main() {
     : path.resolve(__dirname, "rfegolf-scope.json");
   const verboseInterval = parseInt(getArg("log-every", "100"), 10);
 
-  const parts = rangeArg.split("-").map(function (s) { return parseInt(s.trim(), 10); });
+  // ── Modo --from-scope (fronteira auto-incremental) ──
+  // Os compIds da RFEGolf são atribuídos por ordem de criação (crescentes),
+  // logo torneios novos aparecem ACIMA do máximo já conhecido. Em vez de
+  // varrer um range fixo todas as semanas, arranca-se do máximo do scope:
+  //   [maxCompId − lookbehind, maxCompId + lookahead]
+  // O lookbehind cobre a sobreposição entre épocas (comps criados fora de
+  // ordem / publicados tarde); o lookahead apanha os recém-criados. Como o
+  // merge eleva o máximo a cada run, a janela avança sozinha.
+  const fromScope = args.includes("--from-scope");
+  const lookbehind = parseInt(getArg("lookbehind", "400"), 10);
+  const lookahead = parseInt(getArg("lookahead", "800"), 10);
+  let rangeStr = rangeArg;
+  if (fromScope) {
+    let maxComp = 0;
+    try {
+      if (fs.existsSync(outFile)) {
+        const prev = JSON.parse(fs.readFileSync(outFile, "utf8"));
+        for (const t of (prev.tournaments || [])) {
+          if (t && typeof t.compId === "number" && t.compId > maxComp) maxComp = t.compId;
+        }
+      }
+    } catch (e) { /* sem scope → cai no range default abaixo */ }
+    if (maxComp > 0) {
+      rangeStr = (maxComp - lookbehind) + "-" + (maxComp + lookahead);
+      console.log("Modo --from-scope: máximo no scope=" + maxComp + " → range " + rangeStr +
+                  " (lookbehind=" + lookbehind + ", lookahead=" + lookahead + ")");
+    } else {
+      console.log("Modo --from-scope mas scope vazio/ausente → range default " + rangeStr);
+    }
+  }
+
+  const parts = rangeStr.split("-").map(function (s) { return parseInt(s.trim(), 10); });
   const ids = [];
   for (let i = parts[0]; i <= parts[1]; i++) ids.push(i);
   if (maxArg && ids.length > maxArg) ids.length = maxArg;
