@@ -1,6 +1,4 @@
-﻿// Segundo .trim() necessario porque pontuacao a direita (ex: "Jr.") vira
-  // espaco e .replace(/\s+/g," ") so colapsa - nao corta extremos.
-  /**
+﻿/**
  * kids2/data.ts
  *
  * Camada de dados canónica. Lê os ficheiros produzidos pelo agregador
@@ -16,6 +14,7 @@
 import { useEffect, useState } from "react";
 import { cachedFetchJson } from "../../data/fetchCache";
 import type { DataSource } from "../../ui/DataSources";
+import { normName } from "../../utils/normName";
 import { getTournWeight } from "./tournWeight";
 
 // ═════════════════════════════════════════════════════════════════════
@@ -168,14 +167,6 @@ export interface CanonicalData {
 // ═════════════════════════════════════════════════════════════════════
 
 const MANUEL_USKIDS_ID = "630106";
-
-function normName(s: string): string {
-  return (s || "").trim().toLowerCase()
-    .replace(/[-'’.·\/]+/g, " ")
-    .replace(/\s+/g, " ")
-    .trim()
-    .normalize("NFD").replace(/[̀-ͯ]/g, "");
-}
 
 async function fetchWithSource(path: string, group?: string): Promise<{ data: unknown; source: DataSource }> {
   try {

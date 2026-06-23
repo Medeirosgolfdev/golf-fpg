@@ -21,20 +21,10 @@ import { flag } from "../utils/flagUtils";
 import { displayName, fmtToPar } from "../utils/format";
 import { tpColor } from "./tournamentPrimitives";
 import { isManuelByName } from "../constants/manuel";
+import { normName } from "../utils/normName";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import type { UskidsDrawRonda, RondaJogador } from "./uskidsTypes";
-
-/** Normaliza nome para matching draw↔leaderboard (lowercase + sem diacríticos
- *  + colapsa espaços + remove pontuação leve). Replica `normName` de
- *  constants/manuel.ts mas exporta-se aqui para o lookup local. */
-function normName(s: string): string {
-  return (s || "").toLowerCase()
-    .normalize("NFD").replace(/[̀-ͯ]/g, "")
-    .replace(/[.\-']/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
 
 // Mesma paleta do DrawTab.tsx (FPG) — manter consistência visual.
 const TEE_TIME_PALETTE = [

@@ -76,7 +76,7 @@ design-system.html # Referência visual de todos os componentes CSS
 | `/calendario` | CalendarioPage | — |
 | `/draws` | DrawsPage | manuel-pairings.json (jogadores com quem o Manuel já foi parelhado, FPG + USKids) |
 | `/titulos` (+ `/:tab`) | TitulosPage | vista histórica de campeonatos de jovens FPG (3 tabs) |
-| `/nacionais-jovens` | NacionaisJovensPage | fpg-nacionais-historico.json (Campeões Nacionais Sub-10→18, 2005-2026; reusa JovensAnaliseView) |
+| `/titulos/nacional` | TitulosPage (tab Nacional) | fpg-nacionais-historico.json (Campeões Nacionais Sub-10→18, 2005-2026; reusa JovensAnaliseView) |
 | `/ffg` | FFGPage | ffgolf-catalog.json + ffgolf/{year}_{slug}.json (torneios juvenis franceses) |
 | `/rfeg` (+ `/:compId`, `/:source/:id`) | RFEGPage | rfegolf-* + livegolfscoring + nextcaddy + fcg (torneios juvenis espanhóis) |
 | `/england` | EnglandGolfPage | england-golf-catalog.json + england_{slug}.json (England Golf / GolfGenius) |
@@ -85,6 +85,8 @@ design-system.html # Referência visual de todos os componentes CSS
 > **Páginas legadas mantidas como rotas alternativas** (`/bjgt-legacy`, `/kids-legacy`, `/doral-legacy`): versões antigas das páginas-mãe acima, preservadas durante a migração para o `CircuitShell`.
 >
 > **⚠ `ScotlandPage.tsx` (Junior Tour Scotland) está COMPLETA mas NÃO ligada às rotas** — página de circuito de 363 linhas (como England/FFG/RFEG), com scraper `scrape-junior-tour-scotland.js` e dados `scotland-jts-*.json`, mas sem `import`/`<Route>` no `App.tsx`. Feature construída e por lançar (decidir: ligar a rota ou remover).
+>
+> **⚠ `NacionaisJovensPage.tsx` é código morto** — está `lazy`-importada em `App.tsx` mas **sem `<Route>`**; a funcionalidade vive na tab **`/titulos/nacional`** (`TitulosPage`), que reusa o mesmo `JovensAnaliseView` com os mesmos dados. Remover a página + o import órfão, ou (se se quiser rota dedicada) fazer redirect para `/titulos/nacional`. A secção "Página `/nacionais-jovens`" mais abaixo descreve o pipeline de dados (continua válido) mas a rota já não existe.
 
 ## Comandos
 

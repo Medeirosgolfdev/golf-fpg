@@ -8,6 +8,8 @@
  *        normalização de nome em vários sítios, etc.
  */
 
+import { normName } from "../utils/normName";
+
 /** Federação FPG. */
 export const MANUEL_FED = "52884";
 
@@ -57,18 +59,6 @@ export function isManuelUskidsMid(mid: string | number | null | undefined): bool
   if (mid == null) return false;
   const s = String(mid);
   return MANUEL_PLAYER_IDS.includes(s as any);
-}
-
-/**
- * Normaliza um nome para comparação (trim + lowercase + sem diacríticos
- * + colapsa espaços + remove pontuação leve).
- */
-function normName(s: string): string {
-  return (s || "").toLowerCase()
-    .normalize("NFD").replace(/[̀-ͯ]/g, "")
-    .replace(/[\.\-']/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
 }
 
 /**
