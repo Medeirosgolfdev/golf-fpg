@@ -215,11 +215,11 @@ function MatchPlayResultsTable({
 
   const scCls = (g: number, p: number): React.CSSProperties => {
     const d = g - p;
-    if (d <= -2) return { background: "#fef3c7", color: "#92400e", borderRadius: "50%", fontWeight: 700 };
-    if (d === -1) return { background: "#fee2e2", color: "#991b1b", borderRadius: "50%", fontWeight: 700 };
-    if (d === 1)  return { background: "#dbeafe", color: "#1e40af" };
-    if (d === 2)  return { background: "#bfdbfe", color: "#1e3a8a", fontWeight: 700 };
-    if (d >= 3)   return { background: "#93c5fd", color: "#1e3a8a", fontWeight: 700 };
+    if (d <= -2) return { background: "var(--bg-warn-subtle)", color: "var(--color-warn-dark)", borderRadius: "50%", fontWeight: 700 };
+    if (d === -1) return { background: "var(--bg-danger-subtle)", color: "var(--color-danger-dark)", borderRadius: "50%", fontWeight: 700 };
+    if (d === 1)  return { background: "var(--bg-info-subtle)", color: "var(--color-info-dark)" };
+    if (d === 2)  return { background: "var(--bg-info-subtle)", color: "var(--color-info-dark)", fontWeight: 700 };
+    if (d >= 3)   return { background: "var(--bg-info-subtle)", color: "var(--color-info-dark)", fontWeight: 700 };
     return {};
   };
 
@@ -296,12 +296,12 @@ function MatchPlayResultsTable({
                               <tr key={cl.key} style={{ borderTop: ri === 0 ? "none" : "1px solid var(--border)" }}>
                                 <td style={cLbl}>
                                   <div style={{ fontWeight: 600 }}>
-                                    <span style={{ fontSize: 10, color: "var(--text-3)", marginRight: 4 }}>{cl.shortName}</span>
+                                    <span style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", marginRight: 4 }}>{cl.shortName}</span>
                                     {player?.name ?? cl.name}
                                   </div>
                                   <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 1 }}>
-                                    {wins.map((h, hi) => { const opp = clubs.find(c2 => c2.key === h.l); return <span key={`w${hi}`} style={{ fontSize: 10, color: MP_CLUB_COLOR }}>✓ {opp?.shortName ?? h.l}{h.margin ? ` ${h.margin}` : ""}</span>; })}
-                                    {losses.map((h, hi) => { const opp = clubs.find(c2 => c2.key === h.w); return <span key={`l${hi}`} style={{ fontSize: 10, color: "var(--text-3)" }}>✗ {opp?.shortName ?? h.w}{h.margin ? ` ${h.margin}` : ""}</span>; })}
+                                    {wins.map((h, hi) => { const opp = clubs.find(c2 => c2.key === h.l); return <span key={`w${hi}`} style={{ fontSize: "var(--fs-10)", color: MP_CLUB_COLOR }}>✓ {opp?.shortName ?? h.l}{h.margin ? ` ${h.margin}` : ""}</span>; })}
+                                    {losses.map((h, hi) => { const opp = clubs.find(c2 => c2.key === h.w); return <span key={`l${hi}`} style={{ fontSize: "var(--fs-10)", color: "var(--text-3)" }}>✗ {opp?.shortName ?? h.w}{h.margin ? ` ${h.margin}` : ""}</span>; })}
                                   </div>
                                 </td>
                                 {f9.map(i => { const g = sc[i]; return <td key={i} style={cSc}>{g != null ? <span style={{ display: "inline-block", width: 18, lineHeight: "18px", ...scCls(g, par[i]) }}>{g}</span> : <span style={{ color: "var(--text-3)" }}>–</span>}</td>; })}
@@ -492,7 +492,7 @@ function MatchPlayResultsTable({
                     for (let j = i + 1; j < withScores.length; j++)
                       pairs.push([withScores[i], withScores[j]]);
 
-                  const cMatch: React.CSSProperties = { ...cSc, fontSize: 9, fontWeight: 500, padding: "5px 3px" };
+                  const cMatch: React.CSSProperties = { ...cSc, fontSize: "var(--fs-9)", fontWeight: 500, padding: "5px 3px" };
 
                   return (
                     <div key={`${dia.dia}-${m.match}`} style={{ marginBottom: 28 }}>
@@ -508,13 +508,13 @@ function MatchPlayResultsTable({
                           const isTop = pts != null && withScores.every(c2 => (m[c2.key as keyof MpMatch] as number ?? 0) <= pts);
                           return (
                             <div key={cl.key} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                              <span style={{ fontSize: 10, fontWeight: 700, color: isTop ? "var(--accent)" : "var(--text-3)", textTransform: "uppercase" }}>{cl.shortName}</span>
+                              <span style={{ fontSize: "var(--fs-10)", fontWeight: 700, color: isTop ? "var(--accent)" : "var(--text-3)", textTransform: "uppercase" }}>{cl.shortName}</span>
                               <span style={{ fontSize: "var(--fs-12)", fontWeight: 600, color: "var(--text-1)" }}>{player?.name ?? cl.name}</span>
-                              {player?.gross != null && <span style={{ fontSize: 10, color: "var(--text-3)" }}>{player.gross}{player.toPar != null ? ` (${player.toPar >= 0 ? "+" : ""}${player.toPar})` : ""}</span>}
+                              {player?.gross != null && <span style={{ fontSize: "var(--fs-10)", color: "var(--text-3)" }}>{player.gross}{player.toPar != null ? ` (${player.toPar >= 0 ? "+" : ""}${player.toPar})` : ""}</span>}
                               <span style={{ display: "flex", gap: 4 }}>
-                                {(m.h2h ?? []).filter(h => h.w === cl.key && !h.half).map((h, hi) => { const opp = clubs.find(c2 => c2.key === h.l); return <span key={hi} style={{ fontSize: 10, color: "var(--accent)" }}>✓ {opp?.shortName}{h.margin ? ` ${h.margin}` : ""}</span>; })}
-                                {(m.h2h ?? []).filter(h => h.l === cl.key && !h.half).map((h, hi) => { const opp = clubs.find(c2 => c2.key === h.w); return <span key={hi} style={{ fontSize: 10, color: "var(--text-3)" }}>✗ {opp?.shortName}{h.margin ? ` ${h.margin}` : ""}</span>; })}
-                                {(m.h2h ?? []).filter(h => h.half && (h.w === cl.key || h.l === cl.key)).map((h, hi) => { const opp = clubs.find(c2 => c2.key === (h.w === cl.key ? h.l : h.w)); return <span key={hi} style={{ fontSize: 10, color: "var(--text-2)" }}>½ {opp?.shortName}</span>; })}
+                                {(m.h2h ?? []).filter(h => h.w === cl.key && !h.half).map((h, hi) => { const opp = clubs.find(c2 => c2.key === h.l); return <span key={hi} style={{ fontSize: "var(--fs-10)", color: "var(--accent)" }}>✓ {opp?.shortName}{h.margin ? ` ${h.margin}` : ""}</span>; })}
+                                {(m.h2h ?? []).filter(h => h.l === cl.key && !h.half).map((h, hi) => { const opp = clubs.find(c2 => c2.key === h.w); return <span key={hi} style={{ fontSize: "var(--fs-10)", color: "var(--text-3)" }}>✗ {opp?.shortName}{h.margin ? ` ${h.margin}` : ""}</span>; })}
+                                {(m.h2h ?? []).filter(h => h.half && (h.w === cl.key || h.l === cl.key)).map((h, hi) => { const opp = clubs.find(c2 => c2.key === (h.w === cl.key ? h.l : h.w)); return <span key={hi} style={{ fontSize: "var(--fs-10)", color: "var(--text-2)" }}>½ {opp?.shortName}</span>; })}
                               </span>
                             </div>
                           );
@@ -549,7 +549,7 @@ function MatchPlayResultsTable({
                                   if (!s || s.label === "" || s.ended && s.label === "") return "var(--text-3)";
                                   if (s.label === "AS") return "var(--text-3)";
                                   if (s.aLeads) return "var(--accent)";
-                                  if (s.bLeads) return "#b45309";
+                                  if (s.bLeads) return "var(--medal-bronze)";
                                   return "var(--text-2)";
                                 };
                                 return (
@@ -557,7 +557,7 @@ function MatchPlayResultsTable({
                                     <td style={{ ...cLbl, fontStyle: "normal" }}>
                                       <span style={{ color: "var(--accent)", fontWeight: 700 }}>{clA.shortName}</span>
                                       <span style={{ color: "var(--text-3)", margin: "0 4px" }}>vs</span>
-                                      <span style={{ color: "#b45309", fontWeight: 700 }}>{clB.shortName}</span>
+                                      <span style={{ color: "var(--medal-bronze)", fontWeight: 700 }}>{clB.shortName}</span>
                                     </td>
                                     {f9.map((i, fi) => {
                                       const s = statuses[i];
@@ -569,7 +569,7 @@ function MatchPlayResultsTable({
                                       return <td key={i} style={{ ...cMatch, color: s ? cellColor(s) : "var(--text-3)", fontWeight: s?.ended ? 700 : 500 }}>{s?.label || ""}</td>;
                                     })}
                                     <td style={{ ...cSum, borderLeft: "2px solid var(--border)" }} />
-                                    <td style={{ ...cSum, borderLeft: "2px solid var(--border)", fontWeight: 700, color: finalEntry?.half ? "var(--text-2)" : winner ? (winner.key === clA.key ? "var(--accent)" : "#b45309") : "var(--text-3)" }}>
+                                    <td style={{ ...cSum, borderLeft: "2px solid var(--border)", fontWeight: 700, color: finalEntry?.half ? "var(--text-2)" : winner ? (winner.key === clA.key ? "var(--accent)" : "var(--medal-bronze)") : "var(--text-3)" }}>
                                       {finalLabel}
                                     </td>
                                   </tr>
@@ -2137,7 +2137,7 @@ function Content() {
       </div>
 
       {error && (
-        <div className="fw-600 fs-13" style={{ padding: "16px 20px", color: "var(--danger)" }}>
+        <div className="fw-600 fs-13 c-danger" style={{ padding: "16px 20px" }}>
           ⚠️ {error}
         </div>
       )}
@@ -2206,7 +2206,7 @@ function Content() {
               });
             })();
             if (params.tkey && !tShow) {
-              return <div className="center-msg muted" style={{ padding: 40 }}>A carregar torneio {params.tkey}…</div>;
+              return <LoadingState size="sm" message={`A carregar torneio ${params.tkey}…`} />;
             }
             if (!tShow) {
               return !loading && <div className="center-msg muted">Selecciona um torneio</div>;
@@ -2314,21 +2314,14 @@ function Content() {
           {/* Detail Clubes */}
           <div className="course-detail" ref={md.detailRef}>
             {/* Tabs Individual / Grupos */}
-            <div style={{
-              display: "flex", borderBottom: "1px solid var(--border)",
+            <div className="tabbar-under" style={{
               background: "var(--bg-card,#fff)", position: "sticky", top: 0, zIndex: "var(--z-panel-hdr)",
             }}>
               {(["grupos", "individual"] as const).map(v => {
                 const label = v === "grupos" ? "🏅 Grupos" : "📋 Individual";
                 const active = clubesView === v;
                 return (
-                  <button key={v} onClick={() => setClubesView(v)} className="fs-12" style={{
-                    padding: "8px 16px", fontWeight: active ? 700 : 500,
-                    color: active ? "var(--text)" : "var(--text-muted)",
-                    background: "transparent", border: "none",
-                    borderBottom: active ? "2px solid var(--accent)" : "2px solid transparent",
-                    cursor: "pointer", transition: "all .15s",
-                  }}>{label}</button>
+                  <button key={v} onClick={() => setClubesView(v)} className={"tab-under" + (active ? " active" : "")}>{label}</button>
                 );
               })}
             </div>
@@ -2447,9 +2440,9 @@ function Content() {
                       return <TournamentDetail tournament={_t as any} escLookup={escLookup} playersDB={playersDB} />;
                     })()
                   : !clubesLoading && (
-                      <div className="center-msg muted">
-                        {clubesLoaded ? "Selecciona um torneio" : "A carregar…"}
-                      </div>
+                      clubesLoaded
+                        ? <div className="center-msg muted">Selecciona um torneio</div>
+                        : <LoadingState size="sm" message="A carregar…" />
                     )
               : (() => {
                   if (!curClubes) {
@@ -2723,7 +2716,11 @@ function Content() {
                 }
               </>
             ) : (
-              !jovensLoading && <div className="center-msg muted">{jovensLoaded ? "Selecciona um torneio" : "A carregar…"}</div>
+              !jovensLoading && (
+                jovensLoaded
+                  ? <div className="center-msg muted">Selecciona um torneio</div>
+                  : <LoadingState size="sm" message="A carregar…" />
+              )
             )}
           </div>
         </div>

@@ -18,6 +18,8 @@ import { cachedFetchJson } from "../data/fetchCache";
 import { isManuelByName as isM } from "../constants/manuel";
 import ExtLink from "../ui/ExternalLink";
 import { gf } from "../utils/flagUtils";
+import { fmtToPar } from "../utils/format";
+import { tpColor } from "../ui/tournamentPrimitives";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import LoadingState from "../ui/LoadingState";
 import { ManuelPill } from "../ui/PillBadge";
@@ -61,15 +63,6 @@ function flagForCountry(country: string | null | undefined): string {
   const iso2 = NAME_TO_ISO2[country] || ISO3_TO_ISO2[country] || (country.length === 2 ? country : "");
   return iso2 ? (gf(iso2) || "🏳") : "🏳";
 }
-
-const COUNTRY_FLAG: Record<string, string> = {
-  Portugal: "🇵🇹", Spain: "🇪🇸", France: "🇫🇷", Germany: "🇩🇪",
-  Italy: "🇮🇹", Netherlands: "🇳🇱", Denmark: "🇩🇰", Sweden: "🇸🇪",
-  Finland: "🇫🇮", Iceland: "🇮🇸", Poland: "🇵🇱", Switzerland: "🇨🇭",
-  Latvia: "🇱🇻", Estonia: "🇪🇪", Scotland: "🏴", "South Africa": "🇿🇦",
-  UAE: "🇦🇪", Mauritius: "🇲🇺", India: "🇮🇳", Belgium: "🇧🇪",
-  Austria: "🇦🇹", Norway: "🇳🇴",
-};
 
 /* ── Types ────────────────────────────────────────────────────────── */
 interface CatalogEntry {
@@ -224,11 +217,15 @@ function gjglScorecardOptions(): ScorecardOptions {
 const CATALOG_URL = "/data/gjgl-catalog.json";
 const dataUrl = (slug: string) => `/data/gjgl/gjgl_${slug}.json`;
 
-function fmtTopar(tp: number | string | null | undefined): string {
-  if (tp == null) return "—";
+/** to-par do GJGL pode vir como número OU status (WD/DNS/DQ/NR/NS). Strings
+ *  passam tal-qual; números delegam em fmtToPar. */
+function gjglTopar(tp: number | string | null | undefined): string {
   if (typeof tp === "string") return tp;
-  if (tp === 0) return "E";
-  return tp > 0 ? `+${tp}` : `${tp}`;
+  return fmtToPar(tp);
+}
+/** Cor só para to-par numérico (status strings ficam sem cor). */
+function gjglToparColor(tp: number | string | null | undefined): string | undefined {
+  return typeof tp === "number" ? tpColor(tp) : undefined;
 }
 
 /* ─────────────────────────────────────────────────────────────────── */
@@ -354,7 +351,7 @@ export function GlobalJuniorPageLegacy() {
                       }}
                       title={hasData ? "" : "Sem dados scrapados ainda"}
                     >
-                      <span style={{ marginRight: 6 }}>{COUNTRY_FLAG[t.country] || "🏳"}</span>
+                      <span style={{ marginRight: 6 }}>{flagForCountry(t.country) || "🏳"}</span>
                       <span>{t.title.replace(/\s*\d{4}\s*$/, "")}</span>
                     </button>
                   );
@@ -376,7 +373,7 @@ export function GlobalJuniorPageLegacy() {
         {activeCatalogEntry && (
           <>
             <h2 style={{ margin: "0 0 4px 0" }}>
-              <span style={{ marginRight: 8 }}>{COUNTRY_FLAG[activeCatalogEntry.country] || "🏳"}</span>
+              <span style={{ marginRight: 8 }}>{flagForCountry(activeCatalogEntry.country) || "🏳"}</span>
               {activeCatalogEntry.title}
             </h2>
             <div style={{ fontSize: "var(--fs-12)", color: "var(--text-muted)", marginBottom: 16 }}>
@@ -447,7 +444,7 @@ function DivisionTabs({ data }: { data: GjglData }) {
         <ToolbarSep />
         {manuelInDiv && (
           <ToolbarMeta>
-            <ManuelPill /> Pos {manuelInDiv.pos ?? "—"} · Total {manuelInDiv.total ?? "—"} ({fmtTopar(manuelInDiv.toPar)})
+            <ManuelPill /> Pos {manuelInDiv.pos ?? "—"} · Total {manuelInDiv.total ?? "—"} ({gjglTopar(manuelInDiv.toPar)})
           </ToolbarMeta>
         )}
       </Toolbar>
@@ -498,7 +495,7 @@ function SimpleLeaderboard({ div }: { div: GjglDivision }) {
               <td className="r">{(p.rounds || [])[1]?.gross ?? "—"}</td>
               <td className="r">{(p.rounds || [])[2]?.gross ?? "—"}</td>
               <td className="r">{p.total ?? "—"}</td>
-              <td className="r">{fmtTopar(p.toPar)}</td>
+              <td className="r" style={{ color: gjglToparColor(p.toPar) }}>{gjglTopar(p.toPar)}</td>
             </tr>
           );
         })}
@@ -561,7 +558,7 @@ function buildGjglEntries(catalog: Catalog, index: GjglIndex | null): CircuitEnt
       return {
         id: t.slug,
         year: t.year,
-        name: `${COUNTRY_FLAG[t.country] || "🏳"} ${t.title}`.trim(),
+        name: `${flagForCountry(t.country) || "🏳"} ${t.title}`.trim(),
         federation: t.country,
         course: ix?.course ?? undefined,
         dateStart: ix?.start_date ?? undefined,

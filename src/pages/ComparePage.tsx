@@ -23,6 +23,8 @@ import SortableHdr from "../ui/SortableHdr";
 import type { Course, Tee, Hole } from "../data/types";
 import CourseHeroCard, { getParTotal, parBreakdown, PAR_HSL } from "../ui/CourseHeroCard";
 import { MultiTeeSDTable } from "../ui/ScoreTable";
+import TeePill from "../ui/TeePill";
+import { physicalTeeGroups, physicalTeeKey } from "../utils/teeGroups";
 import { calcSD, calcPlayingHcp } from "../utils/whsCalc";
 import { fmtSD, fmtCR } from "../utils/format";
 import { teeHexFromTee as teeHex } from "../utils/teeUtils";
@@ -44,6 +46,25 @@ function filterCoursesForComparison(courses: Course[]): Course[] {
     const hasManuelPlayed = c.master._players && Object.keys(c.master._players).some(fed => fed === MANUEL_FED);
     return !!hasManuelPlayed;
   });
+}
+
+const SEX_MARK: Record<string, string> = { M: " · M", F: " · F" };
+
+/** Opções de tee para os <select>, uma por tee FÍSICO (sem o mesmo tee 2× com
+ *  texto idêntico). Quando um tee físico tem ratings M e F, expande nas duas
+ *  entradas com marcador de sexo no texto (para serem distinguíveis), mantendo
+ *  o teeId real como value — a lógica de selecção/rating a jusante não muda. */
+function teeSelectOptions(tees: Tee[]): { teeId: string; label: string }[] {
+  const opts: { teeId: string; label: string }[] = [];
+  for (const g of physicalTeeGroups(tees)) {
+    const sexes = (["M", "F", "U"] as const).filter(s => g.teeBySex[s]);
+    const multi = sexes.length > 1;
+    for (const s of sexes) {
+      const t = g.teeBySex[s]!;
+      opts.push({ teeId: t.teeId, label: g.label + (multi ? (SEX_MARK[s] ?? "") : "") });
+    }
+  }
+  return opts;
 }
 
 // ═══════════════════ Similitude ═══════════════════
@@ -326,8 +347,10 @@ function TwoTeeSDTable({
   }, [bestMatchA?.teeId, bestMatchB?.teeId, teeA.teeId, teeB.teeId, pcc]);
 
   const ROW1_H = 26;
-  const sticky0: React.CSSProperties = { position: "sticky", top: 0, zIndex: 12, background: "var(--bg)" };
-  const sticky1: React.CSSProperties = { position: "sticky", top: ROW1_H, zIndex: 11, background: "var(--bg)" };
+  // Dois níveis sticky distintos (linha 1 acima da linha 2); não há token > --z-panel-hdr,
+  // por isso usa-se --z-panel-hdr como base e +1 para a fila de cima preservar a ordem relativa.
+  const sticky0: React.CSSProperties = { position: "sticky", top: 0, zIndex: "calc(var(--z-panel-hdr) + 1)" as React.CSSProperties["zIndex"], background: "var(--bg)" };
+  const sticky1: React.CSSProperties = { position: "sticky", top: ROW1_H, zIndex: "var(--z-panel-hdr)" as React.CSSProperties["zIndex"], background: "var(--bg)" };
 
   return (
     <div className="sim-scroll-x scroll-x" style={{ maxHeight: 520 }}>
@@ -526,7 +549,7 @@ function CourseSideBySide({
         const CourseHeader = ({ course, tee }: { course: typeof courseA; tee: typeof teeA }) => (
           <div style={{ fontWeight: 700, fontSize: "var(--fs-13)", marginBottom: 8, display: "flex", alignItems: "center", gap: 8, minHeight: 28 }}>
             ⛳ {course.master.name}
-            <span style={{ background: teeHex(tee), color: textOnColor(teeHex(tee)), borderRadius: 4, padding: "2px 8px", fontSize: "var(--fs-11)", fontWeight: 700 }}>{tee.teeName}</span>
+            <TeePill name={tee.teeName} hex={teeHex(tee)} />
           </div>
         );
         const renderKpis = (dist: number | null, par: number | null, cr: number | null, slope: number | null) => (
@@ -857,11 +880,8 @@ function CourseComparisonView({ simCourses }: { simCourses: Course[] }) {
         if (sim === null) continue;
         const tier = simTier(sim.overall);
         if (tier === null) continue;
-        const dist = tee.distances?.total ?? 0;
-        const slope = tee.ratings?.holes18?.slopeRating ?? 0;
-        const cr = tee.ratings?.holes18?.courseRating ?? 0;
-        const par = getParTotal(tee);
-        const rowKey = `${course.courseKey}|${tee.teeName.trim().toLowerCase()}|${tee.sex}|${dist}|${par}|${slope}|${cr}`;
+        // Dedup por tee FÍSICO: variantes M/F do mesmo tee não geram linhas duplicadas.
+        const rowKey = `${course.courseKey}|${physicalTeeKey(tee)}`;
         if (seenRows.has(rowKey)) continue;
         seenRows.add(rowKey);
         result.push({ course, tee, sim, tier });
@@ -897,8 +917,8 @@ function CourseComparisonView({ simCourses }: { simCourses: Course[] }) {
               value={selectedTee?.teeId ?? ""}
               onChange={e => setSelectedTeeId(e.target.value)}
             >
-              {selectedCourse.master.tees.map(t => (
-                <option key={t.teeId} value={t.teeId}>{t.teeName}</option>
+              {teeSelectOptions(selectedCourse.master.tees).map(o => (
+                <option key={o.teeId} value={o.teeId}>{o.label}</option>
               ))}
             </select>
           </>
@@ -927,8 +947,8 @@ function CourseComparisonView({ simCourses }: { simCourses: Course[] }) {
               value={selectedTeeB?.teeId ?? ""}
               onChange={e => setSelectedTeeBId(e.target.value)}
             >
-              {selectedCourseB.master.tees.map(t => (
-                <option key={t.teeId} value={t.teeId}>{t.teeName}</option>
+              {teeSelectOptions(selectedCourseB.master.tees).map(o => (
+                <option key={o.teeId} value={o.teeId}>{o.label}</option>
               ))}
             </select>
           </>

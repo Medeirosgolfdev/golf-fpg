@@ -15,15 +15,16 @@
 import { MONTHS_PT } from "../utils/format";
 import { cachedFetchJson } from "../data/fetchCache";
 import { normPaisDisplay } from "../utils/flagUtils";
+import { normName } from "../utils/normName";
 
 // ═════════════════════════════════════════════════════════════════════
 // Helpers de string
 // ═════════════════════════════════════════════════════════════════════
 
 const CC: Record<string, string> = {
-  US: "United States", GB: "United Kingdom", ES: "Spain", IT: "Italy",
+  US: "USA", GB: "United Kingdom", ES: "Spain", IT: "Italy",
   FR: "France", DE: "Germany", CH: "Switzerland", NO: "Norway",
-  SE: "Sweden", PT: "Portugal", RU: "Russian Federation", BG: "Bulgaria",
+  SE: "Sweden", PT: "Portugal", RU: "Russia", BG: "Bulgaria",
   NL: "Netherlands", LT: "Lithuania", TH: "Thailand", PH: "Philippines",
   CN: "China", RO: "Romania", UA: "Ukraine", SI: "Slovenia",
   BE: "Belgium", DK: "Denmark", CA: "Canada", BR: "Brazil",
@@ -32,13 +33,13 @@ const CC: Record<string, string> = {
   KR: "South Korea", LV: "Latvia", CZ: "Czech Republic", PL: "Poland",
   PY: "Paraguay", CL: "Chile", CO: "Colombia", PR: "Puerto Rico",
   IE: "Ireland", CY: "Cyprus", OM: "Oman", LB: "Lebanon",
-  AE: "United Arab Emirates", KZ: "Kazakhstan", VN: "Viet Nam",
+  AE: "UAE", KZ: "Kazakhstan", VN: "Vietnam",
   JE: "Jersey", NG: "Nigeria", CR: "Costa Rica", AR: "Argentina",
   UK: "United Kingdom", PHL: "Philippines",
   AU: "Australia", JP: "Japan", NZ: "New Zealand", FI: "Finland",
   TW: "Taiwan", HK: "Hong Kong", ID: "Indonesia", EE: "Estonia",
   AM: "Armenia", BB: "Barbados", BS: "Bahamas", BO: "Bolivia",
-  DO: "Dominican Republic", DZ: "Algeria", EC: "Ecuador",
+  DO: "Dominican Rep.", DZ: "Algeria", EC: "Ecuador",
   GT: "Guatemala", HN: "Honduras", KE: "Kenya", KH: "Cambodia",
   MA: "Morocco", NI: "Nicaragua", PA: "Panama", PE: "Peru",
   RE: "Réunion", SV: "El Salvador", UG: "Uganda",
@@ -54,14 +55,9 @@ export function co(raw: string): string {
   return CC[t] || CC[t.toUpperCase()] || t;
 }
 
-/** Normaliza nome para comparação (lowercase, sem acentos, espaços condensados). */
-export function normName(n: string): string {
-  return n.trim().toLowerCase()
-    .replace(/[-'’.·]+/g, " ")
-    .replace(/\s+/g, " ")
-    .trim()
-    .normalize("NFD").replace(/[̀-ͯ]/g, "");
-}
+/** Normaliza nome para comparação (lowercase, sem acentos, espaços condensados).
+ *  Re-export da fonte canónica em utils/normName (mantido para os consumidores). */
+export { normName };
 
 // ═════════════════════════════════════════════════════════════════════
 // Tipos públicos
