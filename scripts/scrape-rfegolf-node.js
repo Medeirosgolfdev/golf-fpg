@@ -32,6 +32,49 @@ const https = require("https");
 const OUT_DIR = path.resolve(__dirname, "../public/data/rfegolf-resultats");
 if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
 
+// Janela de re-obtenção de comps ainda sem resultados (dias após o fim do evento).
+const REFETCH_PAST_DAYS = 21;
+
+function parseMetaDate(meta) {
+  if (!meta) return null;
+  const iso = meta.dateEndIso || meta.dateStartIso;
+  if (iso) { const t = Date.parse(iso); if (!isNaN(t)) return t; }
+  const dmy = meta.dateEnd || meta.dateStart; // "DD/MM/YYYY"
+  if (dmy) {
+    const m = /^(\d{2})\/(\d{2})\/(\d{4})/.exec(dmy);
+    if (m) { const t = Date.parse(m[3] + "-" + m[2] + "-" + m[1]); if (!isNaN(t)) return t; }
+  }
+  return null;
+}
+
+/* ─── existingRfegShouldSkip — decide se um ficheiro já em disco deve ser saltado.
+ * Mesma ideia do NextCaddy: um comp descoberto ANTES de ser jogado é gravado só
+ * com inscritos (results/leaderboard vazios). Sem isto, --skip-existing saltava-o
+ * para sempre e os resultados nunca eram buscados depois de publicados.
+ * Saltar quando:
+ *   (a) já tem jogadores em results OU leaderboard (= edição jogada e capturada), ou
+ *   (b) está vazio MAS o evento acabou há > REFETCH_PAST_DAYS (não vai ganhar
+ *       resultados — estrangeiro/cancelado/sem leaderboard publicado).
+ * Re-obter (não saltar) os vazios futuros ou recentes — é aí que os resultados
+ * aparecem. NÃO se usa `palmares` (é o palmarés HISTÓRICO, presente mesmo num
+ * evento futuro — marcá-lo-ia como feito). */
+function existingRfegShouldSkip(file) {
+  try {
+    const d = JSON.parse(fs.readFileSync(file, "utf8"));
+    const resPlayers = Array.isArray(d.results)
+      ? d.results.reduce(function (a, r) { return a + ((r && r.players) ? r.players.length : 0); }, 0)
+      : 0;
+    const lb = Array.isArray(d.leaderboard) ? d.leaderboard.length : 0;
+    if (resPlayers > 0 || lb > 0) return true; // já tem resultados → saltar
+    const end = parseMetaDate(d.meta);
+    if (end === null) return false; // vazio sem data → re-obter (raro)
+    const ageDays = (Date.now() - end) / 86400000;
+    return ageDays > REFETCH_PAST_DAYS; // antigo e vazio → desistir (saltar)
+  } catch (e) {
+    return false; // ilegível/truncado → re-obter
+  }
+}
+
 /* ────────────────────────────────────────────────────────────────
    HTTP helper (sem deps externas)
    ──────────────────────────────────────────────────────────────── */
@@ -708,7 +751,7 @@ async function main() {
       const idx = cursor++;
       const cid = comps[idx];
       const outFile = path.join(OUT_DIR, cid + ".json");
-      if (skipExisting && fs.existsSync(outFile)) { skipped++; continue; }
+      if (skipExisting && fs.existsSync(outFile) && existingRfegShouldSkip(outFile)) { skipped++; continue; }
       try {
         const result = await scrapeComp(cid);
         if (filterArg && result.ok) {
