@@ -464,7 +464,7 @@ export default function JogadoresPorAnoPage() {
       </Toolbar>
 
       {viewMode === "todos" && fedsError && (
-        <div className="muted fs-10" style={{ color: "var(--color-warn-vivid)", fontWeight: 600, padding: "4px 0" }}>
+        <div className="muted fs-10 fw-600" style={{ color: "var(--color-warn-vivid)" }}>
           ⚠ Erro a carregar federados.json: {fedsError}
         </div>
       )}

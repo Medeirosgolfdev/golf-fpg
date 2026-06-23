@@ -12,6 +12,7 @@
 
 import type { Player, PlayersDb } from "./types";
 import { cachedFetchJson } from "./fetchCache";
+import { fixMojibake } from "../utils/fixEncoding";
 
 /* ── Formato bruto do JSON (snake_case da API FPG) ──────────── */
 export interface FederadoRaw {
@@ -137,6 +138,15 @@ export function loadFederados(): Promise<FederadosFile> {
   _loading = cachedFetchJson<FederadosFile>("/data/federados.json")
     .then(data => {
       if (!data) throw new Error("Falha ao carregar /data/federados.json");
+      // Repara mojibake/encoding nas strings PT (como o App.tsx faz aos players).
+      // Performance: o ficheiro é grande (~15 MB) → reparamos só os campos de
+      // texto relevantes por registo (não recursão cega no objecto inteiro).
+      for (const f of data.players) {
+        if (f.name) f.name = fixMojibake(f.name);
+        if (f.club_name) f.club_name = fixMojibake(f.club_name);
+        if (f.acronym) f.acronym = fixMojibake(f.acronym);
+        if (f.country) f.country = fixMojibake(f.country);
+      }
       _cache = data;
       _loading = null;
       return data;

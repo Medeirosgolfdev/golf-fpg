@@ -31,6 +31,7 @@ import { Toolbar, ToolbarTitle } from "../ui/Toolbar";
 import Counter from "../ui/Counter";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { useSort } from "../hooks/useSort";
+import { MOBILE_BREAKPOINT } from "../hooks/useIsMobile";
 import { loadPlayerStats, daysSince, type PlayerStatsDb } from "../data/playerStatsTypes";
 import { loadFederados, federadoToPlayer, mergePlayersWithFederados, loadInativosStats, normalizeAgeLevel, type FederadoRaw, type MergedPlayer, type InativosStats } from "../data/federadosLoader";
 import { loadFederadosPP, ppForFed, getPPByFed, hasRealPPHcp, ppPlayerUrl, type FederadoPP } from "../data/federadosPPLoader";
@@ -3768,7 +3769,7 @@ export default function JogadoresPage() {
   // menos interessantes para o tracking júnior). Botão na toolbar carrega-os.
   const [includeSeniors, setIncludeSeniors] = useState(false);
   const [selectedFed, setSelectedFed] = useState<string | null>(urlFed ?? null);
-    const isMobileInit = typeof window !== "undefined" && window.innerWidth <= 768;
+    const isMobileInit = typeof window !== "undefined" && window.innerWidth <= MOBILE_BREAKPOINT;
   const md = useMasterDetail(!(isMobileInit && urlFed));
   const [playerMeta, setPlayerMeta] = useState<PlayerPageData["META"] | null>(null);
   const rankingMode = sortKey === "ranking";
@@ -4346,7 +4347,7 @@ export default function JogadoresPage() {
           );
         })()}
         {viewMode === "todos" && federadosError && (
-          <div className="muted fs-10" style={{ color: "var(--color-warn-vivid)", fontWeight: 600 }}>
+          <div className="muted fs-10 fw-600" style={{ color: "var(--color-warn-vivid)" }}>
             ⚠ Erro a carregar federados.json: {federadosError}
           </div>
         )}

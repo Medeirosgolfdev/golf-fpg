@@ -12,7 +12,7 @@
 import React, { useState, useMemo } from "react";
 import type { Tee } from "../data/types";
 import { sortTees, filterTees, teeHexFromTee as teeHex } from "../utils/teeUtils";
-import { fmt, fmtCR, fmtSD } from "../utils/format";
+import { fmt, fmtCR, fmtSD, fmtToPar } from "../utils/format";
 import {
   calcSD,
   calcPlayingHcp,
@@ -122,7 +122,7 @@ export function SDTable({
               >
                 <td className="sim-td sim-td-score">{r.score}</td>
                 <td className="sim-td c-text-3">
-                  {r.vsPar === 0 ? "E" : r.vsPar > 0 ? `+${r.vsPar}` : r.vsPar}
+                  {fmtToPar(r.vsPar)}
                 </td>
                 {is9h ? (
                   <>
@@ -396,7 +396,7 @@ export function MultiTeeSDTable({
                         : undefined,
                   }}
                 >
-                  {r.delta === 0 ? "E" : r.delta > 0 ? `+${r.delta}` : r.delta}
+                  {fmtToPar(r.delta)}
                 </td>
                 {r.cells.map((cell, i) => {
                   const col = cols[i];

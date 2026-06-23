@@ -24,7 +24,7 @@ import {
   type Sex,
 } from "../data/jovensAnaliseData";
 import { cachedFetchJson } from "../data/fetchCache";
-import { fpgScoringUrl, tournamentUrl, abreviarNome } from "../utils/format";
+import { fpgScoringUrl, tournamentUrl, abreviarNome, fmtToPar } from "../utils/format";
 import { Link } from "react-router-dom";
 import SexBadge from "./SexBadge";
 import { EscPill } from "./PillBadge";
@@ -87,7 +87,7 @@ function PodiumLine({ p, columnEsc, expectedPos, highlightManuel = true }: {
   expectedPos: number;
   highlightManuel?: boolean;
 }) {
-  const toPar = p.toPar == null ? "" : (p.toPar > 0 ? `+${p.toPar}` : p.toPar === 0 ? "E" : String(p.toPar));
+  const toPar = fmtToPar(p.toPar, "");
   const manuel = isManuel({ name: p.name, fed: p.fed ?? undefined });
   const elevated = p.pos != null && p.pos > expectedPos;
   return (
@@ -843,7 +843,7 @@ function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; 
               borderRadius: 4,
               padding: "3px 6px",
               background: titles.length > 0
-                ? "var(--medal-gold-bg, #fef3c7)"  // amber/dourado para anos com título (🏆)
+                ? "var(--medal-gold-bg, #fde68a)"  // amber/dourado para anos com título (🏆)
                 : (played ? undefined : "var(--bg-muted)"),
               opacity: played ? 1 : 0.6,
               fontSize: "var(--fs-11)",
