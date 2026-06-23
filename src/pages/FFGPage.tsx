@@ -49,6 +49,7 @@ import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/Dat
 import DetailHeader from "../ui/DetailHeader";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import LoadingState from "../ui/LoadingState";
+import EmptyState from "../ui/EmptyState";
 import { RoundPill, ManuelPill, PillBadge } from "../ui/PillBadge";
 import { type Tournament as FPGTournament, type Player as FPGPlayer, type RoundScore as FPGRoundScore, type ScorecardOptions } from "./FPGPage";
 import { IntlTournView } from "../ui/IntlTournView";
@@ -1873,11 +1874,11 @@ function FFGContentLegacy() {
   if (loading) return <LoadingState />;
   if (!catalog) {
     return (
-      <div className="center-msg muted">
+      <EmptyState message={<>
         Catálogo FFGolf não disponível.<br />
         <span className="fs-10">Esperado em <code>public/data/ffgolf-catalog.json</code></span>
-        {catalogErr && <><br /><span className="fs-10" style={{ color: "var(--danger)" }}>Erro: {catalogErr}</span></>}
-      </div>
+        {catalogErr && <><br /><span className="fs-10 c-danger">Erro: {catalogErr}</span></>}
+      </>} />
     );
   }
 
@@ -1984,13 +1985,13 @@ function FFGContentLegacy() {
 
   if (!visibleEntries.length && !lgVisible.length) {
     return (
-      <div className="center-msg muted">
+      <EmptyState message={<>
         Nenhum torneio FFGolf scrapado ainda.<br />
         <span className="fs-10">
           {catalog.tournaments.length} torneios mapeados no catálogo. Falta scrape:
           coloca os JSONs em <code>public/data/ffgolf/{`{ano}_{slug}.json`}</code>.
         </span>
-      </div>
+      </>} />
     );
   }
 
@@ -2383,7 +2384,7 @@ function FFGContentLegacy() {
                   <FFGResView data={ffgCur} lgpidfSupp={findMatchingLgpidf(ffgCurMeta)} />
                 </>
               ) : (
-                <div className="center-msg muted">Dados não disponíveis</div>
+                <EmptyState message="Sem dados para este torneio." />
               )}
             </div>
           </div>

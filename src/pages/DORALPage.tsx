@@ -19,6 +19,7 @@ import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/Dat
 import DetailHeader from "../ui/DetailHeader";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import LoadingState from "../ui/LoadingState";
+import EmptyState from "../ui/EmptyState";
 import Counter from "../ui/Counter";
 import { RoundPill, ManuelPill } from "../ui/PillBadge";
 import { type Tournament as FPGTournament, type Player as FPGPlayer, type RoundScore as FPGRoundScore, type ScorecardOptions } from "./FPGPage";
@@ -629,10 +630,10 @@ function Content() {
 
   if (loading) return <LoadingState />;
   if (!entries.length || !cur) return (
-    <div className="center-msg muted">
+    <EmptyState message={<>
       Nenhum ficheiro de dados encontrado.<br />
       <span className="fs-10">Coloca <code>ftm_doral_2025.json</code> em <code>public/data/</code></span>
-    </div>
+    </>} />
   );
 
   // Agrupar por ano para o sidebar
@@ -828,7 +829,7 @@ function Content() {
               })()}
             </>
           ) : (
-            <div className="center-msg muted">Dados não disponíveis</div>
+            <EmptyState message="Sem dados para este torneio." />
           )}
         </div>
 

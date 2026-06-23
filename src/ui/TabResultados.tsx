@@ -341,22 +341,12 @@ function EscalaoTabs({ escaloes, torneio: t, defaultIdx, arMap, drawsData }: {
   const [esc, setEsc] = useState(defaultIdx);
   const escalaoEsperado = escalaoManuelParaData(t.date_inicio);
 
-  const escTabStyle = (i: number): React.CSSProperties => ({
-    padding: "6px 12px", fontSize: "var(--fs-12)",
-    fontWeight: esc === i ? 700 : 500,
-    color: esc === i ? "var(--text)" : "var(--text-muted)",
-    background: "transparent", border: "none",
-    borderBottom: esc === i ? "2px solid var(--accent)" : "2px solid transparent",
-    cursor: "pointer", whiteSpace: "nowrap" as const,
-    marginBottom: -1,
-  });
-
   const e = escaloes[esc];
 
   return (
     <div>
       {/* Barra de escalões */}
-      <div style={{ display: "flex", flexWrap: "wrap", borderBottom: "1px solid var(--border)", marginBottom: 12 }}>
+      <div className="tabbar-under">
         {escaloes.map((es, i) => {
           const isME = t.escalao_manuel
             ? es.age_group === t.escalao_manuel
@@ -365,7 +355,7 @@ function EscalaoTabs({ escaloes, torneio: t, defaultIdx, arMap, drawsData }: {
           const dist = tInfo?.metros?.length === 18
             ? tInfo.metros.reduce((a: number, b: number) => a + b, 0) : null;
           return (
-            <button key={es.age_group} style={escTabStyle(i)} onClick={() => setEsc(i)}>
+            <button key={es.age_group} className={"tab-under" + (esc === i ? " active" : "")} onClick={() => setEsc(i)}>
               {isME ? "★ " : ""}{es.nome}
               {dist ? <span className="ml-4 fs-10 fw-400" style={{ opacity: 0.7 }}>{dist}m</span> : null}
             </button>
@@ -770,9 +760,7 @@ function TabResultados({ data, selectedT, greatgolfData, drawsData }: {
         {manuelRows.length > 0 && (
           <div style={{ display:"flex", gap:8, flexWrap:"wrap", marginTop:10 }}>
             {manuelRows.map((m, i) => {
-              const toPar = m.to_par != null
-                ? (m.to_par === 0 ? "E" : m.to_par > 0 ? `+${m.to_par}` : `${m.to_par}`)
-                : null;
+              const toPar = m.to_par != null ? fmtToPar(m.to_par) : null;
               const liderStr = m.diffLider === 0 ? "líder"
                 : m.diffLider != null ? `+${m.diffLider} do líder`
                 : null;

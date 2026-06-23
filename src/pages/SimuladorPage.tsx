@@ -20,6 +20,7 @@ import { isTournamentCourse } from "../constants/tournamentCourses";
 import ExtLink from "../ui/ExternalLink";
 import { RoundSimulator } from "../ui/RoundSimulator";
 import TeeBars from "../ui/TeeBars";
+import { physicalTeeKey } from "../utils/teeGroups";
 import { loadPlayerData } from "../data/playerDataLoader";
 import type { PlayerPageData, RoundData } from "../data/playerDataLoader";
 import { MANUEL_FED } from "../constants/manuel";
@@ -1103,6 +1104,7 @@ export default function SimuladorPage() {
               if (is9h) return get9hRatings(t, holesMode as "front9" | "back9") !== null;
               return t.ratings?.holes18?.courseRating && t.ratings?.holes18?.slopeRating;
             });
+            const nTees = new Set(tees.map(physicalTeeKey)).size;
             return (
               <button
                 key={c.courseKey}
@@ -1111,7 +1113,7 @@ export default function SimuladorPage() {
               >
                 <div className="course-item-name">{c.master.name}</div>
                 <div className="course-item-meta">
-                  {tees.length} tee{tees.length !== 1 ? "s" : ""} c/ ratings
+                  {nTees} tee{nTees !== 1 ? "s" : ""} c/ ratings
                 </div>
               </button>
             );

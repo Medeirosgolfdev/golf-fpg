@@ -24,7 +24,7 @@ import {
   type HoleStatsData,
 } from "../data/playerDataLoader";
 import { loadPlayerStats, type PlayerStatsDb } from "../data/playerStatsTypes";
-import { norm } from "../utils/format";
+import { norm, shortName } from "../utils/format";
 import { clubShort, hcpDisplay } from "../utils/playerUtils";
 import { deepFixMojibake } from "../utils/fixEncoding";
 import LoadingState from "../ui/LoadingState";
@@ -103,7 +103,6 @@ function aggregateStats(data: PlayerPageData): AggStats | null {
   };
 }
 
-function shortName(name: string) { return name.split(" ").slice(0, 2).join(" "); }
 function firstName(name: string) { return name.split(" ")[0]; }
 const fD = (v: number) => (v >= 0 ? "+" : "") + v.toFixed(1);
 const fD2 = (v: number) => (v >= 0 ? "+" : "") + v.toFixed(2);
@@ -449,8 +448,8 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
       <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", maxHeight: 230, marginTop: 8 }}>
         <line x1={PAD.left} x2={W - PAD.right} y1={yPos(0)} y2={yPos(0)} stroke="var(--color-good)" strokeWidth={1} strokeDasharray="4,3" opacity={0.5} />
         {[-0.5, 0.5, 1.0].filter(v => v >= minV && v <= maxV).map(v => (
-          <g key={v}><line x1={PAD.left} x2={W - PAD.right} y1={yPos(v)} y2={yPos(v)} stroke="#e2e8f0" strokeWidth={0.5} />
-          <text x={PAD.left - 4} y={yPos(v) + 3} textAnchor="end" fontSize={9} fill="#94a3b8">{v > 0 ? "+" : ""}{v.toFixed(1)}</text></g>
+          <g key={v}><line x1={PAD.left} x2={W - PAD.right} y1={yPos(v)} y2={yPos(v)} stroke="var(--border)" strokeWidth={0.5} />
+          <text x={PAD.left - 4} y={yPos(v) + 3} textAnchor="end" fontSize={9} fill="var(--text-muted)">{v > 0 ? "+" : ""}{v.toFixed(1)}</text></g>
         ))}
         {refStats.holes.map((h, i) => (
           <React.Fragment key={i}>
@@ -658,7 +657,7 @@ function HcpEvolutionSection({ slots }: { slots: Slot[] }) {
         </select>
       </div>
       <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", maxHeight: 280, background: "var(--bg-subtle)", borderRadius: 8, border: "1px solid var(--border-light)" }}>
-        {Array.from({ length: 5 }, (_, i) => { const val = minH - padH + (rangeH + 2 * padH) * (i / 4); return (<g key={i}><line x1={PAD.left} y1={yPos(val)} x2={W - PAD.right} y2={yPos(val)} stroke="#e2e8f0" strokeWidth={0.5} /><text x={PAD.left - 4} y={yPos(val) + 3} textAnchor="end" fontSize={9} fill="#94a3b8">{val.toFixed(1)}</text></g>); })}
+        {Array.from({ length: 5 }, (_, i) => { const val = minH - padH + (rangeH + 2 * padH) * (i / 4); return (<g key={i}><line x1={PAD.left} y1={yPos(val)} x2={W - PAD.right} y2={yPos(val)} stroke="var(--border)" strokeWidth={0.5} /><text x={PAD.left - 4} y={yPos(val) + 3} textAnchor="end" fontSize={9} fill="var(--text-muted)">{val.toFixed(1)}</text></g>); })}
         {series.map((s, si) => { if (s.pts.length < 2) return null; const d = s.pts.map(pt => `${xPos(pt.d).toFixed(1)},${yPos(pt.h).toFixed(1)}`).join(" L "); return (<g key={si}><path d={`M ${d}`} fill="none" stroke={s.color} strokeWidth={2} opacity={0.8} strokeLinejoin="round" />{s.pts.map((pt, j) => (<circle key={j} cx={xPos(pt.d)} cy={yPos(pt.h)} r={2.5} fill={s.color} opacity={0.5}><title>{s.name}: HCP {pt.h} ({new Date(pt.d).toLocaleDateString("pt-PT")})</title></circle>))}</g>); })}
       </svg>
       <div className="caKpis" style={{ marginTop: 8 }}>

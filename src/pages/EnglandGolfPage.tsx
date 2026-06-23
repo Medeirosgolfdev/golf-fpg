@@ -27,6 +27,7 @@ import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/Dat
 import DetailHeader from "../ui/DetailHeader";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import LoadingState from "../ui/LoadingState";
+import EmptyState from "../ui/EmptyState";
 import Counter from "../ui/Counter";
 import { useKidsLinkMap } from "../hooks/useKidsLinkMap";
 import { KidsLinkCtx } from "../ui/KidsLink";
@@ -667,7 +668,7 @@ function EnglandContentLegacy() {
             })()}
             <TournView def={cur} evo={evoMap} evoYear={evoYear} selectedDivision={selectedDivision} />
             {/* EvoComparison removida para England Golf */}
-          </>) : <div className="center-msg muted">Dados não disponíveis</div>}
+          </>) : <EmptyState message="Sem dados para este torneio." />}
         </div>
 
       </div>
@@ -789,7 +790,7 @@ const ENGLAND_CONFIG: CircuitConfig = {
   sourceLabels: { england: "England Golf" },
   filters: { search: true, year: true, escalao: true, sex: true, toggles: ["manuel", "pt", "top10", "veteranos"] },
   veteranoThreshold: 3,
-  loadingMessage: "A carregar England Golf...",
+  loadingMessage: "A carregar England Golf…",
 };
 
 function EnglandShellContent() {

@@ -22,6 +22,7 @@ import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/Dat
 import DetailHeader from "../ui/DetailHeader";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import LoadingState from "../ui/LoadingState";
+import EmptyState from "../ui/EmptyState";
 import Counter from "../ui/Counter";
 import { useKidsLinkMap } from "../hooks/useKidsLinkMap";
 import { KidsLinkCtx } from "../ui/KidsLink";
@@ -648,7 +649,7 @@ function Content() {
                 </div>
               </div>
             )}
-          </>) : <div className="center-msg muted">Dados não disponíveis</div>}
+          </>) : <EmptyState message="Sem dados para este torneio." />}
         </div>
 
       </div>
