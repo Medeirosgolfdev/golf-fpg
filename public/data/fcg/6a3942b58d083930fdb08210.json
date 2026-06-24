@@ -1,0 +1,166 @@
+{
+  "gameId": "6a3942b58d083930fdb08210",
+  "fetchedAt": "2026-06-24T12:00:04.616Z",
+  "game": {
+    "_id": "6a3942b58d083930fdb08210",
+    "name": "CAMPIONAT DE CATALUNYA ABSOLUT I 2a CATEGORIA 2026 (WAGR)",
+    "status": "scheduled",
+    "scheduleStartDate": "2026-07-10T07:00:00.000Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "strokePlay",
+    "defaultTeeColorMale": "white",
+    "defaultTeeColorFemale": "blue",
+    "tournament": {
+      "_id": "6a3942b58d083930fdb0823c",
+      "name": "CAMPIONAT DE CATALUNYA ABSOLUT I 2a CATEGORIA 2026 (WAGR)",
+      "clientName": "Federación Catalana de Golf",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de79a6f4d36dfe90dea33ed",
+      "name": "GOLF CLUB PERALADA",
+      "city": "PERALADA",
+      "state": "GIRONA",
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "5de79a6f4d36dfe90dea33ee",
+      "name": "PERALADA",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 72.6,
+        "slope": 138,
+        "par": 71,
+        "_id": "6a3942b58d083930fdb082b9"
+      },
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 64.9,
+        "slope": 118,
+        "par": 71,
+        "_id": "6a3942b58d083930fdb082f2"
+      },
+      {
+        "gender": "M",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 66.9,
+        "slope": 121,
+        "par": 71,
+        "_id": "6a3942b58d083930fdb082df"
+      },
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 70.3,
+        "slope": 139,
+        "par": 71,
+        "_id": "6a3942b58d083930fdb08305"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 72.1,
+        "slope": 130,
+        "par": 71,
+        "_id": "6a3942b58d083930fdb082cc"
+      },
+      {
+        "gender": "F",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 79.4,
+        "slope": 137,
+        "par": 71,
+        "_id": "6a3942b58d083930fdb0832b"
+      },
+      {
+        "gender": "F",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 77,
+        "slope": 131,
+        "par": 71,
+        "_id": "6a3942b58d083930fdb0833f"
+      },
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 70.4,
+        "slope": 128,
+        "par": 71,
+        "_id": "6a3942b58d083930fdb08318"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "6a3942b58d083930fdb0824e",
+      "name": "SCR MAS",
+      "gender": "M",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6a3942b58d083930fdb08251",
+      "name": "SCR FEM",
+      "gender": "F",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6a3942b58d083930fdb08254",
+      "name": "SCR MAS 2ª CAT",
+      "gender": "M",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6a3942b58d083930fdb08257",
+      "name": "SCR FEM 2ª CAT",
+      "gender": "F",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}

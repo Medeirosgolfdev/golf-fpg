@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-22T09:54:29.017Z",
+  "generatedAt": "2026-06-24T11:47:50.553Z",
   "source": "scripts/discover-fcg-scope.js",
   "years": [
     "2025",
@@ -7,7 +7,7 @@
   ],
   "keepNonJuvenile": false,
   "totalTournaments": 27,
-  "totalGames": 24,
+  "totalGames": 25,
   "totalImaster": 0,
   "totalInscritos": 43,
   "tournaments": [
@@ -962,8 +962,8 @@
       "juvenile": true
     },
     {
-      "slug": "campionat-de-catalunya-dobles-2026-2026-07-04",
-      "title": "CAMPIONAT DE CATALUNYA DOBLES 2026",
+      "slug": "campionat-de-catalunya-dobles-2026-absolut-i-senior-2026-07-04",
+      "title": "CAMPIONAT DE CATALUNYA DOBLES 2026 (Absolut i S&egrave;nior)",
       "organizer": null,
       "sede": null,
       "dateStart": null,
@@ -983,14 +983,14 @@
       "inscritos": [],
       "dateRaw": "04-07-2026",
       "dateIso": "2026-07-04",
-      "name": "CAMPIONAT DE CATALUNYA DOBLES 2026",
+      "name": "CAMPIONAT DE CATALUNYA DOBLES 2026 (Absolut i S&egrave;nior)",
       "year": 2026,
-      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-dobles-2026-2026-07-04",
+      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-dobles-2026-absolut-i-senior-2026-07-04",
       "juvenile": true
     },
     {
-      "slug": "campionat-de-catalunya-absolut-i-2-wagr-2026-2026-07-10",
-      "title": "CAMPIONAT DE CATALUNYA ABSOLUT I 2&ordf; (WAGR) 2026",
+      "slug": "campionat-de-catalunya-absolut-i-2-categoria-2026-wagr-2026-07-10",
+      "title": "CAMPIONAT DE CATALUNYA ABSOLUT I 2&ordf; CATEGORIA 2026 (WAGR)",
       "organizer": null,
       "sede": null,
       "dateStart": null,
@@ -1005,19 +1005,27 @@
         "ALV",
         "BNJ"
       ],
-      "games": [],
+      "games": [
+        {
+          "gameId": "6a3942b58d083930fdb08210",
+          "sections": [
+            "summary"
+          ],
+          "hintCategories": []
+        }
+      ],
       "imasterIds": [],
       "inscritos": [],
       "dateRaw": "10-07-2026",
       "dateIso": "2026-07-10",
-      "name": "CAMPIONAT DE CATALUNYA ABSOLUT I 2&ordf; (WAGR) 2026",
+      "name": "CAMPIONAT DE CATALUNYA ABSOLUT I 2&ordf; CATEGORIA 2026 (WAGR)",
       "year": 2026,
-      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-absolut-i-2-wagr-2026-2026-07-10",
+      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-absolut-i-2-categoria-2026-wagr-2026-07-10",
       "juvenile": true
     },
     {
-      "slug": "campionat-de-catalunya-34-masculi-i-femeni-2026-2026-07-18",
-      "title": "CAMPIONAT DE CATALUNYA 3&ordf;4&ordf; MASCUL&Iacute; I FEMEN&Iacute; 2026",
+      "slug": "campionat-de-catalunya-3a-i-4a-categoria-2026-2026-07-18",
+      "title": "CAMPIONAT DE CATALUNYA 3a I 4a CATEGORIA 2026",
       "organizer": null,
       "sede": null,
       "dateStart": null,
@@ -1037,9 +1045,9 @@
       "inscritos": [],
       "dateRaw": "18-07-2026",
       "dateIso": "2026-07-18",
-      "name": "CAMPIONAT DE CATALUNYA 3&ordf;4&ordf; MASCUL&Iacute; I FEMEN&Iacute; 2026",
+      "name": "CAMPIONAT DE CATALUNYA 3a I 4a CATEGORIA 2026",
       "year": 2026,
-      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-34-masculi-i-femeni-2026-2026-07-18",
+      "url": "https://www.catgolf.com/ca/campionats/campionat-de-catalunya-3a-i-4a-categoria-2026-2026-07-18",
       "juvenile": true
     },
     {

@@ -160,11 +160,36 @@ async function scrapeTorneo(id) {
   return { id, ok: true, scrapedAt: new Date().toISOString(), meta, rounds: roundsData };
 }
 
+const LGS_BASE = "https://rfegolf.livegolfscoring.es";
+
+/* ─── Descoberta por LISTAGEM de temporada ───────────────────────────────
+ * Em vez de adivinhar um range numérico, a página /competiciones/temporada/{ano}
+ * lista TODAS as competições da época (nacionais + regionais: Zonais Juvenis,
+ * circuitos autonómicos, etc.). Extraímos os IDs do padrão de link que o próprio
+ * scraper já usa (/torneos/{tipo}/{id}) — robusto contra mudanças de layout. */
+async function discoverSeasonIds(years) {
+  const ids = new Set();
+  for (const y of years) {
+    try {
+      const r = await httpGet(`${LGS_BASE}/competiciones/temporada/${y}`);
+      if (r.status !== 200) { console.log(`  temporada ${y}: HTTP ${r.status}`); continue; }
+      let n = 0;
+      for (const m of r.body.matchAll(/\/torneos\/(?:clasificacion|hoyoahoyo|horarios)\/(\d+)/gi)) {
+        const id = parseInt(m[1], 10);
+        if (id > 0 && !ids.has(id)) { ids.add(id); n++; }
+      }
+      console.log(`  temporada ${y}: ${n} competições`);
+    } catch (e) { console.log(`  temporada ${y}: erro ${e.message}`); }
+  }
+  return [...ids];
+}
+
 async function main() {
   const args = process.argv.slice(2);
   function getArg(n, def) { const i = args.indexOf("--" + n); return i >= 0 ? args[i + 1] : (def === undefined ? null : def); }
   const idArg = getArg("id", null);
   const rangeArg = getArg("range", null);
+  const seasonsArg = getArg("seasons", null);
   const skipExisting = args.includes("--skip-existing");
   const pretty = args.includes("--pretty");
   const concurrency = parseInt(getArg("concurrency", "5"), 10);
@@ -174,8 +199,18 @@ async function main() {
   else if (rangeArg) {
     const p = rangeArg.split("-").map(s => parseInt(s.trim(), 10));
     for (let i = p[0]; i <= p[1]; i++) ids.push(i);
-  } else {
-    console.log("Uso: --id 322 | --range 1-400 [--concurrency 5] [--skip-existing]");
+  }
+  // --seasons "2025,2026": descobre IDs por listagem e junta-os (pode combinar
+  // com --range para também cobrir IDs que a listagem não mostre).
+  if (seasonsArg) {
+    const years = seasonsArg.split(",").map(s => s.trim()).filter(Boolean);
+    console.log(`Discovery por temporada: ${years.join(", ")}`);
+    const found = await discoverSeasonIds(years);
+    for (const id of found) if (!ids.includes(id)) ids.push(id);
+    console.log(`  → ${found.length} IDs descobertos (total a processar: ${ids.length})`);
+  }
+  if (!ids.length) {
+    console.log("Uso: --id 322 | --range 1-400 | --seasons 2025,2026 [--concurrency 5] [--skip-existing]");
     process.exit(1);
   }
 
