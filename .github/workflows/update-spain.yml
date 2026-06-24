@@ -192,6 +192,11 @@ jobs:
         continue-on-error: true
         run: node scripts/enrich-lgs-dates.js
 
+      - name: Backfill datas NextCaddy (scope → meta.dateStart)
+        id: nc_dates
+        continue-on-error: true
+        run: node scripts/backfill-nextcaddy-dates.js
+
       - name: Inferir par NextCaddy (fallback)
         id: infer_par
         continue-on-error: true

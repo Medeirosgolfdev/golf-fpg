@@ -387,10 +387,23 @@ function ncToFPGTournament(
   }
   if (nRounds === 0) return null;
 
-  const par18 = (detail.coursePar && detail.coursePar.length === 18 ? detail.coursePar : new Array(18).fill(4));
+  // Nº de buracos: muitos torneios NextCaddy (Pitch&Putt) são de 9 buracos.
+  // Detectar a partir do par fornecido, senão dos scores reais dos cartões, com
+  // fallback a 18. As arrays par/SI/metros seguem este comprimento (o renderer
+  // de scorecard decide os buracos por par.length — suporta 9 ou 18).
+  const courseParRaw = (detail.coursePar && detail.coursePar.length > 0) ? detail.coursePar : null;
+  let nHoles = courseParRaw ? courseParRaw.length : 0;
+  if (nHoles !== 9 && nHoles !== 18) {
+    for (const p of players) {
+      const r = (p.rounds || []).find((x) => Array.isArray((x as any).scores) && (x as any).scores.length > 0);
+      if (r) { nHoles = (r as any).scores.length; break; }
+    }
+  }
+  if (nHoles !== 9 && nHoles !== 18) nHoles = 18;
+  const par18 = (courseParRaw && courseParRaw.length === nHoles) ? courseParRaw : new Array(nHoles).fill(nHoles === 9 ? 3 : 4);
   const parTotal = par18.reduce((a, b) => a + b, 0);
-  const si18 = (detail._ncCourseSi && detail._ncCourseSi.length === 18) ? detail._ncCourseSi : [];
-  const meters18 = (detail._ncCourseMeters && detail._ncCourseMeters.length === 18) ? detail._ncCourseMeters : [];
+  const si18 = (detail._ncCourseSi && detail._ncCourseSi.length === nHoles) ? detail._ncCourseSi : [];
+  const meters18 = (detail._ncCourseMeters && detail._ncCourseMeters.length === nHoles) ? detail._ncCourseMeters : [];
 
   const norm = (s: string) => s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/[,.]/g, " ").replace(/\s+/g, " ").trim();
   const lookupByName: Record<string, DobLookupEntry> = {};
@@ -413,7 +426,7 @@ function ncToFPGTournament(
     const club = (p.club || e?.club || "").toString();
     const sex: "M" | "F" | null = (p.sexo === "M" ? "M" : p.sexo === "F" ? "F" : (e?.sex === "M" ? "M" : e?.sex === "F" ? "F" : null));
     const roundScores: FPGRoundScore[] = (p.rounds || [])
-      .filter((r) => Array.isArray((r as any).scores) && (r as any).scores.length === 18)
+      .filter((r) => Array.isArray((r as any).scores) && (r as any).scores.length === nHoles)
       .map((r) => ({
         round: r.round,
         gross: (r.gross != null) ? r.gross : ((r as any).scores.reduce((a: number, b: number) => a + b, 0) || 0),
@@ -439,7 +452,7 @@ function ncToFPGTournament(
       _sex: sex,
       _age: age,
       teeName: meters18.length ? "Tour" : undefined,
-      nholes: 18,
+      nholes: nHoles,
       parTotal,
       scores: roundScores[0]?.scores || [],
       par: par18,
@@ -774,6 +787,11 @@ interface NCDetail {
     organizer?: string | null;
     format?: string | null;
     categories?: string[];
+    /** Datas ISO YYYY-MM-DD (extraídas pelo scraper / backfill-nextcaddy-dates.js). */
+    dateStart?: string | null;
+    dateEnd?: string | null;
+    /** Data original por extenso, ex. "21 jun 2026". */
+    dateText?: string | null;
   };
   /** Horarios (draw / tee times). Populado por scripts/scrape-nextcaddy-horarios.js. */
   horarios?: NCHorario[];
@@ -1027,8 +1045,8 @@ function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: HcpLook
     scrapedAt: nc.scrapedAt,
     meta: {
       name: nc.meta?.name ?? null,
-      dateStart: null,
-      dateEnd: null,
+      dateStart: nc.meta?.dateStart ?? null,
+      dateEnd: nc.meta?.dateEnd ?? null,
       course: nc.meta?.course ?? null,
       courseClubId: null,
       players: admitidos.length,

@@ -46,8 +46,19 @@ const OUT_DIR = path.resolve(__dirname, "../public/data/nextcaddy");
 function existingIsComplete(file) {
   try {
     const d = JSON.parse(fs.readFileSync(file, "utf8"));
-    const hasPlayers = (d.leaderboard || []).some((c) => (c.players || []).length > 0);
-    return hasPlayers || d.leaderboardPdfOnly === true;
+    const cats = d.leaderboard || [];
+    const hasPlayers = cats.some((c) => (c.players || []).length > 0);
+    if (!hasPlayers) return d.leaderboardPdfOnly === true;
+    // Provas de jovens DEVEM ter cartões hole-by-hole. Se há jogadores com
+    // inscribedId mas nenhum tem roundScores, está incompleto → re-obter (apanha
+    // os torneios já gravados antes do auto-scorecards e backfilla o hbh).
+    if (isYouthTournament(d.meta, d.categoryNames) && !(d.meta && d.meta.scorecardsUnavailable)) {
+      const players = cats.flatMap((c) => c.players || []);
+      const hasIds = players.some((p) => p.inscribedId);
+      const hasHbh = players.some((p) => p.roundScores && p.roundScores.length > 0);
+      if (hasIds && !hasHbh) return false;
+    }
+    return true;
   } catch {
     return false; // ilegível/truncado → re-obter
   }
@@ -138,6 +149,70 @@ function trCells(trHtml) {
   let m;
   while ((m = re.exec(trHtml)) !== null) cells.push(m[1]);
   return cells;
+}
+
+/* ─── parseSpanishDate — texto → {start,end,text} em ISO ──────────
+ * Apanha datas espanholas em qualquer formato encontrado nos nomes de torneio
+ * e nas cartas de descoberta do nextcaddy:
+ *   "21 jun 2026"                      (formato das discovery cards)
+ *   "Domingo 21 Junio 2026"            (nome de torneio)
+ *   "21 de junio de 2026"
+ *   "21-22 Junio 2026" / "del 21 al 23 de junio 2026" / "21 y 22 jun 2026" (ranges)
+ * Devolve dateStart/dateEnd em ISO YYYY-MM-DD (iguais quando é um dia só), ou
+ * null se não houver mês+ano reconhecíveis. Match EXACTO do token de mês (não
+ * prefixo) para evitar falsos positivos tipo "mayor"→"may". */
+const MES_ES = {
+  ene: 1, enero: 1, feb: 2, febrero: 2, mar: 3, marzo: 3, abr: 4, abril: 4,
+  may: 5, mayo: 5, jun: 6, junio: 6, jul: 7, julio: 7, ago: 8, agosto: 8,
+  sep: 9, septiembre: 9, setiembre: 9, oct: 10, octubre: 10,
+  nov: 11, noviembre: 11, dic: 12, diciembre: 12,
+};
+function _normTxt(s) {
+  return String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+}
+function parseSpanishDate(str) {
+  if (!str) return null;
+  const s = _normTxt(str);
+  const yearM = /\b(20\d{2})\b/.exec(s);
+  if (!yearM) return null;
+  const year = parseInt(yearM[1], 10);
+  // Procurar o PRIMEIRO token alfabético que seja exactamente um nome de mês
+  let month = null, monthIdx = -1;
+  const tokRe = /[a-z]+/g;
+  let m;
+  while ((m = tokRe.exec(s)) !== null) {
+    if (MES_ES[m[0]] != null) { month = MES_ES[m[0]]; monthIdx = m.index; break; }
+  }
+  if (month == null) return null;
+  // Dias: número(s) na janela imediatamente ANTES do mês (1 ou 2 = range)
+  const before = s.slice(Math.max(0, monthIdx - 30), monthIdx);
+  const dayNums = (before.match(/\b\d{1,2}\b/g) || []).map(Number).filter((d) => d >= 1 && d <= 31);
+  if (dayNums.length === 0) return null;
+  const d1 = dayNums[0];
+  const d2 = dayNums.length > 1 ? dayNums[dayNums.length - 1] : d1;
+  const pad = (n) => String(n).padStart(2, "0");
+  return {
+    start: `${year}-${pad(month)}-${pad(Math.min(d1, d2))}`,
+    end: `${year}-${pad(month)}-${pad(Math.max(d1, d2))}`,
+    text: String(str).trim(),
+  };
+}
+
+/* ─── isYouthTournament — heurística de torneio de jovens ─────────
+ * NextCaddy não tem campo de escalão fiável a nível de torneio, mas o NOME e as
+ * categorias revelam quase sempre se é uma prova de menores. Usado para activar
+ * o fetch de cartões (hole-by-hole) automaticamente, mesmo sem --scorecards —
+ * é nos torneios de jovens que o detalhe buraco-a-buraco interessa. */
+const YOUTH_RE = /\b(infantil|juvenil|alev[ií]n|benjam[ií]n|cadet[ae]|j[uú]nior|sub[\s-]?\d{1,2}|menores|escolar|pee?wee|boys?|girls?|ni[nñ]os?)\b/i;
+function isYouthTournament(meta, categoryNames) {
+  if (meta && YOUTH_RE.test(_normTxt(meta.name || ""))) return true;
+  if (Array.isArray(meta && meta.categories) && meta.categories.some((c) => YOUTH_RE.test(_normTxt(c)))) return true;
+  if (categoryNames) {
+    for (const v of Object.values(categoryNames)) {
+      if (v && YOUTH_RE.test(_normTxt(v.name || ""))) return true;
+    }
+  }
+  return false;
 }
 
 /* ─── parseClasificacionesMeta — extrai nomes das categorias do dropdown topo ─── */
@@ -396,13 +471,25 @@ function parseEstadisticas(jsonStr) {
 
 function parseTourMeta(html) {
   const meta = { name: null, organizer: null, course: null, courseCode: null,
-                 dateStart: null, dateEnd: null, format: null, categories: [] };
+                 dateStart: null, dateEnd: null, dateText: null, format: null, categories: [] };
   const propsM = /data-symfony--ux-react--react-props-value="([^"]+)"/.exec(html);
   if (propsM) {
     const v = decodeEntities(propsM[1]);
     try {
       const obj = JSON.parse(v);
       if (obj.competitionName) meta.name = obj.competitionName;
+      // O componente React às vezes traz datas estruturadas (ISO ou DD/MM/YYYY)
+      const ds = obj.dateStart || obj.startDate || obj.fechaInicio || obj.competitionDate || null;
+      const de = obj.dateEnd || obj.endDate || obj.fechaFin || null;
+      const iso = (x) => {
+        if (!x) return null;
+        let mm = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(x));
+        if (mm) return `${mm[1]}-${mm[2]}-${mm[3]}`;
+        mm = /^(\d{1,2})[/-](\d{1,2})[/-](\d{4})/.exec(String(x));
+        if (mm) return `${mm[3]}-${mm[2].padStart(2, "0")}-${mm[1].padStart(2, "0")}`;
+        return null;
+      };
+      if (iso(ds)) { meta.dateStart = iso(ds); meta.dateEnd = iso(de) || iso(ds); }
     } catch { /* ignore */ }
   }
   const orgM = /data-content="(Organizado por [^"]+)"/.exec(html);
@@ -417,6 +504,15 @@ function parseTourMeta(html) {
   if (formatM) meta.format = formatM[1].trim();
   const catList = visible.match(/(?:Alev[ií]n|Benjam[ií]n|Cadete|Infantil|Juvenil|Junior|Caballeros|Se[ñn]oras|Senior|Profesional)\s*(?:Masculino|Femenino)?/gi);
   if (catList) meta.categories = [...new Set(catList.map((c) => c.replace(/\s+/g, " ").trim()))];
+  // Fallback de data: extrair do texto visível (perto do título) e, por fim, do nome.
+  if (!meta.dateStart) {
+    const fromVisible = parseSpanishDate(visible.slice(0, 600)) || parseSpanishDate(meta.name);
+    if (fromVisible) {
+      meta.dateStart = fromVisible.start;
+      meta.dateEnd = fromVisible.end;
+      meta.dateText = fromVisible.text;
+    }
+  }
   return meta;
 }
 
@@ -505,7 +601,6 @@ function parseHorarios(html) {
 
 async function scrapeTour(tourId, opts) {
   opts = opts || {};
-  const fetchScorecards = !!opts.scorecards;
   const scorecardConcurrency = opts.scorecardConcurrency || 4;
 
   const tasks = await Promise.all([
@@ -520,11 +615,21 @@ async function scrapeTour(tourId, opts) {
   const [pageR, clasR, inscR, horaR, estR, roundsR, scoreTypesR] = tasks;
 
   const meta = pageR.status === 200 ? parseTourMeta(pageR.body) : {};
+  // Fallback de data: o discovery scope (opts.dateHint, ex. "21 jun 2026") é a
+  // fonte mais fiável quando a página/nome não trazem data parseável.
+  if (meta && !meta.dateStart && opts.dateHint) {
+    const h = parseSpanishDate(opts.dateHint);
+    if (h) { meta.dateStart = h.start; meta.dateEnd = h.end; meta.dateText = meta.dateText || h.text; }
+  }
   // parseClasificaciones agora devolve {tables, pdfOnly, pdfs, names}
   const clasParsed = clasR.status === 200 && clasR.body.length > 1000
     ? parseClasificaciones(clasR.body)
     : { tables: [], pdfOnly: false, pdfs: [], names: {} };
   const leaderboard = clasParsed.tables;
+  // Cartões hole-by-hole: explícito (--scorecards) OU automático em provas de
+  // jovens (é onde o detalhe buraco-a-buraco interessa). opts.noScorecards desactiva.
+  const fetchScorecards = !opts.noScorecards &&
+    (!!opts.scorecards || isYouthTournament(meta, clasParsed.names));
   const inscritos = inscR.status === 200 && inscR.body.length > 1000 ? parseInscritos(inscR.body) : [];
   const horarios = horaR.status === 200 && horaR.body.length > 500 ? parseHorarios(horaR.body) : [];
   const estadisticas = estR.status === 200 ? parseEstadisticas(estR.body) : null;
@@ -539,6 +644,7 @@ async function scrapeTour(tourId, opts) {
   // Optionally fetch per-player scorecards (hole-by-hole) via /tarjeta-aux/{inscribedId}/-1
   // O par/SI/metros do campo é igual para todos os jogadores duma categoria — extrai da PRIMEIRA tarjeta e partilha.
   let courseScorecard = null;
+  let scorecardsTried = false, scorecardsApplied = 0;
   if (fetchScorecards && leaderboard.length > 0) {
     // Players podem aparecer em VÁRIAS categorias (Scratch + Hcp). Cache por inscribedId
     // para evitar fetches redundantes — fetch 1× e replicar resultado em todas as ocorrências.
@@ -547,6 +653,7 @@ async function scrapeTour(tourId, opts) {
     const cache = new Map(); // inscribedId → scorecard
 
     if (uniqueIds.length > 0) {
+      scorecardsTried = true;
       // Fetch first to get course par/SI/metros
       const firstSc = await fetchScorecard(uniqueIds[0]);
       cache.set(uniqueIds[0], firstSc);
@@ -571,10 +678,14 @@ async function scrapeTour(tourId, opts) {
       for (const p of allPlayers) {
         if (!p.inscribedId) continue;
         const sc = cache.get(p.inscribedId);
-        if (sc && sc.rounds) p.roundScores = sc.rounds;
+        if (sc && sc.rounds && sc.rounds.length) { p.roundScores = sc.rounds; scorecardsApplied++; }
       }
     }
   }
+  // Marca de cartões indisponíveis: tentámos buscar hole-by-hole mas nenhum
+  // jogador devolveu cartão (resultados só em totais/PDF). Evita que o
+  // existingIsComplete re-tente este torneio de jovens indefinidamente.
+  if (scorecardsTried && scorecardsApplied === 0) meta.scorecardsUnavailable = true;
 
   return {
     tourId,
@@ -716,11 +827,15 @@ async function main() {
     return;
   }
 
+  // tours: array de { id, date } — o date (do discovery scope) serve de hint
+  // para preencher meta.dateStart quando a página não traz data parseável.
   let tours = [];
-  if (tourArg) tours = tourArg.split(",").map((s) => parseInt(s.trim(), 10));
+  if (tourArg) tours = tourArg.split(",").map((s) => ({ id: parseInt(s.trim(), 10), date: null }));
   if (scopeArg) {
     const sc = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), scopeArg), "utf8"));
-    tours = (sc.tours || sc.tournaments || sc).map((t) => t.tourId || t.id || t).filter(Boolean);
+    tours = (sc.tours || sc.tournaments || sc)
+      .map((t) => ({ id: t.tourId || t.id || t, date: (t && t.date) || null }))
+      .filter((t) => t.id);
   }
   if (!tours.length) {
     console.log("Uso:");
@@ -741,7 +856,8 @@ async function main() {
   async function worker() {
     while (cursor < tours.length) {
       const idx = cursor++;
-      const tid = tours[idx];
+      const tid = tours[idx].id;
+      const dateHint = tours[idx].date;
       const outFile = path.join(OUT_DIR, `${tid}.json`);
       if (skipExisting && !patchScorecards && fs.existsSync(outFile) && existingIsComplete(outFile)) { skipped++; continue; }
       const t0 = Date.now();
@@ -751,12 +867,19 @@ async function main() {
         if (patchScorecards && fs.existsSync(outFile)) {
           // PATCH mode: lê JSON existente, fetcha só scorecards em falta
           r = JSON.parse(fs.readFileSync(outFile, "utf-8"));
+          // Backfill de data também no patch (não re-fetcha a página): nome → hint scope
+          let dateChanged = false;
+          if (r.meta && !r.meta.dateStart) {
+            const dp = parseSpanishDate(r.meta.name) || (dateHint ? parseSpanishDate(dateHint) : null);
+            if (dp) { r.meta.dateStart = dp.start; r.meta.dateEnd = dp.end; r.meta.dateText = dp.text; dateChanged = true; }
+          }
           const allPlayers = (r.leaderboard || []).flatMap((c) => c.players || []);
           const missing = allPlayers.filter((p) => p.inscribedId && (!p.roundScores || p.roundScores.length === 0));
           const uniqueMissing = [...new Set(missing.map((p) => p.inscribedId))];
           if (uniqueMissing.length === 0) {
+            if (dateChanged) fs.writeFileSync(outFile, JSON.stringify(r, null, 2));
             const elapsed = ((Date.now() - t0) / 1000).toFixed(1);
-            console.log(`  [${idx + 1}/${tours.length}] ${tid}: ${(r.meta && r.meta.name) || "?"} (já completo, ${elapsed}s)`);
+            console.log(`  [${idx + 1}/${tours.length}] ${tid}: ${(r.meta && r.meta.name) || "?"} (já completo${dateChanged ? " +data" : ""}, ${elapsed}s)`);
             ok++; continue;
           }
           // Fetch missing IN SEQUENCE (concurrency 2 + 100ms)
@@ -790,7 +913,7 @@ async function main() {
           console.log(`  [${idx + 1}/${tours.length}] ${tid}: ${(r.meta && r.meta.name) || "?"} (patch +${appliedCount}/${uniqueMissing.length}${remaining > 0 ? `, ${remaining} ainda em falta` : ""}, ${elapsed}s)`);
           ok++; continue;
         }
-        r = await scrapeTour(tid, { scorecards: fetchScorecards });
+        r = await scrapeTour(tid, { scorecards: fetchScorecards, dateHint });
         fs.writeFileSync(outFile, JSON.stringify(r, null, 2));
         const allLbPlayers = (r.leaderboard || []).flatMap((t) => t.players || []);
         const uniqueLb = new Set(allLbPlayers.map((p) => p.inscribedId || p.licencia || p.name)).size;
@@ -817,4 +940,4 @@ if (require.main === module) {
   main().catch((e) => { console.error(e); process.exit(1); });
 }
 
-module.exports = { scrapeTour, discoverTours, discoverToursMultiYear, parseClasificaciones, parseClasificacionesMeta, parsePdfsAttached, parseHorarios, parseInscritos, parseEstadisticas, parseTourMeta, parseDiscoveryCards, parseScorecard, fetchScorecard };
+module.exports = { scrapeTour, discoverTours, discoverToursMultiYear, parseClasificaciones, parseClasificacionesMeta, parsePdfsAttached, parseHorarios, parseInscritos, parseEstadisticas, parseTourMeta, parseDiscoveryCards, parseScorecard, fetchScorecard, parseSpanishDate, isYouthTournament };
