@@ -112,3 +112,8 @@ _archive_*/
 _probe-tmp/
 diag-out/
 outputs/
+
+# Scopes de scorecards NextCaddy gerados (build-nextcaddy-scorecard-scope.js) —
+# transitórios, regerados a cada corrida do pipeline / backfill manual.
+scripts/nextcaddy-scorecard-batch.json
+scripts/nextcaddy-scorecard-scope.json

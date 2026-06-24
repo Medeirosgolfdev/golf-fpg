@@ -176,6 +176,21 @@ jobs:
         continue-on-error: true
         run: node scripts/scrape-nextcaddy-horarios.js --all --concurrency 8 $SKIP_FLAG
 
+      - name: Scrape NextCaddy scorecards (backfill incremental)
+        id: nc_scorecards
+        continue-on-error: true
+        run: |
+          # NextCaddy-only JUVENIL: torneios com leaderboard mas sem cartões
+          # hole-by-hole (o passo de leaderboards acima não passa --scorecards).
+          # --junior salta os ~739 torneios ADULTOS do corpus (Senior/Caballeros/
+          # categorias por hcp) que não interessam ao tracking juvenil — só os
+          # ~210 juvenis (~6.6k scorecards). Lote limitado (maior gap primeiro),
+          # enche via --patch-scorecards a concorrência baixa + retries. O backlog
+          # auto-cura ao longo das semanas; o patch só regrava ficheiros que
+          # ganharam dados (sem churn).
+          node scripts/build-nextcaddy-scorecard-scope.js --junior --limit 80 --out scripts/nextcaddy-scorecard-batch.json
+          node scripts/scrape-nextcaddy.js --patch-scorecards --scope scripts/nextcaddy-scorecard-batch.json --concurrency 2
+
       - name: Scrape FCG (golfdirecto.com)
         id: fcg
         continue-on-error: true

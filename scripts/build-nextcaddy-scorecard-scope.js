@@ -30,11 +30,26 @@ const path = require("path");
 
 const DIR = path.resolve(__dirname, "../public/data/nextcaddy");
 
+/* Termos que marcam um torneio como JUVENIL (--junior). Testados contra o NOME
+ * do torneio e os nomes das categorias do leaderboard. NÃO inclui "menor"
+ * (ambíguo: as categorias adultas de hcp dizem "menor de 36"). O corpus
+ * NextCaddy do pipeline contém ~739 torneios ADULTOS (Senior/Caballeros/
+ * Categorías por hcp) que não interessam ao tracking juvenil — este filtro
+ * isola os ~210 genuinamente juvenis (~6.6k scorecards vs 38k totais). */
+const JUNIOR_RE = /benj|alev[ií]?n|infant|cadet|juven|junior|\bsub\s?-?\s?\d{1,2}\b|pequec|promes|escolar|\bU-?(1[0-8]|[6-9])\b/i;
+
+function isJuniorTour(d) {
+  const name = (d.meta && d.meta.name) || "";
+  const cats = (d.leaderboard || []).map((c) => c.categoryName || "").join(" ");
+  return JUNIOR_RE.test(name) || JUNIOR_RE.test(cats);
+}
+
 function main() {
   const args = process.argv.slice(2);
   const getArg = (n, d) => { const i = args.indexOf("--" + n); return i >= 0 ? args[i + 1] : d; };
   const limit = parseInt(getArg("limit", "0"), 10) || 0;            // 0 = sem limite
   const minMissing = parseInt(getArg("min-missing", "1"), 10) || 1;
+  const juniorOnly = args.includes("--junior");                    // só torneios juvenis
   const out = path.resolve(process.cwd(), getArg("out", "scripts/nextcaddy-scorecard-scope.json"));
   const include = new Set((getArg("include", "") || "").split(",").map((s) => parseInt(s.trim(), 10)).filter(Boolean));
 
@@ -44,6 +59,7 @@ function main() {
     let d;
     try { d = JSON.parse(fs.readFileSync(path.join(DIR, f), "utf8")); } catch { continue; }
     if (d.leaderboardPdfOnly === true) continue;                    // só PDF — sem cartões
+    if (juniorOnly && !isJuniorTour(d)) continue;                   // --junior: salta adultos
     const all = (d.leaderboard || []).flatMap((c) => c.players || []);
     if (!all.length) continue;                                      // vazio/futuro
     const ids = [...new Set(all.filter((p) => p.inscribedId).map((p) => p.inscribedId))];
