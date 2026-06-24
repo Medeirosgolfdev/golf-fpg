@@ -1,6 +1,6 @@
 {
   "gameId": "69e7837119dbb562774fed8d",
-  "fetchedAt": "2026-06-12T14:52:26.487Z",
+  "fetchedAt": "2026-06-24T15:02:24.097Z",
   "game": {
     "_id": "69e7837119dbb562774fed8d",
     "name": "Jornada 1",
@@ -34,15 +34,6 @@
     "teesMale": [
       {
         "gender": "M",
-        "color": "white",
-        "lap": "lap18",
-        "rating": 70.1,
-        "slope": 132,
-        "par": 70,
-        "_id": "69e7837119dbb562774feeae"
-      },
-      {
-        "gender": "M",
         "color": "red",
         "lap": "lap18",
         "rating": 65.4,
@@ -58,6 +49,15 @@
         "slope": 130,
         "par": 70,
         "_id": "69e7837119dbb562774fee9b"
+      },
+      {
+        "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 70.1,
+        "slope": 132,
+        "par": 70,
+        "_id": "69e7837119dbb562774feeae"
       },
       {
         "gender": "M",
@@ -99,6 +99,15 @@
       },
       {
         "gender": "F",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 76.2,
+        "slope": 134,
+        "par": 70,
+        "_id": "69e7837119dbb562774feefa"
+      },
+      {
+        "gender": "F",
         "color": "blue",
         "lap": "lap18",
         "rating": 71.5,
@@ -123,15 +132,6 @@
         "slope": 126,
         "par": 70,
         "_id": "69e7837119dbb562774fee88"
-      },
-      {
-        "gender": "F",
-        "color": "white",
-        "lap": "lap18",
-        "rating": 76.2,
-        "slope": 134,
-        "par": 70,
-        "_id": "69e7837119dbb562774feefa"
       }
     ]
   },
@@ -11604,6 +11604,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "KEALEBOGA",
@@ -11667,6 +11668,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "MARCOS",
@@ -11730,6 +11732,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "ELLIOT",
@@ -11793,6 +11796,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "TITO",
@@ -11856,6 +11860,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "ENEKO",
@@ -11919,6 +11924,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "MIRKO",
@@ -11982,6 +11988,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "GIULIO",
@@ -12045,6 +12052,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "MARIO",
@@ -12092,6 +12100,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "MAX",
@@ -12139,6 +12148,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "MARIA",
@@ -12202,6 +12212,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "IONA",
@@ -12265,6 +12276,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "ONA",
@@ -12328,6 +12340,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "BLANCA",
@@ -12391,6 +12404,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "MARIA",
@@ -12438,6 +12452,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "JANA",
@@ -12485,6 +12500,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "THEO",
@@ -12548,6 +12564,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "GABRIEL",
@@ -12611,6 +12628,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "NEIL",
@@ -12674,6 +12692,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "THADEE",
@@ -12737,6 +12756,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "ARNAU",
@@ -12800,6 +12820,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "MATEO",
@@ -12863,6 +12884,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "MATEO",
@@ -12926,6 +12948,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "ANIOL",
@@ -12973,6 +12996,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "GUILLEM",
@@ -13020,6 +13044,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "ANA",
@@ -13083,6 +13108,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "EDNA",
@@ -13146,6 +13172,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "MARIA",

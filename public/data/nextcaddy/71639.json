@@ -1,7 +1,7 @@
 {
   "tourId": 71639,
   "url": "https://www.nextcaddy.com/tour/71639",
-  "scrapedAt": "2026-06-15T10:28:53.119Z",
+  "scrapedAt": "2026-06-24T14:57:38.957Z",
   "meta": {
     "name": "Torneo Infantil Fin de Curso Pitch&Putt - Domingo 21 Junio 2026",
     "organizer": null,
@@ -19,10 +19,238 @@
       "Juvenil"
     ]
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 30,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 18,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Hugo Montero De Espinosa Lopez",
+          "licencia": "AMC3373746",
+          "hcp": 51.3,
+          "nivel": "I",
+          "rounds": [],
+          "total": 24,
+          "toPar": -6,
+          "inscribedId": 2344915
+        },
+        {
+          "pos": 2,
+          "name": "Fermin Elizburu Mostaza",
+          "licencia": "AMC3061797",
+          "hcp": 24.5,
+          "nivel": "A",
+          "rounds": [],
+          "total": 22,
+          "toPar": -4,
+          "inscribedId": 2342662
+        },
+        {
+          "pos": 3,
+          "name": "Ivan Duran Campos",
+          "licencia": "AM11353768",
+          "hcp": 35.3,
+          "nivel": "B",
+          "rounds": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2345012
+        },
+        {
+          "pos": 4,
+          "name": "Antonio Cañas Ibañez",
+          "licencia": "AMC3417520",
+          "hcp": 54,
+          "nivel": "I",
+          "rounds": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2347181
+        },
+        {
+          "pos": 5,
+          "name": "Matteo Misceo",
+          "licencia": "AMC3488749",
+          "hcp": 36,
+          "nivel": "C",
+          "rounds": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2347299
+        },
+        {
+          "pos": 6,
+          "name": "Guillermo Jimenez Gallego",
+          "licencia": "AMC3060996",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2346516
+        },
+        {
+          "pos": 7,
+          "name": "Felipe Merello Lloret",
+          "licencia": "AM25490112",
+          "hcp": 44.7,
+          "nivel": "B",
+          "rounds": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2346586
+        },
+        {
+          "pos": 8,
+          "name": "Harry Collins",
+          "licencia": "AMC3022286",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2343971
+        },
+        {
+          "pos": 9,
+          "name": "Antonio Manuel Sanchez Alvarez",
+          "licencia": "AMC3477014",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2342643
+        },
+        {
+          "pos": 10,
+          "name": "Marcos Marco Mendez",
+          "licencia": "AMC3417522",
+          "hcp": 42.5,
+          "nivel": "I",
+          "rounds": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2342782
+        },
+        {
+          "pos": 11,
+          "name": "Juan Marco Mendez",
+          "licencia": "AMC3417521",
+          "hcp": 45.2,
+          "nivel": "A",
+          "rounds": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2342784
+        },
+        {
+          "pos": 12,
+          "name": "Joaquin Perez-Calvo Yildiran",
+          "licencia": "AMG9477586",
+          "hcp": 24.2,
+          "nivel": "B",
+          "rounds": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2342651
+        },
+        {
+          "pos": 13,
+          "name": "Carlota Lorenzo Trebs",
+          "licencia": "AMC3022699",
+          "hcp": 36,
+          "nivel": "I",
+          "rounds": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2346691
+        },
+        {
+          "pos": 14,
+          "name": "Adriana Jaen Garcia",
+          "licencia": "AMC3005185",
+          "hcp": 99.9,
+          "nivel": "B",
+          "rounds": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2345249
+        },
+        {
+          "pos": 15,
+          "name": "Diego Macias Pelaez",
+          "licencia": "AMC3528468",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2344853
+        },
+        {
+          "pos": 16,
+          "name": "Ricardo Castrillon Tejada",
+          "licencia": "AMC3024864",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2346302
+        },
+        {
+          "pos": 17,
+          "name": "Chloe Di Maggio Janji",
+          "licencia": "AMC3521586",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 2,
+          "toPar": 16,
+          "inscribedId": 2342924
+        },
+        {
+          "pos": 18,
+          "name": "Filippo Di Maggio Janji",
+          "licencia": "AMC3523832",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "total": 1,
+          "toPar": 17,
+          "inscribedId": 2348303
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 18
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -42,7 +270,7 @@
       "orden": 3,
       "name": "Fermin Elizburu Mostaza",
       "licencia": "AMC3061797",
-      "hcp": 25.4,
+      "hcp": 24.5,
       "nivel": "A"
     },
     {
@@ -60,6 +288,76 @@
       "nivel": "A"
     },
     {
+      "orden": 6,
+      "name": "Harry Collins",
+      "licencia": "AMC3022286",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Diego Macias Pelaez",
+      "licencia": "AMC3528468",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "Hugo Montero De Espinosa Lopez",
+      "licencia": "AMC3373746",
+      "hcp": 51.3,
+      "nivel": "I"
+    },
+    {
+      "orden": 9,
+      "name": "Ivan Duran Campos",
+      "licencia": "AM11353768",
+      "hcp": 35.3,
+      "nivel": "B"
+    },
+    {
+      "orden": 10,
+      "name": "Ricardo Castrillon Tejada",
+      "licencia": "AMC3024864",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 11,
+      "name": "Guillermo Jimenez Gallego",
+      "licencia": "AMC3060996",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 12,
+      "name": "Felipe Merello Lloret",
+      "licencia": "AM25490112",
+      "hcp": 44.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 13,
+      "name": "Antonio Cañas Ibañez",
+      "licencia": "AMC3417520",
+      "hcp": 54,
+      "nivel": "I"
+    },
+    {
+      "orden": 14,
+      "name": "Matteo Misceo",
+      "licencia": "AMC3488749",
+      "hcp": 36,
+      "nivel": "C"
+    },
+    {
+      "orden": 15,
+      "name": "Filippo Di Maggio Janji",
+      "licencia": "AMC3523832",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
       "orden": null,
       "name": "Jugador",
       "licencia": "Licencia",
@@ -72,6 +370,20 @@
       "licencia": "AMC3521586",
       "hcp": 54,
       "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Adriana Jaen Garcia",
+      "licencia": "AMC3005185",
+      "hcp": null,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Carlota Lorenzo Trebs",
+      "licencia": "AMC3022699",
+      "hcp": 36,
+      "nivel": "I"
     },
     {
       "orden": null,
@@ -98,7 +410,7 @@
       "orden": 3,
       "name": "Fermin Elizburu Mostaza",
       "licencia": "AMC3061797",
-      "hcp": 25.4,
+      "hcp": 24.5,
       "nivel": "A"
     },
     {
@@ -121,6 +433,90 @@
       "licencia": "AMC3521586",
       "hcp": 54,
       "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Harry Collins",
+      "licencia": "AMC3022286",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "Diego Macias Pelaez",
+      "licencia": "AMC3528468",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 9,
+      "name": "Hugo Montero De Espinosa Lopez",
+      "licencia": "AMC3373746",
+      "hcp": 51.3,
+      "nivel": "I"
+    },
+    {
+      "orden": 10,
+      "name": "Ivan Duran Campos",
+      "licencia": "AM11353768",
+      "hcp": 35.3,
+      "nivel": "B"
+    },
+    {
+      "orden": 11,
+      "name": "Adriana Jaen Garcia",
+      "licencia": "AMC3005185",
+      "hcp": null,
+      "nivel": "B"
+    },
+    {
+      "orden": 12,
+      "name": "Ricardo Castrillon Tejada",
+      "licencia": "AMC3024864",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 13,
+      "name": "Guillermo Jimenez Gallego",
+      "licencia": "AMC3060996",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 14,
+      "name": "Felipe Merello Lloret",
+      "licencia": "AM25490112",
+      "hcp": 44.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 15,
+      "name": "Carlota Lorenzo Trebs",
+      "licencia": "AMC3022699",
+      "hcp": 36,
+      "nivel": "I"
+    },
+    {
+      "orden": 16,
+      "name": "Antonio Cañas Ibañez",
+      "licencia": "AMC3417520",
+      "hcp": 54,
+      "nivel": "I"
+    },
+    {
+      "orden": 17,
+      "name": "Matteo Misceo",
+      "licencia": "AMC3488749",
+      "hcp": 36,
+      "nivel": "C"
+    },
+    {
+      "orden": 18,
+      "name": "Filippo Di Maggio Janji",
+      "licencia": "AMC3523832",
+      "hcp": 54,
+      "nivel": "A"
     }
   ],
   "horarios": [
@@ -302,5 +698,5 @@
   "pdfs": [
     "/uploads/competiciones/cartel/7396549_71639-torneo-infantil-fin-de-curso-pitch-putt-domingo-21-junio-2026.pdf"
   ],
-  "horariosScrapedAt": "2026-06-22T09:55:25.507Z"
+  "horariosScrapedAt": "2026-06-24T15:01:08.416Z"
 }

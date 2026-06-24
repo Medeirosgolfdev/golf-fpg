@@ -1,7 +1,7 @@
 {
   "tourId": 68194,
   "url": "https://www.nextcaddy.com/tour/68194",
-  "scrapedAt": "2026-06-12T14:42:45.549Z",
+  "scrapedAt": "2026-06-24T14:57:14.643Z",
   "meta": {
     "name": "Liga Femenina (hcp igual o menor de 42.0)",
     "organizer": "Federacion de Golf de Madrid",
@@ -19,10 +19,150 @@
       "Senior"
     ]
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Sofia Sendagorta Rojo",
+          "licencia": "CM60066758",
+          "hcp": 35.4,
+          "nivel": "I",
+          "rounds": [],
+          "total": 25,
+          "toPar": -7,
+          "inscribedId": 2332760
+        },
+        {
+          "pos": 2,
+          "name": "Barbara Osaba Rohleder",
+          "licencia": "CM04376811",
+          "hcp": 34.2,
+          "nivel": "I",
+          "rounds": [],
+          "total": 22,
+          "toPar": -4,
+          "inscribedId": 2333336
+        },
+        {
+          "pos": 3,
+          "name": "Alejandra Sevillano Sanchez",
+          "licencia": "CM22475563",
+          "hcp": 33.9,
+          "nivel": "B",
+          "rounds": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2333853
+        },
+        {
+          "pos": 4,
+          "name": "Candela Guerra Vera",
+          "licencia": "CM41998364",
+          "hcp": 35.5,
+          "nivel": "A",
+          "rounds": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2333268
+        },
+        {
+          "pos": 5,
+          "name": "Carla Amado Garcia Del Pino",
+          "licencia": "CMA5496403",
+          "hcp": 35.2,
+          "nivel": "B",
+          "rounds": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2333359
+        },
+        {
+          "pos": 6,
+          "name": "Valeria Fernandez Gallardo",
+          "licencia": "CM41414029",
+          "hcp": 33.9,
+          "nivel": "B",
+          "rounds": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2332763
+        },
+        {
+          "pos": 7,
+          "name": "Lucia Rodriguez Luna",
+          "licencia": "CM02977313",
+          "hcp": 37.2,
+          "nivel": "A",
+          "rounds": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2332622
+        },
+        {
+          "pos": 8,
+          "name": "Cristina Aparicio Vallarino",
+          "licencia": "CM41305716",
+          "hcp": 15.9,
+          "nivel": "A",
+          "rounds": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2332876
+        },
+        {
+          "pos": 9,
+          "name": "Manuela Triguero Fernandez",
+          "licencia": "CM41373590",
+          "hcp": 36,
+          "nivel": "B",
+          "rounds": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2334000
+        },
+        {
+          "pos": null,
+          "name": "Carlotta Casas Velez-Osorio",
+          "licencia": "CM06355871",
+          "hcp": 32.7,
+          "nivel": "B",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2333873
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap",
+      "jugadores": 10
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -288,5 +428,5 @@
   "pdfs": [
     "/uploads/competiciones/pdf/2898389559_26_06_13_rrll_liga_femenina.pdf"
   ],
-  "horariosScrapedAt": "2026-06-12T14:45:32.111Z"
+  "horariosScrapedAt": "2026-06-24T15:00:25.427Z"
 }

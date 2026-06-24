@@ -1,7 +1,7 @@
 {
   "tourId": 71557,
   "url": "https://www.nextcaddy.com/tour/71557",
-  "scrapedAt": "2026-06-12T14:43:01.418Z",
+  "scrapedAt": "2026-06-24T14:57:40.598Z",
   "meta": {
     "name": "TORNEO P&P DE VERANO",
     "organizer": null,
@@ -19,11 +19,700 @@
       "Juvenil"
     ]
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Torneo P&P De Verano 1ª Categoria",
+      "expectedJugadores": 3,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Raul Molina Grande",
+          "licencia": "AM10114261",
+          "hcp": 8,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2347279
+        },
+        {
+          "pos": 2,
+          "name": "Javier Gamez Martinez",
+          "licencia": "AM10206820",
+          "hcp": 8.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2344847
+        },
+        {
+          "pos": 3,
+          "name": "Raul Martinez Moreno",
+          "licencia": "AM10776070",
+          "hcp": 1.2,
+          "nivel": "M",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2347172
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Torneo P&P De Verano 3ª Categoria",
+      "expectedJugadores": 11,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Antonio Luis Cabrera Fernandez",
+          "licencia": "AM10821529",
+          "hcp": 26,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2347202
+        },
+        {
+          "pos": 2,
+          "name": "Eleuterio Lunar Villarreal",
+          "licencia": "AM10995204",
+          "hcp": 29.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2347040
+        },
+        {
+          "pos": 3,
+          "name": "Isabel Maria Aperador Sepulveda",
+          "licencia": "AM10335553",
+          "hcp": 42.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2344035
+        },
+        {
+          "pos": 4,
+          "name": "Ana Isabel Cano Cerezo",
+          "licencia": "AM10953237",
+          "hcp": 35.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2343996
+        },
+        {
+          "pos": 5,
+          "name": "Vicente Diaz Martos",
+          "licencia": "AM10489824",
+          "hcp": 24.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2348410
+        },
+        {
+          "pos": 6,
+          "name": "Antonio Garcia Vizcarro",
+          "licencia": "AM10093120",
+          "hcp": 26.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2344016
+        },
+        {
+          "pos": 7,
+          "name": "Maria Angeles Alameda Fernandez",
+          "licencia": "AM10978876",
+          "hcp": 32.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2346462
+        },
+        {
+          "pos": 8,
+          "name": "Francisco Javier Garcia Fernandez",
+          "licencia": "AM10489825",
+          "hcp": 44.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2347218
+        },
+        {
+          "pos": 9,
+          "name": "Felix Castro Redondo",
+          "licencia": "AM10072777",
+          "hcp": 30,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2344113
+        },
+        {
+          "pos": 10,
+          "name": "Shana Elizabeth Dooley",
+          "licencia": "AM10756235",
+          "hcp": 30.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2347276
+        },
+        {
+          "pos": 11,
+          "name": "Adolfo Lopez Camacho",
+          "licencia": "AM06953182",
+          "hcp": 29,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2347222
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Torneo P&P De Verano 2ª Categoria",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Antonio Luis Cabrera Fernandez",
+          "licencia": "AM10953363",
+          "hcp": 24.1,
+          "nivel": "A",
+          "rounds": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2347194
+        },
+        {
+          "pos": 2,
+          "name": "Manuel Dorado Muñoz",
+          "licencia": "AM10976600",
+          "hcp": 23.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2346760
+        },
+        {
+          "pos": 3,
+          "name": "Antonio Muñoz Muñoz",
+          "licencia": "AM10988783",
+          "hcp": 13.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2343967
+        },
+        {
+          "pos": 4,
+          "name": "Domingo Serrano Lopera",
+          "licencia": "AM10202185",
+          "hcp": 14.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2346924
+        },
+        {
+          "pos": 5,
+          "name": "Jose Manuel Luque Fernandez",
+          "licencia": "AM10995149",
+          "hcp": 15.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2347030
+        },
+        {
+          "pos": 6,
+          "name": "Osvaldo Miguel Appollonio Calderon",
+          "licencia": "AM10993518",
+          "hcp": 17,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2343998
+        },
+        {
+          "pos": 7,
+          "name": "Jose Antonio Burgueño Perez",
+          "licencia": "AM10990893",
+          "hcp": 21.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2347139
+        },
+        {
+          "pos": 8,
+          "name": "Angel Garcia Rojas",
+          "licencia": "AM10975100",
+          "hcp": 24.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2346461
+        },
+        {
+          "pos": 9,
+          "name": "Joaquin Gamez Rojano",
+          "licencia": "AM10139722",
+          "hcp": 19.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2344026
+        },
+        {
+          "pos": 10,
+          "name": "Ramon Gallego Aguaron",
+          "licencia": "AM10105908",
+          "hcp": 16.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2346925
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Torneo P&P De Verano 1ª Categoria",
+      "jugadores": 3
+    },
+    "2": {
+      "name": "Torneo P&P De Verano 3ª Categoria",
+      "jugadores": 11
+    },
+    "3": {
+      "name": "Torneo P&P De Verano 2ª Categoria",
+      "jugadores": 10
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Antonio Muñoz Muñoz",
+      "licencia": "AM10988783",
+      "hcp": 13.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Osvaldo Miguel Appollonio Calderon",
+      "licencia": "AM10993518",
+      "hcp": 17,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Antonio Garcia Vizcarro",
+      "licencia": "AM10093120",
+      "hcp": 26.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Joaquin Gamez Rojano",
+      "licencia": "AM10139722",
+      "hcp": 19.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Felix Castro Redondo",
+      "licencia": "AM10072777",
+      "hcp": 30,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Javier Gamez Martinez",
+      "licencia": "AM10206820",
+      "hcp": 8.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 7,
+      "name": "Angel Garcia Rojas",
+      "licencia": "AM10975100",
+      "hcp": 24.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 8,
+      "name": "Manuel Dorado Muñoz",
+      "licencia": "AM10976600",
+      "hcp": 23.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Domingo Serrano Lopera",
+      "licencia": "AM10202185",
+      "hcp": 14.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Ramon Gallego Aguaron",
+      "licencia": "AM10105908",
+      "hcp": 16.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Jose Manuel Luque Fernandez",
+      "licencia": "AM10995149",
+      "hcp": 15.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 12,
+      "name": "Eleuterio Lunar Villarreal",
+      "licencia": "AM10995204",
+      "hcp": 29.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Jose Antonio Burgueño Perez",
+      "licencia": "AM10990893",
+      "hcp": 21.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 14,
+      "name": "Raul Martinez Moreno",
+      "licencia": "AM10776070",
+      "hcp": 1.2,
+      "nivel": "M"
+    },
+    {
+      "orden": 15,
+      "name": "Antonio Luis Cabrera Fernandez",
+      "licencia": "AM10953363",
+      "hcp": 24.1,
+      "nivel": "A"
+    },
+    {
+      "orden": 16,
+      "name": "Antonio Luis Cabrera Fernandez",
+      "licencia": "AM10821529",
+      "hcp": 26,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 17,
+      "name": "Francisco Javier Garcia Fernandez",
+      "licencia": "AM10489825",
+      "hcp": 44.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Adolfo Lopez Camacho",
+      "licencia": "AM06953182",
+      "hcp": 29,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 19,
+      "name": "Raul Molina Grande",
+      "licencia": "AM10114261",
+      "hcp": 8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 20,
+      "name": "Vicente Diaz Martos",
+      "licencia": "AM10489824",
+      "hcp": 24.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Ana Isabel Cano Cerezo",
+      "licencia": "AM10953237",
+      "hcp": 35.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Isabel Maria Aperador Sepulveda",
+      "licencia": "AM10335553",
+      "hcp": 42.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Maria Angeles Alameda Fernandez",
+      "licencia": "AM10978876",
+      "hcp": 32.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Shana Elizabeth Dooley",
+      "licencia": "AM10756235",
+      "hcp": 30.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Antonio Muñoz Muñoz",
+      "licencia": "AM10988783",
+      "hcp": 13.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Ana Isabel Cano Cerezo",
+      "licencia": "AM10953237",
+      "hcp": 35.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Osvaldo Miguel Appollonio Calderon",
+      "licencia": "AM10993518",
+      "hcp": 17,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Antonio Garcia Vizcarro",
+      "licencia": "AM10093120",
+      "hcp": 26.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Joaquin Gamez Rojano",
+      "licencia": "AM10139722",
+      "hcp": 19.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Isabel Maria Aperador Sepulveda",
+      "licencia": "AM10335553",
+      "hcp": 42.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 7,
+      "name": "Felix Castro Redondo",
+      "licencia": "AM10072777",
+      "hcp": 30,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Javier Gamez Martinez",
+      "licencia": "AM10206820",
+      "hcp": 8.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 9,
+      "name": "Angel Garcia Rojas",
+      "licencia": "AM10975100",
+      "hcp": 24.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 10,
+      "name": "Maria Angeles Alameda Fernandez",
+      "licencia": "AM10978876",
+      "hcp": 32.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 11,
+      "name": "Manuel Dorado Muñoz",
+      "licencia": "AM10976600",
+      "hcp": 23.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Domingo Serrano Lopera",
+      "licencia": "AM10202185",
+      "hcp": 14.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Ramon Gallego Aguaron",
+      "licencia": "AM10105908",
+      "hcp": 16.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Jose Manuel Luque Fernandez",
+      "licencia": "AM10995149",
+      "hcp": 15.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 15,
+      "name": "Eleuterio Lunar Villarreal",
+      "licencia": "AM10995204",
+      "hcp": 29.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Jose Antonio Burgueño Perez",
+      "licencia": "AM10990893",
+      "hcp": 21.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 17,
+      "name": "Raul Martinez Moreno",
+      "licencia": "AM10776070",
+      "hcp": 1.2,
+      "nivel": "M"
+    },
+    {
+      "orden": 18,
+      "name": "Antonio Luis Cabrera Fernandez",
+      "licencia": "AM10953363",
+      "hcp": 24.1,
+      "nivel": "A"
+    },
+    {
+      "orden": 19,
+      "name": "Antonio Luis Cabrera Fernandez",
+      "licencia": "AM10821529",
+      "hcp": 26,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 20,
+      "name": "Francisco Javier Garcia Fernandez",
+      "licencia": "AM10489825",
+      "hcp": 44.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Adolfo Lopez Camacho",
+      "licencia": "AM06953182",
+      "hcp": 29,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 22,
+      "name": "Shana Elizabeth Dooley",
+      "licencia": "AM10756235",
+      "hcp": 30.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 23,
+      "name": "Raul Molina Grande",
+      "licencia": "AM10114261",
+      "hcp": 8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 24,
+      "name": "Vicente Diaz Martos",
+      "licencia": "AM10489824",
+      "hcp": 24.5,
+      "nivel": "Mid"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -534,5 +1223,5 @@
     "/uploads/competiciones/cartel/1594489032_71557-torneo-p-p-de-verano.pdf",
     "/uploads/competiciones/pdf/2597294080_torneo_p&amp;p_de_verano_2026_.pdf"
   ],
-  "horariosScrapedAt": "2026-06-22T09:55:25.004Z"
+  "horariosScrapedAt": "2026-06-24T15:01:07.844Z"
 }

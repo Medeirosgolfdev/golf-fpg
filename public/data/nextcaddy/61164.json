@@ -1,7 +1,7 @@
 {
   "tourId": 61164,
   "url": "https://www.nextcaddy.com/tour/61164",
-  "scrapedAt": "2026-06-12T14:42:52.188Z",
+  "scrapedAt": "2026-06-24T14:57:23.571Z",
   "meta": {
     "name": "Final Circuito Femenino",
     "organizer": "Real Federacion Andaluza de Golf",
@@ -20,8 +20,13 @@
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Equipo Todos",
+      "jugadores": 18
+    }
+  },
   "inscritos": [
     {
       "orden": null,
@@ -34,7 +39,7 @@
       "orden": null,
       "name": "Ni Li",
       "licencia": "AM76937265",
-      "hcp": 10.7,
+      "hcp": 10.6,
       "nivel": "S"
     },
     {
@@ -153,14 +158,14 @@
       "orden": null,
       "name": "Concha Nuñez Paya",
       "licencia": "AM95248413",
-      "hcp": 18.5,
+      "hcp": 18.3,
       "nivel": "S"
     },
     {
       "orden": null,
       "name": "Rocio Garcia-Aranda Pez",
       "licencia": "AM06114520",
-      "hcp": 20.2,
+      "hcp": 19.8,
       "nivel": "S"
     },
     {
@@ -279,7 +284,7 @@
       "orden": null,
       "name": "M Carmen Lopez Del Campo",
       "licencia": "AM06923151",
-      "hcp": 21.2,
+      "hcp": 21.3,
       "nivel": "S"
     },
     {
@@ -293,14 +298,14 @@
       "orden": null,
       "name": "Maria Del Carmen Carmona Chacon",
       "licencia": "AM06209278",
-      "hcp": 21.3,
+      "hcp": 21.8,
       "nivel": "S"
     },
     {
       "orden": null,
       "name": "Fuensanta Donoso Fernandez",
       "licencia": "AM06234658",
-      "hcp": 22.7,
+      "hcp": 23.6,
       "nivel": "S"
     },
     {
@@ -475,7 +480,7 @@
       "orden": null,
       "name": "Erika Cid Perez",
       "licencia": "AM06960584",
-      "hcp": 28.3,
+      "hcp": 28.7,
       "nivel": "S"
     },
     {
@@ -601,7 +606,7 @@
       "orden": null,
       "name": "Maria Dolores Ruiz Gimenez",
       "licencia": "AM06089117",
-      "hcp": 27.9,
+      "hcp": 27.1,
       "nivel": "S"
     },
     {
@@ -650,7 +655,7 @@
       "orden": null,
       "name": "Yolanda Azcona Lazcanotegui",
       "licencia": "AM01756752",
-      "hcp": 30.2,
+      "hcp": 30.7,
       "nivel": "S"
     }
   ],
@@ -662,7 +667,7 @@
           "time": "09:00",
           "tee": 1,
           "name": "Ni Li",
-          "hcp": 10.7,
+          "hcp": 10.6,
           "ins": "2320292",
           "jid": "64807",
           "nivel": "S"
@@ -761,7 +766,7 @@
           "time": "09:00",
           "tee": 3,
           "name": "Concha Nuñez Paya",
-          "hcp": 18.5,
+          "hcp": 18.3,
           "ins": "2320306",
           "jid": "64807",
           "nivel": "S"
@@ -797,7 +802,7 @@
           "time": "09:00",
           "tee": 4,
           "name": "Rocio Garcia-Aranda Pez",
-          "hcp": 20.2,
+          "hcp": 19.8,
           "ins": "2320307",
           "jid": "64807",
           "nivel": "S"
@@ -833,7 +838,7 @@
           "time": "09:00",
           "tee": 5,
           "name": "M Carmen Lopez Del Campo",
-          "hcp": 21.2,
+          "hcp": 21.3,
           "ins": "2320325",
           "jid": "64807",
           "nivel": "S"
@@ -905,7 +910,7 @@
           "time": "09:00",
           "tee": 7,
           "name": "Maria Del Carmen Carmona Chacon",
-          "hcp": 21.3,
+          "hcp": 21.8,
           "ins": "2320327",
           "jid": "64807",
           "nivel": "S"
@@ -941,7 +946,7 @@
           "time": "09:00",
           "tee": 8,
           "name": "Fuensanta Donoso Fernandez",
-          "hcp": 22.7,
+          "hcp": 23.6,
           "ins": "2320328",
           "jid": "64807",
           "nivel": "S"
@@ -1184,7 +1189,7 @@
           "time": "09:00",
           "tee": 15,
           "name": "Maria Dolores Ruiz Gimenez",
-          "hcp": 27.9,
+          "hcp": 27.1,
           "ins": "2320365",
           "jid": "64807",
           "nivel": "S"
@@ -1202,7 +1207,7 @@
           "time": "09:00",
           "tee": 16,
           "name": "Erika Cid Perez",
-          "hcp": 28.3,
+          "hcp": 28.7,
           "ins": "2320348",
           "jid": "64807",
           "nivel": "S"
@@ -1301,22 +1306,1504 @@
           "time": "09:00",
           "tee": 18,
           "name": "Yolanda Azcona Lazcanotegui",
-          "hcp": 30.2,
+          "hcp": 30.7,
           "ins": "2322912",
           "jid": "64807",
+          "nivel": "S"
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "players": [
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Beatriz Martinez-Sagrera Martin",
+          "hcp": 17.4,
+          "ins": "2320329",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Dolores Rios Cruz",
+          "hcp": 16.8,
+          "ins": "2320345",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Olga Brinkmann Morales",
+          "hcp": 23.5,
+          "ins": "2320364",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Josefa Perez Palomo",
+          "hcp": 22,
+          "ins": "2322909",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 2,
+          "name": "Ana Urbano Cuesta",
+          "hcp": 19.7,
+          "ins": "2320330",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 2,
+          "name": "Erika Cid Perez",
+          "hcp": 28.7,
+          "ins": "2320348",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 2,
+          "name": "Maria Dolores Ruiz Gimenez",
+          "hcp": 27.1,
+          "ins": "2320365",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 2,
+          "name": "Sagrario Montero Martin",
+          "hcp": 26.6,
+          "ins": "2322910",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 3,
+          "name": "Susana De La Guerra Irazu",
+          "hcp": 21.2,
+          "ins": "2320331",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 3,
+          "name": "Alejandra Carazo Zuurmond",
+          "hcp": 26.6,
+          "ins": "2320347",
+          "jid": "64808",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 3,
+          "name": "Concepcion Rodriguez Herrero",
+          "hcp": 28.3,
+          "ins": "2320366",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 3,
+          "name": "Luz Maria Robledo De Antonio",
+          "hcp": 27.6,
+          "ins": "2322911",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 4,
+          "name": "M. Angeles Martinez-Sagrera Martin",
+          "hcp": 31,
+          "ins": "2320332",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 4,
+          "name": "Lelanie Marais",
+          "hcp": 25.3,
+          "ins": "2320346",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 4,
+          "name": "Layla Mechbal Gracia",
+          "hcp": 29,
+          "ins": "2320367",
+          "jid": "64808",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 4,
+          "name": "Yolanda Azcona Lazcanotegui",
+          "hcp": 30.7,
+          "ins": "2322912",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 5,
+          "name": "Lourdes Molina Rando",
+          "hcp": 10.1,
+          "ins": "2320300",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 5,
+          "name": "M Carmen Lopez Del Campo",
+          "hcp": 21.3,
+          "ins": "2320325",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 5,
+          "name": "Maria Del Carmen Ruiz Polo",
+          "hcp": 16.2,
+          "ins": "2320333",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 5,
+          "name": "Maria Dolores Garcia Garcia",
+          "hcp": 27,
+          "ins": "2320360",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 6,
+          "name": "Maria Dolores Perez Saavedra",
+          "hcp": 15,
+          "ins": "2320301",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 6,
+          "name": "Monica Castello Perez",
+          "hcp": 22.4,
+          "ins": "2320326",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 6,
+          "name": "Maria Torres Trillo",
+          "hcp": 20.5,
+          "ins": "2320334",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 6,
+          "name": "Elisa Maria Miret Borja",
+          "hcp": 28.3,
+          "ins": "2320361",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 7,
+          "name": "Ana Fernandez De Valderrama De La Escal",
+          "hcp": 14.4,
+          "ins": "2320302",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 7,
+          "name": "Maria Del Carmen Carmona Chacon",
+          "hcp": 21.8,
+          "ins": "2320327",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 7,
+          "name": "Maria Johanna Meeuwis Vermeeren",
+          "hcp": 26.6,
+          "ins": "2320335",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 7,
+          "name": "Maria Eugenia Carrasco Cordero",
+          "hcp": 28.4,
+          "ins": "2320362",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 8,
+          "name": "Antonia Requena Aranda",
+          "hcp": 27.6,
+          "ins": "2320303",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 8,
+          "name": "Fuensanta Donoso Fernandez",
+          "hcp": 23.6,
+          "ins": "2320328",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 8,
+          "name": "Sagrario Huete Molina",
+          "hcp": 31.4,
+          "ins": "2320336",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 8,
+          "name": "Virginia Daroca Bruño",
+          "hcp": 30,
+          "ins": "2320363",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 9,
+          "name": "Jeannine Rehlinger",
+          "hcp": 17.4,
+          "ins": "2320295",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 9,
+          "name": "Maria Carrere Lovera",
+          "hcp": 12.2,
+          "ins": "2320304",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 9,
+          "name": "Linda Custance",
+          "hcp": 20.2,
+          "ins": "2320351",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 9,
+          "name": "Rosario Sanchez Tentor",
+          "hcp": 21.6,
+          "ins": "2320356",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 10,
+          "name": "Julie Ford",
+          "hcp": 15.8,
+          "ins": "2320293",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 10,
+          "name": "Asuncion Moreno Galiano",
+          "hcp": 14.2,
+          "ins": "2320305",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 10,
+          "name": "Rose Anne Voskertchian",
+          "hcp": 26.6,
+          "ins": "2320352",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 10,
+          "name": "Maria Cano Gomez",
+          "hcp": 24.3,
+          "ins": "2320357",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 11,
+          "name": "Lindsey Hill",
+          "hcp": 16.7,
+          "ins": "2320294",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 11,
+          "name": "Concha Nuñez Paya",
+          "hcp": 18.3,
+          "ins": "2320306",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 11,
+          "name": "Annissa Bayer",
+          "hcp": 27.7,
+          "ins": "2320353",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 11,
+          "name": "Laura Rios Izquierdo",
+          "hcp": 27.1,
+          "ins": "2320358",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 12,
+          "name": "Ni Li",
+          "hcp": 10.6,
+          "ins": "2320292",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 12,
+          "name": "Rocio Garcia-Aranda Pez",
+          "hcp": 19.8,
+          "ins": "2320307",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 12,
+          "name": "Françoise Dedoncker-Marchand",
+          "hcp": 32.1,
+          "ins": "2320354",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 12,
+          "name": "Gemma Maria Curto Oliva",
+          "hcp": 31.4,
+          "ins": "2320359",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 13,
+          "name": "Danielle Bostoen",
+          "hcp": 9.3,
+          "ins": "2320296",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 13,
+          "name": "Magdalena Agudo Romero",
+          "hcp": 12.4,
+          "ins": "2320317",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 13,
+          "name": "Claudia Rocio Piñeros Barrera",
+          "hcp": 20.1,
+          "ins": "2320337",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 13,
+          "name": "Pilar Berdejo Rodriguez",
+          "hcp": 20.3,
+          "ins": "2320341",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 14,
+          "name": "Ana Vega Narvaez",
+          "hcp": 10.6,
+          "ins": "2320297",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 14,
+          "name": "Isabel Esteban Garmendia",
+          "hcp": 13.8,
+          "ins": "2320312",
+          "jid": "64808",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 14,
+          "name": "Ascension Garcia Garcia",
+          "hcp": 19,
+          "ins": "2320321",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 14,
+          "name": "Soledad Iges Maestre",
+          "hcp": 26.5,
+          "ins": "2320342",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 15,
+          "name": "Belinda Romero Pineda",
+          "hcp": 17.5,
+          "ins": "2320298",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 15,
+          "name": "Yolanda Arauz Ojanguren",
+          "hcp": 14.3,
+          "ins": "2320313",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 15,
+          "name": "Maria Luisa Carrere Lovera",
+          "hcp": 14.8,
+          "ins": "2320318",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 15,
+          "name": "Enriqueta Ruiz Gongora",
+          "hcp": 19.7,
+          "ins": "2320322",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 16,
+          "name": "Josefa Vazquez Rojas",
+          "hcp": 25.3,
+          "ins": "2320299",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 16,
+          "name": "Clemence Adnot",
+          "hcp": 15.4,
+          "ins": "2320314",
+          "jid": "64808",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 16,
+          "name": "Ana Capote Canovas",
+          "hcp": 20.3,
+          "ins": "2320319",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 16,
+          "name": "Maria Angeles Segui Azpilcueta",
+          "hcp": 20.2,
+          "ins": "2320338",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 17,
+          "name": "Carla Godino Triano",
+          "hcp": 20.4,
+          "ins": "2320320",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 17,
+          "name": "Carmen De Luna Bellido",
+          "hcp": 21.2,
+          "ins": "2320323",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 17,
+          "name": "Lorenza Utrera Campos",
+          "hcp": 23,
+          "ins": "2320339",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 17,
+          "name": "Encarnacion Zamudio Lobato",
+          "hcp": 25.3,
+          "ins": "2320343",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 18,
+          "name": "Cristina Valverde Garcia",
+          "hcp": 23.7,
+          "ins": "2320315",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 18,
+          "name": "Amparo Piña Rivera",
+          "hcp": 23.9,
+          "ins": "2320324",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 18,
+          "name": "Raquel Rebollo Moreno",
+          "hcp": 31.3,
+          "ins": "2320340",
+          "jid": "64808",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 18,
+          "name": "Carmen Samper Rodriguez",
+          "hcp": 26.8,
+          "ins": "2320344",
+          "jid": "64808",
           "nivel": "S"
         }
       ]
     }
   ],
   "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
+    "0": {
+      "p": {
+        "id": 160184,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            250
+          ],
+          [
+            "Birdie",
+            8
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            845
+          ],
+          [
+            "Peor",
+            1026
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 160185,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            205
+          ],
+          [
+            "2",
+            175
+          ],
+          [
+            "3",
+            207
+          ],
+          [
+            "4",
+            155
+          ],
+          [
+            "5",
+            182
+          ],
+          [
+            "6",
+            216
+          ],
+          [
+            "7",
+            187
+          ],
+          [
+            "8",
+            123
+          ],
+          [
+            "9",
+            243
+          ],
+          [
+            "10",
+            204
+          ],
+          [
+            "11",
+            164
+          ],
+          [
+            "12",
+            138
+          ],
+          [
+            "13",
+            206
+          ],
+          [
+            "14",
+            151
+          ],
+          [
+            "15",
+            114
+          ],
+          [
+            "16",
+            203
+          ],
+          [
+            "17",
+            224
+          ],
+          [
+            "18",
+            150
+          ]
+        ]
+      }
+    },
+    "1": {
+      "p": {
+        "id": 160180,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            130
+          ],
+          [
+            "Birdie",
+            3
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            425
+          ],
+          [
+            "Peor",
+            521
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 160181,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            103
+          ],
+          [
+            "2",
+            92
+          ],
+          [
+            "3",
+            107
+          ],
+          [
+            "4",
+            80
+          ],
+          [
+            "5",
+            93
+          ],
+          [
+            "6",
+            98
+          ],
+          [
+            "7",
+            93
+          ],
+          [
+            "8",
+            66
+          ],
+          [
+            "9",
+            133
+          ],
+          [
+            "10",
+            109
+          ],
+          [
+            "11",
+            77
+          ],
+          [
+            "12",
+            78
+          ],
+          [
+            "13",
+            92
+          ],
+          [
+            "14",
+            69
+          ],
+          [
+            "15",
+            63
+          ],
+          [
+            "16",
+            103
+          ],
+          [
+            "17",
+            101
+          ],
+          [
+            "18",
+            84
+          ]
+        ]
+      },
+      "lxy": {
+        "id": 160186,
+        "datos": [
+          [
+            "Hoyo",
+            "MARIA DEL CARMEN CARMONA CHACON",
+            "M. ANGELES MARTINEZ-SAGRERA MARTIN",
+            "LUZ MARIA ROBLEDO DE ANTONIO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 3",
+            2,
+            1,
+            1
+          ],
+          [
+            "Hoyo 4",
+            2,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 5",
+            1,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            -3,
+            -2
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            -3,
+            -3
+          ],
+          [
+            "Hoyo 8",
+            -2,
+            -3,
+            -4
+          ],
+          [
+            "Hoyo 9",
+            -2,
+            -4,
+            -5
+          ],
+          [
+            "Hoyo 10",
+            -2,
+            -5,
+            -4
+          ],
+          [
+            "Hoyo 11",
+            -1,
+            -6,
+            -4
+          ],
+          [
+            "Hoyo 12",
+            -2,
+            -6,
+            -4
+          ],
+          [
+            "Hoyo 13",
+            -2,
+            -6,
+            -5
+          ],
+          [
+            "Hoyo 14",
+            -3,
+            -4,
+            -6
+          ],
+          [
+            "Hoyo 15",
+            -3,
+            -5,
+            -6
+          ],
+          [
+            "Hoyo 16",
+            -4,
+            -6,
+            -6
+          ],
+          [
+            "Hoyo 17",
+            -5,
+            -4,
+            -5
+          ],
+          [
+            "Hoyo 18",
+            -5,
+            -5,
+            -5
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 160187,
+        "datos": [
+          [
+            "Hoyo",
+            "MARIA DEL CARMEN CARMONA CHACON",
+            "M. ANGELES MARTINEZ-SAGRERA MARTIN",
+            "LUZ MARIA ROBLEDO DE ANTONIO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 3",
+            1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 4",
+            0,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 5",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            -2,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 7",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 9",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            0,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 11",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 14",
+            -1,
+            2,
+            -1
+          ],
+          [
+            "Hoyo 15",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 16",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 17",
+            -1,
+            2,
+            1
+          ],
+          [
+            "Hoyo 18",
+            0,
+            -1,
+            0
+          ]
+        ]
+      }
+    },
+    "2": {
+      "p": {
+        "id": 160182,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            120
+          ],
+          [
+            "Birdie",
+            5
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            420
+          ],
+          [
+            "Peor",
+            505
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 160183,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            102
+          ],
+          [
+            "2",
+            83
+          ],
+          [
+            "3",
+            100
+          ],
+          [
+            "4",
+            75
+          ],
+          [
+            "5",
+            89
+          ],
+          [
+            "6",
+            118
+          ],
+          [
+            "7",
+            94
+          ],
+          [
+            "8",
+            57
+          ],
+          [
+            "9",
+            110
+          ],
+          [
+            "10",
+            95
+          ],
+          [
+            "11",
+            87
+          ],
+          [
+            "12",
+            66
+          ],
+          [
+            "13",
+            60
+          ],
+          [
+            "14",
+            114
+          ],
+          [
+            "15",
+            51
+          ],
+          [
+            "16",
+            100
+          ],
+          [
+            "17",
+            123
+          ],
+          [
+            "18",
+            82
+          ]
+        ]
+      },
+      "lxy": {
+        "id": 160188,
+        "datos": [
+          [
+            "Hoyo",
+            "ALEJANDRA CARAZO ZUURMOND",
+            "ERIKA CID PEREZ",
+            "MARIA CANO GOMEZ"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            2,
+            1,
+            2
+          ],
+          [
+            "Hoyo 2",
+            3,
+            2,
+            3
+          ],
+          [
+            "Hoyo 3",
+            3,
+            3,
+            3
+          ],
+          [
+            "Hoyo 4",
+            3,
+            2,
+            2
+          ],
+          [
+            "Hoyo 5",
+            1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 6",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 8",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 9",
+            1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 11",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 12",
+            -2,
+            1,
+            0
+          ],
+          [
+            "Hoyo 13",
+            -2,
+            0,
+            2
+          ],
+          [
+            "Hoyo 14",
+            -3,
+            1,
+            3
+          ],
+          [
+            "Hoyo 15",
+            -2,
+            0,
+            2
+          ],
+          [
+            "Hoyo 16",
+            -2,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 17",
+            -2,
+            1,
+            1
+          ],
+          [
+            "Hoyo 18",
+            -2,
+            0,
+            0
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 160189,
+        "datos": [
+          [
+            "Hoyo",
+            "ALEJANDRA CARAZO ZUURMOND",
+            "ERIKA CID PEREZ",
+            "MARIA CANO GOMEZ"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            2,
+            1,
+            2
+          ],
+          [
+            "Hoyo 2",
+            1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 3",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 4",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 5",
+            -2,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 8",
+            2,
+            0,
+            0
+          ],
+          [
+            "Hoyo 9",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 12",
+            -2,
+            2,
+            0
+          ],
+          [
+            "Hoyo 13",
+            0,
+            -1,
+            2
+          ],
+          [
+            "Hoyo 14",
+            -1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 15",
+            1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 16",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 17",
+            0,
+            2,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            -1,
+            -1
+          ]
+        ]
+      }
+    }
   },
   "roundIds": [
     {
@@ -1330,7 +2817,9 @@
   ],
   "scoreTypes": [],
   "pdfs": [
-    "/uploads/circular/2026/960db328bdb9e41e59f0fd895701cb97.pdf"
+    "/uploads/competiciones/pdf/1046935814_web.pdf",
+    "/uploads/circular/2026/960db328bdb9e41e59f0fd895701cb97.pdf",
+    "/uploads/competiciones/pdf/2150759737_web.pdf"
   ],
-  "horariosScrapedAt": "2026-06-12T14:44:58.449Z"
+  "horariosScrapedAt": "2026-06-24T14:59:51.132Z"
 }

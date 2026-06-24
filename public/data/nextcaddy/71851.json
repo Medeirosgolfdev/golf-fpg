@@ -1,7 +1,7 @@
 {
   "tourId": 71851,
   "url": "https://www.nextcaddy.com/tour/71851",
-  "scrapedAt": "2026-06-22T09:54:49.419Z",
+  "scrapedAt": "2026-06-24T14:57:41.187Z",
   "meta": {
     "name": "VOBS COMPETITION",
     "organizer": null,
@@ -20,10 +20,161 @@
       "Juvenil"
     ]
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 11,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "David James Corston",
+          "licencia": "AMD5033553",
+          "hcp": 14.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2348642
+        },
+        {
+          "pos": 2,
+          "name": "Fraser Sharpe",
+          "licencia": "AMD5507638",
+          "hcp": 19.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2348636
+        },
+        {
+          "pos": 3,
+          "name": "John Collins",
+          "licencia": "AMD5492691",
+          "hcp": 33.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2348635
+        },
+        {
+          "pos": 4,
+          "name": "Jeffrey Wadsworth",
+          "licencia": "AMD5979795",
+          "hcp": 17,
+          "nivel": "S",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2348632
+        },
+        {
+          "pos": 5,
+          "name": "Bret Myles Duncan",
+          "licencia": "AME7775047",
+          "hcp": 23,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2348634
+        },
+        {
+          "pos": 6,
+          "name": "Paul Boyce Howarth",
+          "licencia": "AMD5485623",
+          "hcp": 20.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2348639
+        },
+        {
+          "pos": 7,
+          "name": "Carl Cluck",
+          "licencia": "AME7902244",
+          "hcp": 20.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2348637
+        },
+        {
+          "pos": 8,
+          "name": "Matthew Colin Anderson",
+          "licencia": "AMC3064506",
+          "hcp": 21.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2348641
+        },
+        {
+          "pos": 9,
+          "name": "Louis Jorfi",
+          "licencia": "AM25979495",
+          "hcp": 17,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2348638
+        },
+        {
+          "pos": 10,
+          "name": "Mark Oakley Alan",
+          "licencia": "AMD5492066",
+          "hcp": 24.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2348640
+        },
+        {
+          "pos": null,
+          "name": "Barry Fennelly",
+          "licencia": "AM66412924",
+          "hcp": 12.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2348633
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 11
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -318,5 +469,6 @@
   "scoreTypes": [],
   "pdfs": [
     "/uploads/competiciones/cartel/3772430567_71851-vobs-competition.pdf"
-  ]
+  ],
+  "horariosScrapedAt": "2026-06-24T15:01:10.094Z"
 }

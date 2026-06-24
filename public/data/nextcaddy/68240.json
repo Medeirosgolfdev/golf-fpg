@@ -1,7 +1,7 @@
 {
   "tourId": 68240,
   "url": "https://www.nextcaddy.com/tour/68240",
-  "scrapedAt": "2026-06-12T14:42:55.833Z",
+  "scrapedAt": "2026-06-24T14:57:31.754Z",
   "meta": {
     "name": "Torneo Access Series \"Dehesa Militar\"",
     "organizer": "Federacion de Golf de Madrid",
@@ -14,17 +14,707 @@
       "Caballeros",
       "Señoras",
       "Juvenil",
+      "Infantil",
       "Infantil Masculino",
       "Infantil Femenino",
-      "Infantil",
       "Profesional",
       "Senior"
     ]
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 30,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificacion Scratch Indistinta Absoluto",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Han Xiang Wang",
+          "licencia": "CMA5007285",
+          "hcp": 8.1,
+          "nivel": "C",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2342235
+        },
+        {
+          "pos": 2,
+          "name": "Daniel Ricardo De Lima De Menezes",
+          "licencia": "CM07088274",
+          "hcp": 8.3,
+          "nivel": "J",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2337684
+        },
+        {
+          "pos": 3,
+          "name": "Francisco Casas Castillo",
+          "licencia": "CMA8920445",
+          "hcp": 10.8,
+          "nivel": "C",
+          "rounds": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2343169
+        },
+        {
+          "pos": 4,
+          "name": "Jorge Martin-Simo Llorente",
+          "licencia": "CMA8943344",
+          "hcp": 14,
+          "nivel": "C",
+          "rounds": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2339066
+        },
+        {
+          "pos": 5,
+          "name": "Nicolas Fernandez De La Cruz",
+          "licencia": "CM41969603",
+          "hcp": 11.6,
+          "nivel": "C",
+          "rounds": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2337925
+        },
+        {
+          "pos": 6,
+          "name": "Alvaro Perez Ortega",
+          "licencia": "CM87795376",
+          "hcp": 7.7,
+          "nivel": "J",
+          "rounds": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2342106
+        },
+        {
+          "pos": 7,
+          "name": "Harald Lilly Fernandez",
+          "licencia": "CM41887505",
+          "hcp": 19.2,
+          "nivel": "C",
+          "rounds": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2343909
+        },
+        {
+          "pos": 8,
+          "name": "Adrian De Eguren Rodriguez-Solar",
+          "licencia": "CM06913080",
+          "hcp": 8.6,
+          "nivel": "C",
+          "rounds": [],
+          "total": 15,
+          "toPar": 21,
+          "inscribedId": 2338691
+        },
+        {
+          "pos": 9,
+          "name": "Guillermo Sanchez Grande",
+          "licencia": "CM41000677",
+          "hcp": 35.8,
+          "nivel": "J",
+          "rounds": [],
+          "total": 3,
+          "toPar": 33,
+          "inscribedId": 2337971
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Clasificacion Handicap Indistinta Abbsoluto",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Han Xiang Wang",
+          "licencia": "CMA5007285",
+          "hcp": 8.1,
+          "nivel": "C",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2342235
+        },
+        {
+          "pos": 2,
+          "name": "Harald Lilly Fernandez",
+          "licencia": "CM41887505",
+          "hcp": 19.2,
+          "nivel": "C",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2343909
+        },
+        {
+          "pos": 3,
+          "name": "Daniel Ricardo De Lima De Menezes",
+          "licencia": "CM07088274",
+          "hcp": 8.3,
+          "nivel": "J",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2337684
+        },
+        {
+          "pos": 4,
+          "name": "Jorge Martin-Simo Llorente",
+          "licencia": "CMA8943344",
+          "hcp": 14,
+          "nivel": "C",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2339066
+        },
+        {
+          "pos": 5,
+          "name": "Francisco Casas Castillo",
+          "licencia": "CMA8920445",
+          "hcp": 10.8,
+          "nivel": "C",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2343169
+        },
+        {
+          "pos": 6,
+          "name": "Nicolas Fernandez De La Cruz",
+          "licencia": "CM41969603",
+          "hcp": 11.6,
+          "nivel": "C",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2337925
+        },
+        {
+          "pos": 7,
+          "name": "Alvaro Perez Ortega",
+          "licencia": "CM87795376",
+          "hcp": 7.7,
+          "nivel": "J",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2342106
+        },
+        {
+          "pos": 8,
+          "name": "Adrian De Eguren Rodriguez-Solar",
+          "licencia": "CM06913080",
+          "hcp": 8.6,
+          "nivel": "C",
+          "rounds": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2338691
+        },
+        {
+          "pos": 9,
+          "name": "Guillermo Sanchez Grande",
+          "licencia": "CM41000677",
+          "hcp": 35.8,
+          "nivel": "J",
+          "rounds": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2337971
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Clasificacion Scratch Indistinta Infantil",
+      "expectedJugadores": 18,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jaime Paradela Martin",
+          "licencia": "CM61910816",
+          "hcp": 7.6,
+          "nivel": "I",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2338258
+        },
+        {
+          "pos": 2,
+          "name": "Ignacio Lopez-Huerta Molina",
+          "licencia": "CMA8957910",
+          "hcp": 14.8,
+          "nivel": "I",
+          "rounds": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2342709
+        },
+        {
+          "pos": 3,
+          "name": "Guillermo Ruiz De Infante Hernandez",
+          "licencia": "CMA8995317",
+          "hcp": 12,
+          "nivel": "I",
+          "rounds": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2342713
+        },
+        {
+          "pos": 4,
+          "name": "Diego Bruzzi",
+          "licencia": "CM81981599",
+          "hcp": 13.9,
+          "nivel": "I",
+          "rounds": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2338056
+        },
+        {
+          "pos": 5,
+          "name": "Pedro Irujo Carrasco",
+          "licencia": "CM06052125",
+          "hcp": 13.2,
+          "nivel": "I",
+          "rounds": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2337680
+        },
+        {
+          "pos": 6,
+          "name": "Francisco Llorca Castro",
+          "licencia": "CM03960046",
+          "hcp": 12.1,
+          "nivel": "I",
+          "rounds": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2337785
+        },
+        {
+          "pos": 7,
+          "name": "Paula Rubio Romero",
+          "licencia": "CM41988996",
+          "hcp": 12.9,
+          "nivel": "I",
+          "rounds": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2342839
+        },
+        {
+          "pos": 8,
+          "name": "Ignacio Maria Campaña Rodriguez",
+          "licencia": "CM22081692",
+          "hcp": 11.5,
+          "nivel": "I",
+          "rounds": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2337561
+        },
+        {
+          "pos": 9,
+          "name": "Guillermo Martinez Liceras",
+          "licencia": "CMA8351181",
+          "hcp": 13.2,
+          "nivel": "I",
+          "rounds": [],
+          "total": 15,
+          "toPar": 21,
+          "inscribedId": 2338289
+        },
+        {
+          "pos": 10,
+          "name": "Maria Salas Dos Santos",
+          "licencia": "CM41965528",
+          "hcp": 13.8,
+          "nivel": "I",
+          "rounds": [],
+          "total": 13,
+          "toPar": 23,
+          "inscribedId": 2337866
+        },
+        {
+          "pos": 11,
+          "name": "Daniela Jorge Martin",
+          "licencia": "CM05346092",
+          "hcp": 18.2,
+          "nivel": "I",
+          "rounds": [],
+          "total": 11,
+          "toPar": 25,
+          "inscribedId": 2342418
+        },
+        {
+          "pos": 12,
+          "name": "Xabier Esteban Betegon",
+          "licencia": "CMD8983532",
+          "hcp": 28.3,
+          "nivel": "I",
+          "rounds": [],
+          "total": 9,
+          "toPar": 27,
+          "inscribedId": 2337508
+        },
+        {
+          "pos": 13,
+          "name": "Tomas Iglesias Silva",
+          "licencia": "CMA8992702",
+          "hcp": 15.7,
+          "nivel": "I",
+          "rounds": [],
+          "total": 9,
+          "toPar": 27,
+          "inscribedId": 2337606
+        },
+        {
+          "pos": 14,
+          "name": "Joao Francisco Pires Carvalho",
+          "licencia": "CMA8197368",
+          "hcp": 26.1,
+          "nivel": "I",
+          "rounds": [],
+          "total": 4,
+          "toPar": 32,
+          "inscribedId": 2337643
+        },
+        {
+          "pos": 15,
+          "name": "Barbara Osaba Rohleder",
+          "licencia": "CM04376811",
+          "hcp": 33.1,
+          "nivel": "I",
+          "rounds": [],
+          "total": 2,
+          "toPar": 34,
+          "inscribedId": 2339384
+        },
+        {
+          "pos": null,
+          "name": "Nicolas Serrano Villa",
+          "licencia": "CM41469063",
+          "hcp": 13.6,
+          "nivel": "I",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2337665
+        },
+        {
+          "pos": null,
+          "name": "Felix Bruyelle Sicilia",
+          "licencia": "CM11352435",
+          "hcp": 11.4,
+          "nivel": "I",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2342775
+        },
+        {
+          "pos": null,
+          "name": "Benjamin Casas Velez-Osorio",
+          "licencia": "CMA8994392",
+          "hcp": 8.8,
+          "nivel": "I",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2337651
+        }
+      ]
+    },
+    {
+      "category": 4,
+      "categoryName": "Clasificacion Handicap Indistinta Infantil",
+      "expectedJugadores": 18,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Xabier Esteban Betegon",
+          "licencia": "CMD8983532",
+          "hcp": 28.3,
+          "nivel": "I",
+          "rounds": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2337508
+        },
+        {
+          "pos": 2,
+          "name": "Ignacio Lopez-Huerta Molina",
+          "licencia": "CMA8957910",
+          "hcp": 14.8,
+          "nivel": "I",
+          "rounds": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2342709
+        },
+        {
+          "pos": 3,
+          "name": "Jaime Paradela Martin",
+          "licencia": "CM61910816",
+          "hcp": 7.6,
+          "nivel": "I",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2338258
+        },
+        {
+          "pos": 4,
+          "name": "Guillermo Ruiz De Infante Hernandez",
+          "licencia": "CMA8995317",
+          "hcp": 12,
+          "nivel": "I",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2342713
+        },
+        {
+          "pos": 5,
+          "name": "Francisco Llorca Castro",
+          "licencia": "CM03960046",
+          "hcp": 12.1,
+          "nivel": "I",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2337785
+        },
+        {
+          "pos": 6,
+          "name": "Diego Bruzzi",
+          "licencia": "CM81981599",
+          "hcp": 13.9,
+          "nivel": "I",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2338056
+        },
+        {
+          "pos": 7,
+          "name": "Daniela Jorge Martin",
+          "licencia": "CM05346092",
+          "hcp": 18.2,
+          "nivel": "I",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2342418
+        },
+        {
+          "pos": 8,
+          "name": "Pedro Irujo Carrasco",
+          "licencia": "CM06052125",
+          "hcp": 13.2,
+          "nivel": "I",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2337680
+        },
+        {
+          "pos": 9,
+          "name": "Guillermo Martinez Liceras",
+          "licencia": "CMA8351181",
+          "hcp": 13.2,
+          "nivel": "I",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2338289
+        },
+        {
+          "pos": 10,
+          "name": "Joao Francisco Pires Carvalho",
+          "licencia": "CMA8197368",
+          "hcp": 26.1,
+          "nivel": "I",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2337643
+        },
+        {
+          "pos": 11,
+          "name": "Paula Rubio Romero",
+          "licencia": "CM41988996",
+          "hcp": 12.9,
+          "nivel": "I",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2342839
+        },
+        {
+          "pos": 12,
+          "name": "Ignacio Maria Campaña Rodriguez",
+          "licencia": "CM22081692",
+          "hcp": 11.5,
+          "nivel": "I",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2337561
+        },
+        {
+          "pos": 13,
+          "name": "Maria Salas Dos Santos",
+          "licencia": "CM41965528",
+          "hcp": 13.8,
+          "nivel": "I",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2337866
+        },
+        {
+          "pos": 14,
+          "name": "Tomas Iglesias Silva",
+          "licencia": "CMA8992702",
+          "hcp": 15.7,
+          "nivel": "I",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2337606
+        },
+        {
+          "pos": 15,
+          "name": "Barbara Osaba Rohleder",
+          "licencia": "CM04376811",
+          "hcp": 33.1,
+          "nivel": "I",
+          "rounds": [],
+          "total": 14,
+          "toPar": 22,
+          "inscribedId": 2339384
+        },
+        {
+          "pos": null,
+          "name": "Benjamin Casas Velez-Osorio",
+          "licencia": "CMA8994392",
+          "hcp": 8.8,
+          "nivel": "I",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2337651
+        },
+        {
+          "pos": null,
+          "name": "Nicolas Serrano Villa",
+          "licencia": "CM41469063",
+          "hcp": 13.6,
+          "nivel": "I",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2337665
+        },
+        {
+          "pos": null,
+          "name": "Felix Bruyelle Sicilia",
+          "licencia": "CM11352435",
+          "hcp": 11.4,
+          "nivel": "I",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2342775
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificacion Scratch Indistinta Absoluto",
+      "jugadores": 9
+    },
+    "2": {
+      "name": "Clasificacion Handicap Indistinta Abbsoluto",
+      "jugadores": 9
+    },
+    "3": {
+      "name": "Clasificacion Scratch Indistinta Infantil",
+      "jugadores": 18
+    },
+    "4": {
+      "name": "Clasificacion Handicap Indistinta Infantil",
+      "jugadores": 18
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -44,28 +734,28 @@
       "orden": 3,
       "name": "Tomas Iglesias Silva",
       "licencia": "CMA8992702",
-      "hcp": 15.8,
+      "hcp": 15.7,
       "nivel": "I"
     },
     {
       "orden": 4,
       "name": "Joao Francisco Pires Carvalho",
       "licencia": "CMA8197368",
-      "hcp": 27.1,
+      "hcp": 26.1,
       "nivel": "I"
     },
     {
       "orden": 5,
       "name": "Benjamin Casas Velez-Osorio",
       "licencia": "CMA8994392",
-      "hcp": 10,
+      "hcp": 8.8,
       "nivel": "I"
     },
     {
       "orden": 6,
       "name": "Nicolas Serrano Villa",
       "licencia": "CM41469063",
-      "hcp": 14,
+      "hcp": 13.6,
       "nivel": "I"
     },
     {
@@ -128,7 +818,7 @@
       "orden": 15,
       "name": "Adrian De Eguren Rodriguez-Solar",
       "licencia": "CM06913080",
-      "hcp": 8.7,
+      "hcp": 8.6,
       "nivel": "C"
     },
     {
@@ -144,6 +834,48 @@
       "licencia": "CM87795376",
       "hcp": 7.7,
       "nivel": "J"
+    },
+    {
+      "orden": 18,
+      "name": "Han Xiang Wang",
+      "licencia": "CMA5007285",
+      "hcp": 8.1,
+      "nivel": "C"
+    },
+    {
+      "orden": 19,
+      "name": "Ignacio Lopez-Huerta Molina",
+      "licencia": "CMA8957910",
+      "hcp": 14.8,
+      "nivel": "I"
+    },
+    {
+      "orden": 20,
+      "name": "Guillermo Ruiz De Infante Hernandez",
+      "licencia": "CMA8995317",
+      "hcp": 12,
+      "nivel": "I"
+    },
+    {
+      "orden": 21,
+      "name": "Felix Bruyelle Sicilia",
+      "licencia": "CM11352435",
+      "hcp": 11.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 22,
+      "name": "Francisco Casas Castillo",
+      "licencia": "CMA8920445",
+      "hcp": 10.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 23,
+      "name": "Harald Lilly Fernandez",
+      "licencia": "CM41887505",
+      "hcp": 19.2,
+      "nivel": "C"
     },
     {
       "orden": null,
@@ -163,7 +895,21 @@
       "orden": 2,
       "name": "Barbara Osaba Rohleder",
       "licencia": "CM04376811",
-      "hcp": 34.2,
+      "hcp": 33.1,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Daniela Jorge Martin",
+      "licencia": "CM05346092",
+      "hcp": 18.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Paula Rubio Romero",
+      "licencia": "CM41988996",
+      "hcp": 12.9,
       "nivel": "I"
     },
     {
@@ -191,28 +937,28 @@
       "orden": 3,
       "name": "Tomas Iglesias Silva",
       "licencia": "CMA8992702",
-      "hcp": 15.8,
+      "hcp": 15.7,
       "nivel": "I"
     },
     {
       "orden": 4,
       "name": "Joao Francisco Pires Carvalho",
       "licencia": "CMA8197368",
-      "hcp": 27.1,
+      "hcp": 26.1,
       "nivel": "I"
     },
     {
       "orden": 5,
       "name": "Benjamin Casas Velez-Osorio",
       "licencia": "CMA8994392",
-      "hcp": 10,
+      "hcp": 8.8,
       "nivel": "I"
     },
     {
       "orden": 6,
       "name": "Nicolas Serrano Villa",
       "licencia": "CM41469063",
-      "hcp": 14,
+      "hcp": 13.6,
       "nivel": "I"
     },
     {
@@ -282,7 +1028,7 @@
       "orden": 16,
       "name": "Adrian De Eguren Rodriguez-Solar",
       "licencia": "CM06913080",
-      "hcp": 8.7,
+      "hcp": 8.6,
       "nivel": "C"
     },
     {
@@ -296,7 +1042,7 @@
       "orden": 18,
       "name": "Barbara Osaba Rohleder",
       "licencia": "CM04376811",
-      "hcp": 34.2,
+      "hcp": 33.1,
       "nivel": "I"
     },
     {
@@ -305,6 +1051,62 @@
       "licencia": "CM87795376",
       "hcp": 7.7,
       "nivel": "J"
+    },
+    {
+      "orden": 20,
+      "name": "Han Xiang Wang",
+      "licencia": "CMA5007285",
+      "hcp": 8.1,
+      "nivel": "C"
+    },
+    {
+      "orden": 21,
+      "name": "Daniela Jorge Martin",
+      "licencia": "CM05346092",
+      "hcp": 18.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 22,
+      "name": "Ignacio Lopez-Huerta Molina",
+      "licencia": "CMA8957910",
+      "hcp": 14.8,
+      "nivel": "I"
+    },
+    {
+      "orden": 23,
+      "name": "Guillermo Ruiz De Infante Hernandez",
+      "licencia": "CMA8995317",
+      "hcp": 12,
+      "nivel": "I"
+    },
+    {
+      "orden": 24,
+      "name": "Felix Bruyelle Sicilia",
+      "licencia": "CM11352435",
+      "hcp": 11.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 25,
+      "name": "Paula Rubio Romero",
+      "licencia": "CM41988996",
+      "hcp": 12.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 26,
+      "name": "Francisco Casas Castillo",
+      "licencia": "CMA8920445",
+      "hcp": 10.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 27,
+      "name": "Harald Lilly Fernandez",
+      "licencia": "CM41887505",
+      "hcp": 19.2,
+      "nivel": "C"
     }
   ],
   "horarios": [
@@ -594,6 +1396,8 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-06-22T09:55:12.456Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/2053225142_arb_reg_loc_2023_cdsm_dehesa_.pdf"
+  ],
+  "horariosScrapedAt": "2026-06-24T15:00:27.522Z"
 }

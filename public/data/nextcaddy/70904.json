@@ -1,7 +1,7 @@
 {
   "tourId": 70904,
   "url": "https://www.nextcaddy.com/tour/70904",
-  "scrapedAt": "2026-06-12T14:42:57.570Z",
+  "scrapedAt": "2026-06-24T14:57:33.766Z",
   "meta": {
     "name": "VIII Torneo Academia Infantil 2025-2026 - 9 hoyos",
     "organizer": null,
@@ -21,65 +21,350 @@
       "Juvenil"
     ]
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 30,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "3ª Categoria",
+      "expectedJugadores": 11,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Daniel Jimenez Pachon",
+          "licencia": "AMI5322414",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2343924
+        },
+        {
+          "pos": 2,
+          "name": "Hugo Zambrano Gonzalez",
+          "licencia": "AMI5989569",
+          "hcp": 37.6,
+          "nivel": "B",
+          "rounds": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2332411
+        },
+        {
+          "pos": 3,
+          "name": "Luis Ramirez Barba",
+          "licencia": "AM11414965",
+          "hcp": 50.7,
+          "nivel": "B",
+          "rounds": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2344946
+        },
+        {
+          "pos": 4,
+          "name": "Daniela Mena Chaparro",
+          "licencia": "AM11092816",
+          "hcp": 45.6,
+          "nivel": "B",
+          "rounds": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2325552
+        },
+        {
+          "pos": 5,
+          "name": "Leo Rodriguez Lopez",
+          "licencia": "AMI5416477",
+          "hcp": 41.8,
+          "nivel": "B",
+          "rounds": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2335390
+        },
+        {
+          "pos": 6,
+          "name": "Dasha Violeta Arenas Khattar",
+          "licencia": "AM11473991",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2333361
+        },
+        {
+          "pos": 7,
+          "name": "Philemon Casado Diouf",
+          "licencia": "AM11467632",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2344070
+        },
+        {
+          "pos": 8,
+          "name": "Izan Tirado Alvarez",
+          "licencia": "AMI5091398",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2325708
+        },
+        {
+          "pos": 9,
+          "name": "Carlos Martin Villatoro",
+          "licencia": "AM11419406",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2335654
+        },
+        {
+          "pos": 10,
+          "name": "Julia Bueno Bellido",
+          "licencia": "AMI5471443",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2342217
+        },
+        {
+          "pos": null,
+          "name": "Fabio Utrera Carracao",
+          "licencia": "AM11012935",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2344938
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "2ª Categoria",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Ignacio Ballesteros Lopez De Los Mozos",
+          "licencia": "AMI5987995",
+          "hcp": 42.3,
+          "nivel": "A",
+          "rounds": [],
+          "total": 24,
+          "toPar": -6,
+          "inscribedId": 2342398
+        },
+        {
+          "pos": 2,
+          "name": "Alejandro Labrot-Moreno Sanchez",
+          "licencia": "AMI5066739",
+          "hcp": 23.1,
+          "nivel": "A",
+          "rounds": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2340354
+        },
+        {
+          "pos": 3,
+          "name": "Jose Harras Diaz",
+          "licencia": "AMI5517647",
+          "hcp": 35.9,
+          "nivel": "A",
+          "rounds": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2342397
+        },
+        {
+          "pos": 4,
+          "name": "Daniel Olid Del Rio",
+          "licencia": "AM11895760",
+          "hcp": 38,
+          "nivel": "A",
+          "rounds": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2332144
+        },
+        {
+          "pos": 5,
+          "name": "Adrian Blasco Pietras",
+          "licencia": "AMI5495900",
+          "hcp": 38.7,
+          "nivel": "A",
+          "rounds": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2337050
+        },
+        {
+          "pos": 6,
+          "name": "Olaia Navarro Sanjaume",
+          "licencia": "AMI5061667",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2344963
+        },
+        {
+          "pos": null,
+          "name": "Daniela Mena Gutierrez",
+          "licencia": "AMI5091410",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2338179
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "3ª Categoria",
+      "jugadores": 11
+    },
+    "2": {
+      "name": "2ª Categoria",
+      "jugadores": 7
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
-      "name": "Enzo Tirado Alvarez",
-      "licencia": "AMI5946335",
-      "hcp": 54,
-      "nivel": "I"
-    },
-    {
-      "orden": 2,
       "name": "Izan Tirado Alvarez",
       "licencia": "AMI5091398",
       "hcp": 54,
       "nivel": "B"
     },
     {
-      "orden": 3,
+      "orden": 2,
       "name": "Hugo Zambrano Gonzalez",
       "licencia": "AMI5989569",
-      "hcp": 38.1,
+      "hcp": 37.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Leo Rodriguez Lopez",
+      "licencia": "AMI5416477",
+      "hcp": 41.8,
       "nivel": "B"
     },
     {
       "orden": 4,
-      "name": "Leo Rodriguez Lopez",
-      "licencia": "AMI5416477",
-      "hcp": 42.5,
-      "nivel": "B"
-    },
-    {
-      "orden": 5,
       "name": "Adrian Blasco Pietras",
       "licencia": "AMI5495900",
       "hcp": 38.7,
       "nivel": "A"
     },
     {
-      "orden": 6,
+      "orden": 5,
       "name": "Alejandro Labrot-Moreno Sanchez",
       "licencia": "AMI5066739",
       "hcp": 23.1,
       "nivel": "A"
     },
     {
+      "orden": 6,
+      "name": "Jose Harras Diaz",
+      "licencia": "AMI5517647",
+      "hcp": 35.9,
+      "nivel": "A"
+    },
+    {
       "orden": 7,
-      "name": "Daniel Olid Del Rio",
-      "licencia": "AM11895760",
-      "hcp": 38.1,
+      "name": "Ignacio Ballesteros Lopez De Los Mozos",
+      "licencia": "AMI5987995",
+      "hcp": 42.3,
       "nivel": "A"
     },
     {
       "orden": 8,
+      "name": "Daniel Jimenez Pachon",
+      "licencia": "AMI5322414",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 9,
+      "name": "Daniel Olid Del Rio",
+      "licencia": "AM11895760",
+      "hcp": 38,
+      "nivel": "A"
+    },
+    {
+      "orden": 10,
       "name": "Carlos Martin Villatoro",
       "licencia": "AM11419406",
       "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 11,
+      "name": "Philemon Casado Diouf",
+      "licencia": "AM11467632",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 12,
+      "name": "Fabio Utrera Carracao",
+      "licencia": "AM11012935",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 13,
+      "name": "Luis Ramirez Barba",
+      "licencia": "AM11414965",
+      "hcp": 50.7,
       "nivel": "B"
     },
     {
@@ -98,13 +383,27 @@
     },
     {
       "orden": 2,
-      "name": "Daniela Mena Chaparro",
-      "licencia": "AM11092816",
-      "hcp": 46,
+      "name": "Julia Bueno Bellido",
+      "licencia": "AMI5471443",
+      "hcp": 54,
       "nivel": "B"
     },
     {
       "orden": 3,
+      "name": "Olaia Navarro Sanjaume",
+      "licencia": "AMI5061667",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Daniela Mena Chaparro",
+      "licencia": "AM11092816",
+      "hcp": 45.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
       "name": "Dasha Violeta Arenas Khattar",
       "licencia": "AM11473991",
       "hcp": 54,
@@ -119,80 +418,129 @@
     },
     {
       "orden": 1,
-      "name": "Enzo Tirado Alvarez",
-      "licencia": "22-05-26 10:18",
-      "hcp": 54,
-      "nivel": "AMI5946335"
-    },
-    {
-      "orden": 2,
       "name": "Izan Tirado Alvarez",
       "licencia": "22-05-26 10:20",
       "hcp": 54,
       "nivel": "AMI5091398"
     },
     {
-      "orden": 3,
+      "orden": 2,
       "name": "Hugo Zambrano Gonzalez",
       "licencia": "31-05-26 20:09",
-      "hcp": 38.1,
+      "hcp": 37.6,
       "nivel": "AMI5989569"
     },
     {
-      "orden": 4,
+      "orden": 3,
       "name": "Leo Rodriguez Lopez",
       "licencia": "04-06-26 17:37",
-      "hcp": 42.5,
+      "hcp": 41.8,
       "nivel": "AMI5416477"
     },
     {
-      "orden": 5,
+      "orden": 4,
       "name": "Adrian Blasco Pietras",
       "licencia": "07-06-26 11:15",
       "hcp": 38.7,
       "nivel": "AMI5495900"
     },
     {
-      "orden": 6,
+      "orden": 5,
       "name": "Daniela Mena Gutierrez",
       "licencia": "08-06-26 17:50",
       "hcp": 54,
       "nivel": "AMI5091410"
     },
     {
-      "orden": 7,
+      "orden": 6,
       "name": "Alejandro Labrot-Moreno Sanchez",
       "licencia": "10-06-26 15:40",
       "hcp": 23.1,
       "nivel": "AMI5066739"
     },
     {
+      "orden": 7,
+      "name": "Julia Bueno Bellido",
+      "licencia": "12-06-26 21:12",
+      "hcp": 54,
+      "nivel": "AMI5471443"
+    },
+    {
       "orden": 8,
-      "name": "Daniela Mena Chaparro",
-      "licencia": "22-05-26 07:45",
-      "hcp": 46,
-      "nivel": "AM11092816"
+      "name": "Jose Harras Diaz",
+      "licencia": "13-06-26 12:19",
+      "hcp": 35.9,
+      "nivel": "AMI5517647"
     },
     {
       "orden": 9,
-      "name": "Daniel Olid Del Rio",
-      "licencia": "31-05-26 11:20",
-      "hcp": 38.1,
-      "nivel": "AM11895760"
+      "name": "Ignacio Ballesteros Lopez De Los Mozos",
+      "licencia": "13-06-26 12:19",
+      "hcp": 42.3,
+      "nivel": "AMI5987995"
     },
     {
       "orden": 10,
+      "name": "Daniel Jimenez Pachon",
+      "licencia": "15-06-26 15:46",
+      "hcp": 54,
+      "nivel": "AMI5322414"
+    },
+    {
+      "orden": 11,
+      "name": "Olaia Navarro Sanjaume",
+      "licencia": "17-06-26 08:06",
+      "hcp": 54,
+      "nivel": "AMI5061667"
+    },
+    {
+      "orden": 12,
+      "name": "Daniela Mena Chaparro",
+      "licencia": "22-05-26 07:45",
+      "hcp": 45.6,
+      "nivel": "AM11092816"
+    },
+    {
+      "orden": 13,
+      "name": "Daniel Olid Del Rio",
+      "licencia": "31-05-26 11:20",
+      "hcp": 38,
+      "nivel": "AM11895760"
+    },
+    {
+      "orden": 14,
       "name": "Dasha Violeta Arenas Khattar",
       "licencia": "02-06-26 10:23",
       "hcp": 54,
       "nivel": "AM11473991"
     },
     {
-      "orden": 11,
+      "orden": 15,
       "name": "Carlos Martin Villatoro",
       "licencia": "05-06-26 10:29",
       "hcp": 54,
       "nivel": "AM11419406"
+    },
+    {
+      "orden": 16,
+      "name": "Philemon Casado Diouf",
+      "licencia": "15-06-26 21:05",
+      "hcp": 54,
+      "nivel": "AM11467632"
+    },
+    {
+      "orden": 17,
+      "name": "Fabio Utrera Carracao",
+      "licencia": "17-06-26 00:22",
+      "hcp": 54,
+      "nivel": "AM11012935"
+    },
+    {
+      "orden": 18,
+      "name": "Luis Ramirez Barba",
+      "licencia": "17-06-26 06:58",
+      "hcp": 50.7,
+      "nivel": "AM11414965"
     }
   ],
   "horarios": [
@@ -522,5 +870,5 @@
     }
   },
   "pdfs": [],
-  "horariosScrapedAt": "2026-06-22T09:55:22.509Z"
+  "horariosScrapedAt": "2026-06-24T15:01:00.393Z"
 }

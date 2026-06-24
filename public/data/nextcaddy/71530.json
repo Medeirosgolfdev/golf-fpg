@@ -1,7 +1,7 @@
 {
   "tourId": 71530,
   "url": "https://www.nextcaddy.com/tour/71530",
-  "scrapedAt": "2026-06-12T14:42:47.854Z",
+  "scrapedAt": "2026-06-24T14:57:17.337Z",
   "meta": {
     "name": "FINAL C. INFANTIL B.K. 18 HOYOS 13-06-26",
     "organizer": null,
@@ -20,10 +20,634 @@
       "Juvenil"
     ]
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 38,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 26,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Fernando Perez-Barbadillo Martin",
+          "licencia": "AM05167262",
+          "hcp": 7.3,
+          "nivel": "J",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2340952
+        },
+        {
+          "pos": 2,
+          "name": "Santiago Bernal Bollullos",
+          "licencia": "AM05899624",
+          "hcp": 1.4,
+          "nivel": "J",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2340956
+        },
+        {
+          "pos": 3,
+          "name": "Roberto Terry Andrades",
+          "licencia": "AM05483825",
+          "hcp": 12.4,
+          "nivel": "C",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2340962
+        },
+        {
+          "pos": 4,
+          "name": "Juan Lacave Arbesu",
+          "licencia": "AM05907334",
+          "hcp": 6,
+          "nivel": "C",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2341529
+        },
+        {
+          "pos": 5,
+          "name": "Borja Fernandez De Bobadilla Diaz",
+          "licencia": "AM02975530",
+          "hcp": 1.9,
+          "nivel": "J",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2340957
+        },
+        {
+          "pos": 6,
+          "name": "Juan Moran Amado",
+          "licencia": "AM05912217",
+          "hcp": 9.3,
+          "nivel": "C",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2340961
+        },
+        {
+          "pos": 7,
+          "name": "Jaime Fernandez De Bobadilla Diaz",
+          "licencia": "AM02975531",
+          "hcp": 8.1,
+          "nivel": "C",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2340966
+        },
+        {
+          "pos": 8,
+          "name": "Martin Serrano Rodriguez",
+          "licencia": "AM05953564",
+          "hcp": 12.1,
+          "nivel": "I",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2340971
+        },
+        {
+          "pos": 9,
+          "name": "Eduardo Brandariz Carvallo",
+          "licencia": "AM05941223",
+          "hcp": 10.2,
+          "nivel": "C",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2340965
+        },
+        {
+          "pos": 10,
+          "name": "Nicolas Brandariz Carvallo",
+          "licencia": "AM05964530",
+          "hcp": 18.4,
+          "nivel": "A",
+          "rounds": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2340976
+        },
+        {
+          "pos": 11,
+          "name": "Candela De Lope Gomez",
+          "licencia": "AM05892676",
+          "hcp": 9.4,
+          "nivel": "C",
+          "rounds": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2340960
+        },
+        {
+          "pos": 12,
+          "name": "Alfonso Arriaga Perez-Ojeda",
+          "licencia": "AM05970731",
+          "hcp": 19.7,
+          "nivel": "A",
+          "rounds": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2340978
+        },
+        {
+          "pos": 13,
+          "name": "Alvaro Toledano Martinez Del Cerro",
+          "licencia": "AM05910369",
+          "hcp": 17.5,
+          "nivel": "C",
+          "rounds": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2340959
+        },
+        {
+          "pos": 14,
+          "name": "Aida Prieto Segura",
+          "licencia": "AM05940303",
+          "hcp": 28.1,
+          "nivel": "I",
+          "rounds": [],
+          "total": 15,
+          "toPar": 21,
+          "inscribedId": 2341955
+        },
+        {
+          "pos": 15,
+          "name": "Alfonso Mas Gonzalez",
+          "licencia": "AMD5466082",
+          "hcp": 21.8,
+          "nivel": "A",
+          "rounds": [],
+          "total": 15,
+          "toPar": 21,
+          "inscribedId": 2340980
+        },
+        {
+          "pos": 16,
+          "name": "Ignacio Azofra Martel",
+          "licencia": "AM05306204",
+          "hcp": 54,
+          "nivel": "I",
+          "rounds": [],
+          "total": 13,
+          "toPar": 23,
+          "inscribedId": 2340972
+        },
+        {
+          "pos": 17,
+          "name": "Gonzalo Filgueiras Enriquez",
+          "licencia": "AM05471946",
+          "hcp": 42.8,
+          "nivel": "A",
+          "rounds": [],
+          "total": 10,
+          "toPar": 26,
+          "inscribedId": 2340984
+        },
+        {
+          "pos": 18,
+          "name": "Pedro Pablo Bononato Terry",
+          "licencia": "AM05099558",
+          "hcp": 40.3,
+          "nivel": "A",
+          "rounds": [],
+          "total": 9,
+          "toPar": 27,
+          "inscribedId": 2340979
+        },
+        {
+          "pos": 19,
+          "name": "Sebastian Delgado Perez De Guzman",
+          "licencia": "AM05959566",
+          "hcp": 30.6,
+          "nivel": "I",
+          "rounds": [],
+          "total": 9,
+          "toPar": 27,
+          "inscribedId": 2340970
+        },
+        {
+          "pos": 20,
+          "name": "Alvaro Lechuga Alvarez-Campana",
+          "licencia": "AM05983219",
+          "hcp": 34.2,
+          "nivel": "A",
+          "rounds": [],
+          "total": 8,
+          "toPar": 28,
+          "inscribedId": 2340977
+        },
+        {
+          "pos": 21,
+          "name": "Blanca Moreno Quintero",
+          "licencia": "AM05948216",
+          "hcp": 42.1,
+          "nivel": "I",
+          "rounds": [],
+          "total": 7,
+          "toPar": 29,
+          "inscribedId": 2340974
+        },
+        {
+          "pos": 22,
+          "name": "Ignacio Fernandez De Bobadilla Diaz",
+          "licencia": "AM02413274",
+          "hcp": 45.1,
+          "nivel": "A",
+          "rounds": [],
+          "total": 6,
+          "toPar": 30,
+          "inscribedId": 2340985
+        },
+        {
+          "pos": 23,
+          "name": "Maria Victoria Romero-Haupold De La Cruz",
+          "licencia": "AM05372211",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "total": 0,
+          "toPar": 36,
+          "inscribedId": 2340983
+        },
+        {
+          "pos": 24,
+          "name": "Paul Dauthieu Valle",
+          "licencia": "AM05412260",
+          "hcp": 49,
+          "nivel": "C",
+          "rounds": [],
+          "total": 0,
+          "toPar": 36,
+          "inscribedId": 2341528
+        },
+        {
+          "pos": null,
+          "name": "Gonzalo Sanchez Lopez",
+          "licencia": "AM02974480",
+          "hcp": 29.5,
+          "nivel": "A",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2340975
+        },
+        {
+          "pos": null,
+          "name": "Carlos Arriaga Sanchez",
+          "licencia": "AMD5084300",
+          "hcp": 20.6,
+          "nivel": "A",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2340982
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 26,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Fernando Perez-Barbadillo Martin",
+          "licencia": "AM05167262",
+          "hcp": 7.3,
+          "nivel": "J",
+          "rounds": [],
+          "total": 43,
+          "toPar": -7,
+          "inscribedId": 2340952
+        },
+        {
+          "pos": 2,
+          "name": "Roberto Terry Andrades",
+          "licencia": "AM05483825",
+          "hcp": 12.4,
+          "nivel": "C",
+          "rounds": [],
+          "total": 43,
+          "toPar": -7,
+          "inscribedId": 2340962
+        },
+        {
+          "pos": 3,
+          "name": "Aida Prieto Segura",
+          "licencia": "AM05940303",
+          "hcp": 28.1,
+          "nivel": "I",
+          "rounds": [],
+          "total": 41,
+          "toPar": -5,
+          "inscribedId": 2341955
+        },
+        {
+          "pos": 4,
+          "name": "Nicolas Brandariz Carvallo",
+          "licencia": "AM05964530",
+          "hcp": 18.4,
+          "nivel": "A",
+          "rounds": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2340976
+        },
+        {
+          "pos": 5,
+          "name": "Alfonso Arriaga Perez-Ojeda",
+          "licencia": "AM05970731",
+          "hcp": 19.7,
+          "nivel": "A",
+          "rounds": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2340978
+        },
+        {
+          "pos": 6,
+          "name": "Juan Moran Amado",
+          "licencia": "AM05912217",
+          "hcp": 9.3,
+          "nivel": "C",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2340961
+        },
+        {
+          "pos": 7,
+          "name": "Martin Serrano Rodriguez",
+          "licencia": "AM05953564",
+          "hcp": 12.1,
+          "nivel": "I",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2340971
+        },
+        {
+          "pos": 8,
+          "name": "Ignacio Azofra Martel",
+          "licencia": "AM05306204",
+          "hcp": 54,
+          "nivel": "I",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2340972
+        },
+        {
+          "pos": 9,
+          "name": "Eduardo Brandariz Carvallo",
+          "licencia": "AM05941223",
+          "hcp": 10.2,
+          "nivel": "C",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2340965
+        },
+        {
+          "pos": 10,
+          "name": "Blanca Moreno Quintero",
+          "licencia": "AM05948216",
+          "hcp": 42.1,
+          "nivel": "I",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2340974
+        },
+        {
+          "pos": 11,
+          "name": "Juan Lacave Arbesu",
+          "licencia": "AM05907334",
+          "hcp": 6,
+          "nivel": "C",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2341529
+        },
+        {
+          "pos": 12,
+          "name": "Jaime Fernandez De Bobadilla Diaz",
+          "licencia": "AM02975531",
+          "hcp": 8.1,
+          "nivel": "C",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2340966
+        },
+        {
+          "pos": 13,
+          "name": "Alfonso Mas Gonzalez",
+          "licencia": "AMD5466082",
+          "hcp": 21.8,
+          "nivel": "A",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2340980
+        },
+        {
+          "pos": 14,
+          "name": "Santiago Bernal Bollullos",
+          "licencia": "AM05899624",
+          "hcp": 1.4,
+          "nivel": "J",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2340956
+        },
+        {
+          "pos": 15,
+          "name": "Sebastian Delgado Perez De Guzman",
+          "licencia": "AM05959566",
+          "hcp": 30.6,
+          "nivel": "I",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2340970
+        },
+        {
+          "pos": 16,
+          "name": "Pedro Pablo Bononato Terry",
+          "licencia": "AM05099558",
+          "hcp": 40.3,
+          "nivel": "A",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2340979
+        },
+        {
+          "pos": 17,
+          "name": "Gonzalo Filgueiras Enriquez",
+          "licencia": "AM05471946",
+          "hcp": 42.8,
+          "nivel": "A",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2340984
+        },
+        {
+          "pos": 18,
+          "name": "Borja Fernandez De Bobadilla Diaz",
+          "licencia": "AM02975530",
+          "hcp": 1.9,
+          "nivel": "J",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2340957
+        },
+        {
+          "pos": 19,
+          "name": "Candela De Lope Gomez",
+          "licencia": "AM05892676",
+          "hcp": 9.4,
+          "nivel": "C",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2340960
+        },
+        {
+          "pos": 20,
+          "name": "Alvaro Lechuga Alvarez-Campana",
+          "licencia": "AM05983219",
+          "hcp": 34.2,
+          "nivel": "A",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2340977
+        },
+        {
+          "pos": 21,
+          "name": "Alvaro Toledano Martinez Del Cerro",
+          "licencia": "AM05910369",
+          "hcp": 17.5,
+          "nivel": "C",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2340959
+        },
+        {
+          "pos": 22,
+          "name": "Ignacio Fernandez De Bobadilla Diaz",
+          "licencia": "AM02413274",
+          "hcp": 45.1,
+          "nivel": "A",
+          "rounds": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2340985
+        },
+        {
+          "pos": 23,
+          "name": "Paul Dauthieu Valle",
+          "licencia": "AM05412260",
+          "hcp": 49,
+          "nivel": "C",
+          "rounds": [],
+          "total": 4,
+          "toPar": 32,
+          "inscribedId": 2341528
+        },
+        {
+          "pos": 24,
+          "name": "Maria Victoria Romero-Haupold De La Cruz",
+          "licencia": "AM05372211",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "total": 2,
+          "toPar": 34,
+          "inscribedId": 2340983
+        },
+        {
+          "pos": null,
+          "name": "Gonzalo Sanchez Lopez",
+          "licencia": "AM02974480",
+          "hcp": 29.5,
+          "nivel": "A",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2340975
+        },
+        {
+          "pos": null,
+          "name": "Carlos Arriaga Sanchez",
+          "licencia": "AMD5084300",
+          "hcp": 20.6,
+          "nivel": "A",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2340982
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 26
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 26
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -698,5 +1322,5 @@
     }
   },
   "pdfs": [],
-  "horariosScrapedAt": "2026-06-12T14:46:13.824Z"
+  "horariosScrapedAt": "2026-06-24T15:01:07.621Z"
 }

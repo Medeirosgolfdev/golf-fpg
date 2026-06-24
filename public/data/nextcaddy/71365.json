@@ -1,7 +1,7 @@
 {
   "tourId": 71365,
   "url": "https://www.nextcaddy.com/tour/71365",
-  "scrapedAt": "2026-06-12T14:42:44.565Z",
+  "scrapedAt": "2026-06-24T14:57:13.367Z",
   "meta": {
     "name": "GOLFISTAS SEVILLA ( TARDE 15:30)",
     "organizer": null,
@@ -19,10 +19,502 @@
       "Juvenil"
     ]
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 40,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "2ª Categoria",
+      "expectedJugadores": 11,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jose Jesus Rodriguez Montes",
+          "licencia": "AMF7993423",
+          "hcp": 24.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2338249
+        },
+        {
+          "pos": 2,
+          "name": "Rosario Barea De Lara",
+          "licencia": "AMG3473261",
+          "hcp": 21.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2334694
+        },
+        {
+          "pos": 3,
+          "name": "Manuela Moreno Carranza",
+          "licencia": "AMG3759449",
+          "hcp": 20.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2334725
+        },
+        {
+          "pos": 4,
+          "name": "Carlos Moreno Allgayer",
+          "licencia": "AMB6982597",
+          "hcp": 22.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2337127
+        },
+        {
+          "pos": 5,
+          "name": "Jesus Cabello Rangel",
+          "licencia": "AMF7494545",
+          "hcp": 25.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2340737
+        },
+        {
+          "pos": 6,
+          "name": "Isidro Mendez Garrido",
+          "licencia": "AMK5990973",
+          "hcp": 20.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2337084
+        },
+        {
+          "pos": 7,
+          "name": "Yoshua De Las Nieves Trijueque Sayago",
+          "licencia": "AMG8486327",
+          "hcp": 22.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2339701
+        },
+        {
+          "pos": 8,
+          "name": "Antonio Fraile Rexach",
+          "licencia": "AMG3935722",
+          "hcp": 26.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2334632
+        },
+        {
+          "pos": 9,
+          "name": "Antonio Rodenas Alvarez",
+          "licencia": "AMI7701670",
+          "hcp": 24.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2337106
+        },
+        {
+          "pos": 10,
+          "name": "Jose Manuel Romero Leal",
+          "licencia": "AMG3803226",
+          "hcp": 26.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2337333
+        },
+        {
+          "pos": 11,
+          "name": "Faustino Rodriguez Gutierrez",
+          "licencia": "AM85616765",
+          "hcp": 20.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2338211
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "3ª Categoria",
+      "expectedJugadores": 20,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jose Garcia Martinez",
+          "licencia": "AMK5958018",
+          "hcp": 31.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 44,
+          "toPar": -8,
+          "inscribedId": 2334620
+        },
+        {
+          "pos": 2,
+          "name": "Enrique Terrero Prada",
+          "licencia": "AMK5753053",
+          "hcp": 29.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 42,
+          "toPar": -6,
+          "inscribedId": 2338124
+        },
+        {
+          "pos": 3,
+          "name": "Daniel Angel Grillo Guerrero",
+          "licencia": "AMK5475619",
+          "hcp": 38.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 42,
+          "toPar": -6,
+          "inscribedId": 2336937
+        },
+        {
+          "pos": 4,
+          "name": "Jesus Acebedo Arenas",
+          "licencia": "AMG3958017",
+          "hcp": 35.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 41,
+          "toPar": -5,
+          "inscribedId": 2337047
+        },
+        {
+          "pos": 5,
+          "name": "Luis Garcia Navarro",
+          "licencia": "AM96762714",
+          "hcp": 35.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2337863
+        },
+        {
+          "pos": 6,
+          "name": "Angel De Frias Corona",
+          "licencia": "AMG3902441",
+          "hcp": 37.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2337586
+        },
+        {
+          "pos": 7,
+          "name": "Enrique Cebreros Fernandez",
+          "licencia": "AM71372608",
+          "hcp": 30.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2337939
+        },
+        {
+          "pos": 8,
+          "name": "Jose Barrera Pavon",
+          "licencia": "AMG3162071",
+          "hcp": 37,
+          "nivel": "S",
+          "rounds": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2334631
+        },
+        {
+          "pos": 9,
+          "name": "Juan Luis Guillen Vicente-Arche",
+          "licencia": "AMG3608158",
+          "hcp": 28.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2334622
+        },
+        {
+          "pos": 10,
+          "name": "Francisco Fernandez Fernandez",
+          "licencia": "AM68077838",
+          "hcp": 32.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2334613
+        },
+        {
+          "pos": 11,
+          "name": "Valentin Martin Terceño",
+          "licencia": "AM96758701",
+          "hcp": 32.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2337205
+        },
+        {
+          "pos": 12,
+          "name": "Jose Maria Vidal Bernal",
+          "licencia": "AMG3376859",
+          "hcp": 33.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2337276
+        },
+        {
+          "pos": 13,
+          "name": "Juan Manuel Guerra Curado",
+          "licencia": "AMG3009780",
+          "hcp": 34.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2334663
+        },
+        {
+          "pos": 14,
+          "name": "Manuel Aparicio Villegas",
+          "licencia": "AMG3969137",
+          "hcp": 36.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2334575
+        },
+        {
+          "pos": 15,
+          "name": "Angel Manuel Garcia Rivera",
+          "licencia": "AMG3376860",
+          "hcp": 27.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2339413
+        },
+        {
+          "pos": 16,
+          "name": "Miguel Rubio Medina",
+          "licencia": "AMG3947955",
+          "hcp": 31.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2338269
+        },
+        {
+          "pos": 17,
+          "name": "Luis Miguel Ramirez Alvarez",
+          "licencia": "7754808209",
+          "hcp": 29.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2337263
+        },
+        {
+          "pos": 18,
+          "name": "Antonio Jose Repullo Aranda",
+          "licencia": "AMF7811550",
+          "hcp": 29.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2336927
+        },
+        {
+          "pos": 19,
+          "name": "Rafael Fernandez De Cabo",
+          "licencia": "AMG3377308",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2339412
+        },
+        {
+          "pos": 20,
+          "name": "Pablo Roman Foster",
+          "licencia": "AM00030748",
+          "hcp": 34.9,
+          "nivel": "J",
+          "rounds": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2334573
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "1ª Categoria",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jose Postigo Secano",
+          "licencia": "AMK5771527",
+          "hcp": 17.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2334637
+        },
+        {
+          "pos": 2,
+          "name": "Alfonso Santos Genero",
+          "licencia": "AMI7618947",
+          "hcp": 19.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2337873
+        },
+        {
+          "pos": 3,
+          "name": "Juan Perez Baena",
+          "licencia": "AMG3941792",
+          "hcp": 18.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2336886
+        },
+        {
+          "pos": 4,
+          "name": "Cayetano Martinez Rubio",
+          "licencia": "AMG3759447",
+          "hcp": 15.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2334726
+        },
+        {
+          "pos": 5,
+          "name": "Manuel Megias Casas",
+          "licencia": "AMK5942563",
+          "hcp": 13.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2334692
+        },
+        {
+          "pos": 6,
+          "name": "Jose Manuel Marquez Esmoris",
+          "licencia": "AMF7618887",
+          "hcp": 17.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2338717
+        },
+        {
+          "pos": 7,
+          "name": "Juan Mariano Camarillo Naranjo",
+          "licencia": "AMK5190723",
+          "hcp": 11.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2338075
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "2ª Categoria",
+      "jugadores": 11
+    },
+    "2": {
+      "name": "3ª Categoria",
+      "jugadores": 20
+    },
+    "3": {
+      "name": "1ª Categoria",
+      "jugadores": 7
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -150,5 +642,5 @@
   "pdfs": [
     "/uploads/competiciones/cartel/3047010883_71365-golfistas-sevilla-tarde-15-30.pdf"
   ],
-  "horariosScrapedAt": "2026-06-12T14:46:12.026Z"
+  "horariosScrapedAt": "2026-06-24T15:01:05.396Z"
 }

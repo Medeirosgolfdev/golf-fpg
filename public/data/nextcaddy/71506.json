@@ -1,7 +1,7 @@
 {
   "tourId": 71506,
   "url": "https://www.nextcaddy.com/tour/71506",
-  "scrapedAt": "2026-06-12T14:42:47.215Z",
+  "scrapedAt": "2026-06-24T14:57:16.743Z",
   "meta": {
     "name": "LIGA DE PRINCIPIANTES 25/26, JORNADA 7",
     "organizer": null,
@@ -20,9 +20,165 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Liga De Principiantes 25/26, Jornada 7",
+      "expectedJugadores": 12,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Francisco Javier Garcia Garcia",
+          "licencia": "AM10516587",
+          "hcp": 29,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2341516
+        },
+        {
+          "pos": 2,
+          "name": "Rafael Esteo Porras",
+          "licencia": "AM10977984",
+          "hcp": 25.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2339527
+        },
+        {
+          "pos": 3,
+          "name": "Blas Grande Cristin",
+          "licencia": "AM10467621",
+          "hcp": 29.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2338648
+        },
+        {
+          "pos": 4,
+          "name": "Francisco Espejo Carmona",
+          "licencia": "AM10978163",
+          "hcp": 33.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2339416
+        },
+        {
+          "pos": 5,
+          "name": "Luis Sanchez Vasco",
+          "licencia": "AM10487638",
+          "hcp": 48.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2340009
+        },
+        {
+          "pos": 6,
+          "name": "Carlos Ramon Morales De La Puerta",
+          "licencia": "AM10516709",
+          "hcp": 40,
+          "nivel": "S",
+          "rounds": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2340444
+        },
+        {
+          "pos": 7,
+          "name": "Pablo Jurado Gonzalez",
+          "licencia": "AM10152586",
+          "hcp": 30.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2341293
+        },
+        {
+          "pos": 8,
+          "name": "Joseluis Adell Priego",
+          "licencia": "AM10964326",
+          "hcp": 37.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2341553
+        },
+        {
+          "pos": 9,
+          "name": "Juan Lozano Ollero",
+          "licencia": "AM10476357",
+          "hcp": 36.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2341419
+        },
+        {
+          "pos": 10,
+          "name": "Esther Garcia Martinez",
+          "licencia": "AM10516708",
+          "hcp": 42,
+          "nivel": "S",
+          "rounds": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2340443
+        },
+        {
+          "pos": 11,
+          "name": "Francisco Javier Fernandez Calero",
+          "licencia": "AM10489815",
+          "hcp": 42.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2340481
+        },
+        {
+          "pos": 12,
+          "name": "Oscar Encinas Dominguez",
+          "licencia": "AM10374763",
+          "hcp": 31.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2341752
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Liga De Principiantes 25/26, Jornada 7",
+      "jugadores": 12
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -75,34 +231,27 @@
     },
     {
       "orden": 8,
-      "name": "Pedro Lopez Calero",
-      "licencia": "AM10483794",
-      "hcp": 35.3,
-      "nivel": "S"
-    },
-    {
-      "orden": 9,
       "name": "Juan Lozano Ollero",
       "licencia": "AM10476357",
       "hcp": 36.7,
       "nivel": "S"
     },
     {
-      "orden": 10,
+      "orden": 9,
       "name": "Francisco Javier Garcia Garcia",
       "licencia": "AM10516587",
       "hcp": 29,
       "nivel": "Mid"
     },
     {
-      "orden": 11,
+      "orden": 10,
       "name": "Joseluis Adell Priego",
       "licencia": "AM10964326",
       "hcp": 37.8,
       "nivel": "Mid"
     },
     {
-      "orden": 12,
+      "orden": 11,
       "name": "Oscar Encinas Dominguez",
       "licencia": "AM10374763",
       "hcp": 31.6,
@@ -187,34 +336,27 @@
     },
     {
       "orden": 9,
-      "name": "Pedro Lopez Calero",
-      "licencia": "AM10483794",
-      "hcp": 35.3,
-      "nivel": "S"
-    },
-    {
-      "orden": 10,
       "name": "Juan Lozano Ollero",
       "licencia": "AM10476357",
       "hcp": 36.7,
       "nivel": "S"
     },
     {
-      "orden": 11,
+      "orden": 10,
       "name": "Francisco Javier Garcia Garcia",
       "licencia": "AM10516587",
       "hcp": 29,
       "nivel": "Mid"
     },
     {
-      "orden": 12,
+      "orden": 11,
       "name": "Joseluis Adell Priego",
       "licencia": "AM10964326",
       "hcp": 37.8,
       "nivel": "Mid"
     },
     {
-      "orden": 13,
+      "orden": 12,
       "name": "Oscar Encinas Dominguez",
       "licencia": "AM10374763",
       "hcp": 31.6,
@@ -291,15 +433,6 @@
         {
           "time": "18:00",
           "tee": 7,
-          "name": "Pedro Lopez Calero",
-          "hcp": 35.3,
-          "ins": "2341415",
-          "jid": "76572",
-          "nivel": "S"
-        },
-        {
-          "time": "18:00",
-          "tee": 7,
           "name": "Francisco Espejo Carmona",
           "hcp": 33.8,
           "ins": "2339416",
@@ -364,5 +497,5 @@
   "pdfs": [
     "/uploads/competiciones/cartel/3720487465_71506-liga-de-principiantes-25-26-jornada-7.pdf"
   ],
-  "horariosScrapedAt": "2026-06-12T14:46:13.559Z"
+  "horariosScrapedAt": "2026-06-24T15:01:07.142Z"
 }

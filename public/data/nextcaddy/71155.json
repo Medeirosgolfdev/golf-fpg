@@ -1,7 +1,7 @@
 {
   "tourId": 71155,
   "url": "https://www.nextcaddy.com/tour/71155",
-  "scrapedAt": "2026-06-12T14:42:49.827Z",
+  "scrapedAt": "2026-06-24T14:57:19.259Z",
   "meta": {
     "name": "Campeonato de Madrid de 4ª categoría",
     "organizer": "Federacion de Golf de Madrid",
@@ -20,10 +20,480 @@
       "Juvenil"
     ]
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Scratch Masculina",
+      "expectedJugadores": 19,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Carlos Gonzalez Olalla",
+          "licencia": "CM61389063",
+          "hcp": 18.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2334184
+        },
+        {
+          "pos": 2,
+          "name": "Carlos Corbi Villalba",
+          "licencia": "CM33001370",
+          "hcp": 26.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2333276
+        },
+        {
+          "pos": 3,
+          "name": "Jesus Mendez Ruiz",
+          "licencia": "CM41982323",
+          "hcp": 19.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2332813
+        },
+        {
+          "pos": 4,
+          "name": "Oscar Fernandez Puigdomenech",
+          "licencia": "CM41304379",
+          "hcp": 22.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2335415
+        },
+        {
+          "pos": 5,
+          "name": "Francisco Javier Valencia Delgado",
+          "licencia": "CM41691816",
+          "hcp": 25,
+          "nivel": "S",
+          "rounds": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2333943
+        },
+        {
+          "pos": 6,
+          "name": "Manuel De Miguel Carrasco",
+          "licencia": "CM00755843",
+          "hcp": 19.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2333865
+        },
+        {
+          "pos": 7,
+          "name": "Christian Holm Lopez",
+          "licencia": "CM22389131",
+          "hcp": 25.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 15,
+          "toPar": 21,
+          "inscribedId": 2334201
+        },
+        {
+          "pos": 8,
+          "name": "Carlos Dominguez Araujo",
+          "licencia": "CM41639449",
+          "hcp": 21.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 14,
+          "toPar": 22,
+          "inscribedId": 2337085
+        },
+        {
+          "pos": 9,
+          "name": "Daniel Garcia Manzanet",
+          "licencia": "CM41393581",
+          "hcp": 21.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 14,
+          "toPar": 22,
+          "inscribedId": 2333243
+        },
+        {
+          "pos": 10,
+          "name": "Joao Lourenço Damiao Da Silva Reis Simao",
+          "licencia": "CMA5924457",
+          "hcp": 24.1,
+          "nivel": "J",
+          "rounds": [],
+          "total": 14,
+          "toPar": 22,
+          "inscribedId": 2335416
+        },
+        {
+          "pos": 11,
+          "name": "Jesus Jose Rodriguez Lopez",
+          "licencia": "CM02676360",
+          "hcp": 20.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 13,
+          "toPar": 23,
+          "inscribedId": 2336276
+        },
+        {
+          "pos": 12,
+          "name": "Jose Luis Villarreal Valle",
+          "licencia": "CM41786653",
+          "hcp": 23.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 12,
+          "toPar": 24,
+          "inscribedId": 2337247
+        },
+        {
+          "pos": 13,
+          "name": "Juan Jose Rodero Samaniego",
+          "licencia": "CM00250957",
+          "hcp": 23.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 10,
+          "toPar": 26,
+          "inscribedId": 2335778
+        },
+        {
+          "pos": 14,
+          "name": "Juan Pedro Cejudo Vico",
+          "licencia": "CM33163338",
+          "hcp": 24.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 10,
+          "toPar": 26,
+          "inscribedId": 2333251
+        },
+        {
+          "pos": 15,
+          "name": "Sergio Camara Parra",
+          "licencia": "CM41805335",
+          "hcp": 25.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 10,
+          "toPar": 26,
+          "inscribedId": 2334210
+        },
+        {
+          "pos": 16,
+          "name": "Ignacio Ortega Remirez",
+          "licencia": "CM15417922",
+          "hcp": 19.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 9,
+          "toPar": 27,
+          "inscribedId": 2337217
+        },
+        {
+          "pos": 17,
+          "name": "Damian Villamarin Flores",
+          "licencia": "CM41783638",
+          "hcp": 24,
+          "nivel": "S",
+          "rounds": [],
+          "total": 9,
+          "toPar": 27,
+          "inscribedId": 2333334
+        },
+        {
+          "pos": 18,
+          "name": "Jon De La Maza Ortiz",
+          "licencia": "CM18375186",
+          "hcp": 20.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 8,
+          "toPar": 28,
+          "inscribedId": 2332640
+        },
+        {
+          "pos": 19,
+          "name": "Martin Gallart Masvidal",
+          "licencia": "CM14888533",
+          "hcp": 24.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 6,
+          "toPar": 30,
+          "inscribedId": 2333713
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Clasificación Hándicap Masculina",
+      "expectedJugadores": 19,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Carlos Gonzalez Olalla",
+          "licencia": "CM61389063",
+          "hcp": 18.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 41,
+          "toPar": -5,
+          "inscribedId": 2334184
+        },
+        {
+          "pos": 2,
+          "name": "Christian Holm Lopez",
+          "licencia": "CM22389131",
+          "hcp": 25.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2334201
+        },
+        {
+          "pos": 3,
+          "name": "Francisco Javier Valencia Delgado",
+          "licencia": "CM41691816",
+          "hcp": 25,
+          "nivel": "S",
+          "rounds": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2333943
+        },
+        {
+          "pos": 4,
+          "name": "Carlos Corbi Villalba",
+          "licencia": "CM33001370",
+          "hcp": 26.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2333276
+        },
+        {
+          "pos": 5,
+          "name": "Joao Lourenço Damiao Da Silva Reis Simao",
+          "licencia": "CMA5924457",
+          "hcp": 24.1,
+          "nivel": "J",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2335416
+        },
+        {
+          "pos": 6,
+          "name": "Manuel De Miguel Carrasco",
+          "licencia": "CM00755843",
+          "hcp": 19.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2333865
+        },
+        {
+          "pos": 7,
+          "name": "Daniel Garcia Manzanet",
+          "licencia": "CM41393581",
+          "hcp": 21.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2333243
+        },
+        {
+          "pos": 8,
+          "name": "Oscar Fernandez Puigdomenech",
+          "licencia": "CM41304379",
+          "hcp": 22.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2335415
+        },
+        {
+          "pos": 9,
+          "name": "Jesus Mendez Ruiz",
+          "licencia": "CM41982323",
+          "hcp": 19.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2332813
+        },
+        {
+          "pos": 10,
+          "name": "Juan Jose Rodero Samaniego",
+          "licencia": "CM00250957",
+          "hcp": 23.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2335778
+        },
+        {
+          "pos": 11,
+          "name": "Jesus Jose Rodriguez Lopez",
+          "licencia": "CM02676360",
+          "hcp": 20.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2336276
+        },
+        {
+          "pos": 12,
+          "name": "Carlos Dominguez Araujo",
+          "licencia": "CM41639449",
+          "hcp": 21.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2337085
+        },
+        {
+          "pos": 13,
+          "name": "Damian Villamarin Flores",
+          "licencia": "CM41783638",
+          "hcp": 24,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2333334
+        },
+        {
+          "pos": 14,
+          "name": "Sergio Camara Parra",
+          "licencia": "CM41805335",
+          "hcp": 25.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2334210
+        },
+        {
+          "pos": 15,
+          "name": "Jose Luis Villarreal Valle",
+          "licencia": "CM41786653",
+          "hcp": 23.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2337247
+        },
+        {
+          "pos": 16,
+          "name": "Juan Pedro Cejudo Vico",
+          "licencia": "CM33163338",
+          "hcp": 24.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2333251
+        },
+        {
+          "pos": 17,
+          "name": "Jon De La Maza Ortiz",
+          "licencia": "CM18375186",
+          "hcp": 20.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2332640
+        },
+        {
+          "pos": 18,
+          "name": "Martin Gallart Masvidal",
+          "licencia": "CM14888533",
+          "hcp": 24.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2333713
+        },
+        {
+          "pos": 19,
+          "name": "Ignacio Ortega Remirez",
+          "licencia": "CM15417922",
+          "hcp": 19.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2337217
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Scratch Masculina",
+      "jugadores": 19
+    },
+    "2": {
+      "name": "Clasificación Hándicap Masculina",
+      "jugadores": 19
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -528,5 +998,5 @@
     "/uploads/competiciones/cartel/3381591371_71155-campeonato-de-madrid-de-4-categoria.pdf",
     "/uploads/competiciones/pdf/3510530589_reglas_locales_las_rejas_campo_largo_-_documentos_de_google.pdf"
   ],
-  "horariosScrapedAt": "2026-06-12T14:46:09.777Z"
+  "horariosScrapedAt": "2026-06-24T15:01:03.172Z"
 }

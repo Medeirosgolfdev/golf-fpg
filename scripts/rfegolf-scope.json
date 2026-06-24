@@ -1,19 +1,10 @@
 {
-  "generatedAt": "2026-06-24T13:17:38.257Z",
-  "source": "AllCompetitions.aspx (calendário oficial)",
-  "years": [
-    2019,
-    2020,
-    2021,
-    2022,
-    2023,
-    2024,
-    2025,
-    2026,
-    2027
-  ],
-  "allCommittees": true,
-  "total": 514,
+  "generatedAt": "2026-06-24T14:35:33.149Z",
+  "range": "15500-17200",
+  "minYear": 2021,
+  "totalProbed": 1701,
+  "totalExisting": 573,
+  "totalJuvenil": 518,
   "byYear": {
     "2019": 30,
     "2020": 14,
@@ -22,20 +13,21 @@
     "2023": 68,
     "2024": 71,
     "2025": 62,
-    "2026": 55
+    "2026": 57,
+    "2027": 1
   },
   "byCategory": {
     "Benjamín": 23,
     "Juvenil": 159,
-    "Infantil": 61,
-    "Sub-16": 48,
+    "Infantil": 62,
+    "Sub-16": 50,
     "Junior": 35,
-    "Sub-18": 67,
-    "Alevín": 31,
+    "Sub-18": 68,
+    "Alevín": 32,
     "Cadete": 18,
     "Sub-25": 2,
     "Sub-21": 1,
-    "Sub-14": 1
+    "Sub-14": 2
   },
   "tournaments": [
     {
@@ -4710,14 +4702,7 @@
       "year": 2025,
       "category": "Sub-18",
       "sex": "M",
-      "juvenil": true,
-      "startDate": "20/03/2025",
-      "startDateIso": "2025-03-20",
-      "endDate": "23/03/2025",
-      "endDateIso": "2025-03-23",
-      "club": "CAMP PANORAMICA",
-      "winner": "Yago Horno",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15526,
@@ -4735,14 +4720,7 @@
       "year": 2024,
       "category": "Sub-18",
       "sex": "M",
-      "juvenil": true,
-      "startDate": "25/04/2024",
-      "startDateIso": "2024-04-25",
-      "endDate": "27/04/2024",
-      "endDateIso": "2024-04-27",
-      "club": null,
-      "winner": "Francia",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15551,
@@ -4760,14 +4738,7 @@
       "year": 2025,
       "category": "Sub-18",
       "sex": "F",
-      "juvenil": true,
-      "startDate": "13/03/2025",
-      "startDateIso": "2025-03-13",
-      "endDate": "16/03/2025",
-      "endDateIso": "2025-03-16",
-      "club": "NORBA CLUB",
-      "winner": "Lucía Iraola",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15559,
@@ -4875,14 +4846,7 @@
       "year": 2024,
       "category": "Junior",
       "sex": null,
-      "juvenil": true,
-      "startDate": "18/06/2024",
-      "startDateIso": "2024-06-18",
-      "endDate": "21/06/2024",
-      "endDateIso": "2024-06-21",
-      "club": "Chukyo Golf Club, Toyota, JAPÓN",
-      "winner": "EEUU (Mas) y EEUU (Fem)",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15617,
@@ -4978,14 +4942,7 @@
       "year": 2024,
       "category": "Sub-16",
       "sex": "F",
-      "juvenil": true,
-      "startDate": "30/07/2024",
-      "startDateIso": "2024-07-30",
-      "endDate": "01/08/2024",
-      "endDateIso": "2024-08-01",
-      "club": null,
-      "winner": "Guia Vittoria Acutis (Ita)",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15655,
@@ -4994,14 +4951,7 @@
       "year": 2025,
       "category": "Sub-18",
       "sex": "M",
-      "juvenil": true,
-      "startDate": "13/04/2025",
-      "startDateIso": "2025-04-13",
-      "endDate": "16/04/2025",
-      "endDateIso": "2025-04-16",
-      "club": "CAMPO TALAYUELA",
-      "winner": "Andalucía",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15664,
@@ -5040,14 +4990,7 @@
       "year": 2024,
       "category": "Sub-18",
       "sex": "M",
-      "juvenil": true,
-      "startDate": "16/11/2024",
-      "startDateIso": "2024-11-16",
-      "endDate": "17/11/2024",
-      "endDateIso": "2024-11-17",
-      "club": null,
-      "winner": "Francia (11-9)",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15706,
@@ -5056,14 +4999,7 @@
       "year": 2024,
       "category": "Junior",
       "sex": null,
-      "juvenil": true,
-      "startDate": "23/08/2024",
-      "startDateIso": "2024-08-23",
-      "endDate": "24/08/2024",
-      "endDateIso": "2024-08-24",
-      "club": null,
-      "winner": "GB&I, 8 - Resto de Europa, 7",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15716,
@@ -5114,14 +5050,7 @@
       "year": 2025,
       "category": "Juvenil",
       "sex": "M",
-      "juvenil": true,
-      "startDate": "07/02/2025",
-      "startDateIso": "2025-02-07",
-      "endDate": "09/02/2025",
-      "endDateIso": "2025-02-09",
-      "club": "CAMPO TALAYUELA",
-      "winner": "Nicolás González",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15756,
@@ -5130,14 +5059,7 @@
       "year": 2025,
       "category": "Juvenil",
       "sex": "F",
-      "juvenil": true,
-      "startDate": "07/02/2025",
-      "startDateIso": "2025-02-07",
-      "endDate": "09/02/2025",
-      "endDateIso": "2025-02-09",
-      "club": "VALDECAÑAS",
-      "winner": "Aroa González",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15757,
@@ -5146,14 +5068,7 @@
       "year": 2025,
       "category": "Cadete",
       "sex": "M",
-      "juvenil": true,
-      "startDate": "07/03/2025",
-      "startDateIso": "2025-03-07",
-      "endDate": "09/03/2025",
-      "endDateIso": "2025-03-09",
-      "club": "GOLF LLEIDA & COUNTRY CLUB",
-      "winner": "Samuel Love",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15758,
@@ -5162,14 +5077,7 @@
       "year": 2025,
       "category": "Sub-16",
       "sex": null,
-      "juvenil": true,
-      "startDate": "05/04/2025",
-      "startDateIso": "2025-04-05",
-      "endDate": "06/04/2025",
-      "endDateIso": "2025-04-06",
-      "club": "Seaton Carew GC (ENG)",
-      "winner": "Inglaterra, 16 - España, 8",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15759,
@@ -5178,14 +5086,7 @@
       "year": 2025,
       "category": "Sub-16",
       "sex": "F",
-      "juvenil": true,
-      "startDate": "02/05/2025",
-      "startDateIso": "2025-05-02",
-      "endDate": "04/05/2025",
-      "endDateIso": "2025-05-04",
-      "club": "GOLF XAZ",
-      "winner": "Adriana García Terol",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15760,
@@ -5194,14 +5095,7 @@
       "year": 2025,
       "category": "Sub-16",
       "sex": "M",
-      "juvenil": true,
-      "startDate": "02/05/2025",
-      "startDateIso": "2025-05-02",
-      "endDate": "04/05/2025",
-      "endDateIso": "2025-05-04",
-      "club": "LA CORUÑA",
-      "winner": "Samuel Love",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15761,
@@ -5210,14 +5104,7 @@
       "year": 2025,
       "category": "Alevín",
       "sex": null,
-      "juvenil": true,
-      "startDate": "25/06/2025",
-      "startDateIso": "2025-06-25",
-      "endDate": "27/06/2025",
-      "endDateIso": "2025-06-27",
-      "club": "R. NOVO SANCTI PETRI (INF.M-ALV.MF) / GOLF CAMPANO (BENJ.MF) / LA ESTANCIA (INF.F)",
-      "winner": "O. De Wint - S. Gamilla (Inf.); E. Jiménez - D. Lozano (Ale.); D. Gross - M. Tirado (Ben.)",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15762,
@@ -5226,14 +5113,7 @@
       "year": 2025,
       "category": "Junior",
       "sex": null,
-      "juvenil": true,
-      "startDate": "27/06/2025",
-      "startDateIso": "2025-06-27",
-      "endDate": "28/06/2025",
-      "endDateIso": "2025-06-28",
-      "club": null,
-      "winner": "R. Europa, 11,5 - GB & Irl, 6,5",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15763,
@@ -5257,14 +5137,7 @@
       "year": 2025,
       "category": "Sub-16",
       "sex": null,
-      "juvenil": true,
-      "startDate": "24/07/2025",
-      "startDateIso": "2025-07-24",
-      "endDate": "26/07/2025",
-      "endDateIso": "2025-07-26",
-      "club": null,
-      "winner": "Alemania",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15765,
@@ -5273,14 +5146,7 @@
       "year": 2025,
       "category": "Sub-16",
       "sex": "F",
-      "juvenil": true,
-      "startDate": "29/07/2025",
-      "startDateIso": "2025-07-29",
-      "endDate": "31/07/2025",
-      "endDateIso": "2025-07-31",
-      "club": null,
-      "winner": "Serafima Taylor (ING)",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15766,
@@ -5304,14 +5170,7 @@
       "year": 2025,
       "category": "Infantil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "28/08/2025",
-      "startDateIso": "2025-08-28",
-      "endDate": "29/08/2025",
-      "endDateIso": "2025-08-29",
-      "club": "LAURO",
-      "winner": "La Cañada",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15768,
@@ -5320,14 +5179,7 @@
       "year": 2025,
       "category": "Sub-16",
       "sex": "F",
-      "juvenil": true,
-      "startDate": "04/09/2025",
-      "startDateIso": "2025-09-04",
-      "endDate": "07/09/2025",
-      "endDateIso": "2025-09-07",
-      "club": "INFINITUM",
-      "winner": "Madrid",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15769,
@@ -5351,14 +5203,7 @@
       "year": 2025,
       "category": "Infantil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "09/10/2025",
-      "startDateIso": "2025-10-09",
-      "endDate": "12/10/2025",
-      "endDateIso": "2025-10-12",
-      "club": "LA VALMUZA",
-      "winner": "Andalucía",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15772,
@@ -5367,14 +5212,7 @@
       "year": 2025,
       "category": "Sub-14",
       "sex": null,
-      "juvenil": true,
-      "startDate": "03/07/2025",
-      "startDateIso": "2025-07-03",
-      "endDate": "05/07/2025",
-      "endDateIso": "2025-07-05",
-      "club": null,
-      "winner": "Jorge de la Riva / Jurilayci Kardasik (FRA)",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15785,
@@ -5383,14 +5221,7 @@
       "year": 2023,
       "category": "Sub-18",
       "sex": "M",
-      "juvenil": true,
-      "startDate": "18/11/2023",
-      "startDateIso": "2023-11-18",
-      "endDate": "19/11/2023",
-      "endDateIso": "2023-11-19",
-      "club": null,
-      "winner": null,
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15839,
@@ -5417,14 +5248,7 @@
       "year": 2025,
       "category": "Juvenil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "01/02/2025",
-      "startDateIso": "2025-02-01",
-      "endDate": "02/02/2025",
-      "endDateIso": "2025-02-02",
-      "club": null,
-      "winner": "Varios ganadores",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15849,
@@ -5433,14 +5257,7 @@
       "year": 2025,
       "category": "Juvenil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "15/02/2025",
-      "startDateIso": "2025-02-15",
-      "endDate": "16/02/2025",
-      "endDateIso": "2025-02-16",
-      "club": "CAPDEPERA",
-      "winner": "Varios ganadores",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15850,
@@ -5449,14 +5266,7 @@
       "year": 2025,
       "category": "Juvenil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "22/02/2025",
-      "startDateIso": "2025-02-22",
-      "endDate": "23/02/2025",
-      "endDateIso": "2025-02-23",
-      "club": "LAYOS / RCG TENERIFE / TALAYUELA",
-      "winner": "Varios ganadores",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15851,
@@ -5465,14 +5275,7 @@
       "year": 2025,
       "category": "Juvenil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "01/03/2025",
-      "startDateIso": "2025-03-01",
-      "endDate": "02/03/2025",
-      "endDateIso": "2025-03-02",
-      "club": null,
-      "winner": "Varios ganadores",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15853,
@@ -5481,14 +5284,7 @@
       "year": 2025,
       "category": "Juvenil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "29/03/2025",
-      "startDateIso": "2025-03-29",
-      "endDate": "30/03/2025",
-      "endDateIso": "2025-03-30",
-      "club": null,
-      "winner": "Varios ganadores",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15854,
@@ -5497,14 +5293,7 @@
       "year": 2025,
       "category": "Juvenil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "05/04/2025",
-      "startDateIso": "2025-04-05",
-      "endDate": "06/04/2025",
-      "endDateIso": "2025-04-06",
-      "club": null,
-      "winner": "Varios ganadores",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15856,
@@ -5513,14 +5302,7 @@
       "year": 2025,
       "category": "Juvenil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "10/05/2025",
-      "startDateIso": "2025-05-10",
-      "endDate": "11/05/2025",
-      "endDateIso": "2025-05-11",
-      "club": "MANISES / GORRAIZ / LA LLOREA",
-      "winner": "Varios ganadores",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15857,
@@ -5529,14 +5311,7 @@
       "year": 2025,
       "category": "Juvenil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "17/05/2025",
-      "startDateIso": "2025-05-17",
-      "endDate": "18/05/2025",
-      "endDateIso": "2025-05-18",
-      "club": "LA VALMUZA",
-      "winner": "Varios ganadores",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15858,
@@ -5545,14 +5320,7 @@
       "year": 2025,
       "category": "Juvenil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "24/05/2025",
-      "startDateIso": "2025-05-24",
-      "endDate": "25/05/2025",
-      "endDateIso": "2025-05-25",
-      "club": "ALMERIMAR / LA TORRE",
-      "winner": "Varios ganadores",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15859,
@@ -5561,14 +5329,7 @@
       "year": 2025,
       "category": "Juvenil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "01/07/2025",
-      "startDateIso": "2025-07-01",
-      "endDate": "02/07/2025",
-      "endDateIso": "2025-07-02",
-      "club": "LARRABEA",
-      "winner": "Varios ganadores",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15860,
@@ -5577,14 +5338,7 @@
       "year": 2025,
       "category": "Juvenil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "08/07/2025",
-      "startDateIso": "2025-07-08",
-      "endDate": "09/07/2025",
-      "endDateIso": "2025-07-09",
-      "club": "BASOZABAL",
-      "winner": "Varios ganadores",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15878,
@@ -5611,14 +5365,7 @@
       "year": 2025,
       "category": "Juvenil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "12/04/2025",
-      "startDateIso": "2025-04-12",
-      "endDate": "13/04/2025",
-      "endDateIso": "2025-04-13",
-      "club": "CORDOBA C.DE CAMPO",
-      "winner": "Varios ganadores",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15903,
@@ -5645,14 +5392,7 @@
       "year": 2026,
       "category": "Sub-18",
       "sex": "M",
-      "juvenil": true,
-      "startDate": "29/03/2026",
-      "startDateIso": "2026-03-29",
-      "endDate": "01/04/2026",
-      "endDateIso": "2026-04-01",
-      "club": "LOS LAGOS",
-      "winner": "Ignacio Iglesias",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15916,
@@ -5661,14 +5401,7 @@
       "year": 2026,
       "category": "Sub-18",
       "sex": "M",
-      "juvenil": true,
-      "startDate": "23/04/2026",
-      "startDateIso": "2026-04-23",
-      "endDate": "26/04/2026",
-      "endDateIso": "2026-04-26",
-      "club": "RIOJA ALTA",
-      "winner": "Andalucía",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15923,
@@ -5686,14 +5419,7 @@
       "year": 2026,
       "category": "Sub-18",
       "sex": "F",
-      "juvenil": true,
-      "startDate": "19/03/2026",
-      "startDateIso": "2026-03-19",
-      "endDate": "22/03/2026",
-      "endDateIso": "2026-03-22",
-      "club": "RCG GUADALMINA",
-      "winner": "Carolina Pérez-Tasso",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15932,
@@ -5702,134 +5428,7 @@
       "year": 2026,
       "category": "Junior",
       "sex": "F",
-      "juvenil": true,
-      "startDate": "01/04/2026",
-      "startDateIso": "2026-04-01",
-      "endDate": "06/04/2026",
-      "endDateIso": "2026-04-06",
-      "club": "Golf de Saint Cloud, FRANCIA",
-      "winner": "Benedicte Brent-Petersen (DEN)",
-      "discoveredVia": "calendar"
-    },
-    {
-      "compId": 15950,
-      "name": "Campeonato de España Sub 16 Masculino y Femenino 2025",
-      "year": 2025,
-      "category": "Sub-16",
-      "sex": "M",
-      "startDate": "02/05/2025",
-      "startDateIso": "2025-05-02",
-      "endDate": "04/05/2025",
-      "endDateIso": "2025-05-04",
-      "club": null,
-      "winner": "Samuel Love / Adriana García Terol",
-      "juvenil": true,
-      "discoveredVia": "calendar"
-    },
-    {
-      "compId": 15953,
-      "name": "Campeonato de España Benjamín Femenino 2025",
-      "year": 2025,
-      "category": "Benjamín",
-      "sex": "F",
-      "startDate": "25/06/2025",
-      "startDateIso": "2025-06-25",
-      "endDate": "27/06/2025",
-      "endDateIso": "2025-06-27",
-      "club": "GOLF CAMPANO",
-      "winner": "Martina Tirado",
-      "juvenil": true,
-      "discoveredVia": "calendar"
-    },
-    {
-      "compId": 15954,
-      "name": "Campeonato de España Benjamín Masculino 2025",
-      "year": 2025,
-      "category": "Benjamín",
-      "sex": "M",
-      "startDate": "25/06/2025",
-      "startDateIso": "2025-06-25",
-      "endDate": "27/06/2025",
-      "endDateIso": "2025-06-27",
-      "club": "GOLF CAMPANO",
-      "winner": "Diego Gross",
-      "juvenil": true,
-      "discoveredVia": "calendar"
-    },
-    {
-      "compId": 15955,
-      "name": "Campeonato de España Alevín Femenino 2025",
-      "year": 2025,
-      "category": "Alevín",
-      "sex": "F",
-      "startDate": "25/06/2025",
-      "startDateIso": "2025-06-25",
-      "endDate": "27/06/2025",
-      "endDateIso": "2025-06-27",
-      "club": "R. NOVO SANCTI PETRI GC",
-      "winner": "Daniela Lozano",
-      "juvenil": true,
-      "discoveredVia": "calendar"
-    },
-    {
-      "compId": 15956,
-      "name": "Campeonato de España Alevín Masculino 2025",
-      "year": 2025,
-      "category": "Alevín",
-      "sex": "M",
-      "startDate": "25/06/2025",
-      "startDateIso": "2025-06-25",
-      "endDate": "27/06/2025",
-      "endDateIso": "2025-06-27",
-      "club": "R. NOVO SANCTI PETRI GC",
-      "winner": "Enzo Jiménez",
-      "juvenil": true,
-      "discoveredVia": "calendar"
-    },
-    {
-      "compId": 15957,
-      "name": "Campeonato de España Infantil Masculino 2025",
-      "year": 2025,
-      "category": "Infantil",
-      "sex": "M",
-      "startDate": "25/06/2025",
-      "startDateIso": "2025-06-25",
-      "endDate": "27/06/2025",
-      "endDateIso": "2025-06-27",
-      "club": "R. NOVO SANCTI PETRI GC",
-      "winner": "Oliver de Wint",
-      "juvenil": true,
-      "discoveredVia": "calendar"
-    },
-    {
-      "compId": 15958,
-      "name": "Campeonato de España Infantil Femenino 2025",
-      "year": 2025,
-      "category": "Infantil",
-      "sex": "F",
-      "startDate": "25/06/2025",
-      "startDateIso": "2025-06-25",
-      "endDate": "27/06/2025",
-      "endDateIso": "2025-06-27",
-      "club": "LA ESTANCIA",
-      "winner": "Sofía Gamilla",
-      "juvenil": true,
-      "discoveredVia": "calendar"
-    },
-    {
-      "compId": 15960,
-      "name": "Match Juvenil Francia-España 2025",
-      "year": 2025,
-      "category": "Juvenil",
-      "sex": null,
-      "startDate": "01/11/2025",
-      "startDateIso": "2025-11-01",
-      "endDate": "02/11/2025",
-      "endDateIso": "2025-11-02",
-      "club": null,
-      "winner": "Francia, 8 - España, 8",
-      "juvenil": true,
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15950,
@@ -5916,17 +5515,10 @@
       "compId": 15964,
       "exists": true,
       "name": "III Copa José María Olazábal – Campeonato Interclubes Internacional Invitacional Sub 18",
-      "year": 2025,
+      "year": null,
       "category": "Sub-18",
       "sex": null,
-      "juvenil": true,
-      "startDate": "16/07/2025",
-      "startDateIso": "2025-07-16",
-      "endDate": "17/07/2025",
-      "endDateIso": "2025-07-17",
-      "club": null,
-      "winner": "El Prat",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 15980,
@@ -6001,6 +5593,15 @@
       "juvenil": true
     },
     {
+      "compId": 16009,
+      "exists": true,
+      "name": "Campeonato de España Alevín Femenino de Pitch & Putt 2025",
+      "year": 2025,
+      "category": "Alevín",
+      "sex": "F",
+      "juvenil": true
+    },
+    {
       "compId": 16017,
       "name": "Copa de Andalucía Femenina 2026",
       "year": 2026,
@@ -6026,33 +5627,21 @@
     },
     {
       "compId": 16025,
+      "exists": true,
       "name": "Puntuable Nacional Juvenil Femenino 2026",
       "year": 2026,
       "category": "Juvenil",
       "sex": "F",
-      "startDate": "27/02/2026",
-      "startDateIso": "2026-02-27",
-      "endDate": "01/03/2026",
-      "endDateIso": "2026-03-01",
-      "club": "SALAMANCA FORUM GOLF",
-      "winner": "Chanya Huaysan",
-      "juvenil": true,
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16028,
+      "exists": true,
       "name": "Puntuable Nacional Juvenil Masculino 2026",
       "year": 2026,
       "category": "Juvenil",
       "sex": "M",
-      "startDate": "27/02/2026",
-      "startDateIso": "2026-02-27",
-      "endDate": "01/03/2026",
-      "endDateIso": "2026-03-01",
-      "club": "ZARAPICOS",
-      "winner": "Oliver de Wint",
-      "juvenil": true,
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16029,
@@ -6070,29 +5659,7 @@
       "year": 2026,
       "category": "Cadete",
       "sex": "M",
-      "juvenil": true,
-      "startDate": "06/03/2026",
-      "startDateIso": "2026-03-06",
-      "endDate": "08/03/2026",
-      "endDateIso": "2026-03-08",
-      "club": "RCG TENERIFE",
-      "winner": "Youp Orsel",
-      "discoveredVia": "calendar"
-    },
-    {
-      "compId": 16033,
-      "name": "Match España - Inglaterra Sub 16 2026",
-      "year": 2026,
-      "category": "Sub-16",
-      "sex": null,
-      "startDate": "11/04/2026",
-      "startDateIso": "2026-04-11",
-      "endDate": "12/04/2026",
-      "endDateIso": "2026-04-12",
-      "club": "CENTRO NACIONAL",
-      "winner": "España, 13 - Inglaterra, 11",
-      "juvenil": true,
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16033,
@@ -6106,18 +5673,11 @@
     {
       "compId": 16035,
       "exists": true,
-      "name": "ROYAL WATERLOO (BEL)",
+      "name": "Internacional de Bélgica Sub 14 2026",
       "year": 2026,
-      "category": null,
+      "category": "Sub-14",
       "sex": null,
-      "juvenil": false,
-      "startDate": "02/07/2026",
-      "startDateIso": "2026-07-02",
-      "endDate": "04/07/2026",
-      "endDateIso": "2026-07-04",
-      "club": null,
-      "winner": null,
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16036,
@@ -6146,18 +5706,11 @@
     {
       "compId": 16038,
       "exists": true,
-      "name": "GOG MAGOG- WANDLEBURY (ENG)",
+      "name": "Internacional de Inglaterra Sub 16 y Sub 14 Femenino 2026",
       "year": 2026,
-      "category": null,
-      "sex": null,
-      "juvenil": false,
-      "startDate": "18/08/2026",
-      "startDateIso": "2026-08-18",
-      "endDate": "20/08/2026",
-      "endDateIso": "2026-08-20",
-      "club": null,
-      "winner": null,
-      "discoveredVia": "calendar"
+      "category": "Sub-16",
+      "sex": "F",
+      "juvenil": true
     },
     {
       "compId": 16039,
@@ -6256,14 +5809,7 @@
       "year": 2026,
       "category": "Sub-18",
       "sex": "M",
-      "juvenil": true,
-      "startDate": "06/03/2026",
-      "startDateIso": "2026-03-06",
-      "endDate": "08/03/2026",
-      "endDateIso": "2026-03-08",
-      "club": null,
-      "winner": "España",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16056,
@@ -6291,33 +5837,30 @@
     },
     {
       "compId": 16065,
+      "exists": true,
       "name": "Campeonato de España de FFAA Sub 18 Masculino 2026 - 1ª División",
       "year": 2026,
       "category": "Sub-18",
       "sex": "M",
-      "startDate": "23/04/2026",
-      "startDateIso": "2026-04-23",
-      "endDate": "26/04/2026",
-      "endDateIso": "2026-04-26",
-      "club": "RIOJA ALTA",
-      "winner": null,
-      "juvenil": true,
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16066,
+      "exists": true,
       "name": "Campeonato de España de FFAA Sub 18 Masculino 2026 - 2ª División",
       "year": 2026,
       "category": "Sub-18",
       "sex": "M",
-      "startDate": "23/04/2026",
-      "startDateIso": "2026-04-23",
-      "endDate": "26/04/2026",
-      "endDateIso": "2026-04-26",
-      "club": "RIOJA ALTA",
-      "winner": null,
-      "juvenil": true,
-      "discoveredVia": "calendar"
+      "juvenil": true
+    },
+    {
+      "compId": 16073,
+      "exists": true,
+      "name": "Campeonato de Europa Sub 18 Masculino por Equipos 2026",
+      "year": 2026,
+      "category": "Sub-18",
+      "sex": "M",
+      "juvenil": true
     },
     {
       "compId": 16074,
@@ -6350,14 +5893,7 @@
       "year": 2026,
       "category": "Juvenil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "31/01/2026",
-      "startDateIso": "2026-01-31",
-      "endDate": "01/02/2026",
-      "endDateIso": "2026-02-01",
-      "club": null,
-      "winner": "Varios ganadores",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16112,
@@ -6366,14 +5902,7 @@
       "year": 2026,
       "category": "Juvenil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "14/02/2026",
-      "startDateIso": "2026-02-14",
-      "endDate": "15/02/2026",
-      "endDateIso": "2026-02-15",
-      "club": null,
-      "winner": "Varios ganadores",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16113,
@@ -6382,14 +5911,7 @@
       "year": 2026,
       "category": "Juvenil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "28/02/2026",
-      "startDateIso": "2026-02-28",
-      "endDate": "01/03/2026",
-      "endDateIso": "2026-03-01",
-      "club": null,
-      "winner": "Varios ganadores",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16114,
@@ -6398,14 +5920,7 @@
       "year": 2026,
       "category": "Juvenil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "07/03/2026",
-      "startDateIso": "2026-03-07",
-      "endDate": "08/03/2026",
-      "endDateIso": "2026-03-08",
-      "club": null,
-      "winner": "Varios ganadores",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16115,
@@ -6414,14 +5929,7 @@
       "year": 2026,
       "category": "Juvenil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "14/03/2026",
-      "startDateIso": "2026-03-14",
-      "endDate": "15/03/2026",
-      "endDateIso": "2026-03-15",
-      "club": null,
-      "winner": "Varios ganadores",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16116,
@@ -6430,14 +5938,7 @@
       "year": 2026,
       "category": "Juvenil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "11/04/2026",
-      "startDateIso": "2026-04-11",
-      "endDate": "12/04/2026",
-      "endDateIso": "2026-04-12",
-      "club": null,
-      "winner": "Varios ganadores",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16117,
@@ -6446,14 +5947,7 @@
       "year": 2026,
       "category": "Juvenil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "18/04/2026",
-      "startDateIso": "2026-04-18",
-      "endDate": "19/04/2026",
-      "endDateIso": "2026-04-19",
-      "club": null,
-      "winner": "Varios ganadores",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16118,
@@ -6462,14 +5956,7 @@
       "year": 2026,
       "category": "Juvenil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "09/05/2026",
-      "startDateIso": "2026-05-09",
-      "endDate": "10/05/2026",
-      "endDateIso": "2026-05-10",
-      "club": null,
-      "winner": "Varios ganadores",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16119,
@@ -6478,14 +5965,7 @@
       "year": 2026,
       "category": "Juvenil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "23/05/2026",
-      "startDateIso": "2026-05-23",
-      "endDate": "24/05/2026",
-      "endDateIso": "2026-05-24",
-      "club": null,
-      "winner": "Varios ganadores",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16120,
@@ -6494,14 +5974,7 @@
       "year": 2026,
       "category": "Juvenil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "30/05/2026",
-      "startDateIso": "2026-05-30",
-      "endDate": "31/05/2026",
-      "endDateIso": "2026-05-31",
-      "club": null,
-      "winner": "Varios ganadores",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16122,
@@ -6510,14 +5983,7 @@
       "year": 2026,
       "category": "Juvenil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "02/07/2026",
-      "startDateIso": "2026-07-02",
-      "endDate": "03/07/2026",
-      "endDateIso": "2026-07-03",
-      "club": null,
-      "winner": null,
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16129,
@@ -6526,14 +5992,7 @@
       "year": 2026,
       "category": "Juvenil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "06/07/2026",
-      "startDateIso": "2026-07-06",
-      "endDate": "07/07/2026",
-      "endDateIso": "2026-07-07",
-      "club": null,
-      "winner": null,
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16130,
@@ -6542,44 +6001,7 @@
       "year": 2026,
       "category": "Junior",
       "sex": null,
-      "juvenil": true,
-      "startDate": "23/06/2026",
-      "startDateIso": "2026-06-23",
-      "endDate": "26/06/2026",
-      "endDateIso": "2026-06-26",
-      "club": null,
-      "winner": null,
-      "discoveredVia": "calendar"
-    },
-    {
-      "compId": 16179,
-      "name": "Campeonato de España Sub 16 Masculino 2026",
-      "year": 2026,
-      "category": "Sub-16",
-      "sex": "M",
-      "startDate": "01/05/2026",
-      "startDateIso": "2026-05-01",
-      "endDate": "03/05/2026",
-      "endDateIso": "2026-05-03",
-      "club": "INFINITUM",
-      "winner": null,
-      "juvenil": true,
-      "discoveredVia": "calendar"
-    },
-    {
-      "compId": 16180,
-      "name": "Campeonato de España Sub 16 Femenino 2026",
-      "year": 2026,
-      "category": "Sub-16",
-      "sex": "F",
-      "startDate": "01/05/2026",
-      "startDateIso": "2026-05-01",
-      "endDate": "03/05/2026",
-      "endDateIso": "2026-05-03",
-      "club": "INFINITUM",
-      "winner": null,
-      "juvenil": true,
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16179,
@@ -6606,14 +6028,7 @@
       "year": 2026,
       "category": "Infantil",
       "sex": "M",
-      "juvenil": true,
-      "startDate": "26/06/2026",
-      "startDateIso": "2026-06-26",
-      "endDate": "28/06/2026",
-      "endDateIso": "2026-06-28",
-      "club": "SERENA GOLF",
-      "winner": null,
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16189,
@@ -6622,14 +6037,7 @@
       "year": 2026,
       "category": "Infantil",
       "sex": "F",
-      "juvenil": true,
-      "startDate": "26/06/2026",
-      "startDateIso": "2026-06-26",
-      "endDate": "28/06/2026",
-      "endDateIso": "2026-06-28",
-      "club": "REAL LA MANGA CLUB",
-      "winner": null,
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16192,
@@ -6638,14 +6046,7 @@
       "year": 2026,
       "category": "Alevín",
       "sex": "M",
-      "juvenil": true,
-      "startDate": "26/06/2026",
-      "startDateIso": "2026-06-26",
-      "endDate": "28/06/2026",
-      "endDateIso": "2026-06-28",
-      "club": "REAL LA MANGA CLUB",
-      "winner": null,
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16193,
@@ -6654,14 +6055,7 @@
       "year": 2026,
       "category": "Alevín",
       "sex": "F",
-      "juvenil": true,
-      "startDate": "26/06/2026",
-      "startDateIso": "2026-06-26",
-      "endDate": "28/06/2026",
-      "endDateIso": "2026-06-28",
-      "club": "REAL LA MANGA CLUB",
-      "winner": null,
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16194,
@@ -6670,14 +6064,7 @@
       "year": 2026,
       "category": "Benjamín",
       "sex": "M",
-      "juvenil": true,
-      "startDate": "26/06/2026",
-      "startDateIso": "2026-06-26",
-      "endDate": "28/06/2026",
-      "endDateIso": "2026-06-28",
-      "club": "REAL LA MANGA CLUB",
-      "winner": null,
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16195,
@@ -6686,14 +6073,7 @@
       "year": 2026,
       "category": "Benjamín",
       "sex": "F",
-      "juvenil": true,
-      "startDate": "26/06/2026",
-      "startDateIso": "2026-06-26",
-      "endDate": "28/06/2026",
-      "endDateIso": "2026-06-28",
-      "club": "REAL LA MANGA CLUB",
-      "winner": null,
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16196,
@@ -6702,14 +6082,7 @@
       "year": 2026,
       "category": "Juvenil",
       "sex": null,
-      "juvenil": true,
-      "startDate": "16/05/2026",
-      "startDateIso": "2026-05-16",
-      "endDate": "17/05/2026",
-      "endDateIso": "2026-05-17",
-      "club": null,
-      "winner": "Varios ganadores",
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16205,
@@ -6718,14 +6091,7 @@
       "year": 2026,
       "category": "Sub-18",
       "sex": null,
-      "juvenil": true,
-      "startDate": "15/07/2026",
-      "startDateIso": "2026-07-15",
-      "endDate": "16/07/2026",
-      "endDateIso": "2026-07-16",
-      "club": null,
-      "winner": null,
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16208,
@@ -6734,14 +6100,7 @@
       "year": 2026,
       "category": "Alevín",
       "sex": null,
-      "juvenil": true,
-      "startDate": "26/06/2026",
-      "startDateIso": "2026-06-26",
-      "endDate": "28/06/2026",
-      "endDateIso": "2026-06-28",
-      "club": null,
-      "winner": null,
-      "discoveredVia": "calendar"
+      "juvenil": true
     },
     {
       "compId": 16209,
@@ -6750,14 +6109,16 @@
       "year": 2026,
       "category": "Sub-16",
       "sex": "M",
-      "juvenil": true,
-      "startDate": "01/05/2026",
-      "startDateIso": "2026-05-01",
-      "endDate": "03/05/2026",
-      "endDateIso": "2026-05-03",
-      "club": null,
-      "winner": "Martín Cervera / Daniela Carrión",
-      "discoveredVia": "calendar"
+      "juvenil": true
+    },
+    {
+      "compId": 16214,
+      "exists": true,
+      "name": "Campeonato de España Sub-16 de Pitch & Putt 2027",
+      "year": 2027,
+      "category": "Sub-16",
+      "sex": null,
+      "juvenil": true
     }
   ]
 }

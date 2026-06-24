@@ -1,6 +1,6 @@
 {
   "gameId": "69e787be19dbb56277141e37",
-  "fetchedAt": "2026-06-12T14:52:47.112Z",
+  "fetchedAt": "2026-06-24T15:02:42.961Z",
   "game": {
     "_id": "69e787be19dbb56277141e37",
     "name": "Jornada 1",
@@ -43,12 +43,21 @@
       },
       {
         "gender": "M",
-        "color": "blue",
+        "color": "red",
         "lap": "lap9f",
-        "rating": 32.1,
-        "slope": 115,
+        "rating": 31.5,
+        "slope": 112,
         "par": 34,
-        "_id": "6a05aa98b768d49c8e610e54"
+        "_id": "6a05aa98b768d49c8e610e7a"
+      },
+      {
+        "gender": "M",
+        "color": "gold",
+        "lap": "lap9f",
+        "rating": 31.4,
+        "slope": 118,
+        "par": 34,
+        "_id": "6a05aa98b768d49c8e610ea0"
       },
       {
         "gender": "M",
@@ -61,12 +70,12 @@
       },
       {
         "gender": "M",
-        "color": "red",
+        "color": "blue",
         "lap": "lap9f",
-        "rating": 31.5,
-        "slope": 112,
+        "rating": 32.1,
+        "slope": 115,
         "par": 34,
-        "_id": "6a05aa98b768d49c8e610e7a"
+        "_id": "6a05aa98b768d49c8e610e54"
       },
       {
         "gender": "M",
@@ -76,36 +85,9 @@
         "slope": 126,
         "par": 34,
         "_id": "6a05aa98b768d49c8e610e8d"
-      },
-      {
-        "gender": "M",
-        "color": "gold",
-        "lap": "lap9f",
-        "rating": 31.4,
-        "slope": 118,
-        "par": 34,
-        "_id": "6a05aa98b768d49c8e610ea0"
       }
     ],
     "teesFemale": [
-      {
-        "gender": "F",
-        "color": "white",
-        "lap": "lap9f",
-        "rating": 36.8,
-        "slope": 122,
-        "par": 34,
-        "_id": "6a05aa98b768d49c8e610eb3"
-      },
-      {
-        "gender": "F",
-        "color": "yellow",
-        "lap": "lap9f",
-        "rating": 36.1,
-        "slope": 119,
-        "par": 34,
-        "_id": "6a05aa98b768d49c8e610ec6"
-      },
       {
         "gender": "F",
         "color": "gold",
@@ -123,6 +105,24 @@
         "slope": 123,
         "par": 34,
         "_id": "6a05aa98b768d49c8e610e41"
+      },
+      {
+        "gender": "F",
+        "color": "white",
+        "lap": "lap9f",
+        "rating": 36.8,
+        "slope": 122,
+        "par": 34,
+        "_id": "6a05aa98b768d49c8e610eb3"
+      },
+      {
+        "gender": "F",
+        "color": "yellow",
+        "lap": "lap9f",
+        "rating": 36.1,
+        "slope": 119,
+        "par": 34,
+        "_id": "6a05aa98b768d49c8e610ec6"
       },
       {
         "gender": "F",
@@ -4736,6 +4736,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "AMAHLE",
@@ -4799,6 +4800,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "ALEX",
@@ -4862,6 +4864,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "ADELA",
@@ -4909,6 +4912,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "MAKHOSINI",
@@ -4972,6 +4976,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "LUCAS",
@@ -5035,6 +5040,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "HERNAN",
@@ -5098,6 +5104,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "BIEL",
@@ -5161,6 +5168,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "NIL",
@@ -5224,6 +5232,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "ALEX",
@@ -5287,6 +5296,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "IBAI",
@@ -5334,6 +5344,7 @@
         "maxPlayersByGroup": 0,
         "_id": "5de79a77c09cb5e94be31edd"
       },
+      "blockedForBooking": false,
       "players": [
         {
           "firstName": "ALVARO",

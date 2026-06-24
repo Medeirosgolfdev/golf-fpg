@@ -1,7 +1,7 @@
 {
   "tourId": 71647,
   "url": "https://www.nextcaddy.com/tour/71647",
-  "scrapedAt": "2026-06-15T10:28:52.295Z",
+  "scrapedAt": "2026-06-24T14:57:23.654Z",
   "meta": {
     "name": "INTERCLUB SOLOGOLF VILLANUEVA VS HERCULES GOLF A CORUÑA",
     "organizer": null,
@@ -19,10 +19,425 @@
       "Juvenil"
     ]
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 35,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Luis Carlos Guillen De Troya",
+          "licencia": "AMC9601053",
+          "hcp": 20.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 41,
+          "toPar": -5,
+          "inscribedId": 2342617
+        },
+        {
+          "pos": 2,
+          "name": "Ciro Warleta Alcina",
+          "licencia": "AM02937939",
+          "hcp": 23.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 41,
+          "toPar": -5,
+          "inscribedId": 2342609
+        },
+        {
+          "pos": 3,
+          "name": "Electo Alvarez De La Sierra",
+          "licencia": "GC54386577",
+          "hcp": 15.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2342603
+        },
+        {
+          "pos": 4,
+          "name": "Auria Monteagudo Fernandez",
+          "licencia": "GC54386579",
+          "hcp": 16.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2342607
+        },
+        {
+          "pos": 5,
+          "name": "Diego Crespo Sevilla",
+          "licencia": "AM66914047",
+          "hcp": 27.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2342613
+        },
+        {
+          "pos": 6,
+          "name": "Francisco Jose Marin Blanco",
+          "licencia": "AMC3913650",
+          "hcp": 20,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2342652
+        },
+        {
+          "pos": 7,
+          "name": "Dario Piñeiro Rodriguez",
+          "licencia": "GC54094259",
+          "hcp": 20.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2342627
+        },
+        {
+          "pos": 8,
+          "name": "Myriam Montalvo Fernandez",
+          "licencia": "AM66210752",
+          "hcp": 24.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2342634
+        },
+        {
+          "pos": 9,
+          "name": "Antonio Gonzalez Mallo",
+          "licencia": "GC54383202",
+          "hcp": 21.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2342619
+        },
+        {
+          "pos": 10,
+          "name": "Manuel Alcaraz Vera",
+          "licencia": "AMC9613466",
+          "hcp": 21.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2342621
+        },
+        {
+          "pos": 11,
+          "name": "Patricia Sanchez-Ferragut Soto",
+          "licencia": "AMC9613090",
+          "hcp": 22.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2342628
+        },
+        {
+          "pos": 12,
+          "name": "Francisco Tortosa Burgos",
+          "licencia": "AM66210753",
+          "hcp": 29.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2342610
+        },
+        {
+          "pos": 13,
+          "name": "Jose Ramon Fernandez Lasanta",
+          "licencia": "AMC9611946",
+          "hcp": 31.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2342614
+        },
+        {
+          "pos": 14,
+          "name": "Felix Jesus Roco Torres",
+          "licencia": "GC54396476",
+          "hcp": 23.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2342608
+        },
+        {
+          "pos": 15,
+          "name": "Enrique Alcaraz Vera",
+          "licencia": "AMC9613091",
+          "hcp": 23.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2342622
+        },
+        {
+          "pos": 16,
+          "name": "Lourdes Andres De Paul",
+          "licencia": "AMD5802266",
+          "hcp": 28.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2342598
+        },
+        {
+          "pos": 17,
+          "name": "Maria Jose Marcos Garcia",
+          "licencia": "GC54239466",
+          "hcp": 32.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2342616
+        },
+        {
+          "pos": 18,
+          "name": "Jose Maria Cabanela Gomez",
+          "licencia": "GC67762264",
+          "hcp": 20,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2342611
+        },
+        {
+          "pos": 19,
+          "name": "Manuel Rodriguez Verdejo",
+          "licencia": "AMC9325334",
+          "hcp": 17.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2342618
+        },
+        {
+          "pos": 20,
+          "name": "Jesus Ceballos Guerrero",
+          "licencia": "AM17163641",
+          "hcp": 21.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2342602
+        },
+        {
+          "pos": 21,
+          "name": "Maria Jose Tosso Jimenez",
+          "licencia": "AM00884670",
+          "hcp": 22.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2342605
+        },
+        {
+          "pos": 22,
+          "name": "Carmen Suarez Formoso",
+          "licencia": "GC67918822",
+          "hcp": 22.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2342604
+        },
+        {
+          "pos": 23,
+          "name": "Maria Del Rosario Rodriguez Sanz",
+          "licencia": "AM66914052",
+          "hcp": 31.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2342629
+        },
+        {
+          "pos": 24,
+          "name": "Ricardo Garcia Hermida",
+          "licencia": "GC54436370",
+          "hcp": 14.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2342623
+        },
+        {
+          "pos": 25,
+          "name": "Antonia Maria Rodriguez Cordero",
+          "licencia": "AMC3913648",
+          "hcp": 21.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2342606
+        },
+        {
+          "pos": 26,
+          "name": "Carmen Medina Alvarez",
+          "licencia": "AMC3958829",
+          "hcp": 26.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2342600
+        },
+        {
+          "pos": 27,
+          "name": "Antonio Jose Montabes Calatayud",
+          "licencia": "AMC3958827",
+          "hcp": 25.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2342626
+        },
+        {
+          "pos": 28,
+          "name": "Silvia Laz Maine",
+          "licencia": "AMD5499720",
+          "hcp": 38,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2342599
+        },
+        {
+          "pos": 29,
+          "name": "Maria Carmen Garcia Gomez",
+          "licencia": "GC54436369",
+          "hcp": 13.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2342612
+        },
+        {
+          "pos": 30,
+          "name": "Ramon Figueroa Marrero",
+          "licencia": "AMD5052987",
+          "hcp": 18.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2342625
+        },
+        {
+          "pos": 31,
+          "name": "Maria Del Carmen Gonzalez Garcia",
+          "licencia": "GC54405113",
+          "hcp": 29.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2342624
+        },
+        {
+          "pos": 32,
+          "name": "Cesar De Jesus Otero Grille",
+          "licencia": "GC54444466",
+          "hcp": 36.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2342615
+        },
+        {
+          "pos": 33,
+          "name": "Maria Esther Plaza Seara",
+          "licencia": "GC54443244",
+          "hcp": 27.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2342620
+        },
+        {
+          "pos": 34,
+          "name": "Begoña Robles Ferreras",
+          "licencia": "GC54746984",
+          "hcp": 25.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2342633
+        },
+        {
+          "pos": null,
+          "name": "Alfredo Seijas Santa Cruz",
+          "licencia": "GC54239467",
+          "hcp": 28.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2342632
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 35
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -869,5 +1284,6 @@
   "scoreTypes": [],
   "pdfs": [
     "/uploads/competiciones/cartel/559981810_71647-interclub-sologolf-villanueva-vs-hercules-golf-a-coruna.pdf"
-  ]
+  ],
+  "horariosScrapedAt": "2026-06-24T15:01:08.562Z"
 }

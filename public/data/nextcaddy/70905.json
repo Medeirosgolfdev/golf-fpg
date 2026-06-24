@@ -1,7 +1,7 @@
 {
   "tourId": 70905,
   "url": "https://www.nextcaddy.com/tour/70905",
-  "scrapedAt": "2026-06-12T14:42:57.675Z",
+  "scrapedAt": "2026-06-24T14:57:34.043Z",
   "meta": {
     "name": "VIII Torneo Academia Infantil 2025-2026 - 4 hoyos",
     "organizer": null,
@@ -21,9 +21,143 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Paula Labrot-Moreno Sanchez",
+          "licencia": "AMI5508216",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 6,
+          "toPar": 12,
+          "inscribedId": 2340357
+        },
+        {
+          "pos": 2,
+          "name": "Christopher Rios Jimenez",
+          "licencia": "AMI5507501",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2331357
+        },
+        {
+          "pos": 3,
+          "name": "Manuel Mena Gutierrez",
+          "licencia": "AMI5488760",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2338178
+        },
+        {
+          "pos": 4,
+          "name": "Aron Aharrar Bricha",
+          "licencia": "AMI5495878",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 3,
+          "toPar": 15,
+          "inscribedId": 2340500
+        },
+        {
+          "pos": 5,
+          "name": "Oliver Kieron Rea",
+          "licencia": "AMI5474796",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 3,
+          "toPar": 15,
+          "inscribedId": 2340435
+        },
+        {
+          "pos": 6,
+          "name": "Xinchun Lu",
+          "licencia": "AMI5517914",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 3,
+          "toPar": 15,
+          "inscribedId": 2332461
+        },
+        {
+          "pos": 7,
+          "name": "Lucia Vega Martinez",
+          "licencia": "AM11523526",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 3,
+          "toPar": 15,
+          "inscribedId": 2329806
+        },
+        {
+          "pos": 8,
+          "name": "Gabriela Sans Prado",
+          "licencia": "AMI5527718",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 3,
+          "toPar": 15,
+          "inscribedId": 2344106
+        },
+        {
+          "pos": 9,
+          "name": "Sofia Borrey Wust",
+          "licencia": "AMI5497972",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 3,
+          "toPar": 15,
+          "inscribedId": 2344487
+        },
+        {
+          "pos": 10,
+          "name": "Martina Borrero Gimilio",
+          "licencia": "AMI5508119",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 1,
+          "toPar": 17,
+          "inscribedId": 2324508
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 10
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -41,6 +175,20 @@
     },
     {
       "orden": 3,
+      "name": "Gabriela Sans Prado",
+      "licencia": "AMI5527718",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Sofia Borrey Wust",
+      "licencia": "AMI5497972",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
       "name": "Lucia Vega Martinez",
       "licencia": "AM11523526",
       "hcp": 54,
@@ -146,6 +294,20 @@
     },
     {
       "orden": 8,
+      "name": "Gabriela Sans Prado",
+      "licencia": "15-06-26 23:00",
+      "hcp": 54,
+      "nivel": "AMI5527718"
+    },
+    {
+      "orden": 9,
+      "name": "Sofia Borrey Wust",
+      "licencia": "16-06-26 13:23",
+      "hcp": 54,
+      "nivel": "AMI5497972"
+    },
+    {
+      "orden": 10,
       "name": "Lucia Vega Martinez",
       "licencia": "28-05-26 10:20",
       "hcp": 54,
@@ -266,5 +428,5 @@
   ],
   "scoreTypes": [],
   "pdfs": [],
-  "horariosScrapedAt": "2026-06-22T09:55:22.490Z"
+  "horariosScrapedAt": "2026-06-24T15:01:00.388Z"
 }

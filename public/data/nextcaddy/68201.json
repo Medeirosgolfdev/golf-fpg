@@ -1,7 +1,7 @@
 {
   "tourId": 68201,
   "url": "https://www.nextcaddy.com/tour/68201",
-  "scrapedAt": "2026-06-12T14:42:45.906Z",
+  "scrapedAt": "2026-06-24T14:57:15.017Z",
   "meta": {
     "name": "Liga Femenina (hcp mayor o igual a 42.1)",
     "organizer": "Federacion de Golf de Madrid",
@@ -19,10 +19,293 @@
       "Senior"
     ]
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap",
+      "expectedJugadores": 23,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Olivia Vargas Tejerina",
+          "licencia": "CM41491983",
+          "hcp": 42.5,
+          "nivel": "B",
+          "rounds": [],
+          "total": 25,
+          "toPar": -7,
+          "inscribedId": 2334713
+        },
+        {
+          "pos": 2,
+          "name": "Maria Lama Gutierrez",
+          "licencia": "CMA8486913",
+          "hcp": 51.7,
+          "nivel": "I",
+          "rounds": [],
+          "total": 25,
+          "toPar": -7,
+          "inscribedId": 2333172
+        },
+        {
+          "pos": 3,
+          "name": "Maria Viejo Micale",
+          "licencia": "CM41305616",
+          "hcp": 49.4,
+          "nivel": "A",
+          "rounds": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2334650
+        },
+        {
+          "pos": 4,
+          "name": "Claudia Lesmes Esteban",
+          "licencia": "CM18483268",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2332680
+        },
+        {
+          "pos": 5,
+          "name": "Camino Castillejo Magan",
+          "licencia": "CM02486606",
+          "hcp": 52.5,
+          "nivel": "B",
+          "rounds": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2333518
+        },
+        {
+          "pos": 6,
+          "name": "Guadalupe Leon Allende",
+          "licencia": "CM06484126",
+          "hcp": 47.5,
+          "nivel": "B",
+          "rounds": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2333039
+        },
+        {
+          "pos": 7,
+          "name": "Elena Mas Martinez",
+          "licencia": "CMD9371925",
+          "hcp": 53.4,
+          "nivel": "A",
+          "rounds": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2336448
+        },
+        {
+          "pos": 8,
+          "name": "Alexandra Serrano Villa",
+          "licencia": "CM41488811",
+          "hcp": 48.6,
+          "nivel": "B",
+          "rounds": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2333064
+        },
+        {
+          "pos": 9,
+          "name": "Alejandra Vallarino Anchuela",
+          "licencia": "CM03495108",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2333191
+        },
+        {
+          "pos": 10,
+          "name": "Ines Beistegui Muñoz",
+          "licencia": "CM04988951",
+          "hcp": 39.7,
+          "nivel": "A",
+          "rounds": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2333187
+        },
+        {
+          "pos": 11,
+          "name": "Vera Endeiza Martinez",
+          "licencia": "CM52994103",
+          "hcp": 51.1,
+          "nivel": "B",
+          "rounds": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2332681
+        },
+        {
+          "pos": 12,
+          "name": "Catalina Garcia Alonso",
+          "licencia": "CM41490527",
+          "hcp": 48.4,
+          "nivel": "B",
+          "rounds": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2332976
+        },
+        {
+          "pos": 13,
+          "name": "Fernanda Castillejo Magan",
+          "licencia": "CM02486607",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2333519
+        },
+        {
+          "pos": 14,
+          "name": "Silvia Triguero Fernandez",
+          "licencia": "CM41484593",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2334001
+        },
+        {
+          "pos": 15,
+          "name": "Isabel Gutierrez Pascual Del Pobil",
+          "licencia": "CMA8418552",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2333144
+        },
+        {
+          "pos": 16,
+          "name": "Claudia Vallarino Cabo",
+          "licencia": "CM03494717",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2333378
+        },
+        {
+          "pos": 17,
+          "name": "Nela Fernandez Imamovic",
+          "licencia": "CMD9479143",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2332697
+        },
+        {
+          "pos": 18,
+          "name": "Casilda Aparicio Vallarino",
+          "licencia": "CM41508458",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2332872
+        },
+        {
+          "pos": 19,
+          "name": "Sofia Del Valle Horta",
+          "licencia": "CM81508447",
+          "hcp": 49,
+          "nivel": "A",
+          "rounds": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2334630
+        },
+        {
+          "pos": null,
+          "name": "Julia Martin Barcelo",
+          "licencia": "CM41347608",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2333091
+        },
+        {
+          "pos": null,
+          "name": "Guadalupe Mata Pinilla",
+          "licencia": "CMA8514999",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2334549
+        },
+        {
+          "pos": null,
+          "name": "Valeria Aguilar Rodriguez",
+          "licencia": "CM41479244",
+          "hcp": 49,
+          "nivel": "A",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2333029
+        },
+        {
+          "pos": null,
+          "name": "Veronica Aguilar Rodriguez",
+          "licencia": "CM41479242",
+          "hcp": 45.7,
+          "nivel": "A",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2333028
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap",
+      "jugadores": 23
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -587,5 +870,5 @@
   "pdfs": [
     "/uploads/competiciones/pdf/775859777_26_06_13_rrll_liga_femenina.pdf"
   ],
-  "horariosScrapedAt": "2026-06-12T14:45:32.524Z"
+  "horariosScrapedAt": "2026-06-24T15:00:25.837Z"
 }

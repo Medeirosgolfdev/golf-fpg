@@ -1,7 +1,7 @@
 {
   "tourId": 68249,
   "url": "https://www.nextcaddy.com/tour/68249",
-  "scrapedAt": "2026-06-12T14:42:59.604Z",
+  "scrapedAt": "2026-06-24T14:57:37.477Z",
   "meta": {
     "name": "Torneo por Equipos Amateur",
     "organizer": "Federacion de Golf de Madrid",
@@ -21,8 +21,17 @@
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Scratch",
+      "jugadores": 13
+    },
+    "2": {
+      "name": "Clasificación Por Equipos Hándicap",
+      "jugadores": 13
+    }
+  },
   "inscritos": [
     {
       "orden": null,
@@ -55,8 +64,8 @@
     {
       "orden": null,
       "name": "Angel Linares Gomez",
-      "licencia": "AM04306218",
-      "hcp": 20.7,
+      "licencia": "CMA8306218",
+      "hcp": 18.1,
       "nivel": "Mid"
     },
     {
@@ -70,21 +79,21 @@
       "orden": null,
       "name": "Maria Elena Delgado Palomar",
       "licencia": "CMD3933144",
-      "hcp": 15.2,
+      "hcp": 14.6,
       "nivel": "S"
     },
     {
       "orden": null,
       "name": "Francis Alcantara Torres",
       "licencia": "CMC2888436",
-      "hcp": 24.4,
+      "hcp": 23.5,
       "nivel": "S"
     },
     {
       "orden": null,
       "name": "Maria Jesus Rodriguez Ortiz",
       "licencia": "CM41308179",
-      "hcp": 14.5,
+      "hcp": 14.3,
       "nivel": "S"
     },
     {
@@ -112,7 +121,7 @@
       "orden": null,
       "name": "Iker Barrondo Martin",
       "licencia": "CM15490413",
-      "hcp": 24.1,
+      "hcp": 23.3,
       "nivel": "Mid"
     },
     {
@@ -140,7 +149,7 @@
       "orden": null,
       "name": "David Ramos Perez",
       "licencia": "CM00958717",
-      "hcp": 23.4,
+      "hcp": 22.7,
       "nivel": "Mid"
     },
     {
@@ -189,7 +198,7 @@
       "orden": null,
       "name": "Adrian Tapia Fernandez",
       "licencia": "CM06322131",
-      "hcp": 20.8,
+      "hcp": 21.5,
       "nivel": "S"
     },
     {
@@ -198,6 +207,286 @@
       "licencia": "CM00056887",
       "hcp": 24.5,
       "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Golftail",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Santiago Martinez Santiago",
+      "licencia": "CM02950201",
+      "hcp": 6.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Luis Lopez-Doriga Gonzalez",
+      "licencia": "CM00972554",
+      "hcp": 22.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Juan Carlos Couret Siljestrom",
+      "licencia": "CM02069572",
+      "hcp": 16.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Jaime Garcia Curran",
+      "licencia": "CM81917363",
+      "hcp": 18.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "LOS POWER RANGERS",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Jose Ramon Durand Rojas",
+      "licencia": "CME4956483",
+      "hcp": 14.2,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Alfonso Perez Ferreiro",
+      "licencia": "CME4993624",
+      "hcp": 16.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Luis Naranjo Castresana",
+      "licencia": "CM81900695",
+      "hcp": 13.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Francisco Atanasio Goitia",
+      "licencia": "MM22805067",
+      "hcp": 16.9,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "GOLDEN DRIVERS",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Monica Brun De Quevedo",
+      "licencia": "CM00347478",
+      "hcp": 20.7,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Ilaria Cereda Tanzi",
+      "licencia": "CM00149195",
+      "hcp": 25.6,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Pablo Igartua Moreno",
+      "licencia": "CM61138198",
+      "hcp": 26.3,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Rocio Lorenzo-Arroyo Poullet",
+      "licencia": "CM41633399",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Chugligans",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Samuel Garcia Anel",
+      "licencia": "CME9478635",
+      "hcp": 15.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Jaime Masjuan Ginel",
+      "licencia": "CM81985852",
+      "hcp": 17.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Lucas Garcia Anel",
+      "licencia": "CME9478677",
+      "hcp": 19.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Diego Benito Beiro",
+      "licencia": "7730480785",
+      "hcp": 20.5,
+      "nivel": "M"
+    },
+    {
+      "orden": null,
+      "name": "Socket the guerin",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Alvaro Guerin Almazor",
+      "licencia": "CB02332329",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Jesus Rubio Martinez",
+      "licencia": "CM07373824",
+      "hcp": 15.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Javier Iribas Olaortua",
+      "licencia": "CM61301233",
+      "hcp": 3.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Carlos Rodriguez Ruiz De La Torre",
+      "licencia": "CM41320490",
+      "hcp": 6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "KANALLAS",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Victor Maganto Suarez",
+      "licencia": "CM61953445",
+      "hcp": 12.4,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jose Ramon Chico Zamorano",
+      "licencia": "CM05633250",
+      "hcp": 14.2,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Carlos Lopez Garcia",
+      "licencia": "CMD9911382",
+      "hcp": 10.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Antonio Salido Pachon",
+      "licencia": "CM00445811",
+      "hcp": 14.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Par-anoicos",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Javier Añez Arroyo",
+      "licencia": "CMA8912581",
+      "hcp": 2.2,
+      "nivel": "J"
+    },
+    {
+      "orden": null,
+      "name": "Amilcar Fernando Villavicencio Alviarez",
+      "licencia": "CMA8933951",
+      "hcp": 3.1,
+      "nivel": "J"
+    },
+    {
+      "orden": null,
+      "name": "Nerea Anton Moya",
+      "licencia": "CMA8960343",
+      "hcp": 2.2,
+      "nivel": "J"
+    },
+    {
+      "orden": null,
+      "name": "Alejandro Gonzalez Quintero",
+      "licencia": "8818978463",
+      "hcp": 21.6,
+      "nivel": "J"
+    },
+    {
+      "orden": null,
+      "name": "365",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Javier Ausin Ajuria",
+      "licencia": "1102789823",
+      "hcp": 14.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Santiago Carralero Requena",
+      "licencia": "CM18972802",
+      "hcp": 20.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Leyre Lopez Itoiz",
+      "licencia": "4400990669",
+      "hcp": 10.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Alvaro Barettino Suarez",
+      "licencia": "CMB2980712",
+      "hcp": 15.9,
+      "nivel": "Mid"
     }
   ],
   "horarios": [
@@ -1008,7 +1297,8 @@
     }
   },
   "pdfs": [
-    "/uploads/competiciones/pdf/290459881_condiciones_competicion_torneos_por_equipos_2026.pdf"
+    "/uploads/competiciones/pdf/290459881_condiciones_competicion_torneos_por_equipos_2026.pdf",
+    "/uploads/competiciones/pdf/1290487470_arb_reg_loc_cma08_2025.pdf"
   ],
-  "horariosScrapedAt": "2026-06-22T09:55:12.843Z"
+  "horariosScrapedAt": "2026-06-24T15:00:28.172Z"
 }
