@@ -1,9 +1,9 @@
 {
   "tourId": 71178,
   "url": "https://www.nextcaddy.com/tour/71178",
-  "scrapedAt": "2026-06-12T14:42:57.142Z",
+  "scrapedAt": "2026-06-24T14:57:33.421Z",
   "meta": {
-    "name": "I TORNEO DE DAMAS SEARA GOLF",
+    "name": "II TORNEO DE DAMAS SEARA GOLF",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
@@ -18,10 +18,359 @@
       "Juvenil"
     ]
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 30,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual Desde 26.6 Hcp",
+      "expectedJugadores": 14,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Inmaculada Casas De Ciria",
+          "licencia": "AMC9352195",
+          "hcp": 34,
+          "nivel": "S",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2344864
+        },
+        {
+          "pos": 2,
+          "name": "Cristina Ramos Guillen",
+          "licencia": "AMD5979789",
+          "hcp": 38.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2331995
+        },
+        {
+          "pos": 3,
+          "name": "Marta Micheo Diaz",
+          "licencia": "AMD5022669",
+          "hcp": 34.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2341341
+        },
+        {
+          "pos": 4,
+          "name": "Maria Del Rosario Rodriguez Sanz",
+          "licencia": "AM66914052",
+          "hcp": 32.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2329963
+        },
+        {
+          "pos": 5,
+          "name": "Mª Magdalena Alcaraz Vera",
+          "licencia": "AMD5979780",
+          "hcp": 39.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2329862
+        },
+        {
+          "pos": 6,
+          "name": "Inmaculada Hernandez Sousa",
+          "licencia": "AMD5006530",
+          "hcp": 49.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2334605
+        },
+        {
+          "pos": 7,
+          "name": "Lourdes Andres De Paul",
+          "licencia": "AMD5802266",
+          "hcp": 28.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2333110
+        },
+        {
+          "pos": 8,
+          "name": "Almudena Balbuena Mora-Figueroa",
+          "licencia": "AMD5966553",
+          "hcp": 33.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2343177
+        },
+        {
+          "pos": 9,
+          "name": "Maria De La O Argudo Garcia De Lago",
+          "licencia": "AM05982441",
+          "hcp": 37,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2343140
+        },
+        {
+          "pos": 10,
+          "name": "Rosa Perdigones Fernandez",
+          "licencia": "AMD5162500",
+          "hcp": 32.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2347616
+        },
+        {
+          "pos": 11,
+          "name": "Carolina Laura Galliano",
+          "licencia": "AMD5004252",
+          "hcp": 36.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2329897
+        },
+        {
+          "pos": 12,
+          "name": "Paloma Azagra Rexach",
+          "licencia": "AMC9601054",
+          "hcp": 26.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2331949
+        },
+        {
+          "pos": 13,
+          "name": "Maria Teresa Martin Falomir",
+          "licencia": "AMC9752145",
+          "hcp": 28.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2346278
+        },
+        {
+          "pos": 14,
+          "name": "Silvia Laz Maine",
+          "licencia": "AMD5499720",
+          "hcp": 40.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2340416
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Handicap Individual Hasta 26.5 Hcp",
+      "expectedJugadores": 13,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Brianda Terry Osborne",
+          "licencia": "AM05746317",
+          "hcp": 24.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 42,
+          "toPar": -6,
+          "inscribedId": 2340501
+        },
+        {
+          "pos": 2,
+          "name": "Elisa Terry Osborne",
+          "licencia": "AM05358122",
+          "hcp": 15.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2336421
+        },
+        {
+          "pos": 3,
+          "name": "Isabel Palacios Rafoso",
+          "licencia": "AM05604799",
+          "hcp": 19.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2329966
+        },
+        {
+          "pos": 4,
+          "name": "Maria Lourdes Caballo Giles",
+          "licencia": "AM05138959",
+          "hcp": 21.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2334223
+        },
+        {
+          "pos": 5,
+          "name": "Paloma Martinez-Gil Gutierrez De La Camara",
+          "licencia": "GC07443224",
+          "hcp": 20.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2340958
+        },
+        {
+          "pos": 6,
+          "name": "Patricia Sanchez-Ferragut Soto",
+          "licencia": "AMC9613090",
+          "hcp": 22,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2330903
+        },
+        {
+          "pos": 7,
+          "name": "Eva Camacho Torrent",
+          "licencia": "AMD5902043",
+          "hcp": 13.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2330885
+        },
+        {
+          "pos": 8,
+          "name": "Guadalupe Agudo Montero",
+          "licencia": "AM00129678",
+          "hcp": 17,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2331959
+        },
+        {
+          "pos": 9,
+          "name": "Maria Jose Tosso Jimenez",
+          "licencia": "AM00884670",
+          "hcp": 22.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2329911
+        },
+        {
+          "pos": 10,
+          "name": "Maria Ruiz Diez",
+          "licencia": "AM05359931",
+          "hcp": 25.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2341952
+        },
+        {
+          "pos": 11,
+          "name": "Victoria Liñan Vazquez",
+          "licencia": "AM02183864",
+          "hcp": 26.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2336420
+        },
+        {
+          "pos": 12,
+          "name": "Virginia Quintana Cerezo",
+          "licencia": "AMC9761113",
+          "hcp": 18,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2343204
+        },
+        {
+          "pos": 13,
+          "name": "Myriam Montalvo Fernandez",
+          "licencia": "AM66210752",
+          "hcp": 24.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2331999
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Desde 26.6 Hcp",
+      "jugadores": 14
+    },
+    "2": {
+      "name": "Handicap Individual Hasta 26.5 Hcp",
+      "jugadores": 13
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -48,14 +397,14 @@
       "orden": 4,
       "name": "Maria Del Rosario Rodriguez Sanz",
       "licencia": "AM66914052",
-      "hcp": 31.4,
+      "hcp": 32.2,
       "nivel": "S"
     },
     {
       "orden": 5,
       "name": "Isabel Palacios Rafoso",
       "licencia": "AM05604799",
-      "hcp": 19.8,
+      "hcp": 19.7,
       "nivel": "S"
     },
     {
@@ -69,7 +418,7 @@
       "orden": 7,
       "name": "Patricia Sanchez-Ferragut Soto",
       "licencia": "AMC9613090",
-      "hcp": 22.4,
+      "hcp": 22,
       "nivel": "S"
     },
     {
@@ -97,7 +446,7 @@
       "orden": 11,
       "name": "Myriam Montalvo Fernandez",
       "licencia": "AM66210752",
-      "hcp": 24.9,
+      "hcp": 24.7,
       "nivel": "S"
     },
     {
@@ -111,7 +460,7 @@
       "orden": 13,
       "name": "Maria Lourdes Caballo Giles",
       "licencia": "AM05138959",
-      "hcp": 22,
+      "hcp": 21.8,
       "nivel": "S"
     },
     {
@@ -125,7 +474,7 @@
       "orden": 15,
       "name": "Victoria Liñan Vazquez",
       "licencia": "AM02183864",
-      "hcp": 26.6,
+      "hcp": 26.5,
       "nivel": "S"
     },
     {
@@ -139,7 +488,7 @@
       "orden": 17,
       "name": "Silvia Laz Maine",
       "licencia": "AMD5499720",
-      "hcp": 38,
+      "hcp": 40.3,
       "nivel": "S"
     },
     {
@@ -169,6 +518,48 @@
       "licencia": "AM05359931",
       "hcp": 25.1,
       "nivel": "Mid"
+    },
+    {
+      "orden": 22,
+      "name": "Maria De La O Argudo Garcia De Lago",
+      "licencia": "AM05982441",
+      "hcp": 37,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 23,
+      "name": "Almudena Balbuena Mora-Figueroa",
+      "licencia": "AMD5966553",
+      "hcp": 33.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 24,
+      "name": "Virginia Quintana Cerezo",
+      "licencia": "AMC9761113",
+      "hcp": 18,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 25,
+      "name": "Inmaculada Casas De Ciria",
+      "licencia": "AMC9352195",
+      "hcp": 34,
+      "nivel": "S"
+    },
+    {
+      "orden": 26,
+      "name": "Maria Teresa Martin Falomir",
+      "licencia": "AMC9752145",
+      "hcp": 28.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 27,
+      "name": "Rosa Perdigones Fernandez",
+      "licencia": "AMD5162500",
+      "hcp": 32.3,
+      "nivel": "S"
     },
     {
       "orden": null,
@@ -202,14 +593,14 @@
       "orden": 4,
       "name": "Maria Del Rosario Rodriguez Sanz",
       "licencia": "AM66914052",
-      "hcp": 31.4,
+      "hcp": 32.2,
       "nivel": "S"
     },
     {
       "orden": 5,
       "name": "Isabel Palacios Rafoso",
       "licencia": "AM05604799",
-      "hcp": 19.8,
+      "hcp": 19.7,
       "nivel": "S"
     },
     {
@@ -223,7 +614,7 @@
       "orden": 7,
       "name": "Patricia Sanchez-Ferragut Soto",
       "licencia": "AMC9613090",
-      "hcp": 22.4,
+      "hcp": 22,
       "nivel": "S"
     },
     {
@@ -251,7 +642,7 @@
       "orden": 11,
       "name": "Myriam Montalvo Fernandez",
       "licencia": "AM66210752",
-      "hcp": 24.9,
+      "hcp": 24.7,
       "nivel": "S"
     },
     {
@@ -265,7 +656,7 @@
       "orden": 13,
       "name": "Maria Lourdes Caballo Giles",
       "licencia": "AM05138959",
-      "hcp": 22,
+      "hcp": 21.8,
       "nivel": "S"
     },
     {
@@ -279,7 +670,7 @@
       "orden": 15,
       "name": "Victoria Liñan Vazquez",
       "licencia": "AM02183864",
-      "hcp": 26.6,
+      "hcp": 26.5,
       "nivel": "S"
     },
     {
@@ -293,7 +684,7 @@
       "orden": 17,
       "name": "Silvia Laz Maine",
       "licencia": "AMD5499720",
-      "hcp": 38,
+      "hcp": 40.3,
       "nivel": "S"
     },
     {
@@ -323,6 +714,48 @@
       "licencia": "AM05359931",
       "hcp": 25.1,
       "nivel": "Mid"
+    },
+    {
+      "orden": 22,
+      "name": "Maria De La O Argudo Garcia De Lago",
+      "licencia": "AM05982441",
+      "hcp": 37,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 23,
+      "name": "Almudena Balbuena Mora-Figueroa",
+      "licencia": "AMD5966553",
+      "hcp": 33.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 24,
+      "name": "Virginia Quintana Cerezo",
+      "licencia": "AMC9761113",
+      "hcp": 18,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 25,
+      "name": "Inmaculada Casas De Ciria",
+      "licencia": "AMC9352195",
+      "hcp": 34,
+      "nivel": "S"
+    },
+    {
+      "orden": 26,
+      "name": "Maria Teresa Martin Falomir",
+      "licencia": "AMC9752145",
+      "hcp": 28.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 27,
+      "name": "Rosa Perdigones Fernandez",
+      "licencia": "AMD5162500",
+      "hcp": 32.3,
+      "nivel": "S"
     }
   ],
   "horarios": [
@@ -605,5 +1038,5 @@
   "pdfs": [
     "/uploads/competiciones/cartel/1447759966_71178-i-torneo-de-damas-seara-golf.pdf"
   ],
-  "horariosScrapedAt": "2026-06-22T09:55:23.497Z"
+  "horariosScrapedAt": "2026-06-24T15:01:03.311Z"
 }

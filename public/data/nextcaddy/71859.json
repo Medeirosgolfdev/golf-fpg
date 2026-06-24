@@ -1,7 +1,7 @@
 {
   "tourId": 71859,
   "url": "https://www.nextcaddy.com/tour/71859",
-  "scrapedAt": "2026-06-22T09:54:49.897Z",
+  "scrapedAt": "2026-06-24T14:57:43.267Z",
   "meta": {
     "name": "LADIES DAY 24/6",
     "organizer": null,
@@ -18,20 +18,1115 @@
       "Juvenil"
     ]
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 28,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Paula Jayne Monaghan",
+          "licencia": "AM76033183",
+          "hcp": 33.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2350470
+        },
+        {
+          "pos": 2,
+          "name": "Ni Li",
+          "licencia": "AM76937265",
+          "hcp": 10.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2350311
+        },
+        {
+          "pos": 3,
+          "name": "Gillian Ballard",
+          "licencia": "AM76971658",
+          "hcp": 24.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2350409
+        },
+        {
+          "pos": 4,
+          "name": "Marie Bo Andersen",
+          "licencia": "AM76473630",
+          "hcp": 25.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2350411
+        },
+        {
+          "pos": 5,
+          "name": "Eva Hoffmann",
+          "licencia": "AM76194903",
+          "hcp": 27.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2350430
+        },
+        {
+          "pos": 6,
+          "name": "Julie Ford",
+          "licencia": "AM76932147",
+          "hcp": 16.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2350312
+        },
+        {
+          "pos": 7,
+          "name": "Jeannine Rehlinger",
+          "licencia": "AM76903264",
+          "hcp": 17.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2350315
+        },
+        {
+          "pos": 8,
+          "name": "Tracy Smith Mallabar",
+          "licencia": "AM76924290",
+          "hcp": 20.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2350416
+        },
+        {
+          "pos": 9,
+          "name": "Christine Una Jones",
+          "licencia": "AM76696579",
+          "hcp": 20.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2350414
+        },
+        {
+          "pos": 10,
+          "name": "Lesley Brown",
+          "licencia": "AM76984723",
+          "hcp": 22.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2350412
+        },
+        {
+          "pos": 11,
+          "name": "Cornelia Johanna Hopmans",
+          "licencia": "AM76472578",
+          "hcp": 20.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2350415
+        },
+        {
+          "pos": 12,
+          "name": "Anne Donegan",
+          "licencia": "AM76955134",
+          "hcp": 24.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2350410
+        },
+        {
+          "pos": 13,
+          "name": "Jessica Welter",
+          "licencia": "AM76482636",
+          "hcp": 25.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2350423
+        },
+        {
+          "pos": 14,
+          "name": "Lindsey Hill",
+          "licencia": "AM76170011",
+          "hcp": 16.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2350316
+        },
+        {
+          "pos": 15,
+          "name": "Ute Hakman",
+          "licencia": "AM76801467",
+          "hcp": 20.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2350417
+        },
+        {
+          "pos": 16,
+          "name": "Deborah Monaghan",
+          "licencia": "AM76481987",
+          "hcp": 25.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2350424
+        },
+        {
+          "pos": 17,
+          "name": "Jacqy De Rijk",
+          "licencia": "AM76898519",
+          "hcp": 29.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2350428
+        },
+        {
+          "pos": 18,
+          "name": "Deborah Packebusch",
+          "licencia": "AM76187026",
+          "hcp": 19.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2350317
+        },
+        {
+          "pos": 19,
+          "name": "Elyane Stuart",
+          "licencia": "AM76183162",
+          "hcp": 27.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2350432
+        },
+        {
+          "pos": 20,
+          "name": "Anne-Marja Palmorth",
+          "licencia": "AM76522741",
+          "hcp": 27,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2350427
+        },
+        {
+          "pos": 21,
+          "name": "Maria Belen De La Cruz Martin",
+          "licencia": "AM76233358",
+          "hcp": 29.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2350431
+        },
+        {
+          "pos": 22,
+          "name": "Sarah Stewart",
+          "licencia": "AM76901048",
+          "hcp": 14.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2350313
+        },
+        {
+          "pos": 23,
+          "name": "Anna Visser",
+          "licencia": "AM76519033",
+          "hcp": 38,
+          "nivel": "S",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2350472
+        },
+        {
+          "pos": 24,
+          "name": "CONNIE MCINTYRE",
+          "licencia": "TR95499954",
+          "hcp": 30,
+          "nivel": "S",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2350465
+        },
+        {
+          "pos": 25,
+          "name": "Jainne Griggs",
+          "licencia": "AM76145013",
+          "hcp": 34.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2350467
+        },
+        {
+          "pos": 26,
+          "name": "Janet Susan Marshall",
+          "licencia": "AM76893887",
+          "hcp": 32.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2350439
+        },
+        {
+          "pos": 27,
+          "name": "Noreen Lorraine Bramley",
+          "licencia": "AM76886459",
+          "hcp": 30.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2350440
+        },
+        {
+          "pos": null,
+          "name": "Klaudia Luise Ilg",
+          "licencia": "AM76809386",
+          "hcp": 25.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2350421
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 28
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Ni Li",
+      "licencia": "AM76937265",
+      "hcp": 10.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Julie Ford",
+      "licencia": "AM76932147",
+      "hcp": 16.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Sarah Stewart",
+      "licencia": "AM76901048",
+      "hcp": 14.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Jeannine Rehlinger",
+      "licencia": "AM76903264",
+      "hcp": 17.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Lindsey Hill",
+      "licencia": "AM76170011",
+      "hcp": 16.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Deborah Packebusch",
+      "licencia": "AM76187026",
+      "hcp": 19.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Gillian Ballard",
+      "licencia": "AM76971658",
+      "hcp": 24.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Anne Donegan",
+      "licencia": "AM76955134",
+      "hcp": 24.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Marie Bo Andersen",
+      "licencia": "AM76473630",
+      "hcp": 25.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Lesley Brown",
+      "licencia": "AM76984723",
+      "hcp": 22.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Christine Una Jones",
+      "licencia": "AM76696579",
+      "hcp": 20.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Cornelia Johanna Hopmans",
+      "licencia": "AM76472578",
+      "hcp": 20.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Tracy Smith Mallabar",
+      "licencia": "AM76924290",
+      "hcp": 20.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Ute Hakman",
+      "licencia": "AM76801467",
+      "hcp": 20.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Klaudia Luise Ilg",
+      "licencia": "AM76809386",
+      "hcp": 25.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Jessica Welter",
+      "licencia": "AM76482636",
+      "hcp": 25.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Deborah Monaghan",
+      "licencia": "AM76481987",
+      "hcp": 25.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Anne-Marja Palmorth",
+      "licencia": "AM76522741",
+      "hcp": 27,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 19,
+      "name": "Jacqy De Rijk",
+      "licencia": "AM76898519",
+      "hcp": 29.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Eva Hoffmann",
+      "licencia": "AM76194903",
+      "hcp": 27.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Maria Belen De La Cruz Martin",
+      "licencia": "AM76233358",
+      "hcp": 29.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Elyane Stuart",
+      "licencia": "AM76183162",
+      "hcp": 27.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 23,
+      "name": "Janet Susan Marshall",
+      "licencia": "AM76893887",
+      "hcp": 32.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 24,
+      "name": "Noreen Lorraine Bramley",
+      "licencia": "AM76886459",
+      "hcp": 30.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 25,
+      "name": "CONNIE MCINTYRE",
+      "licencia": "TR95499954",
+      "hcp": 30,
+      "nivel": "S"
+    },
+    {
+      "orden": 26,
+      "name": "Jainne Griggs",
+      "licencia": "AM76145013",
+      "hcp": 34.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 27,
+      "name": "Paula Jayne Monaghan",
+      "licencia": "AM76033183",
+      "hcp": 33.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 28,
+      "name": "Anna Visser",
+      "licencia": "AM76519033",
+      "hcp": 38,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Fecha Inscripción",
+      "hcp": null,
+      "nivel": "Licencia"
+    },
+    {
+      "orden": 1,
+      "name": "Ni Li",
+      "licencia": "24-06-26 13:28",
+      "hcp": 10.8,
+      "nivel": "AM76937265"
+    },
+    {
+      "orden": 2,
+      "name": "Julie Ford",
+      "licencia": "24-06-26 13:28",
+      "hcp": 16.2,
+      "nivel": "AM76932147"
+    },
+    {
+      "orden": 3,
+      "name": "Sarah Stewart",
+      "licencia": "24-06-26 13:28",
+      "hcp": 14.5,
+      "nivel": "AM76901048"
+    },
+    {
+      "orden": 4,
+      "name": "Jeannine Rehlinger",
+      "licencia": "24-06-26 13:38",
+      "hcp": 17.5,
+      "nivel": "AM76903264"
+    },
+    {
+      "orden": 5,
+      "name": "Lindsey Hill",
+      "licencia": "24-06-26 13:41",
+      "hcp": 16.8,
+      "nivel": "AM76170011"
+    },
+    {
+      "orden": 6,
+      "name": "Deborah Packebusch",
+      "licencia": "24-06-26 13:41",
+      "hcp": 19.7,
+      "nivel": "AM76187026"
+    },
+    {
+      "orden": 7,
+      "name": "Gillian Ballard",
+      "licencia": "24-06-26 14:43",
+      "hcp": 24.4,
+      "nivel": "AM76971658"
+    },
+    {
+      "orden": 8,
+      "name": "Anne Donegan",
+      "licencia": "24-06-26 14:43",
+      "hcp": 24.8,
+      "nivel": "AM76955134"
+    },
+    {
+      "orden": 9,
+      "name": "Marie Bo Andersen",
+      "licencia": "24-06-26 14:44",
+      "hcp": 25.4,
+      "nivel": "AM76473630"
+    },
+    {
+      "orden": 10,
+      "name": "Lesley Brown",
+      "licencia": "24-06-26 14:45",
+      "hcp": 22.7,
+      "nivel": "AM76984723"
+    },
+    {
+      "orden": 11,
+      "name": "Christine Una Jones",
+      "licencia": "24-06-26 14:47",
+      "hcp": 20.8,
+      "nivel": "AM76696579"
+    },
+    {
+      "orden": 12,
+      "name": "Cornelia Johanna Hopmans",
+      "licencia": "24-06-26 14:48",
+      "hcp": 20.9,
+      "nivel": "AM76472578"
+    },
+    {
+      "orden": 13,
+      "name": "Tracy Smith Mallabar",
+      "licencia": "24-06-26 14:49",
+      "hcp": 20.7,
+      "nivel": "AM76924290"
+    },
+    {
+      "orden": 14,
+      "name": "Ute Hakman",
+      "licencia": "24-06-26 14:49",
+      "hcp": 20.7,
+      "nivel": "AM76801467"
+    },
+    {
+      "orden": 15,
+      "name": "Klaudia Luise Ilg",
+      "licencia": "24-06-26 14:55",
+      "hcp": 25.8,
+      "nivel": "AM76809386"
+    },
+    {
+      "orden": 16,
+      "name": "Jessica Welter",
+      "licencia": "24-06-26 14:57",
+      "hcp": 25.1,
+      "nivel": "AM76482636"
+    },
+    {
+      "orden": 17,
+      "name": "Deborah Monaghan",
+      "licencia": "24-06-26 14:59",
+      "hcp": 25.5,
+      "nivel": "AM76481987"
+    },
+    {
+      "orden": 18,
+      "name": "Anne-Marja Palmorth",
+      "licencia": "24-06-26 15:08",
+      "hcp": 27,
+      "nivel": "AM76522741"
+    },
+    {
+      "orden": 19,
+      "name": "Jacqy De Rijk",
+      "licencia": "24-06-26 15:09",
+      "hcp": 29.3,
+      "nivel": "AM76898519"
+    },
+    {
+      "orden": 20,
+      "name": "Eva Hoffmann",
+      "licencia": "24-06-26 15:09",
+      "hcp": 27.4,
+      "nivel": "AM76194903"
+    },
+    {
+      "orden": 21,
+      "name": "Maria Belen De La Cruz Martin",
+      "licencia": "24-06-26 15:09",
+      "hcp": 29.3,
+      "nivel": "AM76233358"
+    },
+    {
+      "orden": 22,
+      "name": "Elyane Stuart",
+      "licencia": "24-06-26 15:09",
+      "hcp": 27.8,
+      "nivel": "AM76183162"
+    },
+    {
+      "orden": 23,
+      "name": "Janet Susan Marshall",
+      "licencia": "24-06-26 15:21",
+      "hcp": 32.7,
+      "nivel": "AM76893887"
+    },
+    {
+      "orden": 24,
+      "name": "Noreen Lorraine Bramley",
+      "licencia": "24-06-26 15:21",
+      "hcp": 30.5,
+      "nivel": "AM76886459"
+    },
+    {
+      "orden": 25,
+      "name": "CONNIE MCINTYRE",
+      "licencia": "24-06-26 15:35",
+      "hcp": 30,
+      "nivel": "TR95499954"
+    },
+    {
+      "orden": 26,
+      "name": "Jainne Griggs",
+      "licencia": "24-06-26 15:35",
+      "hcp": 34.4,
+      "nivel": "AM76145013"
+    },
+    {
+      "orden": 27,
+      "name": "Paula Jayne Monaghan",
+      "licencia": "24-06-26 15:36",
+      "hcp": 33.5,
+      "nivel": "AM76033183"
+    },
+    {
+      "orden": 28,
+      "name": "Anna Visser",
+      "licencia": "24-06-26 15:38",
+      "hcp": 38,
+      "nivel": "AM76519033"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
+    "0": {
+      "p": {
+        "id": 160380,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            58
+          ],
+          [
+            "Birdie",
+            5
+          ],
+          [
+            "Eagle",
+            1
+          ],
+          [
+            "Bogey",
+            165
+          ],
+          [
+            "Peor",
+            188
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 160381,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            18
+          ],
+          [
+            "2",
+            41
+          ],
+          [
+            "3",
+            45
+          ],
+          [
+            "4",
+            25
+          ],
+          [
+            "5",
+            34
+          ],
+          [
+            "6",
+            45
+          ],
+          [
+            "7",
+            23
+          ],
+          [
+            "8",
+            30
+          ],
+          [
+            "9",
+            37
+          ],
+          [
+            "10",
+            31
+          ],
+          [
+            "11",
+            26
+          ],
+          [
+            "12",
+            37
+          ],
+          [
+            "13",
+            29
+          ],
+          [
+            "14",
+            39
+          ],
+          [
+            "15",
+            17
+          ],
+          [
+            "16",
+            40
+          ],
+          [
+            "17",
+            39
+          ],
+          [
+            "18",
+            28
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 160382,
+        "datos": [
+          [
+            "Hoyo",
+            "PAULA JAYNE MONAGHAN",
+            "LI NI",
+            "GILLIAN ANN BALLARD"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -2,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            1,
+            -2
+          ],
+          [
+            "Hoyo 4",
+            -2,
+            1,
+            -2
+          ],
+          [
+            "Hoyo 5",
+            -2,
+            0,
+            -3
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            0,
+            -3
+          ],
+          [
+            "Hoyo 7",
+            -2,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            0,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 9",
+            1,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 10",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 14",
+            0,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 15",
+            -2,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 16",
+            -2,
+            -2,
+            -3
+          ],
+          [
+            "Hoyo 17",
+            -2,
+            -2,
+            -2
+          ],
+          [
+            "Hoyo 18",
+            -3,
+            0,
+            0
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 160383,
+        "datos": [
+          [
+            "Hoyo",
+            "PAULA JAYNE MONAGHAN",
+            "LI NI",
+            "GILLIAN ANN BALLARD"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -2,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 3",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 5",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            0,
+            2
+          ],
+          [
+            "Hoyo 8",
+            2,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 9",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 10",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            2
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 14",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 15",
+            -2,
+            1,
+            -3
+          ],
+          [
+            "Hoyo 16",
+            0,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 18",
+            -1,
+            2,
+            2
+          ]
+        ]
+      }
+    }
   },
   "roundIds": [
     {
@@ -41,5 +1136,5 @@
   ],
   "scoreTypes": [],
   "pdfs": [],
-  "horariosScrapedAt": "2026-06-24T12:00:00.582Z"
+  "horariosScrapedAt": "2026-06-24T15:01:10.137Z"
 }

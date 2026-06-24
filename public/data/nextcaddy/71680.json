@@ -1,7 +1,7 @@
 {
   "tourId": 71680,
   "url": "https://www.nextcaddy.com/tour/71680",
-  "scrapedAt": "2026-06-15T10:28:52.758Z",
+  "scrapedAt": "2026-06-24T14:57:35.599Z",
   "meta": {
     "name": "FINAL LIGA PRINCIPIANTES 25/26",
     "organizer": null,
@@ -19,10 +19,216 @@
       "Juvenil"
     ]
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Final Liga Principiantes 25/26",
+      "expectedJugadores": 16,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Francisco Espejo Carmona",
+          "licencia": "AM10978163",
+          "hcp": 33.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2344027
+        },
+        {
+          "pos": 2,
+          "name": "Francisco Javier Garcia Garcia",
+          "licencia": "AM10516587",
+          "hcp": 28.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2346929
+        },
+        {
+          "pos": 3,
+          "name": "Juan Lozano Ollero",
+          "licencia": "AM10476357",
+          "hcp": 37.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2343789
+        },
+        {
+          "pos": 4,
+          "name": "Rafael Esteo Porras",
+          "licencia": "AM10977984",
+          "hcp": 25.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2344736
+        },
+        {
+          "pos": 5,
+          "name": "Blas Grande Cristin",
+          "licencia": "AM10467621",
+          "hcp": 29.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2343732
+        },
+        {
+          "pos": 6,
+          "name": "Felix Castro Redondo",
+          "licencia": "AM10072777",
+          "hcp": 30,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2344109
+        },
+        {
+          "pos": 7,
+          "name": "Joseluis Adell Priego",
+          "licencia": "AM10964326",
+          "hcp": 37.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2346676
+        },
+        {
+          "pos": 8,
+          "name": "Luis Sanchez Vasco",
+          "licencia": "AM10487638",
+          "hcp": 48.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2344023
+        },
+        {
+          "pos": 9,
+          "name": "Carlos Ramon Morales De La Puerta",
+          "licencia": "AM10516709",
+          "hcp": 41,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2344700
+        },
+        {
+          "pos": 10,
+          "name": "Pablo Jurado Gonzalez",
+          "licencia": "AM10152586",
+          "hcp": 30.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2346472
+        },
+        {
+          "pos": 11,
+          "name": "Esther Garcia Martinez",
+          "licencia": "AM10516708",
+          "hcp": 45.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2344863
+        },
+        {
+          "pos": 12,
+          "name": "Antonio Luis Morillo Balsera",
+          "licencia": "CM00292163",
+          "hcp": 36.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2344920
+        },
+        {
+          "pos": 13,
+          "name": "Francisco Javier Garcia Fernandez",
+          "licencia": "AM10489825",
+          "hcp": 44.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2343985
+        },
+        {
+          "pos": 14,
+          "name": "Francisco Javier Fernandez Calero",
+          "licencia": "AM10489815",
+          "hcp": 42.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2344375
+        },
+        {
+          "pos": 15,
+          "name": "Juan Jose Garcia Muñoz",
+          "licencia": "AM10517387",
+          "hcp": 43.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2344220
+        },
+        {
+          "pos": 16,
+          "name": "Hilario Ruiz Martinez",
+          "licencia": "AM10145519",
+          "hcp": 28,
+          "nivel": "S",
+          "rounds": [],
+          "total": 12,
+          "toPar": 24,
+          "inscribedId": 2344922
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Final Liga Principiantes 25/26",
+      "jugadores": 16
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -36,6 +242,118 @@
       "name": "Pedro Lopez Calero",
       "licencia": "AM10483794",
       "hcp": 35.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Juan Lozano Ollero",
+      "licencia": "AM10476357",
+      "hcp": 37.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Francisco Javier Garcia Fernandez",
+      "licencia": "AM10489825",
+      "hcp": 44.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Luis Sanchez Vasco",
+      "licencia": "AM10487638",
+      "hcp": 48.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Francisco Espejo Carmona",
+      "licencia": "AM10978163",
+      "hcp": 33.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Felix Castro Redondo",
+      "licencia": "AM10072777",
+      "hcp": 30,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Juan Jose Garcia Muñoz",
+      "licencia": "AM10517387",
+      "hcp": 43.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Francisco Javier Fernandez Calero",
+      "licencia": "AM10489815",
+      "hcp": 42.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Carlos Ramon Morales De La Puerta",
+      "licencia": "AM10516709",
+      "hcp": 41,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Rafael Esteo Porras",
+      "licencia": "AM10977984",
+      "hcp": 25.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Antonio Luis Morillo Balsera",
+      "licencia": "CM00292163",
+      "hcp": 36.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Hilario Ruiz Martinez",
+      "licencia": "AM10145519",
+      "hcp": 28,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Pablo Jurado Gonzalez",
+      "licencia": "AM10152586",
+      "hcp": 30.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Joseluis Adell Priego",
+      "licencia": "AM10964326",
+      "hcp": 37.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 16,
+      "name": "Francisco Javier Garcia Garcia",
+      "licencia": "AM10516587",
+      "hcp": 28.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Esther Garcia Martinez",
+      "licencia": "AM10516708",
+      "hcp": 45.3,
       "nivel": "S"
     },
     {
@@ -58,6 +376,111 @@
       "licencia": "AM10483794",
       "hcp": 35.3,
       "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Juan Lozano Ollero",
+      "licencia": "AM10476357",
+      "hcp": 37.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Francisco Javier Garcia Fernandez",
+      "licencia": "AM10489825",
+      "hcp": 44.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Luis Sanchez Vasco",
+      "licencia": "AM10487638",
+      "hcp": 48.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Francisco Espejo Carmona",
+      "licencia": "AM10978163",
+      "hcp": 33.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Felix Castro Redondo",
+      "licencia": "AM10072777",
+      "hcp": 30,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Juan Jose Garcia Muñoz",
+      "licencia": "AM10517387",
+      "hcp": 43.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Francisco Javier Fernandez Calero",
+      "licencia": "AM10489815",
+      "hcp": 42.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Carlos Ramon Morales De La Puerta",
+      "licencia": "AM10516709",
+      "hcp": 41,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Rafael Esteo Porras",
+      "licencia": "AM10977984",
+      "hcp": 25.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Esther Garcia Martinez",
+      "licencia": "AM10516708",
+      "hcp": 45.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Antonio Luis Morillo Balsera",
+      "licencia": "CM00292163",
+      "hcp": 36.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Hilario Ruiz Martinez",
+      "licencia": "AM10145519",
+      "hcp": 28,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Pablo Jurado Gonzalez",
+      "licencia": "AM10152586",
+      "hcp": 30.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Joseluis Adell Priego",
+      "licencia": "AM10964326",
+      "hcp": 37.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 17,
+      "name": "Francisco Javier Garcia Garcia",
+      "licencia": "AM10516587",
+      "hcp": 28.2,
+      "nivel": "Mid"
     }
   ],
   "horarios": [
@@ -239,5 +662,5 @@
   "pdfs": [
     "/uploads/competiciones/cartel/3416476258_71680-final-liga-principiantes-25-26.pdf"
   ],
-  "horariosScrapedAt": "2026-06-22T09:55:25.605Z"
+  "horariosScrapedAt": "2026-06-24T15:01:08.765Z"
 }

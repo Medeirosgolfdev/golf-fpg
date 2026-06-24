@@ -1,7 +1,7 @@
 {
   "tourId": 70903,
   "url": "https://www.nextcaddy.com/tour/70903",
-  "scrapedAt": "2026-06-12T14:42:57.270Z",
+  "scrapedAt": "2026-06-24T14:57:33.466Z",
   "meta": {
     "name": "VIII Torneo Academia Infantil 2025-2026 - 18 hoyos",
     "organizer": null,
@@ -20,9 +20,165 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 12,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Enzo Tirado Alvarez",
+          "licencia": "AMI5946335",
+          "hcp": 54,
+          "nivel": "I",
+          "rounds": [],
+          "total": 46,
+          "toPar": -10,
+          "inscribedId": 2348133
+        },
+        {
+          "pos": 2,
+          "name": "Luca Aguilera Cordero",
+          "licencia": "AMI5488550",
+          "hcp": 26,
+          "nivel": "I",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2338457
+        },
+        {
+          "pos": 3,
+          "name": "Juan Vera Carcavilla",
+          "licencia": "AM00915146",
+          "hcp": 30.6,
+          "nivel": "I",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2344976
+        },
+        {
+          "pos": 4,
+          "name": "Victor Sanabria De Borja",
+          "licencia": "AMI5991948",
+          "hcp": 36.1,
+          "nivel": "I",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2326944
+        },
+        {
+          "pos": 5,
+          "name": "Juan Jose Rodriguez Lopez",
+          "licencia": "AMI5998051",
+          "hcp": 20.3,
+          "nivel": "A",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2335391
+        },
+        {
+          "pos": 6,
+          "name": "Carolina Borrey Wust",
+          "licencia": "AMI5988830",
+          "hcp": 54,
+          "nivel": "I",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2344485
+        },
+        {
+          "pos": 7,
+          "name": "Juan Olid Del Rio",
+          "licencia": "AM11895757",
+          "hcp": 25.3,
+          "nivel": "A",
+          "rounds": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2332145
+        },
+        {
+          "pos": 8,
+          "name": "Carlos Jimenez Pachon",
+          "licencia": "AMI5968707",
+          "hcp": 42.4,
+          "nivel": "I",
+          "rounds": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2343925
+        },
+        {
+          "pos": null,
+          "name": "Aimar Jodar Armario",
+          "licencia": "AMI5522443",
+          "hcp": 36,
+          "nivel": "C",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2346049
+        },
+        {
+          "pos": null,
+          "name": "Bruno Utrera Carracao",
+          "licencia": "AM11978667",
+          "hcp": 13.9,
+          "nivel": "A",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2344940
+        },
+        {
+          "pos": null,
+          "name": "Eliot Anderson Tolosa",
+          "licencia": "AMI5374222",
+          "hcp": 42.2,
+          "nivel": "I",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2333277
+        },
+        {
+          "pos": null,
+          "name": "Alan Anderson Tolosa",
+          "licencia": "AMI5374223",
+          "hcp": 30.7,
+          "nivel": "I",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2333278
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 12
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -61,10 +217,59 @@
     },
     {
       "orden": 6,
+      "name": "Carlos Jimenez Pachon",
+      "licencia": "AMI5968707",
+      "hcp": 42.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 7,
+      "name": "Aimar Jodar Armario",
+      "licencia": "AMI5522443",
+      "hcp": 36,
+      "nivel": "C"
+    },
+    {
+      "orden": 8,
+      "name": "Enzo Tirado Alvarez",
+      "licencia": "AMI5946335",
+      "hcp": 54,
+      "nivel": "I"
+    },
+    {
+      "orden": 9,
       "name": "Juan Olid Del Rio",
       "licencia": "AM11895757",
-      "hcp": 25.5,
+      "hcp": 25.3,
       "nivel": "A"
+    },
+    {
+      "orden": 10,
+      "name": "Bruno Utrera Carracao",
+      "licencia": "AM11978667",
+      "hcp": 13.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 11,
+      "name": "Juan Vera Carcavilla",
+      "licencia": "AM00915146",
+      "hcp": 30.6,
+      "nivel": "I"
+    },
+    {
+      "orden": null,
+      "name": "Jugador",
+      "licencia": "Licencia",
+      "hcp": null,
+      "nivel": "Nivel"
+    },
+    {
+      "orden": 1,
+      "name": "Carolina Borrey Wust",
+      "licencia": "AMI5988830",
+      "hcp": 54,
+      "nivel": "I"
     },
     {
       "orden": null,
@@ -110,10 +315,52 @@
     },
     {
       "orden": 6,
+      "name": "Carlos Jimenez Pachon",
+      "licencia": "15-06-26 15:49",
+      "hcp": 42.4,
+      "nivel": "AMI5968707"
+    },
+    {
+      "orden": 7,
+      "name": "Carolina Borrey Wust",
+      "licencia": "16-06-26 13:19",
+      "hcp": 54,
+      "nivel": "AMI5988830"
+    },
+    {
+      "orden": 8,
+      "name": "Aimar Jodar Armario",
+      "licencia": "17-06-26 15:35",
+      "hcp": 36,
+      "nivel": "AMI5522443"
+    },
+    {
+      "orden": 9,
+      "name": "Enzo Tirado Alvarez",
+      "licencia": "20-06-26 16:45",
+      "hcp": 54,
+      "nivel": "AMI5946335"
+    },
+    {
+      "orden": 10,
       "name": "Juan Olid Del Rio",
       "licencia": "31-05-26 11:22",
-      "hcp": 25.5,
+      "hcp": 25.3,
       "nivel": "AM11895757"
+    },
+    {
+      "orden": 11,
+      "name": "Bruno Utrera Carracao",
+      "licencia": "17-06-26 00:31",
+      "hcp": 13.9,
+      "nivel": "AM11978667"
+    },
+    {
+      "orden": 12,
+      "name": "Juan Vera Carcavilla",
+      "licencia": "17-06-26 09:06",
+      "hcp": 30.6,
+      "nivel": "AM00915146"
     }
   ],
   "horarios": [
@@ -239,5 +486,5 @@
   ],
   "scoreTypes": [],
   "pdfs": [],
-  "horariosScrapedAt": "2026-06-22T09:55:22.496Z"
+  "horariosScrapedAt": "2026-06-24T15:01:00.330Z"
 }

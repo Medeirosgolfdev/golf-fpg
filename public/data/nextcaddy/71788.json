@@ -1,7 +1,7 @@
 {
   "tourId": 71788,
   "url": "https://www.nextcaddy.com/tour/71788",
-  "scrapedAt": "2026-06-22T09:54:49.210Z",
+  "scrapedAt": "2026-06-24T14:57:40.932Z",
   "meta": {
     "name": "Sherry International Golf Group (SIGG) -  Lunes 22 Junio 2026 (Grupo privado)",
     "organizer": null,
@@ -19,10 +19,315 @@
       "Juvenil"
     ]
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 30,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 25,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Gustavo Adolfo Ernesto Contepomi",
+          "licencia": "AMC3959008",
+          "hcp": 28.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2348276
+        },
+        {
+          "pos": 2,
+          "name": "Amaro De La Calle Moya",
+          "licencia": "AMC3792985",
+          "hcp": 24,
+          "nivel": "S",
+          "rounds": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2348285
+        },
+        {
+          "pos": 3,
+          "name": "Mark Glading",
+          "licencia": "AMC3029818",
+          "hcp": 18.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2348277
+        },
+        {
+          "pos": 4,
+          "name": "Antonio Diaz Rivera",
+          "licencia": "AM00898678",
+          "hcp": 18.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2348274
+        },
+        {
+          "pos": 5,
+          "name": "Christopher Davies",
+          "licencia": "AMC3965899",
+          "hcp": 13.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2348273
+        },
+        {
+          "pos": 6,
+          "name": "Juan Carlos Monge Martinez",
+          "licencia": "AM00388228",
+          "hcp": 20.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2348283
+        },
+        {
+          "pos": 7,
+          "name": "Juan Jose Mier-Teran Franco",
+          "licencia": "AM32279016",
+          "hcp": 16.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2348292
+        },
+        {
+          "pos": 8,
+          "name": "Miguel Angel Becerra Moya",
+          "licencia": "AMC3810193",
+          "hcp": 12.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2348280
+        },
+        {
+          "pos": 9,
+          "name": "Christopher J. Jameson",
+          "licencia": "AMC3605717",
+          "hcp": 24.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2348267
+        },
+        {
+          "pos": 10,
+          "name": "Florence Louisa Laruelle",
+          "licencia": "AMC9981836",
+          "hcp": 31.3,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2348270
+        },
+        {
+          "pos": 11,
+          "name": "Lorenzo Carrion Mata",
+          "licencia": "AME7220403",
+          "hcp": 33.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2348291
+        },
+        {
+          "pos": 12,
+          "name": "Javier Rodrigo Antona",
+          "licencia": "AMC3082204",
+          "hcp": 1.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2348718
+        },
+        {
+          "pos": 13,
+          "name": "Edward James",
+          "licencia": "AMC3343313",
+          "hcp": 15,
+          "nivel": "S",
+          "rounds": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2348271
+        },
+        {
+          "pos": 14,
+          "name": "Raul Barroso Benitez",
+          "licencia": "AM00356412",
+          "hcp": 14.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2348269
+        },
+        {
+          "pos": 15,
+          "name": "Jose Antonio Peralta Fraidias",
+          "licencia": "AM32342926",
+          "hcp": 18.5,
+          "nivel": "S",
+          "rounds": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2348288
+        },
+        {
+          "pos": 16,
+          "name": "James Major",
+          "licencia": "AMC9820109",
+          "hcp": 7.9,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2348278
+        },
+        {
+          "pos": 17,
+          "name": "Valentin Gago Perez",
+          "licencia": "AMC9784516",
+          "hcp": 21,
+          "nivel": "S",
+          "rounds": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2348275
+        },
+        {
+          "pos": 18,
+          "name": "Jose Luis Oviedo Granados",
+          "licencia": "AM32358980",
+          "hcp": 10.8,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2348284
+        },
+        {
+          "pos": 19,
+          "name": "Jose Romero Abad",
+          "licencia": "AM32197606",
+          "hcp": 20.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2348279
+        },
+        {
+          "pos": 20,
+          "name": "Tomas Romero Abad",
+          "licencia": "AM32611302",
+          "hcp": 21.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2348281
+        },
+        {
+          "pos": 21,
+          "name": "Dean Jannone",
+          "licencia": "AM25818745",
+          "hcp": 21.1,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2348272
+        },
+        {
+          "pos": 22,
+          "name": "Jose Manuel Salido Hedrera",
+          "licencia": "AMC3899113",
+          "hcp": 26.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2348289
+        },
+        {
+          "pos": 23,
+          "name": "Manuel Gil Cano",
+          "licencia": "AMC3763068",
+          "hcp": 23.2,
+          "nivel": "S",
+          "rounds": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2348282
+        },
+        {
+          "pos": 24,
+          "name": "Fco Javier Roman Garcia",
+          "licencia": "AMC3984887",
+          "hcp": 4.4,
+          "nivel": "J",
+          "rounds": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2348290
+        },
+        {
+          "pos": null,
+          "name": "Peter Green",
+          "licencia": "AMC3904584",
+          "hcp": 15,
+          "nivel": "S",
+          "rounds": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2348268
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 25
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -644,5 +949,6 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": []
+  "pdfs": [],
+  "horariosScrapedAt": "2026-06-24T15:01:09.754Z"
 }

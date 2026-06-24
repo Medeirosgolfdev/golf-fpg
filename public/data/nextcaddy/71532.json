@@ -1,7 +1,7 @@
 {
   "tourId": 71532,
   "url": "https://www.nextcaddy.com/tour/71532",
-  "scrapedAt": "2026-06-12T14:42:48.471Z",
+  "scrapedAt": "2026-06-24T14:57:17.933Z",
   "meta": {
     "name": "FINAL C. INFANTIL B.K. 9P3 HOYOS 13-06-26",
     "organizer": null,
@@ -21,9 +21,154 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 11,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Filippa Geldinovski Ruiz",
+          "licencia": "AM05475428",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2341017
+        },
+        {
+          "pos": 2,
+          "name": "Jaime Gomez-Cano Picardo",
+          "licencia": "AM05472442",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2341022
+        },
+        {
+          "pos": 3,
+          "name": "Rodrigo Auriol Ruiz",
+          "licencia": "AM05473782",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2341025
+        },
+        {
+          "pos": 4,
+          "name": "Jorge Gomez Murillo",
+          "licencia": "AM05519140",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2341021
+        },
+        {
+          "pos": 5,
+          "name": "Guillermo Sierra Bazoberry",
+          "licencia": "AM05477441",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2341010
+        },
+        {
+          "pos": 6,
+          "name": "Gonzalo Martinez Gonzalez",
+          "licencia": "AM05374716",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2341014
+        },
+        {
+          "pos": 7,
+          "name": "Angela Jimenez Canca",
+          "licencia": "AM05027732",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2341026
+        },
+        {
+          "pos": 8,
+          "name": "Teresa Lechuga Melgosa",
+          "licencia": "AM05492626",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2341015
+        },
+        {
+          "pos": 9,
+          "name": "Alejandra Segura Ramos",
+          "licencia": "AM05481678",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2341016
+        },
+        {
+          "pos": 10,
+          "name": "Matilde Lechuga Melgosa",
+          "licencia": "AM05492601",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2341009
+        },
+        {
+          "pos": 11,
+          "name": "Gonzalo Guerrero Argudo",
+          "licencia": "AM05372158",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2341020
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 11
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -317,5 +462,5 @@
   ],
   "scoreTypes": null,
   "pdfs": [],
-  "horariosScrapedAt": "2026-06-12T14:46:13.720Z"
+  "horariosScrapedAt": "2026-06-24T15:01:07.435Z"
 }

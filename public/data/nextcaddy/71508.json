@@ -1,7 +1,7 @@
 {
   "tourId": 71508,
   "url": "https://www.nextcaddy.com/tour/71508",
-  "scrapedAt": "2026-06-12T14:42:47.581Z",
+  "scrapedAt": "2026-06-24T14:57:17.002Z",
   "meta": {
     "name": "FINAL LIGA DE DAMAS 2025-2026",
     "organizer": null,
@@ -20,9 +20,110 @@
     ]
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Final Liga De Damas 2025-2026",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Angela Garcia Rodriguez",
+          "licencia": "AM10885875",
+          "hcp": 38.3,
+          "nivel": "I",
+          "rounds": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2339817
+        },
+        {
+          "pos": 2,
+          "name": "Isabel Maria Aperador Sepulveda",
+          "licencia": "AM10335553",
+          "hcp": 41.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2338712
+        },
+        {
+          "pos": 3,
+          "name": "Ana Isabel Cano Cerezo",
+          "licencia": "AM10953237",
+          "hcp": 34.6,
+          "nivel": "S",
+          "rounds": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2338687
+        },
+        {
+          "pos": 4,
+          "name": "Hazel Madrigal Lopez",
+          "licencia": "AM10991774",
+          "hcp": 24.4,
+          "nivel": "S",
+          "rounds": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2338689
+        },
+        {
+          "pos": 5,
+          "name": "Joaquina Cabrera Lumbreras",
+          "licencia": "AM10988518",
+          "hcp": 30.7,
+          "nivel": "S",
+          "rounds": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2341074
+        },
+        {
+          "pos": 6,
+          "name": "Maria Jose Moreno Sanchez",
+          "licencia": "AM10351267",
+          "hcp": 38.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2341572
+        },
+        {
+          "pos": 7,
+          "name": "Martina Fernandez Moreno",
+          "licencia": "AM10487819",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "total": 3,
+          "toPar": 15,
+          "inscribedId": 2341605
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Final Liga De Damas 2025-2026",
+      "jugadores": 7
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -47,41 +148,34 @@
     },
     {
       "orden": 4,
-      "name": "Vega Lopez Lopez",
-      "licencia": "AM10488615",
-      "hcp": 53.5,
-      "nivel": "B"
-    },
-    {
-      "orden": 5,
       "name": "Angela Garcia Rodriguez",
       "licencia": "AM10885875",
       "hcp": 38.3,
       "nivel": "I"
     },
     {
-      "orden": 6,
+      "orden": 5,
       "name": "Agustina Marquez Torrico",
       "licencia": "AM10092703",
       "hcp": 37.4,
       "nivel": "S"
     },
     {
-      "orden": 7,
+      "orden": 6,
       "name": "Joaquina Cabrera Lumbreras",
       "licencia": "AM10988518",
       "hcp": 30.7,
       "nivel": "S"
     },
     {
-      "orden": 8,
+      "orden": 7,
       "name": "Maria Jose Moreno Sanchez",
       "licencia": "AM10351267",
       "hcp": 38.4,
       "nivel": "Mid"
     },
     {
-      "orden": 9,
+      "orden": 8,
       "name": "Martina Fernandez Moreno",
       "licencia": "AM10487819",
       "hcp": 54,
@@ -117,41 +211,34 @@
     },
     {
       "orden": 4,
-      "name": "Vega Lopez Lopez",
-      "licencia": "AM10488615",
-      "hcp": 53.5,
-      "nivel": "B"
-    },
-    {
-      "orden": 5,
       "name": "Angela Garcia Rodriguez",
       "licencia": "AM10885875",
       "hcp": 38.3,
       "nivel": "I"
     },
     {
-      "orden": 6,
+      "orden": 5,
       "name": "Agustina Marquez Torrico",
       "licencia": "AM10092703",
       "hcp": 37.4,
       "nivel": "S"
     },
     {
-      "orden": 7,
+      "orden": 6,
       "name": "Joaquina Cabrera Lumbreras",
       "licencia": "AM10988518",
       "hcp": 30.7,
       "nivel": "S"
     },
     {
-      "orden": 8,
+      "orden": 7,
       "name": "Maria Jose Moreno Sanchez",
       "licencia": "AM10351267",
       "hcp": 38.4,
       "nivel": "Mid"
     },
     {
-      "orden": 9,
+      "orden": 8,
       "name": "Martina Fernandez Moreno",
       "licencia": "AM10487819",
       "hcp": 54,
@@ -165,11 +252,11 @@
         {
           "time": "18:00",
           "tee": 1,
-          "name": "Agustina Marquez Torrico",
-          "hcp": 37.4,
-          "ins": "2340543",
+          "name": "Isabel Maria Aperador Sepulveda",
+          "hcp": 41.8,
+          "ins": "2338712",
           "jid": "76574",
-          "nivel": "S"
+          "nivel": "M"
         },
         {
           "time": "18:00",
@@ -177,6 +264,15 @@
           "name": "Ana Isabel Cano Cerezo",
           "hcp": 34.6,
           "ins": "2338687",
+          "jid": "76574",
+          "nivel": "S"
+        },
+        {
+          "time": "18:00",
+          "tee": 1,
+          "name": "Agustina Marquez Torrico",
+          "hcp": 37.4,
+          "ins": "2340543",
           "jid": "76574",
           "nivel": "S"
         },
@@ -192,11 +288,20 @@
         {
           "time": "18:00",
           "tee": 2,
-          "name": "Martina Fernandez Moreno",
-          "hcp": 54,
-          "ins": "2341605",
+          "name": "Hazel Madrigal Lopez",
+          "hcp": 24.4,
+          "ins": "2338689",
           "jid": "76574",
-          "nivel": "A"
+          "nivel": "S"
+        },
+        {
+          "time": "18:00",
+          "tee": 2,
+          "name": "Joaquina Cabrera Lumbreras",
+          "hcp": 30.7,
+          "ins": "2341074",
+          "jid": "76574",
+          "nivel": "S"
         },
         {
           "time": "18:00",
@@ -210,38 +315,11 @@
         {
           "time": "18:00",
           "tee": 2,
-          "name": "Joaquina Cabrera Lumbreras",
-          "hcp": 30.7,
-          "ins": "2341074",
+          "name": "Martina Fernandez Moreno",
+          "hcp": 54,
+          "ins": "2341605",
           "jid": "76574",
-          "nivel": "S"
-        },
-        {
-          "time": "18:00",
-          "tee": 3,
-          "name": "Isabel Maria Aperador Sepulveda",
-          "hcp": 41.8,
-          "ins": "2338712",
-          "jid": "76574",
-          "nivel": "M"
-        },
-        {
-          "time": "18:00",
-          "tee": 3,
-          "name": "Vega Lopez Lopez",
-          "hcp": 53.5,
-          "ins": "2338718",
-          "jid": "76574",
-          "nivel": "B"
-        },
-        {
-          "time": "18:00",
-          "tee": 3,
-          "name": "Hazel Madrigal Lopez",
-          "hcp": 24.4,
-          "ins": "2338689",
-          "jid": "76574",
-          "nivel": "S"
+          "nivel": "A"
         }
       ]
     }
@@ -265,5 +343,5 @@
   "pdfs": [
     "/uploads/competiciones/cartel/2529818892_71508-final-liga-de-damas-2025-2026.pdf"
   ],
-  "horariosScrapedAt": "2026-06-12T14:46:13.562Z"
+  "horariosScrapedAt": "2026-06-24T15:01:07.331Z"
 }
