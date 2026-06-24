@@ -26,7 +26,7 @@ import LoadingState from "../LoadingState";
 import Counter from "../Counter";
 import SexBadge from "../SexBadge";
 import ExtLink from "../ExternalLink";
-import { EscPill, RoundPill, ManuelPill } from "../PillBadge";
+import { EscPill, RoundPill, ManuelPill, YearPill } from "../PillBadge";
 import { IntlTournView } from "../IntlTournView";
 import { ScorecardLeaderboard, type ScorecardRow } from "../ScorecardLeaderboard";
 import { KidsLinkCtx } from "../KidsLink";
@@ -113,6 +113,31 @@ function fmtDateRange(d1?: string, d2?: string): string {
   if (a && b && a !== b) return `${a} → ${b}`;
   return a || b || "";
 }
+/** Parte numérica de uma data "DD/MM/YYYY" ou "YYYY-MM-DD". */
+function parseDateParts(s?: string): { y: number; m: number; d: number } | null {
+  if (!s) return null;
+  let m = /^(\d{4})-(\d{1,2})-(\d{1,2})/.exec(s);
+  if (m) return { y: +m[1], m: +m[2], d: +m[3] };
+  m = /(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(s);
+  if (m) return { y: +m[3], m: +m[2], d: +m[1] };
+  return null;
+}
+/** Idade (anos) à data de referência (default: hoje). */
+function ageAtRef(dob?: string, ref?: string): number | null {
+  const b = parseDateParts(dob);
+  if (!b) return null;
+  const t = new Date();
+  const r = parseDateParts(ref) ?? { y: t.getFullYear(), m: t.getMonth() + 1, d: t.getDate() };
+  let age = r.y - b.y;
+  if (r.m < b.m || (r.m === b.m && r.d < b.d)) age--;
+  return age;
+}
+/** Ano de nascimento (primeiro grupo de 4 dígitos da dob). */
+function birthYearOf(dob?: string): number | null {
+  const m = dob ? /\d{4}/.exec(dob) : null;
+  return m ? +m[0] : null;
+}
+
 /** Texto branco/preto consoante a luminosidade da cor de fundo (hex #rrggbb). */
 function fgFor(bg?: string): string {
   if (!bg || !/^#[0-9a-f]{6}$/i.test(bg)) return "#fff";
@@ -157,7 +182,7 @@ function applyToggles(
 
 // ── Sub-vistas: Inscritos e Draw ──────────────────────────────────────
 
-function InscritosView({ lists }: { lists: NonNullable<CircuitDivision["inscritos"]>["lists"] }) {
+function InscritosView({ lists, dateRef }: { lists: NonNullable<CircuitDivision["inscritos"]>["lists"]; dateRef?: string }) {
   const available = lists.filter(l => l.players.length > 0);
   const [active, setActive] = useState(available[0]?.key ?? "");
   useEffect(() => { if (!available.some(l => l.key === active)) setActive(available[0]?.key ?? ""); }, [available, active]);
@@ -174,7 +199,7 @@ function InscritosView({ lists }: { lists: NonNullable<CircuitDivision["inscrito
           ))}
         </div>
       )}
-      <InscritosTable rows={cur.players} />
+      <InscritosTable rows={cur.players} dateRef={dateRef} />
     </div>
   );
 }
@@ -186,18 +211,32 @@ type InscritosSortKey = "pos" | "name" | "escalao" | "sex" | "club" | "hcp" | "d
 function anyCountry(rows: CircuitInscritoRow[]): boolean { return rows.some(p => !!p.country); }
 function anyFed(rows: CircuitInscritoRow[]): boolean { return rows.some(p => !!p.fed); }
 
-function InscritosTable({ rows }: { rows: CircuitInscritoRow[] }) {
+function InscritosTable({ rows, dateRef }: { rows: CircuitInscritoRow[]; dateRef?: string }) {
   const { sortKey, sortDir, toggleSort } = useSort<InscritosSortKey>("pos");
-  // Cada coluna opcional só aparece se ALGUM jogador tiver esse dado — uma coluna
-  // 100% vazia (ex: "Estado" quando ninguém tem estado) fica oculta.
-  const showCountry = anyCountry(rows);
+  const [q, setQ] = useState("");
+  // Layout alinhado com a aba Inscrições da FPG (AdmissionsTab): bandeira + sexo
+  // ficam INLINE no nome (não em colunas próprias); colunas = ESC · Lic · Clube ·
+  // HCP · Nasc. (ano + idade). Cada coluna opcional só aparece se ALGUM jogador
+  // tiver esse dado (uma coluna 100% vazia fica oculta).
+  const hasCountry = anyCountry(rows);
+  const hasSex = rows.some(p => p.sex === "M" || p.sex === "F");
   const showFed = anyFed(rows);
   const showEsc = rows.some(p => !!p.escalao);
-  const showSex = rows.some(p => p.sex === "M" || p.sex === "F");
   const showClub = rows.some(p => !!p.club);
   const showHcp = rows.some(p => p.hcp != null);
   const showDob = rows.some(p => !!p.dob);
   const showStatus = rows.some(p => !!p.status);
+
+  // Pesquisa por nome / clube / licença (igual à aba Inscrições da FPG).
+  const term = normName(q);
+  const filtered = useMemo(() => {
+    if (!term) return rows;
+    return rows.filter(p =>
+      normName(p.name || "").includes(term) ||
+      normName(p.club || "").includes(term) ||
+      (p.fed || "").toLowerCase().includes(term)
+    );
+  }, [rows, term]);
 
   const sorted = useMemo(() => {
     const dir = sortDir === "asc" ? 1 : -1;
@@ -215,17 +254,17 @@ function InscritosTable({ rows }: { rows: CircuitInscritoRow[] }) {
         case "fed": return (p.fed || "").toLowerCase();
       }
     };
-    return [...rows].sort((a, b) => {
+    return [...filtered].sort((a, b) => {
       const va = val(a), vb = val(b);
       return va < vb ? -dir : va > vb ? dir : 0;
     });
-  }, [rows, sortKey, sortDir]);
+  }, [filtered, sortKey, sortDir]);
 
   // Construído sobre o ScorecardLeaderboard (mesmo componente/estilo .sc-lb que
-  // os resultados e o resto da app) — sem scorecard nem colunas de total. As
-  // colunas próprias (País/Escalão/Sx/Clube/Lic./HCP/Nasc./Estado) entram como
-  // prefix/postScorecard cells; a ordenação é externa (useSort acima), por isso
-  // passamos sortable=false + activeSortKey/Dir + SortableHdr nos headers custom.
+  // os resultados e o resto da app) — sem scorecard nem colunas de total. Layout
+  // FPG: bandeira+sexo INLINE no nome; colunas ESC./Lic./Clube/HCP/Nasc. entram
+  // como prefix cells e Estado como postScorecard; a ordenação é externa (useSort
+  // acima), por isso passamos activeSortKey/Dir + SortableHdr nos headers custom.
   const scRows: ScorecardRow[] = sorted.map((p, i) => {
     const manuel = isManuelByName(p.name);
     const pt = !manuel && (p.country ? flag(p.country) === "🇵🇹" : false);
@@ -239,21 +278,36 @@ function InscritosTable({ rows }: { rows: CircuitInscritoRow[] }) {
       sortPos: typeof p.pos === "number" ? p.pos : null,
       sortName: p.name,
       nameContent: (
-        <span className="tourn-pname">{p.name}{manuel && <> <ManuelPill /></>}</span>
+        <span className="tourn-pname" style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+          {hasCountry && p.country && (
+            <span title={p.country} style={{ fontSize: "var(--fs-16)" }}>{flag(p.country)}</span>
+          )}
+          {p.name}
+          {hasSex && p.sex && <SexBadge sex={p.sex} />}
+          {manuel && <ManuelPill />}
+        </span>
       ),
       prefixCells: (
         <>
-          {showCountry && (
-            <td className="lb-club" title={p.country || ""} style={{ textAlign: "center", fontSize: "var(--fs-16)" }}>
-              {p.country ? flag(p.country) : "—"}
-            </td>
-          )}
-          {showEsc && <td className="lb-esc">{p.escalao ? <EscPill esc={p.escalao} /> : <span className="muted">—</span>}</td>}
-          {showSex && <td style={{ textAlign: "center" }}>{p.sex ? <SexBadge sex={p.sex} /> : <span className="muted">—</span>}</td>}
-          {showClub && <td className="lb-club" style={{ textAlign: "left" }}>{p.club || "—"}</td>}
-          {showFed && <td className="lb-fed">{p.fed || "—"}</td>}
-          {showHcp && <td className="lb-hcp">{p.hcp != null ? p.hcp.toFixed(1) : "—"}</td>}
-          {showDob && <td className="lb-club" style={{ textAlign: "center", whiteSpace: "nowrap" }}>{p.dob || "—"}</td>}
+          {showEsc && <td className="lb-esc">{p.escalao ? <EscPill esc={p.escalao} /> : <span className="muted">–</span>}</td>}
+          {showFed && <td className="lb-fed">{p.fed || "–"}</td>}
+          {showClub && <td className="lb-club" title={p.club || ""} style={{ textAlign: "left" }}>{p.club || "–"}</td>}
+          {showHcp && <td className="lb-hcp">{p.hcp != null ? p.hcp.toFixed(1) : "–"}</td>}
+          {showDob && (() => {
+            const yr = birthYearOf(p.dob);
+            const age = ageAtRef(p.dob, dateRef);
+            return (
+              <td title={p.dob ? `${p.dob}${age != null ? ` (${age} anos à data)` : ""}` : ""}
+                  style={{ textAlign: "center", padding: "6px 8px", whiteSpace: "nowrap" }}>
+                {yr != null ? (
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+                    <YearPill year={yr} />
+                    {age != null && <span className="muted fs-10">({age})</span>}
+                  </span>
+                ) : <span className="muted">–</span>}
+              </td>
+            );
+          })()}
         </>
       ),
       postScorecardCells: showStatus ? (
@@ -268,14 +322,22 @@ function InscritosTable({ rows }: { rows: CircuitInscritoRow[] }) {
 
   const prefixHeaderCells = (
     <>
-      {showCountry && <SortableHdr k="country" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>País</SortableHdr>}
-      {showEsc && <SortableHdr k="escalao" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-esc">Escalão</SortableHdr>}
-      {showSex && <SortableHdr k="sex" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Sx</SortableHdr>}
-      {showClub && <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-club">Clube</SortableHdr>}
+      {showEsc && <SortableHdr k="escalao" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-esc">ESC.</SortableHdr>}
       {showFed && <SortableHdr k="fed" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-fed">Lic.</SortableHdr>}
+      {showClub && <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-club">CLUBE</SortableHdr>}
       {showHcp && <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-hcp">HCP</SortableHdr>}
-      {showDob && <SortableHdr k="dob" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Nasc.</SortableHdr>}
+      {showDob && <SortableHdr k="dob" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ padding: "7px 8px", textAlign: "center" }}>Nasc.</SortableHdr>}
     </>
+  );
+
+  const filterBar = (
+    <div className="detail-toolbar">
+      <input className="input" value={q} onChange={e => setQ(e.target.value)}
+        placeholder="Nome, clube, licença..." style={{ maxWidth: 240 }} />
+      <span className="muted fs-12">
+        {term ? `${filtered.length} de ${rows.length} inscritos` : `${rows.length} inscritos`}
+      </span>
+    </div>
   );
 
   return (
@@ -284,6 +346,7 @@ function InscritosTable({ rows }: { rows: CircuitInscritoRow[] }) {
       rows={scRows}
       showScorecard={false}
       hideTotals
+      filterBar={filterBar}
       prefixHeaderCells={prefixHeaderCells}
       postScorecardHeaderCells={
         showStatus ? <SortableHdr k="status" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Estado</SortableHdr> : undefined
@@ -512,6 +575,33 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
     ? applyToggles(curDiv.results, toggles, vetIndex, vetThreshold)
     : null;
 
+  // ── Inscritos / Draw como tabs iniciais da barra única (estilo FPG) ──
+  // Quando há resultados de ronda, fundem-se na barra do IntlTournView:
+  //   Inscritos → Draw → R1 → R2 → … → Resumo → 📋 Scorecards
+  // (em vez de viverem numa barra de secção separada por cima). Sem rondas
+  // (customResults / só inscritos), ficam como barra de secção — ver render.
+  const leadingTabs: { key: string; label: string; content: React.ReactNode }[] = [];
+  if (curDiv && !curDiv.renderFull) {
+    if (sections.includes("inscritos")) {
+      leadingTabs.push({
+        key: "inscritos",
+        label: `${SECTION_DEF.inscritos.icon} ${SECTION_DEF.inscritos.label}`,
+        content: curDiv.renderInscritos
+          ? curDiv.renderInscritos()
+          : (curDiv.inscritos ? <InscritosView lists={curDiv.inscritos.lists} dateRef={cur?.dateStart ?? cur?.dateEnd} /> : null),
+      });
+    }
+    if (sections.includes("draw")) {
+      leadingTabs.push({
+        key: "draw",
+        label: `${SECTION_DEF.draw.icon} ${SECTION_DEF.draw.label}`,
+        content: curDiv.renderDrawSection
+          ? curDiv.renderDrawSection()
+          : (curDiv.draw ? <DrawView rounds={curDiv.draw.rounds} /> : null),
+      });
+    }
+  }
+
   // ── Stats para o header rico (estilo FPGPage) ───────────────────────
   const headerStats = (() => {
     const res = curDiv?.results;
@@ -735,24 +825,6 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
                 />
                 )}
 
-                {/* Tabs de secção (Resultados / Inscritos / Draw) */}
-                {sections.length > 1 && !curDiv.renderFull && (
-                  <div className="tab-bar" style={{ marginBottom: 8 }}>
-                    {sections.map(s => (
-                      <button
-                        key={s}
-                        className={`tab-under${curSection === s ? " active" : ""}`}
-                        onClick={() => setSection(s)}
-                      >
-                        {SECTION_DEF[s].icon} {SECTION_DEF[s].label}
-                        {s === "results" && curDiv.results && (
-                          <span className="muted"> ({curDiv.results.players.length})</span>
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                )}
-
                 {/* Tabs de escalão (.tab-under) */}
                 {curDivisions.length > 1 && (
                   <div style={{ display: "flex", gap: 2, flexWrap: "wrap", borderBottom: "1px solid var(--border)", marginBottom: 10, overflowX: "auto" }}>
@@ -778,9 +850,14 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
                   </div>
                 )}
 
-                {/* Conteúdo da secção activa */}
+                {/* Conteúdo do torneio.
+                    • Com resultados de ronda → barra ÚNICA estilo FPG: as tabs
+                      Inscritos/Draw entram como `leadingTabs` ANTES de R1, na mesma
+                      barra do IntlTournView (Inscritos → Draw → R1 → … → Resumo).
+                    • Sem rondas (customResults / só inscritos) → barra de secção
+                      simples (já era plana, sem aninhamento). */}
                 {curDiv.renderFull && curDiv.renderFull()}
-                {!curDiv.renderFull && curSection === "results" && (resultsTourn ? (
+                {!curDiv.renderFull && (resultsTourn ? (
                   <IntlTournView
                     tournament={resultsTourn}
                     scOptions={curDiv.scOptions ?? {}}
@@ -792,20 +869,37 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
                     accExtra={curDiv.accExtra}
                     renderAccSection={curDiv.renderAccSection}
                     renderRoundSection={curDiv.renderRoundSection}
+                    leadingTabs={leadingTabs.length ? leadingTabs : undefined}
                   />
-                ) : curDiv.customResults ? (
-                  curDiv.customResults
-                ) : null)}
-                {curSection === "inscritos" && (
-                  curDiv.renderInscritos
-                    ? curDiv.renderInscritos()
-                    : curDiv.inscritos && <InscritosView lists={curDiv.inscritos.lists} />
-                )}
-                {curSection === "draw" && (
-                  curDiv.renderDrawSection
-                    ? curDiv.renderDrawSection()
-                    : curDiv.draw && <DrawView rounds={curDiv.draw.rounds} />
-                )}
+                ) : (
+                  <>
+                    {/* Sem rondas: barra de secção (Resultados custom / Inscritos / Draw) */}
+                    {sections.length > 1 && (
+                      <div className="tab-bar" style={{ marginBottom: 8 }}>
+                        {sections.map(s => (
+                          <button
+                            key={s}
+                            className={`tab-under${curSection === s ? " active" : ""}`}
+                            onClick={() => setSection(s)}
+                          >
+                            {SECTION_DEF[s].icon} {SECTION_DEF[s].label}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                    {curSection === "results" && curDiv.customResults}
+                    {curSection === "inscritos" && (
+                      curDiv.renderInscritos
+                        ? curDiv.renderInscritos()
+                        : curDiv.inscritos && <InscritosView lists={curDiv.inscritos.lists} dateRef={cur?.dateStart ?? cur?.dateEnd} />
+                    )}
+                    {curSection === "draw" && (
+                      curDiv.renderDrawSection
+                        ? curDiv.renderDrawSection()
+                        : curDiv.draw && <DrawView rounds={curDiv.draw.rounds} />
+                    )}
+                  </>
+                ))}
               </>
             ) : (
               <EmptyState message="Sem dados para este torneio." />

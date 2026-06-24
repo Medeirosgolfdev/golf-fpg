@@ -306,6 +306,8 @@ function lgsToFPGTournament(
       _age: age,
       nholes: 18,
       parTotal,
+      courseRating: lgs.course?.courseRating ?? undefined,
+      slope: lgs.course?.slope ?? undefined,
       scores: a.rounds[0]?.scores || [],
       par,
       si: lgs.course?.si || [],
@@ -332,7 +334,8 @@ function lgsScorecardOptions(): ScorecardOptions {
   // - ESC visível (idade → Sub-N, pill colorido global)
   // - HCP visível (coluna própria, sortable)
   // - CLUBE escondido (irrelevante em ES — não conhecemos os clubes)
-  // - SD escondido (não temos CR/slope)
+  // - SD visível quando há CR/Slope (Valor del campo) — cai para "–" quando o
+  //   torneio não os publica (ou ainda não foi re-scrapado)
   // - TEE escondido
   // - noPlayerLink: licenças espanholas (AM12345...) não correspondem a fed codes
   //   FPG — não criar link /jogadores/{fed} a apontar para nada útil.
@@ -340,7 +343,7 @@ function lgsScorecardOptions(): ScorecardOptions {
     hideHCP: false,
     hideEsc: false,
     hideClub: true,
-    hideSD: true,
+    hideSD: false,
     hideTee: true,
     showAge: true,
     noPlayerLink: true,
@@ -913,7 +916,9 @@ function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup):
     sexo: "" as string,
     categoria: "" as string,
     pdfUrl: `https://rfegolf.livegolfscoring.es/torneos/clasificacion/${lgs.id}`,
-    nRounds, courseRating: null as number | null, slope: null as number | null,
+    nRounds,
+    courseRating: ((lgs.course as { courseRating?: number | null } | null)?.courseRating ?? null) as number | null,
+    slope: ((lgs.course as { slope?: number | null } | null)?.slope ?? null) as number | null,
     players: aggregated.map(a => ({
       pos: a.pos,
       name: a.name,

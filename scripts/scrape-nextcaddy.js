@@ -287,10 +287,7 @@ function parseScorecard(html) {
 
   for (let i = 0; i < allRows.length; i++) {
     if (!isHeader(allRows[i])) continue;
-    const is9H = !isHeader18(allRows[i]) && isHeader9(allRows[i]);
-    if (is9H) nineHole = true;
-    const holesOnly = is9H ? holesOnly9 : holesOnly18;
-    const minScores = is9H ? 9 : 18;
+    const header18 = isHeader18(allRows[i]);
 
     const block = allRows.slice(i + 1, i + 7);
     const metrosRow = block.find((rr) => /^Metros$/i.test(rr[0] || ""));
@@ -298,16 +295,29 @@ function parseScorecard(html) {
     const parRow = block.find((rr) => /^Par$/i.test(rr[0] || ""));
     if (!parRow) continue;
 
+    const parIdx = allRows.indexOf(parRow);
+    if (parIdx < 0 || parIdx + 1 >= allRows.length) continue;
+    const scoresRow = allRows[parIdx + 1];
+    const sNums = numCells(scoresRow, 1);
+
+    // Buracos jogados — decididos pelo SCORE ROW, não só pelo cabeçalho.
+    // Um torneio de 9 buracos pode correr num campo de 18 (ex. pitch&putt de
+    // 9 buracos renderizado como 9×2, caso 71639): o cabeçalho mostra 18H mas
+    // o jogador só tem 9 scores + total (≤12 valores numéricos). Nesse caso
+    // tratamos como 9H — par/SI/metros e scores ficam só com a frente.
+    // holesOnly9 corta sempre slice(0,9), por isso aplica-se igual a um
+    // cabeçalho 18H reduzido (mete a fila completa de par/metros/hcp em frente-9).
+    const effNine = !header18 || sNums.length <= 12;
+    if (effNine) nineHole = true;
+    const holesOnly = effNine ? holesOnly9 : holesOnly18;
+    const minScores = effNine ? 9 : 18;
+
     if (par == null) {
       par = holesOnly(numCells(parRow, 1));
       if (hcpRow) si = holesOnly(numCells(hcpRow, 1));
       if (metrosRow) meters = holesOnly(numCells(metrosRow, 2));
     }
 
-    const parIdx = allRows.indexOf(parRow);
-    if (parIdx < 0 || parIdx + 1 >= allRows.length) continue;
-    const scoresRow = allRows[parIdx + 1];
-    const sNums = numCells(scoresRow, 1);
     if (sNums.length < minScores) continue;
     const scores = holesOnly(sNums);
     const total = sNums[sNums.length - 1] ?? null;
@@ -317,19 +327,27 @@ function parseScorecard(html) {
   return { par, si, meters, rounds, nineHole };
 }
 
-async function fetchScorecard(inscribedId) {
-  // FAIL-FAST: timeout 6s, sem retries. Os que falharem são apanhados no patch mode.
+async function fetchScorecard(inscribedId, opts) {
+  // FAIL-FAST por tentativa: timeout 6s. Por omissão sem retries — o scrape bulk
+  // mantém-se rápido e os falhados são apanhados depois pelo patch mode. O patch
+  // mode passa { retries: N }: repete falhas transientes/throttle (timeout,
+  // não-200, corpo curto) com backoff progressivo, enchendo stragglers numa só
+  // passagem em vez de exigir várias re-execuções manuais.
   if (!inscribedId) return null;
-  try {
-    const r = await Promise.race([
-      get(`${BASE}/tarjeta-aux/${inscribedId}/-1`),
-      new Promise((_, rej) => setTimeout(() => rej(new Error("timeout-fast")), 6000)),
-    ]);
-    if (r.status !== 200 || r.body.length < 5000) return null;
-    return parseScorecard(r.body);
-  } catch {
-    return null;
+  const retries = (opts && opts.retries) || 0;
+  const retryDelay = (opts && opts.retryDelay) || 500;
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const r = await Promise.race([
+        get(`${BASE}/tarjeta-aux/${inscribedId}/-1`),
+        new Promise((_, rej) => setTimeout(() => rej(new Error("timeout-fast")), 6000)),
+      ]);
+      if (r.status === 200 && r.body.length >= 5000) return parseScorecard(r.body);
+      // não-200 / corpo curto = throttle ou erro transiente → tenta de novo
+    } catch { /* timeout / erro de rede → tenta de novo */ }
+    if (attempt < retries) await new Promise((res) => setTimeout(res, retryDelay * (attempt + 1)));
   }
+  return null;
 }
 
 /* ─── parseInscritos — inscritos list ─────────────────────────── */
@@ -765,7 +783,7 @@ async function main() {
           async function pworker() {
             while (pcursor < uniqueMissing.length) {
               const id = uniqueMissing[pcursor++];
-              const sc = await fetchScorecard(id);
+              const sc = await fetchScorecard(id, { retries: 3 });
               cache.set(id, sc);
               await new Promise((r) => setTimeout(r, 100));
             }
@@ -779,15 +797,25 @@ async function main() {
             if (sc && sc.rounds && sc.rounds.length) {
               p.roundScores = sc.rounds;
               appliedCount++;
-              // course pode ser {par: null,...} (truthy mas vazio) — usar par como teste real
-              if ((!r.course || !Array.isArray(r.course.par)) && sc.par) r.course = { par: sc.par, si: sc.si, meters: sc.meters };
+              // course pode ser {par: null,...} (truthy mas vazio) — usar par como teste real.
+              // Actualiza também quando o nº de buracos do scorecard fresco diverge do
+              // armazenado (ex.: 18 stale de um run buggy → 9 reais num torneio de 9 buracos).
+              if (sc.par && (!r.course || !Array.isArray(r.course.par) || r.course.par.length !== sc.par.length)) {
+                r.course = { par: sc.par, si: sc.si, meters: sc.meters };
+              }
             }
           }
-          r.scrapedAt = new Date().toISOString();
-          fs.writeFileSync(outFile, JSON.stringify(r, null, 2));
           const elapsed = ((Date.now() - t0) / 1000).toFixed(1);
           const remaining = uniqueMissing.length - appliedCount;
-          console.log(`  [${idx + 1}/${tours.length}] ${tid}: ${(r.meta && r.meta.name) || "?"} (patch +${appliedCount}/${uniqueMissing.length}${remaining > 0 ? `, ${remaining} ainda em falta` : ""}, ${elapsed}s)`);
+          // Só reescreve se algo foi realmente aplicado. Caso contrário (todos os
+          // fetches throttled/falhados) era só churn de timestamp — o ficheiro
+          // aparecia "modificado" no git apenas pela mudança de scrapedAt, sem
+          // dados novos. Deixar intacto para o git não o marcar.
+          if (appliedCount > 0) {
+            r.scrapedAt = new Date().toISOString();
+            fs.writeFileSync(outFile, JSON.stringify(r, null, 2));
+          }
+          console.log(`  [${idx + 1}/${tours.length}] ${tid}: ${(r.meta && r.meta.name) || "?"} (patch +${appliedCount}/${uniqueMissing.length}${remaining > 0 ? `, ${remaining} ainda em falta` : ""}${appliedCount === 0 ? " — sem alterações, não regravado" : ""}, ${elapsed}s)`);
           ok++; continue;
         }
         r = await scrapeTour(tid, { scorecards: fetchScorecards });

@@ -49,6 +49,13 @@ export interface IntlTournViewProps {
   renderAccSection?: (leaderboard: React.ReactNode) => React.ReactNode;
   /** Override das colunas do AccumulatedLB (default: { esc: false, fed: false, tee: false }). */
   accShowCols?: { esc?: boolean; fed?: boolean; tee?: boolean; club?: boolean; hcp?: boolean; age?: boolean; birthYear?: boolean };
+  /**
+   * Tabs colocadas ANTES das tabs de ronda, na MESMA barra (ex: Inscritos, Draw).
+   * Produz uma progressão única estilo FPG:
+   *   Inscritos → Draw → R1 → R2 → … → Resumo → 📋 Scorecards
+   * Vazio/ausente = comportamento original (só rondas).
+   */
+  leadingTabs?: { key: string; label: string; content: React.ReactNode }[];
 }
 
 export function IntlTournView({
@@ -63,9 +70,11 @@ export function IntlTournView({
   renderRoundSection,
   renderAccSection,
   accShowCols,
+  leadingTabs,
 }: IntlTournViewProps) {
   const nR = tournament.rounds || 1;
   const isMulti = nR > 1;
+  const nLeading = leadingTabs?.length ?? 0;
 
   const nameDecoratorFn: ScorecardOptions["nameDecorator"] = useCallback(
     (name: string, content: React.ReactNode) => (
@@ -136,8 +145,8 @@ export function IntlTournView({
     } as any;
   }, [tournament, cutAfterRound]);
 
-  // Tab labels
-  const tabLabels = useMemo(() => {
+  // Tab labels das RONDAS (sem as leadingTabs).
+  const roundTabLabels = useMemo(() => {
     if (!isMulti) return ["Scorecard"];
     const baseLabels: string[] = [];
     expanded.forEach((t: any, i: number) => {
@@ -155,18 +164,34 @@ export function IntlTournView({
     return baseLabels;
   }, [isMulti, expanded, roundLabels, cutAfterRound]);
 
-  const [tab, setTab] = useState(0);
+  // Barra única: [leadingTabs…, rondas…]. Estilo FPG (Inscritos → Draw → R1 → …).
+  const combinedLabels = useMemo(
+    () => [...(leadingTabs?.map(t => t.label) ?? []), ...roundTabLabels],
+    [leadingTabs, roundTabLabels],
+  );
+  // Mostrar barra se há >1 tab no total (rondas multi OU leadingTabs presentes).
+  const showTabBar = combinedLabels.length > 1;
 
-  // Mapear `tab` index para entry de expanded (considerando tab Pre-Cut inserida).
-  // Se tab == cutAfterRound (a tab Pre-Cut), curT = preCutTourn.
-  // Se tab > cutAfterRound, descontar 1 ao indice antes de mapear a expanded.
-  const isPreCutTab = isMulti && cutAfterRound != null && tab === cutAfterRound;
-  const expIdx = (cutAfterRound != null && tab > cutAfterRound) ? tab - 1 : tab;
+  // Início: primeira tab de ronda (índice nLeading) — abre nos resultados, como a
+  // FPG quando já há resultados; as leadingTabs (Inscritos/Draw) ficam à esquerda.
+  const [tab, setTab] = useState(() => nLeading);
+  const safeTab = Math.min(Math.max(tab, 0), Math.max(0, combinedLabels.length - 1));
+
+  // Tab activa é uma leadingTab?
+  const leadingActive = safeTab < nLeading;
+  // Índice equivalente na lógica de rondas (descontando as leadingTabs).
+  const rtab = Math.max(0, safeTab - nLeading);
+
+  // Mapear `rtab` para entry de expanded (considerando tab Pre-Cut inserida).
+  // Se rtab == cutAfterRound (a tab Pre-Cut), curT = preCutTourn.
+  // Se rtab > cutAfterRound, descontar 1 ao indice antes de mapear a expanded.
+  const isPreCutTab = isMulti && cutAfterRound != null && rtab === cutAfterRound;
+  const expIdx = (cutAfterRound != null && rtab > cutAfterRound) ? rtab - 1 : rtab;
   const curT = isMulti
     ? (isPreCutTab && preCutTourn ? preCutTourn : expanded[Math.min(expIdx, expanded.length - 1)])
     : tournament;
-  const isAcc      = isMulti && !!(curT as any)?._isTotal;
-  const isCombined = isMulti && tabLabels[tab] === COMBINED_TAB;
+  const isAcc      = !leadingActive && isMulti && !!(curT as any)?._isTotal;
+  const isCombined = !leadingActive && isMulti && roundTabLabels[rtab] === COMBINED_TAB;
 
   // Build the leaderboard elements for render-section callbacks
   const accLB = (
@@ -190,27 +215,29 @@ export function IntlTournView({
 
   return (
     <div>
-      {/* Tab bar */}
-      {isMulti && (
+      {/* Tab bar única (leadingTabs + rondas) */}
+      {showTabBar && (
         <div className="tab-bar">
-          {tabLabels.map((label, i) => (
-            <button key={i} className={`tab-under${tab === i ? " active" : ""}`} onClick={() => setTab(i)}>{label}</button>
+          {combinedLabels.map((label, i) => (
+            <button key={i} className={`tab-under${safeTab === i ? " active" : ""}`} onClick={() => setTab(i)}>{label}</button>
           ))}
         </div>
       )}
 
       {/* Content */}
-      {isCombined
-        ? <AllRoundsScorecardLB tournament={tournament} escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB} options={opts} />
-        : isAcc
-          ? (renderAccSection
-              ? renderAccSection(accLB)
-              : <>{accHeader}{accLB}{accExtra}</>
-            )
-          : (renderRoundSection
-              ? renderRoundSection(roundLB, tab)
-              : <>{roundLB}{roundExtra?.(tab)}</>
-            )
+      {leadingActive
+        ? leadingTabs![safeTab].content
+        : isCombined
+          ? <AllRoundsScorecardLB tournament={tournament} escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB} options={opts} />
+          : isAcc
+            ? (renderAccSection
+                ? renderAccSection(accLB)
+                : <>{accHeader}{accLB}{accExtra}</>
+              )
+            : (renderRoundSection
+                ? renderRoundSection(roundLB, rtab)
+                : <>{roundLB}{roundExtra?.(rtab)}</>
+              )
       }
     </div>
   );
