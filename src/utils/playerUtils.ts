@@ -7,6 +7,7 @@
 
 import type { Player } from "../data/types";
 import type { NormalizedTournament } from "./tournamentTypes";
+import { displayName } from "./format";
 
 /** Nome curto do clube (aceita string ou objecto {short, long}) */
 export function clubShort(p: Player): string {
@@ -211,7 +212,10 @@ export function formatPlayerName(raw: string): string {
     }).join(" ");
     return `${cap(first)} ${cap(last)}`.trim();
   }
-  return raw;
+  // Sem vírgula: o nome pode vir em ALL CAPS (ex: dados RFEG/FPG "JOSÉ GARCIA").
+  // displayName() detecta >45% maiúsculas → Title Case; nomes já bem-formatados
+  // passam intactos (apenas com tratamento de partículas). Idempotente.
+  return displayName(raw);
 }
 
 /**

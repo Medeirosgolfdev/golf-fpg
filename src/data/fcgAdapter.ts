@@ -15,6 +15,7 @@
  * + escalões). Como RFEGDetail tem só 1 meta.category, juntamos players de todas
  * as categorias e usamos `__cat` para identificar (mostrado na UI).
  */
+import { displayName as displayCase } from "../utils/format";
 
 // Types redefinidos localmente (DobLookup/HcpLookup são privados ao RFEGPage.tsx).
 // Compatíveis estruturalmente — TypeScript faz duck typing.
@@ -141,10 +142,13 @@ export interface MinimalRFEGShape {
   __categories?: FCGCategory[];
 }
 
-function displayName(first: string | null | undefined, last: string | null | undefined): string {
+// Nomes no golfdirecto vêm em ALL CAPS ("NIL", "CARRERA COSTA"). displayName()
+// (de format.ts) detecta >45% maiúsculas → Title Case, igualando o aspeto das
+// outras fontes/páginas. Nome já bem-formatado passa intacto.
+function fmtName(first: string | null | undefined, last: string | null | undefined): string {
   const a = (first || "").trim();
   const b = (last || "").trim();
-  return [a, b].filter(Boolean).join(" ");
+  return displayCase([a, b].filter(Boolean).join(" "));
 }
 
 export function adaptFcg(d: FCGDetail, dobLookup?: DobLookup, _hcpLookup?: HcpLookup): MinimalRFEGShape {
@@ -187,7 +191,7 @@ export function adaptFcg(d: FCGDetail, dobLookup?: DobLookup, _hcpLookup?: HcpLo
       const toPar = typeof acc.onlyGross === "number" ? acc.onlyGross : (typeof day.onlyGross === "number" ? day.onlyGross : null);
       admitidos.push({
         pos,
-        name: displayName(p.firstName, p.surname),
+        name: fmtName(p.firstName, p.surname),
         licencia: lic,
         pais: p.country,
         hcp: p.hcpExact,
@@ -408,7 +412,7 @@ export function fcgToFPGTournament(detail: MinimalRFEGShape, dobLookup?: DobLook
       players.push({
         scoreId: `fcg-${detail.compId}-${scoreIdCounter++}`,
         pos,
-        name: [p.firstName, p.surname].filter(Boolean).join(" "),
+        name: fmtName(p.firstName, p.surname),
         club: dobEntry?.club || "—",
         fed: lic,
         fedCode: lic,

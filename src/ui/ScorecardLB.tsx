@@ -323,7 +323,10 @@ export function ScorecardLB({
         // Em RFEG (noPlayerLink), licenças espanholas não correspondem a fed codes
         // FPG — render plain text para não criar link /jogadores/{fed} inútil.
         const baseInner = noLink ? (
-          <span style={{ fontWeight: isManuel(p) ? 700 : undefined }}>{p.name}</span>
+          // Mesma classe que TournPName usa noutras páginas (.tourn-pname =
+          // font-weight 700) — sem isto os nomes RFEG ficavam normais enquanto
+          // os das vistas Resumo/Inscritos e das outras páginas são bold.
+          <span className="tourn-pname">{p.name}</span>
         ) : (
           <PName
             name={p.name}

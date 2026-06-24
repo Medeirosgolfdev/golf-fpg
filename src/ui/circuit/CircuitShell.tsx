@@ -28,6 +28,7 @@ import SexBadge from "../SexBadge";
 import ExtLink from "../ExternalLink";
 import { EscPill, RoundPill, ManuelPill } from "../PillBadge";
 import { IntlTournView } from "../IntlTournView";
+import { ScorecardLeaderboard, type ScorecardRow } from "../ScorecardLeaderboard";
 import { KidsLinkCtx } from "../KidsLink";
 import { useKidsLinkMap } from "../../hooks/useKidsLinkMap";
 import { isManuelByName } from "../../constants/manuel";
@@ -187,8 +188,16 @@ function anyFed(rows: CircuitInscritoRow[]): boolean { return rows.some(p => !!p
 
 function InscritosTable({ rows }: { rows: CircuitInscritoRow[] }) {
   const { sortKey, sortDir, toggleSort } = useSort<InscritosSortKey>("pos");
+  // Cada coluna opcional só aparece se ALGUM jogador tiver esse dado — uma coluna
+  // 100% vazia (ex: "Estado" quando ninguém tem estado) fica oculta.
   const showCountry = anyCountry(rows);
   const showFed = anyFed(rows);
+  const showEsc = rows.some(p => !!p.escalao);
+  const showSex = rows.some(p => p.sex === "M" || p.sex === "F");
+  const showClub = rows.some(p => !!p.club);
+  const showHcp = rows.some(p => p.hcp != null);
+  const showDob = rows.some(p => !!p.dob);
+  const showStatus = rows.some(p => !!p.status);
 
   const sorted = useMemo(() => {
     const dir = sortDir === "asc" ? 1 : -1;
@@ -212,50 +221,79 @@ function InscritosTable({ rows }: { rows: CircuitInscritoRow[] }) {
     });
   }, [rows, sortKey, sortDir]);
 
-  const hdr = (k: InscritosSortKey, label: React.ReactNode, cls?: string) => (
-    <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={cls}>{label}</SortableHdr>
+  // Construído sobre o ScorecardLeaderboard (mesmo componente/estilo .sc-lb que
+  // os resultados e o resto da app) — sem scorecard nem colunas de total. As
+  // colunas próprias (País/Escalão/Sx/Clube/Lic./HCP/Nasc./Estado) entram como
+  // prefix/postScorecard cells; a ordenação é externa (useSort acima), por isso
+  // passamos sortable=false + activeSortKey/Dir + SortableHdr nos headers custom.
+  const scRows: ScorecardRow[] = sorted.map((p, i) => {
+    const manuel = isManuelByName(p.name);
+    const pt = !manuel && (p.country ? flag(p.country) === "🇵🇹" : false);
+    return {
+      key: i,
+      pos: p.pos ?? i + 1,
+      gross: 0,
+      toPar: null,
+      isManuel: manuel,
+      isPortuguese: pt,
+      sortPos: typeof p.pos === "number" ? p.pos : null,
+      sortName: p.name,
+      nameContent: (
+        <span className="tourn-pname">{p.name}{manuel && <> <ManuelPill /></>}</span>
+      ),
+      prefixCells: (
+        <>
+          {showCountry && (
+            <td className="lb-club" title={p.country || ""} style={{ textAlign: "center", fontSize: "var(--fs-16)" }}>
+              {p.country ? flag(p.country) : "—"}
+            </td>
+          )}
+          {showEsc && <td className="lb-esc">{p.escalao ? <EscPill esc={p.escalao} /> : <span className="muted">—</span>}</td>}
+          {showSex && <td style={{ textAlign: "center" }}>{p.sex ? <SexBadge sex={p.sex} /> : <span className="muted">—</span>}</td>}
+          {showClub && <td className="lb-club" style={{ textAlign: "left" }}>{p.club || "—"}</td>}
+          {showFed && <td className="lb-fed">{p.fed || "—"}</td>}
+          {showHcp && <td className="lb-hcp">{p.hcp != null ? p.hcp.toFixed(1) : "—"}</td>}
+          {showDob && <td className="lb-club" style={{ textAlign: "center", whiteSpace: "nowrap" }}>{p.dob || "—"}</td>}
+        </>
+      ),
+      postScorecardCells: showStatus ? (
+        <td style={{ textAlign: "center" }}>
+          {p.status
+            ? <span className="p p-sm p-muted">{p.status}</span>
+            : <span className="muted">—</span>}
+        </td>
+      ) : undefined,
+    };
+  });
+
+  const prefixHeaderCells = (
+    <>
+      {showCountry && <SortableHdr k="country" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>País</SortableHdr>}
+      {showEsc && <SortableHdr k="escalao" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-esc">Escalão</SortableHdr>}
+      {showSex && <SortableHdr k="sex" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Sx</SortableHdr>}
+      {showClub && <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-club">Clube</SortableHdr>}
+      {showFed && <SortableHdr k="fed" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-fed">Lic.</SortableHdr>}
+      {showHcp && <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-hcp">HCP</SortableHdr>}
+      {showDob && <SortableHdr k="dob" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Nasc.</SortableHdr>}
+    </>
   );
 
   return (
-    <div className="bjgt-chart-scroll">
-      <table className="sc-lb">
-        <thead>
-          <tr>
-            {hdr("pos", "#")}
-            {hdr("name", "Nome", "lb-name")}
-            {showCountry && hdr("country", "País")}
-            {hdr("escalao", "Escalão")}
-            {hdr("sex", "Sx")}
-            {hdr("club", "Clube", "lb-club")}
-            {showFed && hdr("fed", "Lic.")}
-            {hdr("hcp", "HCP")}
-            {hdr("dob", "Nasc.")}
-            {hdr("status", "Estado")}
-          </tr>
-        </thead>
-        <tbody>
-          {sorted.map((p, i) => {
-            const pt = p.country ? flag(p.country) === "🇵🇹" : false;
-            return (
-            <tr key={i} className={isManuelByName(p.name) ? "row-manuel" : (pt ? "row-pt" : undefined)}>
-              <td>{p.pos ?? i + 1}</td>
-              <td className="lb-name fw-700" style={{ textAlign: "left" }}>
-                {p.name}{isManuelByName(p.name) && <> <ManuelPill /></>}
-              </td>
-              {showCountry && <td title={p.country || ""} style={{ fontSize: "var(--fs-16)" }}>{p.country ? flag(p.country) : "—"}</td>}
-              <td>{p.escalao || "—"}</td>
-              <td>{p.sex ? <SexBadge sex={p.sex} /> : "—"}</td>
-              <td className="lb-club" style={{ textAlign: "left" }}>{p.club || "—"}</td>
-              {showFed && <td className="muted" style={{ fontFamily: "var(--font-mono)", fontSize: "var(--fs-11)" }}>{p.fed || "—"}</td>}
-              <td>{p.hcp != null ? p.hcp.toFixed(1) : "—"}</td>
-              <td>{p.dob || "—"}</td>
-              <td>{p.status || "—"}</td>
-            </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+    <ScorecardLeaderboard
+      par={[]}
+      rows={scRows}
+      showScorecard={false}
+      hideTotals
+      prefixHeaderCells={prefixHeaderCells}
+      postScorecardHeaderCells={
+        showStatus ? <SortableHdr k="status" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Estado</SortableHdr> : undefined
+      }
+      postScorecardColCount={showStatus ? 1 : 0}
+      onSortPos={() => toggleSort("pos")}
+      onSortName={() => toggleSort("name")}
+      activeSortKey={sortKey}
+      activeSortDir={sortDir}
+    />
   );
 }
 
@@ -304,9 +342,14 @@ export interface CircuitShellProps {
   selectedId?: string;
   /** Chamado ao seleccionar um torneio (a página navega/actualiza URL). */
   onSelectEntry?: (entry: CircuitEntry) => void;
+  /** Vista informativa activa (specialItem), resolvida pela página a partir da
+   *  URL — torna estas vistas deep-linkáveis. Se `onSelectInfo` for fornecido, o
+   *  infoView passa a ser controlado pela página (URL) em vez de estado interno. */
+  selectedInfo?: string | null;
+  onSelectInfo?: (key: string | null) => void;
 }
 
-export default function CircuitShell({ entries, config, loading, selectedId, onSelectEntry }: CircuitShellProps) {
+export default function CircuitShell({ entries, config, loading, selectedId, onSelectEntry, selectedInfo, onSelectInfo }: CircuitShellProps) {
   const md = useMasterDetail();
   const { kidsMap } = useKidsLinkMap();
 
@@ -319,8 +362,11 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
   const [fLiga, setFLiga] = useState("all");
   const [fIntl, setFIntl] = useState(false);
   const [toggles, setToggles] = useState<Set<CircuitToggle>>(new Set());
-  /** Vista informativa activa (ex: Categorías/Federaciones) — null = detalhe normal. */
-  const [infoView, setInfoView] = useState<string | null>(null);
+  /** Vista informativa activa (ex: Categorías/Federaciones) — null = detalhe normal.
+   *  Controlada por URL quando a página passa `onSelectInfo`; senão estado interno. */
+  const [infoViewLocal, setInfoViewLocal] = useState<string | null>(null);
+  const infoView = onSelectInfo ? (selectedInfo ?? null) : infoViewLocal;
+  const setInfo = (k: string | null) => { if (onSelectInfo) onSelectInfo(k); else setInfoViewLocal(k); };
 
   const flt = config.filters ?? {};
   const enabledToggles = flt.toggles ?? [];
@@ -402,7 +448,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
 
   const selectEntry = (e: CircuitEntry) => {
     setLocalId(e.id);
-    setInfoView(null); // sair de qualquer vista informativa ao escolher torneio
+    setInfo(null); // sair de qualquer vista informativa ao escolher torneio
     md.onSelect();
     onSelectEntry?.(e);
   };
@@ -571,7 +617,7 @@ export default function CircuitShell({ entries, config, loading, selectedId, onS
             <select
               className="input"
               value={infoView ?? ""}
-              onChange={e => setInfoView(e.target.value || null)}
+              onChange={e => setInfo(e.target.value || null)}
               style={{ fontSize: "var(--fs-12)", padding: "3px 6px" }}
               title="Páginas informativas"
             >

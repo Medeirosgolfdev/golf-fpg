@@ -144,7 +144,16 @@ function jobDivisionToTournament(div: JobDivision, name: string): FPGTournament 
   // outro o BACK-9 (startingHole=10). O par/metros/SI vêm do course_analytics com
   // 18 buracos → é preciso fatiar para os 9 jogados POR RONDA (consoante o
   // startingHole dessa ronda), senão a coloração buraco-a-buraco fica errada.
-  const nineHole = players.some((p) => (p.rounds || []).some((r) => r.scores?.length === 9));
+  // ⚠ Decidir pela MAIORIA das rondas, não por `some`: numa divisão de 18
+  // buracos basta UM jogador que desistiu a meio (uma ronda de 9 scores) para
+  // `some` marcar a divisão inteira como 9 buracos e fatiar todos os cartões
+  // a 9 (ex: FM 2026 "13 & 14" tem 328 rondas de 18 + 1 de 9 por desistência).
+  let n9 = 0, n18 = 0;
+  for (const p of players) for (const r of p.rounds || []) {
+    const L = r.scores?.length;
+    if (L === 9) n9++; else if (L === 18) n18++;
+  }
+  const nineHole = n9 > n18;
   const holes = nineHole ? 9 : 18;
 
   // Arrays do campo completo (18 buracos), quando válidos.
@@ -217,20 +226,31 @@ function jobDivisionToTournament(div: JobDivision, name: string): FPGTournament 
   return { name, tcode: `job-${name}`, date: "", campo: "", rounds: nR, playerCount: fpg.length, players: fpg };
 }
 
-/** Evolução ano-a-ano do JOB: compara cada divisão com a edição do ano anterior
- *  (mesma divisão), usando o to-par total como valor comparável. */
-function jobEvoFor(file: JobFile, all: JobFile[], divIndex: number, label: string): { evo?: Map<string, EvoEntry>; evoYear?: string } {
+/** Evolução ano-a-ano do JOB/FM: marca quem regressou da edição do ano anterior
+ *  e em que escalão estava, usando o to-par total como valor comparável.
+ *
+ *  ⚠ A referência é o conjunto de TODOS os escalões do ano anterior — não o
+ *  mesmo escalão (nem, pior, o mesmo ÍNDICE de divisão, que muda de ano para
+ *  ano e dava 0 correspondências). Num torneio júnior os miúdos SOBEM de
+ *  escalão a cada ano, por isso o regressado típico estava num escalão mais
+ *  novo na edição anterior. Cada jogador da referência traz o seu escalão de
+ *  origem (`from`) para o badge "11 & 12 → 13 & 14" funcionar; o `divLabel`
+ *  resolve o label de forma idêntica para actual e referência (senão o mesmo
+ *  escalão apareceria sempre como "subiu"). */
+function jobEvoFor(
+  file: JobFile, all: JobFile[], divIndex: number,
+  divLabel: (dv: JobDivision, idx: number) => string,
+): { evo?: Map<string, EvoEntry>; evoYear?: string } {
   const prev = all.find((f) => f.year === file.year - 1);
   if (!prev) return {};
   const curDiv = file.divisions[divIndex];
-  const prevDiv = prev.divisions[divIndex];
-  if (!curDiv || !prevDiv) return {};
-  const toEvo = (d: JobDivision) => d.players
+  if (!curDiv) return {};
+  const completos = (d: JobDivision, idx: number) => d.players
     .filter((p) => p.toPar != null && p.total != null)
-    .map((p) => ({ name: p.name, value: p.toPar as number, category: label }));
+    .map((p) => ({ name: p.name, value: p.toPar as number, category: divLabel(d, idx) }));
   const raw = buildEvoMap({
-    currentPlayers: toEvo(curDiv),
-    referencePlayers: toEvo(prevDiv),
+    currentPlayers: completos(curDiv, divIndex),
+    referencePlayers: prev.divisions.flatMap((d, idx) => completos(d, idx)),
     referenceYear: String(file.year - 1),
     isManuel: isM,
   });
@@ -265,7 +285,7 @@ function buildFmEntries(files: JobFile[]): CircuitEntry[] {
   return files.map((f): CircuitEntry => {
     const divisions: CircuitDivision[] = f.divisions.map((dv, i) => {
       const label = dv.division; // FM: usar o nome do age group directamente ("10 and Under", "11 & 12", …)
-      const { evo, evoYear } = jobEvoFor(f, files, i, label);
+      const { evo, evoYear } = jobEvoFor(f, files, i, (d) => d.division);
       const hasEvo = !!evo && evo.size > 0;
       const results = jobDivisionToTournament(dv, label);
       if (hasEvo) for (const pl of results.players) {
@@ -313,7 +333,7 @@ function buildFmEntries(files: JobFile[]): CircuitEntry[] {
           />
         ),
       };
-    });
+    }).sort(majorDivCompare); // tabs por idade crescente: 10 and Under → 11 & 12 → 13 & 14 → 15 …
     const all = f.divisions.flatMap((d) => d.players);
     return {
       id: `fm:${f.year}`,
@@ -337,7 +357,7 @@ function buildJobEntries(files: JobFile[]): CircuitEntry[] {
   return files.map((f): CircuitEntry => {
     const divisions: CircuitDivision[] = f.divisions.map((dv, i) => {
       const label = JOB_DIV_LABELS[i] || dv.division;
-      const { evo, evoYear } = jobEvoFor(f, files, i, label);
+      const { evo, evoYear } = jobEvoFor(f, files, i, (d, idx) => JOB_DIV_LABELS[idx] || d.division);
       const hasEvo = !!evo && evo.size > 0;
       const results = jobDivisionToTournament(dv, label);
       if (hasEvo) for (const pl of results.players) {

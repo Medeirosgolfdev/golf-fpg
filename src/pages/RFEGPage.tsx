@@ -37,6 +37,7 @@ import DrawTab from "../ui/DrawTab";
 import type { FpgDraw, FpgDrawFlight } from "../data/nacional2026Loader";
 import type { Tournament as FPGTournament, Player as FPGPlayer, RoundScore as FPGRoundScore, ScorecardOptions } from "./FPGPage";
 import { RFEGFederationsView } from "./rfeg/FederationsView";
+import { RFEGPlayersView } from "./rfeg/PlayersView";
 import CircuitShell from "../ui/circuit/CircuitShell";
 import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitInscritoRow, CircuitSex, CircuitLink } from "../ui/circuit/types";
 
@@ -2186,8 +2187,8 @@ function rfegCountryCode(pais: string | null | undefined): string | undefined {
 function rfegInscritoRow(p: RFEGPlayer): CircuitInscritoRow {
   return {
     pos: p.pos ?? undefined,
-    name: p.name ?? "—",
-    club: p.club ?? undefined,
+    name: p.name ? formatPlayerName(p.name) : "—",
+    club: p.club ? displayName(p.club) : undefined,
     fed: p.licencia ?? undefined,
     hcp: p.hcp,
     escalao: p.catEdad ?? undefined,
@@ -2267,6 +2268,93 @@ function NCHighlights({ rows }: { rows: NCHighlightRow[] }) {
   );
 }
 
+/* ── NCResultsLeaderboard ────────────────────────────────────────────────
+ * Leaderboard de TOTAIS (sem scorecard buraco-a-buraco). Usado quando a fonte
+ * dá pos/total/±par por jogador mas não os scores hole-by-hole (ex: NextCaddy
+ * Liguillas, cujo leaderboard é real mas sem cartões). Mesmo aspecto .sc-lb que
+ * o resto da app, via ScorecardLeaderboard sem scorecard. Colunas vazias ocultas. */
+function NCResultsLeaderboard({ players }: { players: RFEGPlayer[] }) {
+  type K = "pos" | "nome" | "toPar" | "total" | "hcp" | "club" | "fed";
+  const { sortKey, sortDir, toggleSort } = useSort<K>("pos");
+  const showFed = players.some((p) => !!p.licencia);
+  const showClub = players.some((p) => !!p.club);
+  const showHcp = players.some((p) => p.hcp != null);
+
+  const enriched = useMemo(() => players.map((p) => ({
+    ...p,
+    _name: formatPlayerName(p.name || ""),
+    _club: p.club ? displayName(p.club) : "",
+  })), [players]);
+
+  const sorted = useMemo(() => {
+    const INF = 9999;
+    const mult = sortDir === "asc" ? 1 : -1;
+    return [...enriched].sort((a, b) => {
+      let v = 0;
+      switch (sortKey) {
+        case "pos":   v = (a.pos ?? INF) - (b.pos ?? INF); break;
+        case "nome":  v = (a._name || "").localeCompare(b._name || "", "pt"); break;
+        case "toPar": v = (a.toPar ?? INF) - (b.toPar ?? INF); break;
+        case "total": v = (a.total ?? INF) - (b.total ?? INF); break;
+        case "hcp":   v = (a.hcp ?? INF) - (b.hcp ?? INF); break;
+        case "club":  v = (a._club || "").localeCompare(b._club || "", "es"); break;
+        case "fed":   v = (a.licencia || "").localeCompare(b.licencia || ""); break;
+      }
+      return mult * v;
+    });
+  }, [enriched, sortKey, sortDir]);
+
+  const rows: ScorecardRow[] = sorted.map((p, i) => {
+    const manuel = p._name ? isM(p._name) : false;
+    return {
+      key: `${p.licencia ?? "-"}-${i}`,
+      pos: p.pos ?? i + 1,
+      gross: p.total ?? 0,
+      toPar: p.toPar ?? null,
+      isManuel: manuel,
+      sortPos: p.pos ?? null,
+      sortName: p._name || "",
+      fedCode: p.licencia ?? undefined,
+      nameContent: (
+        <span className="tourn-pname" style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+          {p._name || "—"}
+          {(p.sexo === "M" || p.sexo === "F") && <SexBadge sex={p.sexo} />}
+          {manuel && <ManuelPill />}
+          {p._name && <KidsLink nome={p._name} />}
+        </span>
+      ),
+      prefixCells: (
+        <>
+          {showFed && <td className="lb-fed">{p.licencia ?? "—"}</td>}
+          {showClub && <td className="lb-club" title={p._club}>{p._club || "—"}</td>}
+          {showHcp && <td className="lb-hcp">{p.hcp != null ? p.hcp.toFixed(1) : "—"}</td>}
+        </>
+      ),
+    };
+  });
+
+  return (
+    <ScorecardLeaderboard
+      par={[]}
+      rows={rows}
+      showScorecard={false}
+      prefixHeaderCells={
+        <>
+          {showFed && <SortableHdr k="fed" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as K)} className="lb-fed">LICENCIA</SortableHdr>}
+          {showClub && <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as K)} className="lb-club">CLUBE</SortableHdr>}
+          {showHcp && <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as K)} className="lb-hcp">HCP</SortableHdr>}
+        </>
+      }
+      onSortPos={() => toggleSort("pos")}
+      onSortName={() => toggleSort("nome")}
+      onSortToPar={() => toggleSort("toPar")}
+      onSortGross={() => toggleSort("total")}
+      activeSortKey={sortKey === "nome" ? "name" : sortKey === "total" ? "gross" : sortKey}
+      activeSortDir={sortDir}
+    />
+  );
+}
+
 /** Carrega o detalhe de um torneio e constrói a sua (única) divisão. */
 async function rfegLoadDivisions(
   t: RFEGIndexEntry, dobLookup?: DobLookup, hcpLookup?: HcpLookup,
@@ -2310,12 +2398,22 @@ async function rfegLoadDivisions(
     }
   }
 
-  // Destaques (item #2): torneio NextCaddy só-PDF (sem leaderboard) mas com
-  // live-scoring → mostrar birdies/eagles/hole-in-one em vez de secção vazia.
+  // NextCaddy sem scorecard hbh: muitas Liguillas TÊM leaderboard real (pos/
+  // total/±par) mas sem cartões → ncToFPGTournament devolve null. Nesse caso
+  // mostramos o leaderboard de totais (NCResultsLeaderboard) em vez de cair nos
+  // "destaques". Os destaques (NCHighlights) ficam só para torneios mesmo
+  // só-PDF (sem qualquer leaderboard) — e mesmo aí têm nomes por PAR de jogadores
+  // (o live-scoring regista o flight, não o indivíduo), por isso são último recurso.
   let customResults: React.ReactNode = undefined;
   if (t.source === "nextcaddy" && !results) {
-    const hl = ncHighlightRows((raw as NCDetail).scoreTypes);
-    if (hl.length) customResults = <NCHighlights rows={hl} />;
+    const admit = data.inscritos.admitidos;
+    const hasTotals = admit.some((p) => p.total != null || p.toPar != null);
+    if (hasTotals) {
+      customResults = <NCResultsLeaderboard players={admit} />;
+    } else {
+      const hl = ncHighlightRows((raw as NCDetail).scoreTypes);
+      if (hl.length) customResults = <NCHighlights rows={hl} />;
+    }
   }
 
   const division: CircuitDivision = {
@@ -2450,18 +2548,25 @@ export default function RFEGPage() {
     [index, dobLookup, hcpLookup],
   );
 
+  // Vista informativa via URL: /rfeg/info/{key} (deep-linkável, persiste no reload).
+  // "info" não colide com as fontes reais (rfegolf/nextcaddy/livegolfscoring/golfdirecto).
+  const onInfo = params.source === "info";
+  const selectedInfo = onInfo ? (params.id ?? null) : null;
+
   const selectedId = useMemo<string | undefined>(() => {
+    if (onInfo) return undefined;
     const idStr = params.id ?? params.compId;
     if (!idStr) return undefined;
     if (params.source) return `${params.source}:${idStr}`;
     return entries.find((e) => e.id.endsWith(`:${idStr}`))?.id;
-  }, [params.id, params.compId, params.source, entries]);
+  }, [params.id, params.compId, params.source, entries, onInfo]);
 
   // Config + páginas informativas (menu INFO na toolbar do shell).
   const config = useMemo<CircuitConfig>(() => ({
     ...RFEG_CONFIG,
     veteranIndex: vetIndex.size ? vetIndex : undefined,
     specialItems: index ? [
+      { key: "jugadores", label: "👥 Jugadores de España", render: () => <RFEGPlayersView /> },
       { key: "categorias", label: "📚 Categorías de edad", render: () => <RFEGCategoriesView catCounts={index.byCategory} /> },
       { key: "federaciones", label: "🏛️ Federaciones de España", render: () => <RFEGFederationsView /> },
     ] : [],
@@ -2479,6 +2584,8 @@ export default function RFEGPage() {
         const [src, id] = e.id.split(":");
         navigate(`/rfeg/${src}/${id}`);
       }}
+      selectedInfo={selectedInfo}
+      onSelectInfo={(key) => navigate(key ? `/rfeg/info/${key}` : "/rfeg")}
     />
   );
 }
