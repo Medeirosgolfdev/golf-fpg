@@ -4,7 +4,14 @@
  * Estas alimentam meta.dateStart/dateEnd e o auto-fetch de cartões hbh.
  */
 // describe/it/expect são globais (vitest.config.ts → test.globals = true)
-const { parseSpanishDate, isYouthTournament } = require("./scrape-nextcaddy.js");
+const { parseSpanishDate, isYouthTournament, parseScorecard } = require("./scrape-nextcaddy.js");
+
+// Constrói uma tabela HTML a partir de linhas (arrays de células) — replica a
+// estrutura real das tarjetas do NextCaddy para testar parseScorecard offline.
+function tarjetaHtml(rows) {
+  const tr = (cells) => "<tr>" + cells.map((c) => `<td>${c}</td>`).join("") + "</tr>";
+  return `<html><body><table>${rows.map(tr).join("")}</table></body></html>`;
+}
 
 describe("parseSpanishDate", () => {
   it("formato das discovery cards (DD mmm YYYY)", () => {
@@ -52,5 +59,55 @@ describe("isYouthTournament", () => {
 
   it("também olha para as categorias", () => {
     expect(isYouthTournament({ name: "Torneo de Clausura", categories: ["Infantil", "Caballeros"] })).toBe(true);
+  });
+});
+
+describe("parseScorecard", () => {
+  it("9 buracos jogados num template de 18 (Pitch&Putt duplicado) — caso 71639", () => {
+    // Estrutura REAL da tarjeta /tarjeta-aux/2344915/-1 (campo de 9 par-3 mostrado
+    // como 18: front-9 == back-9; jogador só tem 9 scores + total).
+    const html = tarjetaHtml([
+      ["", "1", "2", "3", "4", "5", "6", "7", "8", "9", "I", "10", "11", "12", "13", "14", "15", "16", "17", "18", "V", "T"],
+      ["Metros", "M", "102", "109", "114", "107", "56", "92", "115", "66", "52", "813", "102", "109", "114", "107", "56", "92", "115", "66", "52", "813", "1626"],
+      ["Hcp", "7", "5", "1", "3", "15", "13", "17", "11", "9", "-", "8", "6", "2", "4", "16", "14", "18", "12", "10", "-", "-"],
+      ["Par", "3", "3", "3", "3", "3", "3", "3", "3", "3", "27", "3", "3", "3", "3", "3", "3", "3", "3", "3", "27", "54"],
+      ["", "3", "4", "5", "4", "4", "4", "4", "2", "3", "33"],
+      ["Neto", "N", "3", "3", "2", "3", "2", "2", "2", "4", "3", "24"],
+    ]);
+    const sc = parseScorecard(html);
+    expect(sc.par).toEqual([3, 3, 3, 3, 3, 3, 3, 3, 3]);
+    expect(sc.meters).toEqual([102, 109, 114, 107, 56, 92, 115, 66, 52]);
+    expect(sc.si).toEqual([7, 5, 1, 3, 15, 13, 17, 11, 9]);
+    expect(sc.nineHole).toBe(true);
+    expect(sc.rounds).toHaveLength(1);
+    expect(sc.rounds[0].scores).toEqual([3, 4, 5, 4, 4, 4, 4, 2, 3]);
+    expect(sc.rounds[0].total).toBe(33);
+  });
+
+  it("18 buracos reais (não duplicado) — não trima", () => {
+    const html = tarjetaHtml([
+      ["", "1", "2", "3", "4", "5", "6", "7", "8", "9", "I", "10", "11", "12", "13", "14", "15", "16", "17", "18", "V", "T"],
+      ["Par", "4", "4", "3", "4", "5", "4", "3", "4", "4", "35", "4", "3", "4", "4", "5", "4", "3", "4", "5", "36", "71"],
+      ["", "5", "4", "3", "4", "6", "4", "3", "5", "4", "38", "4", "4", "5", "4", "5", "4", "3", "4", "5", "38", "76"],
+    ]);
+    const sc = parseScorecard(html);
+    expect(sc.par).toHaveLength(18);
+    expect(sc.nineHole).toBe(false);
+    expect(sc.rounds[0].scores).toHaveLength(18);
+    expect(sc.rounds[0].scores).toEqual([5, 4, 3, 4, 6, 4, 3, 5, 4, 4, 4, 5, 4, 5, 4, 3, 4, 5]);
+    expect(sc.rounds[0].total).toBe(76);
+  });
+
+  it("9 buracos reais (header de 9 colunas)", () => {
+    const html = tarjetaHtml([
+      ["", "1", "2", "3", "4", "5", "6", "7", "8", "9", "T"],
+      ["Par", "4", "4", "3", "4", "5", "4", "3", "4", "4", "35"],
+      ["", "5", "4", "3", "4", "5", "4", "3", "4", "4", "36"],
+    ]);
+    const sc = parseScorecard(html);
+    expect(sc.par).toEqual([4, 4, 3, 4, 5, 4, 3, 4, 4]);
+    expect(sc.nineHole).toBe(true);
+    expect(sc.rounds[0].scores).toEqual([5, 4, 3, 4, 5, 4, 3, 4, 4]);
+    expect(sc.rounds[0].total).toBe(36);
   });
 });

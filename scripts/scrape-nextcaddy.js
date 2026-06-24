@@ -345,16 +345,21 @@ function parseScorecard(html) {
     }
     return out;
   }
-  function holesOnly18(arr) {
-    if (arr.length < 21) return arr;
-    return [...arr.slice(0, 9), ...arr.slice(10, 19)];
+  // splitHoleValues — separa os valores POR BURACO dos subtotais I/V e do total.
+  // Layouts vistos numa linha (já sem o rótulo): [h1..h9,T] (10), [h1..h9,I,T] (11),
+  // [h1..h18,T] (19), [h1..h9,I,h10..h18,V,T] (21). Devolve só os buracos + o total.
+  function splitHoleValues(nums) {
+    if (!nums.length) return { holes: [], total: null };
+    const total = nums[nums.length - 1];
+    let body = nums.slice(0, -1);
+    if (body.length === 20) body = [...body.slice(0, 9), ...body.slice(10, 19)];      // 18H: tira I(9) e V(19)
+    else if (body.length === 19) body = [...body.slice(0, 9), ...body.slice(10)];      // 18H sem V: tira I(9)
+    else if (body.length === 10) body = body.slice(0, 9);                              // 9H com subtotal I: tira (9)
+    return { holes: body, total };
   }
-  function holesOnly9(arr) {
-    // 9H: arr is [h1..h9, total] or [h1..h9, I_total, total]
-    if (arr.length === 10) return arr.slice(0, 9);
-    if (arr.length === 11) return arr.slice(0, 9);
-    return arr.slice(0, 9);
-  }
+  // Campo de 9 buracos mostrado num template de 18 (front-9 == back-9 valor a valor)
+  const dupFront9 = (arr) => Array.isArray(arr) && arr.length === 18 &&
+    arr.slice(0, 9).every((v, k) => v === arr[9 + k]);
 
   const rounds = [];
   let par = null, si = null, meters = null;
@@ -362,10 +367,6 @@ function parseScorecard(html) {
 
   for (let i = 0; i < allRows.length; i++) {
     if (!isHeader(allRows[i])) continue;
-    const is9H = !isHeader18(allRows[i]) && isHeader9(allRows[i]);
-    if (is9H) nineHole = true;
-    const holesOnly = is9H ? holesOnly9 : holesOnly18;
-    const minScores = is9H ? 9 : 18;
 
     const block = allRows.slice(i + 1, i + 7);
     const metrosRow = block.find((rr) => /^Metros$/i.test(rr[0] || ""));
@@ -373,20 +374,30 @@ function parseScorecard(html) {
     const parRow = block.find((rr) => /^Par$/i.test(rr[0] || ""));
     if (!parRow) continue;
 
-    if (par == null) {
-      par = holesOnly(numCells(parRow, 1));
-      if (hcpRow) si = holesOnly(numCells(hcpRow, 1));
-      if (metrosRow) meters = holesOnly(numCells(metrosRow, 2));
-    }
-
     const parIdx = allRows.indexOf(parRow);
     if (parIdx < 0 || parIdx + 1 >= allRows.length) continue;
     const scoresRow = allRows[parIdx + 1];
-    const sNums = numCells(scoresRow, 1);
-    if (sNums.length < minScores) continue;
-    const scores = holesOnly(sNums);
-    const total = sNums[sNums.length - 1] ?? null;
-    rounds.push({ round: rounds.length + 1, scores, total });
+
+    // Scores do jogador (a linha logo a seguir ao Par) — define o nº de buracos REAL.
+    const { holes: scoreHoles, total } = splitHoleValues(numCells(scoresRow, 1));
+    if (scoreHoles.length < 9) continue;  // sem scores válidos (ex.: linha vazia)
+    const nH = scoreHoles.length;
+
+    // Par/SI/metros do template do campo (Metros tem 2 colunas de rótulo: "Metros" + "M").
+    let parH = splitHoleValues(numCells(parRow, 1)).holes;
+    let siH = hcpRow ? splitHoleValues(numCells(hcpRow, 1)).holes : null;
+    let metersH = metrosRow ? splitHoleValues(numCells(metrosRow, 2)).holes : null;
+
+    // Jogou 9 buracos num template de 18 duplicado (Pitch&Putt de 9) → usar a frente-9.
+    if (nH === 9 && (dupFront9(parH) || dupFront9(metersH))) {
+      if (parH && parH.length === 18) parH = parH.slice(0, 9);
+      if (siH && siH.length === 18) siH = siH.slice(0, 9);
+      if (metersH && metersH.length === 18) metersH = metersH.slice(0, 9);
+    }
+    if (nH === 9) nineHole = true;
+
+    if (par == null) { par = parH; si = siH; meters = metersH; }
+    rounds.push({ round: rounds.length + 1, scores: scoreHoles, total });
     i = parIdx + 1;
   }
   return { par, si, meters, rounds, nineHole };
