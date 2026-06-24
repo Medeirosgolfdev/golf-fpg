@@ -158,7 +158,7 @@ jobs:
       - name: Scrape livegolfscoring (scorecards hbh)
         id: lgs
         continue-on-error: true
-        run: node scripts/scrape-livegolfscoring.js --range "$LGS_RANGE" --concurrency 10 $SKIP_FLAG
+        run: node scripts/scrape-livegolfscoring.js --seasons "2025,2026" --range "$LGS_RANGE" --concurrency 10 $SKIP_FLAG
 
       - name: Scrape NextCaddy (leaderboards)
         id: nextcaddy
