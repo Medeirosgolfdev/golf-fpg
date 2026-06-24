@@ -38,7 +38,7 @@ import type { FpgDraw, FpgDrawFlight } from "../data/nacional2026Loader";
 import type { Tournament as FPGTournament, Player as FPGPlayer, RoundScore as FPGRoundScore, ScorecardOptions } from "./FPGPage";
 import { RFEGFederationsView } from "./rfeg/FederationsView";
 import CircuitShell from "../ui/circuit/CircuitShell";
-import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitInscritoRow, CircuitSex } from "../ui/circuit/types";
+import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitInscritoRow, CircuitSex, CircuitLink } from "../ui/circuit/types";
 
 /* ── Types ──────────────────────────────────────────────── */
 
@@ -78,6 +78,11 @@ interface RFEGIndexEntry {
   leaderboardPlayers?: number;
   /** Número de rondas (LGS expõe; NC/RFEGolf ficam undefined). */
   nRounds?: number;
+  /** Federação organizadora (RFEGolf detail meta.federation). */
+  federation?: string | null;
+  /** Pré-computados pelo build do índice (páginas lazy): há Manuel / portugueses? */
+  hasManuel?: boolean;
+  hasPt?: boolean;
   scrapedAt: string | null;
 }
 
@@ -2151,6 +2156,27 @@ function rfegSex(s: string | null | undefined): CircuitSex | undefined {
   return s === "M" ? "M" : s === "F" ? "F" : (s === "Mixto" || s === "Mixed") ? "Mixed" : undefined;
 }
 
+/** O RFEGolf devolve o país por extenso em espanhol ("ESPAÑA", "PORTUGAL").
+ *  Convertemos para código ISO-2 para a função flag() (que aceita ISO/EN/PT). */
+const ES_COUNTRY_CODE: Record<string, string> = {
+  "ESPANA": "ES", "ESPAÑA": "ES", "PORTUGAL": "PT", "FRANCIA": "FR", "ITALIA": "IT",
+  "ALEMANIA": "DE", "INGLATERRA": "GB", "ESCOCIA": "GB", "GALES": "GB", "REINO UNIDO": "GB",
+  "IRLANDA": "IE", "BELGICA": "BE", "BÉLGICA": "BE", "HOLANDA": "NL", "PAISES BAJOS": "NL",
+  "SUECIA": "SE", "SUIZA": "CH", "POLONIA": "PL", "CHINA": "CN", "REPUBLICA CHECA": "CZ",
+  "REPÚBLICA CHECA": "CZ", "DINAMARCA": "DK", "NORUEGA": "NO", "FINLANDIA": "FI",
+  "AUSTRIA": "AT", "ESTADOS UNIDOS": "US", "MARRUECOS": "MA", "ANDORRA": "AD",
+  "LUXEMBURGO": "LU", "RUSIA": "RU", "MEXICO": "MX", "MÉXICO": "MX", "ARGENTINA": "AR",
+  "BRASIL": "BR", "JAPON": "JP", "JAPÓN": "JP", "COREA DEL SUR": "KR", "AUSTRALIA": "AU",
+  "CANADA": "CA", "CANADÁ": "CA", "SUDAFRICA": "ZA", "SUDÁFRICA": "ZA",
+};
+
+function rfegCountryCode(pais: string | null | undefined): string | undefined {
+  if (!pais) return undefined;
+  const t = pais.trim();
+  if (!t) return undefined;
+  return ES_COUNTRY_CODE[t.toUpperCase()] ?? t; // desconhecido passa tal-qual (flag() trata)
+}
+
 function rfegInscritoRow(p: RFEGPlayer): CircuitInscritoRow {
   return {
     pos: p.pos ?? undefined,
@@ -2160,7 +2186,7 @@ function rfegInscritoRow(p: RFEGPlayer): CircuitInscritoRow {
     hcp: p.hcp,
     escalao: p.catEdad ?? undefined,
     sex: p.sexo === "M" || p.sexo === "F" ? p.sexo : undefined,
-    country: p.pais ?? undefined,
+    country: rfegCountryCode(p.pais),
     dob: p.dob ?? undefined,
     status: p.estado ?? undefined,
   };
@@ -2205,12 +2231,27 @@ async function rfegLoadDivisions(
     .map((k) => ({ key: k, label: LIST_LABELS[k], players: (data.inscritos[k] || []).map(rfegInscritoRow) }))
     .filter((l) => l.players.length > 0);
 
+  // Links de PDF originais — o RFEGolf publica ~65% dos resultados só em PDF.
+  // Cada grupo de resultados traz o seu pdfUrl; juntamos os únicos como links
+  // de ação no header (renderizados pelo CircuitShell via division.links).
+  const links: CircuitLink[] = [];
+  if (t.source === "rfegolf") {
+    const seen = new Set<string>();
+    for (const g of data.results || []) {
+      if (g.pdfUrl && !seen.has(g.pdfUrl)) {
+        seen.add(g.pdfUrl);
+        links.push({ label: g.label ? `PDF · ${g.label}` : "Resultados PDF", url: g.pdfUrl, icon: "📄", title: "Resultados oficiais em PDF" });
+      }
+    }
+  }
+
   const division: CircuitDivision = {
     key: "main",
     escalao: t.category ?? "—",
     sex: rfegSex(t.sex),
     results: results ?? undefined,
     inscritos: lists.length ? { lists } : undefined,
+    links: links.length ? links : undefined,
     scOptions: lgsScorecardOptions(),
   };
   return [division];
@@ -2218,7 +2259,10 @@ async function rfegLoadDivisions(
 
 function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: HcpLookup): CircuitEntry[] {
   return index.tournaments
-    .filter((t) => t.category && (t.leaderboardPlayers || 0) > 0)
+    // Mostrar também torneios FUTUROS/em curso que ainda só têm inscritos
+    // (leaderboardPlayers === 0 mas counts.admitidos > 0) — ex: Campeonatos de
+    // España já com lista de inscritos antes de serem jogados.
+    .filter((t) => t.category && ((t.leaderboardPlayers || 0) > 0 || (t.counts?.admitidos || 0) > 0))
     .map((t): CircuitEntry => ({
       id: `${t.source}:${t.id}`,
       year: t.year,
@@ -2235,7 +2279,11 @@ function buildRfegEntries(index: RFEGIndex, dobLookup?: DobLookup, hcpLookup?: H
         : undefined,
       escalao: t.category ?? undefined,
       sex: rfegSex(t.sex),
-      playerCount: t.leaderboardPlayers ?? undefined,
+      federation: t.federation ?? undefined,
+      hasManuel: t.hasManuel ?? undefined,
+      hasPt: t.hasPt ?? undefined,
+      // Sem resultados ainda → mostrar nº de inscritos na sidebar.
+      playerCount: t.leaderboardPlayers || t.counts?.admitidos || undefined,
       roundsCount: t.nRounds ?? undefined,
       divisionCount: 1,
       loadDivisions: () => rfegLoadDivisions(t, dobLookup, hcpLookup),

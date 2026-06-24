@@ -69,6 +69,17 @@ function extractSexFromName(name) {
 const tournaments = [];
 let skipped = 0;
 
+// Há ≥1 inscrito português? (RFEGolf expõe pais por extenso em espanhol.)
+function rfegHasPt(j) {
+  const ins = (j && j.inscritos) || {};
+  for (const k of ["admitidos", "reservas", "invitados", "provisional", "noAdmitidos"]) {
+    for (const p of (ins[k] || [])) {
+      if (p && typeof p.pais === "string" && /PORTUGAL/i.test(p.pais)) return true;
+    }
+  }
+  return false;
+}
+
 // ── 1) RFEGolf ────────────────────────────────────────────────
 const rfegFiles = fs.existsSync(ROOT)
   ? fs.readdirSync(ROOT).filter(f => /^\d+\.json$/.test(f)).sort()
@@ -110,8 +121,11 @@ for (const file of rfegFiles) {
       courseClubId: meta.courseClubId || null,
       mode: meta.mode || null,
       style: meta.style || null,
+      // NB: meta.federation do RFEGolf está mal etiquetado (contém o sexo) e
+      // meta.region vem vazio — por isso NÃO há federação utilizável aqui.
       hcpLimitMen: meta.hcpLimitMen != null ? meta.hcpLimitMen : null,
       hcpLimitWomen: meta.hcpLimitWomen != null ? meta.hcpLimitWomen : null,
+      hasPt: rfegHasPt(j) || undefined,
       counts: {
         admitidos: counts.admitidos || 0,
         reservas: counts.reservas || 0,
@@ -192,6 +206,7 @@ for (const file of ncFiles) {
       course: meta.course || null,
       courseCode: meta.courseCode || null,
       organizer: meta.organizer || null,
+      federation: meta.organizer || null,
       format: meta.format || null,
       categories: meta.categories || [],
       counts: {

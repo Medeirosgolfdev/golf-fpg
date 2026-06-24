@@ -32,6 +32,7 @@ import { KidsLinkCtx } from "../KidsLink";
 import { useKidsLinkMap } from "../../hooks/useKidsLinkMap";
 import { isManuelByName } from "../../constants/manuel";
 import { tournamentAces } from "../../utils/aces";
+import { flag } from "../../utils/flagUtils";
 import SortableHdr from "../SortableHdr";
 import { useSort } from "../../hooks/useSort";
 import EmptyState from "../EmptyState";
@@ -177,10 +178,17 @@ function InscritosView({ lists }: { lists: NonNullable<CircuitDivision["inscrito
   );
 }
 
-type InscritosSortKey = "pos" | "name" | "escalao" | "sex" | "club" | "hcp" | "dob" | "status";
+type InscritosSortKey = "pos" | "name" | "escalao" | "sex" | "club" | "hcp" | "dob" | "status" | "country" | "fed";
+
+// Há ≥1 jogador com país preenchido / licença? Só mostramos a coluna nesse caso
+// (outras páginas-circuito podem não trazer estes campos).
+function anyCountry(rows: CircuitInscritoRow[]): boolean { return rows.some(p => !!p.country); }
+function anyFed(rows: CircuitInscritoRow[]): boolean { return rows.some(p => !!p.fed); }
 
 function InscritosTable({ rows }: { rows: CircuitInscritoRow[] }) {
   const { sortKey, sortDir, toggleSort } = useSort<InscritosSortKey>("pos");
+  const showCountry = anyCountry(rows);
+  const showFed = anyFed(rows);
 
   const sorted = useMemo(() => {
     const dir = sortDir === "asc" ? 1 : -1;
@@ -194,6 +202,8 @@ function InscritosTable({ rows }: { rows: CircuitInscritoRow[] }) {
         case "hcp": return p.hcp ?? 999;
         case "dob": return p.dob || "";
         case "status": return (p.status || "").toLowerCase();
+        case "country": return (p.country || "").toUpperCase();
+        case "fed": return (p.fed || "").toLowerCase();
       }
     };
     return [...rows].sort((a, b) => {
@@ -213,29 +223,36 @@ function InscritosTable({ rows }: { rows: CircuitInscritoRow[] }) {
           <tr>
             {hdr("pos", "#")}
             {hdr("name", "Nome", "lb-name")}
+            {showCountry && hdr("country", "País")}
             {hdr("escalao", "Escalão")}
             {hdr("sex", "Sx")}
             {hdr("club", "Clube", "lb-club")}
+            {showFed && hdr("fed", "Lic.")}
             {hdr("hcp", "HCP")}
             {hdr("dob", "Nasc.")}
             {hdr("status", "Estado")}
           </tr>
         </thead>
         <tbody>
-          {sorted.map((p, i) => (
-            <tr key={i} className={isManuelByName(p.name) ? "row-manuel" : undefined}>
+          {sorted.map((p, i) => {
+            const pt = p.country ? flag(p.country) === "🇵🇹" : false;
+            return (
+            <tr key={i} className={isManuelByName(p.name) ? "row-manuel" : (pt ? "row-pt" : undefined)}>
               <td>{p.pos ?? i + 1}</td>
               <td className="lb-name fw-700" style={{ textAlign: "left" }}>
                 {p.name}{isManuelByName(p.name) && <> <ManuelPill /></>}
               </td>
+              {showCountry && <td title={p.country || ""} style={{ fontSize: "var(--fs-16)" }}>{p.country ? flag(p.country) : "—"}</td>}
               <td>{p.escalao || "—"}</td>
               <td>{p.sex ? <SexBadge sex={p.sex} /> : "—"}</td>
               <td className="lb-club" style={{ textAlign: "left" }}>{p.club || "—"}</td>
+              {showFed && <td className="muted" style={{ fontFamily: "var(--font-mono)", fontSize: "var(--fs-11)" }}>{p.fed || "—"}</td>}
               <td>{p.hcp != null ? p.hcp.toFixed(1) : "—"}</td>
               <td>{p.dob || "—"}</td>
               <td>{p.status || "—"}</td>
             </tr>
-          ))}
+            );
+          })}
         </tbody>
       </table>
     </div>
