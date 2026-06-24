@@ -133,9 +133,6 @@ export function ScorecardLeaderboard({
   const parTotal = par.reduce((a, b) => a + b, 0);
   const hasSI = nh > 0 && (si?.length ?? 0) >= nh;
   const siArr = hasSI ? si!.slice(0, nh).map(v => typeof v === 'string' ? parseInt(v as string, 10) : (Number(v) || 0)) : [];
-  const siF9    = siArr.length >= 9 ? siArr.slice(0, 9).reduce((a, b) => a + b, 0) : 0;
-  const siB9    = !is9 && siArr.length >= 18 ? siArr.slice(9, 18).reduce((a, b) => a + b, 0) : 0;
-  const siTotal = siArr.reduce((a, b) => a + b, 0);
 
   // Filtrar teeMeters válidos (com metros suficientes)
   const validTeeMeters = (teeMeters || []).filter(tm => tm.meters.length >= nh);
@@ -256,16 +253,17 @@ export function ScorecardLeaderboard({
                 <td className="sticky-col-0" />
                 <td className="lb-par-lbl sticky-col-1" colSpan={parLabelColSpan + 1}>{siLabel}</td>
                 <td className="lb-topar" />
-                <td className="lb-gross">{siTotal > 0 ? siTotal : ""}</td>
+                {/* S.I. é um índice por buraco (1-18), NÃO somável → TOT/OUT/IN em branco. */}
+                <td className="lb-gross" />
                 {Array.from({ length: postTotalColCount }, (_, i) => <td key={i} />)}
                 {siArr.slice(0, 9).map((v, i) => (
                   <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v || ""}</td>
                 ))}
-                <td className="lb-halftot">{siF9 > 0 ? siF9 : ""}</td>
+                <td className="lb-halftot" />
                 {!is9 && siArr.slice(9, 18).map((v, i) => (
                   <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v || ""}</td>
                 ))}
-                {!is9 && <td className="lb-halftot">{siB9 > 0 ? siB9 : ""}</td>}
+                {!is9 && <td className="lb-halftot" />}
                 {postScorecardColCount > 0 && Array.from({ length: postScorecardColCount }, (_, i) => <td key={i} />)}
               </tr>
             )}

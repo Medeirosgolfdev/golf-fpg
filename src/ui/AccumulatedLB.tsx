@@ -28,7 +28,7 @@ export function AccumulatedLB({
   nRounds: number;
   escLookup: EscLookup;
   playersDB: PlayersDB;
-  showCols?: { esc?: boolean; fed?: boolean; tee?: boolean; club?: boolean; hcp?: boolean };
+  showCols?: { esc?: boolean; fed?: boolean; tee?: boolean; club?: boolean; hcp?: boolean; age?: boolean; birthYear?: boolean };
   extraColumns?: ExtraColumn<MRRow & { _pos?: number | null }>[];
   renderName?: (row: MRRow) => React.ReactNode;
 }) {
@@ -43,7 +43,7 @@ export function AccumulatedLB({
   const rows: MRRow[] = useMemo(() => {
     return rawPlayers.map((p) => {
       const esc = resolveEsc(p, escLookup, { tournamentDate: tournament.date, playersDB, fedBirthdates }) || tournament.escalao || "";
-      const dob = (p.fedCode && ((playersDB as any)?.[p.fedCode]?.dob || fedBirthdates.get(p.fedCode))) || null;
+      const dob = (p.fedCode && ((playersDB as any)?.[p.fedCode]?.dob || fedBirthdates.get(p.fedCode))) || (p as any).dob || null;
       const roundScores = p.roundScores || [];
       // Posicionar cada ronda pelo seu número real (rounds[0]=R1, rounds[1]=R2, ...)
       // para que jogadores parciais mostrem "–" nas rondas que não jogaram

@@ -227,6 +227,7 @@ function lgsToFPGTournament(
       memberId?: string | null; pos: number | null; name: string; toPar: number; hoy: number;
       scores: number[] | null; halves: number[] | null; total: number | null;
     }> }>;
+    course?: { meters?: (number | null)[]; si?: (number | null)[]; par?: (number | null)[] } | null;
   },
   dobLookup?: DobLookup,
 ): FPGTournament {
@@ -249,7 +250,7 @@ function lgsToFPGTournament(
         agg[key].rounds.push({
           round: r.round, gross: p.total,
           scores: p.scores, pars: r.par || par,
-          si: [], meters: [], teeName: undefined,
+          si: lgs.course?.si || [], meters: lgs.course?.meters || [], teeName: undefined,
         });
       }
     }
@@ -298,14 +299,15 @@ function lgsToFPGTournament(
       toPar: a.toPar,
       hcpExact: hcp != null ? hcp : undefined,
       escalao: escLabel,
+      dob: e?.dob || undefined,
       _sex: sex,
       _age: age,
       nholes: 18,
       parTotal,
       scores: a.rounds[0]?.scores || [],
       par,
-      si: [],
-      meters: [],
+      si: lgs.course?.si || [],
+      meters: lgs.course?.meters || [],
       roundScores: a.rounds,
       _wd: incomplete,
       _roundsPlayed: a.rounds.length,
@@ -479,10 +481,27 @@ function rfegolfToFPGTournament(detail: RFEGDetail, dobLookup?: DobLookup): FPGT
   const lookupByName: Record<string, DobLookupEntry> = {};
   if (dobLookup) for (const e of Object.values(dobLookup)) if (e.name) lookupByName[norm(e.name)] = e;
 
+  // Inscritos do PRÓPRIO torneio: têm HCP + DOB + licença exactos e casam ~100%
+  // por nome com a tabela de resultados (que vem do PDF, só com o nome). Fonte
+  // preferida sobre o dobLookup global (que falha em homónimos/nomes ausentes).
+  const insByName: Record<string, RFEGPlayer> = {};
+  for (const list of Object.values(detail.inscritos || {})) {
+    if (!Array.isArray(list)) continue;
+    for (const ins of list as RFEGPlayer[]) {
+      if (ins && ins.name) { const k = norm(ins.name); if (!insByName[k]) insByName[k] = ins; }
+    }
+  }
+
   const dateRef = detail.meta.dateStart || null;
   const players: FPGPlayer[] = allRows.map((p, idx) => {
-    const e = lookupByName[norm(p.name || "")];
-    const subN = e?.dob ? dobToSubN(e.dob, dateRef) : null;
+    const nm = norm(p.name || "");
+    const ins = insByName[nm];
+    const e = lookupByName[nm];
+    const dobStr = ins?.dob || e?.dob || null;
+    // Escalão ES: preferir a categoria oficial do inscrito (Alevín/Infantil/…),
+    // senão calcular pela DOB à data do torneio.
+    const subN = ins?.catEdad || (dobStr ? dobToSubN(dobStr, dateRef) : null) || null;
+    const hcpExact = (typeof ins?.hcp === "number") ? ins.hcp : null;
     const roundScores: FPGRoundScore[] = (p.rounds || [])
       .map((g, i) => ({
         round: i + 1,
@@ -499,12 +518,14 @@ function rfegolfToFPGTournament(detail: RFEGDetail, dobLookup?: DobLookup): FPGT
       scoreId: `rfeg-${detail.compId}-${idx}`,
       pos: p.pos ?? idx + 1,
       name: formatPlayerName(p.name || ""),
-      club: e?.club ? displayName(e.club) : "—",
-      fed: e?.licencia || undefined,
-      fedCode: e?.licencia || undefined,
+      club: ins?.club ? displayName(ins.club) : (e?.club ? displayName(e.club) : "—"),
+      fed: ins?.licencia || e?.licencia || undefined,
+      fedCode: ins?.licencia || e?.licencia || undefined,
       grossTotal: p.total ?? null,
       toPar: p.toPar ?? null,
       escalao: subN,
+      hcpExact,
+      dob: ins?.dob || e?.dob || undefined,
       nholes: 18,
       parTotal,
       scores: [],
@@ -828,6 +849,7 @@ interface LgsDetail {
     rounds: { round: number; label: string }[];
   };
   rounds: LgsRound[];
+  course?: { meters: (number | null)[]; si: (number | null)[]; par: (number | null)[]; avg?: (number | null)[]; metersTotal?: number | null; holes?: number } | null;
 }
 
 function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup): RFEGDetail {
@@ -941,7 +963,8 @@ function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup):
     results: [resultsGroup],
     /** Rondas hbh com par real — usado pela vista hbh quando expandida */
     _lgsRounds: lgs.rounds,
-  } as RFEGDetail & { _lgsRounds: LgsRound[] };
+    _lgsCourse: lgs.course || null,
+  } as RFEGDetail & { _lgsRounds: LgsRound[]; _lgsCourse: LgsDetail["course"] };
 }
 type DobLookup = Record<string, DobLookupEntry>;
 
@@ -1339,6 +1362,7 @@ function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEnt
         id: data.compId,
         meta: { name: data.meta.name, course: data.meta.course, dateRange: data.meta.dateStart, dateIso: data.meta.dateStart },
         rounds: (data as any)._lgsRounds,
+        course: (data as any)._lgsCourse,
         _hcpLookup: hcpLookup,
       } as any, dobLookup);
     }
@@ -1475,7 +1499,7 @@ function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEnt
               scOptions={lgsScorecardOptions()}
               siLabel={entry.source === "livegolfscoring" ? "m" : "SI"}
               // Para Espanha: ESC visível (Sub-N pill), HCP visível, CLUBE escondido
-              accShowCols={{ esc: true, fed: false, tee: false, club: false, hcp: true }}
+              accShowCols={{ esc: true, fed: false, tee: false, club: false, hcp: true, age: true, birthYear: false }}
             />
           ) : (
             <EmptyState message="Sem resultados publicados — ver tab Inscritos." />
@@ -2374,6 +2398,7 @@ async function rfegLoadDivisions(
       id: data.compId,
       meta: { name: data.meta.name, course: data.meta.course, dateRange: data.meta.dateStart, dateIso: data.meta.dateStart },
       rounds: (data as unknown as { _lgsRounds: unknown[] })._lgsRounds,
+      course: (data as unknown as { _lgsCourse?: unknown })._lgsCourse,
       _hcpLookup: hcpLookup,
     } as any, dobLookup); // eslint-disable-line @typescript-eslint/no-explicit-any
   } else if (t.source === "nextcaddy") results = ncToFPGTournament(data, dobLookup);
@@ -2522,6 +2547,7 @@ export default function RFEGPage() {
   const [index, setIndex] = useState<RFEGIndex | null>(null);
   const [dobLookup, setDobLookup] = useState<DobLookup | undefined>(undefined);
   const [hcpLookup, setHcpLookup] = useState<HcpLookup | undefined>(undefined);
+  const [twins, setTwins] = useState<Record<string, number>>({});
   const [vetIndex, setVetIndex] = useState<Map<string, number>>(() => new Map());
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -2533,6 +2559,8 @@ export default function RFEGPage() {
       .catch((e) => setError(String(e?.message ?? e)));
     cachedFetchJson<DobLookupFile>("/data/licencia-dob-lookup.json").then((d) => { if (d && d.lookup) setDobLookup(d.lookup); }).catch(() => {});
     cachedFetchJson<HcpLookupFile>("/data/licencia-hcp-lookup.json").then((d) => { if (d && d.lookup) setHcpLookup(d.lookup); }).catch(() => {});
+    // Gémeos RFEGolf<->LGS: esconder o duplicado RFEGolf (só-PDF) quando há LGS rico.
+    cachedFetchJson<{ twins: Record<string, number> }>("/data/rfegolf-lgs-twins.json").then((d) => { if (d && d.twins) setTwins(d.twins); }).catch(() => {});
     // Índice de veteranos (presenças por jogador) — agregados de rivais.
     Promise.all([
       cachedFetchJson<RfegRivalsFile>("/data/rfegolf-rivals.json").catch(() => null),
@@ -2544,9 +2572,25 @@ export default function RFEGPage() {
   }, []);
 
   const entries = useMemo(
-    () => (index ? buildRfegEntries(index, dobLookup, hcpLookup) : []),
-    [index, dobLookup, hcpLookup],
+    () => {
+      if (!index) return [];
+      const all = buildRfegEntries(index, dobLookup, hcpLookup);
+      // Esconder o duplicado RFEGolf quando existe gémeo LGS (mais rico: hbh+metros).
+      // O LGS é canónico; o RFEGolf só-PDF (par falso, sem scorecards) é suprimido.
+      return all.filter((e) => {
+        const [src, id] = e.id.split(":");
+        return !(src === "rfegolf" && twins[id] != null);
+      });
+    },
+    [index, dobLookup, hcpLookup, twins],
   );
+
+  // Aterrar num URL RFEGolf com gémeo LGS → redirige para o LGS rico (hbh+metros).
+  useEffect(() => {
+    if (params.source === "rfegolf" && params.id && twins[params.id] != null) {
+      navigate(`/rfeg/livegolfscoring/${twins[params.id]}`, { replace: true });
+    }
+  }, [params.source, params.id, twins, navigate]);
 
   // Vista informativa via URL: /rfeg/info/{key} (deep-linkável, persiste no reload).
   // "info" não colide com as fontes reais (rfegolf/nextcaddy/livegolfscoring/golfdirecto).

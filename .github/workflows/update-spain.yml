@@ -192,6 +192,11 @@ jobs:
         continue-on-error: true
         run: node scripts/enrich-lgs-dates.js
 
+      - name: Enrich LGS stats (metros + SI por buraco)
+        id: enrich_lgs_stats
+        continue-on-error: true
+        run: node scripts/enrich-lgs-stats.js --concurrency 6
+
       - name: Inferir par NextCaddy (fallback)
         id: infer_par
         continue-on-error: true
@@ -215,6 +220,12 @@ jobs:
       - name: Build fcg-rivals.json
         run: node scripts/build-fcg-rivals.js
 
+      - name: Build mapa de gémeos RFEGolf<->LGS
+        run: node scripts/build-lgs-twins.js
+
+      - name: Build spain-player-results.json (torneios por jogador)
+        run: node scripts/build-spain-player-results.js
+
       - name: Commit e push (se houver mudanças)
         run: |
           git config user.name  "github-actions[bot]"
@@ -230,6 +241,8 @@ jobs:
                   public/data/spain-players.json \
                   public/data/rfegolf-rivals.json \
                   public/data/fcg-rivals.json \
+                  public/data/spain-player-results.json \
+                  public/data/rfegolf-lgs-twins.json \
                   scripts/fcg-scope.json \
                   scripts/nextcaddy-scope-all.json \
                   scripts/rfegolf-scope.json 2>/dev/null || true

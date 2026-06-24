@@ -8,6 +8,7 @@
  * URLs:
  *   /torneos/clasificacion/{id}      → leaderboard final/em curso
  *   /torneos/hoyoahoyo/{id}/{r}      → scorecards por ronda
+ *   /torneos/estadisticas/{id}       → metros + SI + par + média por buraco
  *   /torneos/horarios/{id}/{r}       → tee times por ronda
  *
  * O ID é interno (1-400+ em 2026). Não há mapeamento directo com CompId RFEGolf
@@ -16,7 +17,7 @@
  * USO:
  *   node scripts/scrape-livegolfscoring.js --id 322
  *   node scripts/scrape-livegolfscoring.js --range 1-400 --concurrency 5
- *   node scripts/scrape-livegolfscoring.js --range 300-330 --skip-existing
+ *   node scripts/scrape-livegolfscoring.js --seasons 2025,2026 --skip-existing
  */
 
 const fs = require("fs");
@@ -78,12 +79,9 @@ function parseHoyoAHoyo(html) {
   let m;
   while ((m = trRe.exec(html)) !== null) {
     const block = m[1];
-    // Tentar apanhar memberId do id do td: <td><span id="star-XXXX">
     const idM = /id="(?:star|jugador|fichalink)-(\d+)"/.exec(block);
     const memberId = idM ? idM[1] : null;
     const blockText = stripTags(block);
-    // Pattern: > {pos} {NAME} {±toPar} h1 h2 h3 h4 h5 h6 h7 h8 h9 out h10 ... h18 in total ±today
-    // O nome pode ter vírgula e espaços
     const re = /^[> ]*(T?\d+|\d+|—)?\s+([A-Za-zÁÉÍÓÚÑÜáéíóúñü\s,'\.-]+?)\s+\*?\s*([+\-]\d+|E|Par)\s+((?:\d+\s+){19,21}\d+)\s+([+\-]\d+|E|Par)/;
     const r = re.exec(blockText);
     if (!r) continue;
@@ -94,7 +92,6 @@ function parseHoyoAHoyo(html) {
     const numsStr = r[4].trim();
     const hoyRaw = r[5];
     const nums = numsStr.split(/\s+/).map(s => parseInt(s, 10)).filter(n => !isNaN(n));
-    // Esperado: 21 nums (h1-9, out=36, h10-18, in=36, total) ou 22 com Hdp; pegamos os 18 buracos + out + in + total
     let scores = null, total = null, halves = null;
     if (nums.length >= 21) {
       scores = [...nums.slice(0, 9), ...nums.slice(10, 19)];
@@ -109,15 +106,40 @@ function parseHoyoAHoyo(html) {
   return { par, players };
 }
 
+/* Tabela /torneos/estadisticas/{id}: por buraco Mtrs (metros) + Hdp (SI) + Par +
+ * Media (score médio do torneio). É a UNICA fonte de DISTANCIAS por buraco no LGS
+ * (o hoyoahoyo só tem par). Markup: <table class="board estadisticas"> com 18 <tr>,
+ * cada um com <td> Hoyo - Mtrs - Hdp - Par - Media - Eagles - Birdies - ... */
+function parseEstadisticas(html) {
+  const tblM = /<table[^>]*class="[^"]*estadisticas[^"]*"[^>]*>([\s\S]*?)<\/table>/i.exec(html);
+  if (!tblM) return null;
+  const meters = new Array(18).fill(null), si = new Array(18).fill(null), par = new Array(18).fill(null), avg = new Array(18).fill(null);
+  let found = 0, m;
+  const trRe = /<tr[^>]*>([\s\S]*?)<\/tr>/gi;
+  while ((m = trRe.exec(tblM[1])) !== null) {
+    const cells = [...m[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)].map(c => stripTags(c[1]));
+    if (cells.length < 5) continue;
+    const hole = parseInt(cells[0], 10);
+    if (!(hole >= 1 && hole <= 18)) continue;
+    const i = hole - 1;
+    const mt = parseInt(cells[1], 10); if (!isNaN(mt)) meters[i] = mt;
+    const hd = parseInt(cells[2], 10); if (!isNaN(hd)) si[i] = hd;
+    const pr = parseInt(cells[3], 10); if (!isNaN(pr)) par[i] = pr;
+    const av = parseFloat(String(cells[4]).replace(",", ".")); if (!isNaN(av)) avg[i] = av;
+    found++;
+  }
+  if (found < 9) return null;
+  const metersTotal = meters.reduce((a, b) => a + (b || 0), 0) || null;
+  return { meters, si, par, avg, metersTotal, holes: found };
+}
+
 function parseTorneoMeta(html) {
-  // Selector de ronda — quantas rondas
   const rounds = [];
   const optRe = /<option value="\/torneos\/hoyoahoyo\/\d+\/(\d+)"[^>]*>([^<]+)<\/option>/gi;
   let m;
   while ((m = optRe.exec(html)) !== null) {
     rounds.push({ round: parseInt(m[1], 10), label: m[2].trim() });
   }
-  // Nome do torneio
   let name = null;
   const nm = /<h1[^>]*>([^<]+)<\/h1>/.exec(html);
   if (nm) name = stripTags(nm[1]);
@@ -125,11 +147,9 @@ function parseTorneoMeta(html) {
     const nm2 = /<title[^>]*>([^<]+)<\/title>/.exec(html);
     if (nm2) name = stripTags(nm2[1]).replace(/\s*-\s*Real Federación.+$/i, "").trim();
   }
-  // Curso
   let course = null;
   const cm = /<span[^>]*class="nombre_campo"[^>]*>([^<]+)<\/span>/.exec(html);
   if (cm) course = stripTags(cm[1]);
-  // Datas
   let dateRange = null;
   const dm = /Del\s+(\d+\s+[a-z]+)\s+al\s+(\d+\s+[a-z]+(?:\s+\d{4})?)/i.exec(html);
   if (dm) dateRange = `${dm[1]} - ${dm[2]}`;
@@ -157,16 +177,20 @@ async function scrapeTorneo(id) {
     roundsData.push({ round: r.round, label: r.label, par: parsed.par, players: parsed.players });
   }
 
-  return { id, ok: true, scrapedAt: new Date().toISOString(), meta, rounds: roundsData };
+  // 3. Estatísticas por buraco — metros + SI + par + média (distâncias jogadas).
+  let course = null;
+  try {
+    const est = await httpGet(`https://rfegolf.livegolfscoring.es/torneos/estadisticas/${id}`);
+    if (est.status === 200) course = parseEstadisticas(est.body);
+  } catch (e) { /* sem estatísticas publicadas — ok */ }
+
+  return { id, ok: true, scrapedAt: new Date().toISOString(), meta, course, rounds: roundsData };
 }
 
 const LGS_BASE = "https://rfegolf.livegolfscoring.es";
 
-/* ─── Descoberta por LISTAGEM de temporada ───────────────────────────────
- * Em vez de adivinhar um range numérico, a página /competiciones/temporada/{ano}
- * lista TODAS as competições da época (nacionais + regionais: Zonais Juvenis,
- * circuitos autonómicos, etc.). Extraímos os IDs do padrão de link que o próprio
- * scraper já usa (/torneos/{tipo}/{id}) — robusto contra mudanças de layout. */
+/* Descoberta por LISTAGEM de temporada: /competiciones/temporada/{ano} lista
+ * TODAS as competições da época. Extrai os IDs do padrão /torneos/{tipo}/{id}. */
 async function discoverSeasonIds(years) {
   const ids = new Set();
   for (const y of years) {
@@ -200,8 +224,6 @@ async function main() {
     const p = rangeArg.split("-").map(s => parseInt(s.trim(), 10));
     for (let i = p[0]; i <= p[1]; i++) ids.push(i);
   }
-  // --seasons "2025,2026": descobre IDs por listagem e junta-os (pode combinar
-  // com --range para também cobrir IDs que a listagem não mostre).
   if (seasonsArg) {
     const years = seasonsArg.split(",").map(s => s.trim()).filter(Boolean);
     console.log(`Discovery por temporada: ${years.join(", ")}`);
@@ -228,7 +250,8 @@ async function main() {
           fs.writeFileSync(out, JSON.stringify(result, null, pretty ? 2 : 0));
           ok++;
           const nP = result.rounds.reduce((a, r) => a + (r.players?.length || 0), 0);
-          console.log(`  ${id}: ${result.meta.name?.slice(0, 50) || "?"} (${result.rounds.length} R, ${nP} entries)`);
+          const mt = result.course ? `, ${result.course.metersTotal}m` : "";
+          console.log(`  ${id}: ${result.meta.name?.slice(0, 48) || "?"} (${result.rounds.length} R, ${nP} entries${mt})`);
         } else {
           fail++;
         }
@@ -241,4 +264,8 @@ async function main() {
   console.log(`\nDone: ok=${ok} fail=${fail} skip=${skip}`);
 }
 
-main().catch(e => { console.error(e); process.exit(1); });
+if (require.main === module) {
+  main().catch(e => { console.error(e); process.exit(1); });
+}
+
+module.exports = { scrapeTorneo, parseEstadisticas, parseHoyoAHoyo, httpGet };

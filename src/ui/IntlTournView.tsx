@@ -48,7 +48,7 @@ export interface IntlTournViewProps {
    */
   renderAccSection?: (leaderboard: React.ReactNode) => React.ReactNode;
   /** Override das colunas do AccumulatedLB (default: { esc: false, fed: false, tee: false }). */
-  accShowCols?: { esc?: boolean; fed?: boolean; tee?: boolean; club?: boolean; hcp?: boolean };
+  accShowCols?: { esc?: boolean; fed?: boolean; tee?: boolean; club?: boolean; hcp?: boolean; age?: boolean; birthYear?: boolean };
 }
 
 export function IntlTournView({
