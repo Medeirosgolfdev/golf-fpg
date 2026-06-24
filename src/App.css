@@ -2553,6 +2553,10 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .row-manuel .sticky-col-1 { background: var(--bg-manuel-sticky) !important; }
 .row-manuel:hover { background: var(--bg-success-subtle) !important; }
 
+/* Jogador português (não-Manuel) destacado subtilmente nas tabelas de inscritos. */
+.row-pt { background: color-mix(in srgb, var(--color-rfeg-red) 7%, transparent); }
+.row-pt:hover { background: color-mix(in srgb, var(--color-rfeg-red) 12%, transparent); }
+
 /* ─── Destaque Português — usado em páginas internacionais (FFG, etc.)
    onde queremos marcar conterrâneos. Cor: verde néon #00FF00 (mesma do
    pill INTL global, ver --pill-intl-bg em tokens.css). ─── */

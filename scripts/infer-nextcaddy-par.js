@@ -49,6 +49,20 @@ function inferParTotalForRound(roundEntries, nHoles) {
   return best;
 }
 
+// Infere só o PAR TOTAL a partir de (total, toPar) — para torneios sem scores
+// buraco-a-buraco. Tenta 18 buracos (par plausível 60-80), depois 9 (27-40).
+function inferParTotalAny(entries) {
+  if (!entries.length) return null;
+  for (const nHoles of [18, 9]) {
+    const pt = inferParTotalForRound(entries, nHoles);
+    if (pt != null) {
+      const agree = entries.filter((e) => e.total - e.toPar === pt).length / entries.length;
+      return { parTotal: pt, confidence: agree >= 0.8 ? "total-high" : "total-low" };
+    }
+  }
+  return null;
+}
+
 function inferParPerHole(scoresMatrix, parTotal) {
   if (!scoresMatrix.length) return null;
   const nHoles = scoresMatrix[0].length;
@@ -121,7 +135,7 @@ function inferParPerHole(scoresMatrix, parTotal) {
 }
 
 const files = fs.readdirSync(NC_DIR).filter((f) => /^\d+\.json$/.test(f));
-let updated = 0, skipped = 0, errors = 0;
+let updated = 0, skipped = 0, errors = 0, totalOnly = 0;
 const lowConfidence = [];
 
 for (const file of files) {
@@ -152,7 +166,35 @@ for (const file of files) {
   }
 
   if (roundsMap.size === 0) {
-    skipped++;
+    // Sem scores buraco-a-buraco → tentar inferir pelo menos o PAR TOTAL a
+    // partir de (total, toPar) do leaderboard. Dá o par do campo ao cabeçalho
+    // e às cores de total, mesmo sem o par por buraco. Não sobrescreve um par
+    // por buraco real já existente.
+    const flat = [];
+    for (const cat of j.leaderboard || []) {
+      for (const p of cat.players || []) {
+        let total = typeof p.total === "number" ? p.total : null;
+        if (total == null && Array.isArray(p.roundScores)) {
+          const t = p.roundScores.find((rs) => typeof rs.total === "number");
+          if (t) total = t.total;
+        }
+        if (typeof total === "number" && typeof p.toPar === "number") flat.push({ total, toPar: p.toPar });
+      }
+    }
+    const pt = inferParTotalAny(flat);
+    if (pt && !(j.course && Array.isArray(j.course.par))) {
+      if (!j.course) j.course = {};
+      j.course.parTotal = pt.parTotal;
+      j.course.parInferred = true;
+      j.course.parConfidence = pt.confidence; // total-high | total-low
+      if (j.course.si === undefined) j.course.si = null;
+      if (j.course.meters === undefined) j.course.meters = null;
+      if (!DRY) fs.writeFileSync(fpath, JSON.stringify(j, null, 2));
+      updated++;
+      totalOnly++;
+    } else {
+      skipped++;
+    }
     continue;
   }
 
@@ -187,7 +229,7 @@ for (const file of files) {
   }
 }
 
-console.log("\nNextCaddy par inference: " + updated + " updated, " + skipped + " skipped (no scores), " + errors + " errors");
+console.log("\nNextCaddy par inference: " + updated + " updated (" + totalOnly + " só par-total), " + skipped + " skipped, " + errors + " errors");
 if (lowConfidence.length) {
   console.log("\nLow/medium confidence (" + lowConfidence.length + "):");
   for (const lc of lowConfidence.slice(0, 10)) {
