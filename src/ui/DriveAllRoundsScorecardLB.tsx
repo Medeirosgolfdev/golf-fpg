@@ -160,6 +160,7 @@ function DriveAllRoundsScorecardLB({
                   <span className="muted">–</span>
                 )}
               </td>
+              <td className="lb-eag">{rd.eags || ""}</td>
               <td className="lb-bird">{rd.birds || ""}</td>
               <td className="lb-par-stat">{rd.pars || ""}</td>
               <td className="lb-bog">{rd.bogs || ""}</td>
@@ -205,6 +206,7 @@ function DriveAllRoundsScorecardLB({
                 <span className="muted">–</span>
               )}
             </td>
+            <td className="lb-eag">{row.rd.eags || ""}</td>
             <td className="lb-bird">{row.rd.birds || ""}</td>
             <td className="lb-par-stat">{row.rd.pars || ""}</td>
             <td className="lb-bog">{row.rd.bogs || ""}</td>
@@ -227,6 +229,7 @@ function DriveAllRoundsScorecardLB({
   const postScorecardHeaderCells = (
     <>
       <th className="lb-sd">SD</th>
+      <th className="lb-eag">🦅</th>
       <th className="lb-bird">🐦</th>
       <th className="lb-par-stat">Par</th>
       <th className="lb-bog">■</th>
@@ -330,7 +333,7 @@ function DriveAllRoundsScorecardLB({
         prefixHeaderCells={prefixHeaderCells}
         postScorecardHeaderCells={postScorecardHeaderCells}
         parLabelColSpan={3}
-        postScorecardColCount={4}
+        postScorecardColCount={5}
         showScorecard={showSC}
         onToggleScorecard={() => setShowSC((v) => !v)}
         filterBar={null}

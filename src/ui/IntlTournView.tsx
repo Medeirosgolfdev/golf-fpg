@@ -74,7 +74,7 @@ export function IntlTournView({
 
   const renderNameFn = useCallback(
     (row: MultiRoundRow) => (
-      <span className="fw-700 inline-flex items-center">
+      <span className="tourn-pname inline-flex items-center">
         {row.countryFlag} {row.name}<KidsLink nome={row.name} />
       </span>
     ), []);

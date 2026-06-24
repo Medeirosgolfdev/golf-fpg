@@ -203,10 +203,10 @@ function ageAt(dob?: string | null, refDate?: string): number | null {
 type MRSortKey =
   | "pos" | "name" | "club" | "esc" | "hcp" | "gross" | "toPar" | "tee" | "fed"
   | "sd" | "birthYear" | "age"
-  | "bird" | "par-stat" | "bog"
-  | "acc:bird" | "acc:par" | "acc:bog"
+  | "eag" | "bird" | "par-stat" | "bog"
+  | "acc:eag" | "acc:bird" | "acc:par" | "acc:bog"
   | `gross:${number}` | `rtp:${number}`
-  | `sd:${number}` | `bird:${number}` | `par:${number}` | `bog:${number}`;
+  | `sd:${number}` | `eag:${number}` | `bird:${number}` | `par:${number}` | `bog:${number}`;
 
 /* ══════════════════════════════════════════════════════════════
    COMPONENTE PRINCIPAL
@@ -278,6 +278,10 @@ export function MultiRoundLeaderboard({
   const hasAnyHcp  = useMemo(() => rows.some(r => r.hcp != null), [rows]);
   const hasAnyTee  = useMemo(() => rows.some(r => r.teeName != null && r.teeName !== ""), [rows]);
   const hasAnySD   = useMemo(() => rows.some(r => r.rounds?.some(rd => rd?.sd != null)), [rows]);
+  // Dados buraco-a-buraco (birdies/pars/bogeys) existem mesmo quando não há CR/Slope
+  // para calcular SD (ex.: torneios RFEG/LGS). Mostrar as stats por ronda na mesma —
+  // o SD cai para "–" graciosamente — para o Resumo ficar igual ao da FPGPage.
+  const hasAnyRoundHoleStats = useMemo(() => rows.some(r => r.rounds?.some(rd => rd && ((rd.birdies || 0) + (rd.pars || 0) + (rd.bogeys || 0)) > 0)), [rows]);
   // Nasc./Idade: usa dob da row, com fallback ao playersDB[fed].dob.
   const dobOf = useMemo(() => (r: MultiRoundRow): string | null =>
     r.dob || (r.fed ? (playersDB?.[r.fed] as any)?.dob ?? null : null), [playersDB]);
@@ -290,7 +294,7 @@ export function MultiRoundLeaderboard({
   const showTee = wantTee && hasAnyTee;
   const showBirthYear = wantBirthYear && hasAnyDob;
   const showAge = wantAge && hasAnyDob;
-  const showRoundStats = wantRoundStats && hasAnySD;
+  const showRoundStats = wantRoundStats && (hasAnySD || hasAnyRoundHoleStats);
   const showRoundToPar = wantRoundToPar;
 
   const { sortKey, sortDir, toggleSort: handleSort } = useSort<MRSortKey>("pos", "asc");
@@ -353,6 +357,13 @@ export function MultiRoundLeaderboard({
       const sb = b.rounds[ri]?.sd ?? INF;
       return sortDir === "asc" ? sa - sb : sb - sa;
     }
+    // Eagles por ronda específica: "eag:0", "eag:1", ...
+    if (typeof sortKey === "string" && sortKey.startsWith("eag:")) {
+      const ri = parseInt(sortKey.slice(4), 10);
+      const sa = a.rounds[ri]?.eagles ?? 0;
+      const sb = b.rounds[ri]?.eagles ?? 0;
+      return sortDir === "asc" ? sb - sa : sa - sb;
+    }
     // Birdies por ronda específica: "bird:0", "bird:1", ...
     if (typeof sortKey === "string" && sortKey.startsWith("bird:")) {
       const ri = parseInt(sortKey.slice(5), 10);
@@ -387,9 +398,15 @@ export function MultiRoundLeaderboard({
       case "gross": return sortDir === "asc" ? (a.gross ?? INF) - (b.gross ?? INF) : (b.gross ?? INF) - (a.gross ?? INF);
       case "toPar": return sortDir === "asc" ? ((a.gross ?? INF) - (a.parTotal ?? 0)) - ((b.gross ?? INF) - (b.parTotal ?? 0)) : ((b.gross ?? INF) - (b.parTotal ?? 0)) - ((a.gross ?? INF) - (a.parTotal ?? 0));
       case "sd":    { const sa = a.rounds[0]?.sd ?? INF; const sb = b.rounds[0]?.sd ?? INF; return sortDir === "asc" ? sa - sb : sb - sa; }
+      case "eag":       { const sa = a.rounds[0]?.eagles ?? 0;   const sb = b.rounds[0]?.eagles ?? 0;   return sortDir === "asc" ? sb - sa : sa - sb; }
       case "bird":      { const sa = a.rounds[0]?.birdies ?? 0;  const sb = b.rounds[0]?.birdies ?? 0;  return sortDir === "asc" ? sb - sa : sa - sb; }
       case "par-stat":  { const sa = a.rounds[0]?.pars ?? 0;     const sb = b.rounds[0]?.pars ?? 0;     return sortDir === "asc" ? sb - sa : sa - sb; }
       case "bog":       { const sa = a.rounds[0]?.bogeys ?? 999; const sb = b.rounds[0]?.bogeys ?? 999; return sortDir === "asc" ? sa - sb : sb - sa; }
+      case "acc:eag":   {
+        const sa = a.rounds.reduce((t, r) => t + (r?.eagles || 0), 0);
+        const sb = b.rounds.reduce((t, r) => t + (r?.eagles || 0), 0);
+        return sortDir === "asc" ? sb - sa : sa - sb;
+      }
       case "acc:bird":  {
         const sa = a.rounds.reduce((t, r) => t + (r?.birdies || 0), 0);
         const sb = b.rounds.reduce((t, r) => t + (r?.birdies || 0), 0);
@@ -477,6 +494,7 @@ export function MultiRoundLeaderboard({
 
               {/* Acumulados multi-ronda (entre Total e R1) */}
               {isMulti && showRoundStats && <>
+                <SHdr k="acc:eag"  className="lb-acc-eag">🦅</SHdr>
                 <SHdr k="acc:bird" className="lb-acc-bird">🐦</SHdr>
                 <SHdr k="acc:par"  className="lb-acc-par">=</SHdr>
                 <SHdr k="acc:bog"  className="lb-acc-bog">■</SHdr>
@@ -493,6 +511,7 @@ export function MultiRoundLeaderboard({
                       {showRoundToPar && <SHdr k={`rtp:${r}` as MRSortKey} className="lb-rnd-tp">±</SHdr>}
                       {showRoundStats && <>
                         <SHdr k={`sd:${r}` as MRSortKey} className="lb-rnd-sd">SD</SHdr>
+                        <SHdr k={`eag:${r}` as MRSortKey} className="lb-rnd-eag">🦅</SHdr>
                         <SHdr k={`bird:${r}` as MRSortKey} className="lb-rnd-bird">🐦</SHdr>
                         <SHdr k={`par:${r}`  as MRSortKey} className="lb-rnd-par">=</SHdr>
                         <SHdr k={`bog:${r}`  as MRSortKey} className="lb-rnd-bog">■</SHdr>
@@ -502,6 +521,7 @@ export function MultiRoundLeaderboard({
                 : <>
                     {showRoundStats && <>
                       <SHdr k="sd" className="lb-sd">SD</SHdr>
+                      <SHdr k="eag"      className="lb-eag">🦅</SHdr>
                       <SHdr k="bird"     className="lb-bird">🐦</SHdr>
                       <SHdr k="par-stat" className="lb-par-stat">Par</SHdr>
                       <SHdr k="bog"      className="lb-bog">■</SHdr>
@@ -586,15 +606,21 @@ export function MultiRoundLeaderboard({
                     const yr = birthYearOf(dob);
                     const age = ageAt(dob, tournamentDate);
                     return <td className="lb-esc" title={age != null ? `${age} anos à data do torneio` : undefined}>
-                      {yr != null ? yr : <span className="muted">–</span>}
+                      {yr != null
+                        ? <span className="p p-sm" style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent" }}>{yr}</span>
+                        : <span className="muted">–</span>}
                     </td>;
                   })()}
                   {showAge && (() => {
                     const dob = dobOf(row);
                     const yr = birthYearOf(dob);
-                    const age = ageAt(dob, tournamentDate);
+                    // Preferir a idade pré-calculada pelo adapter (row.age) → CONSISTENTE
+                    // com as tabs R1/R2/R3. Só recalcular por dob se o adapter não a deu.
+                    const age = row.age != null ? row.age : ageAt(dob, tournamentDate);
                     return <td className="lb-esc" title={yr != null ? `Nascido em ${dob}` : undefined}>
-                      {age != null ? `${age}a` : <span className="muted">–</span>}
+                      {age != null
+                        ? <span className="p p-sm" style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent" }}>{age}a</span>
+                        : <span className="muted">–</span>}
                     </td>;
                   })()}
                   {showFed && <td className="lb-fed">{row.fed || "–"}</td>}
@@ -621,9 +647,10 @@ export function MultiRoundLeaderboard({
 
                   {/* Acumulados multi-ronda */}
                   {isMulti && showRoundStats && (() => {
-                    let tBird = 0, tPar = 0, tBog = 0;
-                    for (const rd of row.rounds) { if (rd) { tBird += rd.birdies || 0; tPar += rd.pars || 0; tBog += rd.bogeys || 0; } }
+                    let tEag = 0, tBird = 0, tPar = 0, tBog = 0;
+                    for (const rd of row.rounds) { if (rd) { tEag += rd.eagles || 0; tBird += rd.birdies || 0; tPar += rd.pars || 0; tBog += rd.bogeys || 0; } }
                     return <>
+                      <td className="lb-acc-eag">{tEag || ""}</td>
                       <td className="lb-acc-bird">{tBird || ""}</td>
                       <td className="lb-acc-par">{tPar || ""}</td>
                       <td className="lb-acc-bog">{tBog || ""}</td>
@@ -634,7 +661,7 @@ export function MultiRoundLeaderboard({
                   {isMulti
                     ? Array.from({ length: nRounds }, (_, r) => {
                         const rd = row.rounds[r];
-                        const emptyCols = (showRoundToPar ? 1 : 0) + (showRoundStats ? 4 : 0);
+                        const emptyCols = (showRoundToPar ? 1 : 0) + (showRoundStats ? 5 : 0);
                         if (!rd) return (
                           <React.Fragment key={r}>
                             <td className="lb-rnd c-muted">–</td>
@@ -654,6 +681,7 @@ export function MultiRoundLeaderboard({
                                   ? <SDPill sd={rd.sd} source={rd.sdSource ?? null} hcp={row.hcp} />
                                   : <span className="muted">–</span>}
                               </td>
+                              <td className="lb-rnd-eag">{rd.eagles || ""}</td>
                               <td className="lb-rnd-bird">{rd.birdies || ""}</td>
                               <td className="lb-rnd-par">{rd.pars || ""}</td>
                               <td className="lb-rnd-bog">{rd.bogeys || ""}</td>
@@ -670,6 +698,7 @@ export function MultiRoundLeaderboard({
                                 ? <SDPill sd={rd.sd} source={rd.sdSource ?? null} hcp={row.hcp} />
                                 : <span className="muted">–</span>}
                             </td>
+                            <td className="lb-eag">{rd?.eagles || ""}</td>
                             <td className="lb-bird">{rd?.birdies || ""}</td>
                             <td className="lb-par-stat">{rd?.pars || ""}</td>
                             <td className="lb-bog">{rd?.bogeys || ""}</td>

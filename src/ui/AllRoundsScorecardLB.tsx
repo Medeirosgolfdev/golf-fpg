@@ -119,7 +119,7 @@ export function AllRoundsScorecardLB({
     );
   }
 
-  const postCols = (hideSD ? 0 : 1) + 3; // SD(opcional) 🐦 Par ■
+  const postCols = (hideSD ? 0 : 1) + 4; // SD(opcional) 🦅 🐦 Par ■
   const headerSpan = 2 + (hideHCP ? 0 : 1) + 1;
 
   if (!tournament.players.length) return <EmptyState size="sm" message="Sem dados." />;
@@ -353,6 +353,7 @@ export function AllRoundsScorecardLB({
                 </>
               )}
               {!hideSD && <th className="lb-sd">SD</th>}
+              <SortableHdr k="eag" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-eag">🦅</SortableHdr>
               <SortableHdr k="bird" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-bird">🐦</SortableHdr>
               <SortableHdr k="par" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-par-stat">Par</SortableHdr>
               <SortableHdr k="bog" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-bog">■</SortableHdr>
@@ -420,6 +421,7 @@ export function AllRoundsScorecardLB({
                                 {rd.sd != null ? <SDPill sd={rd.sd} source={null} hcp={row.hcp} /> : <span className="muted">–</span>}
                               </td>
                             )}
+                            <td className="lb-eag" style={{ borderTop: bTop }}>{rd.eags || ""}</td>
                             <td className="lb-bird" style={{ borderTop: bTop }}>{rd.birds || ""}</td>
                             <td className="lb-par-stat" style={{ borderTop: bTop }}>{rd.pars || ""}</td>
                             <td className="lb-bog" style={{ borderTop: bTop }}>{rd.bogs || ""}</td>
@@ -462,6 +464,7 @@ export function AllRoundsScorecardLB({
                           {rd.sd != null ? <SDPill sd={rd.sd} source={null} hcp={row.hcp} /> : <span className="muted">–</span>}
                         </td>
                       )}
+                      <td className="lb-eag">{rd.eags || ""}</td>
                       <td className="lb-bird">{rd.birds || ""}</td>
                       <td className="lb-par-stat">{rd.pars || ""}</td>
                       <td className="lb-bog">{rd.bogs || ""}</td>

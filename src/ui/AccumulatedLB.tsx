@@ -62,12 +62,16 @@ export function AccumulatedLB({
           grossTotal: rs.gross,
         };
         const { sd } = computeSD(sdP);
-        let birdies = 0,
+        let eagles = 0,
+          birdies = 0,
           pars = 0,
           bogeys = 0;
         for (let i = 0; i < (rs.scores?.length ?? 0); i++) {
-          const d = (rs.scores[i] || 0) - (rs.pars[i] || 0);
-          if (d <= -1) birdies++;
+          const sc = rs.scores[i] || 0;
+          if (sc <= 0) continue; // buraco não jogado (9H guardadas como 18 com zeros)
+          const d = sc - (rs.pars[i] || 0);
+          if (d <= -2) eagles++;
+          else if (d === -1) birdies++;
           else if (d === 0) pars++;
           else bogeys++;
         }
@@ -76,6 +80,7 @@ export function AccumulatedLB({
           parPerRound: rs.pars?.reduce((a, b) => a + b, 0) || parPerRound,
           sd,
           sdSource: null as string | null,
+          eagles,
           birdies,
           pars,
           bogeys,
@@ -89,6 +94,9 @@ export function AccumulatedLB({
         hcp: p.hcpExact ?? null,
         esc: esc || undefined,
         dob,
+        // Idade pré-calculada pelo adapter (mesma que as tabs R1/R2/R3 usam) —
+        // evita divergência entre tabs por recalcular com datas diferentes.
+        age: (p as { _age?: number | null })._age ?? null,
         teeName: p.teeName,
         gross: numGross(p),
         parTotal: parPerRound * (p._roundsPlayed ?? nRounds),

@@ -34,6 +34,7 @@ export interface RdData {
   gross: number;
   toPar: number;
   sd: number | null;
+  eags: number;
   birds: number;
   pars: number;
   bogs: number;
@@ -216,15 +217,17 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
     const capped = rs.scores?.map((s) => Math.min(s, maxHoleScore)) ?? [];
     const gross = capped.length ? capped.reduce((a, b) => a + b, 0) : rs.gross;
     const rdPar = refPars?.reduce((a, b) => a + b, 0) || parTot;
-    let birds = 0, pars2 = 0, bogs = 0;
+    let eags = 0, birds = 0, pars2 = 0, bogs = 0;
     capped.forEach((s, h) => {
+      if (!s || s <= 0) return; // buraco não jogado (9H guardadas como 18 com zeros)
       const d = s - (refPars[h] ?? par[h] ?? 0);
-      if (d <= -1) birds++;
+      if (d <= -2) eags++;
+      else if (d === -1) birds++;
       else if (d === 0) pars2++;
       else bogs++;
     });
     const sd = computeRoundSD ? computeRoundSD(p, capped, rs, ref, gross) : null;
-    return { scores: capped, gross, toPar: gross - rdPar, sd, birds, pars: pars2, bogs, holePars: refPars || [] };
+    return { scores: capped, gross, toPar: gross - rdPar, sd, eags, birds, pars: pars2, bogs, holePars: refPars || [] };
   }
 
   // Jogadores filtrados
@@ -347,8 +350,8 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
         return sortDir === "asc" ? best(a) - best(b) : best(b) - best(a);
       }
       // Birdies / Pares / Bogeys — melhor ronda do jogador no torneio
-      if (sortKey === "bird" || sortKey === "par" || sortKey === "bog") {
-        const pick = (rd: RdData) => sortKey === "bird" ? rd.birds : sortKey === "par" ? rd.pars : rd.bogs;
+      if (sortKey === "eag" || sortKey === "bird" || sortKey === "par" || sortKey === "bog") {
+        const pick = (rd: RdData) => sortKey === "eag" ? rd.eags : sortKey === "bird" ? rd.birds : sortKey === "par" ? rd.pars : rd.bogs;
         const agg = (row: PRow): number => {
           const vals = row.rds.filter((rd): rd is RdData => rd != null).map(pick);
           if (!vals.length) return sortKey === "bog" ? INF : -1;
@@ -405,8 +408,8 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
         const av = f(a.rd) || INF, bv = f(b.rd) || INF;
         return sortDir === "asc" ? av - bv : bv - av;
       }
-      if (sortKey === "bird" || sortKey === "par" || sortKey === "bog") {
-        const pick = (rd: RdData) => sortKey === "bird" ? rd.birds : sortKey === "par" ? rd.pars : rd.bogs;
+      if (sortKey === "eag" || sortKey === "bird" || sortKey === "par" || sortKey === "bog") {
+        const pick = (rd: RdData) => sortKey === "eag" ? rd.eags : sortKey === "bird" ? rd.birds : sortKey === "par" ? rd.pars : rd.bogs;
         const av = pick(a.rd), bv = pick(b.rd);
         if (sortKey === "bog") return sortDir === "asc" ? av - bv : bv - av;
         return sortDir === "asc" ? bv - av : av - bv;

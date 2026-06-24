@@ -17,6 +17,7 @@ export interface MRRound {
   sd?: number | null;
   sdSource?: string | null;
   /** Contadores de score */
+  eagles?: number;
   birdies?: number;
   pars?: number;
   bogeys?: number;
@@ -38,6 +39,9 @@ export interface MultiRoundRow {
   sex?: string;
   /** Data de nascimento (ISO "YYYY-MM-DD" ou "DD/MM/YYYY"). Alimenta as colunas Nasc./Idade. */
   dob?: string | null;
+  /** Idade pré-calculada pelo adapter (à data do torneio). Preferida sobre recalcular
+   *  por dob, para a coluna Idade ser CONSISTENTE com as tabs R1/R2/R3. */
+  age?: number | null;
   club?: string;
   hcp?: number | null;
   /** Soma de todos os pars das rondas (para calcular ±par total) */

@@ -58,6 +58,7 @@ type SortKey =
   | "toPar"
   | "tee"
   | "sd"
+  | "eag"
   | "bird"
   | "par-stat"
   | "bog"
@@ -160,18 +161,19 @@ export function ScorecardLB({
    *  Usa fillBlankHoles (Net Double Bogey reconciliado) para coerência com
    *  o que aparece na UI. */
   const statsByPlayer = useMemo(() => {
-    const m = new Map<Player, { birds: number; pars: number; bogs: number; scores: number[]; inferred: boolean[] }>();
+    const m = new Map<Player, { eags: number; birds: number; pars: number; bogs: number; scores: number[]; inferred: boolean[] }>();
     for (const p of rawPlayers) {
       const { scores, inferred } = fillBlankHoles(p);
-      let birds = 0, pars = 0, bogs = 0;
+      let eags = 0, birds = 0, pars = 0, bogs = 0;
       for (let i = 0; i < scores.length && i < par.length; i++) {
         if (!scores[i]) continue;
         const d = scores[i] - par[i];
-        if (d <= -1) birds++;
+        if (d <= -2) eags++;
+        else if (d === -1) birds++;
         else if (d === 0) pars++;
         else bogs++;
       }
-      m.set(p, { birds, pars, bogs, scores, inferred });
+      m.set(p, { eags, birds, pars, bogs, scores, inferred });
     }
     return m;
   }, [rawPlayers, par]);
@@ -250,6 +252,11 @@ export function ScorecardLB({
           av = computeSD(a).sd ?? 999;
           bv = computeSD(b).sd ?? 999;
           break;
+        case "eag":
+          // Mais eagles primeiro quando asc.
+          av = -(statsByPlayer.get(a)?.eags ?? 0);
+          bv = -(statsByPlayer.get(b)?.eags ?? 0);
+          break;
         case "bird":
           // Mais birdies primeiro quando asc (mais útil) — invertemos o sinal.
           av = -(statsByPlayer.get(a)?.birds ?? 0);
@@ -301,6 +308,7 @@ export function ScorecardLB({
     const stats = statsByPlayer.get(p);
     const scores = stats?.scores ?? [];
     const inferred = stats?.inferred ?? [];
+    const eags = stats?.eags ?? 0;
     const birds = stats?.birds ?? 0;
     const pars = stats?.pars ?? 0;
     const bogs = stats?.bogs ?? 0;
@@ -447,6 +455,7 @@ export function ScorecardLB({
               )}
             </td>
           )}
+          <td className="lb-eag">{eags || ""}</td>
           <td className="lb-bird">{birds || ""}</td>
           <td className="lb-par-stat">{pars || ""}</td>
           <td className="lb-bog">{bogs || ""}</td>
@@ -568,6 +577,16 @@ export function ScorecardLB({
               SD
             </SortableHdr>
           )}
+          <SortableHdr
+            k="eag"
+            sortKey={sortKey}
+            sortDir={sortDir}
+            onSort={handleSort}
+            className="lb-eag"
+            title="Clique para ordenar por nº de eagles (descendente)"
+          >
+            🦅
+          </SortableHdr>
           <SortableHdr
             k="bird"
             sortKey={sortKey}

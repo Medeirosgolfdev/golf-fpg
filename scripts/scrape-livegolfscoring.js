@@ -156,6 +156,16 @@ function parseTorneoMeta(html) {
   return { name, course, dateRange, rounds };
 }
 
+/** Extrai "Valor del campo: 72.8 | Slope: 135" da página de classificação. */
+function parseCourseValue(html) {
+  let courseRating = null, slope = null;
+  const cr = /Valor del campo:\s*([\d]+(?:[.,]\d+)?)/i.exec(html);
+  if (cr) { const v = parseFloat(cr[1].replace(",", ".")); if (!isNaN(v)) courseRating = v; }
+  const sl = /Slope:\s*([\d]+)/i.exec(html);
+  if (sl) { const v = parseInt(sl[1], 10); if (!isNaN(v)) slope = v; }
+  return { courseRating, slope };
+}
+
 async function scrapeTorneo(id) {
   // Carrega hoyoahoyo (sem ronda) — tem o select de rondas + título
   const main = await httpGet(`https://rfegolf.livegolfscoring.es/torneos/hoyoahoyo/${id}`);
@@ -183,6 +193,20 @@ async function scrapeTorneo(id) {
     const est = await httpGet(`https://rfegolf.livegolfscoring.es/torneos/estadisticas/${id}`);
     if (est.status === 200) course = parseEstadisticas(est.body);
   } catch (e) { /* sem estatísticas publicadas — ok */ }
+
+  // 3b. Course Rating (Valor del campo) + Slope — só existem na página de
+  //     classificação (não no hoyoahoyo). Necessários para o cálculo do SD.
+  try {
+    const cls = await httpGet(`https://rfegolf.livegolfscoring.es/torneos/clasificacion/${id}`);
+    if (cls.status === 200) {
+      const cv = parseCourseValue(cls.body);
+      if (cv.courseRating != null || cv.slope != null) {
+        course = course || {};
+        course.courseRating = cv.courseRating;
+        course.slope = cv.slope;
+      }
+    }
+  } catch (e) { /* sem valor do campo publicado — ok, SD fica indisponível */ }
 
   return { id, ok: true, scrapedAt: new Date().toISOString(), meta, course, rounds: roundsData };
 }

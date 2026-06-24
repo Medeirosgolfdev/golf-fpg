@@ -227,7 +227,7 @@ function lgsToFPGTournament(
       memberId?: string | null; pos: number | null; name: string; toPar: number; hoy: number;
       scores: number[] | null; halves: number[] | null; total: number | null;
     }> }>;
-    course?: { meters?: (number | null)[]; si?: (number | null)[]; par?: (number | null)[] } | null;
+    course?: { meters?: (number | null)[]; si?: (number | null)[]; par?: (number | null)[]; courseRating?: number | null; slope?: number | null } | null;
   },
   dobLookup?: DobLookup,
 ): FPGTournament {
@@ -251,6 +251,8 @@ function lgsToFPGTournament(
           round: r.round, gross: p.total,
           scores: p.scores, pars: r.par || par,
           si: lgs.course?.si || [], meters: lgs.course?.meters || [], teeName: undefined,
+          courseRating: lgs.course?.courseRating ?? undefined,
+          slope: lgs.course?.slope ?? undefined,
         });
       }
     }
@@ -846,6 +848,8 @@ interface LgsDetail {
     name: string | null;
     course: string | null;
     dateRange: string | null;
+    dateIso?: string | null;
+    year?: number | null;
     rounds: { round: number; label: string }[];
   };
   rounds: LgsRound[];
@@ -926,8 +930,11 @@ function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup):
     scrapedAt: lgs.scrapedAt,
     meta: {
       name: lgs.meta.name,
-      dateStart: lgs.meta.dateRange,
-      dateEnd: lgs.meta.dateRange,
+      // Usar a data ISO real (com ano) para o cálculo de idade ser à DATA DO
+      // TORNEIO (histórica). O dateRange ("25 junio - 27 junio") não tem ano e
+      // é impossível de parsear → caía na data de hoje. Ver bug idade ES.
+      dateStart: lgs.meta.dateIso || lgs.meta.dateRange,
+      dateEnd: lgs.meta.dateIso || lgs.meta.dateRange,
       course: lgs.meta.course,
       courseClubId: null,
       players: aggregated.length,

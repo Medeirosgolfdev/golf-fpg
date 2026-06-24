@@ -2475,6 +2475,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 
 /* Estatísticas pós-scorecard — separador forte após In */
 .sc-lb .lb-sd       { width: 48px; border-left: 2px solid var(--border); }
+.sc-lb .lb-eag      { width: 28px; font-size: var(--fs-12); color: var(--score-eagle); font-weight: 700; border-left: 1px solid var(--border-light); }
 .sc-lb .lb-bird     { width: 28px; font-size: var(--fs-12); color: var(--color-good); font-weight: 700; border-left: 1px solid var(--border-light); }
 .sc-lb .lb-par-stat { width: 28px; font-size: var(--fs-12); color: var(--text-3); border-left: 1px solid var(--border-light); }
 .sc-lb .lb-bog      { width: 28px; font-size: var(--fs-12); color: var(--color-danger); border-left: 1px solid var(--border-light); }
@@ -2486,6 +2487,8 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .sc-lb .lb-rnd-tp { width: 30px; background: var(--bg-rnd, #e8f2e4); font-size: var(--fs-11);
   font-family: var(--font-mono); }
 .sc-lb .lb-rnd-sd   { width: 44px; background: var(--bg-rnd-stats, #f5f9f3); }
+.sc-lb .lb-rnd-eag  { width: 22px; background: var(--bg-rnd-stats, #f5f9f3);
+  font-size: var(--fs-11); color: var(--score-eagle); font-weight: 700; }
 .sc-lb .lb-rnd-bird { width: 22px; background: var(--bg-rnd-stats, #f5f9f3);
   font-size: var(--fs-11); color: var(--color-good); font-weight: 700; }
 .sc-lb .lb-rnd-par  { width: 22px; background: var(--bg-rnd-stats, #f5f9f3);
@@ -2495,14 +2498,17 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 /* Headers usam a variante mais escura (mockup: #dde8d9 / #f0f5ee) */
 .sc-lb thead th.lb-rnd, .sc-lb thead th.lb-rnd-tp { background: var(--bg-rnd-header); }
 .sc-lb thead th.lb-rnd-sd,
+.sc-lb thead th.lb-rnd-eag,
 .sc-lb thead th.lb-rnd-bird,
 .sc-lb thead th.lb-rnd-par,
 .sc-lb thead th.lb-rnd-bog  { background: var(--bg-rnd-stats-header); }
 
 /* Colunas acumuladas (totais) — verde-salva para distinguir das rondas verde-folha */
+.sc-lb .lb-acc-eag  { width: 22px; background: var(--bg-acc); font-size: var(--fs-11); color: var(--score-eagle); font-weight: 700; }
 .sc-lb .lb-acc-bird { width: 22px; background: var(--bg-acc); font-size: var(--fs-11); color: var(--color-good); font-weight: 700; }
 .sc-lb .lb-acc-par  { width: 22px; background: var(--bg-acc); font-size: var(--fs-11); color: var(--text-3); }
 .sc-lb .lb-acc-bog  { width: 22px; background: var(--bg-acc); font-size: var(--fs-11); color: var(--color-danger); }
+.sc-lb thead th.lb-acc-eag,
 .sc-lb thead th.lb-acc-bird,
 .sc-lb thead th.lb-acc-par,
 .sc-lb thead th.lb-acc-bog  { background: var(--bg-acc-header); }
