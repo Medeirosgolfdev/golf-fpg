@@ -22,7 +22,7 @@ import LoadingState from "../ui/LoadingState";
 import SidebarToggle from "../ui/SidebarToggle";
 import SidebarSectionTitle from "../ui/SidebarSectionTitle";
 import { Toolbar, ToolbarTitle, ToolbarMeta } from "../ui/Toolbar";
-import { RoundPill, EscPill, YearPill, SUB_TO_ES_TERM } from "../ui/PillBadge";
+import { RoundPill, EscPill, YearPill, ManuelPill, SUB_TO_ES_TERM } from "../ui/PillBadge";
 import SortableHdr from "../ui/SortableHdr";
 import SexBadge from "../ui/SexBadge";
 import ExtLink from "../ui/ExternalLink";
@@ -785,10 +785,16 @@ interface NCDetail {
     meters?: number[] | null;
     parTotal?: number;
     parInferred?: boolean;
-    parConfidence?: "high" | "medium" | "low";
+    // total-high/total-low: só o par TOTAL foi inferido (sem par por buraco).
+    parConfidence?: "high" | "medium" | "low" | "total-high" | "total-low";
   };
   leaderboard: { category: number; players: NCPlayer[] }[];
   inscritos: NCInsc[];
+  /** Resultados publicados só em PDF (sem tabela HTML parseável). */
+  leaderboardPdfOnly?: boolean;
+  /** Destaques de live-scoring (birdies/eagles/hole-in-one por jogador+buraco),
+   *  capturados mesmo quando o leaderboard final só sai em PDF. */
+  scoreTypes?: Record<string, { scoreTypeKey?: string; players?: { playerName?: string; holeNumber?: number }[] }>;
 }
 
 interface DobLookupEntry { name: string | null; dob: string; dobIso: string; sex: string | null; club: string | null; catEdad: string | null; licencia?: string | null }
@@ -2202,6 +2208,65 @@ function rfegSourceUrl(t: RFEGIndexEntry): string {
         : `https://rfegolf.livegolfscoring.es/torneos/clasificacion/${t.id}`;
 }
 
+/* ── Destaques NextCaddy (item #2) ──────────────────────────────────────
+ * Mesmo quando o leaderboard final só sai em PDF, o NextCaddy regista em tempo
+ * real birdies/eagles/hole-in-one por jogador. Surgimos isso como tabela de
+ * destaques — é o único sinal de desempenho disponível nesses torneios só-PDF. */
+type NCHighlightRow = { name: string; eagle: number; birdie: number; ace: number; pts: number };
+
+function ncHighlightRows(scoreTypes: NCDetail["scoreTypes"]): NCHighlightRow[] {
+  const m = new Map<string, NCHighlightRow>();
+  const bump = (raw: string, key: "eagle" | "birdie" | "ace") => {
+    const name = formatPlayerName((raw || "").trim());
+    if (!name) return;
+    const r = m.get(name) ?? { name, eagle: 0, birdie: 0, ace: 0, pts: 0 };
+    r[key]++;
+    m.set(name, r);
+  };
+  for (const [type, v] of Object.entries(scoreTypes || {})) {
+    const key = type === "eagle" ? "eagle" : type === "hole_in_one" ? "ace" : type === "birdie" ? "birdie" : null;
+    if (!key) continue;
+    for (const p of v?.players ?? []) if (p?.playerName) bump(p.playerName, key);
+  }
+  const rows = [...m.values()];
+  for (const r of rows) r.pts = r.ace * 100 + r.eagle * 10 + r.birdie;
+  return rows.sort((a, b) => b.pts - a.pts);
+}
+
+function NCHighlights({ rows }: { rows: NCHighlightRow[] }) {
+  const { sortKey, sortDir, toggleSort } = useSort<"name" | "ace" | "eagle" | "birdie">("name");
+  const sorted = useMemo(() => {
+    const dir = sortDir === "asc" ? 1 : -1;
+    const val = (r: NCHighlightRow): string | number => (sortKey === "name" ? r.name.toLowerCase() : r[sortKey]);
+    return [...rows].sort((a, b) => { const va = val(a), vb = val(b); return va < vb ? -dir : va > vb ? dir : 0; });
+  }, [rows, sortKey, sortDir]);
+  const hdr = (k: "name" | "ace" | "eagle" | "birdie", label: string) => (
+    <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>{label}</SortableHdr>
+  );
+  return (
+    <div>
+      <p className="muted" style={{ fontSize: "var(--fs-13)", margin: "0 0 8px" }}>
+        ⚠ Resultados finais só publicados em PDF (ver link no cabeçalho). Destaques de live-scoring registados durante o jogo:
+      </p>
+      <div className="bjgt-chart-scroll">
+        <table className="sc-lb">
+          <thead><tr>{hdr("name", "Jogador")}{hdr("ace", "🏌 HiO")}{hdr("eagle", "🦅 Eagle")}{hdr("birdie", "🐦 Birdie")}</tr></thead>
+          <tbody>
+            {sorted.map((r, i) => (
+              <tr key={i} className={isM(r.name) ? "row-manuel" : undefined}>
+                <td className="lb-name fw-700" style={{ textAlign: "left" }}>{r.name}{isM(r.name) && <> <ManuelPill /></>}</td>
+                <td>{r.ace || "—"}</td>
+                <td>{r.eagle || "—"}</td>
+                <td>{r.birdie || "—"}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
 /** Carrega o detalhe de um torneio e constrói a sua (única) divisão. */
 async function rfegLoadDivisions(
   t: RFEGIndexEntry, dobLookup?: DobLookup, hcpLookup?: HcpLookup,
@@ -2245,11 +2310,20 @@ async function rfegLoadDivisions(
     }
   }
 
+  // Destaques (item #2): torneio NextCaddy só-PDF (sem leaderboard) mas com
+  // live-scoring → mostrar birdies/eagles/hole-in-one em vez de secção vazia.
+  let customResults: React.ReactNode = undefined;
+  if (t.source === "nextcaddy" && !results) {
+    const hl = ncHighlightRows((raw as NCDetail).scoreTypes);
+    if (hl.length) customResults = <NCHighlights rows={hl} />;
+  }
+
   const division: CircuitDivision = {
     key: "main",
     escalao: t.category ?? "—",
     sex: rfegSex(t.sex),
     results: results ?? undefined,
+    customResults,
     inscritos: lists.length ? { lists } : undefined,
     links: links.length ? links : undefined,
     scOptions: lgsScorecardOptions(),
