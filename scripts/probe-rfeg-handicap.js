@@ -1,40 +1,29 @@
 /**
- * scripts/probe-rfeg-handicap.js
+ * scripts/probe-rfeg-handicap.js  (v2)
  *
  * PROBE do serviço público de consulta de hándicap da RFEG:
  *   https://rfegolf.es/paginasservicios/serviciohandicap.aspx
- *   (espelho interno: http://82.223.130.155:3001/PaginasServicios/ServicioHandicap.aspx)
  *
- * OBJECTIVO: descobrir o "contrato" exacto do form ASP.NET WebForms para depois
- * construir o enumerador por apelido (censo de federados espanhóis). Este script
- * NÃO scrapa nada em massa — só faz 1 GET + 2 POSTs de teste e despeja tudo para
- * inspecção. Corre-o no PC (este host tem acesso ao rfegolf.es; o sandbox Cowork
- * NÃO — está bloqueado por política de rede).
+ * v1 dissecava o form mas submetia no botão errado (o search do cabeçalho) e o
+ * BTEnviar real é um IMAGE button dentro de um UpdatePanel SharePoint — por isso
+ * a pesquisa nunca disparava. v2 corrige:
+ *   - usa o botão certo `…$ctl00$BTEnviar` com coordenadas .x/.y (image button)
+ *   - mantém TODOS os hidden SharePoint (__VIEWSTATE, __EVENTVALIDATION,
+ *     __REQUESTDIGEST, MSO*) tal como o browser
+ *   - tenta full-postback (parse fácil) e, se não render, fallback async
+ *     (X-MicrosoftAjax: Delta=true + ScriptManager1=upInscritos|BTEnviar + __ASYNCPOST)
  *
- * O que faz:
- *   1. GET da página → captura cookies (ASP.NET_SessionId) + form completo.
- *   2. Disseca o form: <form action>, TODOS os <input>/<select>/<textarea>
- *      (name/id/type/value), hidden fields (__VIEWSTATE / __EVENTVALIDATION /
- *      __VIEWSTATEGENERATOR / __EVENTTARGET), e scan dos <script> inline à procura
- *      de .asmx / PageMethods / UpdatePanel / ScriptResource (caso seja AJAX e não
- *      postback clássico).
- *   3. Heurística: identifica candidatos a campo "licencia" / "apellidos" / "nombre"
- *      e ao botão de submit (por id/name a conter lic/apell/nombre/buscar/consultar).
- *   4. POST de teste A: pesquisa por APELIDO (default "GARCIA") — para ver se devolve
- *      uma LISTA de federados (ideal para enumeração) ou correspondência única.
- *   5. POST de teste B: pesquisa por LICENÇA (default uma que já temos) — para ver o
- *      formato de resultado por licença directa.
- *   6. Guarda o HTML cru de cada resposta em --out e imprime um resumo + primeiras
- *      linhas de qualquer tabela de resultados encontrada.
+ * Resultado conhecido da página (descoberto via dump v1):
+ *   - pesquisa por LICENÇA  → painel único: lblConsultaNombre / lblConsultaHandicap /
+ *     lblConsultaHandicapmundial / lblHpStatus (Estado) / lblConsultaModificacion
+ *   - pesquisa por APELIDO  → grelha `PanelGridHandicaps` (LISTA de federados)
  *
- * USO (no PC):
- *   node scripts/probe-rfeg-handicap.js
+ * USO (corre no PC — o sandbox Cowork está bloqueado por política de rede):
+ *   node scripts/probe-rfeg-handicap.js                          # search handicap (licença + apelido)
  *   node scripts/probe-rfeg-handicap.js --surname FERNANDEZ --licencia 1100050485
- *   node scripts/probe-rfeg-handicap.js --mirror            # usa o espelho por IP (HTTP :3001)
- *   node scripts/probe-rfeg-handicap.js --out ./rfeg-probe-out
+ *   node scripts/probe-rfeg-handicap.js --url https://rfegolf.es/RankingPagina/RankingList.aspx   # só dissecar
  *
- * Depois envia-me o conteúdo de --out (os 3 .html + o probe-summary.json) e eu
- * finalizo o enumerador com os nomes de campo reais.
+ * Depois envia-me a pasta --out (./rfeg-probe-out): os .html + probe-summary.json.
  */
 
 const fs = require("fs");
@@ -48,33 +37,23 @@ function arg(name, def) {
   const i = argv.indexOf("--" + name);
   return i >= 0 && argv[i + 1] && !argv[i + 1].startsWith("--") ? argv[i + 1] : def;
 }
-const USE_MIRROR = argv.includes("--mirror");
 const SURNAME = arg("surname", "GARCIA");
 const LICENCIA = arg("licencia", "1100050485");
 const OUT_DIR = path.resolve(arg("out", "./rfeg-probe-out"));
-
-const HOST_HTTPS = "https://rfegolf.es/paginasservicios/serviciohandicap.aspx";
-const HOST_MIRROR = "http://82.223.130.155:3001/PaginasServicios/ServicioHandicap.aspx";
-const PAGE_URL = USE_MIRROR ? HOST_MIRROR : HOST_HTTPS;
+const PAGE_URL = arg("url", "https://rfegolf.es/paginasservicios/serviciohandicap.aspx");
+const DISSECT_ONLY = PAGE_URL.toLowerCase().indexOf("serviciohandicap") < 0;
 
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36";
-
 if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
 
 /* ─── HTTP (GET/POST, cookie jar, segue redirects) ─────────────── */
 const cookieJar = {};
-function cookieHeader() {
-  return Object.entries(cookieJar).map(([k, v]) => `${k}=${v}`).join("; ");
-}
+function cookieHeader() { return Object.entries(cookieJar).map(([k, v]) => `${k}=${v}`).join("; "); }
 function storeCookies(res) {
-  const sc = res.headers["set-cookie"];
-  if (!sc) return;
-  for (const line of sc) {
-    const m = /^([^=]+)=([^;]*)/.exec(line);
-    if (m) cookieJar[m[1].trim()] = m[2].trim();
-  }
+  const sc = res.headers["set-cookie"]; if (!sc) return;
+  for (const line of sc) { const m = /^([^=]+)=([^;]*)/.exec(line); if (m) cookieJar[m[1].trim()] = m[2].trim(); }
 }
-function request(method, urlStr, body, retries = 2) {
+function request(method, urlStr, body, extraHeaders, retries = 2) {
   return new Promise((resolve, reject) => {
     const url = new URL(urlStr);
     const lib = url.protocol === "http:" ? http : https;
@@ -86,251 +65,199 @@ function request(method, urlStr, body, retries = 2) {
     };
     if (Object.keys(cookieJar).length) headers["Cookie"] = cookieHeader();
     if (body != null) {
-      headers["Content-Type"] = "application/x-www-form-urlencoded";
+      headers["Content-Type"] = "application/x-www-form-urlencoded; charset=utf-8";
       headers["Content-Length"] = Buffer.byteLength(body);
       headers["Origin"] = url.origin;
       headers["Referer"] = urlStr;
     }
+    Object.assign(headers, extraHeaders || {});
     const req = lib.request({
-      method,
-      hostname: url.hostname,
-      port: url.port || (url.protocol === "http:" ? 80 : 443),
-      path: url.pathname + url.search,
-      headers,
-      timeout: 30000,
+      method, hostname: url.hostname, port: url.port || (url.protocol === "http:" ? 80 : 443),
+      path: url.pathname + url.search, headers, timeout: 30000,
     }, (res) => {
       storeCookies(res);
       if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
         const next = new URL(res.headers.location, urlStr).toString();
-        res.resume();
-        request("GET", next, null, retries).then(resolve, reject);
-        return;
+        res.resume(); request("GET", next, null, extraHeaders, retries).then(resolve, reject); return;
       }
       const chunks = [];
       res.on("data", (c) => chunks.push(c));
       res.on("end", () => resolve({ status: res.statusCode, headers: res.headers, body: Buffer.concat(chunks).toString("utf8") }));
     });
-    req.on("error", (err) => { if (retries > 0) setTimeout(() => request(method, urlStr, body, retries - 1).then(resolve, reject), 1500); else reject(err); });
+    req.on("error", (err) => { if (retries > 0) setTimeout(() => request(method, urlStr, body, extraHeaders, retries - 1).then(resolve, reject), 1500); else reject(err); });
     req.on("timeout", () => req.destroy(new Error("timeout")));
     if (body != null) req.write(body);
     req.end();
   });
 }
 
-/* ─── parsing do form ──────────────────────────────────────────── */
+/* ─── parsing ──────────────────────────────────────────────────── */
 function parseInputs(html) {
-  const inputs = [];
-  const re = /<(input|select|textarea)\b([^>]*)>/gi;
-  let m;
+  const inputs = []; const re = /<(input|select|textarea)\b([^>]*)>/gi; let m;
   while ((m = re.exec(html)) !== null) {
-    const tag = m[1].toLowerCase();
-    const attrs = m[2];
+    const tag = m[1].toLowerCase(); const attrs = m[2];
     const get = (a) => { const r = new RegExp(a + '\\s*=\\s*"([^"]*)"', "i").exec(attrs); return r ? r[1] : null; };
-    inputs.push({
-      tag,
-      name: get("name"),
-      id: get("id"),
+    inputs.push({ tag, name: get("name"), id: get("id"),
       type: (get("type") || (tag === "select" ? "select" : tag === "textarea" ? "textarea" : "text")).toLowerCase(),
-      value: get("value"),
-    });
+      value: get("value") });
   }
   return inputs;
 }
-function parseFormAction(html) {
-  const m = /<form\b[^>]*\baction\s*=\s*"([^"]*)"/i.exec(html);
-  return m ? m[1] : null;
+function decode(s){return String(s||"").replace(/&nbsp;/g," ").replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"').replace(/&#(\d+);/g,(_,n)=>String.fromCharCode(+n)).replace(/&aacute;/g,"á").replace(/&eacute;/g,"é").replace(/&iacute;/g,"í").replace(/&oacute;/g,"ó").replace(/&uacute;/g,"ú").replace(/&ntilde;/g,"ñ");}
+function txt(s){return decode(String(s||"").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim());}
+function spanText(html, idEnds) {
+  const re = new RegExp('<span[^>]*id="[^"]*' + idEnds + '"[^>]*>([\\s\\S]*?)</span>', "i");
+  const m = re.exec(html); return m ? txt(m[1]) : null;
 }
 function scanScripts(html) {
-  const hits = [];
-  const patterns = [
-    [/[\w./-]+\.asmx(\/[\w]+)?/gi, "asmx web service"],
-    [/PageMethods\.\w+/gi, "PageMethods (script service)"],
-    [/ScriptResource\.axd/gi, "ScriptResource (AJAX)"],
-    [/Sys\.WebForms\.PageRequestManager/gi, "UpdatePanel / partial postback"],
-    [/\/api\/[\w./-]+/gi, "possible REST endpoint"],
-    [/\$\.(ajax|get|post)\s*\(/gi, "jQuery ajax"],
-    [/fetch\s*\(\s*['"][^'"]+['"]/gi, "fetch() call"],
+  const hits = []; const P = [
+    [/[\w./-]+\.asmx(\/[A-Za-z]\w+)?/gi, "asmx"], [/\.aspx\/[A-Z]\w+/gi, "PageMethod (.aspx/Method)"],
+    [/listAction\s*[:=]\s*['"][^'"]+['"]/gi, "jTable listAction"], [/[A-Za-z]\w*LST\b/g, "*LST method"],
+    [/PageMethods\.\w+/gi, "PageMethods"], [/Sys\.WebForms\.PageRequestManager/gi, "UpdatePanel"],
+    [/jtStartIndex|jtPageSize|jtSorting/gi, "jTable params"], [/\$\.(ajax|getJSON|post)\s*\(/gi, "jQuery ajax"],
   ];
-  for (const [re, label] of patterns) {
-    const found = new Set();
-    let m;
-    while ((m = re.exec(html)) !== null) found.add(m[0]);
-    if (found.size) hits.push({ label, samples: [...found].slice(0, 8) });
-  }
+  for (const [re, label] of P) { const f = new Set(); let m; while ((m = re.exec(html)) !== null) f.add(m[0]); if (f.size) hits.push({ label, samples: [...f].slice(0, 10) }); }
   return hits;
 }
-function pickField(inputs, ...needles) {
-  // devolve o name do primeiro input de texto cujo id/name contém um dos needles
-  for (const inp of inputs) {
-    if (!inp.name) continue;
-    if (!["text", "search", "textarea"].includes(inp.type)) continue;
-    const hay = ((inp.id || "") + " " + (inp.name || "")).toLowerCase();
-    if (needles.some((n) => hay.includes(n))) return inp;
-  }
-  return null;
-}
-function pickButton(inputs, ...needles) {
-  for (const inp of inputs) {
-    if (!inp.name) continue;
-    if (!["submit", "button", "image"].includes(inp.type)) continue;
-    const hay = ((inp.id || "") + " " + (inp.name || "") + " " + (inp.value || "")).toLowerCase();
-    if (needles.some((n) => hay.includes(n))) return inp;
-  }
-  return null;
-}
-function hidden(inputs) {
-  const o = {};
-  for (const inp of inputs) if (inp.type === "hidden" && inp.name) o[inp.name] = inp.value || "";
-  return o;
-}
-function firstTablePreview(html) {
-  // qualquer <table> com >1 linha; devolve as primeiras 6 linhas como matriz de células
-  const tables = [];
-  const re = /<table\b[^>]*>([\s\S]*?)<\/table>/gi;
-  let m;
+function allTables(html) {
+  const out = []; const re = /<table\b([^>]*)>([\s\S]*?)<\/table>/gi; let m;
   while ((m = re.exec(html)) !== null) {
-    const rowsHtml = m[1].match(/<tr\b[\s\S]*?<\/tr>/gi) || [];
-    if (rowsHtml.length < 2) continue;
-    const rows = rowsHtml.slice(0, 6).map((tr) => {
-      const cells = tr.match(/<t[dh]\b[\s\S]*?<\/t[dh]>/gi) || [];
-      return cells.map((c) => c.replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/\s+/g, " ").trim());
-    });
-    const idM = /<table\b[^>]*\bid="([^"]*)"/i.exec(m[0]);
-    tables.push({ id: idM ? idM[1] : null, totalRows: rowsHtml.length, preview: rows });
+    const idM = /\bid="([^"]*)"/i.exec(m[1]); const rows = m[2].match(/<tr\b[\s\S]*?<\/tr>/gi) || [];
+    if (rows.length < 1) continue;
+    out.push({ id: idM ? idM[1] : null, totalRows: rows.length,
+      rows: rows.slice(0, 12).map((tr) => (tr.match(/<t[dh]\b[\s\S]*?<\/t[dh]>/gi) || []).map(txt)) });
   }
-  return tables.sort((a, b) => b.totalRows - a.totalRows).slice(0, 4);
+  return out;
+}
+function extractById(html, idEnds) {
+  // devolve o innerHTML aproximado de um <div id="...idEnds"> (até ao fecho — heurístico)
+  const re = new RegExp('<div[^>]*id="[^"]*' + idEnds + '"[^>]*>', "i");
+  const m = re.exec(html); if (!m) return null;
+  const start = m.index + m[0].length;
+  // corta um bloco generoso; suficiente para inspeccionar a grelha
+  return html.slice(start, start + 8000);
 }
 
-/* ─── postback ASP.NET ─────────────────────────────────────────── */
-function buildPostBody(hiddenFields, fieldName, value, button) {
-  const params = new URLSearchParams();
-  for (const [k, v] of Object.entries(hiddenFields)) params.set(k, v);
-  if (button && button.name) {
-    // se for submit clássico, manda o name=value do botão; senão usa __EVENTTARGET
-    params.set(button.name, button.value || "Buscar");
-  } else {
-    params.set("__EVENTTARGET", "");
-    params.set("__EVENTARGUMENT", "");
+/* ─── postback builders ────────────────────────────────────────── */
+function formFields(inputs) {
+  // mapa name→value de TODOS os inputs não-image (mimics browser), hidden mantém valor
+  const o = {};
+  for (const inp of inputs) {
+    if (!inp.name) continue;
+    if (inp.type === "image" || inp.type === "submit" || inp.type === "button") continue;
+    o[inp.name] = inp.value || "";
   }
-  if (fieldName) params.set(fieldName, value);
-  return params.toString();
+  return o;
+}
+function encodeBody(obj) {
+  return Object.entries(obj).map(([k, v]) => encodeURIComponent(k) + "=" + encodeURIComponent(v)).join("&");
+}
+
+/* parse de resposta (full ou async) → campos do registo único + grelha */
+function parseHandicapResult(html) {
+  return {
+    nombre: spanText(html, "lblConsultaNombre"),
+    handicap: spanText(html, "lblConsultaHandicap"),
+    handicapMundial: spanText(html, "lblConsultaHandicapmundial"),
+    estado: spanText(html, "lblHpStatus"),
+    modificacion: spanText(html, "lblConsultaModificacion"),
+    error: spanText(html, "lblError"),
+    gridRaw: extractById(html, "PanelGridHandicaps"),
+    gridTables: allTables(extractById(html, "PanelGridHandicaps") || ""),
+  };
 }
 
 /* ─── main ─────────────────────────────────────────────────────── */
 (async () => {
   const summary = { pageUrl: PAGE_URL, ranAt: new Date().toISOString(), steps: {} };
-  console.log("PROBE RFEG hándicap →", PAGE_URL);
-  console.log("OUT:", OUT_DIR);
+  console.log("PROBE v2 →", PAGE_URL, "\nOUT:", OUT_DIR);
 
-  /* 1. GET */
   let getRes;
-  try {
-    getRes = await request("GET", PAGE_URL, null);
-  } catch (e) {
-    console.error("FALHOU o GET:", e.message);
-    console.error("Se for ECONNREFUSED/403 podes estar num host bloqueado. Tenta no PC, ou --mirror.");
-    process.exit(1);
-  }
+  try { getRes = await request("GET", PAGE_URL, null); }
+  catch (e) { console.error("GET falhou:", e.message, "\n(host bloqueado? corre no PC.)"); process.exit(1); }
   fs.writeFileSync(path.join(OUT_DIR, "01-page.html"), getRes.body);
   console.log(`\n[GET] status=${getRes.status} bytes=${getRes.body.length} cookies=${Object.keys(cookieJar).join(",") || "(none)"}`);
-  summary.steps.get = { status: getRes.status, bytes: getRes.body.length, cookies: Object.keys(cookieJar) };
-
-  if (getRes.status !== 200) {
-    console.error("GET não devolveu 200 — não dá para dissecar o form. Vê 01-page.html.");
-    fs.writeFileSync(path.join(OUT_DIR, "probe-summary.json"), JSON.stringify(summary, null, 2));
-    process.exit(1);
-  }
+  if (getRes.status !== 200) { console.error("GET != 200, ver 01-page.html"); process.exit(1); }
 
   const inputs = parseInputs(getRes.body);
-  const action = parseFormAction(getRes.body);
-  const hiddenFields = hidden(inputs);
   const scripts = scanScripts(getRes.body);
+  summary.steps.get = { status: getRes.status, bytes: getRes.body.length, scriptHits: scripts };
 
-  const licField = pickField(inputs, "licen", "numlic", "nlic");
-  const apeField = pickField(inputs, "apell", "apel");
-  const nomField = pickField(inputs, "nombre", "nom");
-  const button = pickButton(inputs, "buscar", "consult", "submit", "btn", "aceptar");
-
-  console.log("\n=== FORM ===");
-  console.log("action:", action);
-  console.log("hidden fields:", Object.keys(hiddenFields).map((k) => k + (hiddenFields[k] ? `(${hiddenFields[k].length}b)` : "(empty)")).join(", "));
-  console.log("\ncampos visíveis (name | id | type | value):");
-  for (const inp of inputs) {
-    if (inp.type === "hidden") continue;
-    console.log(`  ${inp.name || "-"} | ${inp.id || "-"} | ${inp.type} | ${inp.value || ""}`);
+  /* ── modo dissecar-só (ex: RankingList.aspx) ── */
+  if (DISSECT_ONLY) {
+    console.log("\n=== DISSECT (sem submit) ===");
+    console.log("campos visíveis:");
+    for (const inp of inputs) if (inp.type !== "hidden") console.log(`  ${inp.name || "-"} | ${inp.id || "-"} | ${inp.type} | ${inp.value || ""}`);
+    console.log("hidden:", inputs.filter(i => i.type === "hidden").map(i => i.name).join(", "));
+    if (scripts.length) { console.log("\nscripts/AJAX/jTable:"); for (const s of scripts) console.log(`  ${s.label}: ${s.samples.join("  ")}`); }
+    const tabs = allTables(getRes.body).sort((a, b) => b.totalRows - a.totalRows).slice(0, 5);
+    console.log("\ntabelas (top 5 por nº de linhas):");
+    for (const t of tabs) { console.log(`  #${t.id || "?"} (${t.totalRows} linhas):`); for (const r of t.rows.slice(0, 4)) console.log("     ", r.join(" | ")); }
+    summary.steps.dissect = { visibleInputs: inputs.filter(i => i.type !== "hidden"), hidden: inputs.filter(i => i.type === "hidden").map(i => i.name), tables: tabs };
+    fs.writeFileSync(path.join(OUT_DIR, "probe-summary.json"), JSON.stringify(summary, null, 2));
+    console.log("\n✓ Dissect terminado. Envia 01-page.html + probe-summary.json.");
+    return;
   }
-  console.log("\nheurística:");
-  console.log("  campo licença  →", licField ? `${licField.name}` : "(não encontrado)");
-  console.log("  campo apelidos →", apeField ? `${apeField.name}` : "(não encontrado)");
-  console.log("  campo nome     →", nomField ? `${nomField.name}` : "(não encontrado)");
-  console.log("  botão submit   →", button ? `${button.name} = "${button.value || ""}"` : "(não encontrado)");
-  if (scripts.length) {
-    console.log("\n⚠ scripts/AJAX detectados (pode não ser postback clássico):");
-    for (const s of scripts) console.log(`  ${s.label}: ${s.samples.join("  ")}`);
-  }
-  summary.steps.form = {
-    action,
-    hiddenFields: Object.keys(hiddenFields),
-    visibleInputs: inputs.filter((i) => i.type !== "hidden"),
-    heuristics: {
-      licencia: licField ? licField.name : null,
-      apellidos: apeField ? apeField.name : null,
-      nombre: nomField ? nomField.name : null,
-      button: button ? { name: button.name, value: button.value } : null,
-    },
-    scriptHits: scripts,
-  };
 
-  const postUrl = action ? new URL(action, PAGE_URL).toString() : PAGE_URL;
+  /* ── descobrir prefixo da WebPart + IDs do UpdatePanel/ScriptManager ── */
+  const licInp = inputs.find((i) => i.name && i.name.endsWith("$txt_H_Licencia"));
+  if (!licInp) { console.error("Não encontrei txt_H_Licencia — a página mudou. Ver 01-page.html."); process.exit(1); }
+  const P = licInp.name.replace(/\$txt_H_Licencia$/, "");      // ctl00$m$g_<guid>$ctl00
+  const fLic = P + "$txt_H_Licencia", fNom = P + "$txt_H_Nombre", fAp1 = P + "$txt_H_Apellido1", fAp2 = P + "$txt_H_Apellido2";
+  const btn = P + "$BTEnviar";
+  const smM = /PageRequestManager\._initialize\('([^']+)'/.exec(getRes.body);
+  const sm = smM ? smM[1] : "ctl00$ScriptManager1";
+  const upM = new RegExp("'t(" + P.replace(/[$]/g, "\\$") + "\\$up\\w+)'").exec(getRes.body);
+  const updatePanel = upM ? upM[1] : (P + "$upInscritos");
+  console.log("\n=== contrato ===");
+  console.log("  prefixo WebPart :", P);
+  console.log("  campos          :", "lic=" + fLic);
+  console.log("  botão (image)   :", btn);
+  console.log("  ScriptManager   :", sm);
+  console.log("  UpdatePanel     :", updatePanel);
+  summary.contract = { prefix: P, fLic, fNom, fAp1, fAp2, btn, sm, updatePanel };
 
-  /* 2. POST por APELIDO */
-  if (apeField) {
-    try {
-      const body = buildPostBody(hiddenFields, apeField.name, SURNAME, button);
-      const res = await request("POST", postUrl, body);
-      fs.writeFileSync(path.join(OUT_DIR, "02-by-surname.html"), res.body);
-      const tables = firstTablePreview(res.body);
-      console.log(`\n[POST apelido="${SURNAME}"] status=${res.status} bytes=${res.body.length} → 02-by-surname.html`);
-      console.log("  tabelas encontradas:", tables.map((t) => `${t.id || "?"}(${t.totalRows} linhas)`).join(", ") || "nenhuma");
-      if (tables[0]) { console.log("  preview da maior tabela:"); for (const r of tables[0].preview) console.log("   ", r.join(" | ")); }
-      summary.steps.bySurname = { status: res.status, bytes: res.body.length, tables: tables.map((t) => ({ id: t.id, totalRows: t.totalRows, preview: t.preview })) };
-    } catch (e) {
-      console.error("POST apelido falhou:", e.message);
-      summary.steps.bySurname = { error: e.message };
+  async function search({ licencia, apellido1, nombre }, label) {
+    // re-GET para ViewState/EventValidation/REQUESTDIGEST frescos
+    const g = await request("GET", PAGE_URL, null);
+    const ins = parseInputs(g.body);
+    const base = formFields(ins);
+    base["__EVENTTARGET"] = ""; base["__EVENTARGUMENT"] = "";
+    base[fLic] = licencia || ""; base[fNom] = nombre || ""; base[fAp1] = apellido1 || ""; base[fAp2] = "";
+
+    // ── tentativa A: FULL postback (image button coords) ──
+    const full = Object.assign({}, base); full[btn + ".x"] = "9"; full[btn + ".y"] = "11";
+    let res = await request("POST", PAGE_URL, encodeBody(full));
+    let parsed = parseHandicapResult(res.body);
+    let mode = "full";
+    const empty = (p) => (!p.handicap || p.handicap === "-----") && (!p.gridTables || !p.gridTables.length || !p.gridTables.some(t => t.totalRows > 0));
+
+    // ── tentativa B: ASYNC partial postback (se A não rendeu) ──
+    if (empty(parsed)) {
+      const asy = Object.assign({}, base);
+      asy[sm] = updatePanel + "|" + btn; asy["__ASYNCPOST"] = "true";
+      asy[btn + ".x"] = "9"; asy[btn + ".y"] = "11";
+      const res2 = await request("POST", PAGE_URL, encodeBody(asy), { "X-MicrosoftAjax": "Delta=true", "X-Requested-With": "XMLHttpRequest" });
+      res = res2; parsed = parseHandicapResult(res2.body); mode = "async";
     }
-  } else {
-    console.log("\n[POST apelido] saltado — não identifiquei o campo de apelidos (vê os campos acima e corrige a heurística).");
-  }
-
-  /* re-GET para refrescar ViewState antes do 2º POST (ASP.NET invalida-o por request) */
-  let h2 = hiddenFields, b2 = button;
-  try {
-    const fresh = await request("GET", PAGE_URL, null);
-    const fi = parseInputs(fresh.body);
-    h2 = hidden(fi);
-    b2 = pickButton(fi, "buscar", "consult", "submit", "btn", "aceptar") || button;
-  } catch (_) {}
-
-  /* 3. POST por LICENÇA */
-  if (licField) {
-    try {
-      const body = buildPostBody(h2, licField.name, LICENCIA, b2);
-      const res = await request("POST", postUrl, body);
-      fs.writeFileSync(path.join(OUT_DIR, "03-by-licencia.html"), res.body);
-      const tables = firstTablePreview(res.body);
-      console.log(`\n[POST licencia="${LICENCIA}"] status=${res.status} bytes=${res.body.length} → 03-by-licencia.html`);
-      console.log("  tabelas encontradas:", tables.map((t) => `${t.id || "?"}(${t.totalRows} linhas)`).join(", ") || "nenhuma");
-      if (tables[0]) { console.log("  preview:"); for (const r of tables[0].preview) console.log("   ", r.join(" | ")); }
-      summary.steps.byLicencia = { status: res.status, bytes: res.body.length, tables: tables.map((t) => ({ id: t.id, totalRows: t.totalRows, preview: t.preview })) };
-    } catch (e) {
-      console.error("POST licença falhou:", e.message);
-      summary.steps.byLicencia = { error: e.message };
+    const fn = "search-" + label + "-" + mode + ".html";
+    fs.writeFileSync(path.join(OUT_DIR, fn), res.body);
+    console.log(`\n[${label}] mode=${mode} status=${res.status} bytes=${res.body.length} → ${fn}`);
+    console.log("  registo único:", JSON.stringify({ nombre: parsed.nombre, handicap: parsed.handicap, handicapMundial: parsed.handicapMundial, estado: parsed.estado, modificacion: parsed.modificacion }));
+    console.log("  lblError:", parsed.error);
+    if (parsed.gridTables && parsed.gridTables.length) {
+      console.log("  GRELHA PanelGridHandicaps:");
+      for (const t of parsed.gridTables) { console.log(`    tabela #${t.id || "?"} (${t.totalRows} linhas):`); for (const r of t.rows.slice(0, 8)) console.log("       ", r.join(" | ")); }
+    } else {
+      console.log("  GRELHA: vazia (gridRaw len=" + ((parsed.gridRaw || "").length) + ")");
     }
-  } else {
-    console.log("\n[POST licença] saltado — não identifiquei o campo de licença.");
+    return { mode, status: res.status, parsed: { ...parsed, gridRaw: (parsed.gridRaw || "").slice(0, 4000) } };
   }
+
+  summary.steps.byLicencia = await search({ licencia: LICENCIA }, "licencia");
+  summary.steps.bySurname = await search({ apellido1: SURNAME }, "apellido");
 
   fs.writeFileSync(path.join(OUT_DIR, "probe-summary.json"), JSON.stringify(summary, null, 2));
-  console.log("\n✓ Probe terminado. Envia-me a pasta", OUT_DIR, "(3 .html + probe-summary.json).");
-  console.log("  O que confirmar: (a) apelido devolve LISTA? (b) há paginação? (c) que colunas vêm (licença/nome/clube/hcp/cat)?");
+  console.log("\n✓ Probe v2 terminado. Envia a pasta", OUT_DIR, "(search-*.html + probe-summary.json).");
+  console.log("  Confirma: (a) por licença → handicap preenchido? (b) por apelido → grelha com que COLUNAS (licença/nome/club/hcp/cat)? (c) há cap/paginação p/ apelidos comuns?");
 })();
