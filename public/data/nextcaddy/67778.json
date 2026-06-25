@@ -1,7 +1,7 @@
 {
   "tourId": 67778,
   "url": "https://www.nextcaddy.com/tour/67778",
-  "scrapedAt": "2026-06-24T14:54:03.493Z",
+  "scrapedAt": "2026-06-25T10:59:54.477Z",
   "meta": {
     "name": "Torneo Benjamín Femenino \"Las Rejas\"",
     "organizer": "Federacion de Golf de Madrid",
@@ -20,11 +20,39 @@
     ]
   },
   "course": {
-    "parTotal": 35,
-    "parInferred": true,
-    "parConfidence": "total-high",
-    "si": null,
-    "meters": null
+    "par": [
+      4,
+      4,
+      3,
+      5,
+      4,
+      4,
+      3,
+      5,
+      3
+    ],
+    "si": [
+      7,
+      3,
+      13,
+      5,
+      11,
+      9,
+      15,
+      1,
+      17
+    ],
+    "meters": [
+      290,
+      312,
+      113,
+      403,
+      257,
+      290,
+      87,
+      390,
+      87
+    ]
   },
   "leaderboard": [
     {
@@ -85,7 +113,24 @@
           "rounds": [],
           "total": 55,
           "toPar": 20,
-          "inscribedId": 2277087
+          "inscribedId": 2277087,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                6,
+                5,
+                10,
+                7,
+                6,
+                3,
+                8,
+                3
+              ],
+              "total": 55
+            }
+          ]
         },
         {
           "pos": 5,
@@ -107,7 +152,24 @@
           "rounds": [],
           "total": 61,
           "toPar": 26,
-          "inscribedId": 2277533
+          "inscribedId": 2277533,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                11,
+                4,
+                11,
+                6,
+                6,
+                5,
+                7,
+                3
+              ],
+              "total": 61
+            }
+          ]
         }
       ]
     },
@@ -158,7 +220,24 @@
           "rounds": [],
           "total": 36,
           "toPar": 1,
-          "inscribedId": 2277087
+          "inscribedId": 2277087,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                6,
+                5,
+                10,
+                7,
+                6,
+                3,
+                8,
+                3
+              ],
+              "total": 55
+            }
+          ]
         },
         {
           "pos": 4,
@@ -191,7 +270,24 @@
           "rounds": [],
           "total": 44,
           "toPar": 9,
-          "inscribedId": 2277533
+          "inscribedId": 2277533,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                11,
+                4,
+                11,
+                6,
+                6,
+                5,
+                7,
+                3
+              ],
+              "total": 61
+            }
+          ]
         }
       ]
     }

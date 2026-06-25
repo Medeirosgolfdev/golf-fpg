@@ -34,7 +34,9 @@ import { flag } from "../utils/flagUtils";
 import { formatPlayerName } from "../utils/playerUtils";
 import { IntlTournView } from "../ui/IntlTournView";
 import DrawTab from "../ui/DrawTab";
-import type { FpgDraw, FpgDrawFlight } from "../data/nacional2026Loader";
+import type { FpgDraw, FpgDrawFlight, FpgAdmissions } from "../data/nacional2026Loader";
+import AdmissionsTab from "../ui/AdmissionsTab";
+import type { PlayersDB } from "../ui/tournamentPrimitives";
 import type { Tournament as FPGTournament, Player as FPGPlayer, RoundScore as FPGRoundScore, ScorecardOptions } from "./FPGPage";
 import { RFEGFederationsView } from "./rfeg/FederationsView";
 import { RFEGPlayersView } from "./rfeg/PlayersView";
@@ -109,9 +111,10 @@ interface RFEGPlayer {
   club: string | null;
   dob: string | null;
   estado: string | null;
-  rounds?: { round: number; gross: number | null; scores?: number[] }[];
+  rounds?: { round: number; gross: number | null; scores?: number[]; meters?: number[] | null }[];
   total?: number | null;
   toPar?: number | null;
+  teeMeters?: number | null;   // distância total do tee deste jogador (rapazes/raparigas jogam tees distintos)
 }
 
 interface RFEGDetail {
@@ -180,7 +183,7 @@ const LIST_LABELS: Record<ListKind, string> = {
   provisional: "Provisional",
 };
 
-type SortKey = "pos" | "nome" | "licencia" | "pais" | "hcp" | "catEdad" | "club" | "nasc";
+type SortKey = "pos" | "nome" | "licencia" | "pais" | "hcp" | "catEdad" | "club" | "nasc" | "tee";
 
 /* ── Helpers ───────────────────────────────────────────── */
 
@@ -394,10 +397,20 @@ function ncToFPGTournament(
   }
   if (nRounds === 0) return null;
 
-  const par18 = (detail.coursePar && detail.coursePar.length === 18 ? detail.coursePar : new Array(18).fill(4));
+  // Nº de buracos: NextCaddy tem torneios de 9 buracos (pitch&putt, alevíns) cujo
+  // course.par/scores têm length 9. Detetar 9 vs 18 em vez de assumir 18 — assumir
+  // 18 dropava TODOS os cartões de 9 (filtro scores.length===18) e mostrava par-72
+  // fake. par18/si18/meters18 mantêm o nome mas guardam 9 OU 18 valores conforme o campo.
+  const holeCount = (detail.coursePar && (detail.coursePar.length === 9 || detail.coursePar.length === 18))
+    ? detail.coursePar.length
+    : (players.some((p) => (p.rounds || []).some((r) => {
+        const s = (r as { scores?: number[] }).scores;
+        return Array.isArray(s) && s.length === 9;
+      })) ? 9 : 18);
+  const par18 = (detail.coursePar && detail.coursePar.length === holeCount) ? detail.coursePar : new Array(holeCount).fill(4);
   const parTotal = par18.reduce((a, b) => a + b, 0);
-  const si18 = (detail._ncCourseSi && detail._ncCourseSi.length === 18) ? detail._ncCourseSi : [];
-  const meters18 = (detail._ncCourseMeters && detail._ncCourseMeters.length === 18) ? detail._ncCourseMeters : [];
+  const si18 = (detail._ncCourseSi && detail._ncCourseSi.length === holeCount) ? detail._ncCourseSi : [];
+  const meters18 = (detail._ncCourseMeters && detail._ncCourseMeters.length === holeCount) ? detail._ncCourseMeters : [];
 
   const norm = (s: string) => s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/[,.]/g, " ").replace(/\s+/g, " ").trim();
   const lookupByName: Record<string, DobLookupEntry> = {};
@@ -419,17 +432,33 @@ function ncToFPGTournament(
     const escLabel = ageToEscalaoEs(age);
     const club = (p.club || e?.club || "").toString();
     const sex: "M" | "F" | null = (p.sexo === "M" ? "M" : p.sexo === "F" ? "F" : (e?.sex === "M" ? "M" : e?.sex === "F" ? "F" : null));
+    // Metros do TEE deste jogador (rapazes jogam das amarelas, raparigas das
+    // vermelhas → distâncias diferentes), vindos do cartão dele. Fallback à
+    // distância do campo. O teeName mostra a distância total para diferenciar tees.
+    const playerMeters: number[] = (() => {
+      for (const r of (p.rounds || [])) {
+        const m = (r as { meters?: number[] | null }).meters;
+        if (Array.isArray(m) && m.length === holeCount) return m;
+      }
+      return meters18;
+    })();
+    const playerMetersTotal = playerMeters.reduce((a, b) => a + (b || 0), 0);
+    const teeLabel = playerMetersTotal > 0 ? `${playerMetersTotal} m` : (meters18.length ? "Tour" : undefined);
     const roundScores: FPGRoundScore[] = (p.rounds || [])
-      .filter((r) => Array.isArray((r as any).scores) && (r as any).scores.length === 18)
-      .map((r) => ({
-        round: r.round,
-        gross: (r.gross != null) ? r.gross : ((r as any).scores.reduce((a: number, b: number) => a + b, 0) || 0),
-        scores: (r as any).scores,
-        pars: par18,
-        si: si18,
-        meters: meters18,
-        teeName: meters18.length ? "Tour" : undefined,
-      }));
+      .filter((r) => Array.isArray((r as any).scores) && (r as any).scores.length === holeCount)
+      .map((r) => {
+        const rm = (r as { meters?: number[] | null }).meters;
+        const mm = (Array.isArray(rm) && rm.length === holeCount) ? rm : playerMeters;
+        return {
+          round: r.round,
+          gross: (r.gross != null) ? r.gross : ((r as any).scores.reduce((a: number, b: number) => a + b, 0) || 0),
+          scores: (r as any).scores,
+          pars: par18,
+          si: si18,
+          meters: mm,
+          teeName: teeLabel,
+        };
+      });
     const incomplete = roundScores.length < nRounds;
     return {
       scoreId: `nc-${detail.compId}-${idx}`,
@@ -445,13 +474,13 @@ function ncToFPGTournament(
       // Fields extra usados pelo nameDecorator (M/F badge) + filtros (sex/age)
       _sex: sex,
       _age: age,
-      teeName: meters18.length ? "Tour" : undefined,
-      nholes: 18,
+      teeName: teeLabel,
+      nholes: holeCount,
       parTotal,
       scores: roundScores[0]?.scores || [],
       par: par18,
       si: si18,
-      meters: meters18,
+      meters: playerMeters,
       roundScores,
       _wd: incomplete,
       _roundsPlayed: roundScores.length,
@@ -583,6 +612,7 @@ function PlayerTable({ players, dateRef, coursePar }: { players: RFEGPlayer[]; d
         case "licencia": v = (a.licencia || "").localeCompare(b.licencia || ""); break;
         case "pais":     v = (a.pais || "").localeCompare(b.pais || "", "es"); break;
         case "hcp":      v = (a.hcp ?? INF) - (b.hcp ?? INF); break;
+        case "tee":      v = (a.teeMeters ?? INF) - (b.teeMeters ?? INF); break;
         case "catEdad":  v = (a.catEdad || "").localeCompare(b.catEdad || ""); break;
         case "club":     v = (a.club || "").localeCompare(b.club || "", "es"); break;
         case "nasc":     v = (a._dobIso || "").localeCompare(b._dobIso || ""); break;
@@ -627,6 +657,7 @@ function PlayerTable({ players, dateRef, coursePar }: { players: RFEGPlayer[]; d
         <td className="lb-fed">{p.licencia ?? "—"}</td>
         <td className="lb-club" title={p._club || (p.club ?? "")}>{p._club || "—"}</td>
         <td className="lb-hcp">{p.hcp == null ? "—" : p.hcp.toFixed(1)}</td>
+        <td className="lb-hcp" style={{ textAlign: "center", whiteSpace: "nowrap" }} title="Distância do tee deste jogador (do cartão)">{p.teeMeters ? `${p.teeMeters} m` : <span className="muted">—</span>}</td>
       </>
     );
     const prefixForInscritos = (
@@ -637,6 +668,7 @@ function PlayerTable({ players, dateRef, coursePar }: { players: RFEGPlayer[]; d
         <td className="lb-fed">{p.licencia ?? "—"}</td>
         <td className="lb-club" title={p._club || (p.club ?? "")}>{p._club || "—"}</td>
         <td className="lb-hcp">{p.hcp == null ? "—" : p.hcp.toFixed(1)}</td>
+        <td className="lb-hcp" style={{ textAlign: "center", whiteSpace: "nowrap" }} title="Distância do tee deste jogador (do cartão)">{p.teeMeters ? `${p.teeMeters} m` : <span className="muted">—</span>}</td>
         <td style={{ textAlign: "center", padding: "6px 8px" }}>
           {p.sexo === "M" || p.sexo === "F" ? <SexBadge sex={p.sexo} /> : <span className="muted">—</span>}
         </td>
@@ -711,6 +743,7 @@ function PlayerTable({ players, dateRef, coursePar }: { players: RFEGPlayer[]; d
       <SortableHdr k="licencia" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-fed">LICENCIA</SortableHdr>
       <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">CLUBE</SortableHdr>
       <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">HCP</SortableHdr>
+      <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">TEE</SortableHdr>
     </>
   ) : (
     <>
@@ -718,6 +751,7 @@ function PlayerTable({ players, dateRef, coursePar }: { players: RFEGPlayer[]; d
       <SortableHdr k="licencia" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-fed">LICENCIA</SortableHdr>
       <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">CLUBE</SortableHdr>
       <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">HCP</SortableHdr>
+      <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">TEE</SortableHdr>
       <th style={{ padding: "7px 8px", textAlign: "center" }}>Sx</th>
       <SortableHdr k="nasc" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px", textAlign: "center" }}>Nasc.</SortableHdr>
       <SortableHdr k="pais" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 4px", textAlign: "center", width: 32 }} title="País">🏳️</SortableHdr>
@@ -758,6 +792,7 @@ interface NCRoundScore {
   round: number;
   scores?: number[];
   total?: number | null;
+  meters?: number[] | null;   // metros do TEE deste jogador (rapazes/raparigas jogam tees distintos)
 }
 interface NCPlayer {
   pos?: number | null;
@@ -981,6 +1016,16 @@ function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup):
 type DobLookup = Record<string, DobLookupEntry>;
 
 function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup): RFEGDetail {
+  // Data: o NextCaddy não a expõe nos endpoints, mas muitos nomes trazem-na no fim
+  // (ex.: "...9P3 HOYOS 13-06-26"). Extrai DD-MM-YY[YY] / DD/MM/YYYY do nome.
+  const ncDate: string | null = (() => {
+    const m = /(\d{1,2})[-/.](\d{1,2})[-/.](\d{2,4})(?!\d)/.exec(nc.meta?.name || "");
+    if (!m) return null;
+    const day = parseInt(m[1], 10), month = parseInt(m[2], 10);
+    let y = m[3]; if (y.length === 2) y = (parseInt(y, 10) >= 70 ? "19" : "20") + y;
+    if (month < 1 || month > 12 || day < 1 || day > 31) return null;
+    return `${y}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+  })();
   const enrich = (licencia: string | null) => {
     if (!licencia || !dobLookup) return null;
     return dobLookup[licencia.trim()] || null;
@@ -992,6 +1037,13 @@ function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: HcpLook
     return hcpLookup[key]?.hcp ?? null;
   };
 
+  // Distância do tee de cada jogador (do cartão dele). Mapas p/ cruzar com
+  // inscritos (por licencia) e draw (por inscribedId), já que esses não trazem cartão.
+  const teeMetersByLic: Record<string, number> = {};
+  const teeMetersByIns: Record<string, number> = {};
+  // Info por inscribedId para enriquecer o Draw como na FPG (escalão + ±/Tot por ronda).
+  const drawInfoByIns: Record<string, { dob: string | null; name: string | null; rounds: { round: number; gross: number | null; toPar: number | null }[] }> = {};
+  const ncParTotal = Array.isArray(nc.course?.par) ? nc.course!.par!.reduce((a, b) => a + (b || 0), 0) : 0;
   const lbPlayers: RFEGPlayer[] = [];
   for (const cat of (nc.leaderboard || [])) {
     for (const p of (cat.players || [])) {
@@ -1005,8 +1057,26 @@ function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: HcpLook
               ? r.total
               : (Array.isArray(r.scores) ? (r.scores.filter((x) => x > 0).reduce((a, b) => a + b, 0) || null) : null),
             scores: Array.isArray(r.scores) ? r.scores : undefined,
+            meters: Array.isArray(r.meters) ? r.meters : null,   // metros do tee deste jogador
           }))
         : (p.rounds || []);
+      const teeM = rs.find((r) => Array.isArray(r.meters) && r.meters.length)?.meters || null;
+      const teeMetersTotal = teeM ? teeM.reduce((a, b) => a + (b || 0), 0) : null;
+      if (teeMetersTotal) {
+        if (p.licencia) teeMetersByLic[p.licencia.trim().toUpperCase()] = teeMetersTotal;
+        if (p.inscribedId) teeMetersByIns[String(p.inscribedId)] = teeMetersTotal;
+      }
+      if (p.inscribedId) {
+        drawInfoByIns[String(p.inscribedId)] = {
+          dob: e ? e.dob : null,
+          name: p.name ?? null,
+          rounds: rs.map((r) => {
+            const g = typeof r.total === "number" ? r.total
+              : (Array.isArray(r.scores) ? (r.scores.filter((x) => x > 0).reduce((a, b) => a + b, 0) || null) : null);
+            return { round: r.round, gross: g, toPar: (g != null && ncParTotal) ? g - ncParTotal : null };
+          }),
+        };
+      }
       lbPlayers.push({
         pos: p.pos ?? null,
         name: p.name,
@@ -1022,11 +1092,13 @@ function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: HcpLook
         rounds,
         total: p.total ?? null,
         toPar: p.toPar ?? null,
+        teeMeters: teeMetersTotal,
       });
     }
   }
   const inscPlayers: RFEGPlayer[] = (nc.inscritos || []).map((p) => {
     const e = enrich(p.licencia ?? null);
+    const lic = (p.licencia || "").trim().toUpperCase();
     return {
       pos: p.orden ?? null,
       name: p.name,
@@ -1038,6 +1110,7 @@ function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: HcpLook
       club: e ? e.club : null,
       dob: e ? e.dob : null,
       estado: null,
+      teeMeters: (lic && teeMetersByLic[lic]) || null,   // cruzado com o cartão (torneios já jogados)
     };
   });
   // Deduplicar por licencia: o NextCaddy às vezes lista o mesmo jogador em
@@ -1062,7 +1135,7 @@ function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: HcpLook
     scrapedAt: nc.scrapedAt,
     meta: {
       name: nc.meta?.name ?? null,
-      dateStart: null,
+      dateStart: ncDate,
       dateEnd: null,
       course: nc.meta?.course ?? null,
       courseClubId: null,
@@ -1080,9 +1153,15 @@ function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: HcpLook
     parConfidence: nc.course?.parConfidence,
     // Horarios (draw / tee times) — passar adiante para a tab Draw saída
     _ncHorarios: Array.isArray(nc.horarios) ? nc.horarios : null,
-    // Guardar SI e metros do NextCaddy para o adapter ncToFPGTournament passar adiante
-    _ncCourseSi: (nc.course?.si && Array.isArray(nc.course.si) && nc.course.si.length === 18) ? nc.course.si : null,
-    _ncCourseMeters: (nc.course?.meters && Array.isArray(nc.course.meters) && nc.course.meters.length === 18) ? nc.course.meters : null,
+    // Distância do tee por jogador (cruzada por inscribedId) para a tab Draw
+    _teeMetersByIns: teeMetersByIns,
+    // Info (dob/escalão + resultado por ronda) por inscribedId para enriquecer o Draw
+    _drawInfoByIns: drawInfoByIns,
+    // Guardar SI e metros do NextCaddy para o adapter ncToFPGTournament passar
+    // adiante. Aceitar 9 OU 18 buracos (pitch&putt/alevíns são de 9) — exigir 18
+    // descartava o SI/metros dos torneios de 9.
+    _ncCourseSi: (nc.course?.si && Array.isArray(nc.course.si) && (nc.course.si.length === 9 || nc.course.si.length === 18)) ? nc.course.si : null,
+    _ncCourseMeters: (nc.course?.meters && Array.isArray(nc.course.meters) && (nc.course.meters.length === 9 || nc.course.meters.length === 18)) ? nc.course.meters : null,
     inscritos: {
       admitidos,
       reservas: [],
@@ -1260,11 +1339,44 @@ type RFEGTab = "scorecards" | "inscritos" | "draw";
  * Tab "Draw saída" do RFEGPage — reusa o componente DrawTab partilhado para
  * coerência visual com FPG. Converte NC horarios → FpgDraw shape. */
 function DrawSaidaView({ detail, entry }: {
-  detail: RFEGDetail & { _ncHorarios?: NCHorario[] | null };
+  detail: RFEGDetail & {
+    _ncHorarios?: NCHorario[] | null;
+    _teeMetersByIns?: Record<string, number>;
+    _drawInfoByIns?: Record<string, { dob: string | null; name: string | null; rounds: { round: number; gross: number | null; toPar: number | null }[] }>;
+  };
   entry: RFEGIndexEntry;
 }) {
+  const teeByIns = detail._teeMetersByIns || {};
+  const drawInfo = detail._drawInfoByIns || {};
   const horarios = detail._ncHorarios;
   const [activeRound, setActiveRound] = useState<number>(1);
+
+  // Enriquecer como a FPG: playersDB (escalão via dob) + resultados ±/Tot da ronda,
+  // cruzando o jogador do draw (jid) com o leaderboard via inscribedId (ins).
+  const drawPlayersDB = useMemo<PlayersDB>(() => {
+    const db: PlayersDB = {};
+    for (const rd of (horarios || [])) {
+      for (const p of rd.players) {
+        if (!p.jid || !p.ins) continue;
+        const info = drawInfo[String(p.ins)];
+        if (!info) continue;
+        const esc = ageToEscalaoEs(ageAt(info.dob, detail.meta.dateStart)) || undefined;
+        db[p.jid] = { dob: info.dob || undefined, escalao: esc, name: info.name || undefined, country: "ES" };
+      }
+    }
+    return db;
+  }, [horarios, drawInfo, detail.meta.dateStart]);
+
+  const drawResults = useMemo<Map<string, { gross: number; toPar: number | null }>>(() => {
+    const m = new Map<string, { gross: number; toPar: number | null }>();
+    const rd = (horarios || []).find((x) => x.round === activeRound) || (horarios || [])[0];
+    for (const p of (rd?.players || [])) {
+      if (!p.jid || !p.ins) continue;
+      const rr = drawInfo[String(p.ins)]?.rounds.find((x) => x.round === activeRound);
+      if (rr && rr.gross != null) m.set(p.jid, { gross: rr.gross, toPar: rr.toPar });
+    }
+    return m;
+  }, [horarios, drawInfo, activeRound]);
 
   // Construir FpgDraw a partir dos NC horarios para a ronda activa
   const drawForRound = useMemo<FpgDraw | null>(() => {
@@ -1286,11 +1398,13 @@ function DrawSaidaView({ detail, entry }: {
         });
         curKey = k;
       }
+      const dist = p.ins ? teeByIns[String(p.ins)] : undefined;   // distância do tee (cruzada do cartão)
       flights[flights.length - 1].players.push({
         nome: formatPlayerName(p.name),
         clube: null,                    // NC não expõe clube no draw
         fed: p.jid || null,             // jid NC ≠ fed FPG, mas dá identidade única
         hcp: p.hcp,
+        tee: dist ? `${dist} m` : null, // DrawTab mostra p.tee — aqui a distância do jogador
       });
     }
     return {
@@ -1331,7 +1445,8 @@ function DrawSaidaView({ detail, entry }: {
         draw={drawForRound}
         roundNum={activeRound}
         tournamentDate={detail.meta.dateStart}
-        playersDB={undefined}
+        playersDB={drawPlayersDB}
+        results={drawResults}
       />
     </div>
   );
@@ -1541,11 +1656,29 @@ function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEnt
                   );
                 })}
               </div>
-              <PlayerTable
-                players={currentList}
-                dateRef={m.dateStart}
-                coursePar={data.coursePar}
-                parConfidence={data.parConfidence}
+              <AdmissionsTab
+                admissions={{
+                  totalInscritos: currentList.length,
+                  players: currentList.map((p, i) => {
+                    const a = ageAt(p.dob, m.dateStart);
+                    return {
+                      pos: p.pos ?? i + 1,
+                      fed: p.licencia,
+                      nome: p.name || "",
+                      clube: p.club,
+                      hcp: p.hcp,
+                      vac: null,
+                      dataInscricao: null,
+                      status: "confirmed" as const,
+                      dob: p.dob,
+                      country: "ES",
+                      escalao: (a != null ? ageToEscalaoEs(a) : null) || p.catEdad || null,
+                      teeName: p.teeMeters ? `${p.teeMeters} m` : null,
+                    };
+                  }),
+                } as FpgAdmissions}
+                date={m.dateStart}
+                hidePostCols
               />
             </>
           )

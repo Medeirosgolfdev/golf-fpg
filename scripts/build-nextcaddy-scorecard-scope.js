@@ -64,7 +64,11 @@ function main() {
     if (!all.length) continue;                                      // vazio/futuro
     const ids = [...new Set(all.filter((p) => p.inscribedId).map((p) => p.inscribedId))];
     if (!ids.length) continue;                                      // sem inscribedId — não raspável
-    const filled = new Set(all.filter((p) => p.roundScores && p.roundScores.length).map((p) => p.inscribedId));
+    // "Cheio" = tem roundScores COM a chave `meters` (distância do tee do jogador).
+    // Cartões de runs antigos têm roundScores mas sem `meters` → contam como em falta
+    // para serem re-buscados 1× e ganharem os metros por jogador (rapazes/raparigas
+    // jogam tees diferentes). Alinhado com o needsFetch() do patch mode.
+    const filled = new Set(all.filter((p) => p.roundScores && p.roundScores[0] && ("meters" in p.roundScores[0])).map((p) => p.inscribedId));
     const missing = ids.filter((id) => !filled.has(id)).length;
     if (missing >= minMissing) rows.push({ tourId: d.tourId, missing, total: ids.length });
   }

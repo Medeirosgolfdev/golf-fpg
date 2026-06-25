@@ -32,6 +32,8 @@ interface Props {
   fpgUrl?: string;
   tournamentEscalao?: string;
   tournamentSex?: "M" | "F";
+  /** Esconde VAC/Registo/Status — fontes sem esses dados (ex.: NextCaddy/España). */
+  hidePostCols?: boolean;
 }
 
 type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "nasc" | "vac" | "registo" | "status";
@@ -48,7 +50,7 @@ function teeNameFor(escalao?: string, sex?: "M" | "F"): string | undefined {
 
 export default function AdmissionsTab({
   admissions, playersDB, date, fpgUrl,
-  tournamentEscalao, tournamentSex,
+  tournamentEscalao, tournamentSex, hidePostCols,
 }: Props) {
   const [q, setQ] = useState("");
   const fedCountries = useFedCountries();
@@ -65,8 +67,8 @@ export default function AdmissionsTab({
   const enriched = useMemo(() => players.map(p => {
     const bd = p.fed && playersDB ? (playersDB[p.fed] as any) : undefined;
     const nomeFormatted = formatPlayerName(p.nome || "");
-    // Dob: playersDB (curado) → federados.json (base FPG) → undefined
-    const dob: string | undefined = bd?.dob || (p.fed ? fedBirthdates.get(p.fed) : undefined);
+    // Dob: override do jogador (NextCaddy) → playersDB (curado) → federados.json (FPG)
+    const dob: string | undefined = p.dob || bd?.dob || (p.fed ? fedBirthdates.get(p.fed) : undefined);
     const dobYear = dob ? parseInt(dob.slice(0, 4), 10) : null;
     let clube = p.clube;
     if (!clube && bd) {
@@ -76,7 +78,7 @@ export default function AdmissionsTab({
     // Escalão: calculado da dob (autoritativo). NÃO cair em `tournamentEscalao`
     // porque torneios combinados (Regional Sub 14-24, Sub 10+12) misturam vários
     // escalões — o genérico engana.
-    const escHist = escalaoAtDate(dob, date || undefined) || null;
+    const escHist = p.escalao || escalaoAtDate(dob, date || undefined) || null;
     return {
       ...p,
       _nomeFormatted: nomeFormatted,
@@ -166,7 +168,7 @@ export default function AdmissionsTab({
           }
           return (
             <>
-              <CountryFlag fed={p.fed} fedCountries={fedCountries} country={intlCountry} />
+              <CountryFlag fed={p.fed} fedCountries={fedCountries} country={p.country || intlCountry} />
               <TournPName
                 name={p._nomeFormatted || "–"}
                 fed={p.fed || undefined}
@@ -184,7 +186,7 @@ export default function AdmissionsTab({
             <td className="lb-fed">{p.fed || "–"}</td>
             <td className="lb-club" title={p._clube}>{p._clube || "–"}</td>
             <td className="lb-hcp">{fmtHcp(p.hcp)}</td>
-            <td className="lb-tee"><TeeDot teeName={teeName} /></td>
+            <td className="lb-tee">{p.teeName ? <span className="fs-11" style={{ whiteSpace: "nowrap" }}>{p.teeName}</span> : <TeeDot teeName={teeName} />}</td>
             <td title={p._dob ? `${p._dob} (${age ?? "?"} anos à data)` : ""} style={{ textAlign: "center", padding: "6px 8px", whiteSpace: "nowrap" }}>
               {p._dobYear != null ? (
                 <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
@@ -195,7 +197,7 @@ export default function AdmissionsTab({
             </td>
           </>
         ),
-        postScorecardCells: (
+        postScorecardCells: hidePostCols ? undefined : (
           <>
             <td className="lb-hcp" style={{ fontWeight: 600 }}>{fmtHcp(p.vac)}</td>
             <td className="fs-11 muted" style={{ whiteSpace: "nowrap", padding: "6px 8px" }}>
@@ -210,7 +212,7 @@ export default function AdmissionsTab({
         ),
       };
     });
-  }, [sorted, playersDB, fedCountries, teeName, date]);
+  }, [sorted, playersDB, fedCountries, teeName, date, hidePostCols]);
 
   if (admissions.error) {
     return <div className="detail-toolbar" style={{ padding: 16 }}>
@@ -268,8 +270,8 @@ export default function AdmissionsTab({
       par={[]}
       rows={rows}
       prefixHeaderCells={prefixHeaderCells}
-      postScorecardHeaderCells={postScorecardHeaderCells}
-      postScorecardColCount={3}
+      postScorecardHeaderCells={hidePostCols ? undefined : postScorecardHeaderCells}
+      postScorecardColCount={hidePostCols ? 0 : 3}
       showScorecard={false}
       filterBar={filterBar}
       // Sorting da pos e nome: delegamos a useSort externo

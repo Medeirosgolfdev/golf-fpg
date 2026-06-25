@@ -1,7 +1,7 @@
 {
   "tourId": 61072,
   "url": "https://www.nextcaddy.com/tour/61072",
-  "scrapedAt": "2026-06-24T14:52:37.914Z",
+  "scrapedAt": "2026-06-25T11:05:21.943Z",
   "meta": {
     "name": "Circuito Benjamín Zona E",
     "organizer": "Real Federacion Andaluza de Golf",
@@ -21,11 +21,39 @@
     ]
   },
   "course": {
-    "parTotal": 34,
-    "parInferred": true,
-    "parConfidence": "total-high",
-    "si": null,
-    "meters": null
+    "par": [
+      5,
+      3,
+      3,
+      4,
+      4,
+      4,
+      4,
+      3,
+      4
+    ],
+    "si": [
+      17,
+      16,
+      12,
+      1,
+      18,
+      11,
+      10,
+      5,
+      7
+    ],
+    "meters": [
+      384,
+      122,
+      116,
+      356,
+      211,
+      220,
+      195,
+      142,
+      342
+    ]
   },
   "leaderboard": [
     {
@@ -53,7 +81,24 @@
           "rounds": [],
           "total": 46,
           "toPar": 12,
-          "inscribedId": 2247786
+          "inscribedId": 2247786,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                5,
+                4,
+                6,
+                4,
+                5,
+                6,
+                4,
+                6
+              ],
+              "total": 46
+            }
+          ]
         },
         {
           "pos": 2,
@@ -64,7 +109,24 @@
           "rounds": [],
           "total": 52,
           "toPar": 18,
-          "inscribedId": 2256986
+          "inscribedId": 2256986,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                4,
+                4,
+                6,
+                6,
+                8,
+                7,
+                6,
+                6
+              ],
+              "total": 52
+            }
+          ]
         },
         {
           "pos": 3,
@@ -75,7 +137,24 @@
           "rounds": [],
           "total": 53,
           "toPar": 19,
-          "inscribedId": 2248349
+          "inscribedId": 2248349,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                4,
+                7,
+                7,
+                7,
+                5,
+                4,
+                5,
+                8
+              ],
+              "total": 53
+            }
+          ]
         },
         {
           "pos": 4,
@@ -86,7 +165,24 @@
           "rounds": [],
           "total": 57,
           "toPar": 23,
-          "inscribedId": 2250906
+          "inscribedId": 2250906,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                4,
+                6,
+                7,
+                7,
+                7,
+                8,
+                5,
+                6
+              ],
+              "total": 57
+            }
+          ]
         }
       ]
     },
@@ -115,7 +211,24 @@
           "rounds": [],
           "total": 30,
           "toPar": -4,
-          "inscribedId": 2247786
+          "inscribedId": 2247786,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                5,
+                4,
+                6,
+                4,
+                5,
+                6,
+                4,
+                6
+              ],
+              "total": 46
+            }
+          ]
         },
         {
           "pos": 2,
@@ -126,7 +239,24 @@
           "rounds": [],
           "total": 34,
           "toPar": null,
-          "inscribedId": 2256986
+          "inscribedId": 2256986,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                4,
+                4,
+                6,
+                6,
+                8,
+                7,
+                6,
+                6
+              ],
+              "total": 52
+            }
+          ]
         },
         {
           "pos": 3,
@@ -137,7 +267,24 @@
           "rounds": [],
           "total": 39,
           "toPar": 5,
-          "inscribedId": 2248349
+          "inscribedId": 2248349,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                4,
+                7,
+                7,
+                7,
+                5,
+                4,
+                5,
+                8
+              ],
+              "total": 53
+            }
+          ]
         },
         {
           "pos": 4,
@@ -148,7 +295,24 @@
           "rounds": [],
           "total": 42,
           "toPar": 8,
-          "inscribedId": 2250906
+          "inscribedId": 2250906,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                4,
+                6,
+                7,
+                7,
+                7,
+                8,
+                5,
+                6
+              ],
+              "total": 57
+            }
+          ]
         }
       ]
     }

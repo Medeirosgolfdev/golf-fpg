@@ -328,25 +328,40 @@ function parseScorecard(html) {
 }
 
 async function fetchScorecard(inscribedId, opts) {
-  // FAIL-FAST por tentativa: timeout 6s. Por omissão sem retries — o scrape bulk
-  // mantém-se rápido e os falhados são apanhados depois pelo patch mode. O patch
-  // mode passa { retries: N }: repete falhas transientes/throttle (timeout,
-  // não-200, corpo curto) com backoff progressivo, enchendo stragglers numa só
-  // passagem em vez de exigir várias re-execuções manuais.
+  // FAIL-FAST por tentativa: timeout 6s. opts.retries repete falhas (patch mode usa).
+  //
+  // Validade pelo PARSER: aceita-se a tarjeta só quando parseScorecard extrai rondas.
+  // Um HTTP 200 SEM cartão extraído NÃO é "sem cartão permanente" — é uma resposta
+  // DEGRADADA por carga: sob concorrência o nextcaddy devolve uma página PARCIAL
+  // (~7.6KB, sem a tabela de golpes); numa 2ª/3ª tentativa — ou em sequência, sem
+  // concorrência — devolve a página completa (~27KB) com o cartão. Verificado: até os
+  // que pareciam "sem cartão" devolvem o cartão completo ao re-tentar. Por isso
+  // RE-TENTA-SE (lastReason="degraded") em vez de marcar permanente — marcar era a
+  // causa de "faltam sempre tantos" e de perder cartões recuperáveis.
+  // opts.stats (objecto opcional) conta por motivo: ok/degraded/http/timeout.
   if (!inscribedId) return null;
-  const retries = (opts && opts.retries) || 0;
-  const retryDelay = (opts && opts.retryDelay) || 500;
+  opts = opts || {};
+  const retries = opts.retries || 0;
+  const retryDelay = opts.retryDelay || 500;
+  const stats = opts.stats || null;
+  const bump = (k) => { if (stats) stats[k] = (stats[k] || 0) + 1; };
+  let lastReason = "fail";
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
       const r = await Promise.race([
         get(`${BASE}/tarjeta-aux/${inscribedId}/-1`),
         new Promise((_, rej) => setTimeout(() => rej(new Error("timeout-fast")), 6000)),
       ]);
-      if (r.status === 200 && r.body.length >= 5000) return parseScorecard(r.body);
-      // não-200 / corpo curto = throttle ou erro transiente → tenta de novo
-    } catch { /* timeout / erro de rede → tenta de novo */ }
+      if (r.status !== 200) { lastReason = "http"; }              // erro/throttle → retry
+      else {
+        const sc = parseScorecard(r.body);
+        if (sc && Array.isArray(sc.rounds) && sc.rounds.length > 0) { bump("ok"); return sc; }
+        lastReason = "degraded";                                  // 200 sem cartão = parcial por carga → retry
+      }
+    } catch { lastReason = "timeout"; }                           // timeout/rede → retry
     if (attempt < retries) await new Promise((res) => setTimeout(res, retryDelay * (attempt + 1)));
   }
+  bump(lastReason);                                               // esgotou retries (degraded/http/timeout)
   return null;
 }
 
@@ -383,7 +398,18 @@ function parseInscritos(html) {
     if (!name && !licencia) continue;
     players.push({ orden, name, licencia, hcp, nivel });
   }
-  return players;
+  // Dedup: o getListadoInscritos devolve a lista REPETIDA (a resposta rende-a 2×
+  // — tabelas por género/total ou mobile+desktop). Verificado em 68766: 32 entradas
+  // = 16 jogadores reais, cada um 2×. Mantém a 1ª ocorrência por licencia (fallback nome).
+  const seen = new Set();
+  const deduped = [];
+  for (const p of players) {
+    const key = (p.licencia || "").trim().toLowerCase() || ("name:" + (p.name || "").trim().toLowerCase());
+    if (seen.has(key)) continue;
+    seen.add(key);
+    deduped.push(p);
+  }
+  return deduped;
 }
 
 /* ─── parseEstadisticas — JSON ────────────────────────────────── */
@@ -435,6 +461,16 @@ function parseTourMeta(html) {
   if (formatM) meta.format = formatM[1].trim();
   const catList = visible.match(/(?:Alev[ií]n|Benjam[ií]n|Cadete|Infantil|Juvenil|Junior|Caballeros|Se[ñn]oras|Senior|Profesional)\s*(?:Masculino|Femenino)?/gi);
   if (catList) meta.categories = [...new Set(catList.map((c) => c.replace(/\s+/g, " ").trim()))];
+  // Data: o NextCaddy não a expõe nos endpoints, mas muitos nomes trazem-na no fim
+  // (ex.: "...9P3 HOYOS 13-06-26"). Extrai DD-MM-YY[YY] / DD/MM/YYYY do nome → ISO.
+  const dM = /(\d{1,2})[-/.](\d{1,2})[-/.](\d{2,4})(?!\d)/.exec(meta.name || "");
+  if (dM) {
+    const day = parseInt(dM[1], 10), month = parseInt(dM[2], 10);
+    let y = dM[3]; if (y.length === 2) y = (parseInt(y, 10) >= 70 ? "19" : "20") + y;
+    if (month >= 1 && month <= 12 && day >= 1 && day <= 31) {
+      meta.dateStart = `${y}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    }
+  }
   return meta;
 }
 
@@ -565,15 +601,10 @@ async function scrapeTour(tourId, opts) {
     const cache = new Map(); // inscribedId → scorecard
 
     if (uniqueIds.length > 0) {
-      // Fetch first to get course par/SI/metros
-      const firstSc = await fetchScorecard(uniqueIds[0]);
-      cache.set(uniqueIds[0], firstSc);
-      if (firstSc) {
-        courseScorecard = { par: firstSc.par, si: firstSc.si, meters: firstSc.meters };
-      }
-      // Now fetch the rest — concurrency=4 + sem delay = ~600ms/fetch × 4 = ~150ms/fetch effective
-      // Para 50 jogadores = ~8s. Throttling raro porque é HTTP keep-alive.
-      let cursor = 1;
+      // Fetch concorrente de todos. Sem confiar no 1.º jogador para o course
+      // (pode ser nocard → null): o par/SI/metros é extraído do PRIMEIRO cartão
+      // com sucesso (igual para toda a categoria).
+      let cursor = 0;
       async function worker() {
         while (cursor < uniqueIds.length) {
           const id = uniqueIds[cursor++];
@@ -585,11 +616,16 @@ async function scrapeTour(tourId, opts) {
       const innerConc = scorecardConcurrency || 4;
       await Promise.all(Array.from({ length: innerConc }, () => worker()));
 
-      // Aplicar scorecards do cache aos players (incluindo cópias em múltiplas categorias)
+      // Aplicar scorecards do cache aos players (incluindo cópias em múltiplas
+      // categorias) + fixar o course a partir do primeiro cartão válido.
       for (const p of allPlayers) {
         if (!p.inscribedId) continue;
         const sc = cache.get(p.inscribedId);
-        if (sc && sc.rounds) p.roundScores = sc.rounds;
+        if (sc && sc.rounds && sc.rounds.length) {
+          const pm = (sc.meters && sc.meters.length) ? sc.meters : null;   // metros do tee deste jogador
+          p.roundScores = sc.rounds.map((rr) => ({ ...rr, meters: pm }));
+          if (!courseScorecard && sc.par) courseScorecard = { par: sc.par, si: sc.si, meters: sc.meters };
+        }
       }
     }
   }
@@ -770,36 +806,51 @@ async function main() {
           // PATCH mode: lê JSON existente, fetcha só scorecards em falta
           r = JSON.parse(fs.readFileSync(outFile, "utf-8"));
           const allPlayers = (r.leaderboard || []).flatMap((c) => c.players || []);
-          const missing = allPlayers.filter((p) => p.inscribedId && (!p.roundScores || p.roundScores.length === 0));
+          // "Precisa de fetch" = sem roundScores OU roundScores sem a chave `meters`.
+          // Cada jogador joga do SEU tee (rapazes amarelas, raparigas vermelhas) com
+          // distância própria — capturada do cartão dele. Cartões de runs antigos não
+          // têm `meters` por jogador (assumiam 1 distância do campo): re-busca-os 1×
+          // para anexar os metros do tee. Quando a chave já existe (mesmo que null), está feito.
+          const needsFetch = (p) => {
+            const r0 = p.roundScores && p.roundScores[0];
+            return !r0 || !("meters" in r0);
+          };
+          const missing = allPlayers.filter((p) => p.inscribedId && needsFetch(p));
           const uniqueMissing = [...new Set(missing.map((p) => p.inscribedId))];
           if (uniqueMissing.length === 0) {
             const elapsed = ((Date.now() - t0) / 1000).toFixed(1);
             console.log(`  [${idx + 1}/${tours.length}] ${tid}: ${(r.meta && r.meta.name) || "?"} (já completo, ${elapsed}s)`);
             ok++; continue;
           }
-          // Fetch missing IN SEQUENCE (concurrency 2 + 100ms)
+          // Fetch SEQUENCIAL (1 de cada vez) + retries: o nextcaddy degrada respostas
+          // sob concorrência (devolve página parcial sem cartão). Em sequência + retry
+          // o cartão completo chega quase sempre à 1ª/2ª tentativa → enche numa só
+          // passagem em vez de "faltar sempre". scStats conta motivos p/ diagnóstico.
           const cache = new Map();
+          const scStats = {};
           let pcursor = 0;
           async function pworker() {
             while (pcursor < uniqueMissing.length) {
               const id = uniqueMissing[pcursor++];
-              const sc = await fetchScorecard(id, { retries: 3 });
+              const sc = await fetchScorecard(id, { retries: 4, stats: scStats });
               cache.set(id, sc);
-              await new Promise((r) => setTimeout(r, 100));
+              await new Promise((r) => setTimeout(r, 150));
             }
           }
-          await Promise.all(Array.from({ length: 2 }, () => pworker()));
-          // Aplicar aos players + actualizar course se ainda nao tem par
+          await Promise.all(Array.from({ length: 1 }, () => pworker()));
+          // Aplicar cartões + fixar course a partir do primeiro válido.
           let appliedCount = 0;
           for (const p of allPlayers) {
             if (!p.inscribedId) continue;
             const sc = cache.get(p.inscribedId);
             if (sc && sc.rounds && sc.rounds.length) {
-              p.roundScores = sc.rounds;
+              // Metros do TEE deste jogador (rapazes/raparigas jogam distâncias
+              // diferentes). Anexa a cada ronda — null se o cartão não trouxe metros.
+              const pm = (sc.meters && sc.meters.length) ? sc.meters : null;
+              p.roundScores = sc.rounds.map((rr) => ({ ...rr, meters: pm }));
               appliedCount++;
-              // course pode ser {par: null,...} (truthy mas vazio) — usar par como teste real.
-              // Actualiza também quando o nº de buracos do scorecard fresco diverge do
-              // armazenado (ex.: 18 stale de um run buggy → 9 reais num torneio de 9 buracos).
+              // Actualiza course quando em falta ou o nº de buracos diverge
+              // (ex.: 18 stale de um run buggy → 9 reais num torneio de 9 buracos).
               if (sc.par && (!r.course || !Array.isArray(r.course.par) || r.course.par.length !== sc.par.length)) {
                 r.course = { par: sc.par, si: sc.si, meters: sc.meters };
               }
@@ -807,15 +858,13 @@ async function main() {
           }
           const elapsed = ((Date.now() - t0) / 1000).toFixed(1);
           const remaining = uniqueMissing.length - appliedCount;
-          // Só reescreve se algo foi realmente aplicado. Caso contrário (todos os
-          // fetches throttled/falhados) era só churn de timestamp — o ficheiro
-          // aparecia "modificado" no git apenas pela mudança de scrapedAt, sem
-          // dados novos. Deixar intacto para o git não o marcar.
+          // Só reescreve se ganhou cartões (senão era só churn de timestamp).
           if (appliedCount > 0) {
             r.scrapedAt = new Date().toISOString();
             fs.writeFileSync(outFile, JSON.stringify(r, null, 2));
           }
-          console.log(`  [${idx + 1}/${tours.length}] ${tid}: ${(r.meta && r.meta.name) || "?"} (patch +${appliedCount}/${uniqueMissing.length}${remaining > 0 ? `, ${remaining} ainda em falta` : ""}${appliedCount === 0 ? " — sem alterações, não regravado" : ""}, ${elapsed}s)`);
+          const statsStr = Object.entries(scStats).map(([k, v]) => `${k}=${v}`).join(" ");
+          console.log(`  [${idx + 1}/${tours.length}] ${tid}: ${(r.meta && r.meta.name) || "?"} (patch +${appliedCount}/${uniqueMissing.length}${remaining > 0 ? `, ${remaining} ainda em falta` : ""}${appliedCount === 0 ? " — sem alterações" : ""}${statsStr ? ` [${statsStr}]` : ""}, ${elapsed}s)`);
           ok++; continue;
         }
         r = await scrapeTour(tid, { scorecards: fetchScorecards });

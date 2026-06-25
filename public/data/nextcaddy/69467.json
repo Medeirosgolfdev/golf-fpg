@@ -1,7 +1,7 @@
 {
   "tourId": 69467,
   "url": "https://www.nextcaddy.com/tour/69467",
-  "scrapedAt": "2026-06-24T14:54:24.595Z",
+  "scrapedAt": "2026-06-25T11:05:20.598Z",
   "meta": {
     "name": "TORNEO INFANTIL VILLANUEVA 9 HOYOS",
     "organizer": null,
@@ -22,7 +22,41 @@
       "Juvenil"
     ]
   },
-  "course": null,
+  "course": {
+    "par": [
+      4,
+      3,
+      4,
+      4,
+      5,
+      3,
+      4,
+      3,
+      5
+    ],
+    "si": [
+      14,
+      9,
+      7,
+      16,
+      1,
+      18,
+      5,
+      11,
+      3
+    ],
+    "meters": [
+      295,
+      102,
+      329,
+      258,
+      469,
+      104,
+      345,
+      85,
+      383
+    ]
+  },
   "leaderboard": [
     {
       "category": 1,
@@ -49,7 +83,24 @@
           "rounds": [],
           "total": 14,
           "toPar": 4,
-          "inscribedId": 2288755
+          "inscribedId": 2288755,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                7,
+                5,
+                7,
+                10,
+                7,
+                9,
+                5,
+                8
+              ],
+              "total": 65
+            }
+          ]
         },
         {
           "pos": 2,
@@ -60,7 +111,24 @@
           "rounds": [],
           "total": 13,
           "toPar": 5,
-          "inscribedId": 2288751
+          "inscribedId": 2288751,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                4,
+                6,
+                7,
+                7,
+                4,
+                6,
+                4,
+                4
+              ],
+              "total": 47
+            }
+          ]
         },
         {
           "pos": 3,
@@ -71,7 +139,24 @@
           "rounds": [],
           "total": 11,
           "toPar": 7,
-          "inscribedId": 2288756
+          "inscribedId": 2288756,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                7,
+                7,
+                null,
+                6,
+                null,
+                6
+              ],
+              "total": null
+            }
+          ]
         },
         {
           "pos": 4,
@@ -93,7 +178,24 @@
           "rounds": [],
           "total": 5,
           "toPar": 13,
-          "inscribedId": 2288753
+          "inscribedId": 2288753,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                9,
+                7,
+                8,
+                null,
+                null,
+                4,
+                9,
+                9,
+                null
+              ],
+              "total": null
+            }
+          ]
         },
         {
           "pos": 6,
