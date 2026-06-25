@@ -28,7 +28,6 @@ import Aroeira2AnaliseView from "../../ui/Aroeira2AnaliseView";
 import AdmissionsTab from "../../ui/AdmissionsTab";
 import DrawTab, { buildDrawResults } from "../../ui/DrawTab";
 import { TOURNAMENT_EXTRA_LINKS } from "./constants";
-import PrintButton from "../../ui/PrintButton";
 import PrintPJAButton from "../../ui/PrintPJAButton";
 
 function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options, accShowCols, accExtraColumns, accHeader, drawHideCols, hideHeader }: { tournament: Tournament; escLookup: EscLookup; playersDB: PlayersDB; extraTabs?: { key: string; label: string; content: React.ReactNode }[]; options?: ScorecardOptions; accShowCols?: { esc?: boolean; fed?: boolean; tee?: boolean; club?: boolean; hcp?: boolean }; accExtraColumns?: React.ComponentProps<typeof AccumulatedLB>["extraColumns"]; accHeader?: React.ReactNode; drawHideCols?: React.ComponentProps<typeof DrawTab>["hideCols"]; hideHeader?: boolean }) {
@@ -291,7 +290,6 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
                 {lnk.icon ? `${lnk.icon} ` : ""}{lnk.label} ↗
               </a>
             ))}
-            <PrintButton />
             {/* PrintPJAButton carrega pja-members.json sozinho — só aparece
                 se houver lista para o ano do torneio. */}
             <PrintPJAButton year={(tournament.date || "").substring(0, 4)} />

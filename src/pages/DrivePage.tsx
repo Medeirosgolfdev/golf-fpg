@@ -6,7 +6,6 @@
  */
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useSort } from "../hooks/useSort";
-import PrintButton from "../ui/PrintButton";
 import { loadPlayers } from "../data/loader";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from "recharts";
 import { sdClassByHcp, medalColor } from "../utils/scoreDisplay";
@@ -2135,7 +2134,6 @@ function DriveContent() {
                     ) : titleText}
                     actions={<>
                       <TournExtLinks ccode={curTournament.ccode} tcode={curTournament.tcode} />
-                      <PrintButton />
                     </>}
                     sub={<>
                       {curTournament.campo && <span className="muted">📍 {curTournament.campo}</span>}

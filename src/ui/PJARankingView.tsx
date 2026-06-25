@@ -7,7 +7,6 @@ import SexBadge from "./SexBadge";
 import EmptyState from "./EmptyState";
 import LoadingState from "./LoadingState";
 import FilterChip from "./FilterChip";
-import PrintButton from "./PrintButton";
 import { CrossSeasonTable, SortTh as CSortTh } from "./CrossSeasonTable";
 import { isManuel, fmtTP, tpColor, TournPName, type PlayersDB } from "./tournamentPrimitives";
 import { fmtDate, escalaoAtDate } from "../utils/format";
@@ -764,8 +763,6 @@ export function PJARankingView({
         </button>
       ))}
     </div>
-    {/* Botão PDF — exporta ranking completo com colunas dos torneios */}
-    <PrintButton label="PDF" className="tourn-ext-link print-hide" title={`Exportar ranking ${year} para PDF — usa A3 landscape ou multi-page automático`} />
     {/* Search removido — a FPGPage renderiza um search único na sua toolbar
         e passa o valor via `externalFilterName`. Fallback inline quando o
         componente é usado standalone (sem externalFilterName). */}

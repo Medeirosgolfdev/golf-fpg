@@ -160,9 +160,11 @@ export function IntlTournView({
     if (cutAfterRound && cutAfterRound < expanded.length) {
       baseLabels.splice(cutAfterRound, 0, `Pré-Cut R1–R${cutAfterRound}`);
     }
-    baseLabels.push(COMBINED_TAB);
+    // Não mostrar a tab "📋 Scorecards" quando a fonte não tem cartão hole-by-hole
+    // (ex.: RFEGolf só-PDF → _noHbh): a grelha sairia vazia contra par-72 falso.
+    if (!(tournament as { _noHbh?: boolean })._noHbh) baseLabels.push(COMBINED_TAB);
     return baseLabels;
-  }, [isMulti, expanded, roundLabels, cutAfterRound]);
+  }, [isMulti, expanded, roundLabels, cutAfterRound, tournament]);
 
   // Barra única: [leadingTabs…, rondas…]. Estilo FPG (Inscritos → Draw → R1 → …).
   const combinedLabels = useMemo(

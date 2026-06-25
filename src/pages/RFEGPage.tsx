@@ -34,7 +34,7 @@ import { flag } from "../utils/flagUtils";
 import { formatPlayerName } from "../utils/playerUtils";
 import { IntlTournView } from "../ui/IntlTournView";
 import DrawTab from "../ui/DrawTab";
-import type { FpgDraw, FpgDrawFlight, FpgAdmissions } from "../data/nacional2026Loader";
+import type { FpgDraw, FpgDrawFlight, FpgAdmissions, FpgAdmissionPlayer } from "../data/nacional2026Loader";
 import AdmissionsTab from "../ui/AdmissionsTab";
 import type { PlayersDB } from "../ui/tournamentPrimitives";
 import type { Tournament as FPGTournament, Player as FPGPlayer, RoundScore as FPGRoundScore, ScorecardOptions } from "./FPGPage";
@@ -182,8 +182,6 @@ const LIST_LABELS: Record<ListKind, string> = {
   noAdmitidos: "No admitidos",
   provisional: "Provisional",
 };
-
-type SortKey = "pos" | "nome" | "licencia" | "pais" | "hcp" | "catEdad" | "club" | "nasc" | "tee";
 
 /* ── Helpers ───────────────────────────────────────────── */
 
@@ -580,211 +578,13 @@ function rfegolfToFPGTournament(detail: RFEGDetail, dobLookup?: DobLookup): FPGT
     rounds: nRounds,
     playerCount: players.length,
     players,
-  };
+    // RFEGolf publica ~65% só em PDF: temos os TOTAIS por ronda mas NÃO o cartão
+    // hole-by-hole (scores/par/si/meters vazios). Marca para o IntlTournView NÃO
+    // mostrar a tab "📋 Scorecards" (grelha vazia contra par-72 falso = parece partido).
+    _noHbh: true,
+  } as FPGTournament;
 }
 
-
-/* ── PlayerTable ─────────────────────────────────────────── */
-
-function PlayerTable({ players, dateRef, coursePar }: { players: RFEGPlayer[]; dateRef?: string | null; coursePar?: number[] | null; parConfidence?: "high" | "medium" | "low" }) {
-  const { sortKey, sortDir, toggleSort } = useSort<SortKey>("pos");
-
-  const enriched = useMemo(() => players.map((p) => ({
-    ...p,
-    _name: formatPlayerName(p.name || ""),
-    _club: p.club ? displayName(p.club) : "",
-    _flag: p.pais ? flag(p.pais) : "🏳️",
-    _age: ageAt(p.dob, dateRef),
-    _dobIso: (() => {
-      const m = p.dob ? /(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(p.dob) : null;
-      return m ? `${m[3]}-${m[2].padStart(2, "0")}-${m[1].padStart(2, "0")}` : "";
-    })(),
-  })), [players, dateRef]);
-
-  const sorted = useMemo(() => {
-    const INF = 9999;
-    const mult = sortDir === "asc" ? 1 : -1;
-    return [...enriched].sort((a, b) => {
-      let v = 0;
-      switch (sortKey) {
-        case "pos":      v = (a.pos ?? INF) - (b.pos ?? INF); break;
-        case "nome":     v = (a._name || "").localeCompare(b._name || "", "pt"); break;
-        case "licencia": v = (a.licencia || "").localeCompare(b.licencia || ""); break;
-        case "pais":     v = (a.pais || "").localeCompare(b.pais || "", "es"); break;
-        case "hcp":      v = (a.hcp ?? INF) - (b.hcp ?? INF); break;
-        case "tee":      v = (a.teeMeters ?? INF) - (b.teeMeters ?? INF); break;
-        case "catEdad":  v = (a.catEdad || "").localeCompare(b.catEdad || ""); break;
-        case "club":     v = (a.club || "").localeCompare(b.club || "", "es"); break;
-        case "nasc":     v = (a._dobIso || "").localeCompare(b._dobIso || ""); break;
-      }
-      return mult * v;
-    });
-  }, [enriched, sortKey, sortDir]);
-
-  if (!players.length) return <EmptyState size="sm" message="Lista vazia." />;
-
-  const hasResults = sorted.some((p) => p.rounds && p.rounds.length > 0);
-  const maxRounds = hasResults ? Math.max(0, ...sorted.map((p) => (p.rounds || []).length)) : 0;
-
-  // Em torneios single-round com scores hole-by-hole, mostramos scorecard expandido.
-  const allHaveSingleRoundScores = hasResults && maxRounds === 1 &&
-    sorted.every((p) => {
-      const r = (p.rounds || [])[0];
-      return r && Array.isArray(r.scores) && r.scores.length > 0;
-    });
-  const singleRoundLen = allHaveSingleRoundScores
-    ? Math.max(...sorted.map((p) => ((p.rounds || [])[0]?.scores?.length || 0)))
-    : 0;
-  const showHoleByHole = allHaveSingleRoundScores && (singleRoundLen === 9 || singleRoundLen === 18);
-
-  // Par real: vem em `coursePar` quando o JSON do torneio tem par[] (NextCaddy
-  // inferido por scripts/infer-nextcaddy-par.js a partir dos scores top-50%, ou
-  // RFEGolf quando suportar). Fallback: array vazio → ScorecardLeaderboard
-  // assume par 4 e os scores aparecem coloridos como par.
-  const par: number[] = (coursePar && Array.isArray(coursePar) && (coursePar.length === 9 || coursePar.length === 18))
-    ? coursePar
-    : [];
-
-  const rows: ScorecardRow[] = sorted.map((p, i) => {
-    const isManuel = p._name ? isM(p._name) : false;
-    const cat = p.catEdad ? p.catEdad.replace(/^Sub\s*/i, "Sub-") : null;
-
-    const prefixForResults = (
-      <>
-        <td className="lb-esc">
-          {cat ? <EscPill esc={cat} /> : <span className="muted">—</span>}
-        </td>
-        <td className="lb-fed">{p.licencia ?? "—"}</td>
-        <td className="lb-club" title={p._club || (p.club ?? "")}>{p._club || "—"}</td>
-        <td className="lb-hcp">{p.hcp == null ? "—" : p.hcp.toFixed(1)}</td>
-        <td className="lb-hcp" style={{ textAlign: "center", whiteSpace: "nowrap" }} title="Distância do tee deste jogador (do cartão)">{p.teeMeters ? `${p.teeMeters} m` : <span className="muted">—</span>}</td>
-      </>
-    );
-    const prefixForInscritos = (
-      <>
-        <td className="lb-esc">
-          {cat ? <EscPill esc={cat} /> : <span className="muted">—</span>}
-        </td>
-        <td className="lb-fed">{p.licencia ?? "—"}</td>
-        <td className="lb-club" title={p._club || (p.club ?? "")}>{p._club || "—"}</td>
-        <td className="lb-hcp">{p.hcp == null ? "—" : p.hcp.toFixed(1)}</td>
-        <td className="lb-hcp" style={{ textAlign: "center", whiteSpace: "nowrap" }} title="Distância do tee deste jogador (do cartão)">{p.teeMeters ? `${p.teeMeters} m` : <span className="muted">—</span>}</td>
-        <td style={{ textAlign: "center", padding: "6px 8px" }}>
-          {p.sexo === "M" || p.sexo === "F" ? <SexBadge sex={p.sexo} /> : <span className="muted">—</span>}
-        </td>
-        <td title={p.dob ? `${p.dob} (${p._age ?? "?"} anos à data)` : ""}
-            style={{ textAlign: "center", padding: "6px 8px", whiteSpace: "nowrap" }}>
-          {p.dob ? (
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-              <YearPill year={parseInt(p.dob.slice(-4), 10)} />
-              {p._age != null && <span className="muted fs-10">({p._age})</span>}
-            </span>
-          ) : <span className="muted">—</span>}
-        </td>
-        <td title={p.pais ?? ""} style={{ padding: "6px 8px", textAlign: "center", fontSize: "var(--fs-18)" }}>
-          {p._flag}
-        </td>
-      </>
-    );
-
-    const postForResults = (
-      <>
-        <td style={{ textAlign: "center", fontWeight: 700, fontFamily: "var(--font-mono)" }}>
-          <span style={{ color: tpColor(p.toPar) }}>{fmtToPar(p.toPar)}</span>
-        </td>
-        <td style={{ textAlign: "center", fontWeight: 700, fontFamily: "var(--font-mono)" }}>
-          {p.total ?? "—"}
-        </td>
-        {!showHoleByHole && Array.from({ length: maxRounds }, (_, idx) => {
-          const r = (p.rounds || []).find((x) => x.round === idx + 1);
-          return (
-            <td key={`r${idx}`} style={{ textAlign: "center", fontFamily: "var(--font-mono)" }}>
-              {r && r.gross != null ? r.gross : "—"}
-            </td>
-          );
-        })}
-      </>
-    );
-    const postForInscritos = (
-      <td style={{ padding: "6px 8px", textAlign: "center" }}>
-        {p.estado
-          ? <span style={{ background: "var(--bg-muted)", color: "var(--text-muted)", fontSize: "var(--fs-10)", padding: "1px 6px", borderRadius: 10, border: "1px solid var(--border-light)" }}>{p.estado}</span>
-          : <span className="muted fs-10">✓</span>}
-      </td>
-    );
-
-    const r0 = showHoleByHole ? (p.rounds || [])[0] : null;
-    const rowScores = (r0 && Array.isArray(r0.scores)) ? r0.scores : undefined;
-
-    return {
-      key: `${p.licencia ?? "-"}-${i}`,
-      pos: p.pos ?? i + 1,
-      gross: p.total ?? 0,
-      toPar: p.toPar ?? null,
-      scores: rowScores ?? [],
-      isManuel,
-      sortPos: p.pos ?? null,
-      sortName: p._name || "",
-      fedCode: p.licencia ?? undefined,
-      nameContent: (
-        <span style={{ display: "inline-flex", alignItems: "center", gap: 4, fontWeight: isManuel ? 700 : 500 }}>
-          {p._name || "—"}
-          {p._name && <KidsLink nome={p._name} />}
-        </span>
-      ),
-      prefixCells: hasResults ? prefixForResults : prefixForInscritos,
-      postScorecardCells: hasResults ? postForResults : postForInscritos,
-    };
-  });
-
-  const prefixHeaderCells = hasResults ? (
-    <>
-      <SortableHdr k="catEdad" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">CAT</SortableHdr>
-      <SortableHdr k="licencia" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-fed">LICENCIA</SortableHdr>
-      <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">CLUBE</SortableHdr>
-      <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">HCP</SortableHdr>
-      <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">TEE</SortableHdr>
-    </>
-  ) : (
-    <>
-      <SortableHdr k="catEdad" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">CAT</SortableHdr>
-      <SortableHdr k="licencia" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-fed">LICENCIA</SortableHdr>
-      <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">CLUBE</SortableHdr>
-      <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">HCP</SortableHdr>
-      <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">TEE</SortableHdr>
-      <th style={{ padding: "7px 8px", textAlign: "center" }}>Sx</th>
-      <SortableHdr k="nasc" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px", textAlign: "center" }}>Nasc.</SortableHdr>
-      <SortableHdr k="pais" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 4px", textAlign: "center", width: 32 }} title="País">🏳️</SortableHdr>
-    </>
-  );
-  const postScorecardHeaderCells = hasResults ? (
-    <>
-      <th style={{ padding: "7px 8px", textAlign: "center", fontWeight: 700 }}>±Par</th>
-      <th style={{ padding: "7px 8px", textAlign: "center", fontWeight: 700 }}>Total</th>
-      {!showHoleByHole && Array.from({ length: maxRounds }, (_, i) => (
-        <th key={`r${i}`} style={{ padding: "7px 8px", textAlign: "center" }}>R{i + 1}</th>
-      ))}
-    </>
-  ) : (
-    <th style={{ padding: "7px 8px", textAlign: "center" }}>Status</th>
-  );
-  const postColCount = hasResults ? (showHoleByHole ? 2 : 2 + maxRounds) : 1;
-
-  return (
-    <ScorecardLeaderboard
-      par={showHoleByHole ? (par.length ? par : new Array(singleRoundLen).fill(4)) : []}
-      rows={rows}
-      prefixHeaderCells={prefixHeaderCells}
-      postScorecardHeaderCells={postScorecardHeaderCells}
-      postScorecardColCount={postColCount}
-      showScorecard={showHoleByHole}
-      onSortPos={() => toggleSort("pos")}
-      onSortName={() => toggleSort("nome")}
-      activeSortKey={sortKey}
-      activeSortDir={sortDir}
-    />
-  );
-}
 
 /* ── NextCaddy adapter ─────────────────────────────────── */
 
@@ -2586,6 +2386,44 @@ async function rfegLoadDivisions(
     }
   }
 
+  // Unificação com a FPGPage: TODAS as fontes España renderizam os inscritos e o
+  // draw pelos MESMOS componentes partilhados (AdmissionsTab / DrawTab via
+  // DrawSaidaView), via os hooks renderInscritos/renderDrawSection do CircuitShell
+  // (mesmo padrão que a DrivePage usa). hidePostCols esconde VAC/Registo/Status
+  // (que o NextCaddy/España não têm). Cada jogador traz dob/escalão/país/tee como
+  // overrides; o tee mostra a distância do cartão (rapazes/raparigas jogam tees ≠).
+  const buildAdmissions = (): FpgAdmissions => {
+    const players: FpgAdmissionPlayer[] = [];
+    for (const k of (Object.keys(LIST_LABELS) as ListKind[])) {
+      const status = k === "reservas" ? "reserva" : "confirmed";
+      for (const p of (data.inscritos[k] || [])) {
+        const a = ageAt(p.dob, data.meta.dateStart);
+        players.push({
+          pos: p.pos ?? null,
+          fed: p.licencia,
+          nome: p.name || "",
+          clube: p.club,
+          hcp: p.hcp,
+          vac: null,
+          dataInscricao: null,
+          status,
+          dob: p.dob,
+          country: rfegCountryCode(p.pais) || "ES",
+          escalao: (a != null ? ageToEscalaoEs(a) : null) || p.catEdad || null,
+          teeName: p.teeMeters ? `${p.teeMeters} m` : null,
+        });
+      }
+    }
+    return {
+      players,
+      totalInscritos: players.filter((p) => p.status === "confirmed").length,
+      reservas: players.filter((p) => p.status === "reserva").length,
+    };
+  };
+
+  const horarios = (data as unknown as { _ncHorarios?: unknown[] })._ncHorarios;
+  const hasDraw = t.source === "nextcaddy" && Array.isArray(horarios) && horarios.length > 0;
+
   const division: CircuitDivision = {
     key: "main",
     escalao: t.category ?? "—",
@@ -2593,6 +2431,13 @@ async function rfegLoadDivisions(
     results: results ?? undefined,
     customResults,
     inscritos: lists.length ? { lists } : undefined,
+    renderInscritos: lists.length
+      ? () => <AdmissionsTab admissions={buildAdmissions()} date={data.meta.dateStart} hidePostCols />
+      : undefined,
+    draw: hasDraw ? { rounds: {} } : undefined,
+    renderDrawSection: hasDraw
+      ? () => <DrawSaidaView detail={data} entry={t} />
+      : undefined,
     links: links.length ? links : undefined,
     scOptions: lgsScorecardOptions(),
   };
