@@ -216,6 +216,20 @@ function ageAt(dob: string | null, ref: string | null | undefined): number | nul
   return age;
 }
 
+/** Converte uma data "DD/MM/YYYY" (formato das fontes España) para ISO
+ *  "YYYY-MM-DD". Deixa passar valores já-ISO e devolve null se não reconhecer.
+ *  O AdmissionsTab partilhado — e os utils `ageAtDate`/`escalaoAtDate` que ele usa —
+ *  assumem dob/datas em ISO (a federados.json FPG é ISO). Sem esta conversão,
+ *  `parseInt(dob.slice(0,4))` lia o DIA ("01/02/2016" → 1) e `new Date(dob)`
+ *  ficava Invalid (idade "? anos"). */
+function esDateToIso(s: string | null | undefined): string | null {
+  if (!s) return null;
+  const t = s.trim();
+  const m = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(t);
+  if (m) return `${m[3]}-${m[2].padStart(2, "0")}-${m[1].padStart(2, "0")}`;
+  return /^\d{4}-\d{2}-\d{2}/.test(t) ? t : null;
+}
+
 /* ── lgsToFPGTournament ──────────────────────────────────────
  * Converte JSON livegolfscoring para FPGTournament — permite reusar
  * IntlTournView (mesmo componente que FFGPage usa) para aspecto consistente
@@ -285,7 +299,7 @@ function lgsToFPGTournament(
     const e = lookupByName[norm(a.name)];
     const club = e?.club ? displayName(e.club) : "";
     const age = e?.dob ? ageAt(e.dob, dateRef) : null;
-    const escLabel = ageToEscalaoEs(age);
+    const escLabel = escaloEsForPlayer(e?.catEdad, e?.dob, dateRef);
     const sex: "M" | "F" | null = e?.sex === "M" ? "M" : e?.sex === "F" ? "F" : null;
     const incomplete = a.rounds.length < numRounds;
     // HCP via lookup global (LGS não tem HCP no JSON)
@@ -365,14 +379,47 @@ function ageToSubN(age: number | null): string | null {
   if (age <= 25) return "Sub-25";
   return null;
 }
-function dobToSubN(dob: string | null, ref: string | null | undefined): string | null {
-  return ageToSubN(ageAt(dob, ref));
-}
 /** Termo oficial RFEG para o escalão. Sub-12 → "Alevín", etc. */
 function ageToEscalaoEs(age: number | null): string | null {
   const subN = ageToSubN(age);
   if (!subN) return null;
   return SUB_TO_ES_TERM[subN] || subN;
+}
+
+/** Variantes de caixa/acento dos termos RFEG → forma canónica (a fonte traz
+ *  "Alevín" e "ALEVIN" misturados; sem isto a UI mostrava as duas grafias). */
+const ES_TERM_CANON: Record<string, string> = {
+  benjamin: "Benjamín", alevin: "Alevín", infantil: "Infantil",
+  cadete: "Cadete", junior: "Junior", juvenil: "Juvenil", absoluto: "Absoluto",
+};
+function canonEscaloEs(s: string | null | undefined): string | null {
+  if (!s) return null;
+  const k = s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[\s-]/g, "");
+  return ES_TERM_CANON[k] || s.trim();
+}
+/** Extrai o ano (4 dígitos) de uma data "DD/MM/YYYY" ou ISO "YYYY-MM-DD". */
+function yearOf(s: string | null | undefined): number | null {
+  if (!s) return null;
+  const m = /(\d{4})/.exec(s);
+  return m ? parseInt(m[1], 10) : null;
+}
+/** Escalão RFEG canónico de um jogador.
+ *  1) Categoria OFICIAL da fonte (catEdad/nivel), normalizada — autoritativa: o
+ *     RFEG atribui a categoria por COHORT de ano de nascimento.
+ *  2) Fallback: idade-no-ano = anoTorneio − anoNascimento (NÃO idade exacta à data
+ *     do torneio — senão o mesmo ano de nascimento parte-se em duas categorias
+ *     consoante o aniversário caia antes/depois do torneio: ex. dois nascidos em
+ *     2015 apareciam como Alevín e Benjamín no mesmo campeonato). */
+function escaloEsForPlayer(
+  catEdad: string | null | undefined,
+  dob: string | null | undefined,
+  ref: string | null | undefined,
+): string | null {
+  const canon = canonEscaloEs(catEdad);
+  if (canon) return canon;
+  const by = yearOf(dob), ty = yearOf(ref);
+  if (by == null || ty == null) return null;
+  return ageToEscalaoEs(ty - by);
 }
 
 /* ── ncToFPGTournament ────────────────────────────────────────
@@ -426,8 +473,9 @@ function ncToFPGTournament(
     const age = ageAt(dob, dateRef);
     // Termo RFEG (Alevín, Benjamín, etc.) — coerência: sempre o termo da
     // federação espanhola, nunca "Sub-N". EscPill tem mapeamento ES→Sub-N CSS,
-    // logo "Alevín" recebe a mesma cor que "Sub-12".
-    const escLabel = ageToEscalaoEs(age);
+    // logo "Alevín" recebe a mesma cor que "Sub-12". Categoria oficial da fonte
+    // primeiro; fallback por cohort de ano (não idade exacta) — ver escaloEsForPlayer.
+    const escLabel = escaloEsForPlayer(p.catEdad || e?.catEdad, dob, dateRef);
     const club = (p.club || e?.club || "").toString();
     const sex: "M" | "F" | null = (p.sexo === "M" ? "M" : p.sexo === "F" ? "F" : (e?.sex === "M" ? "M" : e?.sex === "F" ? "F" : null));
     // Metros do TEE deste jogador (rapazes jogam das amarelas, raparigas das
@@ -532,7 +580,7 @@ function rfegolfToFPGTournament(detail: RFEGDetail, dobLookup?: DobLookup): FPGT
     const dobStr = ins?.dob || e?.dob || null;
     // Escalão ES: preferir a categoria oficial do inscrito (Alevín/Infantil/…),
     // senão calcular pela DOB à data do torneio.
-    const subN = ins?.catEdad || (dobStr ? dobToSubN(dobStr, dateRef) : null) || null;
+    const subN = escaloEsForPlayer(ins?.catEdad, dobStr, dateRef);
     const hcpExact = (typeof ins?.hcp === "number") ? ins.hcp : null;
     const roundScores: FPGRoundScore[] = (p.rounds || [])
       .map((g, i) => ({
@@ -1160,7 +1208,7 @@ function DrawSaidaView({ detail, entry }: {
         if (!p.jid || !p.ins) continue;
         const info = drawInfo[String(p.ins)];
         if (!info) continue;
-        const esc = ageToEscalaoEs(ageAt(info.dob, detail.meta.dateStart)) || undefined;
+        const esc = escaloEsForPlayer(null, info.dob, detail.meta.dateStart) || undefined;
         db[p.jid] = { dob: info.dob || undefined, escalao: esc, name: info.name || undefined, country: "ES" };
       }
     }
@@ -1460,7 +1508,6 @@ function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEnt
                 admissions={{
                   totalInscritos: currentList.length,
                   players: currentList.map((p, i) => {
-                    const a = ageAt(p.dob, m.dateStart);
                     return {
                       pos: p.pos ?? i + 1,
                       fed: p.licencia,
@@ -1470,14 +1517,14 @@ function TournamentDetail({ entry, dobLookup, hcpLookup }: { entry: RFEGIndexEnt
                       vac: null,
                       dataInscricao: null,
                       status: "confirmed" as const,
-                      dob: p.dob,
-                      country: "ES",
-                      escalao: (a != null ? ageToEscalaoEs(a) : null) || p.catEdad || null,
+                      dob: esDateToIso(p.dob),
+                      country: rfegPlayerFlag(p.name, p.pais),
+                      escalao: escaloEsForPlayer(p.catEdad, p.dob, m.dateStart),
                       teeName: p.teeMeters ? `${p.teeMeters} m` : null,
                     };
                   }),
                 } as FpgAdmissions}
-                date={m.dateStart}
+                date={esDateToIso(m.dateStart) ?? m.dateStart}
                 hidePostCols
               />
             </>
@@ -2144,13 +2191,53 @@ const ES_COUNTRY_CODE: Record<string, string> = {
   "LUXEMBURGO": "LU", "RUSIA": "RU", "MEXICO": "MX", "MÉXICO": "MX", "ARGENTINA": "AR",
   "BRASIL": "BR", "JAPON": "JP", "JAPÓN": "JP", "COREA DEL SUR": "KR", "AUSTRALIA": "AU",
   "CANADA": "CA", "CANADÁ": "CA", "SUDAFRICA": "ZA", "SUDÁFRICA": "ZA",
+  // América Latina (frequentes na RFEG)
+  "PARAGUAY": "PY", "URUGUAY": "UY", "CHILE": "CL", "COLOMBIA": "CO", "PERU": "PE",
+  "PERÚ": "PE", "VENEZUELA": "VE", "ECUADOR": "EC", "BOLIVIA": "BO", "CUBA": "CU",
+  "COSTA RICA": "CR", "GUATEMALA": "GT", "PANAMA": "PA", "PANAMÁ": "PA",
+  "REPUBLICA DOMINICANA": "DO", "REPÚBLICA DOMINICANA": "DO", "HONDURAS": "HN",
+  "EL SALVADOR": "SV", "NICARAGUA": "NI",
 };
 
-function rfegCountryCode(pais: string | null | undefined): string | undefined {
+/** País a mostrar como BANDEIRA na página de Espanha — só ESTRANGEIROS com país
+ *  CONHECIDO. Estamos no circuito espanhol: os espanhóis são o default e NÃO levam
+ *  bandeira; destaca-se apenas quem NÃO é espanhol (o inverso do habitual).
+ *  ⚠ Só emite bandeira para nomes de país RECONHECIDOS em ES_COUNTRY_CODE. "EXTRANJERO"
+ *  (estrangeiro sem país concreto) e valores não mapeados → SEM bandeira: a fonte RFEG
+ *  marca "EXTRANJERO" mesmo a espanhóis de federações regionais (ex.: Xan Iribarne,
+ *  Federación Vasca) — uma 🏳️ genérica seria enganadora. Estrangeiros genuínos cuja
+ *  fonte não dá o país são marcados via RFEG_NAT_OVERRIDE (por nome). */
+function rfegForeignFlag(pais: string | null | undefined): string | undefined {
   if (!pais) return undefined;
-  const t = pais.trim();
-  if (!t) return undefined;
-  return ES_COUNTRY_CODE[t.toUpperCase()] ?? t; // desconhecido passa tal-qual (flag() trata)
+  const code = ES_COUNTRY_CODE[pais.trim().toUpperCase()];
+  if (!code || code === "ES") return undefined;
+  return code;
+}
+
+/** Nacionalidades CURADAS — a fonte RFEG é pouco fiável para estrangeiros: marca-os
+ *  ora como "EXTRANJERO" (sem país), ora até como "ESPAÑA" (porque jogam com licença
+ *  espanhola). Estes overrides, por nome normalizado (ver rfegNatNorm), têm prioridade
+ *  sobre `pais`. Estender conforme se confirmem casos. */
+const RFEG_NAT_OVERRIDE: Record<string, string> = {
+  // Irmãos russos: o RFEG marca-os EXTRANJERO/ESPAÑA (no Campeonato Nacional,
+  // "EXTRANJERO" impede a atribuição do título) — mas são russos.
+  "dmitrii elchaninov": "RU",
+  "elchaninov nikita": "RU",
+};
+/** Normaliza um nome para chave de override: minúsculas, sem acentos, vírgula→espaço,
+ *  e tokens ORDENADOS — assim casa independentemente da ordem ("ELCHANINOV , DMITRII"
+ *  e "Dmitrii Elchaninov" dão a mesma chave). O primeiro nome mantém os irmãos
+ *  distintos (Dmitrii ≠ Nikita). */
+function rfegNatNorm(name: string | null | undefined): string {
+  return (name || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
+    .replace(/,/g, " ").split(/\s+/).filter(Boolean).sort().join(" ");
+}
+/** Bandeira a mostrar para um jogador na página de Espanha: override curado de
+ *  nacionalidade primeiro, senão a regra geral (só estrangeiros levam bandeira). */
+function rfegPlayerFlag(name: string | null | undefined, pais: string | null | undefined): string | undefined {
+  const ov = RFEG_NAT_OVERRIDE[rfegNatNorm(name)];
+  if (ov) return ov;
+  return rfegForeignFlag(pais);
 }
 
 function rfegInscritoRow(p: RFEGPlayer): CircuitInscritoRow {
@@ -2162,7 +2249,7 @@ function rfegInscritoRow(p: RFEGPlayer): CircuitInscritoRow {
     hcp: p.hcp,
     escalao: p.catEdad ?? undefined,
     sex: p.sexo === "M" || p.sexo === "F" ? p.sexo : undefined,
-    country: rfegCountryCode(p.pais),
+    country: rfegPlayerFlag(p.name, p.pais),
     dob: p.dob ?? undefined,
     status: p.estado ?? undefined,
   };
@@ -2393,11 +2480,28 @@ async function rfegLoadDivisions(
   // (que o NextCaddy/España não têm). Cada jogador traz dob/escalão/país/tee como
   // overrides; o tee mostra a distância do cartão (rapazes/raparigas jogam tees ≠).
   const buildAdmissions = (): FpgAdmissions => {
+    // ⚠ As listas RFEG sobrepõem-se: `provisional` é o SUPERCONJUNTO (admitidos ∪
+    // reservas ∪ bajas ∪ noAdmitidos) com `estado` por jogador. Iterar TODAS as
+    // listas duplicava cada jogador (um admitido aparecia em `admitidos` E em
+    // `provisional`). Mostramos só o campo real: admitidos+invitados (confirmados)
+    // + reservas (pendentes), e desduplicamos por licença (fallback nome). Fallback
+    // à `provisional` quando ainda não houve corte de admissão (torneio futuro só
+    // com lista provisional).
+    const ins = data.inscritos;
+    const confirmedSrc = (ins.admitidos.length || ins.invitados.length)
+      ? [...ins.admitidos, ...ins.invitados]
+      : ins.provisional;
+    const groups: Array<{ list: RFEGPlayer[]; status: "confirmed" | "reserva" }> = [
+      { list: confirmedSrc, status: "confirmed" },
+      { list: ins.reservas, status: "reserva" },
+    ];
     const players: FpgAdmissionPlayer[] = [];
-    for (const k of (Object.keys(LIST_LABELS) as ListKind[])) {
-      const status = k === "reservas" ? "reserva" : "confirmed";
-      for (const p of (data.inscritos[k] || [])) {
-        const a = ageAt(p.dob, data.meta.dateStart);
+    const seen = new Set<string>();
+    for (const { list, status } of groups) {
+      for (const p of (list || [])) {
+        const key = (p.licencia || p.name || "").trim().toLowerCase();
+        if (key && seen.has(key)) continue;
+        if (key) seen.add(key);
         players.push({
           pos: p.pos ?? null,
           fed: p.licencia,
@@ -2407,9 +2511,9 @@ async function rfegLoadDivisions(
           vac: null,
           dataInscricao: null,
           status,
-          dob: p.dob,
-          country: rfegCountryCode(p.pais) || "ES",
-          escalao: (a != null ? ageToEscalaoEs(a) : null) || p.catEdad || null,
+          dob: esDateToIso(p.dob),
+          country: rfegPlayerFlag(p.name, p.pais),
+          escalao: escaloEsForPlayer(p.catEdad, p.dob, data.meta.dateStart),
           teeName: p.teeMeters ? `${p.teeMeters} m` : null,
         });
       }
@@ -2432,7 +2536,7 @@ async function rfegLoadDivisions(
     customResults,
     inscritos: lists.length ? { lists } : undefined,
     renderInscritos: lists.length
-      ? () => <AdmissionsTab admissions={buildAdmissions()} date={data.meta.dateStart} hidePostCols />
+      ? () => <AdmissionsTab admissions={buildAdmissions()} date={esDateToIso(data.meta.dateStart) ?? data.meta.dateStart} hidePostCols />
       : undefined,
     draw: hasDraw ? { rounds: {} } : undefined,
     renderDrawSection: hasDraw
